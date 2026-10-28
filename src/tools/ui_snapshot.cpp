@@ -67,10 +67,26 @@ juce::Component* findControl(juce::Component& parent, const juce::String& id)
 struct GestureProbe : juce::AudioProcessorParameter::Listener
 {
     int begins = 0, ends = 0, changes = 0;
-    void parameterValueChanged(int, float) override { ++changes; }
+    int depth = 0, unbracketedChanges = 0, malformedGestures = 0;
+    void parameterValueChanged(int, float) override
+    {
+        ++changes;
+        if (depth != 1) ++unbracketedChanges;
+    }
     void parameterGestureChanged(int, bool starting) override
     {
-        if (starting) ++begins; else ++ends;
+        if (starting)
+        {
+            ++begins;
+            if (depth != 0) ++malformedGestures;
+            ++depth;
+        }
+        else
+        {
+            ++ends;
+            if (depth != 1) ++malformedGestures;
+            --depth;
+        }
     }
 };
 
@@ -520,16 +536,48 @@ int main(int argc, char** argv)
             GestureProbe probe;
             memoryParameter->addListener(&probe);
             const double original = slider->getValue();
-            slider->setValue(1234.0, juce::sendNotificationSync);
+            // Programmatic Slider::setValue is not a user gesture. Exercise
+            // the actual accessibility action, which JUCE brackets with its
+            // slider drag notifications (and hence attachment host gestures).
+            auto* accessibility = slider->getAccessibilityHandler();
+            auto* valueInterface = accessibility != nullptr ? accessibility->getValueInterface() : nullptr;
+            check(valueInterface != nullptr, "miniature slider exposes accessible value action");
+            if (valueInterface != nullptr) valueInterface->setValue(1234.0);
             check(std::abs(processor.getMemoryValue(0, cs80::CP_lpfCutoff) - 1234.0f) < 0.02f,
                   "miniature GUI slider writes APVTS");
-            check(probe.changes > 0 && probe.begins > 0 && probe.begins == probe.ends,
-                  "miniature slider sends balanced host gestures");
+            check(probe.changes > 0 && probe.begins == 1 && probe.ends == 1
+                  && probe.depth == 0 && probe.unbracketedChanges == 0 && probe.malformedGestures == 0,
+                  "miniature accessible slider edit sends exactly one balanced host gesture");
             memoryParameter->setValueNotifyingHost(memoryParameter->convertTo0to1(2456.0f));
             flushGui(30);
             check(std::abs(slider->getValue() - 2456.0) < 0.02, "host automation updates miniature slider");
             memoryParameter->removeListener(&probe);
-            slider->setValue(original, juce::sendNotificationSync);
+            for (bool duringDrag : { false, true })
+            {
+                GestureProbe keyboardProbe;
+                memoryParameter->addListener(&keyboardProbe);
+                const double beforeKey = slider->getValue();
+                if (duringDrag)
+                {
+                    // The key must join the existing drag, not start a nested
+                    // host gesture. This exercises FocusSlider's guard.
+                    juce::Slider::ScopedDragNotification drag(*slider);
+                    check(slider->keyPressed(juce::KeyPress(juce::KeyPress::upKey)),
+                          "miniature slider handles arrow during drag");
+                }
+                else
+                    check(slider->keyPressed(juce::KeyPress(juce::KeyPress::upKey)),
+                          "miniature slider handles arrow keyboard edit");
+                check(slider->getValue() > beforeKey
+                      && std::abs(processor.getMemoryValue(0, cs80::CP_lpfCutoff) - slider->getValue()) < 0.02,
+                      "actual arrow key changes miniature APVTS value");
+                check(keyboardProbe.changes > 0 && keyboardProbe.begins == 1 && keyboardProbe.ends == 1
+                      && keyboardProbe.depth == 0 && keyboardProbe.unbracketedChanges == 0
+                      && keyboardProbe.malformedGestures == 0,
+                      "arrow edit has one nonnested balanced host gesture");
+                memoryParameter->removeListener(&keyboardProbe);
+            }
+            memoryParameter->setValueNotifyingHost(memoryParameter->convertTo0to1((float) original));
         }
         else check(false, "miniature slider discoverable");
         const auto toggleId = Cs80AudioProcessor::memoryParameterId(0, cs80::CP_saw);

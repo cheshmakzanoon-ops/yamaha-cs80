@@ -58,6 +58,30 @@ class FocusSlider final : public juce::Slider
 {
 public:
     FocusSlider() { setWantsKeyboardFocus(true); }
+    bool keyPressed(const juce::KeyPress& key) override
+    {
+        const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
+            || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
+        if (isEnabled() && arrow && !key.getModifiers().isAnyModifierKeyDown() && !gestureActive)
+        {
+            // JUCE 8.0.6 arrow keys change values without drag notifications.
+            // Attachments need these to bracket host automation, just as for
+            // pointer, wheel and accessibility edits.
+            juce::Slider::ScopedDragNotification gesture(*this);
+            return juce::Slider::keyPressed(key);
+        }
+        return juce::Slider::keyPressed(key);
+    }
+    void startedDragging() override
+    {
+        gestureActive = true;
+        juce::Slider::startedDragging();
+    }
+    void stoppedDragging() override
+    {
+        gestureActive = false;
+        juce::Slider::stoppedDragging();
+    }
     void focusGained(juce::Component::FocusChangeType cause) override
     {
         juce::Slider::focusGained(cause);
@@ -76,6 +100,8 @@ public:
             g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 2.0f, 1.5f);
         }
     }
+private:
+    bool gestureActive = false;
 };
 
 // Parameter-bound rotary or hardware linear slider with a unit-aware readout.

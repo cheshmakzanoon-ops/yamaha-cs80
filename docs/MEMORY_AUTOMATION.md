@@ -56,3 +56,12 @@ settings without an editor; all 104 controls and two selectors roundtripping;
 legacy migration and missing-state defaulting; GUI-to-APVTS and host-to-GUI updates
 with balanced slider/switch gestures. These additions require CI execution;
 source inspection alone is not a test pass.
+
+### Gesture regression correction
+
+JUCE 8.0.6's programmatic Slider::setValue is not a complete user gesture. The
+smoke fixture now exercises the actual accessible-value action and asserts exact
+begin/end counts and that value notifications occur inside the gesture. The
+same investigation found JUCE arrow-key edits lack drag notifications;
+FocusSlider now brackets handled arrows, without nesting during an existing
+drag. Actual arrow-key regressions cover both idle and already-dragging cases.
