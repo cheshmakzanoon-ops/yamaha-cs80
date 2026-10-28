@@ -80,13 +80,27 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Configure
-        run: >
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
-          -DCS80_BUILD_PLUGIN=ON
-          -DCS80_BUILD_TESTS=ON
+        id: configure
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
+            -DCS80_BUILD_PLUGIN=ON `
+            -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Report CMake failure
+        if: steps.configure.outcome == 'failure'
+        shell: pwsh
+        run: |
+          $message = (Get-Content configure.log -Tail 25) -join ' || '
+          Write-Output "::error title=Windows CMake::$message"
+          exit 1
 
       - name: Build
+        if: steps.configure.outcome == 'success'
         run: cmake --build build --config Release --parallel
 
       - name: Test
+        if: steps.configure.outcome == 'success'
         run: ctest --test-dir build -C Release --output-on-failure
