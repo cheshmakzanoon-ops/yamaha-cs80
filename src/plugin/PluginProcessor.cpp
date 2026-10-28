@@ -19,6 +19,8 @@ Cs80AudioProcessor::Cs80AudioProcessor()
     : AudioProcessor(BusesProperties().withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       apvts(*this, nullptr, "CS80_PARAMS", createParameterLayout())
 {
+    for (int i = 0; i < cs80::P_numParams; ++i)
+        parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
@@ -73,9 +75,8 @@ void Cs80AudioProcessor::readParameters()
 {
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
-        const auto id = parameterId(i);
-        if (auto* p = apvts.getRawParameterValue(id))
-            cached.v[(size_t) i] = p->load();
+        if (auto* p = parameterValues[(size_t) i])
+            cached.v[(size_t) i] = p->load(std::memory_order_relaxed);
     }
 }
 
@@ -110,7 +111,7 @@ void Cs80AudioProcessor::setParamValue(int index, float physicalValue)
     {
         const float normalised = cs80::normaliseParam(index, physicalValue);
         p->setValueNotifyingHost(normalised);
-        cached.v[(size_t) index] = physicalValue;
+
     }
 }
 
@@ -126,8 +127,7 @@ void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
         if (auto* p = apvts.getParameter(parameterId(i)))
             p->setValueNotifyingHost(cs80::normaliseParam(i, values[i]));
     }
-    cached = values;
-    engine.setParams(cached);
+    // The next audio block snapshots APVTS atomics; never mutate DSP from the GUI.
 }
 
 void Cs80AudioProcessor::setPresetName(const juce::String& name)
@@ -206,8 +206,38 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     readParameters();
     engine.setParams(cached);
 
-    if (interleaved.size() < (size_t) numSamples * 2)
-        interleaved.resize((size_t) numSamples * 2, 0.0f);
+    const float ribbon = pendingRibbon.exchange(noPendingControl, std::memory_order_relaxed);
+    const float pitch = pendingPitch.exchange(noPendingControl, std::memory_order_relaxed);
+    const float mod = pendingMod.exchange(noPendingControl, std::memory_order_relaxed);
+    if (std::isfinite(ribbon)) engine.setRibbon(juce::jlimit(-1.0f, 1.0f, ribbon));
+    if (std::isfinite(pitch)) engine.pitchBend(1, juce::jlimit(-1.0f, 1.0f, pitch));
+    if (std::isfinite(mod)) engine.controlChange(1, juce::jlimit(0.0f, 1.0f, mod), 1);
+
+    // Hosts may supply a block larger than their advertised maximum. Render
+    // bounded chunks rather than allocating on the real-time thread.
+    auto renderSegment = [&](int start, int length)
+    {
+        const int capacity = (int) interleaved.size() / 2;
+        if (capacity == 0) return;
+        for (int offset = 0; offset < length; )
+        {
+            const int n = std::min(capacity, length - offset);
+            engine.render(interleaved.data(), n);
+            for (int i = 0; i < n; ++i)
+            {
+                const float left = interleaved[(size_t) i * 2];
+                const float right = interleaved[(size_t) i * 2 + 1];
+                if (numChannels >= 2)
+                {
+                    buffer.setSample(0, start + offset + i, left);
+                    buffer.setSample(1, start + offset + i, right);
+                }
+                else if (numChannels == 1)
+                    buffer.setSample(0, start + offset + i, 0.5f * (left + right));
+            }
+            offset += n;
+        }
+    };
 
     int done = 0;
     for (const auto metadata : midi)
@@ -215,48 +245,22 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         const int pos = juce::jlimit(0, numSamples, metadata.samplePosition);
         if (pos > done)
         {
-            const int n = pos - done;
-            engine.render(interleaved.data(), n);
-            // The interleaved buffer has L/R pairs, so copy separately.
-            if (numChannels >= 2)
-            {
-                for (int i = 0; i < n; ++i)
-                {
-                    buffer.setSample(0, done + i, interleaved[(size_t) i * 2]);
-                    buffer.setSample(1, done + i, interleaved[(size_t) i * 2 + 1]);
-                }
-            }
-            else if (numChannels == 1)
-            {
-                for (int i = 0; i < n; ++i)
-                    buffer.setSample(0, done + i,
-                                     (interleaved[(size_t) i * 2]
-                                      + interleaved[(size_t) i * 2 + 1]) * 0.5f);
-            }
+            renderSegment(done, pos - done);
             done = pos;
         }
         handleMidi(metadata.getMessage());
     }
 
     if (done < numSamples)
-    {
-        const int n = numSamples - done;
-        engine.render(interleaved.data(), n);
-        if (numChannels >= 2)
-        {
-            for (int i = 0; i < n; ++i)
-            {
-                buffer.setSample(0, done + i, interleaved[(size_t) i * 2]);
-                buffer.setSample(1, done + i, interleaved[(size_t) i * 2 + 1]);
-            }
-        }
-        else if (numChannels == 1)
-        {
-            for (int i = 0; i < n; ++i)
-                buffer.setSample(0, done + i, (interleaved[(size_t) i * 2] + interleaved[(size_t) i * 2 + 1]) * 0.5f);
-        }
-    }
+        renderSegment(done, numSamples - done);
+
+    unsigned mask = 0;
+    for (int i = 0; i < 8; ++i)
+        if (engine.getVoiceInfo(i).active) mask |= 1u << i;
+    activeVoiceMask.store(mask, std::memory_order_relaxed);
+    activeVoiceCount.store(engine.activeVoices(), std::memory_order_relaxed);
 }
+
 
 juce::AudioProcessorEditor* Cs80AudioProcessor::createEditor()
 {
@@ -311,8 +315,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
             apvts.replaceState(tree);
             presetName = tree.getProperty("presetName", "Init Patch").toString();
             currentProgram = (int) tree.getProperty("factoryIndex", 0);
-            readParameters();
-            engine.setParams(cached);
+            // DSP state is updated by the next audio block, not the state-loading thread.
             if (onPresetChanged)
                 onPresetChanged();
         }
@@ -372,8 +375,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
             apvts.replaceState(tree);
             presetName = tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString();
             currentProgram = (int) tree.getProperty("factoryIndex", 0);
-            readParameters();
-            engine.setParams(cached);
+            // DSP state is updated by the next audio block, not the state-loading thread.
             if (onPresetChanged)
                 onPresetChanged();
         }

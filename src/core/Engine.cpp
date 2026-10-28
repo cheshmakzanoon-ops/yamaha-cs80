@@ -75,6 +75,7 @@ void Engine::reset()
     ringAdsr.reset();
     ringPhase = 0.0f;
     ringEnv = 0.0f;
+    ringFrequency = 0.0f;
     pwmPhase = { 0.0f, 0.0f };
     subLfo.reset(0.0f);
     for (auto& l : modLfos)
@@ -502,6 +503,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.targetPitch = (float) note;
     v.glidePitch = global.portamento > 0.0001f ? (float) lastNote : (float) note;
     v.initBendValue = -global.initBend * v.velocity * 1.0f;
+    v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
     lastNote = note;
     ++heldCount;
@@ -830,6 +832,11 @@ void Engine::processInternalSample(float& outL, float& outR)
         if (std::abs(v.initBendValue) > 0.0001f)
             v.initBendValue *= std::exp(-1.0f / (0.075f * sr));
 
+        // Sustain I holds each released voice's last ribbon pitch. Sustain II
+        // keeps release tails coupled to subsequent ribbon gestures.
+        if (v.held || v.pedalHeld || global.sustainMode == 1)
+            v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
+
         const float glideOffset = v.glidePitch - (float) v.note;
         const float dispersion = global.voiceDispersion;
         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
@@ -843,7 +850,6 @@ void Engine::processInternalSample(float& outL, float& outR)
                           + cs80::kFeetSemitones[std::clamp((int) rs.feet, 0, 5)]
                           + global.masterTune
                           + (ch == 1 ? global.detuneCents / 100.0f : 0.0f)
-                          + ribbon * (ribbon >= 0.0f ? 12.0f : 18.0f)
                           + globalBend
                           + v.mpeBend
                           + glideOffset
@@ -857,7 +863,7 @@ void Engine::processInternalSample(float& outL, float& outR)
             if (global.glideMode == 2)
                 pitch = std::round(pitch);
 
-            const float freq = midiToHz(pitch, global.tuningRef);
+            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio;
             const float pwm = std::sin(kTwoPi * pwmPhase[ch]);
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
 
@@ -932,24 +938,20 @@ void Engine::processInternalSample(float& outL, float& outR)
             ++stillActive;
     heldCount = stillHeld;
 
-    // Global ring modulator. The AD envelope is triggered by the first key
-    // and does not restart until every key has been released.
+    // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
+    // so enabling MODULATION does not resurrect a frozen envelope.
+    ringEnv = ringAdsr.tick(sr, false);
+    ringFrequency = clampf(ringModulationFrequency(global.ringSpeed,
+                                                   global.ringDepth, ringEnv),
+                           0.0f, sr * 0.4f);
+    ringPhase += ringFrequency * invSr;
+    ringPhase -= std::floor(ringPhase);
     if (global.ringAmount > 0.001f)
     {
-        const float renv = ringAdsr.tick(sr, false);
-        ringEnv = renv;
-        const float carrierFreq = clampf(global.ringSpeed, 0.05f, sr * 0.4f);
-        ringPhase += carrierFreq * invSr;
-        ringPhase -= std::floor(ringPhase);
         const float carrier = std::sin(kTwoPi * ringPhase);
         const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
-        const float depth = clampf(global.ringDepth, 0.0f, 1.0f);
-        // Depth is the modulator's own amplitude, amount is the dry/ring
-        // balance. Both were exposed as separate panel controls for a reason.
-        const float ringedL = mixL * carrier * (0.15f + 0.85f * depth * renv);
-        const float ringedR = mixR * carrier * (0.15f + 0.85f * depth * renv);
-        mixL = lerp(mixL, ringedL, amount);
-        mixR = lerp(mixR, ringedR, amount);
+        mixL = lerp(mixL, mixL * carrier, amount);
+        mixR = lerp(mixR, mixR * carrier, amount);
     }
 
     mixL += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
@@ -1080,7 +1082,7 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
     if (index < 0 || index >= kNumVoices)
         return {};
     const auto& v = voices[(size_t) index];
-    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend };
+    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio };
 }
 
 } // namespace cs80

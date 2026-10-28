@@ -25,6 +25,48 @@ juce::Font displayFont(float height, int style = juce::Font::plain)
     return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
                                         height, style));
 }
+// Software-rendered key surfaces keep snapshots identical to the interactive
+// editor. The key depth, moulded front lip and black-key bevel are drawn here.
+class HardwareKeyboard final : public juce::MidiKeyboardComponent
+{
+public:
+    HardwareKeyboard(juce::MidiKeyboardState& state, Orientation orientation)
+        : MidiKeyboardComponent(state, orientation) {}
+
+    void drawWhiteNote(int, juce::Graphics& g, juce::Rectangle<float> area,
+                       bool down, bool over, juce::Colour, juce::Colour) override
+    {
+        auto key = area.reduced(0.6f, 0.0f);
+        const float front = key.getHeight() * 0.09f;
+        const auto colour = down ? juce::Colour(0xffd4bd82) : juce::Colour(0xffece7d7);
+        g.setGradientFill(juce::ColourGradient(colour.darker(0.30f), key.getX(), key.getY(),
+                                               colour.brighter(0.07f), key.getX(), key.getBottom() - front, false));
+        g.fillRect(key);
+        g.setColour(colour.darker(0.16f));
+        g.fillRect(key.removeFromBottom(front));
+        g.setColour(juce::Colours::white.withAlpha(0.62f));
+        g.drawHorizontalLine((int) key.getBottom(), key.getX() + 1, key.getRight() - 1);
+        g.setColour(juce::Colours::black.withAlpha(0.4f));
+        g.drawVerticalLine((int) area.getRight()-1, area.getY(), area.getBottom());
+        if (over && !down) { g.setColour(juce::Colour(0xfff3d691).withAlpha(0.17f)); g.fillRect(area); }
+    }
+
+    void drawBlackNote(int, juce::Graphics& g, juce::Rectangle<float> area,
+                       bool down, bool over, juce::Colour) override
+    {
+        g.setColour(juce::Colour(0xff010201)); g.fillRect(area);
+        auto cap = area.reduced(area.getWidth() * 0.13f, 0);
+        cap.removeFromBottom(area.getHeight() * 0.13f);
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff30332f), cap.getX(), cap.getY(),
+                                               down ? juce::Colour(0xff76684a) : juce::Colour(0xff111410),
+                                               cap.getX(), cap.getBottom(), false));
+        g.fillRect(cap);
+        g.setColour(juce::Colour(0xff63655e));
+        g.drawHorizontalLine((int) cap.getBottom(), cap.getX(), cap.getRight());
+        g.setColour(juce::Colours::white.withAlpha(over ? 0.2f : 0.08f));
+        g.drawVerticalLine((int) cap.getX(), cap.getY(), cap.getBottom());
+    }
+};
 } // namespace
 
 struct Cs80AudioProcessorEditor::Impl final : public juce::Component
@@ -132,7 +174,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         browseButton.onClick = [this]
         {
             showBrowser(true);
-            browser.focusSaveField();
         };
         saveButton.onClick = [this]
         {
@@ -156,124 +197,155 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advancedButton.onClick = [this] { showAdvanced(! advancedVisible); };
     }
 
+    cs80::ui::ParamKnob& addFader(int parameter, float x, float y, float w, float h,
+                                  const juce::String& label, juce::Colour colour)
+    {
+        auto& control = addKnob(parameter, x, y, w, h, label);
+        control.setHardwareSlider(colour);
+        return control;
+    }
+
+    static juce::Colour whiteCap() { return juce::Colour(0xffe7e2cf); }
+    static juce::Colour greenCap() { return juce::Colour(0xff28564b); }
+    static juce::Colour redCap() { return juce::Colour(0xffc94743); }
+    static juce::Colour yellowCap() { return juce::Colour(0xffe7c348); }
+    static juce::Colour blackCap() { return juce::Colour(0xff363831); }
+    static juce::Colour greyCap() { return juce::Colour(0xff8b8a80); }
+
     void buildMasterSection()
     {
-        // The master strip is 194 px wide. Short, engraved labels keep the
-        // two columns readable even at the 1120 px minimum editor size.
-        addKnob(cs80::P_masterTune, 32, 130, 82, 62, "TUNE");
-        addKnob(cs80::P_detune, 120, 130, 84, 62, "DETUNE");
-        addKnob(cs80::P_mix, 32, 196, 82, 62, "MIX I / II");
-        addKnob(cs80::P_brilliance, 120, 196, 84, 62, "BRILL");
-        addKnob(cs80::P_resonance, 32, 262, 82, 62, "RES");
-        addKnob(cs80::P_masterSustain, 120, 262, 84, 62, "SUSTAIN");
-        addKnob(cs80::P_volume, 32, 328, 82, 62, "VOLUME");
-        addKnob(cs80::P_initBend, 120, 328, 84, 62, "BEND");
-
-        addKnob(cs80::P_chorusSpeed, 32, 420, 82, 60, "CHORUS RATE");
-        addKnob(cs80::P_chorusDepth, 120, 420, 84, 60, "CHORUS DEPTH");
-        addLed(cs80::P_chorusOn, "CHORUS", 30, 500, 82, 24);
-        addLed(cs80::P_chorusMode, "TREMOLO", 120, 500, 84, 24);
-        addLed(cs80::P_outputMode, "STEREO", 30, 534, 82, 24);
-        addLed(cs80::P_mpeOn, "MPE", 120, 534, 84, 24);
+        // The lower strip follows Yamaha's PN2 panel: ring, sub oscillator,
+        // feet, tone selectors, mix, brilliance and performance response.
+        addKnob(cs80::P_masterTune, 49, 548, 62, 82, "PITCH");
+        addFader(cs80::P_detune, 114, 535, 39, 116, "DETUNE", whiteCap());
+        addFader(cs80::P_ringAttack, 161, 535, 38, 116, "ATTACK", blackCap());
+        addFader(cs80::P_ringDecay, 201, 535, 38, 116, "DECAY", blackCap());
+        addFader(cs80::P_ringDepth, 241, 535, 38, 116, "DEPTH", greyCap());
+        addFader(cs80::P_ringSpeed, 281, 535, 38, 116, "SPEED", whiteCap());
+        addFader(cs80::P_ringAmount, 321, 535, 38, 116, "MOD", greyCap());
+        addFader(cs80::P_subWave, 373, 535, 42, 116, "FUNCTION", blackCap());
+        addFader(cs80::P_subSpeed, 417, 535, 38, 116, "SPEED", whiteCap());
+        addFader(cs80::P_subVco, 457, 535, 38, 116, "VCO", whiteCap());
+        addFader(cs80::P_subVcf, 497, 535, 38, 116, "VCF", greenCap());
+        addFader(cs80::P_subVca, 537, 535, 38, 116, "VCA", greyCap());
+        addFader(cs80::chParam(0, cs80::CP_feet), 582, 535, 36, 116, "FEET I", greyCap());
+        addFader(cs80::chParam(1, cs80::CP_feet), 620, 535, 36, 116, "FEET II", greyCap());
+        addFader(cs80::P_mix, 1210, 535, 42, 116, "MIX", redCap());
+        addFader(cs80::P_brilliance, 1257, 535, 42, 116, "BRILLIANCE", greenCap());
+        addFader(cs80::P_resonance, 1304, 535, 42, 116, "RESONANCE", redCap());
+        addFader(cs80::P_subAtSpeed, 1351, 535, 42, 116, "AT SPEED", whiteCap());
+        addFader(cs80::P_subAtVco, 1398, 535, 42, 116, "AT VCO", whiteCap());
+        addFader(cs80::P_initBend, 1445, 535, 42, 116, "INIT BEND", whiteCap());
+        addKnob(cs80::P_volume, 1492, 551, 61, 82, "VOLUME");
     }
 
     void buildChannel(int channel, float y)
     {
         auto p = [channel](int local) { return cs80::chParam(channel, local); };
-        const float x = 228.0f;
-
-        // VCO ---------------------------------------------------------------
-        auto& saw = addLed(p(cs80::CP_saw), "SAW", x + 18, y + 42, 72, 22);
-        saw.accent = cs80::ui::amber;
-        addLed(p(cs80::CP_pulse), "PULSE", x + 96, y + 42, 72, 22);
-        addKnob(p(cs80::CP_sine), 232, y + 72, 74, 60, "SINE");
-        addKnob(p(cs80::CP_noise), 308, y + 72, 74, 60, "NOISE");
-        addKnob(p(cs80::CP_pw), 384, y + 72, 74, 60, "PULSE WIDTH");
-        addKnob(p(cs80::CP_pwmSpeed), 232, y + 138, 74, 60, "PWM RATE");
-        addKnob(p(cs80::CP_pwmDepth), 308, y + 138, 74, 60, "PWM DEPTH");
-        addKnob(p(cs80::CP_feet), 384, y + 138, 74, 60, "FEET");
-
-        // VCF ---------------------------------------------------------------
-        addLed(p(cs80::CP_hpfOn), "HPF ON", 492, y + 42, 76, 22);
-        addLed(p(cs80::CP_lpfOn), "LPF ON", 576, y + 42, 76, 22);
-        addKnob(p(cs80::CP_hpfCutoff), 490, y + 72, 66, 60, "HPF");
-        addKnob(p(cs80::CP_hpfRes), 560, y + 72, 66, 60, "HPF RES");
-        addKnob(p(cs80::CP_lpfCutoff), 630, y + 72, 66, 60, "LPF");
-        addKnob(p(cs80::CP_lpfRes), 700, y + 72, 66, 60, "LPF RES");
-        addKnob(p(cs80::CP_fIl), 488, y + 138, 54, 60, "IL");
-        addKnob(p(cs80::CP_fAl), 544, y + 138, 54, 60, "AL");
-        addKnob(p(cs80::CP_fA), 600, y + 138, 54, 60, "A");
-        addKnob(p(cs80::CP_fD), 656, y + 138, 54, 60, "D");
-        addKnob(p(cs80::CP_fR), 712, y + 138, 54, 60, "R");
-
-        // VCA ---------------------------------------------------------------
-        addKnob(p(cs80::CP_vA), 796, y + 70, 54, 58, "A");
-        addKnob(p(cs80::CP_vD), 853, y + 70, 54, 58, "D");
-        addKnob(p(cs80::CP_vS), 910, y + 70, 54, 58, "S");
-        addKnob(p(cs80::CP_vR), 796, y + 132, 54, 58, "R");
-        addKnob(p(cs80::CP_vcfLevel), 853, y + 132, 54, 58, "VCF LVL");
-        addKnob(p(cs80::CP_vLevel), 910, y + 132, 54, 58, "LEVEL");
-        addKnob(p(cs80::CP_pan), 853, y + 194, 54, 54, "PAN");
-
-        // Touch -------------------------------------------------------------
-        addKnob(p(cs80::CP_initBrill), 982, y + 74, 100, 62, "INIT BRILL");
-        addKnob(p(cs80::CP_initLevel), 1100, y + 74, 100, 62, "INIT LEVEL");
-        addKnob(p(cs80::CP_afterBrill), 982, y + 144, 100, 62, "AFTER BRILL");
-        addKnob(p(cs80::CP_afterLevel), 1100, y + 144, 100, 62, "AFTER LEVEL");
+        float x = 458.0f;
+        auto fader = [&](int param, const char* name, juce::Colour colour)
+        {
+            addFader(p(param), x, y + 36, 38, 136, name, colour);
+            x += 40.0f;
+        };
+        fader(cs80::CP_pwmSpeed, "SPEED", whiteCap());
+        fader(cs80::CP_pwmDepth, "PWM", greenCap());
+        fader(cs80::CP_pw, "PW", greenCap());
+        auto& pulse = addLed(p(cs80::CP_pulse), "PULSE", x, y + 86, 36, 54);
+        pulse.hardwareTab = true; pulse.accent = greyCap(); x += 40;
+        auto& saw = addLed(p(cs80::CP_saw), "SAW", x, y + 86, 36, 54);
+        saw.hardwareTab = true; saw.accent = greyCap(); x += 40;
+        fader(cs80::CP_noise, "NOISE", greenCap());
+        x += 9;
+        fader(cs80::CP_hpfCutoff, "HPF", greenCap());
+        fader(cs80::CP_hpfRes, "RES H", redCap());
+        fader(cs80::CP_lpfCutoff, "LPF", greenCap());
+        fader(cs80::CP_lpfRes, "RES L", redCap());
+        fader(cs80::CP_fIl, "IL", blackCap());
+        fader(cs80::CP_fAl, "AL", blackCap());
+        fader(cs80::CP_fA, "A", blackCap());
+        fader(cs80::CP_fD, "D", blackCap());
+        fader(cs80::CP_fR, "R", yellowCap());
+        x += 9;
+        fader(cs80::CP_vcfLevel, "VCF LEVEL", greyCap());
+        fader(cs80::CP_sine, "SINE", greyCap());
+        fader(cs80::CP_vA, "A", blackCap());
+        fader(cs80::CP_vD, "D", blackCap());
+        fader(cs80::CP_vS, "S", blackCap());
+        fader(cs80::CP_vR, "R", yellowCap());
+        fader(cs80::CP_vLevel, "LEVEL", greyCap());
+        x += 9;
+        fader(cs80::CP_initBrill, "BRILLIANCE", greenCap());
+        fader(cs80::CP_initLevel, "LEVEL", greyCap());
+        fader(cs80::CP_afterBrill, "BRILLIANCE", greenCap());
+        fader(cs80::CP_afterLevel, "LEVEL", greyCap());
     }
 
     void buildChannels()
     {
-        buildChannel(0, 88.0f);
-        buildChannel(1, 358.0f);
+        buildChannel(0, 112.0f);
+        buildChannel(1, 305.0f);
+        // Explicit software-only voice settings stay under a separate lid.
+        addAndMakeVisible(voiceOptions);
+        voiceOptions.setButtonText("VOICE SETTINGS");
+        voiceOptions.onClick = [this] {
+            optionsVisible = ! optionsVisible;
+            for (auto* component : optionComponents) component->setVisible(optionsVisible);
+            repaint();
+        };
+        place(voiceOptions, 94, 447, 278, 25);
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            const float y = 296.0f + (float) channel * 68.0f;
+            auto p = [channel](int local) { return cs80::chParam(channel, local); };
+            auto& pan = addKnob(p(cs80::CP_pan), 100, y, 68, 60, "PAN");
+            auto& level = addKnob(p(cs80::CP_vLevel), 173, y, 68, 60, "LEVEL");
+            auto& hp = addLed(p(cs80::CP_hpfOn), "HPF", 247, y + 8, 62, 21);
+            auto& lp = addLed(p(cs80::CP_lpfOn), "LPF", 247, y + 33, 62, 21);
+            optionComponents.insert(optionComponents.end(), { &pan, &level, &hp, &lp });
+        }
+        for (auto* component : optionComponents) component->setVisible(false);
     }
 
     void buildToneSection()
     {
-        const float startX = 1238.0f;
+        const std::array<juce::Colour, 11> colours = {
+            yellowCap(), yellowCap(), redCap(), whiteCap(), yellowCap(),
+            yellowCap(), yellowCap(), whiteCap(), greenCap(), greenCap(), greenCap()
+        };
         for (int channel = 0; channel < 2; ++channel)
         {
             for (int tone = 0; tone < 11; ++tone)
             {
-                const int column = tone / 6;
-                const int row = tone % 6;
                 auto button = std::make_unique<juce::TextButton>(
-                    juce::String(tone + 1).paddedLeft('0', 2) + "  "
-                    + juce::String(cs80::hardwareToneName(tone)).toUpperCase());
+                    juce::String(cs80::hardwareToneName(tone, channel)).toUpperCase());
                 button->setClickingTogglesState(true);
                 button->setRadioGroupId(0x100 + channel);
                 button->setWantsKeyboardFocus(false);
+                button->getProperties().set("hardwareTab", true);
+                button->setColour(juce::TextButton::buttonColourId, colours[(size_t) tone]);
                 button->onClick = [this, channel, tone] { applyHardwareTone(channel, tone); };
                 addAndMakeVisible(*button);
-                const float y = 88.0f + (channel == 0 ? 42.0f : 202.0f) + (float) row * 24.0f;
-                const float x = startX + (float) column * 164.0f;
-                place(*button, x, y, 156.0f, 21.0f);
+                place(*button, 675.0f + (float) tone * 47.0f,
+                       556.0f + (float) channel * 45.0f, 44.0f, 41.0f);
                 toneButtons[(size_t) channel][(size_t) tone] = std::move(button);
             }
         }
-
-        addKnob(cs80::P_macro1, 1240, 453, 76, 62, "BRIGHT");
-        addKnob(cs80::P_macro2, 1320, 453, 76, 62, "MOTION");
-        addKnob(cs80::P_macro3, 1400, 453, 76, 62, "WIDTH");
-        addKnob(cs80::P_macro4, 1480, 453, 76, 62, "SPACE");
     }
 
     void buildPerformance()
     {
-        addKnob(cs80::P_portamento, 160, 658, 88, 50, "GLIDE");
-        addKnob(cs80::P_keyRelease, 252, 658, 88, 50, "RELEASE");
-        addKnob(cs80::P_modWheelSub, 344, 658, 88, 50, "MOD > SUB");
-        addKnob(cs80::P_modWheelVcf, 436, 658, 88, 50, "MOD > VCF");
-        addKnob(cs80::P_pitchBendRange, 528, 658, 88, 50, "BEND RANGE");
-        addKnob(cs80::P_tuningRef, 620, 658, 88, 50, "A4 TUNE");
-        addKnob(cs80::P_arpRate, 712, 658, 88, 50, "ARP RATE");
-        addKnob(cs80::P_fx1Mix, 804, 658, 88, 50, "FX 1 MIX");
-
-        addLed(cs80::P_sustainMode, "SUSTAIN II", 910, 664, 116, 24);
-        addLed(cs80::P_arpOn, "ARP", 1034, 664, 86, 24);
-        addLed(cs80::P_chorusOn, "CHORUS", 1128, 664, 104, 24);
-        addLed(cs80::P_chorusMode, "TREMOLO", 1240, 664, 104, 24);
-        addLed(cs80::P_outputMode, "STEREO", 1352, 664, 96, 24);
+        addFader(cs80::P_masterSustain, 57, 780, 45, 122, "SUSTAIN", yellowCap());
+        addFader(cs80::P_portamento, 106, 780, 45, 122, "PORTAMENTO", whiteCap());
+        addKnob(cs80::P_chorusSpeed, 160, 782, 55, 64, "SPEED");
+        addKnob(cs80::P_chorusDepth, 220, 782, 55, 64, "DEPTH");
+        auto& sus = addLed(cs80::P_sustainMode, "SUSTAIN II", 57, 912, 49, 46);
+        sus.hardwareTab = true; sus.accent = whiteCap();
+        auto& chorus = addLed(cs80::P_chorusOn, "CHORUS", 168, 868, 48, 60);
+        chorus.hardwareTab = true; chorus.accent = yellowCap();
+        auto& tremolo = addLed(cs80::P_chorusMode, "TREMOLO", 222, 868, 48, 60);
+        tremolo.hardwareTab = true; tremolo.accent = whiteCap();
+        addFader(cs80::P_glideMode, 110, 905, 46, 60, "GLIDE", greyCap());
     }
 
     void buildKeyboard()
@@ -296,21 +368,25 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         ribbon.onValueChange = [this](float value)
         {
-            processor.getEngine().setRibbon(value);
+            processor.setRibbonFromUI(value);
         };
         addAndMakeVisible(ribbon);
 
         pitchWheel.onValueChange = [this](float value)
         {
-            processor.getEngine().pitchBend(1, value);
+            processor.setPitchWheelFromUI(value);
         };
         addAndMakeVisible(pitchWheel);
+        pitchWheel.setVisible(false);
+        optionComponents.push_back(&pitchWheel);
 
         modWheel.onValueChange = [this](float value)
         {
-            processor.getEngine().controlChange(1, value, 1);
+            processor.setModWheelFromUI(value);
         };
         addAndMakeVisible(modWheel);
+        modWheel.setVisible(false);
+        optionComponents.push_back(&modWheel);
     }
 
     // -----------------------------------------------------------------------
@@ -337,7 +413,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         cs80::applyHardwareTone(values, channel, tone);
         processor.applyParameterValues(values);
         processor.setPresetName(juce::String(channel == 0 ? "Tone I: " : "Tone II: ")
-                                + cs80::hardwareToneName(tone));
+                                + cs80::hardwareToneName(tone, channel));
         syncToneMarks();
     }
 
@@ -362,7 +438,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         const auto toneName = name.fromFirstOccurrenceOf(":", false, false).trim();
         for (int tone = 0; tone < 11; ++tone)
-            if (toneName.equalsIgnoreCase(cs80::hardwareToneName(tone)))
+            if (toneName.equalsIgnoreCase(cs80::hardwareToneName(tone, channel)))
                 toneButtons[(size_t) channel][(size_t) tone]->setToggleState(
                     true, juce::dontSendNotification);
     }
@@ -419,310 +495,150 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // -----------------------------------------------------------------------
     // Painting
     // -----------------------------------------------------------------------
-    void paintChannelDecorations(juce::Graphics& g, int channel, float y)
+    void panelText(juce::Graphics& g, const juce::String& text, float x, float y,
+                   float w, float h, float font = 10.0f,
+                   juce::Justification align = juce::Justification::centred)
     {
-        const bool first = channel == 0;
-        auto panel = juce::Rectangle<float>(228.0f, y, 988.0f, first ? 262.0f : 280.0f);
-
-        juce::ColourGradient gradient(juce::Colour(0xff15212b), panel.getX(), panel.getY(),
-                                      juce::Colour(0xff0b1218), panel.getX(), panel.getBottom(), false);
-        g.setGradientFill(gradient);
-        g.fillRoundedRectangle(panel, 5.0f);
-        g.setColour(juce::Colour(0xff31414d));
-        g.drawRoundedRectangle(panel, 5.0f, 1.0f);
-
-        // top identification strip
-        g.setColour(juce::Colour(0xff0a1117));
-        g.fillRect(panel.getX() + 1.0f, panel.getY() + 1.0f, panel.getWidth() - 2.0f, 27.0f);
-        g.setColour(cs80::ui::amber);
-        g.fillRect(panel.getX() + 10.0f, panel.getY() + 9.0f, 3.0f, 11.0f);
-
-        auto channelFont = displayFont( 13.0f,
-                                      juce::Font::bold);
-        channelFont.setExtraKerningFactor(0.14f);
-        g.setFont(channelFont);
-        g.setColour(cs80::ui::ivory);
-        g.drawText(first ? "CHANNEL I" : "CHANNEL II",
-                   (int) panel.getX() + 22, (int) panel.getY() + 5, 220, 20,
-                   juce::Justification::centredLeft);
-
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.75f));
-        g.setFont(displayFont( 9.0f, juce::Font::bold));
-        g.drawText(first ? "RANK A / RANK B  -  VCO - VCF - VCA"
-                         : "RANK A / RANK B  -  DUAL VOICE CARD",
-                   (int) panel.getX() + 252, (int) panel.getY() + 8, 480, 16,
-                   juce::Justification::centredLeft);
-
-        // section dividers and headings
-        for (float divider : { 482.0f, 788.0f, 972.0f })
-        {
-            g.setColour(cs80::ui::lineColour.withAlpha(0.45f));
-            g.drawVerticalLine((int) divider, panel.getY() + 34.0f, panel.getBottom() - 12.0f);
-        }
-
-        const struct { float x; const char* label; } sections[] = {
-            { 232.0f, "VCO" }, { 490.0f, "VCF" }, { 794.0f, "VCA / AMP" },
-            { 978.0f, "TOUCH RESPONSE" }
-        };
-        auto sectionFont = displayFont( 8.5f,
-                                      juce::Font::bold);
-        sectionFont.setExtraKerningFactor(0.11f);
-        g.setFont(sectionFont);
-        for (const auto& section : sections)
-        {
-            g.setColour(cs80::ui::amber.withAlpha(0.92f));
-            g.drawText(section.label, (int) section.x, (int) panel.getY() + 31,
-                       140, 12, juce::Justification::centredLeft);
-        }
-
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.50f));
-        g.setFont(displayFont( 7.5f, juce::Font::plain));
-        g.drawText("PRESSURE / VELOCITY", 982, (int) panel.getY() + 57, 200, 10,
-                   juce::Justification::centredLeft);
-        g.drawText("SINE PATH BYPASSES THE FILTER", 232, (int) panel.getY() + 220, 220, 10,
-                   juce::Justification::centredLeft);
+        g.setColour(juce::Colour(0xffe1dfd3));
+        g.setFont(displayFont(font, juce::Font::bold));
+        g.drawFittedText(text, juce::Rectangle<float>(x, y, w, h).toNearestInt(), align, 2, 0.7f);
     }
 
-    void paintMasterDecorations(juce::Graphics& g)
+    void group(juce::Graphics& g, const char* title, float x, float y, float w)
     {
-        auto panel = juce::Rectangle<float>(24.0f, 88.0f, 194.0f, 550.0f);
-        juce::ColourGradient gradient(juce::Colour(0xff14202a), panel.getX(), panel.getY(),
-                                      juce::Colour(0xff0a1117), panel.getX(), panel.getBottom(), false);
-        g.setGradientFill(gradient);
-        g.fillRoundedRectangle(panel, 5.0f);
-        g.setColour(juce::Colour(0xff31414d));
-        g.drawRoundedRectangle(panel, 5.0f, 1.0f);
-
-        auto headingFont = displayFont( 12.0f,
-                                      juce::Font::bold);
-        headingFont.setExtraKerningFactor(0.12f);
-        g.setFont(headingFont);
-        g.setColour(cs80::ui::ivory);
-        g.drawText("MASTER", 38, 98, 140, 18, juce::Justification::centredLeft);
-        g.setColour(cs80::ui::amber);
-        g.fillRect(30, 102, 3, 9);
-
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.72f));
-        g.setFont(displayFont( 8.0f, juce::Font::plain));
-        g.drawText("GLOBAL VOICE CONDITIONING", 38, 114, 170, 12, juce::Justification::centredLeft);
-
-        g.setColour(cs80::ui::lineColour.withAlpha(0.65f));
-        g.drawHorizontalLine(398, 34.0f, 208.0f);
-        g.setFont(displayFont( 8.0f, juce::Font::bold));
-        g.setColour(cs80::ui::amber.withAlpha(0.9f));
-        g.drawText("CHORUS / TREMOLO", 36, 403, 172, 12, juce::Justification::centredLeft);
-
-        g.setColour(cs80::ui::lineColour.withAlpha(0.65f));
-        g.drawHorizontalLine(486, 34.0f, 208.0f);
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.45f));
-        g.setFont(displayFont( 7.5f, juce::Font::plain));
-        g.drawFittedText("BBD CHORUS - GLOBAL SUB OSC - RING MOD\n8 VOICES - 16 RANKS - 2x OVERSAMPLED",
-                         34, 570, 172, 56, juce::Justification::topLeft, 2);
+        g.setColour(juce::Colour(0xffb6b4a7));
+        g.drawLine(x, y + 13, x, y + 19, 0.8f);
+        g.drawLine(x + w, y + 13, x + w, y + 19, 0.8f);
+        g.drawLine(x, y + 13, x + w, y + 13, 0.8f);
+        g.setColour(juce::Colour(0xff20201e));
+        g.fillRect(x + w * 0.2f, y + 5, w * 0.6f, 16.0f);
+        panelText(g, title, x, y + 3, w, 17, 10);
     }
 
-    void paintToneDecorations(juce::Graphics& g)
+    void paintMemoryLid(juce::Graphics& g)
     {
-        auto panel = juce::Rectangle<float>(1228.0f, 88.0f, 350.0f, 550.0f);
-        juce::ColourGradient gradient(juce::Colour(0xff16222b), panel.getX(), panel.getY(),
-                                      juce::Colour(0xff0a1016), panel.getX(), panel.getBottom(), false);
-        g.setGradientFill(gradient);
-        g.fillRoundedRectangle(panel, 5.0f);
-        g.setColour(juce::Colour(0xff31414d));
-        g.drawRoundedRectangle(panel, 5.0f, 1.0f);
-
-        auto headingFont = displayFont( 12.0f,
-                                      juce::Font::bold);
-        headingFont.setExtraKerningFactor(0.13f);
-        g.setFont(headingFont);
-        g.setColour(cs80::ui::ivory);
-        g.drawText("TONE SELECTOR", 1240, 98, 220, 18, juce::Justification::centredLeft);
-        g.setColour(cs80::ui::amber);
-        g.fillRect(1232, 102, 3, 9);
-
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.78f));
-        g.setFont(displayFont( 8.0f, juce::Font::bold));
-        g.drawText("CHANNEL I", 1240, 116, 140, 12, juce::Justification::centredLeft);
-        g.drawText("CHANNEL II", 1240, 276, 140, 12, juce::Justification::centredLeft);
-        g.setColour(cs80::ui::lineColour.withAlpha(0.6f));
-        g.drawHorizontalLine(430, 1236.0f, 1570.0f);
-        g.setColour(cs80::ui::amber);
-        g.setFont(displayFont( 8.0f, juce::Font::bold));
-        g.drawText("PERFORMANCE MACROS", 1240, 438, 250, 12, juce::Justification::centredLeft);
-
-        // Current patch metadata.
-        juce::String category { "LIVE PANEL" };
-        juce::String description { "Hardware tone selections and panel edits are live. "
-                                   "Open the library to load one of the 200 performance patches." };
-        const auto currentName = processor.getPresetName();
-        for (const auto& preset : processor.getFactoryPresets())
+        auto r = juce::Rectangle<float>(65, 122, 352, 361);
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff252522), 65, 122,
+                                               juce::Colour(0xff151614), 417, 483, false));
+        g.fillRect(r);
+        g.setColour(juce::Colour(0xffb7b5aa));
+        g.drawRect(r.reduced(3), 1.0f);
+        panelText(g, "SYNTHESIZER  CS-80", 85, 140, 310, 25, 19);
+        panelText(g, "VOICE SIGNAL FLOW", 85, 177, 310, 20, 10);
+        // Original vector diagram based on the voice topology, not a bitmap
+        // from a competing instrument. This lid is not a fake memory bank.
+        const char* boxes[] = { "VCO", "HPF", "LPF", "VCA" };
+        for (int i = 0; i < 4; ++i)
         {
-            if (currentName == juce::String(preset.name))
+            const float x = 91.0f + (float) i * 77.0f;
+            g.setColour(juce::Colour(0xffb7b5aa));
+            g.drawRect(x, 220.0f, 57.0f, 32.0f, 1.0f);
+            panelText(g, boxes[i], x, 220, 57, 32, 11);
+            if (i < 3) { g.drawLine(x + 57, 236, x + 77, 236, 1); }
+        }
+        g.setColour(juce::Colour(0xffb7b5aa));
+        g.drawLine(117, 252, 117, 275, 1); g.drawLine(117, 275, 350, 275, 1);
+        g.drawLine(350, 275, 350, 252, 1);
+        panelText(g, "SINE", 155, 257, 100, 18, 8);
+        if (optionsVisible)
+        {
+            g.setColour(juce::Colour(0xff131613)); g.fillRect(83, 286, 314, 151);
+            panelText(g, "I", 83, 306, 15, 25, 11);
+            panelText(g, "II", 83, 374, 15, 25, 11);
+        }
+        else
+        {
+            for (int row = 0; row < 2; ++row)
             {
-                category = juce::String(preset.category).toUpperCase();
-                description = juce::String(preset.description);
-                break;
+                float y = 305.0f + (float) row * 59.0f;
+                g.setColour(juce::Colour(0xffb7b5aa));
+                g.drawRect(126.0f, y, 100.0f, 28.0f, 1.0f);
+                g.drawRect(267.0f, y, 100.0f, 28.0f, 1.0f);
+                panelText(g, row == 0 ? "VCF ENVELOPE" : "INITIAL TOUCH", 126, y, 100, 28, 8);
+                panelText(g, row == 0 ? "VCA ENVELOPE" : "AFTER TOUCH", 267, y, 100, 28, 8);
+                g.drawLine(226, y + 14, 267, y + 14, 1);
             }
+            panelText(g, "TWO CHANNELS  /  EIGHT VOICES", 94, 414, 280, 18, 9);
         }
-
-        g.setColour(cs80::ui::lineColour.withAlpha(0.65f));
-        g.drawHorizontalLine(524, 1236.0f, 1570.0f);
-        g.setColour(cs80::ui::amber);
-        g.setFont(displayFont( 7.5f, juce::Font::bold));
-        g.drawText(category, 1240, 532, 320, 12, juce::Justification::centredLeft);
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.78f));
-        g.setFont(displayFont( 8.2f, juce::Font::plain));
-        g.drawFittedText(description, 1240, 548, 326, 80, juce::Justification::topLeft, 5, 0.82f);
-    }
-
-    void paintPerformanceDecorations(juce::Graphics& g)
-    {
-        auto panel = juce::Rectangle<float>(24.0f, 652.0f, 1554.0f, 62.0f);
-        juce::ColourGradient gradient(juce::Colour(0xff121d25), panel.getX(), panel.getY(),
-                                      juce::Colour(0xff080f14), panel.getX(), panel.getBottom(), false);
-        g.setGradientFill(gradient);
-        g.fillRoundedRectangle(panel, 5.0f);
-        g.setColour(juce::Colour(0xff2d3c47));
-        g.drawRoundedRectangle(panel, 5.0f, 1.0f);
-
-        auto headingFont = displayFont( 10.0f,
-                                      juce::Font::bold);
-        headingFont.setExtraKerningFactor(0.12f);
-        g.setFont(headingFont);
-        g.setColour(cs80::ui::ivory);
-        g.drawText("PERFORMANCE", 34, 660, 118, 16, juce::Justification::centredLeft);
-        g.setColour(cs80::ui::amber);
-        g.setFont(displayFont( 7.0f, juce::Font::plain));
-        g.drawFittedText("RIBBON - LEVER\nPRESSURE - GLIDE", 34, 678, 112, 28,
-                         juce::Justification::topLeft, 2);
-    }
-
-    void paintTopBar(juce::Graphics& g)
-    {
-        g.setColour(juce::Colour(0xff080d12));
-        g.fillRect(18.0f, 18.0f, 1564.0f, 58.0f);
-        g.setColour(juce::Colour(0xff22313c));
-        g.drawHorizontalLine(76, 18.0f, 1582.0f);
-
-        auto brandFont = displayFont( 31.0f,
-                                    juce::Font::bold);
-        brandFont.setExtraKerningFactor(0.06f);
-        g.setFont(brandFont);
-        g.setColour(cs80::ui::ivory);
-        g.drawText("CS-80", 38, 21, 132, 34, juce::Justification::centredLeft);
-
-        auto brandSmall = displayFont( 8.0f,
-                                     juce::Font::bold);
-        brandSmall.setExtraKerningFactor(0.17f);
-        g.setFont(brandSmall);
-        g.setColour(cs80::ui::amber);
-        g.drawText("REFERENCE INSTRUMENTS", 160, 27, 240, 12, juce::Justification::centredLeft);
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.72f));
-        g.setFont(displayFont( 7.2f, juce::Font::plain));
-        g.drawText("DUAL-CHANNEL POLYPHONIC SYNTHESIZER", 160, 42, 260, 10,
-                   juce::Justification::centredLeft);
-
-        g.setColour(juce::Colour(0xff0a1117));
-        g.fillRoundedRectangle(456.0f, 25.0f, 338.0f, 32.0f, 3.0f);
-        g.setColour(cs80::ui::lineColour.withAlpha(0.9f));
-        g.drawRoundedRectangle(456.0f, 25.0f, 338.0f, 32.0f, 3.0f, 0.8f);
-        g.setColour(cs80::ui::amber.withAlpha(0.7f));
-        g.setFont(displayFont( 6.5f, juce::Font::bold));
-        g.drawText("PROGRAM", 463, 27, 60, 8, juce::Justification::centredLeft);
-
-        // Voice allocation LEDs.
-        const int active = processor.getActiveVoiceCount();
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.72f));
-        g.setFont(displayFont( 7.0f, juce::Font::bold));
-        g.drawText("VOICE ALLOCATION  " + juce::String(active) + " / 8",
-                   1270, 24, 220, 10, juce::Justification::centredLeft);
-        for (int i = 0; i < 8; ++i)
-        {
-            const bool on = processor.getEngine().getVoiceInfo(i).active;
-            auto centre = juce::Point<float>(1276.0f + (float) i * 21.0f, 50.0f);
-            if (on)
-            {
-                g.setColour(cs80::ui::amber.withAlpha(0.20f));
-                g.fillEllipse(centre.x - 7.0f, centre.y - 7.0f, 14.0f, 14.0f);
-            }
-            g.setColour(on ? cs80::ui::amberBright : juce::Colour(0xff25323c));
-            g.fillEllipse(centre.x - 3.0f, centre.y - 3.0f, 6.0f, 6.0f);
-        }
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.50f));
-        g.setFont(displayFont( 7.0f, juce::Font::plain));
-        g.drawText("16 RANKS  -  2x OVERSAMPLED  -  MPE", 1270, 59, 260, 9,
-                   juce::Justification::centredLeft);
     }
 
     void paint(juce::Graphics& g) override
     {
-        const float sx = (float) getWidth() / kDesignWidth;
-        const float sy = (float) getHeight() / kDesignHeight;
         g.saveState();
-        g.addTransform(juce::AffineTransform::scale(sx, sy));
-
-        g.fillAll(cs80::ui::charcoal);
-
-        // Wooden end cheeks.
-        for (auto cheek : { juce::Rectangle<float>(0.0f, 10.0f, 20.0f, 980.0f),
-                            juce::Rectangle<float>(1580.0f, 10.0f, 20.0f, 980.0f) })
+        g.addTransform(juce::AffineTransform::scale((float) getWidth() / kDesignWidth,
+                                                    (float) getHeight() / kDesignHeight));
+        g.fillAll(juce::Colour(0xff10100f));
+        // Broad walnut end cheeks and black folded-steel front panel.
+        for (float x : { 8.0f, 1558.0f })
         {
-            juce::ColourGradient wood(juce::Colour(0xff6b4329), cheek.getX(), cheek.getY(),
-                                      juce::Colour(0xff201009), cheek.getX(), cheek.getBottom(), false);
-            g.setGradientFill(wood);
-            g.fillRect(cheek);
-            g.setColour(juce::Colour(0xffb47a48).withAlpha(0.32f));
-            for (int i = 0; i < 9; ++i)
-                g.drawVerticalLine((int) cheek.getX() + 4 + i * 2, cheek.getY() + 8, cheek.getBottom() - 8);
+            auto cheek = juce::Rectangle<float>(x, 70, 34, 914);
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff704731), x, 70,
+                                                   juce::Colour(0xff271910), x + 34, 984, false));
+            g.fillRoundedRectangle(cheek, 5);
+            for (int i = 0; i < 11; ++i)
+            {
+                g.setColour(juce::Colour(0xffb78457).withAlpha(0.10f + (float)(i % 3) * 0.03f));
+                juce::Path grain;
+                grain.startNewSubPath(x + 3 + (float)i * 2.6f, 78);
+                grain.cubicTo(x + 7 + (float)i * 2.1f, 290, x + (float)i * 2.7f, 650,
+                               x + 3 + (float)i * 2.6f, 975);
+                g.strokePath(grain, juce::PathStrokeType(0.8f));
+            }
         }
-
-        // Main chassis.
-        juce::ColourGradient body(juce::Colour(0xff17242e), 800.0f, 18.0f,
-                                  juce::Colour(0xff091016), 800.0f, 988.0f, false);
-        g.setGradientFill(body);
-        g.fillRoundedRectangle(18.0f, 18.0f, 1564.0f, 970.0f, 8.0f);
-        g.setColour(juce::Colour(0xff40515d));
-        g.drawRoundedRectangle(18.0f, 18.0f, 1564.0f, 970.0f, 8.0f, 1.3f);
-
-        // Subtle brushed-metal grain.
-        g.setColour(juce::Colours::white.withAlpha(0.011f));
-        for (int y = 80; y < 980; y += 4)
-            g.drawHorizontalLine(y, 24.0f, 1576.0f);
-
-        paintTopBar(g);
-        paintMasterDecorations(g);
-        paintChannelDecorations(g, 0, 88.0f);
-        paintChannelDecorations(g, 1, 358.0f);
-        paintToneDecorations(g);
-        paintPerformanceDecorations(g);
-
-        // Ribbon rail.
-        g.setColour(juce::Colour(0xff0a1015));
-        g.fillRoundedRectangle(24.0f, 722.0f, 1552.0f, 40.0f, 5.0f);
-        g.setColour(juce::Colour(0xff2c3b46));
-        g.drawRoundedRectangle(24.0f, 722.0f, 1552.0f, 40.0f, 5.0f, 1.0f);
-
-        // Keyboard bed.
-        g.setColour(juce::Colour(0xff05090c));
-        g.fillRoundedRectangle(24.0f, 770.0f, 1552.0f, 208.0f, 5.0f);
-        g.setColour(juce::Colour(0xff273641));
-        g.drawRoundedRectangle(24.0f, 770.0f, 1552.0f, 208.0f, 5.0f, 1.0f);
-        g.setColour(juce::Colour(0xff080d11));
-        g.fillRect(24.0f, 770.0f, 1552.0f, 8.0f);
-        g.setColour(cs80::ui::ivoryDim.withAlpha(0.55f));
-        g.setFont(displayFont( 7.5f, juce::Font::bold));
-        g.drawText("61-KEY VELOCITY / POLYPHONIC AFTERTOUCH KEYBED", 146, 962, 470, 12,
-                   juce::Justification::centredLeft);
-
-        // Screws.
-        for (auto point : { juce::Point<float>(30.0f, 30.0f), juce::Point<float>(1570.0f, 30.0f),
-                            juce::Point<float>(30.0f, 976.0f), juce::Point<float>(1570.0f, 976.0f) })
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff32322d), 800, 78,
+                                               juce::Colour(0xff131512), 800, 754, false));
+        g.fillRect(42, 78, 1516, 680);
+        g.setColour(juce::Colour(0xffbdb9a9));
+        g.drawRect(48, 103, 1504, 393, 1);
+        g.drawRect(48, 506, 1504, 157, 1);
+        for (int x = 60; x < 1540; x += 7)
         {
-            g.setColour(juce::Colour(0xff53606b));
-            g.fillEllipse(point.x - 4.0f, point.y - 4.0f, 8.0f, 8.0f);
-            g.setColour(juce::Colour(0xff111920));
-            g.drawLine(point.x - 2.0f, point.y, point.x + 2.0f, point.y, 1.0f);
+            g.setColour(juce::Colour(0xff080908));
+            g.fillRect(x, 82, 3, 13);
         }
+        paintMemoryLid(g);
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            const float y = channel == 0 ? 112.0f : 305.0f;
+            panelText(g, channel == 0 ? "I" : "II", 426, y + 67, 27, 35, 23);
+            group(g, "VCO", 459, y, 235);
+            group(g, "VCF", 706, y, 354);
+            group(g, "VCA", 1075, y, 272);
+            group(g, "INITIAL", 1365, y, 76);
+            group(g, "AFTER", 1445, y, 76);
+        }
+        g.setColour(juce::Colour(0xff77796f));
+        g.drawHorizontalLine(299, 443, 1539);
+        group(g, "RING MODULATOR", 158, 508, 200);
+        group(g, "SUB OSCILLATOR", 370, 508, 205);
+        group(g, "TONE SELECTOR", 675, 520, 514);
+        panelText(g, "I", 657, 565, 16, 25, 12);
+        panelText(g, "II", 657, 609, 16, 25, 12);
+        group(g, "GLOBAL / TOUCH RESPONSE", 1210, 508, 333);
 
+        // Logo rail and recessed ribbon sit between the synthesizer and keybed.
+        g.setColour(juce::Colour(0xff080a08)); g.fillRect(48, 672, 1504, 74);
+        g.setColour(juce::Colour(0xffb1afa1)); g.drawRect(48, 672, 1504, 74, 1);
+        panelText(g, "YAMAHA", 675, 678, 250, 27, 24);
+        panelText(g, "CS-80", 1360, 681, 164, 25, 22, juce::Justification::centredRight);
+        panelText(g, "INDEPENDENT SOFTWARE RECREATION", 68, 685, 350, 18, 8, juce::Justification::centredLeft);
+        g.setColour(juce::Colour(0xff080907)); g.fillRect(44, 759, 1512, 222);
+        g.setColour(juce::Colour(0xffada995)); g.drawRect(49, 771, 238, 197, 1);
+        panelText(g, "PERFORMANCE", 62, 757, 211, 19, 10);
+        panelText(g, "CHORUS / TREMOLO", 157, 944, 120, 17, 8);
+        // Rails and screws use highlights rather than generic card borders.
+        g.setColour(juce::Colour(0xff626257)); g.fillRect(43, 977, 1514, 4);
+        for (float x : { 55.0f, 1545.0f })
+            for (float y : { 110.0f, 489.0f, 656.0f, 970.0f })
+            {
+                g.setColour(juce::Colour(0xff0a0a09)); g.fillEllipse(x-4,y-3,9,9);
+                g.setColour(juce::Colour(0xff898a80)); g.fillEllipse(x-3,y-3,6,6);
+                g.setColour(juce::Colour(0xff272821)); g.drawLine(x-2,y,x+2,y,1);
+            }
+        // Software toolbar intentionally outside the hardware face.
+        g.setColour(juce::Colour(0xff090c0d)); g.fillRect(0, 0, 1600, 64);
+        panelText(g, "CS-80  /  REFERENCE", 28, 16, 320, 30, 17, juce::Justification::centredLeft);
+        panelText(g, "8 VOICES  /  DUAL CHANNEL", 1280, 18, 290, 22, 10);
         g.restoreState();
     }
 
@@ -749,10 +665,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         initButton.setBounds(r(1030.0f, 25.0f, 64.0f, 32.0f));
         advancedButton.setBounds(r(1102.0f, 25.0f, 154.0f, 32.0f));
 
-        ribbon.setBounds(r(24.0f, 722.0f, 1552.0f, 40.0f));
-        pitchWheel.setBounds(r(28.0f, 786.0f, 46.0f, 174.0f));
-        modWheel.setBounds(r(82.0f, 786.0f, 46.0f, 174.0f));
-        keyboard.setBounds(r(142.0f, 780.0f, 1432.0f, 186.0f));
+        ribbon.setBounds(r(320.0f, 713.0f, 960.0f, 23.0f));
+        pitchWheel.setBounds(r(320.0f, 299.0f, 30.0f, 126.0f));
+        modWheel.setBounds(r(358.0f, 299.0f, 30.0f, 126.0f));
+        keyboard.setBounds(r(300.0f, 780.0f, 1236.0f, 186.0f));
         if (keyboard.getWidth() > 0)
             keyboard.setKeyWidth((float) keyboard.getWidth() / 36.0f);
 
@@ -776,8 +692,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> buttonAttachments;
     std::array<std::array<std::unique_ptr<juce::TextButton>, 11>, 2> toneButtons;
     std::vector<Placement> placements;
+    juce::TextButton voiceOptions;
+    std::vector<juce::Component*> optionComponents;
+    bool optionsVisible = false;
 
-    juce::MidiKeyboardComponent keyboard;
+    HardwareKeyboard keyboard;
     cs80::ui::RibbonStrip ribbon;
     cs80::ui::PerformanceWheel pitchWheel;
     cs80::ui::PerformanceWheel modWheel;

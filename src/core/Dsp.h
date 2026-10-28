@@ -84,7 +84,9 @@ inline float polyBlep(float t, float dt) noexcept
 // Band-limited pulse. Width is in phase units (0..1).
 inline float blepPulse(float phase, float width, float dt) noexcept
 {
-    width = clampf(width, 0.01f, 0.99f);
+    // Preserve sub-percent fixed-time reset pulses; a 1% minimum changes
+    // their duration as pitch changes. Overlapping BLEPs are additive.
+    width = clampf(width, 0.000001f, 0.999999f);
     float v = phase < width ? 1.0f : -1.0f;
     v += polyBlep(phase, dt);
     float t = phase - width;
@@ -92,6 +94,28 @@ inline float blepPulse(float phase, float width, float dt) noexcept
         t += 1.0f;
     v -= polyBlep(t, dt);
     return v;
+}
+
+// Hardware ribbon travel is relative to first contact. Yamaha specifies
+// approximately +1 octave over a full rightward stroke, with downward travel
+// reaching sub-audio. Linear frequency scaling models those endpoints; the
+// precise ribbon resistance/contact transfer still needs hardware measurement.
+inline float ribbonFrequencyRatio(float displacement) noexcept
+{
+    return 1.0f + clampf(displacement, -1.0f, 1.0f);
+}
+
+// Original DEPTH controls a frequency envelope, not ring amplitude. This
+// bounded first-order behavioral mapping preserves the documented dependence
+// of peak frequency on SPEED. Its one-octave maximum excursion is provisional,
+// NOT a measured CS-80 transfer function (see docs/FIDELITY_AUDIT.md).
+inline constexpr float kProvisionalRingFrequencyExcursion = 1.0f;
+
+inline float ringModulationFrequency(float baseHz, float depth, float envelope) noexcept
+{
+    return std::max(0.0f, baseHz)
+           * (1.0f + kProvisionalRingFrequencyExcursion
+                     * clampf(depth, 0.0f, 1.0f) * clampf(envelope, 0.0f, 1.0f));
 }
 
 class Oscillator
@@ -128,7 +152,7 @@ public:
         if (sawOn)
         {
             // Falling saw, with the reset pulse added as a narrow edge.
-            o.saw = (1.0f - 2.0f * phase) - polyBlep(phase, dt) + o.narrow * 0.70f;
+            o.saw = (1.0f - 2.0f * phase) + polyBlep(phase, dt) + o.narrow * 0.70f;
         }
         if (pulseOn)
         {

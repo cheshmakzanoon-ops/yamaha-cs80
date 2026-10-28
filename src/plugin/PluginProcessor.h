@@ -8,6 +8,9 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 
 #include <memory>
+#include <atomic>
+#include <array>
+#include <limits>
 #include <vector>
 
 class Cs80AudioProcessorEditor;
@@ -47,7 +50,15 @@ public:
 
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram; }
-    int getActiveVoiceCount() const noexcept { return engine.activeVoices(); }
+    int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    bool isVoiceActive(int i) const noexcept
+    {
+        return i >= 0 && i < 8 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
+    }
+    // Single-value mailboxes: only the audio callback mutates the DSP engine.
+    void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
+    void setPitchWheelFromUI(float v) noexcept { pendingPitch.store(v, std::memory_order_relaxed); }
+    void setModWheelFromUI(float v) noexcept { pendingMod.store(v, std::memory_order_relaxed); }
     juce::String getPresetName() const { return presetName; }
     void setPresetName(const juce::String& name);
     void loadFactoryPreset(int index);
@@ -75,6 +86,11 @@ private:
     juce::AudioProcessorValueTreeState apvts;
     juce::MidiKeyboardState keyboardState;
     cs80::ParamValues cached;
+    std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
+    static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();
+    std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl };
+    std::atomic<int> activeVoiceCount { 0 };
+    std::atomic<unsigned> activeVoiceMask { 0 };
     std::vector<float> interleaved;
     juce::String presetName { "Init Patch" };
     int currentProgram = 0;

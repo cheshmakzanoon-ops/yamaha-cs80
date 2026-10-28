@@ -123,8 +123,121 @@ void testFeetRatios()
     checkNear(midiToHz(72.0f) / base, 2.0f, 0.001f, "octave ratio");
     checkNear(midiToHz(69.0f, 440.0f), 440.0f, 0.01f, "A4 reference");
     checkNear(kFeetSemitones[0], -12.0f, 0.001f, "16 foot is one octave down");
-    checkNear(kFeetSemitones[2], 12.0f, 0.001f, "4 foot is one octave up");
-    checkNear(kFeetSemitones[5], 48.0f, 0.001f, "1/2 foot is four octaves up");
+    checkNear(kFeetSemitones[1], 0.0f, 0.001f, "8 foot is unison");
+    checkNear(kFeetSemitones[2], 7.0f, 0.001f, "5 1/3 foot is a fifth up");
+    checkNear(kFeetSemitones[3], 12.0f, 0.001f, "4 foot is one octave up");
+    checkNear(kFeetSemitones[4], 19.0f, 0.001f, "2 2/3 foot is octave and fifth");
+    checkNear(kFeetSemitones[5], 24.0f, 0.001f, "2 foot is two octaves up");
+}
+
+void testOscillatorDiscontinuities()
+{
+    // Subtract the explicitly modelled reset spike to isolate the falling saw.
+    // At phase zero a band-limited discontinuity crosses its midpoint, rather
+    // than doubling to +2 as the old inverted BLEP correction did.
+    for (float sr : { 44100.0f, 48000.0f, 96000.0f, 192000.0f })
+    {
+        Oscillator osc;
+        Rng rng;
+        const float frequency = sr / 64.0f;
+        osc.reset(1.0f - frequency / sr);
+        const auto edge = osc.tick(frequency, sr, 0.5f, true, false, 0.0f, rng);
+        checkNear(edge.saw - edge.narrow * 0.70f, 0.0f, 1.0e-6f,
+                  "falling saw BLEP reaches edge midpoint");
+        float peak = 0.0f;
+        for (int i = 0; i < 640; ++i)
+        {
+            const auto o = osc.tick(frequency, sr, 0.5f, true, false, 0.0f, rng);
+            peak = std::max(peak, std::abs(o.saw - o.narrow * 0.70f));
+        }
+        check(peak <= 1.00001f, "falling saw BLEP does not reinforce discontinuity");
+    }
+    // A 30us reset at 100Hz occupies 0.003 of a cycle. Test the generic
+    // band-limited pulse rather than baking an unsupported 1% width limit in.
+    checkNear(blepPulse(0.006f, 0.003f, 0.001f), -1.0f, 1.0e-6f,
+              "fixed-time pulse falls before 1 percent phase");
+    checkNear(blepPulse(0.0015f, 0.003f, 0.001f), 1.0f, 1.0e-6f,
+              "sub-percent pulse retains positive interior");
+}
+
+void testHardwareRingAndRibbon()
+{
+    checkNear(ribbonFrequencyRatio(0.0f), 1.0f, 1.0e-7f, "ribbon first contact is unison");
+    checkNear(ribbonFrequencyRatio(1.0f), 2.0f, 1.0e-7f, "ribbon full upward stroke is octave");
+    checkNear(ribbonFrequencyRatio(-1.0f), 0.0f, 1.0e-7f, "ribbon downward endpoint reaches zero");
+    check(ribbonFrequencyRatio(-0.9999f) < 0.001f, "ribbon reaches sub-audio ratio");
+    checkNear(ringModulationFrequency(80.0f, 0.0f, 1.0f), 80.0f, 1.0e-7f,
+              "zero ring depth keeps base speed");
+    checkNear(ringModulationFrequency(80.0f, 1.0f, 0.0f), 80.0f, 1.0e-7f,
+              "ring envelope returns to base speed");
+    check(ringModulationFrequency(80.0f, 1.0f, 1.0f) > 80.0f,
+          "ring envelope increases frequency, not amplitude");
+    check(ringModulationFrequency(10.0f, 1.0f, 1.0f)
+          < ringModulationFrequency(80.0f, 1.0f, 1.0f),
+          "ring depth peak depends on base speed");
+
+    for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
+    {
+        ParamValues p;
+        p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = 0.0f;
+        p[P_ringSpeed] = 80.0f;
+        p[P_ringDepth] = 1.0f;
+        p[P_ringAttack] = 0.1f;
+        p[P_ringDecay] = 0.1f;
+        p[P_ringAmount] = 0.0f; // envelope must advance even when wet path off
+        Engine e;
+        e.prepare(sr);
+        e.setParams(p);
+        e.noteOn(60, 0.8f);
+        render(e, sr, (int) (sr * 0.02));
+        check(e.getRingFrequency() > 80.0f, "ring speed rises with AD while bypassed");
+        const float beforeLegato = e.getRingEnvelope();
+        e.noteOn(64, 0.8f);
+        checkNear(e.getRingEnvelope(), beforeLegato, 1.0e-7f,
+                  "legato chord does not retrigger ring envelope");
+        render(e, sr, (int) (sr * 0.5));
+        checkNear(e.getRingFrequency(), 80.0f, 0.1f, "ring speed decays to panel speed");
+        e.allNotesOff(false);
+        e.noteOn(67, 0.8f);
+        checkNear(e.getRingEnvelope(), 0.0f, 1.0e-7f, "new phrase retriggers ring AD");
+        p[P_ringAmount] = 1.0f;
+        p[P_ringSpeed] = paramDef(P_ringSpeed).max;
+        e.setParams(p);
+        e.setRibbon(-1.0f);
+        auto audio = analyse(render(e, sr, (int) (sr * 0.1)));
+        check(audio.finite && audio.peak < 2.0f, "zero-frequency ribbon with max ring finite");
+        e.allNotesOff(true);
+        render(e, sr, (int) (sr * 2.0));
+        check(e.activeVoices() == 0, "zero-frequency ribbon does not hold envelope open");
+    }
+
+    for (int sustainMode : { 0, 1 })
+    {
+        Engine e;
+        e.prepare(48000);
+        ParamValues p;
+        p[P_sustainMode] = (float) sustainMode;
+        p[chParam(0, CP_vR)] = p[chParam(1, CP_vR)] = 3.0f;
+        e.setParams(p);
+        e.noteOn(60, 0.8f);
+        e.setRibbon(0.5f);
+        render(e, 48000, 32);
+        checkNear(e.getVoiceInfo(0).ribbonRatio, 1.5f, 1.0e-6f, "held note tracks ribbon");
+        e.noteOff(60);
+        e.setRibbon(-0.5f);
+        render(e, 48000, 32);
+        checkNear(e.getVoiceInfo(0).ribbonRatio, sustainMode == 0 ? 1.5f : 0.5f,
+                  1.0e-6f, "ribbon release-tail sustain mode routing");
+    }
+    Engine automated;
+    automated.prepare(48000);
+    ParamValues p;
+    p[P_ribbon] = 0.5f;
+    automated.setParams(p);
+    automated.noteOn(60, 0.8f);
+    render(automated, 48000, 32);
+    checkNear(automated.getVoiceInfo(0).ribbonRatio, 1.5f, 1.0e-6f,
+              "host ribbon parameter reaches engine");
 }
 
 void testFilterStability()
@@ -512,11 +625,42 @@ void testFactoryBank()
 {
     const auto& bank = factoryPresets();
     check(bank.size() >= 200, "factory bank has at least 200 presets");
-    check(std::string(hardwareToneName(0)) == "Flute 1", "hardware tone names");
+    check(std::string(hardwareToneName(0, 0)) == "String 1", "rank I hardware tone identity");
+    check(std::string(hardwareToneName(0, 1)) == "String 2", "rank II hardware tone identity");
+    check(std::string(hardwareToneName(3, 0)) == "Flute", "rank I fourth tab identity");
+    check(std::string(hardwareToneName(3, 1)) == "Brass 3", "rank II fourth tab identity");
+
+    const char* expected[2][11] = {
+        { "String 1", "String 3", "Brass 1", "Flute", "E. Piano", "Clavichord 1",
+          "Harpsichord 1", "Organ 1", "Guitar 1", "Funky 1", "Funky 3" },
+        { "String 2", "String 4", "Brass 2", "Brass 3", "Bass", "Clavichord 2",
+          "Harpsichord 2", "Organ 2", "Guitar 2", "Funky 2", "Funky 4" }
+    };
+    for (int channel = 0; channel < 2; ++channel)
+        for (int tone = 0; tone < 11; ++tone)
+        {
+            check(std::string(hardwareToneName(tone, channel)) == expected[channel][tone],
+                  "original hardware tab order, bank " + std::to_string(channel));
+            ParamValues selected;
+            selected[P_volume] = 0.37f;
+            selected[P_ringSpeed] = 17.0f;
+            selected[chParam(1 - channel, CP_noise)] = 0.67f;
+            const auto before = selected;
+            applyHardwareTone(selected, channel, tone);
+            bool globalsPreserved = true;
+            for (int i = 0; i < P_numGlobals; ++i)
+                globalsPreserved = globalsPreserved && selected[i] == before[i];
+            check(globalsPreserved, "hardware selection preserves every global");
+            bool otherPreserved = true;
+            for (int i = 0; i < CP_count; ++i)
+                otherPreserved = otherPreserved
+                    && selected[chParam(1 - channel, i)] == before[chParam(1 - channel, i)];
+            check(otherPreserved, "hardware selection preserves entire other rank");
+        }
 
     ParamValues p;
     const float globalBefore = p[P_volume];
-    applyHardwareTone(p, 0, 6);
+    applyHardwareTone(p, 0, 2);
     check(p[chParam(0, CP_lpfCutoff)] < 2000.0f, "hardware brass tone changes the channel");
     checkNear(p[P_volume], globalBefore, 1.0e-7f, "hardware tone preserves globals");
     check(p[chParam(1, CP_lpfCutoff)] > 2000.0f, "hardware tone preserves other channel");
@@ -570,6 +714,8 @@ int main()
     testParameterTable();
     testSineFrequency();
     testFeetRatios();
+    testOscillatorDiscontinuities();
+    testHardwareRingAndRibbon();
     testFilterStability();
     testEnvelope();
     testSustainPedal();

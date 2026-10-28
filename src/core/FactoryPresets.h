@@ -18,8 +18,9 @@ struct FactoryPreset
 
 const std::vector<FactoryPreset>& factoryPresets();
 
-// The 11 hardware tone-selector positions per channel.
-const char* hardwareToneName(int index);
+// Original names/order of the 11 tone-selector positions on each hardware row.
+// Parameter values are provisional voicings, not measured resistor-network captures.
+const char* hardwareToneName(int index, int channel = 0);
 
 // Apply one hardware tone to one channel, preserving the other channel and all
 // global settings. Tone indexes are 0..10.

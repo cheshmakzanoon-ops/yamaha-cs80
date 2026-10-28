@@ -2,7 +2,11 @@
 
 An independent, code-first recreation of the Yamaha CS-80 architecture: eight voices, two independent synthesis layers per voice, sixteen oscillator/filter/VCA chains, polyphonic pressure, ribbon control, ring modulation, sub-oscillator modulation, BBD-style chorus, and a modern performance layer.
 
-The instrument is a real-time **VST3 / AU / Standalone** project built with C++20 and JUCE 8. It is not a sample player, a mock-up, or a UI-only prototype. Every visible control is bound to the audio engine, every factory patch is a complete parameter state, and the build includes core DSP tests plus a headless plugin/UI smoke test.
+The instrument is a C++20/JUCE VST3, AU and standalone synthesizer under active hardware-fidelity reconstruction. The panel is drawn from Yamaha's original instrument photographs and manuals, with colored lever caps, two slider ranks and horizontal tone tabs. It is **not yet a component-complete or measured 1:1 emulation**. Existing finite-output tests and plugin validation do not prove hardware equivalence.
+
+Start with [original hardware references](docs/HARDWARE_REFERENCES.md) and the [fidelity audit](docs/FIDELITY_AUDIT.md). They separate documented behavior, implemented corrections, provisional calibration and missing circuit models. Hardware tone names/order are now rank-specific; their numeric voicings remain explicitly provisional until the selector resistor networks and reference audio are validated.
+
+The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml) captures the actual editor, tests overlay transitions and publishes exact-source provenance. Successful main-branch captures refresh the images below only when the source commit remains current. See docs/screenshots/provenance.json when present; never infer that a screenshot validates a newer commit.
 
 ![CS-80 Reference main panel](docs/screenshots/main-1600x1000.png)
 
@@ -19,12 +23,12 @@ The instrument is a real-time **VST3 / AU / Standalone** project built with C++2
 | Character | Per-voice tuning/cutoff/level/pan dispersion, slow drift, analog noise floor |
 | Effects | BBD-style stereo chorus/tremolo plus three serial modern FX slots |
 | Performance | Arpeggiator, sustain II, portamento/glissando, pitch-bend range, A4 tuning |
-| Presets | 222 factory programs: 22 hardware tone-selector programs + 200 performance patches |
+| Presets | 222 factory programs: 22 provisional hardware-tab studies + 200 original performance patches |
 | Parameters | 122 host-automatable parameters saved in plugin state |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
 | Verification | 1,260 core checks + headless plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
 
-The 1,260 checks are the current local run of the core suite. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
+The 1,260-check count above describes the pre-reconstruction baseline; consult the exact-commit CI logs for the current result. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
 
 ## Screens
 
@@ -125,9 +129,9 @@ The suite covers:
 
 - **MASTER**: tuning, detune of channel II, channel mix, brilliance, resonance, filter sustain, output volume and initial pitch bend.
 - **CHANNEL I / II**: independent VCO, HPF, LPF, filter contour, VCA contour, pressure/velocity response and pan. Each channel is a complete rank; the two channels are mixed and panned in the stereo field.
-- **TONE SELECTOR**: the eleven hardware tone positions, available independently for both channels. Selecting a tone reprograms that channel immediately.
+- **TONE SELECTOR**: eleven distinct named positions on each channel, in the original hardware order. Numeric voicings are provisional. Selecting a tone reprograms that channel immediately.
 - **PERFORMANCE**: glide, key release, wheel-to-sub, wheel-to-VCF, bend range, A4 tuning, arp rate, FX 1 mix and the sustain/arp/chorus/tremolo/stereo switches.
-- **RIBBON**: continuous pitch controller; it springs back to centre and is independent of the pitch wheel.
+- **RIBBON**: first contact establishes the reference; relative motion bends pitch, and release restores neutral. The documented upward endpoint is approximately one octave.
 - **KEYBED**: 61-key MIDI keyboard with velocity and aftertouch; external MIDI uses the same engine.
 
 Double-click any knob to return it to its default. The preset arrows step through the complete bank; **LIBRARY** opens the searchable browser and **SAVE** opens the same browser with the save field focused.
@@ -151,7 +155,7 @@ MPE mode maps per-note pitch bend and pressure on member channels; the wheel ran
 src/core/Params.h          parameter table shared by engine, UI, presets and tests
 src/core/Dsp.h             oscillator, filters, envelopes, LFO, chorus, phaser, reverb, decimator
 src/core/Engine.*          voice allocation, dual-rank engine, modulation, ring, FX, arp
-src/core/FactoryPresets.*  22 hardware tones and the 200-patch performance bank
+src/core/FactoryPresets.*  22 provisional hardware-tab studies and the 200-patch performance bank
 src/plugin/PluginProcessor  APVTS, MIDI, preset/state persistence, host integration
 src/plugin/PluginEditor     main panel, keyboard, ribbon, wheels
 src/plugin/UiComponents     themed knobs, LEDs, ribbon, wheels, look and feel
@@ -172,7 +176,7 @@ docs/RESEARCH.md            source notes and design references
 
 ## Honest scope
 
-This is a circuit-informed behavioral model, not a component-level SPICE simulation and not a byte-for-byte copy of Arturia's product. It deliberately avoids copyrighted samples, presets and artwork. The oscillator/filter/envelope topologies, dual-rank voice structure, pressure routing and performance controls follow the CS-80 architecture; the modern FX, macros, MPE and arpeggiator are original additions.
+This is a circuit-informed behavioral model, not a component-level SPICE simulation and not a byte-for-byte copy of Arturia's product. It uses original drawing code and original provisional voicings rather than copying a competing software product. Yamaha-authored documentation is cited as hardware evidence. The oscillator/filter/envelope topologies, dual-rank voice structure, pressure routing and performance controls follow the CS-80 architecture; the modern FX, macros, MPE and arpeggiator are original additions.
 
 AAX is not built because the AAX SDK is not redistributable in this repository. The plugin is tested as a standalone processor and a headless JUCE editor; it should also be exercised in the target DAW before a release. The 200 performance patches are deterministic original variations built from the same circuit model, with 22 dedicated hardware-tone programs on top.
 

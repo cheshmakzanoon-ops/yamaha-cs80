@@ -1,5 +1,9 @@
 # Engine and signal path
 
+> This document includes legacy modeling choices, not a claim of electrical equivalence.
+> The primary-source ledger and fidelity audit are authoritative about remaining gaps.
+> Generic SVF, chorus, nonlinear shaping and preset values are not calibrated component models.
+
 ## Design target
 
 The CS-80 is a dual-channel polyphonic instrument. Each of the eight voices has two independent synthesis layers, often described as two voice cards, with their own oscillator, high-pass filter, low-pass filter, filter contour and amplifier contour. That gives sixteen oscillator/filter/VCA chains. The two layers are mixed through the channel balance and can be panned independently.
@@ -37,7 +41,7 @@ Each `Rank` contains an oscillator, HPF, LPF, filter envelope, amplifier envelop
 - **Sine**: a shaped sine with a small third harmonic, used by the sine path that bypasses the filters.
 - **Noise**: uncorrelated per-sample noise injected before the filters.
 
-The footage switch is a six-position octave selector. `kFeetSemitones` is `{-12, 0, +12, +24, +36, +48}` for 16', 8', 4', 2', 1' and 1/2'. Pulse width has a 50-90% panel range so the pulse never collapses to silence.
+The footage switch has six hardware stops: 16', 8', 5⅓', 4', 2⅔', 2'. `kFeetSemitones` is `{-12, 0, +7, +12, +19, +24}`; two positions are fifth intervals. Pulse width has a 50-90% panel range so the pulse never collapses to silence.
 
 The engine runs at **2x the host sample rate**. The oscillators, filters, envelopes and effects all run internally at 96 kHz for a 48 kHz host. A 31-tap windowed-sinc decimator removes the out-of-band content before host-rate output. The decimator's symmetric group delay is reported as 8 host samples for plugin delay compensation.
 
@@ -80,11 +84,11 @@ The CS-80 sub-oscillator is a global modulation source, not a sub-bass oscillato
 
 ### Ring modulator
 
-The ring modulator is global and has a dedicated AD envelope retriggered by the first key of a phrase. Speed sets the carrier frequency, depth sets the carrier amplitude, attack/decay shape that amplitude, and amount is the dry/ring balance. The result is suitable for bells, metallic leads and slow sci-fi sweeps.
+The ring modulator is global and has a dedicated AD envelope retriggered by the first key of a phrase. Speed sets carrier frequency. Attack/decay and depth sweep frequency, while amount is the independent dry/ring balance. The current frequency-excursion law is explicitly provisional; see FIDELITY_AUDIT.md for service calibration evidence and remaining work. The result is suitable for bells, metallic leads and slow sci-fi sweeps.
 
 ### Ribbon and wheels
 
-The ribbon is a continuous pitch controller with a ±12/±18 semitone travel and a spring return to centre. It is independent of the pitch wheel. The pitch wheel uses the host-visible `pitch_bend_range`; MPE member channels use `mpe_bend_range`, which defaults to the 48-semitone MPE convention. The modulation wheel is CC1, CC64 is the sustain pedal, and polyphonic pressure is scoped to the member channel when MPE is active.
+The ribbon uses first-touch-relative displacement, a provisional linear frequency ratio with octave-up and zero-frequency downward endpoints, and neutral on release. Sustain I freezes the released voice ratio; Sustain II tracks subsequent motion. It is independent of the pitch wheel. The pitch wheel uses the host-visible `pitch_bend_range`; MPE member channels use `mpe_bend_range`, which defaults to the 48-semitone MPE convention. The modulation wheel is CC1, CC64 is the sustain pedal, and polyphonic pressure is scoped to the member channel when MPE is active.
 
 ## Voice dispersion and drift
 

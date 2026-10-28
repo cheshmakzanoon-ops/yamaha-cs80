@@ -124,6 +124,9 @@ public:
     void render(float* interleavedStereo, int numFrames);
 
     int activeVoices() const noexcept;
+    // Offline diagnostics; read on the rendering thread, not concurrently.
+    float getRingFrequency() const noexcept { return ringFrequency; }
+    float getRingEnvelope() const noexcept { return ringEnv; }
     // Symmetric 31-tap decimator: 15 internal samples, 7.5 host samples at
     // the fixed 2x oversampling ratio. Report 8 for host delay compensation.
     int getLatencySamples() const noexcept { return 8; }
@@ -139,6 +142,7 @@ public:
         float velocity = 0.0f;
         float pressure = 0.0f;
         float bend = 0.0f;
+        float ribbonRatio = 1.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
 
@@ -176,6 +180,7 @@ private:
         float glidePitch = 60.0f;
         float targetPitch = 60.0f;
         float initBendValue = 0.0f;
+        float ribbonRatio = 1.0f;
         uint64_t age = 0;
         Rank ranks[kNumRanks];
     };
@@ -231,6 +236,7 @@ private:
 
     float ringPhase = 0.0f;
     float ringEnv = 0.0f;
+    float ringFrequency = 0.0f;
     bool ringGate = false;
     bool anyVoiceWasActive = false;
 

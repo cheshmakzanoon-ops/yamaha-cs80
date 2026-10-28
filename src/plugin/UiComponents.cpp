@@ -19,7 +19,7 @@ const juce::Colour lineColour { 0xff2c3b47 };
 
 namespace
 {
-const char* const kFeet[] = { "16'", "8'", "4'", "2'", "1'", "1/2'" };
+const char* const kFeet[] = { "16'", "8'", "5 1/3'", "4'", "2 2/3'", "2'" };
 const char* const kSubWaves[] = { "SINE", "TRIANGLE", "SAW", "SQUARE", "S&H", "RANDOM" };
 const char* const kDestinations[] = { "OFF", "PITCH", "VCF", "VCA", "PWM", "PAN" };
 const char* const kFxNames[] = { "OFF", "CHORUS", "PHASER", "TAPE DELAY", "PLATE REVERB", "DRIVE" };
@@ -217,6 +217,48 @@ LookAndFeel::LookAndFeel()
     setColour(juce::ScrollBar::backgroundColourId, juce::Colours::transparentBlack);
 }
 
+void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+                                   float sliderPos, float, float,
+                                   juce::Slider::SliderStyle, juce::Slider& slider)
+{
+    const float cx = (float) x + (float) width * 0.5f;
+    const float top = (float) y + 4.0f;
+    const float bottom = (float) (y + height) - 4.0f;
+    const float scale = juce::jlimit(0.6f, 1.5f, (float) width / 36.0f);
+    g.setColour(juce::Colour(0xff66665d));
+    g.fillRect(cx - 2.8f * scale, top, 5.6f * scale, bottom - top);
+    g.setColour(juce::Colour(0xff050505));
+    g.fillRect(cx - 1.5f * scale, top, 3.0f * scale, bottom - top);
+    for (int i = 0; i <= 10; ++i)
+    {
+        const float yy = top + (bottom - top) * (float) i / 10.0f;
+        g.setColour(juce::Colour(0xffd0cec0).withAlpha(i % 5 == 0 ? 0.9f : 0.5f));
+        g.drawLine(cx - (i % 5 == 0 ? 11.0f : 8.0f) * scale, yy,
+                   cx - 4.0f * scale, yy, 0.8f * scale);
+        g.drawLine(cx + 4.0f * scale, yy, cx + 8.0f * scale, yy, 0.8f * scale);
+    }
+    const float cy = juce::jlimit(top, bottom, sliderPos);
+    const float w = 23.0f * scale, h = 16.0f * scale;
+    auto cap = juce::Rectangle<float>(cx - w * 0.5f, cy - h * 0.5f, w, h);
+    g.setColour(juce::Colours::black.withAlpha(0.8f));
+    g.fillRoundedRectangle(cap.translated(2.0f * scale, 4.0f * scale), 1.7f * scale);
+    const auto colour = slider.findColour(juce::Slider::thumbColourId);
+    g.setGradientFill(juce::ColourGradient(colour.brighter(0.35f), cap.getX(), cap.getY(),
+                                           colour.darker(0.55f), cap.getX(), cap.getBottom(), false));
+    g.fillRoundedRectangle(cap, 1.5f * scale);
+    g.setColour(colour.brighter(0.65f));
+    g.drawLine(cap.getX() + scale, cap.getY() + scale, cap.getRight() - scale, cap.getY() + scale, scale);
+    g.setColour(juce::Colours::black.withAlpha(0.38f));
+    for (int i = -2; i <= 2; ++i)
+        g.drawLine(cap.getX() + 3.0f * scale, cy + (float) i * 2.0f * scale,
+                   cap.getRight() - 3.0f * scale, cy + (float) i * 2.0f * scale, 0.7f * scale);
+    if (slider.isMouseOverOrDragging())
+    {
+        g.setColour(juce::Colours::white.withAlpha(0.5f));
+        g.drawRoundedRectangle(cap.expanded(1.0f), 2.0f, 1.0f);
+    }
+}
+
 void LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height,
                                    float sliderPosProportional, float rotaryStartAngle,
                                    float rotaryEndAngle, juce::Slider& slider)
@@ -282,6 +324,22 @@ void LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, i
 void LookAndFeel::drawButtonBackground(juce::Graphics& g, juce::Button& button,
                                        const juce::Colour&, bool hovered, bool down)
 {
+    if ((bool) button.getProperties()["hardwareTab"])
+    {
+        auto tab = button.getLocalBounds().toFloat().reduced(1.5f);
+        const auto base = button.findColour(juce::TextButton::buttonColourId);
+        const bool pressed = button.getToggleState() || down;
+        g.setColour(juce::Colours::black);
+        g.fillRoundedRectangle(tab.translated(1.0f, 3.0f), 1.5f);
+        g.setGradientFill(juce::ColourGradient(pressed ? base.darker(0.32f) : base.brighter(hovered ? 0.45f : 0.25f),
+                                              tab.getX(), tab.getY(), base.darker(0.15f), tab.getX(), tab.getBottom(), false));
+        g.fillRoundedRectangle(tab, 1.2f);
+        g.setColour(base.brighter(0.5f));
+        g.drawLine(tab.getX() + 1, tab.getY() + 1, tab.getRight() - 1, tab.getY() + 1, 1);
+        g.setColour(pressed ? juce::Colour(0xfff6edbe) : juce::Colours::black.withAlpha(0.35f));
+        g.fillRect(tab.getCentreX() - 6, tab.getBottom() - 5, 12.0f, 2.0f);
+        return;
+    }
     auto r = button.getLocalBounds().toFloat().reduced(0.5f);
     const bool on = button.getToggleState();
     auto top = on ? juce::Colour(0xff3a2b19) : juce::Colour(0xff1a252f);
@@ -306,6 +364,15 @@ void LookAndFeel::drawButtonBackground(juce::Graphics& g, juce::Button& button,
 void LookAndFeel::drawButtonText(juce::Graphics& g, juce::TextButton& button,
                                  bool, bool)
 {
+    if ((bool) button.getProperties()["hardwareTab"])
+    {
+        const auto base = button.findColour(juce::TextButton::buttonColourId);
+        g.setColour(base.getPerceivedBrightness() < 0.4f ? ivory : juce::Colour(0xff20211a));
+        g.setFont(displayFont(juce::jlimit(6.5f, 9.0f, (float) button.getWidth() * 0.20f), juce::Font::bold));
+        g.drawFittedText(button.getButtonText(), button.getLocalBounds().reduced(3, 5),
+                         juce::Justification::centred, 2, 0.65f);
+        return;
+    }
     g.setColour(button.getToggleState() ? amberBright : ivory);
     auto font = displayFont(
                            juce::jlimit(8.0f, 14.0f, (float) button.getHeight() * 0.43f),
@@ -384,8 +451,35 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
 
 ParamKnob::~ParamKnob() = default;
 
+void ParamKnob::setHardwareSlider(juce::Colour capColour)
+{
+    hardwareSlider = true;
+    slider.setSliderStyle(juce::Slider::LinearVertical);
+    slider.setColour(juce::Slider::thumbColourId, capColour);
+    slider.setTooltip(name + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
+    slider.setTitle(name);
+    slider.setDescription(juce::String(cs80::paramDef(parameterIndex).name));
+    resized();
+    repaint();
+}
+
 void ParamKnob::paint(juce::Graphics& g)
 {
+    if (hardwareSlider)
+    {
+        const float scale = juce::jlimit(0.65f, 1.5f, (float) getWidth() / 42.0f);
+        g.setFont(displayFont(9.0f * scale, juce::Font::bold));
+        g.setColour(juce::Colour(0xffe8e5d9));
+        g.drawFittedText(name, 0, 0, getWidth(), juce::roundToInt(24.0f * scale),
+                         juce::Justification::centred, 2, 0.72f);
+        g.setFont(displayFont(7.5f * scale));
+        g.setColour(juce::Colour(0xffc5c1ad));
+        g.drawFittedText(formatParamValue(parameterIndex, (float) slider.getValue()),
+                         0, getHeight() - juce::roundToInt(16.0f * scale), getWidth(),
+                         juce::roundToInt(16.0f * scale), juce::Justification::centred, 1, 0.65f);
+        return;
+    }
+
     const float h = (float) getHeight();
     const float nameHeight = juce::jlimit(10.0f, 15.0f, h * 0.20f);
     const float valueHeight = juce::jlimit(9.0f, 14.0f, h * 0.18f);
@@ -410,6 +504,15 @@ void ParamKnob::paint(juce::Graphics& g)
 
 void ParamKnob::resized()
 {
+    if (hardwareSlider)
+    {
+        const float scale = juce::jlimit(0.65f, 1.5f, (float) getWidth() / 42.0f);
+        const int top = juce::roundToInt(26.0f * scale);
+        const int bottom = juce::roundToInt(18.0f * scale);
+        slider.setBounds(1, top, getWidth() - 2, juce::jmax(8, getHeight() - top - bottom));
+        return;
+    }
+
     const float h = (float) getHeight();
     const float nameHeight = juce::jlimit(10.0f, 15.0f, h * 0.20f);
     const float valueHeight = juce::jlimit(9.0f, 14.0f, h * 0.18f);
@@ -433,6 +536,26 @@ LedButton::LedButton(const juce::String& text, bool momentary)
 
 void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
 {
+    if (hardwareTab)
+    {
+        auto r = getLocalBounds().toFloat().reduced(2.0f);
+        const bool on = getToggleState();
+        g.setColour(juce::Colours::black);
+        g.fillRoundedRectangle(r.translated(0.0f, 3.0f), 2.0f);
+        const auto base = hovered ? accent.brighter(0.15f) : accent;
+        g.setGradientFill(juce::ColourGradient(on || down ? base.darker(0.3f) : base.brighter(0.3f),
+                                              r.getX(), r.getY(), base.darker(0.2f), r.getX(), r.getBottom(), false));
+        g.fillRoundedRectangle(r, 1.8f);
+        g.setColour(base.brighter(0.5f));
+        g.drawHorizontalLine((int) r.getY() + 2, r.getX() + 2, r.getRight() - 2);
+        g.setColour(juce::Colour(0xff171815));
+        g.setFont(displayFont(juce::jlimit(7.0f, 10.5f, r.getWidth() * 0.22f), juce::Font::bold));
+        g.drawFittedText(getButtonText(), r.reduced(2.0f, 4.0f).toNearestInt(), juce::Justification::centred, 2, 0.65f);
+        g.setColour(on ? juce::Colour(0xfff4edc3) : juce::Colours::black.withAlpha(0.35f));
+        g.fillRect(r.getCentreX() - 5.0f, r.getBottom() - 4.0f, 10.0f, 2.0f);
+        return;
+    }
+
     auto r = getLocalBounds().toFloat().reduced(0.5f);
     const bool on = getToggleState();
     float alpha = 1.0f;
@@ -482,62 +605,40 @@ RibbonStrip::RibbonStrip()
 
 void RibbonStrip::paint(juce::Graphics& g)
 {
-    auto r = getLocalBounds().toFloat().reduced(0.5f);
-    juce::ColourGradient track(juce::Colour(0xff05090c), r.getX(), r.getY(),
-                               juce::Colour(0xff111b23), r.getX(), r.getBottom(), false);
-    g.setGradientFill(track);
-    g.fillRoundedRectangle(r, 4.0f);
-
-    g.setColour(lineColour.withAlpha(0.7f));
-    g.drawRoundedRectangle(r, 4.0f, 0.8f);
-
-    for (int i = 1; i < 32; ++i)
+    const auto r = getLocalBounds().toFloat().reduced(0.5f);
+    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff010201), 0, 0,
+                                           juce::Colour(0xff37382f), 0, r.getHeight(), false));
+    g.fillRect(r);
+    g.setColour(juce::Colour(0xff77796d)); g.drawRect(r, 0.8f);
+    g.setColour(juce::Colours::white.withAlpha(0.09f));
+    g.drawHorizontalLine(3, 2, r.getRight()-2);
+    if (touching)
     {
-        const float x = r.getX() + r.getWidth() * (float) i / 32.0f;
-        g.setColour(ivory.withAlpha(i % 4 == 0 ? 0.10f : 0.04f));
-        g.drawVerticalLine((int) x, r.getY() + 7.0f, r.getBottom() - 7.0f);
+        const float posX = anchorX + value * (float) getWidth();
+        g.setColour(juce::Colour(0xfff5e8b3).withAlpha(0.55f));
+        g.fillEllipse(posX - 6, r.getCentreY() - 6, 12, 12);
     }
-
-    const float centreX = r.getCentreX();
-    g.setColour(amber.withAlpha(0.28f));
-    g.drawVerticalLine((int) centreX, r.getY() + 2.0f, r.getBottom() - 2.0f);
-
-    const float posX = centreX + value * (r.getWidth() * 0.5f - 14.0f);
-    g.setColour(juce::Colours::black.withAlpha(0.5f));
-    g.fillRoundedRectangle(posX - 5.0f, r.getY() + 3.0f, 10.0f, r.getHeight() - 6.0f, 3.0f);
-    juce::ColourGradient handle(amberBright, posX - 3.0f, r.getY(),
-                                amber.darker(0.5f), posX + 3.0f, r.getBottom(), false);
-    g.setGradientFill(handle);
-    g.fillRoundedRectangle(posX - 2.5f, r.getY() + 4.0f, 5.0f, r.getHeight() - 8.0f, 2.0f);
-    g.setColour(amberBright.withAlpha(0.12f));
-    g.fillEllipse(posX - 15.0f, r.getCentreY() - 15.0f, 30.0f, 30.0f);
-
-    g.setColour(ivoryDim);
-    g.setFont(displayFont(
-                         juce::jlimit(7.0f, 10.0f, r.getHeight() * 0.28f), juce::Font::bold));
-    g.drawText("RIBBON", (int) r.getX() + 10, (int) r.getY(), 90, (int) r.getHeight(),
-               juce::Justification::centredLeft);
-    g.drawText("PITCH  +", (int) r.getRight() - 100, (int) r.getY(), 90, (int) r.getHeight(),
-               juce::Justification::centredRight);
 }
 
 void RibbonStrip::setFromX(float x)
 {
-    const float centre = (float) getWidth() * 0.5f;
-    value = juce::jlimit(-1.0f, 1.0f, (x - centre) / juce::jmax(1.0f, centre - 14.0f));
-    if (onValueChange)
-        onValueChange(value);
+    value = juce::jlimit(-1.0f, 1.0f, (x - anchorX) / juce::jmax(1.0f, (float) getWidth()));
+    if (onValueChange) onValueChange(value);
     repaint();
 }
 
-void RibbonStrip::mouseDown(const juce::MouseEvent& e) { setFromX(e.position.x); }
+void RibbonStrip::mouseDown(const juce::MouseEvent& e)
+{
+    touching = true;
+    anchorX = e.position.x;
+    setFromX(anchorX);
+}
 void RibbonStrip::mouseDrag(const juce::MouseEvent& e) { setFromX(e.position.x); }
-
 void RibbonStrip::mouseUp(const juce::MouseEvent&)
 {
+    touching = false;
     value = 0.0f;
-    if (onValueChange)
-        onValueChange(0.0f);
+    if (onValueChange) onValueChange(0.0f);
     repaint();
 }
 

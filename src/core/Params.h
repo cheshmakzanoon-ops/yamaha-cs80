@@ -127,9 +127,9 @@ enum : int
     P_numParams = P_ch2Start + CP_count
 };
 
-// Six-position octave footage switch: 16', 8', 4', 2', 1', 1/2'.
-// The switch is an octave selector, not a harmonic-interval selector.
-inline constexpr float kFeetSemitones[6] = { -12.0f, 0.0f, 12.0f, 24.0f, 36.0f, 48.0f };
+// Yamaha owner manual, printed p37: 16', 8', 5 1/3', 4', 2 2/3', 2'.
+// The two fifth stops are intentional, not extra octave transpositions.
+inline constexpr float kFeetSemitones[6] = { -12.0f, 0.0f, 7.0f, 12.0f, 19.0f, 24.0f };
 
 inline constexpr int channelStart(int channel) noexcept
 {

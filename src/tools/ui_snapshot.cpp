@@ -1,5 +1,6 @@
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
+#include "plugin/UiComponents.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -19,6 +20,25 @@ void check(bool condition, const char* what)
     {
         std::printf("FAIL: %s\n", what);
         ++failures;
+    }
+}
+
+void validateVisibleControls(juce::Component& parent)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (! child->isVisible())
+            continue;
+        // Validate user-facing controls, not internal popup/list viewports
+        // which intentionally scroll outside their parent's viewport.
+        if (dynamic_cast<cs80::ui::ParamKnob*>(child) != nullptr
+            || dynamic_cast<cs80::ui::LedButton*>(child) != nullptr)
+        {
+            check(! child->getBounds().isEmpty(), "visible panel control has positive bounds");
+            check(parent.getLocalBounds().contains(child->getBounds()),
+                  "visible panel control is inside parent");
+        }
+        validateVisibleControls(*child);
     }
 }
 
@@ -89,12 +109,36 @@ int main(int argc, char** argv)
         processor.getEngine().allNotesOff(false);
     }
 
+    // GUI control mailboxes are consumed on the audio thread, including a
+    // host block exceeding prepareToPlay's advertised size.
+    {
+        processor.setRibbonFromUI(0.2f);
+        processor.setPitchWheelFromUI(-0.1f);
+        processor.setModWheelFromUI(0.5f);
+        juce::AudioBuffer<float> large(2, 10003);
+        juce::MidiBuffer events;
+        events.addEvent(juce::MidiMessage::noteOn(1, 57, (juce::uint8) 100), 4095);
+        events.addEvent(juce::MidiMessage::noteOff(1, 57), 8193);
+        processor.processBlock(large, events);
+        bool finite = true;
+        for (int ch = 0; ch < 2; ++ch)
+            for (int i = 0; i < large.getNumSamples(); ++i)
+                finite = finite && std::isfinite(large.getSample(ch, i));
+        check(finite, "oversized host block stays finite");
+        check(large.getMagnitude(0, 4095, 4098) > 0.0001f, "oversized block MIDI renders after chunk boundary");
+        processor.setRibbonFromUI(0.0f);
+        processor.setPitchWheelFromUI(0.0f);
+        processor.setModWheelFromUI(0.0f);
+        processor.getEngine().allNotesOff(false);
+    }
+
     Cs80AudioProcessorEditor editor(processor);
     editor.setSize(1600, 1000);
     editor.setVisible(true);
     flushGui(150);
 
     auto save = [&](const juce::String& name) {
+        validateVisibleControls(editor);
         auto image = editor.createComponentSnapshot(editor.getLocalBounds(), true, 1.0f);
         check(! image.isNull(), "snapshot image created");
         check(image.getWidth() == editor.getWidth(), "snapshot width");
@@ -137,6 +181,19 @@ int main(int argc, char** argv)
     flushGui(100);
     save("browser-1600x1000");
     editor.showPresetBrowser(false);
+    // Repeated overlay transitions must restore the instrument surface.
+    for (int pass = 0; pass < 3; ++pass)
+    {
+        editor.showAdvancedPanel(true);
+        check(editor.isAdvancedVisible(), "advanced panel reopens");
+        editor.showPresetBrowser(true);
+        check(! editor.isAdvancedVisible(), "browser hides advanced on repeated transition");
+        editor.showPresetBrowser(false);
+        editor.showAdvancedPanel(false);
+        check(! editor.isAdvancedVisible(), "advanced panel closes");
+    }
+    flushGui(80);
+    save("main-restored-1600x1000");
 
     // User preset save/load path. This touches the per-user application data
     // directory, which is created on demand by the processor.

@@ -8,9 +8,12 @@ namespace cs80
 
 namespace
 {
-const char* kToneNames[11] = {
-    "Flute 1", "Flute 2", "Oboe", "Clarinet", "Bass 1",
-    "Bass 2", "Brass 1", "Brass 2", "Strings 1", "Strings 2", "Organ"
+// Original owner manual tone-selector rows, not the previous shared generic bank.
+const char* kToneNames[2][11] = {
+    { "String 1", "String 3", "Brass 1", "Flute", "E. Piano", "Clavichord 1",
+      "Harpsichord 1", "Organ 1", "Guitar 1", "Funky 1", "Funky 3" },
+    { "String 2", "String 4", "Brass 2", "Brass 3", "Bass", "Clavichord 2",
+      "Harpsichord 2", "Organ 2", "Guitar 2", "Funky 2", "Funky 4" }
 };
 
 void setC(ParamValues& p, int ch, int param, float v)
@@ -298,6 +301,38 @@ void tonePatch(ParamValues& p, int ch, int tone)
     }
 }
 
+// Source-backed tab identity with deliberately provisional sound settings.
+// These are original approximations awaiting preset-board resistor extraction
+// and calibrated hardware captures; none is advertised as a measured factory tone.
+void hardwareTonePatch(ParamValues& p, int ch, int tone)
+{
+    static constexpr int families[2][11] = {
+        { 8, 9, 6, 0, 10, 3, 3, 10, 3, 7, 7 },
+        { 8, 9, 7, 6, 4, 3, 3, 10, 3, 7, 7 }
+    };
+    tonePatch(p, ch, families[ch][tone]);
+    if (tone == 4 && ch == 0) // Electric-piano family, provisional percussive sine/pulse.
+    {
+        vco(p, ch, false, true, 0.45f, 0.0f, 0.72f);
+        filter(p, ch, 30.0f, 2400.0f, 0.1f);
+        ampEnv(p, ch, 0.002f, 1.0f, 0.12f, 0.25f);
+    }
+    if (tone == 5 || tone == 6 || tone == 8)
+    {
+        vco(p, ch, tone != 5, true, tone == 8 ? 0.12f : 0.0f, 0.0f,
+            ch == 0 ? 0.68f : 0.76f);
+        filter(p, ch, 50.0f, tone == 6 ? 7500.0f : 2800.0f, 0.12f);
+        filterEnv(p, ch, 0.5f, 0.65f, 0.002f, 0.3f, 0.2f);
+        ampEnv(p, ch, 0.001f, tone == 8 ? 0.9f : 0.45f, 0.0f, 0.12f);
+    }
+    if (tone >= 9)
+    {
+        filter(p, ch, 160.0f, tone == 9 ? 900.0f : 1700.0f, 0.65f);
+        filterEnv(p, ch, 0.25f, 0.85f, 0.015f, 0.3f, 0.15f);
+        ampEnv(p, ch, 0.002f, 0.4f, 0.35f, 0.12f);
+    }
+}
+
 FactoryPreset make(const std::string& name, const std::string& category,
                    const std::string& description, const ParamValues& p)
 {
@@ -306,11 +341,11 @@ FactoryPreset make(const std::string& name, const std::string& category,
 
 } // namespace
 
-const char* hardwareToneName(int index)
+const char* hardwareToneName(int index, int channel)
 {
-    if (index < 0 || index >= 11)
+    if (index < 0 || index >= 11 || channel < 0 || channel > 1)
         return "";
-    return kToneNames[index];
+    return kToneNames[channel][index];
 }
 
 void applyHardwareTone(ParamValues& values, int channel, int toneIndex)
@@ -324,7 +359,7 @@ void applyHardwareTone(ParamValues& values, int channel, int toneIndex)
     for (int i = 0; i < CP_count; ++i)
         values[chParam(channel, i)] = kChannelDefs[i].def;
 
-    tonePatch(values, channel, std::clamp(toneIndex, 0, 10));
+    hardwareTonePatch(values, channel, std::clamp(toneIndex, 0, 10));
 }
 
 const std::vector<FactoryPreset>& factoryPresets()
@@ -333,20 +368,20 @@ const std::vector<FactoryPreset>& factoryPresets()
         std::vector<FactoryPreset> b;
         b.reserve(240);
 
-        // 22 hardware tone-selector programs: one program per tone per channel.
+        // 22 provisional voicings in the original physical tone-selector order.
         for (int t = 0; t < 11; ++t)
         {
             for (int ch = 0; ch < 2; ++ch)
             {
                 ParamValues p;
                 initPatch(p);
-                tonePatch(p, ch, t);
-                tonePatch(p, 1 - ch, t == 10 ? 8 : t);
+                hardwareTonePatch(p, ch, t);
+                hardwareTonePatch(p, 1 - ch, t);
                 p[P_mix] = ch == 0 ? 0.68f : 0.32f;
                 p[P_chorusOn] = 1.0f;
-                b.push_back(make(std::string(ch == 0 ? "Tone I: " : "Tone II: ") + kToneNames[t],
-                                 "Hardware Tones",
-                                 "Recreation of a CS-80 tone-selector position.", p));
+                b.push_back(make(std::string(ch == 0 ? "Tone I: " : "Tone II: ") + kToneNames[ch][t],
+                                 "Hardware Studies",
+                                 "Original hardware tab identity; provisional voicing, not a measured factory preset.", p));
             }
         }
 

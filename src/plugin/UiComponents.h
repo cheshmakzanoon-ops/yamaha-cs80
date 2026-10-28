@@ -25,9 +25,8 @@ extern const juce::Colour lineColour;
 juce::String formatParamValue(int parameterIndex, float value);
 juce::String shortParamName(int parameterIndex);
 
-// The panel is deliberately drawn rather than assembled from stock JUCE
-// widgets: the CS-80's identity is in its typography, knob skirts, and the
-// amber-on-graphite legends.
+// Original vector rendering of the hardware's colored slider caps and rocker
+// tabs. Rotary controls remain available for the software extension pages.
 class LookAndFeel final : public juce::LookAndFeel_V4
 {
 public:
@@ -36,6 +35,8 @@ public:
     void drawRotarySlider(juce::Graphics&, int x, int y, int width, int height,
                           float sliderPosProportional, float rotaryStartAngle,
                           float rotaryEndAngle, juce::Slider&) override;
+    void drawLinearSlider(juce::Graphics&, int, int, int, int, float, float, float,
+                          juce::Slider::SliderStyle, juce::Slider&) override;
     void drawButtonBackground(juce::Graphics&, juce::Button&, const juce::Colour&,
                               bool shouldDrawButtonAsHighlighted,
                               bool shouldDrawButtonAsDown) override;
@@ -51,7 +52,7 @@ public:
     juce::Font getTextButtonFont(juce::TextButton&, int buttonHeight) override;
 };
 
-// A rotary with an engraved parameter name and a live, unit-aware readout.
+// Parameter-bound rotary or hardware linear slider with a unit-aware readout.
 class ParamKnob final : public juce::Component
 {
 public:
@@ -65,11 +66,13 @@ public:
 
     juce::Slider& getSlider() noexcept { return slider; }
     int getParameterIndex() const noexcept { return parameterIndex; }
+    void setHardwareSlider(juce::Colour capColour);
 
 private:
     Cs80AudioProcessor& processor;
     int parameterIndex;
     juce::String name;
+    bool hardwareSlider = false;
     juce::Slider slider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
 
@@ -87,10 +90,11 @@ public:
                      bool shouldDrawButtonAsDown) override;
 
     juce::Colour accent { amber };
+    bool hardwareTab = false;
 };
 
 // The CS-80 ribbon is a continuous position controller, not a mod wheel.
-// It springs back to the centre when released.
+// Initial contact establishes zero; displacement changes pitch until release.
 class RibbonStrip final : public juce::Component
 {
 public:
@@ -106,6 +110,8 @@ public:
 private:
     void setFromX(float x);
     float value = 0.0f;
+    float anchorX = 0.0f;
+    bool touching = false;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RibbonStrip)
 };
