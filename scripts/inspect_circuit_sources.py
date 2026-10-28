@@ -13,6 +13,9 @@ import urllib.request
 from PIL import Image
 
 SOURCES = {
+    "mics42": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/42%20-%20M%20Circuit%20ICs.jpg",
+    "mics52": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/52%20-%20M%20Circuit%20ICs.jpg",
+    "mwiring44": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/44%20-%20M11-12%20Circuit%20Board%20%26%20Wiring.jpg",
     "trg12": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/19%20-%20TRG%201-2%20Circuit%20Diagram.jpg",
     "trg3": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/21%20-%20TRG%203%20Circuit%20Diagram.jpg",
     "trg4": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/23%20-%20TRG%204%20Circuit%20Diagram.jpg",
@@ -69,6 +72,8 @@ def main():
                 max(0, col * w // 2 - 64), max(0, row * h // 2 - 64),
                 min(w, (col + 1) * w // 2 + 64), min(h, (row + 1) * h // 2 + 64)
             ), True))
+    if max(w, h) <= 2400:
+        boxes.append((f"{args.page}-full-native", (0, 0, w, h), False))
     # Native-pixel detail crops, selected from inspected source coordinates.
     focus = {
         "m": [("filter-detail", (1180, 1080, 3250, 1850))],

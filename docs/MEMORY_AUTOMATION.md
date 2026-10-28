@@ -68,3 +68,19 @@ must be tested separately in a desktop host. The
 same investigation found JUCE arrow-key edits lack drag notifications;
 FocusSlider now brackets handled arrows, without nesting during an existing
 drag. Actual arrow-key regressions cover both idle and already-dragging cases.
+
+## Preset metadata and editor lifetime
+
+The processor no longer stores a callback capturing the editor. Its existing
+message-thread timer polls names and selectors, so background host state changes
+cannot invoke an editor through that callback during destruction. A short lock
+protects preset-name access and paired name/index snapshots; standalone program
+index getters use an atomic value. Host notifications, APVTS operations and file
+I/O occur outside this metadata lock. No lock or allocation was added to processBlock.
+
+State/program APIs remain non-realtime operations. The metadata pair is coherent,
+but the whole APVTS-plus-metadata transaction is not globally atomic. New stress
+checks exercise background restoration, serialization and repeated editor lifetimes,
+plus timer refresh after a background rename. They require exact-revision CI and
+are not a substitute for ThreadSanitizer. This repair does not establish the cause
+of the separately observed Linux validator exit crash.

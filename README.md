@@ -50,7 +50,7 @@ The modern layer is kept behind its own surface so the primary instrument remain
 
 ## Hardware programmer and reconstruction changes
 
-The missing [aftertouch-to-sub-filter route](docs/AFTERTOUCH_SUB_VCF.md) is implemented with an appended host parameter, preserving existing automation indexes. Its numerical depth remains provisional. [Unconditional velocity attenuation has been removed](docs/VELOCITY_GAIN_CORRECTION.md); saved sessions can sound louder below maximum velocity. Initial-touch transient modeling still needs circuit validation.
+The missing [aftertouch-to-sub-filter route](docs/AFTERTOUCH_SUB_VCF.md) is implemented with an appended host parameter, preserving existing automation indexes. Its numerical depth remains provisional. [Unconditional velocity attenuation has been removed](docs/VELOCITY_GAIN_CORRECTION.md); saved sessions can sound louder below maximum velocity. The held initial-touch transfer and separate pitch-bend transient still need circuit validation; see [the corrected touch-path evidence](docs/INITIAL_TOUCH_CIRCUIT_EVIDENCE.md).
 
 See the [complete hardware coverage audit](docs/HARDWARE_COVERAGE.md) and [IG00156 evidence and validation plan](docs/IG00156_MODEL_EVIDENCE.md).
 

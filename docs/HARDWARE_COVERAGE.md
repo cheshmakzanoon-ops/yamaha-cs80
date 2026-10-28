@@ -4,6 +4,10 @@ Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e
 
 **Required outcome:** every physical feature and 1:1 analog circuit behavior, as specified in [ANALOG_FIDELITY_REQUIREMENT.md](ANALOG_FIDELITY_REQUIREMENT.md). The current instrument does not meet that outcome. A control existing on screen does not establish electrical or sonic equivalence.
 
+## Verified increment and source correction
+
+At `71f0483d32657fc48bac1a0693e9c725e71e74dd`, the AT VCF route and zero-touch velocity invariance pass the full Linux/macOS/Windows build/host matrix, numerical/sanitizer tests and UI screenshots. These are software checks, not calibrated analog equivalence. TWS17 plus TRG19/23 now show that initial brilliance/level use a held b signal while pitchbend uses a separate AC-coupled C signal. The earlier inference that all initial-touch destinations should decay together was incorrect and is withdrawn. Affected rows below are updated; other baseline gaps remain open.
+
 ## Status and evidence rules
 
 - **IMPLEMENTED_BEHAVIOR (IB):** a specified discrete or qualitative behavior exists in code. This says nothing about unmeasured transfer curves.
@@ -47,10 +51,10 @@ Primary Yamaha source locators are maintained in [HARDWARE_REFERENCES.md](HARDWA
 |11 Sub → VCO|A; E semitone modulation|O8,37; real pitch-CV injection may not be exponential semitone FM|Compare carrier deviation/sidebands across pitch, depth and waveform|
 |11 Sub → VCF|A; E equal shared offset|O8,37; HP/LP path gains/loading unverified|Trace separate destinations and verify modulation depth and polarity|
 |11 Sub → VCA|A; E linear level addition/clamp|O8,37; actual VCA control law unverified|Measure tremolo law, minimum level and clipping at full modulation|
-|12 Initial pitchbend|A; E velocity-scaled onset, fixed75ms exponential|O10,38,44; timing not established from actual touch RC network|Derive shared initial-touch pulse and compare pitch trajectory at multiple velocities|
+|12 Initial pitchbend|A; E velocity-scaled onset, fixed75ms exponential|O10,38,44; timing not established from actual touch RC network|Derive the separately AC-coupled TWS C path and compare pitch trajectory at multiple velocities|
 |12 Aftertouch → sub speed|A; E lastPressure global speed factor|O10,38; pressure aggregation, nonlinear law and smoothing unverified|Resolve keyboard touch-bus priority/aggregation and test simultaneous unequal pressures|
 |12 Aftertouch → sub VCO|A; E per-voice pressure multiplier|O10,38; correct destinations do not prove gain law|Trace touch bus and measure depth response per key/voice|
-|12 Aftertouch → sub VCF|M in audited baseline; no P_subAtVcf|O10,38; independent physical green control|Add parameter, UI, state/automation and both filter paths; verify against source and pressure tests|
+|12 Aftertouch → sub VCF|IB/A in 71f0483; appended P_subAtVcf and host parameter|O10,38; independent physical green control; software CI passes, numerical depth provisional|Calibrate pressure/depth transfer and receiving circuit; see AFTERTOUCH_SUB_VCF.md|
 |13 Sustain amount|IB/A; E extends both filter/amplitude release|O11,39; nominal release priority implemented; physical foot switching incomplete|Test at all release/control combinations with and without actual footswitch|
 |13 Sustain I/II selector|IB/A; E held-tail mode handling; T testSustainTimeAndWheelRouting|O11,39; mode edge cases and release cancellation timing unmeasured|Compare new chords, repeated notes, ribbon moves and pedal transitions|
 |13 Sustain footswitch assigner|M; MIDI CC64 is a software convention|O11,39; unplugged-switch behavior is not MIDI sustain|Model jack presence, assigner position and switch state explicitly|
@@ -96,8 +100,8 @@ Each row below applies independently to rank I and rank II. Existence in both ma
 |39 VCA sustain level|A; D sustain fraction|O21,34; control voltage→gain mapping unverified|Measure held gain and attack/decay transition at all sustain settings|
 |40 VCA release|IB/A; release and sustain priority implemented|O21,34; exact timing/shape unmeasured|Compare release from attack, decay and sustain, retriggered and stolen-tail cases|
 |41 VCA level|A; E levelCv multiplication/clamp|O22,35; IG00151 linear/exponential pins not separately reconstructed|Solve control summing and characterize both gain-control inputs|
-|42 Initial-touch brilliance|A with known behavioral mismatch; E holds velocity offset|O23,36,44; onset pulse should not become permanent held brightness|Use derived shared transient; verify late held cutoff returns to baseline|
-|43 Initial-touch level|A with known behavioral mismatch; E holds velocity offset|O23,36,44; additional unconditional velocityGain persists even at zero touch controls|Replace unsupported static scaling; test zero-touch invariance and transient decay|
+|42 Initial-touch brilliance|A; E holds velocity offset, qualitatively consistent with held TWS b path|S17/19: b feeds IBI/IBII-controlled VCA banks; earlier shared-decay interpretation withdrawn|Derive sample/hold transfer, loading and brilliance injection; do not force late cutoff to baseline|
+|43 Initial-touch level|A; held velocity route qualitatively consistent with TWS b path; unconditional gain removed in 71f0483|S17/19/23: b feeds ILI/ILII-controlled VCA banks; zero-touch invariance regression passes|Calibrate held level transfer; keep separately derived pitch transient distinct|
 |44 Aftertouch brilliance|A; E per-voice pressure offset|O23,36,44; sensor law, HP/LP ratios and aggregation unverified|Measure pressure→two filter CVs including saturation/hysteresis|
 |45 Aftertouch level|A; E per-voice pressure level addition|O23,36,44; sensor/VCA law uncalibrated|Test polyphonic independence and gain response across force|
 |46 Four memory panels|IB/A; HOST104 controls plus two selectors, UI lid|O23,36; logical banks and persistence implemented, physical divider/loading not|Verify each bank's26 controls, switch networks, rank pairing and source changes|
@@ -149,7 +153,7 @@ None of the following is certified1:1. This section prevents completion based so
 |IG00150/modulation oscillators|E/D sinusoidal/modulation generators|Original oscillation law, waveform distortions, envelope control, pressure response and calibration|
 |Preset, memory and panel resistor/diode networks|HC partial passive solver; source ledger|Complete node inventory, diode operating point, source/load impedances, pot tapers, switch states and all22 preset results|
 |R51/R52 and other control summing|E shared approximations|Solve distinct HP/LP/VCA/VCO paths with actual resistor networks and trims; avoid treating knob fractions as volts|
-|TKC/TSB initial/aftertouch circuitry|E velocity/pressure proxies|Shared decaying initial pulse, force/transient conditioning, sample/hold, key-specific response and global pressure aggregation|
+|TKC/TSB initial/aftertouch circuitry|E velocity/pressure proxies|Separate filtered a, sampled/held b and AC-coupled C paths, force conditioning, key-specific response and global pressure aggregation; see INITIAL_TOUCH_CIRCUIT_EVIDENCE.md|
 |Key voltage generation, scanner and assigner ICs|E event-based allocator|Full service-board/BOM inventory still required; exact scan/hold sequence, priority and analog settling|
 |Ring multiplier and carrier/envelope circuit|E ideal multiplication and provisional sweep|Carrier feedthrough, control law, offsets, nonlinear intermodulation, envelope timing and original gain|
 |Chorus/tremolo circuitry|D modulated delay/amplitude approximation|Trace actual phase/amplitude network and all active devices; validate stereo transfer rather than infer from generic BBD label|
@@ -164,8 +168,8 @@ At this baseline, D comments call its generic input soft clip part of the IG0015
 
 ## Verification matrix and next priority
 
-1. **Close known functional omissions:** four keyboard contours; aftertouch-sub-VCF; original sub waveforms/range and EXT input; EXP/WAH and both footswitch assigners. Add stable host parameter IDs, state migration, UI controls and direct route tests.
-2. **Correct known state/behavior mismatches:** decaying initial-touch paths, unconditional velocity gain, free-running VCO/held filter state, scanner/overflow semantics and glissando topology. Obtain missing circuit evidence before assigning numerical constants.
+1. **Close known functional omissions:** four keyboard contours; calibrated aftertouch-sub-VCF; original sub waveforms/range and EXT input; EXP/WAH and both footswitch assigners. Add stable host parameter IDs, state migration, UI controls and direct route tests.
+2. **Correct known state/behavior mismatches:** separate held initial-touch and pitch-transient circuit laws, free-running VCO/held filter state, scanner/overflow semantics and glissando topology. Obtain missing circuit evidence before assigning numerical constants.
 3. **Complete electrical reconstruction:** board/BOM inventory, passive control networks, IC voltage domains and stage-level trace points. Use ADJ conditions and preserve source revisions.
 4. **Characterize analog nonlinearities:** level-dependent transfer, transient response, modulation sidebands, noise/correlation and thermal/tolerance behavior for an identified calibrated reference instrument.
 5. **Validate all presets and performance combinations:** both ranks, all memories, every selector, keyboard range, pressure, ribbon, pedal and sustain interactions. Include interrupted/repeated gestures and changes during sounding/releasing notes.

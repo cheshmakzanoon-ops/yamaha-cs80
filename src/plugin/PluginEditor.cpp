@@ -287,20 +287,15 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             repaint();
         };
 
-        processor.onPresetChanged = [this]
-        {
-            syncPresetDisplay();
-            syncToneMarks();
-            repaint();
-        };
-
+        // Host state/program changes may arrive on non-message threads.
+        // The existing message-thread timer polls metadata and selectors;
+        // never install a processor callback that captures this editor.
         syncPresetDisplay();
         syncToneMarks();
     }
 
     ~Impl() override
     {
-        processor.onPresetChanged = nullptr;
         setLookAndFeel(nullptr);
     }
 
@@ -958,7 +953,6 @@ Cs80AudioProcessorEditor::Cs80AudioProcessorEditor(Cs80AudioProcessor& p)
 Cs80AudioProcessorEditor::~Cs80AudioProcessorEditor()
 {
     stopTimer();
-    static_cast<Cs80AudioProcessor&>(processor).onPresetChanged = nullptr;
     impl.reset();
 }
 

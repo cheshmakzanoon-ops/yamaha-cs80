@@ -9,6 +9,8 @@
 #include <cmath>
 #include <cstdio>
 #include <memory>
+#include <atomic>
+#include <thread>
 
 namespace
 {
@@ -722,6 +724,98 @@ int main(int argc, char** argv)
         restoreTree(partial);
         check(std::abs(copy.getMemoryValue(0, cs80::CP_lpfCutoff) - cs80::kChannelDefs[cs80::CP_lpfCutoff].def) < 0.02f,
               "missing new-state parameter does not retain stale live value");
+    }
+
+    // Host state callbacks can run off the message thread while an editor is
+    // being opened or closed. No processor callback may capture that editor.
+    // This stress regression is not a substitute for ThreadSanitizer coverage.
+    {
+        Cs80AudioProcessor concurrent;
+        concurrent.prepareToPlay(48000.0, 64);
+        auto makeState = [&](const juce::String& name, int index)
+        {
+            auto tree = concurrent.getAPVTS().copyState();
+            tree.setProperty("presetName", name, nullptr);
+            tree.setProperty("factoryIndex", index, nullptr);
+            return tree.createXml()->toString();
+        };
+        const auto stateA = makeState("Thread State A", 7);
+        const auto stateB = makeState("Thread State B", 11);
+        auto restore = [&](const juce::String& state)
+        {
+            concurrent.setStateInformation(state.toRawUTF8(), state.getNumBytesAsUTF8());
+        };
+        auto validPair = [](const Cs80AudioProcessor::PresetMetadata& metadata)
+        {
+            return (metadata.name == "Thread State A" && metadata.factoryIndex == 7)
+                || (metadata.name == "Thread State B" && metadata.factoryIndex == 11);
+        };
+        restore(stateA);
+        std::atomic<bool> stop { false }, valid { true };
+        std::atomic<int> iterations { 0 };
+        std::thread writer([&]
+        {
+            while (!stop.load(std::memory_order_acquire))
+            {
+                restore((iterations.load(std::memory_order_relaxed) & 1) ? stateA : stateB);
+                if (!validPair(concurrent.getPresetMetadata()))
+                    valid.store(false, std::memory_order_relaxed);
+                iterations.fetch_add(1, std::memory_order_release);
+            }
+        });
+        while (iterations.load(std::memory_order_acquire) == 0)
+            std::this_thread::yield();
+        for (int cycle = 0; cycle < 8; ++cycle)
+        {
+            {
+                auto temporaryEditor = std::make_unique<Cs80AudioProcessorEditor>(concurrent);
+                temporaryEditor->setSize(1120, 700);
+                temporaryEditor->setVisible(true);
+                for (int read = 0; read < 100; ++read)
+                {
+                    if (!validPair(concurrent.getPresetMetadata()))
+                        valid.store(false, std::memory_order_relaxed);
+                    const int program = concurrent.getCurrentProgram();
+                    if (program != 7 && program != 11)
+                        valid.store(false, std::memory_order_relaxed);
+                }
+                // Exercise serialization while background state replacement runs.
+                juce::MemoryBlock state;
+                concurrent.getStateInformation(state);
+                const auto text = juce::String::fromUTF8(
+                    static_cast<const char*>(state.getData()), (int)state.getSize());
+                if (auto xml = juce::XmlDocument::parse(text))
+                {
+                    const auto tree = juce::ValueTree::fromXml(*xml);
+                    if (!validPair({ tree.getProperty("presetName").toString(),
+                                     (int)tree.getProperty("factoryIndex") }))
+                        valid.store(false, std::memory_order_relaxed);
+                }
+                else valid.store(false, std::memory_order_relaxed);
+                flushGui(20);
+            }
+            flushGui(20); // Process pending attachment work after editor destruction.
+        }
+        stop.store(true, std::memory_order_release);
+        writer.join();
+        check(iterations.load() > 0 && valid.load(),
+              "background state restore preserves coherent metadata through editor lifecycles");
+
+        Cs80AudioProcessorEditor timerEditor(concurrent);
+        timerEditor.setVisible(true);
+        std::thread rename([&] { concurrent.setPresetName("Timer Refresh Verified"); });
+        rename.join();
+        flushGui(200);
+        auto containsLabel = [](auto&& self, juce::Component& component) -> bool
+        {
+            if (auto* label = dynamic_cast<juce::Label*>(&component))
+                if (label->getText() == "Timer Refresh Verified") return true;
+            for (auto* child : component.getChildren())
+                if (self(self, *child)) return true;
+            return false;
+        };
+        check(containsLabel(containsLabel, timerEditor),
+              "message-thread timer refreshes preset name after background update");
     }
 
     Cs80AudioProcessorEditor editor(processor);

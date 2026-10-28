@@ -195,12 +195,27 @@ void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
     // The next audio block snapshots APVTS atomics; never mutate DSP from the GUI.
 }
 
+Cs80AudioProcessor::PresetMetadata Cs80AudioProcessor::getPresetMetadata() const
+{
+    const juce::ScopedLock lock(presetMetadataLock);
+    return { presetName, currentProgram.load(std::memory_order_relaxed) };
+}
+
+void Cs80AudioProcessor::setPresetMetadata(const juce::String& name, int index)
+{
+    const juce::ScopedLock lock(presetMetadataLock);
+    presetName = name;
+    currentProgram.store(index, std::memory_order_relaxed);
+}
+
 void Cs80AudioProcessor::setPresetName(const juce::String& name)
 {
-    presetName = name;
+    {
+        const juce::ScopedLock lock(presetMetadataLock);
+        presetName = name;
+    }
+    // Host callbacks may reenter metadata getters; never hold the lock here.
     updateHostDisplay();
-    if (onPresetChanged)
-        onPresetChanged();
 }
 
 void Cs80AudioProcessor::loadFactoryPreset(int index)
@@ -210,11 +225,8 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
         return;
     index = juce::jlimit(0, (int) bank.size() - 1, index);
     applyValues(bank[(size_t) index].values);
-    currentProgram = index;
-    presetName = juce::String(bank[(size_t) index].name);
+    setPresetMetadata(juce::String(bank[(size_t) index].name), index);
     updateHostDisplay();
-    if (onPresetChanged)
-        onPresetChanged();
 }
 
 void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
@@ -475,8 +487,9 @@ void Cs80AudioProcessor::changeProgramName(int, const juce::String&)
 void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     auto state = apvts.copyState();
-    state.setProperty("presetName", presetName, nullptr);
-    state.setProperty("factoryIndex", currentProgram, nullptr);
+    const auto metadata = getPresetMetadata();
+    state.setProperty("presetName", metadata.name, nullptr);
+    state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     if (auto xml = state.createXml())
     {
         auto text = xml->toString();
@@ -495,11 +508,9 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
             apvts.replaceState(normaliseRestoredState(tree));
-            presetName = tree.getProperty("presetName", "Init Patch").toString();
-            currentProgram = (int) tree.getProperty("factoryIndex", 0);
+            setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
+                              (int) tree.getProperty("factoryIndex", 0));
             // DSP state is updated by the next audio block, not the state-loading thread.
-            if (onPresetChanged)
-                onPresetChanged();
         }
     }
 }
@@ -514,19 +525,18 @@ juce::File Cs80AudioProcessor::userPresetDirectory() const
 void Cs80AudioProcessor::saveUserPreset(const juce::String& name)
 {
     const auto dir = userPresetDirectory();
-    auto safe = juce::File::createLegalFileName(name.isNotEmpty() ? name : presetName);
+    const auto metadata = getPresetMetadata();
+    const auto savedName = name.isNotEmpty() ? name : metadata.name;
+    auto safe = juce::File::createLegalFileName(savedName);
     if (safe.isEmpty())
         safe = "User Preset";
     auto file = dir.getChildFile(safe + ".cs80xml");
     auto state = apvts.copyState();
-    state.setProperty("presetName", name.isNotEmpty() ? name : presetName, nullptr);
-    state.setProperty("factoryIndex", currentProgram, nullptr);
+    state.setProperty("presetName", savedName, nullptr);
+    state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     if (auto xml = state.createXml())
         xml->writeTo(file);
-    presetName = name.isNotEmpty() ? name : presetName;
-    updateHostDisplay();
-    if (onPresetChanged)
-        onPresetChanged();
+    setPresetName(savedName);
 }
 
 juce::Array<juce::File> Cs80AudioProcessor::getUserPresetFiles() const
@@ -555,11 +565,9 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
             apvts.replaceState(normaliseRestoredState(tree));
-            presetName = tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString();
-            currentProgram = (int) tree.getProperty("factoryIndex", 0);
+            setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
+                              (int) tree.getProperty("factoryIndex", 0));
             // DSP state is updated by the next audio block, not the state-loading thread.
-            if (onPresetChanged)
-                onPresetChanged();
         }
     }
 }

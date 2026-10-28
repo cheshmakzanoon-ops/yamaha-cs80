@@ -35,7 +35,7 @@ public:
     double getTailLengthSeconds() const override { return 8.0; }
 
     int getNumPrograms() override;
-    int getCurrentProgram() override { return currentProgram; }
+    int getCurrentProgram() override { return currentProgram.load(std::memory_order_relaxed); }
     void setCurrentProgram(int index) override;
     const juce::String getProgramName(int index) override;
     void changeProgramName(int index, const juce::String& newName) override;
@@ -49,7 +49,7 @@ public:
     juce::MidiKeyboardState& getKeyboardState() noexcept { return keyboardState; }
 
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
-    int getCurrentPresetIndex() const noexcept { return currentProgram; }
+    int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
     bool isVoiceActive(int i) const noexcept
     {
@@ -59,7 +59,13 @@ public:
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
     void setPitchWheelFromUI(float v) noexcept { pendingPitch.store(v, std::memory_order_relaxed); }
     void setModWheelFromUI(float v) noexcept { pendingMod.store(v, std::memory_order_relaxed); }
-    juce::String getPresetName() const { return presetName; }
+    struct PresetMetadata
+    {
+        juce::String name;
+        int factoryIndex = 0;
+    };
+    PresetMetadata getPresetMetadata() const;
+    juce::String getPresetName() const { return getPresetMetadata().name; }
     void setPresetName(const juce::String& name);
     void loadFactoryPreset(int index);
     void loadUserPreset(const juce::File& file);
@@ -86,9 +92,8 @@ public:
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     static juce::String parameterId(int index) { return juce::String(cs80::paramId(index)); }
 
-    std::function<void()> onPresetChanged;
-
 private:
+    void setPresetMetadata(const juce::String& name, int index);
     void readParameters();
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
     void resetHardwareSources() noexcept;
@@ -109,8 +114,11 @@ private:
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     std::vector<float> interleaved;
+    // Not accessed by processBlock. State/program APIs already perform non-RT
+    // work; this short metadata lock does not make those APIs realtime-safe.
+    mutable juce::CriticalSection presetMetadataLock;
     juce::String presetName { "Init Patch" };
-    int currentProgram = 0;
+    std::atomic<int> currentProgram { 0 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Cs80AudioProcessor)
 };

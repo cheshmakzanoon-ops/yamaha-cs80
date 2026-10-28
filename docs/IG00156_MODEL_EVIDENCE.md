@@ -110,3 +110,78 @@ For software verification, compare the discrete solver with an offline high-accu
 4. Add a source-domain offline reference model and compare it with the existing TPT implementation.
 5. Obtain or identify suitable calibrated nonlinear measurements before selecting saturation, noise, drift or rail parameters.
 6. Mark each quantity as documented, derived, measured or provisional in the implementation. No current result warrants a 1:1 analog-equivalence claim.
+
+
+## Direct CS-80 M-card image inspection (2026-10-28)
+
+The original [M Circuit Diagram, printed page 41](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/41%20-%20M%20Circuit%20Diagram.jpg) was fetched by [source-inspection run 40783878519, job 123152092199](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40783878519/job/123152092199). All four emitted image tiles were visually inspected. Source identification:
+
+- Drawing KEC-4223-65; heading CS-80 serial number 1001 onward.
+- Original image: 5100 × 3300 pixels, 1,405,965 bytes.
+- SHA-256: `1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`.
+- IC10 is the high-pass IG00156; IC11 is the low-pass IG00156.
+
+### Verified CS-80 grade matching
+
+The drawing explicitly specifies R6 and R7 by IC rank:
+
+| Rank | CS-80 R6 | CS-80 R7 | CS-50/60 R7, comparison only |
+| --- | ---: | ---: | ---: |
+| A | 2.7 kΩ | 3.3 kΩ | 3.0 kΩ |
+| B | 2.2 kΩ | 2.7 kΩ | 2.4 kΩ |
+| C | 1.8 kΩ | 2.2 kΩ | 2.0 kΩ |
+
+CS-50/60 R6 matches the CS-80 column. These are now direct CS-80 evidence and supersede the earlier need to infer matching from CS-15. They do **not** supersede the need to derive the receiving circuit. Do not substitute CS-15 or CS-50/60 values into the CS-80 model.
+
+Both filter drawings visibly contain 180 pF and 1.2 MΩ feedback-network components, two capacitors marked 0.0015 (1.5 nF in the drawing convention), 4.7 MΩ resistors and 33 kΩ resistors. Their complete connection graph, including internal IC nodes, must be transcribed from a focused native-resolution view before calculating the transfer function. In particular, merely seeing a 4.7 MΩ resistor beside an integrating capacitor does not establish that it is leakage across that capacitor.
+
+The source therefore strengthens the case for modeling the actual external network, rather than assuming an ideal two-state filter and adding generic distortion. It does not by itself establish transistor saturation, frequency-dependent damping values, calibrated gain, or measured response. Focused component/pin inspection and the chip's internal illustration remain the next gates before an electrical-model implementation.
+
+
+## Native-resolution external connectivity
+
+A subsequent [inspection run 40784517382, M-card job 123154243112](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40784517382/job/123154243112) emitted `m-filter-detail`: source box [1180,1080,3250,1850], 2070 × 770 pixels, **not resized**. Its PNG SHA-256 is `5dfe074bc3868f22fe662cbe55d718dbb9479db0d05f36a4089a8aae445cbcc7`; the original full-image hash above is unchanged. Direct visual inspection resolves these external connections for both IC10 and IC11:
+
+| Endpoint A | Component | Endpoint B |
+| --- | --- | --- |
+| 16 IN | 33 kΩ | 15 HP |
+| 15 HP | 4.7 MΩ | 14 C1 |
+| 14 C1 | 0.0015 µF = 1.5 nF | 13 BP |
+| 13 BP | 4.7 MΩ | 11 C2 |
+| 11 C2 | 0.0015 µF = 1.5 nF | 10 LP |
+| 10 LP | 33 kΩ | 16 IN |
+| 13 BP | 1.2 MΩ in parallel with 180 pF | 9 FB |
+| 9 FB | wire | 1 AI |
+
+Consequently, the 4.7 MΩ resistors are **not parallel leakage resistors across the 1.5 nF capacitors**. The chip's internal terminal relationships must be included to interpret them.
+
+The AI/FB node also has a 33 kΩ shunt to ground in each filter; the LP node additionally has a 150 kΩ shunt. The latter two resistors have a passive parallel equivalent of approximately 27.049 kΩ. This is not the complete input impedance, because the connected IC and frequency-dependent feedback remain present.
+
+HP pin 15 is AC-coupled through a nonpolar capacitor marked 1/50 to CP2, connector terminal 46. LP audio input AI1 receives CP7, terminal 53; LP output pin 10 is taken to CP8, terminal 56. This sheet does **not** directly join CP2 to CP7 locally. Trace those connector nets and any intervening circuitry before asserting an unloaded HP-to-LP cascade or assigning interstage gain. The earlier normalized SVF equations remain a mathematical baseline, not yet the full M-card equation set.
+
+### What can already be calculated safely
+
+These are external-network calculations from the observed parts, not hardware measurements. With `s` in radians per second, the BP-to-AI/FB branch admittance is:
+
+`Yfb(s) = 1/(1.2e6) + s * 180e-12`
+
+The resistance-capacitance product is 216 microseconds. Capacitive and resistive branch-current magnitudes are equal at approximately 736.83 Hz. **This is not automatically the complete filter's pole, cutoff, resonance corner or damping law.** Those require the IC's internal response and the rest of the network.
+
+For example, define I16, I14 and I11 as current entering the IC at the specified terminals, and Vn as each pin's voltage. The observed external components imply:
+
+`(V16-V15)/33000 + (V16-V10)/33000 + I16 = 0`
+
+`(V14-V15)/4.7e6 + 1.5e-9 * d(V14-V13)/dt + I14 = 0`
+
+`(V11-V13)/4.7e6 + 1.5e-9 * d(V11-V10)/dt + I11 = 0`
+
+These are useful reference-model constraints. They are **not a closed system** until the device-port equations and source/loading relationships are identified. Setting the unknown currents to zero would be an additional, unjustified chip assumption.
+
+The cutoff-control pin 4 is connected to its grade-selected shunt R6 (HP) or R7 (LP), a capacitor marked 0.01 to ground, and the trim feed through 150 kΩ. The trim pot is 100 kΩ across the supplies. Source f1/f2 and envelope-network connections also load these nodes, so R6/R7 times 0.01 µF alone must not be advertised as the complete control-port time constant.
+
+### Remaining source gates
+
+1. Inspect the original IG00156 booklet illustration and its external/terminal conventions. The exact reproduced image is [ig00156.png](https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/ig00156.png?w=1024); the article's enlarged circuit is [vcfcircuit.png](https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/vcfcircuit.png?w=1024). Fetch original-size image bytes if the host supplies them and retain a hash. These are reproductions to reconcile with the original guidebook, not new measured data.
+2. Trace CS-80 connector CP2/CP7/CP8 through the full wiring diagram or harness sheets. Do not confuse connector-net labels with internal IC pin names.
+3. Close the linear nodal equations before selecting a discrete solver or adding a frequency-dependent Q correction.
+4. Identify nonlinear device behavior through original curves, transistor information or calibrated measurement. The newly recovered passive graph does not identify a saturation function.

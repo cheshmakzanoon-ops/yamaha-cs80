@@ -18,10 +18,13 @@ adding one would restore another undocumented response. Existing parameter IDs,
 values and state remain unchanged.
 
 ## Remaining limitation
-Initial Level and Initial Brilliance currently use sustained velocity values.
-The original transient behavior still requires a verified circuit-derived pulse
-model and measurements. This correction does not invent its decay time and does
-not claim that the remaining initial-touch model is exact.
+Initial Level and Initial Brilliance use sustained velocity values. Direct tracing
+of TWS17 and TRG19/23 shows a sampled/held b path for these destinations and a
+separate AC-coupled C path for initial pitch bend. The earlier shared-decay
+interpretation is withdrawn; see INITIAL_TOUCH_CIRCUIT_EVIDENCE.md. The actual
+sample/hold transfer, force/contact mapping, loading and separate pitch-transient
+response still require circuit modeling and measurements. This correction does
+not invent a shared decay time or certify the remaining model.
 
 ## Regression evidence
 The explicit Initial Level test uses nonzero depth and isolates level from
