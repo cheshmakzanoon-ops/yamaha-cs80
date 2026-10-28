@@ -69,6 +69,10 @@ jobs:
     env:
       PLUGINVAL_VERSION: "1.0.4"
     steps:
+      # The validation wrapper lives in the repository, so this job needs a
+      # checkout even though the plugin itself arrives as an artifact.
+      - uses: actions/checkout@v5
+
       - name: Download Linux VST3
         uses: actions/download-artifact@v5
         with:
