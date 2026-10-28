@@ -60,8 +60,11 @@ source inspection alone is not a test pass.
 ### Gesture regression correction
 
 JUCE 8.0.6's programmatic Slider::setValue is not a complete user gesture. The
-smoke fixture now exercises the actual accessible-value action and asserts exact
-begin/end counts and that value notifications occur inside the gesture. The
+offscreen smoke fixture exercises a scoped value-edit transaction and asserts exact
+begin/end counts and that value notifications occur inside the gesture. JUCE's
+getAccessibilityHandler requires a native window handle, which this renderer does
+not create; this fixture does not certify platform accessibility. Native accessibility
+must be tested separately in a desktop host. The
 same investigation found JUCE arrow-key edits lack drag notifications;
 FocusSlider now brackets handled arrows, without nesting during an existing
 drag. Actual arrow-key regressions cover both idle and already-dragging cases.

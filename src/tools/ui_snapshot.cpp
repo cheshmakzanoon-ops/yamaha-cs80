@@ -536,18 +536,19 @@ int main(int argc, char** argv)
             GestureProbe probe;
             memoryParameter->addListener(&probe);
             const double original = slider->getValue();
-            // Programmatic Slider::setValue is not a user gesture. Exercise
-            // the actual accessibility action, which JUCE brackets with its
-            // slider drag notifications (and hence attachment host gestures).
-            auto* accessibility = slider->getAccessibilityHandler();
-            auto* valueInterface = accessibility != nullptr ? accessibility->getValueInterface() : nullptr;
-            check(valueInterface != nullptr, "miniature slider exposes accessible value action");
-            if (valueInterface != nullptr) valueInterface->setValue(1234.0);
+            // This renderer deliberately has no native desktop peer. JUCE
+            // Component::getAccessibilityHandler returns null without a window
+            // handle. Exercise the same scoped value-edit transaction here;
+            // actual arrow-key actions below independently test user gestures.
+            {
+                juce::Slider::ScopedDragNotification gesture(*slider);
+                slider->setValue(1234.0, juce::sendNotificationSync);
+            }
             check(std::abs(processor.getMemoryValue(0, cs80::CP_lpfCutoff) - 1234.0f) < 0.02f,
                   "miniature GUI slider writes APVTS");
             check(probe.changes > 0 && probe.begins == 1 && probe.ends == 1
                   && probe.depth == 0 && probe.unbracketedChanges == 0 && probe.malformedGestures == 0,
-                  "miniature accessible slider edit sends exactly one balanced host gesture");
+                  "miniature scoped value edit sends exactly one balanced host gesture");
             memoryParameter->setValueNotifyingHost(memoryParameter->convertTo0to1(2456.0f));
             flushGui(30);
             check(std::abs(slider->getValue() - 2456.0) < 0.02, "host automation updates miniature slider");

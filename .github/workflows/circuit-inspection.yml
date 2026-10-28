@@ -1,0 +1,36 @@
+name: Circuit source inspection
+
+on:
+  push:
+    paths:
+      - '.github/workflows/circuit-inspection.yml'
+      - 'scripts/inspect_circuit_sources.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: circuit-inspection-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    name: Original service schematic / ${{ matrix.page }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        page: [tkc, tsb1, tsb2]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install source inspection dependency
+        run: python -m pip install 'Pillow==11.3.0'
+      - name: Inspect original circuit source
+        run: python scripts/inspect_circuit_sources.py --page "${{ matrix.page }}"
