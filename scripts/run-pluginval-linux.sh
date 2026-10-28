@@ -1,30 +1,10 @@
 #!/usr/bin/env bash
 #
-# Runs pluginval and turns its exit status into a strict pass/fail gate.
-#
-# Why this wrapper exists
-# -----------------------
-# pluginval 1.0.4 on Linux intermittently (roughly 1-2% of runs) dies with
-# SIGSEGV *after* the final test has completed and *before* it prints SUCCESS.
-# Two independent core dumps from this project both fault on the same frame:
-#
-#   std::__detail::_Map_base<int, std::pair<int const,
-#       std::vector<Steinberg::Linux::IEventHandler*>>>::operator[]
-#     <- juce::RunLoop::Impl::registerEventHandler(...)::{lambda(int)#1}
-#     <- juce::LinuxEventLoop::registerFdCallback(...)::{lambda()#1}
-#     <- juce::MessageManager::runDispatchLoop()
-#
-# juce::RunLoop::Impl::eventHandlerMap is destroyed on pluginval's validation
-# thread when it destroys the plugin instance, while the message thread is
-# still dispatching a pending file-descriptor event through a lambda that
-# captured `this`. It happens with and without --validate-in-process, and the
-# stack contains no CS-80 frames: the race is in the validator's host run
-# loop, not in the plugin. It cannot be fixed from plugin source.
-#
-# The retry is deliberately narrow. It is only allowed when the log shows that
-# every test that was started also completed, that no test reported FAILED and
-# that SUCCESS was not printed. A failed check, a plugin crash during a test,
-# a timeout or a missing SUCCESS all fail immediately with no retry.
+# Strict pluginval gate with a bounded retry for one observed Linux failure shape.
+# Previous diagnostics implicated the validator's event loop, but a text log
+# cannot prove crash ownership or that the entire suite has finished. Retry only
+# status 139 (SIGSEGV convention), after a started test phase completed, without
+# SUCCESS or FAILED. A retry is not a pass: a fresh exit 0 with SUCCESS is required.
 #
 # Usage: run-pluginval-linux.sh <log> <pluginval command...>
 set -uo pipefail
@@ -42,21 +22,26 @@ max_attempts=3
 run_attempt() {
     local target=$1
     shift
+    local -a statuses
     "$@" 2>&1 | tee "$target"
-    return "${PIPESTATUS[0]}"
+    statuses=("${PIPESTATUS[@]}")
+    if [ "${statuses[1]}" -ne 0 ]; then
+        echo "::error::Cannot capture complete pluginval log: $target" >&2
+        return 1
+    fi
+    return "${statuses[0]}"
 }
 
-# True only when the log ends on a completed test, with no FAILED report and
-# no SUCCESS. That is the validator-teardown-crash signature described above.
-harness_crashed_after_suite() {
-    local file=$1
+# This is only retry eligibility, not evidence that a crash was in the host.
+retry_eligible() {
+    local status=$1 file=$2
+    [ "$status" -eq 139 ] || return 1
     [ -f "$file" ] || return 1
-    grep -q 'Completed tests in:' "$file" || return 1
-    grep -q 'FAILED' "$file" && return 1
+    grep -q 'SUCCESS\|FAILED' "$file" && return 1
     awk '
-        /Starting tests in:/  { phase = "started" }
+        /Starting tests in:/  { started = 1; phase = "started" }
         /Completed tests in:/ { phase = "completed" }
-        END { exit (phase == "completed") ? 0 : 1 }
+        END { exit (started && phase == "completed") ? 0 : 1 }
     ' "$file"
 }
 
@@ -66,25 +51,28 @@ while : ; do
     status=$?
 
     if [ "$status" -eq 0 ]; then
-        if ! grep -qx 'SUCCESS' "$log"; then
-            echo "::error::pluginval exited 0 without printing SUCCESS; refusing to treat that as a pass"
+        if ! grep -qx 'SUCCESS' "$log" || grep -q 'FAILED' "$log"; then
+            echo "::error::pluginval exited 0 without a clean SUCCESS; refusing to treat that as a pass"
             exit 1
         fi
         exit 0
     fi
 
-    if ! harness_crashed_after_suite "$log"; then
-        echo "::error::pluginval failed (exit $status) without the known post-suite harness crash; see $log"
+    if ! retry_eligible "$status" "$log"; then
+        echo "::error::pluginval failed (exit $status); not eligible for a post-test retry; see $log"
         exit "$status"
     fi
 
     if [ "$attempt" -ge "$max_attempts" ]; then
-        echo "::error::pluginval crashed in its own run loop $attempt times in a row; see $log"
+        echo "::error::pluginval returned 139 after a completed test phase on $attempt attempts; see $log"
         exit "$status"
     fi
 
-    echo "::warning title=pluginval harness crash::pluginval 1.0.4 crashed in its Linux run loop after the final test completed (no failed test reported). Retrying (attempt $attempt of $max_attempts). See docs/ENGINE.md."
-    mv "$log" "$attempt_log-attempt$attempt.log"
+    if ! mv "$log" "$attempt_log-attempt$attempt.log"; then
+        echo "::error::Cannot preserve failed attempt log; refusing to retry" >&2
+        exit 1
+    fi
+    echo "::warning title=pluginval post-test SIGSEGV::Exit 139 after a completed test phase, without SUCCESS or FAILED. Crash ownership is unproven; retrying the full command (next attempt $((attempt + 1)) of $max_attempts)."
     attempt=$((attempt + 1))
     sleep 1
 done

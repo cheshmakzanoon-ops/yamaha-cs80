@@ -128,7 +128,10 @@ enum : int
 };
 
 // Yamaha owner manual, printed p37: 16', 8', 5 1/3', 4', 2 2/3', 2'.
-// The two fifth stops are intentional, not extra octave transpositions.
+// Nominal harmonic footage ratios. Actual hardware includes resistor/trim tolerances.
+inline constexpr float kFeetRatios[6] = { 0.5f, 1.0f, 1.5f, 2.0f, 3.0f, 4.0f };
+// Legacy equal-tempered approximation, retained for source compatibility only.
+// The oscillator no longer uses these offsets: fifth stops differ by ~1.955 cents.
 inline constexpr float kFeetSemitones[6] = { -12.0f, 0.0f, 7.0f, 12.0f, 19.0f, 24.0f };
 
 inline constexpr int channelStart(int channel) noexcept

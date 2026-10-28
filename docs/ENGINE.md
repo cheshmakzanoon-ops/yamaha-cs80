@@ -22,7 +22,7 @@ The core has no JUCE dependency, so it can be rendered offline, tested with plai
 
 ## Voice model
 
-`Engine` owns eight `Voice` objects. A voice is active while either rank's amplifier envelope is not idle. Allocation uses the oldest idle voice first, then the oldest voice if all eight are busy. Every voice stores:
+`Engine` owns eight `Voice` objects. A voice is active while either rank's amplifier envelope is not idle. Allocation uses a circular cursor, reusing idle or released voices and never stealing a held/pedal-held voice. A ninth held key is rejected; released tails may be replaced. MIDI note-offs match their source channel exactly. Every voice stores:
 
 - MIDI note, velocity, source channel, pressure and timbre
 - pitch target and glide position
@@ -41,7 +41,7 @@ Each `Rank` contains an oscillator, HPF, LPF, filter envelope, amplifier envelop
 - **Sine**: a shaped sine with a small third harmonic, used by the sine path that bypasses the filters.
 - **Noise**: uncorrelated per-sample noise injected before the filters.
 
-The footage switch has six hardware stops: 16', 8', 5⅓', 4', 2⅔', 2'. `kFeetSemitones` is `{-12, 0, +7, +12, +19, +24}`; two positions are fifth intervals. Pulse width has a 50-90% panel range so the pulse never collapses to silence.
+The footage switch has six hardware stops: 16', 8', 5⅓', 4', 2⅔', 2'. `kFeetRatios` is `{0.5, 1, 1.5, 2, 3, 4}`. The fifth stops use nominal harmonic ratios, not equal-tempered +7/+19 semitones; component/trim tolerances are not yet measured. Pulse width has a 50-90% panel range so the pulse never collapses to silence.
 
 The engine runs at **2x the host sample rate**. The oscillators, filters, envelopes and effects all run internally at 96 kHz for a 48 kHz host. A 255-tap Kaiser-windowed decimator removes out-of-band content before host-rate output. The FIR runs at 2x with odd-phase output; its effective host-lattice delay is 63 samples, reported to the host. Symmetric convolution is evaluated only on retained samples. Dense frequency-response and actual C++ tone/impulse checks define numerical acceptance; see DSP_MEASUREMENTS.md.
 

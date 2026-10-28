@@ -30,6 +30,15 @@ if (CS80_BUILD_TESTS)
     endif()
     enable_testing()
     add_test(NAME cs80_core_tests COMMAND cs80_tests)
+    add_executable(cs80_hardware_control_tests tests/HardwareControlTests.cpp)
+    target_include_directories(cs80_hardware_control_tests PRIVATE src)
+    add_test(NAME cs80_hardware_control_tests COMMAND cs80_hardware_control_tests)
+    if (UNIX)
+        add_test(NAME cs80_validator_retry_tests
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-pluginval-retry.sh
+                              ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-pluginval-linux.sh)
+        set_tests_properties(cs80_validator_retry_tests PROPERTIES TIMEOUT 30)
+    endif()
 endif()
 
 add_executable(cs80_render src/tools/render_cli.cpp)

@@ -89,6 +89,7 @@ void Engine::reset()
     decL.reset();
     decR.reset();
     lastNote = 60;
+    nextVoice = 0;
     globalBend = 0.0f;
     modWheel = 0.0f;
     expression = 1.0f;
@@ -260,36 +261,19 @@ void Engine::buildSettings()
 
 int Engine::chooseVoice()
 {
-    for (int i = 0; i < kNumVoices; ++i)
-        if (! voices[(size_t) i].active)
-            return i;
-
-    int best = 0;
-    uint64_t bestAge = UINT64_MAX;
-    for (int i = 0; i < kNumVoices; ++i)
+    // Yamaha owner's manual p43: cyclic assignment of eight voice circuits;
+    // an additional held key is ignored, not an oldest-held voice steal.
+    for (int offset = 0; offset < kNumVoices; ++offset)
     {
-        auto& v = voices[(size_t) i];
-        if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
+        const int index = (nextVoice + offset) % kNumVoices;
+        const auto& voice = voices[(size_t) index];
+        if (! voice.held && ! voice.pedalHeld)
         {
-            if (v.age < bestAge)
-            {
-                best = i;
-                bestAge = v.age;
-            }
+            nextVoice = (index + 1) % kNumVoices;
+            return index;
         }
     }
-    if (bestAge != UINT64_MAX)
-        return best;
-
-    for (int i = 0; i < kNumVoices; ++i)
-    {
-        if (voices[(size_t) i].age < bestAge)
-        {
-            best = i;
-            bestAge = voices[(size_t) i].age;
-        }
-    }
-    return best;
+    return -1;
 }
 
 void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
@@ -433,6 +417,8 @@ void Engine::triggerArpNote()
 
     const int note = arpSequence[(size_t) index];
     const int voice = chooseVoice();
+    if (voice < 0)
+        return;
     float velocity = 0.82f;
     if (heldKeyCount > 0)
         velocity = heldKeys[(size_t) (index % heldKeyCount)].velocity;
@@ -482,16 +468,14 @@ void Engine::updateArpeggiator(float invSampleRate)
         if (arpClock >= interval)
             arpClock = std::fmod(arpClock, interval);
         triggerArpNote();
-        arpGateOpen = true;
+        arpGateOpen = arpVoice >= 0;
         arpGateTime = interval * (global.arpMode == 3 ? 0.45f : 0.58f);
     }
 }
 
 void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
-    if (v.active && (v.held || v.pedalHeld))
-        --heldCount;
-
+    // chooseVoice only returns an unheld circuit.
     v.active = true;
     v.held = true;
     v.sustained = false;
@@ -605,14 +589,9 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
         return;
     }
 
-    // Re-striking a pedal-held note replaces the old voice rather than
-    // stacking a second copy under the pedal.
-    for (auto& v : voices)
-        if (v.active && v.pedalHeld && v.note == midiNote
-            && (! global.mpe || v.midiChannel == midiChannel))
-            releaseVoice(v);
-
     const int idx = chooseVoice();
+    if (idx < 0)
+        return; // all circuits occupied; leave held/ring state untouched
     startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
 }
 
@@ -648,19 +627,11 @@ void Engine::noteOff(int midiNote, int midiChannel)
 
 Engine::Voice* Engine::findVoiceForNote(int note, int midiChannel)
 {
+    // MIDI note identity includes channel even with expressive MPE disabled.
+    // Never redirect an unmatched note-off to a different member/channel.
     Voice* newest = nullptr;
     for (auto& v : voices)
-        if (v.active && v.note == note
-            && (v.midiChannel == midiChannel || ! global.mpe))
-            if (newest == nullptr || v.age > newest->age)
-                newest = &v;
-    if (newest != nullptr)
-        return newest;
-
-    // Some hosts send note-off on the master channel even when the note-on
-    // carried a member channel. Fall back to the newest matching note.
-    for (auto& v : voices)
-        if (v.active && v.note == note)
+        if (v.active && v.held && v.note == note && v.midiChannel == midiChannel)
             if (newest == nullptr || v.age > newest->age)
                 newest = &v;
     return newest;
@@ -862,7 +833,6 @@ void Engine::processInternalSample(float& outL, float& outR)
             auto& rs = rankSettings[ch];
 
             float pitch = (float) v.note
-                          + cs80::kFeetSemitones[std::clamp((int) rs.feet, 0, 5)]
                           + global.masterTune
                           + (ch == 1 ? global.detuneCents / 100.0f : 0.0f)
                           + globalBend
@@ -878,7 +848,10 @@ void Engine::processInternalSample(float& outL, float& outR)
             if (global.glideMode == 2)
                 pitch = std::round(pitch);
 
-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio;
+            // Transposition is a separate nominal harmonic ratio, not rounded
+            // equal-tempered fifths and not part of the shared filter key CV.
+            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
+                               * kFeetRatios[std::clamp(rs.feet, 0, 5)];
             const float pwm = std::sin(kTwoPi * pwmPhase[ch]);
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
 
@@ -1101,7 +1074,7 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
     if (index < 0 || index >= kNumVoices)
         return {};
     const auto& v = voices[(size_t) index];
-    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio };
+    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio, v.held, v.pedalHeld };
 }
 
 Engine::RankInfo Engine::getRankInfo(int voice, int rank) const

@@ -42,11 +42,11 @@ No Arturia artwork, implementation or preset bank is used as the hardware specif
 
 ### 3. Footage selectors
 
-The original six positions are 16', 8', 5⅓', 4', 2⅔', 2'. The engine now uses semitone offsets `{-12,0,7,12,19,24}` rather than six successive octaves. The two fifth positions are not errors to be rounded to octaves. [Owner manual, p37](https://www.therogoffs.com/cs80/CS80E_2.pdf)
+The original six positions are 16', 8', 5⅓', 4', 2⅔', 2'. The first repair replaced six successive octaves with semitone approximations `{-12,0,7,12,19,24}`. The harmonic-footage refinement below now uses nominal ratios `[0.5,1,1.5,2,3,4]` instead. The two fifth positions are not errors to be rounded to octaves. [Owner manual, p37](https://www.therogoffs.com/cs80/CS80E_2.pdf)
 
 **Tests:** Assert all six entries. Existing tests previously verified the wrong table while separately testing an unused fifth ratio.
 
-**Compatibility:** Parameter IDs, index count and normalized range remain unchanged. Saved states with FEET indices 2–5 now sound at their hardware-correct intervals. This is an intentional sonic correction, not transparent patch migration. A release must document it and preserve old renders if users need exact historical recall.
+**Compatibility:** Parameter IDs, index count and normalized range remain unchanged. Saved states with FEET indices 2–5 now use the documented nominal stop relationships. This is an intentional sonic correction, not transparent patch migration. A release must document it and preserve old renders if users need exact historical recall.
 
 ### 4. Ring-modulation envelope routing
 
@@ -177,3 +177,29 @@ Regression tests compare the optimized output with independent full convolution,
 Filter base effective CV is now cached when settings change rather than recomputed with log2 for every voice/sample. New tests compare changed controls against the uncached formula.
 
 **Validation status at authoring:** this increment was assembled through the connected repository API while the cloud sandbox could not start commands because of disk exhaustion. No local compilation or sanitizer run is claimed for this stage. The intended expanded core suite has 1616 checks; Actions must establish the result before it is reported as passing. See [DSP measurements](DSP_MEASUREMENTS.md) for numerical evidence and limits.
+
+## Cyclic voice assignment increment (2026-10-28)
+
+Original owner-manual p43 describes successive strikes cycling through eight voice circuits and ignoring an extra held key once all eight are occupied. The allocator now scans circularly from the circuit after the previous assignment and chooses a released/idle circuit; it returns no allocation instead of stealing a held circuit. Pedal-held voices are also protected under the existing MIDI sustain extension. Direct note-on and arpeggiator callers both guard the no-allocation result. [Yamaha owner manual, p43](https://www.therogoffs.com/cs80/CS80E_3.pdf).
+
+The scan can reuse a release tail when it reaches that available circuit. Its initial cursor after engine reset is a deterministic software convention, not a measured hardware power-on state. Re-striking a pedal-held pitch no longer forcibly replaces its previous voice. Existing patches played with dense chords can therefore omit additional notes rather than use oldest-held stealing; this is an intentional compatibility change toward the original behavior.
+
+MIDI note-off now selects the newest **held** voice with both matching note and channel, rather than accidentally selecting an already-released tail or falling back to an unrelated MPE member. The plugin MIDI dispatcher already forwards the original channel for both note-on and note-off. An unmatched master-channel note-off is not a global panic; use all-notes-off for that operation. Arpeggiator key collection retains its existing modern semantics.
+
+Overlapping duplicate note-ons for the same pitch and channel are a MIDI convention absent from the physical keyboard. Accepted duplicates retain newest-held release ordering. If a duplicate is rejected at capacity, a later identical note-off cannot be distinguished from release of an accepted duplicate without a separate event-identity ledger; that ambiguity remains documented rather than introducing unbounded realtime bookkeeping.
+
+Regression traces cover 24 strikes rotating through eight circuits, a ninth held note, release/reuse with seven others held, pedal-held protection, ignored ninth MPE channel at an identical pitch, unmatched master note-off, and bounded arpeggiator wrap/cleanup. These API-assembled changes require Actions validation; no local pass is claimed while the cloud sandbox remains unavailable.
+
+Oscillator/filter reset on assignment is deliberately unchanged. Circuit assignment evidence does not by itself establish phase continuity, capacitor-state retention or sample-and-hold behavior. A free-running oscillator change requires tracing the actual gate/reset connections and inactive-voice evolution, then testing against electrical or authorized audio captures. No authentic free-running behavior is claimed here.
+
+## Harmonic-footage refinement (2026-10-28)
+
+The six VCO transpositions now multiply oscillator frequency by nominal harmonic ratios `[0.5,1,1.5,2,3,4]`, outside the shared key/filter-pitch domain. Earlier repair used equal-tempered +7/+19 semitone approximations for the fifth stops; these are about 1.955 cents below the nominal 1.5/3 harmonic ratios. The legacy semitone table remains labeled as a source-compatibility approximation and is no longer used by DSP.
+
+The ratio ordering follows the owner's FEET stops and is consistent with the M-board resistor transposition network. **Nominal ratios are not a claim of exact measured hardware tuning:** full switch-network calibration, trimmer settings and component tolerances remain unverified. [Owner manual, p37](https://www.therogoffs.com/cs80/CS80E_2.pdf), [M-board circuit](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/41%20-%20M%20Circuit%20Diagram.jpg), [circuit-model evidence ledger](CIRCUIT_MODEL_SPEC.md).
+
+Tests assert all six nominal ratios, their distinction from equal temperament, actual engine oscillator-frequency ratios, and independent HP/LP keytracking. The small fifth-stop tuning change is intentional; parameter IDs, stop indices and saved values are unchanged. This refinement is part of the unpublished allocator checkpoint and requires Actions validation.
+
+### Remaining assigner boundary
+
+The MIDI implementation currently drops an overflow note-on until a new event occurs. Whether the original continuously scanned KAS automatically reconsiders a still-held ninth key after another circuit becomes free remains unverified. Held-pedal protection is a software MIDI convention; full original scanner, sustain-pedal and sample/hold equivalence is not claimed.

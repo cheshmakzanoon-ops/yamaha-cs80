@@ -320,21 +320,22 @@ int main(int argc, char** argv)
 
     // User preset save/load path. This touches the per-user application data
     // directory, which is created on demand by the processor.
-    processor.saveUserPreset("UI Smoke Preset");
+    const juce::String smokePresetName = "UI Smoke Preset " + juce::Uuid().toString();
+    processor.saveUserPreset(smokePresetName);
     const auto files = processor.getUserPresetFiles();
     bool found = false;
     for (const auto& file : files)
-        found = found || file.getFileNameWithoutExtension() == "UI Smoke Preset";
+        found = found || file.getFileNameWithoutExtension() == smokePresetName;
     check(found, "user preset saved");
     if (found)
     {
         processor.loadFactoryPreset(0);
         for (const auto& file : processor.getUserPresetFiles())
-            if (file.getFileNameWithoutExtension() == "UI Smoke Preset")
+            if (file.getFileNameWithoutExtension() == smokePresetName)
                 processor.loadUserPreset(file);
-        check(processor.getPresetName() == "UI Smoke Preset", "user preset loaded");
+        check(processor.getPresetName() == smokePresetName, "user preset loaded");
         for (const auto& file : processor.getUserPresetFiles())
-            if (file.getFileNameWithoutExtension() == "UI Smoke Preset")
+            if (file.getFileNameWithoutExtension() == smokePresetName)
                 file.deleteFile();
     }
 

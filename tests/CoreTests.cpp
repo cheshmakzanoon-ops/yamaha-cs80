@@ -117,17 +117,13 @@ void testSineFrequency()
 
 void testFeetRatios()
 {
-    const float base = midiToHz(60.0f, 440.0f);
-    const float fifth = midiToHz(67.0f, 440.0f);
-    checkNear(fifth / base, 1.4983f, 0.01f, "5 1/3 foot is a fifth");
-    checkNear(midiToHz(72.0f) / base, 2.0f, 0.001f, "octave ratio");
-    checkNear(midiToHz(69.0f, 440.0f), 440.0f, 0.01f, "A4 reference");
-    checkNear(kFeetSemitones[0], -12.0f, 0.001f, "16 foot is one octave down");
-    checkNear(kFeetSemitones[1], 0.0f, 0.001f, "8 foot is unison");
-    checkNear(kFeetSemitones[2], 7.0f, 0.001f, "5 1/3 foot is a fifth up");
-    checkNear(kFeetSemitones[3], 12.0f, 0.001f, "4 foot is one octave up");
-    checkNear(kFeetSemitones[4], 19.0f, 0.001f, "2 2/3 foot is octave and fifth");
-    checkNear(kFeetSemitones[5], 24.0f, 0.001f, "2 foot is two octaves up");
+    checkNear(midiToHz(69.0f, 440.0f),440,0.01f,"A4 reference");
+    const float expected[6]={.5f,1.f,1.5f,2.f,3.f,4.f};
+    for(int i=0;i<6;++i)
+        checkNear(kFeetRatios[i],expected[i],1.e-7f,"nominal harmonic footage ratio");
+    checkNear(kFeetRatios[2]/kFeetRatios[1],1.5f,1.e-7f,"5 1/3 foot uses nominal3:2 ratio relative to8foot");
+    check(std::abs(kFeetRatios[2]-std::exp2(7.f/12))>.001f,
+          "harmonic fifth is not equal-tempered seven semitones");
 }
 
 void testOscillatorDiscontinuities()
@@ -509,6 +505,8 @@ void testFilterControlDomain()
         const auto foot=probe(60,p);
         checkNear(foot.lpfHz,base.lpfHz,.001f,"footage independent of LPF keytracking");
         checkNear(foot.hpfHz,base.hpfHz,.001f,"footage independent of HPF keytracking");
+        checkNear(foot.oscillatorHz/base.oscillatorHz,kFeetRatios[feet],1.e-6f,
+                  "engine applies nominal harmonic footage ratio independently");
     }
     p[P_subVco]=1;
     const auto vibrato=probe(60,p);
@@ -695,6 +693,74 @@ void testRepeatedNoteRelease()
     engine.noteOff(60, 1);
     engine.allNotesOff(false);
     check(engine.activeVoices() == 0, "repeated note cleanup");
+}
+
+void testHardwareVoiceAssignment()
+{
+    Engine engine; engine.prepare(48000);
+    for(int press=0;press<24;++press)
+    {
+        engine.noteOn(60,.8f);
+        check(engine.getVoiceInfo(press%8).held,"repeated key rotates through all eight circuits");
+        engine.noteOff(60);
+        int held=0; for(int i=0;i<8;++i) held+=engine.getVoiceInfo(i).held ? 1 : 0;
+        check(held==0,"repeated key release targets held circuit, not older release tail");
+    }
+    engine.reset();
+    for(int i=0;i<8;++i) engine.noteOn(48+i,.8f);
+    engine.noteOn(80,.9f);
+    engine.noteOff(80);
+    for(int i=0;i<8;++i)
+    {
+        const auto v=engine.getVoiceInfo(i);
+        check(v.held && v.note==48+i,"ninth held key ignored without disturbing occupied circuits");
+    }
+    engine.noteOff(51); engine.noteOn(81,.8f);
+    check(engine.getVoiceInfo(3).held && engine.getVoiceInfo(3).note==81,
+          "circular scan reuses only released circuit when seven remain held");
+    engine.noteOff(81);
+    for(int i=0;i<8;++i) engine.noteOff(48+i);
+    render(engine,48000,48000*3);
+    check(engine.activeVoices()==0,"ignored note does not leave phantom held count or stuck voice");
+
+    engine.reset(); engine.controlChange(64,1);
+    for(int i=0;i<8;++i) { engine.noteOn(48+i,.8f); engine.noteOff(48+i); }
+    engine.noteOn(48,.9f);
+    for(int i=0;i<8;++i)
+        check(engine.getVoiceInfo(i).pedalHeld && !engine.getVoiceInfo(i).held,
+              "pedal-held circuits are not stolen by retrigger");
+    engine.controlChange(64,0); engine.noteOn(72,.8f);
+    check(engine.getVoiceInfo(0).held && engine.getVoiceInfo(0).note==72,"pedal release makes next circular circuit available");
+    engine.allNotesOff(false);
+
+    ParamValues p; p[P_mpeOn]=1;
+    engine.reset(); engine.setParams(p);
+    for(int i=0;i<8;++i) engine.noteOn(60,.8f,i+2);
+    engine.noteOn(60,.9f,10); engine.noteOff(60,10);
+    for(int i=0;i<8;++i)
+        check(engine.getVoiceInfo(i).held && engine.getVoiceInfo(i).channel==i+2,
+              "ignored MPE ninth member note-off cannot release another member");
+    engine.noteOff(60,1);
+    for(int i=0;i<8;++i)
+        check(engine.getVoiceInfo(i).held,"unmatched master-channel note-off is not a global panic");
+    engine.noteOff(60,5); engine.noteOn(70,.8f,10);
+    check(engine.getVoiceInfo(3).held && engine.getVoiceInfo(3).channel==10,
+          "released MPE circuit is available without changing other members");
+    engine.allNotesOff(false);
+    engine.reset(); p[P_mpeOn]=0; engine.setParams(p);
+    engine.noteOn(60,.8f,2); engine.noteOff(60,1);
+    check(engine.getVoiceInfo(0).held,"non-MPE note-off still respects MIDI channel identity");
+    engine.noteOff(60,2);
+    check(!engine.getVoiceInfo(0).held,"matching non-MPE channel releases held note");
+    // Modern arp is not original hardware. Stress bounded held-key storage and
+    // repeated circuit wrap; all chooseVoice callers must handle no allocation.
+    p[P_arpOn]=1; p[P_arpRate]=30; p[P_arpOctaves]=4;
+    engine.setParams(p);
+    for(int note=0;note<128;++note) engine.noteOn(note,.8f,2);
+    const auto audio=render(engine,48000,48000);
+    check(analyse(audio).finite && engine.activeVoices()<=8,"arpeggiator remains bounded across cyclic assignment");
+    engine.allNotesOff(false);
+    check(engine.activeVoices()==0,"arpeggiator allocation cleanup");
 }
 
 void testVoiceAllocation()
@@ -1011,6 +1077,7 @@ int main()
     testMpeExpression();
     testSubOscillatorWaves();
     testRepeatedNoteRelease();
+    testHardwareVoiceAssignment();
     testVoiceAllocation();
     testRenderAndRelease();
     testVelocityResponse();

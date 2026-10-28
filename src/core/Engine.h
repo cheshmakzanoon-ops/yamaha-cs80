@@ -144,6 +144,7 @@ public:
         float pressure = 0.0f;
         float bend = 0.0f;
         float ribbonRatio = 1.0f;
+        bool held = false, pedalHeld = false;
     };
     VoiceInfo getVoiceInfo(int index) const;
     struct RankInfo
@@ -226,6 +227,7 @@ private:
 
     std::array<Voice, kNumVoices> voices;
     uint64_t voiceCounter = 0;
+    int nextVoice = 0;
     int lastNote = 60;
     float globalBend = 0.0f;
     float modWheel = 0.0f;

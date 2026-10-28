@@ -249,6 +249,8 @@ def main():
     result["decimator"] = decimator_metrics
     (directory/"measurements.json").write_text(json.dumps(result,indent=2)+"\n")
     for row in metrics: print(f"{row['fundamental_hz']:8.2f} Hz: off-harmonic improvement {row['alias_energy_improvement_db']:.2f} dB")
+    if decimator_metrics:
+        print("DECIMATOR_MEASUREMENTS " + json.dumps(decimator_metrics, sort_keys=True))
     print(f"Wrote {5 if decimator_metrics else 4} PNG/SVG figures and {directory/'measurements.json'}")
 
 if __name__=="__main__": main()

@@ -48,6 +48,13 @@ The modern layer is kept behind its own surface so the primary instrument remain
 
 ## Hardware programmer and reconstruction changes
 
+Voice assignment cycles through the eight circuits. A ninth simultaneously held or pedal-held note is rejected rather than stealing an occupied voice; released tails can be reused. MIDI note-off matching is channel-exact. Duplicate same-pitch note-ons on the same MIDI channel are a software-interface ambiguity, not an original physical-keyboard behavior.
+
+Footage uses nominal harmonic ratios 0.5, 1, 1.5, 2, 3 and 4. The fifth stops are about 1.955 cents above equal-tempered fifths. These are nominal circuit targets, not measured tolerances of every original instrument.
+
+The passive matrix model in src/core/HardwareControl.h transcribes 66 verified resistor/diode branches and solves conditional bus voltages. It is tested independently and deliberately does not drive audio until receiver loading and IC conversion are established. See docs/PRESET_CIRCUIT_LEDGER.md for source locations and assumptions.
+
+
 The output decimator now uses a 255-tap Kaiser FIR with 63 host samples of declared latency. This deliberately changes the former 8-sample compensation; projects should let the host refresh plugin delay compensation. CI verifies measured phase delay, pass-band ripple and stop-band rejection. These are software-quality tests, not hardware-match certification.
 
 
@@ -126,7 +133,7 @@ The suite covers:
 - oscillator pitch and footage octave ratios
 - filter stability under high resonance
 - ADSR attack/sustain/release timing
-- eight-voice allocation and voice stealing
+- cyclic eight-voice allocation, held-key overflow rejection and released-voice reuse
 - finite, bounded, DC-blocked audio and release tails
 - velocity response
 - 44.1, 48, 96 and 192 kHz operation
