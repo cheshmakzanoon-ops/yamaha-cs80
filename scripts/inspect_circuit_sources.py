@@ -18,6 +18,10 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "panel3": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/66%20-%20Panel%203%20Circuit%20Diagram.jpg",
+    "rs": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/39%20-%20R51-52%20Circuit%20Diagram.jpg",
+    "kbc": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/15%20-%20KBC%201-2%20Circuit%20Diagram.jpg",
+    "icguide_index": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "cs20m_q": "https://www.polynominal.com/sample-packs/yamaha-cs20m/Yamaha-CS-20m-service-Manual.pdf",
     "icguide": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "ig00156": "https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/ig00156.png",
@@ -131,6 +135,12 @@ def inspect_pdf(url, data, key):
             selected = [52]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "fixed original CS-20M Figure F-4 source target"}), flush=True)
+        elif key == "icguide_index":
+            if count < 6:
+                raise ValueError("guidebook fixed index pages4..6 absent")
+            selected = [4, 5, 6]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "fixed continuation of inspected guidebook index"}), flush=True)
         else:
             txt = root / "source.txt"
             subprocess.run(["pdftotext", "-layout", str(pdf), str(txt)], check=True, timeout=45)
@@ -167,7 +177,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide", "cs20m_q"}:
+    if args.page in {"icguide", "icguide_index", "cs20m_q"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)
