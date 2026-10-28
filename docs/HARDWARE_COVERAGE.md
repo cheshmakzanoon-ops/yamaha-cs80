@@ -51,7 +51,7 @@ Primary Yamaha source locators are maintained in [HARDWARE_REFERENCES.md](HARDWA
 |11 Sub → VCO|A; E semitone modulation|O8,37; real pitch-CV injection may not be exponential semitone FM|Compare carrier deviation/sidebands across pitch, depth and waveform|
 |11 Sub → VCF|A; E equal shared offset|O8,37; HP/LP path gains/loading unverified|Trace separate destinations and verify modulation depth and polarity|
 |11 Sub → VCA|A; E linear level addition/clamp|O8,37; actual VCA control law unverified|Measure tremolo law, minimum level and clipping at full modulation|
-|12 Initial pitchbend|A; E velocity-scaled onset, fixed75ms exponential|O10,38,44; timing not established from actual touch RC network|Derive the separately AC-coupled TWS C path and compare pitch trajectory at multiple velocities|
+|12 Initial pitchbend|A; E depth-independent nominal50ms positive onset, live PB scaling|S17/23: conditional1µF×(100k||100k) pole; FET acquisition/clamp/retrigger still approximate|Derive the separately AC-coupled TWS C path and compare pitch trajectory at multiple velocities|
 |12 Aftertouch → sub speed|A; E lastPressure global speed factor|O10,38; pressure aggregation, nonlinear law and smoothing unverified|Resolve keyboard touch-bus priority/aggregation and test simultaneous unequal pressures|
 |12 Aftertouch → sub VCO|A; E per-voice pressure multiplier|O10,38; correct destinations do not prove gain law|Trace touch bus and measure depth response per key/voice|
 |12 Aftertouch → sub VCF|IB/A in 71f0483; appended P_subAtVcf and host parameter|O10,38; independent physical green control; software CI passes, numerical depth provisional|Calibrate pressure/depth transfer and receiving circuit; see AFTERTOUCH_SUB_VCF.md|

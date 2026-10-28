@@ -87,3 +87,19 @@ No measured audio time constant is certified by this document. The 50ms C-path p
 - trg4 source SHA-256: 8c3d8ffab912fc7e9b3817da880ded20f8fcc177a5927d52e5c68ff78a511b26
 
 - trg5 source SHA-256: 29deffa0cfc883bf2bb3f95f2887f5e1df7f99f4ae96efb0c9d8c4693afe6b92
+
+## Shared pressure-to-speed bus: native TRG5 evidence
+
+Run40786132378, job123159660060, original page25 (same source hash above) supplied two native crops:
+- trg5-speed-upper: box[3750,450,4650,1750], PNG SHA-256 71fce5530093dc2acc622d1df336143899053ff953ed61f32cadb6b8f4ccbd2a.
+- trg5-speed-lower: box[3750,1700,4650,3200], PNG SHA-256 898dfbd61dc30988954a339c09e17f142db43924fc17ac75c019aa451640c533.
+
+Each a1-a8 pressure signal connects to a diode anode. All eight cathodes join one bus. The bus has 47k to E (ground), NOT to -15V: native pixels resolve the rail junction and supersede the earlier overview hypothesis. The bus feeds IC17 pin3 through 330k; SPD feeds pin2 through 100k; SP leaves at terminal40. The branch to the diodes is before the separate ALII-controlled after-level output stages.
+
+This is positive diode combining, not latest-event selection and not an arithmetic average. With stiff nonnegative sources and ideal diodes, its functional limit is max(a1,...,a8,0). With a fixed forward-drop approximation it becomes approximately max(a_i - Vf,0); real behavior requires the diode current-voltage laws, source impedances, and IC17 input loading. Similar pressure values can share conduction, so an exact analog solution is not literally a discrete maximum.
+
+The a values themselves are independently smoothed by TWS100k/1µF branches. Therefore pressure-event order must not determine the shared speed state. A new lower-pressure event must not displace an already larger pressure on another key. Releasing the strongest pressure should expose the next strongest after source smoothing, not reset the bus while other pressures remain.
+
+A normalized maximum over physical-voice pressure proxies is a defensible functional improvement over latest-event memory, but remains a MIDI approximation: channel pressure, poly pressure, sustained/released voices, voice stealing and sensor/allocator history need explicit policy. Do not add a guessed diode threshold in normalized MIDI units. Do not claim that fixing aggregation establishes the SP-to-SUB oscillator frequency law.
+
+The b hold path also must not be described as indefinitely constant: its high-value resistor is gate-connected and can allow bias-dependent leakage. Established evidence is destination/state separation, not ideal infinite retention.

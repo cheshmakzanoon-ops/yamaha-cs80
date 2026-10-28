@@ -1248,6 +1248,211 @@ void testSubAftertouchVcf()
     }
 }
 
+
+void testNominalInitialPitchTransient()
+{
+    // Independent expected values use the conditional TWS C ideal pole,
+    // not a constant read back from the implementation under test.
+    auto settings = [] {
+        ParamValues p;
+        p[P_voiceDispersion]=p[P_drift]=p[P_analogNoise]=0;
+        p[P_detune]=p[P_subVco]=p[P_subAtVco]=p[P_subAtSpeed]=0;
+        p[P_initBend]=.8f;
+        for(int rank=0;rank<2;++rank)
+        {
+            p[chParam(rank,CP_fIl)]=p[chParam(rank,CP_fAl)]=0;
+            p[chParam(rank,CP_initBrill)]=p[chParam(rank,CP_initLevel)]=0;
+            p[chParam(rank,CP_afterBrill)]=p[chParam(rank,CP_afterLevel)]=0;
+            p[chParam(rank,CP_saw)]=p[chParam(rank,CP_pulse)]=0;
+            p[chParam(rank,CP_sine)]=.2f;
+            p[chParam(rank,CP_vLevel)]=.25f;
+            p[chParam(rank,CP_vA)]=p[chParam(rank,CP_vD)]=.001f;
+            p[chParam(rank,CP_vS)]=1;
+        }
+        return p;
+    };
+    auto bend = [](const Engine& e,int voice,int rank,int note) {
+        return 12.0f*std::log2(e.getRankInfo(voice,rank).oscillatorHz/midiToHz((float)note));
+    };
+    for(double rate : {44100.0,48000.0,96000.0,192000.0})
+    {
+        const int period=(int)std::lround(rate*.050);
+        auto p=settings();
+        Engine e; e.prepare(rate); e.setParams(p); e.noteOn(69,.75f);
+        float previous=-.8f*.75f;
+        for(int multiple=1;multiple<=3;++multiple)
+        {
+            render(e,rate,period);
+            const float expected=(float)(-.8*.75*std::exp(-multiple));
+            for(int rank=0;rank<2;++rank)
+                checkNear(bend(e,0,rank,69),expected,2.e-5f,
+                          "initial pitch follows nominal 50/100/150ms positive-step decay");
+            const float current=bend(e,0,0,69);
+            check(current>previous && current<0,
+                  "nominal initial pitch rises monotonically from below without overshoot");
+            previous=current;
+        }
+        render(e,rate,(int)(rate*2)-3*period);
+        check(e.getRankInfo(0,0).oscillatorHz==midiToHz(69),
+              "initial pitch decay does not freeze a permanent subthreshold detuning");
+
+        p[P_initBend]=0;
+        Engine neutral, muted;
+        neutral.prepare(rate); muted.prepare(rate);
+        neutral.setParams(p); neutral.noteOn(69,.75f);
+        auto initiallyEnabled=p; initiallyEnabled[P_initBend]=1;
+        muted.setParams(initiallyEnabled); muted.noteOn(69,.75f); muted.setParams(p);
+        check(render(neutral,rate,256)==render(muted,rate,256),
+              "turning PB depth off before rendering is sample-identical to zero-depth onset");
+        Engine live; live.prepare(rate); live.setParams(p); live.noteOn(69,.75f);
+        render(live,rate,period);
+        check(live.getRankInfo(0,0).oscillatorHz==midiToHz(69),
+              "zero PB depth leaves pitch neutral while upstream onset state evolves");
+        p[P_initBend]=.8f; live.setParams(p); render(live,rate,1);
+        const double elapsed=(period+1)/rate;
+        checkNear(bend(live,0,0,69),(float)(-.8*.75*std::exp(-elapsed/.050)),2.e-5f,
+                  "enabling PB after50ms reveals decayed state, not zero or a restarted onset");
+        p[P_initBend]=.4f; live.setParams(p); render(live,rate,1);
+        checkNear(bend(live,0,0,69),(float)(-.4*.75*std::exp(-((period+2)/rate)/.050)),2.e-5f,
+                  "live PB depth scales the existing transient without restarting it");
+
+        p=settings();
+        Engine poly; poly.prepare(rate); poly.setParams(p); poly.noteOn(69,.75f);
+        render(poly,rate,period); poly.noteOn(76,.4f);
+        const int quarter=(int)std::lround(rate*.025);
+        render(poly,rate,quarter);
+        checkNear(bend(poly,0,0,69),(float)(-.8*.75*std::exp(-((period+quarter)/rate)/.050)),2.e-5f,
+                  "new polyphonic note does not restart the older initial pitch state");
+        checkNear(bend(poly,1,0,76),(float)(-.8*.4*std::exp(-(quarter/rate)/.050)),2.e-5f,
+                  "staggered voice has its independent velocity and onset age");
+
+        // With PB disabled, this patch must not introduce a shared decay into
+        // the existing held Initial Brilliance/Level behavior. This is a
+        // software-preservation regression, not calibration of the b circuit.
+        p[P_initBend]=0;
+        for(int rank=0;rank<2;++rank)
+            p[chParam(rank,CP_initBrill)]=.3f;
+        Engine held; held.prepare(rate); held.setParams(p); held.noteOn(69,.75f);
+        render(held,rate,period);
+        const auto before=held.getRankInfo(0,0);
+        render(held,rate,9*period);
+        const auto after=held.getRankInfo(0,0);
+        check(before.hpfHz==after.hpfHz && before.lpfHz==after.lpfHz,
+              "pitch-only correction preserves current held initial brilliance");
+        for(int rank=0;rank<2;++rank)
+        {
+            p[chParam(rank,CP_initBrill)]=0;
+            p[chParam(rank,CP_initLevel)]=.65f;
+        }
+        Engine soft,hard; soft.prepare(rate); hard.prepare(rate);
+        soft.setParams(p); hard.setParams(p);
+        soft.noteOn(69,.25f); hard.noteOn(69,1);
+        render(soft,rate,10*period); render(hard,rate,10*period);
+        check(analyse(render(hard,rate,period)).rms >
+              1.5*analyse(render(soft,rate,period)).rms,
+              "pitch-only correction preserves current held initial level response");
+    }
+}
+
+
+void testSharedPressureSpeedBus()
+{
+    // All other pressure destinations are zero: only shared speed -> SUB VCO
+    // can distinguish these renders. Matching event histories preserve phase.
+    auto settings = [] {
+        ParamValues p;
+        p[P_voiceDispersion]=p[P_drift]=p[P_analogNoise]=p[P_detune]=0;
+        p[P_initBend]=p[P_subAtVco]=p[P_subAtVcf]=p[P_subVcf]=p[P_subVca]=0;
+        p[P_subAtSpeed]=1; p[P_subVco]=.7f; p[P_subSpeed]=5; p[P_subWave]=0;
+        p[P_mpeOn]=1;
+        for(int rank=0;rank<2;++rank)
+        {
+            p[chParam(rank,CP_initBrill)]=p[chParam(rank,CP_initLevel)]=0;
+            p[chParam(rank,CP_afterBrill)]=p[chParam(rank,CP_afterLevel)]=0;
+            p[chParam(rank,CP_saw)]=p[chParam(rank,CP_pulse)]=0;
+            p[chParam(rank,CP_sine)]=.2f;
+            p[chParam(rank,CP_vLevel)]=.25f;
+            p[chParam(rank,CP_vA)]=p[chParam(rank,CP_vD)]=.001f;
+            p[chParam(rank,CP_vS)]=1; p[chParam(rank,CP_vR)]=1;
+        }
+        return p;
+    };
+    for(double rate : {44100.0,48000.0,96000.0,192000.0})
+    {
+        const auto p=settings();
+        auto start = [&](Engine& e) {
+            e.prepare(rate); e.setParams(p);
+            e.noteOn(60,.7f,2); e.noteOn(67,.7f,3);
+        };
+        auto same = [&](Engine& a,Engine& b,const char* message) {
+            check(render(a,rate,1024)==render(b,rate,1024),message);
+        };
+        Engine a,b; start(a); start(b);
+        a.polyPressure(60,.8f,2); a.polyPressure(67,.2f,3);
+        b.polyPressure(67,.2f,3); b.polyPressure(60,.8f,2);
+        same(a,b,"shared pressure speed is independent of unequal pressure event order");
+        a.polyPressure(67,.4f,3);
+        same(a,b,"a nondominant pressure change does not alter shared speed");
+        a.polyPressure(60,0,2);
+        b.polyPressure(60,.4f,2); b.polyPressure(67,0,3);
+        same(a,b,"zeroing dominant pressure exposes the remaining held maximum");
+        a.polyPressure(99,1,2); a.polyPressure(67,1,9);
+        a.channelPressure(9,1);
+        same(a,b,"unmatched note or channel pressure cannot override shared speed");
+
+        Engine release,reference; start(release); start(reference);
+        for(auto* e : {&release,&reference})
+        {
+            e->polyPressure(60,.8f,2); e->polyPressure(67,.2f,3);
+        }
+        same(release,reference,"shared speed release comparison starts identically");
+        release.noteOff(60,2); reference.noteOff(60,2);
+        reference.polyPressure(60,0,2);
+        same(release,reference,"released dominant voice exposes the remaining held pressure");
+        release.noteOff(67,3); reference.noteOff(67,3);
+        reference.polyPressure(67,0,3);
+        same(release,reference,"all released voices leave shared pressure neutral during tails");
+
+        Engine pedal,pedalReference; start(pedal); start(pedalReference);
+        for(auto* e : {&pedal,&pedalReference})
+        {
+            e->polyPressure(60,.8f,2); e->polyPressure(67,.2f,3);
+            e->controlChange(64,1,2); e->controlChange(64,1,3);
+        }
+        same(pedal,pedalReference,"pedal comparison starts with identical physical pressure");
+        pedal.noteOff(60,2); pedalReference.noteOff(60,2);
+        pedalReference.polyPressure(60,0,2);
+        same(pedal,pedalReference,"pedal-held sound does not retain released physical pressure");
+        pedal.noteOff(67,3); pedalReference.noteOff(67,3);
+        pedalReference.polyPressure(67,0,3);
+        same(pedal,pedalReference,"all pedal-held voices leave shared pressure neutral");
+
+        // Fill all circuits so the next assignment really reuses voice zero.
+        // No samples elapse before reuse: the histories differ only in stale
+        // pressure, not oscillator or smoothing state.
+        Engine reuse,clean; reuse.prepare(rate); clean.prepare(rate);
+        reuse.setParams(p); clean.setParams(p);
+        for(int i=0;i<8;++i)
+        {
+            reuse.noteOn(60+i,.7f,2); clean.noteOn(60+i,.7f,2);
+            reuse.polyPressure(60+i,.9f,2);
+        }
+        for(int i=0;i<8;++i)
+        {
+            reuse.noteOff(60+i,2); clean.noteOff(60+i,2);
+        }
+        reuse.noteOn(72,.7f,2); clean.noteOn(72,.7f,2);
+        same(reuse,clean,"reused circuit clears stale pressure before entering shared bus");
+
+        Engine sensitive,neutral; start(sensitive); start(neutral);
+        sensitive.polyPressure(60,.8f,2);
+        const auto activeAudio=render(sensitive,rate,4096);
+        const auto neutralAudio=render(neutral,rate,4096);
+        check(analyse(activeAudio).rms>1.e-5 && activeAudio!=neutralAudio,
+              "shared speed test fixture is audible and sensitive to held pressure");
+    }
+}
+
 void testEveryFactoryPresetRenders()
 {
     Engine engine;
@@ -1294,6 +1499,8 @@ int main()
     testMpeExpression();
     testSubOscillatorWaves();
     testSubAftertouchVcf();
+    testNominalInitialPitchTransient();
+    testSharedPressureSpeedBus();
     testRepeatedNoteRelease();
     testHardwareVoiceAssignment();
     testVoiceAllocation();

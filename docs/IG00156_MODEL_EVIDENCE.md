@@ -185,3 +185,245 @@ The cutoff-control pin 4 is connected to its grade-selected shunt R6 (HP) or R7 
 2. Trace CS-80 connector CP2/CP7/CP8 through the full wiring diagram or harness sheets. Do not confuse connector-net labels with internal IC pin names.
 3. Close the linear nodal equations before selecting a discrete solver or adding a frequency-dependent Q correction.
 4. Identify nonlinear device behavior through original curves, transistor information or calibrated measurement. The newly recovered passive graph does not identify a saturation function.
+
+## CS-80 pages 42, 52 and 44: calibrated endpoints and resolved interstage wiring
+
+Inspected actual source-image pixels from Actions run **40785572946**, jobs **123157781827** (42), **123157781605** (52) and **123157781892** (44). All three images are 5100 x 3300. These are original Yamaha documentation scans, not hardware measurements.
+
+| Page | Original source | SHA-256 |
+| --- | --- | --- |
+| 42 | [M Circuit ICs](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/42%20-%20M%20Circuit%20ICs.jpg) | `5698fdfd19600f6b0b8b8f9dfdfc70723248b4b33e8daad39b9f9c0ee11cc24d` |
+| 52 | [M Circuit ICs](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/52%20-%20M%20Circuit%20ICs.jpg) | `387d44e9f891c8af9bcef83e3894077df4f198d1676d4580041c828ba1c7fb51` |
+| 44 | [M11-12 Circuit Board and Wiring](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/44%20-%20M11-12%20Circuit%20Board%20%26%20Wiring.jpg) | `3320dd2f625c79d7cca9b98abd5cade9d1b95477e6d8990a93a296c9cda71256` |
+
+Four overlapping quadrant crops per page were inspected. Source boxes are [0,0,2614,1714], [2486,0,5100,1714], [0,1586,2614,3300], [2486,1586,5100,3300], each rendered to 1800 x 1180. The text is legible, but future fine transistor or trace inspection must use native crops rather than infer unreadable markings.
+
+### Actual CS-80 IC calibration anchors
+
+Page 42 identifies IG00156 pin 2 as the key-voltage input, with the stated key-voltage span 0.25–4.0 V. At key voltage 0.25 V and cutoff-control voltage 5 V, the stated cutoff is 1 kHz. This agrees with the previously cited family-guide relation:
+
+```
+fc = 125 * KV * 2^Vf
+125 * 0.25 * 2^5 = 1000 Hz
+```
+
+That numerical agreement is a cross-source consistency check, not proof of unlimited voltage range, board-level slider scaling, exact temperature compensation or IC matching.
+
+Page 42 also supplies actual resonance anchors:
+
+- Pin 6 Q-adjustment sets Q to 5 when pin 7 VQ is 0 V.
+- Pin 7 control at 0 V gives the maximum stated Q of 5.
+- Pin 7 control at 10 V gives the minimum stated Q of 0.5.
+- Pin 9 is described as the Q-feedback **output** pin; do not assume it is a high-impedance summing input merely because its label is FB.
+- Pin 16 is described as the feedback input.
+- Pin 14 and pin 11 are the cutoff-determining capacitor terminals.
+
+**These endpoints do not determine an interpolation curve.** Linear Q, linear damping (1/Q), exponential Q and a transistor-derived response can share endpoints and differ substantially in between. In particular, the tempting law `1/Q = 0.2 + 0.18*VQ` is only an endpoint-interpolating hypothesis, not a transcribed Yamaha equation. Do not ship it as a verified circuit law.
+
+The page's simplified response sketches carry ambiguous dB/voltage annotations; they are not sufficient evidence to replace the two-integrator topology with a one-pole model. Page 52 describes other M-board IC functions, not IG00156 internals. Neither page contains the needed transistor/internal-amplifier graph.
+
+### CP2/CP7/CP8 wiring is now resolved for M11 and M12
+
+Page 44 (drawing KEP-NA03574-6Y, CS-80 serial 1001 onward) explicitly lists:
+
+- M11 terminal 46 CP2 wired to **RA1-M11-CP7 (53)**, color code BE.
+- M12 terminal 46 CP2 wired to **RA1-M12-CP7 (53)**, color code BE.
+- Reciprocal terminal 53 CP7 entries point to the same-board CP2 (46).
+- M11 terminal 56 CP8 wired to **RA1-M11-CP3 (29)**, color code VI.
+- M12 terminal 56 CP8 wired to **RA1-M12-CP3 (29)**, color code VI.
+- Reciprocal terminal 29 CP3 entries point to the same-board CP8 (56).
+
+Combined with page 41, the first two voice-board instances therefore have this evidenced interstage route:
+
+```
+HP IG00156 IC10 pin15
+  -> 1 uF nonpolar coupling capacitor
+  -> CP2 terminal46
+  -> same-board harness wire
+  -> CP7 terminal53
+  -> LP IG00156 IC11 AI pin1 / FB pin9 external node
+```
+
+This supersedes the earlier unresolved CP2/CP7 warning **for M11 and M12**. Other voice-board wiring sheets have not yet been individually checked. The physical harness wire is not an inserted gain stage.
+
+The LP AI/FB node also has its feedback branch and internal IC port attached. Therefore do not compute the entire coupling response using only 1 uF times the parallel 33k/150k ground resistors. A suitable circuit solver must include the capacitor current:
+
+```
+iCouple = 1e-6 * d(V_HP15 - V_LP_AI)/dt
+```
+
+and the complete KCL of both connected ports, including internal chip currents and external feedback. The passive capacitor relation itself is established; the resulting total transfer function is not yet closed.
+
+### Implementable next DSP improvement and its acceptance gate
+
+The source now justifies a **voltage-domain calibration layer**, independent of any claim to transistor-perfect saturation:
+
+1. Keep KV, Vf and VQ explicit and separate from UI slider positions. Document the unverified UI-to-voltage mapping instead of silently calling a normalized knob a circuit voltage.
+2. Add the 0.25 V / 5 V / 1 kHz cutoff anchor as a regression target. For a family-guide exponential control implementation, also check that doubling KV or adding one Vf unit doubles the requested analog cutoff. These are control-law tests, not sampled-output cutoff measurements.
+3. Add independently named resonance calibration anchors Q(0 V)=5 and Q(10 V)=0.5, with a source tag. Do not conflate endpoint checks with validation of the existing middle-of-travel curve.
+4. Distinguish requested analog cutoff from the digital coefficient mapping; compare the discrete filter's measured complex response against the chosen analog reference at several sample rates. Frequency warping correction is a solver decision, not a Yamaha component.
+5. Preserve the current filter implementation until the complete IC graph closes. Then replace the approximation with a coupled linear nodal prototype containing both integrators, the 1.2M/180p feedback branch, the 4.7M paths and the interstage 1 uF capacitor. Verify its small-signal transfer before adding any nonlinear device terms.
+
+A safe immediate code change is to expose and test these calibration anchors and remove unsupported hardware-exact descriptions; it is **not yet justified** to change audio behavior by inserting an arbitrary RC corner, high-frequency resonance taper or generic soft clip. The latter can sound plausible while contradicting the documented loaded graph.
+
+### Precise remaining internal-graph source
+
+The original [Yamaha IC guidebook PDF](https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf) remains the preferred next target. A previous web fetch reported 13,608,992 bytes, too large for that web renderer but within the source-inspection workflow's existing 16 MiB download bound. A bounded PDF path can locate IG00156 by extracted text and render only the matching pages. This requires explicit workflow support for PDF decoding and the source host, not removal of bounds.
+
+Alternative booklet reproductions, pending visual/hash verification, are [ig00156.png](https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/ig00156.png) and [vcfcircuit.png](https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/vcfcircuit.png). Omitting the width query avoids intentionally requesting a downscaled image. The third-party analysis redraw is not an original Yamaha schematic and must not be silently promoted to that status.
+
+Until that graph is available, internal current directions, amplifier gains and port impedances remain explicit unknowns. Even a complete functional diagram would not by itself identify silicon saturation, slew, mismatch, temperature drift or rail asymmetry; those need original quantitative curves or calibrated hardware data.
+
+## Recovered IG00156 functional graph: conditional linear model, not transistor equivalence
+
+Actions run **40786132378**, jobs **123159660277** and **123159660319**, supplied these native-resolution reproductions. Both complete images were visually inspected:
+
+- [Booklet reproduction](https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/ig00156.png), 1958 x 842, 270344 bytes, source SHA-256 `f7fa90bcdf64c07260484630f329fd2fa7acc24d25a55c9e38a8fb830e4e01da`; full-native PNG SHA-256 `2fa9424e7c8fafad6cb1781e876a208d5448e1e2bfce14108423bb141e86ad8f`.
+- [Circuit enlargement](https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/vcfcircuit.png), 1908 x 1392, 258899 bytes, source SHA-256 `127e293090f97fa4a1f6e9cbd8b5220fe91ce675ae724ae3174256e92e013a99`; full-native PNG SHA-256 `5a5f33032e949937976975839e948fbf2a95bebbe53c717b7c50c73d5bfc12a4`.
+
+The booklet identifies Mitsubishi manufacture. The two images show the same **functional** diagram, not individual transistors. They establish three amplifiers OP1/OP2/OP3, two variable-gm blocks, capacitor feedback around OP2/OP3, and a Q-controlled block labeled only “Variable” linking BP to pin9. They do **not** specify transistor saturation, a passive-resistor law for that block, op-amp gain/bandwidth, or explicit +/- labels on the amplifier inputs. Diagram crossings must not all be made junctions: the LP feedback line crossing the HP/BP output lines is not a short between the three outputs; similarly audio and control crossings are not indiscriminately connected.
+
+### Port graph recovered
+
+- OP1 output is HP pin15. Its feedback-side input is pin16, joined through the two external 33k resistors to HP and LP.
+- OP1's other input is AI pin1. The external board connection joins this to pin9, the Q-block output.
+- HP drives gm1, whose output feeds the capacitor-side OP2 input. OP2's other input is grounded; its output is BP pin13. External C1 is between its capacitor-side input and output.
+- BP drives gm2, whose output feeds the capacitor-side OP3 input. OP3's other input is grounded; output is LP pin10. C2 is its feedback capacitor.
+- BP also feeds the Q-controlled “Variable” block returning at pin9.
+- Both gm blocks receive the cutoff-control current. The diagram gives control pins, but not a quantitative transfer or range for every internal block.
+
+The amplifier arrangement is consistent with inverting integrators and a noninverting OP1 signal input. Treat those ideal amplifier/polarity assumptions explicitly, since the reproduced drawing omits +/- symbols. Under that interpretation, with equal 33k feedback resistors:
+
+```
+h = 2*a - l
+```
+
+Here h=HP, b=BP, l=LP, a=AI/FB external node voltage. This is **not** the normalized equation h=u-d*b-l unless the input/feedback network has first been reduced with its actual gain.
+
+### The 4.7M paths are feedforward, not leakage
+
+Each 4.7M resistor connects a gm block's input signal to the corresponding integrator summing node, not across its feedback capacitor. With ideal virtual earth and positive transconductance defined as current entering the summing node:
+
+```
+db/dt = -w1*h
+dl/dt = -w2*b
+w1 = (gm1 + 1/Rff1)/C1
+w2 = (gm2 + 1/Rff2)/C2
+Rff1 = Rff2 = 4.7e6 ohm
+C1 = C2 = 1.5e-9 F
+```
+
+The external contribution alone is 141.844 rad/s (22.575 Hz when divided by 2*pi). This is an **ideal-model contribution**, not a measured universal minimum cutoff: internal gm polarity/range, finite amplifier effects and control calibration have not all been established. Adding an exponential leak term proportional to b or l would model a different resistor placement.
+
+### A port-law-explicit prototype
+
+Define Iq(a,b,VQ) as current leaving the AI node into the internal Q block, and keep it unknown until its law is sourced or measured. The external feedback branch is fully known:
+
+```
+Rfb = 1.2e6 ohm
+Cfb = 180e-12 F
+iExternalFeedback = (a-b)/Rfb + Cfb*d(a-b)/dt
+```
+
+For a bench prototype driven through an explicitly chosen source resistance Rs, with an explicitly chosen shunt Rg, an idealized node equation is:
+
+```
+(a-u)/Rs + a/Rg + (a-b)/Rfb
+    + Cfb*d(a-b)/dt + Iq(a,b,VQ) = 0
+```
+
+This assumes negligible OP1 input current. Rs is a fixture/model parameter here, **not** an invented CS-80 component. Rg must represent the actual node's ground network: the observed LP ground resistors alone yield 33k||150k, while HP has its own input-source network to trace.
+
+An explicit three-state implementation can use x=a-b:
+
+```
+a = x+b
+h = 2*a-l
+db/dt = -w1*h
+dl/dt = -w2*b
+dx/dt = ((u-a)/Rs - a/Rg - x/Rfb - Iq(a,b,VQ))/Cfb
+```
+
+This closes only after an Iq law is selected. For example, Iq=Gq*(a-b) describes a hypothetical voltage-controlled conductance; Iq=Jq(b,VQ) describes a different controlled-current-output hypothesis. The image's generic “Variable” box alone does not choose between them. Naming such a hypothesis in an offline experiment is acceptable; calling it verified Yamaha hardware is not.
+
+For the actual HP-to-LP connection, replace the fixture source term with the shared 1uF coupling-capacitor current and solve the two filters together. Do not independently process two ideal filters followed by a guessed interstage high-pass and claim the same loaded circuit.
+
+### Practical next implementation gate
+
+The highest-value next DSP work is an **offline conditional circuit prototype**, kept separate from the production sound engine, with ideal-opamp assumptions and Q-port hypotheses visibly labeled. It should:
+
+1. Retain explicit physical units and all recovered passive components.
+2. Compare conductance versus controlled-current Q-block hypotheses against the documented Q endpoints and low-level measured complex HP/BP/LP response.
+3. Derive the linear state-space matrices symbolically or from MNA, test poles/zeros and passivity where applicable, then compare a high-accuracy continuous-time solution with the intended discrete solver.
+4. Check whether the 180p branch's state is actually independent after full constraints are applied; do not assume every capacitor creates an independent state in an ideal-opamp network.
+5. Only replace the current audio engine once a selected port model is supported, stability/convergence tested, and gain/cutoff/Q calibration checked. Generic clip insertion is still not a recovered nonlinear law.
+
+Useful discriminating measurements are pin9 output impedance versus VQ, pin9 current at separately controlled AI and BP voltages within safe operating bounds, and full three-output small-signal transfer over frequency/control voltage. A qualified technician should perform any powered-board probing. These observations distinguish a bilateral conductance from a controlled-current output and identify internal current polarity without guessing from a block label.
+
+Remaining primary-source work: inspect the complete original guidebook page (not just this cropped reproduction), and the family service guide's explanation of the Q-control element. Neither newly inspected image supplies quantitative nonlinear operating curves. The EXP/Linear labels under the two cutoff inputs must also be reconciled with the service manual's explicit calibration and external voltage conventions before changing the control law; a block-label adjective is not by itself an equation.
+
+## Primary PDF confirmation and a concrete conditional reference implementation
+
+Actions run **40787065697**, job **123162794733**, rendered [CS20M/40M service manual](https://www.polynominal.com/sample-packs/yamaha-cs20m/Yamaha-CS-20m-service-Manual.pdf) PDF page 52 (printed page 54). PDF SHA-256 `ee319c12286165d2286cce52c9d6f2f8d96ce471fbfb04b41125a7a29425eb14`, 6172162 bytes. The inspected full-page render is 1274 x 1800, PNG SHA-256 `c29e7af837805e4d43fb39d764ab44884701410967141723dc015f8ea0265a45`.
+
+Figures F-3 and F-4 explicitly mark amplifier polarity: OP1's AI input is positive and its feedback input negative; OP2 and OP3 have the gm/capacitor summing node at the negative input and ground at the positive input. This **confirms the signs in the earlier ideal-amplifier equations**, which no longer rest solely on an unmarked booklet symbol. The text and F-4 identify the Q element as a gm converter replacing the conceptual variable resistance. They do not specify its quantitative input/output port law, output resistance or VQ-to-gm relation. The family conceptual topology is corroboration of the same IG00156, not authorization to substitute CS20M board component values for CS80 values.
+
+### Runnable-reference design, isolated from production DSP
+
+A useful first numerical experiment is explicitly named **ideal-opamp, unilateral-Q-current hypothesis**:
+
+```
+Iq(a,b,VQ) = -gq * b
+```
+
+The minus sign means positive b injects current into a. gq is a supplied nonnegative coefficient in siemens, **not yet a sourced function of VQ**. This sign gives damping with the evidenced inverting integrators. No nonlinear distortion is implied.
+
+For the previously defined resistor-fed bench fixture, let Gs=1/Rs, Gg=1/Rg, Gf=1/Rfb and state z=[x,b,l]. Then dz/dt=A*z+B*u with:
+
+```
+A = [
+  [-(Gs+Gg+Gf)/Cfb, (gq-Gs-Gg)/Cfb, 0],
+  [-2*w1,           -2*w1,           w1],
+  [0,               -w2,            0]
+]
+B = [Gs/Cfb, 0, 0]^T
+
+HP = [2, 2, -1] * z
+BP = [0, 1,  0] * z
+LP = [0, 0,  1] * z
+```
+
+Implement the matrix construction with positive finite Rs/Rg/Rfb/Cfb/C1/C2/Rff validation, nonnegative gm1/gm2/gq validation for this particular hypothesis, and physical-unit names. Expose gq directly in the experimental API; do not hide an arbitrary Q-slider interpolation inside it. This is sufficient for a standalone reference solver without pretending the Q port law has been measured.
+
+For constant coefficients and a time step T, implicit trapezoidal integration is:
+
+```
+(I - T*A/2) * zNext
+    = (I + T*A/2) * zNow + T*B*(uNow+uNext)/2
+```
+
+Use a small pivoted linear solve, not an explicitly formed inverse. A singular/ill-conditioned solve must produce a diagnostic, not silently clamp the state. For time-varying coefficients, the endpoint form uses A_now*zNow and A_next*zNext separately; freezing coefficients is an additional approximation. A high-accuracy continuous-time reference or exact fixed-coefficient state transition should be the comparison target. Explicit Euler is a poor default for this potentially stiff small-capacitance network.
+
+A separate algebraic-limit test sets Cfb to zero **by eliminating x**, not by dividing by zero. In the equal-integrator case this fixture's second-order reduction has:
+
+```
+Gtotal = Gs + Gg + Gf
+inputGain = 2*Gs/Gtotal
+damping = 2*(Gf+gq)/Gtotal
+Q = Gtotal / (2*(Gf+gq))
+```
+
+This provides a closed-form solver test and a fixture-only calibration equation `gq=Gtotal/(2*Q)-Gf`. It is not a universal CS80 Q law; its dependence on Rs/Rg makes that limitation explicit. For unequal w1/w2, use `Q=sqrt(w1*w2)/(damping*w1)`.
+
+Minimum reference tests:
+- Algebraic OP1 residual h+l-2*a is zero to floating-point tolerance.
+- Both integrator KCL residuals converge with timestep refinement.
+- Zero input and zero state remain zero.
+- The Cfb->0 reference approaches the independently derived second-order transfer at frequencies where the eliminated-fast-state approximation applies.
+- For representative physically admissible fixture coefficients, check continuous-time poles and discrete-time stability, complex HP/BP/LP transfer, and timestep convergence before any production adoption.
+- Compare this hypothesis with a bilateral conductance Q block; matching the two endpoint Q values alone must not be treated as model identification.
+- Test the 1uF coupling only in a two-filter coupled reference, not as a guessed independent high-pass stage.
+
+### Original guidebook inspection status
+
+Job **123162794502** successfully retrieved the original [IC guidebook PDF](https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf): 164 pages, 13608992 bytes, SHA-256 `ff051aed0687cad4c4b246d145f85896c229e4cc679333328483118a3e7f8cc1`. Text matching found **no IG00156 pages** and fell back to PDF pages 1–3. Actual pixels show the cover, a handwritten scan note and an index page. Therefore this run did **not** inspect the original IG00156 guidebook page and must not be cited as doing so. The next bounded lookup should render index pages 4–6 or use bounded OCR to locate the printed section/page, then render that page. The existing reproduced functional diagram remains the available IG00156 guidebook evidence pending that check.

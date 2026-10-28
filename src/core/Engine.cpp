@@ -8,6 +8,7 @@ namespace cs80
 
 Engine::Engine()
 {
+    initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
     setParams(params);
 }
 
@@ -18,6 +19,7 @@ void Engine::prepare(double hostSampleRate)
                && hostSampleRate <= 768000.0 ? hostSampleRate : 48000.0;
     oversample = 2;
     internalRate = hostRate * (double) oversample;
+    initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
 
     chorus.prepare((float) internalRate);
     fxChorus.prepare((float) internalRate);
@@ -62,6 +64,7 @@ void Engine::reset()
         v.pedalHeld = false;
         v.note = 60;
         v.age = 0;
+        v.initialPitchTransient = 0.0;
         for (auto& r : v.ranks)
         {
             r.osc.reset(0.0f);
@@ -96,7 +99,6 @@ void Engine::reset()
     modWheel = 0.0f;
     expression = 1.0f;
     ribbon = 0.0f;
-    lastPressure = 0.0f;
     smoothedVolume = global.volume;
     heldKeyCount = 0;
     arpSequenceLength = 0;
@@ -485,7 +487,10 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.mpeBend = 0.0f;
     v.targetPitch = (float) note;
     v.glidePitch = global.portamento > 0.0001f ? (float) lastNote : (float) note;
-    v.initBendValue = -global.initBend * v.velocity * 1.0f;
+    // TWS C precedes the TRG4 PB control. Keep its nominal onset state alive
+    // even when PB depth is zero. Reset-to-velocity is still a MIDI/retrigger
+    // approximation, not a complete model of the b sample/hold and clamp.
+    v.initialPitchTransient = -(double) v.velocity;
     v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
     lastNote = note;
@@ -701,22 +706,17 @@ void Engine::allNotesOff(bool release, int midiChannel)
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
     pressure = clampf(pressure, 0.0f, 1.0f);
-    bool matched = false;
     for (auto& v : voices)
         if (v.active && v.note == midiNote
             && (! global.mpe || midiChannel <= 0 || v.midiChannel == midiChannel))
         {
             v.pressure = pressure;
-            matched = true;
         }
-    if (matched)
-        lastPressure = pressure;
 }
 
 void Engine::channelPressure(int midiChannel, float pressure)
 {
     pressure = clampf(pressure, 0.0f, 1.0f);
-    lastPressure = pressure;
     for (auto& v : voices)
         if (v.active && (midiChannel == 1 || v.midiChannel == midiChannel))
             v.pressure = pressure;
@@ -822,8 +822,15 @@ void Engine::processInternalSample(float& outL, float& outR)
     pwmPhase[0] -= std::floor(pwmPhase[0]);
     pwmPhase[1] -= std::floor(pwmPhase[1]);
 
+    // TRG5 positive diode-OR: normalized ideal maximum, not event memory.
+    // Physical release removes this proxy even if a pedal/release tail sounds.
+    // Arpeggiator extension uses its generated held voice gates.
+    float sharedPressure = 0.0f;
+    for (const auto& voice : voices)
+        if (voice.active && voice.held)
+            sharedPressure = std::max(sharedPressure, voice.pressure);
     float speed = global.subSpeed;
-    speed *= 1.0f + global.subAtSpeed * lastPressure * 2.0f;
+    speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
     subSpeedSmoothed += (speed - subSpeedSmoothed) * 0.0015f;
     subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
     driftPhase += 0.031f * invSr;
@@ -853,8 +860,13 @@ void Engine::processInternalSample(float& outL, float& outR)
         else
             v.glidePitch = v.targetPitch;
 
-        if (std::abs(v.initBendValue) > 0.0001f)
-            v.initBendValue *= std::exp(-1.0f / (0.075f * sr));
+        // Conditional TWS C positive-step response: 1 uF * (100k || 100k).
+        // Coefficient is computed at prepare, not in this sample loop. Do not
+        // freeze a permanent detuning residual; snap only a negligible state
+        // to zero well before double-precision denormals are approached.
+        v.initialPitchTransient *= initialPitchDecay;
+        if (std::abs(v.initialPitchTransient) < 1.0e-15)
+            v.initialPitchTransient = 0.0;
 
         // Sustain I holds each released voice's last ribbon pitch. Sustain II
         // keeps release tails coupled to subsequent ribbon gestures.
@@ -876,7 +888,7 @@ void Engine::processInternalSample(float& outL, float& outR)
                           + globalBend
                           + v.mpeBend
                           + glideOffset
-                          + v.initBendValue
+                          + (float) (global.initBend * v.initialPitchTransient)
                           + lfoPitch
                           + subValue * (global.subVco + global.subAtVco * v.pressure) * 1.5f
                           + subValue * modWheel * global.modWheelSub * 2.0f

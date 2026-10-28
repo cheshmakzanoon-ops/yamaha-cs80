@@ -162,6 +162,8 @@ private:
     static constexpr int kNumVoices = 8;
     static constexpr int kNumRanks = 2;
     static constexpr int kMaxHeldKeys = 32;
+    // Nominal ideal C-path pole only; not measured complete touch circuitry.
+    static constexpr double kNominalInitialPitchDecaySeconds = 0.050;
 
     struct Rank
     {
@@ -192,7 +194,7 @@ private:
         float mpeBend = 0.0f;
         double glidePitch = 60.0;
         float targetPitch = 60.0f;
-        float initBendValue = 0.0f;
+        double initialPitchTransient = 0.0;
         float ribbonRatio = 1.0f;
         uint64_t age = 0;
         Rank ranks[kNumRanks];
@@ -236,10 +238,10 @@ private:
     float modWheel = 0.0f;
     float expression = 1.0f;
     float ribbon = 0.0f;
-    float lastPressure = 0.0f;
 
     double hostRate = 48000.0;
     double internalRate = 96000.0;
+    double initialPitchDecay = 0.0; // initialized in constructor and prepare
     int oversample = 2;
 
     std::array<float, 2> pwmPhase {};
