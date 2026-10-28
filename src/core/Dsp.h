@@ -34,6 +34,28 @@ inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
     return tuningRef * std::pow(2.0f, (note - 69.0f) / 12.0f);
 }
 
+// IG00156 nominal law: Yamaha CS servicing guide p34; CS-80 IC sheet p42.
+// MIDI60 / .5V is an interface reference, not a panel-slider voltage claim.
+constexpr float kReferenceKeyVolts = 0.5f;
+inline float filterKeyVolts(float midiPitch) noexcept
+{
+    return kReferenceKeyVolts * std::exp2((midiPitch - 60.0f) / 12.0f);
+}
+inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv) noexcept
+{
+    return 125.0f * keyVolts * std::exp2(effectiveCutoffCv);
+}
+inline float filterEffectiveCv(float referenceCutoffHz) noexcept
+{
+    return std::log2(std::max(referenceCutoffHz, 0.001f) / (125.0f * kReferenceKeyVolts));
+}
+// Only Q endpoints (.5 at 10V, 5 at 0V) are documented. Linear damping
+// between them and the normalized panel mapping are explicitly provisional.
+inline float provisionalFilterQ(float resonance) noexcept
+{
+    return 1.0f / (2.0f - 1.8f * clampf(resonance, 0.0f, 1.0f));
+}
+
 class Rng
 {
 public:

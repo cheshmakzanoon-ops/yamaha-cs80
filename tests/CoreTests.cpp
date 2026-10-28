@@ -383,6 +383,63 @@ void testHardwareFilterContour()
     check(analyse(open).rms > 0.001, "sine bypass test has audible signal");
 }
 
+void testFilterControlDomain()
+{
+    checkNear(nominalFilterCutoff(.25f,5),1000,0.001f,"documented filter calibration anchor");
+    checkNear(nominalFilterCutoff(.5f,5),2000,0.001f,"doubling Kv doubles cutoff");
+    checkNear(nominalFilterCutoff(.25f,6),2000,0.001f,"one effective CV volt doubles cutoff");
+    checkNear(provisionalFilterQ(0),.5f,1.e-6f,"documented minimum Q");
+    checkNear(provisionalFilterQ(1),5,1.e-5f,"documented maximum Q");
+    for(int i=-10;i<=110;++i)
+        check(provisionalFilterQ(i*.01f)>=.5f && provisionalFilterQ(i*.01f)<=5.00001f,
+              "provisional Q interpolation bounded by documented endpoints");
+    ParamValues p;
+    p[P_voiceDispersion]=p[P_drift]=p[P_analogNoise]=0;
+    p[P_brilliance]=p[P_subVco]=p[P_subVcf]=0;
+    for(int ch=0;ch<2;++ch)
+    {
+        p[chParam(ch,CP_fIl)]=p[chParam(ch,CP_fAl)]=0;
+        p[chParam(ch,CP_initBrill)]=p[chParam(ch,CP_afterBrill)]=0;
+        p[chParam(ch,CP_hpfCutoff)]=200;
+        p[chParam(ch,CP_lpfCutoff)]=2000;
+    }
+    auto probe=[&](int note, const ParamValues& values) {
+        Engine e; e.prepare(48000); e.setParams(values); e.noteOn(note,.8f);
+        render(e,48000,64); return e.getRankInfo(0,0);
+    };
+    const auto base=probe(60,p), octave=probe(72,p);
+    checkNear(base.keyVolts,.5f,1.e-6f,"MIDI C4 nominal key voltage");
+    checkNear(octave.hpfHz/base.hpfHz,2,1.e-5f,"HPF neutral keytracking one octave per octave");
+    checkNear(octave.lpfHz/base.lpfHz,2,1.e-5f,"LPF neutral keytracking one octave per octave");
+    p[P_masterTune]=1;
+    const auto tuned=probe(60,p);
+    checkNear(tuned.lpfHz/base.lpfHz,std::exp2(1.f/12),1.e-5f,"master pitch changes shared filter Kv");
+    p[P_masterTune]=0;
+    for(int feet=0;feet<6;++feet)
+    {
+        p[chParam(0,CP_feet)]=(float)feet;
+        const auto foot=probe(60,p);
+        checkNear(foot.lpfHz,base.lpfHz,.001f,"footage independent of LPF keytracking");
+        checkNear(foot.hpfHz,base.hpfHz,.001f,"footage independent of HPF keytracking");
+    }
+    p[P_subVco]=1;
+    const auto vibrato=probe(60,p);
+    checkNear(vibrato.lpfHz,base.lpfHz,.001f,"VCO vibrato independent of filter Kv");
+    p[P_subVco]=0;
+    // Starting a second key from the preceding key verifies the actual engine
+    // glide path, rather than just the standalone voltage conversion.
+    Engine e; e.prepare(48000); e.setParams(p); e.noteOn(60,.8f); render(e,48000,64);
+    p[P_portamento]=.2f; e.setParams(p); e.noteOn(72,.8f); render(e,48000,1);
+    const auto start=e.getRankInfo(1,0);
+    render(e,48000,4800); const auto moving=e.getRankInfo(1,0);
+    render(e,48000,96000); const auto settled=e.getRankInfo(1,0);
+    check(start.keyVolts<.501f,"gliding filter starts near previous key voltage");
+    check(moving.keyVolts>start.keyVolts && moving.keyVolts<1,"filter follows intermediate glide voltage");
+    checkNear(settled.keyVolts,1,.001f,"filter glide reaches target key voltage");
+    checkNear(moving.lpfHz/start.lpfHz,moving.keyVolts/start.keyVolts,1.e-5f,
+              "filter cutoff proportional to gliding key voltage");
+}
+
 void testSustainTimeAndWheelRouting()
 {
     for (int mode : {0,1})
@@ -858,6 +915,7 @@ int main()
     testFilterStability();
     testEnvelope();
     testHardwareFilterContour();
+    testFilterControlDomain();
     testSustainTimeAndWheelRouting();
     testSustainPedal();
     testAllSoundOff();

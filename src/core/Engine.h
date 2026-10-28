@@ -150,6 +150,7 @@ public:
         float hpfHz = 0.0f, lpfHz = 0.0f;
         float filterEnvelope = 0.0f, ampEnvelope = 0.0f;
         float oscillatorHz = 0.0f;
+        float keyVolts = 0.0f, hpfQ = 0.0f, lpfQ = 0.0f;
     };
     // Offline/render-thread diagnostics for response tests and plotted traces.
     RankInfo getRankInfo(int voice, int rank) const;
@@ -186,7 +187,7 @@ private:
         float pressure = 0.0f;
         float timbre = 0.0f;
         float mpeBend = 0.0f;
-        float glidePitch = 60.0f;
+        double glidePitch = 60.0;
         float targetPitch = 60.0f;
         float initBendValue = 0.0f;
         float ribbonRatio = 1.0f;

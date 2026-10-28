@@ -823,9 +823,10 @@ void Engine::processInternalSample(float& outL, float& outR)
     int stillActive = 0;
     int stillHeld = 0;
 
-    const float glideCoef = global.portamento > 0.0001f
-                                ? std::exp(-1.0f / (global.portamento * sr))
-                                : 0.0f;
+    // Double accumulator avoids long-glide float rounding stalling before target.
+    const double glideCoef = global.portamento > 0.0001f
+                                ? std::exp(-1.0 / ((double) global.portamento * sr))
+                                : 0.0;
 
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
@@ -885,7 +886,9 @@ void Engine::processInternalSample(float& outL, float& outR)
             x += audioRng.nextBipolar() * rs.noise * 0.8f;
             x *= 0.9f;
 
-            const float keyOct = ((float) v.note - 60.0f) / 12.0f * 0.8f;
+            // Shared key-voltage domain precedes VCO footage/vibrato. Master
+            // pitch and key portamento move it; ribbon routing is unverified.
+            const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune);
             const float brillOct = global.brilliance
                                    + rs.initBrill * v.velocity * 2.0f
                                    + rs.afterBrill * v.pressure * 2.0f
@@ -898,10 +901,10 @@ void Engine::processInternalSample(float& outL, float& outR)
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
-            const float cutoffLp = rs.lpfCutoff * std::pow(2.0f, brillOct + keyOct + envLp);
-            const float cutoffHp = rs.hpfCutoff * std::pow(2.0f, brillOct + keyOct + envHp);
-            const float qLp = 0.55f + (rs.lpfRes * 0.8f + global.resonance * 0.6f) * 6.0f;
-            const float qHp = 0.55f + (rs.hpfRes * 0.8f + global.resonance * 0.6f) * 5.0f;
+            const float cutoffLp = nominalFilterCutoff(keyVolts, filterEffectiveCv(rs.lpfCutoff) + brillOct + envLp);
+            const float cutoffHp = nominalFilterCutoff(keyVolts, filterEffectiveCv(rs.hpfCutoff) + brillOct + envHp);
+            const float qLp = provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
+            const float qHp = provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
             float filtered = x;
             if (rs.hpfOn)
@@ -923,7 +926,7 @@ void Engine::processInternalSample(float& outL, float& outR)
                                              + lfoAmp,
                                          0.0f, 2.6f);
             const float amp = r.aenv.tick(sr, true);
-            r.info = { cutoffHp, cutoffLp, fenv, amp, freq };
+            r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             const float velocityGain = 0.38f + 0.62f * v.velocity;
             float voiceOut = (filtered * rs.vcfLevel + sine)
