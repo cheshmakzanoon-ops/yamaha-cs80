@@ -94,30 +94,36 @@ jobs:
           test -x pluginval/pluginval
           ./pluginval/pluginval --version | tee pluginval-version.txt
 
+      # scripts/run-pluginval-linux.sh asserts that pluginval really printed
+      # SUCCESS and retries only the known pluginval 1.0.4 Linux run-loop
+      # teardown crash (post-suite, no failed test), which is a race inside the
+      # validator, not in this plugin. Any failed test fails immediately.
       - name: Validate VST3 headless
         run: |
           set -euo pipefail
           mkdir -p pluginval-reports
-          ./pluginval/pluginval \
+          ./scripts/run-pluginval-linux.sh pluginval-headless.log \
+            ./pluginval/pluginval \
             --strictness-level 10 \
             --validate-in-process \
             --skip-gui-tests \
             --timeout-ms 120000 \
             --output-dir pluginval-reports \
             --output-filename cs80-headless \
-            "$PWD/vst3/CS-80 Reference.vst3" 2>&1 | tee pluginval-headless.log
+            "$PWD/vst3/CS-80 Reference.vst3"
 
       - name: Validate VST3 GUI under Xvfb
         run: |
           set -euo pipefail
           xvfb-run -a -s "-screen 0 1920x1200x24" \
+            ./scripts/run-pluginval-linux.sh pluginval-gui.log \
             ./pluginval/pluginval \
             --strictness-level 10 \
             --validate-in-process \
             --timeout-ms 120000 \
             --output-dir pluginval-reports \
             --output-filename cs80-gui \
-            "$PWD/vst3/CS-80 Reference.vst3" 2>&1 | tee pluginval-gui.log
+            "$PWD/vst3/CS-80 Reference.vst3"
 
       - name: Report pluginval failure
         if: failure()
@@ -136,7 +142,9 @@ jobs:
           path: |
             pluginval-reports
             pluginval-headless.log
+            pluginval-headless-attempt*.log
             pluginval-gui.log
+            pluginval-gui-attempt*.log
             pluginval-version.txt
           if-no-files-found: warn
 
@@ -201,6 +209,7 @@ jobs:
             --output-filename cs80-vst3 \
             "$PWD/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3" \
             2>&1 | tee pluginval-vst3.log
+          grep -qx 'SUCCESS' pluginval-vst3.log
 
       - name: Validate AU with pluginval
         run: |
@@ -214,6 +223,7 @@ jobs:
             --output-filename cs80-au \
             "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
             2>&1 | tee pluginval-au.log
+          grep -qx 'SUCCESS' pluginval-au.log
 
       - name: Validate AU with pluginval GUI
         run: |
@@ -226,6 +236,7 @@ jobs:
             --output-filename cs80-au-gui \
             "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
             2>&1 | tee pluginval-au-gui.log
+          grep -qx 'SUCCESS' pluginval-au-gui.log
 
       - name: AU registration diagnostics
         if: failure()
@@ -336,6 +347,10 @@ jobs:
             --output-filename cs80-windows `
             "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Select-String -Path pluginval-windows.log -Pattern '^SUCCESS$' -Quiet)) {
+            Write-Output "::error title=pluginval Windows::validator exited without printing SUCCESS"
+            exit 1
+          }
 
       - name: Report pluginval failure
         if: failure()
