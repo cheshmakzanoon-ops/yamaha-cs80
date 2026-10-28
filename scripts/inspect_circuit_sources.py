@@ -18,6 +18,9 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "icguide_offset": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
+    "panel2": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/64%20-%20Panel%202%20Circuit%20Diagram.jpg",
+    "ba": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/27%20-%20BA%20Circuit%20Diagram.jpg",
     "panel3": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/66%20-%20Panel%203%20Circuit%20Diagram.jpg",
     "rs": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/39%20-%20R51-52%20Circuit%20Diagram.jpg",
     "kbc": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/15%20-%20KBC%201-2%20Circuit%20Diagram.jpg",
@@ -84,6 +87,11 @@ def emit_image(gray, page, url, data):
         boxes.append((f"{page}-full-native", (0, 0, w, h), False))
     # Native-pixel detail crops, selected from inspected source coordinates.
     focus = {
+        "kbc": [
+            ("decoder", (500, 700, 2400, 2200)),
+            ("ladder", (1750, 800, 2600, 3000)),
+            ("output", (2550, 650, 3550, 1600)),
+        ],
         "trg5": [
             ("speed-upper", (3750, 450, 4650, 1750)),
             ("speed-lower", (3750, 1700, 4650, 3200)),
@@ -135,6 +143,12 @@ def inspect_pdf(url, data, key):
             selected = [52]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "fixed original CS-20M Figure F-4 source target"}), flush=True)
+        elif key == "icguide_offset":
+            if count < 28:
+                raise ValueError("guidebook fixed offset sample page28 absent")
+            selected = [12, 20, 28]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "fixed sample pages to resolve printed-section offset"}), flush=True)
         elif key == "icguide_index":
             if count < 6:
                 raise ValueError("guidebook fixed index pages4..6 absent")
@@ -177,7 +191,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide", "icguide_index", "cs20m_q"}:
+    if args.page in {"icguide", "icguide_index", "icguide_offset", "cs20m_q"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)

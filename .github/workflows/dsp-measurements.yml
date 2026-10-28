@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'src/core/**'
+      - 'src/reference/**'
       - 'tests/**'
       - 'scripts/*pluginval*.sh'
       - 'src/tools/dsp_probe.cpp'
