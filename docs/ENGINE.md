@@ -43,11 +43,11 @@ Each `Rank` contains an oscillator, HPF, LPF, filter envelope, amplifier envelop
 
 The footage switch has six hardware stops: 16', 8', 5⅓', 4', 2⅔', 2'. `kFeetSemitones` is `{-12, 0, +7, +12, +19, +24}`; two positions are fifth intervals. Pulse width has a 50-90% panel range so the pulse never collapses to silence.
 
-The engine runs at **2x the host sample rate**. The oscillators, filters, envelopes and effects all run internally at 96 kHz for a 48 kHz host. A 31-tap windowed-sinc decimator removes the out-of-band content before host-rate output. The decimator's symmetric group delay is reported as 8 host samples for plugin delay compensation.
+The engine runs at **2x the host sample rate**. The oscillators, filters, envelopes and effects all run internally at 96 kHz for a 48 kHz host. A 255-tap Kaiser-windowed decimator removes out-of-band content before host-rate output. The FIR runs at 2x with odd-phase output; its effective host-lattice delay is 63 samples, reported to the host. Symmetric convolution is evaluated only on retained samples. Dense frequency-response and actual C++ tone/impulse checks define numerical acceptance; see DSP_MEASUREMENTS.md.
 
 ## Filters
 
-Each rank has a serial high-pass and low-pass stage. Both use a topology-preserving state-variable filter with nonlinear input saturation and independent resonance. The high-pass feeds the low-pass, matching the CS-80's HPF -> LPF order. The sine path bypasses both filters and is summed after the VCA, as on the hardware.
+Each rank has a serial high-pass and low-pass stage. Both use a topology-preserving state-variable filter with nonlinear input saturation and independent resonance. The high-pass feeds the low-pass, matching the CS-80's HPF -> LPF order. The sine path bypasses both filters and joins the filtered signal before the amplitude envelope/VCA.
 
 Cutoff is modulated by:
 
@@ -64,11 +64,11 @@ panel cutoff
   + LFO VCF
 ```
 
-The filter contour has initial level (IL), attack level (AL), attack, decay and release. Its release can be longer than the amplifier release, which is what lets a CS-80 brass swell open after the key is released.
+The filter contour has initial level (IL), attack level (AL), attack, decay and release. Its release moves back toward the negative initial offset. Global sustain extends both filter and amplitude release; the precise analog taper is still uncalibrated.
 
 ## Envelopes
 
-Both contours use a calibrated exponential segment. The coefficient is derived from a **time-to-rest (-60 dB)** rather than a raw RC time constant, so a 200 ms release is finished in roughly 200 ms instead of ringing for seconds. Decay and release include a short fast bend followed by the slower tail; this bend is responsible for the characteristic "brass" movement.
+Both contours currently use provisional exponential segment laws and endpoint thresholds. Their historical exponent of 6 is not an exact -60 dB time constant (ln(1000) would be about 6.908), and the bent segments further alter timing. Do not treat displayed times or bend constants as measured Yamaha calibration. The filter has explicit attack, decay, held, release and idle stages; it starts at negative IL, peaks at positive AL, holds at zero and releases toward IL.
 
 The amplifier contour also receives a velocity gain (`0.38 + 0.62 * velocity`) and a continuous level offset from initial level and aftertouch level. The filter contour is driven separately by initial and aftertouch brilliance.
 
@@ -98,7 +98,7 @@ The ribbon uses first-touch-relative displacement, a provisional linear frequenc
 
 ## Chorus and modern FX
 
-The authentic chorus is a stereo BBD-style delay pair with complementary modulation, band-limiting and a small amount of cross-feed. Tremolo uses the same modulation source and is selected by the `CHORUS / TREM` switch.
+The current chorus approximation is a stereo BBD-style delay pair with complementary modulation, band-limiting and a small amount of cross-feed. Tremolo uses the same modulation source and is selected by the `CHORUS / TREM` switch.
 
 Three serial FX slots sit after the chorus. The type values are fixed by the UI:
 

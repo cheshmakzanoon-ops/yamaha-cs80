@@ -1,0 +1,29 @@
+name: Publish CI evidence
+on:
+  workflow_run:
+    workflows: ["build", "Hardware panel screenshots", "DSP numerical measurements"]
+    types: [requested, in_progress, completed]
+permissions:
+  contents: read
+  statuses: write
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    steps:
+      # No checkout or execution of the triggering run's code. Only publish
+      # GitHub's own run outcome for this repository and exact source SHA.
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            if (!run || run.head_repository.full_name !== context.payload.repository.full_name) return;
+            const done = run.status === 'completed';
+            const state = !done ? 'pending' : run.conclusion === 'success' ? 'success'
+              : run.conclusion === 'failure' ? 'failure' : 'error';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner, repo: context.repo.repo,
+              sha: run.head_sha, state,
+              context: 'ci/' + run.name,
+              description: (run.status + (done ? ': ' + run.conclusion : '')).slice(0, 140),
+              target_url: run.html_url
+            });

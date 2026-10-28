@@ -22,8 +22,10 @@ struct RankSettings
     float pwmDepth = 0.0f;
     int feet = 1;
     float hpfCutoff = 25.0f;
+    float hpfEffectiveCv = 0.0f; // cached by buildSettings
     float hpfRes = 0.0f;
     float lpfCutoff = 7200.0f;
+    float lpfEffectiveCv = 0.0f;
     float lpfRes = 0.12f;
     float fIl = 0.5f;
     float fAl = 0.55f;
@@ -127,9 +129,8 @@ public:
     // Offline diagnostics; read on the rendering thread, not concurrently.
     float getRingFrequency() const noexcept { return ringFrequency; }
     float getRingEnvelope() const noexcept { return ringEnv; }
-    // Symmetric 31-tap decimator: 15 internal samples, 7.5 host samples at
-    // the fixed 2x oversampling ratio. Report 8 for host delay compensation.
-    int getLatencySamples() const noexcept { return 8; }
+    // Odd retained phase of a 255-tap FIR: (127-1)/2 =63 host samples.
+    int getLatencySamples() const noexcept { return Decimator::kHostLatency; }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
 

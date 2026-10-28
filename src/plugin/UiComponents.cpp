@@ -389,6 +389,11 @@ void LookAndFeel::drawButtonBackground(juce::Graphics& g, juce::Button& button,
 void LookAndFeel::drawButtonText(juce::Graphics& g, juce::TextButton& button,
                                  bool, bool)
 {
+    if (button.hasKeyboardFocus(true))
+    {
+        g.setColour(juce::Colour(0xfff6df91));
+        g.drawRoundedRectangle(button.getLocalBounds().toFloat().reduced(1.0f), 2.0f, 1.5f);
+    }
     if ((bool) button.getProperties()["hardwareTab"])
     {
         const auto base = button.findColour(juce::TextButton::buttonColourId);
@@ -482,12 +487,20 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
                                juce::MathConstants<float>::pi * 2.8f, true);
     slider.setMouseDragSensitivity(150);
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
-    slider.setWantsKeyboardFocus(false);
-    slider.onValueChange = [this] { repaint(); };
+    slider.setWantsKeyboardFocus(true);
+    const auto channelName = index >= cs80::P_numGlobals
+        ? juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
+    slider.setTitle(channelName + juce::String(cs80::paramDef(index).name));
+    slider.setDescription("Use the arrow keys to adjust this control. Double-click to restore its default.");
+    slider.onValueChange = [this] {
+        slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
+        repaint();
+    };
     addAndMakeVisible(slider);
 
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
+    slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
 
 }
 
@@ -498,9 +511,7 @@ void ParamKnob::setHardwareSlider(juce::Colour capColour)
     hardwareSlider = true;
     slider.setSliderStyle(juce::Slider::LinearVertical);
     slider.setColour(juce::Slider::thumbColourId, capColour);
-    slider.setTooltip(name + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
-    slider.setTitle(name);
-    slider.setDescription(juce::String(cs80::paramDef(parameterIndex).name));
+    slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
     resized();
     repaint();
 }
@@ -572,8 +583,14 @@ LedButton::LedButton(const juce::String& text, bool momentary)
     : juce::Button(text)
 {
     setClickingTogglesState(! momentary);
-    setMouseClickGrabsKeyboardFocus(false);
-    setWantsKeyboardFocus(false);
+    setMouseClickGrabsKeyboardFocus(true);
+    setWantsKeyboardFocus(true);
+    setTitle(text);
+    setDescription("Press Space or Return to operate this switch.");
+    onStateChange = [this] {
+        setTooltip(getTitle() + (getToggleState() ? ": ON" : ": OFF"));
+    };
+    setTooltip(text + ": OFF");
 }
 
 void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)

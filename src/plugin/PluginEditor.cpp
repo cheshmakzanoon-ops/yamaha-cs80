@@ -76,12 +76,18 @@ public:
     {
         setOpaque(true);
         addAndMakeVisible(close);
+        setTitle("Memory programmer");
+        setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
         close.setButtonText("CLOSE LID");
+        close.setTitle("Close memory programmer");
+        close.setWantsKeyboardFocus(true);
         close.onClick = [this] { if (onClose) onClose(); };
         for (int bank = 0; bank < 4; ++bank)
         {
             auto button = std::make_unique<juce::TextButton>("MEMORY " + juce::String(bank + 1));
             button->setClickingTogglesState(false);
+            button->setWantsKeyboardFocus(true);
+            button->setTitle("Select memory " + juce::String(bank + 1));
             button->onClick = [this, bank] { processor.selectHardwareSource(bank % 2, bank < 2 ? 11 : 12); refresh(); };
             button->setTooltip("Listen to this independent memory on channel " + juce::String(bank % 2 + 1));
             addAndMakeVisible(*button);
@@ -107,7 +113,7 @@ public:
                 }
                 else
                 {
-                    item.slider = std::make_unique<juce::Slider>();
+                    item.slider = std::make_unique<cs80::ui::FocusSlider>();
                     auto* slider = item.slider.get();
                     slider->setSliderStyle(juce::Slider::LinearVertical);
                     slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
@@ -117,6 +123,7 @@ public:
                     slider->setDoubleClickReturnValue(true, def.def);
                     slider->setTitle("Memory " + juce::String(bank + 1) + " " + def.name);
                     slider->setTooltip(slider->getTitle());
+                    slider->setDescription("Independent analog memory control. Use the arrow keys to adjust; select this memory to hear it.");
                     slider->onValueChange = [this, bank, local, slider] {
                         processor.setMemoryValue(bank, local, (float) slider->getValue());
                         slider->setTooltip(slider->getTitle() + ": "
@@ -135,9 +142,16 @@ public:
         for (auto& item : items)
         {
             if (item.slider && ! item.slider->isMouseButtonDown())
+            {
                 item.slider->setValue(processor.getMemoryValue(item.bank, item.local), juce::dontSendNotification);
+                item.slider->setTooltip(item.slider->getTitle() + ": "
+                    + cs80::ui::formatParamValue(cs80::chParam(item.bank % 2, item.local), (float) item.slider->getValue()));
+            }
             if (item.toggle)
+            {
                 item.toggle->setToggleState(processor.getMemoryValue(item.bank, item.local) >= 0.5f, juce::dontSendNotification);
+                item.toggle->setTooltip(item.toggle->getTitle() + (item.toggle->getToggleState() ? ": ON" : ": OFF"));
+            }
         }
         for (int bank = 0; bank < 4; ++bank)
             bankButtons[(size_t) bank]->setToggleState(
@@ -198,7 +212,7 @@ public:
     std::function<void()> onClose;
 
 private:
-    struct Item { int bank=0, local=0; std::unique_ptr<juce::Slider> slider; std::unique_ptr<cs80::ui::LedButton> toggle; };
+    struct Item { int bank=0, local=0; std::unique_ptr<cs80::ui::FocusSlider> slider; std::unique_ptr<cs80::ui::LedButton> toggle; };
     Cs80AudioProcessor& processor;
     juce::TextButton close;
     std::array<std::unique_ptr<juce::TextButton>,4> bankButtons;
@@ -233,6 +247,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         setOpaque(true);
         setLookAndFeel(&lookAndFeel);
         setWantsKeyboardFocus(true);
+        setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
+        setTitle("CS-80 instrument panel");
 
         buildTopBar();
         buildMasterSection();
@@ -243,11 +259,16 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         addAndMakeVisible(advanced);
         advanced.setVisible(false);
+        advanced.setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
         addAndMakeVisible(browser);
         browser.setVisible(false);
+        browser.setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
         addAndMakeVisible(memoryProgrammer);
         memoryProgrammer.setVisible(false);
-        memoryProgrammer.onClose = [this] { memoryProgrammer.setVisible(false); };
+        memoryProgrammer.onClose = [this] {
+            memoryProgrammer.setVisible(false);
+            if (getPeer() != nullptr) memoryLid.grabKeyboardFocus();
+        };
 
         advanced.onClose = [this] { showAdvanced(false); };
         browser.onClose = [this] { showBrowser(false); };
@@ -273,6 +294,19 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     {
         processor.onPresetChanged = nullptr;
         setLookAndFeel(nullptr);
+    }
+
+    bool keyPressed(const juce::KeyPress& key) override
+    {
+        if (key != juce::KeyPress::escapeKey) return false;
+        if (memoryProgrammer.isVisible())
+        {
+            if (memoryProgrammer.onClose) memoryProgrammer.onClose();
+            return true;
+        }
+        if (browserVisible) { showBrowser(false); return true; }
+        if (advancedVisible) { showAdvanced(false); return true; }
+        return false;
     }
 
     // -----------------------------------------------------------------------
@@ -304,6 +338,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         buttonAttachments.push_back(
             std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                 processor.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        const auto channelName = parameter >= cs80::P_numGlobals
+            ? juce::String(parameter < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
+        raw->setTitle(channelName + juce::String(cs80::paramDef(parameter).name));
+        raw->setTooltip(raw->getTitle() + (raw->getToggleState() ? ": ON" : ": OFF"));
         place(*raw, x, y, w, h);
         leds.push_back(std::move(button));
         return *raw;
@@ -314,7 +352,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         for (auto* button : { &prevButton, &nextButton, &browseButton, &saveButton,
                               &initButton, &advancedButton })
         {
-            button->setWantsKeyboardFocus(false);
+            button->setWantsKeyboardFocus(true);
             addAndMakeVisible(*button);
         }
 
@@ -324,6 +362,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         presetLabel.setInterceptsMouseClicks(false, false);
         addAndMakeVisible(presetLabel);
 
+        prevButton.setTitle("Previous preset");
+        nextButton.setTitle("Next preset");
+        browseButton.setTitle("Open preset library");
+        saveButton.setTitle("Save a user preset");
+        initButton.setTitle("Load the initial patch");
+        advancedButton.setTitle("Show advanced controls");
         prevButton.onClick = [this] { stepPreset(-1); };
         nextButton.onClick = [this] { stepPreset(1); };
         browseButton.onClick = [this]
@@ -443,6 +487,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         // Explicit software-only voice settings stay under a separate lid.
         addAndMakeVisible(voiceOptions);
         voiceOptions.setButtonText("VOICE SETTINGS");
+        voiceOptions.setTitle("Show software voice settings");
+        voiceOptions.setWantsKeyboardFocus(true);
         voiceOptions.onClick = [this] {
             optionsVisible = ! optionsVisible;
             for (auto* component : optionComponents) component->setVisible(optionsVisible);
@@ -451,6 +497,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         place(voiceOptions, 94, 447, 278, 25);
         addAndMakeVisible(memoryLid);
         memoryLid.setButtonText("OPEN MEMORY LID");
+        memoryLid.setTitle("Open memory programmer");
+        memoryLid.setWantsKeyboardFocus(true);
         memoryLid.onClick = [this] {
             showAdvanced(false);
             showBrowser(false);
@@ -489,6 +537,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                      : juce::String("MEMORY ") + juce::String(channel + (tone == 11 ? 1 : 3))));
                 const auto fullName = button->getButtonText();
                 button->setTitle(fullName);
+                button->setDescription((channel == 0 ? juce::String("Channel I") : juce::String("Channel II"))
+                    + ": select this voice source with Space or Return. PANEL preserves the main-panel settings.");
                 button->setTooltip(fullName + (channel == 0 ? " / CHANNEL I" : " / CHANNEL II"));
                 button->setButtonText(fullName.replace("HARPSICHORD ", "HARPSI\nCHORD ")
                                               .replace("CLAVICHORD ", "CLAVI\nCHORD ")
@@ -500,7 +550,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                                               .replace("MEMORY ", "MEMORY\n"));
                 button->setClickingTogglesState(true);
                 button->setRadioGroupId(0x100 + channel);
-                button->setWantsKeyboardFocus(false);
+                button->setWantsKeyboardFocus(true);
                 button->getProperties().set("hardwareTab", true);
                 button->setColour(juce::TextButton::buttonColourId, colours[(size_t) tone]);
                 button->onClick = [this, channel, tone] { applyHardwareTone(channel, tone); };
@@ -609,6 +659,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void showAdvanced(bool shouldShow)
     {
+        const bool wasVisible = advancedVisible;
         if (shouldShow) memoryProgrammer.setVisible(false);
         advancedVisible = shouldShow;
         advanced.setVisible(shouldShow);
@@ -619,11 +670,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             browserVisible = false;
             advanced.toFront(true);
         }
+        else if (wasVisible && getPeer() != nullptr)
+            advancedButton.grabKeyboardFocus();
         repaint();
     }
 
     void showBrowser(bool shouldShow)
     {
+        const bool wasVisible = browserVisible;
         if (shouldShow) memoryProgrammer.setVisible(false);
         browserVisible = shouldShow;
         if (shouldShow)
@@ -639,6 +693,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         else
         {
             browser.setVisible(false);
+            if (wasVisible && getPeer() != nullptr) browseButton.grabKeyboardFocus();
         }
         repaint();
     }
@@ -840,6 +895,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     Cs80AudioProcessor& processor;
     cs80::ui::LookAndFeel lookAndFeel;
+    juce::TooltipWindow tooltips { this, 600 };
 
     juce::TextButton prevButton { "<" };
     juce::TextButton nextButton { ">" };

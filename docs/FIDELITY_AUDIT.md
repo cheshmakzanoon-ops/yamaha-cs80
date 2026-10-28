@@ -165,3 +165,15 @@ The double-precision glide accumulator fixes a numerical stall observed at 0.995
 **Compatibility:** Parameter IDs/ranges remain unchanged, but cutoff tracking away from MIDI60, filter behavior during master tuning/glide, and resonance change the sound of existing patches. Preserve the preceding plugin/render for exact legacy recall.
 
 **Validation:** The local C++ core suite passed all 1596 checks before a cloud sandbox disk outage. Added tests cover documented cutoff anchors, octave ratios, master pitch, every footage position, VCO-vibrato independence, glide start/middle/end, and bounded Q. The five-file patch was then reconstructed against published commit `8c662d65` with asserted single-match replacements through GitHub because the sandbox could no longer start commands. Its remote build must be validated by Actions; no new sanitizer result is claimed for this increment.
+
+## Digital reconstruction filter increment (2026-10-28)
+
+The former 31-tap Hamming decimator was a **digital numerical-quality limitation**, not an original CS-80 component. Its odd retained phase had an indexed low-frequency delay of 7 host samples, despite reporting 8. The replacement uses a 255-tap Kaiser design (beta 8.6; normalized cutoff `(20000/88200 + .25)/2`) with double-precision coefficient design and explicitly mirrored float coefficients. Its specification is at most 0.1dB deviation through 20kHz at a 44.1kHz host rate and at least 80dB attenuation from host Nyquist upward. Higher host rates widen the absolute passband; the 20kHz specification does not apply below 44.1kHz.
+
+The engine pushes both internal samples but evaluates only the retained odd phase, using symmetric tap pairs and double accumulation. The phase-aware host delay is `(127-1)/2 = 63` samples (about 1.43ms at 44.1kHz). This differs from the standalone internal FIR's 127-internal-sample group delay. Host reporting and GUI smoke assertions now use 63. Reset clears history without redesigning the coefficients.
+
+Regression tests compare the optimized output with independent full convolution, check impulse/DC/symmetry/centroid and low-frequency phase, scan the rounded coefficients with an independent dense DFT, and verify the latency API at four sample rates. The measurement probe separately checks actual process output. This improves the numerical output stage; it does not eliminate aliases already folded inside the 2x engine or establish analog authenticity.
+
+Filter base effective CV is now cached when settings change rather than recomputed with log2 for every voice/sample. New tests compare changed controls against the uncached formula.
+
+**Validation status at authoring:** this increment was assembled through the connected repository API while the cloud sandbox could not start commands because of disk exhaustion. No local compilation or sanitizer run is claimed for this stage. The intended expanded core suite has 1616 checks; Actions must establish the result before it is reported as passing. See [DSP measurements](DSP_MEASUREMENTS.md) for numerical evidence and limits.

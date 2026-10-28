@@ -72,6 +72,55 @@ void filterEnvelopeProbes(const fs::path& out) {
         require(envelope.isIdle(), "released filter contour reaches idle");
     }
 }
+// The phase below matches Engine::render: retain the SECOND output of each pair.
+void decimatorProbes(const fs::path& out) {
+    cs80::Decimator filter;
+    filter.prepare(88200.0f);
+    auto impulse = csv(out, "decimator-impulse.csv");
+    impulse << "internal_sample,impulse_response\n";
+    double sum = 0.0;
+    for (int i = 0; i < 1024; ++i) {
+        const float value = filter.process(i == 0 ? 1.0f : 0.0f);
+        require(std::isfinite(value), "decimator impulse finite");
+        sum += value;
+        impulse << i << ',' << value << '\n';
+    }
+    require(std::abs(sum - 1.0) < 2.0e-6, "decimator unity DC gain");
+    cs80::Engine engine;
+    engine.prepare(44100.0);
+    auto metadata = csv(out, "decimator.json");
+    metadata << "{\"retained_internal_phase\":1,\"declared_host_latency\":"
+             << engine.getLatencySamples() << ",\"internal_rate\":88200}\n";
+
+    // Two quadratures avoid phase-null false passes at host Nyquist.
+    // Measure the actual float-input/output kernel, not just ideal coefficients.
+    auto tones = csv(out, "decimator-tones.csv");
+    tones << "cycles_per_internal_sample,quadrature_rms_gain_db\n";
+    constexpr double pi = 3.1415926535897932384626433832795;
+    for (double frequency : {0.05, 0.20, 20000.0 / 88200.0, 0.25, 0.255, 0.26, 0.3, 0.4, 0.49}) {
+        cs80::Decimator sineFilter, cosineFilter;
+        sineFilter.prepare(88200.0f);
+        cosineFilter.prepare(88200.0f);
+        double inputPower = 0.0, outputPower = 0.0;
+        for (int i = 0; i < 4096 + 32768; ++i) {
+            const double phase = 2.0 * pi * frequency * i;
+            const float x = static_cast<float>(std::sin(phase));
+            const float q = static_cast<float>(std::cos(phase));
+            const float y = sineFilter.process(x), z = cosineFilter.process(q);
+            if (i >= 4096 && (i & 1) != 0) {
+                inputPower += static_cast<double>(x) * x + static_cast<double>(q) * q;
+                outputPower += static_cast<double>(y) * y + static_cast<double>(z) * z;
+            }
+        }
+        const double gain = 10.0 * std::log10(std::max(outputPower / inputPower, 1.0e-30));
+        require(std::isfinite(gain), "decimator tone gain finite");
+        if (frequency <= 20000.0 / 88200.0)
+            require(std::abs(gain) < 0.1, "decimator passband within 0.1 dB through 20 kHz at 44.1 kHz");
+        if (frequency >= 0.25)
+            require(gain <= -80.0, "decimator stopband tone rejection at least 80 dB");
+        tones << frequency << ',' << gain << '\n';
+    }
+}
 void ringProbes(const fs::path& out) {
     constexpr int rate = 48000, block = 48;
     for (float base : {6.6666667f, 40.0f, 200.0f}) {
@@ -111,6 +160,7 @@ int main(int argc, char** argv) {
         oscillatorProbes(out);
         filterEnvelopeProbes(out);
         ringProbes(out);
+        decimatorProbes(out);
         auto meta = csv(out, "probe.json");
         meta << "{\"schema\":1,\"sample_rate\":48000,\"sample_count\":65536,\"oscillator_bins\":[151,601,3001,6001],\"failures\":" << failures << "}\n";
         std::cout << "DSP probes: " << failures << " failures; output " << out << '\n';

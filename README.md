@@ -26,7 +26,7 @@ The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha
 | Presets | 222 factory programs: 22 provisional hardware-tab studies + 200 original performance patches |
 | Parameters | 122 host-automatable parameters saved in plugin state |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
-| Verification | 1,260 core checks + headless plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
+| Verification | Core regression suite + numerical DSP probes + plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
 
 The 1,260-check count above describes the pre-reconstruction baseline; consult the exact-commit CI logs for the current result. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
 
@@ -47,6 +47,9 @@ The modern layer is kept behind its own surface so the primary instrument remain
 | Searchable preset library | [browser-1600x1000.png](docs/screenshots/browser-1600x1000.png) |
 
 ## Hardware programmer and reconstruction changes
+
+The output decimator now uses a 255-tap Kaiser FIR with 63 host samples of declared latency. This deliberately changes the former 8-sample compensation; projects should let the host refresh plugin delay compensation. CI verifies measured phase delay, pass-band ripple and stop-band rejection. These are software-quality tests, not hardware-match certification.
+
 
 - Each tone-selector row now has the original **14 positions**: 11 named tone studies, two assigned memory banks, and PANEL. Selecting a source does not overwrite the physical manual sliders.
 - **OPEN MEMORY LID** exposes a magnified view of four independent miniature programmer banks. Each bank has 26 controls, including waveform switches and touch response. Memories 1/3 feed rank I; memories 2/4 feed rank II. Footage stays live outside the memory, as on the instrument. Programmer values and selectors persist in plugin/user-preset state. Miniature controls currently support state recall but are not separate host-automation parameters.

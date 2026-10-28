@@ -691,49 +691,80 @@ private:
     float phase = 0.0f;
 };
 
+// Numerical anti-alias reconstruction filter, not an original CS-80 circuit.
+// 255-tap Kaiser beta8.6: <=0.1dB through20kHz at44.1kHz host,
+// >=80dB rejection from host Nyquist (internal normalized frequency .25).
 class Decimator
 {
 public:
+    static constexpr int kTaps = 255;
+    static constexpr int kCenter = (kTaps - 1) / 2;
+    static constexpr int kRetainedPhase = 1;
+    static constexpr int kHostLatency = (kCenter - kRetainedPhase) / 2;
+
     void prepare(float internalRate)
     {
-        // 31-tap windowed-sinc low-pass, cutoff at 0.22 cycles/sample.
-        const int n = 31;
-        const float fc = 0.22f;
-        float sum = 0.0f;
-        for (int i = 0; i < n; ++i)
+        constexpr double pi = 3.14159265358979323846;
+        constexpr double fc = (20000.0 / 88200.0 + 0.25) * 0.5;
+        constexpr double beta = 8.6;
+        const double denominator = besselI0(beta);
+        std::array<double, kTaps> design {};
+        double sum = 0.0;
+        for (int i = 0; i <= kCenter; ++i)
         {
-            const float m = (float) i - (float) (n - 1) * 0.5f;
-            const float sinc = std::abs(m) < 1.0e-6f ? 2.0f * fc : std::sin(kTwoPi * fc * m) / (kPi * m);
-            const float window = 0.54f - 0.46f * std::cos(kTwoPi * (float) i / (float) (n - 1));
-            coeffs[(size_t) i] = sinc * window;
-            sum += coeffs[(size_t) i];
+            const double m = (double) i - kCenter;
+            const double sinc = i == kCenter ? 2.0 * fc : std::sin(2.0 * pi * fc * m) / (pi * m);
+            const double r = m / kCenter;
+            const double window = besselI0(beta * std::sqrt(std::max(0.0, 1.0 - r*r))) / denominator;
+            design[(size_t) i] = design[(size_t) (kTaps - 1 - i)] = sinc * window;
+            sum += sinc * window * (i == kCenter ? 1.0 : 2.0);
         }
-        for (auto& c : coeffs)
-            c /= sum;
-        hist.fill(0.0f);
-        idx = 0;
-        (void) internalRate;
+        for (int i = 0; i <= kCenter; ++i)
+            coeffs[(size_t) i] = coeffs[(size_t) (kTaps - 1 - i)] = (float) (design[(size_t) i] / sum);
+        reset();
+        (void) internalRate; // normalized design; verified host rates >=44.1kHz
     }
 
-    float process(float x) noexcept
+    void reset() noexcept { hist.fill(0.0f); idx = 0; }
+
+    void push(float x) noexcept
     {
         hist[(size_t) idx] = x;
-        float y = 0.0f;
-        for (int i = 0; i < 31; ++i)
-        {
-            int p = idx - i;
-            if (p < 0)
-                p += 31;
-            y += coeffs[(size_t) i] * hist[(size_t) p];
-        }
-        if (++idx >= 31)
-            idx = 0;
-        return y;
+        if (++idx >= kTaps) idx = 0;
     }
 
+    float output() const noexcept
+    {
+        auto delayed = [this](int tap) {
+            int p = idx - 1 - tap;
+            if (p < 0) p += kTaps;
+            return hist[(size_t) p];
+        };
+        double y = (double) coeffs[kCenter] * delayed(kCenter);
+        for (int i = 0; i < kCenter; ++i)
+            y += (double) coeffs[(size_t) i]
+                 * ((double) delayed(i) + (double) delayed(kTaps - 1 - i));
+        return (float) y;
+    }
+
+    // Compatibility/reference path for clients needing every internal output.
+    float process(float x) noexcept { push(x); return output(); }
+    const std::array<float, kTaps>& getCoefficients() const noexcept { return coeffs; }
+
 private:
-    std::array<float, 31> coeffs {};
-    std::array<float, 31> hist {};
+    static double besselI0(double x) noexcept
+    {
+        double sum = 1.0, term = 1.0;
+        for (int k = 1; k < 100; ++k)
+        {
+            term *= (x*x) / (4.0*k*k);
+            sum += term;
+            if (term < 1.e-17 * sum) break;
+        }
+        return sum;
+    }
+    std::array<float, kTaps> coeffs {};
+    std::array<float, kTaps> hist {};
     int idx = 0;
 };
 

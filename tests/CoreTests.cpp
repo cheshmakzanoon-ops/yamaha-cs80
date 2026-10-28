@@ -383,6 +383,83 @@ void testHardwareFilterContour()
     check(analyse(open).rms > 0.001, "sine bypass test has audible signal");
 }
 
+void testDecimator()
+{
+    Decimator full, retained;
+    full.prepare(96000); retained.prepare(96000);
+    const auto& coeff = full.getCoefficients();
+    std::vector<float> input(4096);
+    Rng rng(0xdec180u);
+    for(auto& x : input) x=rng.nextBipolar();
+    double maxError=0, retainedError=0;
+    for(int n=0;n<(int)input.size();++n)
+    {
+        double reference=0;
+        for(int tap=0;tap<Decimator::kTaps && tap<=n;++tap)
+            reference+=(double)coeff[(size_t)tap]*input[(size_t)(n-tap)];
+        const float actual=full.process(input[(size_t)n]);
+        maxError=std::max(maxError,std::abs((double)actual-reference));
+        retained.push(input[(size_t)n]);
+        if((n&1)==Decimator::kRetainedPhase)
+            retainedError=std::max(retainedError,std::abs((double)retained.output()-reference));
+    }
+    check(maxError<1.e-6,"symmetric FIR matches independent full convolution");
+    check(retainedError<1.e-6,"retained-phase FIR matches independent full convolution");
+    full.reset(); retained.reset();
+    double dc=0, centroid=0, retainedDc=0, symmetryError=0;
+    int peakIndex=-1; float peak=0;
+    std::vector<float> odd;
+    for(int n=0;n<Decimator::kTaps+4;++n)
+    {
+        const float x=n==0 ? 1.f : 0.f;
+        const float y=full.process(x);
+        dc+=y;
+        if(n<Decimator::kTaps)
+            symmetryError=std::max(symmetryError,std::abs((double)y-coeff[(size_t)(Decimator::kTaps-1-n)]));
+        retained.push(x);
+        if((n&1)==Decimator::kRetainedPhase)
+        {
+            const float output=retained.output();
+            const int host=(n-1)/2;
+            odd.push_back(output); retainedDc+=output; centroid+=host*(double)output;
+            if(std::abs(output)>peak) { peak=std::abs(output); peakIndex=host; }
+        }
+    }
+    checkNear((float)dc,1,2.e-6f,"decimator unity DC gain");
+    check(symmetryError<2.e-6,"impulse response is symmetric");
+    check(peakIndex==63,"odd retained impulse peaks at host sample63");
+    checkNear((float)(centroid/retainedDc),63,1.e-5f,"retained impulse centroid delay63");
+    constexpr double pi=3.14159265358979323846;
+    double re=0,im=0;
+    for(size_t i=0;i<odd.size();++i) { re+=odd[i]*std::cos(2*pi*.001*i); im-=odd[i]*std::sin(2*pi*.001*i); }
+    checkNear((float)(-std::atan2(im,re)/(2*pi*.001)),63,1.e-4f,"measured low-frequency phase delay63host");
+    double minPass=2,maxPass=0,maxStop=0;
+    // Independent dense DFT of the actual rounded float coefficients.
+    for(int bin=0;bin<=8192;++bin)
+    {
+        const double f=.5*bin/8192;
+        double real=0,imag=0;
+        for(int tap=0;tap<Decimator::kTaps;++tap)
+        {
+            real+=coeff[(size_t)tap]*std::cos(2*pi*f*tap);
+            imag-=coeff[(size_t)tap]*std::sin(2*pi*f*tap);
+        }
+        const double magnitude=std::sqrt(real*real+imag*imag);
+        if(f<=20000.0/88200.0) { minPass=std::min(minPass,magnitude); maxPass=std::max(maxPass,magnitude); }
+        if(f>=.25) maxStop=std::max(maxStop,magnitude);
+    }
+    check(minPass>=std::pow(10.0,-.1/20) && maxPass<=std::pow(10.0,.1/20),
+          "decimator within0.1dB through20kHz at44.1kHz host");
+    check(maxStop<=1.e-4,"decimator at least80dB rejection above host Nyquist");
+    for(double sr : {44100.,48000.,96000.,192000.})
+    {
+        Engine e; e.prepare(sr);
+        check(e.getLatencySamples()==63,"engine latency agrees with retained FIR phase");
+    }
+    retained.reset();
+    checkNear(retained.output(),0,1.e-9f,"decimator reset removes history");
+}
+
 void testFilterControlDomain()
 {
     checkNear(nominalFilterCutoff(.25f,5),1000,0.001f,"documented filter calibration anchor");
@@ -407,6 +484,17 @@ void testFilterControlDomain()
         Engine e; e.prepare(48000); e.setParams(values); e.noteOn(note,.8f);
         render(e,48000,64); return e.getRankInfo(0,0);
     };
+    // Cache refresh must preserve the uncached effective-CV formula on changes.
+    Engine cached; cached.prepare(48000); cached.setParams(p); cached.noteOn(60,.8f);
+    for(float hz : {20.f,200.f,2000.f})
+    {
+        auto changed=p;
+        changed[chParam(0,CP_hpfCutoff)]=changed[chParam(0,CP_lpfCutoff)]=hz;
+        cached.setParams(changed); render(cached,48000,16);
+        const float expected=nominalFilterCutoff(.5f,filterEffectiveCv(hz));
+        checkNear(cached.getRankInfo(0,0).hpfHz,expected,.001f,"cached HP control equals uncached law");
+        checkNear(cached.getRankInfo(0,0).lpfHz,expected,.001f,"cached LP control equals uncached law");
+    }
     const auto base=probe(60,p), octave=probe(72,p);
     checkNear(base.keyVolts,.5f,1.e-6f,"MIDI C4 nominal key voltage");
     checkNear(octave.hpfHz/base.hpfHz,2,1.e-5f,"HPF neutral keytracking one octave per octave");
@@ -915,6 +1003,7 @@ int main()
     testFilterStability();
     testEnvelope();
     testHardwareFilterContour();
+    testDecimator();
     testFilterControlDomain();
     testSustainTimeAndWheelRouting();
     testSustainPedal();

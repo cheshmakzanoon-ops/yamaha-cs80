@@ -67,6 +67,21 @@ int countHardwareSliders(juce::Component& parent)
     return count;
 }
 
+void validateKeyboardControls(juce::Component& parent)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (!child->isVisible()) continue;
+        if (auto* knob = dynamic_cast<cs80::ui::ParamKnob*>(child))
+        {
+            auto& slider = knob->getSlider();
+            check(slider.getWantsKeyboardFocus(), "visible parameter supports keyboard focus");
+            check(slider.getTitle().isNotEmpty(), "visible parameter has accessible title");
+        }
+        validateKeyboardControls(*child);
+    }
+}
+
 void flushGui(int milliseconds)
 {
     juce::MessageManager::getInstance()->runDispatchLoopUntil(milliseconds);
@@ -91,9 +106,9 @@ int main(int argc, char** argv)
     dir.createDirectory();
 
     Cs80AudioProcessor processor;
-    check(processor.getLatencySamples() == 8, "reported latency at construction");
+    check(processor.getLatencySamples() == 63, "reported latency at construction");
     processor.prepareToPlay(48000.0, 512);
-    check(processor.getLatencySamples() == 8, "reported latency after prepare");
+    check(processor.getLatencySamples() == 63, "reported latency after prepare");
 
     // Parameter and preset integrity. These are the checks a host would rely
     // on before the instrument is even asked to make a sound.
@@ -246,6 +261,7 @@ int main(int argc, char** argv)
         }
     };
 
+    validateKeyboardControls(editor);
     check(countHardwareSliders(editor) >= 40, "main instrument uses hardware slider banks");
     save("main-1600x1000");
 

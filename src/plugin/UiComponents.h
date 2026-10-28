@@ -52,6 +52,32 @@ public:
     juce::Font getTextButtonFont(juce::TextButton&, int buttonHeight) override;
 };
 
+// Native slider semantics and accessibility are retained. Only the focus
+// decoration is added; APVTS attachments continue to own value gestures.
+class FocusSlider final : public juce::Slider
+{
+public:
+    FocusSlider() { setWantsKeyboardFocus(true); }
+    void focusGained(juce::Component::FocusChangeType cause) override
+    {
+        juce::Slider::focusGained(cause);
+        repaint();
+    }
+    void focusLost(juce::Component::FocusChangeType cause) override
+    {
+        juce::Slider::focusLost(cause);
+        repaint();
+    }
+    void paintOverChildren(juce::Graphics& g) override
+    {
+        if (hasKeyboardFocus(true))
+        {
+            g.setColour(juce::Colour(0xfff6df91));
+            g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 2.0f, 1.5f);
+        }
+    }
+};
+
 // Parameter-bound rotary or hardware linear slider with a unit-aware readout.
 class ParamKnob final : public juce::Component
 {
@@ -73,7 +99,7 @@ private:
     int parameterIndex;
     juce::String name;
     bool hardwareSlider = false;
-    juce::Slider slider;
+    FocusSlider slider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParamKnob)
@@ -88,6 +114,15 @@ public:
 
     void paintButton(juce::Graphics&, bool shouldDrawButtonAsHighlighted,
                      bool shouldDrawButtonAsDown) override;
+
+    void paintOverChildren(juce::Graphics& g) override
+    {
+        if (hasKeyboardFocus(true))
+        {
+            g.setColour(juce::Colour(0xfff6df91));
+            g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 2.0f, 1.5f);
+        }
+    }
 
     juce::Colour accent { amber };
     bool hardwareTab = false;

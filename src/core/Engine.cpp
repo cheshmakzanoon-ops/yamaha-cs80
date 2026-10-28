@@ -86,8 +86,8 @@ void Engine::reset()
     reverb.reset();
     fxL.reset();
     fxR.reset();
-    decL.prepare((float) internalRate);
-    decR.prepare((float) internalRate);
+    decL.reset();
+    decR.reset();
     lastNote = 60;
     globalBend = 0.0f;
     modWheel = 0.0f;
@@ -232,9 +232,11 @@ void Engine::buildSettings()
         r.pwmDepth = rp(CP_pwmDepth);
         r.feet = (int) std::lround(rp(CP_feet));
         r.hpfCutoff = rp(CP_hpfCutoff);
+        r.hpfEffectiveCv = filterEffectiveCv(r.hpfCutoff);
         r.hpfRes = rp(CP_hpfRes);
         r.hpfOn = rp(CP_hpfOn) >= 0.5f;
         r.lpfCutoff = rp(CP_lpfCutoff);
+        r.lpfEffectiveCv = filterEffectiveCv(r.lpfCutoff);
         r.lpfRes = rp(CP_lpfRes);
         r.lpfOn = rp(CP_lpfOn) >= 0.5f;
         r.fIl = rp(CP_fIl);
@@ -901,8 +903,8 @@ void Engine::processInternalSample(float& outL, float& outR)
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
-            const float cutoffLp = nominalFilterCutoff(keyVolts, filterEffectiveCv(rs.lpfCutoff) + brillOct + envLp);
-            const float cutoffHp = nominalFilterCutoff(keyVolts, filterEffectiveCv(rs.hpfCutoff) + brillOct + envHp);
+            const float cutoffLp = nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp);
+            const float cutoffHp = nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp);
             const float qLp = provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
             const float qHp = provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
@@ -1071,12 +1073,13 @@ void Engine::render(float* interleavedStereo, int numFrames)
         {
             float l = 0.0f, r = 0.0f;
             processInternalSample(l, r);
-            const float dl = decL.process(l);
-            const float dr = decR.process(r);
-            if (os == oversample - 1)
+            decL.push(l);
+            decR.push(r);
+            // Evaluate only the retained odd phase, using symmetric tap pairs.
+            if (os == Decimator::kRetainedPhase)
             {
-                lastL = dl;
-                lastR = dr;
+                lastL = decL.output();
+                lastR = decR.output();
             }
         }
         interleavedStereo[i * 2] = lastL;
