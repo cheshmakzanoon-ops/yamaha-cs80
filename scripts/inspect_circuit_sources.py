@@ -10,10 +10,16 @@ import io
 import json
 import time
 import urllib.request
+import re
+import subprocess
+import tempfile
+from pathlib import Path
 from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "cs20m_q": "https://www.polynominal.com/sample-packs/yamaha-cs20m/Yamaha-CS-20m-service-Manual.pdf",
+    "icguide": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "ig00156": "https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/ig00156.png",
     "ig00156circuit": "https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/vcfcircuit.png",
     "mics42": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/42%20-%20M%20Circuit%20ICs.jpg",
@@ -36,7 +42,7 @@ Image.MAX_IMAGE_PIXELS = 40_000_000
 
 def download(url):
     source_host = urlparse(url).hostname
-    if source_host not in {"www.therogoffs.com", "hygunduz5.wordpress.com"}:
+    if source_host not in {"www.therogoffs.com", "hygunduz5.wordpress.com", "www.goltsynth.com", "www.polynominal.com"}:
         raise ValueError("source host outside fixed allowlist")
     last = None
     for attempt in range(3):
@@ -55,18 +61,10 @@ def download(url):
                 time.sleep(2 * (attempt + 1))
     raise RuntimeError(f"Cannot read source after three attempts: {last}")
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--page", choices=tuple(SOURCES), required=True)
-    args = parser.parse_args()
-    url = SOURCES[args.page]
-    data = download(url)
-    with Image.open(io.BytesIO(data)) as source:
-        source.load()
-        gray = source.convert("L")
+def emit_image(gray, page, url, data):
     w, h = gray.size
     print("CS80_SOURCE_METADATA " + json.dumps({
-        "page": args.page, "url": url, "sha256": hashlib.sha256(data).hexdigest(),
+        "page": page, "url": url, "sha256": hashlib.sha256(data).hexdigest(),
         "bytes": len(data), "width": w, "height": h,
         "purpose": "Original Yamaha schematic analysis; not measured hardware evidence"
     }), flush=True)
@@ -74,12 +72,12 @@ def main():
     # Overlap preserves circuit connections that cross a tile boundary.
     for row in range(2):
         for col in range(2):
-            boxes.append((f"{args.page}-r{row}-c{col}", (
+            boxes.append((f"{page}-r{row}-c{col}", (
                 max(0, col * w // 2 - 64), max(0, row * h // 2 - 64),
                 min(w, (col + 1) * w // 2 + 64), min(h, (row + 1) * h // 2 + 64)
             ), True))
     if max(w, h) <= 2400:
-        boxes.append((f"{args.page}-full-native", (0, 0, w, h), False))
+        boxes.append((f"{page}-full-native", (0, 0, w, h), False))
     # Native-pixel detail crops, selected from inspected source coordinates.
     focus = {
         "trg5": [
@@ -92,10 +90,10 @@ def main():
             ("voice1-lower", (650, 1600, 1250, 3100)),
         ],
     }
-    for name, box in focus.get(args.page, []):
+    for name, box in focus.get(page, []):
         if box[2] > w or box[3] > h or max(box[2]-box[0], box[3]-box[1]) > 2400:
             raise ValueError("focus crop outside verified source bounds")
-        boxes.append((f"{args.page}-{name}", box, False))
+        boxes.append((f"{page}-{name}", box, False))
     for ident, box, resize in boxes:
         crop = gray.crop(box)
         if resize:
@@ -112,6 +110,72 @@ def main():
         for index, start in enumerate(range(0, len(encoded), 4096)):
             print(f"CS80_CROP_DATA {ident} {index:04d} {encoded[start:start+4096]}", flush=True)
         print(f"CS80_CROP_END {ident}", flush=True)
+
+def inspect_pdf(url, data, key):
+    # No OCR or full-document rendering. Text extraction locates at most four pages.
+    with tempfile.TemporaryDirectory(prefix="cs80-icguide-") as directory:
+        root = Path(directory)
+        pdf = root / "source.pdf"
+        pdf.write_bytes(data)
+        info = subprocess.run(["pdfinfo", str(pdf)], check=True, capture_output=True,
+                              text=True, timeout=30).stdout
+        print("CS80_PDF_INFO " + json.dumps({"url": url, "sha256": hashlib.sha256(data).hexdigest(),
+              "bytes": len(data), "pdfinfo": info}), flush=True)
+        match = re.search(r"^Pages:\s+(\d+)", info, re.MULTILINE)
+        if not match or not 1 <= int(match.group(1)) <= 500:
+            raise ValueError("PDF page count outside 1..500 bound")
+        count = int(match.group(1))
+        if key == "cs20m_q":
+            if count < 52:
+                raise ValueError("CS-20M fixed target page52 absent")
+            selected = [52]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "fixed original CS-20M Figure F-4 source target"}), flush=True)
+        else:
+            txt = root / "source.txt"
+            subprocess.run(["pdftotext", "-layout", str(pdf), str(txt)], check=True, timeout=45)
+            if txt.stat().st_size > 8 * 1024 * 1024:
+                raise ValueError("PDF extracted text exceeds 8MiB bound")
+            pages = txt.read_text(encoding="utf-8", errors="replace").split("\f")
+            found = []
+            for number, content in enumerate(pages[:count], 1):
+                hits = list(re.finditer(r"IG\s*0{2}156", content, re.IGNORECASE))
+                if hits:
+                    found.append(number)
+                    excerpts = [content[max(0, hit.start()-180):hit.end()+500] for hit in hits[:4]]
+                    print("CS80_PDF_TEXT_MATCH " + json.dumps({"page": number, "excerpts": excerpts}), flush=True)
+            selected = found[:4] if found else list(range(1, min(3, count)+1))
+            print("CS80_PDF_SELECTION " + json.dumps({"matched_pages": found,
+                  "rendered_pages": selected, "fallback_first_three": not bool(found)}), flush=True)
+        for number in selected:
+            prefix = root / f"page-{number}"
+            subprocess.run(["pdftoppm", "-f", str(number), "-l", str(number),
+                            "-singlefile", "-scale-to", "1800", "-png",
+                            str(pdf), str(prefix)], check=True, timeout=45,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+            png = prefix.with_suffix(".png")
+            if png.stat().st_size > MAX_BYTES:
+                raise ValueError("PDF rendered page exceeds image bound")
+            with Image.open(png) as source:
+                source.load()
+                gray = source.convert("L")
+            emit_image(gray, f"{key}-page{number}", url, data)
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--page", choices=tuple(SOURCES), required=True)
+    args = parser.parse_args()
+    url = SOURCES[args.page]
+    data = download(url)
+    if args.page in {"icguide", "cs20m_q"}:
+        if not data.startswith(b"%PDF-"):
+            raise ValueError("guidebook source is not a PDF")
+        inspect_pdf(url, data, args.page)
+        return
+    with Image.open(io.BytesIO(data)) as source:
+        source.load()
+        gray = source.convert("L")
+    emit_image(gray, args.page, url, data)
 
 if __name__ == "__main__":
     main()
