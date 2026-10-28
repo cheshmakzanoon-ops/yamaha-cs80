@@ -67,6 +67,156 @@ public:
         g.drawVerticalLine((int) cap.getX(), cap.getY(), cap.getBottom());
     }
 };
+// Magnified view of the four independent analog-memory panels. This does not
+// copy a live patch: moving each miniature control edits that bank directly.
+class MemoryProgrammer final : public juce::Component
+{
+public:
+    explicit MemoryProgrammer(Cs80AudioProcessor& p) : processor(p)
+    {
+        setOpaque(true);
+        addAndMakeVisible(close);
+        close.setButtonText("CLOSE LID");
+        close.onClick = [this] { if (onClose) onClose(); };
+        for (int bank = 0; bank < 4; ++bank)
+        {
+            auto button = std::make_unique<juce::TextButton>("MEMORY " + juce::String(bank + 1));
+            button->setClickingTogglesState(false);
+            button->onClick = [this, bank] { processor.selectHardwareSource(bank % 2, bank < 2 ? 11 : 12); refresh(); };
+            button->setTooltip("Listen to this independent memory on channel " + juce::String(bank % 2 + 1));
+            addAndMakeVisible(*button);
+            bankButtons[(size_t) bank] = std::move(button);
+            for (int col = 0; col < 26; ++col)
+            {
+                const int local = order[(size_t) col];
+                const auto& def = cs80::kChannelDefs[local];
+                Item item;
+                item.bank = bank; item.local = local;
+                const bool discrete = local == cs80::CP_saw || local == cs80::CP_pulse;
+                if (discrete)
+                {
+                    item.toggle = std::make_unique<cs80::ui::LedButton>(local == cs80::CP_saw ? "SAW" : "PULSE");
+                    auto* toggle = item.toggle.get();
+                    toggle->hardwareTab = true;
+                    toggle->accent = juce::Colour(0xffa6a697);
+                    toggle->setTitle("Memory " + juce::String(bank + 1) + " " + def.name);
+                    toggle->onClick = [this, bank, local, toggle] {
+                        processor.setMemoryValue(bank, local, toggle->getToggleState() ? 1.0f : 0.0f);
+                    };
+                    addAndMakeVisible(*toggle);
+                }
+                else
+                {
+                    item.slider = std::make_unique<juce::Slider>();
+                    auto* slider = item.slider.get();
+                    slider->setSliderStyle(juce::Slider::LinearVertical);
+                    slider->setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+                    slider->setRange(def.min, def.max);
+                    slider->setSkewFactor(def.skew);
+                    slider->setColour(juce::Slider::thumbColourId, juce::Colour(0xffa6a697));
+                    slider->setDoubleClickReturnValue(true, def.def);
+                    slider->setTitle("Memory " + juce::String(bank + 1) + " " + def.name);
+                    slider->setTooltip(slider->getTitle());
+                    slider->onValueChange = [this, bank, local, slider] {
+                        processor.setMemoryValue(bank, local, (float) slider->getValue());
+                        slider->setTooltip(slider->getTitle() + ": "
+                            + cs80::ui::formatParamValue(cs80::chParam(bank % 2, local), (float) slider->getValue()));
+                    };
+                    addAndMakeVisible(*slider);
+                }
+                items.push_back(std::move(item));
+            }
+        }
+        refresh();
+    }
+
+    void refresh()
+    {
+        for (auto& item : items)
+        {
+            if (item.slider && ! item.slider->isMouseButtonDown())
+                item.slider->setValue(processor.getMemoryValue(item.bank, item.local), juce::dontSendNotification);
+            if (item.toggle)
+                item.toggle->setToggleState(processor.getMemoryValue(item.bank, item.local) >= 0.5f, juce::dontSendNotification);
+        }
+        for (int bank = 0; bank < 4; ++bank)
+            bankButtons[(size_t) bank]->setToggleState(
+                processor.getHardwareSource(bank % 2) == (bank < 2 ? 11 : 12), juce::dontSendNotification);
+    }
+
+    void paint(juce::Graphics& g) override
+    {
+        g.saveState();
+        const float sx = (float) getWidth() / 1472.0f, sy = (float) getHeight() / 554.0f;
+        g.addTransform(juce::AffineTransform::scale(sx, sy));
+        g.fillAll(juce::Colour(0xff1a1c17));
+        g.setColour(juce::Colour(0xffbdb9a5)); g.drawRect(2, 2, 1468, 550, 2);
+        g.setFont(displayFont(17, juce::Font::bold));
+        g.drawText("MEMORY PROGRAMMER", 24, 16, 450, 24, juce::Justification::centredLeft);
+        g.setFont(displayFont(10));
+        g.drawText("FOUR INDEPENDENT MINIATURE PANELS  /  MAGNIFIED VIEW", 24, 42, 1000, 17, juce::Justification::centredLeft);
+        for (int bank = 0; bank < 4; ++bank)
+        {
+            const float y = 73.0f + (float) bank * 112.0f;
+            g.setColour(juce::Colour(0xff292c23)); g.fillRect(14.0f, y, 1444.0f, 107.0f);
+            g.setColour(juce::Colour(0xffc8c7b3));
+            g.setFont(displayFont(10, juce::Font::bold));
+            g.drawText(bank % 2 == 0 ? "CHANNEL I" : "CHANNEL II", 23, (int)y + 60, 110, 18, juce::Justification::centred);
+            for (int col = 0; col < 26; ++col)
+            {
+                g.setFont(displayFont(8.0f, juce::Font::bold));
+                g.drawFittedText(labels[(size_t)col], 145 + col * 50, (int)y + 3, 48, 22,
+                                 juce::Justification::centred, 2, 0.7f);
+            }
+        }
+        g.setColour(juce::Colour(0xffc8c7b3)); g.setFont(displayFont(9));
+        g.drawText("Miniature controls are independent of the main panel. Select a memory to hear it; PANEL returns to the unchanged front-panel settings.",
+                   22, 526, 1420, 16, juce::Justification::centredLeft);
+        g.restoreState();
+    }
+
+    void resized() override
+    {
+        const float sx = (float) getWidth() / 1472.0f, sy = (float) getHeight() / 554.0f;
+        auto r = [sx,sy](float x,float y,float w,float h) {
+            return juce::Rectangle<int>(juce::roundToInt(x*sx),juce::roundToInt(y*sy),
+                                       juce::roundToInt(w*sx),juce::roundToInt(h*sy));
+        };
+        close.setBounds(r(1320,20,125,28));
+        for (int bank = 0; bank < 4; ++bank)
+        {
+            const float y = 73.0f + (float) bank * 112.0f;
+            bankButtons[(size_t) bank]->setBounds(r(24,y+24,108,28));
+            for (int col = 0; col < 26; ++col)
+            {
+                auto& item = items[(size_t)(bank*26+col)];
+                if (item.slider) item.slider->setBounds(r(145+(float)col*50,y+27,48,73));
+                if (item.toggle) item.toggle->setBounds(r(153+(float)col*50,y+38,32,54));
+            }
+        }
+    }
+    std::function<void()> onClose;
+
+private:
+    struct Item { int bank=0, local=0; std::unique_ptr<juce::Slider> slider; std::unique_ptr<cs80::ui::LedButton> toggle; };
+    Cs80AudioProcessor& processor;
+    juce::TextButton close;
+    std::array<std::unique_ptr<juce::TextButton>,4> bankButtons;
+    std::vector<Item> items;
+    const std::array<int,26> order {{
+        cs80::CP_pwmSpeed, cs80::CP_pwmDepth, cs80::CP_pw, cs80::CP_pulse, cs80::CP_saw, cs80::CP_noise,
+        cs80::CP_hpfCutoff, cs80::CP_hpfRes, cs80::CP_lpfCutoff, cs80::CP_lpfRes,
+        cs80::CP_fIl, cs80::CP_fAl, cs80::CP_fA, cs80::CP_fD, cs80::CP_fR,
+        cs80::CP_vcfLevel, cs80::CP_sine, cs80::CP_vA, cs80::CP_vD, cs80::CP_vS, cs80::CP_vR, cs80::CP_vLevel,
+        cs80::CP_initBrill, cs80::CP_initLevel, cs80::CP_afterBrill, cs80::CP_afterLevel
+    }};
+    const std::array<const char*,26> labels {{
+        "SPEED","PWM","PW","PULSE","SAW","NOISE","HPF","RES H","LPF","RES L",
+        "IL","AL","A","D","R","VCF LEVEL","SINE","A","D","S","R","LEVEL",
+        "INITIAL\nBRILL","INITIAL\nLEVEL","AFTER\nBRILL","AFTER\nLEVEL"
+    }};
+};
+
 } // namespace
 
 struct Cs80AudioProcessorEditor::Impl final : public juce::Component
@@ -77,7 +227,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
           pitchWheel("PITCH", true),
           modWheel("MOD", false),
           advanced(p),
-          browser(p)
+          browser(p),
+          memoryProgrammer(p)
     {
         setOpaque(true);
         setLookAndFeel(&lookAndFeel);
@@ -94,6 +245,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advanced.setVisible(false);
         addAndMakeVisible(browser);
         browser.setVisible(false);
+        addAndMakeVisible(memoryProgrammer);
+        memoryProgrammer.setVisible(false);
+        memoryProgrammer.onClose = [this] { memoryProgrammer.setVisible(false); };
 
         advanced.onClose = [this] { showAdvanced(false); };
         browser.onClose = [this] { showBrowser(false); };
@@ -134,6 +288,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     {
         auto knob = std::make_unique<cs80::ui::ParamKnob>(processor, parameter, name);
         auto* raw = knob.get();
+        raw->getSlider().getProperties().set("hardwareRotary", true);
         addAndMakeVisible(*raw);
         place(*raw, x, y, w, h);
         knobs.push_back(std::move(knob));
@@ -294,6 +449,16 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             repaint();
         };
         place(voiceOptions, 94, 447, 278, 25);
+        addAndMakeVisible(memoryLid);
+        memoryLid.setButtonText("OPEN MEMORY LID");
+        memoryLid.onClick = [this] {
+            showAdvanced(false);
+            showBrowser(false);
+            memoryProgrammer.refresh();
+            memoryProgrammer.setVisible(true);
+            memoryProgrammer.toFront(true);
+        };
+        place(memoryLid, 94, 410, 278, 27);
         for (int channel = 0; channel < 2; ++channel)
         {
             const float y = 296.0f + (float) channel * 68.0f;
@@ -309,16 +474,30 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void buildToneSection()
     {
-        const std::array<juce::Colour, 11> colours = {
+        const std::array<juce::Colour, 14> colours = {
             yellowCap(), yellowCap(), redCap(), whiteCap(), yellowCap(),
-            yellowCap(), yellowCap(), whiteCap(), greenCap(), greenCap(), greenCap()
+            yellowCap(), yellowCap(), whiteCap(), greenCap(), greenCap(), greenCap(),
+            whiteCap(), whiteCap(), whiteCap()
         };
         for (int channel = 0; channel < 2; ++channel)
         {
-            for (int tone = 0; tone < 11; ++tone)
+            for (int tone = 0; tone < 14; ++tone)
             {
                 auto button = std::make_unique<juce::TextButton>(
-                    juce::String(cs80::hardwareToneName(tone, channel)).toUpperCase());
+                    (tone < 11 ? juce::String(cs80::hardwareToneName(tone, channel)).toUpperCase()
+                     : tone == 13 ? juce::String("PANEL")
+                     : juce::String("MEMORY ") + juce::String(channel + (tone == 11 ? 1 : 3))));
+                const auto fullName = button->getButtonText();
+                button->setTitle(fullName);
+                button->setTooltip(fullName + (channel == 0 ? " / CHANNEL I" : " / CHANNEL II"));
+                button->setButtonText(fullName.replace("HARPSICHORD ", "HARPSI\nCHORD ")
+                                              .replace("CLAVICHORD ", "CLAVI\nCHORD ")
+                                              .replace("STRING ", "STRING\n")
+                                              .replace("BRASS ", "BRASS\n")
+                                              .replace("GUITAR ", "GUITAR\n")
+                                              .replace("FUNKY ", "FUNKY\n")
+                                              .replace("ORGAN ", "ORGAN\n")
+                                              .replace("MEMORY ", "MEMORY\n"));
                 button->setClickingTogglesState(true);
                 button->setRadioGroupId(0x100 + channel);
                 button->setWantsKeyboardFocus(false);
@@ -326,8 +505,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 button->setColour(juce::TextButton::buttonColourId, colours[(size_t) tone]);
                 button->onClick = [this, channel, tone] { applyHardwareTone(channel, tone); };
                 addAndMakeVisible(*button);
-                place(*button, 675.0f + (float) tone * 47.0f,
-                       556.0f + (float) channel * 45.0f, 44.0f, 41.0f);
+                place(*button, 675.0f + (float) tone * 37.0f,
+                       556.0f + (float) channel * 45.0f, 34.0f, 41.0f);
                 toneButtons[(size_t) channel][(size_t) tone] = std::move(button);
             }
         }
@@ -336,7 +515,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void buildPerformance()
     {
         addFader(cs80::P_masterSustain, 57, 780, 45, 122, "SUSTAIN", yellowCap());
-        addFader(cs80::P_portamento, 106, 780, 45, 122, "PORTAMENTO", whiteCap());
+        addFader(cs80::P_portamento, 106, 780, 45, 122, "PORTA", whiteCap());
         addKnob(cs80::P_chorusSpeed, 160, 782, 55, 64, "SPEED");
         addKnob(cs80::P_chorusDepth, 220, 782, 55, 64, "DEPTH");
         auto& sus = addLed(cs80::P_sustainMode, "SUSTAIN II", 57, 912, 49, 46);
@@ -407,40 +586,18 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncToneMarks();
     }
 
-    void applyHardwareTone(int channel, int tone)
+    void applyHardwareTone(int channel, int source)
     {
-        auto values = processor.currentValues();
-        cs80::applyHardwareTone(values, channel, tone);
-        processor.applyParameterValues(values);
-        processor.setPresetName(juce::String(channel == 0 ? "Tone I: " : "Tone II: ")
-                                + cs80::hardwareToneName(tone, channel));
+        processor.selectHardwareSource(channel, source);
         syncToneMarks();
-    }
-
-    void clearToneMarks()
-    {
-        for (auto& bank : toneButtons)
-            for (auto& button : bank)
-                button->setToggleState(false, juce::dontSendNotification);
     }
 
     void syncToneMarks()
     {
-        const auto name = processor.getPresetName();
-        clearToneMarks();
-        int channel = -1;
-        if (name.startsWithIgnoreCase("Tone I: "))
-            channel = 0;
-        else if (name.startsWithIgnoreCase("Tone II: "))
-            channel = 1;
-        if (channel < 0)
-            return;
-
-        const auto toneName = name.fromFirstOccurrenceOf(":", false, false).trim();
-        for (int tone = 0; tone < 11; ++tone)
-            if (toneName.equalsIgnoreCase(cs80::hardwareToneName(tone, channel)))
-                toneButtons[(size_t) channel][(size_t) tone]->setToggleState(
-                    true, juce::dontSendNotification);
+        for (int channel = 0; channel < 2; ++channel)
+            for (int source = 0; source < 14; ++source)
+                toneButtons[(size_t) channel][(size_t) source]->setToggleState(
+                    processor.getHardwareSource(channel) == source, juce::dontSendNotification);
     }
 
     void syncPresetDisplay()
@@ -452,6 +609,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void showAdvanced(bool shouldShow)
     {
+        if (shouldShow) memoryProgrammer.setVisible(false);
         advancedVisible = shouldShow;
         advanced.setVisible(shouldShow);
         advancedButton.setToggleState(shouldShow, juce::dontSendNotification);
@@ -466,6 +624,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void showBrowser(bool shouldShow)
     {
+        if (shouldShow) memoryProgrammer.setVisible(false);
         browserVisible = shouldShow;
         if (shouldShow)
         {
@@ -487,6 +646,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void tick()
     {
         syncPresetDisplay();
+        syncToneMarks();
+        if (memoryProgrammer.isVisible()) memoryProgrammer.refresh();
         // The voice allocator is the only animated element; redrawing the
         // whole panel at 8 Hz also keeps preset metadata current.
         repaint();
@@ -558,7 +719,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 panelText(g, row == 0 ? "VCA ENVELOPE" : "AFTER TOUCH", 267, y, 100, 28, 8);
                 g.drawLine(226, y + 14, 267, y + 14, 1);
             }
-            panelText(g, "TWO CHANNELS  /  EIGHT VOICES", 94, 414, 280, 18, 9);
+
         }
     }
 
@@ -585,8 +746,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 g.strokePath(grain, juce::PathStrokeType(0.8f));
             }
         }
-        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff32322d), 800, 78,
-                                               juce::Colour(0xff131512), 800, 754, false));
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff252623), 800, 78,
+                                               juce::Colour(0xff111310), 800, 754, false));
         g.fillRect(42, 78, 1516, 680);
         g.setColour(juce::Colour(0xffbdb9a9));
         g.drawRect(48, 103, 1504, 393, 1);
@@ -674,6 +835,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         advanced.setBounds(r(24.0f, 88.0f, 1552.0f, 892.0f));
         browser.setBounds(r(200.0f, 120.0f, 1200.0f, 760.0f));
+        memoryProgrammer.setBounds(r(48.0f, 104.0f, 1504.0f, 560.0f));
     }
 
     Cs80AudioProcessor& processor;
@@ -690,9 +852,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     std::vector<std::unique_ptr<cs80::ui::ParamKnob>> knobs;
     std::vector<std::unique_ptr<cs80::ui::LedButton>> leds;
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> buttonAttachments;
-    std::array<std::array<std::unique_ptr<juce::TextButton>, 11>, 2> toneButtons;
+    std::array<std::array<std::unique_ptr<juce::TextButton>, 14>, 2> toneButtons;
     std::vector<Placement> placements;
     juce::TextButton voiceOptions;
+    juce::TextButton memoryLid;
     std::vector<juce::Component*> optionComponents;
     bool optionsVisible = false;
 
@@ -703,6 +866,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     cs80::ui::AdvancedPanel advanced;
     cs80::ui::PresetBrowser browser;
+    MemoryProgrammer memoryProgrammer;
 
     bool advancedVisible = false;
     bool browserVisible = false;

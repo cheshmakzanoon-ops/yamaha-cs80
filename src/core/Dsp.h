@@ -347,12 +347,28 @@ private:
     float a = 0.0f, d = 0.0f, s = 0.0f, r = 0.0f;
 };
 
-// Filter contour: IL -> AL -> sustain, with a release to the resting cutoff.
-// Values are offsets in octaves, so they can be negative.
+// The original IL is below the steady cutoff; AL is above it. Preserve the
+// existing three-octave model scale, but expose its uncalibrated nature instead
+// of treating printed -5/+5 panel markings as octave measurements.
+inline constexpr float kProvisionalFilterEnvelopeOctaves = 3.0f;
+// M-board EG summing resistors differ (HP100k, LP47k). Retain the prior
+// approximate half-depth HP path until loaded-node gains are fully derived.
+inline constexpr float kProvisionalHpfEnvelopeGain = 0.5f;
+inline float filterInitialOffset(float control) noexcept
+{
+    return -kProvisionalFilterEnvelopeOctaves * clampf(control, 0.0f, 1.0f);
+}
+inline float filterAttackOffset(float control) noexcept
+{
+    return kProvisionalFilterEnvelopeOctaves * clampf(control, 0.0f, 1.0f);
+}
+
+// Yamaha IL -> AL -> steady cutoff, then release towards IL. A held steady
+// state is distinct from Idle so noteOff still releases a settled contour.
 class FilterEnv
 {
 public:
-    enum class Stage { Idle, Attack, Decay, Release };
+    enum class Stage { Idle, Attack, Decay, Sustain, Release };
 
     void reset() noexcept
     {
@@ -413,18 +429,21 @@ public:
                 if (std::abs(value - sustain) < 0.0008f)
                 {
                     value = sustain;
-                    stage = Stage::Idle;
+                    stage = Stage::Sustain;
                 }
                 break;
             }
+            case Stage::Sustain:
+                value = sustain;
+                break;
             case Stage::Release:
             {
                 const float fast = (bent && stageTime < 0.04f) ? 5.0f : 1.0f;
                 const float c = coefficientForTime(r, sampleRate, fast);
-                value += (0.0f - value) * (1.0f - c);
-                if (std::abs(value) < 0.0008f)
+                value += (il - value) * (1.0f - c);
+                if (std::abs(value - il) < 0.0008f)
                 {
-                    value = 0.0f;
+                    value = il;
                     stage = Stage::Idle;
                 }
                 break;

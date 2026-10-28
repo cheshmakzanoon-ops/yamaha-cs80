@@ -290,6 +290,145 @@ void testEnvelope()
     checkNear(gate.tick(48000.0f, true), 1.0f, 0.0001f, "zero attack reaches full level");
 }
 
+void testHardwareFilterContour()
+{
+    checkNear(filterInitialOffset(0.0f), 0.0f, 1.0e-7f, "IL zero neutral");
+    check(filterInitialOffset(1.0f) < 0.0f, "IL lowers initial cutoff");
+    checkNear(filterAttackOffset(0.0f), 0.0f, 1.0e-7f, "AL zero neutral");
+    check(filterAttackOffset(1.0f) > 0.0f, "AL raises attack peak");
+    for (float sr : {44100.0f, 48000.0f, 96000.0f, 192000.0f})
+    {
+        FilterEnv contour;
+        contour.noteOn(-2.0f, 1.0f, 0.1f, 0.1f, 0.2f, 0.0f);
+        checkNear(contour.getValue(), -2.0f, 1.0e-6f, "filter starts at IL");
+        float peak = -2.0f;
+        for (int i = 0; i < (int)(sr * 0.5f); ++i)
+            peak = std::max(peak, contour.tick(sr));
+        checkNear(peak, 1.0f, 0.001f, "filter reaches AL");
+        checkNear(contour.getValue(), 0.0f, 0.001f, "filter held state is panel cutoff");
+        check(!contour.isIdle(), "settled held filter remains releasable");
+        contour.noteOff();
+        for (int i = 0; i < (int)(sr * 0.5f); ++i)
+            contour.tick(sr);
+        checkNear(contour.getValue(), -2.0f, 0.001f, "filter releases to IL after settled decay");
+        check(contour.isIdle(), "released filter becomes idle");
+        for (float keyDuration : {0.005f, 0.13f, 0.4f})
+        {
+            contour.noteOn(-2.0f, 1.0f, 0.1f, 0.1f, 0.2f, 0.0f);
+            for (int i = 0; i < (int)(sr * keyDuration); ++i)
+                contour.tick(sr);
+            const float before = contour.getValue();
+            contour.noteOff();
+            checkNear(contour.getValue(), before, 1.0e-6f, "key release does not jump filter CV");
+            for (int i = 0; i < (int)(sr * 0.5f); ++i)
+                contour.tick(sr);
+            checkNear(contour.getValue(), -2.0f, 0.001f, "early filter release returns to IL");
+        }
+    }
+
+    ParamValues p;
+    p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = 0.0f;
+    p[P_mix] = 0.0f;
+    p[P_keyRelease] = 0.0f;
+    p[chParam(0, CP_fIl)] = 0.6f;
+    p[chParam(0, CP_fAl)] = 0.7f;
+    p[chParam(0, CP_fA)] = 0.2f;
+    p[chParam(0, CP_fD)] = 0.3f;
+    p[chParam(0, CP_hpfCutoff)] = 200.0f;
+    p[chParam(0, CP_lpfCutoff)] = 2000.0f;
+    Engine e;
+    e.prepare(48000);
+    e.setParams(p);
+    e.noteOn(60, 0.8f);
+    render(e, 48000, 1);
+    const auto first = e.getRankInfo(0,0);
+    check(first.hpfHz < 200.0f && first.lpfHz < 2000.0f, "IL lowers both filter cutoffs");
+    checkNear(first.hpfHz / 200.0f,
+              std::pow(first.lpfHz / 2000.0f, kProvisionalHpfEnvelopeGain), 1.0e-6f,
+              "separate provisional HP envelope gain is applied");
+    render(e, 48000, 11000);
+    const auto peak = e.getRankInfo(0,0);
+    check(peak.hpfHz > 200.0f && peak.lpfHz > 2000.0f, "AL raises both filter cutoffs");
+    render(e, 48000, 48000);
+    const auto held = e.getRankInfo(0,0);
+    p[P_masterSustain] = 1.0f;
+    e.setParams(p);
+    render(e, 48000, 64);
+    checkNear(e.getRankInfo(0,0).hpfHz, held.hpfHz, 0.01f, "sustain time does not shift held HPF");
+    checkNear(e.getRankInfo(0,0).lpfHz, held.lpfHz, 0.1f, "sustain time does not shift held LPF");
+
+    // Sine must bypass the two filters, but still pass through the amplifier.
+    auto sineRender = [](bool closed) {
+        ParamValues v;
+        v[P_mix] = 0.0f;
+        v[P_voiceDispersion] = v[P_drift] = v[P_analogNoise] = 0.0f;
+        v[chParam(0, CP_saw)] = v[chParam(0, CP_pulse)] = 0.0f;
+        v[chParam(0, CP_noise)] = 0.0f;
+        v[chParam(0, CP_sine)] = 1.0f;
+        v[chParam(0, CP_hpfCutoff)] = closed ? 17000.0f : 20.0f;
+        v[chParam(0, CP_lpfCutoff)] = closed ? 20.0f : 17000.0f;
+        v[chParam(0, CP_fIl)] = closed ? 1.0f : 0.0f;
+        v[chParam(0, CP_fAl)] = closed ? 0.0f : 1.0f;
+        Engine engine;
+        engine.prepare(48000);
+        engine.setParams(v);
+        engine.noteOn(69, 0.8f);
+        return render(engine, 48000, 12000);
+    };
+    const auto open = sineRender(false), closed = sineRender(true);
+    double error = 0.0;
+    for (size_t i = 0; i < open.size(); ++i)
+        error = std::max(error, std::abs((double)open[i] - closed[i]));
+    check(error < 1.0e-7, "sine signal unchanged by filter and filter contour settings");
+    check(analyse(open).rms > 0.001, "sine bypass test has audible signal");
+}
+
+void testSustainTimeAndWheelRouting()
+{
+    for (int mode : {0,1})
+    {
+        Engine e;
+        e.prepare(48000);
+        ParamValues p;
+        p[P_sustainMode] = (float)mode;
+        p[P_masterSustain] = 0.5f;
+        p[P_keyRelease] = 0.0f;
+        p[chParam(0, CP_vR)] = p[chParam(1, CP_vR)] = 0.01f;
+        p[chParam(0, CP_fR)] = p[chParam(1, CP_fR)] = 0.01f;
+        e.setParams(p);
+        e.noteOn(60,0.8f);
+        render(e,48000,12000);
+        e.noteOff(60);
+        render(e,48000,48000);
+        check(e.activeVoices() == 1, "global sustain time lengthens released note");
+        check(e.getRankInfo(0,0).filterEnvelope > filterInitialOffset(p[chParam(0, CP_fIl)]) + 0.01f,
+              "global sustain also lengthens VCF release");
+        e.noteOn(67,0.8f);
+        render(e,48000,32);
+        check(e.activeVoices() == (mode == 0 ? 2 : 1), "sustain II new note cuts only previous released tail");
+        e.noteOff(67);
+        render(e,48000,48000 * 8);
+        check(e.activeVoices() == 0, "both sustain modes decay without another note");
+    }
+    ParamValues p;
+    p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = p[P_subVco] = 0.0f;
+    p[P_subSpeed] = 1.0f;
+    p[P_subWave] = 0.0f;
+    p[P_modWheelSub] = 1.0f;
+    Engine e;
+    e.prepare(48000);
+    e.setParams(p);
+    e.noteOn(69,0.8f);
+    e.controlChange(1,1.0f);
+    render(e,48000,12000);
+    check(e.getRankInfo(0,0).oscillatorHz > 440.0f, "wheel increases positive sub pitch modulation");
+    render(e,48000,24000);
+    check(e.getRankInfo(0,0).oscillatorHz < 440.0f, "wheel also follows negative sub phase, not DC pitch offset");
+    e.controlChange(1,0.0f);
+    render(e,48000,64);
+    checkNear(e.getRankInfo(0,0).oscillatorHz,440.0f,0.01f,"wheel zero restores unmodulated pitch");
+}
+
 void testSustainPedal()
 {
     ParamValues p;
@@ -718,6 +857,8 @@ int main()
     testHardwareRingAndRibbon();
     testFilterStability();
     testEnvelope();
+    testHardwareFilterContour();
+    testSustainTimeAndWheelRouting();
     testSustainPedal();
     testAllSoundOff();
     testMpeExpression();

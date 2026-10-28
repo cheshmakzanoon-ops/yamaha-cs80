@@ -21,6 +21,19 @@ Cs80AudioProcessor::Cs80AudioProcessor()
 {
     for (int i = 0; i < cs80::P_numParams; ++i)
         parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+            hardwareMemories[(size_t) bank][(size_t) local].store(cs80::kChannelDefs[local].def);
+    for (int channel = 0; channel < 2; ++channel)
+        for (int tone = 0; tone < 11; ++tone)
+        {
+            cs80::ParamValues values;
+            cs80::applyHardwareTone(values, channel, tone);
+            for (int local = 0; local < cs80::CP_count; ++local)
+                hardwareFactoryValues[(size_t) channel][(size_t) tone][(size_t) local] = values[cs80::chParam(channel, local)];
+        }
+    if (!getFactoryPresets().empty())
+        applyValues(getFactoryPresets()[0].values);
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
@@ -78,6 +91,21 @@ void Cs80AudioProcessor::readParameters()
         if (auto* p = parameterValues[(size_t) i])
             cached.v[(size_t) i] = p->load(std::memory_order_relaxed);
     }
+    for (int channel = 0; channel < 2; ++channel)
+    {
+        const int source = getHardwareSource(channel);
+        if (source == 13) continue;
+        for (int local = 0; local < cs80::CP_count; ++local)
+        {
+            // Footage is outside the original programmer; pan/filter bypass
+            // are software extensions and remain live independent controls.
+            if (local == cs80::CP_feet || local == cs80::CP_pan
+                || local == cs80::CP_hpfOn || local == cs80::CP_lpfOn) continue;
+            cached.v[(size_t) cs80::chParam(channel, local)] = source < 11
+                ? hardwareFactoryValues[(size_t) channel][(size_t) source][(size_t) local]
+                : getMemoryValue(channel + (source == 12 ? 2 : 0), local);
+        }
+    }
 }
 
 cs80::ParamValues Cs80AudioProcessor::currentValues() const
@@ -109,7 +137,7 @@ void Cs80AudioProcessor::setParamValue(int index, float physicalValue)
         return;
     if (auto* p = apvts.getParameter(parameterId(index)))
     {
-        const float normalised = cs80::normaliseParam(index, physicalValue);
+        const float normalised = p->convertTo0to1(physicalValue);
         p->setValueNotifyingHost(normalised);
 
     }
@@ -122,10 +150,11 @@ void Cs80AudioProcessor::applyParameterValues(const cs80::ParamValues& values)
 
 void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
 {
+    resetHardwareSources();
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
         if (auto* p = apvts.getParameter(parameterId(i)))
-            p->setValueNotifyingHost(cs80::normaliseParam(i, values[i]));
+            p->setValueNotifyingHost(p->convertTo0to1(values[i]));
     }
     // The next audio block snapshots APVTS atomics; never mutate DSP from the GUI.
 }
@@ -262,6 +291,78 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 }
 
 
+int Cs80AudioProcessor::getHardwareSource(int channel) const noexcept
+{
+    return channel >= 0 && channel < 2 ? hardwareSources[(size_t) channel].load(std::memory_order_relaxed) : 13;
+}
+
+void Cs80AudioProcessor::resetHardwareSources() noexcept
+{
+    for (auto& source : hardwareSources) source.store(13, std::memory_order_relaxed);
+}
+
+void Cs80AudioProcessor::selectHardwareSource(int channel, int source)
+{
+    if (channel < 0 || channel > 1 || source < 0 || source > 13) return;
+    hardwareSources[(size_t) channel].store(source, std::memory_order_relaxed);
+    juce::String label = source < 11 ? juce::String(cs80::hardwareToneName(source, channel))
+        : source == 13 ? "Panel" : "Memory " + juce::String(channel + (source == 12 ? 3 : 1));
+    setPresetName(juce::String(channel == 0 ? "Tone I: " : "Tone II: ") + label);
+}
+
+float Cs80AudioProcessor::getMemoryValue(int bank, int local) const noexcept
+{
+    if (bank < 0 || bank >= 4 || local < 0 || local >= cs80::CP_count) return 0.0f;
+    return hardwareMemories[(size_t) bank][(size_t) local].load(std::memory_order_relaxed);
+}
+
+void Cs80AudioProcessor::setMemoryValue(int bank, int local, float value) noexcept
+{
+    if (bank < 0 || bank >= 4 || local < 0 || local >= cs80::CP_count || !std::isfinite(value)) return;
+    const auto& def = cs80::kChannelDefs[local];
+    hardwareMemories[(size_t) bank][(size_t) local].store(juce::jlimit(def.min, def.max, value), std::memory_order_relaxed);
+}
+
+void Cs80AudioProcessor::writeHardwareState(juce::ValueTree& state) const
+{
+    auto old = state.getChildWithName("HARDWARE");
+    if (old.isValid()) state.removeChild(old, nullptr);
+    juce::ValueTree hardware("HARDWARE");
+    hardware.setProperty("version", 1, nullptr);
+    hardware.setProperty("sourceI", getHardwareSource(0), nullptr);
+    hardware.setProperty("sourceII", getHardwareSource(1), nullptr);
+    for (int bank = 0; bank < 4; ++bank)
+    {
+        juce::ValueTree memory("MEMORY");
+        memory.setProperty("bank", bank, nullptr);
+        for (int local = 0; local < cs80::CP_count; ++local)
+            memory.setProperty("p" + juce::String(local), getMemoryValue(bank, local), nullptr);
+        hardware.addChild(memory, -1, nullptr);
+    }
+    state.addChild(hardware, -1, nullptr);
+}
+
+void Cs80AudioProcessor::restoreHardwareState(const juce::ValueTree& state)
+{
+    // Old plugin states have no hardware programmer section and retain the
+    // original PANEL behavior. Reject invalid indexes and nonfinite values.
+    resetHardwareSources();
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+            setMemoryValue(bank, local, cs80::kChannelDefs[local].def);
+    auto hardware = state.getChildWithName("HARDWARE");
+    if (! hardware.isValid()) return;
+    for (const auto& memory : hardware)
+    {
+        if (!memory.hasType("MEMORY")) continue;
+        const int bank = (int) memory.getProperty("bank", -1);
+        for (int local = 0; local < cs80::CP_count; ++local)
+            setMemoryValue(bank, local, (float) memory.getProperty("p" + juce::String(local), cs80::kChannelDefs[local].def));
+    }
+    hardwareSources[0].store(juce::jlimit(0, 13, (int) hardware.getProperty("sourceI", 13)), std::memory_order_relaxed);
+    hardwareSources[1].store(juce::jlimit(0, 13, (int) hardware.getProperty("sourceII", 13)), std::memory_order_relaxed);
+}
+
 juce::AudioProcessorEditor* Cs80AudioProcessor::createEditor()
 {
     return new Cs80AudioProcessorEditor(*this);
@@ -293,6 +394,7 @@ void Cs80AudioProcessor::changeProgramName(int, const juce::String&)
 void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     auto state = apvts.copyState();
+    writeHardwareState(state);
     state.setProperty("presetName", presetName, nullptr);
     state.setProperty("factoryIndex", currentProgram, nullptr);
     if (auto xml = state.createXml())
@@ -313,6 +415,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
             apvts.replaceState(tree);
+            restoreHardwareState(tree);
             presetName = tree.getProperty("presetName", "Init Patch").toString();
             currentProgram = (int) tree.getProperty("factoryIndex", 0);
             // DSP state is updated by the next audio block, not the state-loading thread.
@@ -337,6 +440,7 @@ void Cs80AudioProcessor::saveUserPreset(const juce::String& name)
         safe = "User Preset";
     auto file = dir.getChildFile(safe + ".cs80xml");
     auto state = apvts.copyState();
+    writeHardwareState(state);
     state.setProperty("presetName", name.isNotEmpty() ? name : presetName, nullptr);
     state.setProperty("factoryIndex", currentProgram, nullptr);
     if (auto xml = state.createXml())
@@ -373,6 +477,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
             apvts.replaceState(tree);
+            restoreHardwareState(tree);
             presetName = tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString();
             currentProgram = (int) tree.getProperty("factoryIndex", 0);
             // DSP state is updated by the next audio block, not the state-loading thread.

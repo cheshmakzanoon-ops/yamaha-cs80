@@ -145,6 +145,14 @@ public:
         float ribbonRatio = 1.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
+    struct RankInfo
+    {
+        float hpfHz = 0.0f, lpfHz = 0.0f;
+        float filterEnvelope = 0.0f, ampEnvelope = 0.0f;
+        float oscillatorHz = 0.0f;
+    };
+    // Offline/render-thread diagnostics for response tests and plotted traces.
+    RankInfo getRankInfo(int voice, int rank) const;
 
 private:
     static constexpr int kNumVoices = 8;
@@ -163,6 +171,7 @@ private:
         float trimLevel = 0.0f;
         float trimEnv = 0.0f;
         float trimPan = 0.0f;
+        RankInfo info;
     };
 
     struct Voice

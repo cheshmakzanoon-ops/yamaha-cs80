@@ -46,6 +46,17 @@ The modern layer is kept behind its own surface so the primary instrument remain
 | Arp / performance / about | [advanced-page4.png](docs/screenshots/advanced-page4.png) |
 | Searchable preset library | [browser-1600x1000.png](docs/screenshots/browser-1600x1000.png) |
 
+## Hardware programmer and reconstruction changes
+
+- Each tone-selector row now has the original **14 positions**: 11 named tone studies, two assigned memory banks, and PANEL. Selecting a source does not overwrite the physical manual sliders.
+- **OPEN MEMORY LID** exposes a magnified view of four independent miniature programmer banks. Each bank has 26 controls, including waveform switches and touch response. Memories 1/3 feed rank I; memories 2/4 feed rank II. Footage stays live outside the memory, as on the instrument. Programmer values and selectors persist in plugin/user-preset state. Miniature controls currently support state recall but are not separate host-automation parameters.
+- PANEL returns to the untouched manual controls. Loading a full digital preset selects PANEL on both ranks. Legacy states without a programmer section also use PANEL.
+- Physical preset values now use JUCE's actual skewed conversion. The old linear conversion silently changed cutoff, envelope, and rate values during preset loading. Old saved states retain their stored physical values; reloading a named factory preset uses its corrected intended settings.
+- Filter contours now start below steady cutoff, attack above it, decay to steady cutoff, and release toward the initial offset even after a long hold. Global sustain extends both amplitude and filter release. Exact analog tapers remain uncalibrated.
+- GUI ribbon/wheel commands enter atomic mailboxes consumed by the audio callback. UI voice indicators use atomic snapshots. Oversized host blocks render in preallocated chunks rather than resizing the scratch buffer on the audio thread.
+
+[View circuit derivation and calibration evidence](docs/CIRCUIT_MODEL_SPEC.md). These are incremental, source-backed repairs, not a finished claim of electrical equivalence.
+
 ## Build
 
 Requirements:

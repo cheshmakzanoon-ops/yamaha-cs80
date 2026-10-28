@@ -35,6 +35,13 @@ endif()
 add_executable(cs80_render src/tools/render_cli.cpp)
 target_link_libraries(cs80_render PRIVATE cs80_core)
 
+add_executable(cs80_dsp_probe src/tools/dsp_probe.cpp)
+target_link_libraries(cs80_dsp_probe PRIVATE cs80_core)
+if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_dsp_probe_tests COMMAND cs80_dsp_probe ${CMAKE_CURRENT_BINARY_DIR}/dsp-probe)
+    set_tests_properties(cs80_dsp_probe_tests PROPERTIES TIMEOUT 120)
+endif()
+
 # ---------------------------------------------------------------------------
 # JUCE plugin / standalone
 # ---------------------------------------------------------------------------

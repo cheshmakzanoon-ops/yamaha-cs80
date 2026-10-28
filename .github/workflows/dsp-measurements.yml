@@ -1,0 +1,41 @@
+name: DSP numerical measurements
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/core/**'
+      - 'src/tools/dsp_probe.cpp'
+      - 'scripts/analyze_dsp.py'
+      - 'CMakeLists.txt'
+      - '.github/workflows/dsp-measurements.yml'
+permissions:
+  contents: read
+concurrency:
+  group: dsp-measurements-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical plotting tools
+        run: python -m pip install numpy==2.2.6 matplotlib==3.10.3
+      - name: Build standalone numerical probe
+        run: |
+          cmake -S . -B build-probe -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF
+          cmake --build build-probe --target cs80_dsp_probe --parallel 2
+      - name: Measure and enforce regression bounds
+        run: |
+          ./build-probe/cs80_dsp_probe artifacts/dsp-probe
+          python scripts/analyze_dsp.py artifacts/dsp-probe
+      - name: Upload source-traceable graphs and raw traces
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-dsp-${{ github.sha }}
+          path: artifacts/dsp-probe
+          if-no-files-found: error

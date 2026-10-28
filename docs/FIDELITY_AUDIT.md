@@ -74,13 +74,23 @@ First contact is the reference position. A full upward stroke is approximately o
 
 ## Remaining high-impact gaps
 
-### Filter contour and sustain: open
+### Filter contour and sustain: behavioral repairs, calibration still open
 
 The original IL lowers the starting cutoff, AL raises the peak, decay returns to steady cutoff, and release returns toward IL. [Owner manual, pp33–35](https://www.therogoffs.com/cs80/CS80E_2.pdf)
 
-Baseline `Engine.cpp:518–523` maps both IL and AL around a bipolar midpoint, and feeds `masterSustain` into the filter's held level. `Dsp.h:396–404` releases toward zero instead of IL. `Engine.cpp:880–881` adds master sustain again and halves HPF envelope depth. These behaviors need replacement together with parameter/preset migration and control labeling, not isolated cosmetic changes.
+Baseline `Engine.cpp:518–523` mapped both IL and AL around a bipolar midpoint and fed `masterSustain` into the filter's held level. `Dsp.h:396–404` released toward zero instead of IL; worse, the settled held stage was marked Idle, so note-off could not start a release at all. `Engine.cpp:880–881` added master sustain again and halved HPF envelope depth.
 
-Required tests: IL/AL polarity and endpoints; short note-off during every stage; release from settled sustain; independent amplitude and filter envelopes; held cutoff invariance when attack/decay settings change; documented sustain-control action. Required measurement: actual voltages and frequency ratios versus slider position, not arbitrary octave multipliers.
+**Repaired:** IL now has negative polarity, AL positive polarity, the held contour is explicitly distinct from Idle, and note-off releases from the current level toward IL. Both filters follow the contour in the same direction, with independent base cutoffs. Their gains are not assumed equal: the M-board schematic routes EG through different resistors (100k HP,47k LP). The inherited half-depth HP approximation is retained in `kProvisionalHpfEnvelopeGain` until loaded-node gains are derived. The sine path is verified to bypass both filters and their contour, while retaining the amplifier path.
+
+**Provisional scale:** `kProvisionalFilterEnvelopeOctaves = 3` preserves the existing model's three-octave scale as an explicit approximation. The printed -5/+5 markings are not asserted to be octaves. The actual IC control voltages, VCF gain law and potentiometer response still need tracing/calibration. Exponential segments and fast-bend constants are inherited behavioral approximations, not validated analog time laws.
+
+Global SUSTAIN is a post-release duration control (approximately ten seconds maximum), and mode II ends prior sustained notes when a new note/chord starts. [Owner manual, p11](https://www.therogoffs.com/cs80/CS80E_1.pdf)
+
+**Repaired:** `masterSustain` sets both filter and amplifier release-time floors up to ten seconds instead of shifting held filter cutoff. Longer per-rank release and modern key-release settings remain as explicit software extensions. The [Yamaha CS servicing guide](https://www.goltsynth.com/resources/downloads/CS/cs_series_servicing_guide.pdf), p61, describes the sustain voltage selector feeding both RF and RA; selecting the longer time is its monotonic behavioral equivalent. The slider's intermediate-position time law is provisionally linear. Mode II now starts release on key-off rather than holding forever, and terminates already-released tails on the next note. Exact hardware sustain pedal routing, amplifier control-voltage law and cutoff transients remain open; the current mode-II cutoff is immediate, not a measured discharge curve.
+
+**Regression evidence:** Four-rate contour traces test start, peak, steady and release levels, including early note-off in attack/decay. Engine probes verify both filter directions and separately applied provisional gains. Two isolated sine renders with opposite filter settings are sample-identical. Sustain time does not shift held filter cutoff; both sustain modes decay without a subsequent key. Mode I preserves independent tails, mode II terminates the previous tail on a new note.
+
+**Compatibility:** Stored IDs and normalized IL/AL values are unchanged, but their interpretation is corrected. Existing patches can sound significantly different. `masterSustain` now has its original musical purpose, not the previous undocumented filter offset. This is an intentional fidelity-breaking-with-legacy correction; old projects needing exact recall should retain the previous plugin version/render.
 
 ### Voice allocation: open
 
@@ -98,19 +108,19 @@ Trace the M-board circuitry and published IC diagrams first. Record nodes, units
 
 ### Filters: open
 
-`Svf` is a generic two-integrator TPT state-variable implementation. Input saturation precedes a linear recurrence. There is no documented derivation from the actual VCF feedback network, resonance limiting, IC gain law or component tolerances. Bounds tests only establish that the filter does not diverge for a selected stimulus.
+`Svf` is a generic two-integrator TPT state-variable implementation. The original IG00156 is also a state-variable design according to the Yamaha CS servicing guide; the topology family itself is not the identified defect. Input saturation precedes a linear recurrence. There is no documented derivation from the actual VCF feedback network, resonance limiting, IC gain law or component tolerances. Bounds tests only establish that the filter does not diverge for a selected stimulus.
 
 Required evidence: small-signal transfer at multiple cutoffs/Q values, level-dependent sweeps, transient and resonance decay, HPF/LPF interaction, key-follow law and modulation response. Compare magnitude and phase, not only a spectrogram with a similar outline.
 
 ### Presets and memory: open
 
-The baseline `FactoryPresets.cpp` constructed original generic instrument settings and used one shared name list for both ranks. The accompanying panel/preset update restores distinct original tab identities, but its voicings are explicitly provisional. The content is not extracted from the tone-selector resistor networks, and memory-panel controls are not yet modeled. Reproducing the UI names does not validate the sounds.
+The baseline `FactoryPresets.cpp` constructed original generic instrument settings and used one shared name list for both ranks. The accompanying panel/preset update restores distinct original tab identities, but its voicings are explicitly provisional. The content is not extracted from the tone-selector resistor networks, The four physical programmer banks and independent PANEL selectors are now modeled at the control/state level; their exact analog transfer is not yet calibrated. Reproducing the UI names does not validate the sounds.
 
 Trace each selector circuit independently, create a provenance row for every parameter and control voltage, and preserve modern patches in a clearly separate bank. Do not describe the original hardware settings as a ROM dump: the relevant source is analog circuitry. Tests should verify bank identity, global-control preservation, channel independence and memory recall before comparisons against real recordings.
 
 ### Expression and sub-oscillator: open
 
-The current generic LFO adds triangle and sample-and-hold, but lacks a distinct inverted saw and external-input signal path. The parameter advertised as mod-wheel-to-sub adds a static pitch offset in `Engine.cpp:853` rather than scaling the sub waveform. `P_ribbon` was previously exposed but unconsumed; its repair illustrates why parameter-count tests cannot prove audible functionality.
+The current generic LFO adds triangle and sample-and-hold, but lacks a distinct inverted saw and external-input signal path. The parameter advertised as mod-wheel-to-sub previously added a static pitch offset in `Engine.cpp:853`; it now scales the sub waveform. Regression probes require upward and downward pitch motion on opposite phases, and unmodulated pitch at wheel zero. This route remains a MIDI extension, not a physical CS-80 wheel. `P_ribbon` was previously exposed but unconsumed; its repair illustrates why parameter-count tests cannot prove audible functionality.
 
 Baseline assigns cutoff/level/envelope trims but never consumes those fields in the audio path. Drift is a family of phase-offset sinusoids. These are not measured unit-to-unit dispersion models. Test each route with one isolated stimulus, then verify correct sign, destination, neutral state and automation behavior.
 
@@ -130,4 +140,14 @@ The 31-tap decimator has 15 internal samples of group delay at 2x, or 7.5 host s
 - Blind listening with level-matched, latency-aligned renders. Do not train and evaluate on the same small preset sample.
 - Evidence-based numerical tolerances. No percentage-fidelity score without an explicit metric and corpus.
 
-The repaired core suite passes 1,379 checks in a direct C++20 optimized build on the cloud computer. GitHub Actions and plugin/UI validation are separate gates; consult their exact-commit results rather than treating this local result as a platform matrix pass.
+The repaired core suite passes 1,449 checks in a direct C++20 optimized build on the cloud computer. GitHub Actions and plugin/UI validation are separate gates; consult their exact-commit results rather than treating this local result as a platform matrix pass.
+
+Sanitizer note: the preceding 1,379-check milestone also passed AddressSanitizer and UndefinedBehaviorSanitizer locally with leak detection disabled. LeakSanitizer itself could not run under this container’s tracing environment; no leak-clean claim is made. The later 1,449-check contour milestone also passed AddressSanitizer and UndefinedBehaviorSanitizer with leak detection disabled.
+
+## Plugin integration corrections
+
+The plugin formerly applied linear `normaliseParam` values to skewed JUCE host ranges. That changed the physical preset settings (for example, an intended 850 Hz cutoff became approximately 20 Hz). Parameter writes now use `RangedAudioParameter::convertTo0to1`, with all exposed parameters checked at five physical values. This test is separate from core-only DSP tests and demonstrates why core preset rendering did not catch the host integration defect.
+
+The GUI no longer writes live engine state directly for ribbon/wheels or preset parameter updates. The audio callback consumes atomic controls and pre-resolved parameter pointers; oversized audio blocks use bounded preallocated chunks. This reduces known races and audio-thread allocation, but does not constitute a comprehensive ThreadSanitizer proof of all host/program metadata paths.
+
+Four programmer banks and both row selectors are persisted in a versioned HARDWARE state child. Main manual APVTS values remain untouched by source selection. Tests verify all bank identities, selected effective DSP parameters, PANEL restoration, invalid values, state roundtrips, and live footage/pan outside memory. Programmer controls are not yet individually host automated.

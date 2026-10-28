@@ -66,6 +66,12 @@ public:
     void saveUserPreset(const juce::String& name);
     juce::Array<juce::File> getUserPresetFiles() const;
 
+    // Physical selector: 0..10 factory, 11 memory A, 12 memory B, 13 PANEL.
+    int getHardwareSource(int channel) const noexcept;
+    void selectHardwareSource(int channel, int source);
+    float getMemoryValue(int bank, int local) const noexcept;
+    void setMemoryValue(int bank, int local, float value) noexcept;
+
     float getParamValue(int index) const;
     void setParamValue(int index, float physicalValue);
     cs80::ParamValues currentValues() const;
@@ -78,6 +84,9 @@ public:
 
 private:
     void readParameters();
+    void writeHardwareState(juce::ValueTree& state) const;
+    void restoreHardwareState(const juce::ValueTree& state);
+    void resetHardwareSources() noexcept;
     void handleMidi(const juce::MidiMessage& message);
     void applyValues(const cs80::ParamValues& values);
     juce::File userPresetDirectory() const;
@@ -86,6 +95,9 @@ private:
     juce::AudioProcessorValueTreeState apvts;
     juce::MidiKeyboardState keyboardState;
     cs80::ParamValues cached;
+    std::array<std::atomic<int>, 2> hardwareSources {{ 13, 13 }};
+    std::array<std::array<std::atomic<float>, cs80::CP_count>, 4> hardwareMemories {};
+    std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
     std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
     static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();
     std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl };

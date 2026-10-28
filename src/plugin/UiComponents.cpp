@@ -269,6 +269,31 @@ void LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, i
     const float angle = rotaryStartAngle
         + juce::jlimit(0.0f, 1.0f, sliderPosProportional) * (rotaryEndAngle - rotaryStartAngle);
 
+    if ((bool) slider.getProperties()["hardwareRotary"])
+    {
+        g.setColour(juce::Colour(0xff020302));
+        g.fillEllipse(cx-radius-1, cy-radius+1, radius*2+2, radius*2+2);
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff55564e), cx-radius, cy-radius,
+                                               juce::Colour(0xff080a08), cx+radius, cy+radius, false));
+        g.fillEllipse(cx-radius, cy-radius, radius*2, radius*2);
+        const float cap = radius * 0.83f;
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff252923),cx,cy-cap,
+                                               juce::Colour(0xff0b0e0a),cx,cy+cap,false));
+        g.fillEllipse(cx-cap,cy-cap,cap*2,cap*2);
+        g.setColour(juce::Colour(0xffdddcc9));
+        g.drawLine(cx+std::sin(angle)*cap*0.35f,cy-std::cos(angle)*cap*0.35f,
+                   cx+std::sin(angle)*cap*0.85f,cy-std::cos(angle)*cap*0.85f,
+                   juce::jmax(1.5f,radius*0.09f));
+        g.setColour(juce::Colour(0xffb9b8a9));
+        for (int n=0;n<=10;++n)
+        {
+            const float a=rotaryStartAngle+(float)n/10.0f*(rotaryEndAngle-rotaryStartAngle);
+            const float rr=radius+2.0f;
+            g.fillEllipse(cx+std::sin(a)*rr-0.6f,cy-std::cos(a)*rr-0.6f,1.2f,1.2f);
+        }
+        return;
+    }
+
     g.setColour(juce::Colours::black.withAlpha(0.55f));
     g.fillEllipse(cx - radius + 1.0f, cy - radius + 2.5f, radius * 2.0f, radius * 2.0f);
 
@@ -368,9 +393,26 @@ void LookAndFeel::drawButtonText(juce::Graphics& g, juce::TextButton& button,
     {
         const auto base = button.findColour(juce::TextButton::buttonColourId);
         g.setColour(base.getPerceivedBrightness() < 0.4f ? ivory : juce::Colour(0xff20211a));
-        g.setFont(displayFont(juce::jlimit(6.5f, 9.0f, (float) button.getWidth() * 0.20f), juce::Font::bold));
-        g.drawFittedText(button.getButtonText(), button.getLocalBounds().reduced(3, 5),
-                         juce::Justification::centred, 2, 0.65f);
+        g.setFont(displayFont(juce::jlimit(7.0f, 9.5f, (float) button.getWidth() * 0.25f), juce::Font::bold));
+        auto text = button.getButtonText();
+        if (button.getWidth() < 30)
+            text = button.getTitle().replace("STRING ", "STR\n")
+                                   .replace("CLAVICHORD ", "CLAV\n")
+                                   .replace("HARPSICHORD ", "HARP\n")
+                                   .replace("MEMORY ", "MEM\n")
+                                   .replace("GUITAR ", "GUIT\n")
+                                   .replace("ORGAN ", "ORG\n")
+                                   .replace("FUNKY ", "FUNK\n")
+                                   .replace("BRASS ", "BRS\n")
+                                   .replace("E. PIANO", "E.P.")
+                                   .replace("FLUTE", "FLT");
+        const auto lines = juce::StringArray::fromLines(text);
+        auto area = button.getLocalBounds().reduced(2, 5);
+        const int count = juce::jmax(1, lines.size());
+        const int lineHeight = area.getHeight() / count;
+        for (int i = 0; i < lines.size(); ++i)
+            g.drawFittedText(lines[i], area.getX(), area.getY() + i * lineHeight,
+                             area.getWidth(), lineHeight, juce::Justification::centred, 1, 0.45f);
         return;
     }
     g.setColour(button.getToggleState() ? amberBright : ivory);

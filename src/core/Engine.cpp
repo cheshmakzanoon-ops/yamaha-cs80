@@ -517,12 +517,12 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
         r.lpf.reset();
         r.fenv.reset();
         r.aenv.reset();
-        r.fenv.noteOn((rs.fIl - 0.5f) * 3.0f,
-                      (rs.fAl - 0.5f) * 3.0f,
+        r.fenv.noteOn(filterInitialOffset(rs.fIl),
+                      filterAttackOffset(rs.fAl),
                       std::max(0.001f, rs.fA * global.envTimeScale),
                       std::max(0.001f, rs.fD * global.envTimeScale),
                       std::max(0.001f, rs.fR * global.envTimeScale),
-                      global.masterSustain * 2.0f);
+                      0.0f);
         r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale),
                       std::max(0.001f, rs.vD * global.envTimeScale),
                       rs.vS,
@@ -554,8 +554,14 @@ void Engine::releaseVoice(Voice& v)
     {
         auto& r = v.ranks[ch];
         const auto& rs = rankSettings[ch];
-        r.aenv.setRelease(std::max(rs.vR, global.keyRelease) * global.envTimeScale);
-        r.fenv.setRelease(std::max(rs.fR, global.keyRelease) * global.envTimeScale);
+        // Hardware SUSTAIN is a release-time performance control, not a filter
+        // sustain-level offset. Retain longer per-rank/key-release settings as
+        // software extensions; the exact potentiometer law remains unmeasured.
+        const float performanceRelease = global.masterSustain * 10.0f;
+        r.aenv.setRelease(std::max({rs.vR, global.keyRelease, performanceRelease})
+                          * global.envTimeScale);
+        r.fenv.setRelease(std::max({rs.fR, global.keyRelease, performanceRelease})
+                          * global.envTimeScale);
         r.aenv.noteOff();
         r.fenv.noteOff();
     }
@@ -579,7 +585,16 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
     {
         for (auto& v : voices)
             if (v.sustained)
-                releaseVoice(v);
+            {
+                // Sustain II terminates previous released notes when a new
+                // note/chord starts; it does not restart their release timer.
+                for (auto& rank : v.ranks)
+                {
+                    rank.aenv.reset();
+                    rank.fenv.reset();
+                }
+                v.active = v.sustained = v.pedalHeld = false;
+            }
     }
 
     if (global.arpOn)
@@ -611,11 +626,8 @@ void Engine::noteOff(int midiNote, int midiChannel)
     {
         if (global.sustainMode == 1 && v->held)
         {
-            v->held = false;
+            releaseVoice(*v);
             v->sustained = true;
-            --heldCount;
-            if (heldCount < 0)
-                heldCount = 0;
         }
         else if (sustainPedal && v->held)
         {
@@ -856,7 +868,7 @@ void Engine::processInternalSample(float& outL, float& outR)
                           + v.initBendValue
                           + lfoPitch
                           + subValue * (global.subVco + global.subAtVco * v.pressure) * 1.5f
-                          + modWheel * global.modWheelSub * 2.0f
+                          + subValue * modWheel * global.modWheelSub * 2.0f
                           + r.trimTune * dispersion * 7.0f
                           + driftVoice;
 
@@ -883,8 +895,8 @@ void Engine::processInternalSample(float& outL, float& outR)
                                    + lfoFilter;
 
             const float fenv = r.fenv.tick(sr, true);
-            const float envLp = fenv + global.masterSustain * 1.5f;
-            const float envHp = envLp * 0.5f;
+            const float envLp = fenv;
+            const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
             const float cutoffLp = rs.lpfCutoff * std::pow(2.0f, brillOct + keyOct + envLp);
             const float cutoffHp = rs.hpfCutoff * std::pow(2.0f, brillOct + keyOct + envHp);
@@ -911,6 +923,7 @@ void Engine::processInternalSample(float& outL, float& outR)
                                              + lfoAmp,
                                          0.0f, 2.6f);
             const float amp = r.aenv.tick(sr, true);
+            r.info = { cutoffHp, cutoffLp, fenv, amp, freq };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             const float velocityGain = 0.38f + 0.62f * v.velocity;
             float voiceOut = (filtered * rs.vcfLevel + sine)
@@ -1083,6 +1096,13 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
         return {};
     const auto& v = voices[(size_t) index];
     return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio };
+}
+
+Engine::RankInfo Engine::getRankInfo(int voice, int rank) const
+{
+    if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
+        return {};
+    return voices[(size_t) voice].ranks[rank].info;
 }
 
 } // namespace cs80
