@@ -1,0 +1,92 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux / VST3 + Standalone
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCS80_BUILD_PLUGIN=ON
+          -DCS80_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Render demo and screenshots
+        run: |
+          mkdir -p artifacts/ui
+          ./build/cs80_render --out artifacts/cs80-demo.wav --seconds 12
+          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu \
+            ./build/CS80Snapshots_artefacts/Release/CS80Snapshots \
+            --out artifacts/ui --self-test
+
+      - name: Upload render artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs80-linux-artifacts
+          path: artifacts
+          if-no-files-found: error
+
+  macos:
+    name: macOS / VST3 + AU + Standalone
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCS80_BUILD_PLUGIN=ON
+          -DCS80_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  windows:
+    name: Windows / VST3 + Standalone
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+          -DCS80_BUILD_PLUGIN=ON
+          -DCS80_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
