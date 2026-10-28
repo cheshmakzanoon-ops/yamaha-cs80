@@ -1,0 +1,47 @@
+name: Hardware panel screenshots
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/plugin/**'
+      - 'src/core/**'
+      - 'src/tools/ui_snapshot.cpp'
+      - 'CMakeLists.txt'
+      - '.github/workflows/screenshots.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: panel-screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install official Ubuntu build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake ninja-build g++ pkg-config libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev libfreetype-dev libfontconfig1-dev fonts-dejavu-core xvfb xauth
+      - name: Configure exact source
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - name: Build screenshot renderer and core tests
+        run: cmake --build build --target CS80Snapshots cs80_tests --parallel 2
+      - name: Verify core
+        run: ./build/cs80_tests
+      - name: Capture actual editor at every supported size and page
+        run: |
+          mkdir -p artifacts/ui
+          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu xvfb-run -a ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test
+          printf '{"commit":"%s","run":"%s","renderer":"JUCE software, actual plugin editor"}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/ui/provenance.json
+          sha256sum artifacts/ui/*.png > artifacts/ui/SHA256SUMS
+      - name: Publish screenshot evidence
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-panel-${{ github.sha }}
+          path: artifacts/ui
+          if-no-files-found: error
