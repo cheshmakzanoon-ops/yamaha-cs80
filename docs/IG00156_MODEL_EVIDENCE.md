@@ -427,3 +427,18 @@ Minimum reference tests:
 ### Original guidebook inspection status
 
 Job **123162794502** successfully retrieved the original [IC guidebook PDF](https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf): 164 pages, 13608992 bytes, SHA-256 `ff051aed0687cad4c4b246d145f85896c229e4cc679333328483118a3e7f8cc1`. Text matching found **no IG00156 pages** and fell back to PDF pages 1–3. Actual pixels show the cover, a handwritten scan note and an index page. Therefore this run did **not** inspect the original IG00156 guidebook page and must not be cited as doing so. The next bounded lookup should render index pages 4–6 or use bounded OCR to locate the printed section/page, then render that page. The existing reproduced functional diagram remains the available IG00156 guidebook evidence pending that check.
+
+## Original guidebook page identity confirmed; quantitative Q/nonlinearity still unknown
+
+The original guidebook inspection is now complete for the IG00156 entry and supersedes the preceding pending-page status. PDF page 5's index identifies IG00156 as section **2–5**. Offset samples at PDF pages 12, 20 and 28 established two PDF pages per entry; direct inspection then confirmed **PDF pages 37–38**.
+
+Actions run **40789983782**, job **123172514519**, source key `icguide_156`, rendered both pages from the previously hashed original PDF `ff051aed0687cad4c4b246d145f85896c229e4cc679333328483118a3e7f8cc1`:
+
+- **PDF 37 / printed 2–5:** IG00156 manufacturer/function heading, package drawing, functional block diagram and pin-description table. Full-page render 1800 x 1272, PNG SHA-256 `25d5d6d5a944609bd4f1184d9cfd6dcdbdbbd4451460945afa90473a91137691`.
+- **PDF 38 / continuation:** CS-5 PN1 1/2 application circuit illustration. Full-page render 1800 x 1272, PNG SHA-256 `71a9ff9f284ffd43ea04a1dde0dce24834586511f5c03dc2ee953ed4570566fb`.
+
+The original page37 corroborates the previously inspected reproduction. It labels the Q-path block only “Variable”; the table identifies pin9 as Q feedback, without a quantitative current/voltage characteristic. Neither page contains a transistor-level internal schematic, Q-control transfer equation, nonlinear operating curves, output-impedance specification, slew-rate data or saturation parameters. No such data should be inferred from successful retrieval.
+
+The continuation is explicitly **CS-5**, not CS-80. It illustrates a selectable HP/BP/LP output application with different peripheral values. It can corroborate functional usage but must not replace the already recovered CS-80 M41 component graph or its rank-specific values.
+
+This closes the missing-original-page provenance question. It does **not** close the model-identification gate: the offline unilateral-current-Q reference remains a hypothesis rather than a measured silicon model. Further progress on the Q port requires a more quantitative original source or calibrated pin-current/output-impedance and small-signal-transfer measurements. Additional searches should target those missing characteristics, rather than repeatedly render this same two-page entry.

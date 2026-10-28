@@ -18,6 +18,12 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "t51": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/31%20-%20T51%20Circuit%20Diagram.jpg",
+    "t52": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/33%20-%20T52%20Circuit%20Diagram.jpg",
+    "t53": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/35%20-%20T53%20Circuit%20Diagram.jpg",
+    "t54": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/37%20-%20T54%20Circuit%20Diagram.jpg",
+    "mkb": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/63%20-%20Panel%201%20%28MKB%29%20Circuit%20Diagram.jpg",
+    "toneselector": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/65%20-%20Panel%202%20%28Tone%20Selector%29%20Circuit%20Diagram.jpg",
     "kbcwiring": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/16%20-%20KBC%201-2%20Circuit%20Board%20%26%20Wiring.jpg",
     "kasics": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/06%20-%20KAS%20ICs.jpg",
     "icguide_156": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
@@ -79,13 +85,26 @@ def emit_image(gray, page, url, data):
         "purpose": "Original Yamaha schematic analysis; not measured hardware evidence"
     }), flush=True)
     boxes = []
-    # Overlap preserves circuit connections that cross a tile boundary.
-    for row in range(2):
-        for col in range(2):
-            boxes.append((f"{page}-r{row}-c{col}", (
-                max(0, col * w // 2 - 64), max(0, row * h // 2 - 64),
-                min(w, (col + 1) * w // 2 + 64), min(h, (row + 1) * h // 2 + 64)
-            ), True))
+    # Preset resistor labels require native pixels, not overview resampling.
+    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector"}:
+        cols, rows = (w + 2199) // 2200, (h + 2199) // 2200
+        if cols * rows > 16:
+            raise ValueError("native preset grid exceeds 16-tile bound")
+        for row in range(rows):
+            for col in range(cols):
+                box = (max(0, col * 2200 - 64), max(0, row * 2200 - 64),
+                       min(w, (col + 1) * 2200 + 64), min(h, (row + 1) * 2200 + 64))
+                if max(box[2]-box[0], box[3]-box[1]) > 2400:
+                    raise ValueError("native preset tile exceeds 2400-pixel bound")
+                boxes.append((f"{page}-native-r{row}-c{col}", box, False))
+    else:
+        # Overlap preserves circuit connections that cross a tile boundary.
+        for row in range(2):
+            for col in range(2):
+                boxes.append((f"{page}-r{row}-c{col}", (
+                    max(0, col * w // 2 - 64), max(0, row * h // 2 - 64),
+                    min(w, (col + 1) * w // 2 + 64), min(h, (row + 1) * h // 2 + 64)
+                ), True))
     if max(w, h) <= 2400:
         boxes.append((f"{page}-full-native", (0, 0, w, h), False))
     # Native-pixel detail crops, selected from inspected source coordinates.

@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [kbc, panel2, kbcwiring, kasics, icguide_156]
+        page: [t51, t52, t53, t54, panel1, mkb, toneselector]
     steps:
       - uses: actions/checkout@v5
         with:

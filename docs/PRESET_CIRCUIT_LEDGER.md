@@ -168,12 +168,13 @@ Terminal 1 is −15 V and terminal 3 is +15 V; grounded center taps are drawn.
 
 At KBC IC14:
 
-- **L1:** 56 kΩ input, 56 kΩ feedback → ideal gain −1.
-- **H1:** 56 kΩ input, 15 kΩ feedback → ideal gain −15/56.
+- Both **LI** and **HI** summers have 56 kΩ control input and 15 kΩ feedback, plus a separate 56 kΩ input from −15 V.
+- Their ideal reference is therefore 225/56 − (15/56)×Vw volts, where Vw is the loaded control wiper voltage. Centered controls give approximately +4.017857 V; ideal endpoint references span 0 to 8.035714 V.
+- The earlier LOW gain −1 versus HIGH gain −15/56 reading was incorrect and is withdrawn. The independently inspected native KBC15 and Panel2p64 drawings establish the same input gain for both controls.
 
-Ideal reference endpoint magnitudes are therefore **15 V** and **4.018 V**, respectively. These are **internal reference bounds, not final VCF cutoff or VCA gain bounds**.
+These are **nominal internal references, not final VCF cutoff or VCA gain bounds**. Potentiometer loading, the switched DAC and receiver gains must be included. See [the keyboard-contour evidence](KEYBOARD_CONTOUR_EVIDENCE.md).
 
-The subsequent network contains switched resistors, YM26700 key-address D/A conversion, VR1 B5k adjustment, and per-voice detection amplifiers. Equal 1 kΩ note resistors coexist with nonuniform octave resistors, and the HIGH/LOW reference paths are not symmetric.
+The subsequent network contains switched resistors, YM26700 key-address D/A conversion, VR1 B5k adjustment, and per-voice detection amplifiers. Equal 1 kΩ note resistors coexist with nonuniform octave resistors, and the switched HIGH/LOW weighting must be derived separately from the identical IC14 input gains.
 
 A symmetric linear curve around an arbitrary MIDI pivot therefore cannot be described as an exact circuit reconstruction. A center-neutral, monotonic, end-weighted interpolation may be used only as an explicitly approximate fallback until that network is solved. Keyboard-control position must not be replaced by VCO footage or pitch-bend CV.
 
@@ -181,4 +182,4 @@ A symmetric linear curve around an arbitrary MIDI pivot therefore cannot be desc
 
 The verified transcription is complete for the sample above. Receiver conversion remains unfinished: the downstream BA/control-amplifier/M-board nodes must be visually traced before assigning numerical software parameters.
 
-Local continuation was blocked by filesystem **ENOSPC**: both command execution and image inspection failed because the sandbox helper could not create its required file. Consequently, no receiver gains or additional circuit-derived factory patches are claimed here.
+Local command execution remains blocked by filesystem ENOSPC, but bounded GitHub Actions source inspection now provides native diagram pixels and hashes. The active receiver and contour audits record newly verified connections; this ledger still does not claim a complete receiver conversion or authentic circuit-derived factory bank.

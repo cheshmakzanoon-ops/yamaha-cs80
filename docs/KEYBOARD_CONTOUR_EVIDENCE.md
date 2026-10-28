@@ -1,0 +1,134 @@
+# Keyboard contour circuit evidence
+
+Research date: 2026-10-28. This is a source-derived investigation, not a completed implementation or a claim of measured hardware equivalence.
+
+## Scope and source chain
+
+The original four global controls are LOW/HIGH BRILLIANCE and LOW/HIGH LEVEL. Owner-manual printed pp9,38,45 describe center-neutral, bipolar adjustment whose effect grows toward the keyboard ends, not a hard split. Brilliance changes both filters; level changes amplitude. The note-position control is generated digitally as a DC quantity. This does not establish a linear-in-semitones law, an exact center note, or equal HIGH/LOW gains.
+
+Primary Yamaha service drawings, mirrored by David Rogoff:
+- [KBC1–2 p15](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/15%20-%20KBC%201-2%20Circuit%20Diagram.jpg)
+- [R51–52 p39](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/39%20-%20R51-52%20Circuit%20Diagram.jpg)
+- [M p41](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/41%20-%20M%20Circuit%20Diagram.jpg)
+- [Owner scan part3](https://www.therogoffs.com/cs80/CS80E_3.pdf), [searchable owner scan](https://device.report/m/08eee3fd014ab14d5f15fe50a150900b9c3ed22ad75895b5736f46b2e186f9b0).
+
+Actual source pixels inspected through authorized GitHub Actions run40788149601, source revision d4969ff8454083d3aa6e122015b3a3f444fc2952:
+- KBC job123166413041; source SHA256 570762503245163d83850eded3defe9c327db24571ebe7bafae56f05f18e0fdf.
+- R51–52 job123166413018; SHA256 b77875e1aee0e092c320f8dea69ec7b9d975d4b3551eaa2cdabc597886c80156.
+- All four overlapping quarter crops inspected. Each source is5100×3300; quarter output is downsampled. Native focused crops are required where a junction, resistor or symbol is ambiguous.
+- M41 job123154243112 in run40784517382, including native filter-detail crop.
+- Panel1p62 and Panel3p66 were inspected and ruled out as the four contour-pot drawing: p62 is the programmable ranks; p66 is the side performance/foot/chorus controls. This correction prevents false source attribution.
+
+## Verified receiving networks
+
+R51–52 p39 carries one KC input per voice. Each KC node feeds the corresponding FH (high-pass cutoff) bus through120k and FL (low-pass cutoff) bus through39k. IB, AB, TF and shared SUB have their own parallel source branches. Shared overall BR uses680k to FH and220k to FL. These are resistor values, NOT standalone dimensionless gains.
+
+The level contour uses a separate per-voice KB source branch through270k to LC. Initial-level TI and after-level TA also enter LC through their own270k branches; AM and LV are separate shared sources. Do not implement keyboard level as an unrelated final master gain.
+
+M41 f1/f2 have rank-dependent grounded R6/R7,0.01uF shunt capacitors,150k trim-feed branches and filter-envelope branches. IG00156 input impedance and complete inter-board connections remain part of the load. Therefore neither120k/39k nor the R6/R7 values alone determines cutoff displacement. The IC's functional voltage law must not be applied directly to a physical loaded pin without establishing its voltage convention.
+
+## Panel2 control mapping, independently verified
+
+[Panel2 p64](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/64%20-%20Panel%202%20Circuit%20Diagram.jpg) was inspected in run40788842580 job123168711867 at source revisionf452586383af06db0b0d8c2284050a0cafdd3f18. VR19 is LOW BRILLIANCE, VR20 HIGH BRILLIANCE, VR21 LOW LEVEL, VR22 HIGH LEVEL. All are marked B10k. Their wipers go directly to KBC1 LI/HI and KBC2 LI/HI respectively. The center taps connect to the ground net and the endpoints to the bipolar supply wiring. Physical lever orientation still requires photo/terminal reconciliation.
+
+**Correction:** the inherited assertion that LOW has a−1 buffer and HIGH a−15/56 buffer is not supported by the inspected KBC schematic. Both IC14 control inputs have56k input and15k feedback. Do not publish the inherited assertion as a source fact. BA27 was also inspected and does not contain these contour input buffers.
+
+### Nominal centered-pot loading (conditional derivation)
+
+Let x be electrical wiper travel from grounded center toward the positive or negative rail, normalized−1..1. For an ideal linear10k track with a true center tap, each half is5k. Its open-circuit voltage is15x and source resistance Rth=5000*abs(x)*(1−abs(x)) ohms. The56k IC14 input terminates at virtual ground, so Vw=15x*56000/(56000+Rth), before bias/input-current corrections. At abs(x)=0.5 the loading ratio is56000/57250=0.97816594. At center and rail endpoints Rth=0 in this nominal model.
+
+Combining with the stage equation below gives nominal reference range0..8.035714V, with neutral4.017857V. These are reference-node bounds, NOT output gain or filter-octave bounds. They require linear B-taper interpretation, ideal rails, verified center contact and unsaturated opamp operation. Physical upward/downward lever polarity is not implied by the definition of x.
+
+## KBC source observations
+
+KBC uses YM26700, receiving note-code inputs and octave-code inputs. The drawing includes shift registers, flip-flops, decoding gates, analog gates, an octave resistor ladder, a note resistor ladder and eight channel outputs. It is not an analog audio-frequency follower.
+
+The printed nominal octave-tap table is OCT0..5 =0.25,0.5,1,2,4,4V under the specified4V reference. The printed note-tap table under OO=4V is C#2.119,D2.245,D#2.378,E2.520,F2.670,F#2.828,G2.997,G#3.175,A3.364,A#3.564,B3.775,C4V. These reference tables are not the finished bipolar contour curve: switched ladder references and HI/LI inputs must be solved.
+
+The HI and LI terminals enter IC14 voltage-slider summing stages through56k branches with15k feedback. Both also receive−15V through56k. Under ideal-opamp assumptions, each reference is therefore Vref =225/56 − (15/56)*Vin =4.017857142857−0.267857142857*Vin volts. This is a source-derived nominal stage equation, not the final contour law.
+
+Native KBC crops in run40788842580 job123168711890 (kbc-decoder, kbc-ladder, kbc-output) independently verify the eight detection channels. Each channel has a0.033uF held node, a voltage follower and a summing inverter with15k signal input,15k feedback (explicit on repeated channels),56k bias from−15V and grounded noninverting input through6.8k. Thus its ideal settled output is225/56−Vsample. Neutral cancellation follows if the switched network supplies225/56; proving that network behavior is a separate obligation.
+
+The note ladder contains eleven1k segments between C# and C taps, with analog switches at both ends. Those ends can select the OO buffer, reference and trim-fed branches (22k plusVR1 B5k and20k plusVR2 B5k). The octave ladder contains unequal1.5k/3k segments. Consequently the printed generic exponential key-voltage tables cannot simply be reused as contour output values. A digital truth table and analog nodal solution are needed.
+
+The KBC POR and PC pins are shown tied through22k to−6.5V on this board: this is evidence against importing active pitch-glide behavior from a generic YM26700 description without considering the actual connection. Final physical note-code mapping remains unresolved.
+
+## Independently cross-checked static network (conditional)
+
+A second reader independently checked native KBC decoder pixels. Define Q1=IC4 pin1, Q2=IC4 pin13, Q3=IC5 pin1; these are delayed/latched input octave bits, not yet mapped to physical octave numbers. Six rails are !Q1,Q1,!Q2,Q2,!Q3,Q3. Left-to-right decoded outputs are:
+- IC7 out9: !Q1*!Q2*Q3
+- IC6 out9: !Q1*!Q2*!Q3
+- IC7 out6: Q1*!Q2*Q3
+- IC6 out6: Q1*Q2*!Q3
+- IC6 out10: !Q1*Q2*!Q3
+- IC7 out10: !Q2*Q3, with two inputs tied.
+
+Continuity across the native ladder and overlapping lower-left quarter indicates HI/IC14 pin1 drives OC5, LI/IC14 pin7 drives OC0 and OC1, and IC13 reference R=225/56 drives OC3. Native kbc-reference-routing in run40789983782 job123172514658 corroborates the reference paths. With L=IC14 LI output and H=IC14 HI output, ideal unloaded octave taps are L,L,(2L+R)/3,R,(R+2H)/3,H. This follows the1.5k,3k,3k,1.5k ladder segments; it is not the generic printed exponential pitch table.
+
+Let O be buffered YM26700 OO output selected from those taps. Let m=0..11 correspond to the drawing's C#..C taps. Assuming active-high ideal analog switches and settled unbiased nodes, the endpoint-switch solution is:
+
+|Q1Q2Q3|Top C endpoint|Bottom C# endpoint|Sampled voltage V(m)|
+|---|---|---|---|
+|000|O|open|O|
+|001|O|R|R+(m/11)*(O−R)|
+|010|R|O|O+(m/11)*(R−O)|
+|011|open|O|O|
+|100|open|O|O|
+|101|O|R through20k+VR2|O−(11−m)*1000*(O−R)/(31000+VR2)|
+|110|R through22k+VR1|O|O+m*1000*(R−O)/(33000+VR1)|
+|111|open|O|O|
+
+VR1/VR2 are0..5000ohm rheostats as drawn. The final detector output is R−V(m). The open-end rows are settled ideal voltages, not a claim of instantaneous switching or zero capacitive memory. The remaining critical fact is a consistent mapping of physical key code to Q and selected OC tap. KBC16 now identifies the actual parts below; active-high switch behavior must be checked against the manufacturer's matching TC4016 documentation. Without these, this table is a network derivation, not yet an executable keyboard contour lookup. Do not use numerical-code plausibility to substitute for the missing primary code table.
+
+## Latest source corroboration and unresolved code convention
+
+Source revisiond6b2bc5129f46bf0dbae598a9ec8c89bd109709f, run40789983782:
+- KAS06 job123172514389.
+- KBC16 job123172514694.
+- KBC native reference-routing job123172514658.
+- Panel2 native contour-controls job123172514604.
+
+[KBC wiring p16](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/16%20-%20KBC%201-2%20Circuit%20Board%20%26%20Wiring.jpg) identifies IC1/2 CD4006AE, IC3 TC4019P, IC4/5 TC4013P, IC6/7 TC4073P, IC8 TC4069P, IC9/10 TC4016P, IC11 YM26700, IC12 LM310, IC13–22 NJM4558. It specifies22k resistors±5% and other resistors±1%; VR1/2 typeV10K4A-5-2. No measured trim position is supplied.
+
+KBC16 wiring confirms KBC1 O1..O8 to R51 KC1..KC8 and KBC2 O1..O8 to R51 KB1..KB8. It independently corroborates VR19/20 to KBC1 LI/HI and VR21/22 to KBC2 LI/HI.
+
+Panel2 native crop confirms terminal3 to+15V, terminal1 to−15V and center5 toground. This is electrical polarity, not yet the physical lever-direction mapping. Ground wire chain and four pot labels were read directly, not inferred from screen styling.
+
+[KAS IC p6](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/06%20-%20KAS%20ICs.jpg) supplies a note-code and octave-code table with the explicit convention1=−6.5V,0=+8.5V. Its printed octave columns list C2, C2#–C3, C3#–C4, C4#–C5, C5#–C6; B1B2B3 tuples are011,101,001,110,010 respectively. This is a49-key-range table within the CS80 service scan, so do not silently extrapolate the missing octave or interpret its octave labels as MIDI numbers. KBC connectors are marked barred B inputs. Physical CMOS high/low states and negative-logic table labels must be reconciled through actual KAS circuitry.
+
+An attempted naive assignment of ascending physical octave columns to successive OC taps, combined with direct bit inversion and the conditional switch table, produces unjustified discontinuities at some boundaries. This is an explicit unresolved consistency check, NOT evidence that the real instrument has those discontinuities. Before production use, resolve whether the discrepancy is code convention, source table reuse, tap selection, or trace interpretation; independently verify the whole mapping. Do not smooth away the inconsistency or choose the version that sounds pleasant.
+
+## Implementation boundary
+
+No arbitrary linear half-keyboard ramp, hard split at MIDI60, symmetric endpoint assumption, fixed ±octave range, or fixed ±dB range is justified by the evidence above. Do not silently add one and label it circuit-derived.
+
+First transcribe the KBC digital decoder and switched resistor network; solve its nominal DC output for all61 original physical keys and each control combination. Preserve separate brilliance/level KBC board outputs and the receiving networks. Identify original keyboard-code mapping rather than relying on MIDI octave naming. Then validate physical lever polarity, center grounding, pot taper and source impedance from the actual panel/buffer schematics.
+
+## Stable parameter plan (not implemented)
+
+Against core123-parameter/host229-parameter baseline:
+- Preserve core0..122 and host0..228 exactly.
+- Append core123..126, host229..232: kbd_brilliance_low, kbd_brilliance_high, kbd_level_low, kbd_level_high.
+- Use dimensionless bipolar−1..1, default0; do not expose unverified dB/octave values.
+- Preserve sub_at_vcf AU version hint3; give these new controls version4. The current blanket extension loop using version3 must be replaced by explicit version metadata/boundaries, not by reordering old parameters.
+- Defaults for missing IDs in older state must be neutral, and bank/preset selection must not erase global controls.
+- Original cap categories: brilliance green; level gray. Place paired LOW/HIGH under their original KEYBOARD CONTROL subgroup; exact placement and lever direction require original panel/owner photo verification rather than guessing from available free space.
+
+## Acceptance plan
+
+1. Circuit oracle: all61 note codes, each slider at−1,−0.5,0,+0.5,+1; record pot voltage, buffer voltage, selected DAC nodes, pervoice output, loaded FH/FL/LC nodes. Test LOW/HIGH simultaneously, not only one-at-a-time.
+2. Neutral identity: all four center values leave existing audio/control behavior unchanged, including held and releasing notes.
+3. Key dependence: compare every adjacent physical key and octave boundary against derived tables; do not make monotonicity or symmetry tests a substitute for those tables.
+4. Destination independence: brilliance affects HP and LP through their respective paths, not VCO tuning; level affects amplitude path, not filters. Verify both ranks and all eight voice allocations.
+5. Controller interactions: determine from wiring whether pitch bend, ribbon, footage, master tune and portamento affect contour input. Test the derived behavior; do not assume oscillator pitch and physical key position are interchangeable.
+6. Automation/state: historical parameter index and AU ordering snapshots; old-session migration; new-state round-trip; neutral defaults; global controls survive preset and memory changes.
+7. Signal behavior: positive/negative extrema, silent patches, maximum envelopes and combined touch/modulation; finite values at supported sample rates and no unexplained discontinuity on slider automation. Any smoothing must match identified circuitry or be labeled a software adaptation.
+8. Hardware validation: identify instrument/board revision/calibration, sweep key/control grid, measure circuit-node CV and resulting cutoff/gain independently, publish residuals and uncertainty. Passing numerical regressions is not1:1analog proof.
+
+## Open evidence
+
+- Native Panel2 terminal/rail reconciliation and physical positive-lever orientation; B-taper ideal linear interpretation versus real tolerance/loading.
+- KBC decoder truth table, gate states, contact/reference loading, offsets, trim conditions and actual breakpoint note(s).
+- KBC1 versus KBC2 wiring to KC versus KB and all rank fanouts.
+- Physical FH/FL/LC loaded-node laws, internal IC input laws and calibrated audible endpoint ranges.
+- Scan, hold, settling and leakage behavior; tolerances, thermal drift and measured unit variation.

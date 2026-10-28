@@ -11,6 +11,7 @@
 #include <memory>
 #include <atomic>
 #include <thread>
+#include <chrono>
 
 namespace
 {
@@ -801,21 +802,45 @@ int main(int argc, char** argv)
         check(iterations.load() > 0 && valid.load(),
               "background state restore preserves coherent metadata through editor lifecycles");
 
+        const auto nameBeforeRename = concurrent.getPresetName();
         Cs80AudioProcessorEditor timerEditor(concurrent);
         timerEditor.setVisible(true);
-        std::thread rename([&] { concurrent.setPresetName("Timer Refresh Verified"); });
-        rename.join();
-        flushGui(200);
-        auto containsLabel = [](auto&& self, juce::Component& component) -> bool
+        auto findLabelWithText = [](auto&& self, juce::Component& component,
+                                    const juce::String& text) -> juce::Label*
         {
             if (auto* label = dynamic_cast<juce::Label*>(&component))
-                if (label->getText() == "Timer Refresh Verified") return true;
+                if (label->getText() == text) return label;
             for (auto* child : component.getChildren())
-                if (self(self, *child)) return true;
-            return false;
+                if (auto* found = self(self, *child, text)) return found;
+            return nullptr;
         };
-        check(containsLabel(containsLabel, timerEditor),
+        juce::Component::SafePointer<juce::Label> presetDisplay(
+            findLabelWithText(findLabelWithText, timerEditor, nameBeforeRename));
+        check(presetDisplay != nullptr, "timer regression locates existing preset label");
+        const juce::String renamed = "Timer Refresh Verified";
+        std::thread rename([&] { concurrent.setPresetName(renamed); });
+        rename.join();
+        check(concurrent.getPresetName() == renamed,
+              "background rename updates processor metadata before UI polling");
+
+        // JUCE timers are best-effort message-thread work, not a synchronous
+        // 125ms guarantee. Observe the actual label while pumping real events.
+        // Do not call tick/syncPresetDisplay directly or replace this with sleep.
+        const auto started = std::chrono::steady_clock::now();
+        const auto deadline = started + std::chrono::seconds(2);
+        while (presetDisplay != nullptr && presetDisplay->getText() != renamed
+               && std::chrono::steady_clock::now() < deadline)
+            flushGui(10);
+        const double elapsedMs = std::chrono::duration<double, std::milli>(
+            std::chrono::steady_clock::now() - started).count();
+        const auto observed = presetDisplay != nullptr
+            ? presetDisplay->getText() : juce::String("<missing>");
+        const auto modelName = concurrent.getPresetName();
+        std::printf("Preset timer refresh: elapsed=%.1fms model='%s' label='%s' stateWrites=%d\n",
+                    elapsedMs, modelName.toRawUTF8(), observed.toRawUTF8(), iterations.load());
+        check(presetDisplay != nullptr && observed == renamed,
               "message-thread timer refreshes preset name after background update");
+
     }
 
     Cs80AudioProcessorEditor editor(processor);
