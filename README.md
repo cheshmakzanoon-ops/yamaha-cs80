@@ -22,7 +22,7 @@ The instrument is a real-time **VST3 / AU / Standalone** project built with C++2
 | Presets | 222 factory programs: 22 hardware tone-selector programs + 200 performance patches |
 | Parameters | 122 host-automatable parameters saved in plugin state |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
-| Verification | 1,260 core checks + headless plugin/UI smoke test, all passing |
+| Verification | 1,260 core checks + headless plugin/UI smoke test + pluginval 1.0.4 strictness 10 (headless locally; headless + GUI under Xvfb in CI) |
 
 The 1,260 checks are the current local run of the core suite. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
 
@@ -117,6 +117,7 @@ The suite covers:
 - macro layer behaviour
 - all 222 factory presets rendering within bounds
 - APVTS exposure, preset/state round-trips, MIDI rendering, editor size, all advanced pages and user preset storage
+- pluginval 1.0.4 at strictness 10, headless locally and headless + GUI-under-Xvfb in CI, against the built Linux VST3
 
 ## Using the instrument
 
@@ -167,7 +168,7 @@ docs/RESEARCH.md            source notes and design references
 
 ## CI
 
-`.github/workflows/build.yml` builds and tests on Linux, macOS and Windows. The Linux job also renders a 12-second performance WAV and all UI screenshots, then uploads them as `cs80-linux-artifacts`. macOS builds VST3, AU and Standalone; Windows builds VST3 and Standalone.
+`.github/workflows/build.yml` builds and tests on Linux, macOS and Windows. The Linux job also uploads the VST3 and the rendered WAV/screenshots. A separate `pluginval` job downloads that VST3, runs pluginval 1.0.4 at strictness 10 both headless and with GUI tests under Xvfb, and fails the workflow on any validator report. macOS builds VST3, AU and Standalone and runs a non-GUI pluginval pass on the VST3. Windows builds VST3 and Standalone and runs the console UI smoke test.
 
 ## Honest scope
 

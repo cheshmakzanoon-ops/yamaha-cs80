@@ -22,6 +22,10 @@ Cs80AudioProcessor::Cs80AudioProcessor()
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
+    // The decimator delay is fixed by the 2x architecture, so report it as
+    // soon as the processor exists. prepareToPlay repeats this for hosts that
+    // query latency only after a sample-rate change.
+    setLatencySamples(engine.getLatencySamples());
     presetName = getFactoryPresets().empty() ? "Init Patch" : juce::String(getFactoryPresets()[0].name);
     currentProgram = 0;
 }

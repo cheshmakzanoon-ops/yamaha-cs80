@@ -157,6 +157,10 @@ The editor is drawn at a 1600x1000 design resolution and scaled to the window. C
 
 ## Verification
 
-`tests/CoreTests.cpp` exercises the engine without JUCE. `src/tools/ui_snapshot.cpp --self-test` instantiates the JUCE processor and editor, checks the APVTS, round-trips state, renders MIDI audio, checks the editor at two sizes, opens all advanced pages and the browser, and saves/loads a user preset. CTest runs both on Unix.
+`tests/CoreTests.cpp` exercises the engine without JUCE. `src/tools/ui_snapshot.cpp --self-test` instantiates the JUCE processor and editor, checks the APVTS, latency reporting, round-trips state, renders MIDI audio, checks the editor at two sizes, opens all advanced pages and the browser, and saves/loads a user preset. CTest registers both tests on Linux, macOS and Windows.
+
+A dedicated CI job downloads the built Linux VST3 and runs pluginval 1.0.4 at strictness 10 with `--validate-in-process`, first with `--skip-gui-tests` and then with the GUI tests under Xvfb. The job fails on any validator report and uploads the pluginval logs. macOS also runs a non-GUI pluginval pass on its VST3.
+
+pluginval's `Plugin info` test queries the latency of its freshly-created host wrapper before `prepareToPlay`, so that one informational line reads 0. The instrument itself reports the fixed 8-sample decimator latency at construction and after preparation; the headless UI smoke test asserts both values.
 
 The Linux CI job additionally writes `artifacts/cs80-demo.wav` and seven PNG screenshots. The demo is a five-chord performance with pressure and ribbon moves, not a static held note.

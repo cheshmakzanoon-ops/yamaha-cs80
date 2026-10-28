@@ -46,7 +46,9 @@ int main(int argc, char** argv)
     dir.createDirectory();
 
     Cs80AudioProcessor processor;
+    check(processor.getLatencySamples() == 8, "reported latency at construction");
     processor.prepareToPlay(48000.0, 512);
+    check(processor.getLatencySamples() == 8, "reported latency after prepare");
 
     // Parameter and preset integrity. These are the checks a host would rely
     // on before the instrument is even asked to make a sound.

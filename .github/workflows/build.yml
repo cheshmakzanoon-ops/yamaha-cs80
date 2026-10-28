@@ -14,7 +14,7 @@ jobs:
     name: Linux / VST3 + Standalone
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install build dependencies
         run: |
@@ -39,6 +39,13 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure
 
+      - name: Upload Linux VST3
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-vst3
+          path: build/CS80Reference_artefacts/Release/VST3
+          if-no-files-found: error
+
       - name: Render demo and screenshots
         run: |
           mkdir -p artifacts/ui
@@ -48,17 +55,96 @@ jobs:
             --out artifacts/ui --self-test
 
       - name: Upload render artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cs80-linux-artifacts
           path: artifacts
           if-no-files-found: error
 
+  pluginval:
+    name: pluginval / Linux VST3 (strictness 10)
+    needs: linux
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PLUGINVAL_VERSION: "1.0.4"
+    steps:
+      - name: Download Linux VST3
+        uses: actions/download-artifact@v5
+        with:
+          name: cs80-linux-vst3
+          path: vst3
+
+      - name: Install pluginval runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libasound2t64 libfontconfig1 libfreetype6 \
+            libx11-6 libxext6 libxrandr2 libxcursor1 libxinerama1 \
+            libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \
+            fonts-dejavu-core xauth xvfb unzip
+
+      - name: Fetch pluginval ${{ env.PLUGINVAL_VERSION }}
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 --retry-delay 2 \
+            -o pluginval.zip \
+            "https://github.com/Tracktion/pluginval/releases/download/v${PLUGINVAL_VERSION}/pluginval_Linux.zip"
+          unzip -q pluginval.zip -d pluginval
+          test -x pluginval/pluginval
+          ./pluginval/pluginval --version | tee pluginval-version.txt
+
+      - name: Validate VST3 headless
+        run: |
+          set -euo pipefail
+          mkdir -p pluginval-reports
+          ./pluginval/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --skip-gui-tests \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-headless \
+            "$PWD/vst3/CS-80 Reference.vst3" 2>&1 | tee pluginval-headless.log
+
+      - name: Validate VST3 GUI under Xvfb
+        run: |
+          set -euo pipefail
+          xvfb-run -a -s "-screen 0 1920x1200x24" \
+            ./pluginval/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-gui \
+            "$PWD/vst3/CS-80 Reference.vst3" 2>&1 | tee pluginval-gui.log
+
+      - name: Report pluginval failure
+        if: failure()
+        run: |
+          for log in pluginval-headless.log pluginval-gui.log; do
+            if [ -f "$log" ]; then
+              echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"
+            fi
+          done
+
+      - name: Upload pluginval reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-pluginval-reports
+          path: |
+            pluginval-reports
+            pluginval-headless.log
+            pluginval-gui.log
+            pluginval-version.txt
+          if-no-files-found: warn
+
   macos:
     name: macOS / VST3 + AU + Standalone
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Configure
         run: >
@@ -73,11 +159,46 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure
 
+      - name: Fetch pluginval 1.0.4
+        env:
+          PLUGINVAL_VERSION: "1.0.4"
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 --retry-delay 2 \
+            -o pluginval.zip \
+            "https://github.com/Tracktion/pluginval/releases/download/v${PLUGINVAL_VERSION}/pluginval_macOS.zip"
+          unzip -q pluginval.zip -d pluginval
+          xattr -dr com.apple.quarantine pluginval/pluginval.app || true
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval --version
+
+      - name: Validate VST3 with pluginval
+        run: |
+          set -euo pipefail
+          mkdir -p pluginval-reports
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --skip-gui-tests \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            "$PWD/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3" \
+            2>&1 | tee pluginval-macos.log
+
+      - name: Upload pluginval report
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-pluginval-macos
+          path: |
+            pluginval-reports
+            pluginval-macos.log
+          if-no-files-found: warn
+
   windows:
     name: Windows / VST3 + Standalone
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Configure
         id: configure

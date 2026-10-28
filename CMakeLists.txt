@@ -116,10 +116,10 @@ if (CS80_BUILD_PLUGIN)
 
     # The snapshot binary doubles as a headless plugin/UI smoke test. It
     # exercises the APVTS, preset and state round-trips, MIDI rendering, the
-    # editor at two sizes, all advanced pages, and user preset storage.
-    if (UNIX)
-        add_test(NAME cs80_ui_smoke
-                 COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
-        set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 120)
-    endif()
+    # editor at two sizes, all advanced pages, and user preset storage. The
+    # console tool uses JUCE's software renderer, so it is registered on all
+    # three desktop platforms rather than only Unix.
+    add_test(NAME cs80_ui_smoke
+             COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
+    set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 120)
 endif()
