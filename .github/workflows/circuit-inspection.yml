@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [mics42, mics52, mwiring44]
+        page: [trg5, ig00156, ig00156circuit]
     steps:
       - uses: actions/checkout@v5
         with:

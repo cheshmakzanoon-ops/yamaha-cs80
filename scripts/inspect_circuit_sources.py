@@ -10,9 +10,12 @@ import io
 import json
 import time
 import urllib.request
+from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "ig00156": "https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/ig00156.png",
+    "ig00156circuit": "https://hygunduz5.wordpress.com/wp-content/uploads/2025/11/vcfcircuit.png",
     "mics42": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/42%20-%20M%20Circuit%20ICs.jpg",
     "mics52": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/52%20-%20M%20Circuit%20ICs.jpg",
     "mwiring44": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/44%20-%20M11-12%20Circuit%20Board%20%26%20Wiring.jpg",
@@ -32,12 +35,15 @@ MAX_BYTES = 16 * 1024 * 1024
 Image.MAX_IMAGE_PIXELS = 40_000_000
 
 def download(url):
+    source_host = urlparse(url).hostname
+    if source_host not in {"www.therogoffs.com", "hygunduz5.wordpress.com"}:
+        raise ValueError("source host outside fixed allowlist")
     last = None
     for attempt in range(3):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "CS80-circuit-research/1.0"})
             with urllib.request.urlopen(req, timeout=30) as response:
-                if response.geturl().split("/")[2] != "www.therogoffs.com":
+                if urlparse(response.geturl()).hostname != source_host:
                     raise ValueError("unexpected source redirect")
                 data = response.read(MAX_BYTES + 1)
                 if len(data) > MAX_BYTES:
@@ -76,6 +82,10 @@ def main():
         boxes.append((f"{args.page}-full-native", (0, 0, w, h), False))
     # Native-pixel detail crops, selected from inspected source coordinates.
     focus = {
+        "trg5": [
+            ("speed-upper", (3750, 450, 4650, 1750)),
+            ("speed-lower", (3750, 1700, 4650, 3200)),
+        ],
         "m": [("filter-detail", (1180, 1080, 3250, 1850))],
         "tws": [
             ("voice1-upper", (650, 550, 1250, 1850)),
