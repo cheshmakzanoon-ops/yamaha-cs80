@@ -168,3 +168,9 @@ A dedicated Linux job downloads the built VST3 and runs pluginval 1.0.4 at stric
 pluginval's `Plugin info` test queries the latency of its freshly-created host wrapper before `prepareToPlay`, so that one informational line reads 0. The instrument itself reports the fixed 8-sample decimator latency at construction and after preparation; the headless UI smoke test asserts both values.
 
 The Linux CI job additionally writes `artifacts/cs80-demo.wav` and seven PNG screenshots. The demo is a five-chord performance with pressure and ribbon moves, not a static held note.
+
+## Host programmer automation and MIDI channel lifecycle
+
+See MEMORY_AUTOMATION.md for the appended 106 parameters and backward-compatible APVTS state migration. The audio core still consumes its 122 physical/global effective values; the plugin resolves PANEL, factory and memory sources at the block boundary. Appended parameters do not renumber the core table.
+
+Channel-scoped All Sound Off terminates matching voices; All Notes Off releases matching keys while respecting MIDI sustain. The legacy explicit global engine call remains available. Source channel/velocity travel with arpeggiator entries. Already mixed shared effect tails cannot be selectively removed per channel without affecting other channels, so channel panic is not advertised as a per-channel effect-buffer reset.

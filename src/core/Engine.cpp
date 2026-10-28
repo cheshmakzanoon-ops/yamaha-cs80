@@ -13,7 +13,9 @@ Engine::Engine()
 
 void Engine::prepare(double hostSampleRate)
 {
-    hostRate = hostSampleRate > 0.0 ? hostSampleRate : 48000.0;
+    // Software resource/numeric guard, not an analog tuning assumption.
+    hostRate = std::isfinite(hostSampleRate) && hostSampleRate >= 8000.0
+               && hostSampleRate <= 768000.0 ? hostSampleRate : 48000.0;
     oversample = 2;
     internalRate = hostRate * (double) oversample;
 
@@ -70,7 +72,7 @@ void Engine::reset()
         }
     }
     heldCount = 0;
-    sustainPedal = false;
+    sustainPedals.fill(false);
     ringKeyDown = false;
     ringAdsr.reset();
     ringPhase = 0.0f;
@@ -102,6 +104,7 @@ void Engine::reset()
     arpDirection = 1;
     arpVoice = -1;
     arpCurrentNote = -1;
+    arpSourceOrder = 0;
     arpGateOpen = false;
     arpWasOn = false;
     arpClock = 0.0f;
@@ -112,6 +115,13 @@ void Engine::reset()
 void Engine::setParams(const ParamValues& values)
 {
     params = values;
+    // Sanitize once at the core boundary before integer casts and DSP laws.
+    for (int i = 0; i < P_numParams; ++i)
+    {
+        const auto& def = paramDef(i);
+        const float value = params[i];
+        params[i] = std::isfinite(value) ? clampf(value, def.min, def.max) : def.def;
+    }
     const bool wasArp = arpWasOn;
     buildSettings();
 
@@ -281,7 +291,7 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
     for (int i = 0; i < heldKeyCount; ++i)
     {
         if (heldKeys[(size_t) i].note == note
-            && (! global.mpe || heldKeys[(size_t) i].midiChannel == midiChannel))
+            && heldKeys[(size_t) i].midiChannel == midiChannel)
         {
             heldKeys[(size_t) i].velocity = velocity;
             rebuildArpSequence();
@@ -318,9 +328,9 @@ void Engine::forgetHeldKey(int note, int midiChannel)
     for (int i = 0; i < heldKeyCount; ++i)
     {
         if (heldKeys[(size_t) i].note == note
-            && (! global.mpe || heldKeys[(size_t) i].midiChannel == midiChannel))
+            && heldKeys[(size_t) i].midiChannel == midiChannel)
         {
-            if (arpCurrentNote == note)
+            if (arpSourceOrder == heldKeys[(size_t) i].order)
                 stopArpVoice();
             for (int j = i + 1; j < heldKeyCount; ++j)
                 heldKeys[(size_t) (j - 1)] = heldKeys[(size_t) j];
@@ -343,37 +353,24 @@ void Engine::rebuildArpSequence()
     if (heldKeyCount == 0)
         return;
 
-    int base[kMaxHeldKeys] {};
-    int baseCount = 0;
-
-    if (global.arpMode == 4)
+    std::array<HeldKey, kMaxHeldKeys> base {};
+    const int baseCount = heldKeyCount;
+    for (int i = 0; i < baseCount; ++i)
+        base[(size_t) i] = heldKeys[(size_t) i];
+    if (global.arpMode != 4)
     {
-        // Played order: retain the order the keys arrived in.
-        for (int i = 0; i < heldKeyCount; ++i)
-            base[baseCount++] = heldKeys[(size_t) i].note;
-    }
-    else
-    {
-        // Pitch order, with duplicates removed.
-        for (int i = 0; i < heldKeyCount; ++i)
-        {
-            const int n = heldKeys[(size_t) i].note;
-            bool exists = false;
-            for (int j = 0; j < baseCount; ++j)
-                exists = exists || base[j] == n;
-            if (! exists)
-                base[baseCount++] = n;
-        }
+        // Keep source channel/velocity/order while sorting pitches. Identical
+        // pitches on different MIDI channels are distinct held keys.
         for (int i = 1; i < baseCount; ++i)
         {
-            const int value = base[i];
+            const auto value = base[(size_t) i];
             int j = i - 1;
-            while (j >= 0 && base[j] > value)
+            while (j >= 0 && base[(size_t) j].note > value.note)
             {
-                base[j + 1] = base[j];
+                base[(size_t) (j + 1)] = base[(size_t) j];
                 --j;
             }
-            base[j + 1] = value;
+            base[(size_t) (j + 1)] = value;
         }
     }
 
@@ -381,16 +378,16 @@ void Engine::rebuildArpSequence()
     for (int oct = 0; oct < octaves; ++oct)
         for (int i = 0; i < baseCount; ++i)
         {
-            const int note = base[i] + oct * 12;
-            if (note >= 0 && note <= 127 && arpSequenceLength < (int) arpSequence.size())
-                arpSequence[(size_t) arpSequenceLength++] = note;
+            auto step = base[(size_t) i];
+            step.note += oct * 12;
+            if (step.note >= 0 && step.note <= 127 && arpSequenceLength < (int) arpSequence.size())
+                arpSequence[(size_t) arpSequenceLength++] = step;
         }
 
     if (global.arpMode == 1)
         std::reverse(arpSequence.begin(), arpSequence.begin() + arpSequenceLength);
     else if (global.arpMode == 2 && arpSequenceLength > 2)
     {
-        // Up / down. The endpoints are not repeated; the pattern cycles.
         const int ascending = arpSequenceLength;
         for (int i = ascending - 2; i > 0; --i)
             arpSequence[(size_t) arpSequenceLength++] = arpSequence[(size_t) i];
@@ -415,16 +412,14 @@ void Engine::triggerArpNote()
         arpIndex = (arpIndex + 1) % arpSequenceLength;
     }
 
-    const int note = arpSequence[(size_t) index];
+    const auto& step = arpSequence[(size_t) index];
     const int voice = chooseVoice();
     if (voice < 0)
         return;
-    float velocity = 0.82f;
-    if (heldKeyCount > 0)
-        velocity = heldKeys[(size_t) (index % heldKeyCount)].velocity;
-    startVoice(voices[(size_t) voice], note, velocity, 1);
+    startVoice(voices[(size_t) voice], step.note, step.velocity, step.midiChannel);
     arpVoice = voice;
-    arpCurrentNote = note;
+    arpCurrentNote = step.note;
+    arpSourceOrder = step.order;
 }
 
 void Engine::stopArpVoice()
@@ -433,6 +428,7 @@ void Engine::stopArpVoice()
         releaseVoice(voices[(size_t) arpVoice]);
     arpVoice = -1;
     arpCurrentNote = -1;
+    arpSourceOrder = 0;
     arpGateOpen = false;
 }
 
@@ -595,6 +591,34 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
     startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
 }
 
+bool Engine::isSustainPedalDown(int midiChannel) const noexcept
+{
+    if (midiChannel < 1 || midiChannel > 16)
+        return false;
+    return sustainPedals[(size_t) midiChannel] || (global.mpe && sustainPedals[1]);
+}
+
+void Engine::releaseKey(Voice& v)
+{
+    if (! v.held)
+        return;
+    // Explicit MIDI extension: pedal hold takes priority in both panel
+    // sustain modes; this is not a model of the physical CS-80 footswitch.
+    if (isSustainPedalDown(v.midiChannel))
+    {
+        v.held = false;
+        v.pedalHeld = true;
+        heldCount = std::max(0, heldCount - 1);
+    }
+    else if (global.sustainMode == 1)
+    {
+        releaseVoice(v);
+        v.sustained = true;
+    }
+    else
+        releaseVoice(v);
+}
+
 void Engine::noteOff(int midiNote, int midiChannel)
 {
     if (global.arpOn)
@@ -602,27 +626,8 @@ void Engine::noteOff(int midiNote, int midiChannel)
         forgetHeldKey(midiNote, midiChannel);
         return;
     }
-
-    if (auto* v = findVoiceForNote(midiNote, midiChannel))
-    {
-        if (global.sustainMode == 1 && v->held)
-        {
-            releaseVoice(*v);
-            v->sustained = true;
-        }
-        else if (sustainPedal && v->held)
-        {
-            v->held = false;
-            v->pedalHeld = true;
-            --heldCount;
-            if (heldCount < 0)
-                heldCount = 0;
-        }
-        else
-        {
-            releaseVoice(*v);
-        }
-    }
+    if (auto* voice = findVoiceForNote(midiNote, midiChannel))
+        releaseKey(*voice);
 }
 
 Engine::Voice* Engine::findVoiceForNote(int note, int midiChannel)
@@ -637,34 +642,59 @@ Engine::Voice* Engine::findVoiceForNote(int note, int midiChannel)
     return newest;
 }
 
-void Engine::allNotesOff(bool release)
+void Engine::allNotesOff(bool release, int midiChannel)
 {
-    sustainPedal = false;
-    for (auto& v : voices)
-        v.pedalHeld = false;
-    heldKeyCount = 0;
-    arpSequenceLength = 0;
-    arpIndex = 0;
-    arpVoice = -1;
-    arpCurrentNote = -1;
-    arpGateOpen = false;
-    arpClock = 0.0f;
+    if (midiChannel < 0 || midiChannel > 16)
+        return;
+    const bool allChannels = midiChannel == 0;
+    // Channel0 is the legacy application panic: clear every pedal and key.
+    // Channel-mode MIDI messages do not reset controller state.
+    if (allChannels)
+        sustainPedals.fill(false);
 
-    for (auto& v : voices)
+    int kept = 0;
+    for (int i = 0; i < heldKeyCount; ++i)
+        if (! allChannels && heldKeys[(size_t) i].midiChannel != midiChannel)
+            heldKeys[(size_t) kept++] = heldKeys[(size_t) i];
+    const bool keysChanged = kept != heldKeyCount;
+    heldKeyCount = kept;
+    if (keysChanged || allChannels)
+        rebuildArpSequence();
+    if (heldKeyCount == 0)
+        arpClock = 0.0f;
+
+    if (arpVoice >= 0 && arpVoice < kNumVoices
+        && (allChannels || voices[(size_t) arpVoice].midiChannel == midiChannel))
     {
-        if (release)
-            releaseVoice(v);
-        else
+        arpVoice = -1;
+        arpCurrentNote = -1;
+        arpSourceOrder = 0;
+        arpGateOpen = false;
+    }
+
+    for (auto& voice : voices)
+    {
+        if (! allChannels && voice.midiChannel != midiChannel)
+            continue;
+        if (! release)
+            voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
+        else if (allChannels)
         {
-            v.active = false;
-            v.held = false;
-            v.sustained = false;
+            voice.pedalHeld = false;
+            releaseVoice(voice);
         }
+        else
+            releaseKey(voice); // CC123 follows note-off, including pedal hold
     }
     heldCount = 0;
-    sustainPedal = false;
-    ringKeyDown = false;
-    ringAdsr.noteOff();
+    for (const auto& voice : voices)
+        if (voice.active && (voice.held || voice.pedalHeld))
+            ++heldCount;
+    if (heldCount == 0)
+    {
+        ringKeyDown = false;
+        ringAdsr.noteOff();
+    }
 }
 
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
@@ -708,6 +738,11 @@ void Engine::pitchBend(int midiChannel, float value)
 
 void Engine::controlChange(int controller, float value, int midiChannel)
 {
+    if (controller == 120 || controller == 123)
+    {
+        allNotesOff(controller == 123, midiChannel);
+        return;
+    }
     value = clampf(value, 0.0f, 1.0f);
     if (controller == 1)
         modWheel = value;
@@ -715,22 +750,24 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         expression = value;
     else if (controller == 64)
     {
-        const bool down = value >= 0.5f;
-        if (down == sustainPedal)
+        if (midiChannel < 1 || midiChannel > 16)
             return;
-        sustainPedal = down;
+        const bool down = value >= 0.5f;
+        if (down == sustainPedals[(size_t) midiChannel])
+            return;
+        sustainPedals[(size_t) midiChannel] = down;
         if (! down)
         {
-            for (auto& v : voices)
-                if (v.pedalHeld)
+            for (auto& voice : voices)
+                if (voice.pedalHeld && ! isSustainPedalDown(voice.midiChannel))
                 {
-                    v.pedalHeld = false;
-                    if (! v.held && ! v.sustained)
-                        releaseVoice(v);
+                    voice.pedalHeld = false;
+                    if (! voice.held && ! voice.sustained)
+                        releaseVoice(voice);
                 }
             heldCount = 0;
-            for (const auto& v : voices)
-                if (v.held || v.pedalHeld)
+            for (const auto& voice : voices)
+                if (voice.held || voice.pedalHeld)
                     ++heldCount;
             if (heldCount == 0)
             {

@@ -24,7 +24,7 @@ The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha
 | Effects | BBD-style stereo chorus/tremolo plus three serial modern FX slots |
 | Performance | Arpeggiator, sustain II, portamento/glissando, pitch-bend range, A4 tuning |
 | Presets | 222 factory programs: 22 provisional hardware-tab studies + 200 original performance patches |
-| Parameters | 122 host-automatable parameters saved in plugin state |
+| Parameters | 228 host-automatable parameters: 122 original + 106 programmer/selector controls |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
 | Verification | Core regression suite + numerical DSP probes + plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
 
@@ -48,6 +48,9 @@ The modern layer is kept behind its own surface so the primary instrument remain
 
 ## Hardware programmer and reconstruction changes
 
+MIDI CC120/123 are dispatched before ordinary controllers. Panic/release is channel-scoped, with explicit global-engine panic retained for API callers. Arpeggiator entries retain their originating channel and velocity; MIDI pedal behavior is an explicit software extension. Core boundaries reject nonfinite parameter values and unsupported sample rates before DSP/allocation; the accepted rate range is 8–768 kHz with a 48 kHz fallback for invalid input, not a claim of measured hardware fidelity across that range.
+
+
 Voice assignment cycles through the eight circuits. A ninth simultaneously held or pedal-held note is rejected rather than stealing an occupied voice; released tails can be reused. MIDI note-off matching is channel-exact. Duplicate same-pitch note-ons on the same MIDI channel are a software-interface ambiguity, not an original physical-keyboard behavior.
 
 Footage uses nominal harmonic ratios 0.5, 1, 1.5, 2, 3 and 4. The fifth stops are about 1.955 cents above equal-tempered fifths. These are nominal circuit targets, not measured tolerances of every original instrument.
@@ -59,7 +62,7 @@ The output decimator now uses a 255-tap Kaiser FIR with 63 host samples of decla
 
 
 - Each tone-selector row now has the original **14 positions**: 11 named tone studies, two assigned memory banks, and PANEL. Selecting a source does not overwrite the physical manual sliders.
-- **OPEN MEMORY LID** exposes a magnified view of four independent miniature programmer banks. Each bank has 26 controls, including waveform switches and touch response. Memories 1/3 feed rank I; memories 2/4 feed rank II. Footage stays live outside the memory, as on the instrument. Programmer values and selectors persist in plugin/user-preset state. Miniature controls currently support state recall but are not separate host-automation parameters.
+- **OPEN MEMORY LID** exposes a magnified view of four independent miniature programmer banks. Each bank has 26 controls, including waveform switches and touch response. Memories 1/3 feed rank I; memories 2/4 feed rank II. Footage stays live outside the memory, as on the instrument. Programmer values and selectors persist in plugin/user-preset state. [Automation and legacy migration](docs/MEMORY_AUTOMATION.md) are covered by plugin/UI regressions. All 104 miniature controls and both selectors are host-automatable; original parameter IDs and AU ordering are preserved.
 - PANEL returns to the untouched manual controls. Loading a full digital preset selects PANEL on both ranks. Legacy states without a programmer section also use PANEL.
 - Physical preset values now use JUCE's actual skewed conversion. The old linear conversion silently changed cutoff, envelope, and rate values during preset loading. Old saved states retain their stored physical values; reloading a named factory preset uses its corrected intended settings.
 - Filter contours now start below steady cutoff, attack above it, decay to steady cutoff, and release toward the initial offset even after a long hold. Global sustain extends both amplitude and filter release. Exact analog tapers remain uncalibrated.

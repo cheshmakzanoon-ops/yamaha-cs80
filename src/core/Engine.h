@@ -114,7 +114,7 @@ public:
 
     void noteOn(int midiNote, float velocity, int midiChannel = 1);
     void noteOff(int midiNote, int midiChannel = 1);
-    void allNotesOff(bool release = true);
+    void allNotesOff(bool release = true, int midiChannel = 0);
     // A channel of 0 applies the pressure to every matching note; a positive
     // channel is required for correct per-note behaviour in MPE.
     void polyPressure(int midiNote, float pressure, int midiChannel = 0);
@@ -209,6 +209,8 @@ private:
     void processInternalSample(float& outL, float& outR);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     void releaseVoice(Voice& voice);
+    void releaseKey(Voice& voice);
+    bool isSustainPedalDown(int midiChannel) const noexcept;
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
 
@@ -267,7 +269,7 @@ private:
     Adsr ringAdsr;
     bool ringKeyDown = false;
     int heldCount = 0;
-    bool sustainPedal = false;
+    std::array<bool, 17> sustainPedals {}; // MIDI channels1..16; index0 unused
     Chorus fxChorus;
     Phaser phaser;
     float driftPhase = 0.0f;
@@ -278,12 +280,13 @@ private:
     uint64_t keyOrder = 0;
     // Maximum ascending sequence is 32 keys x 4 octaves. Up/down adds the
     // reverse traversal minus its two endpoints, so reserve twice that.
-    std::array<int, kMaxHeldKeys * 8> arpSequence {};
+    std::array<HeldKey, kMaxHeldKeys * 8> arpSequence {};
     int arpSequenceLength = 0;
     int arpIndex = 0;
     int arpDirection = 1;
     int arpVoice = -1;
     int arpCurrentNote = -1;
+    uint64_t arpSourceOrder = 0;
     bool arpGateOpen = false;
     bool arpWasOn = false;
     float arpClock = 0.0f;

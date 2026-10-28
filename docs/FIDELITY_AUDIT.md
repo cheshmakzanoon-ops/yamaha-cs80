@@ -150,7 +150,7 @@ The plugin formerly applied linear `normaliseParam` values to skewed JUCE host r
 
 The GUI no longer writes live engine state directly for ribbon/wheels or preset parameter updates. The audio callback consumes atomic controls and pre-resolved parameter pointers; oversized audio blocks use bounded preallocated chunks. This reduces known races and audio-thread allocation, but does not constitute a comprehensive ThreadSanitizer proof of all host/program metadata paths.
 
-Four programmer banks and both row selectors are persisted in a versioned HARDWARE state child. Main manual APVTS values remain untouched by source selection. Tests verify all bank identities, selected effective DSP parameters, PANEL restoration, invalid values, state roundtrips, and live footage/pan outside memory. Programmer controls are not yet individually host automated.
+Four programmer banks and both row selectors are persisted in a versioned HARDWARE state child. Main manual APVTS values remain untouched by source selection. Tests verify all bank identities, selected effective DSP parameters, PANEL restoration, invalid values, state roundtrips, and live footage/pan outside memory. Programmer controls now have appended host-automation parameters; see MEMORY_AUTOMATION.md for migration and AU version-order guarantees.
 
 ## Source-domain filter increment (2026-10-28)
 
@@ -203,3 +203,21 @@ Tests assert all six nominal ratios, their distinction from equal temperament, a
 ### Remaining assigner boundary
 
 The MIDI implementation currently drops an overflow note-on until a new event occurs. Whether the original continuously scanned KAS automatically reconsiders a still-held ninth key after another circuit becomes free remains unverified. Held-pedal protection is a software MIDI convention; full original scanner, sustain-pedal and sample/hold equivalence is not claimed.
+
+## MIDI panic routing and core-boundary guards (2026-10-28)
+
+This is a **modern MIDI/software integration repair**, not original CS-80 circuitry. The processor's generic controller branch previously intercepted CC120/123 before its all-sound/all-notes branches. The core now provides `allNotesOff(bool release, int midiChannel=0)`: channel 0 preserves the application's legacy global panic, while 1–16 target only that MIDI channel. Raw core `controlChange(120/123,...)` also routes to this API. Invalid channel indices do nothing. [MIDI Association control-change/channel-mode table](https://midi.org/midi-1-0-control-change-messages).
+
+Scoped CC120 immediately deactivates matching voices, including pedal-held notes, without resetting another channel or the target's controller state. Scoped CC123 releases matching held keys normally, including MIDI pedal hold. **MIDI pedal priority in both panel sustain modes is an explicit extension**, not a verified model of the CS-80 physical footswitch. CC64 state is channel-specific; with MPE enabled, channel1 acts as the existing lower-zone master and its pedal also holds member voices. Upper-zone/reconfigurable MPE zones and sostenuto are not implemented.
+
+Arpeggiator steps now retain source note identity, channel, velocity and order rather than assigning every generated note to channel1. Scoped panic removes only matching held source keys; other channels continue. Identical pitches on different channels remain distinct. Note-off removal uses source identity even for octave-transposed steps. Ring gate bookkeeping is recomputed from remaining held/pedal-held voices rather than blindly reset by a channel panic.
+
+**Limit:** voice deactivation cannot selectively erase already-mixed downstream chorus/reverb/delay/decimator history. Those shared tails remain; clearing them globally would disturb unrelated channels. This is not a claim of sample-zero silence for one channel at the shared output. The channel0 application panic retains its existing global voice/controller behavior.
+
+Core preparation now accepts only finite host sample rates from 8000 through 768000Hz, otherwise falling back to 48000Hz before buffer allocation. This range is a resource/numerical guard, not a hardware-fidelity statement; the 20kHz decimator passband specification still applies only from 44.1kHz upward. Core parameters are sanitized once before settings construction: nonfinite values use declared defaults; finite out-of-range values clamp to declared bounds. Valid values, IDs and the legacy 500Hz ring-speed extension remain unchanged.
+
+New regressions exercise scoped immediate/release panic, raw core CC dispatch, global-default behavior, invalid channels, pedal hold in both sustain modes, channel isolation, lower-zone MPE master/member pedals, shared ring continuity, arpeggiator source identity/cleanup, NaN/infinity/extreme parameters and unsupported/sample-rate boundaries. Changes were assembled through the repository API during the cloud sandbox outage; **compilation and passing results must be established by Actions**, not inferred from code inspection.
+
+## Hardware automation integration
+
+The plugin now exposes 228 host parameters: the existing 122 retain IDs and AU version hint 1, and 106 programmer/selector parameters are appended with hint 2. APVTS is their single authority, with cached raw atomic pointers on the audio side and JUCE attachments on the GUI side. Detached state completion migrates the old version-1 HARDWARE section and fills missing parameters with defaults, rather than retaining values from a prior session. See MEMORY_AUTOMATION.md and exact-revision UI/host CI results; source inspection alone is not execution evidence.

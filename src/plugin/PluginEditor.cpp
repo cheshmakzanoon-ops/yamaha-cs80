@@ -106,9 +106,9 @@ public:
                     toggle->hardwareTab = true;
                     toggle->accent = juce::Colour(0xffa6a697);
                     toggle->setTitle("Memory " + juce::String(bank + 1) + " " + def.name);
-                    toggle->onClick = [this, bank, local, toggle] {
-                        processor.setMemoryValue(bank, local, toggle->getToggleState() ? 1.0f : 0.0f);
-                    };
+                    toggle->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
+                    item.buttonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
+                        processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *toggle);
                     addAndMakeVisible(*toggle);
                 }
                 else
@@ -124,8 +124,10 @@ public:
                     slider->setTitle("Memory " + juce::String(bank + 1) + " " + def.name);
                     slider->setTooltip(slider->getTitle());
                     slider->setDescription("Independent analog memory control. Use the arrow keys to adjust; select this memory to hear it.");
-                    slider->onValueChange = [this, bank, local, slider] {
-                        processor.setMemoryValue(bank, local, (float) slider->getValue());
+                    slider->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
+                    item.sliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+                        processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *slider);
+                    slider->onValueChange = [bank, local, slider] {
                         slider->setTooltip(slider->getTitle() + ": "
                             + cs80::ui::formatParamValue(cs80::chParam(bank % 2, local), (float) slider->getValue()));
                     };
@@ -143,13 +145,11 @@ public:
         {
             if (item.slider && ! item.slider->isMouseButtonDown())
             {
-                item.slider->setValue(processor.getMemoryValue(item.bank, item.local), juce::dontSendNotification);
                 item.slider->setTooltip(item.slider->getTitle() + ": "
                     + cs80::ui::formatParamValue(cs80::chParam(item.bank % 2, item.local), (float) item.slider->getValue()));
             }
             if (item.toggle)
             {
-                item.toggle->setToggleState(processor.getMemoryValue(item.bank, item.local) >= 0.5f, juce::dontSendNotification);
                 item.toggle->setTooltip(item.toggle->getTitle() + (item.toggle->getToggleState() ? ": ON" : ": OFF"));
             }
         }
@@ -212,7 +212,15 @@ public:
     std::function<void()> onClose;
 
 private:
-    struct Item { int bank=0, local=0; std::unique_ptr<cs80::ui::FocusSlider> slider; std::unique_ptr<cs80::ui::LedButton> toggle; };
+    struct Item
+    {
+        int bank=0, local=0;
+        std::unique_ptr<cs80::ui::FocusSlider> slider;
+        std::unique_ptr<cs80::ui::LedButton> toggle;
+        // Destroy attachments before their controls.
+        std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> sliderAttachment;
+        std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> buttonAttachment;
+    };
     Cs80AudioProcessor& processor;
     juce::TextButton close;
     std::array<std::unique_ptr<juce::TextButton>,4> bankButtons;

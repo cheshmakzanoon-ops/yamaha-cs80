@@ -21,9 +21,12 @@ Cs80AudioProcessor::Cs80AudioProcessor()
 {
     for (int i = 0; i < cs80::P_numParams; ++i)
         parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
+    for (int channel = 0; channel < 2; ++channel)
+        hardwareSources[(size_t) channel] = apvts.getRawParameterValue(hardwareSourceParameterId(channel));
     for (int bank = 0; bank < 4; ++bank)
         for (int local = 0; local < cs80::CP_count; ++local)
-            hardwareMemories[(size_t) bank][(size_t) local].store(cs80::kChannelDefs[local].def);
+            if (isMemoryControl(local))
+                hardwareMemories[(size_t) bank][(size_t) local] = apvts.getRawParameterValue(memoryParameterId(bank, local));
     for (int channel = 0; channel < 2; ++channel)
         for (int tone = 0; tone < 11; ++tone)
         {
@@ -65,6 +68,35 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
         for (int p = 0; p < cs80::CP_count; ++p)
             add(cs80::chParam(ch, p));
 
+    // Append only: the original 122 host parameter indexes/IDs remain stable.
+    for (int channel = 0; channel < 2; ++channel)
+    {
+        juce::StringArray choices;
+        for (int tone = 0; tone < 11; ++tone)
+            choices.add(juce::String(cs80::hardwareToneName(tone, channel)));
+        choices.add("Memory " + juce::String(channel + 1));
+        choices.add("Memory " + juce::String(channel + 3));
+        choices.add("Panel");
+        layout.add(std::make_unique<juce::AudioParameterChoice>(
+            juce::ParameterID { hardwareSourceParameterId(channel), 2 },
+            channel == 0 ? "Channel I source" : "Channel II source", choices, 13));
+    }
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+        {
+            if (!isMemoryControl(local)) continue;
+            const auto& d = cs80::kChannelDefs[local];
+            const auto id = juce::ParameterID { memoryParameterId(bank, local), 2 };
+            const auto name = "Memory " + juce::String(bank + 1) + " " + d.group + " " + d.name;
+            if (local == cs80::CP_saw || local == cs80::CP_pulse)
+                layout.add(std::make_unique<juce::AudioParameterBool>(id, name, d.def >= 0.5f));
+            else
+            {
+                auto attributes = juce::AudioParameterFloatAttributes().withLabel(d.unit);
+                layout.add(std::make_unique<juce::AudioParameterFloat>(id, name,
+                    juce::NormalisableRange<float>(d.min, d.max, 0.0f, d.skew), d.def, attributes));
+            }
+        }
     return layout;
 }
 
@@ -206,18 +238,18 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
         const float bend = (message.getPitchWheelValue() - 8192) / 8192.0f;
         engine.pitchBend(message.getChannel(), bend);
     }
-    else if (message.isController())
-    {
-        engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
-    }
     else if (message.isAllSoundOff())
     {
-        // All Sound Off is an immediate panic; All Notes Off is a release.
-        engine.allNotesOff(false);
+        // CC120/123 are controllers too: dispatch before the generic branch.
+        engine.allNotesOff(false, message.getChannel());
     }
     else if (message.isAllNotesOff())
     {
-        engine.allNotesOff(true);
+        engine.allNotesOff(true, message.getChannel());
+    }
+    else if (message.isController())
+    {
+        engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
     }
 }
 
@@ -291,20 +323,47 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 }
 
 
+bool Cs80AudioProcessor::isMemoryControl(int local) noexcept
+{
+    return local >= 0 && local < cs80::CP_count && local != cs80::CP_feet
+        && local != cs80::CP_pan && local != cs80::CP_hpfOn && local != cs80::CP_lpfOn;
+}
+
+juce::String Cs80AudioProcessor::hardwareSourceParameterId(int channel)
+{
+    return "hardware_source_" + juce::String(channel + 1);
+}
+
+juce::String Cs80AudioProcessor::memoryParameterId(int bank, int local)
+{
+    if (bank < 0 || bank >= 4 || !isMemoryControl(local)) return {};
+    return "memory_" + juce::String(bank + 1) + "_" + cs80::kChannelDefs[local].id;
+}
+
 int Cs80AudioProcessor::getHardwareSource(int channel) const noexcept
 {
-    return channel >= 0 && channel < 2 ? hardwareSources[(size_t) channel].load(std::memory_order_relaxed) : 13;
+    if (channel < 0 || channel >= 2) return 13;
+    const auto* p = hardwareSources[(size_t) channel];
+    const float value = p != nullptr ? p->load(std::memory_order_relaxed) : 13.0f;
+    return std::isfinite(value) ? juce::jlimit(0, 13, juce::roundToInt(value)) : 13;
 }
 
 void Cs80AudioProcessor::resetHardwareSources() noexcept
 {
-    for (auto& source : hardwareSources) source.store(13, std::memory_order_relaxed);
+    for (int channel = 0; channel < 2; ++channel)
+        if (auto* p = apvts.getParameter(hardwareSourceParameterId(channel)))
+            p->setValueNotifyingHost(p->convertTo0to1(13.0f));
 }
 
 void Cs80AudioProcessor::selectHardwareSource(int channel, int source)
 {
     if (channel < 0 || channel > 1 || source < 0 || source > 13) return;
-    hardwareSources[(size_t) channel].store(source, std::memory_order_relaxed);
+    if (auto* p = apvts.getParameter(hardwareSourceParameterId(channel)))
+    {
+        p->beginChangeGesture();
+        p->setValueNotifyingHost(p->convertTo0to1((float) source));
+        p->endChangeGesture();
+    }
     juce::String label = source < 11 ? juce::String(cs80::hardwareToneName(source, channel))
         : source == 13 ? "Panel" : "Memory " + juce::String(channel + (source == 12 ? 3 : 1));
     setPresetName(juce::String(channel == 0 ? "Tone I: " : "Tone II: ") + label);
@@ -313,54 +372,72 @@ void Cs80AudioProcessor::selectHardwareSource(int channel, int source)
 float Cs80AudioProcessor::getMemoryValue(int bank, int local) const noexcept
 {
     if (bank < 0 || bank >= 4 || local < 0 || local >= cs80::CP_count) return 0.0f;
-    return hardwareMemories[(size_t) bank][(size_t) local].load(std::memory_order_relaxed);
+    const auto* p = hardwareMemories[(size_t) bank][(size_t) local];
+    return p != nullptr ? p->load(std::memory_order_relaxed) : cs80::kChannelDefs[local].def;
 }
 
 void Cs80AudioProcessor::setMemoryValue(int bank, int local, float value) noexcept
 {
-    if (bank < 0 || bank >= 4 || local < 0 || local >= cs80::CP_count || !std::isfinite(value)) return;
-    const auto& def = cs80::kChannelDefs[local];
-    hardwareMemories[(size_t) bank][(size_t) local].store(juce::jlimit(def.min, def.max, value), std::memory_order_relaxed);
-}
-
-void Cs80AudioProcessor::writeHardwareState(juce::ValueTree& state) const
-{
-    auto old = state.getChildWithName("HARDWARE");
-    if (old.isValid()) state.removeChild(old, nullptr);
-    juce::ValueTree hardware("HARDWARE");
-    hardware.setProperty("version", 1, nullptr);
-    hardware.setProperty("sourceI", getHardwareSource(0), nullptr);
-    hardware.setProperty("sourceII", getHardwareSource(1), nullptr);
-    for (int bank = 0; bank < 4; ++bank)
+    if (bank < 0 || bank >= 4 || !isMemoryControl(local) || !std::isfinite(value)) return;
+    if (auto* p = apvts.getParameter(memoryParameterId(bank, local)))
     {
-        juce::ValueTree memory("MEMORY");
-        memory.setProperty("bank", bank, nullptr);
-        for (int local = 0; local < cs80::CP_count; ++local)
-            memory.setProperty("p" + juce::String(local), getMemoryValue(bank, local), nullptr);
-        hardware.addChild(memory, -1, nullptr);
+        const auto& def = cs80::kChannelDefs[local];
+        p->beginChangeGesture();
+        p->setValueNotifyingHost(p->convertTo0to1(juce::jlimit(def.min, def.max, value)));
+        p->endChangeGesture();
     }
-    state.addChild(hardware, -1, nullptr);
 }
 
-void Cs80AudioProcessor::restoreHardwareState(const juce::ValueTree& state)
+juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree& state) const
 {
-    // Old plugin states have no hardware programmer section and retain the
-    // original PANEL behavior. Reject invalid indexes and nonfinite values.
-    resetHardwareSources();
-    for (int bank = 0; bank < 4; ++bank)
-        for (int local = 0; local < cs80::CP_count; ++local)
-            setMemoryValue(bank, local, cs80::kChannelDefs[local].def);
+    // APVTS is the sole authority. Complete a detached state before replacing
+    // it: JUCE otherwise retains live parameter values for missing children.
+    auto result = state.createCopy();
     auto hardware = state.getChildWithName("HARDWARE");
-    if (! hardware.isValid()) return;
-    for (const auto& memory : hardware)
+    const bool legacy = hardware.isValid() && (int) hardware.getProperty("version", 1) == 1;
+    auto ensure = [&](const juce::String& id, float fallback)
     {
-        if (!memory.hasType("MEMORY")) continue;
-        const int bank = (int) memory.getProperty("bank", -1);
-        for (int local = 0; local < cs80::CP_count; ++local)
-            setMemoryValue(bank, local, (float) memory.getProperty("p" + juce::String(local), cs80::kChannelDefs[local].def));
+        auto* p = apvts.getParameter(id);
+        if (p == nullptr) return;
+        auto child = result.getChildWithProperty("id", id);
+        if (!child.isValid())
+        {
+            child = juce::ValueTree("PARAM");
+            child.setProperty("id", id, nullptr);
+            result.addChild(child, -1, nullptr);
+        }
+        float value = (float) child.getProperty("value", fallback);
+        if (!std::isfinite(value)) value = fallback;
+        // Round discrete choices/switches and clamp to the declared range.
+        const auto& range = p->getNormalisableRange();
+        value = range.snapToLegalValue(juce::jlimit(range.start, range.end, value));
+        child.setProperty("value", value, nullptr);
+    };
+    for (int i = 0; i < cs80::P_numParams; ++i)
+        ensure(parameterId(i), cs80::paramDef(i).def);
+    for (int channel = 0; channel < 2; ++channel)
+    {
+        float value = legacy ? (float) hardware.getProperty(channel == 0 ? "sourceI" : "sourceII", 13) : 13.0f;
+        if (!std::isfinite(value) || value < 0.0f || value > 13.0f) value = 13.0f;
+        ensure(hardwareSourceParameterId(channel), value);
     }
-    hardwareSources[0].store(juce::jlimit(0, 13, (int) hardware.getProperty("sourceI", 13)), std::memory_order_relaxed);
-    hardwareSources[1].store(juce::jlimit(0, 13, (int) hardware.getProperty("sourceII", 13)), std::memory_order_relaxed);
+    for (int bank = 0; bank < 4; ++bank)
+    {
+        auto memory = legacy ? hardware.getChildWithProperty("bank", bank) : juce::ValueTree();
+        for (int local = 0; local < cs80::CP_count; ++local)
+        {
+            if (!isMemoryControl(local)) continue;
+            const float def = cs80::kChannelDefs[local].def;
+            float value = memory.isValid() ? (float) memory.getProperty("p" + juce::String(local), def) : def;
+            if (!std::isfinite(value)) value = def;
+            ensure(memoryParameterId(bank, local), value);
+        }
+    }
+    // Do not serialize a second, potentially stale copy of automated controls.
+    for (int i = result.getNumChildren(); --i >= 0;)
+        if (result.getChild(i).hasType("HARDWARE"))
+            result.removeChild(i, nullptr);
+    return result;
 }
 
 juce::AudioProcessorEditor* Cs80AudioProcessor::createEditor()
@@ -394,7 +471,6 @@ void Cs80AudioProcessor::changeProgramName(int, const juce::String&)
 void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     auto state = apvts.copyState();
-    writeHardwareState(state);
     state.setProperty("presetName", presetName, nullptr);
     state.setProperty("factoryIndex", currentProgram, nullptr);
     if (auto xml = state.createXml())
@@ -414,8 +490,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
-            apvts.replaceState(tree);
-            restoreHardwareState(tree);
+            apvts.replaceState(normaliseRestoredState(tree));
             presetName = tree.getProperty("presetName", "Init Patch").toString();
             currentProgram = (int) tree.getProperty("factoryIndex", 0);
             // DSP state is updated by the next audio block, not the state-loading thread.
@@ -440,7 +515,6 @@ void Cs80AudioProcessor::saveUserPreset(const juce::String& name)
         safe = "User Preset";
     auto file = dir.getChildFile(safe + ".cs80xml");
     auto state = apvts.copyState();
-    writeHardwareState(state);
     state.setProperty("presetName", name.isNotEmpty() ? name : presetName, nullptr);
     state.setProperty("factoryIndex", currentProgram, nullptr);
     if (auto xml = state.createXml())
@@ -476,8 +550,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
-            apvts.replaceState(tree);
-            restoreHardwareState(tree);
+            apvts.replaceState(normaliseRestoredState(tree));
             presetName = tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString();
             currentProgram = (int) tree.getProperty("factoryIndex", 0);
             // DSP state is updated by the next audio block, not the state-loading thread.

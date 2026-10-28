@@ -54,6 +54,26 @@ juce::Button* findButton(juce::Component& parent, const juce::String& text)
     return nullptr;
 }
 
+juce::Component* findControl(juce::Component& parent, const juce::String& id)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (child->getComponentID() == id) return child;
+        if (auto* found = findControl(*child, id)) return found;
+    }
+    return nullptr;
+}
+
+struct GestureProbe : juce::AudioProcessorParameter::Listener
+{
+    int begins = 0, ends = 0, changes = 0;
+    void parameterValueChanged(int, float) override { ++changes; }
+    void parameterGestureChanged(int, bool starting) override
+    {
+        if (starting) ++begins; else ++ends;
+    }
+};
+
 int countHardwareSliders(juce::Component& parent)
 {
     int count = 0;
@@ -140,6 +160,58 @@ int main(int argc, char** argv)
         }
     }
 
+    check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
+          && Cs80AudioProcessor::hostParameterCount == 228, "228 host parameters");
+    for (int i = 0; i < cs80::P_numParams; ++i)
+    {
+        check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
+              "original host parameter order preserved");
+        check(processor.getParameters()[i]->getVersionHint() == 1, "legacy AU version hints preserved");
+    }
+    int next = cs80::P_numParams;
+    for (int channel = 0; channel < 2; ++channel)
+    {
+        const auto id = Cs80AudioProcessor::hardwareSourceParameterId(channel);
+        check(id == "hardware_source_" + juce::String(channel + 1), "stable source parameter ID");
+        auto* p = processor.getAPVTS().getParameter(id);
+        check(p != nullptr && processor.getParameters()[next++] == p, "source appended before memories");
+        if (p)
+        {
+            check(p->getVersionHint() == 2, "new source AU version hint follows legacy parameters");
+            check(p->getNumSteps() == 14 && p->convertFrom0to1(p->getDefaultValue()) == 13.0f,
+                  "source choices and PANEL default");
+        }
+    }
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+        {
+            const auto id = Cs80AudioProcessor::memoryParameterId(bank, local);
+            if (!Cs80AudioProcessor::isMemoryControl(local))
+            {
+                check(id.isEmpty(), "extensions excluded from miniature automation");
+                continue;
+            }
+            check(id == "memory_" + juce::String(bank + 1) + "_" + cs80::kChannelDefs[local].id,
+                  "stable descriptive memory parameter ID");
+            auto* p = processor.getAPVTS().getParameter(id);
+            check(p != nullptr && processor.getParameters()[next++] == p, "memory bank parameter ordering");
+            if (!p) continue;
+            check(p->getVersionHint() == 2, "new memory AU version hint follows legacy parameters");
+            const auto& d = cs80::kChannelDefs[local];
+            const auto& range = p->getNormalisableRange();
+            check(range.start == d.min && range.end == d.max && range.skew == d.skew,
+                  "memory range and skew agree with main panel");
+            for (float fraction : { 0.0f, 0.2f, 0.5f, 0.8f, 1.0f })
+            {
+                const float value = local == cs80::CP_saw || local == cs80::CP_pulse
+                    ? (fraction >= 0.5f ? 1.0f : 0.0f) : d.min + fraction * (d.max - d.min);
+                processor.setMemoryValue(bank, local, value);
+                check(std::abs(processor.getMemoryValue(bank, local) - value)
+                          <= std::max(0.0001f, (d.max - d.min) * 0.00001f), "memory API uses host skew");
+            }
+            processor.setMemoryValue(bank, local, d.def);
+        }
+
     processor.loadFactoryPreset(22);
     check(processor.getPresetName() == "Replicant Brass", "factory preset load");
     check(processor.getCurrentPresetIndex() == 22, "factory preset index");
@@ -168,6 +240,45 @@ int main(int argc, char** argv)
               "plugin renders MIDI");
         check(processor.getActiveVoiceCount() >= 2, "plugin allocates voices");
         processor.getEngine().allNotesOff(false);
+    }
+
+    // Channel-mode messages must not be swallowed by the generic CC branch.
+    for (int controller : { 120, 123 })
+    {
+        Cs80AudioProcessor panic;
+        auto values = cs80::defaultValues();
+        values[cs80::P_keyRelease] = 0.001f;
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            values[cs80::chParam(channel, cs80::CP_vR)] = 0.001f;
+            values[cs80::chParam(channel, cs80::CP_fR)] = 0.001f;
+        }
+        panic.applyParameterValues(values);
+        panic.prepareToPlay(48000.0, 256);
+        juce::AudioBuffer<float> audio(2, 256);
+        juce::MidiBuffer messages;
+        messages.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8)100), 0);
+        messages.addEvent(juce::MidiMessage::noteOn(2, 67, (juce::uint8)100), 0);
+        panic.processBlock(audio, messages);
+        messages.clear();
+        messages.addEvent(juce::MidiMessage::controllerEvent(1, controller, 0), 0);
+        panic.processBlock(audio, messages);
+        messages.clear();
+        for (int block = 0; block < 200; ++block) panic.processBlock(audio, messages);
+        int channel1 = 0, channel2 = 0;
+        for (int voice = 0; voice < 8; ++voice)
+        {
+            const auto info = panic.getEngine().getVoiceInfo(voice);
+            if (info.active && info.channel == 1) ++channel1;
+            if (info.active && info.channel == 2) ++channel2;
+        }
+        check(channel1 == 0, "actual MIDI CC120/123 clears addressed channel without sticky voices");
+        check(channel2 == 1, "actual MIDI CC120/123 preserves other MIDI channel");
+        messages.addEvent(juce::MidiMessage::controllerEvent(2, controller, 0), 0);
+        panic.processBlock(audio, messages);
+        messages.clear();
+        for (int block = 0; block < 200; ++block) panic.processBlock(audio, messages);
+        check(panic.getActiveVoiceCount() == 0, "actual MIDI panic clears remaining channel");
     }
 
     // GUI control mailboxes are consumed on the audio thread, including a
@@ -235,6 +346,101 @@ int main(int argc, char** argv)
         const float beforeInvalid = memories.getMemoryValue(0, cs80::CP_lpfCutoff);
         memories.setMemoryValue(0, cs80::CP_lpfCutoff, std::numeric_limits<float>::quiet_NaN());
         check(memories.getMemoryValue(0, cs80::CP_lpfCutoff) == beforeInvalid, "programmer rejects nonfinite edits");
+    }
+
+    // Host automation is authoritative, including when no editor exists.
+    {
+        Cs80AudioProcessor automated;
+        automated.prepareToPlay(48000.0, 64);
+        auto setHost = [&](const juce::String& id, float value)
+        {
+            auto* p = automated.getAPVTS().getParameter(id);
+            check(p != nullptr, "automated parameter exists");
+            if (p) p->setValueNotifyingHost(p->convertTo0to1(value));
+        };
+        for (int bank = 0; bank < 4; ++bank)
+            for (int local = 0; local < cs80::CP_count; ++local)
+                if (Cs80AudioProcessor::isMemoryControl(local))
+                {
+                    const auto& d = cs80::kChannelDefs[local];
+                    const float fraction = (float)(bank + 1) / 5.0f;
+                    setHost(Cs80AudioProcessor::memoryParameterId(bank, local),
+                        local == cs80::CP_saw || local == cs80::CP_pulse ? (float)(bank % 2)
+                        : d.min + fraction * (d.max - d.min));
+                }
+        setHost(Cs80AudioProcessor::hardwareSourceParameterId(0), 11);
+        setHost(Cs80AudioProcessor::hardwareSourceParameterId(1), 12);
+        juce::AudioBuffer<float> audio(2, 64);
+        juce::MidiBuffer midi;
+        automated.processBlock(audio, midi);
+        for (int channel = 0; channel < 2; ++channel)
+            check(std::abs(automated.getEngine().getParams()[cs80::chParam(channel, cs80::CP_lpfCutoff)]
+                  - automated.getMemoryValue(channel == 0 ? 0 : 3, cs80::CP_lpfCutoff)) < 0.02f,
+                  "host automation drives selected effective audio parameters");
+        juce::MemoryBlock saved;
+        automated.getStateInformation(saved);
+        Cs80AudioProcessor copy;
+        copy.setStateInformation(saved.getData(), (int)saved.getSize());
+        check(copy.getHardwareSource(0) == 11 && copy.getHardwareSource(1) == 12, "automated selectors round trip");
+        for (int bank = 0; bank < 4; ++bank)
+            for (int local = 0; local < cs80::CP_count; ++local)
+                if (Cs80AudioProcessor::isMemoryControl(local))
+                    check(std::abs(copy.getMemoryValue(bank, local) - automated.getMemoryValue(bank, local))
+                         <= std::max(0.0001f, cs80::kChannelDefs[local].max * 0.00001f),
+                         "all 104 memory parameters round trip");
+        const float retained = automated.getMemoryValue(2, cs80::CP_lpfCutoff);
+        automated.loadFactoryPreset(0);
+        check(automated.getHardwareSource(0) == 13 && automated.getHardwareSource(1) == 13
+              && automated.getMemoryValue(2, cs80::CP_lpfCutoff) == retained,
+              "digital preset selects PANEL without erasing miniature controls");
+
+        auto legacy = copy.getAPVTS().copyState();
+        for (int i = legacy.getNumChildren(); --i >= 0;)
+        {
+            const auto id = legacy.getChild(i).getProperty("id").toString();
+            if (id.startsWith("memory_") || id.startsWith("hardware_source_"))
+                legacy.removeChild(i, nullptr);
+        }
+        juce::ValueTree hardware("HARDWARE");
+        hardware.setProperty("version", 1, nullptr);
+        hardware.setProperty("sourceI", 12, nullptr);
+        hardware.setProperty("sourceII", 11, nullptr);
+        for (int bank = 0; bank < 4; ++bank)
+        {
+            juce::ValueTree memory("MEMORY");
+            memory.setProperty("bank", bank, nullptr);
+            memory.setProperty("p" + juce::String(cs80::CP_lpfCutoff), 800.0f + 100.0f * (float)bank, nullptr);
+            hardware.addChild(memory, -1, nullptr);
+        }
+        legacy.addChild(hardware, -1, nullptr);
+        auto restoreTree = [&](const juce::ValueTree& tree)
+        {
+            auto xml = tree.createXml();
+            const auto text = xml->toString();
+            copy.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+        };
+        restoreTree(legacy);
+        check(copy.getHardwareSource(0) == 12 && copy.getHardwareSource(1) == 11, "version 1 selectors migrate");
+        for (int bank = 0; bank < 4; ++bank)
+            check(std::abs(copy.getMemoryValue(bank, cs80::CP_lpfCutoff) - (800.0f + 100.0f * (float)bank)) < 0.02f,
+                  "version 1 four memories migrate");
+        check(!copy.getAPVTS().copyState().getChildWithName("HARDWARE").isValid(), "legacy duplicate authority removed");
+        legacy.removeChild(hardware, nullptr);
+        restoreTree(legacy);
+        check(copy.getHardwareSource(0) == 13 && copy.getHardwareSource(1) == 13, "pre-programmer state defaults PANEL");
+        for (int bank = 0; bank < 4; ++bank)
+            for (int local = 0; local < cs80::CP_count; ++local)
+                if (Cs80AudioProcessor::isMemoryControl(local))
+                    check(std::abs(copy.getMemoryValue(bank, local) - cs80::kChannelDefs[local].def)
+                          <= std::max(0.0001f, cs80::kChannelDefs[local].max * 0.00001f),
+                          "pre-programmer state resets every missing mini control");
+        auto partial = copy.getAPVTS().copyState();
+        const auto missingId = Cs80AudioProcessor::memoryParameterId(0, cs80::CP_lpfCutoff);
+        partial.removeChild(partial.getChildWithProperty("id", missingId), nullptr);
+        copy.setMemoryValue(0, cs80::CP_lpfCutoff, 111.0f);
+        restoreTree(partial);
+        check(std::abs(copy.getMemoryValue(0, cs80::CP_lpfCutoff) - cs80::kChannelDefs[cs80::CP_lpfCutoff].def) < 0.02f,
+              "missing new-state parameter does not retain stale live value");
     }
 
     Cs80AudioProcessorEditor editor(processor);
@@ -307,6 +513,45 @@ int main(int argc, char** argv)
         lid->triggerClick();
         flushGui(100);
         check(countHardwareSliders(editor) >= 96, "all four miniature programmer banks exposed");
+        const auto sliderId = Cs80AudioProcessor::memoryParameterId(0, cs80::CP_lpfCutoff);
+        auto* memoryParameter = processor.getAPVTS().getParameter(sliderId);
+        if (auto* slider = dynamic_cast<juce::Slider*>(findControl(editor, sliderId)))
+        {
+            GestureProbe probe;
+            memoryParameter->addListener(&probe);
+            const double original = slider->getValue();
+            slider->setValue(1234.0, juce::sendNotificationSync);
+            check(std::abs(processor.getMemoryValue(0, cs80::CP_lpfCutoff) - 1234.0f) < 0.02f,
+                  "miniature GUI slider writes APVTS");
+            check(probe.changes > 0 && probe.begins > 0 && probe.begins == probe.ends,
+                  "miniature slider sends balanced host gestures");
+            memoryParameter->setValueNotifyingHost(memoryParameter->convertTo0to1(2456.0f));
+            flushGui(30);
+            check(std::abs(slider->getValue() - 2456.0) < 0.02, "host automation updates miniature slider");
+            memoryParameter->removeListener(&probe);
+            slider->setValue(original, juce::sendNotificationSync);
+        }
+        else check(false, "miniature slider discoverable");
+        const auto toggleId = Cs80AudioProcessor::memoryParameterId(0, cs80::CP_saw);
+        if (auto* toggle = dynamic_cast<juce::Button*>(findControl(editor, toggleId)))
+        {
+            auto* parameter = processor.getAPVTS().getParameter(toggleId);
+            const bool original = toggle->getToggleState();
+            GestureProbe probe;
+            parameter->addListener(&probe);
+            toggle->triggerClick();
+            flushGui(80);
+            check(toggle->getToggleState() != original
+                  && processor.getMemoryValue(0, cs80::CP_saw) == (original ? 0.0f : 1.0f),
+                  "miniature switch writes APVTS");
+            check(probe.changes > 0 && probe.begins > 0 && probe.begins == probe.ends,
+                  "miniature switch sends balanced host gestures");
+            parameter->removeListener(&probe);
+            parameter->setValueNotifyingHost(original ? 1.0f : 0.0f);
+            flushGui(30);
+            check(toggle->getToggleState() == original, "host automation updates miniature switch");
+        }
+        else check(false, "miniature switch discoverable");
         save("memory-programmer-1600x1000");
         if (auto* close = findButton(editor, "CLOSE LID"))
         {

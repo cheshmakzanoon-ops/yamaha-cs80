@@ -72,6 +72,12 @@ public:
     float getMemoryValue(int bank, int local) const noexcept;
     void setMemoryValue(int bank, int local, float value) noexcept;
 
+    static constexpr int memoryControlCount = 26;
+    static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
+    static bool isMemoryControl(int local) noexcept;
+    static juce::String hardwareSourceParameterId(int channel);
+    static juce::String memoryParameterId(int bank, int local);
+
     float getParamValue(int index) const;
     void setParamValue(int index, float physicalValue);
     cs80::ParamValues currentValues() const;
@@ -84,8 +90,7 @@ public:
 
 private:
     void readParameters();
-    void writeHardwareState(juce::ValueTree& state) const;
-    void restoreHardwareState(const juce::ValueTree& state);
+    juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
     void resetHardwareSources() noexcept;
     void handleMidi(const juce::MidiMessage& message);
     void applyValues(const cs80::ParamValues& values);
@@ -95,8 +100,8 @@ private:
     juce::AudioProcessorValueTreeState apvts;
     juce::MidiKeyboardState keyboardState;
     cs80::ParamValues cached;
-    std::array<std::atomic<int>, 2> hardwareSources {{ 13, 13 }};
-    std::array<std::array<std::atomic<float>, cs80::CP_count>, 4> hardwareMemories {};
+    std::array<std::atomic<float>*, 2> hardwareSources {};
+    std::array<std::array<std::atomic<float>*, cs80::CP_count>, 4> hardwareMemories {};
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
     std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
     static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();

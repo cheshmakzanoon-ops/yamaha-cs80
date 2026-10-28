@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <set>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -607,6 +608,129 @@ void testAllSoundOff()
     check(engine.activeVoices() == 0, "all sound off stops voices immediately");
 }
 
+void testChannelPanic()
+{
+    auto countChannel=[](const Engine& e,int channel) {
+        int count=0;
+        for(int i=0;i<8;++i) { const auto v=e.getVoiceInfo(i); if(v.active && v.channel==channel) ++count; }
+        return count;
+    };
+    Engine e; e.prepare(48000);
+    e.noteOn(60,.8f,2); e.noteOn(64,.8f,3); render(e,48000,2400);
+    e.controlChange(120,0,2);
+    check(countChannel(e,2)==0 && countChannel(e,3)==1,"channel sound-off preserves other channel");
+    check(e.getVoiceInfo(1).held,"unrelated key remains held after channel panic");
+    const float envelope=e.getRingEnvelope();
+    e.noteOn(67,.8f,4);
+    checkNear(e.getRingEnvelope(),envelope,1.e-7f,"channel panic does not reset shared ring gate with other held notes");
+    e.controlChange(123,0,3);
+    check(!e.getVoiceInfo(1).held && e.getVoiceInfo(1).active,"channel notes-off starts release rather than hard kill");
+    check(countChannel(e,4)==1 && e.getVoiceInfo(2).held,"channel release leaves another channel held");
+    e.allNotesOff(false,-1); e.allNotesOff(false,17);
+    check(countChannel(e,4)==1,"invalid panic channel does not become global panic");
+    e.allNotesOff(false);
+    check(e.activeVoices()==0,"default panic remains global");
+    e.noteOn(72,.8f,2);
+    checkNear(e.getRingEnvelope(),0,1.e-7f,"last-channel/global panic permits next ring phrase retrigger");
+    e.allNotesOff(false);
+
+    for(int mode : {0,1})
+    {
+        ParamValues p; p[P_sustainMode]=(float)mode;
+        e.reset(); e.setParams(p);
+        e.noteOn(60,.8f,2); e.noteOn(64,.8f,3); render(e,48000,1024);
+        e.controlChange(64,1,2); e.allNotesOff(true,2);
+        check(e.getVoiceInfo(0).pedalHeld && !e.getVoiceInfo(0).held,
+              "channel notes-off respects pedal hold");
+        e.allNotesOff(true,3);
+        check(!e.getVoiceInfo(1).pedalHeld,"other channel does not inherit pedal");
+        e.controlChange(64,0,3);
+        check(e.getVoiceInfo(0).pedalHeld,"unrelated channel pedal-up does not release target");
+        e.controlChange(64,0,2);
+        render(e,48000,96000);
+        check(e.activeVoices()==0,"channel pedal-up releases notes-off hold");
+    }
+    ParamValues p; e.reset(); e.setParams(p);
+    e.controlChange(64,1,2); e.noteOn(60,.8f,2); e.noteOff(60,2);
+    e.allNotesOff(false,2);
+    check(countChannel(e,2)==0,"channel sound-off overrides pedal-held voice");
+    e.noteOn(61,.8f,2); e.noteOff(61,2);
+    check(e.getVoiceInfo(1).pedalHeld,"channel sound-off does not reset controller state");
+    e.allNotesOff(false); e.noteOn(62,.8f,2); e.noteOff(62,2);
+    check(!e.getVoiceInfo(2).pedalHeld,"legacy global panic clears pedal states");
+
+    e.reset(); p[P_mpeOn]=1; e.setParams(p);
+    e.controlChange(64,1,1); e.noteOn(60,.8f,2); e.noteOn(64,.8f,3);
+    e.allNotesOff(true,2); e.noteOff(64,3);
+    check(e.getVoiceInfo(0).pedalHeld && e.getVoiceInfo(1).pedalHeld,"MPE master pedal holds member channels");
+    e.allNotesOff(false,2);
+    check(e.getVoiceInfo(1).pedalHeld,"member panic preserves other MPE pedal-held notes");
+    e.controlChange(64,0,1); render(e,48000,96000);
+    check(e.activeVoices()==0,"MPE master pedal-up clears remaining holds");
+
+    e.reset(); p=ParamValues{}; p[P_arpOn]=1; p[P_arpRate]=4; p[P_arpOctaves]=1;
+    e.setParams(p); e.noteOn(60,.2f,2); e.noteOn(60,.8f,3); render(e,48000,1);
+    check(e.getVoiceInfo(0).channel==2,"arpeggiator preserves source MIDI channel");
+    checkNear(e.getVoiceInfo(0).velocity,.2f,1.e-6f,"arpeggiator preserves matching source velocity");
+    e.allNotesOff(false,2); render(e,48000,24000);
+    check(countChannel(e,2)==0 && countChannel(e,3)>0,"channel panic removes only matching arpeggiator source keys");
+    e.noteOff(60,2); render(e,48000,24000);
+    check(countChannel(e,3)>0,"wrong-channel arp note-off cannot remove identical other-channel pitch");
+    e.allNotesOff(true,3); render(e,48000,96000);
+    check(e.activeVoices()==0,"last-channel notes-off stops arp without stuck generated notes");
+    e.allNotesOff(false);
+}
+
+void testCoreInputGuards()
+{
+    Engine e;
+    const double invalidRates[]={0,-1,7999,768001,1.e300,
+        std::numeric_limits<double>::quiet_NaN(),
+        std::numeric_limits<double>::infinity(),-std::numeric_limits<double>::infinity()};
+    for(double rate : invalidRates)
+    {
+        e.prepare(rate);
+        checkNear((float)e.getHostSampleRate(),48000,0,"invalid sample rate falls back before allocation");
+        e.noteOn(60,.8f);
+        check(analyse(render(e,48000,256)).finite,"invalid-rate fallback renders finite audio");
+    }
+    for(double rate : {8000.,768000.})
+    {
+        e.prepare(rate);
+        check(e.getHostSampleRate()==rate,"supported sample-rate boundary accepted");
+        e.noteOn(60,.8f);
+        check(analyse(render(e,rate,256)).finite,"boundary sample rate renders finite audio");
+    }
+    e.prepare(48000);
+    for(float invalid : {std::numeric_limits<float>::quiet_NaN(),
+                         std::numeric_limits<float>::infinity(),
+                         -std::numeric_limits<float>::infinity()})
+    {
+        ParamValues p; for(auto& value:p.v) value=invalid;
+        e.reset(); e.setParams(p);
+        bool defaults=true;
+        for(int i=0;i<P_numParams;++i) defaults=defaults && e.getParams()[i]==paramDef(i).def;
+        check(defaults,"all nonfinite core parameters fall back to defaults");
+        e.noteOn(60,.8f);
+        check(analyse(render(e,48000,256)).finite,"nonfinite parameters cannot poison render");
+    }
+    for(bool high : {false,true})
+    {
+        ParamValues p;
+        for(int i=0;i<P_numParams;++i) p[i]=high ? paramDef(i).max+1000000.f : paramDef(i).min-1000000.f;
+        e.reset(); e.setParams(p);
+        bool bounded=true;
+        for(int i=0;i<P_numParams;++i)
+            bounded=bounded && e.getParams()[i]==(high ? paramDef(i).max : paramDef(i).min);
+        check(bounded,"finite out-of-range core parameters clamp to declared bounds");
+        e.noteOn(60,.8f);
+        check(analyse(render(e,48000,256)).finite,"clamped extreme parameters render finite");
+    }
+    ParamValues valid; valid[P_ringSpeed]=500;
+    e.setParams(valid);
+    check(e.getParams()[P_ringSpeed]==500,"valid legacy500Hz ring extension preserved");
+}
+
 void testMpeExpression()
 {
     ParamValues p;
@@ -1074,6 +1198,8 @@ int main()
     testSustainTimeAndWheelRouting();
     testSustainPedal();
     testAllSoundOff();
+    testChannelPanic();
+    testCoreInputGuards();
     testMpeExpression();
     testSubOscillatorWaves();
     testRepeatedNoteRelease();
