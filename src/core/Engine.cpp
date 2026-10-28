@@ -42,6 +42,7 @@ void Engine::prepare(double hostSampleRate)
         v.active = false;
         v.held = false;
         v.sustained = false;
+        v.pedalHeld = false;
     }
     for (int i = 0; i < kNumVoices; ++i)
         voiceDrift[i] = (float) i * 0.73f;
@@ -56,6 +57,7 @@ void Engine::reset()
         v.active = false;
         v.held = false;
         v.sustained = false;
+        v.pedalHeld = false;
         v.note = 60;
         v.age = 0;
         for (auto& r : v.ranks)
@@ -68,6 +70,7 @@ void Engine::reset()
         }
     }
     heldCount = 0;
+    sustainPedal = false;
     ringKeyDown = false;
     ringAdsr.reset();
     ringPhase = 0.0f;
@@ -170,6 +173,7 @@ void Engine::buildSettings()
     global.analogNoise = p(P_analogNoise);
     global.mpe = p(P_mpeOn) >= 0.5f;
     global.pitchBendRange = p(P_pitchBendRange);
+    global.mpeBendRange = p(P_mpeBendRange);
     global.tuningRef = p(P_tuningRef);
     global.modWheelSub = p(P_modWheelSub);
     global.modWheelVcf = p(P_modWheelVcf);
@@ -482,12 +486,13 @@ void Engine::updateArpeggiator(float invSampleRate)
 
 void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
-    if (v.active && v.held)
+    if (v.active && (v.held || v.pedalHeld))
         --heldCount;
 
     v.active = true;
     v.held = true;
     v.sustained = false;
+    v.pedalHeld = false;
     v.note = note;
     v.midiChannel = midiChannel;
     v.velocity = clampf(velocity, 0.0f, 1.0f);
@@ -542,6 +547,7 @@ void Engine::releaseVoice(Voice& v)
         --heldCount;
     }
     v.sustained = false;
+    v.pedalHeld = false;
     for (int ch = 0; ch < 2; ++ch)
     {
         auto& r = v.ranks[ch];
@@ -551,7 +557,10 @@ void Engine::releaseVoice(Voice& v)
         r.aenv.noteOff();
         r.fenv.noteOff();
     }
-    if (heldCount <= 0)
+    bool anyHeld = false;
+    for (const auto& voice : voices)
+        anyHeld = anyHeld || voice.held || voice.pedalHeld;
+    if (! anyHeld)
     {
         heldCount = 0;
         ringKeyDown = false;
@@ -577,6 +586,13 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
         return;
     }
 
+    // Re-striking a pedal-held note replaces the old voice rather than
+    // stacking a second copy under the pedal.
+    for (auto& v : voices)
+        if (v.active && v.pedalHeld && v.note == midiNote
+            && (! global.mpe || v.midiChannel == midiChannel))
+            releaseVoice(v);
+
     const int idx = chooseVoice();
     startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
 }
@@ -599,6 +615,14 @@ void Engine::noteOff(int midiNote, int midiChannel)
             if (heldCount < 0)
                 heldCount = 0;
         }
+        else if (sustainPedal && v->held)
+        {
+            v->held = false;
+            v->pedalHeld = true;
+            --heldCount;
+            if (heldCount < 0)
+                heldCount = 0;
+        }
         else
         {
             releaseVoice(*v);
@@ -608,17 +632,29 @@ void Engine::noteOff(int midiNote, int midiChannel)
 
 Engine::Voice* Engine::findVoiceForNote(int note, int midiChannel)
 {
+    Voice* newest = nullptr;
     for (auto& v : voices)
-        if (v.active && v.note == note && (v.midiChannel == midiChannel || ! global.mpe))
-            return &v;
+        if (v.active && v.note == note
+            && (v.midiChannel == midiChannel || ! global.mpe))
+            if (newest == nullptr || v.age > newest->age)
+                newest = &v;
+    if (newest != nullptr)
+        return newest;
+
+    // Some hosts send note-off on the master channel even when the note-on
+    // carried a member channel. Fall back to the newest matching note.
     for (auto& v : voices)
         if (v.active && v.note == note)
-            return &v;
-    return nullptr;
+            if (newest == nullptr || v.age > newest->age)
+                newest = &v;
+    return newest;
 }
 
 void Engine::allNotesOff(bool release)
 {
+    sustainPedal = false;
+    for (auto& v : voices)
+        v.pedalHeld = false;
     heldKeyCount = 0;
     arpSequenceLength = 0;
     arpIndex = 0;
@@ -639,17 +675,24 @@ void Engine::allNotesOff(bool release)
         }
     }
     heldCount = 0;
+    sustainPedal = false;
     ringKeyDown = false;
     ringAdsr.noteOff();
 }
 
-void Engine::polyPressure(int midiNote, float pressure)
+void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
     pressure = clampf(pressure, 0.0f, 1.0f);
-    lastPressure = pressure;
+    bool matched = false;
     for (auto& v : voices)
-        if (v.active && v.note == midiNote)
+        if (v.active && v.note == midiNote
+            && (! global.mpe || midiChannel <= 0 || v.midiChannel == midiChannel))
+        {
             v.pressure = pressure;
+            matched = true;
+        }
+    if (matched)
+        lastPressure = pressure;
 }
 
 void Engine::channelPressure(int midiChannel, float pressure)
@@ -668,7 +711,7 @@ void Engine::pitchBend(int midiChannel, float value)
     {
         for (auto& v : voices)
             if (v.active && v.midiChannel == midiChannel)
-                v.mpeBend = value * global.pitchBendRange;
+                v.mpeBend = value * global.mpeBendRange;
     }
     else
     {
@@ -683,6 +726,32 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         modWheel = value;
     else if (controller == 11)
         expression = value;
+    else if (controller == 64)
+    {
+        const bool down = value >= 0.5f;
+        if (down == sustainPedal)
+            return;
+        sustainPedal = down;
+        if (! down)
+        {
+            for (auto& v : voices)
+                if (v.pedalHeld)
+                {
+                    v.pedalHeld = false;
+                    if (! v.held && ! v.sustained)
+                        releaseVoice(v);
+                }
+            heldCount = 0;
+            for (const auto& v : voices)
+                if (v.held || v.pedalHeld)
+                    ++heldCount;
+            if (heldCount == 0)
+            {
+                ringKeyDown = false;
+                ringAdsr.noteOff();
+            }
+        }
+    }
     else if (controller == 74)
     {
         for (auto& v : voices)
@@ -750,7 +819,7 @@ void Engine::processInternalSample(float& outL, float& outR)
         if (! v.active)
             continue;
 
-        if (v.held)
+        if (v.held || v.pedalHeld)
             ++stillHeld;
 
         if (global.portamento > 0.0001f)
@@ -1011,7 +1080,7 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
     if (index < 0 || index >= kNumVoices)
         return {};
     const auto& v = voices[(size_t) index];
-    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure };
+    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend };
 }
 
 } // namespace cs80

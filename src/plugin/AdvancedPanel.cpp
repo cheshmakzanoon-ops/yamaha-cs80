@@ -251,18 +251,19 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
                   juce::Justification::topLeft, 3);
 
         page.section(770.0f, 290.0f, 710.0f, 440.0f, "Pitch / tuning / expression");
-        page.knob(800.0f, 350.0f, 112.0f, 92.0f, cs80::P_pitchBendRange, "BEND RANGE");
-        page.knob(930.0f, 350.0f, 112.0f, 92.0f, cs80::P_tuningRef, "A4 TUNING");
-        page.knob(1060.0f, 350.0f, 112.0f, 92.0f, cs80::P_keyRelease, "KEY RELEASE");
-        page.knob(1190.0f, 350.0f, 112.0f, 92.0f, cs80::P_masterTune, "MASTER TUNE");
+        page.knob(800.0f, 350.0f, 112.0f, 92.0f, cs80::P_pitchBendRange, "WHEEL BEND");
+        page.knob(930.0f, 350.0f, 112.0f, 92.0f, cs80::P_mpeBendRange, "MPE BEND");
+        page.knob(1060.0f, 350.0f, 112.0f, 92.0f, cs80::P_tuningRef, "A4 TUNING");
+        page.knob(1190.0f, 350.0f, 112.0f, 92.0f, cs80::P_keyRelease, "KEY RELEASE");
+        page.knob(1320.0f, 350.0f, 112.0f, 92.0f, cs80::P_masterTune, "MASTER TUNE");
         page.text("PLAY RANGE", 800.0f, 464.0f, 160.0f, 16.0f, 9.0f, true, ivoryDim);
         page.text("88 keys / MIDI 0-127", 800.0f, 482.0f, 220.0f, 18.0f, 10.5f, false, ivory);
         page.text("MICROTUNING", 800.0f, 514.0f, 160.0f, 16.0f, 9.0f, true, ivoryDim);
         page.text("The engine is tuned to the selected A4 reference. Use a MIDI\n"
                   "tuning standard or an MTS-capable host for alternate temperaments.",
                   800.0f, 532.0f, 640.0f, 42.0f, 10.5f, false, ivoryDim);
-        page.text("Pitch bend is spring-loaded. The ribbon above the keyboard is a separate\n"
-                  "continuous controller and returns to centre when released.",
+        page.text("The pitch lever is spring-loaded; MPE member channels use their own bend\n"
+                  "range. The ribbon is a separate continuous controller and returns to centre.",
                   800.0f, 610.0f, 640.0f, 42.0f, 10.5f, false, ivoryDim);
     }
 
@@ -273,15 +274,15 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.text("WAVEFORM", 48.0f, 66.0f, 170.0f, 16.0f, 9.0f, true, ivoryDim);
         page.choice(48.0f, 86.0f, 180.0f, 30.0f, cs80::P_subWave, kSubWaves);
         page.knob(260.0f, 72.0f, 120.0f, 96.0f, cs80::P_subSpeed, "SPEED");
-        page.toggle(48.0f, 156.0f, 120.0f, 28.0f, cs80::P_subVco, "VCO");
-        page.toggle(178.0f, 156.0f, 120.0f, 28.0f, cs80::P_subVcf, "VCF");
-        page.toggle(308.0f, 156.0f, 120.0f, 28.0f, cs80::P_subVca, "VCA");
-        page.toggle(438.0f, 156.0f, 130.0f, 28.0f, cs80::P_subAtSpeed, "AT SPEED");
-        page.toggle(578.0f, 156.0f, 120.0f, 28.0f, cs80::P_subAtVco, "AT VCO");
+        page.knob(48.0f, 178.0f, 94.0f, 72.0f, cs80::P_subVco, "VCO");
+        page.knob(158.0f, 178.0f, 94.0f, 72.0f, cs80::P_subVcf, "VCF");
+        page.knob(268.0f, 178.0f, 94.0f, 72.0f, cs80::P_subVca, "VCA");
+        page.knob(400.0f, 178.0f, 94.0f, 72.0f, cs80::P_subAtSpeed, "AT SPEED");
+        page.knob(510.0f, 178.0f, 94.0f, 72.0f, cs80::P_subAtVco, "AT VCO");
         page.text("The CS-80's sub-oscillator is a global modulation source, not a sub-bass\n"
-                  "oscillator. It can sweep the VCOs, VCFs, VCAs and its own rate under pressure.\n"
-                  "At low speeds it is a slow tremolo; at audio rates it adds sidebands.",
-                  48.0f, 210.0f, 670.0f, 68.0f, 10.8f, false, ivoryDim,
+                  "oscillator. The VCO/VCF/VCA amounts sweep the voice and its own rate under\n"
+                  "pressure. At low speeds it is a slow tremolo; at audio rates it adds sidebands.",
+                  48.0f, 258.0f, 670.0f, 60.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
         page.section(770.0f, 20.0f, 710.0f, 330.0f, "Ring modulator");
@@ -385,8 +386,8 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.choice(1200.0f, 98.0f, 210.0f, 30.0f, cs80::P_glideMode, kGlideModes);
         page.toggle(1200.0f, 150.0f, 210.0f, 28.0f, cs80::P_sustainMode, "SUSTAIN II");
         page.text("Portamento glides between successive notes. Glissando quantises\n"
-                  "the glide to semitones. Sustain I is damper-style; Sustain II adds the\n"
-                  "CS-80's long release tail.",
+                  "the glide to semitones. Sustain I releases normally; Sustain II latches\n"
+                  "released notes until the next key press.",
                   800.0f, 220.0f, 650.0f, 62.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
@@ -401,9 +402,9 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
                   "tone-selector programs plus 200 performance patches.",
                   52.0f, 450.0f, 900.0f, 190.0f, 12.0f, false, ivoryDim,
                   juce::Justification::topLeft, 8);
-        page.text("ENGINE  ·  2x oversampled  ·  8 voices  ·  16 ranks  ·  96 kHz internal\n"
-                  "FORMAT  ·  VST3 + standalone  ·  44.1-192 kHz  ·  MPE + poly pressure\n"
-                  "BUILD   ·  Reference Instruments  ·  circuit study no. 1977-CS80",
+        page.text("ENGINE  -  2x oversampled  -  8 voices  -  16 ranks  -  2x host rate\n"
+                  "FORMAT  -  VST3 + standalone  -  44.1-192 kHz  -  MPE + poly pressure\n"
+                  "BUILD   -  Reference Instruments  -  circuit study no. 1977-CS80",
                   1000.0f, 450.0f, 440.0f, 90.0f, 11.0f, false, amber,
                   juce::Justification::topLeft, 4);
         page.text("Touch the ribbon above the keyboard to bend pitch. Drag the pitch lever (PITCH)\n"

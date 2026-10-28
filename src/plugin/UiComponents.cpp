@@ -126,7 +126,8 @@ juce::String formatParamValue(int parameterIndex, float value)
             case cs80::P_voiceDispersion:
             case cs80::P_drift:
             case cs80::P_analogNoise: return percent(value);
-            case cs80::P_pitchBendRange: return number(value, 0) + " st";
+            case cs80::P_pitchBendRange:
+            case cs80::P_mpeBendRange: return number(value, 0) + " st";
             case cs80::P_tuningRef: return number(value, 1) + " Hz";
             case cs80::P_lfo1Dest:
             case cs80::P_lfo2Dest:

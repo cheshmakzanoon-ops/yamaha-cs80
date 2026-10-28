@@ -422,20 +422,34 @@ private:
 class Lfo
 {
 public:
-    void reset(float p = 0.0f) noexcept { phase = p; }
+    void reset(float p = 0.0f) noexcept
+    {
+        phase = p;
+        heldValue = 0.0f;
+        sampleHoldStarted = false;
+    }
 
     float tick(float rate, float sampleRate, int waveform, Rng& rng) noexcept
     {
+        const float previousPhase = phase;
         phase += rate / sampleRate;
         phase -= std::floor(phase);
+        const bool wrapped = phase < previousPhase;
         switch (waveform)
         {
             case 0: return std::sin(kTwoPi * phase);
-            case 1: return 2.0f * phase - 1.0f;                  // saw up
-            case 2: return 1.0f - 2.0f * phase;                  // ramp down
-            case 3: return phase < 0.5f ? 1.0f : -1.0f;          // pulse
-            case 4: return rng.nextBipolar();                   // noise
-            default: return 0.0f;                               // external / off
+            case 1: return 1.0f - 4.0f * std::abs(phase - 0.5f); // triangle
+            case 2: return 2.0f * phase - 1.0f;                  // saw up
+            case 3: return phase < 0.5f ? 1.0f : -1.0f;          // square
+            case 4:                                             // sample & hold
+                if (! sampleHoldStarted || wrapped)
+                {
+                    heldValue = rng.nextBipolar();
+                    sampleHoldStarted = true;
+                }
+                return heldValue;
+            case 5: return rng.nextBipolar();                   // random
+            default: return 0.0f;
         }
     }
 
@@ -443,6 +457,8 @@ public:
 
 private:
     float phase = 0.0f;
+    float heldValue = 0.0f;
+    bool sampleHoldStarted = false;
 };
 
 class DelayLine

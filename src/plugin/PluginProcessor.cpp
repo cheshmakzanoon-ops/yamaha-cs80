@@ -160,7 +160,9 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isAftertouch())
     {
-        engine.polyPressure(message.getNoteNumber(), message.getAfterTouchValue() / 127.0f);
+        engine.polyPressure(message.getNoteNumber(),
+                            message.getAfterTouchValue() / 127.0f,
+                            message.getChannel());
     }
     else if (message.isChannelPressure())
     {
@@ -175,9 +177,14 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     {
         engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
     }
-    else if (message.isAllNotesOff() || message.isAllSoundOff())
+    else if (message.isAllSoundOff())
     {
-        engine.allNotesOff(message.isAllSoundOff());
+        // All Sound Off is an immediate panic; All Notes Off is a release.
+        engine.allNotesOff(false);
+    }
+    else if (message.isAllNotesOff())
+    {
+        engine.allNotesOff(true);
     }
 }
 

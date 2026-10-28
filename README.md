@@ -14,17 +14,17 @@ The instrument is a real-time **VST3 / AU / Standalone** project built with C++2
 | Oscillators | PolyBLEP saw, variable-width pulse, fixed-width reset pulse, shaped sine, noise |
 | Filters | Serial 12 dB high-pass into 12 dB low-pass, resonance on both, TPT state-variable topology |
 | Envelopes | Independent filter and amplifier ADSRs with CS-80-style bent decay/release |
-| Expression | Velocity, polyphonic aftertouch, channel pressure, MPE pitch bend/pressure, mod wheel, ribbon |
+| Expression | Velocity, polyphonic aftertouch, channel pressure, MPE pitch bend/pressure with a separate range, mod wheel, ribbon |
 | Modulation | Three global LFOs, sub-oscillator with VCO/VCF/VCA/AT routing, global ring modulator |
 | Character | Per-voice tuning/cutoff/level/pan dispersion, slow drift, analog noise floor |
 | Effects | BBD-style stereo chorus/tremolo plus three serial modern FX slots |
 | Performance | Arpeggiator, sustain II, portamento/glissando, pitch-bend range, A4 tuning |
 | Presets | 222 factory programs: 22 hardware tone-selector programs + 200 performance patches |
-| Parameters | 121 host-automatable parameters saved in plugin state |
+| Parameters | 122 host-automatable parameters saved in plugin state |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
-| Verification | 1,227 core checks + headless plugin/UI smoke test, all passing |
+| Verification | 1,260 core checks + headless plugin/UI smoke test, all passing |
 
-The 1,230 checks are the current local run of the core suite. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
+The 1,260 checks are the current local run of the core suite. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
 
 ## Screens
 
@@ -139,10 +139,10 @@ Double-click any knob to return it to its default. The preset arrows step throug
 - BBD chorus/tremolo and analog dispersion/drift/noise
 - Three serial FX slots: Chorus, Phaser, Tape Delay, Plate Reverb, Drive
 - Macros: Brightness, Motion, Width, Space
-- MPE, glissando/portamento, sustain II, stereo/mono output
+- MPE with independent wheel and per-note bend ranges, glissando/portamento, sustain II, stereo/mono output
 - Arpeggiator with Up, Down, Up/Down, Random and Played modes, 1-4 octaves
 
-MPE mode maps per-note pitch bend and pressure on member channels. Polyphonic aftertouch works without MPE. CC1 is the modulation wheel, CC11 is expression, and CC74 is timbral brightness.
+MPE mode maps per-note pitch bend and pressure on member channels; the wheel range and the MPE per-note range are separate controls, with the MPE range defaulting to 48 semitones. Polyphonic aftertouch works without MPE and is channel-scoped when MPE is active. CC1 is the modulation wheel, CC11 is expression, CC74 is timbral brightness, and CC64 is the sustain pedal.
 
 ## Repository map
 

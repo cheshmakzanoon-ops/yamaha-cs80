@@ -38,6 +38,7 @@ void checkNear(float actual, float expected, float tolerance, const std::string&
 std::vector<float> render(Engine& engine, double sampleRate, int frames,
                           int blockSize = 256)
 {
+    (void) sampleRate;
     std::vector<float> buffer((size_t) frames * 2, 0.0f);
     for (int i = 0; i < frames; i += blockSize)
     {
@@ -81,8 +82,8 @@ Analysis analyse(const std::vector<float>& buffer)
 
 void testParameterTable()
 {
-    check(P_numParams == P_ch2Start + CP_count, "parameter count");
-    check(P_ch2Start - P_ch1Start == CP_count, "channel blocks are contiguous");
+    check((int) P_numParams == (int) P_ch2Start + (int) CP_count, "parameter count");
+    check((int) P_ch2Start - (int) P_ch1Start == (int) CP_count, "channel blocks are contiguous");
     check(std::string(paramId(0)) == "master_tune", "global parameter id");
     check(std::string(paramId(P_ch2Start)) == "ch2_saw", "channel parameter id");
 
@@ -174,6 +175,129 @@ void testEnvelope()
     gate.reset();
     gate.noteOn(0.0f, 0.2f, 1.0f, 0.2f);
     checkNear(gate.tick(48000.0f, true), 1.0f, 0.0001f, "zero attack reaches full level");
+}
+
+void testSustainPedal()
+{
+    ParamValues p;
+    p[P_volume] = 0.6f;
+    p[P_keyRelease] = 0.05f;
+
+    Engine engine;
+    engine.prepare(48000.0);
+    engine.setParams(p);
+    engine.noteOn(60, 0.8f, 1);
+    render(engine, 48000.0, 2048);
+
+    engine.controlChange(64, 1.0f, 1);
+    engine.noteOff(60, 1);
+    const auto held = render(engine, 48000.0, 24000);
+    check(engine.activeVoices() > 0, "sustain pedal holds a released note");
+    check(analyse(held).finite, "sustain pedal render finite");
+
+    engine.controlChange(64, 0.0f, 1);
+    const auto tail = render(engine, 48000.0, 96000);
+    check(engine.activeVoices() == 0, "sustain pedal releases when lifted");
+    check(analyse(tail).finite, "sustain pedal release finite");
+}
+
+void testAllSoundOff()
+{
+    Engine engine;
+    engine.prepare(48000.0);
+    engine.noteOn(60, 0.8f, 1);
+    render(engine, 48000.0, 2048);
+    check(engine.activeVoices() > 0, "panic test voice active");
+    engine.allNotesOff(false);
+    check(engine.activeVoices() == 0, "all sound off stops voices immediately");
+}
+
+void testMpeExpression()
+{
+    ParamValues p;
+    p[P_mpeOn] = 1.0f;
+    p[P_pitchBendRange] = 2.0f;
+    p[P_mpeBendRange] = 48.0f;
+
+    Engine engine;
+    engine.prepare(48000.0);
+    engine.setParams(p);
+    engine.noteOn(60, 0.8f, 2);
+    engine.noteOn(60, 0.8f, 3);
+    engine.polyPressure(60, 0.9f, 2);
+    engine.pitchBend(2, 1.0f);
+
+    bool sawChannel2 = false;
+    bool sawChannel3 = false;
+    for (int i = 0; i < 8; ++i)
+    {
+        const auto info = engine.getVoiceInfo(i);
+        if (! info.active || info.note != 60)
+            continue;
+        if (info.channel == 2)
+        {
+            checkNear(info.pressure, 0.9f, 0.001f, "MPE pressure is channel-scoped");
+            checkNear(info.bend, 48.0f, 0.001f, "MPE bend uses MPE range");
+            sawChannel2 = true;
+        }
+        else if (info.channel == 3)
+        {
+            checkNear(info.pressure, 0.0f, 0.001f, "MPE pressure leaves other channel alone");
+            checkNear(info.bend, 0.0f, 0.001f, "MPE bend leaves other channel alone");
+            sawChannel3 = true;
+        }
+    }
+    check(sawChannel2 && sawChannel3, "MPE voices retain their member channels");
+}
+
+void testSubOscillatorWaves()
+{
+    for (int wave = 0; wave < 6; ++wave)
+    {
+        Lfo lfo;
+        Rng rng(0x51c80u + (uint32_t) wave);
+        lfo.reset(0.0f);
+        float lo = 1.0f;
+        float hi = -1.0f;
+        bool finite = true;
+        for (int i = 0; i < 48000; ++i)
+        {
+            const float value = lfo.tick(7.0f, 48000.0f, wave, rng);
+            finite = finite && std::isfinite(value);
+            lo = std::min(lo, value);
+            hi = std::max(hi, value);
+        }
+        check(finite, "sub oscillator wave finite: " + std::to_string(wave));
+        check(hi - lo > 0.05f, "sub oscillator wave moves: " + std::to_string(wave));
+    }
+}
+
+void testRepeatedNoteRelease()
+{
+    Engine engine;
+    engine.prepare(48000.0);
+    engine.noteOn(60, 0.2f, 1);
+    engine.noteOn(60, 0.9f, 1);
+    engine.noteOff(60, 1);
+    // The released voice stays active while its release tail fades; let it
+    // finish before checking which voice is still held.
+    render(engine, 48000.0, 96000);
+
+    int activeSixty = 0;
+    for (int i = 0; i < 8; ++i)
+    {
+        const auto info = engine.getVoiceInfo(i);
+        if (info.active && info.note == 60)
+        {
+            ++activeSixty;
+            checkNear(info.velocity, 0.2f, 0.001f,
+                      "repeated note-off releases the newest voice");
+        }
+    }
+    check(activeSixty == 1, "repeated note leaves the older voice active");
+    engine.noteOff(60, 1);
+    engine.allNotesOff(false);
+    check(engine.activeVoices() == 0, "repeated note cleanup");
 }
 
 void testVoiceAllocation()
@@ -448,6 +572,11 @@ int main()
     testFeetRatios();
     testFilterStability();
     testEnvelope();
+    testSustainPedal();
+    testAllSoundOff();
+    testMpeExpression();
+    testSubOscillatorWaves();
+    testRepeatedNoteRelease();
     testVoiceAllocation();
     testRenderAndRelease();
     testVelocityResponse();

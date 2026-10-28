@@ -18,12 +18,6 @@ void setC(ParamValues& p, int ch, int param, float v)
     p[chParam(ch, param)] = v;
 }
 
-void both(ParamValues& p, int param, float v)
-{
-    setC(p, 0, param, v);
-    setC(p, 1, param, v);
-}
-
 void vco(ParamValues& p, int ch, bool saw, bool pulse, float sine, float noise,
          float pw = 0.5f, float pwmDepth = 0.0f, float pwmSpeed = 0.4f)
 {

@@ -79,6 +79,7 @@ struct GlobalSettings
     float analogNoise = 0.12f;
     bool mpe = false;
     float pitchBendRange = 2.0f;
+    float mpeBendRange = 48.0f;
     float tuningRef = 440.0f;
     float modWheelSub = 0.25f;
     float modWheelVcf = 0.0f;
@@ -112,7 +113,9 @@ public:
     void noteOn(int midiNote, float velocity, int midiChannel = 1);
     void noteOff(int midiNote, int midiChannel = 1);
     void allNotesOff(bool release = true);
-    void polyPressure(int midiNote, float pressure);
+    // A channel of 0 applies the pressure to every matching note; a positive
+    // channel is required for correct per-note behaviour in MPE.
+    void polyPressure(int midiNote, float pressure, int midiChannel = 0);
     void channelPressure(int midiChannel, float pressure);
     void pitchBend(int midiChannel, float value); // -1..1
     void controlChange(int controller, float value, int midiChannel = 1);
@@ -135,6 +138,7 @@ public:
         int channel = 1;
         float velocity = 0.0f;
         float pressure = 0.0f;
+        float bend = 0.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
 
@@ -162,6 +166,7 @@ private:
         bool active = false;
         bool held = false;
         bool sustained = false;
+        bool pedalHeld = false;
         int note = 60;
         int midiChannel = 1;
         float velocity = 0.8f;
@@ -243,6 +248,7 @@ private:
     Adsr ringAdsr;
     bool ringKeyDown = false;
     int heldCount = 0;
+    bool sustainPedal = false;
     Chorus fxChorus;
     Phaser phaser;
     float driftPhase = 0.0f;

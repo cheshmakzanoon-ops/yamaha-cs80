@@ -84,7 +84,7 @@ The ring modulator is global and has a dedicated AD envelope retriggered by the 
 
 ### Ribbon and wheels
 
-The ribbon is a continuous pitch controller with a ±12/±18 semitone travel and a spring return to centre. It is independent of the pitch wheel. The pitch wheel uses the host-visible `pitch_bend_range` for both global and MPE bends. The modulation wheel is CC1.
+The ribbon is a continuous pitch controller with a ±12/±18 semitone travel and a spring return to centre. It is independent of the pitch wheel. The pitch wheel uses the host-visible `pitch_bend_range`; MPE member channels use `mpe_bend_range`, which defaults to the 48-semitone MPE convention. The modulation wheel is CC1, CC64 is the sustain pedal, and polyphonic pressure is scoped to the member channel when MPE is active.
 
 ## Voice dispersion and drift
 
@@ -134,7 +134,7 @@ Because macros are offsets, turning one does not destroy the panel settings or r
 
 ## Presets and state
 
-`ParamValues` is a flat array of 121 floats. The table in `src/core/Params.h` defines ID, display name, range, default, skew, unit and group. The APVTS builds one `AudioParameterFloat` per entry, so every control is host-automatable and serialised in the plugin state.
+`ParamValues` is a flat array of 122 floats. The table in `src/core/Params.h` defines ID, display name, range, default, skew, unit and group. The APVTS builds one `AudioParameterFloat` per entry, so every control is host-automatable and serialised in the plugin state.
 
 The factory bank contains:
 

@@ -448,8 +448,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         g.setColour(cs80::ui::ivoryDim.withAlpha(0.75f));
         g.setFont(displayFont( 9.0f, juce::Font::bold));
-        g.drawText(first ? "RANK A / RANK B  ·  VCO - VCF - VCA"
-                         : "RANK A / RANK B  ·  DUAL VOICE CARD",
+        g.drawText(first ? "RANK A / RANK B  -  VCO - VCF - VCA"
+                         : "RANK A / RANK B  -  DUAL VOICE CARD",
                    (int) panel.getX() + 252, (int) panel.getY() + 8, 480, 16,
                    juce::Justification::centredLeft);
 
@@ -516,7 +516,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.drawHorizontalLine(486, 34.0f, 208.0f);
         g.setColour(cs80::ui::ivoryDim.withAlpha(0.45f));
         g.setFont(displayFont( 7.5f, juce::Font::plain));
-        g.drawFittedText("BBD CHORUS · GLOBAL SUB OSC · RING MOD\n8 VOICES · 16 RANKS · 2x OVERSAMPLED",
+        g.drawFittedText("BBD CHORUS - GLOBAL SUB OSC - RING MOD\n8 VOICES - 16 RANKS - 2x OVERSAMPLED",
                          34, 570, 172, 56, juce::Justification::topLeft, 2);
     }
 
@@ -592,7 +592,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.drawText("PERFORMANCE", 34, 660, 118, 16, juce::Justification::centredLeft);
         g.setColour(cs80::ui::amber);
         g.setFont(displayFont( 7.0f, juce::Font::plain));
-        g.drawFittedText("RIBBON · LEVER\nPRESSURE · GLIDE", 34, 678, 112, 28,
+        g.drawFittedText("RIBBON - LEVER\nPRESSURE - GLIDE", 34, 678, 112, 28,
                          juce::Justification::topLeft, 2);
     }
 
@@ -649,7 +649,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
         g.setColour(cs80::ui::ivoryDim.withAlpha(0.50f));
         g.setFont(displayFont( 7.0f, juce::Font::plain));
-        g.drawText("16 RANKS  ·  2x OVERSAMPLED  ·  MPE", 1270, 59, 260, 9,
+        g.drawText("16 RANKS  -  2x OVERSAMPLED  -  MPE", 1270, 59, 260, 9,
                    juce::Justification::centredLeft);
     }
 
