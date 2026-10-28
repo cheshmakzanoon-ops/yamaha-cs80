@@ -171,6 +171,23 @@ jobs:
           xattr -dr com.apple.quarantine pluginval/pluginval.app || true
           ./pluginval/pluginval.app/Contents/MacOS/pluginval --version
 
+      # Audio Unit hosts discover AUs through AudioComponentRegistrar, not
+      # through the build tree. Register the exact built bundle in the
+      # per-user Components directory, then force the registrar to rescan.
+      - name: Register built AU
+        run: |
+          set -euo pipefail
+          AU_SOURCE="$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component"
+          AU_DEST="$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          test -d "$AU_SOURCE"
+          mkdir -p "$HOME/Library/Audio/Plug-Ins/Components"
+          rm -rf "$AU_DEST"
+          cp -R "$AU_SOURCE" "$AU_DEST"
+          codesign --force --sign - "$AU_DEST"
+          killall -9 AudioComponentRegistrar || true
+          sleep 2
+          ls -ld "$AU_DEST"
+
       - name: Validate VST3 with pluginval
         run: |
           set -euo pipefail
@@ -181,17 +198,63 @@ jobs:
             --skip-gui-tests \
             --timeout-ms 120000 \
             --output-dir pluginval-reports \
+            --output-filename cs80-vst3 \
             "$PWD/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3" \
-            2>&1 | tee pluginval-macos.log
+            2>&1 | tee pluginval-vst3.log
 
-      - name: Upload pluginval report
+      - name: Validate AU with pluginval
+        run: |
+          set -euo pipefail
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --skip-gui-tests \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-au \
+            "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
+            2>&1 | tee pluginval-au.log
+
+      - name: Validate AU with pluginval GUI
+        run: |
+          set -euo pipefail
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir pluginval-reports \
+            --output-filename cs80-au-gui \
+            "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" \
+            2>&1 | tee pluginval-au-gui.log
+
+      - name: AU registration diagnostics
+        if: failure()
+        run: |
+          echo '--- installed component ---'
+          ls -la "$HOME/Library/Audio/Plug-Ins/Components" || true
+          codesign -dv "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" || true
+          echo '--- registered audio units ---'
+          auval -a 2>&1 | grep -i 'cs-80' || true
+
+      - name: Report pluginval failure
+        if: failure()
+        run: |
+          for log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log; do
+            if [ -f "$log" ]; then
+              echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"
+            fi
+          done
+
+      - name: Upload pluginval reports
         if: always()
         uses: actions/upload-artifact@v5
         with:
           name: cs80-pluginval-macos
           path: |
             pluginval-reports
-            pluginval-macos.log
+            pluginval-vst3.log
+            pluginval-au.log
+            pluginval-au-gui.log
           if-no-files-found: warn
 
   windows:
@@ -225,3 +288,71 @@ jobs:
       - name: Test
         if: steps.configure.outcome == 'success'
         run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Upload Windows VST3
+        if: steps.configure.outcome == 'success'
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-vst3
+          path: build/CS80Reference_artefacts/Release/VST3
+          if-no-files-found: error
+
+  pluginval-windows:
+    name: pluginval / Windows VST3 (strictness 10)
+    needs: windows
+    runs-on: windows-2022
+    timeout-minutes: 20
+    env:
+      PLUGINVAL_VERSION: "1.0.4"
+    steps:
+      - name: Download Windows VST3
+        uses: actions/download-artifact@v5
+        with:
+          name: cs80-windows-vst3
+          path: vst3
+
+      - name: Fetch pluginval ${{ env.PLUGINVAL_VERSION }}
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $url = "https://github.com/Tracktion/pluginval/releases/download/v$env:PLUGINVAL_VERSION/pluginval_Windows.zip"
+          Invoke-WebRequest -Uri $url -OutFile pluginval.zip
+          Expand-Archive -Path pluginval.zip -DestinationPath pluginval -Force
+          Unblock-File -Path pluginval\pluginval.exe
+          & .\pluginval\pluginval.exe --version | Tee-Object -FilePath pluginval-version.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate VST3 headless
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null
+          & .\pluginval\pluginval.exe `
+            --strictness-level 10 `
+            --validate-in-process `
+            --skip-gui-tests `
+            --timeout-ms 120000 `
+            --output-dir pluginval-reports `
+            --output-filename cs80-windows `
+            "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Report pluginval failure
+        if: failure()
+        shell: pwsh
+        run: |
+          if (Test-Path pluginval-windows.log) {
+            $message = (Get-Content pluginval-windows.log -Tail 20) -join ' || '
+            Write-Output "::error title=pluginval Windows::$message"
+          }
+
+      - name: Upload pluginval reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-pluginval-windows
+          path: |
+            pluginval-reports
+            pluginval-windows.log
+            pluginval-version.txt
+          if-no-files-found: warn
