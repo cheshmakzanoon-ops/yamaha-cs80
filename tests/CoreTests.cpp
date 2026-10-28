@@ -83,7 +83,11 @@ Analysis analyse(const std::vector<float>& buffer)
 
 void testParameterTable()
 {
-    check((int) P_numParams == (int) P_ch2Start + (int) CP_count, "parameter count");
+    check(P_legacyNumParams == 122 && (int) P_legacyNumParams == (int) P_ch2Start + (int) CP_count,
+          "legacy core layout remains122");
+    check(P_subAtVcf == 122 && P_numParams == 123 && paramId(P_subAtVcf) == "sub_at_vcf",
+          "new global control appended after both channel blocks");
+    check(ParamValues{}[P_subAtVcf] == 0.0f, "new pressure VCF depth defaults off");
     check((int) P_ch2Start - (int) P_ch1Start == (int) CP_count, "channel blocks are contiguous");
     check(std::string(paramId(0)) == "master_tune", "global parameter id");
     check(std::string(paramId(P_ch2Start)) == "ch2_saw", "channel parameter id");
@@ -928,8 +932,11 @@ void testVelocityResponse()
         ParamValues p;
         for (int ch = 0; ch < 2; ++ch)
         {
-            p[chParam(ch, CP_initLevel)] = 0.45f;
-            p[chParam(ch, CP_initBrill)] = 0.2f;
+            // Isolate the explicit Initial Level destination; do not rely on
+            // an unconditional velocity multiplier or a brightness change.
+            p[chParam(ch, CP_vLevel)] = 0.25f;
+            p[chParam(ch, CP_initLevel)] = 0.65f;
+            p[chParam(ch, CP_initBrill)] = 0.0f;
         }
         Engine engine;
         engine.prepare(48000.0);
@@ -941,7 +948,28 @@ void testVelocityResponse()
 
     const double soft = measure(0.25f);
     const double hard = measure(1.0f);
-    check(hard > soft * 1.5, "velocity changes level");
+    check(hard > soft * 1.5, "enabled Initial Level changes level with velocity");
+    for (double rate : {44100.0,48000.0,88200.0,96000.0})
+    {
+        ParamValues neutral;
+        neutral[P_initBend]=0;
+        neutral[P_voiceDispersion]=0; neutral[P_drift]=0; neutral[P_analogNoise]=0;
+        for(int ch=0;ch<2;++ch)
+        {
+            neutral[chParam(ch,CP_initLevel)]=0;
+            neutral[chParam(ch,CP_initBrill)]=0;
+        }
+        Engine softEngine, hardEngine;
+        softEngine.prepare(rate); hardEngine.prepare(rate);
+        softEngine.setParams(neutral); hardEngine.setParams(neutral);
+        softEngine.noteOn(60,.1f); hardEngine.noteOn(60,1.f);
+        const auto softAudio=render(softEngine,rate,(int)(rate*.25));
+        const auto hardAudio=render(hardEngine,rate,(int)(rate*.25));
+        check(softAudio==hardAudio, "zero initial-touch depths make attack and hold velocity invariant");
+        softEngine.noteOff(60); hardEngine.noteOff(60);
+        check(render(softEngine,rate,(int)(rate*.5))==render(hardEngine,rate,(int)(rate*.5)),
+              "zero initial-touch depths make release velocity invariant");
+    }
 }
 
 void testSampleRates()
@@ -1157,6 +1185,69 @@ void testFactoryBank()
     }
 }
 
+
+void testSubAftertouchVcf()
+{
+    for (double rate : {44100.0, 48000.0, 88200.0, 96000.0})
+    {
+        ParamValues p;
+        p[P_voiceDispersion]=0; p[P_drift]=0; p[P_analogNoise]=0;
+        p[P_subSpeed]=4; p[P_subWave]=0; p[P_subVcf]=0;
+        p[P_subAtSpeed]=0; p[P_subAtVco]=0;
+        for (int rank=0; rank<2; ++rank)
+        {
+            p[chParam(rank,CP_fIl)]=0; p[chParam(rank,CP_fAl)]=0;
+            p[chParam(rank,CP_initBrill)]=0; p[chParam(rank,CP_afterBrill)]=0;
+            p[chParam(rank,CP_initLevel)]=0; p[chParam(rank,CP_afterLevel)]=0;
+            p[chParam(rank,CP_hpfCutoff)]=200; p[chParam(rank,CP_lpfCutoff)]=1000;
+        }
+        Engine reference, pressure;
+        reference.prepare(rate); pressure.prepare(rate);
+        reference.setParams(p); pressure.setParams(p);
+        for (auto* e : {&reference,&pressure})
+        {
+            e->noteOn(60,.8f,2); e->noteOn(67,.8f,3);
+        }
+        pressure.polyPressure(60,1,2);
+        check(render(reference,rate,256)==render(pressure,rate,256),
+              "zero AT VCF depth leaves audio unchanged by pressure");
+        p[P_subAtVcf]=.75f;
+        pressure.setParams(p);
+        float low=100, high=-100;
+        bool independent=true, bothFilters=true, bothRanks=true;
+        for (int block=0; block<(int)rate/64; ++block)
+        {
+            render(reference,rate,64); render(pressure,rate,64);
+            for (int rank=0;rank<2;++rank)
+            {
+                const auto a=reference.getRankInfo(0,rank), b=pressure.getRankInfo(0,rank);
+                const float hp=std::log2(b.hpfHz/a.hpfHz);
+                const float lp=std::log2(b.lpfHz/a.lpfHz);
+                bothFilters=bothFilters && std::abs(hp-lp)<.00001f;
+                if(rank==0) {low=std::min(low,lp); high=std::max(high,lp);}
+                else
+                {
+                    const auto a0=reference.getRankInfo(0,0), b0=pressure.getRankInfo(0,0);
+                    bothRanks=bothRanks && std::abs(lp-std::log2(b0.lpfHz/a0.lpfHz))<.00001f;
+                }
+                const auto otherA=reference.getRankInfo(1,rank), otherB=pressure.getRankInfo(1,rank);
+                independent=independent && otherA.hpfHz==otherB.hpfHz && otherA.lpfHz==otherB.lpfHz;
+            }
+        }
+        check(low<-.5f && high>.5f, "AT VCF follows bipolar sub waveform, not static brightness");
+        check(bothFilters && bothRanks, "AT VCF reaches HPF and LPF of both ranks");
+        check(independent, "poly pressure VCF does not modulate another held key");
+        pressure.polyPressure(60,0,2);
+        render(reference,rate,64); render(pressure,rate,64);
+        for(int rank=0;rank<2;++rank)
+        {
+            const auto a=reference.getRankInfo(0,rank), b=pressure.getRankInfo(0,rank);
+            check(a.hpfHz==b.hpfHz && a.lpfHz==b.lpfHz,
+                  "releasing pressure removes AT VCF contribution");
+        }
+    }
+}
+
 void testEveryFactoryPresetRenders()
 {
     Engine engine;
@@ -1202,6 +1293,7 @@ int main()
     testCoreInputGuards();
     testMpeExpression();
     testSubOscillatorWaves();
+    testSubAftertouchVcf();
     testRepeatedNoteRelease();
     testHardwareVoiceAssignment();
     testVoiceAllocation();

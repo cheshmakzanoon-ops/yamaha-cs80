@@ -66,6 +66,7 @@ struct GlobalSettings
     float subVca = 0.0f;
     float subAtSpeed = 0.0f;
     float subAtVco = 0.0f;
+    float subAtVcf = 0.0f;
     float ringSpeed = 2.0f;
     float ringDepth = 0.0f;
     float ringAttack = 0.08f;

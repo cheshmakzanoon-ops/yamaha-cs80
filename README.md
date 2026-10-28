@@ -4,6 +4,8 @@ An independent, code-first recreation of the Yamaha CS-80 architecture: eight vo
 
 The instrument is a C++20/JUCE VST3, AU and standalone synthesizer under active hardware-fidelity reconstruction. The panel is drawn from Yamaha's original instrument photographs and manuals, with colored lever caps, two slider ranks and horizontal tone tabs. It is **not yet a component-complete or measured 1:1 emulation**. Existing finite-output tests and plugin validation do not prove hardware equivalence.
 
+The required end target is [1:1 analog circuit behavior](docs/ANALOG_FIDELITY_REQUIREMENT.md), with stage-level evidence and hardware validation. This target has not yet been achieved.
+
 Start with [original hardware references](docs/HARDWARE_REFERENCES.md) and the [fidelity audit](docs/FIDELITY_AUDIT.md). They separate documented behavior, implemented corrections, provisional calibration and missing circuit models. Hardware tone names/order are now rank-specific; their numeric voicings remain explicitly provisional until the selector resistor networks and reference audio are validated.
 
 The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml) captures the actual editor, tests overlay transitions and publishes exact-source provenance. Successful main-branch captures refresh the images below only when the source commit remains current. See docs/screenshots/provenance.json when present; never infer that a screenshot validates a newer commit.
@@ -24,11 +26,11 @@ The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha
 | Effects | BBD-style stereo chorus/tremolo plus three serial modern FX slots |
 | Performance | Arpeggiator, sustain II, portamento/glissando, pitch-bend range, A4 tuning |
 | Presets | 222 factory programs: 22 provisional hardware-tab studies + 200 original performance patches |
-| Parameters | 228 host-automatable parameters: 122 original + 106 programmer/selector controls |
+| Parameters | 229 host-automatable parameters: 122 original + 106 programmer/selector controls + AT VCF |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
 | Verification | Core regression suite + numerical DSP probes + plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
 
-The 1,260-check count above describes the pre-reconstruction baseline; consult the exact-commit CI logs for the current result. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
+Consult the exact-commit CI logs for the current check count and results. The UI smoke test separately validates APVTS exposure, preset/state round-trips, MIDI rendering, editor construction at 1600x1000 and 1200x760, every advanced page, screenshots, and user-preset storage.
 
 ## Screens
 
@@ -47,6 +49,10 @@ The modern layer is kept behind its own surface so the primary instrument remain
 | Searchable preset library | [browser-1600x1000.png](docs/screenshots/browser-1600x1000.png) |
 
 ## Hardware programmer and reconstruction changes
+
+The missing [aftertouch-to-sub-filter route](docs/AFTERTOUCH_SUB_VCF.md) is implemented with an appended host parameter, preserving existing automation indexes. Its numerical depth remains provisional. [Unconditional velocity attenuation has been removed](docs/VELOCITY_GAIN_CORRECTION.md); saved sessions can sound louder below maximum velocity. Initial-touch transient modeling still needs circuit validation.
+
+See the [complete hardware coverage audit](docs/HARDWARE_COVERAGE.md) and [IG00156 evidence and validation plan](docs/IG00156_MODEL_EVIDENCE.md).
 
 MIDI CC120/123 are dispatched before ordinary controllers. Panic/release is channel-scoped, with explicit global-engine panic retained for API callers. Arpeggiator entries retain their originating channel and velocity; MIDI pedal behavior is an explicit software extension. Core boundaries reject nonfinite parameter values and unsupported sample rates before DSP/allocation; the accepted rate range is 8–768 kHz with a 48 kHz fallback for invalid input, not a claim of measured hardware fidelity across that range.
 
@@ -156,7 +162,7 @@ The suite covers:
 - **TONE SELECTOR**: eleven distinct named positions on each channel, in the original hardware order. Numeric voicings are provisional. Selecting a tone reprograms that channel immediately.
 - **PERFORMANCE**: glide, key release, wheel-to-sub, wheel-to-VCF, bend range, A4 tuning, arp rate, FX 1 mix and the sustain/arp/chorus/tremolo/stereo switches.
 - **RIBBON**: first contact establishes the reference; relative motion bends pitch, and release restores neutral. The documented upward endpoint is approximately one octave.
-- **KEYBED**: 61-key MIDI keyboard with velocity and aftertouch; external MIDI uses the same engine.
+- **KEYBED**: 61-key on-screen keyboard with velocity. External MIDI provides polyphonic aftertouch; a per-key pressure gesture on the on-screen keyboard remains to be implemented.
 
 Double-click any knob to return it to its default. The preset arrows step through the complete bank; **LIBRARY** opens the searchable browser and **SAVE** opens the same browser with the save field focused.
 
@@ -196,7 +202,7 @@ docs/RESEARCH.md            source notes and design references
 
 ## CI
 
-`.github/workflows/build.yml` builds and tests on Linux, macOS and Windows. The Linux job also uploads the VST3 and the rendered WAV/screenshots. A separate `pluginval` job downloads that VST3, runs pluginval 1.0.4 at strictness 10 both headless and with GUI tests under Xvfb, and fails the workflow on any validator report. pluginval 1.0.4 itself intermittently segfaults on Linux *after* the final test, in its own host run loop (`RunLoop::Impl::eventHandlerMap` accessed from a stale file-descriptor callback); both core dumps captured here fault in validator frames only. `scripts/run-pluginval-linux.sh` therefore requires the literal `SUCCESS` line and retries only that exact post-suite signature — a failed test, a plugin crash during a test, a timeout or a missing `SUCCESS` fails immediately. macOS builds VST3, AU and Standalone, registers the built AU with `AudioComponentRegistrar`, and runs pluginval at strictness 10 against both the VST3 and AU, including AU GUI tests. Windows builds VST3 and Standalone, runs the console UI smoke test, uploads the VST3, and a dependent job runs pluginval at strictness 10 against it.
+`.github/workflows/build.yml` builds and tests on Linux, macOS and Windows. The Linux job also uploads the VST3 and the rendered WAV/screenshots. A separate `pluginval` job downloads that VST3, runs pluginval 1.0.4 at strictness 10 both headless and with GUI tests under Xvfb, and fails the workflow on any validator report. The Linux wrapper permits at most three full attempts for exit 139 only when a test phase started and the last phase completed, with neither SUCCESS nor FAILED in the log. This is retry eligibility, not proof of crash ownership or completion of the whole suite. A passing attempt must exit 0 and print SUCCESS without FAILED; failed tests and log-capture failures are fatal, and earlier attempt logs are preserved. macOS builds VST3, AU and Standalone, registers the built AU with `AudioComponentRegistrar`, and runs pluginval at strictness 10 against both the VST3 and AU, including AU GUI tests. Windows builds VST3 and Standalone, runs the console UI smoke test, uploads the VST3, and a dependent job runs pluginval at strictness 10 against it.
 
 ## Honest scope
 

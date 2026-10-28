@@ -346,7 +346,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         buttonAttachments.push_back(
             std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                 processor.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
-        const auto channelName = parameter >= cs80::P_numGlobals
+        const auto channelName = parameter >= cs80::P_numGlobals && parameter < cs80::P_legacyNumParams
             ? juce::String(parameter < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
         raw->setTitle(channelName + juce::String(cs80::paramDef(parameter).name));
         raw->setTooltip(raw->getTitle() + (raw->getToggleState() ? ": ON" : ": OFF"));
@@ -437,13 +437,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::P_subVca, 537, 535, 38, 116, "VCA", greyCap());
         addFader(cs80::chParam(0, cs80::CP_feet), 582, 535, 36, 116, "FEET I", greyCap());
         addFader(cs80::chParam(1, cs80::CP_feet), 620, 535, 36, 116, "FEET II", greyCap());
-        addFader(cs80::P_mix, 1210, 535, 42, 116, "MIX", redCap());
-        addFader(cs80::P_brilliance, 1257, 535, 42, 116, "BRILLIANCE", greenCap());
-        addFader(cs80::P_resonance, 1304, 535, 42, 116, "RESONANCE", redCap());
-        addFader(cs80::P_subAtSpeed, 1351, 535, 42, 116, "AT SPEED", whiteCap());
-        addFader(cs80::P_subAtVco, 1398, 535, 42, 116, "AT VCO", whiteCap());
-        addFader(cs80::P_initBend, 1445, 535, 42, 116, "INIT BEND", whiteCap());
-        addKnob(cs80::P_volume, 1492, 551, 61, 82, "VOLUME");
+        addFader(cs80::P_mix, 1210, 535, 38, 116, "MIX", redCap());
+        addFader(cs80::P_brilliance, 1252, 535, 38, 116, "BRILLIANCE", greenCap());
+        addFader(cs80::P_resonance, 1294, 535, 38, 116, "RESONANCE", redCap());
+        addFader(cs80::P_initBend, 1336, 535, 38, 116, "INIT BEND", whiteCap());
+        addFader(cs80::P_subAtSpeed, 1378, 535, 38, 116, "AT SPEED", whiteCap());
+        addFader(cs80::P_subAtVco, 1420, 535, 38, 116, "AT VCO", whiteCap());
+        addFader(cs80::P_subAtVcf, 1462, 535, 38, 116, "AT VCF", greenCap());
+        addKnob(cs80::P_volume, 1504, 551, 49, 82, "VOLUME");
     }
 
     void buildChannel(int channel, float y)

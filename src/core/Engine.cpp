@@ -170,6 +170,7 @@ void Engine::buildSettings()
     global.subVca = p(P_subVca);
     global.subAtSpeed = p(P_subAtSpeed);
     global.subAtVco = p(P_subAtVco);
+    global.subAtVcf = p(P_subAtVcf);
     global.ringSpeed = p(P_ringSpeed);
     global.ringDepth = p(P_ringDepth);
     global.ringAttack = p(P_ringAttack);
@@ -906,7 +907,10 @@ void Engine::processInternalSample(float& outL, float& outR)
                                    + rs.afterBrill * v.pressure * 2.0f
                                    + v.timbre * 0.8f
                                    + modWheel * global.modWheelVcf * 1.5f
-                                   + subValue * global.subVcf * 1.5f
+                                   // Owner manual p39: pressure adds SUB VCF depth,
+                                   // not a static cutoff offset. The 1.5-octave scale
+                                   // is provisional, not a measured circuit gain.
+                                   + subValue * (global.subVcf + global.subAtVcf * v.pressure) * 1.5f
                                    + lfoFilter;
 
             const float fenv = r.fenv.tick(sr, true);
@@ -940,9 +944,10 @@ void Engine::processInternalSample(float& outL, float& outR)
             const float amp = r.aenv.tick(sr, true);
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
-            const float velocityGain = 0.38f + 0.62f * v.velocity;
+            // Velocity acts through the selected initial-touch destinations.
+            // An unconditional velocity gain made disabled touch controls audible.
             float voiceOut = (filtered * rs.vcfLevel + sine)
-                             * levelCv * amp * chGain * velocityGain * 0.17f;
+                             * levelCv * amp * chGain * 0.17f;
 
             float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan, -1.0f, 1.0f);
             mixL += voiceOut * (0.5f - 0.5f * pan);
@@ -985,13 +990,13 @@ void Engine::processInternalSample(float& outL, float& outR)
     mixL += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
     mixR += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
 
-    // BBD-style stereo chorus/tremolo.
+    // Provisional delay-line chorus/tremolo behavior, not a circuit-calibrated BBD model.
     const auto ch = chorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
                                    global.chorusOn, global.chorusTremolo);
     mixL = ch.l;
     mixR = ch.r;
 
-    // Three modern FX slots, processed in series after the authentic CS-80
+    // Three modern FX slots, processed in series after the provisional CS-80
     // chorus. The type numbers are fixed by the UI: 1 chorus, 2 phaser,
     // 3 tape delay, 4 plate reverb, 5 drive.
     for (int slot = 0; slot < 3; ++slot)

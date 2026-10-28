@@ -124,7 +124,10 @@ enum : int
 {
     P_ch1Start = P_numGlobals,
     P_ch2Start = P_ch1Start + CP_count,
-    P_numParams = P_ch2Start + CP_count
+    P_legacyNumParams = P_ch2Start + CP_count,
+    // Extensions must follow both legacy channel blocks; never shift their IDs.
+    P_subAtVcf = P_legacyNumParams,
+    P_numParams
 };
 
 // Yamaha owner manual, printed p37: 16', 8', 5 1/3', 4', 2 2/3', 2'.
@@ -261,10 +264,18 @@ inline constexpr ParamDef kChannelDefs[] = {
 static_assert(std::size(kGlobalDefs) == P_numGlobals, "global parameter table size mismatch");
 static_assert(std::size(kChannelDefs) == CP_count, "channel parameter table size mismatch");
 
+inline constexpr ParamDef kExtensionDefs[] = {
+    { "sub_at_vcf", "AT VCF", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" }
+};
+static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
+static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);
+
 inline const ParamDef& paramDef(int index) noexcept
 {
     if (index < P_numGlobals)
         return kGlobalDefs[index];
+    if (index >= P_legacyNumParams)
+        return kExtensionDefs[index - P_legacyNumParams];
     return kChannelDefs[(index - P_ch1Start) % CP_count];
 }
 
@@ -272,6 +283,8 @@ inline std::string paramId(int index)
 {
     if (index < P_numGlobals)
         return kGlobalDefs[index].id;
+    if (index >= P_legacyNumParams)
+        return kExtensionDefs[index - P_legacyNumParams].id;
     const int channel = index < P_ch2Start ? 1 : 2;
     const int local = index < P_ch2Start ? index - P_ch1Start : index - P_ch2Start;
     return "ch" + std::to_string(channel) + "_" + kChannelDefs[local].id;
@@ -288,11 +301,8 @@ struct ParamValues
 
     ParamValues()
     {
-        for (int i = 0; i < P_numGlobals; ++i)
-            v[(size_t) i] = kGlobalDefs[i].def;
-        for (int ch = 0; ch < 2; ++ch)
-            for (int i = 0; i < CP_count; ++i)
-                v[(size_t) chParam(ch, i)] = kChannelDefs[i].def;
+        for (int i = 0; i < P_numParams; ++i)
+            v[(size_t) i] = paramDef(i).def;
     }
 
     float& operator[](int index) noexcept { return v[(size_t) index]; }

@@ -2,12 +2,20 @@ name: build
 
 on:
   push:
+    paths-ignore:
+      - 'scripts/inspect_circuit_sources.py'
+      - '.github/workflows/circuit-inspection.yml'
   pull_request:
+    paths-ignore:
+      - 'scripts/inspect_circuit_sources.py'
+      - '.github/workflows/circuit-inspection.yml'
   workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Complete the active validation checkpoint; newer source waits instead of
+  # cancelling cross-platform evidence while research and screenshots proceed.
+  cancel-in-progress: false
 
 jobs:
   linux:
@@ -86,7 +94,7 @@ jobs:
             libasound2t64 libfontconfig1 libfreetype6 \
             libx11-6 libxext6 libxrandr2 libxcursor1 libxinerama1 \
             libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \
-            fonts-dejavu-core xauth xvfb unzip
+            fonts-dejavu-core xauth xvfb unzip gdb
 
       - name: Fetch pluginval ${{ env.PLUGINVAL_VERSION }}
         run: |
@@ -98,10 +106,10 @@ jobs:
           test -x pluginval/pluginval
           ./pluginval/pluginval --version | tee pluginval-version.txt
 
-      # scripts/run-pluginval-linux.sh asserts that pluginval really printed
-      # SUCCESS and retries only the known pluginval 1.0.4 Linux run-loop
-      # teardown crash (post-suite, no failed test), which is a race inside the
-      # validator, not in this plugin. Any failed test fails immediately.
+      # The wrapper accepts only an explicit SUCCESS. At most three full
+      # attempts are allowed for exit139 after a completed test phase with
+      # neither FAILED nor SUCCESS. Eligibility does not prove the whole suite
+      # finished or identify which component caused the crash.
       - name: Validate VST3 headless
         run: |
           set -euo pipefail
@@ -117,6 +125,7 @@ jobs:
             "$PWD/vst3/CS-80 Reference.vst3"
 
       - name: Validate VST3 GUI under Xvfb
+        id: validate_gui
         run: |
           set -euo pipefail
           xvfb-run -a -s "-screen 0 1920x1200x24" \
@@ -128,6 +137,38 @@ jobs:
             --output-dir pluginval-reports \
             --output-filename cs80-gui \
             "$PWD/vst3/CS-80 Reference.vst3"
+
+      # This is a separate diagnostic execution, never a replacement pass.
+      # The original validation step stays failed even if this run cannot
+      # reproduce the crash. --return-child-result and pipe statuses preserve
+      # diagnostic failure rather than turning a signal into success.
+      - name: Diagnose GUI validator failure with gdb
+        if: failure() && steps.validate_gui.outcome == 'failure'
+        run: |
+          set +e
+          set -o pipefail
+          mkdir -p pluginval-diagnostic-reports
+          timeout --signal=TERM --kill-after=10s 240s \
+            xvfb-run -a -s "-screen 0 1920x1200x24" \
+            gdb --batch --return-child-result \
+            -ex "set pagination off" \
+            -ex "set print thread-events off" \
+            -ex "run" \
+            -ex "thread apply all bt 40" \
+            -ex "info sharedlibrary" \
+            -ex "info registers" \
+            --args ./pluginval/pluginval \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir pluginval-diagnostic-reports \
+            --output-filename cs80-gui-gdb \
+            "$PWD/vst3/CS-80 Reference.vst3" 2>&1 | tee pluginval-gui-gdb.log
+          statuses=("${PIPESTATUS[@]}")
+          echo "Diagnostic process exit: ${statuses[0]}; log capture exit: ${statuses[1]}"
+          echo "Original validation remains failed. This rerun is diagnostic evidence only."
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
 
       - name: Report pluginval failure
         if: failure()
@@ -149,6 +190,8 @@ jobs:
             pluginval-headless-attempt*.log
             pluginval-gui.log
             pluginval-gui-attempt*.log
+            pluginval-gui-gdb.log
+            pluginval-diagnostic-reports
             pluginval-version.txt
           if-no-files-found: warn
 

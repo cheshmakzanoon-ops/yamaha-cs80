@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [tkc, tsb1, tsb2]
+        page: [sh, tws, m, panel1]
     steps:
       - uses: actions/checkout@v5
         with:

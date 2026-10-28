@@ -13,6 +13,10 @@ import urllib.request
 from PIL import Image
 
 SOURCES = {
+    "sh": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/07%20-%20SH%20Circuit%20Diagram.jpg",
+    "tws": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/17%20-%20TWS%20Circuit%20Diagram.jpg",
+    "m": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/41%20-%20M%20Circuit%20Diagram.jpg",
+    "panel1": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/62%20-%20Panel%201%20Circuit%20Diagram.jpg",
     "tkc": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/09%20-%20TKC%20Circuit%20Diagram.jpg",
     "tsb1": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/11%20-%20TSB%201%20Circuit%20Diagram.jpg",
     "tsb2": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/13%20-%20TSB%202%20Circuit%20Diagram.jpg",

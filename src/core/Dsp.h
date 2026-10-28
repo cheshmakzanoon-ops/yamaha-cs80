@@ -25,7 +25,7 @@ inline float lerp(float a, float b, float t) noexcept
 
 inline float softClip(float x) noexcept
 {
-    // Gentle OTA/op-amp saturation. Linear for small signals.
+    // Generic soft saturation approximation; not an identified OTA/op-amp transfer.
     return std::tanh(x * 0.85f) / 0.85f;
 }
 
@@ -181,8 +181,8 @@ public:
             o.pulse = blepPulse(phase, pulseWidth, dt) + o.narrow * 0.45f;
         }
 
-        // The waveshaper's sine is not a mathematical sine; a little third
-        // harmonic makes it sit in the mix the way the hardware does.
+        // Provisional sine-shaper approximation. This fixed 3.5% third harmonic
+        // is not derived from an identified circuit or calibrated hardware data.
         const float s = std::sin(kTwoPi * phase);
         o.sine = s + 0.035f * std::sin(3.0f * kTwoPi * phase);
 
@@ -228,7 +228,8 @@ public:
 
     Output process(float x) noexcept
     {
-        // A small amount of input saturation is part of the IG00156's voice.
+        // Provisional pre-filter saturation, not an identified IG00156 nonlinearity.
+        // See docs/IG00156_MODEL_EVIDENCE.md before substituting a circuit model.
         x = softClip(x * 1.1f);
         const float v3 = x - ic2;
         const float v1 = a1 * ic1 + a2 * v3;
@@ -274,8 +275,8 @@ inline float coefficientForTime(float seconds, float sampleRate, float multiplie
     return std::exp(-6.0f * multiplier / (seconds * sampleRate));
 }
 
-// CS-80 style ADSR. The decay and release have a short fast bend before the
-// slower tail; the bend is what makes the envelope feel like the hardware.
+// Provisional bent-envelope approximation. The fast bend and slower tail
+// remain uncalibrated; this shape is not proof of original envelope circuitry.
 class Adsr
 {
 public:

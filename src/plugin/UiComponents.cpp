@@ -66,10 +66,11 @@ juce::Font displayFont(float height, int style = juce::Font::plain)
 juce::String formatParamValue(int parameterIndex, float value)
 {
     const auto& definition = cs80::paramDef(parameterIndex);
-    const int local = parameterIndex >= cs80::P_numGlobals
+    const int local = parameterIndex >= cs80::P_numGlobals && parameterIndex < cs80::P_legacyNumParams
         ? (parameterIndex - cs80::P_ch1Start) % cs80::CP_count
         : -1;
 
+    if (parameterIndex == cs80::P_subAtVcf) return percent(value);
     if (parameterIndex < cs80::P_numGlobals)
     {
         switch (parameterIndex)
@@ -488,9 +489,10 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
     slider.setMouseDragSensitivity(150);
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
     slider.setWantsKeyboardFocus(true);
-    const auto channelName = index >= cs80::P_numGlobals
+    const auto channelName = index >= cs80::P_numGlobals && index < cs80::P_legacyNumParams
         ? juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
     slider.setTitle(channelName + juce::String(cs80::paramDef(index).name));
+    slider.setComponentID(Cs80AudioProcessor::parameterId(index));
     slider.setDescription("Use the arrow keys to adjust this control. Double-click to restore its default.");
     slider.onValueChange = [this] {
         slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));

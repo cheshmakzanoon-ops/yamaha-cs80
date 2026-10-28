@@ -51,7 +51,7 @@ Cs80AudioProcessor::Cs80AudioProcessor()
 juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    auto add = [&layout](int index) {
+    auto add = [&layout](int index, int versionHint = 1) {
         const auto& d = cs80::paramDef(index);
         juce::NormalisableRange<float> range(d.min, d.max, 0.0f, d.skew);
         juce::AudioParameterFloatAttributes attributes;
@@ -59,7 +59,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
             attributes = attributes.withLabel(d.unit);
         const auto id = parameterId(index);
         layout.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID { id, 1 }, juce::String(d.name), range, d.def, attributes));
+            juce::ParameterID { id, versionHint }, juce::String(d.name), range, d.def, attributes));
     };
 
     for (int i = 0; i < cs80::P_numGlobals; ++i)
@@ -97,6 +97,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
                     juce::NormalisableRange<float>(d.min, d.max, 0.0f, d.skew), d.def, attributes));
             }
         }
+    // Core extension index122 is NOT host index122: keep all 228 existing
+    // host indexes stable, and use a later AU version hint to preserve AU order.
+    for (int i = cs80::P_legacyNumParams; i < cs80::P_numParams; ++i)
+        add(i, 3);
     return layout;
 }
 

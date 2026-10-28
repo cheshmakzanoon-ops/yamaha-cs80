@@ -177,14 +177,14 @@ int main(int argc, char** argv)
     }
 
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 228, "228 host parameters");
-    for (int i = 0; i < cs80::P_numParams; ++i)
+          && Cs80AudioProcessor::hostParameterCount == 229, "229 host parameters");
+    for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
               "original host parameter order preserved");
         check(processor.getParameters()[i]->getVersionHint() == 1, "legacy AU version hints preserved");
     }
-    int next = cs80::P_numParams;
+    int next = cs80::P_legacyNumParams;
     for (int channel = 0; channel < 2; ++channel)
     {
         const auto id = Cs80AudioProcessor::hardwareSourceParameterId(channel);
@@ -227,6 +227,271 @@ int main(int argc, char** argv)
             }
             processor.setMemoryValue(bank, local, d.def);
         }
+
+
+    // Literal snapshot of the shipped228 IDs. This must not be generated from
+    // the live definitions, or accidental reordering could make both sides agree.
+    const char* legacyHostIds[] = {
+        "master_tune",
+        "detune",
+        "mix",
+        "brilliance",
+        "resonance",
+        "master_sustain",
+        "volume",
+        "init_bend",
+        "portamento",
+        "glide_mode",
+        "sustain_mode",
+        "key_release",
+        "ribbon",
+        "sub_wave",
+        "sub_speed",
+        "sub_vco",
+        "sub_vcf",
+        "sub_vca",
+        "sub_at_speed",
+        "sub_at_vco",
+        "ring_speed",
+        "ring_depth",
+        "ring_attack",
+        "ring_decay",
+        "ring_amount",
+        "chorus_on",
+        "chorus_mode",
+        "chorus_speed",
+        "chorus_depth",
+        "output_mode",
+        "voice_dispersion",
+        "drift",
+        "analog_noise",
+        "mpe_on",
+        "pitch_bend_range",
+        "mpe_bend_range",
+        "tuning_ref",
+        "modwheel_sub",
+        "modwheel_vcf",
+        "lfo1_rate",
+        "lfo1_depth",
+        "lfo1_dest",
+        "lfo2_rate",
+        "lfo2_depth",
+        "lfo2_dest",
+        "lfo3_rate",
+        "lfo3_depth",
+        "lfo3_dest",
+        "fx1_type",
+        "fx1_mix",
+        "fx2_type",
+        "fx2_mix",
+        "fx3_type",
+        "fx3_mix",
+        "arp_on",
+        "arp_mode",
+        "arp_rate",
+        "arp_octaves",
+        "macro1",
+        "macro2",
+        "macro3",
+        "macro4",
+        "ch1_saw",
+        "ch1_pulse",
+        "ch1_sine",
+        "ch1_noise",
+        "ch1_pw",
+        "ch1_pwm_speed",
+        "ch1_pwm_depth",
+        "ch1_feet",
+        "ch1_hpf_cutoff",
+        "ch1_hpf_res",
+        "ch1_hpf_on",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_lpf_on",
+        "ch1_f_il",
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_vcf_level",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch1_init_level",
+        "ch1_after_brill",
+        "ch1_after_level",
+        "ch1_pan",
+        "ch2_saw",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_noise",
+        "ch2_pw",
+        "ch2_pwm_speed",
+        "ch2_pwm_depth",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_hpf_res",
+        "ch2_hpf_on",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_lpf_on",
+        "ch2_f_il",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "ch2_after_brill",
+        "ch2_after_level",
+        "ch2_pan",
+        "hardware_source_1",
+        "hardware_source_2",
+        "memory_1_saw",
+        "memory_1_pulse",
+        "memory_1_sine",
+        "memory_1_noise",
+        "memory_1_pw",
+        "memory_1_pwm_speed",
+        "memory_1_pwm_depth",
+        "memory_1_hpf_cutoff",
+        "memory_1_hpf_res",
+        "memory_1_lpf_cutoff",
+        "memory_1_lpf_res",
+        "memory_1_f_il",
+        "memory_1_f_al",
+        "memory_1_f_a",
+        "memory_1_f_d",
+        "memory_1_f_r",
+        "memory_1_vcf_level",
+        "memory_1_v_a",
+        "memory_1_v_d",
+        "memory_1_v_s",
+        "memory_1_v_r",
+        "memory_1_v_level",
+        "memory_1_init_brill",
+        "memory_1_init_level",
+        "memory_1_after_brill",
+        "memory_1_after_level",
+        "memory_2_saw",
+        "memory_2_pulse",
+        "memory_2_sine",
+        "memory_2_noise",
+        "memory_2_pw",
+        "memory_2_pwm_speed",
+        "memory_2_pwm_depth",
+        "memory_2_hpf_cutoff",
+        "memory_2_hpf_res",
+        "memory_2_lpf_cutoff",
+        "memory_2_lpf_res",
+        "memory_2_f_il",
+        "memory_2_f_al",
+        "memory_2_f_a",
+        "memory_2_f_d",
+        "memory_2_f_r",
+        "memory_2_vcf_level",
+        "memory_2_v_a",
+        "memory_2_v_d",
+        "memory_2_v_s",
+        "memory_2_v_r",
+        "memory_2_v_level",
+        "memory_2_init_brill",
+        "memory_2_init_level",
+        "memory_2_after_brill",
+        "memory_2_after_level",
+        "memory_3_saw",
+        "memory_3_pulse",
+        "memory_3_sine",
+        "memory_3_noise",
+        "memory_3_pw",
+        "memory_3_pwm_speed",
+        "memory_3_pwm_depth",
+        "memory_3_hpf_cutoff",
+        "memory_3_hpf_res",
+        "memory_3_lpf_cutoff",
+        "memory_3_lpf_res",
+        "memory_3_f_il",
+        "memory_3_f_al",
+        "memory_3_f_a",
+        "memory_3_f_d",
+        "memory_3_f_r",
+        "memory_3_vcf_level",
+        "memory_3_v_a",
+        "memory_3_v_d",
+        "memory_3_v_s",
+        "memory_3_v_r",
+        "memory_3_v_level",
+        "memory_3_init_brill",
+        "memory_3_init_level",
+        "memory_3_after_brill",
+        "memory_3_after_level",
+        "memory_4_saw",
+        "memory_4_pulse",
+        "memory_4_sine",
+        "memory_4_noise",
+        "memory_4_pw",
+        "memory_4_pwm_speed",
+        "memory_4_pwm_depth",
+        "memory_4_hpf_cutoff",
+        "memory_4_hpf_res",
+        "memory_4_lpf_cutoff",
+        "memory_4_lpf_res",
+        "memory_4_f_il",
+        "memory_4_f_al",
+        "memory_4_f_a",
+        "memory_4_f_d",
+        "memory_4_f_r",
+        "memory_4_vcf_level",
+        "memory_4_v_a",
+        "memory_4_v_d",
+        "memory_4_v_s",
+        "memory_4_v_r",
+        "memory_4_v_level",
+        "memory_4_init_brill",
+        "memory_4_init_level",
+        "memory_4_after_brill",
+        "memory_4_after_level"
+    };
+    for (int i=0; i<228; ++i)
+        check(processor.getParameters()[i] == processor.getAPVTS().getParameter(legacyHostIds[i]),
+              "all previously shipped host parameter IDs/order preserved");
+    auto* atVcf = processor.getAPVTS().getParameter("sub_at_vcf");
+    check(next == 228 && atVcf != nullptr && processor.getParameters()[next] == atVcf,
+          "AT VCF appended after all programmer parameters");
+    check(atVcf != nullptr && atVcf->getVersionHint() == 3, "AT VCF AU hint follows programmer hint2");
+    if (atVcf)
+    {
+        check(atVcf->getDefaultValue() == 0.0f, "AT VCF defaults off");
+        atVcf->setValueNotifyingHost(.65f);
+        juce::AudioBuffer<float> atAudio(2,64);
+        juce::MidiBuffer atMidi;
+        processor.processBlock(atAudio,atMidi);
+        check(std::abs(processor.getEngine().getParams()[cs80::P_subAtVcf]-.65f)<.00001f,
+              "AT VCF host automation reaches core without an editor");
+        juce::MemoryBlock savedAt;
+        processor.getStateInformation(savedAt);
+        Cs80AudioProcessor restoredAt;
+        restoredAt.setStateInformation(savedAt.getData(), (int)savedAt.getSize());
+        check(std::abs(restoredAt.getParamValue(cs80::P_subAtVcf)-.65f)<.00001f,
+              "AT VCF state round trip");
+        auto oldState=processor.getAPVTS().copyState();
+        oldState.removeChild(oldState.getChildWithProperty("id","sub_at_vcf"),nullptr);
+        auto xml=oldState.createXml();
+        const auto text=xml->toString();
+        restoredAt.setStateInformation(text.toRawUTF8(),text.getNumBytesAsUTF8());
+        check(restoredAt.getParamValue(cs80::P_subAtVcf)==0.0f,
+              "old state defaults missing AT VCF rather than retaining live value");
+        atVcf->setValueNotifyingHost(0.0f);
+    }
 
     processor.loadFactoryPreset(22);
     check(processor.getPresetName() == "Replicant Brass", "factory preset load");
@@ -462,6 +727,24 @@ int main(int argc, char** argv)
     Cs80AudioProcessorEditor editor(processor);
     editor.setSize(1600, 1000);
     editor.setVisible(true);
+    if (auto* atSlider=dynamic_cast<juce::Slider*>(findControl(editor,"sub_at_vcf")))
+    {
+        check(atSlider->getTitle()=="AT VCF", "global extension is not mislabeled Channel II");
+        auto* p=processor.getAPVTS().getParameter("sub_at_vcf");
+        p->setValueNotifyingHost(.4f);
+        flushGui(30);
+        check(std::abs(atSlider->getValue()-.4)<.00001, "AT VCF host automation updates visible slider");
+        GestureProbe probe;
+        p->addListener(&probe);
+        const double before=atSlider->getValue();
+        atSlider->keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        check(atSlider->getValue()>before && probe.begins==1 && probe.ends==1
+              && probe.unbracketedChanges==0 && probe.malformedGestures==0,
+              "AT VCF actual keyboard edit sends one balanced host gesture");
+        p->removeListener(&probe);
+        p->setValueNotifyingHost(0.0f);
+    }
+    else check(false, "AT VCF main-panel slider exists");
     flushGui(150);
 
     auto save = [&](const juce::String& name) {
