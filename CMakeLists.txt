@@ -33,6 +33,18 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
+    find_package(Threads REQUIRED)
+    add_executable(cs80_keyboard_event_queue_tests tests/KeyboardEventQueueTests.cpp)
+    target_include_directories(cs80_keyboard_event_queue_tests PRIVATE src)
+    target_link_libraries(cs80_keyboard_event_queue_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_keyboard_event_queue_tests COMMAND cs80_keyboard_event_queue_tests)
+    set_tests_properties(cs80_keyboard_event_queue_tests PROPERTIES TIMEOUT 120)
+    if (NOT MSVC)
+        add_test(NAME cs80_keyboard_epoch_interleaving_tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_keyboard_epoch_interleaving.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_keyboard_epoch_interleaving_tests PROPERTIES TIMEOUT 180)
+    endif()
     add_executable(cs80_parity_mode_tests tests/ParityModeTests.cpp)
     target_link_libraries(cs80_parity_mode_tests PRIVATE cs80_core)
     add_test(NAME cs80_parity_mode_tests COMMAND cs80_parity_mode_tests)

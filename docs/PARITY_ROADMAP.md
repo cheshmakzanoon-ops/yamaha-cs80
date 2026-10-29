@@ -160,6 +160,8 @@ Replace the random trims with measured distributions (and correlations) of compo
 
 ### W12. Numerical and platform quality (keep green throughout)
 
+The [keyboard handoff](KEYBOARD_AUDIO_HANDOFF.md) removes the identified shared MidiKeyboardState lock and host-buffer injection from the callback using a bounded queue and explicit lifecycle/overflow policy. This is a scoped boundary correction, not proof of whole-plugin allocation freedom, hard realtime or race freedom. The [schema correction](STATE_SCHEMA_VALIDATION.md) removes direct live-state type reads during competing restores.
+
 Oversampling and aliasing at higher rates, CPU cost of the nodal models, denormals and determinism, sanitizer and ThreadSanitizer coverage of host and program metadata paths, AAX (SDK not redistributable), and DAW exercise before release.
 
 ---

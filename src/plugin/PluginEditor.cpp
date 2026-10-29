@@ -35,6 +35,7 @@ public:
 
     // Pointer gesture standing in for the original per-key pressure sensor.
     std::function<void(int, float)> onKeyPressure;
+    std::function<bool(int)> hostKeyDown;
 
     bool mouseDownOnKey(int note, const juce::MouseEvent& e) override
     {
@@ -54,9 +55,10 @@ public:
         gesture.end();
     }
 
-    void drawWhiteNote(int, juce::Graphics& g, juce::Rectangle<float> area,
+    void drawWhiteNote(int note, juce::Graphics& g, juce::Rectangle<float> area,
                        bool down, bool over, juce::Colour, juce::Colour) override
     {
+        down = down || (hostKeyDown && hostKeyDown(note));
         auto key = area.reduced(0.6f, 0.0f);
         const float front = key.getHeight() * 0.09f;
         const auto colour = down ? juce::Colour(0xffd4bd82) : juce::Colour(0xffece7d7);
@@ -72,9 +74,10 @@ public:
         if (over && !down) { g.setColour(juce::Colour(0xfff3d691).withAlpha(0.17f)); g.fillRect(area); }
     }
 
-    void drawBlackNote(int, juce::Graphics& g, juce::Rectangle<float> area,
+    void drawBlackNote(int note, juce::Graphics& g, juce::Rectangle<float> area,
                        bool down, bool over, juce::Colour) override
     {
+        down = down || (hostKeyDown && hostKeyDown(note));
         g.setColour(juce::Colour(0xff010201)); g.fillRect(area);
         auto cap = area.reduced(area.getWidth() * 0.13f, 0);
         cap.removeFromBottom(area.getHeight() * 0.13f);
@@ -651,6 +654,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void buildKeyboard()
     {
+        processor.serviceKeyboardUI();
+        keyboard.hostKeyDown = [this](int note) { return processor.isHostKeyDown(note); };
         keyboard.setAvailableRange(24, 84);
         keyboard.setLowestVisibleKey(24);
         keyboard.setScrollButtonsVisible(false);
@@ -803,6 +808,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void tick()
     {
+        processor.serviceKeyboardUI();
+        keyboard.repaint();
         syncSubMode();
         syncPresetDisplay();
         syncToneMarks();

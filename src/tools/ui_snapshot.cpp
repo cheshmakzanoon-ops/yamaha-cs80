@@ -500,6 +500,205 @@ void testKeyPressureGesture(bool isolated = false)
           "pressure is polyphonic: each key keeps its own value");
 }
 
+// Sequential host/message-thread handoff regressions. These are behavioral tests,
+// not an allocator instrumentation or thread-sanitizer result.
+void testKeyboardHandoffHost(bool isolated)
+{
+    Cs80AudioProcessor host;
+    host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+    juce::AudioBuffer<float> audio(2, 32);
+    auto process = [&](juce::MidiBuffer& midi) { host.processBlock(audio, midi); };
+    auto tick = [&] { juce::MidiBuffer midi; process(midi); };
+    auto held = [&](int note, int channel = 1)
+    {
+        int count = 0;
+        for (int v = 0; v < 8; ++v)
+        {
+            const auto info = host.getEngine().getVoiceInfo(v);
+            if (info.active && info.held && info.note == note && info.channel == channel) ++count;
+        }
+        return count;
+    };
+    auto reset = [&]
+    {
+        host.releaseResources();
+        host.prepareToPlay(48000.0, 32);
+        host.serviceKeyboardUI();
+        tick(); // Apply isolation before any test strike; that transition resets voices.
+    };
+    auto hostNote = [&](int note, bool on, int channel = 1)
+    {
+        juce::MidiBuffer midi;
+        midi.addEvent(on ? juce::MidiMessage::noteOn(channel, note, (juce::uint8) 100)
+                         : juce::MidiMessage::noteOff(channel, note), 0);
+        process(midi);
+    };
+    reset();
+    auto& keyboard = host.getKeyboardState(); // All uses here are non-audio producers.
+    keyboard.noteOn(1, 60, 0.8f);
+    check(held(60) == 0, "UI strike does not mutate the engine before processBlock");
+    host.setKeyPressureFromUI(60, 0.65f);
+    tick();
+    check(held(60) == 1 && !host.isHostKeyDown(60), "queued UI strike reaches DSP without host feedback");
+    for (int v = 0; v < 8; ++v)
+    {
+        const auto info = host.getEngine().getVoiceInfo(v);
+        if (info.active && info.held && info.note == 60)
+        {
+            check(std::abs(info.pressure - 0.65f) < 1e-6f, "UI pressure is applied after queued UI note-on");
+            check(std::abs(info.velocity - 102.0f / 127.0f) < 1e-6f,
+                  "non-grid UI velocity preserves JUCE seven-bit rounding");
+        }
+    }
+    host.serviceKeyboardUI();
+    tick();
+    check(held(60) == 1, "draining JUCE indirect MIDI does not replay a queued strike");
+    host.loadFactoryPreset(0);
+    tick();
+    check(held(60) == 1, "ordinary factory preset restore retains an accepted UI-held note");
+    keyboard.noteOff(1, 60, 0.0f);
+    tick();
+    check(held(60) == 0, "queued UI release reaches DSP");
+    {
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer midi;
+        keyboard.noteOn(1, 59, 0.8f);
+        host.processBlock(empty, midi);
+        check(held(59) == 1, "zero-frame callback consumes queued UI strike");
+        keyboard.noteOff(1, 59, 0.0f);
+        host.processBlock(empty, midi);
+        check(held(59) == 0, "zero-frame callback consumes queued UI release");
+    }
+
+    for (const float zeroVelocity : { 0.0f, 0.001f })
+    {
+        reset();
+        keyboard.noteOn(1, 58, 0.8f);
+        tick();
+        check(held(58) == 1, "UI velocity-zero fixture starts with a held note");
+        // Both values encode MIDI velocity byte zero; the old JUCE indirect
+        // path interpreted them as note-offs, not silent held note-ons.
+        keyboard.noteOn(1, 58, zeroVelocity);
+        tick();
+        check(held(58) == 0, "zero or sub-half-byte UI velocity releases the tracked UI note");
+    }
+
+    reset();
+    // A single UI event maps to sample zero independently of wall-clock timing.
+    // Host off must precede UI on at that same sample, leaving the new key held.
+    keyboard.noteOn(1, 62, 0.8f);
+    hostNote(62, false);
+    check(held(62) == 1, "host MIDI precedes queued UI MIDI at equal sample positions");
+
+    reset();
+    keyboard.noteOn(1, 67, 0.8f);
+    juce::MidiBuffer mixed;
+    unsigned char sysEx[64] = {};
+    sysEx[0] = 0xf0;
+    sysEx[63] = 0xf7;
+    mixed.addEvent(juce::MidiMessage::noteOn(1, 64, (juce::uint8) 100), 0);
+    mixed.addEvent(sysEx, 64, 7); // Prebuilt before processing, not inside callback.
+    mixed.addEvent(juce::MidiMessage::noteOff(1, 64), 19);
+    auto serialise = [](const juce::MidiBuffer& midi)
+    {
+        std::vector<int> result;
+        for (const auto event : midi)
+        {
+            result.push_back(event.samplePosition);
+            result.push_back(event.numBytes);
+            for (int i = 0; i < event.numBytes; ++i) result.push_back(event.data[i]);
+        }
+        return result;
+    };
+    const auto original = serialise(mixed);
+    process(mixed);
+    check(serialise(mixed) == original, "processing preserves host MIDI bytes, event order and timestamps");
+    check(held(64) == 0 && held(67) == 1, "64-byte SysEx does not interfere with supported host or UI notes");
+    check(!host.isHostKeyDown(64) && !keyboard.isNoteOn(1, 64), "host release is mirrored without writing UI state");
+
+    reset();
+    hostNote(69, true, 2);
+    hostNote(69, true, 3);
+    check(host.isHostKeyDown(69) && !keyboard.isNoteOn(2, 69), "host visualization is independent of UI keyboard state");
+    hostNote(69, false, 2);
+    check(host.isHostKeyDown(69), "host visual mask retains another channel's held key");
+    // Actual editor reopen exercises its maintenance without injecting host notes.
+    for (int reopen = 0; reopen < 2; ++reopen)
+    {
+        std::unique_ptr<juce::AudioProcessorEditor> editor(host.createEditor());
+        host.serviceKeyboardUI();
+    }
+    tick();
+    check(held(69, 3) == 1 && held(69, 1) == 0 && !keyboard.isNoteOn(3, 69),
+          "editor reopen preserves host-held notes without UI feedback");
+    hostNote(69, false, 3);
+    check(!host.isHostKeyDown(69), "last host channel release clears visual mask");
+    check(!host.isHostKeyDown(-1) && !host.isHostKeyDown(128), "host visual query rejects invalid notes");
+
+    reset();
+    keyboard.noteOn(1, 60, 0.8f);
+    tick();
+    keyboard.noteOn(1, 63, 0.8f); // Queued but not consumed in the old epoch.
+    host.releaseResources();
+    host.prepareToPlay(48000.0, 32);
+    keyboard.noteOn(1, 61, 0.8f);
+    tick();
+    check(held(60) == 0 && held(61) == 0 && held(63) == 0, "lifecycle reset discards old events and rejects UI before acknowledgment");
+    host.serviceKeyboardUI();
+    check(!keyboard.isNoteOn(1, 60) && !keyboard.isNoteOn(1, 61), "message-thread acknowledgment clears stale physical UI state");
+    keyboard.noteOn(1, 61, 0.8f);
+    tick();
+    check(held(61) == 1, "fresh UI strike is accepted after lifecycle acknowledgment");
+
+    reset();
+    keyboard.noteOn(1, 60, 0.8f);
+    tick();
+    hostNote(72, true); // Same channel, different pitch: overflow must not panic it.
+    for (int i = 0; i < 257; ++i) keyboard.noteOn(1, 61, 0.8f);
+    tick();
+    check(held(60) == 0 && held(61) == 0, "UI overflow releases tracked UI notes and discards queued strikes");
+    check(held(72) == 1 && host.isHostKeyDown(72), "UI overflow does not send global channel panic or clear host visuals");
+    keyboard.noteOn(1, 62, 0.8f);
+    tick();
+    check(held(62) == 0, "overflow rejects new UI input until message-thread acknowledgment");
+    host.serviceKeyboardUI();
+    keyboard.noteOn(1, 62, 0.8f);
+    tick();
+    check(held(62) == 1 && held(72) == 1, "overflow acknowledgment restores UI input while preserving unrelated host note");
+
+    // Engine identifies notes by channel/pitch, not source. Simultaneous host/UI
+    // collisions are deliberately NOT promised lossless ownership or recovery.
+    // Once host off/panic clears UI tracking, however, a delayed old UI off must
+    // not release a subsequent host strike of that same channel/pitch.
+    for (int stopKind = 0; stopKind < 3; ++stopKind)
+    {
+        reset();
+        keyboard.noteOn(1, 65, 0.8f);
+        tick();
+        juce::MidiBuffer stop;
+        stop.addEvent(stopKind == 0 ? juce::MidiMessage::noteOff(1, 65)
+                                   : juce::MidiMessage::controllerEvent(1, stopKind == 1 ? 120 : 123, 0), 0);
+        process(stop);
+        hostNote(65, true);
+        keyboard.noteOff(1, 65, 0.0f);
+        tick();
+        check(held(65) == 1 && host.isHostKeyDown(65), "delayed old UI off cannot kill host note after host off or panic");
+    }
+
+    reset();
+    keyboard.noteOn(1, 66, 0.8f);
+    tick();
+    check(held(66) == 1, "parity transition fixture starts with an accepted UI-held note");
+    host.setParamValue(cs80::P_parityMode, isolated ? 0.0f : 1.0f);
+    tick();
+    check(held(66) == 0, "parity transition resets the previously sounding UI voice");
+    hostNote(66, true);
+    keyboard.noteOff(1, 66, 0.0f);
+    tick();
+    check(held(66) == 1 && host.isHostKeyDown(66),
+          "delayed old UI off cannot kill a new host note after parity transition");
+}
+
 // Isolation is host/session policy: it survives presets, but missing or malformed
 // serialized values cannot inherit an already-enabled live instance.
 void testParityIsolationHost()
@@ -972,6 +1171,8 @@ int main(int argc, char** argv)
     testParityIsolationHost();
     testKeyPressureGesture();
     testKeyPressureGesture(true);
+    testKeyboardHandoffHost(false);
+    testKeyboardHandoffHost(true);
     testExpressionPersistence();
     testLiveEnvelopeTimingHost();
 

@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/core/**'
       - 'src/reference/**'
+      - 'src/plugin/KeyboardEventQueue.h'
       - 'tests/**'
       - 'scripts/*pluginval*.sh'
       - 'src/tools/dsp_probe.cpp'

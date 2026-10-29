@@ -8,4 +8,4 @@ A single immutable `CS80_PARAMS` Identifier now supplies both APVTS construction
 
 Host smoke tests exercise valid and wrong schemas through both restore paths, 64 host restores alongside 64 main-thread user-preset loads, and quiescent recovery. The test joins its worker before destroying fixtures and checks complete metadata/parameter pairs only after competing writers stop. It is functional stress, not proof of deterministic overlap, transactional restore or ThreadSanitizer cleanliness. JUCE compilation and execution were unavailable in the local core-only environment and must be checked in CI.
 
-The separately audited audio/UI keyboard handoff is not fixed by this change. It still uses JUCE's shared keyboard-state lock and owning MIDI message copies. A bounded handoff requires separate ordering, overflow, lifecycle and visual-state tests; this schema fix makes no realtime-allocation claim.
+The separately audited audio/UI keyboard handoff is addressed by a later [bounded handoff](KEYBOARD_AUDIO_HANDOFF.md), with its own ordering, overflow, lifecycle and visual-state tests. This schema fix itself makes no realtime-allocation claim.

@@ -3,6 +3,7 @@
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
 #include "core/Params.h"
+#include "KeyboardEventQueue.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -16,11 +17,11 @@
 
 class Cs80AudioProcessorEditor;
 
-class Cs80AudioProcessor : public juce::AudioProcessor
+class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener
 {
 public:
     Cs80AudioProcessor();
-    ~Cs80AudioProcessor() override = default;
+    ~Cs80AudioProcessor() override;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -50,7 +51,15 @@ public:
     juce::AudioProcessorValueTreeState& getAPVTS() noexcept { return apvts; }
     const juce::AudioProcessorValueTreeState& getAPVTS() const noexcept { return apvts; }
     cs80::Engine& getEngine() noexcept { return engine; }
+    // Non-audio producers only. Never feed host MIDI into this state.
     juce::MidiKeyboardState& getKeyboardState() noexcept { return keyboardState; }
+    // Message-thread maintenance; clears lifecycle epochs and discards JUCE indirect MIDI.
+    void serviceKeyboardUI();
+    bool isHostKeyDown(int note) const noexcept
+    {
+        return note >= 0 && note < 128
+            && hostKeyMasks[(size_t) note].load(std::memory_order_relaxed) != 0;
+    }
 
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
@@ -123,12 +132,20 @@ private:
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
     void resetHardwareSources() noexcept;
     void handleMidi(const juce::MidiMessage& message);
+    void handleNoteOn(juce::MidiKeyboardState*, int channel, int note, float velocity) override;
+    void handleNoteOff(juce::MidiKeyboardState*, int channel, int note, float velocity) override;
+    void resetKeyboardHandoff() noexcept;
+    void observeHostMidi(const juce::MidiMessage& message) noexcept;
     void applyValues(const cs80::ParamValues& values);
     juce::File userPresetDirectory() const;
 
     cs80::Engine engine;
     juce::AudioProcessorValueTreeState apvts;
     juce::MidiKeyboardState keyboardState;
+    juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
+    cs80::KeyboardEventQueue<> keyboardEvents;
+    std::array<unsigned, 128> uiHeldMasks {}; // Audio-owned source recovery tracking.
+    std::array<std::atomic<unsigned>, 128> hostKeyMasks {};
     cs80::ParamValues cached;
     std::array<std::atomic<float>*, 2> hardwareSources {};
     std::array<std::array<std::atomic<float>*, cs80::CP_count>, 4> hardwareMemories {};

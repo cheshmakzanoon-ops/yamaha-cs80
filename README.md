@@ -52,6 +52,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Check | Count / scope |
 | --- | --- |
 | Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
+| Keyboard handoff | Bounded non-audio-producer/audio-consumer queue, epoch/overflow regressions and host integration tests; not a whole-plugin hard-realtime claim |
 | Live envelope timing | 91,672 checks of isolation-only A/D/R refresh without retrigger; level-target transitions remain unresolved |
 | Active-tail continuity | 49,584 checks of opt-in isolation phase/filter-state retention; no full idle-clock claim |
 | Parity isolation / harness | 121 core isolation checks, 22 comparison-harness tests and 13 candidate-export tests; no hardware evidence |
@@ -215,6 +216,7 @@ docs/                           evidence ledgers and audits (index below)
 | [PRA_WAH_REFERENCE_DESIGN.md](docs/PRA_WAH_REFERENCE_DESIGN.md) | Conditional offline ideal-op-amp wah network, explicit optical/loading boundaries; not calibrated WI-to-WO audio |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |
+| [KEYBOARD_AUDIO_HANDOFF.md](docs/KEYBOARD_AUDIO_HANDOFF.md) | Bounded UI note handoff, host visualization, overflow/lifecycle policy and limits |
 | [STATE_SCHEMA_VALIDATION.md](docs/STATE_SCHEMA_VALIDATION.md) | Immutable schema validation and competing-restore regression scope |
 | [ENVELOPE_TARGET_TRANSITION_REVIEW.md](docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md) | Source-located capacitor/target feedback paths and missing live-target transition laws |
 | [LIVE_ENVELOPE_TIMING.md](docs/LIVE_ENVELOPE_TIMING.md) | Isolation-only live attack/decay/release timing, state continuity and deferred level-target behavior |
