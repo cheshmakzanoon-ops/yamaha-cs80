@@ -131,6 +131,8 @@ The model still maps normalized panel positions to behavior. The original is a n
 
 ### W8. Output stage, supply, headphone
 
+The [output source review and conditional AC reference](OUTPUT_LEVEL_SOURCE_REVIEW.md) now separates the three HIGH/LOW tap selectors from the upstream headphone path. It solves only an explicit passive fixture with supplied disputed resistor values and loads. Source discrepancies and active-stage/load calibration remain unresolved; the production0.1 LOW scalar is not replaced.
+
 HIGH/LOW levels (currently an arbitrary -20 dB), output coupling poles and headroom (currently a 10 Hz DC block and `softClip`), left/right/general routing, headphone amplifier, noise. Rail/ripple/bias effects only as far as they are audible and only with evidence; never imply software reproduces mains safety.
 
 ### W9. Presets, programmer and memories (document-derivable until the final comparison)
