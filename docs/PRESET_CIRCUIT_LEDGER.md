@@ -34,7 +34,7 @@ BA has a labeled **+10.6 V supply rail**, distinct from the TS selector logic’
 
 The matrix schematic does not assign individual R-number designators. Use **board/column/output** as the reproducible locator; for example, **T51/A/7** identifies String 1’s HPF branch resistor. Do not invent resistor reference numbers.
 
-## Verified sample transcription
+## Original 66-entry sample transcription
 
 Values are in **kΩ**, except where explicitly marked Ω.
 
@@ -70,6 +70,37 @@ Only this source-data entry and its conditional regression fixture are corrected
 no production audio or provisional preset parameter changes.
 See [native review](PRESET_NATIVE_MATRIX_REVIEW.md) for crop hashes and remaining
 unverified/revision-marked entries.
+
+### Independently reviewed source-domain extension
+
+Native inspection and an independent second reader confirmed84 additional
+unmarked cells for the same six columns, giving **150 classified /6 unknown**
+among their156 tone/output addresses. See the full supplemental table and
+source/crop hashes in [native matrix review](PRESET_NATIVE_MATRIX_REVIEW.md).
+Across all22 original tones ×26 outputs,150 addresses are classified and422
+remain unresolved. These counts measure transcription coverage, not sonic fidelity.
+
+Six revision-marked cells deliberately remain `unknown` in the implementation:
+T51/A/20, T53/A/20, T53/C/20 (legible1.2K but unresolved revision applicability),
+and T51/A/25, T51/C/25, T53/A/25 (overdrawn/altered components).
+T52/T54 and all other tone columns remain untranscribed.
+
+The inspected T51/T53 waveform rows4/5 have **no drawn local10k shunt**.
+All other inspected output rows have their one local10k shunt recorded explicitly.
+`findLocalShunt` reports unknown for unrepresented addresses; it does not infer
+companion-board shunts or receiving-IC impedance.
+
+Use `solveMatrixBus` for a source-table address. It returns unknown for the six
+excluded cells and `unresolvedLoading` for a no-shunt switch row unless a positive
+finite ground load is explicitly supplied. With that load it does not add10k.
+An open branch is only zero under the declared grounded-load/no-alternate-source
+assumptions. No-shunt direct branches also require explicit loading as a
+conservative interface gate. The generic `solveBus` is retained only as the
+explicit illustrative one10k-divider helper.
+
+This extension changes no production audio or factory parameter values. It does
+not authenticate the six sample sounds: marked cells, receiver loading, source
+impedance, selection routing and IC conversion still block that claim.
 
 ### Output-number map
 

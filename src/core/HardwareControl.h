@@ -65,29 +65,49 @@ inline constexpr std::array<Column, 6> verifiedColumns {{
     { 53, 'D', "Brass 3", t53Source }
 }};
 
+// Metadata describes the drawn local shunt only, not total receiver loading.
+enum class LocalShunt { unknown, none, tenK };
+
 struct OutputRow
 {
     int output;
     std::string_view control;
     std::array<Branch, 6> branches; // verifiedColumns order
+    LocalShunt shunt = LocalShunt::unknown;
 };
 
-inline constexpr std::array<OutputRow, 11> verifiedOutputs {{
-    { 7, "HPF", { kiloOhms(6.8), openBranch, kiloOhms(51), kiloOhms(6.2), openBranch, kiloOhms(27) } },
-    { 8, "RESH", { kiloOhms(5.6), directBranch, kiloOhms(15), directBranch, directBranch, kiloOhms(18) } },
-    { 9, "LPF", { kiloOhms(1), kiloOhms(5.1), kiloOhms(7.5), ohms(750), kiloOhms(4.3), kiloOhms(13) } },
-    { 10, "RESL", { directBranch, kiloOhms(6.8), kiloOhms(30), directBranch, kiloOhms(3.6), kiloOhms(15) } },
-    { 11, "IL", { kiloOhms(16), kiloOhms(43), kiloOhms(9.1), openBranch, kiloOhms(9.1), kiloOhms(27) } },
-    { 12, "AL", { kiloOhms(3.6), kiloOhms(13), kiloOhms(130), openBranch, kiloOhms(20), kiloOhms(1.6) } },
-    { 13, "VCF attack", { kiloOhms(30), kiloOhms(62), kiloOhms(18), directBranch, kiloOhms(120), kiloOhms(15) } },
-    { 14, "VCF decay", { kiloOhms(12), kiloOhms(51), kiloOhms(51), directBranch, kiloOhms(13), kiloOhms(12) } },
-    { 15, "VCF release", { kiloOhms(1.2), directBranch, kiloOhms(3.6), directBranch, directBranch, kiloOhms(3.9) } },
-    { 18, "VCA attack", { kiloOhms(62), kiloOhms(8.2), kiloOhms(22), kiloOhms(2.2), kiloOhms(9.1), kiloOhms(8.2) } },
-    { 19, "VCA decay", { kiloOhms(82), kiloOhms(39), openBranch, kiloOhms(47), kiloOhms(36), kiloOhms(13) } }
+inline constexpr std::array<OutputRow, 26> verifiedOutputs {{
+    { 1, "Speed", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
+    { 2, "PWM", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
+    { 3, "PW", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
+    { 4, "Square switch", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::none },
+    { 5, "Saw switch", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::none },
+    { 6, "Noise", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
+    { 7, "HPF", { kiloOhms(6.8), openBranch, kiloOhms(51), kiloOhms(6.2), openBranch, kiloOhms(27) }, LocalShunt::tenK },
+    { 8, "RESH", { kiloOhms(5.6), directBranch, kiloOhms(15), directBranch, directBranch, kiloOhms(18) }, LocalShunt::tenK },
+    { 9, "LPF", { kiloOhms(1), kiloOhms(5.1), kiloOhms(7.5), ohms(750), kiloOhms(4.3), kiloOhms(13) }, LocalShunt::tenK },
+    { 10, "RESL", { directBranch, kiloOhms(6.8), kiloOhms(30), directBranch, kiloOhms(3.6), kiloOhms(15) }, LocalShunt::tenK },
+    { 11, "IL", { kiloOhms(16), kiloOhms(43), kiloOhms(9.1), openBranch, kiloOhms(9.1), kiloOhms(27) }, LocalShunt::tenK },
+    { 12, "AL", { kiloOhms(3.6), kiloOhms(13), kiloOhms(130), openBranch, kiloOhms(20), kiloOhms(1.6) }, LocalShunt::tenK },
+    { 13, "VCF attack", { kiloOhms(30), kiloOhms(62), kiloOhms(18), directBranch, kiloOhms(120), kiloOhms(15) }, LocalShunt::tenK },
+    { 14, "VCF decay", { kiloOhms(12), kiloOhms(51), kiloOhms(51), directBranch, kiloOhms(13), kiloOhms(12) }, LocalShunt::tenK },
+    { 15, "VCF release", { kiloOhms(1.2), directBranch, kiloOhms(3.6), directBranch, directBranch, kiloOhms(3.9) }, LocalShunt::tenK },
+    { 16, "VCF level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::tenK },
+    { 17, "Sine", { kiloOhms(220), kiloOhms(220), openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
+    { 18, "VCA attack", { kiloOhms(62), kiloOhms(8.2), kiloOhms(22), kiloOhms(2.2), kiloOhms(9.1), kiloOhms(8.2) }, LocalShunt::tenK },
+    { 19, "VCA decay", { kiloOhms(82), kiloOhms(39), openBranch, kiloOhms(47), kiloOhms(36), kiloOhms(13) }, LocalShunt::tenK },
+    // Six marked revision cells remain unknown despite some legible values.
+    { 20, "VCA sustain", { unknownBranch, kiloOhms(6.2), kiloOhms(9.1), unknownBranch, unknownBranch, kiloOhms(11) }, LocalShunt::tenK },
+    { 21, "VCA release", { kiloOhms(1.3), directBranch, kiloOhms(3.9), kiloOhms(4.7), directBranch, kiloOhms(5.1) }, LocalShunt::tenK },
+    { 22, "VCA level", { directBranch, directBranch, directBranch, directBranch, directBranch, kiloOhms(1.8) }, LocalShunt::tenK },
+    { 23, "Initial brilliance", { kiloOhms(12), kiloOhms(18), kiloOhms(62), kiloOhms(22), kiloOhms(22), kiloOhms(22) }, LocalShunt::tenK },
+    { 24, "Initial level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::tenK },
+    { 25, "After brilliance", { unknownBranch, unknownBranch, kiloOhms(62), unknownBranch, kiloOhms(10), kiloOhms(10) }, LocalShunt::tenK },
+    { 26, "After level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::tenK }
 }};
 
 // No interpolation, invented component designators, or assumed zero for missing
-// rows/columns. T52/T54 and all untranscribed outputs remain unknown.
+// cells. T52/T54, other columns and six revision-marked cells remain unknown.
 constexpr Branch findBranch(int board, char column, int output) noexcept
 {
     for (std::size_t i = 0; i < verifiedColumns.size(); ++i)
@@ -96,6 +116,17 @@ constexpr Branch findBranch(int board, char column, int output) noexcept
                 if (row.output == output)
                     return row.branches[i];
     return unknownBranch;
+}
+
+// Known columns only: do not infer companion-board or missing-column topology.
+constexpr LocalShunt findLocalShunt(int board, char column, int output) noexcept
+{
+    for (const auto& c : verifiedColumns)
+        if (c.board == board && c.column == column)
+            for (const auto& row : verifiedOutputs)
+                if (row.output == output)
+                    return row.shunt;
+    return LocalShunt::unknown;
 }
 
 inline constexpr double busShuntOhms = 10000.0;
@@ -107,7 +138,7 @@ struct BusConditions
     std::optional<double> groundLoadOhms = std::nullopt;
 };
 
-enum class SolveStatus { solved, unknownBranch, invalidInput };
+enum class SolveStatus { solved, unknownBranch, invalidInput, unresolvedLoading };
 
 struct BusResult
 {
@@ -115,6 +146,8 @@ struct BusResult
     std::optional<double> volts; // Unresolved/invalid results have no voltage.
 };
 
+// GENERIC ILLUSTRATIVE HELPER, not matrix-aware: explicitly assumes 10k.
+// Use solveMatrixBus for source-table addresses (waveform rows have no shunt).
 // Deliberately narrow model:
 // - one selected ideal voltage source and one constant-drop isolation diode;
 // - ONE 10k shunt to E, not duplicate shunts from companion boards;
@@ -167,5 +200,34 @@ inline BusResult solveBus(Branch branch, const BusConditions& conditions) noexce
         shunt = load / (1.0 + load / busShuntOhms);
     }
     return { SolveStatus::solved, drive * (shunt / (seriesOhms + shunt)) };
+}
+// Matrix-aware conditional DC calculation, NOT a solved physical receiver.
+// Retains all solveBus ideal-source/constant-diode/no-alternate-source assumptions.
+// Local shunts are not evidence of total loaded impedance. Unknown selection,
+// reference-tied loads, IC conversion and nonlinear loading remain outside scope.
+inline BusResult solveMatrixBus(int board, char column, int output,
+                                const BusConditions& conditions) noexcept
+{
+    const auto branch = findBranch(board, column, output);
+    // Reuse generic input validation, but never use its 10k result on a no-shunt row.
+    const auto checked = solveBus(branch, conditions);
+    if (checked.status != SolveStatus::solved)
+        return checked;
+    const auto shunt = findLocalShunt(board, column, output);
+    if (shunt == LocalShunt::tenK)
+        return checked;
+    if (shunt != LocalShunt::none)
+        return { SolveStatus::unknownBranch, std::nullopt };
+    // Conservatively require explicit loading even for an ideal direct drive:
+    // the actual logic receiver/leakage and source strength are not established.
+    if (!conditions.groundLoadOhms)
+        return { SolveStatus::unresolvedLoading, std::nullopt };
+    if (branch.kind == BranchKind::open)
+        return { SolveStatus::solved, 0.0 };
+    const double drive = conditions.selectedColumnVolts > conditions.diodeDropVolts
+                       ? conditions.selectedColumnVolts - conditions.diodeDropVolts : 0.0;
+    const double series = branch.kind == BranchKind::resistor ? branch.resistanceOhms() : 0.0;
+    // Only the caller's ground load: no invented 10k shunt on outputs4/5.
+    return { SolveStatus::solved, drive / (1.0 + series / *conditions.groundLoadOhms) };
 }
 } // namespace cs80::hardware

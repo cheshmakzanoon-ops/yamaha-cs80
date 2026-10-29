@@ -53,9 +53,9 @@ The note ladder contains eleven1k segments between C# and C taps, with analog sw
 
 The KBC POR and PC pins are shown tied through22k to−6.5V on this board: this is evidence against importing active pitch-glide behavior from a generic YM26700 description without considering the actual connection. Final physical note-code mapping remains unresolved.
 
-## Provisional static network (junction review pending)
+## Verified decoder wiring; conditional static network
 
-Two readers attempted independent checks of native KBC decoder pixels. **Review warning (2026-10-29): tiny junction dots on the middle/fifth gate input rails remain disputed, and the formula table below is not verified. In particular IC6 out10 may select Q3 rather than !Q3. A narrower native crop is requested. Do not implement this table or mark it accepted.** Define Q1=IC4 pin1, Q2=IC4 pin13, Q3=IC5 pin1; these are delayed/latched input octave bits, not yet mapped to physical octave numbers. Six rails are !Q1,Q1,!Q2,Q2,!Q3,Q3. Left-to-right decoded outputs are:
+Three readers independently checked the native KBC rail crop in run40795174429, job123189790589, marker `kbc-decoder-rails`, source box [550,1400,1400,1700]. The earlier fifth-gate ambiguity is resolved: its junctions are on rails1,4,5, so IC6 out10 selects !Q1*Q2*!Q3, not Q3. The fourth gate also selects !Q3. Local junction coordinates are (622,105),(645,214),(667,249) for the fifth group; the Q3 rail is below at y283. Switch-control wiring was independently rechecked without changing the table. This verifies the traced gate network, not its mapping to all61 physical keys. Define Q1=IC4 pin1, Q2=IC4 pin13, Q3=IC5 pin1; these are delayed/latched input octave bits, not yet mapped to physical octave numbers. Six rails are !Q1,Q1,!Q2,Q2,!Q3,Q3. Left-to-right decoded outputs are:
 - IC7 out9: !Q1*!Q2*Q3
 - IC6 out9: !Q1*!Q2*!Q3
 - IC7 out6: Q1*!Q2*Q3
@@ -96,7 +96,7 @@ Panel2 native crop confirms terminal3 to+15V, terminal1 to−15V and center5 tog
 
 [KAS IC p6](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/06%20-%20KAS%20ICs.jpg) supplies a note-code and octave-code table with the explicit convention1=−6.5V,0=+8.5V. Its printed octave columns list C2, C2#–C3, C3#–C4, C4#–C5, C5#–C6; B1B2B3 tuples are011,101,001,110,010 respectively. This is a49-key-range table within the CS80 service scan, so do not silently extrapolate the missing octave or interpret its octave labels as MIDI numbers. KBC connectors are marked barred B inputs. Physical CMOS high/low states and negative-logic table labels must be reconciled through actual KAS circuitry.
 
-An attempted naive assignment of ascending physical octave columns to successive OC taps, combined with direct bit inversion and the conditional switch table, produces unjustified discontinuities at some boundaries. This is an explicit unresolved consistency check, NOT evidence that the real instrument has those discontinuities. Before production use, resolve whether the discrepancy is code convention, source table reuse, tap selection, or trace interpretation; independently verify the whole mapping. Do not smooth away the inconsistency or choose the version that sounds pleasant.
+An attempted naive assignment of ascending physical octave columns to successive OC taps, combined with direct bit inversion and the conditional switch table, produces discontinuities at some boundaries whose applicability to the actual keyboard is not established. This is an explicit unresolved consistency check, NOT evidence that the real instrument has those discontinuities. Before production use, resolve whether the discrepancy is code convention, source table reuse, tap selection, or trace interpretation; independently verify the whole mapping. Do not smooth away the inconsistency or choose the version that sounds pleasant.
 
 ### Further primary inspection, 2026-10-29
 
@@ -104,7 +104,7 @@ IC guidebook PDF15–18 (run40791735546 retry job123179772116) were read and the
 
 Original Yamaha CS Series Servicing Guide scans were inspected in run40794512782: page14 job123187579420, page21 job123187579491, page22 job123187579339, page23 job123187579537. [Scan index](https://dragonflyalley.com/synth/jurgenHaiblePages/jh_cs50.html). Page23 directly associates OC0 with C2, OC1 with C2#–C3, OC2 with C3#–C4, OC3 with C4#–C5 and OC4 with C5#–C6 for its49-key example. Page14 repeats the barred B code table. Page21 defines positive voltage logic for timing; that must not silently override KAS06's code-table voltage convention. Page22 describes multiplexed, nearly held outputs rather than instantaneous ideal state.
 
-These pages do not resolve the current contour inconsistency. Rechecking actual KBC rail junctions and switch-control wiring is now the next priority. The conditional table above is retained only as a reproducible hypothesis under review, not a circuit-validated implementation.
+These pages do not establish the complete CS80 mapping: their worked example explicitly has four voices and49 keys. The later narrow KBC crop resolves the rail-junction dispute and a second reader corroborates the endpoint control wires. Remaining work is the mapping from actual CS80 B codes through delayed/latched Q states to the YM26700 OC selection, including its extra octave and applicable chip mode. Smoothness is a diagnostic expectation, not a primary-source proof; do not alter verified wiring to force continuity. Likewise do not infer the missing octave by extrapolation. The conditional network table is reproducible, but not yet a complete physical-key implementation.
 
 ## Implementation boundary
 
@@ -135,8 +135,8 @@ Against core123-parameter/host229-parameter baseline:
 
 ## Open evidence
 
-- Native Panel2 terminal/rail reconciliation and physical positive-lever orientation; B-taper ideal linear interpretation versus real tolerance/loading.
-- KBC decoder truth table, gate states, contact/reference loading, offsets, trim conditions and actual breakpoint note(s).
-- KBC1 versus KBC2 wiring to KC versus KB and all rank fanouts.
+- Physical positive-lever orientation; B-taper ideal linear interpretation versus real tolerance/loading. Native Panel2 electrical terminals and rails are now corroborated.
+- Mapping the verified decoder graph to the actual CS80's61 physical keys, including B-to-Q timing/order and YM26700 OC selection; matching TC4016 control-level documentation; contact/reference loading, offsets, trim conditions and actual breakpoint note(s).
+- All rank fanouts and their loading. KBC1-to-KC and KBC2-to-KB wiring are now corroborated.
 - Physical FH/FL/LC loaded-node laws, internal IC input laws and calibrated audible endpoint ranges.
 - Scan, hold, settling and leakage behavior; tolerances, thermal drift and measured unit variation.

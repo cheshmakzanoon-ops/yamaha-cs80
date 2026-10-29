@@ -42,7 +42,7 @@ int main()
 {
     // Explicit illustrative assumptions from the ledger, NOT measured hardware.
     const BusConditions illustration { 10.6, 0.6, std::nullopt };
-    check(verifiedColumns.size() == 6 && verifiedOutputs.size() == 11, "sample dimensions");
+    check(verifiedColumns.size() == 6 && verifiedOutputs.size() == 26, "sample dimensions");
     check(busShuntOhms == 10000.0, "single 10k bus shunt");
     constexpr std::array<int, 11> outputs { 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19 };
     // Independent ledger transcription in ohms: -1 = open, 0 = direct.
@@ -77,6 +77,113 @@ int main()
                  resistance < 0 ? 0.0 : 100000.0 / (resistance + 10000.0),
                  locator + " conditional divider");
         }
+
+
+    // Independently reviewed supplemental source cells. -2 means unresolved
+    // revision, -1 means absent branch, 0 means direct diode, others are ohms.
+    constexpr std::array<int, 15> addedOutputs { 1,2,3,4,5,6,16,17,20,21,22,23,24,25,26 };
+    constexpr double added[15][6] {
+        {-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1},
+        {-1,-1,-1,-1,-1,-1}, {0,0,0,0,0,0}, {-1,-1,-1,-1,-1,-1},
+        {0,0,0,0,0,0}, {220000,220000,-1,-1,-1,-1},
+        {-2,6200,9100,-2,-2,11000},
+        {1300,0,3900,4700,0,5100}, {0,0,0,0,0,1800},
+        {12000,18000,62000,22000,22000,22000},
+        {0,0,0,0,0,0}, {-2,-2,62000,-2,10000,10000}, {0,0,0,0,0,0}
+    };
+    int addedKnown = 0, addedUnknown = 0;
+    for (std::size_t row = 0; row < addedOutputs.size(); ++row)
+        for (std::size_t col = 0; col < verifiedColumns.size(); ++col)
+        {
+            const auto& c = verifiedColumns[col];
+            const int output = addedOutputs[row];
+            const double expectedValue = added[row][col];
+            const auto branch = findBranch(c.board, c.column, output);
+            const auto kind = expectedValue == -2 ? BranchKind::unknown
+                            : expectedValue == -1 ? BranchKind::open
+                            : expectedValue == 0 ? BranchKind::direct : BranchKind::resistor;
+            check(branch.kind == kind, "supplemental source branch classification");
+            if (expectedValue > 0)
+                check(branch.resistanceOhms() == expectedValue
+                      && branch.sourceUnit == ResistanceUnit::kiloOhms,
+                      "supplemental source printed kilo-ohms");
+            const bool noShunt = output == 4 || output == 5;
+            check(findLocalShunt(c.board, c.column, output)
+                      == (noShunt ? LocalShunt::none : LocalShunt::tenK),
+                  "independent row-local shunt fixture");
+            const auto result = solveMatrixBus(c.board, c.column, output, illustration);
+            if (expectedValue == -2)
+            {
+                ++addedUnknown;
+                check(result.status == SolveStatus::unknownBranch && !result.volts,
+                      "revision uncertainty remains unresolved");
+                const auto loaded = solveMatrixBus(c.board, c.column, output, {10.6,0.6,5000.0});
+                check(loaded.status == SolveStatus::unknownBranch && !loaded.volts,
+                      "explicit load cannot resolve revision");
+            }
+            else
+            {
+                ++addedKnown;
+                if (noShunt)
+                {
+                    check(result.status == SolveStatus::unresolvedLoading && !result.volts,
+                          "no-shunt switch requires explicit receiver load");
+                    near(solveMatrixBus(c.board, c.column, output, {10.6,0.6,5000.0}),
+                         expectedValue == -1 ? 0.0 : 10.0,
+                         "switch uses only explicit conditional ground load");
+                    near(solveMatrixBus(c.board, c.column, output, {0.5,0.6,5000.0}),
+                         0.0, "switch below diode threshold with explicit load");
+                }
+                else
+                {
+                    near(result, expectedValue == -1 ? 0.0 : 100000.0/(expectedValue+10000.0),
+                         "supplemental analog conditional divider");
+                    near(solveMatrixBus(c.board, c.column, output, {10.6,0.6,10000.0}),
+                         expectedValue == -1 ? 0.0 : 50000.0/(expectedValue+5000.0),
+                         "supplemental analog explicit parallel load");
+                }
+            }
+        }
+    check(addedKnown == 84 && addedUnknown == 6, "84 promoted cells and six held revisions");
+    int totalKnown = 0, totalUnknown = 0;
+    for (const auto& row : verifiedOutputs)
+        for (const auto& branch : row.branches)
+            branch.kind == BranchKind::unknown ? ++totalUnknown : ++totalKnown;
+    check(totalKnown == 150 && totalUnknown == 6, "150 known of156 sampled addresses");
+    // Unknown addresses do not inherit another board's shunt or source branch.
+    for (int board : {0,52,54})
+    {
+        check(findLocalShunt(board,'A',4) == LocalShunt::unknown, "no cross-board shunt inference");
+        const auto result = solveMatrixBus(board,'A',4,{10.6,0.6,10000.0});
+        check(result.status == SolveStatus::unknownBranch && !result.volts, "unknown board not solved");
+    }
+    check(findLocalShunt(51,'B',4) == LocalShunt::unknown, "unknown column metadata");
+    check(findLocalShunt(51,'A',27) == LocalShunt::unknown, "unknown output metadata");
+    for (const auto& c : verifiedColumns)
+        for (int output : outputs)
+        {
+            check(findLocalShunt(c.board,c.column,output) == LocalShunt::tenK,
+                  "original rows retain one local10k");
+            const auto generic = solveBus(findBranch(c.board,c.column,output), illustration);
+            near(solveMatrixBus(c.board,c.column,output,illustration), *generic.volts,
+                 "matrix-aware original-row compatibility");
+        }
+    for (int output : {4,5,7,20})
+    {
+        for (double bad : {0.0,-1.0,std::numeric_limits<double>::infinity(),
+                           std::numeric_limits<double>::quiet_NaN()})
+        {
+            const auto result = solveMatrixBus(51,'A',output,{10.6,0.6,bad});
+            check(result.status == SolveStatus::invalidInput && !result.volts,
+                  "matrix load validation precedes topology or revision status");
+        }
+        const auto badSource = solveMatrixBus(51,'A',output,{-1.0,0.6});
+        check(badSource.status == SolveStatus::invalidInput && !badSource.volts,
+              "matrix invalid source validation");
+        const auto badDiode = solveMatrixBus(51,'A',output,{10.6,-1.0});
+        check(badDiode.status == SolveStatus::invalidInput && !badDiode.volts,
+              "matrix invalid diode validation");
+    }
 
     // Independent decimal calculations for the two filter rows.
     constexpr std::array<double, 6> hpf {
@@ -113,7 +220,7 @@ int main()
 
     for (const auto branch : { findBranch(52, 'A', 7), findBranch(54, 'A', 7),
                                findBranch(51, 'B', 7), findBranch(53, 'F', 9),
-                               findBranch(51, 'A', 1), findBranch(51, 'A', 20),
+                               findBranch(51, 'A', 25), findBranch(51, 'A', 20),
                                findBranch(0, '?', -1), unknownBranch })
     {
         const auto result = solveBus(branch, illustration);

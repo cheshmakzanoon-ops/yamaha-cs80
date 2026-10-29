@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "cs80adjust": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
     "kasguide14": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p14.gif",
     "kasguide21": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p21.gif",
     "kasguide22": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p22.gif",
@@ -175,6 +176,12 @@ def inspect_pdf(url, data, key):
             selected = [52]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "fixed original CS-20M Figure F-4 source target"}), flush=True)
+        elif key == "cs80adjust":
+            if count < 30:
+                raise ValueError("CS80 adjustment fixed target page30 absent")
+            selected = [2, 29, 30]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "CS80 adjustment contents and keyboard calibration candidates"}), flush=True)
         elif key == "icguide_vco":
             if count < 40:
                 raise ValueError("guidebook fixed oscillator candidate page40 absent")
@@ -241,7 +248,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q"}:
+    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)

@@ -5,7 +5,15 @@ Scope: original 22 factory tone circuits and their control-voltage interfaces.
 This is an inventory of **known versus unresolved source data**, not a new
 transcription or a claim of authentic preset sound. No physical CS-80 was measured.
 
-## What the existing source-domain implementation actually covers
+## Implementation increment after this baseline
+
+The independently reviewed source-domain table now contains150 classified cells
+and six explicitly unresolved revision cells among the six sampled columns.
+Across22 tones ×26 outputs,422 addresses remain unresolved. This is source-data
+coverage, not electrical calibration or sound equivalence. See PRESET_CIRCUIT_LEDGER.md
+and PRESET_NATIVE_MATRIX_REVIEW.md for the current table and row-local loading rules.
+
+## What the original baseline implementation covered
 
 `src/core/HardwareControl.h` and `tests/HardwareControlTests.cpp` contain
 six sampled columns times eleven output rows = **66 classified cells**.

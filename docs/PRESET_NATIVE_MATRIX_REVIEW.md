@@ -2,9 +2,10 @@
 
 2026-10-29; source inspection at commit `e912db1f7877b48d07463e0f5a4d3a915f64b981`.
 **No production audio changes. One independently verified source-matrix correction: T51/C/12, 15K → 13K.**
-These are visual readings of Yamaha scans, not measurements. Supplemental
-readings below await a second independent reader before being promoted into
-`HardwareControl.h`.
+These are visual readings of Yamaha scans, not measurements. Independent review
+on 2026-10-29 confirmed all 84 unmarked supplemental cells without transcription
+disagreements. Only those 84 are promoted into `HardwareControl.h`; six marked
+revision cells remain explicitly unknown. No production audio or preset parameters change.
 
 ## Recheck of the original 66 entries
 
@@ -26,15 +27,15 @@ ledger; the remaining entry has now been independently corrected:
   4.347826086956522V at Vs10.6V/Vd0.6V with one10k shunt and no receiver load.
   That arithmetic is not an authenticated AL voltage at the IC or a patch value.
 - The initial reread agreed65/66; after this isolated correction all66 sampled
-  entries agree with the inspected source. Supplemental entries below still
-  require their own second-reader verification.
+  entries agree with the inspected source. The 84 unmarked supplemental entries below have now also received independent
+  visual verification; six marked revision cells remain excluded.
 - T53/A/9 is indeed printed **750** without K; preserve Ω units.
 
 Both drawings bear CS-80 S/#1001~ and KEC-4447-67. Revision triangles and crossed
 components occur lower in the matrices. They are evidence that a source-revision
 choice is necessary, not permission to silently combine revisions.
 
-## Candidate completion of the six sampled columns
+## Independently reviewed completion of the six sampled columns
 
 Numerical cells are kΩ. `direct` includes the isolation diode.
 `open` means no selected-column branch is drawn; it does not mean the bus is
@@ -60,9 +61,18 @@ unloaded or unconditionally zero. `unknown revision` must stay unresolved.
 
 `*`: 1.2K is legible, but the branch carries a revision triangle. Preserve
 that marker and check the applicable service update before declaring a target
-revision. These 90 addresses comprise 87 legible candidate classifications and
-three deliberately unresolved revision cases. **They are not yet 87 newly
-verified implementation entries.** No code-coverage count changes until review.
+revision. The three starred readings are preserved as source observations only;
+their implementation cells remain unknown, just like the three overdrawn cells.
+
+**Promotion gate completed:** the independent reader confirmed the other84
+unmarked classifications and local shunt observations with no disagreement.
+Implementation coverage is now **150 known /6 unknown** among156 six-column
+addresses: the original66 plus84 supplemental cells. Across all22 factory
+columns ×26 outputs, this is150 classified /422 unresolved addresses, not a
+fidelity score or150 calibrated electrical states.
+
+The six unknown implementation locators are T51/A/20, T53/A/20, T53/C/20,
+T51/A/25, T51/C/25 and T53/A/25. No revision-applicability assumption is made.
 
 ### Ambiguities requiring explicit resolution
 
@@ -74,8 +84,8 @@ verified implementation entries.** No code-coverage count changes until review.
   values (e.g. T51/F/22, T53/E/23), and marked diodes in output26. A future full
   matrix must include revision status per cell.
 - Rows4/5 have **no drawn 10K shunts** on these boards, unlike the analog rows.
-  The existing universal-shunt passive solver must not be used to model these
-  switch buses. A missing switch branch is not proof of a zero-volt switch node
+  The generic illustrative10k helper must not be used to model these
+  switch buses. The matrix-aware entry point now enforces this boundary. A missing switch branch is not proof of a zero-volt switch node
   until its receiver is traced.
 - Top-row opens here are not evidence that all factory tones lack PWM/PW:
   other columns have branches. Do not generalize these six sampled tones.
@@ -119,9 +129,37 @@ All listed crops are native-size, without resampling.
 ## Next review gate
 
 1. T51/C/12 independent review is complete; retain the isolated13K correction and its regression. Do not extrapolate its verification to the supplemental table.
-2. Independently verify the candidate table, especially row21's 1.3K versus
-   nearby 1.2K and the open/direct switch classifications.
+2. Independent verification of the84 unmarked cells is complete, including
+   row21's1.3K and switch classifications. Keep all six marked cells unknown.
 3. Obtain the applicable revision explanation for marked branches.
 4. Continue the remaining sixteen columns and selection/receiver mapping.
 5. Keep matrix voltages separate from normalized parameters and IC controls:
    neither this table nor its completion establishes authentic audible presets.
+
+## Source-domain implementation and conditional solver boundary
+
+Each output row now explicitly records its local shunt: outputs4/5 are
+`LocalShunt::none`; the other24 rows on these inspected boards are
+`LocalShunt::tenK`. Missing boards/columns/outputs return unknown metadata.
+This does not infer a second shunt on T52/T54 or the complete receiver impedance.
+
+`solveMatrixBus(board,column,output,conditions)` preserves unknown branch status.
+For no-shunt rows it returns `unresolvedLoading` without a voltage unless the
+caller supplies an explicit positive finite linear ground load. This conservative
+rule also applies to an ideal direct branch. With that load, only the supplied
+load is used; no10k shunt is invented. Analog rows use their one local10k shunt
+and an optional parallel caller load. Invalid conditions are rejected before
+topology or revision status can produce a result.
+
+The existing `solveBus(Branch,...)` remains explicitly a generic illustrative
+one10k-divider helper, not an address-aware hardware model. Both paths assume an
+ideal selected source, fixed supplied diode drop, no alternate sources and no
+non-ground reference load. Neither computes a real switch threshold, diode I–V,
+BA source impedance, envelope time, IC voltage conversion or authentic preset.
+
+Regression fixtures independently enumerate all90 supplemental addresses:
+84 known and6 unknown. They check printed units, all26 local-shunt declarations,
+unresolved no-load switch buses, explicit-load results, invalid-load precedence,
+unknown-address isolation, preservation of the original66 conditional results,
+and the150/6 aggregate count. Hardware authenticity still requires receiver and
+revision analysis, not only passing these software consistency tests.
