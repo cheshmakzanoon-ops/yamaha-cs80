@@ -53,9 +53,9 @@ The note ladder contains eleven1k segments between C# and C taps, with analog sw
 
 The KBC POR and PC pins are shown tied through22k to−6.5V on this board: this is evidence against importing active pitch-glide behavior from a generic YM26700 description without considering the actual connection. Final physical note-code mapping remains unresolved.
 
-## Independently cross-checked static network (conditional)
+## Provisional static network (junction review pending)
 
-A second reader independently checked native KBC decoder pixels. Define Q1=IC4 pin1, Q2=IC4 pin13, Q3=IC5 pin1; these are delayed/latched input octave bits, not yet mapped to physical octave numbers. Six rails are !Q1,Q1,!Q2,Q2,!Q3,Q3. Left-to-right decoded outputs are:
+Two readers attempted independent checks of native KBC decoder pixels. **Review warning (2026-10-29): tiny junction dots on the middle/fifth gate input rails remain disputed, and the formula table below is not verified. In particular IC6 out10 may select Q3 rather than !Q3. A narrower native crop is requested. Do not implement this table or mark it accepted.** Define Q1=IC4 pin1, Q2=IC4 pin13, Q3=IC5 pin1; these are delayed/latched input octave bits, not yet mapped to physical octave numbers. Six rails are !Q1,Q1,!Q2,Q2,!Q3,Q3. Left-to-right decoded outputs are:
 - IC7 out9: !Q1*!Q2*Q3
 - IC6 out9: !Q1*!Q2*!Q3
 - IC7 out6: Q1*!Q2*Q3
@@ -97,6 +97,14 @@ Panel2 native crop confirms terminal3 to+15V, terminal1 to−15V and center5 tog
 [KAS IC p6](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/06%20-%20KAS%20ICs.jpg) supplies a note-code and octave-code table with the explicit convention1=−6.5V,0=+8.5V. Its printed octave columns list C2, C2#–C3, C3#–C4, C4#–C5, C5#–C6; B1B2B3 tuples are011,101,001,110,010 respectively. This is a49-key-range table within the CS80 service scan, so do not silently extrapolate the missing octave or interpret its octave labels as MIDI numbers. KBC connectors are marked barred B inputs. Physical CMOS high/low states and negative-logic table labels must be reconciled through actual KAS circuitry.
 
 An attempted naive assignment of ascending physical octave columns to successive OC taps, combined with direct bit inversion and the conditional switch table, produces unjustified discontinuities at some boundaries. This is an explicit unresolved consistency check, NOT evidence that the real instrument has those discontinuities. Before production use, resolve whether the discrepancy is code convention, source table reuse, tap selection, or trace interpretation; independently verify the whole mapping. Do not smooth away the inconsistency or choose the version that sounds pleasant.
+
+### Further primary inspection, 2026-10-29
+
+IC guidebook PDF15–18 (run40791735546 retry job123179772116) were read and their identities confirmed: YM26600 front/block15/16 and YM26700 front/block17/18. They contain pin assignments and decoder blocks, not the missing OC truth table.
+
+Original Yamaha CS Series Servicing Guide scans were inspected in run40794512782: page14 job123187579420, page21 job123187579491, page22 job123187579339, page23 job123187579537. [Scan index](https://dragonflyalley.com/synth/jurgenHaiblePages/jh_cs50.html). Page23 directly associates OC0 with C2, OC1 with C2#–C3, OC2 with C3#–C4, OC3 with C4#–C5 and OC4 with C5#–C6 for its49-key example. Page14 repeats the barred B code table. Page21 defines positive voltage logic for timing; that must not silently override KAS06's code-table voltage convention. Page22 describes multiplexed, nearly held outputs rather than instantaneous ideal state.
+
+These pages do not resolve the current contour inconsistency. Rechecking actual KBC rail junctions and switch-control wiring is now the next priority. The conditional table above is retained only as a reproducible hypothesis under review, not a circuit-validated implementation.
 
 ## Implementation boundary
 

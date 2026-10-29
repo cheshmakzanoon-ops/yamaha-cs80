@@ -161,6 +161,83 @@ void testOscillatorDiscontinuities()
               "sub-percent pulse retains positive interior");
 }
 
+
+void testOscillatorComparatorPulse()
+{
+    // Coherent, exactly representable phase grids isolate mean/plateau checks
+    // from long-run float phase drift. No Yamaha voltage calibration is implied.
+    for (float sr : { 44100.0f, 48000.0f, 96000.0f, 192000.0f })
+    {
+        for (int period : { 32, 128, 512, 2048 })
+        {
+            const float dt = 1.0f / (float) period;
+            const float frequency = sr * dt;
+            for (float width : { .125f, .25f, .5f, .75f, .875f })
+            {
+                Oscillator osc;
+                Rng rng;
+                double sum = 0.0;
+                float maxPlateauError = 0.0f, maxBlepError = 0.0f;
+                bool finite = true, bounded = true;
+                int positivePlateaus = 0, negativePlateaus = 0;
+                for (int n = 0; n < period; ++n)
+                {
+                    const auto out = osc.tick(frequency, sr, width, false, true, 0.0f, rng);
+                    const float phase = osc.getPhase();
+                    finite = finite && std::isfinite(out.pulse);
+                    bounded = bounded && std::abs(out.pulse) <= 1.00001f;
+                    sum += out.pulse;
+                    // Preserve the existing antialiased edge kernel exactly,
+                    // including wrap and duty transition; this is not a hardware fit.
+                    maxBlepError = std::max(maxBlepError,
+                        std::abs(out.pulse - blepPulse(phase, width, dt)));
+                    const float wrapDistance = std::min(phase, 1.0f - phase);
+                    if (wrapDistance > dt && std::abs(phase - width) > dt)
+                    {
+                        const float expected = phase < width ? 1.0f : -1.0f;
+                        maxPlateauError = std::max(maxPlateauError,
+                                                  std::abs(out.pulse - expected));
+                        if (expected > 0.0f) ++positivePlateaus;
+                        else ++negativePlateaus;
+                    }
+                }
+                check(finite && bounded, "comparator pulse finite and bounded through both edges");
+                check(positivePlateaus > 0 && negativePlateaus > 0,
+                      "comparator fixture samples both plateaus away from BLEPs");
+                checkNear(maxPlateauError, 0.0f, 1.e-6f,
+                          "pulse has only unit plateaus, no independent reset level");
+                checkNear(maxBlepError, 0.0f, 1.e-7f,
+                          "pulse preserves original bandlimited edge kernel");
+                checkNear((float) (sum / period), 2.0f * width - 1.0f, 2.e-6f,
+                          "pulse mean follows duty without reset-dependent DC");
+            }
+        }
+
+        // Zero frequency and overlapping edge kernels, including width clamps.
+        // These are numerical boundary tests, not supported hardware operating points.
+        for (float ratio : { 0.0f, .00001f, .01f, .125f, .45f, .6f })
+        {
+            for (float width : { 0.0f, .000001f, .05f, .5f, .95f, .999999f, 1.0f })
+            {
+                Oscillator on, off;
+                Rng onRng, offRng;
+                bool valid = true, otherPathsUnchanged = true;
+                for (int n = 0; n < 1024; ++n)
+                {
+                    const auto a = on.tick(sr * ratio, sr, width, true, true, 0.0f, onRng);
+                    const auto b = off.tick(sr * ratio, sr, width, true, false, 0.0f, offRng);
+                    valid = valid && std::isfinite(a.pulse) && std::abs(a.pulse) <= 1.00001f;
+                    otherPathsUnchanged = otherPathsUnchanged && b.pulse == 0.0f
+                        && a.saw == b.saw && a.sine == b.sine && a.narrow == b.narrow
+                        && on.getPhase() == off.getPhase();
+                }
+                check(valid, "zero/high-frequency and extreme-width pulse stays finite and bounded");
+                check(otherPathsUnchanged, "pulse enable preserves saw, sine, reset and phase paths");
+            }
+        }
+    }
+}
+
 void testHardwareRingAndRibbon()
 {
     checkNear(ribbonFrequencyRatio(0.0f), 1.0f, 1.0e-7f, "ribbon first contact is unison");
@@ -1485,6 +1562,7 @@ int main()
     testSineFrequency();
     testFeetRatios();
     testOscillatorDiscontinuities();
+    testOscillatorComparatorPulse();
     testHardwareRingAndRibbon();
     testFilterStability();
     testEnvelope();

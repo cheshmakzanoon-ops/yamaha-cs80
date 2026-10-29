@@ -106,6 +106,61 @@ jobs:
           test -x pluginval/pluginval
           ./pluginval/pluginval --version | tee pluginval-version.txt
 
+      - name: Verify diagnostic exit propagation
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/run-pluginval-with-core.py
+          for expected in 0 7 139; do
+            set +e
+            python3 scripts/run-pluginval-with-core.py \
+              --core-log "$PWD/pluginval-core-fixture.log" \
+              --executable /bin/sh -- /bin/sh -c "exit $expected"
+            actual=$?
+            set -e
+            if [ "$actual" -ne "$expected" ]; then
+              echo "::error::Diagnostic helper changed exit $expected to $actual"
+              exit 1
+            fi
+          done
+          # A diagnostic log open failure must not override the child result.
+          set +e
+          python3 scripts/run-pluginval-with-core.py \
+            --core-log /dev/null/unwritable.log \
+            --executable /bin/sh -- /bin/sh -c 'exit 7'
+          actual=$?
+          set -e
+          if [ "$actual" -ne 7 ]; then
+            echo "::error::Diagnostic log failure changed child exit to $actual"
+            exit 1
+          fi
+          # Do not synthesize a crash when the kernel routes cores externally:
+          # Linux pipe collectors ignore RLIMIT_CORE, including a zero limit.
+          pattern="$(cat /proc/sys/kernel/core_pattern)"
+          if [[ "$pattern" != \|* ]]; then
+            set +e
+            python3 scripts/run-pluginval-with-core.py \
+              --core-log "$PWD/pluginval-core-fixture.log" \
+              --executable /bin/sh -- /bin/sh -c 'ulimit -c 0; kill -SEGV "$$"'
+            actual=$?
+            set -e
+            if [ "$actual" -ne 139 ]; then
+              echo "::error::Diagnostic helper changed SIGSEGV status to $actual"
+              exit 1
+            fi
+          else
+            echo "Synthetic signal fixture unavailable with kernel pipe collector; exit139 fixture remains required."
+          fi
+          # A normally exited inferior has no live thread/register context.
+          # Exercise the same guard as the failure-only diagnostic below.
+          gdb -nx -nh --batch --return-child-result \
+            -iex "set auto-load off" \
+            -iex "set debuginfod enabled off" \
+            -iex "set print frame-arguments none" \
+            -ex "run" \
+            -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
+            --args /bin/true > pluginval-gdb-normal-exit.log 2>&1
+          echo "Diagnostic exit propagation and normal-inferior guard checked."
+
       # The wrapper accepts only an explicit SUCCESS. At most three full
       # attempts are allowed for exit139 after a completed test phase with
       # neither FAILED nor SUCCESS. Eligibility does not prove the whole suite
@@ -115,12 +170,15 @@ jobs:
           set -euo pipefail
           mkdir -p pluginval-reports
           ./scripts/run-pluginval-linux.sh pluginval-headless.log \
-            ./pluginval/pluginval \
+            python3 "$PWD/scripts/run-pluginval-with-core.py" \
+            --core-log "$PWD/pluginval-headless-core.log" \
+            --executable "$PWD/pluginval/pluginval" -- \
+            "$PWD/pluginval/pluginval" \
             --strictness-level 10 \
             --validate-in-process \
             --skip-gui-tests \
             --timeout-ms 120000 \
-            --output-dir pluginval-reports \
+            --output-dir "$PWD/pluginval-reports" \
             --output-filename cs80-headless \
             "$PWD/vst3/CS-80 Reference.vst3"
 
@@ -130,13 +188,23 @@ jobs:
           set -euo pipefail
           xvfb-run -a -s "-screen 0 1920x1200x24" \
             ./scripts/run-pluginval-linux.sh pluginval-gui.log \
-            ./pluginval/pluginval \
+            python3 "$PWD/scripts/run-pluginval-with-core.py" \
+            --core-log "$PWD/pluginval-gui-core.log" \
+            --executable "$PWD/pluginval/pluginval" -- \
+            "$PWD/pluginval/pluginval" \
             --strictness-level 10 \
             --validate-in-process \
             --timeout-ms 120000 \
-            --output-dir pluginval-reports \
+            --output-dir "$PWD/pluginval-reports" \
             --output-filename cs80-gui \
             "$PWD/vst3/CS-80 Reference.vst3"
+
+      - name: Show first-attempt core diagnostics
+        if: always()
+        run: |
+          for log in pluginval-headless-core.log pluginval-gui-core.log; do
+            if [ -f "$log" ]; then cat "$log"; fi
+          done
 
       # This is a separate diagnostic execution, never a replacement pass.
       # The original validation step stays failed even if this run cannot
@@ -150,13 +218,14 @@ jobs:
           mkdir -p pluginval-diagnostic-reports
           timeout --signal=TERM --kill-after=10s 240s \
             xvfb-run -a -s "-screen 0 1920x1200x24" \
-            gdb --batch --return-child-result \
+            gdb -nx -nh --batch --return-child-result \
+            -iex "set auto-load off" \
+            -iex "set debuginfod enabled off" \
+            -iex "set print frame-arguments none" \
             -ex "set pagination off" \
             -ex "set print thread-events off" \
             -ex "run" \
-            -ex "thread apply all bt 40" \
-            -ex "info sharedlibrary" \
-            -ex "info registers" \
+            -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
             --args ./pluginval/pluginval \
             --strictness-level 10 \
             --validate-in-process \
@@ -191,6 +260,10 @@ jobs:
             pluginval-gui.log
             pluginval-gui-attempt*.log
             pluginval-gui-gdb.log
+            pluginval-headless-core.log
+            pluginval-gui-core.log
+            pluginval-core-fixture.log
+            pluginval-gdb-normal-exit.log
             pluginval-diagnostic-reports
             pluginval-version.txt
           if-no-files-found: warn

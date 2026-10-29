@@ -178,7 +178,11 @@ public:
         }
         if (pulseOn)
         {
-            o.pulse = blepPulse(phase, pulseWidth, dt) + o.narrow * 0.45f;
+            // IG00158 PI9 -> comparator -> PO7; M41 has no separate
+            // reset-pulse summing branch here. Keep an ideal bandlimited
+            // two-level comparator approximation. Actual reset-dependent
+            // crossing times/clamps remain uncalibrated; see oscillator evidence.
+            o.pulse = blepPulse(phase, pulseWidth, dt);
         }
 
         // Provisional sine-shaper approximation. This fixed 3.5% third harmonic
