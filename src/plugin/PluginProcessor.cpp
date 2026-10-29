@@ -7,6 +7,19 @@
 
 namespace
 {
+// JUCE 8.0.6 AudioParameterBool stores an unsnapped host float internally,
+// while APVTS caches its snapped 0/1 value. A same-bucket state restore may
+// therefore skip the setter. Publish the existing boolean semantics through
+// getValue too, so host, APVTS, DSP and saved state cannot disagree.
+// Use only for actual Bool parameters; float switches/choices stay untouched.
+// IDs, order, defaults, version hints and the >= 0.5 boolean meaning are unchanged.
+class CanonicalBoolParameter final : public juce::AudioParameterBool
+{
+public:
+    using juce::AudioParameterBool::AudioParameterBool;
+    float getValue() const override { return get() ? 1.0f : 0.0f; }
+};
+
 juce::File makeUserPresetDirectory()
 {
     return juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory)
@@ -95,7 +108,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
             const auto id = juce::ParameterID { memoryParameterId(bank, local), 2 };
             const auto name = "Memory " + juce::String(bank + 1) + " " + d.group + " " + d.name;
             if (local == cs80::CP_saw || local == cs80::CP_pulse)
-                layout.add(std::make_unique<juce::AudioParameterBool>(id, name, d.def >= 0.5f));
+                layout.add(std::make_unique<CanonicalBoolParameter>(id, name, d.def >= 0.5f));
             else
             {
                 auto attributes = juce::AudioParameterFloatAttributes().withLabel(d.unit);
@@ -106,7 +119,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     // Core extension index122 is NOT host index122: keep all 228 existing
     // host indexes stable, and use a later AU version hint to preserve AU order.
     add(cs80::P_subAtVcf, 3); // shipped host228 / AUhint3 stays fixed
-    layout.add(std::make_unique<juce::AudioParameterBool>(
+    layout.add(std::make_unique<CanonicalBoolParameter>(
         juce::ParameterID { parameterId(cs80::P_subOriginalMode), 4 },
         "Original SUB mode", true));
     layout.add(std::make_unique<juce::AudioParameterChoice>(

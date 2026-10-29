@@ -752,6 +752,69 @@ int main(int argc, char** argv)
             check(range.skew == 0.35f, "original SUB speed has explicit independent mapping");
     }
 
+    // Reproduce pluginval 1.0.4's save -> random host value -> restore
+    // sequence, including the failing GUI seed's 0.829008 same-true-bucket
+    // write. Read the host-facing value as well as APVTS: the stock JUCE Bool
+    // can retain a fractional host value while APVTS already caches 0 or 1.
+    for (bool withEditor : {false, true})
+    {
+        Cs80AudioProcessor modeHost;
+        std::unique_ptr<Cs80AudioProcessorEditor> modeEditor;
+        if (withEditor)
+        {
+            modeEditor = std::make_unique<Cs80AudioProcessorEditor>(modeHost);
+            modeEditor->setVisible(true);
+            flushGui(150);
+        }
+        juce::StringArray booleanIds { "sub_original_mode" };
+        for (int bank = 0; bank < 4; ++bank)
+            for (int local : {cs80::CP_saw, cs80::CP_pulse})
+                booleanIds.add(Cs80AudioProcessor::memoryParameterId(bank, local));
+        check(booleanIds.size() == 9, "all nine true Bool controls included in state regression");
+        for (const auto& id : booleanIds)
+        {
+            auto* mode = modeHost.getAPVTS().getParameter(id);
+            auto* raw = modeHost.getAPVTS().getRawParameterValue(id);
+            check(mode != nullptr && raw != nullptr && mode->isBoolean() && mode->isDiscrete()
+                      && mode->getNumSteps() == 2 && mode->getVersionHint() == (id == "sub_original_mode" ? 4 : 2),
+                  "canonical Bool preserves original two-step metadata and AU version hint");
+            if (mode && raw)
+            {
+                for (float hostValue : {0.0f, 0.170992f, 0.4999f, 0.5f, 0.829008f, 0.84027f, 1.0f})
+                {
+                    const float expected = hostValue >= 0.5f ? 1.0f : 0.0f;
+                    mode->setValueNotifyingHost(expected);
+                    juce::MemoryBlock savedMode;
+                    modeHost.getStateInformation(savedMode);
+                    mode->setValueNotifyingHost(hostValue);
+                    modeHost.setStateInformation(savedMode.getData(), (int)savedMode.getSize());
+                    check(mode->getValue() == expected
+                              && raw->load() == expected,
+                          "same-bucket fractional host write restores canonical Bool without stale normalized value");
+
+                    // Save a fractional host write itself, then restore after both
+                    // a different same-bucket value and an opposite-bucket value.
+                    mode->setValueNotifyingHost(hostValue);
+                    check(mode->getValue() == expected
+                              && raw->load() == expected,
+                          "fractional normalized Bool automation retains the existing half-range threshold");
+                    modeHost.getStateInformation(savedMode);
+                    for (float changed : {expected == 1.0f ? 0.7f : 0.3f, 1.0f - expected})
+                    {
+                        mode->setValueNotifyingHost(changed);
+                        modeHost.setStateInformation(savedMode.getData(), (int)savedMode.getSize());
+                        check(mode->getValue() == expected
+                                  && raw->load() == expected,
+                              "fractional-Bool saved state restores host and APVTS values across both buckets");
+                    }
+                    if (withEditor) flushGui(20);
+                }
+            }
+        }
+        modeEditor.reset();
+        if (withEditor) flushGui(20);
+    }
+
     {
         Cs80AudioProcessor migration;
         check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f,
@@ -814,14 +877,14 @@ int main(int argc, char** argv)
                   && std::abs(restoredOriginal.getParamValue(cs80::P_subOriginalSpeed) - 4.2f) < 0.00001f
                   && restoredOriginal.getParamValue(cs80::P_subExtLevel) == 0.0f,
               "old state explicitly returns to legacy mode and clears stale original controls");
-        for (float invalid : {-1.0f, 2.0f})
+        for (float invalid : {-1.0f, 0.829008f, 2.0f})
         {
             restoreTree(current);
             auto badMode = current.createCopy();
             badMode.getChildWithProperty("id", "sub_original_mode").setProperty("value", invalid, nullptr);
             restoreTree(badMode);
             check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 0.0f,
-                  "out-of-range saved mode safely restores legacy rather than retaining original");
+                  "invalid saved mode safely restores legacy rather than retaining original");
         }
         restoreTree(current);
         auto missingValue = current.createCopy();
@@ -1374,6 +1437,47 @@ int main(int argc, char** argv)
     check(waitForGui([&] { return hasSubControls(true)
         && subStatusIs("SUB: ORIGINAL FUNCTIONS"); }), "original screenshot controls and status ready");
     save("main-1600x1000");
+
+    // Capture the real host-bus-enabled EXT state, not a synthetic label.
+    // Preserve the normal screenshot/test setup when these views are done.
+    {
+        const auto savedLayout = processor.getBusesLayout();
+        const float savedMode = processor.getParamValue(cs80::P_subOriginalMode);
+        const float savedFunction = processor.getParamValue(cs80::P_subOriginalFunction);
+        const float savedLevel = processor.getParamValue(cs80::P_subExtLevel);
+        auto extLayout = savedLayout;
+        extLayout.inputBuses.set(0, juce::AudioChannelSet::mono());
+        check(processor.setBusesLayout(extLayout), "EXT screenshot enables optional input bus");
+        processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
+        processor.setParamValue(cs80::P_subOriginalFunction, 5.0f);
+        processor.setParamValue(cs80::P_subExtLevel, 1.0f);
+        juce::AudioBuffer<float> statusAudio(2, 64);
+        statusAudio.clear();
+        juce::MidiBuffer statusMidi;
+        processor.processBlock(statusAudio, statusMidi);
+        check(waitForGui([&] { return hasSubControls(true)
+            && subStatusIs("SUB: EXT BUS ENABLED"); }),
+              "EXT screenshot observes actual enabled-bus status");
+        save("main-ext-enabled-1600x1000");
+        editor.showAdvancedPanel(true);
+        editor.showAdvancedPage(1);
+        check(editor.isAdvancedVisible(), "EXT screenshot opens SUB advanced page");
+        flushGui(150);
+        save("advanced-sub-ext-enabled");
+        editor.showAdvancedPanel(false);
+
+        check(processor.setBusesLayout(savedLayout), "EXT screenshot restores prior bus layout");
+        processor.setParamValue(cs80::P_subOriginalMode, savedMode);
+        processor.setParamValue(cs80::P_subOriginalFunction, savedFunction);
+        processor.setParamValue(cs80::P_subExtLevel, savedLevel);
+        statusAudio.clear();
+        processor.processBlock(statusAudio, statusMidi);
+        check(waitForGui([&] { return hasSubControls(true)
+            && subStatusIs("SUB: ORIGINAL FUNCTIONS"); }),
+              "EXT screenshots restore default original SUB surface");
+        check(!processor.isExternalInputEnabled() && !editor.isAdvancedVisible(),
+              "EXT screenshots restore disabled bus and closed advanced overlay");
+    }
 
     editor.setSize(1200, 760);
     flushGui(100);

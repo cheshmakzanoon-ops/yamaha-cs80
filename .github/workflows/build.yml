@@ -199,10 +199,32 @@ jobs:
             --output-filename cs80-gui \
             "$PWD/vst3/CS-80 Reference.vst3"
 
+      # Required replay of the state-restoration regression, never a rescue
+      # for the independent randomized validation immediately above.
+      - name: Validate GUI state regression seed 0x2da72db
+        if: always() && !cancelled() && (steps.validate_gui.outcome == 'success' || steps.validate_gui.outcome == 'failure')
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 240s \
+            xvfb-run -a -s "-screen 0 1920x1200x24" \
+            ./scripts/run-pluginval-linux.sh pluginval-gui-seed-regression.log \
+            python3 "$PWD/scripts/run-pluginval-with-core.py" \
+            --core-log "$PWD/pluginval-gui-seed-regression-core.log" \
+            --executable "$PWD/pluginval/pluginval" -- \
+            "$PWD/pluginval/pluginval" \
+            --random-seed 0x2da72db \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir "$PWD/pluginval-reports" \
+            --output-filename cs80-gui-seed-regression \
+            "$PWD/vst3/CS-80 Reference.vst3"
+
       - name: Show first-attempt core diagnostics
         if: always()
         run: |
-          for log in pluginval-headless-core.log pluginval-gui-core.log; do
+          for log in pluginval-headless-core.log pluginval-gui-core.log pluginval-gui-seed-regression-core.log; do
             if [ -f "$log" ]; then cat "$log"; fi
           done
 
@@ -303,7 +325,7 @@ jobs:
       - name: Report pluginval failure
         if: failure()
         run: |
-          for log in pluginval-headless.log pluginval-gui.log; do
+          for log in pluginval-headless.log pluginval-gui.log pluginval-gui-seed-regression.log; do
             if [ -f "$log" ]; then
               echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"
             fi
@@ -320,6 +342,9 @@ jobs:
             pluginval-headless-attempt*.log
             pluginval-gui.log
             pluginval-gui-attempt*.log
+            pluginval-gui-seed-regression.log
+            pluginval-gui-seed-regression-attempt*.log
+            pluginval-gui-seed-regression-core.log
             pluginval-gui-gdb.log
             pluginval-gui-trace.log
             pluginval-fault-trace.log
@@ -518,6 +543,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Validate VST3 headless
+        id: validate_windows
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
@@ -533,6 +559,29 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           if (-not (Select-String -Path pluginval-windows.log -Pattern '^SUCCESS$' -Quiet)) {
             Write-Output "::error title=pluginval Windows::validator exited without printing SUCCESS"
+            exit 1
+          }
+
+      # Required known-failure replay in addition to the randomized gate.
+      - name: Validate state regression seed 0x5037a0c
+        if: always() && !cancelled() && (steps.validate_windows.outcome == 'success' || steps.validate_windows.outcome == 'failure')
+        timeout-minutes: 5
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path pluginval-reports | Out-Null
+          & .\pluginval\pluginval.exe `
+            --random-seed 0x5037a0c `
+            --strictness-level 10 `
+            --validate-in-process `
+            --skip-gui-tests `
+            --timeout-ms 120000 `
+            --output-dir pluginval-reports `
+            --output-filename cs80-windows-seed-regression `
+            "vst3\CS-80 Reference.vst3" 2>&1 | Tee-Object -FilePath pluginval-windows-seed-regression.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Select-String -Path pluginval-windows-seed-regression.log -Pattern '^SUCCESS$' -Quiet)) {
+            Write-Output "::error title=pluginval Windows seeded regression::validator exited without printing SUCCESS"
             exit 1
           }
 
@@ -553,5 +602,6 @@ jobs:
           path: |
             pluginval-reports
             pluginval-windows.log
+            pluginval-windows-seed-regression.log
             pluginval-version.txt
           if-no-files-found: warn
