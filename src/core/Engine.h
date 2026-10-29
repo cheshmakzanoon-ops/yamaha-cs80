@@ -5,6 +5,7 @@
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
 #include "PerformanceControls.h"
+#include "PraWahCircuit.h"
 
 #include <array>
 #include <cstdint>
@@ -196,6 +197,15 @@ public:
     struct RankEnvelopeState { Adsr::State amplitude; FilterEnv::State filter; };
     // Exact current envelope-state proxy; same render-thread-only restriction.
     RankEnvelopeState getRankEnvelopeState(int voice, int rank) const noexcept;
+    struct PraWahState
+    {
+        PraWahCircuit::Capacitors capacitors;
+        double sampleRate = 0.0, opticalOhms = 0.0, targetOhms = 0.0;
+        float wetMix = 0.0f;
+    };
+    // Exact reconstruction circuit state; channel 0/1, render thread only.
+    // These are model variables, not measured instrument voltages/resistances.
+    PraWahState getPraWahState(int channel) const noexcept;
 
 private:
     static constexpr int kNumVoices = 8;
@@ -299,8 +309,11 @@ private:
     float lfoPitch = 0.0f, lfoFilter = 0.0f, lfoAmp = 0.0f, lfoPwm = 0.0f, lfoPan = 0.0f;
     float subSpeedSmoothed = 4.2f;
 
-    // PRA EXP-WAH branch and GENERAL output trim. Smoothing prevents switch clicks;
-    // the default EXP/HIGH state never touches these filters or the gain (exact 1).
+    // Isolation uses the reviewed capacitor graph with an explicitly inferred
+    // optical/loading/trim profile. Both branches run even in EXP (dry X).
+    PraWahCircuit praWahL, praWahR;
+    // Legacy EXP-WAH branch and GENERAL output trim. Preserve its arithmetic,
+    // transparent EXP bypass and reset policy for default-off compatibility.
     Svf wahL, wahR;
     float wahMix = 0.0f;
     float wahFrequency = kProvisionalWahLowHz;

@@ -2,7 +2,7 @@
 
 An independent, code-first recreation of the Yamaha CS-80: eight voices, two independent synthesis ranks per voice (sixteen oscillator / filter / VCA chains), polyphonic pressure, ribbon, ring modulation, SUB oscillator, chorus/tremolo and a modern performance layer. C++20 / JUCE 8, built as **VST3, AU (macOS) and Standalone**, with a JUCE-free core library that renders offline.
 
-> **Where this stands now.** This is a working, extensively regression-tested cross-platform synthesizer with a hardware-inspired CS-80 panel, eight dual-rank voices, a broad original-control surface, 244 automatable parameters and 222 programs. Recent work adds active-tail state continuity, live A/D/R timing and inferred state-continuous level tracking in isolation mode, safer state restoration, a bounded UI-to-audio keyboard handoff, and reproducible dynamic capture evidence. The audible engine is still a **circuit-informed behavioral reconstruction**: important oscillator, nonlinear-filter, envelope, touch, effect and preset laws remain inferred or provisional. Reviewed circuit-reference models exist for several stages, but most are not yet integrated into audio. **No comparison against an identified real CS-80 has been performed.** Strong software-quality evidence is not a claim of measured analog equivalence.
+> **Where this stands now.** This is a working, extensively regression-tested cross-platform synthesizer with a hardware-inspired CS-80 panel, eight dual-rank voices, a broad original-control surface, 244 automatable parameters and 222 programs. Recent work adds active-tail state continuity, live A/D/R timing and inferred state-continuous level tracking in isolation mode, safer state restoration, a bounded UI-to-audio keyboard handoff, and reproducible dynamic capture evidence. The audible engine is still a **circuit-informed behavioral reconstruction**: important oscillator, nonlinear-filter, envelope, touch, effect and preset laws remain inferred or provisional. Isolation mode now uses a circuit-derived, stateful PRA wah with explicitly inferred optical/loading/trim values. Other reviewed circuit-reference models are mostly not yet integrated into audio. **No comparison against an identified real CS-80 has been performed.** Strong software-quality evidence is not a claim of measured analog equivalence.
 
 ## Development mandate: best reconstruction from public knowledge
 
@@ -50,7 +50,7 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | Touch and pressure | Approximate | Held initial-touch path vs separate AC-coupled pitch transient (50 ms nominal), shared max-pressure bus, per-voice pressure, AT to VCO / VCF / SUB speed |
 | Keyboard contours | Approximate | Four centre-neutral levers (LOW/HIGH brilliance and level), per-key weights from the KBC octave-tap ladder. Key map and gains provisional |
 | Footswitch and assigners | Implemented / Approximate | Jack plugged + contact + independent SUSTAIN and PORTA/GLISS assigners (`!assigned or !plugged or pressed`); tail-shortening and glide-snap edge policy provisional |
-| EXP / EXP-WAH, output HIGH/LOW | Approximate | Dedicated post-mix stage stands in for the PRA network; coarse wah/chorus/expression order source-verified, transfer uncalibrated; LOW is an arbitrary -20 dB |
+| EXP / EXP-WAH, output HIGH/LOW | Circuit-derived wah in isolation; other laws approximate | Stateful four-capacitor PRA graph, always-clocked dry/wet histories and source-verified routing; optical/trim/loading profile inferred. Legacy wah retained outside isolation. LOW remains an arbitrary -20 dB |
 | SUB, ring, ribbon | Approximate | Six original SUB functions (0.7-60 Hz), optional mono EXT modulation bus, frequency-envelope ring with documented calibration anchors, relative ribbon (~1 octave) |
 | Tone selectors, memories, presets | Approximate / Offline only | 14 positions per rank, 4 independent memory banks (104 automatable controls), PANEL; **all 22 factory tone voicings are placeholders**. A 547-cell passive resistor-matrix solver is offline only (25 cells unresolved) |
 | Chorus / tremolo, output stage | Approximate | Generic modulated delay and amplitude tremolo; 10 Hz DC block, soft clip, 255-tap decimator (63 samples latency) |
@@ -61,7 +61,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest fully verified executable checkpoint, [`8662c3c`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/8662c3c3ed704ffcc8284a43309565e2d6aeaca5), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40959629321), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40959629255), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40959629316). The local GNU core-only configuration has 25 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
+The latest fully verified executable checkpoint, [`5d3b3f3`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/5d3b3f3d7d9b73b4f29bd2d5b31c17d01b85d140), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40964061457), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40964061046), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40964061113). The local GNU core-only configuration has 27 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
@@ -75,7 +75,7 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 | Live envelope levels | 221,594 checks of state-continuous S/IL/AL response and high-rate convergence; stage-selection/tracking laws explicitly inferred |
 | Envelope numerical accuracy | 22,732 checks of long-envelope convergence, double state/clocks/coefficients and valid high-rate settings; three reduced-precision mutants rejected |
 | Active-tail continuity | 49,584 checks of opt-in isolation phase/filter-state retention; no full idle-clock claim |
-| Parity isolation / harness | 125 core isolation checks, 22 comparison-harness tests and 13 candidate-export tests; no hardware evidence |
+| Parity isolation / harness | 126 core isolation checks, 22 comparison-harness tests and 13 candidate-export tests; no hardware evidence |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) eight-voice rank network (14,012), and conditional RC transients (1,882) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
@@ -84,6 +84,7 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 | Level control DC reference | 54,272 checks of 16 separately loaded LC nodes and 43 explicit source ports; no IC5 gain or loudness calibration |
 | Resonance control DC reference | 28,059 checks of 32 individually loaded VQ nodes and shared cross-rank RES bus; no internal Q law |
 | OE2 filter AC reference | 10,190 checks of independent nodal models of the input/reconstruction filters and unequal AC-coupled gain stages; no BBD voltage or chorus calibration |
+| Realtime PRA wah | 8,758,361 module checks, 164,808 Engine integration checks, independent transient/AC oracles; inferred profile, not measured instrument calibration |
 | PRA wah AC reference | 28,686 independent nodal/KCL checks of an idealized conditional network; no calibrated pedal or WI-to-WO transfer |
 | BBD clock-event reference | 97,650 normalized signal-packet checks; not a charge, voltage or calibrated audio model |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
@@ -228,6 +229,7 @@ docs/                           evidence ledgers and audits (index below)
 | [LEVEL_CONTROL_REFERENCE_DESIGN.md](docs/LEVEL_CONTROL_REFERENCE_DESIGN.md), [TRG_LEVEL_RECIPROCAL_REVIEW.md](docs/TRG_LEVEL_RECIPROCAL_REVIEW.md) | Conditional loaded level network and reviewed reciprocal touch-wiring evidence |
 | [RESONANCE_CONTROL_REFERENCE_DESIGN.md](docs/RESONANCE_CONTROL_REFERENCE_DESIGN.md) | Conditional dual-rank loaded resonance network and conservative numerical-domain checks |
 | [OE2_FILTER_REFERENCE_DESIGN.md](docs/OE2_FILTER_REFERENCE_DESIGN.md) | Conditional input/reconstruction RC networks, coupling poles and physical current ports |
+| [REALTIME_PRA_WAH_MODEL.md](docs/REALTIME_PRA_WAH_MODEL.md) | Integrated isolation wah, documented circuit graph, inferred profile, state continuity and numerical evidence |
 | [PRA_WAH_REFERENCE_DESIGN.md](docs/PRA_WAH_REFERENCE_DESIGN.md) | Conditional offline ideal-op-amp wah network, explicit optical/loading boundaries; not calibrated WI-to-WO audio |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |

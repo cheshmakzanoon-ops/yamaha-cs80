@@ -388,46 +388,57 @@ void testExpressionPersistence()
     guarded->setExpressionFromUI(7.0f);
     check(guarded->getExpressionValue() == 1.0f, "an over-range pedal value clamps");
 
-    // In isolation the physical UI pedal still works, but CC11 neither moves
-    // the shared position nor changes the audio (including after prepare).
-    auto isolated = fresh(0.3f);
-    auto isolatedReference = fresh(0.3f);
-    auto isolatedFull = fresh(1.0f);
-    for (auto* target : {isolated.get(), isolatedReference.get(), isolatedFull.get()})
+    // In isolation the physical UI pedal still works in both foot modes, but
+    // CC11 neither moves the shared position nor changes the audio. The PRA
+    // dry X path is circuit-conditioned and pedal-dependent: comparing two
+    // different pedal positions cannot isolate the downstream expression gain.
+    for (float footMode : { 0.0f, 1.0f })
     {
-        // Consume the UI mailbox before changing mode: the transition must
-        // restore the held physical position, not rely on a pending UI update.
-        // Identical note-free history keeps phase RNG and numerical state paired.
-        juce::AudioBuffer<float> consume(2, 512);
-        juce::MidiBuffer empty;
-        target->processBlock(consume, empty);
-        target->setParamValue(cs80::P_parityMode, 1.0f);
+        auto isolated = fresh(0.3f);
+        auto isolatedReference = fresh(0.3f);
+        for (auto* target : { isolated.get(), isolatedReference.get() })
+        {
+            target->setParamValue(cs80::P_footMode, footMode);
+            // Consume the UI mailbox before changing mode: the transition must
+            // restore the held physical position, not rely on a pending UI update.
+            // Identical note-free history keeps phase RNG and numerical state paired.
+            juce::AudioBuffer<float> consume(2, 512);
+            consume.clear();
+            juce::MidiBuffer empty;
+            target->processBlock(consume, empty);
+            target->setParamValue(cs80::P_parityMode, 1.0f);
+        }
+        // Only the reference receives a new mailbox update. Omitting the
+        // processor's transition reapply must no longer pass as paired silence
+        // or identically wrong expression on both instances.
+        isolatedReference->setExpressionFromUI(0.3f);
+        const double isolatedQuiet = rmsOf(*isolated), pairedQuiet = rmsOf(*isolatedReference);
+        check(isolatedQuiet > 0.0 && isolatedQuiet == pairedQuiet,
+              "EXP and EXP-WAH isolation transitions restore consumed pedal exactly like a pending UI update");
+        juce::AudioBuffer<float> isolatedBlock(2, 256);
+        juce::MidiBuffer ignoredCc;
+        ignoredCc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 127), 0);
+        isolated->processBlock(isolatedBlock, ignoredCc);
+        juce::AudioBuffer<float> referenceBlock(2, 256);
+        juce::MidiBuffer noCc;
+        isolatedReference->processBlock(referenceBlock, noCc);
+        float ccResidual = 0.0f;
+        for (int ch = 0; ch < 2; ++ch)
+            for (int sample = 0; sample < 256; ++sample)
+                ccResidual = std::max(ccResidual, std::abs(isolatedBlock.getSample(ch, sample)
+                                                          - referenceBlock.getSample(ch, sample)));
+        check(ccResidual == 0.0f, "isolated MIDI CC11 is sample-inert in EXP and EXP-WAH");
+        check(isolated->getExpressionValue() == 0.3f, "isolated CC11 cannot overwrite physical UI pedal");
+        for (double restartRate : { 48000.0, 96000.0 })
+        {
+            isolated->prepareToPlay(restartRate, 512);
+            isolatedReference->prepareToPlay(restartRate, 512);
+            isolatedReference->setExpressionFromUI(0.3f);
+            const double restarted = rmsOf(*isolated), unchanged = rmsOf(*isolatedReference);
+            check(unchanged > 0.0 && restarted == unchanged,
+                  "same-rate and changed-rate prepare restore EXP/WAH pedal without leaking ignored CC11");
+        }
     }
-    const double isolatedQuiet = rmsOf(*isolated), isolatedLoud = rmsOf(*isolatedFull);
-    const double pairedQuiet = rmsOf(*isolatedReference);
-    check(isolatedLoud > 0.0 && std::abs(isolatedQuiet / isolatedLoud - 0.3) < 1e-5,
-          "isolation transition reapplies consumed physical pedal with linear 0.3 gain");
-    check(std::abs(isolatedQuiet - pairedQuiet) < isolatedLoud * 1e-6,
-          "paired isolation render histories are deterministic");
-    juce::AudioBuffer<float> isolatedBlock(2, 256);
-    juce::MidiBuffer ignoredCc;
-    ignoredCc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 127), 0);
-    isolated->processBlock(isolatedBlock, ignoredCc);
-    juce::AudioBuffer<float> referenceBlock(2, 256);
-    juce::MidiBuffer noCc;
-    isolatedReference->processBlock(referenceBlock, noCc);
-    float ccResidual = 0.0f;
-    for (int ch = 0; ch < 2; ++ch)
-        for (int sample = 0; sample < 256; ++sample)
-            ccResidual = std::max(ccResidual, std::abs(isolatedBlock.getSample(ch, sample)
-                                                      - referenceBlock.getSample(ch, sample)));
-    check(ccResidual < 1e-7f, "isolated MIDI CC11 is sample-inert against paired physical-pedal render");
-    check(isolated->getExpressionValue() == 0.3f, "isolated CC11 cannot overwrite physical UI pedal");
-    isolated->prepareToPlay(48000.0, 512);
-    isolatedReference->prepareToPlay(48000.0, 512);
-    const double restarted = rmsOf(*isolated), unchanged = rmsOf(*isolatedReference);
-    check(unchanged > 0.0 && std::abs(restarted - unchanged) < unchanged * 1e-6,
-          "ignored CC11 cannot leak into isolation through prepareToPlay");
 
     // MIDI CC11 moves the shared value too, so the wheel can follow it.
     auto midiPedal = fresh(-1.0f);
@@ -1234,6 +1245,89 @@ void testPerformanceControlsHost()
     }
 }
 
+// Existing host controls must keep their event-time meaning as the isolation
+// PRA circuit replaces the legacy SVF. These compare complete audio streams;
+// they do not assume EXP is transparent or claim measured pedal calibration.
+void testIsolatedFootControllerHost()
+{
+    for (double rate : { 44100.0, 48000.0, 96000.0 })
+    {
+        auto renderScript = [&](const std::vector<int>& partitions, bool automateFoot, bool ignoredCc)
+        {
+            Cs80AudioProcessor target;
+            target.setParamValue(cs80::P_parityMode, 1.0f);
+            target.setParamValue(cs80::P_chorusOn, 0.0f);
+            target.prepareToPlay(rate, 512);
+            check(target.getLatencySamples() == 63, "PRA host integration preserves reported latency");
+            constexpr float pedals[] = { 0.15f, 0.95f, 0.25f, 0.8f, 0.0f, 0.6f, 1.0f, 0.35f };
+            constexpr float modes[] = { 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f };
+            constexpr int segmentFrames = 2048;
+            std::vector<float> rendered;
+            rendered.reserve(8 * segmentFrames * 2);
+            size_t nextPartition = 0;
+            bool finite = true, stereoIdentical = true;
+            double energy = 0.0;
+            for (int segment = 0; segment < 8; ++segment)
+            {
+                const float mode = automateFoot ? modes[segment] : 0.0f;
+                target.setParamValue(cs80::P_footMode, mode);
+                target.setExpressionFromUI(pedals[segment]);
+                // Invalid UI input cannot poison a previously published physical move.
+                target.setExpressionFromUI(std::numeric_limits<float>::quiet_NaN());
+                for (int offset = 0; offset < segmentFrames;)
+                {
+                    const int count = std::min(segmentFrames - offset,
+                                               partitions[nextPartition++ % partitions.size()]);
+                    juce::AudioBuffer<float> buffer(2, count);
+                    buffer.clear();
+                    juce::MidiBuffer midi;
+                    if (offset == 0)
+                    {
+                        if (segment == 0)
+                        {
+                            midi.addEvent(juce::MidiMessage::noteOn(1, 45, (juce::uint8) 100), 0);
+                            midi.addEvent(juce::MidiMessage::noteOn(1, 52, (juce::uint8) 100), 0);
+                        }
+                        if (segment == 7)
+                        {
+                            midi.addEvent(juce::MidiMessage::noteOff(1, 45), 0);
+                            midi.addEvent(juce::MidiMessage::noteOff(1, 52), 0);
+                        }
+                        if (ignoredCc)
+                            midi.addEvent(juce::MidiMessage::controllerEvent(1, 11, (segment & 1) ? 0 : 127),
+                                          std::min(17, count - 1));
+                    }
+                    target.processBlock(buffer, midi);
+                    for (int sample = 0; sample < count; ++sample)
+                    {
+                        const float left = buffer.getSample(0, sample), right = buffer.getSample(1, sample);
+                        finite = finite && std::isfinite(left) && std::isfinite(right);
+                        stereoIdentical = stereoIdentical && left == right;
+                        energy += (double) left * left + (double) right * right;
+                        rendered.push_back(left);
+                        rendered.push_back(right);
+                    }
+                    offset += count;
+                }
+                check(target.getEngine().getParams()[cs80::P_footMode] == mode,
+                      "host foot-mode automation reaches Engine during held notes and release");
+                check(target.getExpressionValue() == pedals[segment],
+                      "physical pedal wins over ignored isolated CC11 and nonfinite UI input");
+            }
+            check(finite && energy > 1e-8, "repeated isolated EXP/WAH and pedal reversals produce finite audible audio");
+            check(stereoIdentical, "paired isolated PRA channels remain identical with chorus disabled");
+            return rendered;
+        };
+        const auto regular = renderScript({ 512 }, true, false);
+        const auto irregular = renderScript({ 1, 31, 509, 7, 257, 97 }, true, false);
+        const auto withCc = renderScript({ 127, 1, 503, 17 }, true, true);
+        const auto dryOnly = renderScript({ 512 }, false, false);
+        check(regular == irregular, "isolated pedal/foot event timeline is sample-exact across host block partitions");
+        check(regular == withCc, "ignored CC11 does not change isolated moving-pedal/foot-switch audio");
+        check(regular != dryOnly, "host EXP-WAH automation audibly differs from the same pedal timeline in EXP");
+    }
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -1255,6 +1349,7 @@ int main(int argc, char** argv)
 
     testExternalInputHost();
     testPerformanceControlsHost();
+    testIsolatedFootControllerHost();
     testParityIsolationHost();
     testKeyPressureGesture();
     testKeyPressureGesture(true);

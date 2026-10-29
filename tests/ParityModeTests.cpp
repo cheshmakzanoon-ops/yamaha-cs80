@@ -198,14 +198,25 @@ int main()
           "tape-delay exit cannot resurrect damping history");
 
     // Direct original-controller proxies survive; only optional MIDI mappings go.
+    // PRA dry X is circuit-conditioned and changes with pedal resistance, so
+    // cross-pedal output is no longer a pure gain ratio. Keep the pedal identical
+    // and scale the source after the nonlinear voice filters instead: this still
+    // proves the isolated downstream path has no output soft clip. The separate
+    // PraWahIntegrationTests full-pipeline oracle proves downstream expression gain.
+    auto quieter = p;
+    for (int rank = 0; rank < 2; ++rank)
+        quieter[chParam(rank, CP_vLevel)] *= 0.25f;
     Engine full, pedal;
-    prepare(full, p); prepare(pedal, p);
+    prepare(full, p); prepare(pedal, quieter);
     full.noteOn(60, 0.8f); pedal.noteOn(60, 0.8f);
-    pedal.setExpression(0.25f);
+    full.setExpression(0.25f); pedal.setExpression(0.25f);
     auto a = render(full), b = render(pedal);
     double error = 0;
     for (size_t i = 0; i < a.size(); ++i) error = std::max(error, std::abs((double)b[i] - a[i] * 0.25));
-    check(error < 1.0e-8, "direct expression remains linear without output soft clip");
+    check(error < 1.0e-8, "same-pedal source scaling remains linear without output soft clip");
+    const double targetLog = std::log(1000000.0) + 0.25 * (std::log(2000.0)-std::log(1000000.0));
+    check(std::abs(std::log(pedal.getPraWahState(0).targetOhms)-targetLog) < 1.0e-12,
+          "direct physical expression remains active despite isolated MIDI CC11 mask");
     prepare(e, p); e.noteOn(60, 0.8f); e.polyPressure(60, 0.7f);
     check(e.getVoiceInfo(0).pressure == 0.7f, "direct poly pressure retained");
     e.setRibbon(0.5f); (void) render(e);

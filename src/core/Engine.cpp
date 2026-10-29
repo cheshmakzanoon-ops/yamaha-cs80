@@ -35,6 +35,10 @@ void Engine::prepare(double hostSampleRate)
     decL.prepare((float) internalRate);
     decR.prepare((float) internalRate);
     externalInput.prepare((float) hostRate);
+    // Engine rate guards imply a valid 16kHz..1.536MHz circuit rate. Profile
+    // defaults are documented engineering inferences, not measured calibration.
+    praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
+    praWahR.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
 
     Rng trimRng(0xC5801234u);
     for (auto& v : voices)
@@ -107,6 +111,10 @@ void Engine::reset()
     decR.reset();
     wahL.reset();
     wahR.reset();
+    // reset() also restores expression to 1 below: do not start an optical
+    // sweep from the previous pedal value or let a bypassed tail survive.
+    praWahL.reset(1.0);
+    praWahR.reset(1.0);
     wahMix = global.pedalWah ? 1.0f : 0.0f;
     wahRunning = false;
     outputGain = outputLevelGain(global.outputHigh);
@@ -1177,10 +1185,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         mixR = lerp(mixR, mixR * carrier, amount);
     }
 
-    // PRA EXP-WAH. EXP passes the dry branch only, EXP-WAH the processed branch
-    // only; the crossfade merely hides the switch. Placement after the ring
-    // modulator and before the chorus is an assumption: the PRA harness block
-    // diagram that fixes it is not in the evidence set.
+    // PRA EXP-WAH: documented ring -> PRA -> OE1/OE2 -> expression order
+    // (docs/OE1_SIGNAL_ROUTING_EVIDENCE.md). The 12ms switching crossfade is
+    // an inferred de-click policy, not a recovered FET transient law.
     {
         const float wahTarget = global.pedalWah ? 1.0f : 0.0f;
         if (wahMix != wahTarget)
@@ -1189,7 +1196,19 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             if (std::abs(wahMix - wahTarget) < 1.0e-4f)
                 wahMix = wahTarget;
         }
-        if (wahMix > 0.0f)
+        if (global.parityMode)
+        {
+            praWahL.setPedal(expression);
+            praWahR.setPedal(expression);
+            // Always clock all four physical capacitor states, including when
+            // EXP selects dry. Dry X includes input coupling/source loading;
+            // wet Y already includes VR2 gain: no SVF or extra normalization.
+            const auto left = praWahL.process(mixL);
+            const auto right = praWahR.process(mixR);
+            mixL = lerp((float) left.x, (float) left.y, wahMix);
+            mixR = lerp((float) right.x, (float) right.y, wahMix);
+        }
+        else if (wahMix > 0.0f)
         {
             const float pedalHz = wahCentreHz(expression);
             // Start on the pedal position rather than sweeping up from a stale value.
@@ -1378,6 +1397,15 @@ Engine::RankEnvelopeState Engine::getRankEnvelopeState(int voice, int rank) cons
         return {};
     const auto& r = voices[(size_t) voice].ranks[rank];
     return { r.aenv.getState(), r.fenv.getState() };
+}
+
+Engine::PraWahState Engine::getPraWahState(int channel) const noexcept
+{
+    if (channel < 0 || channel > 1)
+        return {};
+    const auto& circuit = channel == 0 ? praWahL : praWahR;
+    return { circuit.capacitorState(), circuit.sampleRate(), circuit.opticalResistance(),
+             circuit.targetOpticalResistance(), wahMix };
 }
 
 } // namespace cs80
