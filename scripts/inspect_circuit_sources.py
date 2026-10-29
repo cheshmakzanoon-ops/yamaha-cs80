@@ -117,6 +117,7 @@ def emit_image(gray, page, url, data):
     focus = {
         "panel2": [("contour-controls", (3350, 1900, 4500, 3250))],
         "kbc": [
+            ("decoder-rails", (550, 1400, 1400, 1700)),
             ("reference-routing", (1400, 1700, 2600, 3100)),
             ("decoder", (500, 700, 2400, 2200)),
             ("ladder", (1750, 800, 2600, 3000)),

@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [m, kasguide14, kasguide21, kasguide22, kasguide23]
+        page: [kbc]
     steps:
       - uses: actions/checkout@v5
         with:
