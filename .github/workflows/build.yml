@@ -216,6 +216,14 @@ jobs:
           set +e
           set -o pipefail
           mkdir -p pluginval-diagnostic-reports
+          seed_args=()
+          seed="$(python3 scripts/pluginval-diagnostic-seed.py pluginval-gui.log)"
+          if [ -n "$seed" ]; then
+            seed_args=(--random-seed "$seed")
+            echo "Diagnostic replay seed: $seed"
+          else
+            echo "Diagnostic seed differs or is unmatched; nonreproduction cannot isolate debugger timing."
+          fi
           timeout --signal=TERM --kill-after=10s 240s \
             xvfb-run -a -s "-screen 0 1920x1200x24" \
             gdb -nx -nh --batch --return-child-result \
@@ -227,6 +235,7 @@ jobs:
             -ex "run" \
             -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
             --args ./pluginval/pluginval \
+            "${seed_args[@]}" \
             --strictness-level 10 \
             --validate-in-process \
             --timeout-ms 120000 \
@@ -236,6 +245,58 @@ jobs:
           statuses=("${PIPESTATUS[@]}")
           echo "Diagnostic process exit: ${statuses[0]}; log capture exit: ${statuses[1]}"
           echo "Original validation remains failed. This rerun is diagnostic evidence only."
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      # Additional diagnostic only: never changes the preceding strict gate.
+      - name: Build and test fault-thread diagnostic shim
+        id: build_trace
+        if: always() && !cancelled()
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc libunwind-dev
+          mkdir -p pluginval-trace-tools
+          cc -std=c11 -O2 -Wall -Wextra -Werror -fPIC -shared -Wl,-z,now \
+            scripts/pluginval-fault-trace.c -lunwind \
+            -o pluginval-trace-tools/fault-trace.so
+          cc -std=c11 -O0 -g -Wall -Wextra -Werror -rdynamic -pthread \
+            scripts/pluginval-fault-fixture.c \
+            -o pluginval-trace-tools/fault-fixture
+          python3 scripts/test-pluginval-fault-trace.py \
+            pluginval-trace-tools/fault-trace.so pluginval-trace-tools/fault-fixture
+
+      - name: Diagnose GUI validator with fault-thread trace
+        if: failure() && steps.validate_gui.outcome == 'failure' && steps.build_trace.outcome == 'success'
+        run: |
+          set +e
+          set -o pipefail
+          mkdir -p pluginval-trace-reports
+          seed_args=()
+          seed="$(python3 scripts/pluginval-diagnostic-seed.py pluginval-gui.log)"
+          if [ -n "$seed" ]; then
+            seed_args=(--random-seed "$seed")
+            echo "Diagnostic replay seed: $seed"
+          else
+            echo "Diagnostic seed differs or is unmatched; nonreproduction cannot isolate debugger timing."
+          fi
+          # Preload the validator (and possible descendants), not timeout/Xvfb/env.
+          # One rerun, same binary and plugin. It cannot replace the failed gate.
+          timeout --signal=TERM --kill-after=10s 240s \
+            xvfb-run -a -s "-screen 0 1920x1200x24" \
+            env LD_PRELOAD="$PWD/pluginval-trace-tools/fault-trace.so" \
+            ./pluginval/pluginval "${seed_args[@]}" \
+            --strictness-level 10 \
+            --validate-in-process \
+            --timeout-ms 120000 \
+            --output-dir "$PWD/pluginval-trace-reports" \
+            --output-filename cs80-gui-trace \
+            "$PWD/vst3/CS-80 Reference.vst3" \
+            198>pluginval-fault-trace.log 2>&1 | tee pluginval-gui-trace.log
+          statuses=("${PIPESTATUS[@]}")
+          cat pluginval-fault-trace.log
+          echo "Trace diagnostic process exit: ${statuses[0]}; log capture exit: ${statuses[1]}"
+          echo "Original validation remains failed; diagnostic nonreproduction is inconclusive."
           if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
           exit "${statuses[0]}"
 
@@ -260,6 +321,9 @@ jobs:
             pluginval-gui.log
             pluginval-gui-attempt*.log
             pluginval-gui-gdb.log
+            pluginval-gui-trace.log
+            pluginval-fault-trace.log
+            pluginval-trace-reports
             pluginval-headless-core.log
             pluginval-gui-core.log
             pluginval-core-fixture.log
