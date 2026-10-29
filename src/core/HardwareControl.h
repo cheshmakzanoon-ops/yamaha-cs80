@@ -78,7 +78,7 @@ inline constexpr std::array<OutputRow, 11> verifiedOutputs {{
     { 9, "LPF", { kiloOhms(1), kiloOhms(5.1), kiloOhms(7.5), ohms(750), kiloOhms(4.3), kiloOhms(13) } },
     { 10, "RESL", { directBranch, kiloOhms(6.8), kiloOhms(30), directBranch, kiloOhms(3.6), kiloOhms(15) } },
     { 11, "IL", { kiloOhms(16), kiloOhms(43), kiloOhms(9.1), openBranch, kiloOhms(9.1), kiloOhms(27) } },
-    { 12, "AL", { kiloOhms(3.6), kiloOhms(15), kiloOhms(130), openBranch, kiloOhms(20), kiloOhms(1.6) } },
+    { 12, "AL", { kiloOhms(3.6), kiloOhms(13), kiloOhms(130), openBranch, kiloOhms(20), kiloOhms(1.6) } },
     { 13, "VCF attack", { kiloOhms(30), kiloOhms(62), kiloOhms(18), directBranch, kiloOhms(120), kiloOhms(15) } },
     { 14, "VCF decay", { kiloOhms(12), kiloOhms(51), kiloOhms(51), directBranch, kiloOhms(13), kiloOhms(12) } },
     { 15, "VCF release", { kiloOhms(1.2), directBranch, kiloOhms(3.6), directBranch, directBranch, kiloOhms(3.9) } },

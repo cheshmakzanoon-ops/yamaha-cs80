@@ -49,7 +49,7 @@ Values are in **kΩ**, except where explicitly marked Ω.
 | 9 | LPF | 1 | 5.1 | 7.5 | **750 Ω** | 4.3 | 13 |
 | 10 | RESL | direct | 6.8 | 30 | direct | 3.6 | 15 |
 | 11 | IL | 16 | 43 | 9.1 | open | 9.1 | 27 |
-| 12 | AL | 3.6 | 15 | 130 | open | 20 | 1.6 |
+| 12 | AL | 3.6 | 13 | 130 | open | 20 | 1.6 |
 | 13 | VCF attack | 30 | 62 | 18 | direct | 120 | 15 |
 | 14 | VCF decay | 12 | 51 | 51 | direct | 13 | 12 |
 | 15 | VCF release | 1.2 | direct | 3.6 | direct | direct | 3.9 |
@@ -59,6 +59,17 @@ Values are in **kΩ**, except where explicitly marked Ω.
 These values establish genuine rank-I/rank-II voicing differences. They do **not** by themselves establish normalized software-slider positions or envelope durations.
 
 Later service revisions may alter marked components. Preserve source revision when extending the transcription.
+
+**Native-source correction, 2026-10-29:** T51/C/12 (Brass 1 AL) is printed
+**13K**, not the previously transcribed 15K. Two independent visual readers
+traced column C to output12 in native tiles `t51-native-r0-c1` and
+`t51-native-r0-c2`, [inspection job123175135239](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40790769942/job/123175135239).
+Original source SHA256:
+`009384403e4c4b8e855daf6153219b3a94e6904d1f605393f3eda27968b9e014`.
+Only this source-data entry and its conditional regression fixture are corrected;
+no production audio or provisional preset parameter changes.
+See [native review](PRESET_NATIVE_MATRIX_REVIEW.md) for crop hashes and remaining
+unverified/revision-marked entries.
 
 ### Output-number map
 

@@ -18,6 +18,8 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "icguide_vco": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
+    "icguide_kas": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "t51": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/31%20-%20T51%20Circuit%20Diagram.jpg",
     "t52": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/33%20-%20T52%20Circuit%20Diagram.jpg",
     "t53": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/35%20-%20T53%20Circuit%20Diagram.jpg",
@@ -167,6 +169,18 @@ def inspect_pdf(url, data, key):
             selected = [52]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "fixed original CS-20M Figure F-4 source target"}), flush=True)
+        elif key == "icguide_vco":
+            if count < 40:
+                raise ValueError("guidebook fixed oscillator candidate page40 absent")
+            selected = [35, 36, 39, 40]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "index-derived IG00153/IG00158 candidates; verify rendered identity"}), flush=True)
+        elif key == "icguide_kas":
+            if count < 18:
+                raise ValueError("guidebook fixed keyboard IC candidate pages15..18 absent")
+            selected = [15, 16, 17, 18]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "index-derived YM26600/YM26700 candidates; verify rendered identity"}), flush=True)
         elif key == "icguide_156":
             if count < 38:
                 raise ValueError("guidebook fixed IG00156 pages37..38 absent")
@@ -221,7 +235,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "cs20m_q"}:
+    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)

@@ -52,7 +52,7 @@ int main()
         { 1000, 5100, 7500, 750, 4300, 13000 },
         { 0, 6800, 30000, 0, 3600, 15000 },
         { 16000, 43000, 9100, -1, 9100, 27000 },
-        { 3600, 15000, 130000, -1, 20000, 1600 },
+        { 3600, 13000, 130000, -1, 20000, 1600 },
         { 30000, 62000, 18000, 0, 120000, 15000 },
         { 12000, 51000, 51000, 0, 13000, 12000 },
         { 1200, 0, 3600, 0, 0, 3900 },
@@ -94,6 +94,15 @@ int main()
         check(!c.tone.empty() && c.source == (c.board == 51 ? t51Source : t53Source),
               "tone source attribution");
     }
+    // Native T51 source independently re-read by two reviewers: C/output12
+    // is 13K, not the earlier 15K transcription. Still a conditional DC model.
+    const auto brass1AL = findBranch(51, 'C', 12);
+    check(brass1AL.kind == BranchKind::resistor && brass1AL.sourceValue == 13.0
+          && brass1AL.sourceUnit == ResistanceUnit::kiloOhms,
+          "T51/C/12 native-source correction preserves printed 13K");
+    near(solveBus(brass1AL, illustration), 4.347826086956522,
+         "T51/C/12 corrected conditional divider, not an authenticated AL parameter");
+
     const auto printed750 = findBranch(53, 'A', 9);
     check(printed750.sourceValue == 750.0 && printed750.sourceUnit == ResistanceUnit::ohms,
           "preserve printed 750 ohms, not 750 kilohms");

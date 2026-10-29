@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [t51, t52, t53, t54, panel1, mkb, toneselector]
+        page: [icguide_kas, icguide_vco]
     steps:
       - uses: actions/checkout@v5
         with:
@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install official Ubuntu PDF inspection tools
-        if: matrix.page == 'icguide' || matrix.page == 'icguide_index' || matrix.page == 'icguide_offset' || matrix.page == 'icguide_156' || matrix.page == 'cs20m_q'
+        if: matrix.page == 'icguide' || matrix.page == 'icguide_index' || matrix.page == 'icguide_offset' || matrix.page == 'icguide_156' || matrix.page == 'icguide_kas' || matrix.page == 'icguide_vco' || matrix.page == 'cs20m_q'
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils
       - name: Install source inspection dependency
         run: python -m pip install 'Pillow==11.3.0'
