@@ -74,7 +74,7 @@ The four IG00151 control branches and clock modulation must be solved together w
 ## 5. Exact next evidence gates
 
 1. **MN3001 device-to-board validation:** the manufacturer supplement below resolves stage identity and clock-period convention. Full tap transfer, operating/bias conditions and characterized loss/noise/bandwidth still need integration with the actual OE2 circuit and measurements. No substitute MN30xx model.
-2. **BA617 datasheet and original service adjustment procedure:** oscillator law, valid control range, TP1/TP2 target frequency/waveform and trim conditions. No nominal delay/clock range is derivable from these two board drawings alone.
+2. **BA617 quantitative behavior:** [BA617_SOURCE_REVIEW.md](BA617_SOURCE_REVIEW.md) now establishes functional pins and the TP1 alignment period of7–12.5µs under specified no-modulation settings. It does not establish an oscillator equation, control-input limits, installed unit trim, full modulation endpoints or a separate TP2 target. The nominal timing inference is explicitly bounded to that alignment setup.
 3. **OE1 control-network analysis and calibration:** operating switch states, control waveforms, phase/depth and IG00151 settings. Circuit revisions and component tolerances must be reconciled.
 4. **Physical measurements:** clock and control waveforms across settings, impulse/frequency response, insertion level, distortion/noise and switching transients. Source topology does not close the physical-data gate.
 
@@ -106,7 +106,7 @@ Directly downloaded OE57/58 originals are 5100×3300. Local artifacts: `artifact
 
 MN3001 contains **two independent 512-stage chains**. The timing page defines **T = 1/fCP** and depicts complementary CP1/CP2 waveforms. The device-level 10–800 kHz / 0.32–25.6 ms endpoints are consistent with nominal **t = 256/fCP seconds** per chain. That relation is an inference from the stated stages, timing convention and endpoints—not a measured CS-80 delay law. The internal drawing includes output-end stages beyond the nominal512 labels; exact output-tap phase/recombination still requires analysis. Do not equate the datasheet range or its typical40 kHz condition with the CS-80 operating range.
 
-This resolves the device stage-count gap. BA617 control law, installed trim settings and CS-80 clock measurements remain required.
+This resolves the device stage-count gap. The later [BA617 review](BA617_SOURCE_REVIEW.md) adds pin roles and a manufacturer alignment interval; BA617 control law, installed trim settings and actual CS-80 clock measurements remain required.
 
 PDF SHA-256: `a99dc2cbb7aa735ff2f69a1cc06d863ba6ac25798eada44b6558748aee445dec`. Full-page PNG renders use PyMuPDF scale1.5 (108 dpi), no crop, with page bounds recorded below; these are PDF renders, not native scan-pixel crops.
 

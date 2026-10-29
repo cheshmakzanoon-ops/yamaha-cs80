@@ -30,3 +30,16 @@ This is diagnostic infrastructure, not proof that a crash is in the validator,
 the plugin, or a particular library. Tests printing SUCCESS before process exit
 do not turn exit139 into a pass. Record exact source, validator version, run,
 attempt and evidence when diagnosing intermittent failures.
+
+
+## 2026-10-29 checkpoint: post-success exit remains a failure
+
+Commit `f89de6382b40c278e02497cc439178ca442c9dc7`, [build run40925492958](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40925492958), Linux validator job123632463354:
+
+- Headless seed `0x382bb75`: SUCCESS and exit0.
+- GUI seed `0x2afb526`: SUCCESS, then exit139; this gate failed.
+- Known state-regression seed `0x2da72db`: SUCCESS and exit0.
+- Same-seed GDB and fault-trace diagnostic replays exited0. Nonreproduction is inconclusive; they do not replace the failed original invocation or establish ownership of this particular crash.
+- All four platform build/test jobs, Windows validation and both native macOS VST3/AU/GUI validations passed. DSP, compatibility and screenshot workflows passed. The overall build workflow remains failed because of the Linux GUI process exit.
+
+The previous executable checkpoint `1962ae5308521c6fa03ea9c3040cc9cada5472a4` passed all its workflows; that does not erase this later intermittent failure. No assertion failure was logged in this invocation, and no new crash stack was obtained. Pluginval remains the official released1.0.4; its latest release was rechecked on2026-10-29. Do not relabel a post-SUCCESS crash as a pass, retry until green, or infer a fixed teardown defect from successful diagnostic replays.
