@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "twswiring": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/18%20-%20TWS%20Circuit%20Board%20%26%20Wiring.jpg",
     "kas04": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/04%20-%20KAS%20schematic.jpg",
     "kas05": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/05%20-%20KAS%20Circuit%20Board%20%26%20Wiring.jpg",
     "cs80adjust": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
@@ -95,7 +96,7 @@ def emit_image(gray, page, url, data):
     }), flush=True)
     boxes = []
     # Dense resistor and keyboard-code labels require native pixels, not overview resampling.
-    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05"}:
+    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring"}:
         cols, rows = (w + 2199) // 2200, (h + 2199) // 2200
         if cols * rows > 16:
             raise ValueError("native preset grid exceeds 16-tile bound")
@@ -133,6 +134,8 @@ def emit_image(gray, page, url, data):
         "m": [("filter-detail", (1180, 1080, 3250, 1850)),
               ("oscillator-detail", (400, 1100, 1800, 2600))],
         "tws": [
+            ("hold-glyphs-left", (650, 1700, 3050, 2050)),
+            ("hold-glyphs-right", (3000, 1700, 5100, 2050)),
             ("voice1-upper", (650, 550, 1250, 1850)),
             ("voice1-lower", (650, 1600, 1250, 3100)),
         ],

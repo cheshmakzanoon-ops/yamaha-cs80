@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [kas04, kas05]
+        page: [tws, twswiring]
     steps:
       - uses: actions/checkout@v5
         with:
