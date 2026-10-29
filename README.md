@@ -61,7 +61,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest fully verified executable checkpoint, [`5d3b3f3`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/5d3b3f3d7d9b73b4f29bd2d5b31c17d01b85d140), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40964061457), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40964061046), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40964061113). The local GNU core-only configuration has 29 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
+The latest fully verified executable checkpoint, [`8bb9b81`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/8bb9b81472c7618e910d385d27fc315a8fd40c8b), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40969276611), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40969276513), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40969276497). The local GNU core-only configuration has 29 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
@@ -90,6 +90,8 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 | BBD clock-event reference | 97,650 normalized signal-packet checks; not a charge, voltage or calibrated audio model |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
 | CI (`build.yml`) | Linux, native Apple Silicon and Intel macOS (VST3, AU, Standalone), and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
+
+A [source-pinned cloud timing audit](docs/performance/2026-10-29/SUMMARY.md) measured eight dual-rank voices: at 48kHz/256 samples, isolation median callback time was 1.24–1.29ms against a 5.33ms budget. At 192kHz the budget was tight and many callbacks exceeded it. These are limited cloud-core timings, not a DAW or hard-realtime guarantee.
 
 The core and performance suites have also been run under AddressSanitizer and UndefinedBehaviorSanitizer (leak detection off; no leak-clean claim). **None of this compares anything to hardware.** There is no reference capture corpus in the repository. Consult the exact-commit Actions results rather than this table for any specific revision. The known intermittent Linux validator post-SUCCESS exit139 remains a failed gate when it occurs; [recorded checkpoints](docs/VALIDATOR_DIAGNOSTICS.md) distinguish successful tests from unsuccessful process exit.
 
