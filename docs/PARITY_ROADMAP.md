@@ -125,7 +125,7 @@ The model still maps normalized panel positions to behavior. The original is a n
 
 - IG00150 exponential speed converter (including the touch-to-speed currents), calibrated against the documented 200 Hz point.
 - Ring: carrier law, envelope-to-frequency transfer (replace `kProvisionalRingFrequencyExcursion`), multiplier DC and feedthrough, calibrated to the ADJ p19 anchors and extended across speed x depth.
-- **PRA wah**: solve the verified IC1/IC2 active RC network with measured optical resistances (pedal travel to EI, EI to resistance with dynamics, WI to WO response, dry/processed insertion level) and retain the verified ring-blend → wah → OE1/OE2 → optical-expression → volume order ([routing evidence](OE1_SIGNAL_ROUTING_EVIDENCE.md)). Replaces the swept band-pass stand-in.
+- **PRA wah**: the [conditional small-signal reference](PRA_WAH_REFERENCE_DESIGN.md) derives the ideal-op-amp network up to IC2 pin13 before FET2. Optical resistance, an unresolved parallel resistor and omitted source/load boundaries remain explicit caller inputs; it does not drive audio. Next, solve the complete IC1/IC2 active RC network with measured optical resistances (pedal travel to EI, EI to resistance with dynamics, WI to WO response, dry/processed insertion level) and retain the verified ring-blend → wah → OE1/OE2 → optical-expression → volume order ([routing evidence](OE1_SIGNAL_ROUTING_EVIDENCE.md)). Replaces the swept band-pass stand-in.
 - Chorus/tremolo: [OE2 evidence](OE2_CIRCUIT_EVIDENCE.md) now identifies the device and branch graph; [MN3001 clock-event reference](MN3001_CLOCK_EVENT_DESIGN.md) implements only an explicitly normalized packet-timing abstraction, with no pin/charge calibration or production integration. Actual phase/amplitude control, bias, charge transfer, clock law and complete OE1/OE2 response remain open; the current audible chorus is still a generic modulated delay.
 - Footswitch edge transients and the real release-cancellation behavior.
 
@@ -260,7 +260,7 @@ Other workflows: `build.yml` (3-platform build, tests, pluginval 10 including GU
 
 - Default ANALOG DRIFT is large (see section 5) and arbitrary; decide whether it stays a creative control outside parity mode.
 - Three of five voice trims are generated but unused.
-- Oscillator phase is randomized per note start; whether the original free-runs is unresolved (W3, W2).
+- In isolation mode, active unheld tail reassignment preserves oscillator phase and filter state. Full idle free-running and held key-voltage evolution remain unresolved (W3, W2); default-off and inactive assignment retain the previous reset policy.
 - Whether the original continuously rescans and reconsiders a still-held ninth key is unresolved (W2).
 - The KAS-to-KBC code mapping contradicts the CS-80 calibration keys under the naive reading (KEYBOARD_CONTOUR_EVIDENCE.md).
 - PRA placement is now source-verified in [OE1_SIGNAL_ROUTING_EVIDENCE.md](OE1_SIGNAL_ROUTING_EVIDENCE.md); detailed OE2 transfer and optical laws remain open. [OE2_CIRCUIT_EVIDENCE.md](OE2_CIRCUIT_EVIDENCE.md) resolves I(53), records the four parallel VCA returns and verifies the manufacturer dual 512-stage identity; installed clock/modulation calibration is still missing.

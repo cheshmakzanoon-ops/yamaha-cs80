@@ -45,7 +45,7 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | Voice variation | Approximate | Per-voice tuning and pan scatter, slow drift, noise floor: arbitrary, not measured tolerances |
 | Host / plugin layer | Implemented | 244 append-only host parameters, state migration, preset library, pluginval 10 on every platform |
 
-The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots, MPE, arpeggiator) are deliberate software extensions, listed in the roadmap so they can be made inert in a future parity mode.
+The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots, MPE, arpeggiator) are deliberate software extensions. The opt-in isolation mode makes them inert without rewriting stored patches.
 
 ### What the tests and CI prove (and what they do not)
 
@@ -58,6 +58,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) eight-voice rank network (14,012), and conditional RC transients (1,882) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
 | Legacy compatibility CI | Same-compiler byte comparison against pinned baseline: shipped 222 presets at 3 rates, normal and noisy reassignment scenarios |
+| PRA wah AC reference | 28,686 independent nodal/KCL checks of an idealized conditional network; no calibrated pedal or WI-to-WO transfer |
 | BBD clock-event reference | 97,650 normalized signal-packet checks; not a charge, voltage or calibrated audio model |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
 | CI (`build.yml`) | Linux, native Apple Silicon and Intel macOS (VST3, AU, Standalone), and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
@@ -201,6 +202,7 @@ docs/                           evidence ledgers and audits (index below)
 | [HARDWARE_COVERAGE.md](docs/HARDWARE_COVERAGE.md) | Every original control, connector and circuit block with status and next acceptance action |
 | [HARDWARE_REFERENCES.md](docs/HARDWARE_REFERENCES.md) | Primary sources, tone-selector order, IC-level facts, calibration anchors |
 | [MN3001_CLOCK_EVENT_DESIGN.md](docs/MN3001_CLOCK_EVENT_DESIGN.md) | Offline, explicitly idealized clock-event packet reference and physical-model exclusions |
+| [PRA_WAH_REFERENCE_DESIGN.md](docs/PRA_WAH_REFERENCE_DESIGN.md) | Conditional offline ideal-op-amp wah network, explicit optical/loading boundaries; not calibrated WI-to-WO audio |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |
 | [PRESET_FOLDOUT_SOURCE_REVIEW.md](docs/PRESET_FOLDOUT_SOURCE_REVIEW.md) | Independent alternate-source matrix evidence; conflicts retained, still 547/25 |
