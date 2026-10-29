@@ -43,3 +43,14 @@ Commit `f89de6382b40c278e02497cc439178ca442c9dc7`, [build run40925492958](https:
 - All four platform build/test jobs, Windows validation and both native macOS VST3/AU/GUI validations passed. DSP, compatibility and screenshot workflows passed. The overall build workflow remains failed because of the Linux GUI process exit.
 
 The previous executable checkpoint `1962ae5308521c6fa03ea9c3040cc9cada5472a4` passed all its workflows; that does not erase this later intermittent failure. No assertion failure was logged in this invocation, and no new crash stack was obtained. Pluginval remains the official released1.0.4; its latest release was rechecked on2026-10-29. Do not relabel a post-SUCCESS crash as a pass, retry until green, or infer a fixed teardown defect from successful diagnostic replays.
+
+## 2026-10-29 PRA reference checkpoint
+
+Commit `2c93ca0f0df9992d8839f094d4f5a25004dea11c`, [build run40933500223](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40933500223), Linux validator job123660820515:
+
+- Original headless seed `0x65245c3` printed SUCCESS, then exited139. No assertion failure was logged; the process gate failed.
+- GUI and fixed-seed validation were not reached after the headless failure. Do not count them as passed.
+- No local ELF core was available and no new crash stack was obtained. Diagnostic infrastructure fixture tests passed, but no actual same-seed validator replay was recorded in this job.
+- DSP numerical, sanitizer, raw legacy-compatibility and screenshot workflows passed. These do not override the failed host-validator gate. All four platform builds/tests, both native macOS validations and Windows validation also passed. The overall build remains failed solely at the recorded Linux validator gate.
+
+This checkpoint adds offline reference code, not a validator repair. A later successful run, if any, cannot erase this original failure.

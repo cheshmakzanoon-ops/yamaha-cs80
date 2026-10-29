@@ -135,7 +135,7 @@ HIGH/LOW levels (currently an arbitrary -20 dB), output coupling poles and headr
 
 ### W9. Presets, programmer and memories (document-derivable until the final comparison)
 
-Source checkpoint: [PRESET_RECEIVER_PORTS.md](PRESET_RECEIVER_PORTS.md) records all 26 rank-I first-hop destinations with reviewed native evidence. Complete fanout, intermediary BA/SUB/TRG behavior, rank-II continuity and quantitative receiver-current laws remain open.
+Source checkpoint: [PRESET_RECEIVER_PORTS.md](PRESET_RECEIVER_PORTS.md) records all 26 rank-I first-hop destinations with reviewed native evidence. The [rank-II receiver ledger](RANK_II_RECEIVER_PORTS.md) now records all 26 first hops, individually traced M21–M28 harness connections and R52 destinations. Full intermediary BA/SUB/TRG behavior, conflicting memory endpoints, passive Q/level solves and quantitative receiver-current laws remain open.
 
 The 22 factory tone voicings are placeholders; the preset circuits are the source.
 
