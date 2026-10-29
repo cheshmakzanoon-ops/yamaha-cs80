@@ -374,6 +374,12 @@ private:
     float a = 0.0f, d = 0.0f, s = 0.0f, r = 0.0f;
 };
 
+// Per-voice tuning scatter at VOICE DISPERSION = 1, in cents. Arbitrary software
+// scatter, not a measured tolerance of any instrument. It was formerly added to a
+// semitone pitch without the cents conversion, detuning default voices by over two
+// semitones; see docs/PARITY_ROADMAP.md (voice variation).
+inline constexpr float kProvisionalVoiceTuneSpreadCents = 7.0f;
+
 // The original IL is below the steady cutoff; AL is above it. Preserve the
 // existing three-octave model scale, but expose its uncalibrated nature instead
 // of treating printed -5/+5 panel markings as octave measurements.

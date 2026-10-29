@@ -92,7 +92,9 @@ The ribbon uses first-touch-relative displacement, a provisional linear frequenc
 
 ## Voice dispersion and drift
 
-`voice_dispersion` scales deterministic per-card trims for tune, cutoff, level, pan and envelope. At zero the eight voices are calibrated. At 0.4-0.6 they spread enough to produce the unstable, chorused quality of a large analog polyphonic.
+`voice_dispersion` scales deterministic per-voice, per-rank random trims. Only two of the five trims that are generated are consumed: **tuning** (up to 7 cents at full dispersion, `kProvisionalVoiceTuneSpreadCents`, so about 2.5 cents at the 0.35 default) and **pan**. Cutoff, level and envelope trims are generated but not yet read by the audio path. At zero the eight voices are exactly in tune. The scatter is arbitrary software variation, not a measured tolerance.
+
+Until 2026-10-29 the tuning trim was added to a semitone pitch without the cents conversion, so default voices sat up to about 2 semitones off pitch. Older pitch tests all zeroed dispersion and could not see it; `testDefaultVoiceTuning` now covers the default.
 
 `drift` adds a slow independent sine movement per voice. `analog_noise` adds a low-level noise floor after the voice mix. These are performance controls, not random modulation that changes the patch on every block.
 

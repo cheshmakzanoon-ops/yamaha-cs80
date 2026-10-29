@@ -608,6 +608,46 @@ void testFilterControlDomain()
               "filter cutoff proportional to gliding key voltage");
 }
 
+void testDefaultVoiceTuning()
+{
+    // Regression: the per-voice tuning scatter was once added to a semitone pitch in
+    // cents' units, so default voices sat up to ~2 semitones off. Every older test
+    // zeroed dispersion first, so none of them could see it.
+    auto spreadCents = [](float dispersion, bool secondRank)
+    {
+        Engine e;
+        e.prepare(48000);
+        ParamValues p;
+        p[P_voiceDispersion] = dispersion;
+        p[P_drift] = 0.0f;
+        p[P_detune] = 0.0f;
+        e.setParams(p);
+        for (int i = 0; i < 8; ++i)
+            e.noteOn(60 + i, 0.8f);
+        render(e, 48000, 4800);
+        double worst = 0.0;
+        for (int v = 0; v < 8; ++v)
+        {
+            const auto info = e.getVoiceInfo(v);
+            if (! info.active)
+                continue;
+            const float hz = e.getRankInfo(v, secondRank ? 1 : 0).oscillatorHz;
+            worst = std::max(worst, std::abs(1200.0 * std::log2((double) hz / midiToHz((float) info.note))));
+        }
+        return worst;
+    };
+    for (bool second : {false, true})
+    {
+        check(spreadCents(0.0f, second) < 1e-3, "zero dispersion leaves every voice exactly in tune");
+        const double atDefault = spreadCents(ParamValues{}[P_voiceDispersion], second);
+        check(atDefault < 7.0 * ParamValues{}[P_voiceDispersion] + 1e-3,
+              "default dispersion detunes voices by a few cents at most, not semitones");
+        check(atDefault > 0.1, "default dispersion still scatters the voices");
+        check(spreadCents(1.0f, second) < kProvisionalVoiceTuneSpreadCents + 1e-3,
+              "full dispersion stays inside the documented 7 cent spread");
+    }
+}
+
 void testSustainTimeAndWheelRouting()
 {
     for (int mode : {0,1})
@@ -1842,6 +1882,7 @@ int main()
     testDecimator();
     testFilterControlDomain();
     testSustainTimeAndWheelRouting();
+    testDefaultVoiceTuning();
     testSustainPedal();
     testAllSoundOff();
     testChannelPanic();

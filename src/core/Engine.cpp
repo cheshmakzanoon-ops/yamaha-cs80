@@ -973,7 +973,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                           + lfoPitch
                           + subValue * (global.subVco + global.subAtVco * v.pressure) * 1.5f
                           + subValue * modWheel * global.modWheelSub * 2.0f
-                          + r.trimTune * dispersion * 7.0f
+                          + r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f)
                           + driftVoice;
 
             if (global.glideMode == 2 && global.glideGate)
