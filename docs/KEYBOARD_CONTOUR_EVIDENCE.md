@@ -106,6 +106,39 @@ Original Yamaha CS Series Servicing Guide scans were inspected in run40794512782
 
 These pages do not establish the complete CS80 mapping: their worked example explicitly has four voices and49 keys. The later narrow KBC crop resolves the rail-junction dispute and a second reader corroborates the endpoint control wires. Remaining work is the mapping from actual CS80 B codes through delayed/latched Q states to the YM26700 OC selection, including its extra octave and applicable chip mode. Smoothness is a diagnostic expectation, not a primary-source proof; do not alter verified wiring to force continuity. Likewise do not infer the missing octave by extrapolation. The conditional network table is reproducible, but not yet a complete physical-key implementation.
 
+
+### CS80-specific calibration anchors
+
+Original Yamaha [Adjustment Procedures and updates](https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF), PDF29/printed27 and PDF30/printed28, were inspected in run40797172086 job123196345195 at source revision5db8a01fcfe6f61ae18596edb91d0f487463b9f5. These are actual CS80 calibration procedures, not the generic49-key IC example.
+
+|Control setting|Physical key label in manual|Board / trimmer|DVM testpoint|Printed target|
+|---|---|---|---|---|
+|LOW BRILLIANCE minimum|C2|KBC1 / VR1|O1|−2.76±0.14V|
+|HIGH BRILLIANCE maximum|C5#|KBC1 / VR2|O1|+2.76±0.14V|
+|LOW LEVEL minimum|C2|KBC2 / VR1|O1|−2.76±0.14V|
+|HIGH LEVEL maximum|C5#|KBC2 / VR2|O1|+2.76±0.14V|
+
+The following page identifies the physical O1 terminal and both trims. The manual does not provide all61 codes or full contour curves here. Its C2/C5# labels must not silently become MIDI note numbers. The first-hand MFox repair account reports approximately2.66V on KBC2 and questions the2.76V target; importantly2.66V lies INSIDE the original printed2.62–2.90V tolerance interval. That observation alone does not establish a Yamaha erratum.
+
+Conditional nominal check: with the verified circuit, C2 must enable the VR1 branch for that trim adjustment to work, which corresponds to Q110; C5# must enable VR2, corresponding to Q101. If those keys select L and H respectively, and the pot endpoint gives reference displacement225/56V, the nominal target magnitude2.76V requires VR1≈2136.29ohm and VR2≈4136.29ohm, both within the drawn0–5000ohm range. Nominal VR1 magnitude range is2.67857–2.85479V; VR2 range2.59217–2.79018V. These are consistency calculations under stated assumptions, not measured trimmer positions or proof of the intervening code map.
+
+This supplies an exact remaining verification target: establish latched Q1/Q2/Q3 and OO selection at the manual's physical C2 and C5#, then each adjacent octave boundary, on the CS80 variant. Measure O1 separately on KBC1 and KBC2 at center and both endpoint settings. The unmodified49-key example's naive direct mapping does not satisfy the C2 trim-enable requirement. Do not change the confirmed wiring or invent middle-key codes to repair that mismatch.
+
+
+### Actual KAS-to-KBC output path: no recoder found
+
+The original [KAS04 schematic](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/04%20-%20KAS%20schematic.jpg) and [KAS05 wiring](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/05%20-%20KAS%20Circuit%20Board%20%26%20Wiring.jpg) were inspected at native resolution in run40798346402, jobs123200150121/123200150293, revision7ad43d470898b5a9854d884d98df9b228d021ae7. Two readers independently traced KAS04 upper-left/upper-middle native tiles:
+- YM26600 pin29 B1 → IC4 pin11→12 buffer → exported B1 connector60.
+- YM26600 pin30 B2 → IC4 pin14→15 buffer → exported B2 connector58.
+- YM26600 pin31 B3 → IC5 pin9→10 buffer → exported B3 connector59.
+- The same source lines branch directly to the local YM26700 pins9/10/11 respectively.
+
+KAS05 independently labels the B3 connector57, whereas KAS04 prints59; KAS05 labels59 as ground E. Preserve this source discrepancy. The named wiring paths are B1(60)→KBC1 B1(24), B2(58)→KBC1 B2(23), B3(57)→KBC1 B3(21), not a bit permutation.
+
+The buffer symbols have no inversion bubbles. No external Boolean recoding or bit permutation appears on these paths. KAS04 marks these B signals barred, unlike the unbarred octave-output labels in KAS06 prose. A missing external recoder is therefore not supported by the inspected schematic. KAS05 octave input wires are U1→keyboard T1-C1, U2→T1-C#2, U3→T1-C#3, U4→T1-C#4, U5→T1-C#5; CL connects keyboard M1-C1 and C connects M1-C2. These are physical wiring labels, not a complete YM26600 output-code table.
+
+A proposed six-state Johnson-code hypothesis was checked against fresh KAS06 pixels and independently rejected as a transcription of that table: the actual printed triples remain011,101,001,110,010. A hypothesis fitting calibration endpoints does not establish the other physical-key codes. The remaining discrepancy is real evidence uncertainty, not permission to replace the printed table or verified gate graph with a convenient sequence.
+
 ## Implementation boundary
 
 No arbitrary linear half-keyboard ramp, hard split at MIDI60, symmetric endpoint assumption, fixed ±octave range, or fixed ±dB range is justified by the evidence above. Do not silently add one and label it circuit-derived.
