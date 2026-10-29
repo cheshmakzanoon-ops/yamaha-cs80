@@ -131,6 +131,19 @@ enum : int
     P_subOriginalFunction,
     P_subOriginalSpeed,
     P_subExtLevel,
+    // Owner manual controls 9/10: keyboard contours (bipolar, 0 = neutral).
+    P_kbdBrillianceLow,
+    P_kbdBrillianceHigh,
+    P_kbdLevelLow,
+    P_kbdLevelHigh,
+    // Footswitch jack/contact and the two independent assigners (owner pp11-12,39).
+    P_footswitchPlugged,
+    P_footswitchPressed,
+    P_sustainAssign,
+    P_glideAssign,
+    // Foot controller selector: 0 = EXP, 1 = EXP-WAH. Output switch: 0 = LOW, 1 = HIGH.
+    P_footMode,
+    P_outputLevel,
     P_numParams
 };
 
@@ -273,7 +286,17 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "sub_original_mode", "ORIGINAL SUB MODE", 0.0f, 1.0f, 1.0f, 1.0f, "", "SUB OSC" },
     { "sub_original_function", "ORIGINAL SUB FUNCTION", 0.0f, 5.0f, 0.0f, 1.0f, "", "SUB OSC" },
     { "sub_original_speed", "ORIGINAL SUB SPEED", 0.7f, 60.0f, 4.2f, 0.35f, "Hz", "SUB OSC" },
-    { "sub_ext_level", "EXT INPUT LEVEL", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" }
+    { "sub_ext_level", "EXT INPUT LEVEL", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" },
+    { "kbd_brilliance_low", "KBD BRILLIANCE LOW", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD" },
+    { "kbd_brilliance_high", "KBD BRILLIANCE HIGH", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD" },
+    { "kbd_level_low", "KBD LEVEL LOW", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD" },
+    { "kbd_level_high", "KBD LEVEL HIGH", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD" },
+    { "footswitch_plugged", "FOOTSWITCH PLUGGED", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
+    { "footswitch_pressed", "FOOTSWITCH PRESSED", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
+    { "sustain_assign", "SUSTAIN ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
+    { "glide_assign", "PORTA / GLISS ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
+    { "foot_mode", "PEDAL EXP / WAH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
+    { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" }
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

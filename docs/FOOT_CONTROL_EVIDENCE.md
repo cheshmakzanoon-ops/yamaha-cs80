@@ -2,6 +2,8 @@
 
 Audit base: 15ddb0b9cf600fe8fe236c886d674e22d0c8fe66 (233 host parameters). Read-only proposal, not a claim of circuit-equivalent production behavior.
 
+**Implementation status (2026-10-29):** the assigner batch described under "Smallest assigner-only production batch", plus a provisional EXP/EXP-WAH stage and an output switch, is implemented with the append-only parameters and policies recorded in [PERFORMANCE_CONTROLS.md](PERFORMANCE_CONTROLS.md). The proposal text below is kept as the evidence record. One deliberate difference: that proposal used four booleans, while the build also added `foot_mode` and `output_level`. The EXP-WAH stage is a labelled stand-in for the PRA network, not the optical RC solution requested below.
+
 ## Original footswitch semantics
 The owner's manual printed pp11–12,39,45 distinguishes the TS footswitch from the TRS optical expression pedal. One footswitch independently gates the sustain and portamento/glissando effects through their two assigners. An assigner OFF bypasses that gate. With no plug, the switched jack behaves as an active footswitch. A plugged but open dummy plug is therefore not equivalent to no plug.
 Define J=plug present, P=physical contact pressed, A=corresponding assigner enabled:

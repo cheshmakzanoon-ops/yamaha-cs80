@@ -70,6 +70,16 @@ juce::Component* findControl(juce::Component& parent, const juce::String& id)
 }
 
 
+juce::Component* findByTitle(juce::Component& parent, const juce::String& title)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (child->getTitle() == title) return child;
+        if (auto* found = findByTitle(*child, title)) return found;
+    }
+    return nullptr;
+}
+
 cs80::ui::ParamKnob* findParameterControl(juce::Component& parent, int parameterIndex)
 {
     for (auto* child : parent.getChildren())
@@ -319,6 +329,193 @@ void testExternalInputHost()
     }
 }
 
+
+// Pointer-to-pressure mapping and its delivery through the real audio callback.
+void testKeyPressureGesture()
+{
+    cs80::ui::KeyPressureGesture gesture;
+    gesture.begin(60, 50.0f);
+    check(gesture.drag(60, 50.0f, 200.0f) == 0.0f, "a fresh strike starts with no pressure");
+    check(std::abs(gesture.drag(60, 90.0f, 200.0f) - 0.5f) < 1e-6f, "half the travel is half pressure");
+    check(gesture.drag(60, 400.0f, 200.0f) == 1.0f, "pressure saturates at full travel");
+    check(gesture.drag(60, 10.0f, 200.0f) == 0.0f, "drawing back up eases off and never goes negative");
+    check(gesture.drag(62, 120.0f, 200.0f) < 0.0f && gesture.getNote() == 62,
+          "sliding onto another key is a new strike, not a pressure change");
+    check(gesture.drag(62, 120.0f, 200.0f) == 0.0f, "the new key's anchor is where it was entered");
+    gesture.end();
+    check(gesture.getNote() < 0, "releasing ends the gesture");
+    check(std::isfinite(gesture.drag(60, 5.0f, 0.0f)), "a zero-height keyboard cannot divide by zero");
+
+    Cs80AudioProcessor host;
+    host.setParamValue(cs80::P_voiceDispersion, 0.0f);
+    host.prepareToPlay(48000.0, 256);
+    auto block = [&](const juce::MidiBuffer& events = {})
+    {
+        juce::AudioBuffer<float> audio(2, 256);
+        juce::MidiBuffer midi(events);
+        host.processBlock(audio, midi);
+    };
+    auto pressureOf = [&](int note)
+    {
+        for (int v = 0; v < 8; ++v)
+        {
+            const auto info = host.getEngine().getVoiceInfo(v);
+            if (info.active && info.held && info.note == note) return info.pressure;
+        }
+        return -1.0f;
+    };
+    // The note-on and the first pressure message arrive in the same block, which
+    // is the case a drain at the start of the block would lose.
+    juce::MidiBuffer strike;
+    strike.addEvent(juce::MidiMessage::noteOn(1, 64, (juce::uint8) 100), 0);
+    host.setKeyPressureFromUI(64, 0.6f);
+    block(strike);
+    check(std::abs(pressureOf(64) - 0.6f) < 1e-6f, "pressure sent with the strike is not lost");
+    host.setKeyPressureFromUI(64, 0.25f);
+    host.setKeyPressureFromUI(200, 0.9f);   // out of range: ignored
+    host.setKeyPressureFromUI(64, std::numeric_limits<float>::quiet_NaN());
+    host.setKeyPressureFromUI(64, 0.25f);
+    block();
+    check(std::abs(pressureOf(64) - 0.25f) < 1e-6f, "later pressure updates the held key");
+    block();
+    check(std::abs(pressureOf(64) - 0.25f) < 1e-6f, "the mailbox is consumed once and the pressure holds");
+    juce::MidiBuffer second;
+    second.addEvent(juce::MidiMessage::noteOn(1, 67, (juce::uint8) 100), 0);
+    host.setKeyPressureFromUI(67, 1.0f);
+    block(second);
+    check(std::abs(pressureOf(64) - 0.25f) < 1e-6f && pressureOf(67) == 1.0f,
+          "pressure is polyphonic: each key keeps its own value");
+}
+
+// Keyboard contour, footswitch/assigners, EXP-WAH and output switch at the host boundary.
+void testPerformanceControlsHost()
+{
+    const char* ids[] = { "kbd_brilliance_low", "kbd_brilliance_high", "kbd_level_low", "kbd_level_high",
+                          "footswitch_plugged", "footswitch_pressed", "sustain_assign", "glide_assign",
+                          "foot_mode", "output_level" };
+    Cs80AudioProcessor host;
+    for (int i = 0; i < 10; ++i)
+    {
+        auto* parameter = host.getAPVTS().getParameter(ids[i]);
+        check(parameter != nullptr && host.getParameters()[233 + i] == parameter,
+              (juce::String("performance control appended in order: ") + ids[i]).toRawUTF8());
+        if (parameter == nullptr) continue;
+        check(parameter->getVersionHint() == 5, (juce::String("AU version hint 5: ") + ids[i]).toRawUTF8());
+        check(cs80::paramId(cs80::P_kbdBrillianceLow + i) == ids[i], "core and host ids agree");
+        const float def = parameter->convertFrom0to1(parameter->getDefaultValue());
+        check(std::abs(def - cs80::paramDef(cs80::P_kbdBrillianceLow + i).def) < 1e-6f,
+              (juce::String("host default equals core default: ") + ids[i]).toRawUTF8());
+    }
+    for (int i : { 4, 5, 6, 7, 9 })
+        check(dynamic_cast<juce::AudioParameterBool*>(host.getAPVTS().getParameter(ids[i])) != nullptr,
+              (juce::String("boolean host parameter: ") + ids[i]).toRawUTF8());
+    auto* mode = dynamic_cast<juce::AudioParameterChoice*>(host.getAPVTS().getParameter("foot_mode"));
+    check(mode != nullptr && mode->choices[0] == "EXP" && mode->choices[1] == "EXP-WAH",
+          "foot controller selector exposes EXP and EXP-WAH");
+    for (int i = 0; i < 4; ++i)
+    {
+        const auto& range = host.getAPVTS().getParameter(ids[i])->getNormalisableRange();
+        check(range.start == -1.0f && range.end == 1.0f
+                  && host.getAPVTS().getParameter(ids[i])->getDefaultValue() == 0.5f,
+              "contour levers are bipolar with a centred default");
+    }
+
+    // State round trip, and old sessions fall back to the neutral defaults.
+    for (int i = 0; i < 4; ++i) host.setParamValue(cs80::P_kbdBrillianceLow + i, 0.25f * (float) (i - 1));
+    host.setParamValue(cs80::P_footswitchPlugged, 1.0f);
+    host.setParamValue(cs80::P_footswitchPressed, 1.0f);
+    host.setParamValue(cs80::P_sustainAssign, 1.0f);
+    host.setParamValue(cs80::P_glideAssign, 1.0f);
+    host.setParamValue(cs80::P_footMode, 1.0f);
+    host.setParamValue(cs80::P_outputLevel, 0.0f);
+    juce::MemoryBlock saved;
+    host.getStateInformation(saved);
+    Cs80AudioProcessor restored;
+    restored.setStateInformation(saved.getData(), (int) saved.getSize());
+    bool roundTrip = true;
+    for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
+        roundTrip = roundTrip && std::abs(restored.getParamValue(i) - host.getParamValue(i)) < 1e-5f;
+    check(roundTrip, "performance controls survive a state round trip");
+    auto oldState = host.getAPVTS().copyState();
+    for (auto* id : ids)
+        oldState.removeChild(oldState.getChildWithProperty("id", id), nullptr);
+    const auto oldText = oldState.createXml()->toString();
+    restored.setStateInformation(oldText.toRawUTF8(), oldText.getNumBytesAsUTF8());
+    bool neutral = true;
+    for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
+        neutral = neutral && restored.getParamValue(i) == cs80::paramDef(i).def;
+    check(neutral && restored.getParamValue(cs80::P_outputLevel) == 1.0f,
+          "a session saved before these controls restores neutral values, not live ones");
+
+    // Preset recall restores the sound, not the jack/pedal/selector/output wiring.
+    host.setParamValue(cs80::P_kbdLevelHigh, 0.5f);
+    host.loadFactoryPreset(5);
+    check(host.getParamValue(cs80::P_footswitchPlugged) == 1.0f && host.getParamValue(cs80::P_footswitchPressed) == 1.0f
+              && host.getParamValue(cs80::P_footMode) == 1.0f && host.getParamValue(cs80::P_outputLevel) == 0.0f,
+          "preset recall leaves jack, pedal contact, EXP/WAH selector and output switch alone");
+    check(host.getParamValue(cs80::P_kbdLevelHigh) == 0.0f && host.getParamValue(cs80::P_sustainAssign) == 0.0f
+              && host.getParamValue(cs80::P_glideAssign) == 0.0f,
+          "preset recall does reset the contour levers and assigners with the patch");
+
+    // The real audio callback: automation reaches the core, and the paths are audible.
+    auto render = [](Cs80AudioProcessor& target, float pedal, int blocks = 60)
+    {
+        target.prepareToPlay(48000.0, 512);
+        if (pedal >= 0.0f) target.setExpressionFromUI(pedal);
+        juce::AudioBuffer<float> buffer(2, 512);
+        double square = 0.0;
+        long count = 0;
+        bool finite = true;
+        for (int b = 0; b < blocks; ++b)
+        {
+            buffer.clear();
+            juce::MidiBuffer midi;
+            if (b == 0)
+            {
+                midi.addEvent(juce::MidiMessage::noteOn(1, 45, (juce::uint8) 100), 0);
+                midi.addEvent(juce::MidiMessage::noteOn(1, 52, (juce::uint8) 100), 0);
+            }
+            target.processBlock(buffer, midi);
+            if (b < blocks / 2) continue;
+            for (int i = 0; i < 512; ++i)
+            {
+                const float v = buffer.getSample(0, i);
+                finite = finite && std::isfinite(v);
+                square += (double) v * v;
+                ++count;
+            }
+        }
+        return finite ? std::sqrt(square / (double) count) : -1.0;
+    };
+    {
+        Cs80AudioProcessor reference, trimmed, wah, pedalDown, pedalUp;
+        for (auto* target : { &reference, &trimmed, &wah, &pedalDown, &pedalUp })
+        {
+            target->setParamValue(cs80::P_voiceDispersion, 0.0f);
+            target->setParamValue(cs80::P_drift, 0.0f);
+            target->setParamValue(cs80::P_analogNoise, 0.0f);
+        }
+        trimmed.setParamValue(cs80::P_outputLevel, 0.0f);
+        wah.setParamValue(cs80::P_footMode, 1.0f);
+        const double base = render(reference, -1.0f);
+        check(base > 1e-4, "host render fixture is audible");
+        check(std::abs(render(trimmed, -1.0f) / base - 0.1) < 0.002, "host output LOW is the -20 dB trim");
+        const double wahLevel = render(wah, 0.1f);
+        check(wahLevel > 1e-5 && std::abs(wahLevel - render(pedalDown, 0.1f)) > 1e-5,
+              "host EXP-WAH changes the audible result");
+        check(render(pedalUp, 0.25f) < base * 0.5, "on-screen pedal mailbox reaches expression/volume");
+        Cs80AudioProcessor automation;
+        automation.setParamValue(cs80::P_kbdBrillianceHigh, 0.75f);
+        automation.setParamValue(cs80::P_sustainAssign, 1.0f);
+        automation.setParamValue(cs80::P_footswitchPlugged, 1.0f);
+        render(automation, -1.0f, 2);
+        check(std::abs(automation.getEngine().getParams()[cs80::P_kbdBrillianceHigh] - 0.75f) < 1e-5f
+                  && automation.getEngine().getParams()[cs80::P_sustainAssign] == 1.0f
+                  && automation.getEngine().getParams()[cs80::P_footswitchPlugged] == 1.0f,
+              "host automation of performance controls reaches the core without an editor");
+    }
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -339,6 +536,8 @@ int main(int argc, char** argv)
     dir.createDirectory();
 
     testExternalInputHost();
+    testPerformanceControlsHost();
+    testKeyPressureGesture();
 
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");
@@ -377,15 +576,23 @@ int main(int argc, char** argv)
             const float physical = def.min + fraction * (def.max - def.min);
             processor.setParamValue(index, physical);
             const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
-            const float expected = index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+            const bool discrete = index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel);
+            const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
             check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
                   "physical parameter round trips host skew");
         }
     }
 
+    // Preset recall deliberately leaves the jack/pedal/selector/output wiring alone, so
+    // the sweep above must not leave it at its maximum for the screenshots below.
+    for (int index = 0; index < cs80::P_numParams; ++index)
+        if (Cs80AudioProcessor::isPhysicalSetupParameter(index))
+            processor.setParamValue(index, cs80::paramDef(index).def);
+
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 233, "233 host parameters");
+          && Cs80AudioProcessor::hostParameterCount == 243, "243 host parameters");
     for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
@@ -1266,6 +1473,55 @@ int main(int argc, char** argv)
     }
     else check(false, "AT VCF main-panel slider exists");
     flushGui(150);
+
+    // Keyboard contour, footswitch and output controls on the main panel.
+    for (int index = cs80::P_kbdBrillianceLow; index <= cs80::P_kbdLevelHigh; ++index)
+        check(findParameterControl(editor, index) != nullptr, "keyboard contour lever is on the main panel");
+    if (auto* lever = findParameterControl(editor, cs80::P_kbdBrillianceHigh))
+    {
+        processor.setParamValue(cs80::P_kbdBrillianceHigh, 0.2f);
+        flushGui(30);
+        check(std::abs(lever->getSlider().getValue() - 0.2) < 1e-5, "contour host automation updates the visible lever");
+        GestureProbe probe;
+        auto* parameter = processor.getAPVTS().getParameter("kbd_brilliance_high");
+        parameter->addListener(&probe);
+        lever->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        parameter->removeListener(&probe);
+        check(processor.getParamValue(cs80::P_kbdBrillianceHigh) > 0.2f && probe.begins == 1 && probe.ends == 1
+                  && probe.unbracketedChanges == 0 && probe.malformedGestures == 0,
+              "contour lever keyboard edit sends one balanced host gesture");
+        lever->mouseDoubleClick(juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(),
+            juce::Point<float>(5.0f, 5.0f), juce::ModifierKeys(), 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, lever, lever,
+            juce::Time::getCurrentTime(), juce::Point<float>(5.0f, 5.0f), juce::Time::getCurrentTime(), 2, false));
+        flushGui(30);
+        check(processor.getParamValue(cs80::P_kbdBrillianceHigh) == 0.0f, "double-click re-centres a contour lever");
+    }
+    struct Toggle { const char* title; int parameter; };
+    for (const auto& toggle : { Toggle { "FOOTSWITCH PLUGGED", cs80::P_footswitchPlugged },
+                                Toggle { "FOOTSWITCH PRESSED", cs80::P_footswitchPressed },
+                                Toggle { "PEDAL EXP / WAH", cs80::P_footMode },
+                                Toggle { "SUSTAIN ASSIGN", cs80::P_sustainAssign },
+                                Toggle { "PORTA / GLISS ASSIGN", cs80::P_glideAssign },
+                                Toggle { "OUTPUT HIGH / LOW", cs80::P_outputLevel } })
+    {
+        auto* button = dynamic_cast<juce::Button*>(findByTitle(editor, toggle.title));
+        check(button != nullptr, (juce::String("main-panel switch exists: ") + toggle.title).toRawUTF8());
+        if (button == nullptr) continue;
+        const float before = processor.getParamValue(toggle.parameter);
+        check(button->getToggleState() == (before >= 0.5f), (juce::String("switch shows host state: ") + toggle.title).toRawUTF8());
+        button->triggerClick();
+        flushGui(20);
+        check(processor.getParamValue(toggle.parameter) == (before >= 0.5f ? 0.0f : 1.0f),
+              (juce::String("switch click drives the host parameter: ") + toggle.title).toRawUTF8());
+        processor.setParamValue(toggle.parameter, before);
+        flushGui(20);
+        check(button->getToggleState() == (before >= 0.5f), (juce::String("host automation moves the switch: ") + toggle.title).toRawUTF8());
+    }
+    check(findByTitle(editor, "Foot controller position (expression)") != nullptr, "on-screen foot controller exists");
+
+
+    flushGui(150);
+
 
 
     // Exercise the actual editor timer/attachments, not a direct refresh hook.

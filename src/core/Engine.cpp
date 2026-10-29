@@ -9,6 +9,8 @@ namespace cs80
 Engine::Engine()
 {
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
+    wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
+    outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
     setParams(params);
 }
@@ -54,6 +56,9 @@ void Engine::prepare(double hostSampleRate)
         voiceDrift[i] = (float) i * 0.73f;
     // Explicitly provisional10ms rate smoothing, sample-rate independent.
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
+    // Explicitly provisional switch/pedal smoothing, sample-rate independent.
+    wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
+    outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
     reset();
     setParams(params);
 }
@@ -100,6 +105,11 @@ void Engine::reset()
     fxR.reset();
     decL.reset();
     decR.reset();
+    wahL.reset();
+    wahR.reset();
+    wahMix = global.pedalWah ? 1.0f : 0.0f;
+    wahRunning = false;
+    outputGain = outputLevelGain(global.outputHigh);
     lastNote = 60;
     nextVoice = 0;
     globalBend = 0.0f;
@@ -132,7 +142,13 @@ void Engine::setParams(const ParamValues& values)
         params[i] = std::isfinite(value) ? clampf(value, def.min, def.max) : def.def;
     }
     const bool wasArp = arpWasOn;
+    const bool hadSustainGate = global.sustainGate;
     buildSettings();
+
+    // Gate edges act when parameters are applied, not by per-sample polling, so
+    // the outcome does not depend on how the host partitions a render.
+    if (hadSustainGate && ! global.sustainGate)
+        cancelSustainTails();
 
     // Toggling the arpeggiator is a performance action, not a parameter that
     // should leave old voices hanging. Enabling it clears the directly played
@@ -203,6 +219,18 @@ void Engine::buildSettings()
     global.tuningRef = p(P_tuningRef);
     global.modWheelSub = p(P_modWheelSub);
     global.modWheelVcf = p(P_modWheelVcf);
+    global.kbdBrillianceLow = p(P_kbdBrillianceLow);
+    global.kbdBrillianceHigh = p(P_kbdBrillianceHigh);
+    global.kbdLevelLow = p(P_kbdLevelLow);
+    global.kbdLevelHigh = p(P_kbdLevelHigh);
+    {
+        const bool plugged = p(P_footswitchPlugged) >= 0.5f;
+        const bool pressed = p(P_footswitchPressed) >= 0.5f;
+        global.sustainGate = footswitchGate(p(P_sustainAssign) >= 0.5f, plugged, pressed);
+        global.glideGate = footswitchGate(p(P_glideAssign) >= 0.5f, plugged, pressed);
+    }
+    global.pedalWah = p(P_footMode) >= 0.5f;
+    global.outputHigh = p(P_outputLevel) >= 0.5f;
     global.lfoRate[0] = p(P_lfo1Rate);
     global.lfoRate[1] = p(P_lfo2Rate);
     global.lfoRate[2] = p(P_lfo3Rate);
@@ -497,7 +525,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.timbre = 0.0f;
     v.mpeBend = 0.0f;
     v.targetPitch = (float) note;
-    v.glidePitch = global.portamento > 0.0001f ? (float) lastNote : (float) note;
+    v.contour = keyboardContourWeights(note);
+    v.glidePitch = global.glideGate && global.portamento > 0.0001f ? (float) lastNote : (float) note;
     // TWS C precedes the TRG4 PB control. Keep its nominal onset state alive
     // even when PB depth is zero. Reset-to-velocity is still a MIDI/retrigger
     // approximation, not a complete model of the b sample/hold and clamp.
@@ -556,7 +585,8 @@ void Engine::releaseVoice(Voice& v)
         // Hardware SUSTAIN is a release-time performance control, not a filter
         // sustain-level offset. Retain longer per-rank/key-release settings as
         // software extensions; the exact potentiometer law remains unmeasured.
-        const float performanceRelease = global.masterSustain * 10.0f;
+        // An assigned, plugged and open footswitch disables only this term.
+        const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
         r.aenv.setRelease(std::max({rs.vR, global.keyRelease, performanceRelease})
                           * global.envTimeScale);
         r.fenv.setRelease(std::max({rs.fR, global.keyRelease, performanceRelease})
@@ -627,13 +657,34 @@ void Engine::releaseKey(Voice& v)
         v.pedalHeld = true;
         heldCount = std::max(0, heldCount - 1);
     }
-    else if (global.sustainMode == 1)
+    else if (global.sustainMode == 1 && global.sustainGate)
     {
         releaseVoice(v);
         v.sustained = true;
     }
     else
         releaseVoice(v);
+}
+
+void Engine::cancelSustainTails()
+{
+    for (auto& v : voices)
+    {
+        // Held and pedal-held notes are not tails; MIDI CC64 bookkeeping is a
+        // separate software convention and is deliberately left alone.
+        if (! v.active || v.held || v.pedalHeld)
+            continue;
+        v.sustained = false;
+        for (int ch = 0; ch < 2; ++ch)
+        {
+            auto& r = v.ranks[ch];
+            const auto& rs = rankSettings[ch];
+            // setRelease keeps stage, value and elapsed stage time, so the
+            // bent fast-release window is not restarted.
+            r.aenv.setRelease(std::max(rs.vR, global.keyRelease) * global.envTimeScale);
+            r.fenv.setRelease(std::max(rs.fR, global.keyRelease) * global.envTimeScale);
+        }
+    }
 }
 
 void Engine::noteOff(int midiNote, int midiChannel)
@@ -755,6 +806,9 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         allNotesOff(controller == 123, midiChannel);
         return;
     }
+    // clampf passes NaN through; a non-finite controller value is not an event.
+    if (! std::isfinite(value))
+        return;
     value = clampf(value, 0.0f, 1.0f);
     if (controller == 1)
         modWheel = value;
@@ -867,7 +921,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     int stillHeld = 0;
 
     // Double accumulator avoids long-glide float rounding stalling before target.
-    const double glideCoef = global.portamento > 0.0001f
+    // An open assigned footswitch suppresses new glides and snaps running ones to target.
+    const bool glideActive = global.glideGate && global.portamento > 0.0001f;
+    const double glideCoef = glideActive
                                 ? std::exp(-1.0 / ((double) global.portamento * sr))
                                 : 0.0;
 
@@ -880,7 +936,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         if (v.held || v.pedalHeld)
             ++stillHeld;
 
-        if (global.portamento > 0.0001f)
+        if (glideActive)
             v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch) * glideCoef;
         else
             v.glidePitch = v.targetPitch;
@@ -895,7 +951,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
         // Sustain I holds each released voice's last ribbon pitch. Sustain II
         // keeps release tails coupled to subsequent ribbon gestures.
-        if (v.held || v.pedalHeld || global.sustainMode == 1)
+        if (v.held || v.pedalHeld || (global.sustainMode == 1 && global.sustainGate))
             v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
 
         const float glideOffset = v.glidePitch - (float) v.note;
@@ -920,7 +976,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                           + r.trimTune * dispersion * 7.0f
                           + driftVoice;
 
-            if (global.glideMode == 2)
+            if (global.glideMode == 2 && global.glideGate)
                 pitch = std::round(pitch);
 
             // Transposition is a separate nominal harmonic ratio, not rounded
@@ -948,7 +1004,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                    // not a static cutoff offset. The 1.5-octave scale
                                    // is provisional, not a measured circuit gain.
                                    + subValue * (global.subVcf + global.subAtVcf * v.pressure) * 1.5f
-                                   + lfoFilter;
+                                   + lfoFilter
+                                   // Keyboard contour: zero (exactly) when both levers are centred.
+                                   + keyboardBrillianceOctaves(global.kbdBrillianceLow,
+                                                               global.kbdBrillianceHigh, v.contour);
 
             const float fenv = r.fenv.tick(sr, true);
             const float envLp = fenv;
@@ -976,7 +1035,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                              + rs.initLevel * v.velocity
                                              + rs.afterLevel * v.pressure
                                              + subValue * global.subVca * 0.45f
-                                             + lfoAmp,
+                                             + lfoAmp
+                                             + keyboardLevelOffset(global.kbdLevelLow,
+                                                                   global.kbdLevelHigh, v.contour),
                                          0.0f, 2.6f);
             const float amp = r.aenv.tick(sr, true);
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp };
@@ -1022,6 +1083,39 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
         mixL = lerp(mixL, mixL * carrier, amount);
         mixR = lerp(mixR, mixR * carrier, amount);
+    }
+
+    // PRA EXP-WAH. EXP passes the dry branch only, EXP-WAH the processed branch
+    // only; the crossfade merely hides the switch. Placement after the ring
+    // modulator and before the chorus is an assumption: the PRA harness block
+    // diagram that fixes it is not in the evidence set.
+    {
+        const float wahTarget = global.pedalWah ? 1.0f : 0.0f;
+        if (wahMix != wahTarget)
+        {
+            wahMix += (wahTarget - wahMix) * wahSmoothing;
+            if (std::abs(wahMix - wahTarget) < 1.0e-4f)
+                wahMix = wahTarget;
+        }
+        if (wahMix > 0.0f)
+        {
+            const float pedalHz = wahCentreHz(expression);
+            // Start on the pedal position rather than sweeping up from a stale value.
+            wahFrequency = wahRunning ? wahFrequency + (pedalHz - wahFrequency) * wahSmoothing : pedalHz;
+            wahRunning = true;
+            wahL.set(wahFrequency, kProvisionalWahQ, sr);
+            wahR.set(wahFrequency, kProvisionalWahQ, sr);
+            // Svf's band-pass peaks at Q; normalise to unity before make-up gain.
+            constexpr float bandGain = kProvisionalWahMakeup / kProvisionalWahQ;
+            mixL = lerp(mixL, wahL.process(mixL).bp * bandGain, wahMix);
+            mixR = lerp(mixR, wahR.process(mixR).bp * bandGain, wahMix);
+        }
+        else if (wahRunning)
+        {
+            wahL.reset();
+            wahR.reset();
+            wahRunning = false;
+        }
     }
 
     mixL += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
@@ -1104,6 +1198,17 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     const float gain = smoothedVolume * 4.0f * expression;
     outL = softClip(dcOutL * gain);
     outR = softClip(dcOutR * gain);
+
+    // GENERAL HIGH/LOW switch. HIGH is exactly unity, so the default is sample-identical.
+    const float outputTarget = outputLevelGain(global.outputHigh);
+    if (outputGain != outputTarget)
+    {
+        outputGain += (outputTarget - outputGain) * outputGainSmoothing;
+        if (std::abs(outputGain - outputTarget) < 1.0e-6f)
+            outputGain = outputTarget;
+    }
+    outL *= outputGain;
+    outR *= outputGain;
 
     if (! global.stereo)
     {

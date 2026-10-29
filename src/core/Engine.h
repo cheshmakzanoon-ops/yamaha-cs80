@@ -4,6 +4,7 @@
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
+#include "PerformanceControls.h"
 
 #include <array>
 #include <cstdint>
@@ -92,6 +93,16 @@ struct GlobalSettings
     float tuningRef = 440.0f;
     float modWheelSub = 0.25f;
     float modWheelVcf = 0.0f;
+    float kbdBrillianceLow = 0.0f;
+    float kbdBrillianceHigh = 0.0f;
+    float kbdLevelLow = 0.0f;
+    float kbdLevelHigh = 0.0f;
+    // Cached footswitch gates. With no plug or no assignment both stay open,
+    // which is the pre-assigner behavior.
+    bool sustainGate = true;
+    bool glideGate = true;
+    bool pedalWah = false;
+    bool outputHigh = true;
     float lfoRate[3] { 0.28f, 0.55f, 1.1f };
     float lfoDepth[3] { 0.0f, 0.0f, 0.0f };
     int lfoDest[3] { 0, 0, 0 };
@@ -209,6 +220,7 @@ private:
         double initialPitchTransient = 0.0;
         float ribbonRatio = 1.0f;
         uint64_t age = 0;
+        KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
     };
 
@@ -225,6 +237,9 @@ private:
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     void releaseVoice(Voice& voice);
     void releaseKey(Voice& voice);
+    // Footswitch gate fell: shorten already-released tails to their non-performance
+    // release without restarting the envelope stage, retriggering or holding a note.
+    void cancelSustainTails();
     bool isSustainPedalDown(int midiChannel) const noexcept;
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
@@ -267,6 +282,16 @@ private:
     float lfoValues[3] {};
     float lfoPitch = 0.0f, lfoFilter = 0.0f, lfoAmp = 0.0f, lfoPwm = 0.0f, lfoPan = 0.0f;
     float subSpeedSmoothed = 4.2f;
+
+    // PRA EXP-WAH branch and GENERAL output trim. Smoothing prevents switch clicks;
+    // the default EXP/HIGH state never touches these filters or the gain (exact 1).
+    Svf wahL, wahR;
+    float wahMix = 0.0f;
+    float wahFrequency = kProvisionalWahLowHz;
+    bool wahRunning = false;
+    float wahSmoothing = 0.0f;
+    float outputGain = 1.0f;
+    float outputGainSmoothing = 0.0f;
 
     float ringPhase = 0.0f;
     float ringEnv = 0.0f;

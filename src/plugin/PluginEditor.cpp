@@ -33,6 +33,27 @@ public:
     HardwareKeyboard(juce::MidiKeyboardState& state, Orientation orientation)
         : MidiKeyboardComponent(state, orientation) {}
 
+    // Pointer gesture standing in for the original per-key pressure sensor.
+    std::function<void(int, float)> onKeyPressure;
+
+    bool mouseDownOnKey(int note, const juce::MouseEvent& e) override
+    {
+        gesture.begin(note, e.position.y);
+        return true;
+    }
+    bool mouseDraggedToKey(int note, const juce::MouseEvent& e) override
+    {
+        const float pressure = gesture.drag(note, e.position.y, (float) getHeight());
+        if (pressure >= 0.0f && onKeyPressure)
+            onKeyPressure(note, pressure);
+        return true;
+    }
+    void mouseUp(const juce::MouseEvent& e) override
+    {
+        MidiKeyboardComponent::mouseUp(e);
+        gesture.end();
+    }
+
     void drawWhiteNote(int, juce::Graphics& g, juce::Rectangle<float> area,
                        bool down, bool over, juce::Colour, juce::Colour) override
     {
@@ -66,6 +87,9 @@ public:
         g.setColour(juce::Colours::white.withAlpha(over ? 0.2f : 0.08f));
         g.drawVerticalLine((int) cap.getX(), cap.getY(), cap.getBottom());
     }
+
+private:
+    cs80::ui::KeyPressureGesture gesture;
 };
 // Magnified view of the four independent analog-memory panels. This does not
 // copy a live patch: moving each miniature control edits that bank directly.
@@ -263,6 +287,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         buildChannels();
         buildToneSection();
         buildPerformance();
+        buildKeyboardControls();
         buildKeyboard();
 
         addAndMakeVisible(advanced);
@@ -588,6 +613,42 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::P_glideMode, 110, 905, 46, 60, "GLIDE", greyCap());
     }
 
+    // Owner controls 9/10 (keyboard contour) plus the foot-controller group that
+    // the original keeps on its left-hand panel: footswitch jack/contact, the two
+    // assigners, EXP/WAH and the output switch.
+    void buildKeyboardControls()
+    {
+        addFader(cs80::P_kbdBrillianceLow, 303, 784, 40, 108, "LOW", greenCap());
+        addFader(cs80::P_kbdBrillianceHigh, 345, 784, 40, 108, "HIGH", greenCap());
+        addFader(cs80::P_kbdLevelLow, 387, 784, 40, 108, "LOW", greyCap());
+        addFader(cs80::P_kbdLevelHigh, 429, 784, 40, 108, "HIGH", greyCap());
+
+        expressionPedal.setTitle("Foot controller position (expression)");
+        expressionPedal.setDescription("On-screen foot controller. Drives volume, and the wah sweep in EXP-WAH. MIDI CC11 does the same.");
+        expressionPedal.setValue(1.0f);
+        expressionPedal.onValueChange = [this](float value) { processor.setExpressionFromUI(value); };
+        addAndMakeVisible(expressionPedal);
+        place(expressionPedal, 473, 784, 38, 108);
+
+        auto toggle = [this](int parameter, const char* label, const char* tip, float x, float y)
+        {
+            auto& led = addLed(parameter, label, x, y, 68, 21);
+            led.setTooltip(tip);
+        };
+        toggle(cs80::P_footswitchPlugged, "PLUG",
+               "Footswitch plugged into the jack. With no plug the switched jack acts as a pressed switch.", 303, 904);
+        toggle(cs80::P_footswitchPressed, "PRESS",
+               "Footswitch contact. Latches; toggle it to play the switch.", 374, 904);
+        toggle(cs80::P_footMode, "WAH",
+               "Foot controller selector: off = EXP (volume only), on = EXP-WAH.", 445, 904);
+        toggle(cs80::P_sustainAssign, "SUSTAIN",
+               "Assign the footswitch to SUSTAIN. Plugged and open switch removes the sustain release.", 303, 937);
+        toggle(cs80::P_glideAssign, "PORTA",
+               "Assign the footswitch to portamento/glissando. Plugged and open switch suppresses gliding.", 374, 937);
+        toggle(cs80::P_outputLevel, "HIGH",
+               "Output level switch: lit = HIGH (unity), unlit = LOW.", 445, 937);
+    }
+
     void buildKeyboard()
     {
         keyboard.setAvailableRange(24, 84);
@@ -605,6 +666,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         keyboard.setColour(juce::MidiKeyboardComponent::upDownButtonBackgroundColourId, juce::Colour(0xff111a21));
         keyboard.setWantsKeyboardFocus(false);
         addAndMakeVisible(keyboard);
+
+        keyboard.onKeyPressure = [this](int note, float pressure)
+        {
+            processor.setKeyPressureFromUI(note, pressure);
+        };
 
         ribbon.onValueChange = [this](float value)
         {
@@ -876,6 +942,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.setColour(juce::Colour(0xff080907)); g.fillRect(44, 759, 1512, 222);
         g.setColour(juce::Colour(0xffada995)); g.drawRect(49, 771, 238, 197, 1);
         panelText(g, "PERFORMANCE", 62, 757, 211, 19, 10);
+        g.setColour(juce::Colour(0xffada995)); g.drawRect(296, 771, 222, 197, 1);
+        panelText(g, "KEYBOARD / FOOT", 304, 757, 206, 19, 10);
+        panelText(g, "BRILLIANCE", 303, 774, 82, 11, 7.5f);
+        panelText(g, "LEVEL", 387, 774, 82, 11, 7.5f);
+        panelText(g, "FOOTSWITCH", 303, 893, 137, 11, 7.5f);
+        panelText(g, "FOOT", 445, 893, 68, 11, 7.5f);
+        panelText(g, "ASSIGN TO", 303, 926, 137, 11, 7.5f);
+        panelText(g, "OUTPUT", 445, 926, 68, 11, 7.5f);
         panelText(g, "CHORUS / TREMOLO", 157, 944, 120, 17, 8);
         // Rails and screws use highlights rather than generic card borders.
         g.setColour(juce::Colour(0xff626257)); g.fillRect(43, 977, 1514, 4);
@@ -921,7 +995,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         ribbon.setBounds(r(320.0f, 713.0f, 960.0f, 23.0f));
         pitchWheel.setBounds(r(320.0f, 299.0f, 30.0f, 126.0f));
         modWheel.setBounds(r(358.0f, 299.0f, 30.0f, 126.0f));
-        keyboard.setBounds(r(300.0f, 780.0f, 1236.0f, 186.0f));
+        keyboard.setBounds(r(528.0f, 780.0f, 1008.0f, 186.0f));
         if (keyboard.getWidth() > 0)
             keyboard.setKeyWidth((float) keyboard.getWidth() / 36.0f);
 
@@ -959,6 +1033,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     cs80::ui::RibbonStrip ribbon;
     cs80::ui::PerformanceWheel pitchWheel;
     cs80::ui::PerformanceWheel modWheel;
+    cs80::ui::PerformanceWheel expressionPedal { "PEDAL", false };
 
     cs80::ui::AdvancedPanel advanced;
     cs80::ui::PresetBrowser browser;

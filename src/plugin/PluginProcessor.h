@@ -62,6 +62,14 @@ public:
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
     void setPitchWheelFromUI(float v) noexcept { pendingPitch.store(v, std::memory_order_relaxed); }
     void setModWheelFromUI(float v) noexcept { pendingMod.store(v, std::memory_order_relaxed); }
+    // On-screen foot controller: delivered to the engine as expression (CC11).
+    void setExpressionFromUI(float v) noexcept { pendingExpression.store(v, std::memory_order_relaxed); }
+    // On-screen per-key pressure gesture, delivered as polyphonic aftertouch on channel 1.
+    void setKeyPressureFromUI(int note, float pressure) noexcept
+    {
+        if (note >= 0 && note < 128)
+            pendingKeyPressure[(size_t) note].store(pressure, std::memory_order_relaxed);
+    }
     struct PresetMetadata
     {
         juce::String name;
@@ -84,6 +92,8 @@ public:
     static constexpr int memoryControlCount = 26;
     static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
     static bool isMemoryControl(int local) noexcept;
+    // Jack/pedal/selector/output-switch state survives preset recall.
+    static bool isPhysicalSetupParameter(int index) noexcept;
     static juce::String hardwareSourceParameterId(int channel);
     static juce::String memoryParameterId(int bank, int local);
 
@@ -113,7 +123,9 @@ private:
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
     std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
     static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();
-    std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl };
+    std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl },
+        pendingExpression { noPendingControl };
+    std::array<std::atomic<float>, 128> pendingKeyPressure {};
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     std::vector<float> interleaved;

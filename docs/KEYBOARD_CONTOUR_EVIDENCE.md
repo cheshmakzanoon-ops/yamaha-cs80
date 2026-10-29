@@ -145,7 +145,11 @@ No arbitrary linear half-keyboard ramp, hard split at MIDI60, symmetric endpoint
 
 First transcribe the KBC digital decoder and switched resistor network; solve its nominal DC output for all61 original physical keys and each control combination. Preserve separate brilliance/level KBC board outputs and the receiving networks. Identify original keyboard-code mapping rather than relying on MIDI octave naming. Then validate physical lever polarity, center grounding, pot taper and source impedance from the actual panel/buffer schematics.
 
-## Stable parameter plan (not implemented)
+## Stable parameter plan (implemented 2026-10-29 with different indices)
+
+**Status:** the four controls now exist as core 127..130 / host 233..236 with AU hint 5, because later work appended other parameters first; the indices in the plan below are the original proposal against an older baseline. Audio uses a provisional per-key weight model, not the unresolved KBC network, and `src/reference/KeyboardContour.h` still does not drive it. See [PERFORMANCE_CONTROLS.md](PERFORMANCE_CONTROLS.md) for exactly what is and is not established.
+
+### Original proposal
 
 Against core123-parameter/host229-parameter baseline:
 - Preserve core0..122 and host0..228 exactly.

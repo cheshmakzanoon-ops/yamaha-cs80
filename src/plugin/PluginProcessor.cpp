@@ -34,6 +34,8 @@ Cs80AudioProcessor::Cs80AudioProcessor()
           .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       apvts(*this, nullptr, "CS80_PARAMS", createParameterLayout())
 {
+    for (auto& pressure : pendingKeyPressure)
+        pressure.store(noPendingControl, std::memory_order_relaxed);
     for (int i = 0; i < cs80::P_numParams; ++i)
         parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
     for (int channel = 0; channel < 2; ++channel)
@@ -128,6 +130,22 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
         juce::StringArray { "Sine", "Saw down", "Saw up", "Square", "Noise", "EXT" }, 0));
     add(cs80::P_subOriginalSpeed, 4);
     add(cs80::P_subExtLevel, 4);
+
+    // Keyboard contours, footswitch/assigners, EXP-WAH and output switch. AU
+    // version hint 5 keeps them after every previously shipped parameter.
+    for (int index = cs80::P_kbdBrillianceLow; index <= cs80::P_kbdLevelHigh; ++index)
+        add(index, 5);
+    for (int index : { cs80::P_footswitchPlugged, cs80::P_footswitchPressed,
+                       cs80::P_sustainAssign, cs80::P_glideAssign })
+        layout.add(std::make_unique<CanonicalBoolParameter>(
+            juce::ParameterID { parameterId(index), 5 },
+            juce::String(cs80::paramDef(index).name), cs80::paramDef(index).def >= 0.5f));
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_footMode), 5 },
+        "Foot controller mode", juce::StringArray { "EXP", "EXP-WAH" }, 0));
+    layout.add(std::make_unique<CanonicalBoolParameter>(
+        juce::ParameterID { parameterId(cs80::P_outputLevel), 5 },
+        "Output HIGH (on) / LOW (off)", true));
     return layout;
 }
 
@@ -222,11 +240,21 @@ void Cs80AudioProcessor::applyParameterValues(const cs80::ParamValues& values)
     applyValues(values);
 }
 
+bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
+{
+    return index == cs80::P_footswitchPlugged || index == cs80::P_footswitchPressed
+        || index == cs80::P_footMode || index == cs80::P_outputLevel;
+}
+
 void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
 {
     resetHardwareSources();
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
+        // A preset recalls the sound, not what is plugged into the jack, the
+        // pedal contact, the EXP/WAH selector or the rear output switch.
+        if (isPhysicalSetupParameter(i))
+            continue;
         if (auto* p = apvts.getParameter(parameterId(i)))
             p->setValueNotifyingHost(p->convertTo0to1(values[i]));
     }
@@ -327,6 +355,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const float ribbon = pendingRibbon.exchange(noPendingControl, std::memory_order_relaxed);
     const float pitch = pendingPitch.exchange(noPendingControl, std::memory_order_relaxed);
     const float mod = pendingMod.exchange(noPendingControl, std::memory_order_relaxed);
+    const float pedal = pendingExpression.exchange(noPendingControl, std::memory_order_relaxed);
+    if (std::isfinite(pedal)) engine.controlChange(11, juce::jlimit(0.0f, 1.0f, pedal), 1);
     if (std::isfinite(ribbon)) engine.setRibbon(juce::jlimit(-1.0f, 1.0f, ribbon));
     if (std::isfinite(pitch)) engine.pitchBend(1, juce::jlimit(-1.0f, 1.0f, pitch));
     if (std::isfinite(mod)) engine.controlChange(1, juce::jlimit(0.0f, 1.0f, mod), 1);
@@ -373,6 +403,15 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             done = pos;
         }
         handleMidi(metadata.getMessage());
+    }
+
+    // Pressure from the on-screen keys is applied after this block's note-ons so a
+    // gesture that started in the same block cannot be consumed before its voice exists.
+    for (int note = 0; note < 128; ++note)
+    {
+        const float pressure = pendingKeyPressure[(size_t) note].exchange(noPendingControl, std::memory_order_relaxed);
+        if (std::isfinite(pressure))
+            engine.polyPressure(note, juce::jlimit(0.0f, 1.0f, pressure), 1);
     }
 
     if (done < numSamples)

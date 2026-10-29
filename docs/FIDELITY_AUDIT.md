@@ -221,3 +221,11 @@ New regressions exercise scoped immediate/release panic, raw core CC dispatch, g
 ## Hardware automation integration
 
 The plugin now exposes 228 host parameters: the existing 122 retain IDs and AU version hint 1, and 106 programmer/selector parameters are appended with hint 2. APVTS is their single authority, with cached raw atomic pointers on the audio side and JUCE attachments on the GUI side. Detached state completion migrates the old version-1 HARDWARE section and fills missing parameters with defaults, rather than retaining values from a prior session. See MEMORY_AUTOMATION.md and exact-revision UI/host CI results; source inspection alone is not execution evidence.
+
+## Performance-control closure increment (2026-10-29)
+
+Keyboard brilliance/level contours, the footswitch jack/contact with both assigners, the EXP / EXP-WAH selector with a post-mix stand-in for the PRA network, the GENERAL HIGH/LOW switch and an on-screen per-key pressure gesture were added. Defaults reproduce the previous behavior bit for bit (96 preset/gesture renders compared as raw float streams against the preceding commit). Topology follows the evidence ledgers; **all gains are provisional and labelled `kProvisional…`**, and the key map, wah transfer and output level are explicitly measurement-required. Details, policies and what was not established: [PERFORMANCE_CONTROLS.md](PERFORMANCE_CONTROLS.md).
+
+Locally executed in the cloud container: the core suite (11,260 checks), the new performance-control suite (113 checks, mutation-checked), the HC/IG00156/keyboard-contour reference suites, the validator-retry script test and the plugin/UI smoke test on a Linux Release build. The core and performance-control suites also ran clean under AddressSanitizer and UndefinedBehaviorSanitizer (leak detection off, as in earlier milestones; no leak-clean claim). Not executed here: pluginval, macOS/Windows builds, a sanitizer pass over the plugin/UI target. Consult exact-commit Actions results for those; none is inferred.
+
+The 1:1 analog requirement is **not** met by this increment. It removes missing controls, not unmeasured circuit behavior.

@@ -75,6 +75,18 @@ juce::String formatParamValue(int parameterIndex, float value)
     if (parameterIndex == cs80::P_subOriginalMode) return value >= 0.5f ? "ORIGINAL" : "LEGACY";
     if (parameterIndex == cs80::P_subOriginalFunction) return enumName(kOriginalSubWaves, 6, value);
     if (parameterIndex == cs80::P_subOriginalSpeed) return rate(value);
+    if (parameterIndex >= cs80::P_kbdBrillianceLow && parameterIndex <= cs80::P_kbdLevelHigh)
+        return (value > 0.004f ? "+" : "") + juce::String(juce::roundToInt(value * 100.0f)) + "%";
+    switch (parameterIndex)
+    {
+        case cs80::P_footswitchPlugged: return value >= 0.5f ? "PLUGGED" : "NO PLUG";
+        case cs80::P_footswitchPressed: return value >= 0.5f ? "PRESSED" : "OPEN";
+        case cs80::P_sustainAssign:
+        case cs80::P_glideAssign: return value >= 0.5f ? "ASSIGNED" : "OFF";
+        case cs80::P_footMode: return value >= 0.5f ? "EXP-WAH" : "EXP";
+        case cs80::P_outputLevel: return value >= 0.5f ? "HIGH" : "LOW";
+        default: break;
+    }
     if (parameterIndex < cs80::P_numGlobals)
     {
         switch (parameterIndex)
@@ -745,6 +757,12 @@ PerformanceWheel::PerformanceWheel(const juce::String& label, bool springLoaded)
     setMouseCursor(juce::MouseCursor::UpDownResizeCursor);
     setRepaintsOnMouseActivity(true);
 
+}
+
+void PerformanceWheel::setValue(float newValue)
+{
+    value = juce::jlimit(spring ? -1.0f : 0.0f, 1.0f, newValue);
+    repaint();
 }
 
 void PerformanceWheel::paint(juce::Graphics& g)

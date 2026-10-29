@@ -157,6 +157,38 @@ public:
     bool hardwareTab = false;
 };
 
+// Pointer-to-pressure mapping for the on-screen keys. After the strike, pushing
+// the pointer further down the key presses harder (full pressure after 40% of the
+// key height); drawing back up eases off. This stands in for the original per-key
+// pressure sensor and does not model its force law.
+class KeyPressureGesture
+{
+public:
+    static constexpr float kTravelFraction = 0.4f;
+
+    void begin(int note, float y) noexcept { activeNote = note; anchorY = y; }
+    void end() noexcept { activeNote = -1; }
+    int getNote() const noexcept { return activeNote; }
+
+    // Pressure 0..1 for the key under the pointer. Sliding onto a different key is
+    // a new strike, not a pressure change, and returns -1.
+    float drag(int note, float y, float keyHeight) noexcept
+    {
+        if (note != activeNote)
+        {
+            begin(note, y);
+            return -1.0f;
+        }
+        const float travel = kTravelFraction * (keyHeight > 1.0f ? keyHeight : 1.0f);
+        const float p = (y - anchorY) / travel;
+        return p < 0.0f ? 0.0f : (p > 1.0f ? 1.0f : p);
+    }
+
+private:
+    int activeNote = -1;
+    float anchorY = 0.0f;
+};
+
 // The CS-80 ribbon is a continuous position controller, not a mod wheel.
 // Initial contact establishes zero; displacement changes pitch until release.
 class RibbonStrip final : public juce::Component
@@ -193,6 +225,8 @@ public:
 
     std::function<void(float)> onValueChange;
     float getValue() const noexcept { return value; }
+    // Moves the control without notifying onValueChange (initial or restored position).
+    void setValue(float newValue);
 
 private:
     void setFromY(float y);

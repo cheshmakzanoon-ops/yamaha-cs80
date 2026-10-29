@@ -20,13 +20,13 @@ The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha
 | Oscillators | PolyBLEP saw, variable-width pulse, fixed-width reset pulse, shaped sine, noise |
 | Filters | Serial 12 dB high-pass into 12 dB low-pass, resonance on both, TPT state-variable topology |
 | Envelopes | Independent filter and amplifier ADSRs with CS-80-style bent decay/release |
-| Expression | Velocity, polyphonic aftertouch, channel pressure, MPE pitch bend/pressure with a separate range, mod wheel, ribbon |
+| Expression | Velocity, polyphonic aftertouch (MIDI, or drag down an on-screen key), channel pressure, MPE pitch bend/pressure with a separate range, mod wheel, ribbon, EXP / EXP-WAH foot controller, four keyboard contour levers |
 | Modulation | Three global LFOs, sub-oscillator with VCO/VCF/VCA/AT routing, global ring modulator |
 | Character | Per-voice tuning/cutoff/level/pan dispersion, slow drift, analog noise floor |
 | Effects | BBD-style stereo chorus/tremolo plus three serial modern FX slots |
-| Performance | Arpeggiator, sustain II, portamento/glissando, pitch-bend range, A4 tuning |
+| Performance | Arpeggiator, sustain II, portamento/glissando, footswitch with independent sustain and porta/gliss assigners, HIGH/LOW output switch, pitch-bend range, A4 tuning |
 | Presets | 222 factory programs: 22 provisional hardware-tab studies + 200 original performance patches |
-| Parameters | 233 host-automatable parameters: 122 original + 106 programmer/selector controls + AT VCF + 4 original-SUB controls |
+| Parameters | 243 host-automatable parameters: 122 original + 106 programmer/selector controls + AT VCF + 4 original-SUB controls + 10 performance controls (keyboard contours, footswitch/assigners, EXP-WAH, output switch) |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
 | Verification | Core regression suite + numerical DSP probes + plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
 
@@ -56,6 +56,8 @@ Fresh instances now use the [original six-position SUB function set](docs/ORIGIN
 Initial pitch bend now uses a [source-derived nominal 50ms positive-onset response](docs/INITIAL_PITCH_TRANSIENT.md), with state independent of the live PB depth control. The [shared pressure-to-speed bus](docs/SHARED_PRESSURE_SPEED.md) uses the maximum active held-key pressure instead of the most recent event. Both are explicitly bounded circuit-informed approximations, not measured complete touch circuitry.
 
 The missing [aftertouch-to-sub-filter route](docs/AFTERTOUCH_SUB_VCF.md) is implemented with an appended host parameter, preserving existing automation indexes. Its numerical depth remains provisional. [Unconditional velocity attenuation has been removed](docs/VELOCITY_GAIN_CORRECTION.md); saved sessions can sound louder below maximum velocity. The held initial-touch transfer and separate pitch-bend transient still need circuit validation; see [the corrected touch-path evidence](docs/INITIAL_TOUCH_CIRCUIT_EVIDENCE.md).
+
+The four **keyboard contour** levers (LOW/HIGH BRILLIANCE and LEVEL), the **footswitch jack and two assigners**, the **EXP / EXP-WAH** selector and the **HIGH/LOW output switch** now exist, in a KEYBOARD / FOOT group beside the keyboard, with append-only host IDs. Their routes follow the service evidence; their gains are provisional and the default of each is the previous behavior. [What is and is not established](docs/PERFORMANCE_CONTROLS.md).
 
 See the [complete hardware coverage audit](docs/HARDWARE_COVERAGE.md) and [IG00156 evidence and validation plan](docs/IG00156_MODEL_EVIDENCE.md).
 
@@ -156,6 +158,7 @@ The suite covers:
 - macro layer behaviour
 - all 222 factory presets rendering within bounds
 - APVTS exposure, preset/state round-trips, MIDI rendering, editor size, all advanced pages and user preset storage
+- keyboard contour, footswitch gate truth table and tail/glide edges, EXP-WAH, output trim and the key-pressure mailbox (`cs80_performance_control_tests` and the UI smoke test)
 - pluginval 1.0.4 at strictness 10 against the Linux VST3 (headless + GUI under Xvfb), macOS VST3, macOS AU (headless + GUI), and Windows VST3 (headless)
 
 ## Using the instrument
@@ -167,7 +170,8 @@ The suite covers:
 - **TONE SELECTOR**: eleven distinct named positions on each channel, in the original hardware order. Numeric voicings are provisional. Selecting a tone reprograms that channel immediately.
 - **PERFORMANCE**: glide, key release, wheel-to-sub, wheel-to-VCF, bend range, A4 tuning, arp rate, FX 1 mix and the sustain/arp/chorus/tremolo/stereo switches.
 - **RIBBON**: first contact establishes the reference; relative motion bends pitch, and release restores neutral. The documented upward endpoint is approximately one octave.
-- **KEYBED**: 61-key on-screen keyboard with velocity. External MIDI provides polyphonic aftertouch; a per-key pressure gesture on the on-screen keyboard remains to be implemented.
+- **KEYBED**: 61-key on-screen keyboard with velocity. External MIDI provides polyphonic aftertouch; on screen, strike a key and drag further down it to press harder (a pointer stand-in for the per-key sensor).
+- **KEYBOARD / FOOT**: LOW/HIGH BRILLIANCE and LEVEL contour levers (centre = neutral), an on-screen PEDAL wheel, footswitch PLUG/PRESS with SUSTAIN and PORTA assigners, WAH (EXP-WAH) and HIGH (output) switches.
 
 Double-click any knob to return it to its default. The preset arrows step through the complete bank; **LIBRARY** opens the searchable browser and **SAVE** opens the same browser with the save field focused.
 
@@ -189,6 +193,7 @@ MPE mode maps per-note pitch bend and pressure on member channels; the wheel ran
 ```text
 src/core/Params.h          parameter table shared by engine, UI, presets and tests
 src/core/Dsp.h             oscillator, filters, envelopes, LFO, chorus, phaser, reverb, decimator
+src/core/PerformanceControls.h  keyboard contour weights, footswitch gate, wah and output-switch constants
 src/core/Engine.*          voice allocation, dual-rank engine, modulation, ring, FX, arp
 src/core/FactoryPresets.*  22 provisional hardware-tab studies and the 200-patch performance bank
 src/plugin/PluginProcessor  APVTS, MIDI, preset/state persistence, host integration
@@ -199,6 +204,7 @@ src/plugin/PresetBrowser    searchable factory/user library
 src/tools/render_cli.cpp    offline performance renderer for CI
 src/tools/ui_snapshot.cpp   headless screenshots and plugin/UI smoke test
 tests/CoreTests.cpp         deterministic DSP and preset tests
+tests/PerformanceControlTests.cpp  contour, footswitch, EXP-WAH and output-switch tests
 docs/ENGINE.md              signal path and implementation notes
 docs/RESEARCH.md            source notes and design references
 ```
