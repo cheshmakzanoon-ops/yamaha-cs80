@@ -1101,7 +1101,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                    + keyboardBrillianceOctaves(global.kbdBrillianceLow,
                                                                global.kbdBrillianceHigh, v.contour);
 
-            const float fenv = r.fenv.tick(sr, true);
+            const float fenv = r.fenv.tick(sr, true, global.parityMode);
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
@@ -1131,7 +1131,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                              + keyboardLevelOffset(global.kbdLevelLow,
                                                                    global.kbdLevelHigh, v.contour),
                                          0.0f, 2.6f);
-            const float amp = r.aenv.tick(sr, true);
+            const float amp = r.aenv.tick(sr, true, global.parityMode);
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             // Velocity acts through the selected initial-touch destinations.
@@ -1163,7 +1163,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
-    ringEnv = ringAdsr.tick(sr, false);
+    ringEnv = ringAdsr.tick(sr, false, global.parityMode);
     ringFrequency = clampf(ringModulationFrequency(global.ringSpeed,
                                                    global.ringDepth, ringEnv),
                            0.0f, sr * 0.4f);

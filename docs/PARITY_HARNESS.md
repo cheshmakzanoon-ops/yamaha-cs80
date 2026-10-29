@@ -243,10 +243,7 @@ required to fail these state-step checks.
 The complete CLI suite also checks independent-process byte determinism on the
 same build/platform, finite complete audio, retained release output, strict JSON
 keys/constants, malformed timelines, wrong rank/frame/value, reset/stale state,
-missing trace rows, fixture switching and failed-rerun cleanup. The original
-three default artifacts are compared byte-for-byte with the preserved
-pre-extension executable under the same toolchain; cross-platform identity is
-not claimed.
+missing trace rows, fixture switching and failed-rerun cleanup. At exporter-only checkpoint `249fe07`, the original three default artifacts were compared byte-for-byte with the preserved pre-extension executable under the same toolchain. Later [envelope numerical corrections](ENVELOPE_NUMERICAL_ACCURACY.md) intentionally change isolation audio/state responses, not the fixture schema or stimulus. Cross-platform identity is not claimed.
 
 CI must export the two fixtures into separate directories. The existing
 exact-commit provenance, source/binary hashes, build environment and final
@@ -263,7 +260,7 @@ attack event by one frame, swapping rank attack times, and omitting the post-set
 probe. Temporary mutation sources/logs live under `/tmp/parity-live-adr-mutations`;
 they are not production dependencies.
 
-All three default files matched the preserved pre-extension executable byte for
+At exporter-only checkpoint `249fe07`, all three default files matched the preserved pre-extension executable byte for
 byte. On this build, `capture.json` SHA-256 is
 `09b8bad1e8741b71a135e16743d264ee5fbf18f404f5dfa05b15462c92735879`;
 both channel CSVs have SHA-256

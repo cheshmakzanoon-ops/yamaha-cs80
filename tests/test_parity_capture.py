@@ -242,6 +242,11 @@ def read_live_probes(path):
     return rows
 
 
+def half_ulp32(value):
+    """Maximum round-to-nearest error for a finite binary32 snapshot."""
+    return 2**-150 if abs(value) < 2**-126 else 2.0**(math.frexp(abs(value))[1] - 25)
+
+
 def validate_live_probes(rows):
     assert len(rows) == 36
     cursor = 0
@@ -274,17 +279,31 @@ def validate_live_probes(rows):
                         assert abs(expected - target) > .005
                         if phase == "a":
                             assert old_elapsed < times[rank] * 1.2 - .01
-                        coefficient = f32(math.exp(f32(-6 / f32(f32(times[rank]) * 96000))))
+                        # Reconstruction retains double state/clock; CSV contains
+                        # round-trippable binary32 snapshots, not that hidden state.
+                        # Propagate the prior half-ULP uncertainty through the
+                        # contractive two-tick law, then allow final snapshot rounding.
+                        coefficient = math.exp(-6 / (f32(times[rank]) * 96000))
+                        expected = f32(expected)
+                        initial_error = half_ulp32(expected)
                         for _ in range(2):
                             if phase == 'r' and envelope == 'filter':
-                                expected = f32(expected + f32(f32(target - expected) * f32(1 - coefficient)))
+                                expected += (target - expected) * (1 - coefficient)
                             elif phase == 'r':
-                                expected = f32(expected * coefficient)
+                                expected *= coefficient
                             else:
-                                expected = f32(target + f32(f32(expected - target) * coefficient))
-                            old_elapsed = f32(old_elapsed + f32(1 / 96000))
-                        assert abs(value - expected) < 2e-7
-                        assert abs(elapsed - old_elapsed) < 2e-8
+                                expected = target + (expected - target) * coefficient
+                        value = f32(value)
+                        # At most 16 double arithmetic rounding operations; this
+                        # term is negligible next to the two float snapshots.
+                        arithmetic_error = 16 * 2**-52 * (1 + abs(expected) + abs(target))
+                        value_bound = initial_error * coefficient**2 + half_ulp32(value) + arithmetic_error
+                        assert abs(value - expected) <= value_bound
+                        old_elapsed = f32(old_elapsed)
+                        expected_elapsed = old_elapsed + 2 / 96000
+                        elapsed = f32(elapsed)
+                        time_bound = half_ulp32(old_elapsed) + half_ulp32(elapsed) + 2 * math.ulp(expected_elapsed)
+                        assert abs(elapsed - expected_elapsed) <= time_bound
                         assert abs(value - before[key][0]) > 1e-6
 
 
@@ -359,6 +378,10 @@ class LiveCaptureTests(unittest.TestCase):
                      lambda rows: rows[4].update(elapsed='0'),
                      lambda rows: rows[8].update(value=rows[0]['value']),
                      lambda rows: rows[8].update(sample='8642'),
+                     lambda rows: rows[8].update(elapsed=rows[0]['elapsed']),
+                     # A stale attack coefficient (1 second instead of .2) must fail.
+                     lambda rows: rows[8].update(value=str(f32(1 + (float(rows[0]['value']) - 1)
+                                                                  * math.exp(-12 / 96000)))),
                      lambda rows: rows[8].update(value='nan'),
                      lambda rows: rows[0].update(stage='3')]
         for index, mutate in enumerate(mutations):

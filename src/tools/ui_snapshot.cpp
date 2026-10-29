@@ -865,8 +865,8 @@ void testLiveEnvelopeTimingHost()
             for (int sample = 0; sample < frames * 2; ++sample)
                 for (int rank = 0; rank < 2; ++rank)
                 {
-                    expectedAmplitude[rank].tick(internalRate, true);
-                    expectedFilter[rank].tick(internalRate, true);
+                    expectedAmplitude[rank].tick(internalRate, true, isolated);
+                    expectedFilter[rank].tick(internalRate, true, isolated);
                 }
             compare();
         };

@@ -75,9 +75,41 @@ int main()
         const auto a = isolated.getRankInfo(0, rank), b = neutralModern.getRankInfo(0, rank);
         check(a.hpfEnabled && a.lpfEnabled, "both filters forced on");
         check(a.oscillatorHz == b.oscillatorHz, "neutral tuning and macro width");
-        check(a.lpfHz == b.lpfHz && a.hpfHz == b.hpfHz, "neutral macro brightness and motion");
-        check(a.ampEnvelope == b.ampEnvelope && a.filterEnvelope == b.filterEnvelope,
-              "neutral macro envelope times");
+        // Different precision backends need their own neutral-time oracle;
+        // equality across modes would falsely demand legacy rounding in reconstruction.
+        for (bool reconstruction : {false, true})
+        {
+            auto value = [&](int id) { return p[chParam(rank, id)]; };
+            Adsr amp; FilterEnv filter;
+            amp.noteOn(value(CP_vA), value(CP_vD), value(CP_vS), value(CP_vR));
+            filter.noteOn(filterInitialOffset(value(CP_fIl)), filterAttackOffset(value(CP_fAl)),
+                          value(CP_fA), value(CP_fD), value(CP_fR), 0.0f);
+            for (int sample = 0; sample < 8192; ++sample)
+            {
+                amp.tick(96000.0f, true, reconstruction);
+                filter.tick(96000.0f, true, reconstruction);
+            }
+            const auto actual = reconstruction ? a : b;
+            check(actual.ampEnvelope == amp.getValue() && actual.filterEnvelope == filter.getValue(),
+                  "neutral macro envelope times match mode-specific neutral primitive");
+        }
+    }
+
+    // Remove only the envelope contribution for this cross-mode brightness
+    // assertion, so distinct state rounding cannot masquerade as macro leakage.
+    auto flatIsolated = p, flatModern = neutral;
+    for (int rank = 0; rank < 2; ++rank)
+        for (int control : {CP_fIl, CP_fAl})
+            flatIsolated[chParam(rank, control)] = flatModern[chParam(rank, control)] = 0.0f;
+    prepare(isolated, flatIsolated); prepare(neutralModern, flatModern);
+    isolated.noteOn(60, 0.8f); neutralModern.noteOn(60, 0.8f);
+    (void) render(isolated); (void) render(neutralModern);
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        const auto a = isolated.getRankInfo(0, rank), b = neutralModern.getRankInfo(0, rank);
+        check(a.filterEnvelope == 0.0f && b.filterEnvelope == 0.0f,
+              "brightness fixture has no envelope contribution");
+        check(a.lpfHz == b.lpfHz && a.hpfHz == b.hpfHz, "neutral macro brightness");
     }
 
     // Each independent extension must be inert, including its maximum value.

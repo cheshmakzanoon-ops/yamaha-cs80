@@ -291,9 +291,11 @@ public:
 
     void reset() noexcept
     {
+        preciseValue = 0.0;
         value = 0.0f;
         stage = Stage::Idle;
         stageTime = 0.0f;
+        preciseTime = 0.0;
         liveSustain = liveDecay = false;
     }
 
@@ -303,8 +305,10 @@ public:
         liveSustain = liveDecay = false;
         stage = Stage::Attack;
         stageTime = 0.0f;
+        preciseTime = 0.0;
         if (a <= 0.0002f)
             value = 1.0f;
+        preciseValue = value;
     }
 
     void noteOff() noexcept
@@ -313,11 +317,14 @@ public:
         {
             stage = Stage::Release;
             stageTime = 0.0f;
+            preciseTime = 0.0;
         }
     }
 
-    float tick(float sampleRate, bool bent = true) noexcept
+    // reconstruction is fixed for a note lifetime; Engine resets on mode changes.
+    float tick(float sampleRate, bool bent = true, bool reconstruction = false) noexcept
     {
+        if (reconstruction) return tickReconstruction(sampleRate, bent);
         stageTime += 1.0f / sampleRate;
         switch (stage)
         {
@@ -426,6 +433,51 @@ public:
     float getValue() const noexcept { return value; }
 
 private:
+    // Never round this state through the public float diagnostic/output. The
+    // legacy path remains separate to preserve existing patches byte-for-byte.
+    double preciseValue = 0.0, preciseTime = 0.0;
+    float tickReconstruction(float sampleRate, bool bent) noexcept
+    {
+        preciseTime += 1.0 / static_cast<double>(sampleRate);
+        const auto coefficient = [sampleRate](float time, double fast = 1.0) {
+            return std::exp(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+        };
+        switch (stage)
+        {
+            case Stage::Idle: preciseValue = 0.0; break;
+            case Stage::Attack:
+                preciseValue = 1.0 + (preciseValue - 1.0) * coefficient(a);
+                if (preciseValue >= 0.999f || preciseTime > a * 1.2f + 0.001f)
+                {
+                    preciseValue = 1.0; stage = Stage::Decay; preciseTime = 0.0;
+                }
+                break;
+            case Stage::Decay:
+                preciseValue = s + (preciseValue - s) * coefficient(d, bent && preciseTime < 0.035f ? 5.0 : 1.0);
+                if (std::abs(preciseValue - s) < 0.0005f)
+                {
+                    preciseValue = s; stage = Stage::Sustain;
+                }
+                break;
+            case Stage::Sustain:
+                if (liveSustain)
+                {
+                    preciseValue = s + (preciseValue - s) * coefficient(d);
+                    if (std::abs(preciseValue - s) < 0.0005f)
+                    {
+                        preciseValue = s; liveSustain = false;
+                    }
+                }
+                else preciseValue = s;
+                break;
+            case Stage::Release:
+                preciseValue *= coefficient(r, bent && preciseTime < 0.045f ? 5.0 : 1.0);
+                if (preciseValue < 0.0002f) { preciseValue = 0.0; stage = Stage::Idle; }
+                break;
+        }
+        stageTime = static_cast<float>(preciseTime);
+        return value = static_cast<float>(preciseValue);
+    }
     Stage stage = Stage::Idle;
     float value = 0.0f;
     float stageTime = 0.0f;
@@ -465,9 +517,11 @@ public:
 
     void reset() noexcept
     {
+        preciseValue = 0.0;
         value = 0.0f;
         stage = Stage::Idle;
         stageTime = 0.0f;
+        preciseTime = 0.0;
         liveAttack = liveRelease = releaseSelected = false;
     }
 
@@ -484,8 +538,10 @@ public:
         value = il;
         stage = Stage::Attack;
         stageTime = 0.0f;
+        preciseTime = 0.0;
         if (a <= 0.0002f)
             value = al;
+        preciseValue = value;
     }
 
     void noteOff() noexcept
@@ -495,12 +551,15 @@ public:
             stage = Stage::Release;
             releaseSelected = true;
             stageTime = 0.0f;
+            preciseTime = 0.0;
             if (liveRelease) releaseState = value;
         }
     }
 
-    float tick(float sampleRate, bool bent = true) noexcept
+    // reconstruction is fixed for a note lifetime; Engine resets on mode changes.
+    float tick(float sampleRate, bool bent = true, bool reconstruction = false) noexcept
     {
+        if (reconstruction) return tickReconstruction(sampleRate, bent);
         stageTime += 1.0f / sampleRate;
         switch (stage)
         {
@@ -616,6 +675,50 @@ public:
     float getValue() const noexcept { return value; }
 
 private:
+    // Never round this state through the public float diagnostic/output. The
+    // legacy path remains separate to preserve existing patches byte-for-byte.
+    double preciseValue = 0.0, preciseTime = 0.0;
+    float tickReconstruction(float sampleRate, bool bent) noexcept
+    {
+        preciseTime += 1.0 / static_cast<double>(sampleRate);
+        const auto coefficient = [sampleRate](float time, double fast = 1.0) {
+            return std::exp(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+        };
+        switch (stage)
+        {
+            case Stage::Idle:
+                if (releaseSelected && liveRelease && preciseValue != il)
+                {
+                    preciseValue += (il - preciseValue) * (1.0 - coefficient(r));
+                    if (std::abs(preciseValue - il) < 0.0008f) preciseValue = il;
+                }
+                break;
+            case Stage::Attack:
+                preciseValue = al + (preciseValue - al) * coefficient(a);
+                if (std::abs(preciseValue - al) < 0.001f || (!liveAttack && preciseTime > a * 1.2f + 0.001f))
+                {
+                    preciseValue = al; stage = Stage::Decay; preciseTime = 0.0;
+                }
+                break;
+            case Stage::Decay:
+                preciseValue = sustain + (preciseValue - sustain) * coefficient(d, bent && preciseTime < 0.035f ? 5.0 : 1.0);
+                if (std::abs(preciseValue - sustain) < 0.0008f)
+                {
+                    preciseValue = sustain; stage = Stage::Sustain;
+                }
+                break;
+            case Stage::Sustain: preciseValue = sustain; break;
+            case Stage::Release:
+                preciseValue += (il - preciseValue) * (1.0 - coefficient(r, bent && preciseTime < 0.04f ? 5.0 : 1.0));
+                if (std::abs(preciseValue - il) < 0.0008f)
+                {
+                    preciseValue = il; stage = Stage::Idle;
+                }
+                break;
+        }
+        stageTime = static_cast<float>(preciseTime);
+        return value = static_cast<float>(preciseValue);
+    }
     Stage stage = Stage::Idle;
     float value = 0.0f, stageTime = 0.0f;
     bool liveAttack = false, liveRelease = false, releaseSelected = false;
