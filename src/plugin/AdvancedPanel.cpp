@@ -273,9 +273,9 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         auto& page = *pages[1];
         page.section(20.0f, 20.0f, 730.0f, 330.0f, "Sub oscillator");
         auto* originalMode = page.toggle(48.0f, 60.0f, 205.0f, 27.0f,
-                                        cs80::P_subOriginalMode, "ORIGINAL MODE");
+                                        cs80::P_subOriginalMode, "STORED ORIGINAL MODE");
         originalMode->setComponentID("sub_original_mode");
-        originalMode->setTooltip("On: original six functions and 0.7-60 Hz range. Off: unchanged legacy automation.");
+        originalMode->setTooltip("Stored preference: on selects original six functions and 0.7-60 Hz; off selects legacy. PARITY ISOLATION forces original regardless of this retained setting; legacy controls are inert while isolated.");
         page.text("ORIGINAL FUNCTION", 48.0f, 100.0f, 170.0f, 16.0f, 9.0f, true, ivoryDim);
         page.choice(48.0f, 121.0f, 180.0f, 30.0f, cs80::P_subOriginalFunction, kOriginalSubWaves);
         page.knob(240.0f, 96.0f, 92.0f, 78.0f, cs80::P_subOriginalSpeed, "ORIGINAL Hz");
@@ -290,7 +290,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(378.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtSpeed, "AT SPEED");
         page.knob(488.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtVco, "AT VCO");
         page.knob(598.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtVcf, "AT VCF");
-        page.text("Mode selects one function/rate pair; inactive settings are retained, never converted.\n"
+        page.text("PARITY ISOLATION forces ORIGINAL; stored mode and legacy settings are retained but inert.\n"
                   "Noise / EXT ignore SPEED. EXT: optional mono input, disabled by default; host routing required.\n"
                   "Six original functions; analog waveform, depth and touch laws remain provisional.",
                   48.0f, 278.0f, 670.0f, 60.0f, 10.2f, false, ivoryDim,

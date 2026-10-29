@@ -117,3 +117,63 @@ The tests deliberately mutate delay, amplitude and DC bias and recompute file
 hashes: metrics must still fail. Other mutations prove that bad provenance,
 nonfinite samples, damaged files, invalid thresholds and incomplete stage sets
 cannot become passing reports. A green run establishes comparison plumbing only.
+
+## Actual-engine candidate stimulus export (separate from synthetic acceptance)
+
+`cs80_parity_capture` exports an **actual core-engine output**, not the synthetic
+stand-ins above. It deliberately supplies no reference, tolerance, fidelity
+score or passing analog result:
+
+```sh
+./build/cs80_parity_capture --out artifacts/parity-engine-candidate
+python3 tests/test_parity_capture.py --capture ./build/cs80_parity_capture
+```
+
+The core-linked tool captures exactly 96,000 host frames (two seconds at 48 kHz),
+including startup, the existing 63-sample output latency and release tails.
+`left.csv` and `right.csv` use the comparison harness's `sample,value` format.
+`capture.json` records every submitted core parameter by stable ID (including
+values overridden internally by feature isolation), the channel file names,
+counts, host/internal rates, declared latency and initialization policy. No
+factory-preset or host state is loaded. The patch enables the uncalibrated
+original-feature-isolation mode, uses both saw ranks, disables variation/noise,
+chorus and ring, and includes nonzero original pressure-to-level/brilliance paths.
+All remaining submitted default values are recorded explicitly, not left implicit
+in the metadata. Changes to those defaults therefore change the artifact.
+
+Events are applied **before** rendering the specified zero-based host sample:
+
+| Sample | Event (MIDI channel 1) |
+| --- | --- |
+| 4,800 | note 60 on, velocity 0.75 |
+| 19,200 | note 60 poly pressure 0.5 |
+| 33,600 | note 60 poly pressure 0 |
+| 48,000 | note 60 off |
+| 57,600 | note 67 on, velocity 0.625 |
+| 72,000 | note 67 off |
+
+A fresh Engine receives `setParams`, `prepare`, then `reset`. No warmup samples
+are discarded; initial silence, note-start phase/reset behavior and transients
+are retained. Rendering blocks end at event boundaries. The existing deterministic
+engine seed is used; this does not assert real oscillator reset/free-run behavior.
+The export adds **no clipping, normalization, gain matching, resampling or latency
+trimming**. Feature isolation bypasses the engine's output DC blocker and output
+soft clip. The production decimator and provisional filter saturation remain;
+this distinction is explicitly labelled in metadata. Units are raw engine
+floats, not calibrated volts. CSV values use enough decimal digits to round-trip
+binary32, with a fixed locale and newline format.
+
+The seven CLI tests invoke two independent processes and require byte-identical
+artifacts on the **same build/platform**, finite nonzero channel output, complete
+sample counts, exact events/settings metadata, safe argument/destination failures,
+and rejection of deliberately corrupted test artifacts. They are software export
+checks, not a cross-platform bit-identity promise or analog acceptance test.
+
+`capture.json` is intentionally **not** a reference-corpus manifest. It has no
+hardware identity, acquisition rights or measured uncertainty. Before comparing
+it to any reference, create a reviewed corpus manifest with source/binary/CSV
+hashes, exact-commit provenance, units/scaling and an explicitly registered window.
+The capture retains latency inside its 96,000 frames; it is not automatically a
+96,000-reference-sample plus latency-tail pair. Do not silently truncate a
+reference to force compatibility. Archive these candidate files with the exact CI
+commit and binary provenance; a local capture alone is not authoritative evidence.

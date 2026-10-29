@@ -394,19 +394,39 @@ void testExpressionPersistence()
     auto isolatedReference = fresh(0.3f);
     auto isolatedFull = fresh(1.0f);
     for (auto* target : {isolated.get(), isolatedReference.get(), isolatedFull.get()})
+    {
+        // Consume the UI mailbox before changing mode: the transition must
+        // restore the held physical position, not rely on a pending UI update.
+        // Identical note-free history keeps phase RNG and numerical state paired.
+        juce::AudioBuffer<float> consume(2, 512);
+        juce::MidiBuffer empty;
+        target->processBlock(consume, empty);
         target->setParamValue(cs80::P_parityMode, 1.0f);
+    }
     const double isolatedQuiet = rmsOf(*isolated), isolatedLoud = rmsOf(*isolatedFull);
-    check(isolatedQuiet > 0.0 && isolatedQuiet < isolatedLoud * 0.5,
-          "UI expression remains audible after entering isolation");
+    const double pairedQuiet = rmsOf(*isolatedReference);
+    check(isolatedLoud > 0.0 && std::abs(isolatedQuiet / isolatedLoud - 0.3) < 1e-5,
+          "isolation transition reapplies consumed physical pedal with linear 0.3 gain");
+    check(std::abs(isolatedQuiet - pairedQuiet) < isolatedLoud * 1e-6,
+          "paired isolation render histories are deterministic");
     juce::AudioBuffer<float> isolatedBlock(2, 256);
     juce::MidiBuffer ignoredCc;
     ignoredCc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 127), 0);
     isolated->processBlock(isolatedBlock, ignoredCc);
+    juce::AudioBuffer<float> referenceBlock(2, 256);
+    juce::MidiBuffer noCc;
+    isolatedReference->processBlock(referenceBlock, noCc);
+    float ccResidual = 0.0f;
+    for (int ch = 0; ch < 2; ++ch)
+        for (int sample = 0; sample < 256; ++sample)
+            ccResidual = std::max(ccResidual, std::abs(isolatedBlock.getSample(ch, sample)
+                                                      - referenceBlock.getSample(ch, sample)));
+    check(ccResidual < 1e-7f, "isolated MIDI CC11 is sample-inert against paired physical-pedal render");
     check(isolated->getExpressionValue() == 0.3f, "isolated CC11 cannot overwrite physical UI pedal");
     isolated->prepareToPlay(48000.0, 512);
     isolatedReference->prepareToPlay(48000.0, 512);
     const double restarted = rmsOf(*isolated), unchanged = rmsOf(*isolatedReference);
-    check(std::abs(restarted - unchanged) < unchanged * 0.15,
+    check(unchanged > 0.0 && std::abs(restarted - unchanged) < unchanged * 1e-6,
           "ignored CC11 cannot leak into isolation through prepareToPlay");
 
     // MIDI CC11 moves the shared value too, so the wheel can follow it.
@@ -1751,6 +1771,30 @@ int main(int argc, char** argv)
     check(waitForGui([&] { return hasSubControls(false)
         && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
           "main SUB controls bind legacy parameters and report legacy status through editor timer");
+    processor.setParamValue(cs80::P_subOriginalFunction, 0.0f);
+    processor.setParamValue(cs80::P_parityMode, 1.0f);
+    check(waitForGui([&] { return hasSubControls(true)
+        && subStatusIs("SUB: ORIGINAL / PARITY ISOLATION"); }),
+          "isolated main SUB binds original function and speed despite stored legacy preference");
+    check(processor.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+          "effective original SUB UI does not overwrite stored legacy mode");
+    if (auto* knob = findParameterControl(editor, cs80::P_subOriginalFunction))
+    {
+        const float legacyBefore = processor.getParamValue(cs80::P_subWave);
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        check(processor.getParamValue(cs80::P_subOriginalFunction) == 1.0f
+                  && processor.getParamValue(cs80::P_subWave) == legacyBefore,
+              "isolated main SUB edits the effective original function only");
+    }
+    if (auto* storedMode = dynamic_cast<juce::Button*>(findControl(editor, "sub_original_mode")))
+        check(storedMode->getButtonText() == "STORED ORIGINAL MODE"
+                  && storedMode->getTooltip().contains("forces original"),
+              "Advanced SUB labels the stored preference and isolation override");
+    else check(false, "Advanced SUB stored preference toggle exists");
+    processor.setParamValue(cs80::P_parityMode, 0.0f);
+    check(waitForGui([&] { return hasSubControls(false)
+        && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
+          "leaving isolation restores main SUB legacy bindings without overwriting stored mode");
     processor.setParamValue(cs80::P_subWave, 0.0f);
     processor.setParamValue(cs80::P_subOriginalFunction, 4.0f);
     if (auto* knob = findParameterControl(editor, cs80::P_subWave))

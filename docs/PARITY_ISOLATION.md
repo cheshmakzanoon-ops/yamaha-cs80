@@ -32,7 +32,7 @@ physical pedal position after the reset. New notes must be triggered afterward.
 - Arpeggiator and MPE disabled; pitch/mod wheels, MIDI CC1/11/64/74 ignored.
   Channel-scoped panic CC120/123 remains available.
 - Both rank filters enabled, rank pan centred, output mono-fold disabled.
-- Original SUB forced on; legacy SUB waveform/rate controls inert. Ring speed
+- Original SUB forced on; legacy SUB waveform/rate controls inert. Ring base speed
   capped at the documented 200 Hz endpoint.
 - KEY RELEASE zero; A4 reference fixed at nominal 440 Hz. Original master tuning,
   rank detune, sustain/assigners, ribbon and touch routes remain active.

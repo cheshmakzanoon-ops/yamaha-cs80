@@ -778,7 +778,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void syncSubMode()
     {
         if (subFunction == nullptr || subSpeed == nullptr) return;
-        const bool original = processor.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
+        const bool isolated = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
+        const bool original = isolated || processor.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
         const bool functionReady = subFunction->bindParameter(original ? cs80::P_subOriginalFunction : cs80::P_subWave);
         const bool speedReady = subSpeed->bindParameter(original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed);
         juce::String status;
@@ -790,12 +791,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             status = processor.isExternalInputEnabled()
                 ? "SUB: EXT BUS ENABLED" : "SUB: EXT BUS DISABLED / SILENT";
         else
-            status = "SUB: ORIGINAL FUNCTIONS";
+            status = isolated ? "SUB: ORIGINAL / PARITY ISOLATION" : "SUB: ORIGINAL FUNCTIONS";
         if (subModeLabel.getText() != status)
             subModeLabel.setText(status, juce::dontSendNotification);
-        subModeLabel.setTooltip(original
+        subModeLabel.setTooltip((isolated
+            ? juce::String("Parity isolation forces original SUB controls; the stored mode and legacy settings are retained. Not calibrated. ")
+            : juce::String()) + (original
             ? "Original six functions; analog response laws remain provisional. EXT uses an optional mono input bus, disabled by default. Host routing is required; bus enabled does not prove a signal is present. At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1. Reconstruction delay: 63.5 host samples. This is software normalization, not physical voltage calibration."
-            : "Legacy waveform and rate automation are preserved. Select Original mode in Advanced to use the hardware functions.");
+            : "Legacy waveform and rate automation are preserved. Select Original mode in Advanced to use the hardware functions."));
     }
 
     void tick()

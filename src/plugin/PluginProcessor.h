@@ -63,7 +63,7 @@ public:
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
     void setPitchWheelFromUI(float v) noexcept { pendingPitch.store(v, std::memory_order_relaxed); }
     void setModWheelFromUI(float v) noexcept { pendingMod.store(v, std::memory_order_relaxed); }
-    // On-screen foot controller: delivered to the engine as expression (CC11).
+    // On-screen foot controller: direct physical-expression API, independent of MIDI CC11.
     void setExpressionFromUI(float v) noexcept
     {
         if (! std::isfinite(v)) return;
@@ -71,8 +71,8 @@ public:
         expressionValue.store(v, std::memory_order_relaxed);
         pendingExpression.store(v, std::memory_order_relaxed);
     }
-    // Last foot-controller position from the on-screen wheel or MIDI CC11. The engine
-    // forgets it on every prepareToPlay, so the processor re-applies it and the editor
+    // Last foot-controller position from the on-screen wheel or non-isolated MIDI CC11.
+    // The processor re-applies it after prepareToPlay and isolation transitions; the editor
     // reads it back; otherwise wheel and sound would disagree after a transport restart
     // or after reopening the window.
     float getExpressionValue() const noexcept { return expressionValue.load(std::memory_order_relaxed); }

@@ -9,6 +9,7 @@ on:
       - 'tests/**'
       - 'scripts/*pluginval*.sh'
       - 'src/tools/dsp_probe.cpp'
+      - 'src/tools/parity_capture.cpp'
       - 'scripts/analyze_dsp.py'
       - 'scripts/parity_harness.py'
       - 'CMakeLists.txt'
@@ -32,11 +33,23 @@ jobs:
       - name: Build standalone numerical probe
         run: |
           cmake -S . -B build-probe -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF
-          cmake --build build-probe --target cs80_dsp_probe --parallel 2
+          cmake --build build-probe --target cs80_dsp_probe cs80_parity_capture --parallel 2
       - name: Measure and enforce regression bounds
         run: |
           ./build-probe/cs80_dsp_probe artifacts/dsp-probe
           python scripts/analyze_dsp.py artifacts/dsp-probe
+      - name: Export actual-engine candidate with exact-source provenance
+        run: |
+          python tests/test_parity_capture.py --capture ./build-probe/cs80_parity_capture
+          ./build-probe/cs80_parity_capture --out artifacts/engine-candidate
+          printf '{"commit":"%s","run":"%s","analog_evidence":false}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/engine-candidate/provenance.json
+          sha256sum src/core/Engine.cpp src/core/Engine.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > artifacts/engine-candidate/SOURCE_SHA256SUMS
+          (cd artifacts/engine-candidate && sha256sum *.csv *.json SOURCE_SHA256SUMS > SHA256SUMS)
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-engine-candidate-${{ github.sha }}
+          path: artifacts/engine-candidate
+          if-no-files-found: error
       - name: Upload source-traceable graphs and raw traces
         uses: actions/upload-artifact@v5
         with:
