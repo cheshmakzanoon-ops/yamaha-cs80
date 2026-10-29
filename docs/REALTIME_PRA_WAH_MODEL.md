@@ -87,7 +87,7 @@ Dry X rather than raw U intentionally includes the documented input coupling and
 
 ### Executed standalone verification
 
-`tests/PraWahCircuitTests.cpp` currently passes **8,758,361 checks** in a local optimized GNU C++20 build. These are algorithm/fixture checks, not hardware acceptance statistics:
+`tests/PraWahCircuitTests.cpp` currently passes **8,758,418 checks** in a local optimized GNU C++20 build. These are algorithm/fixture checks, not hardware acceptance statistics:
 
 - 48 measured sinusoidal fixtures, all nine nodes, 48/88.2/192kHz, 8Hz–18kHz, optical/trim/loading variations. The warped AC oracle is the existing independently MNA-verified `reference::pra_wah`; maximum measured complex error was **2.285×10⁻¹⁰**.
 - Unwarped comparisons at 332Hz, 3.4kHz and 12kHz improve with 48→96→192→384kHz refinement. No resonance prewarping hides the error.
@@ -107,3 +107,9 @@ Dry X rather than raw U intentionally includes the documented input coupling and
 The focused Engine suite passes **164,808 checks**. Twelve separately compiled integration mutants are rejected, covering frozen bypass state, raw dry path, incorrect wet node, misplaced/missing expression, wrong internal rate, stale reset pedal, wrong legacy dispatch, hidden makeup, charge reset and ring/chorus ordering. The final local Release and ASan/UBSan configurations each pass **27/27 CTest suites** (58.35s and 245.45s respectively; sanitizer leak detection disabled). Both default-off raw corpora retain the pinned baseline hashes (`4a3483f77c9df9895386b98eaa169358d19b463c21283231f994c5d0f6c523de` normal; `fe447882e3ea3560eefb7b5ae4a474b151efe5ced775b5ab36f2609c5fde0660` tails). These hashes are same-compiler software compatibility evidence.
 
 The old cross-pedal exact RMS ratio is no longer physically appropriate: dry X depends on optical network loading. The parity suite instead proves source-amplitude linearity at a fixed pedal using the original tolerance, while the independent integration oracle checks downstream expression gain. Host tests compare consumed-versus-pending restoration at identical pedal values, both selectors, reprepare, ignored CC11 and regular/irregular render partitions. The host source passes a JUCE 8.0.6 syntax check; actual plugin/UI execution requires exact-commit CI. No parameter ID or state schema changes.
+
+### Cross-platform rollback-fixture correction
+
+At commit `a494118`, [macOS ARM job 123770931775](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40966112571/job/123770931775) failed 86 exact continuation comparisons in the standalone rejection fixture. The host smoke and Engine integration suites passed; the job remained failed and its validator stages were not run. The fixture had independently warmed two inlined instances before testing rejection. Different optimizer specialization/contraction is a plausible explanation, not a reproduced or proven ARM diagnosis.
+
+The corrected fixture copies one charged state, checks every byte of the same object before/after rejection (including private caches), and runs both continuations through a shared non-inlined runtime-dispatched kernel. Exact equality remains required; no tolerance or production DSP is changed. All **8,758,418 checks** pass with GNU and Clang19 optimized FMA-enabled builds and ASan/UBSan locally (leak detection off), and all 18 source mutants remain rejected. ARM verification requires the new exact-commit CI run; passing x86 checks alone does not close that result.

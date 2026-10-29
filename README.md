@@ -84,7 +84,7 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 | Level control DC reference | 54,272 checks of 16 separately loaded LC nodes and 43 explicit source ports; no IC5 gain or loudness calibration |
 | Resonance control DC reference | 28,059 checks of 32 individually loaded VQ nodes and shared cross-rank RES bus; no internal Q law |
 | OE2 filter AC reference | 10,190 checks of independent nodal models of the input/reconstruction filters and unequal AC-coupled gain stages; no BBD voltage or chorus calibration |
-| Realtime PRA wah | 8,758,361 module checks, 164,808 Engine integration checks, independent transient/AC oracles; inferred profile, not measured instrument calibration |
+| Realtime PRA wah | 8,758,418 module checks, 164,808 Engine integration checks, independent transient/AC oracles; inferred profile, not measured instrument calibration |
 | PRA wah AC reference | 28,686 independent nodal/KCL checks of an idealized conditional network; no calibrated pedal or WI-to-WO transfer |
 | BBD clock-event reference | 97,650 normalized signal-packet checks; not a charge, voltage or calibrated audio model |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |

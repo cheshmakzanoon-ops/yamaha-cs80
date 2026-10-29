@@ -3,6 +3,7 @@
 #include "core/PraWahCircuit.h"
 #include "reference/PraWah.h"
 #include <array>
+#include <cstring>
 #include <cstdlib>
 #include <new>
 #include <complex>
@@ -10,6 +11,7 @@
 #include <limits>
 #include <numbers>
 #include <random>
+#include <type_traits>
 #include <vector>
 namespace { bool countAllocations=false; std::size_t allocations=0; }
 void* operator new(std::size_t size) { if(countAllocations)++allocations; if(void* p=std::malloc(size?size:1))return p;throw std::bad_alloc(); }
@@ -27,6 +29,28 @@ void near(double a,double b,const char* what,double tol=2e-10){check(std::abs(a-
 void near(C a,C b,const char* what,double tol=2e-8){check(std::abs(a-b)<=tol*(1+std::abs(a)+std::abs(b)),what);}
 std::array<double,9> values(PraWahCircuit::Nodes n){return {n.x,n.n,n.a,n.p,n.b,n.q,n.c,n.d,n.y};}
 std::array<C,9> values(cs80::reference::pra_wah::Response n){return {n.x,n.n,n.a,n.p,n.b,n.q,n.c,n.d,n.y};}
+// Rejection promises no writes to this same instance, including cached private
+// coefficients. Snapshot bytes before/after the operation, not between two
+// independently constructed objects (whose padding need not be identical).
+static_assert(std::is_trivially_copyable_v<PraWahCircuit>);
+using CircuitBytes=std::array<unsigned char,sizeof(PraWahCircuit)>;
+CircuitBytes circuitBytes(const PraWahCircuit& circuit){
+ CircuitBytes bytes;std::memcpy(bytes.data(),&circuit,sizeof circuit);return bytes;
+}
+// Exact differential checks must execute the SAME compiled arithmetic. Separate
+// inlined call sites may specialize/constant-fold or contract FMA differently,
+// so equal source expressions need not produce bit-identical floating results.
+// This test-only shared kernel leaves production floating-point policy intact.
+#if defined(_MSC_VER)
+__declspec(noinline)
+#elif defined(__GNUC__) || defined(__clang__)
+__attribute__((noinline))
+#endif
+PraWahCircuit::Nodes sharedProcessKernel(PraWahCircuit& circuit,double input) noexcept {
+ return circuit.process(input);
+}
+using ProcessFunction=PraWahCircuit::Nodes (*)(PraWahCircuit&,double) noexcept;
+ProcessFunction volatile sharedProcess=sharedProcessKernel;
 cs80::reference::pra_wah::Boundary boundary(const PraWahCircuit::Profile& p,double optical){
  return {optical,p.parallelOhms,p.vr1Ohms,p.vr2Ohms,p.sourceOhms,{p.dryLoadSiemens,0},{0,0}};
 }
@@ -62,9 +86,11 @@ struct TransientOracle {
 };
 void setupAndGuards(){
  PraWahCircuit a,b;PraWahCircuit::Profile p;
- check(a.prepare(96000,p,.4),"prepare nominal");b=a;
- for(int k=0;k<100;++k){a.process(std::sin(k));b.process(std::sin(k));}
+ check(a.prepare(96000,p,.4),"prepare nominal");
+ for(int k=0;k<100;++k)a.process(std::sin(k));
+ b=a; // Clone the charged state, not a separately optimized warm-up trajectory.
  auto before=a.capacitorState();
+ const auto beforeBytes=circuitBytes(a);
  for(double invalid:{-1.,0.,7999.,1536001.,std::numeric_limits<double>::infinity(),std::numeric_limits<double>::quiet_NaN()})
   check(!a.prepare(invalid,p,.4),"invalid rate rejected");
  for(int field=0;field<8;++field){auto bad=p;double* ptrs[]={&bad.parallelOhms,&bad.vr1Ohms,&bad.vr2Ohms,&bad.sourceOhms,&bad.dryLoadSiemens,&bad.heelOhms,&bad.toeOhms,&bad.opticalTauSeconds};*ptrs[field]=std::numeric_limits<double>::quiet_NaN();check(!a.prepare(96000,bad,.4),"nonfinite profile rejected");}
@@ -81,10 +107,11 @@ void setupAndGuards(){
   a.setPedal(invalid);a.setOpticalResistance(invalid);
  }
  a.setOpticalResistance(0);a.setOpticalResistance(1e8);
+ check(beforeBytes==circuitBytes(a),"invalid setup preserves every state byte");
  for(int k=0;k<4;++k){check(before[k].voltage==a.capacitorState()[k].voltage,"invalid setup charge unchanged");check(before[k].current==a.capacitorState()[k].current,"invalid setup current unchanged");}
- for(int k=0;k<100;++k){auto x=values(a.process(.2)),y=values(b.process(.2));check(x==y,"invalid setup entire state unchanged");}
- auto z=a;auto bad=a;check(values(z.process(0))==values(bad.process(std::numeric_limits<double>::infinity())),"nonfinite input zeroed");
- z=a;bad=a;check(values(z.process(1e6))==values(bad.process(1e300)),"numerical input bound explicit");
+ for(int k=0;k<100;++k){auto x=values(sharedProcess(a,.2)),y=values(sharedProcess(b,.2));check(x==y,"invalid setup entire state unchanged");}
+ auto z=a;auto bad=a;check(values(sharedProcess(z,0))==values(sharedProcess(bad,std::numeric_limits<double>::infinity())),"nonfinite input zeroed");
+ z=a;bad=a;check(values(sharedProcess(z,1e6))==values(sharedProcess(bad,1e300)),"numerical input bound explicit");
  a.setPedal(-3);near(a.targetOpticalResistance(),p.heelOhms,"heel clamp");a.setPedal(3);near(a.targetOpticalResistance(),p.toeOhms,"toe clamp");
  a.reset(.3);for(auto cap:a.capacitorState())check(cap.voltage==0&&cap.current==0,"reset zero charge");
  near(a.opticalResistance(),std::exp(.7*std::log(p.heelOhms)+.3*std::log(p.toeOhms)),"reset no arbitrary startup optical sweep");
@@ -126,13 +153,16 @@ void atomicRollbackAndBoundaryControls(){
   for(int n=0;n<193;++n){
    // A later valid pedal change also exercises cached endpoint logarithms.
    if(n==97){a.setPedal(.31);b.setPedal(.31);}
-   check(values(a.process(.2*std::sin(n*.11)))==values(b.process(.2*std::sin(n*.11))),"rejected operation leaves future samples bit-identical");
+   const double input=.2*std::sin(n*.11);
+   check(values(sharedProcess(a,input))==values(sharedProcess(b,input)),"rejected operation leaves future samples bit-identical");
   }
   sameState(a,b);
  };
  const auto rejects=[&](double rate,const Profile& profile,double pedal){
   auto a=charged;
+  const auto beforeBytes=circuitBytes(a);
   check(!a.prepare(rate,profile,pedal),"invalid replacement rejected");
+  check(beforeBytes==circuitBytes(a),"rejected replacement preserves every state byte");
   sameContinuation(a,charged);
  };
  for(std::size_t k=0;k<fields.size();++k){
@@ -151,9 +181,9 @@ void atomicRollbackAndBoundaryControls(){
  for(double rate:{-inf,inf,nan,std::nextafter(PraWahCircuit::minimumRate,-inf),std::nextafter(PraWahCircuit::maximumRate,inf)})
   rejects(rate,candidate,.67);
  for(double pedal:{-inf,inf,nan})rejects(192000,candidate,pedal);
- for(double pedal:{-inf,inf,nan}){auto a=charged;a.setPedal(pedal);sameContinuation(a,charged);}
+ for(double pedal:{-inf,inf,nan}){auto a=charged;const auto beforeBytes=circuitBytes(a);a.setPedal(pedal);check(beforeBytes==circuitBytes(a),"invalid pedal preserves every state byte");sameContinuation(a,charged);}
  for(double ohms:{-inf,inf,nan,std::nextafter(PraWahCircuit::minimumOpticalOhms,-inf),std::nextafter(PraWahCircuit::maximumOpticalOhms,inf)}){
-  auto a=charged;a.setOpticalResistance(ohms);sameContinuation(a,charged);
+  auto a=charged;const auto beforeBytes=circuitBytes(a);a.setOpticalResistance(ohms);check(beforeBytes==circuitBytes(a),"invalid resistance preserves every state byte");sameContinuation(a,charged);
  }
  for(double rate:{PraWahCircuit::minimumRate,PraWahCircuit::maximumRate}){
   auto a=charged;PraWahCircuit fresh;
@@ -173,10 +203,10 @@ void atomicRollbackAndBoundaryControls(){
   auto a=charged,b=charged;
   a.reset(invalid);b.reset();sameContinuation(a,b); // Invalid pedal ignored; explicit reset still occurs.
   a=charged;b=charged;
-  check(values(a.process(invalid))==values(b.process(0)),"all nonfinite audio input becomes zero");
+  check(values(sharedProcess(a,invalid))==values(sharedProcess(b,0)),"all nonfinite audio input becomes zero");
  }
  auto a=charged,b=charged;
- check(values(a.process(-std::numeric_limits<double>::max()))==values(b.process(-PraWahCircuit::maximumInputMagnitude)),"negative finite audio is clamped symmetrically");
+ check(values(sharedProcess(a,-std::numeric_limits<double>::max()))==values(sharedProcess(b,-PraWahCircuit::maximumInputMagnitude)),"negative finite audio is clamped symmetrically");
 }
 void opticalAndCharge(){
  PraWahCircuit a;PraWahCircuit::Profile p;a.prepare(96000,p,0);
