@@ -18,6 +18,10 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "mwiring45": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/45%20-%20M13-14%20Circuit%20Board%20%26%20Wiring.jpg",
+    "mwiring46": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/46%20-%20M15-16%20Circuit%20Board%20%26%20Wiring.jpg",
+    "mwiring47": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/47%20-%20M17-18%20Circuit%20Board%20%26%20Wiring.jpg",
+    "icguide_152": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "icguide_sub": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "sub29": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/29%20-%20SUB%20Circuit%20Diagram.jpg",
     "sub30": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/30%20-%20SUB%20Circuit%20Board%20%26%20Wiring.jpg",
@@ -106,7 +110,7 @@ def emit_image(gray, page, url, data):
     }), flush=True)
     boxes = []
     # Dense resistor and keyboard-code labels require native pixels, not overview resampling.
-    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring", "t51w", "t52w", "t53w", "t54w", "sub29", "sub30", "ej67"}:
+    if page in {"mwiring45", "mwiring46", "mwiring47", "t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring", "t51w", "t52w", "t53w", "t54w", "sub29", "sub30", "ej67"}:
         cols, rows = (w + 2199) // 2200, (h + 2199) // 2200
         if cols * rows > 16:
             raise ValueError("native preset grid exceeds 16-tile bound")
@@ -141,7 +145,8 @@ def emit_image(gray, page, url, data):
             ("speed-upper", (3750, 450, 4650, 1750)),
             ("speed-lower", (3750, 1700, 4650, 3200)),
         ],
-        "m": [("filter-detail", (1180, 1080, 3250, 1850)),
+        "m": [("al-receiver", (1600, 1950, 2450, 2900)),
+              ("filter-detail", (1180, 1080, 3250, 1850)),
               ("oscillator-detail", (400, 1100, 1800, 2600))],
         "tws": [
             ("hold-glyphs-left", (650, 1700, 3050, 2050)),
@@ -203,6 +208,12 @@ def inspect_pdf(url, data, key):
             selected = [2, 29, 30]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "CS80 adjustment contents and keyboard calibration candidates"}), flush=True)
+        elif key == "icguide_152":
+            if count < 34:
+                raise ValueError("guidebook fixed IG00152 candidate page34 absent")
+            selected = [33, 34]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "index IG00152 section2-3 and verified adjacent offsets; verify identity and AL port evidence"}), flush=True)
         elif key == "icguide_sub":
             if count < 30:
                 raise ValueError("guidebook fixed suboscillator candidate page30 absent")
@@ -275,7 +286,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide_sub", "icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "adjupdates_a", "adjupdates_b"}:
+    if args.page in {"icguide_152", "icguide_sub", "icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "adjupdates_a", "adjupdates_b"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)
