@@ -25,7 +25,7 @@ The M41 source SHA-256 is `1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f
 
 The current `coefficientForTime` mapping, fast-bend windows, attack timeout and release threshold remain provisional. Changing attack time may cause the existing next-tick elapsed-time completion rule to fire; the setter itself must not reset or advance the stage. This behavior is not a measured analog transition.
 
-VCA sustain level and filter initial/attack/steady targets are deliberately not refreshed by this patch. The existing Sustain-stage assignment would jump directly to a changed target; inventing an arbitrary slew or applying a decay law to that change would not establish the real circuit's behavior. Those live-target transitions remain an explicit open gap, requiring a justified state law and validation. A/D/R timing refresh does not close all live-envelope controls, all preset transitions, or W5/W10 parity.
+The timing-only checkpoint deliberately left VCA sustain and filter IL/AL targets latched rather than silently choosing a new transition law. Under the subsequently updated public-knowledge mandate, [live level tracking](LIVE_ENVELOPE_LEVEL_MODEL.md) now supplies an explicitly inferred state-continuous policy. That later model is not a measured IC law. This document's timing-specific evidence and historical checkpoint remain valid; A/D/R and target-response correctness still do not establish complete W5/W10 hardware equivalence.
 
 ## Verification checkpoint
 

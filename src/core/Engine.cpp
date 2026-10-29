@@ -165,7 +165,8 @@ void Engine::setParams(const ParamValues& values)
     // Physical timing ports remain connected while a voice sounds/releases.
     // Refresh only in opt-in isolation: legacy dynamic automation is unchanged.
     // This retains the existing provisional timing/bend/completion law, not a
-    // calibrated IC model. Sustain/IL/AL level targets remain onset-latched.
+    // calibrated IC model. Live level selection is a state-continuous engineering
+    // inference; see docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md.
     if (global.parityMode)
     {
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
@@ -176,6 +177,8 @@ void Engine::setParams(const ParamValues& values)
             {
                 auto& rank = voice.ranks[ch];
                 const auto& settings = rankSettings[ch];
+                rank.aenv.setSustain(settings.vS);
+                rank.fenv.setLevels(filterInitialOffset(settings.fIl), filterAttackOffset(settings.fAl));
                 rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale),
                                    std::max(0.001f, settings.vD * global.envTimeScale),
                                    std::max({settings.vR, global.keyRelease, performanceRelease})

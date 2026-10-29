@@ -294,11 +294,13 @@ public:
         value = 0.0f;
         stage = Stage::Idle;
         stageTime = 0.0f;
+        liveSustain = liveDecay = false;
     }
 
     void noteOn(float attack, float decay, float sustain, float release) noexcept
     {
         a = attack; d = decay; s = clampf(sustain, 0.0f, 1.0f); r = release;
+        liveSustain = liveDecay = false;
         stage = Stage::Attack;
         stageTime = 0.0f;
         if (a <= 0.0002f)
@@ -331,14 +333,24 @@ public:
                     value = 1.0f;
                     stage = Stage::Decay;
                     stageTime = 0.0f;
+                    if (liveDecay) decayState = value;
                 }
                 break;
             }
             case Stage::Decay:
             {
                 const float fast = (bent && stageTime < 0.035f) ? 5.0f : 1.0f;
-                const float c = coefficientForTime(d, sampleRate, fast);
-                value = s + (value - s) * c;
+                if (liveDecay)
+                {
+                    const double liveC = std::exp(-6.0 * fast / (std::max(d, 0.00005f) * static_cast<double>(sampleRate)));
+                    decayState = s + (decayState - s) * liveC;
+                    value = static_cast<float>(decayState);
+                }
+                else
+                {
+                    const float c = coefficientForTime(d, sampleRate, fast);
+                    value = s + (value - s) * c;
+                }
                 if (std::abs(value - s) < 0.0005f)
                 {
                     value = s;
@@ -347,7 +359,21 @@ public:
                 break;
             }
             case Stage::Sustain:
-                value = s;
+                if (liveSustain)
+                {
+                    // Inferred retained decay-port tracking, without re-entering
+                    // Decay or restarting its bend window. Double accumulation
+                    // avoids float quantization stalling a long, slow transition.
+                    const double c = std::exp(-6.0 / (std::max(d, 0.00005f) * static_cast<double>(sampleRate)));
+                    sustainState = s + (sustainState - s) * c;
+                    value = static_cast<float>(sustainState);
+                    if (std::abs(sustainState - s) < 0.0005)
+                    {
+                        value = s;
+                        liveSustain = false;
+                    }
+                }
+                else value = s;
                 break;
             case Stage::Release:
             {
@@ -366,12 +392,30 @@ public:
     }
 
     // Live timing controls only: preserve the capacitor-state proxy, stage and
-    // elapsed time. Level-target transitions require a separate verified law.
+    // elapsed time. Target policies below are explicitly engineering-inferred.
     void setTimes(float attack, float decay, float release) noexcept
     {
         a = attack;
         d = decay;
         r = release;
+    }
+    // Selected target changes do not replace stored state or restart a stage.
+    // Attack stores S for Decay; Release/Idle do not respond to S. A held
+    // Sustain follows S with the existing decay-time law (inferred, unmeasured).
+    void setSustain(float sustain) noexcept
+    {
+        sustain = clampf(sustain, 0.0f, 1.0f);
+        if (sustain != s && stage == Stage::Sustain)
+        {
+            if (!liveSustain) sustainState = value;
+            liveSustain = true;
+        }
+        if (sustain != s && (stage == Stage::Attack || stage == Stage::Decay))
+        {
+            if (!liveDecay) decayState = value;
+            liveDecay = true;
+        }
+        s = sustain;
     }
     struct State { Stage stage = Stage::Idle; float value = 0.0f, elapsed = 0.0f; };
     State getState() const noexcept { return { stage, value, stageTime }; }
@@ -385,6 +429,8 @@ private:
     Stage stage = Stage::Idle;
     float value = 0.0f;
     float stageTime = 0.0f;
+    bool liveSustain = false, liveDecay = false;
+    double sustainState = 0.0, decayState = 0.0;
     float a = 0.0f, d = 0.0f, s = 0.0f, r = 0.0f;
 };
 
@@ -422,11 +468,13 @@ public:
         value = 0.0f;
         stage = Stage::Idle;
         stageTime = 0.0f;
+        liveAttack = liveRelease = releaseSelected = false;
     }
 
     void noteOn(float initialLevel, float attackLevel, float attack, float decay,
                 float release, float sustainLevel) noexcept
     {
+        liveAttack = liveRelease = releaseSelected = false;
         il = initialLevel;
         al = attackLevel;
         a = attack;
@@ -445,7 +493,9 @@ public:
         if (stage != Stage::Idle)
         {
             stage = Stage::Release;
+            releaseSelected = true;
             stageTime = 0.0f;
+            if (liveRelease) releaseState = value;
         }
     }
 
@@ -455,12 +505,34 @@ public:
         switch (stage)
         {
             case Stage::Idle:
+                // Completed release is still an IL selection while another
+                // envelope keeps the voice audible. Track without reactivating
+                // the stage; reset/untriggered Idle remains inert.
+                if (releaseSelected && liveRelease && value != il)
+                {
+                    const double c = std::exp(-6.0 / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
+                    releaseState += (il - releaseState) * (1.0 - c);
+                    value = static_cast<float>(releaseState);
+                    if (std::abs(value - il) < 0.0008f)
+                        value = static_cast<float>(releaseState = il);
+                }
                 break;
             case Stage::Attack:
             {
-                const float c = coefficientForTime(a, sampleRate);
-                value = al + (value - al) * c;
-                if (std::abs(value - al) < 0.001f || stageTime > a * 1.2f + 0.001f)
+                if (liveAttack)
+                {
+                    const double liveC = std::exp(-6.0 / (std::max(a, 0.00005f) * static_cast<double>(sampleRate)));
+                    attackState = al + (attackState - al) * liveC;
+                    value = static_cast<float>(attackState);
+                }
+                else
+                {
+                    const float c = coefficientForTime(a, sampleRate);
+                    value = al + (value - al) * c;
+                }
+                // A moved target invalidates the old onset-based timeout. Retain
+                // elapsed state and finish only near the new target; no big snap.
+                if (std::abs(value - al) < 0.001f || (!liveAttack && stageTime > a * 1.2f + 0.001f))
                 {
                     value = al;
                     stage = Stage::Decay;
@@ -486,11 +558,21 @@ public:
             case Stage::Release:
             {
                 const float fast = (bent && stageTime < 0.04f) ? 5.0f : 1.0f;
-                const float c = coefficientForTime(r, sampleRate, fast);
-                value += (il - value) * (1.0f - c);
+                if (liveRelease)
+                {
+                    const double liveC = std::exp(-6.0 * fast / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
+                    releaseState += (il - releaseState) * (1.0 - liveC);
+                    value = static_cast<float>(releaseState);
+                }
+                else
+                {
+                    const float c = coefficientForTime(r, sampleRate, fast);
+                    value += (il - value) * (1.0f - c);
+                }
                 if (std::abs(value - il) < 0.0008f)
                 {
                     value = il;
+                    releaseState = il;
                     stage = Stage::Idle;
                 }
                 break;
@@ -500,12 +582,31 @@ public:
     }
 
     // Live timing controls only: preserve the capacitor-state proxy, stage and
-    // elapsed time. Level-target transitions require a separate verified law.
+    // elapsed time. Target policies below are explicitly engineering-inferred.
     void setTimes(float attack, float decay, float release) noexcept
     {
         a = attack;
         d = decay;
         r = release;
+    }
+    // Inferred phase selection: AL acts in Attack, IL in Release (including
+    // completed-release Idle); other
+    // selections are stored, not treated as a trigger. Decay/Sustain keep their
+    // grounded steady target. Preserve all state, including elapsed bend time.
+    void setLevels(float initialLevel, float attackLevel) noexcept
+    {
+        if (attackLevel != al && stage == Stage::Attack)
+        {
+            if (!liveAttack) attackState = value;
+            liveAttack = true;
+        }
+        if (initialLevel != il)
+        {
+            if (!liveRelease) releaseState = value;
+            liveRelease = true;
+        }
+        il = initialLevel;
+        al = attackLevel;
     }
     struct State { Stage stage = Stage::Idle; float value = 0.0f, elapsed = 0.0f; };
     State getState() const noexcept { return { stage, value, stageTime }; }
@@ -517,6 +618,8 @@ public:
 private:
     Stage stage = Stage::Idle;
     float value = 0.0f, stageTime = 0.0f;
+    bool liveAttack = false, liveRelease = false, releaseSelected = false;
+    double attackState = 0.0, releaseState = 0.0;
     float il = 0.0f, al = 0.0f, a = 0.0f, d = 0.0f, r = 0.0f, sustain = 0.0f;
 };
 

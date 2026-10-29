@@ -107,10 +107,10 @@ void partitionTests(double rate){
         check(a==b,"unchanged repeated setters and block partition are bit-identical");
         for(int ch=0;ch<2;++ch)check(equal(whole.getRankEnvelopeState(0,ch),split.getRankEnvelopeState(0,ch)),"partition preserves exact envelope state");
     }
-    // Deliberately deferred level-target controls remain onset-latched.
+    // Live target selection preserves the update boundary, then changes release.
     auto before=whole.getRankEnvelopeState(0,0);p[chParam(0,CP_vS)]=.9f;p[chParam(0,CP_fIl)]=.9f;p[chParam(0,CP_fAl)]=.1f;whole.setParams(p);
-    check(equal(before,whole.getRankEnvelopeState(0,0)),"deferred target edits do not invent instantaneous transition");
-    auto expected=render(split,128),actual=render(whole,128);check(actual==expected,"timing-only patch does not activate deferred level targets");
+    check(equal(before,whole.getRankEnvelopeState(0,0)),"live target edits do not invent instantaneous transition");
+    auto expected=render(split,128),actual=render(whole,128);check(actual!=expected,"isolation live IL changes the active release trajectory");
     // Isolation transitions retain their documented reset policy.
     p[P_parityMode]=0;whole.setParams(p);check(whole.activeVoices()==0,"leaving isolation clears notes");p[P_parityMode]=1;whole.setParams(p);check(whole.activeVoices()==0,"entering isolation does not resurrect notes");
     for(int ch=0;ch<2;++ch){auto s=whole.getRankEnvelopeState(0,ch);check(s.amplitude.stage==Adsr::Stage::Idle&&s.filter.stage==FilterEnv::Stage::Idle&&s.amplitude.value==0&&s.filter.value==0,"mode transition resets envelope states");}

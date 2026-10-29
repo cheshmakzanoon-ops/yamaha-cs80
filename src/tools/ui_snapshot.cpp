@@ -773,8 +773,9 @@ void testLiveEnvelopeTimingHost()
 {
     constexpr int timingControls[] = { cs80::CP_vA, cs80::CP_vD, cs80::CP_vR,
                                       cs80::CP_fA, cs80::CP_fD, cs80::CP_fR };
+    // Routing checks for an explicitly inferred live-target model, not hardware calibration.
     for (bool isolated : { false, true })
-    for (int initialStage = 0; initialStage < 3; ++initialStage)
+    for (int initialStage = 0; initialStage < 4; ++initialStage)
     {
         Cs80AudioProcessor host;
         auto panel = cs80::defaultValues();
@@ -790,6 +791,11 @@ void testLiveEnvelopeTimingHost()
                 panel[cs80::chParam(rank, control)] = 2.0f;
             panel[cs80::chParam(rank, cs80::CP_vA)] = initialStage == 0 ? 1.0f : 0.001f;
             panel[cs80::chParam(rank, cs80::CP_fA)] = initialStage == 0 ? 1.0f : 0.001f;
+            if (initialStage == 3)
+            {
+                panel[cs80::chParam(rank, cs80::CP_vD)] = 0.01f;
+                panel[cs80::chParam(rank, cs80::CP_fD)] = 0.01f;
+            }
             panel[cs80::chParam(rank, cs80::CP_vS)] = 0.25f;
             panel[cs80::chParam(rank, cs80::CP_fIl)] = 0.2f;
             panel[cs80::chParam(rank, cs80::CP_fAl)] = 0.8f;
@@ -805,6 +811,12 @@ void testLiveEnvelopeTimingHost()
         for (int bank = 0; bank < 4; ++bank)
             for (int control : timingControls)
                 host.setMemoryValue(bank, control, 0.4f + 0.1f * (float) bank);
+        for (int bank = 0; bank < 4; ++bank)
+        {
+            host.setMemoryValue(bank, cs80::CP_vS, 0.65f);
+            host.setMemoryValue(bank, cs80::CP_fIl, 0.35f);
+            host.setMemoryValue(bank, cs80::CP_fAl, 0.55f);
+        }
         host.prepareToPlay(48000.0, 128);
         juce::AudioBuffer<float> empty(2, 0);
         juce::MidiBuffer midi;
@@ -877,11 +889,13 @@ void testLiveEnvelopeTimingHost()
         {
             const auto phase = host.getEngine().getRankEnvelopeState(0, rank);
             const auto ampStage = initialStage == 0 ? cs80::Adsr::Stage::Attack
-                : initialStage == 1 ? cs80::Adsr::Stage::Decay : cs80::Adsr::Stage::Release;
+                : initialStage == 1 ? cs80::Adsr::Stage::Decay
+                : initialStage == 2 ? cs80::Adsr::Stage::Release : cs80::Adsr::Stage::Sustain;
             const auto filterStage = initialStage == 0 ? cs80::FilterEnv::Stage::Attack
-                : initialStage == 1 ? cs80::FilterEnv::Stage::Decay : cs80::FilterEnv::Stage::Release;
+                : initialStage == 1 ? cs80::FilterEnv::Stage::Decay
+                : initialStage == 2 ? cs80::FilterEnv::Stage::Release : cs80::FilterEnv::Stage::Sustain;
             check(phase.amplitude.stage == ampStage && phase.filter.stage == filterStage,
-                  "live timing fixture reaches its intended attack decay or release stage");
+                  "live envelope fixture reaches its intended attack decay release or sustain stage");
         }
         auto applyWithoutAdvancing = [&]
         {
@@ -908,7 +922,7 @@ void testLiveEnvelopeTimingHost()
                       && after.filter.stage == before.filter.stage
                       && after.filter.value == before.filter.value
                       && after.filter.elapsed == before.filter.elapsed,
-                      "zero-frame host timing update does not retrigger envelopes");
+                      "zero-frame host timing and target update preserves exact envelope state");
                 const auto afterAudio = host.getEngine().getRankAudioState(0, rank);
                 check(afterAudio.phase == audio[rank].phase
                       && afterAudio.hpf.ic1 == audio[rank].hpf.ic1
@@ -922,6 +936,9 @@ void testLiveEnvelopeTimingHost()
                     auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
                     expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
                     expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
+                    expectedAmplitude[rank].setSustain(value(cs80::CP_vS));
+                    expectedFilter[rank].setLevels(cs80::filterInitialOffset(value(cs80::CP_fIl)),
+                                                   cs80::filterAttackOffset(value(cs80::CP_fAl)));
                 }
             }
             compare();
@@ -944,31 +961,101 @@ void testLiveEnvelopeTimingHost()
                 }
             }
         };
+        auto checkSourceLevels = [&](int source)
+        {
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                cs80::ParamValues factory;
+                if (source < 11) cs80::applyHardwareTone(factory, rank, source);
+                for (int control : { cs80::CP_vS, cs80::CP_fIl, cs80::CP_fAl })
+                {
+                    const int index = cs80::chParam(rank, control);
+                    const float expected = source == 13 ? host.getParamValue(index)
+                        : source == 11 ? host.getMemoryValue(rank, control) : factory[index];
+                    check(std::abs(host.getEngine().getParams()[index] - expected) < 2e-5f,
+                          "selected source supplies live S IL AL targets");
+                    check(std::abs(host.getParamValue(index) - panel[index]) < 2e-5f,
+                          "source selection preserves separately stored panel level targets");
+                }
+            }
+        };
         host.selectHardwareSource(0, 11);
         host.selectHardwareSource(1, 11);
         applyWithoutAdvancing();
         checkSourceTimings(11);
+        checkSourceLevels(11);
         render(64);
-        // Memory banks 3/4 are not selected; their edits must not affect timing.
+        if (initialStage == 3)
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                const auto amplitude = host.getEngine().getRankEnvelopeState(0, rank).amplitude;
+                check(amplitude.stage == cs80::Adsr::Stage::Sustain,
+                      "held sustain target change does not restart attack or decay");
+                check(isolated ? amplitude.value > 0.25f && amplitude.value < 0.65f
+                               : std::abs(amplitude.value - 0.25f) < 2e-5f,
+                      "isolated held sustain follows selected memory while legacy remains latched");
+            }
+        // Memory banks 3/4 are not selected; their edits must not affect timing or targets.
         for (int bank : { 2, 3 })
             for (int control : timingControls) host.setMemoryValue(bank, control, 0.09f);
+        for (int bank : { 2, 3 })
+            for (int control : { cs80::CP_vS, cs80::CP_fIl, cs80::CP_fAl })
+                host.setMemoryValue(bank, control, 0.95f);
+        // Hidden PANEL targets also must not leak into the selected memory source.
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            panel[cs80::chParam(rank, cs80::CP_vS)] = 0.15f;
+            panel[cs80::chParam(rank, cs80::CP_fIl)] = 0.1f;
+            panel[cs80::chParam(rank, cs80::CP_fAl)] = 0.9f;
+            for (int control : { cs80::CP_vS, cs80::CP_fIl, cs80::CP_fAl })
+            {
+                const int index = cs80::chParam(rank, control);
+                host.setParamValue(index, panel[index]);
+            }
+        }
         applyWithoutAdvancing();
         checkSourceTimings(11);
+        checkSourceLevels(11);
         render(64);
         for (int bank : { 0, 1 })
             for (int control : timingControls) host.setMemoryValue(bank, control, 0.8f);
+        for (int bank : { 0, 1 })
+        {
+            host.setMemoryValue(bank, cs80::CP_vS, 0.75f);
+            host.setMemoryValue(bank, cs80::CP_fIl, 0.45f);
+            host.setMemoryValue(bank, cs80::CP_fAl, 0.65f);
+        }
         applyWithoutAdvancing();
         checkSourceTimings(11);
+        checkSourceLevels(11);
         render(64);
         host.selectHardwareSource(0, 2);
         host.selectHardwareSource(1, 2);
         applyWithoutAdvancing();
         checkSourceTimings(2);
+        checkSourceLevels(2);
         render(64);
         host.selectHardwareSource(0, 13);
         host.selectHardwareSource(1, 13);
         applyWithoutAdvancing();
         checkSourceTimings(13);
+        checkSourceLevels(13);
+        render(64);
+        // A directly edited, selected PANEL follows the same state-continuous policy.
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            panel[cs80::chParam(rank, cs80::CP_vS)] = 0.85f;
+            panel[cs80::chParam(rank, cs80::CP_fIl)] = 0.6f;
+            panel[cs80::chParam(rank, cs80::CP_fAl)] = 0.3f;
+            for (int control : { cs80::CP_vS, cs80::CP_fIl, cs80::CP_fAl })
+            {
+                const int index = cs80::chParam(rank, control);
+                host.setParamValue(index, panel[index]);
+            }
+        }
+        applyWithoutAdvancing();
+        checkSourceTimings(13);
+        checkSourceLevels(13);
         render(64);
     }
 }
