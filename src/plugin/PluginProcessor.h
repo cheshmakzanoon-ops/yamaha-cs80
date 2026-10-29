@@ -24,6 +24,9 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    bool isBusesLayoutSupported(const BusesLayout&) const override;
+    bool isExternalInputEnabled() const noexcept
+    { return externalInputEnabled.load(std::memory_order_relaxed); }
 
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override { return true; }
@@ -114,6 +117,8 @@ private:
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     std::vector<float> interleaved;
+    std::vector<float> externalScratch;
+    std::atomic<bool> externalInputEnabled { false };
     // Not accessed by processBlock. State/program APIs already perform non-RT
     // work; this short metadata lock does not make those APIs realtime-safe.
     mutable juce::CriticalSection presetMetadataLock;

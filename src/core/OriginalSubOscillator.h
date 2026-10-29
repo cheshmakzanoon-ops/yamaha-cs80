@@ -30,7 +30,7 @@ public:
         noise = Rng(0x53554231u);
     }
 
-    float tick(float rate, float sampleRate, int function) noexcept
+    float tick(float rate, float sampleRate, int function, float external = 0.0f) noexcept
     {
         // Engine bounds finite rates/sample rates; double phase avoids low-rate
         // float quantisation. Noise advances on every original-mode sample,
@@ -47,7 +47,7 @@ public:
             // uncalibrated, so use an explicitly normalized ideal square.
             case 3: return phase < 0.5 ? 1.0f : -1.0f;
             case 4: return white; // ideal white source, not measured zener noise
-            case 5: return 0.0f; // EXT disconnected until optional input bus exists
+            case 5: return external; // independent of phase/base speed/AT speed
             default: return 0.0f;
         }
     }

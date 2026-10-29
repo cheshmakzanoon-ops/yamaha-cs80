@@ -46,7 +46,7 @@ Primary Yamaha source locators are maintained in [HARDWARE_REFERENCES.md](HARDWA
 |9 Keyboard brilliance HIGH|M; no parameter/route|O9,38; separate high-end control|Verify center-neutral behavior and key-dependent HP/LP contribution|
 |10 Keyboard level LOW|M; no parameter/route|O9,38; distinct level contour|Derive level-control injection and test all keys, including neutral|
 |10 Keyboard level HIGH|M; no parameter/route|O9,38; not symmetric by assumption|Measure high-end slope/endpoint and interaction with LOW|
-|11 Sub oscillator function selector|IB/A; original sine, falling/rising saw, square, noise, silent disconnected EXT; legacy shapes retained separately|O8,37,49; SUB29/30 and PN2 switch routing; ideal waveforms, not nonlinear IC equivalence|Complete optional EXT input; calibrate waveform shape/noise spectrum/amplitude; see ORIGINAL_SUB_OSCILLATOR.md|
+|11 Sub oscillator function selector|IB/A; original sine, falling/rising saw, square, noise, optional mono EXT modulation; legacy shapes retained separately|O8,37,49; SUB29/30 and PN2 switch routing; ideal waveforms, not nonlinear IC equivalence|Calibrate EXT physical voltage/headroom and waveform shape/noise spectrum/amplitude; see ORIGINAL_SUB_OSCILLATOR.md|
 |11 Sub oscillator speed|IB/A; original0.7–60Hz, separate legacy0.05–30Hz automation untouched|O49 endpoints; intermediate taper and10ms original-mode rate smoothing provisional|Derive quantitative IG00150 exponential conversion and full combined speed/AT response|
 |11 Sub → VCO|A; E semitone modulation|O8,37; real pitch-CV injection may not be exponential semitone FM|Compare carrier deviation/sidebands across pitch, depth and waveform|
 |11 Sub → VCF|A; E equal shared offset|O8,37; HP/LP path gains/loading unverified|Trace separate destinations and verify modulation depth and polarity|
@@ -126,7 +126,7 @@ HC encodes the verified subset of passive preset branches and distinguishes abse
 |Oscillators/filter state between notes|A with mismatch; E startVoice resets phase/filters, inactive voices skipped|Implement proven free-running/held-state behavior, not merely removing reset while freezing idle time|
 |Foot controller socket/pedal|M/A/PC; E expression CC|No physical electrical socket/load model or EXP-WAH mode. Characterize pedal resistance, travel, taper and switch selector|
 |Footswitch socket|M/A/PC; MIDI CC64|Implement connected/disconnected/pressed truth table for both assigners; MIDI sustain remains separately documented extension|
-|External input and level|M; no original EXT modulation route|Add optional audio input bus with level conditioning and original modulation routing; verify impedance/gain/headroom and no-input behavior|
+|External input and level|IB/A; optional disabled mono bus, inverted software normalization, LEVEL and shared SUB routing|Alias-safe input capture and255-tap2x reconstruction; extra63.5host-sample control delay is software, not analog. Physicalvoltage/pot/headroom uncalibrated;10k schematic vs50k manual conflict; see EXTERNAL_MODULATION.md|
 |GENERAL mono output|A; E digital mono fold-down|Trace actual summing and output impedance/level; digital average may not match hardware|
 |LEFT and RIGHT outputs|A; stereo engine|Reconstruct exact routing, phase, gains and channel interaction with chorus/tremolo|
 |HIGH/LOW output switch|M|Implement documented level difference with actual circuit loading/headroom; digital output mode is not this switch|
@@ -168,7 +168,7 @@ At this baseline, D comments call its generic input soft clip part of the IG0015
 
 ## Verification matrix and next priority
 
-1. **Close known functional omissions:** four keyboard contours; calibrated aftertouch-sub-VCF; calibrated original sub waveforms/range and optional EXT input; EXP/WAH and both footswitch assigners. Add stable host parameter IDs, state migration, UI controls and direct route tests.
+1. **Close known functional omissions:** four keyboard contours; calibrated aftertouch-sub-VCF; calibrated original sub waveforms/range and EXT input circuitry; EXP/WAH and both footswitch assigners. Add stable host parameter IDs, state migration, UI controls and direct route tests.
 2. **Correct known state/behavior mismatches:** separate held initial-touch and pitch-transient circuit laws, free-running VCO/held filter state, scanner/overflow semantics and glissando topology. Obtain missing circuit evidence before assigning numerical constants.
 3. **Complete electrical reconstruction:** board/BOM inventory, passive control networks, IC voltage domains and stage-level trace points. Use ADJ conditions and preserve source revisions.
 4. **Characterize analog nonlinearities:** level-dependent transfer, transient response, modulation sidebands, noise/correlation and thermal/tolerance behavior for an identified calibrated reference instrument.

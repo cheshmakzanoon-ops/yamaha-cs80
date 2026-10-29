@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [m, mwiring45, mwiring46, mwiring47, icguide_152]
+        page: [pra53, panel3]
     steps:
       - uses: actions/checkout@v5
         with:

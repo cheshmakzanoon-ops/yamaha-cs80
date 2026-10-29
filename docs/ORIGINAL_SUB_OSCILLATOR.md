@@ -6,9 +6,9 @@ This closes the original function-selection and basic speed-range omissions, **n
 
 Fresh plugin/core instances use sine, falling saw, rising saw, square, white noise and EXT, in physical switch order. Basic speed is0.7–60Hz. A shared double-precision phase is free-running while original mode is active and is not reset by notes. Ideal sine is normalized to peak1; saw peaks are scaled by3.5/3.2 from nominal IC output Vpp. Square peaks and noise amplitude/spectrum remain uncalibrated normalized approximations. Saw/square edges are ideal, not a transistor/op-amp bandwidth model.
 
-NOISE is a dedicated continuously advanced pseudorandom stream, not sample-and-hold, and ignores base/AT SPEED. EXT is zero/disconnected: **there is no audio input bus in this batch**. Reserved EXT LEVEL persists/automates but does not affect sound and is disabled in the editor. Its visible disconnected status must not be mistaken for a complete external-input implementation.
+NOISE is a dedicated continuously advanced pseudorandom stream, not sample-and-hold, and ignores base/AT SPEED. EXT now takes the optional mono host input bus, disabled by default, through [documented software reconstruction and safety conditioning](EXTERNAL_MODULATION.md). LEVEL controls its inverted shared modulation depth. No bus means zero EXT modulation; the UI reports bus-enabled status, not proof of a connected physical cable.
 
-Mode switching retains both parameter sets, never converts them or retriggers either oscillator. Each mode's phase pauses while inactive. This is an explicit compatibility policy, not a Yamaha function. Main FUNCTION/SPEED attachments follow mode on the message thread; in-flight gestures finish against the original attachment before rebinding.
+Mode switching retains both parameter sets, never converts them or retriggers either oscillator. Each mode's phase/rate pauses while inactive, so switching may create an abrupt modulation discontinuity; no crossfade or analog switch-transient model is claimed. This is an explicit compatibility policy, not a Yamaha function. Main FUNCTION/SPEED attachments follow mode on the message thread; in-flight gestures finish against the original attachment before rebinding.
 
 ## Source evidence
 
@@ -32,11 +32,11 @@ Original mode deliberately retains the existing provisional multiplier:
 rateTarget = baseHz * (1 + 2 * ATdepth * maximumHeldPressure), bounded0.7–180Hz.
 The180Hz ceiling is a software bound, **not** a measured hardware maximum. Original-mode smoothing is an explicitly provisional10ms exponential, sample-rate independent. The intermediate speed-pot taper is also unmeasured. Legacy mode retains its old rate multiplier and per-sample0.0015 smoothing exactly. Revision-marked VR10/ground resistance differs between annotated schematic and board print; do not silently pick one to claim calibration.
 
-### External circuit evidence for the next batch
+### External circuit evidence
 
 Independent readings agree EXI46→10k→IC12 inverter with100k feedback gives nominal−10. EXO45 feeds rear LEVEL VR1 terminal3; opposite end is grounded, wiper2 returns EXL44. IC12 noninverting22k/2.2k stage gives+11 and outputs MN42 to switch position6. Small-signal ideal gain is−110*a, where a is electrical wiper fraction; pot taper/value are unknown. No coupling capacitor is drawn here. Do not invent a high-pass or saturation law.
 
-10mVrms input gives nominal1.1Vrms at full LEVEL, consistent in scale with3.20Vpp sine. This does not calibrate digital full scale. Owner50k input impedance conflicts with the shown/printed10k input resistor; retain the discrepancy. Optional input bus, real-time alias-safe chunk capture, reconstruction and measured nonlinear behavior remain pending.
+10mVrms input gives nominal1.1Vrms at full LEVEL, consistent in scale with3.20Vpp sine. This does not calibrate digital full scale. Owner50k input impedance conflicts with the shown/printed10k input resistor; retain the discrepancy. An optional host bus, alias-safe bounded capture and software reconstruction are implemented separately; measured nonlinear behavior and physical voltage calibration remain pending.
 
 ## Compatibility contract
 
@@ -44,7 +44,7 @@ Core123..126 / host229..232 append:
 - sub_original_mode, boolean default1;
 - sub_original_function, six choices default0;
 - sub_original_speed,0.7..60/default4.2/skew0.35;
-- sub_ext_level,0..1/default0, currently disconnected.
+- sub_ext_level,0..1/default0, software-normalized input level.
 
 All four use AU version hint4. Existing122 core controls/host0..121 keep hint1; programmer/selector host122..227 keep hint2; AT VCF core122/host228 keeps hint3. The old sub_wave0..5, sub_speed0.05..30/default4.2/skew0.35 and every old ID/order/default remain unchanged.
 
@@ -52,6 +52,6 @@ All222 shipped factory programs explicitly select legacy mode. The constructor a
 
 ## Tests and remaining gates
 
-Core tests cover nominal phase/rates/shapes, opposite saws, white-noise speed invariance, disconnected EXT, arbitrary render partitions, reserved-control isolation, factory legacy modes, and an independent sample-for-sample legacy LFO/RNG/smoothing oracle. Plugin/UI tests cover original233 parameters, old229 order/hints, independent normalized legacy mappings, fresh startup/factory selection, old/new/invalid state and user files, actual timer-driven UI rebinding and visible disconnected status.
+Core tests cover nominal phase/rates/shapes, opposite saws, white-noise speed invariance, disabled EXT, arbitrary render partitions, inactive-control isolation, factory legacy modes, and an independent sample-for-sample legacy LFO/RNG/smoothing oracle. Plugin/UI tests cover original233 parameters, old229 order/hints, independent normalized legacy mappings, fresh startup/factory selection, old/new/invalid state and user files, actual timer-driven UI rebinding and visible input-bus status.
 
-These tests establish software behavior, not hardware match. Compile/core numerical and sanitizer runs, UI smoke, pluginval across formats, and actual screenshots remain Actions gates. Next batch adds the optional disabled-by-default mono input, preserving default host layouts and old renders; component/measurement calibration remains a separate open workstream.
+These tests establish software behavior, not hardware match. Compile/core numerical and sanitizer runs, UI smoke, pluginval across formats, and actual screenshots remain Actions gates. The optional disabled-by-default mono input preserves the default no-input layout and old renders; component/measurement calibration remains a separate open workstream.

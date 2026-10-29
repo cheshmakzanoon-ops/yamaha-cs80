@@ -16,7 +16,9 @@ juce::File makeUserPresetDirectory()
 } // namespace
 
 Cs80AudioProcessor::Cs80AudioProcessor()
-    : AudioProcessor(BusesProperties().withOutput("Output", juce::AudioChannelSet::stereo(), true)),
+    : AudioProcessor(BusesProperties()
+          .withInput("External Modulation", juce::AudioChannelSet::mono(), false)
+          .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       apvts(*this, nullptr, "CS80_PARAMS", createParameterLayout())
 {
     for (int i = 0; i < cs80::P_numParams; ++i)
@@ -110,10 +112,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     layout.add(std::make_unique<juce::AudioParameterChoice>(
         juce::ParameterID { parameterId(cs80::P_subOriginalFunction), 4 },
         "Original SUB function",
-        juce::StringArray { "Sine", "Saw down", "Saw up", "Square", "Noise", "EXT (disconnected)" }, 0));
+        juce::StringArray { "Sine", "Saw down", "Saw up", "Square", "Noise", "EXT" }, 0));
     add(cs80::P_subOriginalSpeed, 4);
     add(cs80::P_subExtLevel, 4);
     return layout;
+}
+
+bool Cs80AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+{
+    if (layouts.inputBuses.size() != 1 || layouts.outputBuses.size() != 1) return false;
+    const auto input = layouts.getMainInputChannelSet();
+    const auto output = layouts.getMainOutputChannelSet();
+    return (input.isDisabled() || input == juce::AudioChannelSet::mono())
+        && (output == juce::AudioChannelSet::mono() || output == juce::AudioChannelSet::stereo());
 }
 
 void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
@@ -123,6 +134,8 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     engine.setParams(cached);
     setLatencySamples(engine.getLatencySamples());
     interleaved.assign((size_t) juce::jmax(4096, samplesPerBlock) * 2, 0.0f);
+    externalScratch.assign(interleaved.size() / 2, 0.0f);
+    externalInputEnabled.store(getTotalNumInputChannels() == 1, std::memory_order_relaxed);
     keyboardState.reset();
 }
 
@@ -285,10 +298,13 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 {
     juce::ScopedNoDenormals noDenormals;
     const int numSamples = buffer.getNumSamples();
-    const int numChannels = buffer.getNumChannels();
-
-    for (int ch = 0; ch < numChannels; ++ch)
-        buffer.clear(ch, 0, numSamples);
+    const int numChannels = std::min(buffer.getNumChannels(), getTotalNumOutputChannels());
+    const bool inputEnabled = getTotalNumInputChannels() == 1;
+    externalInputEnabled.store(inputEnabled, std::memory_order_relaxed);
+    // The sole mono input aliases channel0 in JUCE's process buffer. Do not
+    // clear output before copying each bounded input chunk.
+    const float* input = inputEnabled && buffer.getNumChannels() > 0
+                           ? buffer.getReadPointer(0) : nullptr;
 
     keyboardState.processNextMidiBuffer(midi, 0, numSamples, true);
 
@@ -306,12 +322,18 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     // bounded chunks rather than allocating on the real-time thread.
     auto renderSegment = [&](int start, int length)
     {
-        const int capacity = (int) interleaved.size() / 2;
-        if (capacity == 0) return;
+        const int capacity = std::min((int) interleaved.size() / 2, (int) externalScratch.size());
+        if (capacity == 0)
+        {
+            for (int ch = 0; ch < numChannels; ++ch) buffer.clear(ch, start, length);
+            return;
+        }
         for (int offset = 0; offset < length; )
         {
             const int n = std::min(capacity, length - offset);
-            engine.render(interleaved.data(), n);
+            if (input != nullptr)
+                std::copy_n(input + start + offset, n, externalScratch.data());
+            engine.render(interleaved.data(), n, input != nullptr ? externalScratch.data() : nullptr);
             for (int i = 0; i < n; ++i)
             {
                 const float left = interleaved[(size_t) i * 2];

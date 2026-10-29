@@ -721,13 +721,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         else if (!original)
             status = "SUB: LEGACY / ORIGINAL IN ADVANCED";
         else if (std::lround(processor.getParamValue(cs80::P_subOriginalFunction)) == 5)
-            status = "SUB: EXT DISCONNECTED / SILENT";
+            status = processor.isExternalInputEnabled()
+                ? "SUB: EXT BUS ENABLED" : "SUB: EXT BUS DISABLED / SILENT";
         else
             status = "SUB: ORIGINAL FUNCTIONS";
         if (subModeLabel.getText() != status)
             subModeLabel.setText(status, juce::dontSendNotification);
         subModeLabel.setTooltip(original
-            ? "Original six functions. Analog response laws remain provisional. EXT has no input bus in this build."
+            ? "Original six functions; analog response laws remain provisional. EXT uses an optional mono input bus, disabled by default. Host routing is required; bus enabled does not prove a signal is present. At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1. Reconstruction delay: 63.5 host samples. This is software normalization, not physical voltage calibration."
             : "Legacy waveform and rate automation are preserved. Select Original mode in Advanced to use the hardware functions.");
     }
 

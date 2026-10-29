@@ -50,7 +50,7 @@ The modern layer is kept behind its own surface so the primary instrument remain
 
 ## Hardware programmer and reconstruction changes
 
-Fresh instances now use the [original six-position SUB function set](docs/ORIGINAL_SUB_OSCILLATOR.md) and nominal0.7–60 Hz basic range. Existing factory programs and old saved states retain the legacy waveforms/range and normalized automation. Advanced exposes the compatibility switch. EXT is visibly **disconnected and silent** until its optional input bus is implemented; its reserved LEVEL control is disabled in the editor. Waveform shapes, noise spectrum and touch/rate laws remain provisional.
+Fresh instances now use the [original six-position SUB function set](docs/ORIGINAL_SUB_OSCILLATOR.md) and nominal0.7–60 Hz basic range. Existing factory programs and old saved states retain the legacy waveforms/range and normalized automation. Advanced exposes the compatibility switch. [EXT accepts an optional mono host input](docs/EXTERNAL_MODULATION.md), disabled by default. Enable that bus in the host, select EXT and raise LEVEL; it supplies modulation, never direct audio-through. Digital normalization and reconstruction delay are explicit software conventions, not physical-voltage calibration. Waveform shapes, noise spectrum and touch/rate laws remain provisional.
 
 
 Initial pitch bend now uses a [source-derived nominal 50ms positive-onset response](docs/INITIAL_PITCH_TRANSIENT.md), with state independent of the live PB depth control. The [shared pressure-to-speed bus](docs/SHARED_PRESSURE_SPEED.md) uses the maximum active held-key pressure instead of the most recent event. Both are explicitly bounded circuit-informed approximations, not measured complete touch circuitry.

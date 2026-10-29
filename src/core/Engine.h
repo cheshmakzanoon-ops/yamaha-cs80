@@ -2,6 +2,7 @@
 
 #include "Dsp.h"
 #include "OriginalSubOscillator.h"
+#include "ExternalModulationInterpolator.h"
 #include "Params.h"
 
 #include <array>
@@ -65,7 +66,7 @@ struct GlobalSettings
     bool subOriginalMode = true;
     int subOriginalFunction = 0;
     float subOriginalSpeed = 4.2f;
-    float subExtLevel = 0.0f; // reserved, disconnected in this batch
+    float subExtLevel = 0.0f;
     float subVco = 0.0f;
     float subVcf = 0.0f;
     float subVca = 0.0f;
@@ -129,7 +130,10 @@ public:
     void controlChange(int controller, float value, int midiChannel = 1);
     void setRibbon(float value);
 
-    void render(float* interleavedStereo, int numFrames);
+    // Optional separate host-rate mono modulation; never mixed directly into output.
+    // Input/output storage must not overlap (plugin captures aliased host input).
+    // Null means disconnected: reconstruction history is cleared on transition.
+    void render(float* interleavedStereo, int numFrames, const float* externalMono = nullptr);
 
     int activeVoices() const noexcept;
     // Offline diagnostics; read on the rendering thread, not concurrently.
@@ -217,7 +221,7 @@ private:
     };
 
     void buildSettings();
-    void processInternalSample(float& outL, float& outR);
+    void processInternalSample(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     void releaseVoice(Voice& voice);
     void releaseKey(Voice& voice);
@@ -255,6 +259,7 @@ private:
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;
     OriginalSubOscillator originalSub;
+    ExternalModulationInterpolator externalInput;
     float originalSubSpeedSmoothed = 4.2f;
     float originalSubSmoothing = 0.0f;
     Lfo modLfos[3];

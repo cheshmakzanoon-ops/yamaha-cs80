@@ -483,6 +483,20 @@ juce::Font LookAndFeel::getTextButtonFont(juce::TextButton&, int buttonHeight)
                       juce::Font::bold);
 }
 
+namespace
+{
+juce::String parameterTooltip(int index, const juce::String& title, float value)
+{
+    auto text = title + ": " + formatParamValue(index, value);
+    if (index == cs80::P_subExtLevel)
+        text += ". Optional mono EXT bus is disabled by default; host routing is required. "
+                "Maximum LEVEL: a peak 1 passband sine gives nominal inverted modulation peak 1. "
+                "Causal reconstruction delay: 63.5 host samples. Software normalization, "
+                "not physical voltage calibration.";
+    return text;
+}
+} // namespace
+
 ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
     : processor(p), parameterIndex(index), name(displayName.isNotEmpty() ? displayName : shortParamName(index))
 {
@@ -499,14 +513,14 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
     slider.setComponentID(Cs80AudioProcessor::parameterId(index));
     slider.setDescription("Use the arrow keys to adjust this control. Double-click to restore its default.");
     slider.onValueChange = [this] {
-        slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
+        slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
         repaint();
     };
     addAndMakeVisible(slider);
 
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
-    slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
 
 }
 
@@ -525,7 +539,7 @@ bool ParamKnob::bindParameter(int index)
     slider.setComponentID(Cs80AudioProcessor::parameterId(index));
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
-    slider.setTooltip(slider.getTitle() + ": " + formatParamValue(index, (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(index, slider.getTitle(), (float) slider.getValue()));
     repaint();
     return true;
 }
@@ -535,7 +549,7 @@ void ParamKnob::setHardwareSlider(juce::Colour capColour)
     hardwareSlider = true;
     slider.setSliderStyle(juce::Slider::LinearVertical);
     slider.setColour(juce::Slider::thumbColourId, capColour);
-    slider.setTooltip(slider.getTitle() + ": " + formatParamValue(parameterIndex, (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
     resized();
     repaint();
 }

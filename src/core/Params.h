@@ -273,7 +273,7 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "sub_original_mode", "ORIGINAL SUB MODE", 0.0f, 1.0f, 1.0f, 1.0f, "", "SUB OSC" },
     { "sub_original_function", "ORIGINAL SUB FUNCTION", 0.0f, 5.0f, 0.0f, 1.0f, "", "SUB OSC" },
     { "sub_original_speed", "ORIGINAL SUB SPEED", 0.7f, 60.0f, 4.2f, 0.35f, "Hz", "SUB OSC" },
-    { "sub_ext_level", "EXT INPUT LEVEL (DISCONNECTED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" }
+    { "sub_ext_level", "EXT INPUT LEVEL", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" }
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

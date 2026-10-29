@@ -12,6 +12,8 @@
 #include <atomic>
 #include <thread>
 #include <chrono>
+#include <vector>
+#include <limits>
 
 namespace
 {
@@ -138,6 +140,185 @@ void flushGui(int milliseconds)
 {
     juce::MessageManager::getInstance()->runDispatchLoopUntil(milliseconds);
 }
+
+void testExternalInputHost()
+{
+    auto settings = [] {
+        cs80::ParamValues values;
+        values[cs80::P_subOriginalMode] = 1.0f;
+        values[cs80::P_subOriginalFunction] = 5.0f;
+        values[cs80::P_subExtLevel] = 1.0f;
+        values[cs80::P_subVco] = 0.15f;
+        values[cs80::P_subVcf] = 0.2f;
+        values[cs80::P_subVca] = 0.1f;
+        values[cs80::P_voiceDispersion] = 0.0f;
+        values[cs80::P_drift] = 0.0f;
+        values[cs80::P_analogNoise] = 0.0f;
+        return values;
+    };
+    auto configure = [&](Cs80AudioProcessor& target, bool enabled, bool monoOutput = false)
+    {
+        auto layout = target.getBusesLayout();
+        check(layout.inputBuses.size() == 1 && layout.outputBuses.size() == 1,
+              "EXT declares one optional input bus and one output bus");
+        if (layout.inputBuses.size() != 1 || layout.outputBuses.size() != 1) return;
+        layout.inputBuses.set(0, enabled ? juce::AudioChannelSet::mono() : juce::AudioChannelSet::disabled());
+        layout.outputBuses.set(0, monoOutput ? juce::AudioChannelSet::mono() : juce::AudioChannelSet::stereo());
+        check(target.setBusesLayout(layout), "supported EXT bus layout accepted");
+        target.applyParameterValues(settings());
+        target.prepareToPlay(48000.0, 64);
+        check(target.isExternalInputEnabled() == enabled, "EXT enabled telemetry matches prepared bus");
+    };
+    Cs80AudioProcessor layouts;
+    check(layouts.getBusCount(true) == 1 && layouts.getTotalNumInputChannels() == 0,
+          "EXT input exists but is disabled on a fresh instance");
+    check(layouts.getTotalNumOutputChannels() == 2, "default output remains stereo");
+    if (layouts.getBusCount(true) == 1)
+        check(layouts.getBus(true, 0)->getName() == "External Modulation", "EXT bus has descriptive host name");
+    auto supported = layouts.getBusesLayout();
+    supported.inputBuses.set(0, juce::AudioChannelSet::mono());
+    check(layouts.isBusesLayoutSupported(supported), "mono EXT with stereo output supported");
+    supported.outputBuses.set(0, juce::AudioChannelSet::mono());
+    check(layouts.isBusesLayoutSupported(supported), "mono EXT with mono output supported");
+    auto invalid = supported;
+    invalid.inputBuses.set(0, juce::AudioChannelSet::stereo());
+    check(!layouts.isBusesLayoutSupported(invalid), "stereo EXT input rejected rather than silently downmixed");
+    invalid = supported;
+    invalid.outputBuses.set(0, juce::AudioChannelSet::disabled());
+    check(!layouts.isBusesLayoutSupported(invalid), "disabled output rejected");
+    invalid.outputBuses.set(0, juce::AudioChannelSet::create5point1());
+    check(!layouts.isBusesLayoutSupported(invalid), "unsupported multichannel output rejected");
+
+    auto renderInput = [&](Cs80AudioProcessor& target, const std::vector<int>& sizes,
+                           bool notes, int inputKind)
+    {
+        std::vector<float> audio;
+        int total = 0;
+        for (int n : sizes) total += n;
+        audio.reserve((size_t) total * (size_t) target.getTotalNumOutputChannels());
+        int start = 0;
+        for (int length : sizes)
+        {
+            const int channels = std::max(target.getTotalNumInputChannels(), target.getTotalNumOutputChannels());
+            juce::AudioBuffer<float> block(channels, length);
+            block.clear();
+            if (target.getTotalNumInputChannels() != 0)
+            {
+                // Actual bus view aliases output channel zero. Do not clear it
+                // between writing the host's input and calling processBlock.
+                auto input = target.getBusBuffer(block, true, 0);
+                for (int i = 0; i < length; ++i)
+                {
+                    float value = inputKind == 0 ? 0.0f
+                        : inputKind == 1 ? 0.4f * std::sin((float)(start + i) * 0.013f)
+                        : inputKind == 2 ? 0.25f
+                        : inputKind == 3 ? 8.0f : 1.0f;
+                    if (inputKind == 5)
+                        value = i % 3 == 0 ? std::numeric_limits<float>::quiet_NaN()
+                              : i % 3 == 1 ? std::numeric_limits<float>::infinity()
+                                           : -std::numeric_limits<float>::infinity();
+                    input.setSample(0, i, value);
+                }
+            }
+            juce::MidiBuffer midi;
+            auto event = [&](int frame, const juce::MidiMessage& message)
+            {
+                if (notes && frame >= start && (frame < start + length || (frame == total && start + length == total)))
+                    midi.addEvent(message, frame - start);
+            };
+            event(0, juce::MidiMessage::noteOn(1, 60, (juce::uint8)100));
+            event(4095, juce::MidiMessage::aftertouchChange(1, 60, 100));
+            event(4096, juce::MidiMessage::noteOn(1, 67, (juce::uint8)90));
+            event(8193, juce::MidiMessage::noteOff(1, 60));
+            event(10003, juce::MidiMessage::noteOff(1, 67));
+            target.processBlock(block, midi);
+            for (int i = 0; i < length; ++i)
+                for (int channel = 0; channel < target.getTotalNumOutputChannels(); ++channel)
+                    audio.push_back(block.getSample(channel, i));
+            start += length;
+        }
+        return audio;
+    };
+    for (bool monoOutput : {false, true})
+    {
+        Cs80AudioProcessor large, partitioned;
+        configure(large, true, monoOutput);
+        configure(partitioned, true, monoOutput);
+        const auto a = renderInput(large, {10003}, true, 1);
+        const auto b = renderInput(partitioned, {63, 4032, 1, 4097, 1810}, true, 1);
+        check(a == b, "aliased EXT input renders identically across oversized chunks and MIDI block edges");
+        bool finite = true, audible = false;
+        for (float value : a)
+        {
+            finite = finite && std::isfinite(value);
+            audible = audible || std::abs(value) > 0.00001f;
+        }
+        check(finite && audible, "aliased mono or stereo EXT render fixture is finite and audible");
+        check(large.getEngine().getVoiceInfo(0).held == partitioned.getEngine().getVoiceInfo(0).held,
+              "end-of-block MIDI release survives EXT chunking");
+    }
+    {
+        Cs80AudioProcessor noNotes;
+        configure(noNotes, true);
+        const auto audio = renderInput(noNotes, {10003}, false, 2);
+        bool silent = true;
+        for (float value : audio) silent = silent && value == 0.0f;
+        check(silent, "EXT has no direct audio-through with no sounding voices");
+        check(noNotes.getEngine().getSubOscillatorValue() < -0.2f,
+              "captured constant EXT input survives output aliasing and uses inverted software normalization");
+        auto disabled = noNotes.getBusesLayout();
+        disabled.inputBuses.set(0, juce::AudioChannelSet::disabled());
+        check(noNotes.setBusesLayout(disabled), "EXT bus can be disabled after nonzero input history");
+        renderInput(noNotes, {128}, false, 0);
+        check(!noNotes.isExternalInputEnabled() && noNotes.getEngine().getSubOscillatorValue() == 0.0f,
+              "disabling EXT immediately zeros modulation and enabled telemetry");
+        disabled.inputBuses.set(0, juce::AudioChannelSet::mono());
+        check(noNotes.setBusesLayout(disabled), "EXT bus can be reenabled");
+        renderInput(noNotes, {128}, false, 0);
+        check(noNotes.isExternalInputEnabled() && noNotes.getEngine().getSubOscillatorValue() == 0.0f,
+              "reenabling EXT with zero input cannot resurrect pre-disable FIR history");
+    }
+    for (int scenario = 0; scenario < 3; ++scenario)
+    {
+        Cs80AudioProcessor signal, zero;
+        configure(signal, true); configure(zero, true);
+        auto values = settings();
+        if (scenario == 0) values[cs80::P_subOriginalFunction] = 0.0f;
+        if (scenario == 1) values[cs80::P_subOriginalMode] = 0.0f;
+        if (scenario == 2) values[cs80::P_subExtLevel] = 0.0f;
+        signal.applyParameterValues(values); zero.applyParameterValues(values);
+        check(renderInput(signal, {10003}, true, 1) == renderInput(zero, {10003}, true, 0),
+              "input does not leak into non-EXT, legacy, or zero-LEVEL audio");
+    }
+    {
+        Cs80AudioProcessor slow, fast;
+        configure(slow, true); configure(fast, true);
+        auto values = settings();
+        values[cs80::P_subOriginalSpeed] = 0.7f;
+        values[cs80::P_subAtSpeed] = 0.0f;
+        slow.applyParameterValues(values);
+        values[cs80::P_subOriginalSpeed] = 60.0f;
+        values[cs80::P_subAtSpeed] = 1.0f;
+        fast.applyParameterValues(values);
+        check(renderInput(slow, {10003}, true, 1) == renderInput(fast, {10003}, true, 1),
+              "EXT ignores both base and pressure speed controls through actual host MIDI path");
+    }
+    {
+        Cs80AudioProcessor nonfinite, zero, extreme, fullScale;
+        configure(nonfinite, true); configure(zero, true);
+        configure(extreme, true); configure(fullScale, true);
+        check(renderInput(nonfinite, {10003}, true, 5) == renderInput(zero, {10003}, true, 0),
+              "non-finite EXT host input becomes silence rather than corrupting DSP history");
+        check(renderInput(extreme, {10003}, true, 3) == renderInput(fullScale, {10003}, true, 4),
+              "finite above-full-scale EXT host input follows documented safety clamp");
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer noEvents;
+        nonfinite.processBlock(empty, noEvents);
+        check(std::isfinite(nonfinite.getEngine().getSubOscillatorValue()),
+              "zero-frame EXT host block leaves finite state");
+    }
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -156,6 +337,8 @@ int main(int argc, char** argv)
 
     juce::File dir(juce::File::getCurrentWorkingDirectory().getChildFile(outDir));
     dir.createDirectory();
+
+    testExternalInputHost();
 
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");
@@ -1088,9 +1271,67 @@ int main(int argc, char** argv)
                   && std::abs(processor.getParamValue(cs80::P_subSpeed) - 7.0f) < 0.0001f,
               "original main speed edits leave legacy automation untouched");
     }
+    // A host mode change must not destroy the attachment that owns an
+    // in-progress drag gesture. Wait for the real timer to defer the rebind.
+    if (auto* knob = findParameterControl(editor, cs80::P_subOriginalFunction))
+    {
+        auto* originalParameter = processor.getAPVTS().getParameter("sub_original_function");
+        GestureProbe heldProbe;
+        originalParameter->addListener(&heldProbe);
+        const float legacyBeforeDrag = processor.getParamValue(cs80::P_subWave);
+        {
+            juce::Slider::ScopedDragNotification heldDrag(knob->getSlider());
+            knob->getSlider().setValue(2.0, juce::sendNotificationSync);
+            processor.setParamValue(cs80::P_subOriginalMode, 0.0f);
+            check(waitForGui([&] { return subStatusIs("SUB MODE CHANGED / RELEASE CONTROL"); }),
+                  "host mode change during held drag reports deferred rebinding");
+            check(knob->getParameterIndex() == cs80::P_subOriginalFunction
+                      && heldProbe.begins == 1 && heldProbe.ends == 0 && heldProbe.depth == 1,
+                  "held function drag keeps original parameter attachment and open gesture");
+            knob->getSlider().setValue(3.0, juce::sendNotificationSync);
+            check(processor.getParamValue(cs80::P_subOriginalFunction) == 3.0f
+                      && processor.getParamValue(cs80::P_subWave) == legacyBeforeDrag,
+                  "continued held drag after mode automation still edits its original parameter");
+        }
+        check(heldProbe.begins == 1 && heldProbe.ends == 1 && heldProbe.depth == 0
+                  && heldProbe.changes >= 2 && heldProbe.unbracketedChanges == 0
+                  && heldProbe.malformedGestures == 0,
+              "releasing deferred function drag balances original host gesture");
+        check(waitForGui([&] { return hasSubControls(false)
+            && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
+              "timer completes deferred mode rebind only after drag release");
+        check(knob->getParameterIndex() == cs80::P_subWave
+                  && heldProbe.begins == 1 && heldProbe.ends == 1
+                  && heldProbe.unbracketedChanges == 0 && heldProbe.malformedGestures == 0,
+              "completed rebind does not reopen or corrupt old parameter gesture");
+        originalParameter->removeListener(&heldProbe);
+        processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
+        check(waitForGui([&] { return hasSubControls(true)
+            && subStatusIs("SUB: ORIGINAL FUNCTIONS"); }),
+              "original controls remain reusable after held-gesture mode transition");
+    }
+    else check(false, "original function control exists for held-gesture rebind regression");
+
     processor.setParamValue(cs80::P_subOriginalFunction, 5.0f);
-    check(waitForGui([&] { return subStatusIs("SUB: EXT DISCONNECTED / SILENT"); }),
-          "external function visibly reports disconnected silent input");
+    check(waitForGui([&] { return subStatusIs("SUB: EXT BUS DISABLED / SILENT"); }),
+          "external function visibly reports disabled silent input bus");
+    {
+        auto extLayout = processor.getBusesLayout();
+        extLayout.inputBuses.set(0, juce::AudioChannelSet::mono());
+        check(processor.setBusesLayout(extLayout), "EXT bus can be enabled with editor open");
+        juce::AudioBuffer<float> extStatusAudio(2, 64);
+        extStatusAudio.clear();
+        juce::MidiBuffer extStatusMidi;
+        processor.processBlock(extStatusAudio, extStatusMidi);
+        check(waitForGui([&] { return subStatusIs("SUB: EXT BUS ENABLED"); }),
+              "editor reports enabled external bus without pretending signal detection");
+        extLayout.inputBuses.set(0, juce::AudioChannelSet::disabled());
+        check(processor.setBusesLayout(extLayout), "EXT bus can be disabled with editor open");
+        extStatusAudio.clear();
+        processor.processBlock(extStatusAudio, extStatusMidi);
+        check(waitForGui([&] { return subStatusIs("SUB: EXT BUS DISABLED / SILENT"); }),
+              "editor reports disabled external bus after audio-thread telemetry update");
+    }
     auto editorLegacyState = processor.getAPVTS().copyState();
     editorLegacyState.removeChild(editorLegacyState.getChildWithProperty("id", "sub_original_mode"), nullptr);
     auto editorLegacyXml = editorLegacyState.createXml();
@@ -1283,7 +1524,7 @@ int main(int argc, char** argv)
                   && processor.getParamValue(cs80::P_subOriginalFunction) == 5.0f
                   && std::abs(processor.getParamValue(cs80::P_subOriginalSpeed) - 0.7f) < 0.00001f
                   && std::abs(processor.getParamValue(cs80::P_subExtLevel) - 0.3f) < 0.00001f,
-              "user preset round-trips original SUB controls including disconnected EXT");
+              "user preset round-trips original SUB controls including EXT settings");
         for (const auto& file : processor.getUserPresetFiles())
             if (file.getFileNameWithoutExtension() == smokePresetName)
             {

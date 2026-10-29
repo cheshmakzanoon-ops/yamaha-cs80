@@ -32,6 +32,7 @@ void Engine::prepare(double hostSampleRate)
     fxDampR.set(9000.0f, (float) internalRate);
     decL.prepare((float) internalRate);
     decR.prepare((float) internalRate);
+    externalInput.prepare((float) hostRate);
 
     Rng trimRng(0xC5801234u);
     for (auto& v : voices)
@@ -87,6 +88,7 @@ void Engine::reset()
     pwmPhase = { 0.0f, 0.0f };
     subLfo.reset(0.0f);
     originalSub.reset();
+    externalInput.reset();
     originalSubSpeedSmoothed = global.subOriginalSpeed;
     for (auto& l : modLfos)
         l.reset(0.0f);
@@ -799,7 +801,7 @@ void Engine::setRibbon(float value)
     ribbon = clampf(value, -1.0f, 1.0f);
 }
 
-void Engine::processInternalSample(float& outL, float& outR)
+void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
 {
     const float sr = (float) internalRate;
     const float invSr = 1.0f / sr;
@@ -843,7 +845,10 @@ void Engine::processInternalSample(float& outL, float& outR)
         const float speed = OriginalSubOscillator::targetRate(
             global.subOriginalSpeed, global.subAtSpeed, sharedPressure);
         originalSubSpeedSmoothed += (speed - originalSubSpeedSmoothed) * originalSubSmoothing;
-        subValue = originalSub.tick(originalSubSpeedSmoothed, sr, global.subOriginalFunction);
+        // EJ/SUB input chain inverts. Peak1 digital input at fullLEVEL maps
+        // to nominal peak1 modulation, NOT a claim of volts-per-full-scale.
+        subValue = originalSub.tick(originalSubSpeedSmoothed, sr, global.subOriginalFunction,
+                                    -global.subExtLevel * externalModulation);
     }
     else
     {
@@ -1108,18 +1113,20 @@ void Engine::processInternalSample(float& outL, float& outR)
     (void) stillActive;
 }
 
-void Engine::render(float* interleavedStereo, int numFrames)
+void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)
 {
     if (interleavedStereo == nullptr || numFrames <= 0)
         return;
 
+    externalInput.setConnected(externalMono != nullptr);
     for (int i = 0; i < numFrames; ++i)
     {
+        const auto external = externalInput.tick(externalMono != nullptr ? externalMono[i] : 0.0f);
         float lastL = 0.0f, lastR = 0.0f;
         for (int os = 0; os < oversample; ++os)
         {
             float l = 0.0f, r = 0.0f;
-            processInternalSample(l, r);
+            processInternalSample(l, r, external[(size_t) os]);
             decL.push(l);
             decR.push(r);
             // Evaluate only the retained odd phase, using symmetric tap pairs.

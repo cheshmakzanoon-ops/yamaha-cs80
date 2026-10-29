@@ -13,7 +13,7 @@ namespace
 const juce::StringArray kDestinations { "OFF", "PITCH", "VCF", "VCA", "PWM", "PAN" };
 const juce::StringArray kFxTypes { "OFF", "CHORUS", "PHASER", "TAPE DELAY", "PLATE REVERB", "DRIVE" };
 const juce::StringArray kSubWaves { "SINE", "TRIANGLE", "SAW", "SQUARE", "S&H", "RANDOM" };
-const juce::StringArray kOriginalSubWaves { "SINE", "SAW DOWN", "SAW UP", "SQUARE", "WHITE NOISE", "EXT (DISCONNECTED)" };
+const juce::StringArray kOriginalSubWaves { "SINE", "SAW DOWN", "SAW UP", "SQUARE", "WHITE NOISE", "EXT" };
 const juce::StringArray kArpModes { "UP", "DOWN", "UP / DOWN", "RANDOM", "PLAYED" };
 const juce::StringArray kGlideModes { "OFF", "PORTAMENTO", "GLISSANDO" };
 
@@ -258,10 +258,10 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(1190.0f, 350.0f, 112.0f, 92.0f, cs80::P_keyRelease, "KEY RELEASE");
         page.knob(1320.0f, 350.0f, 112.0f, 92.0f, cs80::P_masterTune, "MASTER TUNE");
         page.text("PLAY RANGE", 800.0f, 464.0f, 160.0f, 16.0f, 9.0f, true, ivoryDim);
-        page.text("88 keys / MIDI 0-127", 800.0f, 482.0f, 220.0f, 18.0f, 10.5f, false, ivory);
-        page.text("MICROTUNING", 800.0f, 514.0f, 160.0f, 16.0f, 9.0f, true, ivoryDim);
-        page.text("The engine is tuned to the selected A4 reference. Use a MIDI\n"
-                  "tuning standard or an MTS-capable host for alternate temperaments.",
+        page.text("61-key panel / MIDI notes 0-127", 800.0f, 482.0f, 340.0f, 18.0f, 10.5f, false, ivory);
+        page.text("TUNING REFERENCE", 800.0f, 514.0f, 160.0f, 16.0f, 9.0f, true, ivoryDim);
+        page.text("A4 sets the reference frequency for twelve-tone equal temperament.\n"
+                  "MIDI Tuning Standard and tuning-table import are not implemented.",
                   800.0f, 532.0f, 640.0f, 42.0f, 10.5f, false, ivoryDim);
         page.text("The pitch lever is spring-loaded; MPE member channels use their own bend\n"
                   "range. The ribbon is a separate continuous controller and returns to centre.",
@@ -280,8 +280,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.choice(48.0f, 121.0f, 180.0f, 30.0f, cs80::P_subOriginalFunction, kOriginalSubWaves);
         page.knob(240.0f, 96.0f, 92.0f, 78.0f, cs80::P_subOriginalSpeed, "ORIGINAL Hz");
         auto* extLevel = page.knob(340.0f, 96.0f, 92.0f, 78.0f, cs80::P_subExtLevel, "EXT LEVEL");
-        extLevel->setEnabled(false);
-        extLevel->getSlider().setTooltip("Reserved rear LEVEL control. External input is disconnected and silent in this build.");
+        extLevel->getSlider().setDescription("External modulation input LEVEL. The optional mono bus is disabled by default and requires host routing. At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1, with 63.5 host samples of causal reconstruction delay. Software normalization, not physical voltage calibration.");
         page.text("LEGACY FUNCTION", 446.0f, 100.0f, 170.0f, 16.0f, 9.0f, true, ivoryDim);
         page.choice(446.0f, 121.0f, 180.0f, 30.0f, cs80::P_subWave, kSubWaves);
         page.knob(634.0f, 96.0f, 92.0f, 78.0f, cs80::P_subSpeed, "LEGACY Hz");
@@ -292,7 +291,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(488.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtVco, "AT VCO");
         page.knob(598.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtVcf, "AT VCF");
         page.text("Mode selects one function/rate pair; inactive settings are retained, never converted.\n"
-                  "Original noise and EXT ignore SPEED / AT SPEED. EXT is disconnected and silent.\n"
+                  "Noise / EXT ignore SPEED. EXT: optional mono input, disabled by default; host routing required.\n"
                   "Six original functions; analog waveform, depth and touch laws remain provisional.",
                   48.0f, 278.0f, 670.0f, 60.0f, 10.2f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
@@ -304,8 +303,8 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(1184.0f, 82.0f, 118.0f, 100.0f, cs80::P_ringDecay, "DECAY");
         page.knob(1312.0f, 82.0f, 118.0f, 100.0f, cs80::P_ringAmount, "AMOUNT");
         page.text("A global ring modulator feeds the output alongside the voices. The envelope\n"
-                  "is retriggered by the first key of a phrase. Depth and amount are independent:\n"
-                  "depth controls the modulator level, amount controls the dry/wet balance.",
+                  "is retriggered by the first key of a phrase. DEPTH sweeps oscillator frequency;\n"
+                  "AMOUNT sets the dry/wet mix. The analog response remains provisional.",
                   800.0f, 212.0f, 650.0f, 62.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
@@ -314,9 +313,9 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(186.0f, 434.0f, 126.0f, 104.0f, cs80::P_chorusDepth, "DEPTH");
         page.toggle(342.0f, 450.0f, 136.0f, 28.0f, cs80::P_chorusOn, "CHORUS");
         page.toggle(492.0f, 450.0f, 150.0f, 28.0f, cs80::P_chorusMode, "TREMOLO");
-        page.text("The original uses a pair of BBD delay lines with complementary modulation.\n"
-                  "This model keeps the band-limited, slightly noisy character of the BBD\n"
-                  "rather than a clean digital chorus. Tremolo taps the same source.",
+        page.text("Current chorus/tremolo is a provisional delay-line model,\n"
+                  "not circuit-calibrated BBD equivalence. Its modulation and tonal response\n"
+                  "have not been validated against original hardware.",
                   48.0f, 570.0f, 660.0f, 70.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
@@ -325,8 +324,8 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(938.0f, 432.0f, 126.0f, 104.0f, cs80::P_drift, "DRIFT");
         page.knob(1076.0f, 432.0f, 126.0f, 104.0f, cs80::P_analogNoise, "NOISE");
         page.text("Dispersion spreads the eight voice cards in tuning, cutoff and level.\n"
-                  "Drift slowly moves each card; noise adds the floor of a 1977 signal path.\n"
-                  "Set them to zero for a calibrated, repeatable render.",
+                  "Drift slowly moves each card; noise adds a provisional background floor.\n"
+                  "Set them to zero for a repeatable render; this is not hardware calibration.",
                   800.0f, 554.0f, 650.0f, 60.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
     }
@@ -366,8 +365,9 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(938.0f, 406.0f, 128.0f, 112.0f, cs80::P_mix, "MIX I/II");
         page.toggle(1090.0f, 420.0f, 150.0f, 28.0f, cs80::P_outputMode, "STEREO");
         page.toggle(1254.0f, 420.0f, 150.0f, 28.0f, cs80::P_mpeOn, "MPE");
-        page.text("Stereo mode pans the two ranks and opens the chorus to its full width.\n"
-                  "Mono sums the output after the effects so it folds down without phase loss.",
+        page.text("Stereo retains the left and right outputs.\n"
+                  "Mono averages them after effects and limiting;\n"
+                  "phase cancellation can change the result.",
                   1090.0f, 466.0f, 310.0f, 56.0f, 10.5f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
         page.text("All effects are bypassed at 0% mix. The engine is oversampled 2x internally\n"
@@ -397,9 +397,9 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.text("GLIDE MODE", 1200.0f, 78.0f, 200.0f, 16.0f, 9.0f, true, ivoryDim);
         page.choice(1200.0f, 98.0f, 210.0f, 30.0f, cs80::P_glideMode, kGlideModes);
         page.toggle(1200.0f, 150.0f, 210.0f, 28.0f, cs80::P_sustainMode, "SUSTAIN II");
-        page.text("Portamento glides between successive notes. Glissando quantises\n"
-                  "the glide to semitones. Sustain I releases normally; Sustain II latches\n"
-                  "released notes until the next key press.",
+        page.text("Portamento glides; Glissando steps in semitones. Both sustain modes\n"
+                  "release notes. Sustain II also cuts previous release tails at a new key press.\n"
+                  "MIDI pedal hold is a separate software extension in either mode.",
                   800.0f, 220.0f, 650.0f, 62.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 

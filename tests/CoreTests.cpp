@@ -1003,9 +1003,142 @@ void testOriginalSubOscillator()
     for(int count : {1,63,257,1024,2751})
     { partitioned.render(actual.data()+2*done,count); done+=count; }
     check(actual==expected,"original SUB continuous across arbitrary render partitions");
-    const float before=whole.getSubOscillatorRate();
-    whole.noteOn(64,.8f);
-    check(whole.getSubOscillatorRate()==before,"note-on does not reset shared original rate state");
+    // Direct modulation comparisons catch a phase reset even when the rate
+    // stays unchanged. Notes must not retrigger the shared original oscillator.
+    Engine notes,noNotes; notes.prepare(48000); noNotes.prepare(48000);
+    notes.setParams(p); noNotes.setParams(p);
+    render(notes,48000,1024); render(noNotes,48000,1024);
+    notes.noteOn(64,.8f);
+    render(notes,48000,17); render(noNotes,48000,17);
+    check(notes.getSubOscillatorValue()==noNotes.getSubOscillatorValue()
+          && notes.getSubOscillatorRate()==noNotes.getSubOscillatorRate(),
+          "note-on does not reset shared original phase or rate state");
+
+    // Mode switching is a software compatibility policy: inactive original
+    // phase/rate pause, resume without reset, and may jump at the switch.
+    Engine paused,continuous; paused.prepare(48000); continuous.prepare(48000);
+    paused.setParams(p); continuous.setParams(p);
+    render(paused,48000,128); render(continuous,48000,128);
+    auto inactive=p; inactive[P_subOriginalMode]=0;
+    paused.setParams(inactive); render(paused,48000,257);
+    paused.setParams(p);
+    render(paused,48000,64); render(continuous,48000,64);
+    check(paused.getSubOscillatorValue()==continuous.getSubOscillatorValue()
+          && paused.getSubOscillatorRate()==continuous.getSubOscillatorRate(),
+          "original oscillator resumes paused phase/rate after compatibility-mode switch");
+}
+
+
+void testExternalModulation()
+{
+    checkNear((float)ExternalModulationInterpolator::kHostDelay,63.5f,0,
+              "external reconstruction delay is separate63.5host samples");
+    ExternalModulationInterpolator impulse;
+    impulse.prepare(48000); impulse.setConnected(true);
+    double total=0, weighted=0; double phaseBound[2]{}; float maxImpulse=0; int peakIndex=-1;
+    for(int host=0;host<256;++host)
+    {
+        const auto pair=impulse.tick(host==0 ? 1.f:0.f);
+        for(int phase=0;phase<2;++phase)
+        {
+            const int n=2*host+phase;
+            total+=pair[(size_t)phase]; weighted+=n*pair[(size_t)phase];
+            phaseBound[phase]+=std::abs(pair[(size_t)phase]);
+            if(std::abs(pair[(size_t)phase])>maxImpulse)
+            {maxImpulse=std::abs(pair[(size_t)phase]);peakIndex=n;}
+        }
+    }
+    check(std::abs(total-2.0)<1.e-6,"2x interpolator impulse integral preserves gain");
+    check(phaseBound[0]<2.7 && phaseBound[1]<2.7,
+          "measured polyphase absolute impulse sums bound worst-case ringing below2.7");
+    check(peakIndex==127 && std::abs(weighted/total-127)<1.e-5,
+          "measured external impulse center and signed centroid at127internal samples");
+
+    // Measure actual time-domain output, not coefficient self-comparison.
+    // Coherent bins independently separate wanted tone and first image.
+    constexpr int count=8192;
+    constexpr double pi=3.14159265358979323846;
+    for(float rate : {44100.f,48000.f,96000.f})
+        for(double requested : {20.0,1000.0,20000.0})
+        {
+            const int bin=(int)std::lround(requested*count/(2*rate));
+            const int imageBin=count/2-bin;
+            ExternalModulationInterpolator filter;
+            filter.prepare(rate); filter.setConnected(true);
+            double real=0,imag=0,imageReal=0,imageImag=0;
+            for(int frame=0;frame<512+count/2;++frame)
+            {
+                const float input=(float)std::sin(2*pi*bin*(2.0*frame)/count);
+                const auto pair=filter.tick(input);
+                if(frame<512)continue;
+                for(int phase=0;phase<2;++phase)
+                {
+                    const int n=2*(frame-512)+phase;
+                    const double value=pair[(size_t)phase];
+                    const double a=2*pi*bin*n/count, b=2*pi*imageBin*n/count;
+                    real+=value*std::cos(a); imag-=value*std::sin(a);
+                    imageReal+=value*std::cos(b); imageImag-=value*std::sin(b);
+                }
+            }
+            const double gain=2*std::hypot(real,imag)/count;
+            const double imageGain=2*std::hypot(imageReal,imageImag)/count;
+            const double db=20*std::log10(gain), imageDb=20*std::log10(std::max(imageGain,1.e-15));
+            std::printf("EXT reconstruction sr=%.0f tone=%.3fHz gain=%.6fdB image=%.2fdB delay=63.5host\n",
+                        rate,bin*(2.0*rate)/count,db,imageDb);
+            check(std::abs(db)<.002,"measured EXT reconstruction passband within0.002dB");
+            check(imageDb < -80,"measured EXT anti-imaging rejection better than80dB");
+        }
+
+    check(ExternalModulationInterpolator::sanitise(std::numeric_limits<float>::quiet_NaN())==0
+          && ExternalModulationInterpolator::sanitise(std::numeric_limits<float>::infinity())==0,
+          "nonfinite input uses explicit software zero policy");
+    check(ExternalModulationInterpolator::sanitise(std::numeric_limits<float>::max())==1
+          && ExternalModulationInterpolator::sanitise(-std::numeric_limits<float>::max())==-1,
+          "extreme finite input clamps before FIR arithmetic");
+    ExternalModulationInterpolator bounded;
+    bounded.prepare(48000); bounded.setConnected(true);
+    Rng noise(0x455854u); bool finite=true;
+    for(int n=0;n<4096;++n)
+        for(float x:bounded.tick(noise.nextBipolar()*std::numeric_limits<float>::max()))
+            finite=finite&&std::isfinite(x)&&std::abs(x)<3;
+    check(finite,"software-limited input plus FIR ringing remains finite and below3peak");
+
+    ParamValues p;
+    p[P_subOriginalFunction]=5; p[P_subExtLevel]=1; p[P_analogNoise]=0;
+    p[P_subVco]=p[P_subVcf]=p[P_subVca]=.25f;
+    std::vector<float> input(2048,1.f), audio(4096);
+    Engine e; e.prepare(48000); e.setParams(p);
+    e.render(audio.data(),2048,input.data());
+    check(std::abs(e.getSubOscillatorValue()+1)<.0001f,
+          "positive full-scale input gives nominalnegative unit EXT modulation");
+    check(analyse(audio).peak==0,"external modulation has no direct audio-through without notes");
+    check(e.getLatencySamples()==63,"external input does not alter reported audio latency");
+    e.render(audio.data(),1,nullptr);
+    check(e.getSubOscillatorValue()==0,"disconnect immediately mutes external reconstruction");
+    input.assign(2048,0);
+    e.render(audio.data(),2048,input.data());
+    check(e.getSubOscillatorValue()==0,"reconnection starts with cleared reconstruction history");
+
+    // Deliberate connected zero drains the causal filter; null disconnect
+    // clears it. Both become exactzero, including across arbitrary blocks.
+    input[0]=1;
+    e.render(audio.data(),1,input.data());
+    input[0]=0;
+    e.render(audio.data(),2048,input.data());
+    check(e.getSubOscillatorValue()==0,"connected silence drains finite reconstruction tail");
+
+    Engine whole,split; whole.prepare(48000);split.prepare(48000);
+    whole.setParams(p); split.setParams(p);
+    whole.noteOn(60,.8f);split.noteOn(60,.8f);
+    input.resize(4096);
+    for(int i=0;i<4096;++i)input[(size_t)i]=(float)std::sin(2*pi*73*i/4096);
+    std::vector<float> expected(8192),actual(8192);
+    whole.render(expected.data(),4096,input.data());
+    int done=0;
+    for(int n : {1,127,511,2048,1409})
+    {split.render(actual.data()+2*done,n,input.data()+done);done+=n;}
+    check(expected==actual && whole.getSubOscillatorValue()==split.getSubOscillatorValue(),
+          "external interpolation and modulation invariant under render partitioning");
 }
 
 void testRepeatedNoteRelease()
@@ -1716,6 +1849,7 @@ int main()
     testMpeExpression();
     testSubOscillatorWaves();
     testOriginalSubOscillator();
+    testExternalModulation();
     testSubAftertouchVcf();
     testNominalInitialPitchTransient();
     testSharedPressureSpeedBus();
