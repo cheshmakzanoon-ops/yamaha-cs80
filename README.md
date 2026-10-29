@@ -186,6 +186,8 @@ docs/                           evidence ledgers and audits (index below)
 
 | Read this | For |
 | --- | --- |
+| [REFERENCE_CAPTURE_REQUEST.md](docs/REFERENCE_CAPTURE_REQUEST.md) | M1 external-first reference intake, metadata/rights/calibration requirements and unfilled checklist |
+| [PRESET_RECEIVER_PORTS.md](docs/PRESET_RECEIVER_PORTS.md) | Reviewed 26-output rank-I first-hop ledger with explicit missing loads/paths |
 | [PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md) | **The plan to 1:1**: definition of done, blockers, workstreams, provisional-value register, order, rules |
 | [ANALOG_FIDELITY_REQUIREMENT.md](docs/ANALOG_FIDELITY_REQUIREMENT.md) | The target, as the owner stated it |
 | [FIDELITY_AUDIT.md](docs/FIDELITY_AUDIT.md) | Dated gap register and every correction so far |

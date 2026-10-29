@@ -31,7 +31,7 @@ Work falls into three classes. Know which one you are in before you start.
 | **B. Measurement-required** | Nonlinear transfer curves, saturation, true envelope laws and bends, noise spectra, drift, tolerance distributions, waveform shapes, touch-circuit dynamics, anything the schematic leaves unspecified | **No.** No amount of schematic reading establishes these | Not started. There is no reference capture corpus in this repository |
 | **C. Not software-reproducible** | Key weight and travel, ribbon felt, mains safety, power supply hazards, chassis | Never; must be marked as such, with a controller requirement where relevant | Documented as PC/M in the coverage ledger |
 
-**The single largest blocker for the next developer is access to a reference.** Class B work needs one of: a working CS-80 and a qualified technician with a documented, safe test fixture (do not probe a powered vintage unit casually), or authorized, calibrated recordings and test-point captures with redistribution rights recorded. Everything after milestone M1 below depends on it. Schematic-only progress can still tighten Class A and make the model *consistent*, but it cannot make it *provably equal*.
+**The single largest blocker for the next developer is access to a reference.** The ready-to-use [M1 capture request](REFERENCE_CAPTURE_REQUEST.md) separates safe external intake from qualified-technician internal work and lists admission requirements; its unfilled checklist is deliberately not an accepted comparison manifest. Class B work needs one of: a working CS-80 and a qualified technician with a documented, safe test fixture (do not probe a powered vintage unit casually), or authorized, calibrated recordings and test-point captures with redistribution rights recorded. Everything after milestone M1 below depends on it. Schematic-only progress can still tighten Class A and make the model *consistent*, but it cannot make it *provably equal*.
 
 Practical note on sources: earlier container requests encountered 403/unreachable mirrors, so source inspection used GitHub Actions (section 10). On 2026-10-29, native `therogoffs.com` scans downloaded successfully with curl in the cloud checkout; Python urllib still returned 406 for some of the same URLs. Verify current access rather than treating historical failures as permanent. Preserve source-byte hashes and native crop provenance with either route.
 
@@ -134,6 +134,8 @@ The model still maps normalized panel positions to behavior. The original is a n
 HIGH/LOW levels (currently an arbitrary -20 dB), output coupling poles and headroom (currently a 10 Hz DC block and `softClip`), left/right/general routing, headphone amplifier, noise. Rail/ripple/bias effects only as far as they are audible and only with evidence; never imply software reproduces mains safety.
 
 ### W9. Presets, programmer and memories (document-derivable until the final comparison)
+
+Source checkpoint: [PRESET_RECEIVER_PORTS.md](PRESET_RECEIVER_PORTS.md) records all26 rank-I first-hop destinations with reviewed native evidence. Complete fanout, intermediary BA/SUB/TRG behavior, rank-II continuity and quantitative receiver-current laws remain open.
 
 The 22 factory tone voicings are placeholders; the preset circuits are the source.
 

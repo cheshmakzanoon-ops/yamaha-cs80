@@ -1,0 +1,92 @@
+{
+  "template_kind": "non_executable_reference_intake_checklist",
+  "template_version": 1,
+  "not_a_parity_harness_manifest": true,
+  "hardware_acceptance_enabled": false,
+  "status": "unfilled_no_reference_evidence",
+  "instructions": "Copy for intake only. Null means unknown. Attach records described in docs/REFERENCE_CAPTURE_REQUEST.md; this template never authorizes hardware comparison.",
+  "unit": {
+    "private_identity_record": null,
+    "public_unit_id": null,
+    "model": null,
+    "board_and_ic_revision_records": [],
+    "modifications_repairs": null,
+    "calibration_procedure_edition_pages": null,
+    "calibration_date_and_technician": null,
+    "calibration_instrument_records": [],
+    "rails_and_trims_records_with_uncertainty": []
+  },
+  "session": {
+    "id": null,
+    "collector": null,
+    "utc_start": null,
+    "ambient_temperature_c": null,
+    "warm_up_minutes": null,
+    "changes_since_calibration": null,
+    "settings_sheet_and_photo_records": [],
+    "signal_chain_record": null,
+    "clock_source_sync_accuracy_record": null,
+    "level_scaling_and_uncertainty_record": null,
+    "acquisition_processing": null
+  },
+  "rights": {
+    "rights_holder": null,
+    "permission_evidence_private_path": null,
+    "analysis_allowed": null,
+    "storage_allowed": null,
+    "raw_redistribution_allowed": null,
+    "metadata_photos_redistribution_allowed": null,
+    "derived_data_redistribution_allowed": null,
+    "license_restrictions_attribution": null
+  },
+  "preregistration": {
+    "plan_path_sha256_commit_utc": null,
+    "control_grid_repeat_count_durations": null,
+    "setting_group_train_validation_assignments": null,
+    "holdout_access_policy": null,
+    "metrics_alignment_windows": null,
+    "uncertainty_budget_and_justified_limits": null,
+    "reviewer_approval": null
+  },
+  "internal_acquisition_if_any": {
+    "qualified_technician": null,
+    "safe_fixture_review_record": null,
+    "source_edition_page_board_node_mapping": null,
+    "probe_loading_bandwidth_coupling_scaling_record": null
+  },
+  "takes": [
+    {
+      "take_id": null,
+      "scenario": null,
+      "evidence_status": "exploratory_until_reviewed",
+      "split": null,
+      "setting_group": null,
+      "settings_and_actual_events_record": null,
+      "force_velocity_mapping_and_timing_uncertainty": null,
+      "voice_assignment": null,
+      "raw_relative_path": null,
+      "byte_count": null,
+      "sha256": null,
+      "sample_rate_hz": null,
+      "frame_count": null,
+      "sample_format_bit_depth": null,
+      "channel_map": null,
+      "units_and_scaling_record": null,
+      "clipping_dropouts_deviations": null,
+      "derivatives_and_recipes": []
+    }
+  ],
+  "candidate_if_used": {
+    "fixture_id": "w0-engine-stimulus-v1",
+    "exact_commit_dirty_state_build_record": null,
+    "source_binary_capture_json_and_csv_hash_inventory": null,
+    "hardware_setting_mapping_and_unmatched_controls": null
+  },
+  "all_file_inventory_path": null,
+  "intake_review": {
+    "received_utc": null,
+    "reviewer": null,
+    "unresolved_fields": [],
+    "disposition": "not_submitted"
+  }
+}
