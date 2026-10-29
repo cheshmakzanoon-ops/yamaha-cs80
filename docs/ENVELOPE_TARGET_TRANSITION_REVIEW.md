@@ -1,5 +1,7 @@
 # Live envelope targets: state-path evidence and remaining transition law
 
+> **Development policy updated 2026-10-29:** [The current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md) permit implementation and reviewed integration using public evidence plus explicitly labeled engineering inference; unavailable hardware is not a development prerequisite. In this dated evidence record, measurement-required/open gates limit claims of measured fidelity, not continued modeling. Preserve source conflicts and uncertainty; offline-only statements describe the implementation at the recorded checkpoint, not a permanent integration prohibition.
+
 2026-10-29. **Bounded W5/W10 source review; no production change or calibrated transition model. Independent source/state-path review passed.** This asks a narrower question than [live timing continuity](LIVE_ENVELOPE_TIMING.md): does changing VCA sustain or filter IL/AL directly replace envelope state, or change the drive/selection of a separately stored state?
 
 ## New evidence: level selection is not the stored envelope

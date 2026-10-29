@@ -1,5 +1,7 @@
 # Loaded cutoff-control networks: conditional offline DC experiments
 
+> **Policy precedence (2026-10-29):** Under [the current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md), missing physical measurements do not block development or reviewed integration. Use public evidence plus explicitly labeled engineering inference, with assumptions, uncertainty and tests. Earlier measurement/promotion gates below remain limits on claims of physical verification, not a prohibition on inferred models; recorded offline status and source conflicts remain unchanged.
+
 2026-10-29. W1/M2 document-derivable increment. **No instrument or captures were measured; no calibration, analog parity, complete rank-network or audible-behavior claim.** `src/reference/LoadedControl.h` does not drive the engine. It solves one R51/R52 voice's FH/FL pair into the M-card cutoff pins under explicitly supplied electrical boundary conditions. It is not a complete R51/R52 board simulation. The later `LoadedControlRank.h` extension below includes all eight cutoff pairs and their four common buses, still under explicit conditional source/receiver boundaries.
 
 ## Primary-source provenance

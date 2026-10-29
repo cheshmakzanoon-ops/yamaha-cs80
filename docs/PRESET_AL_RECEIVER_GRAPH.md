@@ -1,5 +1,7 @@
 # Rank-I preset AL receiver graph and reference-model gate
 
+> **Policy precedence (2026-10-29):** Under [the current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md), missing physical measurements do not block development or reviewed integration. Use public evidence plus explicitly labeled engineering inference, with assumptions, uncertainty and tests. Earlier measurement/promotion gates below remain limits on claims of physical verification, not a prohibition on inferred models; recorded offline status and source conflicts remain unchanged.
+
 2026-10-29. Source analysis only. No production conversion or new preset values. This is a bounded trace of output12 (VCF attack level), not a completed electrical clone.
 
 ## Observed connectivity

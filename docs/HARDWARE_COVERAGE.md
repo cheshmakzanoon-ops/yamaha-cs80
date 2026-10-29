@@ -1,8 +1,10 @@
 # CS-80 hardware coverage and acceptance ledger
 
+> **Development policy updated 2026-10-29:** [The current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md) permit implementation and reviewed integration using public evidence plus explicitly labeled engineering inference; unavailable hardware is not a development prerequisite. In this dated evidence record, measurement-required/open gates limit claims of measured fidelity, not continued modeling. Preserve source conflicts and uncertainty; offline-only statements describe the implementation at the recorded checkpoint, not a permanent integration prohibition.
+
 Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e`. Later work must update the affected rows with its exact tested revision. This document inventories the original owner's numbered control groups, connections, physical interface and circuit chain. It is not a claim that the inventory has been independently reconciled against every service-manual component.
 
-**Required outcome:** every physical feature and 1:1 analog circuit behavior, as specified in [ANALOG_FIDELITY_REQUIREMENT.md](ANALOG_FIDELITY_REQUIREMENT.md). The current instrument does not meet that outcome. A control existing on screen does not establish electrical or sonic equivalence.
+**Required outcome:** the closest 1:1 recreation of every physical feature and analog circuit behavior achievable from public knowledge plus explicitly labeled engineering inference, as specified in [ANALOG_FIDELITY_REQUIREMENT.md](ANALOG_FIDELITY_REQUIREMENT.md). The current instrument does not meet that outcome. A control existing on screen does not establish electrical or sonic equivalence.
 
 ## Verified increment and source correction
 

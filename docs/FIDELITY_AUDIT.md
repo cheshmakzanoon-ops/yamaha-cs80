@@ -1,5 +1,7 @@
 # Hardware-fidelity audit
 
+> **Development policy updated 2026-10-29:** [The current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md) permit implementation and reviewed integration using public evidence plus explicitly labeled engineering inference; unavailable hardware is not a development prerequisite. In this dated evidence record, measurement-required/open gates limit claims of measured fidelity, not continued modeling. Preserve source conflicts and uncertainty; offline-only statements describe the implementation at the recorded checkpoint, not a permanent integration prohibition.
+
 Audit date: 2026-10-28. Baseline inspected: `97c29f9`. This is an engineering gap register, not a certificate of equivalence. Line references in the baseline findings below refer to that commit; symbols remain useful after edits.
 
 ## Evidence hierarchy and acceptance

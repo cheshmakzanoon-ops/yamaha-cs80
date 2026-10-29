@@ -1,5 +1,7 @@
 # Release-control routing: SUB selector and first M receivers
 
+> **Policy precedence (2026-10-29):** Under [the current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md), missing physical measurements do not block development or reviewed integration. Use public evidence plus explicitly labeled engineering inference, with assumptions, uncertainty and tests. Earlier measurement/promotion gates below remain limits on claims of physical verification, not a prohibition on inferred models; recorded offline status and source conflicts remain unchanged.
+
 2026-10-29. W5/W9 **partial Class A source evidence**, not a calibrated envelope model. No hardware measurement, production DSP change or complete eight-voice fanout solve is claimed. A second reader has checked all eight native crops, the four source hashes and regenerated crop hashes, including diode directions, revised resistors and the Tr6 correction.
 
 ## Result and scope
@@ -101,6 +103,6 @@ Crops are native `PIL.Image.open(source).crop((left,top,right,bottom)).save(path
 1. Completed: second native read of diode/FET polarities, revised values and preserved RP/SH annotations. Still required: reciprocal M11–18 release fanout and M21/rank-II wiring.
 2. Resolve VR3/BA references and full source impedances; trace panel/memory isolation under every selection state.
 3. Trace SH mode-I/II behavior separately; resolve revised J5 protection values if building an analog switch model.
-4. Obtain actual diode/BJT/JFET laws and EG2DT input currents before a loaded nonlinear solve; obtain timing curves/measurements before production envelope calibration.
+4. For a loaded nonlinear solve, use sourced diode/BJT/JFET laws and EG2DT input currents where available; otherwise choose explicitly inferred laws and ranges, document their sensitivity and test the resulting transitions before reviewed integration. Timing curves/measurements can refine this engineering model later; do not label inferred timing as physically calibrated.
 
 Only this new document was authored. Existing files, build configuration and production code were not edited; no commit or push was made. The coverage boundary is the SUB selector, its panel/jack connections and first rank-I M receivers, not a complete release system.

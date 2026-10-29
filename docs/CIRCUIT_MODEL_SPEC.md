@@ -1,5 +1,7 @@
 # Circuit-informed reduced-order model specification
 
+> **Current policy (2026-10-29):** Implement the closest reconstruction supported by public knowledge and explicitly labeled engineering inference under [the requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md). Missing hardware must not stop model development or reviewed integration. Hardware measurements can refine or validate a model later; software tests do not establish measured equivalence.
+
 Research: 2026-10-28. Scope: original CS-80 VCO/VCF, with supporting control circuits. **No physical instrument was measured.** This is a proposed next implementation specification, not a report that the current DSP meets it. No undocumented transistor saturation curve is asserted.
 
 ## Source key and evidence hierarchy
@@ -105,7 +107,9 @@ ADJ p11: use its stated square-wave/footage/key/control setup, not an arbitrary 
 
 ## Saturation and remaining boundaries
 
-There is no verified internal transistor schematic, transistor parameter set, slew rate, input differential voltage limit, or THD curve in the inspected sources. A `tanh` at every stage, a guessed thermal voltage, or a±15V hard clip would add an unsupported sonic claim. Keep any safety limiter external and labeled; keep optional coloration separately switchable. A faithful nonlinear model requires manufacturer characterization, die-level evidence, or authorized hardware measurements.
+There is no verified internal transistor schematic, transistor parameter set, slew rate, input differential voltage limit, or THD curve in the inspected sources. Do not present a `tanh` at every stage, an assumed thermal voltage, or a±15V hard clip as documented Yamaha circuitry. Keep any safety limiter external and labeled; keep optional coloration separately switchable.
+
+Missing characterization does **not** block a physics-informed nonlinear model. Use the established topology and nominal source anchors, explicitly choose and document inferred active-element laws and parameter ranges, and compare credible alternatives where the sources do not identify a unique law. Explain the modeled mechanism and its uncertainty rather than selecting a nonlinearity solely because it sounds pleasing. Integration requires independent review, stability and sample-rate/convergence checks, small-/large-signal response and alias tests, sensitivity analysis, listening comparisons and compatibility regression coverage. These establish a defensible engineering approximation, not measured silicon equivalence. Manufacturer characterization, die-level evidence or authorized hardware measurements are optional later evidence for refinement and stronger verification claims, never prerequisites for this development.
 
 ## Next implementable increment and tests
 

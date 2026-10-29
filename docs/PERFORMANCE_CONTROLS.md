@@ -1,5 +1,7 @@
 # Performance controls: keyboard contour, footswitch assigners, EXP/WAH, output switch, key pressure
 
+> **Policy precedence (2026-10-29):** Under [the current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md), missing physical measurements do not block development or reviewed integration. Use public evidence plus explicitly labeled engineering inference, with assumptions, uncertainty and tests. Earlier measurement/promotion gates below remain limits on claims of physical verification, not a prohibition on inferred models; recorded offline status and source conflicts remain unchanged.
+
 Implemented 2026-10-29 on top of the 233-parameter baseline. These close the functional omissions that [HARDWARE_COVERAGE.md](HARDWARE_COVERAGE.md) listed as MISSING. Each route now exists and is wired to the right destination; **none of the numerical gains is a measured or circuit-derived law.** Every constant is a named `kProvisional…` value in `src/core/PerformanceControls.h` so it cannot be mistaken for evidence.
 
 The default of every new control reproduces the previous behavior exactly. A fixed performance rendered through 96 factory-preset/gesture combinations (glide, both sustain modes, pressure, expression) produced a bit-identical float stream before and after this change.

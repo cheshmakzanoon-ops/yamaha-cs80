@@ -1,5 +1,7 @@
 # Original Yamaha CS-80 reference ledger
 
+> **Policy precedence (2026-10-29):** Under [the current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md), missing physical measurements do not block development or reviewed integration. Use public evidence plus explicitly labeled engineering inference, with assumptions, uncertainty and tests. Earlier measurement/promotion gates below remain limits on claims of physical verification, not a prohibition on inferred models; recorded offline status and source conflicts remain unchanged.
+
 Research checked 2026-10-28. This is a hardware specification/reference ledger, **not a claim that the software implements or measures all of it**. No real CS-80 audio, voltages, or physical dimensions were measured in this work. “Documented” means read from Yamaha-authored scans; “inferred” and “unverified” remain distinct. Arturia manuals/UI are not the reference instrument.
 
 ## Primary sources

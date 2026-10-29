@@ -1,8 +1,20 @@
 # CS-80 Reference
 
-An independent, code-first recreation of the Yamaha CS-80: eight voices, two independent synthesis ranks per voice (sixteen oscillator / filter / VCA chains), polyphonic pressure, ribbon, ring modulation, SUB oscillator, chorus/tremolo and a modern performance layer. C++20 / JUCE 8, shipped as **VST3, AU (macOS) and Standalone**, with a JUCE-free core library that renders offline.
+An independent, code-first recreation of the Yamaha CS-80: eight voices, two independent synthesis ranks per voice (sixteen oscillator / filter / VCA chains), polyphonic pressure, ribbon, ring modulation, SUB oscillator, chorus/tremolo and a modern performance layer. C++20 / JUCE 8, built as **VST3, AU (macOS) and Standalone**, with a JUCE-free core library that renders offline.
 
-> **Where this stands, in one paragraph.** Every control on the original panel that has a software meaning now exists, is host-automatable and is wired to the destination the service documents show. The signal path is a **circuit-informed behavioral model**: topology and nominal laws come from Yamaha's service and owner documentation, but almost every numerical law (waveform shapes, filter nonlinearity, envelope time laws, touch dynamics, contour and wah gains, preset voicings) is a labelled placeholder. **It is not a 1:1 analog emulation, and nothing here has been compared against a real CS-80.** Passing tests prove the software obeys its own specification, not that the specification is the instrument. The required end target is [1:1 analog circuit behavior](docs/ANALOG_FIDELITY_REQUIREMENT.md); the work that remains, and what it needs, is in **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**.
+> **Where this stands now.** This is a working, extensively regression-tested cross-platform synthesizer with a hardware-inspired CS-80 panel, eight dual-rank voices, a broad original-control surface, 244 automatable parameters and 222 programs. Recent work adds active-tail state continuity, live A/D/R timing in isolation mode, safer state restoration, a bounded UI-to-audio keyboard handoff, and reproducible dynamic capture evidence. The audible engine is still a **circuit-informed behavioral reconstruction**: important oscillator, nonlinear-filter, envelope, touch, effect and preset laws remain inferred or provisional. Reviewed circuit-reference models exist for several stages, but most are not yet integrated into audio. **No comparison against an identified real CS-80 has been performed.** Strong software-quality evidence is not a claim of measured analog equivalence.
+
+## Development mandate: best reconstruction from public knowledge
+
+**Updated by the user on 2026-10-29.** The goal is **1:1 CS-80 parity as far as publicly available knowledge and sound engineering can achieve**. Missing access to hardware is **not a development, implementation or integration blocker**.
+
+- Use Yamaha documentation, schematics, manufacturer information and usable public instrument evidence first. Where a known feature's exact internal behavior is unavailable, implement a defensible physical, reduced-order or behavioral model using engineering judgment rather than leaving the feature absent indefinitely.
+- Separate **documented facts**, **circuit-derived results**, **engineering inferences/assumptions**, and **measurements**. Record uncertain parameters, rationale, sensitivity and alternatives; make them revisable. An inferred value does not become a transcribed source fact.
+- Move models into the working synth after circuit/behavior review, numerical stability and convergence checks, interaction tests and compatibility/host validation. Lack of a reference instrument alone must not keep a useful model offline.
+- Hardware measurements are an optional future calibration/refinement path. Public recordings may inform qualitative or explicitly qualified comparisons; they do not magically become calibrated voltage traces.
+- Keep the ambition high without inventing evidence: describe delivered behavior as public-knowledge reconstruction where appropriate, and reserve **measured agreement**, **verified hardware equivalence** and error bounds for comparisons actually performed.
+
+The [fidelity requirement](docs/ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](docs/PARITY_ROADMAP.md) define this policy. They supersede older hardware-first implementation gates in historical audits. Existing **offline**, **unmeasured** or **unknown** labels still describe today's implementation/evidence; they are not permanent bans on completing an explicitly inferred model.
 
 Start with the [original hardware references](docs/HARDWARE_REFERENCES.md), the [fidelity audit](docs/FIDELITY_AUDIT.md) and the [row-by-row hardware coverage ledger](docs/HARDWARE_COVERAGE.md). They separate documented behavior, implemented corrections, provisional calibration and missing circuit models.
 
@@ -25,7 +37,7 @@ The [screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/acti
 
 ## Current state of the engineering
 
-**Status tags** (the same vocabulary as the coverage ledger): **Implemented**: the discrete behavior exists and is tested. **Approximate**: the route exists but its law is provisional. **Offline only**: a circuit reference model exists but deliberately does not drive audio. **Missing**: absent.
+**Status tags** (the same vocabulary as the coverage ledger): **Implemented**: the discrete behavior exists and is tested. **Approximate**: the route exists but its law is provisional. **Offline only**: a tested circuit reference exists but is not yet integrated into audio; integration may proceed with documented engineering assumptions. **Missing**: absent.
 
 Of the 85 control and connector rows in the coverage ledger, counted by first status tag: **29 Implemented, 49 Approximate, 7 Missing**. The seven Missing rows are all physical or electrical-state items (AC power switch, key travel/force, scanner timing, per-voice sample/hold droop, headphone amplifier, power supply, ribbon surface mechanics).
 
@@ -46,6 +58,12 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | Host / plugin layer | Implemented | 244 append-only host parameters, state migration, preset library, pluginval 10 on every platform |
 
 The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots, MPE, arpeggiator) are deliberate software extensions. The opt-in isolation mode makes them inert without rewriting stored patches.
+
+### Current quality checkpoint
+
+The latest substantive executable checkpoint, [`9b860b1`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9b860b1ca6c5cf554261ccc23f7db5ffe4f8771f), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40953422398), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40953422266), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40953422502). The local GNU core-only configuration has 23 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
+
+The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
 ### What the tests and CI prove (and what they do not)
 
@@ -73,23 +91,18 @@ The core and performance suites have also been run under AddressSanitizer and Un
 
 ---
 
-## Path to 1:1 parity (summary)
+## Path to public-knowledge parity (summary)
 
-**M0 implementation:** opt-in [parity isolation](docs/PARITY_ISOLATION.md) masks modern extensions without rewriting stored patches. The [comparison harness](docs/PARITY_HARNESS.md) validates synthetic stand-ins, provenance and declared latency, with versioned synthetic-only tolerances. Its engine capture tool exports unnormalised stereo traces, every submitted core setting and timed stimulus events. An opt-in live-ADR candidate adds applied parameter transactions and before/after/one-frame envelope probes, while preserving the default fixture bytes. Neither establishes hardware agreement. Hardware capture and analog tolerance preregistration remain outstanding. A separately reviewed [loaded cutoff-control experiment](docs/LOADED_CONTROL_EVIDENCE.md) now solves conditional single-voice and eight-voice HP/LP DC networks offline, including shared-bus loading and documented 10 nF node-capacitor transients under explicit fixed boundaries. Upstream driver impedances, chip-current laws and inter-rank connections remain unresolved.
+**Implemented groundwork:** opt-in [isolation](docs/PARITY_ISOLATION.md), reproducible [comparison/candidate capture tools](docs/PARITY_HARNESS.md), live A/D/R transaction probes, loaded control-network references, modulation/output circuit references, and host/compatibility safeguards. Their current scope and limitations are listed above. They are a foundation for implementation, not a substitute for improving the audible engine.
 
-The full plan is **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**. In short:
+The full plan is **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**:
 
-1. **The central constraint.** A substantial part of what remains is *document-derivable* (solving the loaded control-voltage networks, resolving the keyboard key map, transcribing the last preset cells, deriving the true envelope and touch circuits). The rest is **measurement-required**: nonlinear filter and oscillator behavior, envelope laws, noise, drift, tolerances and touch dynamics are simply not in any schematic. **Access to an identified, calibrated CS-80 (with a qualified technician and a safe fixture) or to authorized calibrated captures is the gating prerequisite** for everything past the first milestone.
-2. **Define done first.** Per quantity: a source row, a reference, tolerances fixed *before* looking at the output, published residuals across the operating range, stage-level agreement before end-to-end, blind listening last. No "fidelity percentage" without a metric and corpus.
-3. **Ordered milestones.**
-   - **M0** parity mode (switch off everything the original lacks) and the comparison harness with pre-registered tolerances.
-   - **M1** identify the unit and capture the reference corpus.
-   - **M2** voltage-domain control layer: loaded R51/R52 and M-card summing, KAS/KBC key map, preset receiver table (no hardware needed).
-   - **M3** fit and validate the core path: VCO/shaper, VCF (IG00156), envelopes and VCA, touch.
-   - **M4** SUB, ring, PRA wah, chorus, output stage; drive presets from the solved networks.
-   - **M5** voice variation from measured tolerances, and interaction/edge-case regressions.
-   - **M6** complete-path sign-off; only then may documentation say "parity", for the stated unit and tolerances.
-4. **Where to start Monday:** `docs/PARITY_ROADMAP.md` sections 3 (state), 4 (workstreams W0-W12), 5 (register of every provisional value) and 9 (working rules).
+1. **Do not wait for hardware.** Resolve what public sources establish; for remaining known behavior, select and document an engineering model, uncertainty range and acceptance tests. Research and implementation proceed together.
+2. **Validate the claim actually being made.** Check topology, documented nominal anchors, numerical convergence, aliasing, boundedness, interaction behavior and host compatibility. Use public audio with its limitations stated. Hardware residuals are reported only when suitable hardware data exists.
+3. **Milestones:** M0 tools/isolation; M1 ongoing public evidence and optional reference acquisition; M2 voltage-domain control/preset integration; M3 oscillator/filter/envelope/VCA/touch reconstruction; M4 modulation/output and electrically informed presets; M5 variation/interactions; M6 whole-instrument public-knowledge acceptance with a published uncertainty ledger. **M1 hardware access is not a gate for M2–M6.**
+4. **Immediate direction:** integrate reviewed models with explicit inferred boundaries; implement live envelope-target behavior using a documented state-continuous policy; replace stand-in wah/chorus and arbitrary variation with source-constrained models; advance preset voicings and the unresolved keyboard mapping without presenting assumptions as recovered chip truth.
+
+Calibrated recordings or instrument access remain valuable if they become available, but their absence must not pause this program.
 
 ---
 
@@ -216,6 +229,7 @@ docs/                           evidence ledgers and audits (index below)
 | [PRA_WAH_REFERENCE_DESIGN.md](docs/PRA_WAH_REFERENCE_DESIGN.md) | Conditional offline ideal-op-amp wah network, explicit optical/loading boundaries; not calibrated WI-to-WO audio |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |
+| [KEYBOARD_MAPPING_CONSTRAINT_REVIEW.md](docs/KEYBOARD_MAPPING_CONSTRAINT_REVIEW.md) | Scoped bit/label exclusions and why contour DC data cannot uniquely establish every decoder choice |
 | [KEYBOARD_AUDIO_HANDOFF.md](docs/KEYBOARD_AUDIO_HANDOFF.md) | Bounded UI note handoff, host visualization, overflow/lifecycle policy and limits |
 | [STATE_SCHEMA_VALIDATION.md](docs/STATE_SCHEMA_VALIDATION.md) | Immutable schema validation and competing-restore regression scope |
 | [ENVELOPE_TARGET_TRANSITION_REVIEW.md](docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md) | Source-located capacitor/target feedback paths and missing live-target transition laws |
@@ -236,8 +250,8 @@ docs/                           evidence ledgers and audits (index below)
 
 These keep the project honest; the roadmap's section 9 expands them.
 
-- **No parity claims** without per-quantity evidence (source, reference, pre-registered tolerance, residuals).
-- **Name unmeasured numbers** (`kProvisional...`, "provisional" comments). Never present a heuristic as hardware behavior and never tune a placeholder by ear.
+- **Distinguish reconstruction from verification.** Public-knowledge parity is the development target; measured-equivalence claims require actual references, tolerances and residuals. Do not invent data or completion percentages.
+- **Name inferred numbers and laws** (`kProvisional...` or clearly named model parameters). Explain their physical/behavioral rationale and sensitivity. Perceptual tuning may inform an engineering choice, but is not measured hardware validation.
 - **Append-only parameters and neutral defaults**: new behavior must leave existing patches bit-identical until engaged; never reuse or reorder an ID.
 - **Document audible changes** and the commit to use for historical renders.
 - **Record provenance** for every source read: URL, source-byte SHA-256, crop box, units, review status; keep conflicting sources side by side.
@@ -247,7 +261,7 @@ These keep the project honest; the roadmap's section 9 expands them.
 
 ## Honest scope
 
-This is a circuit-informed behavioral model, not a component-level SPICE simulation, not a measured emulation, and not a copy of Arturia's product (no Arturia artwork, code or presets are used; Yamaha-authored documentation is cited as hardware evidence). The oscillator/filter/envelope topologies, dual-rank structure, pressure routing and performance controls follow the CS-80 architecture; the modern FX, macros, MPE and arpeggiator are original additions. The panel is drawn from Yamaha's photographs and manuals with original code. The plugin should be exercised in the target DAW before any release.
+The current audio engine is a circuit-informed behavioral reconstruction, not yet a complete component-level simulation or a measured emulation, and not a copy of Arturia's product (no Arturia artwork, code or presets are used; Yamaha-authored documentation is cited as hardware evidence). The oscillator/filter/envelope topologies, dual-rank structure, pressure routing and performance controls follow the CS-80 architecture; the modern FX, macros, MPE and arpeggiator are original additions. The panel is drawn from Yamaha's photographs and manuals with original code. The plugin should be exercised in the target DAW before any release.
 
 ## References
 

@@ -1,5 +1,7 @@
 # IG00156 filter model: evidence, equations and validation
 
+> **Development policy updated 2026-10-29:** [The current requirement](ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](PARITY_ROADMAP.md) permit implementation and reviewed integration using public evidence plus explicitly labeled engineering inference; unavailable hardware is not a development prerequisite. In this dated evidence record, measurement-required/open gates limit claims of measured fidelity, not continued modeling. Preserve source conflicts and uncertainty; offline-only statements describe the implementation at the recorded checkpoint, not a permanent integration prohibition.
+
 Status: **circuit topology partly established; nonlinear device model and CS-80 calibration incomplete**. This document does not certify the current TPT state-variable implementation or its generic input soft clip as a transistor-level replica. It implements the evidence discipline required by [the analog fidelity requirement](ANALOG_FIDELITY_REQUIREMENT.md).
 
 ## Primary evidence recovered

@@ -1,5 +1,7 @@
 # M1 reference capture handoff
 
+> **Optional refinement, not a development blocker (2026-10-29):** [The current requirement](ANALOG_FIDELITY_REQUIREMENT.md) permits continued implementation and reviewed integration from public evidence and labeled engineering inference without these captures. This handoff governs future physical-reference acquisition and its evidence quality only; it does not make hardware access a prerequisite for the [roadmap](PARITY_ROADMAP.md). Existing comparator ingestion safeguards remain in force.
+
 For the CS-80 owner and qualified technician: supply the records below with any
 recordings offered as a reference. **No reference unit or calibrated capture is
 currently available in this repository.** This is an acquisition request, not a
