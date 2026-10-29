@@ -206,6 +206,9 @@ private:
 class Svf
 {
 public:
+    // Numerical integrator memories, not calibrated capacitor voltages.
+    struct State { float ic1 = 0.0f, ic2 = 0.0f; };
+    State getState() const noexcept { return { ic1, ic2 }; }
     void reset() noexcept
     {
         ic1 = ic2 = 0.0f;

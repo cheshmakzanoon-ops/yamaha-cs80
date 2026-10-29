@@ -555,6 +555,10 @@ void Engine::updateArpeggiator(float invSampleRate)
 
 void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
+    // Bounded continuity only: inactive circuits still use the legacy reset.
+    // This does not clock idle circuits or model their unknown held key voltage.
+    const bool preserveAudioState = global.parityMode && v.active
+                                    && !v.held && !v.pedalHeld;
     // chooseVoice only returns an unheld circuit.
     v.active = true;
     v.held = true;
@@ -582,9 +586,15 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     {
         auto& r = v.ranks[ch];
         const auto& rs = rankSettings[ch];
-        r.osc.reset(audioRng.nextUnipolar());
-        r.hpf.reset();
-        r.lpf.reset();
+        // Consume the legacy draw even when retaining phase: unrelated noise
+        // must not move in the shared RNG stream. Default-off order is unchanged.
+        const float legacyPhase = audioRng.nextUnipolar();
+        if (!preserveAudioState)
+        {
+            r.osc.reset(legacyPhase);
+            r.hpf.reset();
+            r.lpf.reset();
+        }
         r.fenv.reset();
         r.aenv.reset();
         r.fenv.noteOn(filterInitialOffset(rs.fIl),
@@ -1323,6 +1333,14 @@ Engine::RankInfo Engine::getRankInfo(int voice, int rank) const
     if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
         return {};
     return voices[(size_t) voice].ranks[rank].info;
+}
+
+Engine::RankAudioState Engine::getRankAudioState(int voice, int rank) const noexcept
+{
+    if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
+        return {};
+    const auto& r = voices[(size_t) voice].ranks[rank];
+    return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState() };
 }
 
 } // namespace cs80

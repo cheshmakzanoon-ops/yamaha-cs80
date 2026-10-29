@@ -84,3 +84,7 @@ This is one finite regression corpus, not a proof for every possible automation
 sequence or platform. Compile the probe separately against each revision's
 headers and `cs80_core` library, run with an output-file argument, then compare
 raw files. Do not use one revision's headers with the other's binary library.
+
+### Active-tail continuity
+
+An isolated, still-active unheld release tail retains both ranks’ oscillator phases and HP/LP numerical memories when reused; envelopes/touch still retrigger. Legacy RNG draws are retained to avoid shifting unrelated noise. Cold/inactive assignments, mode/reset policies and default-off behavior are unchanged. See [ACTIVE_TAIL_CONTINUITY.md](ACTIVE_TAIL_CONTINUITY.md); this is not a full inactive free-running or calibrated capacitor-state model.

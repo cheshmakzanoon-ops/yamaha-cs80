@@ -627,15 +627,60 @@ void testPerformanceControlsHost()
     check(neutral && restored.getParamValue(cs80::P_outputLevel) == 1.0f,
           "a session saved before these controls restores neutral values, not live ones");
 
-    // Preset recall restores the sound, not the jack/pedal/selector/output wiring.
+    // Factory preset recall restores the sound, not the jack/pedal/selector/output wiring.
     host.setParamValue(cs80::P_kbdLevelHigh, 0.5f);
     host.loadFactoryPreset(5);
     check(host.getParamValue(cs80::P_footswitchPlugged) == 1.0f && host.getParamValue(cs80::P_footswitchPressed) == 1.0f
               && host.getParamValue(cs80::P_footMode) == 1.0f && host.getParamValue(cs80::P_outputLevel) == 0.0f,
-          "preset recall leaves jack, pedal contact, EXP/WAH selector and output switch alone");
+          "factory preset recall leaves jack, pedal contact, EXP/WAH selector and output switch alone");
     check(host.getParamValue(cs80::P_kbdLevelHigh) == 0.0f && host.getParamValue(cs80::P_sustainAssign) == 0.0f
               && host.getParamValue(cs80::P_glideAssign) == 0.0f,
-          "preset recall does reset the contour levers and assigners with the patch");
+          "factory preset recall does reset the contour levers and assigners with the patch");
+
+    // Unlike factory programs, user presets restore all ten performance controls,
+    // including wiring. Only parity isolation remains a live session policy.
+    // Use the same serialized state for both paths and oppose every live value,
+    // so neither a no-op nor preserving factory-only wiring can pass this test.
+    for (float liveParity : { 0.0f, 1.0f })
+    {
+        Cs80AudioProcessor presetHost;
+        const float storedParity = 1.0f - liveParity;
+        const float storedControls[] = { -0.75f, 0.25f, -0.5f, 0.75f,
+                                        storedParity, storedParity, storedParity, storedParity,
+                                        storedParity, storedParity };
+        for (int i = 0; i < 10; ++i)
+            presetHost.setParamValue(cs80::P_kbdBrillianceLow + i, storedControls[i]);
+        presetHost.setParamValue(cs80::P_parityMode, storedParity);
+        juce::MemoryBlock presetState;
+        presetHost.getStateInformation(presetState);
+        juce::TemporaryFile preset(".cs80xml");
+        const bool written = preset.getFile().replaceWithData(presetState.getData(), presetState.getSize());
+        check(written, "performance user preset fixture written");
+        if (!written) continue;
+
+        auto setOpposingLiveValues = [&]
+        {
+            for (int i = 0; i < 10; ++i)
+                presetHost.setParamValue(cs80::P_kbdBrillianceLow + i,
+                                         i < 4 ? -storedControls[i] : 1.0f - storedControls[i]);
+            presetHost.setParamValue(cs80::P_parityMode, liveParity);
+        };
+        setOpposingLiveValues();
+        presetHost.loadUserPreset(preset.getFile());
+        for (int i = 0; i < 10; ++i)
+            check(std::abs(presetHost.getParamValue(cs80::P_kbdBrillianceLow + i) - storedControls[i]) < 1e-6f,
+                  (juce::String("user preset restores performance control: ") + ids[i]).toRawUTF8());
+        check(presetHost.getParamValue(cs80::P_parityMode) == liveParity,
+              "user performance preset preserves live isolation policy in both directions");
+
+        setOpposingLiveValues();
+        presetHost.setStateInformation(presetState.getData(), (int) presetState.getSize());
+        for (int i = 0; i < 10; ++i)
+            check(std::abs(presetHost.getParamValue(cs80::P_kbdBrillianceLow + i) - storedControls[i]) < 1e-6f,
+                  (juce::String("full session restores performance control: ") + ids[i]).toRawUTF8());
+        check(presetHost.getParamValue(cs80::P_parityMode) == storedParity,
+              "full session restores saved isolation policy in both directions");
+    }
 
     // The real audio callback: automation reaches the core, and the paths are audible.
     auto render = [](Cs80AudioProcessor& target, float pedal, int blocks = 60)

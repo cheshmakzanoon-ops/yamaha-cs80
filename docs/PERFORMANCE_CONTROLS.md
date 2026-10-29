@@ -21,7 +21,7 @@ The default of every new control reproduces the previous behavior exactly. A fix
 
 All earlier IDs, order, ranges, defaults and AU hints are untouched (the smoke test pins literal snapshots of the first 228 IDs, the AT VCF hint 3 and the original-SUB hint 4 block). A session saved before these controls restores neutral values, never the live ones.
 
-**Preset recall.** Loading a factory preset recalls the sound, not the wiring: `footswitch_plugged`, `footswitch_pressed`, `foot_mode` and `output_level` are left where they are. The four contour levers and both assigners are part of the patch and return to their neutral values with it. User presets and host state restore all ten.
+**Preset recall.** Loading a factory preset recalls the sound, not the wiring: `footswitch_plugged`, `footswitch_pressed`, `foot_mode` and `output_level` are left where they are. The four contour levers and both assigners are part of the patch and return to their neutral values with it. User presets and host state restore all ten. Parity isolation is a separate session policy: both factory and user presets preserve its current setting, whereas host state restores its saved setting.
 
 ## Keyboard contour (owner controls 9 and 10)
 

@@ -52,12 +52,14 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Check | Count / scope |
 | --- | --- |
 | Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
+| Active-tail continuity | 49,584 checks of opt-in isolation phase/filter-state retention; no full idle-clock claim |
 | Parity isolation / harness | 121 core isolation checks, 22 comparison-harness tests and 7 candidate-export tests; no hardware evidence |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) eight-voice rank network (14,012), and conditional RC transients (1,882) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
+| Legacy compatibility CI | Same-compiler byte comparison against pinned baseline: shipped222 presets at3 rates, normal and noisy reassignment scenarios |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
-| CI (`build.yml`) | Linux, macOS (VST3, AU, Standalone) and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
+| CI (`build.yml`) | Linux, native Apple Silicon and Intel macOS (VST3, AU, Standalone), and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
 
 The core and performance suites have also been run under AddressSanitizer and UndefinedBehaviorSanitizer (leak detection off; no leak-clean claim). **None of this compares anything to hardware.** There is no reference capture corpus in the repository. Consult the exact-commit Actions results rather than this table for any specific revision.
 
@@ -117,9 +119,9 @@ Double-click any control to return it to its default.
 ### Behavior notes and compatibility
 
 - **Intentional audible changes** are documented where made. Most recent: the default per-voice tuning scatter (previously up to ~2 semitones off by a missing cents conversion; now about 2.5 cents at default dispersion), and earlier corrections to velocity gain, cutoff tracking (octave per octave), footage ratios, filter contour and sustain semantics. Use an earlier commit for historical renders.
-- **State and automation**: host IDs and order are append-only with AU version hints; sessions saved by older builds restore neutral values for newer parameters, never live ones. Preset recall leaves the footswitch jack/contact, EXP/WAH selector and output switch alone (they are wiring, not sound).
+- **State and automation**: host IDs and order are append-only with AU version hints; sessions saved by older builds restore neutral values for newer parameters, never live ones. Factory preset recall leaves the footswitch jack/contact, EXP/WAH selector and output switch alone (they are wiring, not sound); user presets restore them. Both preset types preserve the current parity-isolation setting; full session restore recalls it.
 - **SUB**: fresh instances use the original six functions and 0.7-60 Hz range; factory programs and old states keep the legacy waveforms/range ([ORIGINAL_SUB_OSCILLATOR.md](docs/ORIGINAL_SUB_OSCILLATOR.md)). EXT accepts an optional mono host input, disabled by default and modulation-only ([EXTERNAL_MODULATION.md](docs/EXTERNAL_MODULATION.md)).
-- **Voices**: the cyclic allocator rejects a ninth simultaneously held key rather than stealing; released tails can be reused. Same-pitch duplicate note-ons on one channel are a MIDI ambiguity, not original behavior.
+- **Voices**: the cyclic allocator rejects a ninth simultaneously held key rather than stealing; released tails can be reused. In isolation mode, reassignment of a still-active unheld tail now preserves oscillator phase and HP/LP numerical state ([scope and evidence](docs/ACTIVE_TAIL_CONTINUITY.md)); inactive circuits still use the existing reset policy. Same-pitch duplicate note-ons on one channel are a MIDI ambiguity, not original behavior.
 - **Latency**: the output decimator reports 63 host samples; let the host refresh delay compensation.
 - **Software conventions that are not original**: MIDI CC64 sustain (including MPE-master rule), the latching virtual footswitch, the sample-rate range 8-768 kHz (48 kHz fallback), digital normalisation of EXT, the on-screen key-pressure gesture. See [PERFORMANCE_CONTROLS.md](docs/PERFORMANCE_CONTROLS.md).
 - Footage uses nominal harmonic ratios 0.5, 1, 1.5, 2, 3, 4 (the fifths sit about 1.955 cents above equal temperament); these are nominal circuit targets, not measured tolerances of any instrument.
@@ -186,6 +188,8 @@ docs/                           evidence ledgers and audits (index below)
 
 | Read this | For |
 | --- | --- |
+| [PRESET_BA_CUTOFF_BRANCHES.md](docs/PRESET_BA_CUTOFF_BRANCHES.md) | Reviewed memory-diode injection and selected-source driver topology |
+| [RELEASE_CONTROL_ROUTING.md](docs/RELEASE_CONTROL_ROUTING.md) | SUB release clamp/buffer routes, component revisions and explicit quantitative gaps |
 | [REFERENCE_CAPTURE_REQUEST.md](docs/REFERENCE_CAPTURE_REQUEST.md) | M1 external-first reference intake, metadata/rights/calibration requirements and unfilled checklist |
 | [PRESET_RECEIVER_PORTS.md](docs/PRESET_RECEIVER_PORTS.md) | Reviewed 26-output rank-I first-hop ledger with explicit missing loads/paths |
 | [PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md) | **The plan to 1:1**: definition of done, blockers, workstreams, provisional-value register, order, rules |

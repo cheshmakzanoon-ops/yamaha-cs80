@@ -97,7 +97,7 @@ The model still maps normalized panel positions to behavior. The original is a n
 ### W3. VCO and wave shaper (IG00153, IG00158)
 
 - Replace the analytic PolyBLEP source with a model of the verified M41/IC42 graph: current-source ramp, reset one-shot, comparator with clamp references, triangle-to-sine diode shaper, per-wave voltage gains (saw 3.5 Vpp, sine 3 Vpp, triangle 3.2 Vpp are *pin-level* targets, not final output levels).
-- Decide, from the circuit, whether oscillators free-run between notes and what the filters hold; today `startVoice` resets phase and filter state on assignment, which is a software convention (and the oscillator phase is randomized).
+- Decide, from the circuit, whether oscillators free-run between notes and what the filters hold; [active-tail continuity](ACTIVE_TAIL_CONTINUITY.md) now preserves phase/filter state on still-active unheld reassignment in opt-in isolation mode. Default-off and inactive assignment retain their prior reset policy. Full idle evolution and held key-voltage behavior remain unresolved.
 - MR: capture DC-coupled waveforms at calibrated pitch and pulse width to fit reset shape, thresholds, device spread; measure Hz/V tuning curvature and temperature drift.
 - **Gate:** residual against captures per pitch and width; alias level reported separately from analog response error (see DSP_MEASUREMENTS.md for the method and its limits; the 2x internal rate does not remove aliases folded in the oscillator).
 

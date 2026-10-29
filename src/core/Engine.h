@@ -185,6 +185,14 @@ public:
     };
     // Offline/render-thread diagnostics for response tests and plotted traces.
     RankInfo getRankInfo(int voice, int rank) const;
+    struct RankAudioState
+    {
+        float phase = 0.0f;
+        Svf::State hpf, lpf;
+    };
+    // Exact current state (not last-render telemetry). Render thread only;
+    // not safe for concurrent UI polling. No locks, allocations or mutations.
+    RankAudioState getRankAudioState(int voice, int rank) const noexcept;
 
 private:
     static constexpr int kNumVoices = 8;

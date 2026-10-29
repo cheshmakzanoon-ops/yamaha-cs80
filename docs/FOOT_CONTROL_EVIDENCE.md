@@ -14,7 +14,7 @@ Sustain is the panel-controlled release extension, not an indefinite MIDI hold. 
 
 ## Circuit corroboration
 Panel3p66: SW1 T1=SUB TS1(21), SW2 T1=SUB TS2(26); their B1 contacts share −15 V and their M1 contacts share SUB TS4(24). This corroborates independent selectors sharing one pedal signal.
-SUBp29: TS3(25) is the jack input; two 100k paths feed +15 V and Tr6 base. Tr6 collector is +15 V, emitter TS4 has 10k to −15 V. These values alone do not establish switching threshold or analog edge behavior. TS1 and TS2 act on distinct sustain/P-G networks.
+SUBp29: TS3(25) is the jack input; two 100k paths feed +15 V and Tr6 base. Tr6 is PNP 2SA561: its arrowed emitter is +15 V, and its collector TS4 has 10k to −15 V. (Corrected by native second read in RELEASE_CONTROL_ROUTING.md; older prose reversed collector/emitter.) These values alone do not establish switching threshold or analog edge behavior. TS1 and TS2 act on distinct sustain/P-G networks.
 EJ/EXP/PFSp67: J5 has a normalled contact and TS3 connection. Revised components must not be guessed from crossed-out drawings.
 
 ## Existing implementation is a separate MIDI extension

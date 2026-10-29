@@ -10,6 +10,7 @@ on:
       - 'scripts/*pluginval*.sh'
       - 'src/tools/dsp_probe.cpp'
       - 'src/tools/parity_capture.cpp'
+      - 'src/tools/compatibility_probe.cpp'
       - 'scripts/analyze_dsp.py'
       - 'scripts/parity_harness.py'
       - 'CMakeLists.txt'
@@ -57,6 +58,46 @@ jobs:
         with:
           name: cs80-dsp-${{ github.sha }}
           path: artifacts/dsp-probe
+          if-no-files-found: error
+
+  legacy-compatibility:
+    name: Default-off raw audio versus shipped baseline
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      BASELINE: d56911a7c5f6953cd244457226b126cc567a538b
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build both revisions with the same compiler
+        run: |
+          git fetch --depth=1 origin "$BASELINE"
+          git worktree add --detach baseline "$BASELINE"
+          for source in baseline .; do
+            cmake -S "$source" -B "$source/build-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF
+            cmake --build "$source/build-compat" --target cs80_core --parallel 2
+          done
+          c++ -O2 -std=c++20 -Ibaseline/src src/tools/compatibility_probe.cpp baseline/build-compat/libcs80_core.a -o baseline-probe
+          c++ -O2 -std=c++20 -Isrc src/tools/compatibility_probe.cpp build-compat/libcs80_core.a -o current-probe
+      - name: Require byte-identical default and noisy-reassignment traces
+        run: |
+          mkdir -p artifacts/compatibility
+          for scenario in default tails; do
+            args=()
+            if [ "$scenario" = tails ]; then args=(--tails); fi
+            ./baseline-probe "artifacts/compatibility/baseline-$scenario.f32" "${args[@]}"
+            ./current-probe "artifacts/compatibility/current-$scenario.f32" "${args[@]}"
+            cmp "artifacts/compatibility/baseline-$scenario.f32" "artifacts/compatibility/current-$scenario.f32"
+          done
+          sha256sum artifacts/compatibility/*.f32 > artifacts/compatibility/SHA256SUMS
+          printf '{"baseline":"%s","candidate":"%s","default_off_byte_identical":true,"legacy_programs":222,"sample_rates":[44100,48000,96000],"analog_evidence":false}\n' "$BASELINE" "$GITHUB_SHA" > artifacts/compatibility/report.json
+          c++ --version > artifacts/compatibility/compiler.txt
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-legacy-compatibility-${{ github.sha }}
+          path: |
+            artifacts/compatibility/report.json
+            artifacts/compatibility/SHA256SUMS
+            artifacts/compatibility/compiler.txt
           if-no-files-found: error
 
   parity-harness:
