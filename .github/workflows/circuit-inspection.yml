@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [cs80adjust]
+        page: [kas04, kas05]
     steps:
       - uses: actions/checkout@v5
         with:

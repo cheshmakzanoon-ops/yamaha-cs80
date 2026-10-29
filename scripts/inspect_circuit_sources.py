@@ -18,6 +18,8 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "kas04": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/04%20-%20KAS%20schematic.jpg",
+    "kas05": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/05%20-%20KAS%20Circuit%20Board%20%26%20Wiring.jpg",
     "cs80adjust": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
     "kasguide14": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p14.gif",
     "kasguide21": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p21.gif",
@@ -92,8 +94,8 @@ def emit_image(gray, page, url, data):
         "purpose": "Original Yamaha schematic analysis; not measured hardware evidence"
     }), flush=True)
     boxes = []
-    # Preset resistor labels require native pixels, not overview resampling.
-    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector"}:
+    # Dense resistor and keyboard-code labels require native pixels, not overview resampling.
+    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05"}:
         cols, rows = (w + 2199) // 2200, (h + 2199) // 2200
         if cols * rows > 16:
             raise ValueError("native preset grid exceeds 16-tile bound")
