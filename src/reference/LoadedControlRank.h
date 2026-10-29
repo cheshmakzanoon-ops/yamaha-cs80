@@ -118,13 +118,16 @@ inline Vector solvePositive(const Matrix& matrix, const Vector& rhs)
     }
     return result;
 }
-} // namespace rank_detail
-
-inline RankResult solveRank(const RankInputs& inputs)
-{
-    using namespace rank_detail;
+struct System {
     Matrix matrix{};
     Vector rhs{};
+};
+
+inline System assemble(const RankInputs& inputs)
+{
+    System system;
+    auto& matrix = system.matrix;
+    auto& rhs = system.rhs;
     for (std::size_t voice = 0; voice < 8; ++voice) {
         const auto& parameters = inputs.voices[voice];
         validate(parameters.hpReceiver);
@@ -146,8 +149,18 @@ inline RankResult solveRank(const RankInputs& inputs)
     for (std::size_t bus = 0; bus < 4; ++bus)
         sourceStamp(inputs.buses[bus], busConductances(bus), matrix, rhs);
 
+    for (std::size_t row = 0; row < 16; ++row) {
+        require(std::isfinite(rhs[row]));
+        for (std::size_t column = 0; column < 16; ++column)
+            require(std::isfinite(matrix[row][column]));
+    }
+    return system;
+}
+
+inline RankResult resultAt(const RankInputs& inputs, const Vector& volts)
+{
     RankResult result{};
-    result.pinVolts = solvePositive(matrix, rhs);
+    result.pinVolts = volts;
     for (std::size_t voice = 0; voice < 8; ++voice) {
         for (std::size_t local = 0; local < 5; ++local) {
             result.localTerminalVolts[voice][local] = terminal(inputs.voices[voice].local[local],
@@ -157,5 +170,12 @@ inline RankResult solveRank(const RankInputs& inputs)
     for (std::size_t bus = 0; bus < 4; ++bus)
         result.busTerminalVolts[bus] = terminal(inputs.buses[bus], busConductances(bus), result.pinVolts);
     return result;
+}
+} // namespace rank_detail
+
+inline RankResult solveRank(const RankInputs& inputs)
+{
+    const auto system = rank_detail::assemble(inputs);
+    return rank_detail::resultAt(inputs, rank_detail::solvePositive(system.matrix, system.rhs));
 }
 } // namespace cs80::reference::loaded_control

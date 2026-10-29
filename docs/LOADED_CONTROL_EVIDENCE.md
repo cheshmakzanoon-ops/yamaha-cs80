@@ -122,3 +122,50 @@ c++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc \
 ```
 
 Independent review status for this extension: source topology, all three added original hashes, all nine added native crop hashes, Schur elimination, Cholesky solve and tests independently reviewed; no blocking discrepancy found. Unknown receiver laws, upstream multiport/driver circuitry, actual source impedances, inter-rank source sharing, trims, rails, component tolerances and physical-pin-to-effective-cutoff conversion remain unknown. Each common bus is *conditionally represented* by an independent Thevenin source, not established as an independent physical source. No receiver has been defaulted to an open circuit. This extends document-derived passive loading only; it does not remove hardware-calibration gates.
+
+## Conditional cutoff-node transient extension
+
+`src/reference/LoadedControlTransient.h` adds a **numerical RC reference experiment** to the same eight-voice passive graph. It uses only the documented **0.01 µF = 10 nF capacitor from each cutoff pin to ground** (M41 native filter crop above). There is no additional assumed chip capacitance, upstream driver pole, transistor law, temperature law or measured settling parameter. All source resistances, independent-source boundary assumptions and affine static receiver currents remain prescribed by the caller, not calibrated.
+
+The rank assembly and source-terminal reconstruction are now shared helpers in `LoadedControlRank.h`; its existing DC public API is unchanged. Prior single-pair 8,132 checks and rank 14,012 checks still pass. Assembly also rejects nonfinite computed matrix/forcing entries instead of allowing an overflowed boundary calculation into the transient state.
+
+### Differential equation and integration
+
+With the fixed conductance matrix `A`, time-varying forcing `b(t)`, and diagonal capacitor matrix `C=10 nF * identity`, the **conditional fixture equation** is
+
+`C dV/dt + A V = b(t)`.
+
+This is the external-node charge equation under the stated memoryless source/receiver assumptions, not the complete CS-80 transient equation. For step duration `h`, trapezoidal integration solves
+
+`(C/h + A/2) Vnext = (C/h − A/2) Vprevious + (bprevious + bnext)/2`.
+
+Both forcing endpoints are included. Source-terminal voltages are reconstructed algebraically from the new pin voltages and supplied source values; no hidden source charge is introduced. The constructor requires finite **explicit initial capacitor voltages and explicit initial source/current-offset values**. It never silently assumes zero or DC equilibrium.
+
+### Events, configuration and failure semantics
+
+- `step(seconds,nextInputs)` accepts finite positive durations and integrates using stored previous forcing and the supplied next endpoint. Boundary source voltages and receiver-current offsets may vary; source resistances, receiver conductances and IC grades must match the initial configuration exactly.
+- `setForcing(inputs)` is an explicit **zero-duration forcing event**. It updates algebraic terminals and the stored starting forcing without changing capacitor voltages. For a step at the beginning of an interval, call this before integrating that interval; do not mistake endpoint-averaged forcing for an instantaneous start-of-interval step.
+- Reconfiguration is deliberate: construct a new instance with the new configuration, chosen initial forcing, and explicitly chosen initial voltages. Supplying the previous state's pin voltages preserves capacitor charge. For example a real moving trim generally changes both voltage and source resistance; that is a configuration change, not automatically supported by voltage-only stimulus updates.
+- Invalid/unknown initial voltages, unknown sources/receivers, invalid durations, changed topology, or nonfinite intermediate calculations throw `std::invalid_argument`. Failed stepping/events leave both state and forcing history unchanged. No unknown receiver becomes a default open circuit.
+
+### Numerical verification and limits
+
+`tests/LoadedControlTransientTests.cpp`: **1,882 checks**, strict-warning C++20 and ASan/UBSan pass (leak detection disabled). Tests use numerical error tolerances for the conditional equations, **not analog-fidelity tolerances**:
+
+- Independent literal-resistor scalar decay against `exp(−G*t/C)` and approximately fourfold error reduction when halving the step size.
+- Independently derived symmetric eight-voice 2×2 eigenmodes, analytic exponential decay, retained eigenvectors and second-order timestep refinement. The symmetric reduction includes eightfold common-bus loading, not eight disconnected pair copies.
+- Variable-duration partitions checked against the exact scalar trapezoidal amplification product. Different finite partitions are **not** asserted bit-identical or analytically identical.
+- Explicit source-step response, ramp response exercising previous/current forcing, and preservation of supplied DC equilibrium over multiple step sizes.
+- Independent per-component resistor-current sums verify trapezoidal capacitor charge balance at all 16 pins across 100 changing-voltage/current-offset steps.
+- Unknown/invalid boundaries and changed source resistance, receiver conductance, grade and trim impedance reject. A subsequent valid step is compared bit-exactly with an untouched instance to verify failed calls did not mutate state or forcing history.
+- Three targeted mutation builds—doubling the node capacitor, omitting previous forcing, and removing the common-bus topology guard—each fail the corresponding regression.
+
+**Accuracy warning:** trapezoidal integration is A-stable but not L-stable. Steps much larger than a fixture's decay time may alternate sign and poorly approximate decay even without numerical growth. A regression explicitly checks that coarse alternating mode; it is not a hardware oscillation claim. Choose and refine `h` against the declared stimulus and conditional eigenvalues; no universal audio sample rate, physical time constant or audible settling claim follows from this fixture. Real source/chip dynamics could change those eigenvalues substantially.
+
+```sh
+c++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc \
+  tests/LoadedControlTransientTests.cpp -o /tmp/cs80-loaded-transient
+/tmp/cs80-loaded-transient
+```
+
+Independent review status for transient extension: equations, endpoint-forcing history, fixed-topology guards, charge-continuous events, exception atomicity, DC refactor and evidence limitations independently reviewed; all 8,132 + 14,012 + 1,882 checks independently rerun with strict warnings, no blocker found. No production engine/plugin path uses this model; hardware captures and calibration gates remain open.
