@@ -360,13 +360,22 @@ jobs:
           if-no-files-found: warn
 
   macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel]
     concurrency:
-      group: ${{ github.workflow }}-macos-${{ github.ref }}
+      group: ${{ github.workflow }}-macos-${{ matrix.runner }}-${{ github.ref }}
       cancel-in-progress: false
-    name: macOS / VST3 + AU + Standalone
-    runs-on: macos-latest
+    name: macOS / ${{ matrix.runner }} / VST3 + AU + Standalone
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
+      - name: Record native platform
+        run: |
+          uname -m
+          sw_vers
+          xcodebuild -version
 
       - name: Configure
         run: >
@@ -474,7 +483,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: cs80-pluginval-macos
+          name: cs80-pluginval-${{ matrix.runner }}
           path: |
             pluginval-reports
             pluginval-vst3.log
