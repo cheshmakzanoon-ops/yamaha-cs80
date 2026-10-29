@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "profile_id": "synthetic-plumbing-v1",
+  "evidence_kind": "synthetic",
+  "rationale": "Pre-registered W0 plumbing thresholds in dimensionless units, not analog tolerances. Fixed analytic fixture contains an alternating 1e-10 perturbation; 1e-8 permits platform floating-point roundoff but rejects meaningful amplitude, bias and alignment mutations. Real reference acceptance requires a separate reviewed profile committed before comparison, justified by measured uncertainty.",
+  "stages": {
+    "oscillator": {"rms_error": 1e-8, "max_abs_error": 1e-8, "abs_bias_error": 1e-8},
+    "filter": {"rms_error": 1e-8, "max_abs_error": 1e-8, "abs_bias_error": 1e-8},
+    "envelope": {"rms_error": 1e-8, "max_abs_error": 1e-8, "abs_bias_error": 1e-8},
+    "output": {"rms_error": 1e-8, "max_abs_error": 1e-8, "abs_bias_error": 1e-8}
+  }
+}

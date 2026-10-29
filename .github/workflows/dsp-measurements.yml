@@ -10,6 +10,7 @@ on:
       - 'scripts/*pluginval*.sh'
       - 'src/tools/dsp_probe.cpp'
       - 'scripts/analyze_dsp.py'
+      - 'scripts/parity_harness.py'
       - 'CMakeLists.txt'
       - '.github/workflows/dsp-measurements.yml'
 permissions:
@@ -41,6 +42,25 @@ jobs:
         with:
           name: cs80-dsp-${{ github.sha }}
           path: artifacts/dsp-probe
+          if-no-files-found: error
+
+  parity-harness:
+    name: Synthetic reference comparison (not hardware evidence)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test comparison failures and provenance gates
+        run: python tests/test_parity_harness.py
+      - name: Compare deterministic synthetic stand-in traces
+        run: python scripts/parity_harness.py synthetic --out artifacts/parity-harness
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-synthetic-comparison-${{ github.sha }}
+          path: artifacts/parity-harness
           if-no-files-found: error
 
   sanitizers:
