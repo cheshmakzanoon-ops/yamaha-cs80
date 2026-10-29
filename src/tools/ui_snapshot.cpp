@@ -1776,6 +1776,76 @@ int main(int argc, char** argv)
               "missing new-state parameter does not retain stale live value");
     }
 
+    // Validate detached XML against a fixed schema, including when host restore
+    // overlaps a message-thread user-preset load. This is a functional stress
+    // regression, not a transaction guarantee or a ThreadSanitizer result.
+    {
+        Cs80AudioProcessor schemaHost;
+        auto makeSchemaState = [&](const char* type, const char* name, int index, float macro)
+        {
+            juce::ValueTree tree(type);
+            tree.setProperty("presetName", name, nullptr);
+            tree.setProperty("factoryIndex", index, nullptr);
+            juce::ValueTree parameter("PARAM");
+            parameter.setProperty("id", "macro1", nullptr);
+            parameter.setProperty("value", macro, nullptr);
+            tree.addChild(parameter, -1, nullptr);
+            return tree.createXml()->toString();
+        };
+        const auto hostState = makeSchemaState("CS80_PARAMS", "Schema Host", 7, 0.25f);
+        const auto userState = makeSchemaState("CS80_PARAMS", "Schema User", 11, 0.75f);
+        const auto wrongState = makeSchemaState("OTHER_PARAMS", "Wrong Schema", 3, 0.99f);
+        auto restore = [&](const juce::String& state)
+        {
+            schemaHost.setStateInformation(state.toRawUTF8(), state.getNumBytesAsUTF8());
+        };
+        auto matches = [&](const char* name, int index, float macro)
+        {
+            const auto metadata = schemaHost.getPresetMetadata();
+            return metadata.name == name && metadata.factoryIndex == index
+                && std::abs(schemaHost.getParamValue(cs80::P_macro1) - macro) < 1e-6f;
+        };
+        restore(hostState);
+        check(matches("Schema Host", 7, 0.25f), "host accepts fixed state schema");
+        restore(wrongState);
+        check(matches("Schema Host", 7, 0.25f), "host rejects wrong schema without changing sound or metadata");
+
+        juce::TemporaryFile validPreset(".cs80xml"), wrongPreset(".cs80xml");
+        const bool written = validPreset.getFile().replaceWithText(userState)
+                          && wrongPreset.getFile().replaceWithText(wrongState);
+        check(written, "schema user-preset fixtures written");
+        if (written)
+        {
+            schemaHost.loadUserPreset(validPreset.getFile());
+            check(matches("Schema User", 11, 0.75f), "user preset accepts fixed state schema");
+            schemaHost.loadUserPreset(wrongPreset.getFile());
+            check(matches("Schema User", 11, 0.75f), "user preset rejects wrong schema without changing sound or metadata");
+
+            std::atomic<bool> start { false };
+            std::atomic<int> hostRestores { 0 };
+            std::thread writer([&]
+            {
+                while (!start.load(std::memory_order_acquire)) std::this_thread::yield();
+                for (int i = 0; i < 64; ++i)
+                {
+                    restore(hostState);
+                    hostRestores.fetch_add(1, std::memory_order_relaxed);
+                }
+            });
+            start.store(true, std::memory_order_release);
+            for (int i = 0; i < 64; ++i)
+                schemaHost.loadUserPreset(validPreset.getFile());
+            writer.join();
+            check(hostRestores.load() == 64, "host restore and main-thread user restore both complete");
+            // Only check complete sound/metadata pairs once writers are quiescent;
+            // two competing restores are not promised to be a single transaction.
+            restore(hostState);
+            check(matches("Schema Host", 7, 0.25f), "host restore remains usable after competing restores");
+            schemaHost.loadUserPreset(validPreset.getFile());
+            check(matches("Schema User", 11, 0.75f), "user restore remains usable after competing restores");
+        }
+    }
+
     // Host state callbacks can run off the message thread while an editor is
     // being opened or closed. No processor callback may capture that editor.
     // This stress regression is not a substitute for ThreadSanitizer coverage.

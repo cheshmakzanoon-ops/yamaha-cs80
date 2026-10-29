@@ -43,15 +43,24 @@ jobs:
         run: |
           python tests/test_parity_capture.py --capture ./build-probe/cs80_parity_capture
           ./build-probe/cs80_parity_capture --out artifacts/engine-candidate
-          printf '{"commit":"%s","run":"%s","analog_evidence":false}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/engine-candidate/provenance.json
-          sha256sum src/core/Engine.cpp src/core/Engine.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > artifacts/engine-candidate/SOURCE_SHA256SUMS
-          sha256sum build-probe/cs80_parity_capture > artifacts/engine-candidate/BINARY_SHA256SUMS
-          { c++ --version; cmake --version; uname -sm; grep -E '^CMAKE_(BUILD_TYPE|CXX_COMPILER|CXX_FLAGS)' build-probe/CMakeCache.txt; } > artifacts/engine-candidate/build-environment.txt
-          (cd artifacts/engine-candidate && sha256sum *.csv *.json SOURCE_SHA256SUMS BINARY_SHA256SUMS build-environment.txt > SHA256SUMS)
+          ./build-probe/cs80_parity_capture --out artifacts/engine-live-adr --fixture live-adr-v1
+          for capture in artifacts/engine-candidate artifacts/engine-live-adr; do
+            printf '{"commit":"%s","run":"%s","analog_evidence":false}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > "$capture/provenance.json"
+            sha256sum src/core/Engine.cpp src/core/Engine.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > "$capture/SOURCE_SHA256SUMS"
+            sha256sum build-probe/cs80_parity_capture > "$capture/BINARY_SHA256SUMS"
+            { c++ --version; cmake --version; uname -sm; grep -E '^CMAKE_(BUILD_TYPE|CXX_COMPILER|CXX_FLAGS)' build-probe/CMakeCache.txt; } > "$capture/build-environment.txt"
+            (cd "$capture" && sha256sum *.csv *.json SOURCE_SHA256SUMS BINARY_SHA256SUMS build-environment.txt > SHA256SUMS)
+          done
       - uses: actions/upload-artifact@v5
         with:
           name: cs80-engine-candidate-${{ github.sha }}
           path: artifacts/engine-candidate
+          if-no-files-found: error
+      - name: Upload live envelope candidate trace
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-engine-live-adr-${{ github.sha }}
+          path: artifacts/engine-live-adr
           if-no-files-found: error
       - name: Upload source-traceable graphs and raw traces
         uses: actions/upload-artifact@v5

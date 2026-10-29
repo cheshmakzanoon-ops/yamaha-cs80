@@ -54,7 +54,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
 | Live envelope timing | 91,672 checks of isolation-only A/D/R refresh without retrigger; level-target transitions remain unresolved |
 | Active-tail continuity | 49,584 checks of opt-in isolation phase/filter-state retention; no full idle-clock claim |
-| Parity isolation / harness | 121 core isolation checks, 22 comparison-harness tests and 7 candidate-export tests; no hardware evidence |
+| Parity isolation / harness | 121 core isolation checks, 22 comparison-harness tests and 13 candidate-export tests; no hardware evidence |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) eight-voice rank network (14,012), and conditional RC transients (1,882) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
@@ -74,7 +74,7 @@ The core and performance suites have also been run under AddressSanitizer and Un
 
 ## Path to 1:1 parity (summary)
 
-**M0 implementation:** opt-in [parity isolation](docs/PARITY_ISOLATION.md) masks modern extensions without rewriting stored patches. The [comparison harness](docs/PARITY_HARNESS.md) validates synthetic stand-ins, provenance and declared latency, with versioned synthetic-only tolerances. Its engine capture tool exports unnormalised stereo traces, every submitted core setting and timed stimulus events. Neither establishes hardware agreement. Hardware capture and analog tolerance preregistration remain outstanding. A separately reviewed [loaded cutoff-control experiment](docs/LOADED_CONTROL_EVIDENCE.md) now solves conditional single-voice and eight-voice HP/LP DC networks offline, including shared-bus loading and documented 10 nF node-capacitor transients under explicit fixed boundaries. Upstream driver impedances, chip-current laws and inter-rank connections remain unresolved.
+**M0 implementation:** opt-in [parity isolation](docs/PARITY_ISOLATION.md) masks modern extensions without rewriting stored patches. The [comparison harness](docs/PARITY_HARNESS.md) validates synthetic stand-ins, provenance and declared latency, with versioned synthetic-only tolerances. Its engine capture tool exports unnormalised stereo traces, every submitted core setting and timed stimulus events. An opt-in live-ADR candidate adds applied parameter transactions and before/after/one-frame envelope probes, while preserving the default fixture bytes. Neither establishes hardware agreement. Hardware capture and analog tolerance preregistration remain outstanding. A separately reviewed [loaded cutoff-control experiment](docs/LOADED_CONTROL_EVIDENCE.md) now solves conditional single-voice and eight-voice HP/LP DC networks offline, including shared-bus loading and documented 10 nF node-capacitor transients under explicit fixed boundaries. Upstream driver impedances, chip-current laws and inter-rank connections remain unresolved.
 
 The full plan is **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**. In short:
 
@@ -215,6 +215,8 @@ docs/                           evidence ledgers and audits (index below)
 | [PRA_WAH_REFERENCE_DESIGN.md](docs/PRA_WAH_REFERENCE_DESIGN.md) | Conditional offline ideal-op-amp wah network, explicit optical/loading boundaries; not calibrated WI-to-WO audio |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |
+| [STATE_SCHEMA_VALIDATION.md](docs/STATE_SCHEMA_VALIDATION.md) | Immutable schema validation and competing-restore regression scope |
+| [ENVELOPE_TARGET_TRANSITION_REVIEW.md](docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md) | Source-located capacitor/target feedback paths and missing live-target transition laws |
 | [LIVE_ENVELOPE_TIMING.md](docs/LIVE_ENVELOPE_TIMING.md) | Isolation-only live attack/decay/release timing, state continuity and deferred level-target behavior |
 | [RANK_II_RECEIVER_PORTS.md](docs/RANK_II_RECEIVER_PORTS.md) | Reviewed rank-II first hops, individual eight-voice harness and retained source conflicts |
 | [PRESET_FOLDOUT_SOURCE_REVIEW.md](docs/PRESET_FOLDOUT_SOURCE_REVIEW.md) | Independent alternate-source matrix evidence; conflicts retained, still 547/25 |

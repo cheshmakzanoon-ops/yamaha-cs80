@@ -177,3 +177,96 @@ The capture retains latency inside its 96,000 frames; it is not automatically a
 96,000-reference-sample plus latency-tail pair. Do not silently truncate a
 reference to force compatibility. Archive these candidate files with the exact CI
 commit and binary provenance; a local capture alone is not authoritative evidence.
+
+## Opt-in live A/D/R candidate trace (schema 2)
+
+```sh
+./build/cs80_parity_capture --out artifacts/engine-live-adr --fixture live-adr-v1
+```
+
+This separate fixture closes an export gap: the original six-event capture never
+changes parameters after initialization. It does not replace the original
+fixture, reference-corpus schema, synthetic tolerance profile or hardware gate.
+Omitting `--fixture` retains the original schema-1 three-file export and its
+unchanged stimulus. Unknown/extra arguments fail before altering a destination.
+Returning to the default fixture removes only the known `envelope-events.csv`
+sidecar; unrelated files are retained. Failed reruns invalidate an old success
+manifest before writing new artifacts.
+
+The new fixture retains 96,000 host frames at 48 kHz and untrimmed output latency.
+It starts with both amplitude/filter attacks at 1 second, decays/releases at 2
+seconds, amplitude sustain 0.25, filter IL 0 and AL 0.8. The provisional filter
+attack target is consequently nonzero. Master-sustain/release-floor assignment
+is disabled. Level targets never change. A fresh engine follows the same
+setParams/prepare/reset initialization; no warmup, clipping, normalization,
+resampling, reference matching or discarded samples are added.
+
+| Sequence | Host frame | Applied action |
+| --- | --- | --- |
+| 0 | 4,800 | Note60 on, channel1, velocity0.75 |
+| 1 | 8,640 | Both envelopes' attack: rankI0.2s, rankII0.25s |
+| 2 | 28,800 | Both envelopes' decay: rankI0.8s, rankII1.2s |
+| 3 | 48,000 | Note60 off, channel1 |
+| 4 | 52,800 | Both envelopes' release: rankI0.4s, rankII0.6s |
+
+The dispatcher renders up to each event, applies it before that zero-based host
+frame, and records its actual frame and sequence after application. Each timing
+batch changes four submitted parameters and invokes exactly one full `setParams`.
+Schema2 records complete `initial_settings` and `final_settings` maps (all138 core
+parameters) plus ordered `events`. A `parameter_batch` lists stable parameter
+IDs and old/new submitted values; note events retain note/channel/value fields.
+Replaying every batch from the initial map must reproduce the final map exactly.
+These are submitted values, not a claim that every internal override is absent.
+
+`envelope-events.csv` records 36 rows: each of three timing batches, at `before`,
+`after`, and `after_one_host_frame`, for both ranks and both envelopes of voice0.
+Columns are `sequence,sample,point,voice,note,rank,envelope,stage,value,elapsed,active,held`.
+Ranks are zero-based; stage numbers are existing software enum values (Attack1,
+Decay2, Release4 here), not measured IC states. The setter-boundary rows share
+one frame; the last observation is after rendering that frame, at frame+1.
+Thus the fixture has explicit additional one-frame render boundaries. No notes,
+state resets or hidden setters are added for probing. Values are the existing
+read-only software state proxies, not calibrated capacitor voltages.
+
+Tests independently specify the timeline and all changed IDs/values, reconstruct
+the settings history, and require exact row order/completeness, identity and
+expected active phase. Every probe is beyond the provisional fast-bend window,
+away from its target/completion boundary, and nondegenerate for both ranks and
+both envelopes. The setter must preserve stage/value/elapsed exactly. An
+independent Python expression of the existing float recurrence predicts the two
+96-kHz internal ticks in one host frame, with bounded floating-point comparison
+allowance. This checks the software law, **not** Yamaha time constants or analog
+acceptance. Metadata and trace mutations cannot substitute for actual execution;
+source mutations that log but omit a setter or submit stale timing are separately
+required to fail these state-step checks.
+
+The complete CLI suite also checks independent-process byte determinism on the
+same build/platform, finite complete audio, retained release output, strict JSON
+keys/constants, malformed timelines, wrong rank/frame/value, reset/stale state,
+missing trace rows, fixture switching and failed-rerun cleanup. The original
+three default artifacts are compared byte-for-byte with the preserved
+pre-extension executable under the same toolchain; cross-platform identity is
+not claimed.
+
+CI must export the two fixtures into separate directories. The existing
+exact-commit provenance, source/binary hashes, build environment and final
+`SHA256SUMS` cover both audio CSVs, `capture.json` and the new envelope trace.
+Neither schema2 nor a green candidate test authorizes hardware ingestion,
+relabels a reference tolerance, proves physical envelope laws, or closes W5/W10
+hardware parity.
+
+Local extension checkpoint (2026-10-29): all13 CLI tests pass for the Release
+build and a standalone strict C++20 build (`-Wall -Wextra -Wpedantic -Werror`).
+Six isolated source mutations fail: logging without applying the setter,
+submitting initial/stale times, retriggering state at the setter, shifting the
+attack event by one frame, swapping rank attack times, and omitting the post-setter
+probe. Temporary mutation sources/logs live under `/tmp/parity-live-adr-mutations`;
+they are not production dependencies.
+
+All three default files matched the preserved pre-extension executable byte for
+byte. On this build, `capture.json` SHA-256 is
+`09b8bad1e8741b71a135e16743d264ee5fbf18f404f5dfa05b15462c92735879`;
+both channel CSVs have SHA-256
+`3c806af88f87f30a87234831165630ec2b2177210f6d32789c583eacdbdd4ebc`.
+These are same-toolchain regression artifacts, not portable sound signatures.
+Exact-commit publication and full CI remain separate evidence.

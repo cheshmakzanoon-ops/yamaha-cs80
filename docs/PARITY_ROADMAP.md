@@ -69,7 +69,7 @@ Each lists what to do, where to start, and the acceptance gate. Order is in sect
 
 ### W0. Parity mode and the comparison harness (start here)
 
-Implementation checkpoint: [PARITY_ISOLATION.md](PARITY_ISOLATION.md) describes the opt-in isolation contract and explicit numerical/controller-transport exceptions. [PARITY_HARNESS.md](PARITY_HARNESS.md) describes the synthetic comparison and mutation tests. Real capture acceptance remains blocked pending calibrated references and separately preregistered analog tolerances. Consult exact-commit CI for verification status.
+Implementation checkpoint: [PARITY_ISOLATION.md](PARITY_ISOLATION.md) describes the opt-in isolation contract and explicit numerical/controller-transport exceptions. [PARITY_HARNESS.md](PARITY_HARNESS.md) describes the synthetic comparison and mutation tests. The optional `live-adr-v1` candidate additionally records applied A/D/R transactions and state probes; its tests validate the current software law only. Real capture acceptance remains blocked pending calibrated references and separately preregistered analog tolerances. Consult exact-commit CI for verification status.
 
 Nothing can be proved until there is a way to turn off everything the original does not have and compare to a reference.
 
@@ -109,6 +109,8 @@ The model still maps normalized panel positions to behavior. The original is a n
 - **Gate:** complex response error across the control grid within pre-registered tolerance; nonlinear behavior fitted on some settings and validated on held-out ones.
 
 ### W5. Envelopes (IG00152 filter EG, IG00159 VCA EG) and VCA (IG00151)
+
+The [target-transition source review](ENVELOPE_TARGET_TRANSITION_REVIEW.md) distinguishes LC target drive to +IN3 from buffered feedback to −IN4 and the external0.22µF integrating node. It does not resolve the opaque sequence thresholds or charging-current law, so live sustain/IL/AL trajectories remain uncalibrated and unimplemented rather than receiving an invented transition.
 
 - Derive the true timing laws and sustain/release routing from the IC pages (higher timing control voltage shortens a stage; global SUS selects the lower control voltage) and the verified 1 ms-1 s / 10 ms-10 s ranges, instead of the `coefficientForTime` -60 dB heuristic and x5 "bend".
 - VCA: separate exponential and linear control inputs, offsets, bleed.

@@ -8,6 +8,10 @@
 
 namespace
 {
+// Schema validation must not read the live ValueTree handle while another
+// state-loading thread may replace it. This identifier never changes.
+const juce::Identifier stateType { "CS80_PARAMS" };
+
 // JUCE 8.0.6 AudioParameterBool stores an unsnapped host float internally,
 // while APVTS caches its snapped 0/1 value. A same-bucket state restore may
 // therefore skip the setter. Publish the existing boolean semantics through
@@ -33,7 +37,7 @@ Cs80AudioProcessor::Cs80AudioProcessor()
     : AudioProcessor(BusesProperties()
           .withInput("External Modulation", juce::AudioChannelSet::mono(), false)
           .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
-      apvts(*this, nullptr, "CS80_PARAMS", createParameterLayout())
+      apvts(*this, nullptr, stateType, createParameterLayout())
 {
     for (auto& pressure : pendingKeyPressure)
         pressure.store(noPendingControl, std::memory_order_relaxed);
@@ -621,7 +625,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
     if (auto xml = juce::XmlDocument::parse(text))
     {
         auto tree = juce::ValueTree::fromXml(*xml);
-        if (tree.isValid() && tree.hasType(apvts.state.getType()))
+        if (tree.isValid() && tree.hasType(stateType))
         {
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
@@ -679,7 +683,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
     if (auto xml = juce::XmlDocument::parse(file))
     {
         auto tree = juce::ValueTree::fromXml(*xml);
-        if (tree.isValid() && tree.hasType(apvts.state.getType()))
+        if (tree.isValid() && tree.hasType(stateType))
         {
             auto restored = normaliseRestoredState(tree);
             restored.getChildWithProperty("id", parameterId(cs80::P_parityMode))
