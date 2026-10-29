@@ -43,7 +43,7 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | Tone selectors, memories, presets | Approximate / Offline only | 14 positions per rank, 4 independent memory banks (104 automatable controls), PANEL; **all 22 factory tone voicings are placeholders**. A 547-cell passive resistor-matrix solver is offline only (25 cells unresolved) |
 | Chorus / tremolo, output stage | Approximate | Generic modulated delay and amplitude tremolo; 10 Hz DC block, soft clip, 255-tap decimator (63 samples latency) |
 | Voice variation | Approximate | Per-voice tuning and pan scatter, slow drift, noise floor: arbitrary, not measured tolerances |
-| Host / plugin layer | Implemented | 243 append-only host parameters, state migration, preset library, pluginval 10 on every platform |
+| Host / plugin layer | Implemented | 244 append-only host parameters, state migration, preset library, pluginval 10 on every platform |
 
 The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots, MPE, arpeggiator) are deliberate software extensions, listed in the roadmap so they can be made inert in a future parity mode.
 
@@ -51,7 +51,8 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 | Check | Count / scope |
 | --- | --- |
-| Core engine suite (`cs80_tests`) | 11,268 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
+| Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
+| Parity isolation / harness | 121 core isolation checks plus 22 comparison-harness tests; synthetic evidence only |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
@@ -63,6 +64,8 @@ The core and performance suites have also been run under AddressSanitizer and Un
 ---
 
 ## Path to 1:1 parity (summary)
+
+**M0 implementation:** opt-in [parity isolation](docs/PARITY_ISOLATION.md) masks modern extensions without rewriting stored patches. The [comparison harness](docs/PARITY_HARNESS.md) validates synthetic stand-ins, provenance and declared latency, with versioned synthetic-only tolerances. Neither establishes hardware agreement. Hardware capture and analog tolerance preregistration remain outstanding.
 
 The full plan is **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**. In short:
 
@@ -93,7 +96,7 @@ The full plan is **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**. In short:
 | Performance | Footswitch with sustain and porta/gliss assigners, portamento / glissando, arpeggiator, pitch-bend range, A4 tuning, HIGH/LOW output |
 | Effects | Chorus/tremolo plus three serial modern FX slots |
 | Presets | 222 factory programs: 22 provisional hardware-tab studies and 200 original performance patches; searchable library and user presets |
-| Parameters | 243 host-automatable: 122 original + 106 programmer/selector + AT VCF + 4 original-SUB + 10 performance controls |
+| Parameters | 244 host-automatable: 122 original + 106 programmer/selector + AT VCF + 4 original-SUB + 10 performance controls + parity isolation |
 | Formats | VST3 and Standalone everywhere; AU on macOS. AAX is not built (SDK not redistributable) |
 
 ### Using the instrument
@@ -125,7 +128,7 @@ Double-click any control to return it to its default.
 
 ## Build
 
-Requirements: CMake 3.22+, a C++20 compiler, Ninja (recommended) or Visual Studio 2022; Linux needs ALSA, X11, FreeType, Fontconfig and OpenGL development packages; macOS needs the Xcode command-line tools. JUCE 8.0.6 is fetched by CMake when `deps/juce` is absent.
+Requirements: CMake 3.22+, Python 3.10+ (test harness), a C++20 compiler, Ninja (recommended) or Visual Studio 2022; Linux needs ALSA, X11, FreeType, Fontconfig and OpenGL development packages; macOS needs the Xcode command-line tools. JUCE 8.0.6 is fetched by CMake when `deps/juce` is absent.
 
 Ubuntu 24.04:
 

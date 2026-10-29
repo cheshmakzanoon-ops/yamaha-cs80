@@ -141,9 +141,21 @@ void Engine::setParams(const ParamValues& values)
         const float value = params[i];
         params[i] = std::isfinite(value) ? clampf(value, def.min, def.max) : def.def;
     }
+    const bool wasParity = global.parityMode;
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
+    // Mode changes clear notes/controllers and effect histories: no old macro
+    // envelopes, MIDI holds or modern FX tails may leak into the isolated path.
+    // No allocation or sample-rate reconfiguration occurs on this RT boundary.
+    if (wasParity != global.parityMode)
+    {
+        reset();
+        // Legacy reset left these OnePole histories intact. Clear only for
+        // mode transitions to preserve mode-off historical rendering.
+        fxDampL.reset();
+        fxDampR.reset();
+    }
 
     // Gate edges act when parameters are applied, not by per-sample polling, so
     // the outcome does not depend on how the host partitions a render.
@@ -176,6 +188,7 @@ void Engine::buildSettings()
 {
     auto p = [this](int i) { return params.v[(size_t) i]; };
 
+    global.parityMode = p(P_parityMode) >= 0.5f;
     global.masterTune = p(P_masterTune);
     global.detuneCents = p(P_detune);
     global.mix = p(P_mix);
@@ -255,6 +268,30 @@ void Engine::buildSettings()
     global.arpRate = std::max(0.1f, p(P_arpRate));
     global.arpOctaves = std::clamp((int) std::lround(p(P_arpOctaves)), 1, 4);
 
+    // Effective settings only: retain stored automation/patch values unchanged.
+    // Zero variation is an uncalibrated nominal fixture, NOT measured tolerances.
+    if (global.parityMode)
+    {
+        global.keyRelease = 0.0f;
+        global.subOriginalMode = true;
+        global.ringSpeed = std::min(global.ringSpeed, 200.0f);
+        global.stereo = true;
+        global.voiceDispersion = global.drift = global.analogNoise = 0.0f;
+        global.mpe = global.arpOn = false;
+        global.pitchBendRange = global.mpeBendRange = 0.0f;
+        global.tuningRef = 440.0f; // nominal reference, not an identified unit's tuning
+        global.modWheelSub = global.modWheelVcf = 0.0f;
+        for (int i = 0; i < 3; ++i)
+        {
+            global.lfoDepth[i] = 0.0f;
+            global.lfoDest[i] = 0;
+            global.fxType[i] = 0;
+            global.fxMix[i] = 0.0f;
+        }
+        for (float& macro : global.macro)
+            macro = 0.5f;
+    }
+
     // Macro layer. 0.5 is neutral, so a patch sounds exactly like its panel
     // settings until the player deliberately moves a macro.
     const float brightnessMacro = (global.macro[0] - 0.5f) * 2.0f;
@@ -308,6 +345,11 @@ void Engine::buildSettings()
         r.afterBrill = rp(CP_afterBrill);
         r.afterLevel = rp(CP_afterLevel);
         r.pan = rp(CP_pan);
+        if (global.parityMode)
+        {
+            r.hpfOn = r.lpfOn = true;
+            r.pan = 0.0f; // neutral fixture; physical output routing remains W8
+        }
     }
 }
 
@@ -786,6 +828,8 @@ void Engine::channelPressure(int midiChannel, float pressure)
 
 void Engine::pitchBend(int midiChannel, float value)
 {
+    if (global.parityMode)
+        return;
     value = clampf(value, -1.0f, 1.0f);
     if (global.mpe && midiChannel != 1)
     {
@@ -806,6 +850,9 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         allNotesOff(controller == 123, midiChannel);
         return;
     }
+    if (global.parityMode && (controller == 1 || controller == 11
+                              || controller == 64 || controller == 74))
+        return;
     // clampf passes NaN through; a non-finite controller value is not an event.
     if (! std::isfinite(value))
         return;
@@ -848,6 +895,12 @@ void Engine::controlChange(int controller, float value, int midiChannel)
             if (v.active && (midiChannel == 1 || v.midiChannel == midiChannel))
                 v.timbre = value;
     }
+}
+
+void Engine::setExpression(float value)
+{
+    if (std::isfinite(value))
+        expression = clampf(value, 0.0f, 1.0f);
 }
 
 void Engine::setRibbon(float value)
@@ -1040,7 +1093,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                                                    global.kbdLevelHigh, v.contour),
                                          0.0f, 2.6f);
             const float amp = r.aenv.tick(sr, true);
-            r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp };
+            r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             // Velocity acts through the selected initial-touch destinations.
             // An unconditional velocity gain made disabled touch controls audible.
@@ -1196,8 +1249,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     smoothedVolume += (global.volume - smoothedVolume) * 0.003f;
     const float gain = smoothedVolume * 4.0f * expression;
-    outL = softClip(dcOutL * gain);
-    outR = softClip(dcOutR * gain);
+    // W0 removes the arbitrary output conditioner, not the provisional
+    // filter saturation law (W4). No calibrated output/headroom claim (W8).
+    outL = global.parityMode ? mixL * gain : softClip(dcOutL * gain);
+    outR = global.parityMode ? mixR * gain : softClip(dcOutR * gain);
 
     // GENERAL HIGH/LOW switch. HIGH is exactly unity, so the default is sample-identical.
     const float outputTarget = outputLevelGain(global.outputHigh);

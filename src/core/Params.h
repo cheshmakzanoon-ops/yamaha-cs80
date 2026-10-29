@@ -144,6 +144,8 @@ enum : int
     // Foot controller selector: 0 = EXP, 1 = EXP-WAH. Output switch: 0 = LOW, 1 = HIGH.
     P_footMode,
     P_outputLevel,
+    // W0 feature isolation; not a claim of calibrated analog parity.
+    P_parityMode,
     P_numParams
 };
 
@@ -296,7 +298,8 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "sustain_assign", "SUSTAIN ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "glide_assign", "PORTA / GLISS ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "foot_mode", "PEDAL EXP / WAH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
-    { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" }
+    { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" },
+    { "parity_mode", "PARITY MODE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" }
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

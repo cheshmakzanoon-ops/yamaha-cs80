@@ -57,7 +57,7 @@ Of the 85 control and connector rows in HARDWARE_COVERAGE.md, counting each row 
 | Tone selectors and memories | `HardwareControl.h`, `FactoryPresets.cpp`, plugin layer | 14 positions per rank, 4 memory banks (104 host parameters), PANEL, persistence and automation; 547 transcribed resistor-matrix cells in an offline solver | 25 cells unreadable/revision-dependent, loaded solve (BA driver, receivers), mapping into IC laws; **all 22 factory tone voicings are placeholders** | PRESET_*.md, MEMORY_AUTOMATION.md |
 | Chorus/tremolo, output stage | `Dsp.h` `Chorus`, `Engine.cpp` | Modulated delay chorus, amplitude tremolo, 10 Hz DC block, soft clip, 255-tap decimator (63 samples latency) | The original BBD/phase network, coupling poles, headroom, noise | FIDELITY_AUDIT.md, DSP_MEASUREMENTS.md |
 | Voice variation | `Engine.cpp` | Per-voice tuning and pan scatter, slow drift, noise floor | Calibrated distributions; cutoff/level/envelope trims are generated but never read | ENGINE.md, section 6 |
-| Host layer | `src/plugin/` | VST3, AU, Standalone; 243 append-only host parameters; state migration; UI; pluginval 10 | n/a (software quality) | MEMORY_AUTOMATION.md, VALIDATOR_DIAGNOSTICS.md |
+| Host layer | `src/plugin/` | VST3, AU, Standalone; 244 append-only host parameters; state migration; UI; pluginval 10 | n/a (software quality) | MEMORY_AUTOMATION.md, VALIDATOR_DIAGNOSTICS.md |
 
 **Offline reference models that do not drive audio** (by design, so they cannot pose as hardware): `src/core/HardwareControl.h` (passive preset matrix), `src/reference/IG00156Linear.h` (conditional filter graph), `src/reference/KeyboardContour.h` (settled-DC KBC network). Their tests establish arithmetic consistency with the transcribed source, nothing more.
 
@@ -68,6 +68,8 @@ Of the 85 control and connector rows in HARDWARE_COVERAGE.md, counting each row 
 Each lists what to do, where to start, and the acceptance gate. Order is in section 8. "Gate" means a result that must exist before the stage may be called calibrated.
 
 ### W0. Parity mode and the comparison harness (start here)
+
+Implementation checkpoint: [PARITY_ISOLATION.md](PARITY_ISOLATION.md) describes the opt-in isolation contract and explicit numerical/controller-transport exceptions. [PARITY_HARNESS.md](PARITY_HARNESS.md) describes the synthetic comparison and mutation tests. Real capture acceptance remains blocked pending calibrated references and separately preregistered analog tolerances. Consult exact-commit CI for verification status.
 
 Nothing can be proved until there is a way to turn off everything the original does not have and compare to a reference.
 

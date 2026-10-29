@@ -388,6 +388,27 @@ void testExpressionPersistence()
     guarded->setExpressionFromUI(7.0f);
     check(guarded->getExpressionValue() == 1.0f, "an over-range pedal value clamps");
 
+    // In isolation the physical UI pedal still works, but CC11 neither moves
+    // the shared position nor changes the audio (including after prepare).
+    auto isolated = fresh(0.3f);
+    auto isolatedReference = fresh(0.3f);
+    auto isolatedFull = fresh(1.0f);
+    for (auto* target : {isolated.get(), isolatedReference.get(), isolatedFull.get()})
+        target->setParamValue(cs80::P_parityMode, 1.0f);
+    const double isolatedQuiet = rmsOf(*isolated), isolatedLoud = rmsOf(*isolatedFull);
+    check(isolatedQuiet > 0.0 && isolatedQuiet < isolatedLoud * 0.5,
+          "UI expression remains audible after entering isolation");
+    juce::AudioBuffer<float> isolatedBlock(2, 256);
+    juce::MidiBuffer ignoredCc;
+    ignoredCc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 127), 0);
+    isolated->processBlock(isolatedBlock, ignoredCc);
+    check(isolated->getExpressionValue() == 0.3f, "isolated CC11 cannot overwrite physical UI pedal");
+    isolated->prepareToPlay(48000.0, 512);
+    isolatedReference->prepareToPlay(48000.0, 512);
+    const double restarted = rmsOf(*isolated), unchanged = rmsOf(*isolatedReference);
+    check(std::abs(restarted - unchanged) < unchanged * 0.15,
+          "ignored CC11 cannot leak into isolation through prepareToPlay");
+
     // MIDI CC11 moves the shared value too, so the wheel can follow it.
     auto midiPedal = fresh(-1.0f);
     juce::AudioBuffer<float> buffer(2, 256);
@@ -402,7 +423,7 @@ void testExpressionPersistence()
 }
 
 // Pointer-to-pressure mapping and its delivery through the real audio callback.
-void testKeyPressureGesture()
+void testKeyPressureGesture(bool isolated = false)
 {
     cs80::ui::KeyPressureGesture gesture;
     gesture.begin(60, 50.0f);
@@ -418,6 +439,7 @@ void testKeyPressureGesture()
     check(std::isfinite(gesture.drag(60, 5.0f, 0.0f)), "a zero-height keyboard cannot divide by zero");
 
     Cs80AudioProcessor host;
+    host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
     host.setParamValue(cs80::P_voiceDispersion, 0.0f);
     host.prepareToPlay(48000.0, 256);
     auto block = [&](const juce::MidiBuffer& events = {})
@@ -456,6 +478,73 @@ void testKeyPressureGesture()
     block(second);
     check(std::abs(pressureOf(64) - 0.25f) < 1e-6f && pressureOf(67) == 1.0f,
           "pressure is polyphonic: each key keeps its own value");
+}
+
+// Isolation is host/session policy: it survives presets, but missing or malformed
+// serialized values cannot inherit an already-enabled live instance.
+void testParityIsolationHost()
+{
+    Cs80AudioProcessor host;
+    auto* parameter = host.getAPVTS().getParameter("parity_mode");
+    check(parameter != nullptr && host.getParameters()[243] == parameter,
+          "parity isolation appended at host index 243");
+    check(parameter != nullptr && dynamic_cast<juce::AudioParameterBool*>(parameter) != nullptr
+              && parameter->getVersionHint() == 6 && parameter->getDefaultValue() == 0.0f,
+          "parity isolation is canonical Bool with AU hint 6 and opt-in default");
+    check(host.getParamValue(cs80::P_parityMode) == 0.0f, "fresh instance isolation is off");
+    auto restore = [&](const juce::ValueTree& tree)
+    {
+        const auto xml = tree.createXml();
+        const auto text = xml->toString();
+        host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+    };
+    for (float enabled : {0.0f, 1.0f})
+    {
+        host.setParamValue(cs80::P_parityMode, enabled);
+        host.setParamValue(cs80::P_macro1, 0.87f);
+        juce::MemoryBlock saved;
+        host.getStateInformation(saved);
+        host.setParamValue(cs80::P_parityMode, 1.0f - enabled);
+        host.setStateInformation(saved.getData(), (int) saved.getSize());
+        check(host.getParamValue(cs80::P_parityMode) == enabled
+                  && std::abs(host.getParamValue(cs80::P_macro1) - 0.87f) < 1e-6f,
+              "state round trip retains isolation and stored modern settings");
+        host.loadFactoryPreset(22);
+        check(host.getParamValue(cs80::P_parityMode) == enabled
+                  && host.getCurrentPresetIndex() == 22,
+              "performance preset recall remains available and preserves isolation");
+        check(std::abs(host.getParamValue(cs80::P_macro1)
+                       - host.getFactoryPresets()[22].values[cs80::P_macro1]) < 1e-6f,
+              "isolation does not destructively rewrite recalled modern APVTS values");
+        auto userState = host.getAPVTS().copyState();
+        userState.getChildWithProperty("id", "parity_mode").setProperty("value", 1.0f - enabled, nullptr);
+        userState.getChildWithProperty("id", "macro1").setProperty("value", 0.23f, nullptr);
+        juce::TemporaryFile preset(".cs80xml");
+        check(userState.createXml()->writeTo(preset.getFile()), "temporary user preset written");
+        host.loadUserPreset(preset.getFile());
+        check(host.getParamValue(cs80::P_parityMode) == enabled
+                  && std::abs(host.getParamValue(cs80::P_macro1) - 0.23f) < 1e-6f,
+              "user preset recalls stored sound without changing current isolation policy");
+    }
+    const auto valid = host.getAPVTS().copyState();
+    auto missing = valid.createCopy();
+    missing.removeChild(missing.getChildWithProperty("id", "parity_mode"), nullptr);
+    host.setParamValue(cs80::P_parityMode, 1.0f);
+    restore(missing);
+    check(host.getParamValue(cs80::P_parityMode) == 0.0f, "old state defaults isolation off, not live on");
+    for (const auto* invalid : {"nan", "inf", "-1", "2", "0.5", "garbage", "1oops", ""})
+    {
+        auto malformed = valid.createCopy();
+        malformed.getChildWithProperty("id", "parity_mode").setProperty("value", invalid, nullptr);
+        host.setParamValue(cs80::P_parityMode, 1.0f);
+        restore(malformed);
+        check(host.getParamValue(cs80::P_parityMode) == 0.0f, "malformed isolation values restore off");
+    }
+    auto missingValue = valid.createCopy();
+    missingValue.getChildWithProperty("id", "parity_mode").removeProperty("value", nullptr);
+    host.setParamValue(cs80::P_parityMode, 1.0f);
+    restore(missingValue);
+    check(host.getParamValue(cs80::P_parityMode) == 0.0f, "missing isolation value restores off");
 }
 
 // Keyboard contour, footswitch/assigners, EXP-WAH and output switch at the host boundary.
@@ -608,7 +697,9 @@ int main(int argc, char** argv)
 
     testExternalInputHost();
     testPerformanceControlsHost();
+    testParityIsolationHost();
     testKeyPressureGesture();
+    testKeyPressureGesture(true);
     testExpressionPersistence();
 
     Cs80AudioProcessor processor;
@@ -648,7 +739,7 @@ int main(int argc, char** argv)
             const float physical = def.min + fraction * (def.max - def.min);
             processor.setParamValue(index, physical);
             const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
-            const bool discrete = index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+            const bool discrete = index == cs80::P_parityMode || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
                 || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel);
             const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
@@ -660,11 +751,11 @@ int main(int argc, char** argv)
     // Preset recall deliberately leaves the jack/pedal/selector/output wiring alone, so
     // the sweep above must not leave it at its maximum for the screenshots below.
     for (int index = 0; index < cs80::P_numParams; ++index)
-        if (Cs80AudioProcessor::isPhysicalSetupParameter(index))
+        if (Cs80AudioProcessor::isPhysicalSetupParameter(index) || index == cs80::P_parityMode)
             processor.setParamValue(index, cs80::paramDef(index).def);
 
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 243, "243 host parameters");
+          && Cs80AudioProcessor::hostParameterCount == 244, "244 host parameters");
     for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
@@ -1045,17 +1136,22 @@ int main(int argc, char** argv)
             modeEditor->setVisible(true);
             flushGui(150);
         }
-        juce::StringArray booleanIds { "sub_original_mode" };
+        juce::StringArray booleanIds { "sub_original_mode", "footswitch_plugged", "footswitch_pressed",
+                                       "sustain_assign", "glide_assign", "output_level", "parity_mode" };
         for (int bank = 0; bank < 4; ++bank)
             for (int local : {cs80::CP_saw, cs80::CP_pulse})
                 booleanIds.add(Cs80AudioProcessor::memoryParameterId(bank, local));
-        check(booleanIds.size() == 9, "all nine true Bool controls included in state regression");
+        int actualBoolCount = 0;
+        for (auto* parameter : modeHost.getParameters())
+            if (dynamic_cast<juce::AudioParameterBool*>(parameter) != nullptr) ++actualBoolCount;
+        check(booleanIds.size() == 15 && actualBoolCount == booleanIds.size(),
+              "all fifteen true Bool controls included in state regression");
         for (const auto& id : booleanIds)
         {
             auto* mode = modeHost.getAPVTS().getParameter(id);
             auto* raw = modeHost.getAPVTS().getRawParameterValue(id);
             check(mode != nullptr && raw != nullptr && mode->isBoolean() && mode->isDiscrete()
-                      && mode->getNumSteps() == 2 && mode->getVersionHint() == (id == "sub_original_mode" ? 4 : 2),
+                      && mode->getNumSteps() == 2 && mode->getVersionHint() == (id == "parity_mode" ? 6 : id == "sub_original_mode" ? 4 : id.startsWith("memory_") ? 2 : 5),
                   "canonical Bool preserves original two-step metadata and AU version hint");
             if (mode && raw)
             {
@@ -1526,6 +1622,30 @@ int main(int argc, char** argv)
     Cs80AudioProcessorEditor editor(processor);
     editor.setSize(1600, 1000);
     editor.setVisible(true);
+    editor.showAdvancedPanel(true);
+    editor.showAdvancedPage(3);
+    if (auto* parity = dynamic_cast<juce::Button*>(findControl(editor, "parity_mode")))
+    {
+        check(parity->getButtonText() == "PARITY ISOLATION", "isolation toggle is clearly labelled");
+        check(parity->getTooltip().contains("not calibrated")
+                  && parity->getTooltip().contains("No hardware match"),
+              "isolation toggle discloses uncalibrated status");
+        auto* parameter = processor.getAPVTS().getParameter("parity_mode");
+        parameter->setValueNotifyingHost(1.0f);
+        flushGui(30);
+        check(parity->getToggleState(), "host automation updates isolation toggle");
+        GestureProbe probe;
+        parameter->addListener(&probe);
+        parity->triggerClick();
+        flushGui(30);
+        parameter->removeListener(&probe);
+        check(processor.getParamValue(cs80::P_parityMode) == 0.0f
+                  && probe.begins == 1 && probe.ends == 1 && probe.unbracketedChanges == 0,
+              "isolation toggle updates host with balanced gesture");
+        processor.setParamValue(cs80::P_parityMode, 0.0f);
+    }
+    else check(false, "Advanced About isolation toggle exists");
+    editor.showAdvancedPanel(false);
     if (auto* atSlider=dynamic_cast<juce::Slider*>(findControl(editor,"sub_at_vcf")))
     {
         check(atSlider->getTitle()=="AT VCF", "global extension is not mislabeled Channel II");

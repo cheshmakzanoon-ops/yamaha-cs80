@@ -85,7 +85,7 @@ void testParameterTable()
 {
     check(P_legacyNumParams == 122 && (int) P_legacyNumParams == (int) P_ch2Start + (int) CP_count,
           "legacy core layout remains122");
-    check(P_subAtVcf == 122 && P_numParams == 137 && paramId(P_subAtVcf) == "sub_at_vcf",
+    check(P_subAtVcf == 122 && P_numParams == 138 && paramId(P_subAtVcf) == "sub_at_vcf",
           "new global control appended after both channel blocks");
     check(ParamValues{}[P_subAtVcf] == 0.0f, "new pressure VCF depth defaults off");
     check((int) P_ch2Start - (int) P_ch1Start == (int) CP_count, "channel blocks are contiguous");

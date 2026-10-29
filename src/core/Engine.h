@@ -50,6 +50,7 @@ struct RankSettings
 
 struct GlobalSettings
 {
+    bool parityMode = false;
     float masterTune = 0.0f;
     float detuneCents = 7.0f;
     float mix = 0.5f;
@@ -140,6 +141,8 @@ public:
     void pitchBend(int midiChannel, float value); // -1..1
     void controlChange(int controller, float value, int midiChannel = 1);
     void setRibbon(float value);
+    // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
+    void setExpression(float value);
 
     // Optional separate host-rate mono modulation; never mixed directly into output.
     // Input/output storage must not overlap (plugin captures aliased host input).
@@ -147,6 +150,7 @@ public:
     void render(float* interleavedStereo, int numFrames, const float* externalMono = nullptr);
 
     int activeVoices() const noexcept;
+    bool isParityMode() const noexcept { return global.parityMode; }
     // Offline diagnostics; read on the rendering thread, not concurrently.
     float getRingFrequency() const noexcept { return ringFrequency; }
     float getRingEnvelope() const noexcept { return ringEnv; }
@@ -177,6 +181,7 @@ public:
         float filterEnvelope = 0.0f, ampEnvelope = 0.0f;
         float oscillatorHz = 0.0f;
         float keyVolts = 0.0f, hpfQ = 0.0f, lpfQ = 0.0f;
+        bool hpfEnabled = false, lpfEnabled = false;
     };
     // Offline/render-thread diagnostics for response tests and plotted traces.
     RankInfo getRankInfo(int voice, int rank) const;

@@ -419,6 +419,16 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
                   "BUILD   -  Reference Instruments  -  circuit study no. 1977-CS80",
                   1000.0f, 450.0f, 440.0f, 90.0f, 11.0f, false, amber,
                   juce::Justification::topLeft, 4);
+        auto* parity = page.toggle(1000.0f, 552.0f, 400.0f, 30.0f,
+                                   cs80::P_parityMode, "PARITY ISOLATION");
+        parity->setComponentID("parity_mode");
+        parity->setTooltip("Isolation only, not calibrated. Modern settings are retained but inert while on; presets remain available. No hardware match established.");
+        page.text("NOT CALIBRATED - no hardware match established.\n"
+                  "Modern settings are retained but inert while ON.\n"
+                  "Presets and physical expression remain usable.\n"
+                  "2x decimation remains a numerical backend.",
+                  1000.0f, 598.0f, 440.0f, 100.0f, 11.0f, false, amber,
+                  juce::Justification::topLeft, 4);
         page.text("Touch the ribbon above the keyboard to bend pitch. Drag the pitch lever (PITCH)\n"
                   "or modulation wheel (MOD) at the left of the keyboard. Double-click any knob to reset it.",
                   52.0f, 646.0f, 900.0f, 50.0f, 10.8f, false, ivoryDim,

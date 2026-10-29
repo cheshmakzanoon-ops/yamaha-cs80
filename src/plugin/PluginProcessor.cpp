@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 
 namespace
 {
@@ -146,6 +147,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     layout.add(std::make_unique<CanonicalBoolParameter>(
         juce::ParameterID { parameterId(cs80::P_outputLevel), 5 },
         "Output HIGH (on) / LOW (off)", true));
+    // W0 isolation is opt-in, appended after all 243 shipped host IDs.
+    layout.add(std::make_unique<CanonicalBoolParameter>(
+        juce::ParameterID { parameterId(cs80::P_parityMode), 6 },
+        "Parity isolation (not calibrated)", false));
     return layout;
 }
 
@@ -162,7 +167,10 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     engine.prepare(sampleRate);
     readParameters();
+    const bool wasIsolated = engine.isParityMode();
     engine.setParams(cached);
+    if (engine.isParityMode() != wasIsolated)
+        engine.setExpression(expressionValue.load(std::memory_order_relaxed));
     // prepare() resets the engine's expression to full; restore the pedal position.
     pendingExpression.store(expressionValue.load(std::memory_order_relaxed), std::memory_order_relaxed);
     setLatencySamples(engine.getLatencySamples());
@@ -255,7 +263,8 @@ void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
     {
         // A preset recalls the sound, not what is plugged into the jack, the
         // pedal contact, the EXP/WAH selector or the rear output switch.
-        if (isPhysicalSetupParameter(i))
+        // Isolation is a session policy, not a sound: presets cannot disengage it.
+        if (isPhysicalSetupParameter(i) || i == cs80::P_parityMode)
             continue;
         if (auto* p = apvts.getParameter(parameterId(i)))
             p->setValueNotifyingHost(p->convertTo0to1(values[i]));
@@ -333,7 +342,7 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isController())
     {
-        if (message.getControllerNumber() == 11)
+        if (message.getControllerNumber() == 11 && !engine.isParityMode())
             expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
         engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
     }
@@ -354,13 +363,16 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     keyboardState.processNextMidiBuffer(midi, 0, numSamples, true);
 
     readParameters();
+    const bool wasIsolated = engine.isParityMode();
     engine.setParams(cached);
+    if (engine.isParityMode() != wasIsolated)
+        engine.setExpression(expressionValue.load(std::memory_order_relaxed));
 
     const float ribbon = pendingRibbon.exchange(noPendingControl, std::memory_order_relaxed);
     const float pitch = pendingPitch.exchange(noPendingControl, std::memory_order_relaxed);
     const float mod = pendingMod.exchange(noPendingControl, std::memory_order_relaxed);
     const float pedal = pendingExpression.exchange(noPendingControl, std::memory_order_relaxed);
-    if (std::isfinite(pedal)) engine.controlChange(11, juce::jlimit(0.0f, 1.0f, pedal), 1);
+    if (std::isfinite(pedal)) engine.setExpression(juce::jlimit(0.0f, 1.0f, pedal));
     if (std::isfinite(ribbon)) engine.setRibbon(juce::jlimit(-1.0f, 1.0f, ribbon));
     if (std::isfinite(pitch)) engine.pitchBend(1, juce::jlimit(-1.0f, 1.0f, pitch));
     if (std::isfinite(mod)) engine.controlChange(1, juce::jlimit(0.0f, 1.0f, mod), 1);
@@ -516,6 +528,16 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         if (!std::isfinite(value)) value = fallback;
         if (id == parameterId(cs80::P_subOriginalMode) && value != 0.0f && value != 1.0f)
             value = 0.0f;
+        if (id == parameterId(cs80::P_parityMode))
+        {
+            // Only complete finite numeric 0/1 values enable this session policy.
+            // Reject fractional, out-of-range and partially parsed malformed values.
+            const auto encoded = child.getProperty("value", 0.0f).toString().trim();
+            const auto* begin = encoded.toRawUTF8();
+            char* end = nullptr;
+            const auto parsed = std::strtod(begin, &end);
+            value = end != begin && *end == '\0' && parsed == 1.0 ? 1.0f : 0.0f;
+        }
         // Round discrete choices/switches and clamp to the declared range.
         const auto& range = p->getNormalisableRange();
         value = range.snapToLegalValue(juce::jlimit(range.start, range.end, value));
@@ -659,7 +681,10 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(apvts.state.getType()))
         {
-            apvts.replaceState(normaliseRestoredState(tree));
+            auto restored = normaliseRestoredState(tree);
+            restored.getChildWithProperty("id", parameterId(cs80::P_parityMode))
+                .setProperty("value", getParamValue(cs80::P_parityMode), nullptr);
+            apvts.replaceState(restored);
             setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
                               (int) tree.getProperty("factoryIndex", 0));
             // DSP state is updated by the next audio block, not the state-loading thread.
