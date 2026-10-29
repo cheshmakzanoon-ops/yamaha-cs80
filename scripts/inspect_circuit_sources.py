@@ -18,6 +18,12 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "t51w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/32%20-%20T51%20Circuit%20Board%20%26%20Wiring.jpg",
+    "t52w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/34%20-%20T52%20Circuit%20Board%20%26%20Wiring.jpg",
+    "t53w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/36%20-%20T53%20Circuit%20Board%20%26%20Wiring.jpg",
+    "t54w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/38%20-%20T54%20Circuit%20Board%20%26%20Wiring.jpg",
+    "adjupdates_a": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
+    "adjupdates_b": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
     "twswiring": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/18%20-%20TWS%20Circuit%20Board%20%26%20Wiring.jpg",
     "kas04": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/04%20-%20KAS%20schematic.jpg",
     "kas05": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/05%20-%20KAS%20Circuit%20Board%20%26%20Wiring.jpg",
@@ -96,7 +102,7 @@ def emit_image(gray, page, url, data):
     }), flush=True)
     boxes = []
     # Dense resistor and keyboard-code labels require native pixels, not overview resampling.
-    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring"}:
+    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring", "t51w", "t52w", "t53w", "t54w"}:
         cols, rows = (w + 2199) // 2200, (h + 2199) // 2200
         if cols * rows > 16:
             raise ValueError("native preset grid exceeds 16-tile bound")
@@ -181,6 +187,12 @@ def inspect_pdf(url, data, key):
             selected = [52]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "fixed original CS-20M Figure F-4 source target"}), flush=True)
+        elif key in {"adjupdates_a", "adjupdates_b"}:
+            if count < 36:
+                raise ValueError("CS80 adjustment fixed updates page36 absent")
+            selected = [31, 32, 33] if key == "adjupdates_a" else [34, 35, 36]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "fixed original update pages; verify revision applicability"}), flush=True)
         elif key == "cs80adjust":
             if count < 30:
                 raise ValueError("CS80 adjustment fixed target page30 absent")
@@ -253,7 +265,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust"}:
+    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "adjupdates_a", "adjupdates_b"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)
