@@ -18,6 +18,10 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "kasguide14": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p14.gif",
+    "kasguide21": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p21.gif",
+    "kasguide22": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p22.gif",
+    "kasguide23": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p23.gif",
     "icguide_vco": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "icguide_kas": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "t51": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/31%20-%20T51%20Circuit%20Diagram.jpg",
@@ -60,7 +64,7 @@ Image.MAX_IMAGE_PIXELS = 40_000_000
 
 def download(url):
     source_host = urlparse(url).hostname
-    if source_host not in {"www.therogoffs.com", "hygunduz5.wordpress.com", "www.goltsynth.com", "www.polynominal.com"}:
+    if source_host not in {"www.therogoffs.com", "hygunduz5.wordpress.com", "www.goltsynth.com", "www.polynominal.com", "dragonflyalley.com"}:
         raise ValueError("source host outside fixed allowlist")
     last = None
     for attempt in range(3):
@@ -122,7 +126,8 @@ def emit_image(gray, page, url, data):
             ("speed-upper", (3750, 450, 4650, 1750)),
             ("speed-lower", (3750, 1700, 4650, 3200)),
         ],
-        "m": [("filter-detail", (1180, 1080, 3250, 1850))],
+        "m": [("filter-detail", (1180, 1080, 3250, 1850)),
+              ("oscillator-detail", (400, 1100, 1800, 2600))],
         "tws": [
             ("voice1-upper", (650, 550, 1250, 1850)),
             ("voice1-lower", (650, 1600, 1250, 3100)),
