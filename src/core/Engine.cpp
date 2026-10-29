@@ -162,6 +162,32 @@ void Engine::setParams(const ParamValues& values)
     if (hadSustainGate && ! global.sustainGate)
         cancelSustainTails();
 
+    // Physical timing ports remain connected while a voice sounds/releases.
+    // Refresh only in opt-in isolation: legacy dynamic automation is unchanged.
+    // This retains the existing provisional timing/bend/completion law, not a
+    // calibrated IC model. Sustain/IL/AL level targets remain onset-latched.
+    if (global.parityMode)
+    {
+        const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
+        for (auto& voice : voices)
+        {
+            if (!voice.active) continue;
+            for (int ch = 0; ch < kNumRanks; ++ch)
+            {
+                auto& rank = voice.ranks[ch];
+                const auto& settings = rankSettings[ch];
+                rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale),
+                                   std::max(0.001f, settings.vD * global.envTimeScale),
+                                   std::max({settings.vR, global.keyRelease, performanceRelease})
+                                       * global.envTimeScale);
+                rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale),
+                                   std::max(0.001f, settings.fD * global.envTimeScale),
+                                   std::max({settings.fR, global.keyRelease, performanceRelease})
+                                       * global.envTimeScale);
+            }
+        }
+    }
+
     // Toggling the arpeggiator is a performance action, not a parameter that
     // should leave old voices hanging. Enabling it clears the directly played
     // voices; disabling it stops the running pattern.
@@ -1341,6 +1367,14 @@ Engine::RankAudioState Engine::getRankAudioState(int voice, int rank) const noex
         return {};
     const auto& r = voices[(size_t) voice].ranks[rank];
     return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState() };
+}
+
+Engine::RankEnvelopeState Engine::getRankEnvelopeState(int voice, int rank) const noexcept
+{
+    if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
+        return {};
+    const auto& r = voices[(size_t) voice].ranks[rank];
+    return { r.aenv.getState(), r.fenv.getState() };
 }
 
 } // namespace cs80

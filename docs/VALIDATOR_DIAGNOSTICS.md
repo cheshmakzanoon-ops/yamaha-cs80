@@ -54,3 +54,7 @@ Commit `2c93ca0f0df9992d8839f094d4f5a25004dea11c`, [build run40933500223](https:
 - DSP numerical, sanitizer, raw legacy-compatibility and screenshot workflows passed. These do not override the failed host-validator gate. All four platform builds/tests, both native macOS validations and Windows validation also passed. The overall build remains failed solely at the recorded Linux validator gate.
 
 This checkpoint adds offline reference code, not a validator repair. A later successful run, if any, cannot erase this original failure.
+
+## Subsequent OE2 reference checkpoint
+
+Commit `594f4b36e834c3faed991b41fbc14260a0f0bb93` passed [build/platform validation run40934695128](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40934695128), [DSP/sanitizer/raw-compatibility run40934695058](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40934695058) and [screenshots run40934695046](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40934695046). Both native macOS jobs, Windows and Linux validators completed successfully for this exact checkpoint. No validator repair was included; the earlier failed invocations remain failed and the intermittent issue remains unresolved.

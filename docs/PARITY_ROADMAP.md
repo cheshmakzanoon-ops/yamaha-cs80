@@ -146,6 +146,8 @@ The 22 factory tone voicings are placeholders; the preset circuits are the sourc
 
 ### W10. Interaction, state and edge cases
 
+The [live timing correction](LIVE_ENVELOPE_TIMING.md) refreshes active A/D/R controls in isolation mode without resetting voice or envelope state. It retains existing provisional timing laws and deliberately leaves sustain-level/IL/AL target transitions unresolved. This is a bounded routing fix, not W5/W10 completion.
+
 Every combination the real instrument can be put in: both ranks, all memories, every selector, full key range, pressure, ribbon, pedal and sustain interactions, interrupted and repeated gestures, controls changed while notes sound or release. Add these as regression traces once W1-W6 are calibrated (many currently pass only because both sides share one provisional law).
 
 ### W11. Voice variation, tolerance and aging

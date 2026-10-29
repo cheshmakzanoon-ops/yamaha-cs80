@@ -193,6 +193,9 @@ public:
     // Exact current state (not last-render telemetry). Render thread only;
     // not safe for concurrent UI polling. No locks, allocations or mutations.
     RankAudioState getRankAudioState(int voice, int rank) const noexcept;
+    struct RankEnvelopeState { Adsr::State amplitude; FilterEnv::State filter; };
+    // Exact current envelope-state proxy; same render-thread-only restriction.
+    RankEnvelopeState getRankEnvelopeState(int voice, int rank) const noexcept;
 
 private:
     static constexpr int kNumVoices = 8;

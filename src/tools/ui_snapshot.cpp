@@ -567,6 +567,213 @@ void testParityIsolationHost()
     check(host.getParamValue(cs80::P_parityMode) == 0.0f, "missing isolation value restores off");
 }
 
+// Host routing test only: the primitive envelopes retain their provisional law.
+// Separate primitive instances are the oracle so a missing Engine timing refresh
+// cannot be hidden by comparing two processors with the same routing bug.
+void testLiveEnvelopeTimingHost()
+{
+    constexpr int timingControls[] = { cs80::CP_vA, cs80::CP_vD, cs80::CP_vR,
+                                      cs80::CP_fA, cs80::CP_fD, cs80::CP_fR };
+    for (bool isolated : { false, true })
+    for (int initialStage = 0; initialStage < 3; ++initialStage)
+    {
+        Cs80AudioProcessor host;
+        auto panel = cs80::defaultValues();
+        panel[cs80::P_parityMode] = isolated ? 1.0f : 0.0f;
+        panel[cs80::P_masterSustain] = 0.0f;
+        panel[cs80::P_keyRelease] = 0.0f;
+        panel[cs80::P_sustainMode] = 0.0f;
+        for (int macro = cs80::P_macro1; macro <= cs80::P_macro4; ++macro)
+            panel[macro] = 0.5f;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            for (int control : timingControls)
+                panel[cs80::chParam(rank, control)] = 2.0f;
+            panel[cs80::chParam(rank, cs80::CP_vA)] = initialStage == 0 ? 1.0f : 0.001f;
+            panel[cs80::chParam(rank, cs80::CP_fA)] = initialStage == 0 ? 1.0f : 0.001f;
+            panel[cs80::chParam(rank, cs80::CP_vS)] = 0.25f;
+            panel[cs80::chParam(rank, cs80::CP_fIl)] = 0.2f;
+            panel[cs80::chParam(rank, cs80::CP_fAl)] = 0.8f;
+        }
+        host.applyParameterValues(panel);
+        host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        host.selectHardwareSource(0, 13);
+        host.selectHardwareSource(1, 13);
+        for (int bank = 0; bank < 4; ++bank)
+            for (int control = 0; control < cs80::CP_count; ++control)
+                if (Cs80AudioProcessor::isMemoryControl(control))
+                    host.setMemoryValue(bank, control, panel[cs80::chParam(bank % 2, control)]);
+        for (int bank = 0; bank < 4; ++bank)
+            for (int control : timingControls)
+                host.setMemoryValue(bank, control, 0.4f + 0.1f * (float) bank);
+        host.prepareToPlay(48000.0, 128);
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer midi;
+        host.processBlock(empty, midi);
+        check(host.getEngine().isParityMode() == isolated,
+              "live timing host fixture explicitly selects isolation or legacy mode");
+        const auto onset = host.getEngine().getParams();
+        cs80::Adsr expectedAmplitude[2];
+        cs80::FilterEnv expectedFilter[2];
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            auto value = [&](int control) { return onset[cs80::chParam(rank, control)]; };
+            expectedAmplitude[rank].noteOn(value(cs80::CP_vA), value(cs80::CP_vD),
+                                           value(cs80::CP_vS), value(cs80::CP_vR));
+            expectedFilter[rank].noteOn(cs80::filterInitialOffset(value(cs80::CP_fIl)),
+                                        cs80::filterAttackOffset(value(cs80::CP_fAl)),
+                                        value(cs80::CP_fA), value(cs80::CP_fD),
+                                        value(cs80::CP_fR), 0.0f);
+        }
+        midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+        host.processBlock(empty, midi);
+        midi.clear();
+        const float internalRate = (float) host.getEngine().getInternalSampleRate();
+        check(internalRate == 96000.0f, "live timing fixture uses two internal ticks per host frame");
+        auto compare = [&]
+        {
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                const auto actual = host.getEngine().getRankEnvelopeState(0, rank);
+                const auto amp = expectedAmplitude[rank].getState();
+                const auto filter = expectedFilter[rank].getState();
+                check(actual.amplitude.stage == amp.stage
+                      && std::abs(actual.amplitude.value - amp.value) < 2e-5f
+                      && std::abs(actual.amplitude.elapsed - amp.elapsed) < 2e-6f,
+                      "live host amplitude timing agrees with independent primitive history");
+                check(actual.filter.stage == filter.stage
+                      && std::abs(actual.filter.value - filter.value) < 2e-5f
+                      && std::abs(actual.filter.elapsed - filter.elapsed) < 2e-6f,
+                      "live host filter timing agrees with independent primitive history");
+            }
+        };
+        auto render = [&](int frames)
+        {
+            juce::AudioBuffer<float> audio(2, frames);
+            host.processBlock(audio, midi);
+            for (int sample = 0; sample < frames * 2; ++sample)
+                for (int rank = 0; rank < 2; ++rank)
+                {
+                    expectedAmplitude[rank].tick(internalRate, true);
+                    expectedFilter[rank].tick(internalRate, true);
+                }
+            compare();
+        };
+        render(initialStage == 0 ? 64 : 1024);
+        if (initialStage == 2)
+        {
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                expectedAmplitude[rank].setRelease(onset[cs80::chParam(rank, cs80::CP_vR)]);
+                expectedFilter[rank].setRelease(onset[cs80::chParam(rank, cs80::CP_fR)]);
+                expectedAmplitude[rank].noteOff();
+                expectedFilter[rank].noteOff();
+            }
+            midi.addEvent(juce::MidiMessage::noteOff(1, 60), 0);
+            host.processBlock(empty, midi);
+            midi.clear();
+            render(64);
+        }
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const auto phase = host.getEngine().getRankEnvelopeState(0, rank);
+            const auto ampStage = initialStage == 0 ? cs80::Adsr::Stage::Attack
+                : initialStage == 1 ? cs80::Adsr::Stage::Decay : cs80::Adsr::Stage::Release;
+            const auto filterStage = initialStage == 0 ? cs80::FilterEnv::Stage::Attack
+                : initialStage == 1 ? cs80::FilterEnv::Stage::Decay : cs80::FilterEnv::Stage::Release;
+            check(phase.amplitude.stage == ampStage && phase.filter.stage == filterStage,
+                  "live timing fixture reaches its intended attack decay or release stage");
+        }
+        auto applyWithoutAdvancing = [&]
+        {
+            const auto beforeVoice = host.getEngine().getVoiceInfo(0);
+            cs80::Engine::RankEnvelopeState envelopes[2];
+            cs80::Engine::RankAudioState audio[2];
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                envelopes[rank] = host.getEngine().getRankEnvelopeState(0, rank);
+                audio[rank] = host.getEngine().getRankAudioState(0, rank);
+            }
+            host.processBlock(empty, midi);
+            const auto afterVoice = host.getEngine().getVoiceInfo(0);
+            check(beforeVoice.active && afterVoice.active && beforeVoice.note == afterVoice.note
+                  && beforeVoice.held == afterVoice.held,
+                  "live source changes preserve the sounding or releasing voice");
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                const auto after = host.getEngine().getRankEnvelopeState(0, rank);
+                const auto before = envelopes[rank];
+                check(after.amplitude.stage == before.amplitude.stage
+                      && after.amplitude.value == before.amplitude.value
+                      && after.amplitude.elapsed == before.amplitude.elapsed
+                      && after.filter.stage == before.filter.stage
+                      && after.filter.value == before.filter.value
+                      && after.filter.elapsed == before.filter.elapsed,
+                      "zero-frame host timing update does not retrigger envelopes");
+                const auto afterAudio = host.getEngine().getRankAudioState(0, rank);
+                check(afterAudio.phase == audio[rank].phase
+                      && afterAudio.hpf.ic1 == audio[rank].hpf.ic1
+                      && afterAudio.hpf.ic2 == audio[rank].hpf.ic2
+                      && afterAudio.lpf.ic1 == audio[rank].lpf.ic1
+                      && afterAudio.lpf.ic2 == audio[rank].lpf.ic2,
+                      "zero-frame source switch preserves oscillator and filter memories");
+                if (isolated)
+                {
+                    const auto effective = host.getEngine().getParams();
+                    auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
+                    expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
+                    expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
+                }
+            }
+            compare();
+        };
+        auto checkSourceTimings = [&](int source)
+        {
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                cs80::ParamValues factory;
+                if (source < 11) cs80::applyHardwareTone(factory, rank, source);
+                for (int control : timingControls)
+                {
+                    const int index = cs80::chParam(rank, control);
+                    const float expected = source == 13 ? host.getParamValue(index)
+                        : source == 11 ? host.getMemoryValue(rank, control) : factory[index];
+                    check(std::abs(host.getEngine().getParams()[index] - expected) < 2e-5f,
+                          "selected hardware source supplies every live A D R timing port");
+                    check(std::abs(host.getParamValue(index) - onset[index]) < 2e-5f,
+                          "source selection preserves stored panel envelope timings");
+                }
+            }
+        };
+        host.selectHardwareSource(0, 11);
+        host.selectHardwareSource(1, 11);
+        applyWithoutAdvancing();
+        checkSourceTimings(11);
+        render(64);
+        // Memory banks 3/4 are not selected; their edits must not affect timing.
+        for (int bank : { 2, 3 })
+            for (int control : timingControls) host.setMemoryValue(bank, control, 0.09f);
+        applyWithoutAdvancing();
+        checkSourceTimings(11);
+        render(64);
+        for (int bank : { 0, 1 })
+            for (int control : timingControls) host.setMemoryValue(bank, control, 0.8f);
+        applyWithoutAdvancing();
+        checkSourceTimings(11);
+        render(64);
+        host.selectHardwareSource(0, 2);
+        host.selectHardwareSource(1, 2);
+        applyWithoutAdvancing();
+        checkSourceTimings(2);
+        render(64);
+        host.selectHardwareSource(0, 13);
+        host.selectHardwareSource(1, 13);
+        applyWithoutAdvancing();
+        checkSourceTimings(13);
+        render(64);
+    }
+}
+
 // Keyboard contour, footswitch/assigners, EXP-WAH and output switch at the host boundary.
 void testPerformanceControlsHost()
 {
@@ -766,6 +973,7 @@ int main(int argc, char** argv)
     testKeyPressureGesture();
     testKeyPressureGesture(true);
     testExpressionPersistence();
+    testLiveEnvelopeTimingHost();
 
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");

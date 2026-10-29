@@ -365,6 +365,17 @@ public:
         return value;
     }
 
+    // Live timing controls only: preserve the capacitor-state proxy, stage and
+    // elapsed time. Level-target transitions require a separate verified law.
+    void setTimes(float attack, float decay, float release) noexcept
+    {
+        a = attack;
+        d = decay;
+        r = release;
+    }
+    struct State { Stage stage = Stage::Idle; float value = 0.0f, elapsed = 0.0f; };
+    State getState() const noexcept { return { stage, value, stageTime }; }
+
     void setRelease(float seconds) noexcept { r = seconds; }
     bool isIdle() const noexcept { return stage == Stage::Idle; }
     bool isReleased() const noexcept { return stage == Stage::Release || stage == Stage::Idle; }
@@ -487,6 +498,17 @@ public:
         }
         return value;
     }
+
+    // Live timing controls only: preserve the capacitor-state proxy, stage and
+    // elapsed time. Level-target transitions require a separate verified law.
+    void setTimes(float attack, float decay, float release) noexcept
+    {
+        a = attack;
+        d = decay;
+        r = release;
+    }
+    struct State { Stage stage = Stage::Idle; float value = 0.0f, elapsed = 0.0f; };
+    State getState() const noexcept { return { stage, value, stageTime }; }
 
     void setRelease(float seconds) noexcept { r = seconds; }
     bool isIdle() const noexcept { return stage == Stage::Idle; }

@@ -52,6 +52,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Check | Count / scope |
 | --- | --- |
 | Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
+| Live envelope timing | 91,672 checks of isolation-only A/D/R refresh without retrigger; level-target transitions remain unresolved |
 | Active-tail continuity | 49,584 checks of opt-in isolation phase/filter-state retention; no full idle-clock claim |
 | Parity isolation / harness | 121 core isolation checks, 22 comparison-harness tests and 7 candidate-export tests; no hardware evidence |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
@@ -125,6 +126,7 @@ Double-click any control to return it to its default.
 - **State and automation**: host IDs and order are append-only with AU version hints; sessions saved by older builds restore neutral values for newer parameters, never live ones. Factory preset recall leaves the footswitch jack/contact, EXP/WAH selector and output switch alone (they are wiring, not sound); user presets restore them. Both preset types preserve the current parity-isolation setting; full session restore recalls it.
 - **SUB**: fresh instances use the original six functions and 0.7-60 Hz range; factory programs and old states keep the legacy waveforms/range ([ORIGINAL_SUB_OSCILLATOR.md](docs/ORIGINAL_SUB_OSCILLATOR.md)). EXT accepts an optional mono host input, disabled by default and modulation-only ([EXTERNAL_MODULATION.md](docs/EXTERNAL_MODULATION.md)).
 - **Voices**: the cyclic allocator rejects a ninth simultaneously held key rather than stealing; released tails can be reused. In isolation mode, reassignment of a still-active unheld tail now preserves oscillator phase and HP/LP numerical state ([scope and evidence](docs/ACTIVE_TAIL_CONTINUITY.md)); inactive circuits still use the existing reset policy. Same-pitch duplicate note-ons on one channel are a MIDI ambiguity, not original behavior.
+- **Live envelopes in isolation mode**: attack, decay and release timing follow effective control changes on active voices without retriggering. The numerical time laws remain provisional; sustain-level and filter IL/AL target transitions are still onset-latched ([scope](docs/LIVE_ENVELOPE_TIMING.md)). Legacy-off behavior is unchanged.
 - **Latency**: the output decimator reports 63 host samples; let the host refresh delay compensation.
 - **Software conventions that are not original**: MIDI CC64 sustain (including MPE-master rule), the latching virtual footswitch, the sample-rate range 8-768 kHz (48 kHz fallback), digital normalisation of EXT, the on-screen key-pressure gesture. See [PERFORMANCE_CONTROLS.md](docs/PERFORMANCE_CONTROLS.md).
 - Footage uses nominal harmonic ratios 0.5, 1, 1.5, 2, 3, 4 (the fifths sit about 1.955 cents above equal temperament); these are nominal circuit targets, not measured tolerances of any instrument.
@@ -207,6 +209,7 @@ docs/                           evidence ledgers and audits (index below)
 | [PRA_WAH_REFERENCE_DESIGN.md](docs/PRA_WAH_REFERENCE_DESIGN.md) | Conditional offline ideal-op-amp wah network, explicit optical/loading boundaries; not calibrated WI-to-WO audio |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |
+| [LIVE_ENVELOPE_TIMING.md](docs/LIVE_ENVELOPE_TIMING.md) | Isolation-only live attack/decay/release timing, state continuity and deferred level-target behavior |
 | [RANK_II_RECEIVER_PORTS.md](docs/RANK_II_RECEIVER_PORTS.md) | Reviewed rank-II first hops, individual eight-voice harness and retained source conflicts |
 | [PRESET_FOLDOUT_SOURCE_REVIEW.md](docs/PRESET_FOLDOUT_SOURCE_REVIEW.md) | Independent alternate-source matrix evidence; conflicts retained, still 547/25 |
 | [PERFORMANCE_CONTROLS.md](docs/PERFORMANCE_CONTROLS.md) | Keyboard contour, footswitch assigners, EXP-WAH, output switch, key pressure |
