@@ -140,7 +140,7 @@ Because macros are offsets, turning one does not destroy the panel settings or r
 
 ## Presets and state
 
-`ParamValues` is a flat array of 122 floats. The table in `src/core/Params.h` defines ID, display name, range, default, skew, unit and group. The APVTS builds one `AudioParameterFloat` per entry, so every control is host-automatable and serialised in the plugin state.
+`ParamValues` is a flat array of 137 floats (122 original core parameters plus append-only extensions; the plugin additionally exposes 106 programmer/selector parameters, 243 in total). The table in `src/core/Params.h` defines ID, display name, range, default, skew, unit and group. The APVTS builds one `AudioParameterFloat` per entry, so every control is host-automatable and serialised in the plugin state.
 
 The factory bank contains:
 
