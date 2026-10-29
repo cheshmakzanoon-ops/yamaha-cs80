@@ -57,7 +57,8 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) eight-voice rank network (14,012), and conditional RC transients (1,882) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
-| Legacy compatibility CI | Same-compiler byte comparison against pinned baseline: shipped222 presets at3 rates, normal and noisy reassignment scenarios |
+| Legacy compatibility CI | Same-compiler byte comparison against pinned baseline: shipped 222 presets at 3 rates, normal and noisy reassignment scenarios |
+| BBD clock-event reference | 97,650 normalized signal-packet checks; not a charge, voltage or calibrated audio model |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
 | CI (`build.yml`) | Linux, native Apple Silicon and Intel macOS (VST3, AU, Standalone), and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
 
@@ -197,6 +198,7 @@ docs/                           evidence ledgers and audits (index below)
 | [FIDELITY_AUDIT.md](docs/FIDELITY_AUDIT.md) | Dated gap register and every correction so far |
 | [HARDWARE_COVERAGE.md](docs/HARDWARE_COVERAGE.md) | Every original control, connector and circuit block with status and next acceptance action |
 | [HARDWARE_REFERENCES.md](docs/HARDWARE_REFERENCES.md) | Primary sources, tone-selector order, IC-level facts, calibration anchors |
+| [MN3001_CLOCK_EVENT_DESIGN.md](docs/MN3001_CLOCK_EVENT_DESIGN.md) | Offline, explicitly idealized clock-event packet reference and physical-model exclusions |
 | [OE2_CIRCUIT_EVIDENCE.md](docs/OE2_CIRCUIT_EVIDENCE.md) | Original delay/filter/VCA topology and Panasonic MN3001 manufacturer evidence |
 | [OE1_SIGNAL_ROUTING_EVIDENCE.md](docs/OE1_SIGNAL_ROUTING_EVIDENCE.md) | Verified PRA/OE1/OE2 stage routing and remaining optical/transfer gaps |
 | [PRESET_FOLDOUT_SOURCE_REVIEW.md](docs/PRESET_FOLDOUT_SOURCE_REVIEW.md) | Independent alternate-source matrix evidence; conflicts retained, still 547/25 |
