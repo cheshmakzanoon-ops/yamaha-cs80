@@ -330,6 +330,77 @@ void testExternalInputHost()
 }
 
 
+// The foot controller position must survive what resets the engine, and stay shared
+// between the on-screen wheel and MIDI CC11.
+void testExpressionPersistence()
+{
+    auto rmsOf = [](Cs80AudioProcessor& target)
+    {
+        juce::AudioBuffer<float> buffer(2, 512);
+        double square = 0.0;
+        long count = 0;
+        for (int b = 0; b < 40; ++b)
+        {
+            buffer.clear();
+            juce::MidiBuffer midi;
+            if (b == 0) midi.addEvent(juce::MidiMessage::noteOn(1, 52, (juce::uint8) 100), 0);
+            target.processBlock(buffer, midi);
+            if (b < 20) continue;
+            for (int i = 0; i < 512; ++i)
+            {
+                square += (double) buffer.getSample(0, i) * buffer.getSample(0, i);
+                ++count;
+            }
+        }
+        return std::sqrt(square / (double) count);
+    };
+    auto fresh = [](float pedal)
+    {
+        auto target = std::make_unique<Cs80AudioProcessor>();
+        target->setParamValue(cs80::P_voiceDispersion, 0.0f);
+        target->setParamValue(cs80::P_drift, 0.0f);
+        target->setParamValue(cs80::P_analogNoise, 0.0f);
+        target->prepareToPlay(48000.0, 512);
+        if (pedal >= 0.0f) target->setExpressionFromUI(pedal);
+        return target;
+    };
+    check(fresh(-1.0f)->getExpressionValue() == 1.0f, "pedal starts at full travel");
+
+    // A transport restart / sample-rate change calls prepareToPlay again.
+    auto moved = fresh(0.3f);
+    juce::AudioBuffer<float> warm(2, 512);
+    juce::MidiBuffer none;
+    moved->processBlock(warm, none);
+    moved->prepareToPlay(48000.0, 512);
+    auto reference = fresh(0.3f);
+    auto full = fresh(-1.0f);
+    const double restored = rmsOf(*moved), expected = rmsOf(*reference), loud = rmsOf(*full);
+    // The engine's phase RNG is not reset by prepare (about 5% level scatter); snapping
+    // back to full travel would be 3x louder, so a 15% window separates the cases.
+    check(moved->getExpressionValue() == 0.3f && std::abs(restored - expected) < expected * 0.15,
+          "pedal position survives prepareToPlay instead of snapping back to full volume");
+    check(restored < loud * 0.5, "fixture: a 0.3 pedal is clearly quieter than full travel");
+
+    // Non-finite and out-of-range UI values are ignored or clamped.
+    auto guarded = fresh(0.6f);
+    guarded->setExpressionFromUI(std::numeric_limits<float>::quiet_NaN());
+    check(guarded->getExpressionValue() == 0.6f, "a non-finite pedal value is ignored");
+    guarded->setExpressionFromUI(7.0f);
+    check(guarded->getExpressionValue() == 1.0f, "an over-range pedal value clamps");
+
+    // MIDI CC11 moves the shared value too, so the wheel can follow it.
+    auto midiPedal = fresh(-1.0f);
+    juce::AudioBuffer<float> buffer(2, 256);
+    juce::MidiBuffer cc;
+    cc.addEvent(juce::MidiMessage::controllerEvent(1, 11, 32), 0);
+    midiPedal->processBlock(buffer, cc);
+    check(std::abs(midiPedal->getExpressionValue() - 32.0f / 127.0f) < 1e-6f, "CC11 updates the shared pedal position");
+    midiPedal->prepareToPlay(48000.0, 512);
+    const double afterCc = rmsOf(*midiPedal), wanted = rmsOf(*fresh(32.0f / 127.0f));
+    check(std::abs(afterCc - wanted) < wanted * 0.15 && afterCc < rmsOf(*fresh(-1.0f)) * 0.5,
+          "a CC11 pedal position also survives prepareToPlay");
+}
+
 // Pointer-to-pressure mapping and its delivery through the real audio callback.
 void testKeyPressureGesture()
 {
@@ -538,6 +609,7 @@ int main(int argc, char** argv)
     testExternalInputHost();
     testPerformanceControlsHost();
     testKeyPressureGesture();
+    testExpressionPersistence();
 
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");
@@ -1517,7 +1589,20 @@ int main(int argc, char** argv)
         flushGui(20);
         check(button->getToggleState() == (before >= 0.5f), (juce::String("host automation moves the switch: ") + toggle.title).toRawUTF8());
     }
-    check(findByTitle(editor, "Foot controller position (expression)") != nullptr, "on-screen foot controller exists");
+    if (auto* wheel = dynamic_cast<cs80::ui::PerformanceWheel*>(findByTitle(editor, "Foot controller position (expression)")))
+    {
+        processor.setExpressionFromUI(0.35f);
+        flushGui(300);
+        check(std::abs(wheel->getValue() - 0.35f) < 1e-5f, "the pedal wheel follows the shared pedal position");
+        Cs80AudioProcessorEditor reopened(processor);
+        reopened.setSize(1600, 1000);
+        auto* again = dynamic_cast<cs80::ui::PerformanceWheel*>(findByTitle(reopened, "Foot controller position (expression)"));
+        check(again != nullptr && std::abs(again->getValue() - 0.35f) < 1e-5f,
+              "a reopened editor shows the current pedal position, not full travel");
+        processor.setExpressionFromUI(1.0f);
+        flushGui(300);
+    }
+    else check(false, "on-screen foot controller exists");
 
 
     flushGui(150);

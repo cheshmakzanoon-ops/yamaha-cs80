@@ -10,6 +10,7 @@
 #include <memory>
 #include <atomic>
 #include <array>
+#include <cmath>
 #include <limits>
 #include <vector>
 
@@ -63,7 +64,18 @@ public:
     void setPitchWheelFromUI(float v) noexcept { pendingPitch.store(v, std::memory_order_relaxed); }
     void setModWheelFromUI(float v) noexcept { pendingMod.store(v, std::memory_order_relaxed); }
     // On-screen foot controller: delivered to the engine as expression (CC11).
-    void setExpressionFromUI(float v) noexcept { pendingExpression.store(v, std::memory_order_relaxed); }
+    void setExpressionFromUI(float v) noexcept
+    {
+        if (! std::isfinite(v)) return;
+        v = juce::jlimit(0.0f, 1.0f, v);
+        expressionValue.store(v, std::memory_order_relaxed);
+        pendingExpression.store(v, std::memory_order_relaxed);
+    }
+    // Last foot-controller position from the on-screen wheel or MIDI CC11. The engine
+    // forgets it on every prepareToPlay, so the processor re-applies it and the editor
+    // reads it back; otherwise wheel and sound would disagree after a transport restart
+    // or after reopening the window.
+    float getExpressionValue() const noexcept { return expressionValue.load(std::memory_order_relaxed); }
     // On-screen per-key pressure gesture, delivered as polyphonic aftertouch on channel 1.
     void setKeyPressureFromUI(int note, float pressure) noexcept
     {
@@ -126,6 +138,7 @@ private:
     std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl },
         pendingExpression { noPendingControl };
     std::array<std::atomic<float>, 128> pendingKeyPressure {};
+    std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     std::vector<float> interleaved;

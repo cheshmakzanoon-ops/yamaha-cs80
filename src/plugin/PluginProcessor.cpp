@@ -163,6 +163,8 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     engine.prepare(sampleRate);
     readParameters();
     engine.setParams(cached);
+    // prepare() resets the engine's expression to full; restore the pedal position.
+    pendingExpression.store(expressionValue.load(std::memory_order_relaxed), std::memory_order_relaxed);
     setLatencySamples(engine.getLatencySamples());
     interleaved.assign((size_t) juce::jmax(4096, samplesPerBlock) * 2, 0.0f);
     externalScratch.assign(interleaved.size() / 2, 0.0f);
@@ -331,6 +333,8 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isController())
     {
+        if (message.getControllerNumber() == 11)
+            expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
         engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
     }
 }

@@ -625,7 +625,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         expressionPedal.setTitle("Foot controller position (expression)");
         expressionPedal.setDescription("On-screen foot controller. Drives volume, and the wah sweep in EXP-WAH. MIDI CC11 does the same.");
-        expressionPedal.setValue(1.0f);
+        expressionPedal.setValue(processor.getExpressionValue());
         expressionPedal.onValueChange = [this](float value) { processor.setExpressionFromUI(value); };
         addAndMakeVisible(expressionPedal);
         place(expressionPedal, 473, 784, 38, 108);
@@ -803,6 +803,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncSubMode();
         syncPresetDisplay();
         syncToneMarks();
+        // Follow the pedal when MIDI CC11 or a restart moved it; never fight a drag.
+        if (! expressionPedal.isMouseButtonDown()
+            && std::abs(expressionPedal.getValue() - processor.getExpressionValue()) > 1.0e-4f)
+            expressionPedal.setValue(processor.getExpressionValue());
         if (memoryProgrammer.isVisible()) memoryProgrammer.refresh();
         // The voice allocator is the only animated element; redrawing the
         // whole panel at 8 Hz also keeps preset metadata current.

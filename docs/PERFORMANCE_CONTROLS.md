@@ -64,6 +64,10 @@ HIGH is the pre-existing unity output. LOW is an explicit **-20 dB** trim (`kPro
 
 The original senses pressure per key. The on-screen keyboard now supports a pointer gesture: after the strike, dragging down the key presses harder (full pressure after 40% of the key height) and drawing back up eases off; sliding sideways onto another key is a new strike. The pressure reaches the engine as polyphonic aftertouch on channel 1 through a lock-free per-note mailbox that the audio callback drains **after** the block's note-ons, so a gesture that begins in the same block as its strike is not lost. This is a pointer stand-in, not a model of the pressure sensor.
 
+## Pedal position is shared state
+
+The processor owns the foot-controller position. The on-screen wheel and MIDI CC11 both update it; `prepareToPlay` (transport restart, sample-rate change) re-applies it because the engine resets expression to full travel there; and the editor reads it back, so a reopened window and a CC11 move are reflected by the wheel. Without this the wheel and the sound could disagree by a factor of three in level. The position is a performance control and is not saved in session state.
+
 ## UI
 
 A KEYBOARD / FOOT group sits left of the keyboard (which is correspondingly narrower): four contour faders under BRILLIANCE and LEVEL, an on-screen PEDAL wheel, and six switches (PLUG, PRESS, WAH, SUSTAIN and PORTA assigners, HIGH). Every control is a host-automatable parameter with a title for assistive technology; double-click re-centres a lever.
@@ -72,7 +76,7 @@ A KEYBOARD / FOOT group sits left of the keyboard (which is correspondingly narr
 
 `cs80_performance_control_tests` (113 checks): parameter layout and defaults; contour weight table and monotonic, non-overlapping shape; exact `2^octaves` filter ratios at the lever's own end and exact neutrality elsewhere; level leaves the filters alone and vice versa; both ranks; the full 8-row truth table and all 16 assigner/plug/press combinations against observed release length; gate edges (no envelope jump, no resurrection, held notes untouched); Sustain II privilege; glide suppression, mid-glide snap and glissando rounding; EXP versus EXP-WAH spectra, click-free switching and pedal travel; output trim and its smoothing; extreme/NaN inputs and four sample rates. Three deliberate mutations (gate ignored at release, tail cancel removed, contour levers swapped) were each caught.
 
-The UI smoke test adds the host contract (append order, hint 5, defaults, types, state round trip, old-session fallback, preset-recall policy, automation reaching the core, audible EXP-WAH/LOW/pedal), the main-panel controls (host automation moves them, clicks and keys drive the host with balanced gestures) and the key-pressure gesture and mailbox, including the same-block strike case.
+The UI smoke test adds the host contract (append order, hint 5, defaults, types, state round trip, old-session fallback, preset-recall policy, automation reaching the core, audible EXP-WAH/LOW/pedal), the main-panel controls (host automation moves them, clicks and keys drive the host with balanced gestures) the key-pressure gesture and mailbox (including the same-block strike case), and pedal-position persistence across `prepareToPlay`, CC11 and a reopened editor (mutation-checked).
 
 These are software-consistency checks. They do not show that any gain matches an original CS-80, and the exact-revision Actions matrix (macOS/Windows builds, pluginval) has to be consulted rather than inferred from a local run.
 
