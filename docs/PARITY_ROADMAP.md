@@ -33,7 +33,7 @@ Work falls into three classes. Know which one you are in before you start.
 
 **The single largest blocker for the next developer is access to a reference.** Class B work needs one of: a working CS-80 and a qualified technician with a documented, safe test fixture (do not probe a powered vintage unit casually), or authorized, calibrated recordings and test-point captures with redistribution rights recorded. Everything after milestone M1 below depends on it. Schematic-only progress can still tighten Class A and make the model *consistent*, but it cannot make it *provably equal*.
 
-Practical note on sources: from the container used for the latest sessions, `therogoffs.com` answered 403 and `goltsynth.com`, `synthfool.com` and `device.report` were unreachable. Earlier sessions read the original scans inside GitHub Actions instead (see section 10). On a normal workstation you can open the same URLs directly.
+Practical note on sources: earlier container requests encountered 403/unreachable mirrors, so source inspection used GitHub Actions (section 10). On 2026-10-29, native `therogoffs.com` scans downloaded successfully with curl in the cloud checkout; Python urllib still returned 406 for some of the same URLs. Verify current access rather than treating historical failures as permanent. Preserve source-byte hashes and native crop provenance with either route.
 
 ---
 
@@ -125,7 +125,7 @@ The model still maps normalized panel positions to behavior. The original is a n
 
 - IG00150 exponential speed converter (including the touch-to-speed currents), calibrated against the documented 200 Hz point.
 - Ring: carrier law, envelope-to-frequency transfer (replace `kProvisionalRingFrequencyExcursion`), multiplier DC and feedthrough, calibrated to the ADJ p19 anchors and extended across speed x depth.
-- **PRA wah**: solve the verified IC1/IC2 active RC network with measured optical resistances (pedal travel to EI, EI to resistance with dynamics, WI to WO response, dry/processed insertion level) and place it correctly in the chain (needs the PRA harness block diagram). Replaces the swept band-pass stand-in.
+- **PRA wah**: solve the verified IC1/IC2 active RC network with measured optical resistances (pedal travel to EI, EI to resistance with dynamics, WI to WO response, dry/processed insertion level) and retain the verified ring-blend → wah → OE1/OE2 → optical-expression → volume order ([routing evidence](OE1_SIGNAL_ROUTING_EVIDENCE.md)). Replaces the swept band-pass stand-in.
 - Chorus/tremolo: trace the actual phase/amplitude network and active devices; the current modulated delay is not a stage-and-clock model.
 - Footswitch edge transients and the real release-cancellation behavior.
 
@@ -261,7 +261,7 @@ Other workflows: `build.yml` (3-platform build, tests, pluginval 10 including GU
 - Oscillator phase is randomized per note start; whether the original free-runs is unresolved (W3, W2).
 - Whether the original continuously rescans and reconsiders a still-held ninth key is unresolved (W2).
 - The KAS-to-KBC code mapping contradicts the CS-80 calibration keys under the naive reading (KEYBOARD_CONTOUR_EVIDENCE.md).
-- The PRA harness block diagram (where WI/WO/I2/I3 sit relative to the rank sum, ring modulator and chorus) has not been found; it fixes the EXP-WAH placement.
+- PRA placement is now source-verified in [OE1_SIGNAL_ROUTING_EVIDENCE.md](OE1_SIGNAL_ROUTING_EVIDENCE.md); detailed OE2 transfer and optical laws remain open. [OE2_CIRCUIT_EVIDENCE.md](OE2_CIRCUIT_EVIDENCE.md) resolves I(53), records the four parallel VCA returns and verifies the manufacturer dual512-stage identity; installed clock/modulation calibration is still missing.
 - The quantitative Q-block law inside IG00156 is not in any inspected source (see W4).
 - Filter-IC component grades A/B/C are unrelated to synthesis rank I/II; PRESET_COMPLETENESS_AUDIT.md warns about the shared "rank" wording.
 - Historical docs record audit baselines at older commits (for example "233 host parameters"); they are dated evidence, not current counts.

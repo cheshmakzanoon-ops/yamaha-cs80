@@ -54,7 +54,9 @@ The truth table is a discrete routing law, not a transistor transfer model. The 
 
 **Implemented.** A stereo post-mix stage after the ring modulator and before the chorus. EXP leaves the signal untouched. EXP-WAH replaces it with a resonant band-pass (Q 4.5, make-up 1.6) whose centre runs 350 Hz upward by 2.9 octaves as the pedal goes down (CC11 or the on-screen PEDAL wheel). A 12 ms crossfade hides the switch, and the filters are reset whenever the stage is fully off. Pedal position still scales volume in both modes.
 
-**Not established:** the sweep range, Q, make-up gain, the band-pass shape itself, the stage's position in the signal chain (the PRA harness block diagram is not in the evidence set) and the optical-resistance and lamp dynamics.
+**Placement verified (2026-10-29):** current PRA53/54, Panel2 and OE55/56 scans, corroborated by the overall foldout, place the wah after the ring MODULATION blend and before the OE1/OE2 send-return/mixing network; the separate PRA optical expression paths follow OE1 and precede stereo VOLUME. See [signal-routing evidence](OE1_SIGNAL_ROUTING_EVIDENCE.md) for pins, hashes, crops and the unresolved OE2 input-number discrepancy. This validates coarse stage order, not the stereo stand-in or chorus implementation.
+
+**Not established:** the sweep range, Q, make-up gain, the band-pass shape itself, optical-resistance and lamp dynamics, and quantitative OE1/OE2 transfer.
 
 ## GENERAL output HIGH / LOW
 
@@ -82,4 +84,4 @@ These are software-consistency checks. They do not show that any gain matches an
 
 ## Remaining measurement requirements
 
-Lever polarity and taper on the physical panel; the KAS/KBC key map and octave-boundary behavior; real contour voltages into FH/FL/LC; footswitch edge transients; PRA wah transfer and placement; output switch levels. All stay **measurement required**.
+Lever polarity and taper on the physical panel; the KAS/KBC key map and octave-boundary behavior; real contour voltages into FH/FL/LC; footswitch edge transients; PRA wah transfer and optical dynamics; output switch levels. Coarse PRA stage placement is source-verified above. All stay **measurement required**.
