@@ -54,7 +54,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 | Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
 | Parity isolation / harness | 121 core isolation checks, 22 comparison-harness tests and 7 candidate-export tests; no hardware evidence |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
-| Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) |
+| Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) and eight-voice rank network (14,012) |
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
 | CI (`build.yml`) | Linux, macOS (VST3, AU, Standalone) and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
@@ -65,7 +65,7 @@ The core and performance suites have also been run under AddressSanitizer and Un
 
 ## Path to 1:1 parity (summary)
 
-**M0 implementation:** opt-in [parity isolation](docs/PARITY_ISOLATION.md) masks modern extensions without rewriting stored patches. The [comparison harness](docs/PARITY_HARNESS.md) validates synthetic stand-ins, provenance and declared latency, with versioned synthetic-only tolerances. Its engine capture tool exports unnormalised stereo traces, every submitted core setting and timed stimulus events. Neither establishes hardware agreement. Hardware capture and analog tolerance preregistration remain outstanding. A separately reviewed [loaded cutoff-control experiment](docs/LOADED_CONTROL_EVIDENCE.md) now solves a conditional single-voice HP/LP DC network offline; full eight-voice loading and chip-current laws remain unresolved.
+**M0 implementation:** opt-in [parity isolation](docs/PARITY_ISOLATION.md) masks modern extensions without rewriting stored patches. The [comparison harness](docs/PARITY_HARNESS.md) validates synthetic stand-ins, provenance and declared latency, with versioned synthetic-only tolerances. Its engine capture tool exports unnormalised stereo traces, every submitted core setting and timed stimulus events. Neither establishes hardware agreement. Hardware capture and analog tolerance preregistration remain outstanding. A separately reviewed [loaded cutoff-control experiment](docs/LOADED_CONTROL_EVIDENCE.md) now solves conditional single-voice and eight-voice HP/LP DC networks offline, including shared-bus loading. Upstream driver impedances, chip-current laws and inter-rank connections remain unresolved.
 
 The full plan is **[docs/PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md)**. In short:
 

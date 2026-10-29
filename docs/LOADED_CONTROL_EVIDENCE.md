@@ -1,6 +1,6 @@
-# Loaded cutoff-control pair: conditional offline DC experiment
+# Loaded cutoff-control networks: conditional offline DC experiments
 
-2026-10-29. W1/M2 document-derivable increment. **No instrument or captures were measured; no calibration, analog parity, complete rank-network or audible-behavior claim.** `src/reference/LoadedControl.h` does not drive the engine. It solves one R51/R52 voice's FH/FL pair into the M-card cutoff pins under explicitly supplied electrical boundary conditions. It is not a complete R51/R52 board simulation.
+2026-10-29. W1/M2 document-derivable increment. **No instrument or captures were measured; no calibration, analog parity, complete rank-network or audible-behavior claim.** `src/reference/LoadedControl.h` does not drive the engine. It solves one R51/R52 voice's FH/FL pair into the M-card cutoff pins under explicitly supplied electrical boundary conditions. It is not a complete R51/R52 board simulation. The later `LoadedControlRank.h` extension below includes all eight cutoff pairs and their four common buses, still under explicit conditional source/receiver boundaries.
 
 ## Primary-source provenance
 
@@ -44,7 +44,7 @@ The 100 kΩ VR7/VR9 pots span +15/−15 V in the drawing. `trimWiper(low,high,x)
 
 Every source's open-circuit voltage and source resistance must be supplied. There is no guessed zero-ohm driver. Every receiver must supply `I_into_chip=G*Vpin+I0`, including an explicitly requested open receiver `G=I0=0`. This affine load is a conditional experiment boundary, **not an established IG00156 input law**. Unknown boundaries default to NaN and are rejected. Source resistances and receiver conductances must be finite/nonnegative; arbitrary nonlinear/active negative-resistance boundaries are outside this solver.
 
-**Shared-bus exclusion:** real SUB, BR, FH and FL feed other voices, and source circuitry can connect additional loads. This model does not include those seven other voices or multiport driver coupling. A single fixed independent Thevenin source is not generally equivalent to that complete network. Use the fixture for isolated pair sensitivity/KCL experiments only; do not treat a result as the whole instrument's voltage. Full eight-voice shared-bus and upstream source graphs remain W1/W9 work.
+**Single-pair shared-bus exclusion (addressed only within the conditional rank extension below):** real SUB, BR, FH and FL feed other voices, and source circuitry can connect additional loads. This model does not include those seven other voices or multiport driver coupling. A single fixed independent Thevenin source is not generally equivalent to that complete network. Use the fixture for isolated pair sensitivity/KCL experiments only; do not treat a result as the whole instrument's voltage. The rank extension below includes eight-voice cutoff-bus loading; upstream source graphs remain W1/W9 work.
 
 ## Equations and useful distinction
 
@@ -54,7 +54,7 @@ For one source voltage `E`, source resistance `Rs`, and fork conductances `gh=1/
 
 Each control-node KCL includes `(Vnode−Vs)/Rbranch`, grounded-shunt current, trim and master-cutoff branch currents, and the explicit signed chip current. Eliminating each shared source produces a symmetric 2×2 matrix. Its off-diagonal contribution is `−Rs*gh*gl/(1+Rs*(gh+gl))`; it vanishes only for an explicitly ideal source. Two independent voltage dividers would miss this coupling. No capacitor is used to invent a time constant; no physical pin voltage is passed to a presumed volts/octave conversion.
 
-Unknowns still blocking promotion: actual source impedances (including presets/PANEL/memories), all eight-voice and inter-rank loading, chip input-current law, trim state, supply/reference behavior, temperature/tolerances, dynamic acquisition and physical-pin-to-effective-cutoff convention. The service FH/FL voltage and CP3 amplitude alignment gates require the actual audio network and hardware evidence; this fixture cannot satisfy them.
+Unknowns still blocking promotion: actual source impedances (including presets/PANEL/memories), inter-rank and upstream loading, chip input-current law, trim state, supply/reference behavior, temperature/tolerances, dynamic acquisition and physical-pin-to-effective-cutoff convention. The service FH/FL voltage and CP3 amplitude alignment gates require the actual audio network and hardware evidence; this fixture cannot satisfy them.
 
 ## Software verification only
 
@@ -69,3 +69,56 @@ c++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc \
 ```
 
 Local strict-warning build and ASan/UBSan execution passed (leak detection disabled; no leak-clean claim). Three isolated mutation builds changed a 120 kΩ branch, reversed the source-coupling sign, and reversed receiver-current sign; each failed its corresponding regression. This is software verification, not calibration.
+
+## Eight-voice conditional rank extension
+
+`src/reference/LoadedControlRank.h` now models **16 cutoff-pin nodes on one eight-voice board**, not the complete instrument or complete R51/R52 functions. `RankInputs.voices[n].local` contains KC, TF, AB, IB, TP1 for that voice. `RankInputs.buses` contains exactly **one** source each for SUB, BR, FH, FL; their fanout is not replaced with eight independent source copies. Each voice has its own two trim equivalents, chip grades, grounded shunts and explicit signed chip-current boundaries.
+
+### Additional native evidence
+
+R39's continuous vertical SUB/BR/FH/FL lines connect all eight resistor rows; KC/TF/AB/IB are separately voice-indexed. Native upper/lower crops retain an overlap to trace common-bus continuity:
+
+| Crop | Box | PNG SHA-256 |
+|---|---|---|
+| R39 rank upper | `[2700,450,3590,1750]` | `235e57c0dce00299cd1faa48615bfdd15fde2bb69ac7191e1769e3f57bf09965` |
+| R39 rank lower | `[2700,1650,3590,3000]` | `bf0d47d248c48ecd7ada15b2a8a8ac5506437da488c92ed6ffb03ef81bbfff13` |
+
+M44–47 explicitly join every R51 FH1…FH8 to M11…M18 F1 terminal 51, and every FL1…FL8 to F2 terminal 55. Connector numbers with primes must not be collapsed: for example FH4 uses 80′, FL4 uses 80. These pages establish **rank-I wiring only**; this model does not invent any connection to the second rank or assert independence of the actual upstream drivers.
+
+| Additional source | Original SHA-256 |
+|---|---|
+| [M45, M13–14 wiring](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/45%20-%20M13-14%20Circuit%20Board%20%26%20Wiring.jpg) | `32545b5c15ecc7bd038901af9880da20905103dd7413a34b3e1db5183ccf8627` |
+| [M46, M15–16 wiring](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/46%20-%20M15-16%20Circuit%20Board%20%26%20Wiring.jpg) | `197cc76404db321de26f06a8e187e6b33b0690a14afe45eedf56744180c6632c` |
+| [M47, M17–18 wiring](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/47%20-%20M17-18%20Circuit%20Board%20%26%20Wiring.jpg) | `2824471b66f408e70c6ef479f2d11bcda01d965bc3b0e34fea5fbfba9b62f56e` |
+
+Originals are 5100×3300; native grayscale PNG procedure is as above. M44 original hash was already recorded above.
+
+| Wiring crop | Box | PNG SHA-256 |
+|---|---|---|
+| M44 voice2 | `[550,1550,1350,1940]` | `c87fcdbb4444db132a7c38b49c947c1b1b789127f3a0b761b79bcbeecc4e02fa` |
+| M45 voice3 | `[900,1580,1650,1940]` | `7bc6ea1eeb2c5bf01251d4a17de4968777953281b2d277054598e8564041b1f8` |
+| M45 voice4 | `[2900,1580,3670,1970]` | `4513324a4a3a29cc3c50f253e58e74b4785fb807d1779e7080d5e5eff67981c4` |
+| M46 voice5 | `[650,1550,1400,1940]` | `9ac8489b5d5d9cc7b27a7633f761f360be2d76fae9ef4176c2a4fab0b363971a` |
+| M46 voice6 | `[2700,1570,3450,1950]` | `b81892b103bc6ecd639c98831a281e3531b63856477388b4c0f0691db2b15ac1` |
+| M47 voice7 | `[850,1580,1620,1950]` | `27f3661214d82d7938adb0d3c06c20740e8b2265630bbd6b2e49863675d22a37` |
+| M47 voice8 | `[2900,1580,3660,1950]` | `109ebed80f1b8be15e09dbaf8b3c91204febbd4a83afc132a895ab6028525501` |
+
+### Rank equation, tests and remaining boundaries
+
+For source `E,Rs` connected through conductances `g[i]` to multiple pins, let `S=sum(g)`, `z=1+Rs*S`. Eliminating its terminal adds
+
+- diagonal `g[i]*(1+Rs*(S-g[i]))/z`;
+- off-diagonal `−Rs*g[i]*g[j]/z`;
+- right-hand side `g[i]*E/z`.
+
+This preserves inter-voice back-coupling through finite-impedance buses. Positive grounded shunts and nonnegative receiver conductances make the assembled 16×16 matrix positive definite; Cholesky solves its settled-DC KCL. Reported source-terminal voltages allow independent current-balance tests. No dynamic or effective cutoff law was added.
+
+`tests/LoadedControlRankTests.cpp`: **14,012 synthetic checks** pass strict C++20 and ASan/UBSan (leak detection off). Independent literal-resistor KCL checks every pin/local source/common source across 100 varied fixtures; tests cover symmetric voices, coupling through each common bus, zero-impedance bus isolation, comparison to eight independent pair solves only in that ideal-bus limit, and unknown boundary rejection. Under completely symmetric voices, full-rank output also matches a one-pair symmetry reduction with **eight times each common source resistance**—a mathematical test, not an asserted hardware resistance. Mutating the eighth bus fanout, coupling sign, or LP envelope resistor each produces a failed regression.
+
+```sh
+c++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc \
+  tests/LoadedControlRankTests.cpp -o /tmp/cs80-loaded-rank
+/tmp/cs80-loaded-rank
+```
+
+Independent review status for this extension: source topology, all three added original hashes, all nine added native crop hashes, Schur elimination, Cholesky solve and tests independently reviewed; no blocking discrepancy found. Unknown receiver laws, upstream multiport/driver circuitry, actual source impedances, inter-rank source sharing, trims, rails, component tolerances and physical-pin-to-effective-cutoff conversion remain unknown. Each common bus is *conditionally represented* by an independent Thevenin source, not established as an independent physical source. No receiver has been defaulted to an open circuit. This extends document-derived passive loading only; it does not remove hardware-calibration gates.

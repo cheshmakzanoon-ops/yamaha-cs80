@@ -79,6 +79,8 @@ Nothing can be proved until there is a way to turn off everything the original d
 
 ### W1. Voltage-domain calibration layer (document-derivable)
 
+Offline checkpoint: [LOADED_CONTROL_EVIDENCE.md](LOADED_CONTROL_EVIDENCE.md) now records reviewed R39/M41/M44–47 wiring and conditional single-pair/eight-voice cutoff-node models. They retain finite-source loading and inter-voice common-bus coupling, but require explicit source impedance and receiver-current boundaries; they do not drive production audio or establish the IC voltage convention.
+
 The model still maps normalized panel positions to behavior. The original is a network of resistor-summed control voltages.
 
 - Keep key voltage `Kv`, effective cutoff CV and Q CV as explicit quantities separate from slider position (the first step exists: `filterKeyVolts`, `nominalFilterCutoff`, `filterEffectiveCv`).
