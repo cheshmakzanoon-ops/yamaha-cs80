@@ -11,14 +11,13 @@ on:
       - '.github/workflows/circuit-inspection.yml'
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  # Complete the active validation checkpoint; newer source waits instead of
-  # cancelling cross-platform evidence while research and screenshots proceed.
-  cancel-in-progress: false
-
+# Serialize each validation job independently. A macOS allocation wait must not
+# block new Linux/Windows evidence. Running jobs still finish; no gates removed.
 jobs:
   linux:
+    concurrency:
+      group: ${{ github.workflow }}-linux-${{ github.ref }}
+      cancel-in-progress: false
     name: Linux / VST3 + Standalone
     runs-on: ubuntu-24.04
     steps:
@@ -70,6 +69,9 @@ jobs:
           if-no-files-found: error
 
   pluginval:
+    concurrency:
+      group: ${{ github.workflow }}-pluginval-${{ github.ref }}
+      cancel-in-progress: false
     name: pluginval / Linux VST3 (strictness 10)
     needs: linux
     runs-on: ubuntu-24.04
@@ -358,6 +360,9 @@ jobs:
           if-no-files-found: warn
 
   macos:
+    concurrency:
+      group: ${{ github.workflow }}-macos-${{ github.ref }}
+      cancel-in-progress: false
     name: macOS / VST3 + AU + Standalone
     runs-on: macos-latest
     steps:
@@ -478,6 +483,9 @@ jobs:
           if-no-files-found: warn
 
   windows:
+    concurrency:
+      group: ${{ github.workflow }}-windows-${{ github.ref }}
+      cancel-in-progress: false
     name: Windows / VST3 + Standalone
     runs-on: windows-2022
     steps:
@@ -518,6 +526,9 @@ jobs:
           if-no-files-found: error
 
   pluginval-windows:
+    concurrency:
+      group: ${{ github.workflow }}-pluginval-windows-${{ github.ref }}
+      cancel-in-progress: false
     name: pluginval / Windows VST3 (strictness 10)
     needs: windows
     runs-on: windows-2022

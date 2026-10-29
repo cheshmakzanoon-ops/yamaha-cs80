@@ -177,3 +177,8 @@ Against core123-parameter/host229-parameter baseline:
 - All rank fanouts and their loading. KBC1-to-KC and KBC2-to-KB wiring are now corroborated.
 - Physical FH/FL/LC loaded-node laws, internal IC input laws and calibrated audible endpoint ranges.
 - Scan, hold, settling and leakage behavior; tolerances, thermal drift and measured unit variation.
+
+
+### Native code-path corroboration, 2026-10-29
+
+[Keyboard-code path evidence](KEYBOARD_CODE_PATH_EVIDENCE.md) records the independently checked polarity-preserving B-to-delayed-Q path, three primary drawings supporting KAS B3 connector 57 against the KAS04 connector 59 label, and newly identified differences between the overall foldout KBC rendition and detailed p15. The complete 61-key physical-code/YM26700-OC map remains unresolved; no guessed map has been implemented.
