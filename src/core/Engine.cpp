@@ -39,6 +39,8 @@ void Engine::prepare(double hostSampleRate)
     // defaults are documented engineering inferences, not measured calibration.
     praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
     praWahR.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
+    outputCircuit.prepare(internalRate, InferredSymmetricOutputProfile{},
+                          global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
 
     Rng trimRng(0xC5801234u);
     for (auto& v : voices)
@@ -117,6 +119,8 @@ void Engine::reset()
     praWahR.reset(1.0);
     wahMix = global.pedalWah ? 1.0f : 0.0f;
     wahRunning = false;
+    outputCircuit.reset(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
+    outputNodes = {};
     outputGain = outputLevelGain(global.outputHigh);
     lastNote = 60;
     nextVoice = 0;
@@ -153,6 +157,9 @@ void Engine::setParams(const ParamValues& values)
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
+    // A selector event changes the physical load for the next interval, without
+    // resetting capacitor voltage, previous source or inferred readout smoothing.
+    outputCircuit.setMode(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
     // Mode changes clear notes/controllers and effect histories: no old macro
     // envelopes, MIDI holds or modern FX tails may leak into the isolated path.
     // No allocation or sample-rate reconfiguration occurs on this RT boundary.
@@ -1312,16 +1319,30 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     outL = global.parityMode ? mixL * gain : softClip(dcOutL * gain);
     outR = global.parityMode ? mixR * gain : softClip(dcOutR * gain);
 
-    // GENERAL HIGH/LOW switch. HIGH is exactly unity, so the default is sample-identical.
-    const float outputTarget = outputLevelGain(global.outputHigh);
-    if (outputGain != outputTarget)
+    if (global.parityMode)
     {
-        outputGain += (outputTarget - outputGain) * outputGainSmoothing;
-        if (std::abs(outputGain - outputTarget) < 1.0e-6f)
-            outputGain = outputTarget;
+        // Existing float post-volume/expression values define normalized ideal
+        // LEFT/RIGHT preamp-source units, not calibrated LI/RI voltages. GENERAL
+        // is formed before separate coupling/loading and always clocked, even
+        // when no voice sounds. Only LEFT/RIGHT reach the host in isolation.
+        outputNodes = outputCircuit.process(outL, outR);
+        outL = (float) outputNodes.left.audibleJackVolts;
+        outR = (float) outputNodes.right.audibleJackVolts;
     }
-    outL *= outputGain;
-    outR *= outputGain;
+    else
+    {
+        // Historical scalar HIGH/LOW policy; arithmetic and order unchanged.
+        // Do not apply this extra attenuation to the reconstructed output graph.
+        const float outputTarget = outputLevelGain(global.outputHigh);
+        if (outputGain != outputTarget)
+        {
+            outputGain += (outputTarget - outputGain) * outputGainSmoothing;
+            if (std::abs(outputGain - outputTarget) < 1.0e-6f)
+                outputGain = outputTarget;
+        }
+        outL *= outputGain;
+        outR *= outputGain;
+    }
 
     if (! global.stereo)
     {
@@ -1406,6 +1427,16 @@ Engine::PraWahState Engine::getPraWahState(int channel) const noexcept
     const auto& circuit = channel == 0 ? praWahL : praWahR;
     return { circuit.capacitorState(), circuit.sampleRate(), circuit.opticalResistance(),
              circuit.targetOpticalResistance(), wahMix };
+}
+
+Engine::OutputTapState Engine::getOutputTapState(int tap) const noexcept
+{
+    if (tap < 0 || tap > 2)
+        return {};
+    const auto& circuit = tap == 0 ? outputCircuit.leftCircuit()
+                          : tap == 1 ? outputCircuit.rightCircuit() : outputCircuit.generalCircuit();
+    const auto& nodes = tap == 0 ? outputNodes.left : tap == 1 ? outputNodes.right : outputNodes.general;
+    return { circuit.getState(), nodes, circuit.sampleRate(), circuit.getMode() };
 }
 
 } // namespace cs80

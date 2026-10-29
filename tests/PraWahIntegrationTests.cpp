@@ -1,8 +1,8 @@
 // Engine integration of an inferred nominal PRA circuit, not hardware matching.
 // The expected circuit is an independent physical-node companion/MNA solve;
-// the source sine, stage order and downstream expression gain are reconstructed
-// separately. Envelope/chorus/decimator primitives are shared intentionally:
-// this suite verifies their routing, not their internal physical accuracy.
+// the source sine, stage order, downstream expression and loaded output
+// coupling are reconstructed separately. Envelope/chorus/decimator primitives
+// are shared intentionally: this verifies routing, not their physical accuracy.
 #include "core/Engine.h"
 
 #include <algorithm>
@@ -16,7 +16,7 @@ using namespace cs80;
 namespace
 {
 int checks = 0, failures = 0;
-double maximumOutputError = 0.0, maximumStateError = 0.0;
+double maximumOutputError = 0.0, maximumStateError = 0.0, maximumOutputStateError = 0.0;
 void check(bool ok, const char* what)
 {
     ++checks;
@@ -111,6 +111,107 @@ struct NodalCircuit
     }
 };
 
+// Independent output companion/MNA oracle. Nominal values are pinned rather
+// than read from OutputTapCircuit defaults or its reduced coefficients. Nodes
+// are the source-side capacitor plate, common junction, HIGH tap and LOW tap.
+// At a selector event, an ideal voltage source holds the old capacitor voltage
+// while the NEW resistor topology determines the rebased old-end current.
+struct NodalOutputCircuit
+{
+    template <size_t N> using Matrix = std::array<std::array<long double, N>, N>;
+    template <size_t N> using Vector = std::array<long double, N>;
+    template <size_t N> static Vector<N> solve(Matrix<N> m, Vector<N> rhs)
+    {
+        for (size_t row = 0; row < N; ++row)
+        {
+            long double scale = 0.0L;
+            for (auto x : m[row]) scale = std::max(scale, std::abs(x));
+            for (auto& x : m[row]) x /= scale;
+            rhs[row] /= scale;
+        }
+        for (size_t pivot = 0; pivot < N; ++pivot)
+        {
+            size_t best = pivot;
+            for (size_t row = pivot + 1; row < N; ++row)
+                if (std::abs(m[row][pivot]) > std::abs(m[best][pivot])) best = row;
+            std::swap(m[best], m[pivot]); std::swap(rhs[best], rhs[pivot]);
+            for (size_t row = pivot + 1; row < N; ++row)
+            {
+                const auto multiplier = m[row][pivot] / m[pivot][pivot];
+                for (size_t col = pivot; col < N; ++col) m[row][col] -= multiplier * m[pivot][col];
+                rhs[row] -= multiplier * rhs[pivot];
+            }
+        }
+        Vector<N> node{};
+        for (size_t row = N; row-- > 0;)
+        {
+            auto value = rhs[row];
+            for (size_t col = row + 1; col < N; ++col) value -= m[row][col] * node[col];
+            node[row] = value / m[row][row];
+        }
+        return node;
+    }
+    template <size_t N> static void branch(Matrix<N>& m, int a, int b, long double g)
+    {
+        m[a][a] += g; m[b][b] += g; m[a][b] -= g; m[b][a] -= g;
+    }
+    template <size_t N> static void resistors(Matrix<N>& m, Vector<N>& rhs,
+                                             long double source, bool high)
+    {
+        m[0][0] += 1.0L / 100.0L; rhs[0] += source / 100.0L;
+        branch(m, 1, 2, 1.0L / 560.0L);
+        branch(m, 1, 3, 1.0L / 4700.0L);
+        m[3][3] += 1.0L / 560.0L;
+        m[high ? 2 : 3][high ? 2 : 3] += 1.0L / 100000.0L;
+    }
+    static Vector<5> heldCapacitor(long double source, long double voltage, bool high)
+    {
+        Matrix<5> m{}; Vector<5> rhs{};
+        resistors(m, rhs, source, high);
+        m[0][4] = 1.0L; m[1][4] = -1.0L;
+        m[4][0] = 1.0L; m[4][1] = -1.0L; rhs[4] = voltage;
+        return solve(m, rhs);
+    }
+    NodalOutputCircuit() { reset(true); }
+    void reset(bool selectedHigh)
+    {
+        high = selectedHigh; capacitor = previousSource = 0.0L; samples = 0;
+        const auto unit = heldCapacitor(1.0L, 0.0L, high);
+        readoutGain = startGain = targetGain = unit[high ? 2 : 3];
+    }
+    float tick(float source, double rate, bool selectedHigh)
+    {
+        if (high != selectedHigh)
+        {
+            high = selectedHigh; startGain = readoutGain; samples = 0;
+            const auto unit = heldCapacitor(1.0L, 0.0L, high);
+            targetGain = unit[high ? 2 : 3];
+        }
+        const long double oldCurrent = heldCapacitor(previousSource, capacitor, high)[4];
+        constexpr long double coupling = 10.0e-6L;
+        const long double g = 2.0L * coupling * rate, j = -g * capacitor - oldCurrent;
+        Matrix<4> m{}; Vector<4> rhs{};
+        branch(m, 0, 1, g); rhs[0] -= j; rhs[1] += j;
+        resistors(m, rhs, source, high);
+        const auto node = solve(m, rhs);
+        capacitor = node[0] - node[1]; previousSource = source;
+        // Closed-form software dezipper since the last selector event, not
+        // another copy of the production recurrence. The physical V is shared.
+        readoutGain = targetGain + (startGain - targetGain) * std::exp(-++samples / (0.005L * rate));
+        return static_cast<float>(readoutGain * (source - capacitor));
+    }
+    long double homogeneousStep(double rate) const
+    {
+        const auto conductance = heldCapacitor(1.0L, 0.0L, high)[4];
+        const long double g = 2.0L * 10.0e-6L * rate;
+        return (g - conductance) / (g + conductance);
+    }
+    long double capacitor = 0.0L, previousSource = 0.0L;
+    long double readoutGain = 0.0L, startGain = 0.0L, targetGain = 0.0L;
+    long long samples = 0;
+    bool high = true;
+};
+
 ParamValues sinePatch(bool isolation = true, bool wet = false)
 {
     ParamValues p;
@@ -156,6 +257,8 @@ struct PipelineOracle
         envelope.noteOn(0.001f, 0.04f, 0.7f, 0.1f);
         chorus.prepare(static_cast<float>(rate));
         for (auto& d : decimator) d.prepare(static_cast<float>(rate));
+        outputHigh = p[P_outputLevel] != 0.0f;
+        for (auto& output : outputs) output.reset(outputHigh);
     }
     void setPedal(float value)
     {
@@ -210,9 +313,12 @@ struct PipelineOracle
                 const float dc = stereo[channel]-lastInput[channel]
                                  + std::exp(-kTwoPi*10.0f*(1.0f/sr))*lastDc[channel];
                 lastInput[channel] = stereo[channel]; lastDc[channel] = dc;
-                // The circuit receives the unscaled waveform; expression acts
-                // after the chorus, not as an input gain or an optical-only knob.
-                const float out = isolated ? stereo[channel]*expression : softClip(dc*expression);
+                // PRA receives unscaled waveform; expression acts after chorus
+                // and before the loaded output coupling network. Retain float
+                // source scaling, with no additional absolute active-stage gain.
+                const float source = stereo[channel] * expression;
+                const float out = isolated ? outputs[channel].tick(source, rate, outputHigh)
+                                           : softClip(dc*expression);
                 decimator[channel].push(out);
             }
         }
@@ -221,7 +327,7 @@ struct PipelineOracle
     double rate, opticalLog = std::log(2000.0), startLog = std::log(2000.0), targetLog = std::log(2000.0);
     int opticalSamples = 0;
     float phase, expression = 1.0f;
-    bool isolated, wet;
+    bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;
     bool chorusOn, tremolo;
     float chorusSpeed, chorusDepth;
@@ -229,6 +335,7 @@ struct PipelineOracle
     NodalCircuit circuit;
     Chorus chorus;
     std::array<Decimator, 2> decimator;
+    std::array<NodalOutputCircuit, 2> outputs;
     std::array<float, 2> lastInput{}, lastDc{};
     Svf legacyWah;
     float legacyHz = 0.0f;
@@ -256,6 +363,20 @@ void compareState(const Engine& e, const PipelineOracle& oracle)
             near(state.capacitors[k].voltage, oracle.circuit.voltage[k], 2e-9, "independent MNA capacitor voltage matches Engine");
             near(state.capacitors[k].current, oracle.circuit.current[k], 2e-11, "independent MNA capacitor current matches Engine");
         }
+        const auto output = e.getOutputTapState(channel);
+        const auto& expectedOutput = oracle.outputs[channel];
+        const double expectedVoltage = static_cast<double>(expectedOutput.capacitor);
+        maximumOutputStateError = std::max(maximumOutputStateError,
+                                           std::abs(output.state.capacitorVolts - expectedVoltage));
+        near(output.sampleRate, oracle.rate, 0.0, "output companion runs at Engine internal sample rate");
+        check((output.mode == OutputTapCircuit::Mode::high) == oracle.outputHigh,
+              "output selector reaches the physical topology independently of wah selection");
+        near(output.state.capacitorVolts, expectedVoltage, 2e-11,
+             "independent downstream MNA capacitor voltage matches Engine after expression");
+        near(output.state.previousSourceVolts, static_cast<double>(expectedOutput.previousSource), 2e-10,
+             "output source uses unchanged float scaling after chorus and expression");
+        near(output.state.readoutGain, static_cast<double>(expectedOutput.readoutGain), 2e-12,
+             "output readout follows independent closed-form five-millisecond selector slew");
     }
 }
 
@@ -290,13 +411,19 @@ void testIndependentPipeline()
                     e.setParams(p);
                     check(sameCaps(before, e.getPraWahState(0)), "EXP/EXP-WAH event never resets circuit history");
                 }
+                if (isolated && (n == 211 || n == 499 || n == 1357 || n == 6000))
+                {
+                    expected.outputHigh = !expected.outputHigh;
+                    p[P_outputLevel] = expected.outputHigh ? 1.0f : 0.0f;
+                    e.setParams(p);
+                }
                 float actual[2]; e.render(actual, 1);
                 const auto wanted = expected.frame();
                 for (int channel = 0; channel < 2; ++channel)
                 {
                     const double error = std::abs(static_cast<double>(actual[channel])-wanted[channel]);
                     maximumOutputError = std::max(maximumOutputError, error);
-                    near(actual[channel], wanted[channel], 2e-7, "Engine full pipeline equals independent circuit and downstream expression oracle");
+                    near(actual[channel], wanted[channel], 2e-7, "Engine full pipeline equals independent PRA, expression and loaded output oracles");
                     energy += static_cast<double>(actual[channel])*actual[channel];
                 }
                 if (n % 37 == 0 || n == frames-1) compareState(e, expected);
@@ -304,25 +431,50 @@ void testIndependentPipeline()
             check(energy > 1e-7, "full-pipeline fixture is nontrivial and audible");
         }
     // Initial WAH selection must be fully wet at reset, not faded in from EXP.
-    auto p = sinePatch(true, true); p[P_chorusOn] = p[P_chorusMode] = 1.0f;
-    Engine e; setup(e, p);
-    PipelineOracle expected(e, p);
-    for (int n = 0; n < 2000; ++n)
+    // Both output selector endpoints must initialize their own loaded readout.
+    for (bool high : { true, false })
     {
-        float actual[2]; e.render(actual, 1); const auto wanted = expected.frame();
-        for (int k = 0; k < 2; ++k) near(actual[k], wanted[k], 2e-7, "initial wet route and downstream tremolo order");
+        auto p = sinePatch(true, true); p[P_chorusOn] = p[P_chorusMode] = 1.0f;
+        p[P_outputLevel] = high ? 1.0f : 0.0f;
+        Engine e; setup(e, p);
+        PipelineOracle expected(e, p);
+        for (int n = 0; n < 2000; ++n)
+        {
+            float actual[2]; e.render(actual, 1); const auto wanted = expected.frame();
+            for (int k = 0; k < 2; ++k)
+                near(actual[k], wanted[k], 2e-7, "initial wet route, tremolo order and loaded HIGH/LOW endpoint");
+        }
+        compareState(e, expected);
     }
-    compareState(e, expected);
 }
 
 void testAlwaysClockedAndLifecycle()
 {
     auto dry = sinePatch(), wet = sinePatch(true, true);
     Engine a, b; setup(a, dry); setup(b, wet);
+    PipelineOracle dryHistory(a, dry), wetHistory(b, wet);
+    auto predictedRender = [](Engine& e, PipelineOracle& expected, int frames)
+    {
+        auto actual = render(e, frames);
+        for (int n = 0; n < frames; ++n)
+        {
+            const auto wanted = expected.frame();
+            for (int channel = 0; channel < 2; ++channel)
+            {
+                const double error = std::abs(static_cast<double>(actual[2*n + channel]) - wanted[channel]);
+                maximumOutputError = std::max(maximumOutputError, error);
+                near(actual[2*n + channel], wanted[channel], 2e-7,
+                     "each foot-mode history matches its own independent downstream capacitor history");
+            }
+        }
+        compareState(e, expected);
+        return actual;
+    };
     for (float pedal : {0.4f, 0.0f, 0.9f})
     {
         a.setExpression(pedal); b.setExpression(pedal);
-        render(a, 1900); render(b, 1900);
+        dryHistory.setPedal(pedal); wetHistory.setPedal(pedal);
+        predictedRender(a, dryHistory, 1900); predictedRender(b, wetHistory, 1900);
         for (int channel = 0; channel < 2; ++channel)
         {
             const auto x = a.getPraWahState(channel), y = b.getPraWahState(channel);
@@ -331,10 +483,33 @@ void testAlwaysClockedAndLifecycle()
             check(!zeroCaps(x), "EXP and expression zero still charge the active input network");
         }
     }
-    a.setParams(wet);
-    render(a, 7000); render(b, 7000);
+    a.setParams(wet); dryHistory.wet = true;
+    predictedRender(a, dryHistory, 7000); predictedRender(b, wetHistory, 7000);
     check(a.getPraWahState(0).wetMix == 1.0f, "switch fade reaches wet endpoint");
-    check(render(a, 500) == render(b, 500), "wet after long EXP interval has no frozen capacitor or stale-tail artifact");
+    for (int channel = 0; channel < 2; ++channel)
+        check(sameCaps(a.getPraWahState(channel), b.getPraWahState(channel)),
+              "wet enable after EXP preserves exact PRA history without a stale filter tail");
+    // The following output capacitors legitimately retain different prior
+    // dry/wet input histories. Do not demand exact final-host equality or wait
+    // an arbitrary time until rounding hides their difference. Predict each
+    // stream independently, then verify the remaining charge difference follows
+    // the independently stamped homogeneous pole once their inputs coincide.
+    const auto chargeDifference = dryHistory.outputs[0].capacitor - wetHistory.outputs[0].capacitor;
+    check(std::abs(chargeDifference) > 1e-12L, "different prior wah outputs leave distinct downstream charge");
+    near(a.getOutputTapState(0).state.capacitorVolts - b.getOutputTapState(0).state.capacitorVolts,
+         static_cast<double>(chargeDifference), 2e-14,
+         "actual downstream charge retains the independently predicted preceding branch history");
+    const auto tailA = predictedRender(a, dryHistory, 500);
+    const auto tailB = predictedRender(b, wetHistory, 500);
+    check(tailA != tailB, "valid downstream charge history remains in host samples after PRA paths coincide");
+    const long double wantedDifference = chargeDifference
+        * std::pow(dryHistory.outputs[0].homogeneousStep(dryHistory.rate), 1000);
+    near(static_cast<double>(dryHistory.outputs[0].capacitor - wetHistory.outputs[0].capacitor),
+         static_cast<double>(wantedDifference), 2e-14,
+         "remaining downstream history difference decays at the independently stamped output pole");
+    near(a.getOutputTapState(0).state.capacitorVolts - b.getOutputTapState(0).state.capacitorVolts,
+         static_cast<double>(wantedDifference), 2e-14,
+         "actual downstream charge difference follows the predicted pole rather than being erased");
 
     // Already silent voices do not turn the capacitor network off.
     a.allNotesOff(false); b.allNotesOff(false);
@@ -440,7 +615,8 @@ int main()
     testAlwaysClockedAndLifecycle();
     testPedalTimeConstantAndPartition();
     testFinitePolyphony();
-    std::printf("Independent pipeline maximum output error %.9g; capacitor voltage error %.9g\n", maximumOutputError, maximumStateError);
+    std::printf("Independent pipeline maximum output error %.9g; PRA capacitor voltage error %.9g; output capacitor voltage error %.9g\n",
+                maximumOutputError, maximumStateError, maximumOutputStateError);
     std::printf("%d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }

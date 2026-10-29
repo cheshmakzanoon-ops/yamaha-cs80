@@ -58,3 +58,15 @@ This checkpoint adds offline reference code, not a validator repair. A later suc
 ## Subsequent OE2 reference checkpoint
 
 Commit `594f4b36e834c3faed991b41fbc14260a0f0bb93` passed [build/platform validation run40934695128](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40934695128), [DSP/sanitizer/raw-compatibility run40934695058](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40934695058) and [screenshots run40934695046](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40934695046). Both native macOS jobs, Windows and Linux validators completed successfully for this exact checkpoint. No validator repair was included; the earlier failed invocations remain failed and the intermittent issue remains unresolved.
+
+## 2026-10-29 rollback-fixture correction checkpoint
+
+Commit `411452eb071cf6a8c4cd6530d45f25e77e90442b`, [build run40967809044, Linux validator job123779240630](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40967809044/job/123779240630):
+
+- Headless seed `0x1dfb33c` passed. Original GUI seed `0x63421ca` printed SUCCESS and then exited139; the job failed. The fixed regression seed `0x2da72db` passed.
+- Existing same-seed GDB diagnostic replay exited normally. The existing fault-thread diagnostic replay instead reproduced exit139 after SUCCESS.
+- Its trace includes `juce::RunLoop::Impl::registerEventHandler` callback invocation, `juce::LinuxEventLoop::registerFdCallback`, and `juce::MessageManager::runDispatchLoop`. Frame0 is an unsymbolized address. This supports an event-callback-path investigation, but does not establish exact object lifetime, fault ownership, or a verified repair.
+- No local ELF core was collected. The diagnostic trace is evidence from a replay, not a stack captured from the original failed invocation. Neither a passing replay nor SUCCESS text changes that failed gate.
+- The separate macOS ARM rollback-fixture failure from `a494118` is resolved in this checkpoint's ARM job: all tests and native validators passed. DSP/sanitizer/legacy-compatibility workflow40967809049 passed. Other platform results must be read from the exact run rather than assumed.
+
+No validator or production DSP repair is included in the fixture correction. The intermittent Linux GUI failure remains unresolved and visible; this checkpoint is not fully qualified.

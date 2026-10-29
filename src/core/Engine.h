@@ -6,6 +6,7 @@
 #include "Params.h"
 #include "PerformanceControls.h"
 #include "PraWahCircuit.h"
+#include "OutputTapCircuit.h"
 
 #include <array>
 #include <cstdint>
@@ -206,6 +207,18 @@ public:
     // Exact reconstruction circuit state; channel 0/1, render thread only.
     // These are model variables, not measured instrument voltages/resistances.
     PraWahState getPraWahState(int channel) const noexcept;
+    struct OutputTapState
+    {
+        OutputTapCircuit::State state;
+        OutputTapCircuit::Nodes nodes;
+        double sampleRate = 0.0;
+        OutputTapCircuit::Mode mode = OutputTapCircuit::Mode::high;
+    };
+    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. GENERAL is a separately
+    // clocked diagnostic, not a host listening mode. Model units, not measured volts.
+    // Nodes describe the last processed internal sample; mode already selects
+    // the next interval after a parameter event (no instantaneous node re-solve).
+    OutputTapState getOutputTapState(int tap) const noexcept;
 
 private:
     static constexpr int kNumVoices = 8;
@@ -319,6 +332,10 @@ private:
     float wahFrequency = kProvisionalWahLowHz;
     bool wahRunning = false;
     float wahSmoothing = 0.0f;
+    // Isolation output: explicit inferred symmetric driver/load profile and
+    // three independent physical coupling states, including unheard GENERAL.
+    OriginalOutputCircuit outputCircuit;
+    OriginalOutputCircuit::Outputs outputNodes;
     float outputGain = 1.0f;
     float outputGainSmoothing = 0.0f;
 
