@@ -1,5 +1,9 @@
 # Native preset matrix review: T51/T53 sampled columns
 
+**Current full-table status:**547 classified /25 unknown across22 tone columns.
+See [the full matrix audit](PRESET_FULL_MATRIX_AUDIT.md). The150/6 counts below
+refer specifically to the original six-column subset and its historical promotion.
+
 2026-10-29; source inspection at commit `e912db1f7877b48d07463e0f5a4d3a915f64b981`.
 **No production audio changes. One independently verified source-matrix correction: T51/C/12, 15K → 13K.**
 These are visual readings of Yamaha scans, not measurements. Independent review
@@ -67,9 +71,9 @@ their implementation cells remain unknown, just like the three overdrawn cells.
 **Promotion gate completed:** the independent reader confirmed the other84
 unmarked classifications and local shunt observations with no disagreement.
 Implementation coverage is now **150 known /6 unknown** among156 six-column
-addresses: the original66 plus84 supplemental cells. Across all22 factory
-columns ×26 outputs, this is150 classified /422 unresolved addresses, not a
-fidelity score or150 calibrated electrical states.
+addresses: the original66 plus84 supplemental cells. At that historical checkpoint, all22 factory columns ×26 outputs contained
+150 classified /422 unresolved addresses. The later full-table extension is
+547/25; neither count is a fidelity score or calibrated electrical-state count.
 
 The six unknown implementation locators are T51/A/20, T53/A/20, T53/C/20,
 T51/A/25, T51/C/25 and T53/A/25. No revision-applicability assumption is made.
@@ -132,15 +136,17 @@ All listed crops are native-size, without resampling.
 2. Independent verification of the84 unmarked cells is complete, including
    row21's1.3K and switch classifications. Keep all six marked cells unknown.
 3. Obtain the applicable revision explanation for marked branches.
-4. Continue the remaining sixteen columns and selection/receiver mapping.
+4. The remaining sixteen columns have now been independently reviewed and their
+   unmarked cells promoted; selection/receiver mapping remains unfinished.
 5. Keep matrix voltages separate from normalized parameters and IC controls:
    neither this table nor its completion establishes authentic audible presets.
 
 ## Source-domain implementation and conditional solver boundary
 
-Each output row now explicitly records its local shunt: outputs4/5 are
-`LocalShunt::none`; the other24 rows on these inspected boards are
-`LocalShunt::tenK`. Missing boards/columns/outputs return unknown metadata.
+Each output row now explicitly records board-specific local shunts: outputs4/5
+are `LocalShunt::none` everywhere; the other24 rows on T51/T53 are
+`LocalShunt::tenK`, while T52/T54 have no local shunts on any row.
+Invalid boards/columns/outputs return unknown metadata.
 This does not infer a second shunt on T52/T54 or the complete receiver impedance.
 
 `solveMatrixBus(board,column,output,conditions)` preserves unknown branch status.

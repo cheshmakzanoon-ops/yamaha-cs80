@@ -71,36 +71,35 @@ no production audio or provisional preset parameter changes.
 See [native review](PRESET_NATIVE_MATRIX_REVIEW.md) for crop hashes and remaining
 unverified/revision-marked entries.
 
-### Independently reviewed source-domain extension
+### Independently reviewed source-domain extension (current)
 
-Native inspection and an independent second reader confirmed84 additional
-unmarked cells for the same six columns, giving **150 classified /6 unknown**
-among their156 tone/output addresses. See the full supplemental table and
-source/crop hashes in [native matrix review](PRESET_NATIVE_MATRIX_REVIEW.md).
-Across all22 original tones ×26 outputs,150 addresses are classified and422
-remain unresolved. These counts measure transcription coverage, not sonic fidelity.
+The source table now represents all22 factory tone columns ×26 outputs:
+**547 independently reviewed classifications and25 explicit unknown cells**.
+The original150 classified cells are joined by199 rank-I and198 rank-II
+classifications. No marked revision or uncertain glyph has been promoted.
+The complete25-cell exclusion list, board counts, review provenance and remaining
+receiver gates are in [the full matrix audit](PRESET_FULL_MATRIX_AUDIT.md).
 
-Six revision-marked cells deliberately remain `unknown` in the implementation:
-T51/A/20, T53/A/20, T53/C/20 (legible1.2K but unresolved revision applicability),
-and T51/A/25, T51/C/25, T53/A/25 (overdrawn/altered components).
-T52/T54 and all other tone columns remain untranscribed.
+Canonical companion-board columns are T52/A–E and T54/A–E, not G–K.
+No factory sound is authenticated merely by completing its branch inventory.
 
-The inspected T51/T53 waveform rows4/5 have **no drawn local10k shunt**.
-All other inspected output rows have their one local10k shunt recorded explicitly.
-`findLocalShunt` reports unknown for unrepresented addresses; it does not infer
-companion-board shunts or receiving-IC impedance.
+Local shunt metadata is now board-aware: T51/T53 analog rows each draw one10k
+shunt; their waveform rows4/5 do not. T52/T54 draw **no local shunts on any row**.
+This says nothing by itself about total connected-bus/receiver loading.
+T52/T54 primed-terminal routing is crossed/revision-marked and remains unresolved.
 
-Use `solveMatrixBus` for a source-table address. It returns unknown for the six
-excluded cells and `unresolvedLoading` for a no-shunt switch row unless a positive
-finite ground load is explicitly supplied. With that load it does not add10k.
-An open branch is only zero under the declared grounded-load/no-alternate-source
-assumptions. No-shunt direct branches also require explicit loading as a
-conservative interface gate. The generic `solveBus` is retained only as the
-explicit illustrative one10k-divider helper.
+Use `solveMatrixBus` for a source-table address. Unknown cells remain unknown.
+Any row with no drawn local shunt requires an explicit positive finite ground
+load, otherwise the result is `unresolvedLoading` with no voltage. Only that
+caller load is used on T52/T54 or waveform rows; no companion10k is invented.
+For a local10k analog row, a caller load is placed in parallel with that one
+local shunt. The generic `solveBus` remains only an explicitly assumed10k
+illustrative divider, not a complete hardware receiver model.
 
-This extension changes no production audio or factory parameter values. It does
-not authenticate the six sample sounds: marked cells, receiver loading, source
-impedance, selection routing and IC conversion still block that claim.
+Tests preserve printed750Ω,510Ω and390Ω source units, classify all572
+addresses, check all25 unknowns, and distinguish local from assumed connected
+loading. These are software/data consistency tests, not hardware measurements.
+No production audio or factory parameter values change.
 
 ### Output-number map
 

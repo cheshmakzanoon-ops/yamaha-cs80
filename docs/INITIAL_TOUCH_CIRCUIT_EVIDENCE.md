@@ -41,7 +41,7 @@ Visible first-channel components include:
 - D1 and an input hold node with 1M and0.022 to E.
 - An amplifier stage with 6.8k feedback and 10k to E (native crop corrects the overview misreading of 100k): ideal gain 1.68.
 - The a1 branch uses100k series resistance and1/16 capacitance followed by a voltage follower: nominal isolated100ms low-pass product.
-- The b1 branch includes an AC-coupling capacitor marked 1/16, 22k to E, FET1, a 0.33/16 hold capacitor and a unity-gain buffer. The native crop suggests 10M for the high-value resistor, but the handwritten label is not sufficiently secure to rule out the overview's apparent 100M; independent source confirmation is required before a numerical component model. Crucially it connects the held node to the FET gate, NOT directly to E; neither a 33s nor a 3.3s passive decay-to-zero follows from it. The gate also has 1M to the input-side node and a diode connection to the trigger amplifier.
+- The b1 branch includes an AC-coupling capacitor marked 1/16, 22k to E, FET1, a 0.33/16 hold capacitor and a unity-gain buffer. The printed TWS18 board drawing explicitly labels this resistor 10M repeatedly across the eight channels. This supplies an independent assembly-document value where the handwritten TWS17 glyph can resemble 100M; see the component-identity inspection below. Do not use the apparent handwritten 100M as a calibrated value. Crucially it connects the held node to the FET gate, NOT directly to E; neither a 33s nor a 3.3s passive decay-to-zero follows from it. The gate also has 1M to the input-side node and a diode connection to the trigger amplifier.
 - The T1 trigger path contains0.01 coupling,1M,470k feedback,47k on the other amplifier input and a diode-controlled FET gate.
 - The C1 branch is driven by buffered b1 through 1/16 coupling, with 100k shunt to E, 100k input and 100k feedback, plus a diode clamp and 47k at the other amplifier input. With an ideal opamp and clamp nonconducting, the capacitor sees 100k || 100k = 50k, giving a nominal 50ms high-pass pole and high-frequency inverting gain -1. This is a conditional schematic prediction, not a measured pitchbend time or universal touch envelope. A positive b step produces a negative C transient; the clamp changes the opposite-polarity response.
 
@@ -71,7 +71,7 @@ Page7 routes each KI input through a bilateral switch into a hold buffer K. Its 
 
 Before changing initial-touch time laws:
 1. Preserve the established b versus C destination separation; complete overall wiring and panel scaling for every receiver.
-2. Retain native-resolution component readings above and verify FET/opamp identities before numerical switched-circuit modeling.
+2. Use the TWS18 component identities below, then obtain device characteristics, grade/tolerance and bias conditions before numerical switched-circuit modeling.
 3. Derive the switched/FET/diode state sequence, including trigger polarity and acquisition window.
 4. Keep isolated passive RC products separate from the complete driven response.
 5. Model receiving-stage gain, offsets, clamps and loading before assigning MIDI velocity to electrical units.
@@ -103,3 +103,34 @@ The a values themselves are independently smoothed by TWS100k/1µF branches. The
 A normalized maximum over physical-voice pressure proxies is a defensible functional improvement over latest-event memory, but remains a MIDI approximation: channel pressure, poly pressure, sustained/released voices, voice stealing and sensor/allocator history need explicit policy. Do not add a guessed diode threshold in normalized MIDI units. Do not claim that fixing aggregation establishes the SP-to-SUB oscillator frequency law.
 
 The b hold path also must not be described as indefinitely constant: its high-value resistor is gate-connected and can allow bias-dependent leakage. Established evidence is destination/state separation, not ideal infinite retention.
+
+## TWS18 component identity and hold-resistor cross-check
+
+Source inspection run40800371903 completed successfully:
+- TWS17 job123206760735: repeated native hold-network strips across all eight channels.
+- TWS18 job123206761124: original circuit-board/wiring drawing in native tiles.
+
+Original TWS18 source: https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/18%20-%20TWS%20Circuit%20Board%20%26%20Wiring.jpg
+Source SHA-256: b2989a4059001c893ebbbb4c3c1f0a9ba1d9da0d59959d449a2c06959323a89b.
+Dimensions5100x3300; bytes1422385. The TWS17 source hash remains unchanged.
+
+The TWS18 parts note explicitly identifies:
+- Printed board LC21223.
+- FET1 through FET8: 2SK30 (no selection grade or suffix is specified here).
+- Diode1 through Diode32: 1S1555.
+- IC1 through IC20: NJM4558.
+- Triangle-marked capacitors: tantalum.
+
+This page DOES contain the relevant component-identity note; no missing-BOM claim is needed. It does not provide JFET transfer curves, a selected rank, capacitor leakage, opamp input-bias measurements, or actual instrument calibration.
+
+The printed board layout repeatedly reads 10M directly above each 0.33/16 hold capacitor and associated FET. It separately prints the adjacent 22K and 1M resistors. This is clearer assembly-document evidence than the handwritten schematic glyphs, some of which resemble 100M. The documented board value is therefore 10 megaohms; a claim that the board specifies100M is withdrawn. If modeling a specific instrument or resolving a revision discrepancy, verify the populated part rather than silently substituting a different decade.
+
+The resistor remains connected between the held node and FET gate, not to ground. The product10M*0.33uF=3.3s is only a component product relative to an assumed fixed gate potential, NOT an established decay-to-zero time. The gate is also connected through1M to the input-side node and through a1S1555 diode to the trigger amplifier. Its voltage and the FET conduction state must be solved together. The newly established part identities do not justify replacing the held initial-level/brilliance route with a universal exponential.
+
+Native evidence hashes:
+- tws-hold-glyphs-left, box[650,1700,3050,2050], 2400x350: 8fe482c9700f3f28264980fbfa6148374c7b1c2607fbbd11f2b3c544b735d9f9.
+- tws-hold-glyphs-right, box[3000,1700,5100,2050], 2100x350: d47f9850ac865fa64dbb82828557b290900f6a5b2ec06d546ed2e5f8e4952e89.
+- twswiring-native-r0-c0 (printed10M labels), box[0,0,2264,2264]: 23fd2dc04e5e96a0932db5bc62f61d3b296f46b752c17b2739554d99f3912937.
+- twswiring-native-r1-c1 (parts note), box[2136,2136,4464,3300]: 4431693620314f230623b3c643885388eaf069d4c5bb62040acb4e6a8bd93d2c.
+
+No production DSP change or measured-hardware-equivalence claim accompanies this evidence update.

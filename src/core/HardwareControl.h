@@ -7,13 +7,18 @@
 
 namespace cs80::hardware
 {
-// Source snapshot: docs/PRESET_CIRCUIT_LEDGER.md, verified sample transcription.
+// Source snapshots: docs/PRESET_CIRCUIT_LEDGER.md and PRESET_FULL_MATRIX_AUDIT.md.
+// All22 tone columns; only independently verified, unmarked cells are classified.
 // These are electrical branches, NOT slider positions, envelope times, IC input
 // voltages, or calibrated factory patches. No connection to the audio engine.
 inline constexpr std::string_view t51Source =
     "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/31%20-%20T51%20Circuit%20Diagram.jpg";
 inline constexpr std::string_view t53Source =
     "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/35%20-%20T53%20Circuit%20Diagram.jpg";
+inline constexpr std::string_view t52Source =
+    "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/33%20-%20T52%20Circuit%20Diagram.jpg";
+inline constexpr std::string_view t54Source =
+    "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/37%20-%20T54%20Circuit%20Diagram.jpg";
 inline constexpr std::string_view columnSource =
     "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/cs80_foldout_schematic.jpg";
 inline constexpr std::string_view controlNameSource =
@@ -56,13 +61,29 @@ struct Column
     std::string_view source;
 };
 
-inline constexpr std::array<Column, 6> verifiedColumns {{
+inline constexpr std::array<Column, 22> verifiedColumns {{
     { 51, 'A', "String 1", t51Source },
     { 51, 'C', "Brass 1", t51Source },
     { 51, 'D', "Flute", t51Source },
     { 53, 'A', "String 2", t53Source },
     { 53, 'C', "Brass 2", t53Source },
-    { 53, 'D', "Brass 3", t53Source }
+    { 53, 'D', "Brass 3", t53Source },
+    { 51, 'B', "String 3", t51Source },
+    { 51, 'E', "Electric Piano", t51Source },
+    { 51, 'F', "Clavichord 1", t51Source },
+    { 52, 'A', "Harpsichord 1", t52Source },
+    { 52, 'B', "Organ 1", t52Source },
+    { 52, 'C', "Guitar 1", t52Source },
+    { 52, 'D', "Funky 1", t52Source },
+    { 52, 'E', "Funky 3", t52Source },
+    { 53, 'B', "String 4", t53Source },
+    { 53, 'E', "Bass", t53Source },
+    { 53, 'F', "Clavichord 2", t53Source },
+    { 54, 'A', "Harpsichord 2", t54Source },
+    { 54, 'B', "Organ 2", t54Source },
+    { 54, 'C', "Guitar 2", t54Source },
+    { 54, 'D', "Funky 2", t54Source },
+    { 54, 'E', "Funky 4", t54Source }
 }};
 
 // Metadata describes the drawn local shunt only, not total receiver loading.
@@ -72,42 +93,69 @@ struct OutputRow
 {
     int output;
     std::string_view control;
-    std::array<Branch, 6> branches; // verifiedColumns order
-    LocalShunt shunt = LocalShunt::unknown;
+    std::array<Branch, 22> branches; // verifiedColumns order
+    std::array<LocalShunt, 4> localShunts; // board51,52,53,54; not shared-bus loading
 };
 
+// 547 classified cells;25 revision/readability exclusions remain unknown.
+// T52/T54 primed-terminal routing is revision-uncertain, not solved here.
 inline constexpr std::array<OutputRow, 26> verifiedOutputs {{
-    { 1, "Speed", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
-    { 2, "PWM", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
-    { 3, "PW", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
-    { 4, "Square switch", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::none },
-    { 5, "Saw switch", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::none },
-    { 6, "Noise", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
-    { 7, "HPF", { kiloOhms(6.8), openBranch, kiloOhms(51), kiloOhms(6.2), openBranch, kiloOhms(27) }, LocalShunt::tenK },
-    { 8, "RESH", { kiloOhms(5.6), directBranch, kiloOhms(15), directBranch, directBranch, kiloOhms(18) }, LocalShunt::tenK },
-    { 9, "LPF", { kiloOhms(1), kiloOhms(5.1), kiloOhms(7.5), ohms(750), kiloOhms(4.3), kiloOhms(13) }, LocalShunt::tenK },
-    { 10, "RESL", { directBranch, kiloOhms(6.8), kiloOhms(30), directBranch, kiloOhms(3.6), kiloOhms(15) }, LocalShunt::tenK },
-    { 11, "IL", { kiloOhms(16), kiloOhms(43), kiloOhms(9.1), openBranch, kiloOhms(9.1), kiloOhms(27) }, LocalShunt::tenK },
-    { 12, "AL", { kiloOhms(3.6), kiloOhms(13), kiloOhms(130), openBranch, kiloOhms(20), kiloOhms(1.6) }, LocalShunt::tenK },
-    { 13, "VCF attack", { kiloOhms(30), kiloOhms(62), kiloOhms(18), directBranch, kiloOhms(120), kiloOhms(15) }, LocalShunt::tenK },
-    { 14, "VCF decay", { kiloOhms(12), kiloOhms(51), kiloOhms(51), directBranch, kiloOhms(13), kiloOhms(12) }, LocalShunt::tenK },
-    { 15, "VCF release", { kiloOhms(1.2), directBranch, kiloOhms(3.6), directBranch, directBranch, kiloOhms(3.9) }, LocalShunt::tenK },
-    { 16, "VCF level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::tenK },
-    { 17, "Sine", { kiloOhms(220), kiloOhms(220), openBranch, openBranch, openBranch, openBranch }, LocalShunt::tenK },
-    { 18, "VCA attack", { kiloOhms(62), kiloOhms(8.2), kiloOhms(22), kiloOhms(2.2), kiloOhms(9.1), kiloOhms(8.2) }, LocalShunt::tenK },
-    { 19, "VCA decay", { kiloOhms(82), kiloOhms(39), openBranch, kiloOhms(47), kiloOhms(36), kiloOhms(13) }, LocalShunt::tenK },
-    // Six marked revision cells remain unknown despite some legible values.
-    { 20, "VCA sustain", { unknownBranch, kiloOhms(6.2), kiloOhms(9.1), unknownBranch, unknownBranch, kiloOhms(11) }, LocalShunt::tenK },
-    { 21, "VCA release", { kiloOhms(1.3), directBranch, kiloOhms(3.9), kiloOhms(4.7), directBranch, kiloOhms(5.1) }, LocalShunt::tenK },
-    { 22, "VCA level", { directBranch, directBranch, directBranch, directBranch, directBranch, kiloOhms(1.8) }, LocalShunt::tenK },
-    { 23, "Initial brilliance", { kiloOhms(12), kiloOhms(18), kiloOhms(62), kiloOhms(22), kiloOhms(22), kiloOhms(22) }, LocalShunt::tenK },
-    { 24, "Initial level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::tenK },
-    { 25, "After brilliance", { unknownBranch, unknownBranch, kiloOhms(62), unknownBranch, kiloOhms(10), kiloOhms(10) }, LocalShunt::tenK },
-    { 26, "After level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch }, LocalShunt::tenK }
+    { 1, "Speed", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, kiloOhms(18), kiloOhms(7.5), openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 2, "PWM", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, kiloOhms(150), openBranch, openBranch, openBranch, openBranch, kiloOhms(110), kiloOhms(120), openBranch, openBranch, kiloOhms(110), openBranch, openBranch, openBranch, openBranch, openBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 3, "PW", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, kiloOhms(20), kiloOhms(4.3), kiloOhms(7.5), openBranch, kiloOhms(13), kiloOhms(6.2), kiloOhms(8.2), openBranch, kiloOhms(7.5), directBranch, kiloOhms(7.5), openBranch, openBranch, openBranch, openBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 4, "Square switch", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, directBranch, directBranch, directBranch, openBranch, directBranch, directBranch, directBranch, openBranch, directBranch, directBranch, directBranch, directBranch, openBranch, openBranch, openBranch },
+      { LocalShunt::none, LocalShunt::none, LocalShunt::none, LocalShunt::none } },
+    { 5, "Saw switch", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, openBranch, directBranch, openBranch, directBranch, openBranch, directBranch, openBranch, directBranch, openBranch, directBranch, openBranch, openBranch, directBranch, directBranch, directBranch },
+      { LocalShunt::none, LocalShunt::none, LocalShunt::none, LocalShunt::none } },
+    { 6, "Noise", { openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch, openBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 7, "HPF", { kiloOhms(6.8), openBranch, kiloOhms(51), kiloOhms(6.2), openBranch, kiloOhms(27), openBranch, kiloOhms(47), kiloOhms(6.2), kiloOhms(3.6), openBranch, kiloOhms(11), kiloOhms(8.2), kiloOhms(7.5), kiloOhms(27), openBranch, openBranch, kiloOhms(2.7), openBranch, kiloOhms(22), kiloOhms(7.5), kiloOhms(6.8) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 8, "RESH", { kiloOhms(5.6), directBranch, kiloOhms(15), directBranch, directBranch, kiloOhms(18), directBranch, kiloOhms(4.7), kiloOhms(6.2), directBranch, directBranch, kiloOhms(6.8), kiloOhms(13), openBranch, directBranch, directBranch, directBranch, directBranch, directBranch, openBranch, kiloOhms(5.6), openBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 9, "LPF", { kiloOhms(1), kiloOhms(5.1), kiloOhms(7.5), ohms(750), kiloOhms(4.3), kiloOhms(13), directBranch, kiloOhms(33), kiloOhms(4.3), kiloOhms(1.8), unknownBranch, kiloOhms(4.3), kiloOhms(30), openBranch, kiloOhms(1.6), kiloOhms(12), openBranch, kiloOhms(1.8), kiloOhms(6.2), kiloOhms(18), kiloOhms(4.3), kiloOhms(6.2) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 10, "RESL", { directBranch, kiloOhms(6.8), kiloOhms(30), directBranch, kiloOhms(3.6), kiloOhms(15), directBranch, kiloOhms(12), kiloOhms(10), kiloOhms(1.5), openBranch, kiloOhms(27), kiloOhms(11), openBranch, directBranch, openBranch, directBranch, directBranch, openBranch, openBranch, kiloOhms(18), kiloOhms(51) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 11, "IL", { kiloOhms(16), kiloOhms(43), kiloOhms(9.1), openBranch, kiloOhms(9.1), kiloOhms(27), openBranch, openBranch, openBranch, openBranch, openBranch, kiloOhms(220), directBranch, directBranch, kiloOhms(4.7), kiloOhms(130), openBranch, openBranch, openBranch, openBranch, kiloOhms(3.9), openBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 12, "AL", { kiloOhms(3.6), kiloOhms(13), kiloOhms(130), openBranch, kiloOhms(20), kiloOhms(1.6), kiloOhms(5.1), kiloOhms(8.2), kiloOhms(10), openBranch, openBranch, kiloOhms(20), kiloOhms(1.6), directBranch, kiloOhms(30), kiloOhms(3.3), directBranch, openBranch, openBranch, kiloOhms(2.4), kiloOhms(4.7), directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 13, "VCF attack", { kiloOhms(30), kiloOhms(62), kiloOhms(18), directBranch, kiloOhms(120), kiloOhms(15), kiloOhms(75), directBranch, directBranch, directBranch, directBranch, directBranch, ohms(510), openBranch, kiloOhms(8.2), directBranch, directBranch, directBranch, directBranch, directBranch, kiloOhms(16), kiloOhms(11) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 14, "VCF decay", { kiloOhms(12), kiloOhms(51), kiloOhms(51), directBranch, kiloOhms(13), kiloOhms(12), kiloOhms(39), kiloOhms(18), kiloOhms(33), directBranch, directBranch, kiloOhms(10), kiloOhms(3), openBranch, unknownBranch, kiloOhms(8.2), kiloOhms(22), directBranch, directBranch, kiloOhms(36), kiloOhms(8.2), kiloOhms(15) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 15, "VCF release", { kiloOhms(1.2), directBranch, kiloOhms(3.6), directBranch, directBranch, kiloOhms(3.9), kiloOhms(11), directBranch, kiloOhms(3.3), directBranch, directBranch, directBranch, kiloOhms(13), openBranch, kiloOhms(3.3), kiloOhms(1.6), directBranch, directBranch, directBranch, kiloOhms(3.9), directBranch, directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 16, "VCF level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 17, "Sine", { kiloOhms(220), kiloOhms(220), openBranch, openBranch, openBranch, openBranch, openBranch, kiloOhms(10), openBranch, openBranch, openBranch, openBranch, kiloOhms(9.1), kiloOhms(3.6), openBranch, openBranch, openBranch, openBranch, openBranch, kiloOhms(6.8), openBranch, directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 18, "VCA attack", { kiloOhms(62), kiloOhms(8.2), kiloOhms(22), kiloOhms(2.2), kiloOhms(9.1), kiloOhms(8.2), kiloOhms(150), kiloOhms(3.3), directBranch, directBranch, directBranch, kiloOhms(3.3), directBranch, directBranch, kiloOhms(13), kiloOhms(4.3), directBranch, directBranch, directBranch, directBranch, kiloOhms(3.6), directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 19, "VCA decay", { kiloOhms(82), kiloOhms(39), openBranch, kiloOhms(47), kiloOhms(36), kiloOhms(13), openBranch, kiloOhms(36), kiloOhms(20), kiloOhms(36), openBranch, kiloOhms(16), kiloOhms(11), openBranch, directBranch, kiloOhms(33), kiloOhms(11), kiloOhms(16), kiloOhms(5.6), kiloOhms(82), kiloOhms(13), kiloOhms(11) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 20, "VCA sustain", { unknownBranch, kiloOhms(6.2), kiloOhms(9.1), unknownBranch, unknownBranch, kiloOhms(11), kiloOhms(7.5), kiloOhms(160), kiloOhms(68), openBranch, kiloOhms(2.7), kiloOhms(51), kiloOhms(10), unknownBranch, unknownBranch, openBranch, kiloOhms(43), openBranch, kiloOhms(39), kiloOhms(330), kiloOhms(33), kiloOhms(12) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 21, "VCA release", { kiloOhms(1.3), directBranch, kiloOhms(3.9), kiloOhms(4.7), directBranch, kiloOhms(5.1), kiloOhms(9.1), kiloOhms(5.6), directBranch, kiloOhms(3.6), directBranch, kiloOhms(5.6), kiloOhms(3), kiloOhms(4.7), kiloOhms(2.7), directBranch, kiloOhms(2), directBranch, directBranch, kiloOhms(2.7), directBranch, directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 22, "VCA level", { directBranch, directBranch, directBranch, directBranch, directBranch, kiloOhms(1.8), directBranch, unknownBranch, unknownBranch, directBranch, directBranch, unknownBranch, directBranch, directBranch, kiloOhms(1.8), directBranch, unknownBranch, directBranch, directBranch, unknownBranch, kiloOhms(4.7), directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 23, "Initial brilliance", { kiloOhms(12), kiloOhms(18), kiloOhms(62), kiloOhms(22), kiloOhms(22), kiloOhms(22), kiloOhms(18), kiloOhms(15), kiloOhms(82), openBranch, openBranch, kiloOhms(22), kiloOhms(6.8), directBranch, kiloOhms(22), unknownBranch, kiloOhms(16), openBranch, openBranch, kiloOhms(22), kiloOhms(8.2), kiloOhms(12) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 24, "Initial level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 25, "After brilliance", { unknownBranch, unknownBranch, kiloOhms(62), unknownBranch, kiloOhms(10), kiloOhms(10), openBranch, openBranch, unknownBranch, openBranch, openBranch, openBranch, ohms(390), kiloOhms(16), kiloOhms(13), openBranch, openBranch, openBranch, openBranch, unknownBranch, openBranch, kiloOhms(5.6) },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } },
+    { 26, "After level", { directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, directBranch, unknownBranch, unknownBranch, unknownBranch, directBranch, directBranch, directBranch, directBranch, directBranch, unknownBranch, unknownBranch, unknownBranch, directBranch, unknownBranch, directBranch, directBranch },
+      { LocalShunt::tenK, LocalShunt::none, LocalShunt::tenK, LocalShunt::none } }
 }};
 
 // No interpolation, invented component designators, or assumed zero for missing
-// cells. T52/T54, other columns and six revision-marked cells remain unknown.
+// cells. All25 revision/readability exclusions and invalid addresses remain unknown.
 constexpr Branch findBranch(int board, char column, int output) noexcept
 {
     for (std::size_t i = 0; i < verifiedColumns.size(); ++i)
@@ -118,14 +166,16 @@ constexpr Branch findBranch(int board, char column, int output) noexcept
     return unknownBranch;
 }
 
-// Known columns only: do not infer companion-board or missing-column topology.
+// Known columns only. T52/T54 have NO drawn local shunts on any row;
+// do not infer their companion-board load. Board lookup is bounded by the
+// verifiedColumns match before indexing the four-element localShunts array.
 constexpr LocalShunt findLocalShunt(int board, char column, int output) noexcept
 {
     for (const auto& c : verifiedColumns)
         if (c.board == board && c.column == column)
             for (const auto& row : verifiedOutputs)
                 if (row.output == output)
-                    return row.shunt;
+                    return row.localShunts[static_cast<std::size_t>(board - 51)];
     return LocalShunt::unknown;
 }
 
@@ -147,7 +197,7 @@ struct BusResult
 };
 
 // GENERIC ILLUSTRATIVE HELPER, not matrix-aware: explicitly assumes 10k.
-// Use solveMatrixBus for source-table addresses (waveform rows have no shunt).
+// Use solveMatrixBus for source-table addresses (local loading is board-aware).
 // Deliberately narrow model:
 // - one selected ideal voltage source and one constant-drop isolation diode;
 // - ONE 10k shunt to E, not duplicate shunts from companion boards;
@@ -219,7 +269,7 @@ inline BusResult solveMatrixBus(int board, char column, int output,
     if (shunt != LocalShunt::none)
         return { SolveStatus::unknownBranch, std::nullopt };
     // Conservatively require explicit loading even for an ideal direct drive:
-    // the actual logic receiver/leakage and source strength are not established.
+    // actual receiver/leakage, shared-bus loading and source strength are not established.
     if (!conditions.groundLoadOhms)
         return { SolveStatus::unresolvedLoading, std::nullopt };
     if (branch.kind == BranchKind::open)
@@ -227,7 +277,7 @@ inline BusResult solveMatrixBus(int board, char column, int output,
     const double drive = conditions.selectedColumnVolts > conditions.diodeDropVolts
                        ? conditions.selectedColumnVolts - conditions.diodeDropVolts : 0.0;
     const double series = branch.kind == BranchKind::resistor ? branch.resistanceOhms() : 0.0;
-    // Only the caller's ground load: no invented 10k shunt on outputs4/5.
+    // Only the caller's ground load: no invented 10k on T52/T54 or switch rows.
     return { SolveStatus::solved, drive / (1.0 + series / *conditions.groundLoadOhms) };
 }
 } // namespace cs80::hardware

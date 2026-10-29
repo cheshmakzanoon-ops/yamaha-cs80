@@ -7,11 +7,12 @@ transcription or a claim of authentic preset sound. No physical CS-80 was measur
 
 ## Implementation increment after this baseline
 
-The independently reviewed source-domain table now contains150 classified cells
-and six explicitly unresolved revision cells among the six sampled columns.
-Across22 tones ×26 outputs,422 addresses remain unresolved. This is source-data
-coverage, not electrical calibration or sound equivalence. See PRESET_CIRCUIT_LEDGER.md
-and PRESET_NATIVE_MATRIX_REVIEW.md for the current table and row-local loading rules.
+The independently reviewed source-domain table now contains547 classified cells
+and25 explicit revision/readability exclusions across all22 tones ×26 outputs.
+Board-local shunts are distinct: T51/T53 analog rows have10k, switch rows have none,
+and T52/T54 have no local shunts. Companion-board and receiver loading are not
+invented. This is transcription coverage, not electrical calibration or audible
+preset equivalence. See PRESET_FULL_MATRIX_AUDIT.md for exclusions and evidence.
 
 ## What the original baseline implementation covered
 
