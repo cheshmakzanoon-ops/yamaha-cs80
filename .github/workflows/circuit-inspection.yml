@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [t51w, t52w, t53w, t54w, adjupdates_a, adjupdates_b]
+        page: [sub29, sub30, ej67]
     steps:
       - uses: actions/checkout@v5
         with:

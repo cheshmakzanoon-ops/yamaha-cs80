@@ -18,6 +18,9 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "sub29": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/29%20-%20SUB%20Circuit%20Diagram.jpg",
+    "sub30": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/30%20-%20SUB%20Circuit%20Board%20%26%20Wiring.jpg",
+    "ej67": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/67%20-%20Panel%205%20%28EJ%2C%20EXP%2C%20PFS%29%20Circuit%20Diagram.jpg",
     "t51w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/32%20-%20T51%20Circuit%20Board%20%26%20Wiring.jpg",
     "t52w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/34%20-%20T52%20Circuit%20Board%20%26%20Wiring.jpg",
     "t53w": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/36%20-%20T53%20Circuit%20Board%20%26%20Wiring.jpg",
@@ -102,7 +105,7 @@ def emit_image(gray, page, url, data):
     }), flush=True)
     boxes = []
     # Dense resistor and keyboard-code labels require native pixels, not overview resampling.
-    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring", "t51w", "t52w", "t53w", "t54w"}:
+    if page in {"t51", "t52", "t53", "t54", "panel1", "mkb", "toneselector", "kas04", "kas05", "twswiring", "t51w", "t52w", "t53w", "t54w", "sub29", "sub30", "ej67"}:
         cols, rows = (w + 2199) // 2200, (h + 2199) // 2200
         if cols * rows > 16:
             raise ValueError("native preset grid exceeds 16-tile bound")
