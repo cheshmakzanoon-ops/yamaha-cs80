@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [pra53, panel3]
+        page: [pra54]
     steps:
       - uses: actions/checkout@v5
         with:
