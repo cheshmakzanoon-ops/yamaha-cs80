@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 from PIL import Image
 
 SOURCES = {
+    "icguide_sub": "https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf",
     "sub29": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/29%20-%20SUB%20Circuit%20Diagram.jpg",
     "sub30": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/30%20-%20SUB%20Circuit%20Board%20%26%20Wiring.jpg",
     "ej67": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/67%20-%20Panel%205%20%28EJ%2C%20EXP%2C%20PFS%29%20Circuit%20Diagram.jpg",
@@ -202,6 +203,12 @@ def inspect_pdf(url, data, key):
             selected = [2, 29, 30]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "CS80 adjustment contents and keyboard calibration candidates"}), flush=True)
+        elif key == "icguide_sub":
+            if count < 30:
+                raise ValueError("guidebook fixed suboscillator candidate page30 absent")
+            selected = [29, 30]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "index IG00150 section2-1 and verified section2-4 offset; verify rendered identity"}), flush=True)
         elif key == "icguide_vco":
             if count < 40:
                 raise ValueError("guidebook fixed oscillator candidate page40 absent")
@@ -268,7 +275,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "adjupdates_a", "adjupdates_b"}:
+    if args.page in {"icguide_sub", "icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "adjupdates_a", "adjupdates_b"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)
