@@ -13,6 +13,7 @@ namespace
 const juce::StringArray kDestinations { "OFF", "PITCH", "VCF", "VCA", "PWM", "PAN" };
 const juce::StringArray kFxTypes { "OFF", "CHORUS", "PHASER", "TAPE DELAY", "PLATE REVERB", "DRIVE" };
 const juce::StringArray kSubWaves { "SINE", "TRIANGLE", "SAW", "SQUARE", "S&H", "RANDOM" };
+const juce::StringArray kOriginalSubWaves { "SINE", "SAW DOWN", "SAW UP", "SQUARE", "WHITE NOISE", "EXT (DISCONNECTED)" };
 const juce::StringArray kArpModes { "UP", "DOWN", "UP / DOWN", "RANDOM", "PLAYED" };
 const juce::StringArray kGlideModes { "OFF", "PORTAMENTO", "GLISSANDO" };
 
@@ -271,18 +272,29 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
     {
         auto& page = *pages[1];
         page.section(20.0f, 20.0f, 730.0f, 330.0f, "Sub oscillator");
-        page.text("WAVEFORM", 48.0f, 66.0f, 170.0f, 16.0f, 9.0f, true, ivoryDim);
-        page.choice(48.0f, 86.0f, 180.0f, 30.0f, cs80::P_subWave, kSubWaves);
-        page.knob(260.0f, 72.0f, 120.0f, 96.0f, cs80::P_subSpeed, "SPEED");
-        page.knob(48.0f, 178.0f, 94.0f, 72.0f, cs80::P_subVco, "VCO");
-        page.knob(158.0f, 178.0f, 94.0f, 72.0f, cs80::P_subVcf, "VCF");
-        page.knob(268.0f, 178.0f, 94.0f, 72.0f, cs80::P_subVca, "VCA");
-        page.knob(400.0f, 178.0f, 94.0f, 72.0f, cs80::P_subAtSpeed, "AT SPEED");
-        page.knob(510.0f, 178.0f, 94.0f, 72.0f, cs80::P_subAtVco, "AT VCO");
-        page.text("The CS-80's sub-oscillator is a global modulation source, not a sub-bass\n"
-                  "oscillator. The VCO/VCF/VCA amounts sweep the voice and its own rate under\n"
-                  "pressure. At low speeds it is a slow tremolo; at audio rates it adds sidebands.",
-                  48.0f, 258.0f, 670.0f, 60.0f, 10.8f, false, ivoryDim,
+        auto* originalMode = page.toggle(48.0f, 60.0f, 205.0f, 27.0f,
+                                        cs80::P_subOriginalMode, "ORIGINAL MODE");
+        originalMode->setComponentID("sub_original_mode");
+        originalMode->setTooltip("On: original six functions and 0.7-60 Hz range. Off: unchanged legacy automation.");
+        page.text("ORIGINAL FUNCTION", 48.0f, 100.0f, 170.0f, 16.0f, 9.0f, true, ivoryDim);
+        page.choice(48.0f, 121.0f, 180.0f, 30.0f, cs80::P_subOriginalFunction, kOriginalSubWaves);
+        page.knob(240.0f, 96.0f, 92.0f, 78.0f, cs80::P_subOriginalSpeed, "ORIGINAL Hz");
+        auto* extLevel = page.knob(340.0f, 96.0f, 92.0f, 78.0f, cs80::P_subExtLevel, "EXT LEVEL");
+        extLevel->setEnabled(false);
+        extLevel->getSlider().setTooltip("Reserved rear LEVEL control. External input is disconnected and silent in this build.");
+        page.text("LEGACY FUNCTION", 446.0f, 100.0f, 170.0f, 16.0f, 9.0f, true, ivoryDim);
+        page.choice(446.0f, 121.0f, 180.0f, 30.0f, cs80::P_subWave, kSubWaves);
+        page.knob(634.0f, 96.0f, 92.0f, 78.0f, cs80::P_subSpeed, "LEGACY Hz");
+        page.knob(48.0f, 191.0f, 94.0f, 72.0f, cs80::P_subVco, "VCO");
+        page.knob(158.0f, 191.0f, 94.0f, 72.0f, cs80::P_subVcf, "VCF");
+        page.knob(268.0f, 191.0f, 94.0f, 72.0f, cs80::P_subVca, "VCA");
+        page.knob(378.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtSpeed, "AT SPEED");
+        page.knob(488.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtVco, "AT VCO");
+        page.knob(598.0f, 191.0f, 94.0f, 72.0f, cs80::P_subAtVcf, "AT VCF");
+        page.text("Mode selects one function/rate pair; inactive settings are retained, never converted.\n"
+                  "Original noise and EXT ignore SPEED / AT SPEED. EXT is disconnected and silent.\n"
+                  "Six original functions; analog waveform, depth and touch laws remain provisional.",
+                  48.0f, 278.0f, 670.0f, 60.0f, 10.2f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
         page.section(770.0f, 20.0f, 710.0f, 330.0f, "Ring modulator");

@@ -8,6 +8,7 @@ namespace cs80
 
 Engine::Engine()
 {
+    originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
     setParams(params);
 }
@@ -50,6 +51,8 @@ void Engine::prepare(double hostSampleRate)
     }
     for (int i = 0; i < kNumVoices; ++i)
         voiceDrift[i] = (float) i * 0.73f;
+    // Explicitly provisional10ms rate smoothing, sample-rate independent.
+    originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     reset();
     setParams(params);
 }
@@ -83,6 +86,8 @@ void Engine::reset()
     ringFrequency = 0.0f;
     pwmPhase = { 0.0f, 0.0f };
     subLfo.reset(0.0f);
+    originalSub.reset();
+    originalSubSpeedSmoothed = global.subOriginalSpeed;
     for (auto& l : modLfos)
         l.reset(0.0f);
     chorus.reset();
@@ -167,6 +172,10 @@ void Engine::buildSettings()
     global.keyRelease = p(P_keyRelease);
     global.subWave = (int) std::lround(p(P_subWave));
     global.subSpeed = p(P_subSpeed);
+    global.subOriginalMode = p(P_subOriginalMode) >= 0.5f;
+    global.subOriginalFunction = (int) std::lround(p(P_subOriginalFunction));
+    global.subOriginalSpeed = p(P_subOriginalSpeed);
+    global.subExtLevel = p(P_subExtLevel);
     global.subVco = p(P_subVco);
     global.subVcf = p(P_subVcf);
     global.subVca = p(P_subVca);
@@ -829,10 +838,21 @@ void Engine::processInternalSample(float& outL, float& outR)
     for (const auto& voice : voices)
         if (voice.active && voice.held)
             sharedPressure = std::max(sharedPressure, voice.pressure);
-    float speed = global.subSpeed;
-    speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
-    subSpeedSmoothed += (speed - subSpeedSmoothed) * 0.0015f;
-    subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
+    if (global.subOriginalMode)
+    {
+        const float speed = OriginalSubOscillator::targetRate(
+            global.subOriginalSpeed, global.subAtSpeed, sharedPressure);
+        originalSubSpeedSmoothed += (speed - originalSubSpeedSmoothed) * originalSubSmoothing;
+        subValue = originalSub.tick(originalSubSpeedSmoothed, sr, global.subOriginalFunction);
+    }
+    else
+    {
+        // Preserve the shipped waveform mapping, smoothing and RNG stream.
+        float speed = global.subSpeed;
+        speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
+        subSpeedSmoothed += (speed - subSpeedSmoothed) * 0.0015f;
+        subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
+    }
     driftPhase += 0.031f * invSr;
     driftPhase -= std::floor(driftPhase);
 

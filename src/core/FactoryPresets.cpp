@@ -609,6 +609,10 @@ const std::vector<FactoryPreset>& factoryPresets()
                 b.push_back(make(name, families[family], "Factory variation generated from the CS-80 architecture.", p));
             }
         }
+        // Existing programs must retain their original SUB automation/render.
+        // Fresh plugin instances opt into original mode separately.
+        for (auto& preset : b)
+            preset.values[P_subOriginalMode] = 0.0f;
         return b;
     }();
     return bank;

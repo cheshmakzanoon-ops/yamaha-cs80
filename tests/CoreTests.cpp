@@ -85,7 +85,7 @@ void testParameterTable()
 {
     check(P_legacyNumParams == 122 && (int) P_legacyNumParams == (int) P_ch2Start + (int) CP_count,
           "legacy core layout remains122");
-    check(P_subAtVcf == 122 && P_numParams == 123 && paramId(P_subAtVcf) == "sub_at_vcf",
+    check(P_subAtVcf == 122 && P_numParams == 127 && paramId(P_subAtVcf) == "sub_at_vcf",
           "new global control appended after both channel blocks");
     check(ParamValues{}[P_subAtVcf] == 0.0f, "new pressure VCF depth defaults off");
     check((int) P_ch2Start - (int) P_ch1Start == (int) CP_count, "channel blocks are contiguous");
@@ -637,6 +637,7 @@ void testSustainTimeAndWheelRouting()
     }
     ParamValues p;
     p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = p[P_subVco] = 0.0f;
+    p[P_subOriginalMode] = 0.0f; // this phase-sensitive fixture covers shipped legacy routing
     p[P_subSpeed] = 1.0f;
     p[P_subWave] = 0.0f;
     p[P_modWheelSub] = 1.0f;
@@ -870,6 +871,141 @@ void testSubOscillatorWaves()
         check(finite, "sub oscillator wave finite: " + std::to_string(wave));
         check(hi - lo > 0.05f, "sub oscillator wave moves: " + std::to_string(wave));
     }
+}
+
+
+void testOriginalSubOscillator()
+{
+    check(P_subOriginalMode == 123 && P_subOriginalFunction == 124
+          && P_subOriginalSpeed == 125 && P_subExtLevel == 126,
+          "original SUB controls append after existing AT VCF");
+    check(ParamValues{}[P_subOriginalMode] == 1, "fresh core defaults to original SUB");
+    checkNear(OriginalSubOscillator::targetRate(.7f,0,1),.7f,1.e-6f,"original base minimum");
+    checkNear(OriginalSubOscillator::targetRate(60,0,1),60,1.e-6f,"original base maximum");
+    checkNear(OriginalSubOscillator::targetRate(4,1,.5f),8,1.e-6f,
+              "documented provisional AT frequency multiplier");
+    checkNear(OriginalSubOscillator::targetRate(60,1,1),180,1.e-6f,
+              "provisional combined rate bounded at180Hz, not measured maximum");
+
+    for (float rate : {44100.f,48000.f,96000.f,192000.f})
+        for (float hz : {.7f,60.f})
+        {
+            OriginalSubOscillator osc;
+            const int n=(int)rate*2;
+            for(int i=0;i<n;++i) osc.tick(hz,rate,0);
+            double expected=std::fmod((double)n*(double)hz/rate,1.0);
+            const double delta=std::abs(osc.getPhase()-expected);
+            check(std::min(delta,1.0-delta)<1.e-8,
+                  "original phase tracks endpoint rate across sample rates");
+        }
+
+    OriginalSubOscillator sine,down,up,square;
+    for(int n=1;n<=16;++n)
+    {
+        const float a=sine.tick(1000,8000,0);
+        const float d=down.tick(1000,8000,1);
+        const float u=up.tick(1000,8000,2);
+        const float q=square.tick(1000,8000,3);
+        const float phase=(float)(n%8)/8;
+        checkNear(a,std::sin(kTwoPi*phase),1.e-6f,"original position0 sine");
+        checkNear(d,(1-2*phase)*(3.5f/3.2f),1.e-6f,"original position1 falling saw nominal ratio");
+        checkNear(u,-d,1.e-6f,"original position2 unity inverted saw");
+        check(q==(phase<.5f ? 1.f : -1.f),"original position3 normalized comparator square");
+    }
+    OriginalSubOscillator slowNoise,fastNoise,external;
+    bool noiseChanges=false,noiseFinite=true;
+    float previous=0;
+    for(int n=0;n<4096;++n)
+    {
+        const float a=slowNoise.tick(.7f,48000,4);
+        const float b=fastNoise.tick(120,48000,4);
+        noiseFinite=noiseFinite&&std::isfinite(a)&&std::abs(a)<=1;
+        check(a==b,"white noise sample sequence independent of frequency");
+        if(n>0 && a!=previous)noiseChanges=true;
+        previous=a;
+        check(external.tick(60,48000,5)==0,"EXT function is silent while disconnected");
+    }
+    check(noiseChanges&&noiseFinite,"noise is finite white samples, not cycle sample-and-hold");
+
+    // Dormant new controls cannot change the legacy stream or output.
+    ParamValues legacy; legacy[P_subOriginalMode]=0;
+    legacy[P_subVco]=.2f; legacy[P_subVcf]=.2f; legacy[P_subVca]=.2f;
+    for(int wave=0;wave<6;++wave)
+    {
+        legacy[P_subWave]=(float)wave; legacy[P_subSpeed]=7;
+        auto changed=legacy;
+        changed[P_subOriginalFunction]=5; changed[P_subOriginalSpeed]=60; changed[P_subExtLevel]=1;
+        Engine a,b; a.prepare(48000); b.prepare(48000);
+        a.setParams(legacy); b.setParams(changed);
+        a.noteOn(60,.7f); b.noteOn(60,.7f);
+        check(render(a,48000,2048)==render(b,48000,2048),
+              "inactive original controls preserve each legacy waveform render");
+    }
+
+    // Independent shipped LFO oracle, including old RNG consumption and
+    // non-sample-rate-compensated speed smoothing. No voices are needed.
+    for(int wave=0;wave<6;++wave)
+    {
+        Engine engine; engine.prepare(48000);
+        legacy[P_subWave]=(float)wave; legacy[P_subSpeed]=7;
+        engine.setParams(legacy);
+        Rng random(0x9e3779b9u);
+        float phase=0, speed=4.2f, held=0; bool started=false;
+        bool same=true; float pair[2]{};
+        for(int frame=0;frame<512;++frame)
+        {
+            float expected=0;
+            for(int os=0;os<2;++os)
+            {
+                speed+=(7-speed)*.0015f;
+                const float before=phase;
+                phase+=speed/96000; phase-=std::floor(phase);
+                switch(wave)
+                {
+                    case 0: expected=std::sin(kTwoPi*phase); break;
+                    case 1: expected=1-4*std::abs(phase-.5f); break;
+                    case 2: expected=2*phase-1; break;
+                    case 3: expected=phase<.5f ? 1.f:-1.f; break;
+                    case 4:
+                        if(!started || phase<before) {held=random.nextBipolar();started=true;}
+                        expected=held; break;
+                    case 5: expected=random.nextBipolar(); break;
+                }
+            }
+            engine.render(pair,1);
+            same=same&&engine.getSubOscillatorValue()==expected
+                     &&engine.getSubOscillatorRate()==speed;
+        }
+        check(same,"legacy LFO sample stream and speed match independent shipped oracle");
+    }
+
+    for(int function : {4,5})
+    {
+        ParamValues p; p[P_subOriginalFunction]=(float)function;
+        p[P_subOriginalSpeed]=.7f; p[P_subAtSpeed]=0;
+        p[P_subVco]=p[P_subVcf]=p[P_subVca]=.3f;
+        auto fast=p; fast[P_subOriginalSpeed]=60; fast[P_subAtSpeed]=1;
+        Engine a,b; a.prepare(48000); b.prepare(48000);
+        a.setParams(p); b.setParams(fast);
+        a.noteOn(60,.8f); b.noteOn(60,.8f);
+        a.polyPressure(60,1); b.polyPressure(60,1);
+        check(render(a,48000,4096)==render(b,48000,4096),
+              "original noise and disconnected EXT ignore both base and AT SPEED in audio");
+    }
+
+    ParamValues p; p[P_subOriginalFunction]=1; p[P_subOriginalSpeed]=.7f;
+    Engine whole,partitioned; whole.prepare(48000); partitioned.prepare(48000);
+    whole.setParams(p); partitioned.setParams(p);
+    whole.noteOn(60,.8f); partitioned.noteOn(60,.8f);
+    const auto expected=render(whole,48000,4096);
+    std::vector<float> actual(8192);
+    int done=0;
+    for(int count : {1,63,257,1024,2751})
+    { partitioned.render(actual.data()+2*done,count); done+=count; }
+    check(actual==expected,"original SUB continuous across arbitrary render partitions");
+    const float before=whole.getSubOscillatorRate();
+    whole.noteOn(64,.8f);
+    check(whole.getSubOscillatorRate()==before,"note-on does not reset shared original rate state");
 }
 
 void testRepeatedNoteRelease()
@@ -1247,6 +1383,7 @@ void testFactoryBank()
     std::set<std::string> names;
     for (const auto& preset : bank)
     {
+        check(preset.values[P_subOriginalMode] == 0, "shipped factory programs retain legacy SUB");
         check(! preset.name.empty(), "preset has a name");
         check(! preset.category.empty(), "preset has a category");
         check(names.insert(preset.name).second, "preset name unique: " + preset.name);
@@ -1269,6 +1406,7 @@ void testSubAftertouchVcf()
     {
         ParamValues p;
         p[P_voiceDispersion]=0; p[P_drift]=0; p[P_analogNoise]=0;
+        p[P_subOriginalMode]=0; // explicitly exercise unchanged legacy aftertouch routing
         p[P_subSpeed]=4; p[P_subWave]=0; p[P_subVcf]=0;
         p[P_subAtSpeed]=0; p[P_subAtVco]=0;
         for (int rank=0; rank<2; ++rank)
@@ -1440,6 +1578,7 @@ void testSharedPressureSpeedBus()
         ParamValues p;
         p[P_voiceDispersion]=p[P_drift]=p[P_analogNoise]=p[P_detune]=0;
         p[P_initBend]=p[P_subAtVco]=p[P_subAtVcf]=p[P_subVcf]=p[P_subVca]=0;
+        p[P_subOriginalMode]=0; // shared pressure regression originally used legacy SUB
         p[P_subAtSpeed]=1; p[P_subVco]=.7f; p[P_subSpeed]=5; p[P_subWave]=0;
         p[P_mpeOn]=1;
         for(int rank=0;rank<2;++rank)
@@ -1576,6 +1715,7 @@ int main()
     testCoreInputGuards();
     testMpeExpression();
     testSubOscillatorWaves();
+    testOriginalSubOscillator();
     testSubAftertouchVcf();
     testNominalInitialPitchTransient();
     testSharedPressureSpeedBus();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dsp.h"
+#include "OriginalSubOscillator.h"
 #include "Params.h"
 
 #include <array>
@@ -61,6 +62,10 @@ struct GlobalSettings
     float keyRelease = 0.18f;
     float subSpeed = 4.2f;
     int subWave = 0;
+    bool subOriginalMode = true;
+    int subOriginalFunction = 0;
+    float subOriginalSpeed = 4.2f;
+    float subExtLevel = 0.0f; // reserved, disconnected in this batch
     float subVco = 0.0f;
     float subVcf = 0.0f;
     float subVca = 0.0f;
@@ -130,6 +135,9 @@ public:
     // Offline diagnostics; read on the rendering thread, not concurrently.
     float getRingFrequency() const noexcept { return ringFrequency; }
     float getRingEnvelope() const noexcept { return ringEnv; }
+    float getSubOscillatorValue() const noexcept { return subValue; }
+    float getSubOscillatorRate() const noexcept
+    { return global.subOriginalMode ? originalSubSpeedSmoothed : subSpeedSmoothed; }
     // Odd retained phase of a 255-tap FIR: (127-1)/2 =63 host samples.
     int getLatencySamples() const noexcept { return Decimator::kHostLatency; }
     double getHostSampleRate() const noexcept { return hostRate; }
@@ -246,6 +254,9 @@ private:
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;
+    OriginalSubOscillator originalSub;
+    float originalSubSpeedSmoothed = 4.2f;
+    float originalSubSmoothing = 0.0f;
     Lfo modLfos[3];
     float subValue = 0.0f;
     float lfoValues[3] {};

@@ -46,13 +46,13 @@ Primary Yamaha source locators are maintained in [HARDWARE_REFERENCES.md](HARDWA
 |9 Keyboard brilliance HIGH|M; no parameter/route|O9,38; separate high-end control|Verify center-neutral behavior and key-dependent HP/LP contribution|
 |10 Keyboard level LOW|M; no parameter/route|O9,38; distinct level contour|Derive level-control injection and test all keys, including neutral|
 |10 Keyboard level HIGH|M; no parameter/route|O9,38; not symmetric by assumption|Measure high-end slope/endpoint and interaction with LOW|
-|11 Sub oscillator function selector|M/A; D Lfo offers sine, triangle, upward saw, square, sample/hold, random|O8,37,49; baseline set is not original six-position set; inverted saw and EXT path absent|Implement original positions with stable state migration; keep modern shapes separately identified|
-|11 Sub oscillator speed|A; P range0.05–30Hz|O49 nominal0.7–60Hz; current range not original|Derive control-voltage law and calibrate complete hardware range|
+|11 Sub oscillator function selector|IB/A; original sine, falling/rising saw, square, noise, silent disconnected EXT; legacy shapes retained separately|O8,37,49; SUB29/30 and PN2 switch routing; ideal waveforms, not nonlinear IC equivalence|Complete optional EXT input; calibrate waveform shape/noise spectrum/amplitude; see ORIGINAL_SUB_OSCILLATOR.md|
+|11 Sub oscillator speed|IB/A; original0.7–60Hz, separate legacy0.05–30Hz automation untouched|O49 endpoints; intermediate taper and10ms original-mode rate smoothing provisional|Derive quantitative IG00150 exponential conversion and full combined speed/AT response|
 |11 Sub → VCO|A; E semitone modulation|O8,37; real pitch-CV injection may not be exponential semitone FM|Compare carrier deviation/sidebands across pitch, depth and waveform|
 |11 Sub → VCF|A; E equal shared offset|O8,37; HP/LP path gains/loading unverified|Trace separate destinations and verify modulation depth and polarity|
 |11 Sub → VCA|A; E linear level addition/clamp|O8,37; actual VCA control law unverified|Measure tremolo law, minimum level and clipping at full modulation|
 |12 Initial pitchbend|A; E depth-independent nominal50ms positive onset, live PB scaling|S17/23: conditional1µF×(100k||100k) pole; FET acquisition/clamp/retrigger still approximate|Derive the separately AC-coupled TWS C path and compare pitch trajectory at multiple velocities|
-|12 Aftertouch → sub speed|A; E lastPressure global speed factor|O10,38; pressure aggregation, nonlinear law and smoothing unverified|Resolve keyboard touch-bus priority/aggregation and test simultaneous unequal pressures|
+|12 Aftertouch → sub speed|IB/A; maximum held pressure, provisional bounded multiplier|TRG5 diode-OR; SUB29 adds control currents into IG00150 exponential converter, not proof of additive Hz|Calibrate complete touch-bus/current-to-frequency law; legacy behavior unchanged by original-mode addition|
 |12 Aftertouch → sub VCO|A; E per-voice pressure multiplier|O10,38; correct destinations do not prove gain law|Trace touch bus and measure depth response per key/voice|
 |12 Aftertouch → sub VCF|IB/A in 71f0483; appended P_subAtVcf and host parameter|O10,38; independent physical green control; software CI passes, numerical depth provisional|Calibrate pressure/depth transfer and receiving circuit; see AFTERTOUCH_SUB_VCF.md|
 |13 Sustain amount|IB/A; E extends both filter/amplitude release|O11,39; nominal release priority implemented; physical foot switching incomplete|Test at all release/control combinations with and without actual footswitch|
@@ -168,7 +168,7 @@ At this baseline, D comments call its generic input soft clip part of the IG0015
 
 ## Verification matrix and next priority
 
-1. **Close known functional omissions:** four keyboard contours; calibrated aftertouch-sub-VCF; original sub waveforms/range and EXT input; EXP/WAH and both footswitch assigners. Add stable host parameter IDs, state migration, UI controls and direct route tests.
+1. **Close known functional omissions:** four keyboard contours; calibrated aftertouch-sub-VCF; calibrated original sub waveforms/range and optional EXT input; EXP/WAH and both footswitch assigners. Add stable host parameter IDs, state migration, UI controls and direct route tests.
 2. **Correct known state/behavior mismatches:** separate held initial-touch and pitch-transient circuit laws, free-running VCO/held filter state, scanner/overflow semantics and glissando topology. Obtain missing circuit evidence before assigning numerical constants.
 3. **Complete electrical reconstruction:** board/BOM inventory, passive control networks, IC voltage domains and stage-level trace points. Use ADJ conditions and preserve source revisions.
 4. **Characterize analog nonlinearities:** level-dependent transfer, transient response, modulation sidebands, noise/correlation and thermal/tolerance behavior for an identified calibrated reference instrument.

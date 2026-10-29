@@ -21,6 +21,7 @@ namespace
 {
 const char* const kFeet[] = { "16'", "8'", "5 1/3'", "4'", "2 2/3'", "2'" };
 const char* const kSubWaves[] = { "SINE", "TRIANGLE", "SAW", "SQUARE", "S&H", "RANDOM" };
+const char* const kOriginalSubWaves[] = { "SINE", "SAW DOWN", "SAW UP", "SQUARE", "NOISE", "EXT" };
 const char* const kDestinations[] = { "OFF", "PITCH", "VCF", "VCA", "PWM", "PAN" };
 const char* const kFxNames[] = { "OFF", "CHORUS", "PHASER", "TAPE DELAY", "PLATE REVERB", "DRIVE" };
 const char* const kArpModes[] = { "UP", "DOWN", "UP / DOWN", "RANDOM", "PLAYED" };
@@ -70,7 +71,10 @@ juce::String formatParamValue(int parameterIndex, float value)
         ? (parameterIndex - cs80::P_ch1Start) % cs80::CP_count
         : -1;
 
-    if (parameterIndex == cs80::P_subAtVcf) return percent(value);
+    if (parameterIndex == cs80::P_subAtVcf || parameterIndex == cs80::P_subExtLevel) return percent(value);
+    if (parameterIndex == cs80::P_subOriginalMode) return value >= 0.5f ? "ORIGINAL" : "LEGACY";
+    if (parameterIndex == cs80::P_subOriginalFunction) return enumName(kOriginalSubWaves, 6, value);
+    if (parameterIndex == cs80::P_subOriginalSpeed) return rate(value);
     if (parameterIndex < cs80::P_numGlobals)
     {
         switch (parameterIndex)
@@ -507,6 +511,24 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
 }
 
 ParamKnob::~ParamKnob() = default;
+
+bool ParamKnob::bindParameter(int index)
+{
+    jassert(juce::MessageManager::getInstance()->isThisTheMessageThread());
+    if (index == parameterIndex) return true;
+    if (slider.isGestureInProgress() || slider.isMouseButtonDown()) return false;
+    // Destroy the old attachment before changing the slider range/value.
+    attachment.reset();
+    parameterIndex = index;
+    slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
+    slider.setTitle(juce::String(cs80::paramDef(index).name));
+    slider.setComponentID(Cs80AudioProcessor::parameterId(index));
+    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
+    slider.setTooltip(slider.getTitle() + ": " + formatParamValue(index, (float) slider.getValue()));
+    repaint();
+    return true;
+}
 
 void ParamKnob::setHardwareSlider(juce::Colour capColour)
 {

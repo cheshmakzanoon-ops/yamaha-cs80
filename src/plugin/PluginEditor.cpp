@@ -292,6 +292,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         // never install a processor callback that captures this editor.
         syncPresetDisplay();
         syncToneMarks();
+        syncSubMode();
     }
 
     ~Impl() override
@@ -364,6 +365,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         presetLabel.setColour(juce::Label::backgroundColourId, juce::Colours::transparentBlack);
         presetLabel.setInterceptsMouseClicks(false, false);
         addAndMakeVisible(presetLabel);
+        subModeLabel.setComponentID("sub_mode_status");
+        subModeLabel.setTitle("Sub oscillator compatibility and input status");
+        subModeLabel.setJustificationType(juce::Justification::centred);
+        subModeLabel.setColour(juce::Label::textColourId, cs80::ui::ivoryDim);
+        subModeLabel.setInterceptsMouseClicks(false, false);
+        addAndMakeVisible(subModeLabel);
 
         prevButton.setTitle("Previous preset");
         nextButton.setTitle("Next preset");
@@ -425,8 +432,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::P_ringDepth, 241, 535, 38, 116, "DEPTH", greyCap());
         addFader(cs80::P_ringSpeed, 281, 535, 38, 116, "SPEED", whiteCap());
         addFader(cs80::P_ringAmount, 321, 535, 38, 116, "MOD", greyCap());
-        addFader(cs80::P_subWave, 373, 535, 42, 116, "FUNCTION", blackCap());
-        addFader(cs80::P_subSpeed, 417, 535, 38, 116, "SPEED", whiteCap());
+        subFunction = &addFader(cs80::P_subWave, 373, 535, 42, 116, "FUNCTION", blackCap());
+        subSpeed = &addFader(cs80::P_subSpeed, 417, 535, 38, 116, "SPEED", whiteCap());
         addFader(cs80::P_subVco, 457, 535, 38, 116, "VCO", whiteCap());
         addFader(cs80::P_subVcf, 497, 535, 38, 116, "VCF", greenCap());
         addFader(cs80::P_subVca, 537, 535, 38, 116, "VCA", greyCap());
@@ -702,8 +709,31 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         repaint();
     }
 
+    void syncSubMode()
+    {
+        if (subFunction == nullptr || subSpeed == nullptr) return;
+        const bool original = processor.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
+        const bool functionReady = subFunction->bindParameter(original ? cs80::P_subOriginalFunction : cs80::P_subWave);
+        const bool speedReady = subSpeed->bindParameter(original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed);
+        juce::String status;
+        if (!functionReady || !speedReady)
+            status = "SUB MODE CHANGED / RELEASE CONTROL";
+        else if (!original)
+            status = "SUB: LEGACY / ORIGINAL IN ADVANCED";
+        else if (std::lround(processor.getParamValue(cs80::P_subOriginalFunction)) == 5)
+            status = "SUB: EXT DISCONNECTED / SILENT";
+        else
+            status = "SUB: ORIGINAL FUNCTIONS";
+        if (subModeLabel.getText() != status)
+            subModeLabel.setText(status, juce::dontSendNotification);
+        subModeLabel.setTooltip(original
+            ? "Original six functions. Analog response laws remain provisional. EXT has no input bus in this build."
+            : "Legacy waveform and rate automation are preserved. Select Original mode in Advanced to use the hardware functions.");
+    }
+
     void tick()
     {
+        syncSubMode();
         syncPresetDisplay();
         syncToneMarks();
         if (memoryProgrammer.isVisible()) memoryProgrammer.refresh();
@@ -884,6 +914,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         saveButton.setBounds(r(942.0f, 25.0f, 80.0f, 32.0f));
         initButton.setBounds(r(1030.0f, 25.0f, 64.0f, 32.0f));
         advancedButton.setBounds(r(1102.0f, 25.0f, 154.0f, 32.0f));
+        subModeLabel.setBounds(r(1272.0f, 40.0f, 310.0f, 20.0f));
+        subModeLabel.setFont(displayFont(9.0f * sy));
 
         ribbon.setBounds(r(320.0f, 713.0f, 960.0f, 23.0f));
         pitchWheel.setBounds(r(320.0f, 299.0f, 30.0f, 126.0f));
@@ -908,6 +940,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     juce::TextButton initButton { "INIT" };
     juce::TextButton advancedButton { "ADVANCED" };
     juce::Label presetLabel;
+    juce::Label subModeLabel;
+    cs80::ui::ParamKnob* subFunction = nullptr;
+    cs80::ui::ParamKnob* subSpeed = nullptr;
 
     std::vector<std::unique_ptr<cs80::ui::ParamKnob>> knobs;
     std::vector<std::unique_ptr<cs80::ui::LedButton>> leds;

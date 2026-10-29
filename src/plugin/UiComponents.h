@@ -58,6 +58,7 @@ class FocusSlider final : public juce::Slider
 {
 public:
     FocusSlider() { setWantsKeyboardFocus(true); }
+    bool isGestureInProgress() const noexcept { return gestureActive; }
     bool keyPressed(const juce::KeyPress& key) override
     {
         const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
@@ -119,6 +120,8 @@ public:
     juce::Slider& getSlider() noexcept { return slider; }
     int getParameterIndex() const noexcept { return parameterIndex; }
     void setHardwareSlider(juce::Colour capColour);
+    // Message-thread only. Keep an in-flight host gesture on its original parameter.
+    bool bindParameter(int index);
 
 private:
     Cs80AudioProcessor& processor;

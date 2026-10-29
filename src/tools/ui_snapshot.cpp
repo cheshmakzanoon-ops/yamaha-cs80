@@ -67,6 +67,19 @@ juce::Component* findControl(juce::Component& parent, const juce::String& id)
     return nullptr;
 }
 
+
+cs80::ui::ParamKnob* findParameterControl(juce::Component& parent, int parameterIndex)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (!child->isVisible()) continue;
+        if (auto* knob = dynamic_cast<cs80::ui::ParamKnob*>(child))
+            if (knob->getParameterIndex() == parameterIndex) return knob;
+        if (auto* found = findParameterControl(*child, parameterIndex)) return found;
+    }
+    return nullptr;
+}
+
 struct GestureProbe : juce::AudioProcessorParameter::Listener
 {
     int begins = 0, ends = 0, changes = 0;
@@ -146,6 +159,7 @@ int main(int argc, char** argv)
 
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");
+    check(processor.getPresetName().contains("Original SUB"), "fresh startup identifies modified original SUB configuration");
     processor.prepareToPlay(48000.0, 512);
     check(processor.getLatencySamples() == 63, "reported latency after prepare");
 
@@ -155,6 +169,11 @@ int main(int argc, char** argv)
     for (int index = 0; index < cs80::P_numParams; ++index)
     {
         const auto& def = cs80::paramDef(index);
+        if (index == cs80::P_subOriginalMode)
+        {
+            check(processor.getParamValue(index) == 1.0f, "fresh instance selects original SUB functions");
+            continue;
+        }
         check(std::abs(processor.getParamValue(index) - processor.getFactoryPresets()[0].values[index])
                   <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
               "initial program name and actual parameter values agree");
@@ -174,13 +193,16 @@ int main(int argc, char** argv)
         {
             const float physical = def.min + fraction * (def.max - def.min);
             processor.setParamValue(index, physical);
-            check(std::abs(processor.getParamValue(index) - physical) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
+            const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
+            const float expected = index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+                ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
+            check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
                   "physical parameter round trips host skew");
         }
     }
 
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 229, "229 host parameters");
+          && Cs80AudioProcessor::hostParameterCount == 233, "233 host parameters");
     for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
@@ -494,6 +516,139 @@ int main(int argc, char** argv)
         check(restoredAt.getParamValue(cs80::P_subAtVcf)==0.0f,
               "old state defaults missing AT VCF rather than retaining live value");
         atVcf->setValueNotifyingHost(0.0f);
+    }
+
+
+    // These literals are independent of Params.h: old normalized automation
+    // must not acquire the new hardware waveform ordering or speed endpoints.
+    for (int which = 0; which < 2; ++which)
+    {
+        auto* parameter = processor.getAPVTS().getParameter(which == 0 ? "sub_wave" : "sub_speed");
+        check(parameter != nullptr, "legacy SUB automation parameter still exists");
+        if (!parameter) continue;
+        const auto& range = parameter->getNormalisableRange();
+        const float minimum = which == 0 ? 0.0f : 0.05f;
+        const float maximum = which == 0 ? 5.0f : 30.0f;
+        const float skew = which == 0 ? 1.0f : 0.35f;
+        const float defaultValue = which == 0 ? 0.0f : 4.2f;
+        check(range.start == minimum && range.end == maximum && range.skew == skew
+                  && range.interval == 0.0f,
+              "legacy SUB range, skew and continuous parameter contract preserved");
+        check(std::abs(parameter->convertFrom0to1(parameter->getDefaultValue()) - defaultValue) < 0.00001f,
+              "legacy SUB parameter default preserved");
+        for (float normalized : {0.0f, 0.1f, 0.25f, 0.5f, 0.8f, 1.0f})
+        {
+            const float expected = minimum + (maximum - minimum) * std::pow(normalized, 1.0f / skew);
+            check(std::abs(parameter->convertFrom0to1(normalized) - expected) < 0.00002f,
+                  "legacy SUB normalized automation retains original physical meaning");
+        }
+    }
+
+    const char* originalSubIds[] = {
+        "sub_original_mode", "sub_original_function", "sub_original_speed", "sub_ext_level"
+    };
+    const float originalMin[] = {0.0f, 0.0f, 0.7f, 0.0f};
+    const float originalMax[] = {1.0f, 5.0f, 60.0f, 1.0f};
+    const float originalDefault[] = {1.0f, 0.0f, 4.2f, 0.0f};
+    for (int local = 0; local < 4; ++local)
+    {
+        auto* parameter = processor.getAPVTS().getParameter(originalSubIds[local]);
+        check(parameter != nullptr && processor.getParameters()[229 + local] == parameter,
+              "original SUB controls append after all 229 shipped host parameters");
+        if (!parameter) continue;
+        check(parameter->getVersionHint() == 4, "original SUB AU hint follows existing hint3");
+        const auto& range = parameter->getNormalisableRange();
+        check(range.start == originalMin[local] && range.end == originalMax[local],
+              "original SUB host parameter endpoints");
+        check(std::abs(parameter->convertFrom0to1(parameter->getDefaultValue()) - originalDefault[local]) < 0.00001f,
+              "original SUB host defaults");
+        if (local == 0 || local == 1)
+            check(parameter->getNumSteps() == (local == 0 ? 2 : 6),
+                  "original SUB mode and function expose discrete host choices");
+        if (local == 2)
+            check(range.skew == 0.35f, "original SUB speed has explicit independent mapping");
+    }
+
+    {
+        Cs80AudioProcessor migration;
+        check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f,
+              "new processor starts in original SUB mode");
+        for (int program = 0; program < migration.getNumPrograms(); ++program)
+        {
+            migration.setCurrentProgram(program);
+            check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+                  "every shipped factory program explicitly retains legacy SUB behavior");
+        }
+        migration.prepareToPlay(48000.0, 64);
+        migration.setParamValue(cs80::P_subOriginalMode, 1.0f);
+        migration.setParamValue(cs80::P_subOriginalFunction, 2.0f);
+        migration.setParamValue(cs80::P_subOriginalSpeed, 53.0f);
+        migration.setParamValue(cs80::P_subExtLevel, 0.4f);
+        juce::AudioBuffer<float> originalAudio(2, 64);
+        juce::MidiBuffer originalMidi;
+        migration.processBlock(originalAudio, originalMidi);
+        const auto& core = migration.getEngine().getParams();
+        check(core[cs80::P_subOriginalMode] == 1.0f && core[cs80::P_subOriginalFunction] == 2.0f
+                  && std::abs(core[cs80::P_subOriginalSpeed] - 53.0f) < 0.0001f
+                  && std::abs(core[cs80::P_subExtLevel] - 0.4f) < 0.00001f,
+              "original SUB host automation reaches core without an editor");
+        juce::MemoryBlock originalState;
+        migration.getStateInformation(originalState);
+        Cs80AudioProcessor restoredOriginal;
+        restoredOriginal.setStateInformation(originalState.getData(), (int) originalState.getSize());
+        check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                  && restoredOriginal.getParamValue(cs80::P_subOriginalFunction) == 2.0f
+                  && std::abs(restoredOriginal.getParamValue(cs80::P_subOriginalSpeed) - 53.0f) < 0.0001f
+                  && std::abs(restoredOriginal.getParamValue(cs80::P_subExtLevel) - 0.4f) < 0.00001f,
+              "original SUB state round trip");
+        auto serializedXml = juce::XmlDocument::parse(juce::String::fromUTF8(
+            static_cast<const char*>(originalState.getData()), (int) originalState.getSize()));
+        check(serializedXml != nullptr && serializedXml->getIntAttribute("subOscStateVersion", 0) == 1,
+              "host state records original SUB migration version");
+        auto restoreTree = [&](const juce::ValueTree& tree)
+        {
+            auto xml = tree.createXml();
+            const auto text = xml->toString();
+            restoredOriginal.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+        };
+        const auto current = migration.getAPVTS().copyState();
+        auto noVersion = current.createCopy();
+        noVersion.removeProperty("subOscStateVersion", nullptr);
+        restoreTree(noVersion);
+        check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 1.0f,
+              "explicit original mode survives absent version metadata");
+        auto futureVersion = current.createCopy();
+        futureVersion.setProperty("subOscStateVersion", 999, nullptr);
+        restoreTree(futureVersion);
+        check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 1.0f,
+              "explicit original mode remains authoritative with unknown version metadata");
+        auto oldState = current.createCopy();
+        for (const auto* id : originalSubIds)
+            oldState.removeChild(oldState.getChildWithProperty("id", id), nullptr);
+        restoreTree(oldState);
+        check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 0.0f
+                  && restoredOriginal.getParamValue(cs80::P_subOriginalFunction) == 0.0f
+                  && std::abs(restoredOriginal.getParamValue(cs80::P_subOriginalSpeed) - 4.2f) < 0.00001f
+                  && restoredOriginal.getParamValue(cs80::P_subExtLevel) == 0.0f,
+              "old state explicitly returns to legacy mode and clears stale original controls");
+        for (float invalid : {-1.0f, 2.0f})
+        {
+            restoreTree(current);
+            auto badMode = current.createCopy();
+            badMode.getChildWithProperty("id", "sub_original_mode").setProperty("value", invalid, nullptr);
+            restoreTree(badMode);
+            check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+                  "out-of-range saved mode safely restores legacy rather than retaining original");
+        }
+        restoreTree(current);
+        auto missingValue = current.createCopy();
+        missingValue.getChildWithProperty("id", "sub_original_mode").removeProperty("value", nullptr);
+        restoreTree(missingValue);
+        check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+              "mode child with missing value restores legacy");
+        migration.setCurrentProgram(0);
+        check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+              "explicit program zero selection differs from original-mode fresh startup");
     }
 
     processor.loadFactoryPreset(22);
@@ -866,6 +1021,89 @@ int main(int argc, char** argv)
     else check(false, "AT VCF main-panel slider exists");
     flushGui(150);
 
+
+    // Exercise the actual editor timer/attachments, not a direct refresh hook.
+    auto waitForGui = [&](auto ready)
+    {
+        const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+        while (!ready() && std::chrono::steady_clock::now() < deadline)
+            flushGui(20);
+        return ready();
+    };
+    auto subStatusIs = [&](const juce::String& expected)
+    {
+        auto* status = dynamic_cast<juce::Label*>(findControl(editor, "sub_mode_status"));
+        return status != nullptr && status->getText() == expected;
+    };
+    auto hasSubControls = [&](bool original)
+    {
+        return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+            && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+    };
+    processor.setParamValue(cs80::P_subOriginalMode, 0.0f);
+    check(waitForGui([&] { return hasSubControls(false)
+        && subStatusIs("SUB: LEGACY / ORIGINAL IN ADVANCED"); }),
+          "main SUB controls bind legacy parameters and report legacy status through editor timer");
+    processor.setParamValue(cs80::P_subWave, 0.0f);
+    processor.setParamValue(cs80::P_subOriginalFunction, 4.0f);
+    if (auto* knob = findParameterControl(editor, cs80::P_subWave))
+    {
+        check(waitForGui([&] { return knob->getSlider().getValue() == 0.0; }),
+              "legacy function host automation reaches main control");
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        check(processor.getParamValue(cs80::P_subWave) > 0.0f
+                  && processor.getParamValue(cs80::P_subOriginalFunction) == 4.0f,
+              "legacy main function edits legacy automation only");
+    }
+    processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
+    check(waitForGui([&] { return hasSubControls(true)
+        && subStatusIs("SUB: ORIGINAL FUNCTIONS"); }),
+          "main SUB controls rebind original parameters and report original status through editor timer");
+    const float oldWave = processor.getParamValue(cs80::P_subWave);
+    processor.setParamValue(cs80::P_subOriginalFunction, 0.0f);
+    if (auto* knob = findParameterControl(editor, cs80::P_subOriginalFunction))
+    {
+        check(waitForGui([&] { return knob->getSlider().getValue() == 0.0; }),
+              "original function host automation reaches main control");
+        auto* parameter = processor.getAPVTS().getParameter("sub_original_function");
+        GestureProbe probe;
+        parameter->addListener(&probe);
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        parameter->removeListener(&probe);
+        check(processor.getParamValue(cs80::P_subOriginalFunction) == 1.0f
+                  && processor.getParamValue(cs80::P_subWave) == oldWave,
+              "original main function edits original automation only");
+        check(probe.begins == 1 && probe.ends == 1 && probe.malformedGestures == 0
+                  && probe.unbracketedChanges == 0,
+              "rebound original function retains balanced keyboard automation gestures");
+    }
+    processor.setParamValue(cs80::P_subSpeed, 7.0f);
+    processor.setParamValue(cs80::P_subOriginalSpeed, 12.0f);
+    if (auto* knob = findParameterControl(editor, cs80::P_subOriginalSpeed))
+    {
+        check(waitForGui([&] { return std::abs(knob->getSlider().getValue() - 12.0) < 0.0001; }),
+              "original speed host automation reaches rebound main control");
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        check(processor.getParamValue(cs80::P_subOriginalSpeed) > 12.0f
+                  && std::abs(processor.getParamValue(cs80::P_subSpeed) - 7.0f) < 0.0001f,
+              "original main speed edits leave legacy automation untouched");
+    }
+    processor.setParamValue(cs80::P_subOriginalFunction, 5.0f);
+    check(waitForGui([&] { return subStatusIs("SUB: EXT DISCONNECTED / SILENT"); }),
+          "external function visibly reports disconnected silent input");
+    auto editorLegacyState = processor.getAPVTS().copyState();
+    editorLegacyState.removeChild(editorLegacyState.getChildWithProperty("id", "sub_original_mode"), nullptr);
+    auto editorLegacyXml = editorLegacyState.createXml();
+    const auto editorLegacyText = editorLegacyXml->toString();
+    processor.setStateInformation(editorLegacyText.toRawUTF8(), editorLegacyText.getNumBytesAsUTF8());
+    check(waitForGui([&] { return hasSubControls(false); }),
+          "restoring old state with open editor rebinds legacy controls safely");
+    check(processor.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+          "open editor does not override missing-mode legacy migration");
+    processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
+    check(waitForGui([&] { return hasSubControls(true); }),
+          "original controls can be restored after legacy state migration");
+
     auto save = [&](const juce::String& name) {
         validateVisibleControls(editor);
         auto image = editor.createComponentSnapshot(editor.getLocalBounds(), true, 1.0f);
@@ -887,6 +1125,13 @@ int main(int argc, char** argv)
 
     validateKeyboardControls(editor);
     check(countHardwareSliders(editor) >= 40, "main instrument uses hardware slider banks");
+    processor.setParamValue(cs80::P_subOriginalMode, 0.0f);
+    check(waitForGui([&] { return hasSubControls(false); }), "legacy screenshot controls ready");
+    save("main-legacy-1600x1000");
+    processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
+    processor.setParamValue(cs80::P_subOriginalFunction, 0.0f);
+    check(waitForGui([&] { return hasSubControls(true)
+        && subStatusIs("SUB: ORIGINAL FUNCTIONS"); }), "original screenshot controls and status ready");
     save("main-1600x1000");
 
     editor.setSize(1200, 760);
@@ -1017,6 +1262,10 @@ int main(int argc, char** argv)
     // User preset save/load path. This touches the per-user application data
     // directory, which is created on demand by the processor.
     const juce::String smokePresetName = "UI Smoke Preset " + juce::Uuid().toString();
+    processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
+    processor.setParamValue(cs80::P_subOriginalFunction, 5.0f);
+    processor.setParamValue(cs80::P_subOriginalSpeed, 0.7f);
+    processor.setParamValue(cs80::P_subExtLevel, 0.3f);
     processor.saveUserPreset(smokePresetName);
     const auto files = processor.getUserPresetFiles();
     bool found = false;
@@ -1030,6 +1279,32 @@ int main(int argc, char** argv)
             if (file.getFileNameWithoutExtension() == smokePresetName)
                 processor.loadUserPreset(file);
         check(processor.getPresetName() == smokePresetName, "user preset loaded");
+        check(processor.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                  && processor.getParamValue(cs80::P_subOriginalFunction) == 5.0f
+                  && std::abs(processor.getParamValue(cs80::P_subOriginalSpeed) - 0.7f) < 0.00001f
+                  && std::abs(processor.getParamValue(cs80::P_subExtLevel) - 0.3f) < 0.00001f,
+              "user preset round-trips original SUB controls including disconnected EXT");
+        for (const auto& file : processor.getUserPresetFiles())
+            if (file.getFileNameWithoutExtension() == smokePresetName)
+            {
+                auto xml = juce::XmlDocument::parse(file);
+                check(xml != nullptr && xml->getIntAttribute("subOscStateVersion", 0) == 1,
+                      "user preset records original SUB migration version");
+                if (!xml) continue;
+                auto oldUserState = juce::ValueTree::fromXml(*xml);
+                for (const auto* id : originalSubIds)
+                    oldUserState.removeChild(oldUserState.getChildWithProperty("id", id), nullptr);
+                oldUserState.removeProperty("subOscStateVersion", nullptr);
+                auto oldXml = oldUserState.createXml();
+                check(oldXml->writeTo(file), "legacy user preset fixture written");
+                processor.loadUserPreset(file);
+                check(processor.getParamValue(cs80::P_subOriginalMode) == 0.0f
+                          && processor.getParamValue(cs80::P_subOriginalFunction) == 0.0f
+                          && std::abs(processor.getParamValue(cs80::P_subOriginalSpeed) - 4.2f) < 0.00001f
+                          && processor.getParamValue(cs80::P_subExtLevel) == 0.0f,
+                      "legacy user preset clears stale original mode and controls");
+            }
+
         for (const auto& file : processor.getUserPresetFiles())
             if (file.getFileNameWithoutExtension() == smokePresetName)
                 file.deleteFile();

@@ -37,6 +37,9 @@ Cs80AudioProcessor::Cs80AudioProcessor()
         }
     if (!getFactoryPresets().empty())
         applyValues(getFactoryPresets()[0].values);
+    // Fresh instances present the original six-function panel. Factory bank0
+    // itself remains unchanged/legacy when explicitly selected or restored.
+    setParamValue(cs80::P_subOriginalMode, 1.0f);
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
@@ -44,7 +47,8 @@ Cs80AudioProcessor::Cs80AudioProcessor()
     // soon as the processor exists. prepareToPlay repeats this for hosts that
     // query latency only after a sample-rate change.
     setLatencySamples(engine.getLatencySamples());
-    presetName = getFactoryPresets().empty() ? "Init Patch" : juce::String(getFactoryPresets()[0].name);
+    presetName = (getFactoryPresets().empty() ? juce::String("Init Patch")
+                 : juce::String(getFactoryPresets()[0].name)) + " / Original SUB";
     currentProgram = 0;
 }
 
@@ -99,8 +103,16 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
         }
     // Core extension index122 is NOT host index122: keep all 228 existing
     // host indexes stable, and use a later AU version hint to preserve AU order.
-    for (int i = cs80::P_legacyNumParams; i < cs80::P_numParams; ++i)
-        add(i, 3);
+    add(cs80::P_subAtVcf, 3); // shipped host228 / AUhint3 stays fixed
+    layout.add(std::make_unique<juce::AudioParameterBool>(
+        juce::ParameterID { parameterId(cs80::P_subOriginalMode), 4 },
+        "Original SUB mode", true));
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_subOriginalFunction), 4 },
+        "Original SUB function",
+        juce::StringArray { "Sine", "Saw down", "Saw up", "Square", "Noise", "EXT (disconnected)" }, 0));
+    add(cs80::P_subOriginalSpeed, 4);
+    add(cs80::P_subExtLevel, 4);
     return layout;
 }
 
@@ -424,13 +436,16 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         }
         float value = (float) child.getProperty("value", fallback);
         if (!std::isfinite(value)) value = fallback;
+        if (id == parameterId(cs80::P_subOriginalMode) && value != 0.0f && value != 1.0f)
+            value = 0.0f;
         // Round discrete choices/switches and clamp to the declared range.
         const auto& range = p->getNormalisableRange();
         value = range.snapToLegalValue(juce::jlimit(range.start, range.end, value));
         child.setProperty("value", value, nullptr);
     };
     for (int i = 0; i < cs80::P_numParams; ++i)
-        ensure(parameterId(i), cs80::paramDef(i).def);
+        // Missing/invalid mode means old session, NOT the fresh-instance default.
+        ensure(parameterId(i), i == cs80::P_subOriginalMode ? 0.0f : cs80::paramDef(i).def);
     for (int channel = 0; channel < 2; ++channel)
     {
         float value = legacy ? (float) hardware.getProperty(channel == 0 ? "sourceI" : "sourceII", 13) : 13.0f;
@@ -490,6 +505,7 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     const auto metadata = getPresetMetadata();
     state.setProperty("presetName", metadata.name, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
+    state.setProperty("subOscStateVersion", 1, nullptr);
     if (auto xml = state.createXml())
     {
         auto text = xml->toString();
@@ -534,6 +550,7 @@ void Cs80AudioProcessor::saveUserPreset(const juce::String& name)
     auto state = apvts.copyState();
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
+    state.setProperty("subOscStateVersion", 1, nullptr);
     if (auto xml = state.createXml())
         xml->writeTo(file);
     setPresetName(savedName);

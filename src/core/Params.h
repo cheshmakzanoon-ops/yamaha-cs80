@@ -127,6 +127,10 @@ enum : int
     P_legacyNumParams = P_ch2Start + CP_count,
     // Extensions must follow both legacy channel blocks; never shift their IDs.
     P_subAtVcf = P_legacyNumParams,
+    P_subOriginalMode,
+    P_subOriginalFunction,
+    P_subOriginalSpeed,
+    P_subExtLevel,
     P_numParams
 };
 
@@ -265,7 +269,11 @@ static_assert(std::size(kGlobalDefs) == P_numGlobals, "global parameter table si
 static_assert(std::size(kChannelDefs) == CP_count, "channel parameter table size mismatch");
 
 inline constexpr ParamDef kExtensionDefs[] = {
-    { "sub_at_vcf", "AT VCF", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" }
+    { "sub_at_vcf", "AT VCF", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" },
+    { "sub_original_mode", "ORIGINAL SUB MODE", 0.0f, 1.0f, 1.0f, 1.0f, "", "SUB OSC" },
+    { "sub_original_function", "ORIGINAL SUB FUNCTION", 0.0f, 5.0f, 0.0f, 1.0f, "", "SUB OSC" },
+    { "sub_original_speed", "ORIGINAL SUB SPEED", 0.7f, 60.0f, 4.2f, 0.35f, "Hz", "SUB OSC" },
+    { "sub_ext_level", "EXT INPUT LEVEL (DISCONNECTED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "SUB OSC" }
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

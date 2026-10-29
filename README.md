@@ -26,7 +26,7 @@ The [dedicated screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha
 | Effects | BBD-style stereo chorus/tremolo plus three serial modern FX slots |
 | Performance | Arpeggiator, sustain II, portamento/glissando, pitch-bend range, A4 tuning |
 | Presets | 222 factory programs: 22 provisional hardware-tab studies + 200 original performance patches |
-| Parameters | 229 host-automatable parameters: 122 original + 106 programmer/selector controls + AT VCF |
+| Parameters | 233 host-automatable parameters: 122 original + 106 programmer/selector controls + AT VCF + 4 original-SUB controls |
 | Formats | VST3 and Standalone everywhere; AU on macOS |
 | Verification | Core regression suite + numerical DSP probes + plugin/UI smoke test + pluginval 1.0.4 strictness 10 on Linux VST3, macOS VST3/AU, and Windows VST3; GUI tests on Linux and macOS AU |
 
@@ -49,6 +49,9 @@ The modern layer is kept behind its own surface so the primary instrument remain
 | Searchable preset library | [browser-1600x1000.png](docs/screenshots/browser-1600x1000.png) |
 
 ## Hardware programmer and reconstruction changes
+
+Fresh instances now use the [original six-position SUB function set](docs/ORIGINAL_SUB_OSCILLATOR.md) and nominal0.7–60 Hz basic range. Existing factory programs and old saved states retain the legacy waveforms/range and normalized automation. Advanced exposes the compatibility switch. EXT is visibly **disconnected and silent** until its optional input bus is implemented; its reserved LEVEL control is disabled in the editor. Waveform shapes, noise spectrum and touch/rate laws remain provisional.
+
 
 Initial pitch bend now uses a [source-derived nominal 50ms positive-onset response](docs/INITIAL_PITCH_TRANSIENT.md), with state independent of the live PB depth control. The [shared pressure-to-speed bus](docs/SHARED_PRESSURE_SPEED.md) uses the maximum active held-key pressure instead of the most recent event. Both are explicitly bounded circuit-informed approximations, not measured complete touch circuitry.
 
