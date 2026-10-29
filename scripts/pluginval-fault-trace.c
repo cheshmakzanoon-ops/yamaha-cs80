@@ -14,7 +14,7 @@ static atomic_flag active = ATOMIC_FLAG_INIT;
 static void emit(const char *text, size_t n)
 {
     /* One bounded write; failed/partial output must not prevent termination. */
-    (void) write(TRACE_FD, text, n);
+    if (write(TRACE_FD, text, n) < 0) return;
 }
 static size_t hex(char *out, uintptr_t value)
 {
