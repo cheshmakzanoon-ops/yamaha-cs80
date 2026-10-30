@@ -3423,6 +3423,16 @@ int main(int argc, char** argv)
         }
         else check(false, "miniature switch discoverable");
         save("memory-programmer-1600x1000");
+        if (auto* memory = findButton(editor, "MEMORY 2"))              // lit-row state of the lid
+        {
+            juce::MemoryBlock beforeSelect;
+            processor.getStateInformation(beforeSelect);
+            memory->triggerClick();
+            flushGui(100);
+            save("memory-programmer-selected-1600x1000");
+            processor.setStateInformation(beforeSelect.getData(), (int) beforeSelect.getSize());
+            flushGui(100);
+        }
         if (auto* close = findButton(editor, "CLOSE LID"))
         {
             close->triggerClick();
