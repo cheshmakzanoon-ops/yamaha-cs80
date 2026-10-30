@@ -25,7 +25,7 @@ const juce::Colour gold { 0xffcdb878 };
 const juce::Colour capCream { 0xffdcd8c4 };
 const juce::Colour capGreen { 0xff2b9a50 };
 const juce::Colour capPink { 0xffe0205f };
-const juce::Colour capYellow { 0xffe9e03e };
+const juce::Colour capYellow { 0xfff0cc3a };
 const juce::Colour capBlack { 0xff1a1a1f };
 const juce::Colour capGrey { 0xffbdb7ae };
 
@@ -437,16 +437,19 @@ void paintRockerBody(juce::Graphics& g, juce::Rectangle<float> a, bool on, bool 
     }
 
     // Raised half: moulded face, brightest at the crest that faces the light.
-    juce::Colour crest = juce::Colour(0xff5c5c65).brighter(lift);
-    juce::Colour root = juce::Colour(0xff1c1c21);
+    juce::Colour crest = juce::Colour(0xff7a7a85).brighter(lift);
+    juce::Colour root = juce::Colour(0xff24242a);
     g.setGradientFill(juce::ColourGradient(on ? root : crest, raised.getX(), raised.getY(),
                                            on ? crest : root, raised.getX(), raised.getBottom(), false));
     g.fillRoundedRectangle(raised, 2.0f);
-    g.setColour(whiteInk(0.38f));
-    const float crestY = on ? raised.getY() + 0.8f : raised.getY() + 0.8f;
+    // Rim highlight: a bright crest line and a lit left edge pull the raised half off the black well.
+    g.setColour(whiteInk(0.62f));
+    const float crestY = raised.getY() + 0.8f;
     g.drawLine(raised.getX() + 2.0f, crestY, raised.getRight() - 2.0f, crestY, 1.0f);
-    g.setColour(whiteInk(0.14f));
+    g.setColour(whiteInk(0.26f));
     g.drawLine(raised.getX() + 0.8f, raised.getY() + 2.0f, raised.getX() + 0.8f, raised.getBottom() - 2.0f, 1.0f);
+    g.setColour(whiteInk(0.18f));
+    g.drawLine(raised.getX() + 2.0f, raised.getBottom() - 0.8f, raised.getRight() - 2.0f, raised.getBottom() - 0.8f, 1.0f);
     g.setColour(blackInk(0.45f));
     g.drawLine(raised.getRight() - 0.7f, raised.getY() + 2.0f, raised.getRight() - 0.7f, raised.getBottom() - 2.0f, 1.0f);
 
@@ -472,7 +475,7 @@ void paintRockerBody(juce::Graphics& g, juce::Rectangle<float> a, bool on, bool 
     g.drawLine(body.getX() + 1.0f, pivot + 1.1f, body.getRight() - 1.0f, pivot + 1.1f, 0.8f);
 
     // Tiny lamp at the top of the rocker: lit when the rocker is down for ON.
-    drawJewelLamp(g, { body.getCentreX(), upper.getY() + 4.2f }, juce::jlimit(1.3f, 2.1f, a.getWidth() * 0.055f),
+    drawJewelLamp(g, { body.getCentreX(), upper.getY() + 4.6f }, juce::jlimit(1.5f, 2.4f, a.getWidth() * 0.062f),
                   juce::Colour(0xffff8a30), on);
 }
 
@@ -769,6 +772,35 @@ void drawEngravedText(juce::Graphics& g, const juce::String& text, juce::Rectang
     g.drawFittedText(text, box, justification, maxLines, 0.5f);
 }
 
+juce::Font controlCaptionFont(float areaHeight)
+{
+    auto f = displayFont(juce::jlimit(8.5f, 11.5f, areaHeight * 0.78f), juce::Font::bold);
+    f.setExtraKerningFactor(0.055f);
+    return f;
+}
+
+void drawControlCaption(juce::Graphics& g, const juce::String& text, juce::Rectangle<float> area,
+                        juce::Justification justification, float fontSize)
+{
+    auto font = controlCaptionFont(area.getHeight());
+    if (fontSize > 0.0f)
+        font.setHeight(juce::jmax(8.0f, fontSize));
+    drawEngravedText(g, text, area, font, justification, ivory.withAlpha(0.95f));
+}
+
+void drawValuePill(juce::Graphics& g, const juce::String& text, juce::Rectangle<float> area, float fontSize)
+{
+    const float size = fontSize > 0.0f ? fontSize : juce::jlimit(9.5f, 12.0f, area.getHeight() * 0.80f);
+    const auto font = displayFont(size, juce::Font::plain);
+    const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, text);
+    const float pw = juce::jmin(area.getWidth(), tw + 12.0f);
+    const juce::Rectangle<float> pill(area.getCentreX() - pw * 0.5f, area.getY(), pw, area.getHeight());
+    drawGlassPanel(g, pill, 3.0f, juce::Colour(0xff0b0a08), 0.45f);
+    g.setFont(font);
+    g.setColour(amberBright.withAlpha(0.95f));
+    g.drawFittedText(text, pill.toNearestInt(), juce::Justification::centred, 1, 0.6f);
+}
+
 void drawLampGlow(juce::Graphics& g, juce::Point<float> c, float radius, juce::Colour colour, float intensity)
 {
     if (intensity <= 0.0f || radius <= 0.0f)
@@ -793,56 +825,65 @@ void drawJewelLamp(juce::Graphics& g, juce::Point<float> c, float r, juce::Colou
     g.fillEllipse(c.x - rb, c.y - rb, rb * 2.0f, rb * 2.0f);
     g.setColour(blackInk(0.65f));
     g.fillEllipse(c.x - r * 1.04f, c.y - r * 1.04f, r * 2.08f, r * 2.08f);
-    juce::ColourGradient jewel(on ? colour.brighter(0.9f) : colour.darker(0.65f).withMultipliedBrightness(0.7f),
+    // Off: dark smoked glass with only a trace of the lamp colour, so it never reads as lit.
+    const auto dark = juce::Colour(0xff0c0a09).interpolatedWith(colour, 0.10f);
+    juce::ColourGradient jewel(on ? colour.brighter(0.9f) : dark.brighter(0.25f),
                                c.x - r * 0.28f, c.y - r * 0.34f,
-                               on ? colour.darker(0.35f) : juce::Colour(0xff0a0504), c.x + r * 0.8f, c.y + r * 0.9f, true);
-    jewel.addColour(0.55, on ? colour : colour.darker(0.8f));
+                               on ? colour.darker(0.35f) : juce::Colour(0xff040302), c.x + r * 0.8f, c.y + r * 0.9f, true);
+    jewel.addColour(0.55, on ? colour : dark);
     g.setGradientFill(jewel);
     g.fillEllipse(c.x - r, c.y - r, r * 2.0f, r * 2.0f);
-    g.setColour(whiteInk(on ? 0.75f : 0.18f));
+    g.setColour(whiteInk(on ? 0.75f : 0.10f));
     g.fillEllipse(c.x - r * 0.5f, c.y - r * 0.62f, r * 0.55f, r * 0.42f);
 }
 
 void drawFaderSlot(juce::Graphics& g, float cx, float top, float bottom, float s)
 {
-    const float slotW = 5.6f * s;
+    const float slotW = 7.4f * s;
     const float rr = slotW * 0.5f;
     const juce::Rectangle<float> body(cx - rr, top, slotW, bottom - top);
     // Cut edge: lit chamfer on the lower right, shadowed wall on the upper left.
-    g.setColour(whiteInk(0.11f));
-    g.fillRoundedRectangle(body.expanded(0.7f * s).translated(0.45f * s, 0.9f * s), rr + 0.7f * s);
-    g.setColour(blackInk(0.60f));
-    g.fillRoundedRectangle(body.expanded(0.8f * s).translated(-0.35f * s, -0.7f * s), rr + 0.8f * s);
-    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff010101), body.getX(), 0.0f,
-                                           juce::Colour(0xff0d0c0b), body.getRight(), 0.0f, false));
+    g.setColour(whiteInk(0.17f));
+    g.fillRoundedRectangle(body.expanded(0.7f * s).translated(0.5f * s, 0.95f * s), rr + 0.7f * s);
+    g.setColour(blackInk(0.75f));
+    g.fillRoundedRectangle(body.expanded(0.9f * s).translated(-0.4f * s, -0.8f * s), rr + 0.9f * s);
+    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff000000), body.getX(), 0.0f,
+                                           juce::Colour(0xff0a0908), body.getRight(), 0.0f, false));
     g.fillRoundedRectangle(body, rr);
     {
         juce::Graphics::ScopedSaveState state(g);
         juce::Path clip;
         clip.addRoundedRectangle(body, rr);
         g.reduceClipRegion(clip);
-        g.setGradientFill(juce::ColourGradient(blackInk(0.9f), 0.0f, body.getY(),
-                                               juce::Colours::transparentBlack, 0.0f, body.getY() + 9.0f * s, false));
+        // Inner shadow: a crisp 1px wall on the upper left plus a soft falloff, so the slot reads as cut in.
+        g.setGradientFill(juce::ColourGradient(blackInk(0.95f), 0.0f, body.getY(),
+                                               juce::Colours::transparentBlack, 0.0f, body.getY() + 10.0f * s, false));
         g.fillRect(body);
-        g.setGradientFill(juce::ColourGradient(blackInk(0.8f), body.getX(), 0.0f,
-                                               juce::Colours::transparentBlack, body.getX() + 2.4f * s, 0.0f, false));
+        g.setGradientFill(juce::ColourGradient(blackInk(0.9f), body.getX(), 0.0f,
+                                               juce::Colours::transparentBlack, body.getX() + 2.8f * s, 0.0f, false));
         g.fillRect(body);
-        // Lit inner wall on the right.
-        g.setColour(whiteInk(0.10f));
-        g.fillRect(body.getRight() - 0.9f * s, body.getY() + 3.0f * s, 0.9f * s, body.getHeight() - 6.0f * s);
+        g.setColour(blackInk(1.0f));
+        g.fillRect(body.getX(), body.getY(), body.getWidth(), 1.0f);
+        g.fillRect(body.getX(), body.getY(), 1.0f, body.getHeight());
+        // Lit inner wall on the lower right.
+        g.setColour(whiteInk(0.13f));
+        g.fillRect(body.getRight() - 1.0f, body.getY() + 3.0f * s, 1.0f, body.getHeight() - 6.0f * s);
 
-        // The metal rail seated in the slot: a polished rod, lit from the left.
-        const juce::Rectangle<float> rail(cx - 0.95f * s, body.getY() + 1.2f * s, 1.9f * s, body.getHeight() - 2.4f * s);
-        juce::ColourGradient rod(juce::Colour(0xffd6d3c8), rail.getX(), 0.0f, juce::Colour(0xff1d1c1a), rail.getRight(), 0.0f, false);
-        rod.addColour(0.30, juce::Colour(0xffb4b1a6));
-        rod.addColour(0.62, juce::Colour(0xff5b5953));
+        // The rod seated in the slot: dull steel, lit only on its left edge. Deliberately dim, so it
+        // never reads as a bright value-fill stem above the cap.
+        const juce::Rectangle<float> rail(cx - 0.8f * s, body.getY() + 1.2f * s, 1.6f * s, body.getHeight() - 2.4f * s);
+        juce::ColourGradient rod(juce::Colour(0xff8e8a7e), rail.getX(), 0.0f, juce::Colour(0xff161513), rail.getRight(), 0.0f, false);
+        rod.addColour(0.30, juce::Colour(0xff6b685e));
+        rod.addColour(0.65, juce::Colour(0xff34322e));
         g.setGradientFill(rod);
         g.fillRect(rail);
-        g.setGradientFill(juce::ColourGradient(blackInk(0.65f), 0.0f, rail.getY(),
-                                               juce::Colours::transparentBlack, 0.0f, rail.getY() + 6.0f * s, false));
+        g.setColour(blackInk(0.30f));
+        g.fillRect(rail);
+        g.setGradientFill(juce::ColourGradient(blackInk(0.75f), 0.0f, rail.getY(),
+                                               juce::Colours::transparentBlack, 0.0f, rail.getY() + 8.0f * s, false));
         g.fillRect(rail);
         g.setGradientFill(juce::ColourGradient(blackInk(0.55f), 0.0f, rail.getBottom(),
-                                               juce::Colours::transparentBlack, 0.0f, rail.getBottom() - 6.0f * s, false));
+                                               juce::Colours::transparentBlack, 0.0f, rail.getBottom() - 8.0f * s, false));
         g.fillRect(rail);
     }
 }
@@ -858,6 +899,9 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
     const juce::Rectangle<float> face(centre.x - faceW * 0.5f - lift, centre.y - faceH * 0.5f - lift, faceW, faceH);
     const float rad = 1.7f * s;
     const bool pale = c.getPerceivedBrightness() > 0.60f;
+    const bool dark = c.getPerceivedBrightness() < 0.30f;
+    // Dark plastic is lifted toward a charcoal so the top face does not sink into the panel.
+    const juce::Colour fc = dark ? c.brighter(0.42f) : c;
 
     // Hover / drag: warm light spilling around the cap.
     if (hover || drag)
@@ -886,13 +930,13 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
     g.drawLine(face.getX() + ex, face.getBottom() + ey - 0.4f, face.getRight() + ex, face.getBottom() + ey - 0.4f, 0.9f);
 
     // Top face: moulded chamfer ring, then the glossy plateau.
-    g.setGradientFill(juce::ColourGradient(c.brighter(pale ? 0.45f : 0.85f), face.getX(), face.getY(),
-                                           c.darker(0.40f), face.getRight(), face.getBottom(), false));
+    g.setGradientFill(juce::ColourGradient(fc.brighter(pale ? 0.45f : 0.85f), face.getX(), face.getY(),
+                                           fc.darker(0.40f), face.getRight(), face.getBottom(), false));
     g.fillRoundedRectangle(face, rad);
     const auto plate = face.reduced(1.25f * s);
     const float lightUp = drag ? 0.14f : (hover ? 0.08f : 0.0f);
-    g.setGradientFill(juce::ColourGradient(c.brighter(0.30f + lightUp), plate.getX(), plate.getY(),
-                                           c.darker(0.16f - lightUp * 0.5f), plate.getX(), plate.getBottom(), false));
+    g.setGradientFill(juce::ColourGradient(fc.brighter(0.30f + lightUp), plate.getX(), plate.getY(),
+                                           fc.darker(0.16f - lightUp * 0.5f), plate.getX(), plate.getBottom(), false));
     g.fillRoundedRectangle(plate, rad * 0.7f);
     {
         juce::Graphics::ScopedSaveState state2(g);
@@ -900,9 +944,18 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
         clip.addRoundedRectangle(plate, rad * 0.7f);
         g.reduceClipRegion(clip);
         // Glossy sheen: a diagonal window reflection from the upper left.
-        g.setGradientFill(juce::ColourGradient(whiteInk(pale ? 0.34f : 0.26f), plate.getX(), plate.getY(),
+        g.setGradientFill(juce::ColourGradient(whiteInk(pale ? 0.34f : (dark ? 0.34f : 0.26f)), plate.getX(), plate.getY(),
                                                whiteInk(0.0f), plate.getX() + plate.getWidth() * 0.55f, plate.getY() + plate.getHeight() * 0.85f, false));
         g.fillRect(plate);
+        // Window reflection: a slanted bright streak across the plastic.
+        {
+            juce::Path streak;
+            const float pw = plate.getWidth();
+            streak.addQuadrilateral(plate.getX() + pw * 0.14f, plate.getY(), plate.getX() + pw * 0.34f, plate.getY(),
+                                    plate.getX() + pw * 0.18f, plate.getBottom(), plate.getX() - pw * 0.02f, plate.getBottom());
+            g.setColour(whiteInk(pale ? 0.30f : 0.20f));
+            g.fillPath(streak);
+        }
         g.setColour(blackInk(0.18f));
         g.fillRect(plate.getX(), plate.getBottom() - 1.4f * s, plate.getWidth(), 1.4f * s);
 
@@ -922,16 +975,36 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
         const float lw = juce::jmax(1.0f, 1.3f * s);
         g.setColour(blackInk(0.45f));
         g.fillRect(plate.getX() + 1.5f * s, yc - lw * 0.5f + 0.9f, plate.getWidth() - 3.0f * s, lw);
-        g.setColour(pale ? juce::Colour(0xff2a2822) : juce::Colour(0xfff1ead2));
-        g.fillRect(plate.getX() + 1.5f * s, yc - lw * 0.5f, plate.getWidth() - 3.0f * s, lw);
+        if (pale)
+        {
+            g.setColour(juce::Colour(0xff2a2822));
+            g.fillRect(plate.getX() + 1.5f * s, yc - lw * 0.5f, plate.getWidth() - 3.0f * s, lw);
+        }
+        else
+        {
+            // Bright cream index ridge with a little light spilling onto the plastic either side.
+            g.setColour(juce::Colour(0xffffefc4).withAlpha(0.20f));
+            g.fillRect(plate.getX() + 1.5f * s, yc - lw * 1.4f, plate.getWidth() - 3.0f * s, lw * 2.8f);
+            g.setColour(juce::Colour(0xfffff6dc));
+            g.fillRect(plate.getX() + 1.5f * s, yc - lw * 0.5f, plate.getWidth() - 3.0f * s, lw);
+        }
     }
-    // Specular edge and glint.
-    g.setColour(whiteInk(pale ? 0.80f : 0.65f));
-    g.drawLine(face.getX() + rad, face.getY() + 0.55f, face.getRight() - rad, face.getY() + 0.55f, 0.9f);
-    g.setColour(whiteInk(0.35f));
-    g.drawLine(face.getX() + 0.55f, face.getY() + rad, face.getX() + 0.55f, face.getBottom() - rad, 0.9f);
-    g.setColour(whiteInk(pale ? 0.75f : 0.45f));
-    g.fillEllipse(plate.getX() + 1.6f * s, plate.getY() + 1.2f * s, 2.6f * s, 1.3f * s);
+    // Rim light on the upper-left edges and a clear specular glint.
+    g.setColour(whiteInk(pale ? 0.85f : (dark ? 0.95f : 0.70f)));
+    g.drawLine(face.getX() + rad, face.getY() + 0.55f, face.getRight() - rad, face.getY() + 0.55f, dark ? 1.1f : 0.9f);
+    g.setColour(whiteInk(dark ? 0.62f : 0.38f));
+    g.drawLine(face.getX() + 0.55f, face.getY() + rad, face.getX() + 0.55f, face.getBottom() - rad, dark ? 1.1f : 0.9f);
+    if (! pale)
+    {
+        // A faint halo just outside the top-left edge separates dark plastic from the dark panel.
+        g.setColour(whiteInk(dark ? 0.26f : 0.12f));
+        g.drawLine(face.getX() + rad, face.getY() - 0.5f, face.getRight() - rad, face.getY() - 0.5f, 1.0f);
+        g.drawLine(face.getX() - 0.5f, face.getY() + rad, face.getX() - 0.5f, face.getBottom() - rad, 1.0f);
+    }
+    g.setColour(whiteInk(pale ? 0.90f : (dark ? 0.70f : 0.60f)));
+    g.fillEllipse(plate.getX() + 1.4f * s, plate.getY() + 1.0f * s, 3.6f * s, 1.8f * s);
+    g.setColour(whiteInk(pale ? 0.5f : 0.35f));
+    g.fillEllipse(plate.getX() + 2.0f * s, plate.getY() + 1.5f * s, 7.0f * s, 1.1f * s);
     if (hover || drag)
     {
         g.setColour(juce::Colour(0xfff6df91).withAlpha(drag ? 0.80f : 0.50f));
@@ -949,10 +1022,10 @@ void drawSatinPlate(juce::Graphics& g, juce::Rectangle<float> bounds, bool on, b
     if (pressed)
         softShadow(g, face, rad, 0.0f, 0.8f, 1.4f, 0.55f);
     else
-        softShadow(g, face, rad, 0.0f, 2.3f, 2.6f, 0.75f);
+        softShadow(g, face, rad, 0.5f, 3.0f, 3.0f, 0.92f);
 
-    juce::Colour top = on ? juce::Colour(0xff4d3f27) : juce::Colour(0xff4d4a45);
-    juce::Colour bottom = on ? juce::Colour(0xff271d10) : juce::Colour(0xff252320);
+    juce::Colour top = on ? juce::Colour(0xff64512f) : juce::Colour(0xff6a665f);
+    juce::Colour bottom = on ? juce::Colour(0xff2a2011) : juce::Colour(0xff262421);
     if (pressed)
     {
         top = top.darker(0.35f);
@@ -986,12 +1059,13 @@ void drawSatinPlate(juce::Graphics& g, juce::Rectangle<float> bounds, bool on, b
                                                juce::Colours::transparentWhite, face.getX(), face.getY() + face.getHeight() * 0.5f, false));
         g.fillRect(face);
     }
-    g.setColour(whiteInk(pressed ? 0.06f : 0.26f));
+    g.setColour(whiteInk(pressed ? 0.08f : 0.52f));
     g.drawLine(face.getX() + rad, face.getY() + 1.0f, face.getRight() - rad, face.getY() + 1.0f, 1.0f);
-    g.setColour(whiteInk(pressed ? 0.03f : 0.10f));
+    g.setColour(whiteInk(pressed ? 0.04f : 0.24f));
     g.drawLine(face.getX() + 1.0f, face.getY() + rad, face.getX() + 1.0f, face.getBottom() - rad, 1.0f);
-    g.setColour(blackInk(0.40f));
+    g.setColour(blackInk(0.55f));
     g.drawLine(face.getX() + rad, face.getBottom() - 1.0f, face.getRight() - rad, face.getBottom() - 1.0f, 1.0f);
+    g.drawLine(face.getRight() - 1.0f, face.getY() + rad, face.getRight() - 1.0f, face.getBottom() - rad, 1.0f);
     g.setColour(on ? juce::Colour(0xffd9a640).withAlpha(0.80f) : blackInk(0.9f));
     g.drawRoundedRectangle(face, rad, on ? 1.2f : 1.0f);
 
@@ -1181,13 +1255,62 @@ struct TabGeometry
 };
 
 // Tabs travel down and to the right when latched or pressed, so the front and right faces shrink.
+// The face leaves a margin of bezel all round, where the lit lamp bleeds its halo.
 TabGeometry tabGeometry(juce::Rectangle<float> b, bool lit, bool pressed)
 {
-    const float m = juce::jlimit(1.2f, 2.6f, b.getWidth() * 0.065f);
+    const float m = juce::jlimit(1.8f, 3.2f, b.getWidth() * 0.08f);
     const float d = juce::jlimit(1.8f, 3.2f, b.getWidth() * 0.08f);
     const float travel = pressed ? d * 0.8f : (lit ? d * 0.45f : 0.0f);
     return { b.reduced(m).withTrimmedRight(d).withTrimmedBottom(d).translated(travel, travel), d - travel,
              juce::jlimit(1.6f, 3.2f, b.getWidth() * 0.07f) };
+}
+
+float relativeLuminance(juce::Colour c)
+{
+    auto lin = [](float v) { return v <= 0.03928f ? v / 12.92f : std::pow((v + 0.055f) / 1.055f, 2.4f); };
+    return 0.2126f * lin(c.getFloatRed()) + 0.7152f * lin(c.getFloatGreen()) + 0.0722f * lin(c.getFloatBlue());
+}
+
+float contrastBetween(juce::Colour a, juce::Colour b)
+{
+    const float la = relativeLuminance(a), lb = relativeLuminance(b);
+    return (juce::jmax(la, lb) + 0.05f) / (juce::jmin(la, lb) + 0.05f);
+}
+
+// Translucent plastic: dull and dim while the lamp is off, bright with the lamp rising from the
+// bottom when lit. The printed ink is picked for contrast against the plastic as lit or unlit.
+struct TabPlastic
+{
+    juce::Colour body, top, mid, bottom, lamp, ink;
+};
+
+TabPlastic tabPlastic(juce::Colour c, bool lit)
+{
+    float h = 0.0f, sat = 0.0f, v = 0.0f;
+    c.getHSB(h, sat, v);
+    TabPlastic p;
+    if (lit)
+    {
+        p.body = c;
+        p.top = juce::Colour::fromHSV(h, sat * 0.95f, juce::jmin(1.0f, v * 0.94f + 0.02f), 1.0f);
+        p.mid = juce::Colour::fromHSV(h, sat * 0.80f, juce::jmin(1.0f, v * 1.02f + 0.08f), 1.0f);
+        p.bottom = juce::Colour::fromHSV(h, sat * 0.58f, 1.0f, 1.0f).interpolatedWith(juce::Colour(0xfffff1c8), 0.22f);
+        p.lamp = juce::Colour::fromHSV(h, sat * 0.30f, 1.0f, 1.0f).interpolatedWith(juce::Colour(0xfffff4d0), 0.5f);
+    }
+    else
+    {
+        // Desaturated and dimmed by about 40 percent. Dim yellow shifts toward ochre, not olive.
+        if (h > 0.10f && h < 0.20f)
+            h -= 0.018f;
+        p.body = juce::Colour::fromHSV(h, sat * 0.70f, v * 0.62f, 1.0f);
+        p.top = juce::Colour::fromHSV(h, sat * 0.70f, v * 0.68f, 1.0f);
+        p.mid = juce::Colour::fromHSV(h, sat * 0.72f, v * 0.60f, 1.0f);
+        p.bottom = juce::Colour::fromHSV(h, sat * 0.74f, v * 0.46f, 1.0f);
+        p.lamp = juce::Colour(0xff17120d);
+    }
+    const juce::Colour light(0xfff6f0dc), dark(0xff15120c);
+    p.ink = contrastBetween(p.mid, dark) >= contrastBetween(p.mid, light) ? dark : light;
+    return p;
 }
 } // namespace
 
@@ -1197,22 +1320,24 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
     const auto face = geo.face;
     const float depth = geo.depth;
     const float rad = geo.radius;
+    const bool on = lit || pressed;
+    const auto pl = tabPlastic(c, on);
     const auto glow = glowFor(c);
 
-    // Lamp light bleeding onto the black bezel; it fades to nothing at the bounds.
-    if (lit)
+    // Lamp light bleeding onto the black bezel around the tab; it fades to nothing at the bounds.
+    if (on)
     {
         juce::Graphics::ScopedSaveState state(g);
         const auto centre = b.getCentre();
         g.addTransform(juce::AffineTransform::scale(1.0f, b.getHeight() / b.getWidth(), centre.x, centre.y));
-        drawLampGlow(g, centre, b.getWidth() * 0.5f, glow, 1.5f);
+        drawLampGlow(g, centre, b.getWidth() * 0.5f, glow, lit ? 1.6f : 1.1f);
     }
     // Cast shadow (tight when the tab is pushed in).
     if (depth > 0.3f)
-        softShadow(g, face, rad, depth * 0.6f, depth * 0.9f, depth * 1.1f, lit ? 0.6f : 0.85f);
+        softShadow(g, face, rad, depth * 0.6f, depth * 0.9f, depth * 1.1f, on ? 0.55f : 0.85f);
 
-    // Right and front faces.
-    const auto side = lit ? c.darker(0.55f).interpolatedWith(glow, 0.22f) : c.darker(0.62f);
+    // Right and front faces: thick translucent walls, picking up a little of the lamp when lit.
+    const auto side = on ? c.darker(0.50f).interpolatedWith(glow, 0.20f) : pl.body.darker(0.55f);
     if (depth > 0.2f)
     {
         juce::Path right;
@@ -1228,8 +1353,8 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
     }
 
     // Moulded bevel ring.
-    g.setGradientFill(juce::ColourGradient(c.brighter(lit ? 0.85f : 0.6f), face.getX(), face.getY(),
-                                           c.darker(0.45f), face.getRight(), face.getBottom(), false));
+    g.setGradientFill(juce::ColourGradient(pl.body.brighter(on ? 0.75f : 0.55f), face.getX(), face.getY(),
+                                           pl.body.darker(0.45f), face.getRight(), face.getBottom(), false));
     g.fillRoundedRectangle(face, rad);
 
     // Translucent diffuser window with the lamp behind it.
@@ -1241,57 +1366,65 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
         juce::Path clip;
         clip.addRoundedRectangle(win, wr);
         g.reduceClipRegion(clip);
-        const auto topC = lit ? c.brighter(0.68f) : c.brighter(0.02f);
-        const auto botC = lit ? c.brighter(0.22f) : c.darker(0.42f);
-        g.setGradientFill(juce::ColourGradient(topC, win.getX(), win.getY(), botC, win.getX(), win.getBottom(), false));
+        // The lamp gradient rises from the bottom: light colour at the bulb, body colour above.
+        juce::ColourGradient body(pl.bottom, win.getX(), win.getBottom(), pl.top, win.getX(), win.getY(), false);
+        body.addColour(on ? 0.45 : 0.55, pl.mid);
+        g.setGradientFill(body);
         g.fillRect(win);
-        // The bulb behind the plastic.
-        const juce::Point<float> bulb(win.getCentreX(), win.getBottom() - win.getHeight() * 0.22f);
-        juce::ColourGradient lamp(lit ? juce::Colour(0xffffffe8).withAlpha(0.78f) : whiteInk(0.05f), bulb.x, bulb.y,
-                                  juce::Colours::transparentWhite, bulb.x + win.getWidth() * 0.9f, bulb.y, true);
-        g.setGradientFill(lamp);
-        g.fillRect(win);
+        const juce::Point<float> bulb(win.getCentreX(), win.getBottom() + win.getHeight() * 0.04f);
+        if (on)
+        {
+            // Backlight bloom: the bulb itself, then a wide soft wash up through the plastic.
+            g.setGradientFill(juce::ColourGradient(pl.lamp.withAlpha(0.95f), bulb.x, bulb.y,
+                                                   pl.lamp.withAlpha(0.0f), bulb.x + win.getWidth() * 0.75f, bulb.y, true));
+            g.fillRect(win);
+            g.setGradientFill(juce::ColourGradient(pl.lamp.withAlpha(0.42f), bulb.x, bulb.y,
+                                                   pl.lamp.withAlpha(0.0f), bulb.x, bulb.y - win.getHeight() * 0.95f, false));
+            g.fillRect(win);
+        }
         // Shadowed upper-left inner wall of the bezel.
-        g.setGradientFill(juce::ColourGradient(blackInk(lit ? 0.22f : 0.42f), win.getX(), win.getY(),
+        g.setGradientFill(juce::ColourGradient(blackInk(on ? 0.20f : 0.45f), win.getX(), win.getY(),
                                                juce::Colours::transparentBlack, win.getX(), win.getY() + 3.0f, false));
         g.fillRect(win);
-        g.setGradientFill(juce::ColourGradient(blackInk(lit ? 0.14f : 0.28f), win.getX(), win.getY(),
+        g.setGradientFill(juce::ColourGradient(blackInk(on ? 0.12f : 0.30f), win.getX(), win.getY(),
                                                juce::Colours::transparentBlack, win.getX() + 2.2f, win.getY(), false));
         g.fillRect(win);
         // Gloss from the upper left.
-        g.setGradientFill(juce::ColourGradient(whiteInk(lit ? 0.14f : 0.24f), win.getX(), win.getY(),
+        g.setGradientFill(juce::ColourGradient(whiteInk(on ? 0.12f : 0.18f), win.getX(), win.getY(),
                                                whiteInk(0.0f), win.getRight(), win.getY() + win.getHeight() * 0.55f, false));
         g.fillRect(win);
-        if (pressed)
+        if (pressed && ! lit)
         {
-            g.setColour(blackInk(0.12f));
+            g.setColour(blackInk(0.06f));
             g.fillRect(win);
         }
         else if (hovered)
         {
-            g.setColour(whiteInk(0.09f));
+            g.setColour(whiteInk(0.08f));
             g.fillRect(win);
         }
-        // Lamp slit.
-        const juce::Rectangle<float> slit(win.getCentreX() - win.getWidth() * 0.2f, win.getBottom() - 3.4f, win.getWidth() * 0.4f, 1.6f);
-        if (lit)
+        // Lamp bar: the small LED at the foot of the window.
+        const float barH = juce::jlimit(1.8f, 2.8f, win.getHeight() * 0.075f);
+        const juce::Rectangle<float> bar(win.getCentreX() - win.getWidth() * 0.22f, win.getBottom() - barH - 1.6f,
+                                         win.getWidth() * 0.44f, barH);
+        if (on)
         {
-            drawLampGlow(g, slit.getCentre(), win.getWidth() * 0.55f, juce::Colour(0xffffefb8), 0.7f);
-            g.setColour(juce::Colour(0xfffff6d6));
+            drawLampGlow(g, bar.getCentre(), win.getWidth() * 0.62f, juce::Colour(0xffffefb0), 0.85f);
+            g.setColour(juce::Colour(0xfffffbe6));
         }
         else
-            g.setColour(blackInk(0.36f));
-        g.fillRoundedRectangle(slit, 0.8f);
-        if (! lit)
+            g.setColour(blackInk(0.55f));
+        g.fillRoundedRectangle(bar, barH * 0.5f);
+        if (! on)
         {
-            g.setColour(whiteInk(0.14f));
-            g.fillRect(slit.getX(), slit.getBottom(), slit.getWidth(), 0.8f);
+            g.setColour(whiteInk(0.12f));
+            g.fillRect(bar.getX() + 0.5f, bar.getBottom(), bar.getWidth() - 1.0f, 0.8f);
         }
     }
-    g.setColour(blackInk(0.35f));
+    g.setColour(blackInk(0.40f));
     g.drawRoundedRectangle(win, wr, 0.8f);
     // Specular edge of the bevel and the dark far edges.
-    g.setColour(whiteInk(lit ? 0.75f : 0.60f));
+    g.setColour(whiteInk(on ? 0.78f : 0.55f));
     g.drawLine(face.getX() + rad, face.getY() + 0.55f, face.getRight() - rad, face.getY() + 0.55f, 0.9f);
     g.setColour(whiteInk(0.28f));
     g.drawLine(face.getX() + 0.55f, face.getY() + rad, face.getX() + 0.55f, face.getBottom() - rad, 0.9f);
@@ -1335,8 +1468,8 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f)
         const float a = major ? 0.88f : 0.50f;
         for (int side = -1; side <= 1; side += 2)
         {
-            const float x0 = cx + (float) side * 5.4f * f.s;
-            const float x1 = cx + (float) side * (major ? 12.4f : 9.2f) * f.s;
+            const float x0 = cx + (float) side * 6.2f * f.s;
+            const float x1 = cx + (float) side * (major ? 13.0f : 9.8f) * f.s;
             g.setColour(blackInk(0.60f * a));
             g.drawLine(x0, yy + 1.0f, x1, yy + 1.0f, th);
             g.setColour(juce::Colour(0xffdcd3b4).withAlpha(a));
@@ -1344,11 +1477,6 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f)
         }
     }
     drawFaderSlot(g, cx, 0.6f * f.s, (float) H - 0.6f * f.s, f.s);
-}
-
-juce::Colour tabInkFor(juce::Colour base)
-{
-    return base.getPerceivedBrightness() < 0.56f ? juce::Colour(0xfff6f2e4) : juce::Colour(0xff1d1c18);
 }
 
 juce::String compactTabLegend(const juce::Button& button, juce::String text)
@@ -1372,15 +1500,22 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
 {
     const auto geo = tabGeometry(bounds, lit, pressed);
     const float bev = juce::jlimit(1.1f, 2.0f, bounds.getWidth() * 0.055f);
-    auto area = geo.face.reduced(bev);
-    area.removeFromBottom(4.2f);
-    const auto font = displayFont(juce::jlimit(7.0f, 9.5f, bounds.getWidth() * 0.25f), juce::Font::bold);
+    auto area = geo.face.reduced(bev + 0.6f, bev);
+    area.removeFromBottom(4.6f);
+    const auto ink = tabPlastic(base, lit || pressed).ink;
+    const float fontPx = juce::jlimit(7.5f, 9.5f, bounds.getWidth() * 0.25f);
+    const auto font = displayFont(fontPx, juce::Font::bold);
     auto lines = juce::StringArray::fromLines(text);
-    if (lines.size() == 1 && text.containsChar(' ')
-        && (float) juce::GlyphArrangement::getStringWidthInt(font, text) > area.getWidth() * 1.2f)
+    // "SUSTAIN II" stays on one line while it can be fitted without crushing the type; otherwise it
+    // breaks at the last space.
+    if (lines.size() == 1 && text.containsChar(' '))
     {
-        const int split = text.lastIndexOfChar(' ');
-        lines = juce::StringArray(text.substring(0, split), text.substring(split + 1));
+        const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, text);
+        if (tw > area.getWidth() / 0.82f)
+        {
+            const int split = text.lastIndexOfChar(' ');
+            lines = juce::StringArray(text.substring(0, split), text.substring(split + 1));
+        }
     }
     const int count = juce::jmax(1, lines.size());
     // Lines sit close together as one block centred on the face, however tall the plate is.
@@ -1390,10 +1525,14 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
     {
         auto lineFont = font;
         const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, lines[i]);
-        if (tw > area.getWidth())
-            lineFont = font.withHorizontalScale(juce::jmax(0.55f, area.getWidth() / tw));
-        drawEngravedText(g, lines[i], { area.getX(), blockTop + (float) i * lineHeight, area.getWidth(), lineHeight },
-                         lineFont, juce::Justification::centred, tabInkFor(base));
+        const float avail = area.getWidth() - 1.0f;
+        if (tw > avail)
+            lineFont = font.withHorizontalScale(juce::jmax(0.6f, avail / tw));
+        // Crisp printed ink: one pass, no drop shadow.
+        g.setFont(lineFont);
+        g.setColour(ink);
+        g.drawFittedText(lines[i], juce::Rectangle<float>(area.getX(), blockTop + (float) i * lineHeight, area.getWidth(), lineHeight).toNearestInt(),
+                         juce::Justification::centred, 1, 0.5f);
     }
 }
 } // namespace
@@ -1443,6 +1582,9 @@ int LookAndFeel::getSliderThumbRadius(juce::Slider& slider)
     if (slider.getSliderStyle() == juce::Slider::LinearVertical)
         return juce::jlimit(1, juce::jmax(1, (int) faderGeom(slider.getWidth()).r),
                             juce::jmax(1, slider.getHeight() / 2 - 1));
+    if (slider.getSliderStyle() == juce::Slider::LinearHorizontal)
+        return juce::jlimit(1, juce::jmax(1, (int) faderGeom(slider.getHeight() * 6 / 5).r),
+                            juce::jmax(1, slider.getWidth() / 2 - 1));
     return juce::LookAndFeel_V4::getSliderThumbRadius(slider);
 }
 
@@ -1450,12 +1592,16 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
                                    float sliderPos, float minPos, float maxPos,
                                    juce::Slider::SliderStyle style, juce::Slider& slider)
 {
-    if (style != juce::Slider::LinearVertical)
+    const bool horiz = style == juce::Slider::LinearHorizontal;
+    if (style != juce::Slider::LinearVertical && ! horiz)
     {
         juce::LookAndFeel_V4::drawLinearSlider(g, x, y, width, height, sliderPos, minPos, maxPos, style, slider);
         return;
     }
-    const auto f = faderGeom(slider.getWidth());
+    // A horizontal fader is the vertical artwork transposed across the diagonal, which keeps the
+    // light on the upper left: the slot, ticks and cap all turn through 90 degrees consistently.
+    const auto transpose = juce::AffineTransform(0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+    const auto f = faderGeom(horiz ? slider.getHeight() * 6 / 5 : slider.getWidth());
     const float ps = physicalScaleOf(g);
     const bool enabled = slider.isEnabled();
     juce::Graphics::ScopedSaveState state(g);
@@ -1468,18 +1614,27 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     // JUCE hands over the slider region already trimmed by the thumb radius; the artwork spans
     // the whole component so the slot and scale extend beyond the cap's centre travel.
     const int fullW = slider.getWidth(), fullH = slider.getHeight();
-    const auto track = PaintCache::get().fetch(kindTrack, fullW, fullH, 0, juce::roundToInt(f.s * 100.0f), ps,
-                                               [&](juce::Graphics& ig) { paintFaderTrack(ig, fullW, fullH, f); });
+    const auto track = PaintCache::get().fetch(kindTrack, fullW, fullH, 0, juce::roundToInt(f.s * 100.0f) | (horiz ? 1 << 16 : 0), ps,
+                                               [&](juce::Graphics& ig)
+    {
+        if (horiz)
+        {
+            ig.addTransform(transpose);
+            paintFaderTrack(ig, fullH, fullW, f);
+        }
+        else
+            paintFaderTrack(ig, fullW, fullH, f);
+    });
     blit(g, track, 0.0f, 0.0f);
-    if (legendTop.isNotEmpty() || legendBottom.isNotEmpty())
+    if (! horiz && (legendTop.isNotEmpty() || legendBottom.isNotEmpty()))
     {
         const float lx = (float) fullW * 0.5f + 13.0f * f.s;
-        const auto font = displayFont(juce::jmax(5.5f, 6.5f * f.s), juce::Font::bold);
+        const auto font = displayFont(juce::jmax(7.0f, 7.0f * f.s), juce::Font::bold);
         if (legendTop.isNotEmpty())
-            drawEngravedText(g, legendTop, { lx, f.r - f.ey * 0.5f - 4.0f, 9.0f * f.s, 8.0f },
+            drawEngravedText(g, legendTop, { lx, f.r - f.ey * 0.5f - 4.5f, 11.0f * f.s, 9.0f },
                              font, juce::Justification::centredLeft, juce::Colour(0xffd8cfb0));
         if (legendBottom.isNotEmpty())
-            drawEngravedText(g, legendBottom, { lx, (float) fullH - f.r - f.ey * 0.5f - 4.0f, 9.0f * f.s, 8.0f },
+            drawEngravedText(g, legendBottom, { lx, (float) fullH - f.r - f.ey * 0.5f - 4.5f, 11.0f * f.s, 9.0f },
                              font, juce::Justification::centredLeft, juce::Colour(0xffd8cfb0));
     }
 
@@ -1492,9 +1647,22 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     const int imgW = (int) std::ceil(f.faceW + 4.0f * f.s) + margin * 2;
     const int imgH = (int) std::ceil(f.faceH + 5.5f * f.s) + margin * 2;
     const juce::Point<float> faceCentre((float) margin + f.faceW * 0.5f, (float) margin + f.faceH * 0.5f);
-    const auto cap = PaintCache::get().fetch(kindCap, imgW, imgH, colour.getARGB(),
-                                             (juce::roundToInt(f.s * 100.0f) << 3) | (int) capState, ps,
-                                             [&](juce::Graphics& ig) { drawFaderCap(ig, faceCentre, f.faceW, colour, capState); });
+    const auto cap = PaintCache::get().fetch(kindCap, horiz ? imgH : imgW, horiz ? imgW : imgH, colour.getARGB(),
+                                             (juce::roundToInt(f.s * 100.0f) << 3) | (int) capState | (horiz ? 1 << 20 : 0), ps,
+                                             [&](juce::Graphics& ig)
+    {
+        if (horiz)
+            ig.addTransform(transpose);
+        drawFaderCap(ig, faceCentre, f.faceW, colour, capState);
+    });
+    if (horiz)
+    {
+        const juce::Point<float> centreT(faceCentre.y, faceCentre.x); // face centre inside the transposed image
+        const float cx = sliderPos - f.ey * 0.5f;
+        const float cy = (float) fullH * 0.5f - f.ex * 0.5f;
+        blit(g, cap, std::round(cx - centreT.x), std::round(cy - centreT.y));
+        return;
+    }
     const float cx = (float) fullW * 0.5f - f.ex * 0.5f;
     const float cy = sliderPos - f.ey * 0.5f;
     blit(g, cap, std::round(cx - faceCentre.x), std::round(cy - faceCentre.y));
@@ -2186,12 +2354,62 @@ void ParamKnob::setHardwareSlider(juce::Colour capColour)
     repaint();
 }
 
+void ParamKnob::setCapFader(juce::Colour capColour, bool horizontal)
+{
+    if (! horizontal)
+    {
+        setHardwareSlider(capColour);
+        return;
+    }
+    hardwareSlider = true;
+    horizontalFader = true;
+    slider.setSliderStyle(juce::Slider::LinearHorizontal);
+    slider.setColour(juce::Slider::thumbColourId, capColour);
+    slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
+    resized();
+    repaint();
+}
+
+namespace
+{
+// Editor scale relative to the 1600 px design width, so a legend floor of 8 px in design space
+// holds when the window is smaller or larger.
+float uiDesignScale(const juce::Component& c)
+{
+    const auto* top = c.getTopLevelComponent();
+    if (top == nullptr || top == &c || top->getWidth() < 300)
+        return 1.0f;
+    return juce::jlimit(0.5f, 1.8f, (float) top->getWidth() / 1600.0f);
+}
+
+// Smallest legible type: 8 px at the 1600 design width, never below 7 px on screen.
+float legendFloor(const juce::Component& c)
+{
+    return juce::jlimit(7.0f, 10.0f, 8.0f * uiDesignScale(c));
+}
+} // namespace
+
 void ParamKnob::paint(juce::Graphics& g)
 {
+    if (hardwareSlider && horizontalFader)
+    {
+        // Compact horizontal cap fader: caption left and readout right on one line, the fader below.
+        const float h = (float) getHeight();
+        const float titleH = juce::jlimit(11.0f, 15.0f, h * 0.38f);
+        drawControlCaption(g, name, { 1.0f, 0.0f, (float) getWidth() * 0.58f, titleH }, juce::Justification::centredLeft,
+                           juce::jlimit(8.5f, 10.5f, titleH * 0.80f));
+        const auto text = formatParamValue(parameterIndex, (float) slider.getValue());
+        const float size = juce::jlimit(9.0f, 11.0f, titleH * 0.78f);
+        const float pw = juce::jmin((float) getWidth() * 0.44f,
+                                    (float) juce::GlyphArrangement::getStringWidthInt(displayFont(size), text) + 12.0f);
+        drawValuePill(g, text, { (float) getWidth() - pw - 1.0f, 0.0f, pw, titleH }, size);
+        return;
+    }
     if (hardwareSlider)
     {
         const float scale = juce::jlimit(0.65f, 1.5f, (float) getWidth() / 42.0f);
-        auto nameFont = displayFont(juce::jmax(7.0f, 9.0f * scale), juce::Font::bold);
+        const float floorPx = legendFloor(*this);
+        auto nameFont = displayFont(juce::jmax(floorPx + 0.5f, 9.5f * scale), juce::Font::bold);
         nameFont.setExtraKerningFactor(0.02f);
         // A small gutter keeps neighbouring legends from running into each other when one is squeezed.
         drawEngravedText(g, name, { 1.5f, 0.0f, (float) getWidth() - 3.0f, 24.0f * scale }, nameFont,
@@ -2199,7 +2417,8 @@ void ParamKnob::paint(juce::Graphics& g)
         const float vh = 16.0f * scale;
         drawEngravedText(g, formatParamValue(parameterIndex, (float) slider.getValue()),
                          { 0.0f, (float) getHeight() - vh, (float) getWidth(), vh },
-                         displayFont(juce::jmax(7.0f, 7.5f * scale)), juce::Justification::centred, juce::Colour(0xffcfc49c));
+                         displayFont(juce::jmax(floorPx + 0.5f, 8.5f * scale), juce::Font::bold),
+                         juce::Justification::centred, juce::Colour(0xffeadfb4));
         return;
     }
 
@@ -2207,27 +2426,22 @@ void ParamKnob::paint(juce::Graphics& g)
     const float nameHeight = juce::jlimit(10.0f, 15.0f, h * 0.20f);
     const float valueHeight = juce::jlimit(9.0f, 14.0f, h * 0.18f);
 
-    auto nameFont = displayFont(
-                               juce::jlimit(7.5f, 11.5f, h * 0.155f), juce::Font::bold);
-    nameFont.setExtraKerningFactor(0.055f);
-    drawEngravedText(g, name, { 0.0f, 0.0f, (float) getWidth(), nameHeight + 2.0f }, nameFont,
-                     juce::Justification::centred, ivory.withAlpha(0.95f));
-
-    // Value in a small lit window, like a segment readout.
-    const auto valueFont = displayFont(juce::jlimit(7.0f, 11.0f, h * 0.15f), juce::Font::plain);
-    const auto valueText = formatParamValue(parameterIndex, (float) slider.getValue());
-    const float tw = (float) juce::GlyphArrangement::getStringWidthInt(valueFont, valueText);
-    const float pw = juce::jmin((float) getWidth() - 2.0f, tw + 12.0f);
-    const juce::Rectangle<float> pill(((float) getWidth() - pw) * 0.5f, (float) getHeight() - valueHeight - 1.0f,
-                                      pw, valueHeight + 0.5f);
-    drawGlassPanel(g, pill, 3.0f, juce::Colour(0xff0b0a08), 0.45f);
-    g.setFont(valueFont);
-    g.setColour(amber.withAlpha(0.95f));
-    g.drawFittedText(valueText, pill.toNearestInt(), juce::Justification::centred, 1, 0.65f);
+    // Same caption and readout styles that the shared helpers give other pages.
+    drawControlCaption(g, name, { 0.0f, 0.0f, (float) getWidth(), nameHeight + 2.0f }, juce::Justification::centred,
+                       juce::jlimit(8.5f, 11.5f, h * 0.155f));
+    drawValuePill(g, formatParamValue(parameterIndex, (float) slider.getValue()),
+                  { 1.0f, h - valueHeight - 1.0f, (float) getWidth() - 2.0f, valueHeight + 0.5f },
+                  juce::jlimit(9.5f, 11.5f, h * 0.15f));
 }
 
 void ParamKnob::resized()
 {
+    if (hardwareSlider && horizontalFader)
+    {
+        const int titleH = (int) juce::jlimit(11.0f, 15.0f, (float) getHeight() * 0.38f);
+        slider.setBounds(2, titleH + 1, getWidth() - 4, juce::jmax(8, getHeight() - titleH - 2));
+        return;
+    }
     if (hardwareSlider)
     {
         const float scale = juce::jlimit(0.65f, 1.5f, (float) getWidth() / 42.0f);
@@ -2295,22 +2509,27 @@ void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
             }
             g.setColour(blackInk(0.7f));
             g.strokePath(glyph, juce::PathStrokeType(1.4f), juce::AffineTransform::translation(0.6f, 0.9f));
-            g.setColour(on ? juce::Colour(0xfff6efd6) : juce::Colour(0xff8b8574));
-            g.strokePath(glyph, juce::PathStrokeType(1.3f));
-            auto font = displayFont(juce::jlimit(6.0f, 8.5f, r.getWidth() * 0.22f), juce::Font::bold);
-            drawEngravedText(g, getButtonText(), r.withTrimmedTop(r.getHeight() * 0.56f).withTrimmedBottom(2.0f), font,
-                             juce::Justification::centred, on ? juce::Colour(0xffc8bf9b) : juce::Colour(0xff7b7566));
+            g.setColour(on ? juce::Colour(0xfffff6dc) : juce::Colour(0xffc9c1a2));
+            g.strokePath(glyph, juce::PathStrokeType(1.4f));
+            auto font = displayFont(juce::jlimit(8.0f, 9.5f, r.getWidth() * 0.26f), juce::Font::bold);
+            drawEngravedText(g, getButtonText(), r.withTrimmedTop(r.getHeight() * 0.54f).withTrimmedBottom(1.5f), font,
+                             juce::Justification::centred, on ? juce::Colour(0xfff0e8c8) : juce::Colour(0xffddd4b2));
             return;
         }
-        const int w = getWidth(), h = getHeight();
+        const int w = getWidth();
+        // Large deck tabs would tower over the faders beside them: draw them 20 percent shorter,
+        // centred in the bounds. The hit area is unchanged.
+        const bool big = w >= 42 && getHeight() >= 42;
+        const int h = big ? juce::roundToInt((float) getHeight() * 0.8f) : getHeight();
+        const float oy = big ? (float) (getHeight() - h) * 0.5f : 0.0f;
         const bool lit = on;
         const int bits = (lit ? 1 : 0) | (down ? 2 : 0) | (hovered && ! lit ? 4 : 0);
         const auto plate = PaintCache::get().fetch(kindTonePlate, w, h, accent.getARGB(), bits, ps, [&](juce::Graphics& ig)
         {
             drawTonePlate(ig, juce::Rectangle<float>(0.0f, 0.0f, (float) w, (float) h), accent, lit, down, hovered && ! lit);
         });
-        blit(g, plate, 0.0f, 0.0f);
-        drawTabLegend(g, getLocalBounds().toFloat(), lit, down, accent, getButtonText());
+        blit(g, plate, 0.0f, std::round(oy));
+        drawTabLegend(g, juce::Rectangle<float>(0.0f, std::round(oy), (float) w, (float) h), lit, down, accent, getButtonText());
         return;
     }
 
@@ -2340,60 +2559,105 @@ namespace
 {
 juce::Rectangle<float> ribbonChannel(float W, float H)
 {
-    return juce::Rectangle<float>(0.0f, 0.0f, W, H).reduced(0.5f).reduced(1.9f);
+    return juce::Rectangle<float>(0.0f, 0.0f, W, H).reduced(0.5f).reduced(2.6f);
+}
+
+// Wide ribbons keep an end zone for the printed pitch captions.
+float ribbonEndZone(float W)
+{
+    return W > 320.0f ? 46.0f : 9.0f;
 }
 
 juce::Rectangle<float> ribbonBand(juce::Rectangle<float> channel)
 {
-    return channel.reduced(9.0f, channel.getHeight() * 0.27f);
+    const float ez = ribbonEndZone(channel.getWidth() + 5.2f);
+    return channel.reduced(ez, channel.getHeight() * 0.33f);
 }
 
 void paintRibbonBase(juce::Graphics& g, int W, int H)
 {
     const juce::Rectangle<float> frame = juce::Rectangle<float>(0.0f, 0.0f, (float) W, (float) H).reduced(0.5f);
-    // Brass edge: lit on top, shaded below, with a bevel.
-    juce::ColourGradient brass(juce::Colour(0xfff2dfa0), 0.0f, frame.getY(), juce::Colour(0xff8f7433), 0.0f, frame.getBottom(), false);
-    brass.addColour(0.30, juce::Colour(0xffc7a95a));
-    brass.addColour(0.62, juce::Colour(0xff6b5320));
-    g.setGradientFill(brass);
-    g.fillRoundedRectangle(frame, 4.0f);
-    g.setColour(blackInk(0.75f));
+    // Steel bezel: brushed, lit on top and shaded below.
+    drawBrushedMetal(g, frame, 4.0f, juce::Colour(0xffa9adb3), true);
+    {
+        juce::Graphics::ScopedSaveState state(g);
+        juce::Path clip;
+        clip.addRoundedRectangle(frame, 4.0f);
+        g.reduceClipRegion(clip);
+        g.setGradientFill(juce::ColourGradient(whiteInk(0.34f), 0.0f, frame.getY(), blackInk(0.55f), 0.0f, frame.getBottom(), false));
+        g.fillRect(frame);
+    }
+    g.setColour(blackInk(0.85f));
     g.drawRoundedRectangle(frame, 4.0f, 1.0f);
-    g.setColour(whiteInk(0.35f));
+    g.setColour(whiteInk(0.70f));
     g.drawLine(frame.getX() + 4.0f, frame.getY() + 1.0f, frame.getRight() - 4.0f, frame.getY() + 1.0f, 1.0f);
+    g.setColour(whiteInk(0.22f));
+    g.drawLine(frame.getX() + 1.0f, frame.getY() + 4.0f, frame.getX() + 1.0f, frame.getBottom() - 4.0f, 1.0f);
 
     const auto channel = ribbonChannel((float) W, (float) H);
     drawWell(g, channel, 2.5f);
     const auto band = ribbonBand(channel);
 
-    // Printed scale on the channel floor above and below the ribbon.
-    const float tickLen = juce::jmax(1.5f, (band.getY() - channel.getY()) - 2.2f);
+    // Printed scale on the channel floor above and below the ribbon, at full cream brightness.
+    const float tickLen = juce::jmax(1.5f, (band.getY() - channel.getY()) - 2.4f);
     for (int i = 0; i <= 40; ++i)
     {
         const float x = band.getX() + band.getWidth() * (float) i / 40.0f;
         const bool major = i % 10 == 0;
         const bool centre = i == 20;
-        const float len = centre ? tickLen + 1.0f : (major ? tickLen : tickLen * 0.55f);
-        g.setColour(centre ? gold.withAlpha(0.95f) : juce::Colour(0xffd8cfb0).withAlpha(major ? 0.55f : 0.30f));
-        g.drawLine(x, channel.getY() + 1.8f, x, channel.getY() + 1.8f + len, centre ? 1.4f : 0.8f);
-        g.drawLine(x, channel.getBottom() - 1.8f - len, x, channel.getBottom() - 1.8f, centre ? 1.4f : 0.8f);
+        const float len = centre ? tickLen + 1.0f : (major ? tickLen : tickLen * 0.58f);
+        g.setColour(centre ? juce::Colour(0xfff2d475) : juce::Colour(0xffefe6c8).withAlpha(major ? 1.0f : 0.62f));
+        g.drawLine(x, channel.getY() + 1.8f, x, channel.getY() + 1.8f + len, centre ? 1.6f : 0.9f);
+        g.drawLine(x, channel.getBottom() - 1.8f - len, x, channel.getBottom() - 1.8f, centre ? 1.6f : 0.9f);
+    }
+    // Centre detent: a small notch cut into both lips of the channel.
+    {
+        const float cx = band.getCentreX();
+        juce::Path notch;
+        notch.addTriangle(cx - 3.2f, channel.getY(), cx + 3.2f, channel.getY(), cx, channel.getY() + 3.4f);
+        notch.addTriangle(cx - 3.2f, channel.getBottom(), cx + 3.2f, channel.getBottom(), cx, channel.getBottom() - 3.4f);
+        g.setColour(juce::Colour(0xfff2d475));
+        g.fillPath(notch);
     }
 
-    // The ribbon: glossy black, a thin lit crown along its upper edge.
-    g.setColour(blackInk(0.7f));
-    g.fillRoundedRectangle(band.expanded(0.8f).translated(0.0f, 0.8f), 2.4f);
-    juce::ColourGradient strip(juce::Colour(0xff55534d), 0.0f, band.getY(), juce::Colour(0xff060605), 0.0f, band.getBottom(), false);
-    strip.addColour(0.22, juce::Colour(0xff33322e));
-    strip.addColour(0.50, juce::Colour(0xff121110));
+    // The ribbon: a thin glossy black strip, a lit crown along its upper edge.
+    g.setColour(blackInk(0.75f));
+    g.fillRoundedRectangle(band.expanded(0.9f).translated(0.0f, 0.9f), 2.2f);
+    juce::ColourGradient strip(juce::Colour(0xff6a6860), 0.0f, band.getY(), juce::Colour(0xff060605), 0.0f, band.getBottom(), false);
+    strip.addColour(0.20, juce::Colour(0xff3e3d38));
+    strip.addColour(0.52, juce::Colour(0xff151412));
     g.setGradientFill(strip);
-    g.fillRoundedRectangle(band, 2.0f);
-    g.setColour(whiteInk(0.42f));
-    g.drawLine(band.getX() + 2.0f, band.getY() + 0.9f, band.getRight() - 2.0f, band.getY() + 0.9f, 1.0f);
-    g.setColour(whiteInk(0.10f));
+    g.fillRoundedRectangle(band, 1.8f);
+    g.setColour(whiteInk(0.55f));
+    g.drawLine(band.getX() + 2.0f, band.getY() + 0.8f, band.getRight() - 2.0f, band.getY() + 0.8f, 1.0f);
+    g.setColour(whiteInk(0.12f));
     g.drawLine(band.getX() + 2.0f, band.getBottom() - 0.8f, band.getRight() - 2.0f, band.getBottom() - 0.8f, 1.0f);
-    g.setColour(whiteInk(0.035f));
-    for (float f : { 0.38f, 0.62f })
-        g.drawLine(band.getX() + 3.0f, band.getY() + band.getHeight() * f, band.getRight() - 3.0f, band.getY() + band.getHeight() * f, 0.8f);
+
+    // Printed captions at the ends: left lowers the pitch, right raises it.
+    if (ribbonEndZone((float) W) > 20.0f)
+    {
+        const auto font = displayFont(juce::jlimit(8.0f, 9.5f, (float) H * 0.30f), juce::Font::bold);
+        const float ez = band.getX() - channel.getX();
+        drawEngravedText(g, juce::String(juce::CharPointer_UTF8("\xe2\x80\x93 PITCH")),
+                         { channel.getX() + 2.0f, channel.getY(), ez - 5.0f, channel.getHeight() }, font,
+                         juce::Justification::centred, juce::Colour(0xffe8dfc0));
+        drawEngravedText(g, "PITCH +", { band.getRight() + 3.0f, channel.getY(), ez - 5.0f, channel.getHeight() }, font,
+                         juce::Justification::centred, juce::Colour(0xffe8dfc0));
+    }
+}
+
+// Lit finger-position thumb: a glossy amber capsule across the ribbon.
+void drawRibbonThumb(juce::Graphics& g, float x, juce::Rectangle<float> band, float strength)
+{
+    const auto cap = juce::Rectangle<float>(x - 2.6f, band.getY() - 2.2f, 5.2f, band.getHeight() + 4.4f);
+    g.setColour(blackInk(0.55f));
+    g.fillRoundedRectangle(cap.expanded(0.7f).translated(0.6f, 0.9f), 2.6f);
+    juce::ColourGradient grad(juce::Colour(0xfffff3c4).withMultipliedAlpha(0.5f + 0.5f * strength), cap.getX(), cap.getY(),
+                              juce::Colour(0xffb88a2c).withMultipliedAlpha(0.5f + 0.5f * strength), cap.getRight(), cap.getBottom(), false);
+    g.setGradientFill(grad);
+    g.fillRoundedRectangle(cap, 2.4f);
+    g.setColour(whiteInk(0.55f * strength + 0.2f));
+    g.drawLine(cap.getX() + 1.2f, cap.getY() + 1.0f, cap.getX() + 1.2f, cap.getBottom() - 1.0f, 0.9f);
 }
 } // namespace
 
@@ -2417,32 +2681,35 @@ void RibbonStrip::paint(juce::Graphics& g)
     const auto band = ribbonBand(channel);
     const float cy = band.getCentreY();
     const bool hovering = ! touching && hoverX >= 0.0f;
-    if (! touching && ! hovering)
-        return;
 
     juce::Graphics::ScopedSaveState state(g);
     juce::Path clip;
     clip.addRoundedRectangle(channel, 2.5f);
     g.reduceClipRegion(clip);
 
-    const float posX = touching ? juce::jlimit(band.getX(), band.getRight(), anchorX + value * (float) getWidth()) : hoverX;
+    if (! touching && ! hovering)
+    {
+        // Resting thumb at the centre detent: the ribbon never looks inert.
+        drawLampGlow(g, { band.getCentreX(), cy }, juce::jmax(9.0f, (float) H * 0.8f), juce::Colour(0xffe8c36a), 0.38f);
+        drawRibbonThumb(g, band.getCentreX(), band, 0.0f);
+        return;
+    }
+
+    const float posX = touching ? juce::jlimit(band.getX(), band.getRight(), anchorX + value * (float) getWidth())
+                                : juce::jlimit(band.getX(), band.getRight(), hoverX);
     if (touching)
     {
         // Displacement from the point of first contact, lit on the ribbon.
         const float x0 = juce::jmin(anchorX, posX), x1 = juce::jmax(anchorX, posX);
-        g.setColour(amber.withAlpha(0.22f));
+        g.setColour(amber.withAlpha(0.30f));
         g.fillRect(x0, band.getY(), x1 - x0, band.getHeight());
-        g.setColour(amber.withAlpha(0.55f));
+        g.setColour(amber.withAlpha(0.70f));
         g.drawLine(anchorX, channel.getY() + 1.0f, anchorX, channel.getBottom() - 1.0f, 1.0f);
     }
-    drawLampGlow(g, { posX, cy }, juce::jmax(10.0f, (float) H * 1.1f), touching ? amberBright : juce::Colour(0xffd8c98a),
-                 touching ? 1.15f : 0.35f);
-    // Contact line across the ribbon.
-    juce::ColourGradient contact(juce::Colour(0xfffff6d8).withAlpha(touching ? 0.95f : 0.4f), posX, cy,
-                                 amber.withAlpha(0.0f), posX + 3.0f, cy, true);
-    g.setGradientFill(contact);
-    g.fillRect(posX - 3.0f, band.getY(), 6.0f, band.getHeight());
-    // Brass position markers on both edges of the channel.
+    drawLampGlow(g, { posX, cy }, juce::jmax(11.0f, (float) H * 1.2f), touching ? amberBright : juce::Colour(0xffe8c36a),
+                 touching ? 1.3f : 0.5f);
+    drawRibbonThumb(g, posX, band, touching ? 1.0f : 0.55f);
+    // Position markers on both lips of the channel.
     const float mk = juce::jlimit(3.0f, 5.0f, (float) H * 0.22f);
     for (int top = 0; top < 2; ++top)
     {
@@ -2451,8 +2718,8 @@ void RibbonStrip::paint(juce::Graphics& g)
             tri.addTriangle(posX - mk, channel.getY(), posX + mk, channel.getY(), posX, channel.getY() + mk);
         else
             tri.addTriangle(posX - mk, channel.getBottom(), posX + mk, channel.getBottom(), posX, channel.getBottom() - mk);
-        g.setGradientFill(juce::ColourGradient(juce::Colour(0xfff2dfa0), posX - mk, channel.getY(),
-                                               juce::Colour(0xff8f7433), posX + mk, channel.getBottom(), false));
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xfffff0b8), posX - mk, channel.getY(),
+                                               juce::Colour(0xffc79a36), posX + mk, channel.getBottom(), false));
         g.fillPath(tri);
     }
 }

@@ -66,6 +66,15 @@ void drawGlassPanel(juce::Graphics&, juce::Rectangle<float>, float radius, juce:
 void drawEngravedText(juce::Graphics&, const juce::String& text, juce::Rectangle<float> area,
                       const juce::Font&, juce::Justification,
                       juce::Colour ink = juce::Colour(0xffe6dcbc));
+// One caption style for control titles (knob, fader and dropdown headings), so neighbouring
+// captions share size, colour and baseline. The text is centred vertically inside `area`; pass
+// the same area height for every caption in a row. fontSize 0 derives the size from the area.
+juce::Font controlCaptionFont(float areaHeight);
+void drawControlCaption(juce::Graphics&, const juce::String& text, juce::Rectangle<float> area,
+                        juce::Justification = juce::Justification::centred, float fontSize = 0.0f);
+// Readout pill (smoked glass, amber digits) sized to the text, centred in `area`; 10 to 12 px type.
+void drawValuePill(juce::Graphics&, const juce::String& text, juce::Rectangle<float> area,
+                   float fontSize = 0.0f);
 // Soft radial light bloom (one gradient fill) for lamps, lit plastic and contact points.
 void drawLampGlow(juce::Graphics&, juce::Point<float> centre, float radius, juce::Colour colour,
                   float intensity);
@@ -236,6 +245,10 @@ public:
     juce::Slider& getSlider() noexcept { return slider; }
     int getParameterIndex() const noexcept { return parameterIndex; }
     void setHardwareSlider(juce::Colour capColour);
+    // Moulded-cap fader, vertical (same as setHardwareSlider) or a compact horizontal strip with
+    // the caption left, the readout right and the fader below: for envelope and level style
+    // parameters on the software pages. A horizontal fader wants about 120 x 36 px or more.
+    void setCapFader(juce::Colour capColour, bool horizontal);
     // Message-thread only. Keep an in-flight host gesture on its original parameter.
     bool bindParameter(int index);
 
@@ -244,6 +257,7 @@ private:
     int parameterIndex;
     juce::String name;
     bool hardwareSlider = false;
+    bool horizontalFader = false;
     FocusSlider slider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
 
