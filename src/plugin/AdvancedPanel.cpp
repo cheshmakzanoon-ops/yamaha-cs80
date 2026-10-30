@@ -38,6 +38,9 @@ const juce::Colour kGlowDeep { 0xffc98f2a };     // lit amber glass, bottom
 
 // Colours are read at call time: the shared palette lives in another translation unit.
 juce::Colour axisInk() { return ivoryDim.withAlpha(0.92f); }
+// Quiet text on the satin panel face (lighter than the black glass): half way from the dim ink to ivory, so it
+// still clears 4.5:1 where axisInk does not.
+juce::Colour panelInk() { return ivoryDim.interpolatedWith(ivory, 0.5f); }
 // The three LFOs use cool scope colours so they never read as one of the page cap colours.
 juce::Colour lfoColour(int i)
 {
@@ -340,10 +343,12 @@ void inertOverlay(juce::Graphics& g, Rect r, const char* label = "ISOLATION  -  
     text(g, label, badge, 12.5f, true, amber, Just::centred, 0.08f);
 }
 
+// One rule for every time on these pages: below 1000 ms print milliseconds, from 1000 ms print seconds.
 juce::String periodString(float seconds)
 {
-    if (seconds < 1.0f)
-        return juce::String(juce::roundToInt(seconds * 1000.0f)) + " ms";
+    const int ms = juce::roundToInt(seconds * 1000.0f);
+    if (ms < 1000)
+        return juce::String(ms) + " ms";
     return juce::String(seconds, seconds < 10.0f ? 2 : 1) + " s";
 }
 
@@ -353,6 +358,37 @@ juce::String signedString(float v, int decimals, const juce::String& unit)
 }
 
 juce::String plusMinus() { return juce::String(juce::CharPointer_UTF8("\xc2\xb1")); }
+
+// The plate reverb's low-band decay, estimated from the engine's own constants: four comb loops per
+// channel with feedback 0.78 and delays (0.0297 + 0.011 i) * kReverbTimeScale * (1 + 0.031 i) seconds.
+// RT60 of a loop is 60 dB divided by the 2.16 dB it loses on each trip. An estimate, never a measurement.
+struct PlateTail
+{
+    std::array<float, 4> rt60 {}, delay {};
+    float lo = 0.0f, hi = 0.0f, mean = 0.0f;
+    // Linear envelope of the summed loops, 1 at the onset.
+    float envelope(float t) const
+    {
+        float sum = 0.0f;
+        for (float r : rt60)
+            sum += std::pow(10.0f, -3.0f * t / r);
+        return sum * 0.25f;
+    }
+};
+PlateTail plateTail()
+{
+    PlateTail t;
+    for (int i = 0; i < 4; ++i)
+    {
+        const float d = (0.0297f + 0.011f * (float) i) * cs80::kReverbTimeScale * (1.0f + 0.031f * (float) i);
+        t.delay[(size_t) i] = d;
+        t.rt60[(size_t) i] = 3.0f * d / -std::log10(0.78f);
+        t.mean += t.rt60[(size_t) i] * 0.25f;
+    }
+    t.lo = *std::min_element(t.rt60.begin(), t.rt60.end());
+    t.hi = *std::max_element(t.rt60.begin(), t.rt60.end());
+    return t;
+}
 
 juce::String noteName(int midi)
 {
@@ -593,7 +629,7 @@ private:
 class WheelRouting final : public LiveWidget
 {
 public:
-    explicit WheelRouting(Cs80AudioProcessor& p) : LiveWidget(p, 488.0f, 112.0f) {}
+    explicit WheelRouting(Cs80AudioProcessor& p) : LiveWidget(p, 448.0f, 112.0f) {}
 
 private:
     void sample(Sig& s) const override
@@ -607,13 +643,14 @@ private:
         const bool iso = isolated();
         auto row = [&](float y, const juce::String& label, float amount, const juce::String& result)
         {
-            text(g, label, { 16.0f, y, 250.0f, 20.0f }, 12.0f, true, ivory, Just::centredLeft, 0.05f);
-            text(g, result, { 250.0f, y, 222.0f, 20.0f }, 14.0f, true, amount > 0.001f && ! iso ? amberBright : ivoryDim, Just::centredRight, 0.02f);
+            const float bar = designW - 32.0f;
+            text(g, label, { 16.0f, y, 220.0f, 20.0f }, 12.5f, true, ivory, Just::centredLeft, 0.05f);
+            text(g, result, { 220.0f, y, designW - 236.0f, 20.0f }, 14.0f, true, amount > 0.001f && ! iso ? amberBright : axisInk(), Just::centredRight, 0.02f);
             g.setColour(juce::Colours::black.withAlpha(0.75f));
-            g.fillRoundedRectangle(16.0f, y + 26.0f, 456.0f, 8.0f, 4.0f);
+            g.fillRoundedRectangle(16.0f, y + 26.0f, bar, 8.0f, 4.0f);
             g.setColour(iso ? ivoryDim.withAlpha(0.4f) : amber);
             if (amount > 0.001f)
-                g.fillRoundedRectangle(16.0f, y + 26.0f, juce::jmax(5.0f, 456.0f * amount), 8.0f, 4.0f);
+                g.fillRoundedRectangle(16.0f, y + 26.0f, juce::jmax(5.0f, bar * amount), 8.0f, 4.0f);
         };
         row(8.0f, "WHEEL > SUB PITCH", sub, "up to " + plusMinus() + juce::String(sub * 2.0f, 2) + " st");
         row(58.0f, "WHEEL > VCF", vcf, "up to +" + juce::String(vcf * 1.5f, 2) + " oct");
@@ -626,7 +663,7 @@ private:
 class TuningDisplay final : public LiveWidget
 {
 public:
-    explicit TuningDisplay(Cs80AudioProcessor& p) : LiveWidget(p, 880.0f, 112.0f) {}
+    explicit TuningDisplay(Cs80AudioProcessor& p, float width = 944.0f) : LiveWidget(p, width, 112.0f) {}
 
 private:
     void sample(Sig& s) const override
@@ -647,22 +684,23 @@ private:
              { 20.0f, 84.0f, 300.0f, 18.0f }, 11.0f, true, off ? amber : axisInk(), Just::centredLeft, 0.04f);
 
         vline(g, 336.0f, 14.0f, designH - 14.0f, 0.22f, gold);
+        const float split2 = designW - 156.0f;
         auto row = [&](float x, float y, const juce::String& k, const juce::String& val, bool hot)
         {
             text(g, k, { x, y, 180.0f, 20.0f }, 11.0f, true, ivoryDim, Just::centredLeft, 0.08f);
-            text(g, val, { x + 150.0f, y, 190.0f, 20.0f }, 13.0f, true, hot ? amberBright : ivory, Just::centredRight, 0.02f);
+            text(g, val, { x + 150.0f, y, split2 - 24.0f - (x + 150.0f), 20.0f }, 13.0f, true, hot ? amberBright : ivory, Just::centredRight, 0.02f);
         };
         row(356.0f, 10.0f, "A4 REFERENCE", iso ? "440.0 Hz (ISOLATION)" : juce::String(ref, 1) + " Hz", ref != 440.0f && ! iso);
         row(356.0f, 38.0f, "PITCH KNOB", signedString(mt, 2, " st") + " = " + signedString(mt * 100.0f, 0, " ct"), std::abs(mt) > 0.001f);
         row(356.0f, 66.0f, "TEMPERAMENT", "12-TONE EQUAL", false);
-        vline(g, 724.0f, 14.0f, designH - 14.0f, 0.22f, gold);
+        vline(g, split2, 14.0f, designH - 14.0f, 0.22f, gold);
         for (int i = 0; i < 3; ++i)
         {
             const int note = i == 0 ? 60 : (i == 1 ? 57 : 81);
             const float hz = a4 * std::pow(2.0f, (float) (note - 69) / 12.0f);
             const float y = 10.0f + (float) i * 28.0f;
-            text(g, noteName(note), { 746.0f, y, 50.0f, 20.0f }, 13.0f, true, ivory, Just::centredLeft);
-            text(g, juce::String(hz, 2) + " Hz", { 790.0f, y, 80.0f, 20.0f }, 13.0f, true, ivoryDim, Just::centredRight);
+            text(g, noteName(note), { split2 + 22.0f, y, 50.0f, 20.0f }, 13.0f, true, ivory, Just::centredLeft);
+            text(g, juce::String(hz, 2) + " Hz", { split2 + 66.0f, y, 80.0f, 20.0f }, 13.0f, true, axisInk(), Just::centredRight);
         }
     }
 };
@@ -866,7 +904,7 @@ public:
     void paintStatic(juce::Graphics& g) override { glassWell(g, { 0.0f, 0.0f, designW, designH }); }
 
 private:
-    static Rect plotRect() { return { 84.0f, 58.0f, 562.0f, 208.0f }; }
+    static Rect plotRect() { return { 84.0f, 58.0f, 562.0f, 226.0f }; }
 
     struct Geo
     {
@@ -996,10 +1034,7 @@ private:
         repaint();
     }
 
-    static juce::String timeText(float s)
-    {
-        return s < 1.0f ? juce::String(juce::roundToInt(s * 1000.0f)) + " ms" : juce::String(s, 2) + " s";
-    }
+    static juce::String timeText(float s) { return periodString(s); }
     static juce::String hzText(float f) { return juce::String(f, f < 10.0f ? 2 : (f < 100.0f ? 1 : 0)); }
 
     void draw(juce::Graphics& g) override
@@ -1098,16 +1133,16 @@ private:
         axisText(g, timeText(gm.total), { plot.getRight() - 70.0f, plot.getBottom() + 29.0f, 70.0f, 16.0f }, Just::centredRight);
 
         text(g, "CARRIER FREQUENCY, KEY HELD", { 14.0f, 6.0f, 300.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.04f);
+        // A bypassed ring modulator reads as idle: neutral ink, never the amber of a working stage.
         text(g, wet ? "WET " + juce::String(juce::roundToInt(gm.amount * 100.0f)) + "%" : juce::String("BYPASSED  -  MOD 0%"),
-             { 330.0f, 6.0f, 324.0f, 20.0f }, 12.5f, true, wet ? amberBright : amber, Just::centredRight, 0.05f);
+             { 330.0f, 6.0f, 324.0f, 20.0f }, 12.5f, true, wet ? amberBright : axisInk(), Just::centredRight, 0.05f);
         text(g, hzText(gm.speed) + " > " + hzText(peak) + " Hz", { 14.0f, 26.0f, 300.0f, 22.0f }, 15.0f, true,
              live ? ivory : ivoryDim, Just::centredLeft, 0.03f);
         text(g, gm.ghost ? juce::String("DEPTH 0%  -  PREVIEW AT 100%") : "DEPTH " + juce::String(juce::roundToInt(gm.depth * 100.0f)) + "%",
-             { 330.0f, 28.0f, 324.0f, 20.0f }, 12.5f, true, gm.ghost ? amber : ivory, Just::centredRight, 0.04f);
-        text(g, "DRAG A: ATTACK AND DEPTH      DRAG D: DECAY", { 14.0f, 316.0f, 640.0f, 18.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.03f);
-        text(g, "RELEASE 0.35 s, FIXED   -   THE FIRST KEY OF A PHRASE TRIGGERS IT", { 14.0f, 335.0f, 640.0f, 18.0f }, 12.5f, false, axisInk(),
+             { 330.0f, 28.0f, 324.0f, 20.0f }, 12.5f, true, gm.ghost ? axisInk() : ivory, Just::centredRight, 0.04f);
+        text(g, "DRAG A: ATTACK AND DEPTH      DRAG D: DECAY", { 14.0f, 336.0f, 640.0f, 18.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.03f);
+        text(g, "RELEASE 0.35 s, FIXED   -   THE FIRST KEY OF A PHRASE TRIGGERS IT", { 14.0f, 354.0f, 640.0f, 18.0f }, 12.5f, false, axisInk(),
              Just::centredLeft);
-        text(g, "SET ON THE MAIN PANEL:  SPEED, DEPTH, ATTACK, DECAY, MOD", { 14.0f, 354.0f, 640.0f, 18.0f }, 12.5f, true, gold, Just::centredLeft, 0.04f);
     }
 
     int hover = 0, dragging = 0;
@@ -1121,10 +1156,10 @@ private:
 class ChorusSweep final : public LiveWidget
 {
 public:
-    explicit ChorusSweep(Cs80AudioProcessor& p) : LiveWidget(p, 572.0f, 276.0f) {}
+    explicit ChorusSweep(Cs80AudioProcessor& p, float width = 732.0f) : LiveWidget(p, width, 276.0f) {}
 
 private:
-    static Rect plotRect() { return { 70.0f, 40.0f, 482.0f, 120.0f }; }
+    Rect plotRect() const { return { 70.0f, 40.0f, designW - 90.0f, 120.0f }; }
 
     void sample(Sig& s) const override
     {
@@ -1204,7 +1239,7 @@ private:
         g.strokePath(main, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
         text(g, title, { 14.0f, 6.0f, 410.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.03f);
-        text(g, on ? "ON" : "OFF  -  BYPASSED", { 420.0f, 6.0f, 138.0f, 22.0f }, 12.5f, true, on ? amberBright : amber, Just::centredRight, 0.06f);
+        text(g, on ? "ON" : "OFF  -  BYPASSED", { designW - 152.0f, 6.0f, 138.0f, 22.0f }, 12.5f, true, on ? amberBright : axisInk(), Just::centredRight, 0.06f);
 
         // Readouts. SPEED and DEPTH are main-panel settings shown here for reference, so they are flat
         // figures between hairlines in ivory; the delay or gain range is derived from them and lit.
@@ -1216,11 +1251,11 @@ private:
         const Cell cells[3] = { { "SPEED", juce::String(speed, speed < 10.0f ? 2 : 1) + " Hz", false },
                                 { "DEPTH", juce::String(juce::roundToInt(depth * 100.0f)) + "%", false },
                                 { trem ? "GAIN RANGE" : "DELAY RANGE", range, true } };
-        const float cellW[3] = { 150.0f, 130.0f, 240.0f };
+        const float cellW[3] = { 200.0f, 170.0f, 300.0f };
         float cx = 14.0f;
         const float cy = 186.0f;
-        hline(g, 14.0f, 558.0f, cy, 0.20f);
-        hline(g, 14.0f, 558.0f, cy + 50.0f, 0.20f);
+        hline(g, 14.0f, designW - 14.0f, cy, 0.20f);
+        hline(g, 14.0f, designW - 14.0f, cy + 50.0f, 0.20f);
         for (int i = 0; i < 3; ++i)
         {
             if (i > 0)
@@ -1232,8 +1267,7 @@ private:
         }
         text(g, on ? (bbd ? "ONE SHARED WET PATH  (LEFT = RIGHT)" : "FAINT TRACE = RIGHT CHANNEL, PHASE +0.95 PI")
                    : "SWITCH CHORUS ON AT THE MAIN PANEL TO HEAR THIS STAGE",
-             { 14.0f, 240.0f, 548.0f, 18.0f }, 12.5f, false, axisInk(), Just::centredLeft, 0.01f);
-        text(g, "SET ON THE MAIN PANEL:  SPEED, DEPTH, CHORUS, TREMOLO", { 14.0f, 258.0f, 548.0f, 18.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
+             { 14.0f, 244.0f, designW - 28.0f, 18.0f }, 12.5f, false, axisInk(), Just::centredLeft, 0.01f);
     }
 };
 
@@ -1241,7 +1275,7 @@ private:
 class VoiceLcd final : public LiveWidget
 {
 public:
-    explicit VoiceLcd(Cs80AudioProcessor& p) : LiveWidget(p, 460.0f, 124.0f) {}
+    explicit VoiceLcd(Cs80AudioProcessor& p, float width = 348.0f) : LiveWidget(p, width, 124.0f) {}
 
 private:
     void sample(Sig& s) const override
@@ -1262,7 +1296,8 @@ private:
             { "NOISE FLOOR", noise <= 0.001f ? juce::String("OFF") : juce::String(juce::roundToInt(20.0f * std::log10(noise * 0.0008f))) + " dB", noise > 0.001f } };
         for (int i = 0; i < 4; ++i)
         {
-            const Rect c(8.0f + (float) (i % 2) * 228.0f, 4.0f + (float) (i / 2) * 60.0f, 216.0f, 54.0f);
+            const float cw = (designW - 28.0f) * 0.5f;
+            const Rect c(8.0f + (float) (i % 2) * (cw + 12.0f), 4.0f + (float) (i / 2) * 60.0f, cw, 54.0f);
             g.setColour(juce::Colours::black.withAlpha(0.55f));
             g.fillRoundedRectangle(c, 4.0f);
             g.setColour(juce::Colours::white.withAlpha(0.08f));
@@ -1282,7 +1317,7 @@ private:
 class VoiceScatter final : public LiveWidget
 {
 public:
-    explicit VoiceScatter(Cs80AudioProcessor& p) : LiveWidget(p, 340.0f, 276.0f)
+    explicit VoiceScatter(Cs80AudioProcessor& p, float width = 308.0f) : LiveWidget(p, width, 276.0f)
     {
         enableMouse(false);
         // Same generator and draw order as Engine::prepare: tune, cutoff, level, env, pan per rank.
@@ -1312,7 +1347,7 @@ public:
     }
 
 private:
-    static Rect plotRect() { return { 62.0f, 32.0f, 262.0f, 178.0f }; }
+    Rect plotRect() const { return { 62.0f, 32.0f, designW - 78.0f, 178.0f }; }
 
     float dispersion() const { return isolated() ? 0.0f : v(cs80::P_voiceDispersion); }
     // Effective dispersion for drawing: a preview at 100 % when the control is at zero.
@@ -1399,7 +1434,7 @@ private:
         axisText(g, "L " + num(panExt), { plot.getX() - 4.0f, plot.getBottom() + 3.0f, 56.0f, 14.0f }, Just::centredLeft);
         axisText(g, num(panExt) + " R", { plot.getRight() - 52.0f, plot.getBottom() + 3.0f, 56.0f, 14.0f }, Just::centredRight);
 
-        text(g, "SIXTEEN RANKS:  PAN AGAINST TUNING", { 14.0f, 6.0f, 320.0f, 18.0f }, 11.0f, true, axisInk(), Just::centredLeft, 0.05f);
+        text(g, "16 RANKS:  PAN AGAINST TUNING", { 14.0f, 6.0f, designW - 20.0f, 18.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.03f);
         const float fade = ghost ? 0.38f : 1.0f;
         for (int rank = 1; rank >= 0; --rank)
             for (int voice = 0; voice < 8; ++voice)
@@ -1428,24 +1463,24 @@ private:
         if (hover >= 0)
         {
             const int voice = hover / 2, rank = hover % 2;
-            text(g, "CARD " + juce::String(voice + 1) + " / RANK " + (rank == 0 ? "I" : "II") + "   "
+            text(g, "CARD " + juce::String(voice + 1) + " / " + (rank == 0 ? "I" : "II") + "   "
                         + signedString(tune[(size_t) hover] * disp * cs80::kProvisionalVoiceTuneSpreadCents, 1, " ct") + "   PAN "
                         + signedString(pan[(size_t) hover] * disp * 0.8f, 2, ""),
-                 { 14.0f, 244.0f, 318.0f, 20.0f }, 11.5f, true, ivory, Just::centredLeft, 0.02f);
+                 { 14.0f, 244.0f, designW - 20.0f, 20.0f }, 12.5f, true, ivory, Just::centredLeft, 0.0f);
         }
         else if (ghost)
-            text(g, "DISPERSION 0%  -  PREVIEW AT 100%", { 14.0f, 244.0f, 318.0f, 20.0f }, 11.5f, true, amber, Just::centredLeft, 0.04f);
+            text(g, "DISPERSION 0%  -  PREVIEW AT 100%", { 14.0f, 244.0f, designW - 20.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.02f);
         else
         {
             g.setColour(amberBright);
-            g.fillEllipse(16.0f, 249.0f, 10.0f, 10.0f);
-            text(g, "RANK I", { 30.0f, 244.0f, 62.0f, 20.0f }, 11.0f, true, axisInk(), Just::centredLeft);
+            g.fillEllipse(14.0f, 249.0f, 10.0f, 10.0f);
+            text(g, "RANK I", { 28.0f, 244.0f, 62.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredLeft);
             g.setColour(ivory.withAlpha(0.92f));
-            g.fillEllipse(100.0f, 249.0f, 10.0f, 10.0f);
-            text(g, "RANK II", { 114.0f, 244.0f, 66.0f, 20.0f }, 11.0f, true, axisInk(), Just::centredLeft);
+            g.fillEllipse(94.0f, 249.0f, 10.0f, 10.0f);
+            text(g, "RANK II", { 108.0f, 244.0f, 68.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredLeft);
             g.setColour(juce::Colours::white.withAlpha(0.85f));
-            g.drawEllipse(194.0f, 248.0f, 12.0f, 12.0f, 1.3f);
-            text(g, "SOUNDING", { 210.0f, 244.0f, 84.0f, 20.0f }, 11.0f, true, axisInk(), Just::centredLeft);
+            g.drawEllipse(180.0f, 248.0f, 12.0f, 12.0f, 1.3f);
+            text(g, "SOUNDING", { 196.0f, 244.0f, 90.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredLeft);
         }
         if (isolated())
             inertOverlay(g, { 0.0f, 0.0f, designW, designH });
@@ -1662,16 +1697,24 @@ private:
         text(g, "FX " + juce::String(slotIndex + 1), badge, 12.5f, true, working ? juce::Colour(0xff17120a) : ivoryDim, Just::centred, 0.05f);
         drawControlCaption(g, "EFFECT", { 70.0f, 8.0f, 170.0f, 17.0f }, Just::centred, 12.5f);
 
-        // An empty slot says nothing here: the chain strip and the type list already show it is off.
+        // The summary column: type, mix and wet, then one fact about the effect. An empty slot says where it
+        // sits in the series chain instead of repeating that it is off.
         if (type != 0)
         {
-            text(g, kFxTypes[type], { 372.0f, 30.0f, 168.0f, 22.0f }, 14.0f, true, masked ? ivoryDim : ivory, Just::centredLeft, 0.06f);
+            static const char* const facts[] = { "", "0.62 Hz SWEEP", "6 STAGES, 0.32 Hz", "340 ms TAPS", "TAIL ABOUT 3 s (EST.)", "x3.2 SOFT CLIP" };
+            text(g, kFxTypes[type], { 368.0f, 28.0f, 172.0f, 22.0f }, 14.0f, true, masked ? ivoryDim : ivory, Just::centredLeft, 0.06f);
             text(g, masked ? "MASKED BY ISOLATION"
                            : "MIX " + juce::String(juce::roundToInt(mix * 100.0f)) + "%   WET "
                                  + juce::String(juce::roundToInt(juce::jlimit(0.0f, 1.0f, mix * factor[type]) * 100.0f)) + "%",
-                 { 372.0f, 54.0f, 168.0f, 20.0f }, 12.0f, true, masked ? amber : (mix > 0.001f ? amberBright : ivoryDim), Just::centredLeft, 0.03f);
-            if (mix <= 0.001f && ! masked)
-                text(g, "MIX 0: BYPASSED", { 372.0f, 76.0f, 168.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft);
+                 { 368.0f, 52.0f, 172.0f, 20.0f }, 12.5f, true, masked ? amber : (mix > 0.001f ? amberBright : axisInk()), Just::centredLeft, 0.02f);
+            text(g, mix <= 0.001f && ! masked ? juce::String("MIX 0: BYPASSED") : juce::String(facts[type]),
+                 { 368.0f, 74.0f, 172.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft);
+        }
+        else
+        {
+            static const char* const after[] = { "AFTER THE CHORUS", "AFTER FX 1", "AFTER FX 2" };
+            text(g, "EMPTY SLOT", { 368.0f, 36.0f, 172.0f, 22.0f }, 14.0f, true, axisInk(), Just::centredLeft, 0.06f);
+            text(g, after[slotIndex], { 368.0f, 60.0f, 172.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft);
         }
     }
 
@@ -1952,7 +1995,7 @@ private:
                     {
                         const float x = plot.getX() + step * (0.5f + (float) i);
                         stem(x, amp, i % 2 == 1 ? trace : trace.withAlpha(0.6f));
-                        axisText(g, juce::String(340 * i) + " ms", { x - 30.0f, plot.getBottom() + 3.0f, 60.0f, 14.0f });
+                        axisText(g, periodString(0.34f * (float) i), { x - 30.0f, plot.getBottom() + 3.0f, 60.0f, 14.0f });
                         amp *= 0.36f;
                     }
                     axisText(g, "1", { 4.0f, plot.getY() - 6.0f, 56.0f, 14.0f }, Just::centredRight);
@@ -1960,26 +2003,42 @@ private:
                     foot = "340 ms TAPS, EACH x0.36 OF THE LAST, SIDE TO SIDE";
                     break;
                 }
-                case 4: // plate reverb: dry stem plus a dense decaying tail
+                case 4: // plate reverb: the dry stem and the tail on a decibel axis, 0 to -60 dB over 5 s
                 {
-                    frame(4, 4);
+                    frame(5, 3);
+                    const auto tail = plateTail();
+                    constexpr float span = 5.0f, floorDb = -60.0f;
+                    const float shownWet = wet > 0.001f ? wet : 0.3f;
+                    auto yOfDb = [&](float db) { return plot.getY() + plot.getHeight() * juce::jlimit(0.0f, 1.0f, db / floorDb); };
+                    // The dry signal at the onset, then the tail: loop envelope, a little density texture.
+                    const float dryDb = 20.0f * std::log10(juce::jmax(0.001f, 1.0f - shownWet));
                     g.setColour(ivory.withAlpha(active ? 0.9f : 0.4f));
-                    g.fillRoundedRectangle(plot.getX() + 8.0f, plot.getBottom() - plot.getHeight() * (1.0f - wet), 10.0f,
-                                           plot.getHeight() * (1.0f - wet), 2.0f);
+                    g.fillRoundedRectangle(plot.getX() + 6.0f, yOfDb(dryDb), 10.0f, plot.getBottom() - yOfDb(dryDb), 2.0f);
+                    const float x0 = plot.getX() + 24.0f, x1 = plot.getRight() - 6.0f;
                     for (size_t i = 0; i < scatter.size(); ++i)
                     {
-                        const float t = (float) i / (float) scatter.size();
-                        const float x = plot.getX() + 40.0f + (plot.getWidth() - 50.0f) * t;
-                        const float env = std::exp(-3.6f * t) * (0.45f + 0.55f * scatter[i]);
-                        const float h = plot.getHeight() * wet * 0.95f * env;
+                        const float u = (float) i / (float) scatter.size();
+                        const float t = span * (x0 - plot.getX() + (x1 - x0) * u) / plot.getWidth();
+                        const float db = 20.0f * std::log10(juce::jmax(1.0e-4f, shownWet * tail.envelope(t))) - (1.0f - scatter[i]) * 5.0f;
+                        const float y = yOfDb(db);
                         g.setColour(i % 2 ? trace : trace.withAlpha(0.6f));
-                        g.fillRect(x, plot.getBottom() - juce::jmax(1.0f, h), 3.0f, juce::jmax(1.0f, h));
+                        g.fillRect(x0 + (x1 - x0) * u, y, 3.0f, juce::jmax(1.0f, plot.getBottom() - y));
                     }
-                    axisText(g, "1", { 4.0f, plot.getY() - 6.0f, 56.0f, 14.0f }, Just::centredRight);
-                    axisText(g, "0", { 4.0f, plot.getBottom() - 6.0f, 56.0f, 14.0f }, Just::centredRight);
-                    axisText(g, "DRY", { plot.getX() - 6.0f, plot.getBottom() + 3.0f, 36.0f, 14.0f });
-                    axisText(g, "TAIL  (SHAPE, NOT A MEASURED TIME)", { plot.getCentreX() - 130.0f, plot.getBottom() + 3.0f, 260.0f, 13.0f });
-                    foot = "WET LEVEL SCALES THE TAIL";
+                    // Where the loops' mean low-band decay reaches -60 dB below the onset.
+                    const float xr = plot.getX() + plot.getWidth() * tail.mean / span;
+                    g.setColour(ivory.withAlpha(0.5f));
+                    const float dash[] = { 3.0f, 3.0f };
+                    g.drawDashedLine(juce::Line<float>(xr, plot.getY(), xr, plot.getBottom()), dash, 2, 1.0f);
+                    axisText(g, "RT60 ABOUT " + juce::String(tail.mean, 1) + " s (EST.)", { xr + 6.0f, plot.getY() + 2.0f, 200.0f, 16.0f }, Just::centredLeft);
+                    for (int i = 0; i <= 3; ++i)
+                        axisText(g, i == 0 ? juce::String("0 dB") : juce::String(-20 * i),
+                                 { 4.0f, plot.getY() + plot.getHeight() * (float) i / 3.0f - 6.5f, 56.0f, 14.0f }, Just::centredRight);
+                    for (int i = 0; i <= 5; ++i)
+                        axisText(g, i == 0 ? juce::String("0") : juce::String(i) + (i == 5 ? " s" : ""),
+                                 { plot.getX() + plot.getWidth() * (float) i / 5.0f - 20.0f - (i == 5 ? 12.0f : 0.0f), plot.getBottom() + 3.0f, 40.0f, 14.0f });
+                    foot = "ESTIMATED FROM THE FOUR COMB LOOPS (" + juce::String(juce::roundToInt(1000.0f * tail.delay[0])) + " - "
+                           + juce::String(juce::roundToInt(1000.0f * tail.delay[3])) + " ms, FEEDBACK 0.78): RT60 " + juce::String(tail.lo, 1) + " - "
+                           + juce::String(tail.hi, 1) + " s IN THE LOW BAND";
                     break;
                 }
                 default: // drive
@@ -2014,8 +2073,20 @@ private:
                 }
             }
         }
-        text(g, title, { 14.0f, 8.0f, 460.0f, 24.0f }, 15.0f, true, type == 0 ? ivoryDim : amber, Just::centredLeft, 0.08f);
-        text(g, foot, { 14.0f, 292.0f, 792.0f, 20.0f }, 11.0f, false, axisInk(), Just::centredLeft, 0.02f);
+        text(g, title, { 14.0f, 8.0f, 360.0f, 24.0f }, 15.0f, true, type == 0 ? ivoryDim : amber, Just::centredLeft, 0.08f);
+        text(g, foot, { 14.0f, 292.0f, 792.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft, 0.0f);
+        if (type > 0)
+        {
+            // Only the type and the mix are engine parameters; every curve here is drawn from the fixed law.
+            const juce::String tag = "ILLUSTRATION: SHAPE ONLY";
+            const float tw = textWidth(tag, 12.5f, true, 0.06f) + 22.0f;
+            const Rect chip = Rect(0.0f, 0.0f, tw, 22.0f).withCentre({ 520.0f, 20.0f });
+            g.setColour(ivory.withAlpha(0.07f));
+            g.fillRoundedRectangle(chip, 11.0f);
+            g.setColour(ivory.withAlpha(0.38f));
+            g.drawRoundedRectangle(chip, 11.0f, 1.0f);
+            text(g, tag, chip, 12.5f, true, axisInk(), Just::centred, 0.06f);
+        }
         if (type > 0 && ! iso)
             text(g, "WET " + juce::String(juce::roundToInt(wet * 100.0f)) + "%", { 640.0f, 8.0f, 166.0f, 24.0f }, 15.0f, true, ivory,
                  Just::centredRight, 0.04f);
@@ -2161,7 +2232,7 @@ private:
 class ArpClock final : public LiveWidget
 {
 public:
-    explicit ArpClock(Cs80AudioProcessor& p) : LiveWidget(p, 132.0f, 104.0f) {}
+    explicit ArpClock(Cs80AudioProcessor& p) : LiveWidget(p, 152.0f, 112.0f) {}
 
 private:
     void sample(Sig& s) const override
@@ -2174,14 +2245,17 @@ private:
         const float rate = juce::jmax(0.25f, v(cs80::P_arpRate));
         const bool random = juce::roundToInt(v(cs80::P_arpMode)) == 3;
         const bool on = v(cs80::P_arpOn) >= 0.5f && ! isolated();
-        auto row = [&](float y, const juce::String& k, const juce::String& val)
+        auto row = [&](float y, const juce::String& k, const juce::String& val, juce::Colour ink)
         {
-            text(g, k, { 12.0f, y, 56.0f, 20.0f }, 11.0f, true, ivoryDim, Just::centredLeft, 0.1f);
-            text(g, val, { 52.0f, y, 72.0f, 20.0f }, 13.0f, true, on ? amberBright : ivory.withAlpha(0.7f), Just::centredRight);
+            text(g, k, { 12.0f, y, 60.0f, 20.0f }, 12.5f, true, ivoryDim, Just::centredLeft, 0.1f);
+            text(g, val, { 60.0f, y, 80.0f, 20.0f }, 13.0f, true, ink, Just::centredRight);
         };
-        row(10.0f, "STEP", periodString(1.0f / rate));
-        row(42.0f, "CLOCK", juce::String(rate, rate < 10.0f ? 2 : 1) + "/s");
-        row(74.0f, "GATE", juce::String(random ? 45 : 58) + "%");
+        const juce::Colour lit = on ? amberBright : ivory.withAlpha(0.7f);
+        row(8.0f, "STEP", periodString(1.0f / rate), lit);
+        row(36.0f, "CLOCK", juce::String(rate, rate < 10.0f ? 2 : 1) + "/s", lit);
+        // The gate length is set by the mode, not by a control: it is shown in neutral ink and says so.
+        row(64.0f, "GATE", juce::String(random ? 45 : 58) + "%", ivory.withAlpha(0.7f));
+        text(g, "(FIXED)", { 60.0f, 84.0f, 80.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredRight, 0.04f);
     }
 };
 
@@ -2196,20 +2270,46 @@ public:
 private:
     static Rect plotRect() { return { 64.0f, 32.0f, 634.0f, 184.0f }; }
 
+    // The keys held right now: on-screen keys and host MIDI, lowest first. `more` counts the ones beyond eight.
+    std::vector<int> heldNotes(int& more) const
+    {
+        std::vector<int> notes;
+        more = 0;
+        for (int n = 0; n < 128; ++n)
+            if (proc.isHostKeyDown(n) || proc.getKeyboardState().isNoteOnForChannels(0xffff, n))
+            {
+                if (notes.size() < 8) notes.push_back(n); else ++more;
+            }
+        return notes;
+    }
+
     void sample(Sig& s) const override
     {
         s[0] = v(cs80::P_arpMode); s[1] = v(cs80::P_arpOctaves); s[2] = v(cs80::P_arpOn); s[3] = v(cs80::P_parityMode);
+        // The held keys as eight 16-bit words, exact in a float.
+        std::array<unsigned, 8> words {};
+        for (int n = 0; n < 128; ++n)
+            if (proc.isHostKeyDown(n) || proc.getKeyboardState().isNoteOnForChannels(0xffff, n))
+                words[(size_t) (n / 16)] |= 1u << (n % 16);
+        for (size_t i = 0; i < 8; ++i)
+            s[4 + i] = (float) words[i];
     }
 
     void draw(juce::Graphics& g) override
     {
         const int mode = juce::jlimit(0, 4, juce::roundToInt(v(cs80::P_arpMode)));
         const int octaves = juce::jlimit(1, 4, juce::roundToInt(v(cs80::P_arpOctaves)));
-        const bool on = v(cs80::P_arpOn) >= 0.5f && ! isolated();
-        // The same ordering rules as Engine::rebuildArpSequence, on a demonstration chord pressed E, G, C.
-        std::vector<int> base { 64, 67, 60 };
-        if (mode != 4)
+        const bool armed = v(cs80::P_arpOn) >= 0.5f && ! isolated();
+        // The chord: the keys held now, else a demonstration chord pressed E, G, C.
+        int more = 0;
+        std::vector<int> base = heldNotes(more);
+        const bool liveKeys = ! base.empty();
+        if (! liveKeys)
+            base = { 64, 67, 60 };
+        // Same ordering rules as Engine::rebuildArpSequence. Press order is not tracked, so PLAYED shows ascending.
+        if (mode != 4 || liveKeys)
             std::sort(base.begin(), base.end());
+        const bool on = armed && liveKeys;
         std::vector<int> seq;
         for (int o = 0; o < octaves; ++o)
             for (int n : base)
@@ -2223,7 +2323,7 @@ private:
                 seq.push_back(seq[(size_t) i]);
         }
         const auto plot = plotRect();
-        const int lowest = 60, highest = 67 + 12 * (octaves - 1);
+        const int lowest = *std::min_element(seq.begin(), seq.end()), highest = *std::max_element(seq.begin(), seq.end());
         const float rowH = plot.getHeight() / (float) (highest - lowest + 1);
         const float stepW = plot.getWidth() / (float) seq.size();
 
@@ -2241,14 +2341,20 @@ private:
         hline(g, plot.getX(), plot.getRight(), plot.getBottom(), 0.34f);
         vline(g, plot.getX(), plot.getY(), plot.getBottom(), 0.34f);
 
-        // Pitch gutter: only the notes the pattern uses, so the labels never crowd.
-        std::vector<int> used(base.begin(), base.end());
-        for (int o = 1; o < octaves; ++o)
+        // Pitch gutter: the notes the pattern uses, thinned so the labels never touch.
+        std::vector<int> used;
+        for (int o = 0; o < octaves; ++o)
             for (int n : base)
                 used.push_back(n + 12 * o);
+        std::sort(used.begin(), used.end());
+        used.erase(std::unique(used.begin(), used.end()), used.end());
+        float lastY = 1.0e9f;
         for (int n : used)
         {
             const float y = plot.getBottom() - ((float) (n - lowest) + 0.5f) * rowH;
+            if (lastY - y < 15.0f)
+                continue;
+            lastY = y;
             axisText(g, noteName(n), { 6.0f, y - 8.0f, 50.0f, 16.0f }, Just::centredRight);
             g.setColour(axisInk().withAlpha(0.5f));
             g.fillRect(plot.getX() - 4.0f, y - 0.5f, 4.0f, 1.0f);
@@ -2300,12 +2406,21 @@ private:
         }
         if (random)
             text(g, "RANDOM STEP FROM THE HELD NOTES, ALL OCTAVES", plot, 12.5f, true, on ? amberBright : axisInk(), Just::centred, 0.08f);
-        const juce::String chord = mode == 4 ? juce::String("DEMO CHORD, PLAYED E4 G4 C4") : juce::String("DEMO CHORD C4 E4 G4");
-        text(g, (on ? chord : "ARP OFF  -  PREVIEW  -  " + chord) + "  -  " + juce::String((int) seq.size()) + " STEPS",
-             { 14.0f, 5.0f, 490.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.02f);
-        text(g, kArpModes[mode] + "  -  " + juce::String(octaves) + (octaves == 1 ? " OCTAVE" : " OCTAVES"),
-             { 504.0f, 5.0f, 196.0f, 22.0f }, 12.5f, true, on ? ivory : axisInk(), Just::centredRight, 0.04f);
+
+        juce::String names;
+        for (int n : base)
+            names += (names.isEmpty() ? "" : " ") + noteName(n);
+        juce::String head = liveKeys ? "HELD KEYS  " + names + (more > 0 ? " +" + juce::String(more) : juce::String())
+                                     : "DEMO CHORD  " + names + "  -  HOLD KEYS FOR YOURS";
+        if (! armed)
+            head = "ARP OFF  -  PREVIEW  -  " + head;
+        text(g, head, { 14.0f, 5.0f, 430.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.02f);
+        text(g, kArpModes[mode] + "  -  " + juce::String(octaves) + " OCT  -  " + juce::String((int) seq.size()) + " STEPS",
+             { 400.0f, 5.0f, 298.0f, 22.0f }, 12.5f, true, on ? ivory : axisInk(), Just::centredRight, 0.03f);
         text(g, "STEP", { 4.0f, plot.getBottom() + 3.0f, 56.0f, 16.0f }, 12.5f, true, axisInk(), Just::centredRight);
+        if (mode == 4 && liveKeys)
+            text(g, "PLAYED ORDER IS NOT TRACKED  -  SHOWN ASCENDING", { plot.getX() + 10.0f, plot.getY() + 4.0f, 360.0f, 20.0f }, 12.5f, true,
+                 axisInk(), Just::centredLeft, 0.02f);
         if (isolated())
             inertOverlay(g, { 0.0f, 0.0f, designW, designH });
     }
@@ -2334,7 +2449,7 @@ public:
     }
 
 private:
-    static Rect plotRect() { return { 60.0f, 32.0f, 572.0f, 116.0f }; }
+    static Rect plotRect() { return { 60.0f, 32.0f, 572.0f, 134.0f }; }
 
     void sample(Sig& s) const override { s[0] = v(cs80::P_portamento); s[1] = v(cs80::P_glideMode); }
 
@@ -2420,7 +2535,6 @@ private:
         else if (tau <= 0.0001f) right = "PORTA 0  -  PITCH JUMPS  -  DASHED: " + periodString(showTau);
         else right = mode == 2 ? "GLISSANDO  -  SEMITONE STEPS  -  DASHED: SMOOTH" : "PORTAMENTO  -  TIME CONSTANT = PORTA";
         text(g, right, { 160.0f, 5.0f, 478.0f, 22.0f }, 12.5f, true, gliding ? amber : axisInk(), Just::centredRight, 0.02f);
-        text(g, "SET ON THE MAIN PANEL:  PORTA (TIME) AND GLIDE (MODE)", { 14.0f, 186.0f, 620.0f, 18.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
     }
 
     float lastTau = 0.0f;
@@ -2546,7 +2660,7 @@ private:
             for (int c = 0; c < 3; ++c)
             {
                 const int kind = rows[r].kind[c];
-                const juce::Colour ink = kind == 1 ? amberBright : (kind == 2 ? ivoryDim.withAlpha(0.8f) : (kind == 3 ? amber : (c == pol ? ivory : axisInk())));
+                const juce::Colour ink = kind == 1 ? amberBright : (kind == 2 ? panelInk() : (kind == 3 ? amberBright.withMultipliedBrightness(0.85f) : (c == pol ? ivory : panelInk())));
                 text(g, rows[r].cell[c], { labelW + colW * (float) c + pad, y, colW - pad - 6.0f, rowH }, 12.5f, kind != 0, ink, Just::centredLeft, 0.02f);
             }
         }
@@ -2614,7 +2728,7 @@ public:
         ui::text(g, getButtonText() + (masked ? "  (MASKED)" : ""), { r.getX() + 44.0f, r.getY() + 6.0f, r.getWidth() - 52.0f, 20.0f }, 13.5f, true,
                  masked ? amberBright : ink, Just::centredLeft, 0.06f);
         ui::text(g, sub, { r.getX() + 44.0f, r.getY() + 27.0f, r.getWidth() - 52.0f, 18.0f }, 12.5f, false,
-                 lit ? juce::Colour(0xff3c260a) : axisInk(), Just::centredLeft, 0.0f);
+                 lit ? juce::Colour(0xff3c260a) : panelInk(), Just::centredLeft, 0.0f);
         if (hasKeyboardFocus(true))
         {
             g.setColour(juce::Colour(0xfff6df91));
@@ -2827,6 +2941,91 @@ public:
 
 private:
     juce::String legend;
+};
+
+// ---------------------------------------------------------------------------
+// Two-way selector: STEREO and MONO side by side, the one in force lit. One boolean parameter (on = stereo).
+// ---------------------------------------------------------------------------
+
+class AdvOutputSwitch final : public juce::Button
+{
+public:
+    AdvOutputSwitch() : juce::Button("Output mode")
+    {
+        setWantsKeyboardFocus(true);
+        setMouseClickGrabsKeyboardFocus(false);
+        setTitle("Output mode: stereo or mono");
+        setTooltip("STEREO keeps the left and right outputs separate. MONO averages them after effects and limiting; phase cancellation "
+                   "can change the result.");
+        setDescription(getTooltip());
+    }
+
+    void mouseDown(const juce::MouseEvent& e) override
+    {
+        pressed = e.x < getWidth() / 2 ? 0 : 1;
+        juce::Button::mouseDown(e);
+    }
+
+    void mouseUp(const juce::MouseEvent& e) override
+    {
+        juce::Button::mouseUp(e);
+        pressed = -1;
+    }
+
+    // The arrows pick a side, Space and Return flip it.
+    bool keyPressed(const juce::KeyPress& key) override
+    {
+        const bool flip = key == juce::KeyPress::spaceKey || key == juce::KeyPress::returnKey;
+        const bool left = key == juce::KeyPress::leftKey, right = key == juce::KeyPress::rightKey;
+        if (! (flip || left || right))
+            return juce::Button::keyPressed(key);
+        const bool toStereo = flip ? ! getToggleState() : left;
+        if (toStereo != getToggleState())
+            setToggleState(toStereo, juce::sendNotificationSync);
+        return true;
+    }
+
+    // A click chooses the half it landed on. The parameter attachment also reaches this through
+    // setToggleState, with no mouse press behind it: that notification must not flip anything.
+    void clicked() override
+    {
+        if (pressed >= 0)
+            setToggleState(pressed == 0, juce::dontSendNotification);
+    }
+
+    void paintButton(juce::Graphics& g, bool hovered, bool down) override
+    {
+        constexpr float dw = 236.0f, dh = 40.0f;
+        g.addTransform(juce::AffineTransform::scale((float) getWidth() / dw, (float) getHeight() / dh));
+        const bool stereo = getToggleState();
+        const Rect track(1.0f, 1.0f, dw - 2.0f, dh - 3.0f);
+        drawWell(g, track, 5.0f);
+        const float half = (track.getWidth() - 9.0f) * 0.5f;
+        for (int seg = 0; seg < 2; ++seg)
+        {
+            const bool lit = (seg == 0) == stereo;
+            const Rect r(track.getX() + 3.0f + (float) seg * (half + 3.0f), track.getY() + 3.0f, half, track.getHeight() - 6.0f);
+            g.setColour(juce::Colours::black.withAlpha(0.6f));
+            g.fillRoundedRectangle(r.translated(0.0f, 1.5f), 4.0f);
+            g.setGradientFill(lit ? juce::ColourGradient(kGlow, r.getX(), r.getY(), kGlowDeep, r.getX(), r.getBottom(), false)
+                                  : juce::ColourGradient(juce::Colour(hovered ? 0xff3a3733 : 0xff2b2926), r.getX(), r.getY(),
+                                                         juce::Colour(0xff151311), r.getX(), r.getBottom(), false));
+            g.fillRoundedRectangle(r.translated(0.0f, down && lit ? 1.0f : 0.0f), 4.0f);
+            g.setColour(juce::Colours::white.withAlpha(lit ? 0.45f : 0.10f));
+            g.drawLine(r.getX() + 4.0f, r.getY() + 1.1f, r.getRight() - 4.0f, r.getY() + 1.1f, 1.0f);
+            g.setColour(lit ? juce::Colour(0xff6b4510) : juce::Colours::black.withAlpha(0.9f));
+            g.drawRoundedRectangle(r, 4.0f, 1.0f);
+            ui::text(g, seg == 0 ? "STEREO" : "MONO", r, 12.5f, true, lit ? juce::Colour(0xff2a1c07) : ivory, Just::centred, 0.1f);
+        }
+        if (hasKeyboardFocus(true))
+        {
+            g.setColour(juce::Colour(0xfff6df91));
+            g.drawRoundedRectangle(track.expanded(0.5f), 5.5f, 1.6f);
+        }
+    }
+
+private:
+    int pressed = -1;
 };
 
 class AdvInfoLayer final : public juce::Component
@@ -3146,6 +3345,20 @@ public:
         return raw;
     }
 
+    // A two-way STEREO / MONO selector on one boolean parameter.
+    AdvOutputSwitch* outputSwitch(Rect r, int parameter)
+    {
+        auto control = std::make_unique<AdvOutputSwitch>();
+        auto* raw = control.get();
+        raw->setExplicitFocusOrder(++focusCounter);
+        addAndMakeVisible(*raw);
+        buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
+            proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        owned.push_back(std::move(control));
+        placed.push_back({ raw, r });
+        return raw;
+    }
+
     juce::ComboBox* choice(Rect r, int parameter, const juce::StringArray& items)
     {
         auto control = std::make_unique<juce::ComboBox>();
@@ -3199,7 +3412,7 @@ private:
 };
 
 // ---------------------------------------------------------------------------
-// Chassis: walnut cheeks, crinkle-finished charcoal body, header and footer rails. Cached once.
+// Chassis: crinkle-finished charcoal body between the editor's cheeks, header and footer rails. Cached once.
 // ---------------------------------------------------------------------------
 
 class AdvChassis final : public juce::Component
@@ -3208,15 +3421,16 @@ public:
     AdvChassis()
     {
         setInterceptsMouseClicks(false, false);
-        setOpaque(true);
+        setOpaque(false);
         setBufferedToImage(true);
     }
 
+    // Only the body between the cheek columns (x 44 to 1556) is painted. The cheeks belong to the editor's
+    // own backdrop and stay transparent here, as they do under the memory lid.
     void paint(juce::Graphics& g) override
     {
         gArtScale = (float) getWidth() / kW;
         g.addTransform(juce::AffineTransform::scale((float) getWidth() / kW, (float) getHeight() / kH));
-        g.fillAll(juce::Colour(0xff0c0b0a));
 
         const Rect body(44.0f, 0.0f, kW - 88.0f, kH);
         fillPanelFace(g, body);
@@ -3242,16 +3456,19 @@ public:
         glassWell(g, { 357.0f, 14.0f, 886.0f, 68.0f }, 7.0f);
 
         // Corner screws holding the body to the cheeks.
-        for (float x : { 60.0f, kW - 60.0f })
+        for (float x : { 54.0f, kW - 54.0f })
             for (float y : { 14.0f, kH - 14.0f })
                 drawScrew(g, { x, y }, 4.0f, x < 800.0f ? 0.7f : 1.9f);
 
-        // Walnut cheeks: the shared figured-grain helper, a different figure on each side.
-        drawWalnutGrain(g, { 0.0f, 0.0f, 44.0f, kH }, true, 11, true);
-        drawWalnutGrain(g, { kW - 44.0f, 0.0f, 44.0f, kH }, true, 23, true);
-        g.setColour(gold.withAlpha(0.5f));
-        g.drawLine(44.5f, 0.0f, 44.5f, kH, 1.0f);
-        g.drawLine(kW - 44.5f, 0.0f, kW - 44.5f, kH, 1.0f);
+        // The body seats against the cheeks: a short inner shadow along each edge, no drawn line.
+        for (int side = 0; side < 2; ++side)
+        {
+            const float x = side == 0 ? body.getX() : body.getRight();
+            const float dir = side == 0 ? 1.0f : -1.0f;
+            g.setGradientFill(juce::ColourGradient(juce::Colours::black.withAlpha(0.45f), x, 0.0f,
+                                                   juce::Colours::transparentBlack, x + dir * 7.0f, 0.0f, false));
+            g.fillRect(side == 0 ? x : x - 7.0f, 0.0f, 7.0f, kH);
+        }
     }
 };
 
@@ -3473,6 +3690,7 @@ private:
     int page = 0;
 };
 
+// The footer: the page's one footnote on the left (what lives on the main panel), the key hints on the right.
 class AdvFooterStatus final : public juce::Component
 {
 public:
@@ -3482,12 +3700,27 @@ public:
         setOpaque(false);
     }
 
+    void setPage(int index)
+    {
+        page = index;
+        repaint();
+    }
+
     void paint(juce::Graphics& g) override
     {
         g.addTransform(juce::AffineTransform::scale((float) getWidth() / 1472.0f, (float) getHeight() / 26.0f));
-        text(g, shortcutName() + "+1 to 4 switch pages   -   Esc closes   -   double-click any knob to reset it", { 22.0f, 0.0f, 760.0f, 26.0f }, 12.5f,
-             false, axisInk(), Just::centredLeft, 0.02f);
+        static const char* const notes[] = {
+            "",
+            "SET ON THE MAIN PANEL:  SUB OSC AND RING MOD CONTROLS, CHORUS SPEED AND DEPTH",
+            "",
+            "SET ON THE MAIN PANEL:  PORTA (TIME), GLIDE (MODE), BEND AND SUS II" };
+        text(g, notes[juce::jlimit(0, 3, page)], { 0.0f, 0.0f, 900.0f, 26.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
+        text(g, shortcutName() + "+1 to 4 pages   -   Esc closes   -   double-click a knob to reset", { 900.0f, 0.0f, 556.0f, 26.0f }, 12.5f,
+             false, axisInk(), Just::centredRight, 0.02f);
     }
+
+private:
+    int page = 0;
 };
 
 // ---------------------------------------------------------------------------
@@ -3532,28 +3765,28 @@ void buildModulation(AdvancedPage& page)
                      { rate, depth });
     }
 
-    page.module({ 64.0f, 564.0f, 520.0f, 332.0f }, "Wheels", true, juce::Colours::transparentBlack,
+    page.module({ 64.0f, 564.0f, 480.0f, 332.0f }, "Wheels", true, juce::Colours::transparentBlack,
                 "The CS-80's pressure and velocity are separate performance dimensions. Initial touch sets the attack brightness; aftertouch bends the "
                 "filter while held. The mod wheel adds sub-oscillator pitch and filter movement; the readouts below give each amount in the engine's "
                 "own units. Isolation masks the modern wheel routing.");
-    page.knob({ 159.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelSub, "WHEEL > SUB");
-    page.knob({ 339.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelVcf, "WHEEL > VCF");
-    page.widget<WheelRouting>({ 80.0f, 764.0f, 488.0f, 112.0f });
+    page.knob({ 139.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelSub, "WHEEL > SUB");
+    page.knob({ 319.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelVcf, "WHEEL > VCF");
+    page.widget<WheelRouting>({ 80.0f, 764.0f, 448.0f, 112.0f });
 
-    page.module({ 600.0f, 564.0f, 936.0f, 332.0f }, "Pitch, bend and tuning", true, juce::Colours::transparentBlack,
+    page.module({ 560.0f, 564.0f, 976.0f, 332.0f }, "Pitch, bend and tuning", true, juce::Colours::transparentBlack,
                 "PLAY RANGE: 61-key panel, MIDI notes 0-127. WHEEL BEND is the range of the spring-loaded pitch lever and MIDI pitch bend. With MPE on, "
                 "each note's own channel bends by MPE BEND instead; isolation disables MPE. A4 sets the reference frequency for twelve-tone equal "
                 "temperament; MIDI Tuning Standard and tuning-table import are not implemented. The ribbon is a separate continuous controller and "
                 "returns to centre. The main-panel PITCH knob adds a fine offset, included in the readout.");
-    page.knob({ 685.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND");
-    page.custom([](juce::Graphics& g) { etchRect(g, { 898.0f, 598.0f, 340.0f, 152.0f }, 6.0f, 0.5f); });
-    page.toggle({ 912.0f, 652.0f, 114.0f, 40.0f }, cs80::P_mpeOn, "MPE");
-    auto* mpeBend = page.knob({ 1038.0f, 604.0f, 160.0f, 140.0f }, cs80::P_mpeBendRange, "MPE BEND");
+    page.knob({ 620.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND");
+    page.custom([](juce::Graphics& g) { etchRect(g, { 878.0f, 598.0f, 340.0f, 152.0f }, 6.0f, 0.5f); });
+    page.toggle({ 892.0f, 652.0f, 114.0f, 40.0f }, cs80::P_mpeOn, "MPE");
+    auto* mpeBend = page.knob({ 1018.0f, 604.0f, 160.0f, 140.0f }, cs80::P_mpeBendRange, "MPE BEND");
     page.dimWhen([&proc = page.processor()]
                  { return proc.getParamValue(cs80::P_mpeOn) < 0.5f || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
                  { mpeBend });
-    page.knob({ 1291.0f, 604.0f, 160.0f, 140.0f }, cs80::P_tuningRef, "A4 TUNING");
-    page.widget<TuningDisplay>({ 630.0f, 764.0f, 880.0f, 112.0f });
+    page.knob({ 1316.0f, 604.0f, 160.0f, 140.0f }, cs80::P_tuningRef, "A4 TUNING");
+    page.widget<TuningDisplay>({ 576.0f, 764.0f, 944.0f, 112.0f });
 }
 
 void buildSubRing(AdvancedPage& page)
@@ -3575,15 +3808,13 @@ void buildSubRing(AdvancedPage& page)
                     return original && juce::roundToInt(p.getParamValue(cs80::P_subOriginalFunction)) == 5 && p.isExternalInputEnabled()
                         && p.getParamValue(cs80::P_subExtLevel) > 0.001f;
                 });
-    auto* originalMode = page.switchButton({ 88.0f, 158.0f, 236.0f, 40.0f }, cs80::P_subOriginalMode, "STORED ORIGINAL MODE", "ORIGINAL WAVEFORMS");
+    auto* originalMode = page.switchButton({ 88.0f, 192.0f, 236.0f, 40.0f }, cs80::P_subOriginalMode, "STORED ORIGINAL MODE", "ORIGINAL WAVEFORMS");
     originalMode->setComponentID("sub_original_mode");
     originalMode->setTooltip("Original waveforms: on selects the six original functions and 0.7-60 Hz; off selects the legacy set. The choice is stored "
                              "with the patch. PARITY ISOLATION forces original regardless of this stored setting; legacy controls are inert while isolated.");
-    page.note("ON    THE SIX ORIGINAL FUNCTIONS, 0.7 - 60 Hz", { 344.0f, 152.0f, 290.0f, 18.0f });
-    page.note("OFF   THE LEGACY FUNCTION SET", { 344.0f, 172.0f, 290.0f, 18.0f });
-    page.note("ISOLATION FORCES THE ORIGINAL SET", { 344.0f, 192.0f, 290.0f, 18.0f });
-    page.note("FUNCTION, SPEED, DEPTH AND PRESSURE", { 88.0f, 214.0f, 300.0f, 18.0f }, 11.0f, Just::centredLeft, true);
-    page.note("ARE ON THE MAIN PANEL, SUB OSCILLATOR", { 88.0f, 232.0f, 330.0f, 18.0f }, 11.0f, Just::centredLeft, true);
+    page.note("ON    THE SIX ORIGINAL FUNCTIONS, 0.7 - 60 Hz", { 344.0f, 182.0f, 300.0f, 18.0f });
+    page.note("OFF   THE LEGACY FUNCTION SET", { 344.0f, 204.0f, 300.0f, 18.0f });
+    page.note("ISOLATION FORCES THE ORIGINAL SET", { 344.0f, 226.0f, 300.0f, 18.0f });
     auto* extLevel = page.knob({ 656.0f, 146.0f, 140.0f, 134.0f }, cs80::P_subExtLevel, "EXT LEVEL");
     extLevel->getSlider().setDescription("External modulation input LEVEL. The optional mono bus is disabled by default and requires host routing. "
                                          "At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1, with 63.5 host samples "
@@ -3607,15 +3838,15 @@ void buildSubRing(AdvancedPage& page)
     page.widget<RingCurve>({ 854.0f, 148.0f, 668.0f, 376.0f });
 
     // --- Chorus / tremolo ---------------------------------------------------------------------------------
-    page.module({ 64.0f, 564.0f, 600.0f, 332.0f }, "Chorus / tremolo", true, pageColour(1),
+    page.module({ 64.0f, 564.0f, 760.0f, 332.0f }, "Chorus / tremolo", true, pageColour(1),
                 "SPEED, DEPTH and the CHORUS and TREMOLO switches are on the main panel. Legacy: provisional generic delay line. Source Performance "
                 "and Isolation: OE2 BBD delay path (256 clock periods, printed filters); clock range, wet level and polarity are inferred, not "
                 "validated against original hardware.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_chorusOn) >= 0.5f; });
-    page.widget<ChorusSweep>({ 78.0f, 604.0f, 572.0f, 276.0f });
+    page.widget<ChorusSweep>({ 78.0f, 604.0f, 732.0f, 276.0f }, 732.0f);
 
     // --- Analog voice ----------------------------------------------------------------------------------------
-    page.module({ 680.0f, 564.0f, 856.0f, 332.0f }, "Analog voice", true, pageColour(1),
+    page.module({ 840.0f, 564.0f, 696.0f, 332.0f }, "Analog voice", true, pageColour(1),
                 "Dispersion spreads the eight voice cards in tuning and pan; drift slowly moves each card; noise adds a provisional background floor. "
                 "Set them to zero for a repeatable render; this is not hardware calibration. The scatter plots the sixteen ranks (eight cards, two "
                 "ranks each) on axes that follow the dispersion you set; a ring marks a card that is sounding. At zero dispersion a dashed preview "
@@ -3626,11 +3857,11 @@ void buildSubRing(AdvancedPage& page)
                         && (p.getParamValue(cs80::P_voiceDispersion) > 0.001f || p.getParamValue(cs80::P_drift) > 0.001f
                             || p.getParamValue(cs80::P_analogNoise) > 0.001f);
                 });
-    page.knob({ 700.0f, 602.0f, 148.0f, 136.0f }, cs80::P_voiceDispersion, "DISPERSION");
-    page.knob({ 856.0f, 602.0f, 148.0f, 136.0f }, cs80::P_drift, "DRIFT");
-    page.knob({ 1012.0f, 602.0f, 148.0f, 136.0f }, cs80::P_analogNoise, "NOISE");
-    page.widget<VoiceLcd>({ 700.0f, 750.0f, 460.0f, 124.0f });
-    page.widget<VoiceScatter>({ 1180.0f, 602.0f, 340.0f, 276.0f });
+    page.knob({ 852.0f, 602.0f, 116.0f, 136.0f }, cs80::P_voiceDispersion, "DISPERSION");
+    page.knob({ 968.0f, 602.0f, 116.0f, 136.0f }, cs80::P_drift, "DRIFT");
+    page.knob({ 1084.0f, 602.0f, 116.0f, 136.0f }, cs80::P_analogNoise, "NOISE");
+    page.widget<VoiceLcd>({ 852.0f, 750.0f, 348.0f, 124.0f }, 348.0f);
+    page.widget<VoiceScatter>({ 1212.0f, 602.0f, 308.0f, 276.0f }, 308.0f);
 }
 
 void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
@@ -3720,7 +3951,7 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
                 "VOLUME and the MIX I/II crossfade are on the main panel, and the toolbar meter shows the output level. The engine runs at 2x. "
                 "Legacy output is DC-blocked and soft-limited. Source modes keep raw source output, which can exceed digital full scale: leave "
                 "monitoring headroom.");
-    page.toggle({ 1274.0f, 622.0f, 236.0f, 40.0f }, cs80::P_outputMode, "STEREO");
+    page.outputSwitch({ 1274.0f, 622.0f, 236.0f, 40.0f }, cs80::P_outputMode);
     page.widget<OutputPanel>({ 1264.0f, 678.0f, 256.0f, 200.0f });
 }
 
@@ -3736,7 +3967,7 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
     auto* mode = page.choice({ 216.0f, 172.0f, 176.0f, 36.0f }, cs80::P_arpMode, kArpModes);
     auto* rate = page.knob({ 408.0f, 146.0f, 128.0f, 124.0f }, cs80::P_arpRate, "RATE");
     auto* oct = page.knob({ 544.0f, 146.0f, 120.0f, 124.0f }, cs80::P_arpOctaves, "OCTAVES");
-    auto* clock = page.widget<ArpClock>({ 676.0f, 150.0f, 132.0f, 104.0f });
+    auto* clock = page.widget<ArpClock>({ 656.0f, 148.0f, 152.0f, 112.0f });
     page.widget<ArpPattern>({ 88.0f, 280.0f, 712.0f, 250.0f });
     page.dimWhen([&proc] { return proc.getParamValue(cs80::P_arpOn) < 0.5f; }, { modeCaption, mode, rate, oct, clock });
 
@@ -3760,13 +3991,25 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
                 "NOT CALIBRATED - no hardware match established. SOURCE: current source models with MIDI, optional MPE and the modern overlays. "
                 "ISOLATION wins when both are on: bend, CC1/11/64/74 and MPE are off and the modern effects are masked; pressure, ribbon and the "
                 "on-screen pedal stay active. An effective mode change stops notes; keep headroom. The stored source request is retained but masked "
-                "while isolation is on. Library programs reset the source request off and return both rank selectors to PANEL.",
+                "while isolation is on. Library programs reset the source request off and return both rank selectors to PANEL."
+                "\n\nTERMS IN THE TABLE. The highlighted column is the policy in force. STUDY TABLE: the older hand-voiced table of tone studies. "
+                "SOURCE MODELS: the circuit-informed voice models; NOMINAL uses their nominal component values. STORED MODE: the Sub oscillator's "
+                "own ORIGINAL WAVEFORMS switch. GENERIC DELAY: the older stand-in chorus. OE2 BBD: a bucket-brigade delay chorus that follows the "
+                "printed OE2 circuit. DC BLOCK + SOFT LIMIT: the legacy output stage; RAW leaves the source output untouched."
+                "\n\nABOUT. A circuit-informed recreation of the Yamaha CS-80 (1977): eight voices, each with two independent ranks, for sixteen "
+                "oscillator/filter/VCA chains. The signal path follows the original's high-pass into low-pass topology, linear VCA and global "
+                "sub-oscillator. The primary panel exposes the controls a player touches; these pages expose the modern layer (LFOs, MPE, effects, "
+                "dispersion). All controls are host-automatable and saved in plugin state, except transient performance gestures. The library has "
+                "22 legacy tone studies and 200 performance patches; loading one returns both ranks to PANEL and resets SOURCE PERFORMANCE off. "
+                "Touch the ribbon above the keyboard to bend pitch; drag the pitch lever (PITCH) or modulation wheel (MOD) at the left of the "
+                "keyboard; double-click any knob to reset it.",
                 [](Cs80AudioProcessor& p)
                 { return p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_sourcePerformance) >= 0.5f; });
     // The three switches are the column heads of the table below them.
     page.label("WHAT EACH POLICY CHANGES", { 96.0f, 618.0f, 290.0f, 22.0f }, 12.5f, gold, Just::centredLeft, 0.1f);
-    page.note("THE BANDED COLUMN IS IN FORCE", { 96.0f, 642.0f, 290.0f, 20.0f }, 12.5f, Just::centredLeft, false);
-    auto* legacy = page.policyCell({ 396.0f, 612.0f, 368.0f, 54.0f }, 0, "LEGACY", "Study voicing, overlays live");
+    page.custom([](juce::Graphics& g)
+    { text(g, "THE HIGHLIGHTED COLUMN IS IN FORCE", { 96.0f, 642.0f, 290.0f, 20.0f }, 12.5f, false, panelInk(), Just::centredLeft, 0.02f); });
+    auto* legacy = page.policyCell({ 396.0f, 612.0f, 368.0f, 54.0f }, 0, "LEGACY", "STUDY VOICING, OVERLAYS LIVE");
     legacy->setComponentID("render_policy_legacy");
     legacy->setTitle("Legacy render policy");
     legacy->setTooltip("Legacy: the older voicing table with ordinary MIDI and the modern overlays. Selecting it clears both stored requests, "
@@ -3778,7 +4021,7 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
         setParameterOnce(proc, cs80::P_parityMode, 0.0f);
     };
 
-    auto* sourcePerformance = page.policyCell({ 772.0f, 612.0f, 368.0f, 54.0f }, 1, "SOURCE PERFORMANCE", "Source models, overlays live");
+    auto* sourcePerformance = page.policyCell({ 772.0f, 612.0f, 368.0f, 54.0f }, 1, "SOURCE PERFORMANCE", "SOURCE MODELS, OVERLAYS LIVE");
     sourcePerformance->setComponentID("source_performance");
     sourcePerformance->setTitle("Source performance (uncalibrated)");
     sourcePerformance->setTooltip("Opt-in source-performance policy: current source models with ordinary MIDI pitch bend, CC1/11/64/74, optional MPE and "
@@ -3789,7 +4032,7 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
                                   "and memories still own only the 26 programmer controls; footage and global controls remain live.");
     sourcePerformance->setDescription(sourcePerformance->getTooltip());
 
-    auto* parity = page.policyCell({ 1148.0f, 612.0f, 368.0f, 54.0f }, 2, "PARITY ISOLATION", "Nominal models, overlays masked");
+    auto* parity = page.policyCell({ 1148.0f, 612.0f, 368.0f, 54.0f }, 2, "PARITY ISOLATION", "NOMINAL MODELS, OVERLAYS MASKED");
     parity->setComponentID("parity_mode");
     parity->setTooltip("Comparison fixture, not calibrated. No hardware match established. Enable before playing: toggling stops notes and clears "
                        "controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal "
@@ -3800,24 +4043,14 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
 
     page.widget<PolicyTable>({ 80.0f, 672.0f, 1440.0f, 184.0f });
 
-    // About: one line; the long text is behind its info button.
+    // About: one line; the long text is in the module's info card.
     page.custom([](juce::Graphics& g)
     {
         etchLine(g, 96.0f, 861.0f, 1504.0f, 861.0f, 0.4f);
         engrave(g, "CS-80 REFERENCE", { 96.0f, 862.0f, 210.0f, 30.0f }, 14.0f, true, ivory, Just::centredLeft, 0.08f);
-        text(g, "ENGINE  2x oversampled, 8 voices x 2 ranks", { 320.0f, 862.0f, 420.0f, 30.0f }, 12.5f, true, amber, Just::centredLeft, 0.02f);
+        text(g, "ENGINE  2x OVERSAMPLED, 8 VOICES x 2 RANKS", { 320.0f, 862.0f, 420.0f, 30.0f }, 12.5f, true, amber, Just::centredLeft, 0.02f);
         text(g, "NOT CALIBRATED  -  NO HARDWARE MATCH ESTABLISHED", { 760.0f, 862.0f, 640.0f, 30.0f }, 12.5f, true, gold, Just::centredLeft, 0.04f);
     });
-    page.infoButton({ 1462.0f, 859.0f, 36.0f, 34.0f }, "About this instrument",
-                    "A circuit-informed recreation of the Yamaha CS-80 (1977): eight voices, each with two independent ranks, for sixteen "
-                    "oscillator/filter/VCA chains. The signal path follows the original's high-pass into low-pass topology, linear VCA and global "
-                    "sub-oscillator.\n\nThe primary panel exposes the controls a player touches; these pages expose the modern layer (LFOs, MPE, "
-                    "effects, dispersion) without cluttering the instrument. All controls are host-automatable and saved in plugin state, except "
-                    "transient performance gestures. The library has 22 legacy tone studies and 200 performance patches; loading one returns both "
-                    "ranks to PANEL and resets SOURCE PERFORMANCE off. Current source models are available with SOURCE PERFORMANCE or comparison "
-                    "isolation.\n\nTouch the ribbon above the keyboard to bend pitch. Drag the pitch lever (PITCH) or modulation wheel (MOD) at the "
-                    "left of the keyboard. Double-click any knob to reset it.\n\nNOT CALIBRATED: no hardware match is established for the source "
-                    "models, the BBD chorus or the analog laws.");
 }
 } // namespace
 
@@ -3895,6 +4128,7 @@ void AdvancedPanel::showPage(int index)
         tabs[(size_t) i]->setToggleState(i == activePage, juce::dontSendNotification);
     }
     titleBlock->setPage(activePage);
+    footer->setPage(activePage);
     pages[(size_t) activePage]->refresh();
     repaint();
 }
@@ -3942,9 +4176,9 @@ void AdvancedPanel::timerCallback()
     pages[(size_t) activePage]->refresh();
 }
 
-void AdvancedPanel::paint(juce::Graphics& g)
+void AdvancedPanel::paint(juce::Graphics&)
 {
-    g.fillAll(juce::Colour(0xff0c0b0a));
+    // Nothing: the chassis paints the body and the editor's backdrop shows through the cheek columns.
 }
 
 void AdvancedPanel::resized()
@@ -3962,7 +4196,7 @@ void AdvancedPanel::resized()
         tabs[(size_t) i]->setBounds(r(367.0f + (float) i * 218.0f, 22.0f, 212.0f, 48.0f));
         pages[(size_t) i]->setBounds(getLocalBounds());
     }
-    titleBlock->setBounds(r(80.0f, 14.0f, 270.0f, 78.0f));
+    titleBlock->setBounds(r(64.0f, 14.0f, 270.0f, 78.0f));
     footer->setBounds(r(64.0f, 908.0f, 1472.0f, 26.0f));
     closeButton->setBounds(r(1420.0f, 26.0f, 116.0f, 38.0f));
     info->setBounds(getLocalBounds());
