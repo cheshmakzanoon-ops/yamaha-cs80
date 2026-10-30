@@ -794,7 +794,14 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.lpf.reset();
         }
         r.fenv.reset();
-        r.aenv.reset();
+        // Amplitude envelope: a reused sounding tail restarts its attack from the level it has
+        // reached instead of from zero (source policies only). Zeroing it removed the whole tail in
+        // one sample, a step of up to 0.022 full scale across eight sampled factory programs (0.007
+        // now), a tick under a passage. Inferred from the same reasoning as the oscillator and filter
+        // memories above (no traced reset path); the real envelope capacitor behaviour is not
+        // measured. Legacy keeps the reset.
+        if (!preserveAudioState)
+            r.aenv.reset();
         r.fenv.noteOn(filterInitialTarget(ch),
                       filterAttackTarget(ch),
                       std::max(0.001f, rs.fA * global.envTimeScale),

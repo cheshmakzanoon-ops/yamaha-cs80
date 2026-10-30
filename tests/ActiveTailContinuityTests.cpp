@@ -33,13 +33,26 @@ int main() {
             Engine e; init(e,rate,settings(isolation)); fill(e); render(e,997); e.noteOff(48); render(e,31);
             check(e.getVoiceInfo(0).active && !e.getVoiceInfo(0).held,"active unheld tail fixture");
             std::array<Engine::RankAudioState,2> before;
+            std::array<Adsr::State,2> envBefore;
             for(int r=0;r<2;++r) { before[r]=e.getRankAudioState(0,r); check(!zero(before[r].hpf)&&!zero(before[r].lpf),"both filter memories nonzero before reuse"); }
+            for(int r=0;r<2;++r) { envBefore[r]=e.getRankEnvelopeState(0,r).amplitude; check(envBefore[r].stage==Adsr::Stage::Release&&envBefore[r].value>0.01f,"amplitude envelope is a sounding release tail before reuse"); }
             e.noteOn(replacement,0.6f);
+            for(int r=0;r<2;++r) {
+                // The VCA envelope of a reused tail restarts its attack from the level it has reached
+                // (source policies, inferred); legacy zeroes it, which steps the whole tail out in one sample.
+                auto env=e.getRankEnvelopeState(0,r).amplitude;
+                check(env.stage==Adsr::Stage::Attack,"reused circuit attacks");
+                check(isolation ? env.value==envBefore[r].value : env.value==0.0f,"amplitude envelope policy at assignment");
+            }
             for(int r=0;r<2;++r) {
                 auto after=e.getRankAudioState(0,r);
                 check(isolation ? after.phase==before[r].phase : after.phase!=before[r].phase,"phase policy at assignment");
                 check(isolation ? equal(after.hpf,before[r].hpf) : zero(after.hpf),"HP memory policy at assignment");
                 check(isolation ? equal(after.lpf,before[r].lpf) : zero(after.lpf),"LP memory policy at assignment");
+            }
+            if(isolation) {
+                render(e,64,16);
+                for(int r=0;r<2;++r) check(e.getRankEnvelopeState(0,r).amplitude.value>=envBefore[r].value,"reused-tail attack never dips below the tail level");
             }
             for(float x:render(e,1024)) check(std::isfinite(x),"reuse render finite");
         }
