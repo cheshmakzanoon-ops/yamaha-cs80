@@ -3,6 +3,8 @@
 #include "plugin/UiComponents.h"
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
+#include "../../tests/SourcePerformanceHostTests.h"
+#include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
 
@@ -1754,6 +1756,8 @@ int main(int argc, char** argv)
         return cs80::tests::runLocaleSmoke(argc, argv);
     juce::ScopedJuceInitialiser_GUI juceInit;
     cs80::tests::testPluginHostMetadata(check);
+    cs80::tests::testSourcePerformanceHost(check);
+    cs80::tests::testEditorInitialSize(check);
 
     juce::String outDir = "artifacts/ui";
     bool selfTest = false;
@@ -1817,7 +1821,8 @@ int main(int argc, char** argv)
             const float physical = def.min + fraction * (def.max - def.min);
             processor.setParamValue(index, physical);
             const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
-            const bool discrete = index == cs80::P_parityMode || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+            const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
+                || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
                 || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel);
             const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
@@ -1833,7 +1838,7 @@ int main(int argc, char** argv)
             processor.setParamValue(index, cs80::paramDef(index).def);
 
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 244, "244 host parameters");
+          && Cs80AudioProcessor::hostParameterCount == 245, "245 host parameters");
     for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
@@ -2215,21 +2220,21 @@ int main(int argc, char** argv)
             flushGui(150);
         }
         juce::StringArray booleanIds { "sub_original_mode", "footswitch_plugged", "footswitch_pressed",
-                                       "sustain_assign", "glide_assign", "output_level", "parity_mode" };
+                                       "sustain_assign", "glide_assign", "output_level", "parity_mode", "source_performance" };
         for (int bank = 0; bank < 4; ++bank)
             for (int local : {cs80::CP_saw, cs80::CP_pulse})
                 booleanIds.add(Cs80AudioProcessor::memoryParameterId(bank, local));
         int actualBoolCount = 0;
         for (auto* parameter : modeHost.getParameters())
             if (dynamic_cast<juce::AudioParameterBool*>(parameter) != nullptr) ++actualBoolCount;
-        check(booleanIds.size() == 15 && actualBoolCount == booleanIds.size(),
-              "all fifteen true Bool controls included in state regression");
+        check(booleanIds.size() == 16 && actualBoolCount == booleanIds.size(),
+              "all sixteen true Bool controls included in state regression");
         for (const auto& id : booleanIds)
         {
             auto* mode = modeHost.getAPVTS().getParameter(id);
             auto* raw = modeHost.getAPVTS().getRawParameterValue(id);
             check(mode != nullptr && raw != nullptr && mode->isBoolean() && mode->isDiscrete()
-                      && mode->getNumSteps() == 2 && mode->getVersionHint() == (id == "parity_mode" ? 6 : id == "sub_original_mode" ? 4 : id.startsWith("memory_") ? 2 : 5),
+                      && mode->getNumSteps() == 2 && mode->getVersionHint() == (id == "source_performance" ? 7 : id == "parity_mode" ? 6 : id == "sub_original_mode" ? 4 : id.startsWith("memory_") ? 2 : 5),
                   "canonical Bool preserves original two-step metadata and AU version hint");
             if (mode && raw)
             {

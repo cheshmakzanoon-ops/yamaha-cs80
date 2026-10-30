@@ -6,6 +6,7 @@
 #include "core/FactoryPresets.h"
 
 #include <array>
+#include <algorithm>
 #include <cmath>
 #include <string_view>
 #include <vector>
@@ -21,6 +22,35 @@ struct Placement
 constexpr float kDesignWidth = 1600.0f;
 constexpr float kDesignHeight = 1000.0f;
 
+struct InitialEditorSize
+{
+    int width;
+    int height;
+};
+
+constexpr InitialEditorSize initialEditorSizeForArea(int usableWidth, int usableHeight)
+{
+    // No display (e.g. headless rendering): preserve the established default.
+    if (usableWidth <= 0 || usableHeight <= 0)
+        return { 1600, 1000 };
+
+    // Leave modest room for the host frame/title/toolbar where space permits.
+    // Work in exact 8:5 steps, using JUCE's already-logical userArea pixels;
+    // applying the monitor DPI scale again would shrink high-DPI windows twice.
+    const int units = std::clamp(std::min((usableWidth - 32) / 8,
+                                          (usableHeight - 64) / 5), 140, 200);
+    // The current layout cannot go below 1120x700. Small displays may not fit
+    // that content plus host chrome; do not silently scale below this minimum.
+    return { units * 8, units * 5 };
+}
+
+static_assert(initialEditorSizeForArea(1920, 1200).width == 1600);
+static_assert(initialEditorSizeForArea(1920, 1040).height == 975);
+static_assert(initialEditorSizeForArea(1440, 860).width == 1272);
+static_assert(initialEditorSizeForArea(1366, 728).height == 700);
+static_assert(initialEditorSizeForArea(1024, 600).width == 1120);
+static_assert(initialEditorSizeForArea(0, 0).height == 1000);
+
 juce::Font displayFont(float height, int style = juce::Font::plain)
 {
     return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
@@ -29,9 +59,9 @@ juce::Font displayFont(float height, int style = juce::Font::plain)
 
 // UI-only classification of the requested APVTS selection. This immutable
 // lookup must not read Engine diagnostics, which belong to the render thread.
-constexpr std::string_view requestedSourceRouteTag(int rank, int source, bool isolated)
+constexpr std::string_view requestedSourceRouteTag(int rank, int source, cs80::RenderPolicy policy)
 {
-    switch (cs80::source_factory::route(rank, source, isolated))
+    switch (cs80::source_factory::route(rank, source, cs80::usesSourceModels(policy)))
     {
         case cs80::source_factory::Route::source_complete: return "SOURCE-COMPLETE";
         case cs80::source_factory::Route::source_inferred: return "SOURCE-INFERRED";
@@ -41,12 +71,16 @@ constexpr std::string_view requestedSourceRouteTag(int rank, int source, bool is
     }
     return "INVALID";
 }
-static_assert(requestedSourceRouteTag(0, 1, true) == "SOURCE-COMPLETE");
-static_assert(requestedSourceRouteTag(1, 0, true) == "SOURCE-INFERRED");
-static_assert(requestedSourceRouteTag(0, 1, false) == "LEGACY STUDY");
-static_assert(requestedSourceRouteTag(1, 12, true) == "MEMORY");
-static_assert(requestedSourceRouteTag(0, 13, false) == "PANEL");
-static_assert(requestedSourceRouteTag(-1, 0, true) == "INVALID");
+static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(1.0f, 0.0f)) == "SOURCE-COMPLETE");
+static_assert(requestedSourceRouteTag(1, 0, cs80::renderPolicy(1.0f, 0.0f)) == "SOURCE-INFERRED");
+static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(0.0f, 1.0f)) == "SOURCE-COMPLETE");
+static_assert(requestedSourceRouteTag(1, 0, cs80::renderPolicy(0.0f, 1.0f)) == "SOURCE-INFERRED");
+static_assert(cs80::renderPolicy(1.0f, 1.0f) == cs80::RenderPolicy::isolation);
+static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(1.0f, 1.0f)) == "SOURCE-COMPLETE");
+static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(0.0f, 0.0f)) == "LEGACY STUDY");
+static_assert(requestedSourceRouteTag(1, 12, cs80::RenderPolicy::sourcePerformance) == "MEMORY");
+static_assert(requestedSourceRouteTag(0, 13, cs80::RenderPolicy::legacy) == "PANEL");
+static_assert(requestedSourceRouteTag(-1, 0, cs80::RenderPolicy::isolation) == "INVALID");
 
 // Custom wheels are plain Components rather than TooltipClients. Reuse their
 // accessibility description for hover help without intercepting pedal gestures.
@@ -679,7 +713,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         expressionPedal.setTitle("Foot controller position (expression)");
         expressionPedal.setComponentID("expression_pedal");
-        expressionPedal.setDescription("On-screen foot controller: volume and the EXP-WAH sweep. MIDI CC11 follows this pedal only with parity isolation OFF. In isolation, CC11 is ignored; this on-screen pedal remains active.");
+        expressionPedal.setDescription("On-screen foot controller: volume and the EXP-WAH sweep. MIDI CC11 follows this pedal with parity isolation OFF, in both legacy and source-performance modes. In isolation, CC11 is ignored; this on-screen pedal remains active.");
         expressionPedal.setValue(processor.getExpressionValue());
         expressionPedal.onValueChange = [this](float value) { processor.setExpressionFromUI(value); };
         addAndMakeVisible(expressionPedal);
@@ -862,18 +896,25 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     {
         // These atomics are a UI snapshot, not a render-thread acceptance report.
         // Do not substitute getEngine().getSourceToneInfo() here.
-        const bool isolated = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
-        const juce::String mode = isolated
+        const float parityRequest = processor.getParamValue(cs80::P_parityMode);
+        const float sourceRequest = processor.getParamValue(cs80::P_sourcePerformance);
+        const auto policy = cs80::renderPolicy(parityRequest, sourceRequest);
+        const juce::String mode = policy == cs80::RenderPolicy::isolation
             ? "COMPARISON ISOLATION / NOT CALIBRATED  |  MIDI OFF: BEND, CC1/11/64/74, MPE  |  PRESSURE, RIBBON + UI PEDAL LIVE  |  MODE CHANGE STOPS NOTES"
-            : "LEGACY PERFORMANCE / SOURCE MODEL OFF  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  SOURCE TABS: ADVANCED > ABOUT > ISOLATION";
+            : policy == cs80::RenderPolicy::sourcePerformance
+                ? "SOURCE PERFORMANCE / NOT CALIBRATED  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  MODERN OVERLAYS LIVE  |  MODE CHANGE STOPS NOTES"
+                : "LEGACY PERFORMANCE / SOURCE MODEL OFF  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  SOURCE MODE: ADVANCED > ABOUT";
         if (modeStatusLabel.getText() != mode)
             modeStatusLabel.setText(mode, juce::dontSendNotification);
-        modeStatusLabel.setTooltip("Requested mode from stored parameters; audio applies it on a control frame. Isolation is a comparison fixture, not a hardware-equivalence claim. It masks modern features and resets sounding notes when toggled. Library recall returns both ranks to PANEL; use the hardware tabs to audition the source model. Source output can exceed digital full scale: keep monitoring headroom.");
+        modeStatusLabel.setTooltip(juce::String("Requested mode from stored parameters; audio applies it on a control frame. Source performance uses current source models with MIDI, optional MPE and modern software overlays (macros, FX, pan and bypass). Neither source mode is calibrated or establishes a hardware match. Isolation wins when both switches are ON: it masks MIDI bend, CC1/11/64/74, MPE and modern features. Pressure, ribbon and the on-screen pedal remain live. An effective mode change resets sounding notes and controller/effect history. Changing the source switch while isolation stays ON is masked and does not stop notes. Library recall returns both ranks to PANEL and resets source performance OFF, while retaining isolation. Source output can exceed digital full scale: keep monitoring headroom.")
+            + (policy == cs80::RenderPolicy::isolation && sourceRequest >= 0.5f
+                ? " Source-performance request is ON but masked by isolation; turning isolation OFF applies that request."
+                : ""));
 
         for (int rank = 0; rank < 2; ++rank)
         {
             const int source = processor.getHardwareSource(rank);
-            const auto route = requestedSourceRouteTag(rank, source, isolated);
+            const auto route = requestedSourceRouteTag(rank, source, policy);
             const juce::String identity = source < 11
                 ? juce::String(cs80::hardwareToneName(source, rank)).toUpperCase()
                 : source == 13 ? juce::String("MAIN PANEL")
@@ -886,6 +927,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             label.setTooltip(text + ". Requested APVTS selection, not an audio-thread acknowledgment. "
                 "SOURCE-COMPLETE means the source-matrix column has no unresolved cells, not that the instrument is calibrated; device laws remain inferred. "
                 "SOURCE-INFERRED also uses explicit hypotheses for unresolved cells. LEGACY STUDY uses the older voicing table. "
+                "Source performance and isolation share source classifications but differ in MIDI and modern-overlay policy. "
                 "A selected tone or memory owns the 26 programmer controls; main-panel faders are retained for PANEL. Footage and global controls remain live. "
                 "Library programs reset both selectors to PANEL and do not select source tabs.");
         }
@@ -1162,11 +1204,23 @@ Cs80AudioProcessorEditor::Cs80AudioProcessorEditor(Cs80AudioProcessor& p)
     impl = std::make_unique<Impl>(p);
     addAndMakeVisible(*impl);
 
-    setSize(1600, 1000);
     setResizable(true, true);
     setResizeLimits(1120, 700, 2400, 1500);
     if (auto* constrainer = getConstrainer())
         constrainer->setFixedAspectRatio(kDesignWidth / kDesignHeight);
+
+    // The host has not attached/repositioned this editor yet. The mouse display
+    // is the best available opening-display hint, with primary as a fallback.
+    // This is an initial suggestion only: later host/manual setSize calls and
+    // explicit screenshot dimensions remain authoritative, with no auto-resize.
+    const auto& displays = juce::Desktop::getInstance().getDisplays();
+    const auto* display = displays.getDisplayForPoint(juce::Desktop::getMousePosition());
+    if (display == nullptr)
+        display = displays.getPrimaryDisplay();
+    const auto initialSize = display != nullptr
+        ? initialEditorSizeForArea(display->userArea.getWidth(), display->userArea.getHeight())
+        : initialEditorSizeForArea(0, 0);
+    setSize(initialSize.width, initialSize.height);
 
     startTimerHz(8);
 }

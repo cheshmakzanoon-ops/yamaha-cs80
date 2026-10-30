@@ -186,9 +186,10 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     for (int rank = 0; rank < kNumRanks; ++rank)
     {
         const int selector = frame.hardwareSources[rank];
-        const bool isolated = frame.effectiveValues[P_parityMode] >= 0.5f;
-        if (selector != hardwareSources[rank] || isolated != global.parityMode)
-            routes[rank] = source_factory::route(rank, selector, isolated);
+        const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
+                                                                frame.effectiveValues[P_sourcePerformance]));
+        if (selector != hardwareSources[rank] || sourceModels != usesSourceModels(global.renderPolicy))
+            routes[rank] = source_factory::route(rank, selector, sourceModels);
         if (source_factory::isSourceDriven(routes[rank])
             && (!tones[rank].compiled || tones[rank].source.selector != selector))
         {
@@ -223,17 +224,18 @@ void Engine::applyParams(const ParamValues& values)
         const float value = params[i];
         params[i] = std::isfinite(value) ? clampf(value, def.min, def.max) : def.def;
     }
-    const bool wasParity = global.parityMode;
+    const auto previousPolicy = global.renderPolicy;
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
     outputCircuit.setMode(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
-    // Mode changes clear notes/controllers and effect histories: no old macro
-    // envelopes, MIDI holds or modern FX tails may leak into the isolated path.
+    // Effective policy changes clear notes/controllers and effect histories: no
+    // old numerical EG state, MIDI holds or FX may leak across model policies.
+    // A retained source-performance switch change under isolation is inert.
     // No allocation or sample-rate reconfiguration occurs on this RT boundary.
-    if (wasParity != global.parityMode)
+    if (previousPolicy != global.renderPolicy)
     {
         reset();
         // Legacy reset left these OnePole histories intact. Clear only for
@@ -248,11 +250,11 @@ void Engine::applyParams(const ParamValues& values)
         cancelSustainTails();
 
     // Physical timing ports remain connected while a voice sounds/releases.
-    // Refresh only in opt-in isolation: legacy dynamic automation is unchanged.
+    // Refresh in either opt-in source policy: legacy dynamic automation is unchanged.
     // This retains the existing provisional timing/bend/completion law, not a
     // calibrated IC model. Live level selection is a state-continuous engineering
     // inference; see docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md.
-    if (global.parityMode)
+    if (usesSourceModels(global.renderPolicy))
     {
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
         for (auto& voice : voices)
@@ -307,6 +309,7 @@ void Engine::buildSettings()
     auto p = [this](int i) { return params.v[(size_t) i]; };
 
     global.parityMode = p(P_parityMode) >= 0.5f;
+    global.renderPolicy = renderPolicy(p(P_parityMode), p(P_sourcePerformance));
     global.masterTune = p(P_masterTune);
     global.detuneCents = p(P_detune);
     global.mix = p(P_mix);
@@ -758,7 +761,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
     // Bounded continuity only: inactive circuits still use the legacy reset.
     // This does not clock idle circuits or model their unknown held key voltage.
-    const bool preserveAudioState = global.parityMode && v.active
+    const bool preserveAudioState = usesSourceModels(global.renderPolicy) && v.active
                                     && !v.held && !v.pedalHeld;
     // chooseVoice only returns an unheld circuit.
     v.active = true;
@@ -1292,7 +1295,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                                                global.kbdBrillianceHigh, v.contour);
 
             const float fenv = sourceActive[ch] ? sourceFilterValues[ch][vi]
-                : r.fenv.tick(sr, true, global.parityMode);
+                : r.fenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
@@ -1335,7 +1338,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                              + keyboardLevelOffset(global.kbdLevelLow,
                                                                    global.kbdLevelHigh, v.contour),
                                          0.0f, 2.6f);
-            const float amp = r.aenv.tick(sr, true, global.parityMode);
+            const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             // Velocity acts through the selected initial-touch destinations.
@@ -1367,7 +1370,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
-    ringEnv = ringAdsr.tick(sr, false, global.parityMode);
+    ringEnv = ringAdsr.tick(sr, false, usesSourceModels(global.renderPolicy));
     ringFrequency = clampf(ringModulationFrequency(global.ringSpeed,
                                                    global.ringDepth, ringEnv),
                            0.0f, sr * 0.4f);
@@ -1392,7 +1395,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             if (std::abs(wahMix - wahTarget) < 1.0e-4f)
                 wahMix = wahTarget;
         }
-        if (global.parityMode)
+        if (usesSourceModels(global.renderPolicy))
         {
             praWahL.setPedal(expression);
             praWahR.setPedal(expression);
@@ -1503,17 +1506,17 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     smoothedVolume += (global.volume - smoothedVolume) * 0.003f;
     const float gain = smoothedVolume * 4.0f * expression;
-    // W0 removes the arbitrary output conditioner, not the provisional
-    // filter saturation law (W4). No calibrated output/headroom claim (W8).
-    outL = global.parityMode ? mixL * gain : softClip(dcOutL * gain);
-    outR = global.parityMode ? mixR * gain : softClip(dcOutR * gain);
+    // Source policies remove the arbitrary output conditioner, not the
+    // provisional filter saturation law. No calibrated output/headroom claim.
+    outL = usesSourceModels(global.renderPolicy) ? mixL * gain : softClip(dcOutL * gain);
+    outR = usesSourceModels(global.renderPolicy) ? mixR * gain : softClip(dcOutR * gain);
 
-    if (global.parityMode)
+    if (usesSourceModels(global.renderPolicy))
     {
         // Existing float post-volume/expression values define normalized ideal
         // LEFT/RIGHT preamp-source units, not calibrated LI/RI voltages. GENERAL
         // is formed before separate coupling/loading and always clocked, even
-        // when no voice sounds. Only LEFT/RIGHT reach the host in isolation.
+        // when no voice sounds. Only LEFT/RIGHT reach the host in source policies.
         outputNodes = outputCircuit.process(outL, outR);
         outL = (float) outputNodes.left.audibleJackVolts;
         outR = (float) outputNodes.right.audibleJackVolts;

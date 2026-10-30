@@ -15,8 +15,23 @@
 namespace cs80
 {
 
-// One render-thread transaction: effective PANEL/memory/legacy values and their
-// existing rank-local selector identities. No new host parameter or saved bank.
+// Source-performance policy v1: current source models plus explicit software
+// performance overlays. Isolation retains priority and its original contract.
+// This policy does not select the separate experimental oscillator/backend.
+enum class RenderPolicy { legacy, sourcePerformance, isolation };
+inline constexpr RenderPolicy renderPolicy(float parity, float sourcePerformance) noexcept
+{
+    return parity >= 0.5f ? RenderPolicy::isolation
+         : sourcePerformance >= 0.5f ? RenderPolicy::sourcePerformance
+                                     : RenderPolicy::legacy;
+}
+inline constexpr bool usesSourceModels(RenderPolicy policy) noexcept
+{
+    return policy != RenderPolicy::legacy;
+}
+
+// One render-thread transaction: effective parameters (including render policy)
+// and existing rank-local selector identities, not a second saved bank/authority.
 struct ControlFrame
 {
     ParamValues effectiveValues;
@@ -63,6 +78,7 @@ struct RankSettings
 struct GlobalSettings
 {
     bool parityMode = false;
+    RenderPolicy renderPolicy = RenderPolicy::legacy;
     float masterTune = 0.0f;
     float detuneCents = 7.0f;
     float mix = 0.5f;
@@ -181,6 +197,9 @@ public:
 
     int activeVoices() const noexcept;
     bool isParityMode() const noexcept { return global.parityMode; }
+    // Render-thread diagnostic. UI should derive the requested policy from its
+    // APVTS snapshot instead of reading this audio-owned accepted state.
+    RenderPolicy getRenderPolicy() const noexcept { return global.renderPolicy; }
     // Offline diagnostics; read on the rendering thread, not concurrently.
     float getRingFrequency() const noexcept { return ringFrequency; }
     float getRingEnvelope() const noexcept { return ringEnv; }

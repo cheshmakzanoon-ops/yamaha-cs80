@@ -4,6 +4,11 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
+This revision describes the new opt-in **SOURCE PERFORMANCE** switch. Older
+artifacts may not contain it; use the guide bundled with your artifact and check
+its manifest commit. The fully green `0273031` checkpoint predates this switch;
+its results do not qualify a later source-performance build.
+
 ## Choose and verify a build
 
 From the repository's **Actions → build** run, choose a commit whose required
@@ -77,7 +82,8 @@ distributions. No additional audio driver is bundled on any platform.
    measured performance guarantee for your computer. In a DAW, create an
    instrument track, load **CS-80 Reference**, enable monitoring and choose the
    MIDI input. Start with low monitoring volume.
-2. Leave **PARITY ISOLATION off** for ordinary playing: velocity, pressure,
+2. Leave both **SOURCE PERFORMANCE** and **PARITY ISOLATION off** for the
+   unchanged default legacy sound: velocity, pressure,
    pitch bend, CC1 modulation, CC11 expression and CC64 pedal hold work here.
    Select a library brass/string/keys patch or edit PANEL. Eight simultaneously
    held voices are available; a ninth held note is intentionally ignored.
@@ -85,17 +91,55 @@ distributions. No additional audio driver is bundled on any platform.
    member channels 2–16, and match pitch-bend ranges manually. Automatic RPN
    zone/range negotiation is not implemented. Polyphonic pressure also works
    without MPE; on screen, strike a key and drag farther down it for pressure.
-4. To audition the new nominal source tabs, switch **Advanced → About → PARITY
-   ISOLATION on before playing**, then select the hardware tone tabs. The mode
-   change stops notes. This comparison mode ignores MIDI bend, CC1/11/64/74 and
-   MPE; pressure, ribbon and the on-screen PEDAL remain active. Library recall
-   returns both ranks to PANEL; it does not select a source-model tab. The
-   toolbar identifies both requested routes. Keep extra monitoring headroom:
+4. To play the new nominal source tabs with your controller, turn **Advanced →
+   About → SOURCE PERFORMANCE on**, leave **PARITY ISOLATION off**, then select
+   the hardware tone tabs. MIDI bend, CC1/11/64/74, optional MPE and modern
+   FX/macros remain usable. This is an explicitly hybrid software performance
+   mode, not a calibrated hardware comparison. The toolbar identifies the
+   requested policy and both source routes. Keep extra monitoring headroom:
    source-model output can exceed digital full scale.
 5. Use **SAVE** to name a user patch; an existing filename requires confirmation.
    Check the saved/error status. Save the DAW session for the full session mode
-   and automation. User/factory patch recall preserves the current isolation
-   policy; session restore recalls it. Transient pedal gestures are not saved.
+   and automation. A new user patch saves/restores SOURCE PERFORMANCE; factory
+   library recall resets it OFF and returns both selectors to PANEL. Old patches
+   without the flag restore it OFF. User/factory patch recall preserves the
+   independent isolation policy; full session restore recalls both flags.
+   Transient pedal gestures are not saved.
+
+### Choose the mode before playing
+
+| SOURCE PERFORMANCE | PARITY ISOLATION | Effective behavior |
+|---|---|---|
+| OFF | OFF | Legacy performance (unchanged fresh default) |
+| ON | OFF | Source models plus normal MIDI, optional MPE and modern overlays |
+| Either | ON | Strict comparison: bend, CC1/11/64/74, MPE and modern overlays masked |
+
+Isolation retains the source request but takes precedence over it. Pressure,
+ribbon and the on-screen PEDAL remain active in all three policies. An effective
+mode change **stops sounding notes and clears controller/FX history**; the shared
+pedal position is reapplied. Toggling only SOURCE PERFORMANCE while isolation
+remains ON is masked and does not stop notes. Turning isolation OFF applies the
+stored source request. Library recall never disables isolation; it selects
+PANEL and clears the source-performance request, not a source-model tone tab.
+
+The 7 `SOURCE-COMPLETE` and 15 `SOURCE-INFERRED` factory tabs share the current
+nominal models in source performance and isolation. “Complete” describes the
+classified source column, not measured hardware equivalence. PANEL and memories
+retain their programmer identity; they do not become factory source columns.
+The separate experimental oscillator is not enabled by these switches.
+
+### Screen size and performance limits
+
+Initial editor size fits the logical usable display where possible, preserving
+the existing 8:5 layout and **1120x700 logical-pixel minimum**. Smaller usable
+screens, or tight screens with large host chrome, may not fit the editor. This
+initial fit does not override later host/manual resizing, remember window size,
+or create a smaller layout. OS/host scaling can reduce the available logical area.
+
+The dry eight-voice source-isolation timing audit is evidence for DSP commit
+`932c6d4` only. It found useful typical margin at 44.1/48 kHz but also deadline
+misses; it is not a real-time guarantee or qualification of the later
+source-performance/MIDI/FX path. Test your intended patches in the actual host.
 
 The host receives 63 samples of output latency. Tail metadata is unbounded
 because supported noise and retained effect histories have no universal finite

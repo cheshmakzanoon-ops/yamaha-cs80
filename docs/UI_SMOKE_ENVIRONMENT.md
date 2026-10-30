@@ -16,6 +16,12 @@ There was also an earlier, separate stale tooltip assertion, corrected in
 `fd00da6`. Successful PNG output was not a passing smoke run. Linux CTest without
 any `DISPLAY` likewise could not exercise the new native confirmation dialog.
 
+For comparison, Apple Silicon job `123864558336` at the same commit completed
+the full UI smoke (26.32 seconds) with exactly one reported failure: that stale
+tooltip assertion. The preset/dialog, metadata and readiness assertions produced
+no additional failures there. This is targeted cross-platform evidence, **not**
+a clean UI-suite pass or validation of the Linux harness.
+
 ## Source diagnosis and limits of the evidence
 
 The new preset tests open the real overwrite confirmation after the screenshots.
@@ -33,8 +39,8 @@ in `XChangeProperty`. A bare Xvfb server has no window manager establishing thes
 protocol atoms. That source path matches the observed opcode, zero atom and first
 native-dialog timing. This is a source-backed diagnosis, **not a locally executed
 Xvfb reproduction**: this workspace lacks the required GUI build/runtime tools.
-The wrapper logs atom absence/presence and manager readiness so ordinary CI can
-establish the runtime evidence directly.
+The wrapper logs atom absence/presence and manager readiness. The successful
+native CI run below now supplies that runtime evidence directly.
 
 ## Supported test desktop
 
@@ -54,8 +60,24 @@ private X server. No user's existing desktop/session settings are altered.
 
 ## Verification status
 
-Shell syntax and controlled fake-tool harness fixtures can verify startup/error
-handling, argument/exit-code forwarding and scoped cleanup; these do not stand
-in for native GUI execution. The next exact-commit Linux CI run must demonstrate
-the logged atom transition, ready manager, all preset/UI assertions and a clean
-process exit before this regression is called fixed.
+Shell syntax passed, and all seven controlled fixtures in
+`python3 tests/test_ui_smoke_environment.py -v` passed: successful launch and
+argument forwarding, preserved child failure, missing dependency, window-manager
+startup failure, missing protocol atom, unsuppressed X-query failure, and the
+15-second readiness deadline. Every launched fixture manager PID was reaped.
+These fake-tool tests do not stand in for native GUI execution.
+
+Native Linux verification **passed** at commit
+`54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e` in
+[screenshot run 40995783622, job 123868460296](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783622/job/123868460296).
+The 2026-10-30 UTC log records:
+
+- **03:13:52:** `WM_PROTOCOLS` absent before window-manager startup.
+- **03:13:53:** Openbox ready on `:99`, with `WM_PROTOCOLS` present.
+- **03:14:10:** `UI SMOKE TEST PASSED`, with process exit 0 and a successful job.
+
+This establishes the atom transition and successful full screenshot/UI smoke
+execution for the harness fix, without suppressing X errors or removing checks.
+It does not establish completion of the separate cross-platform main-build
+queue, nor validate the subsequent source-performance UI or initial-sizing
+changes, which are not part of this verified snapshot.

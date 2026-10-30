@@ -223,6 +223,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     layout.add(std::make_unique<CanonicalBoolParameter>(
         juce::ParameterID { parameterId(cs80::P_parityMode), 6 },
         "Parity isolation (not calibrated)", false));
+    // Source performance is a sound-model choice, not a change to isolation.
+    // Append after all 244 shipped host parameters; existing AU hints stay fixed.
+    layout.add(std::make_unique<CanonicalBoolParameter>(
+        juce::ParameterID { parameterId(cs80::P_sourcePerformance), 7 },
+        "Source performance (not calibrated)", false));
     return layout;
 }
 
@@ -239,12 +244,12 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     engine.prepare(sampleRate);
     readParameters();
-    const bool wasIsolated = engine.isParityMode();
+    const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
-    if (engine.isParityMode() != wasIsolated)
+    if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
-        // Isolation transitions reset Engine voices. A stale physical UI release
+        // Effective policy transitions reset Engine voices. A stale UI release
         // must not claim a subsequent host strike of the same pitch/channel.
         uiHeldMasks.fill(0);
     }
@@ -455,12 +460,12 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const auto uiCount = keyboardEvents.take(uiEvents);
 
     readParameters();
-    const bool wasIsolated = engine.isParityMode();
+    const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
-    if (engine.isParityMode() != wasIsolated)
+    if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
-        // Isolation transitions reset Engine voices. A stale physical UI release
+        // Effective policy transitions reset Engine voices. A stale UI release
         // must not claim a subsequent host strike of the same pitch/channel.
         uiHeldMasks.fill(0);
     }
@@ -663,10 +668,13 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         if (!std::isfinite(value)) value = fallback;
         if (id == parameterId(cs80::P_subOriginalMode) && value != 0.0f && value != 1.0f)
             value = 0.0f;
-        if (id == parameterId(cs80::P_parityMode))
+        if (id == parameterId(cs80::P_parityMode)
+            || id == parameterId(cs80::P_sourcePerformance))
         {
-            // Only complete finite numeric 0/1 values enable this session policy.
+            // Only complete finite numeric 0/1 values enable either opt-in policy.
             // Reject fractional, out-of-range and partially parsed malformed values.
+            // Missing source_performance must clear a live opt-in on old-state
+            // recall, never silently inherit it and change an old patch's sound.
             const auto encoded = child.getProperty("value", 0.0f).toString().trim();
             const auto* begin = encoded.toRawUTF8();
             char* end = nullptr;

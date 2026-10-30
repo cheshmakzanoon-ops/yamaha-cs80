@@ -370,9 +370,11 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
                   "phase cancellation can change the result.",
                   1090.0f, 466.0f, 310.0f, 56.0f, 10.5f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
-        page.text("All effects are bypassed at 0% mix. The engine is oversampled 2x internally\n"
-                  "and the output stage is DC-blocked and soft-limited.",
-                  800.0f, 584.0f, 650.0f, 42.0f, 10.5f, false, ivoryDim);
+        page.text("Effects are bypassed at 0% mix; isolation masks them. The engine runs at 2x.\n"
+                  "Legacy output is DC-blocked and soft-limited. Source modes keep raw source\n"
+                  "output, which can exceed digital full scale: leave monitoring headroom.",
+                  800.0f, 584.0f, 650.0f, 62.0f, 10.5f, false, ivoryDim,
+                  juce::Justification::topLeft, 3);
     }
 
     // --- Arpeggiator and performance ---------------------------------------
@@ -412,25 +414,33 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
                   "layer (LFOs, MPE, effects, dispersion) without cluttering the instrument. All controls are\n"
                   "host-automatable and saved in plugin state, except transient performance gestures.\n"
                   "The library has 22 legacy tone studies and 200 performance patches; loading one returns\n"
-                  "both ranks to PANEL. Source-model factory tabs require comparison isolation below.",
+                  "both ranks to PANEL and resets SOURCE PERFORMANCE off. Current source models\n"
+                  "are available with SOURCE PERFORMANCE or comparison isolation below.",
                   52.0f, 450.0f, 900.0f, 190.0f, 12.0f, false, ivoryDim,
-                  juce::Justification::topLeft, 9);
+                  juce::Justification::topLeft, 10);
         page.text("ENGINE  -  2x oversampled  -  8 voices  -  16 ranks  -  2x host rate\n"
                   "FORMAT  -  VST3 + AU (macOS) + standalone  -  MPE + poly pressure\n"
                   "BUILD   -  Reference Instruments  -  circuit study no. 1977-CS80",
                   1000.0f, 450.0f, 440.0f, 90.0f, 11.0f, false, amber,
                   juce::Justification::topLeft, 4);
-        auto* parity = page.toggle(1000.0f, 552.0f, 400.0f, 30.0f,
+        auto* sourcePerformance = page.toggle(1000.0f, 548.0f, 400.0f, 28.0f,
+                                              cs80::P_sourcePerformance, "SOURCE PERFORMANCE");
+        sourcePerformance->setComponentID("source_performance");
+        sourcePerformance->setTitle("Source performance (uncalibrated)");
+        sourcePerformance->setTooltip("Opt-in source-performance policy: current source models with ordinary MIDI pitch bend, CC1/11/64/74, optional MPE and modern software overlays (macros, FX, pan and bypass). Not calibrated; no hardware match established. Keep output headroom. An effective mode change stops notes and clears controller/effect history. PARITY ISOLATION wins if both switches are ON; changing this source request while isolation stays ON is masked and does not stop notes. The source request is saved with sound presets; library programs reset it OFF and return both selectors to PANEL. Selected tones and memories still own only the 26 programmer controls; footage and global controls remain live.");
+        sourcePerformance->setDescription(sourcePerformance->getTooltip());
+        auto* parity = page.toggle(1000.0f, 584.0f, 400.0f, 28.0f,
                                    cs80::P_parityMode, "PARITY ISOLATION");
         parity->setComponentID("parity_mode");
-        parity->setTooltip("Comparison fixture, not calibrated. No hardware match established. Enable before playing: toggling stops notes and clears controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are retained but inert. Output may exceed digital full scale.");
+        parity->setTooltip("Comparison fixture, not calibrated. No hardware match established. Enable before playing: toggling stops notes and clears controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are retained but inert. Isolation takes priority over SOURCE PERFORMANCE; its stored source request is masked, not cleared. Output may exceed digital full scale.");
+        parity->setDescription(parity->getTooltip());
         page.text("NOT CALIBRATED - no hardware match established.\n"
-                  "OFF: legacy performance. ON: source factory tabs.\n"
-                  "ON ignores bend, CC1/11/64/74 and MPE; masks modern FX.\n"
-                  "Pressure, ribbon and on-screen PEDAL stay active.\n"
-                  "MODE CHANGE STOPS NOTES. Keep output headroom.\n"
-                  "Complete source cells do not mean calibrated device laws.",
-                  1000.0f, 598.0f, 440.0f, 120.0f, 10.5f, false, amber,
+                  "SOURCE: current models + MIDI / MPE / modern overlays.\n"
+                  "ISOLATION wins: bend, CC1/11/64/74 + MPE off; FX masked.\n"
+                  "Pressure, ribbon + on-screen PEDAL stay active.\n"
+                  "Effective mode changes stop notes; keep headroom.\n"
+                  "Source request is retained but masked in isolation.",
+                  1000.0f, 622.0f, 440.0f, 112.0f, 10.2f, false, amber,
                   juce::Justification::topLeft, 6);
         page.text("Touch the ribbon above the keyboard to bend pitch. Drag the pitch lever (PITCH)\n"
                   "or modulation wheel (MOD) at the left of the keyboard. Double-click any knob to reset it.",

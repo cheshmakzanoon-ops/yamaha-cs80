@@ -146,6 +146,9 @@ enum : int
     P_outputLevel,
     // W0 feature isolation; not a claim of calibrated analog parity.
     P_parityMode,
+    // Opt-in source-model audio with the existing modern performance overlays.
+    // Append only: parity keeps its index and its independent isolation meaning.
+    P_sourcePerformance,
     P_numParams
 };
 
@@ -299,7 +302,8 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "glide_assign", "PORTA / GLISS ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "foot_mode", "PEDAL EXP / WAH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" },
-    { "parity_mode", "PARITY MODE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" }
+    { "parity_mode", "PARITY MODE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" },
+    { "source_performance", "SOURCE PERFORMANCE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" }
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

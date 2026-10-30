@@ -89,7 +89,7 @@ void testParameterTable()
     check(P_subExtLevel == 126 && P_kbdBrillianceLow == 127 && P_kbdBrillianceHigh == 128
               && P_kbdLevelLow == 129 && P_kbdLevelHigh == 130 && P_footswitchPlugged == 131
               && P_footswitchPressed == 132 && P_sustainAssign == 133 && P_glideAssign == 134
-              && P_footMode == 135 && P_outputLevel == 136 && P_numParams == 138,
+              && P_footMode == 135 && P_outputLevel == 136 && P_numParams == 139,
           "performance controls are appended after the shipped extension block");
     const char* ids[] = { "kbd_brilliance_low", "kbd_brilliance_high", "kbd_level_low", "kbd_level_high",
                           "footswitch_plugged", "footswitch_pressed", "sustain_assign", "glide_assign",

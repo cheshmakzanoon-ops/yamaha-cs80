@@ -49,7 +49,7 @@ std::vector<float> phrase(const ParamValues& p, bool controllers = false)
 int main()
 {
     ParamValues p;
-    check(P_parityMode == 137 && P_numParams == 138, "core append-only index");
+    check(P_parityMode == 137 && P_numParams == 139, "core append-only index");
     check(paramId(P_parityMode) == "parity_mode" && p[P_parityMode] == 0.0f,
           "stable ID and neutral default");
     auto explicitOff = p;
@@ -114,7 +114,7 @@ int main()
 
     // Each independent extension must be inert, including its maximum value.
     const int inert[] = {
-        P_keyRelease, P_subOriginalMode, P_subWave, P_subSpeed,
+        P_sourcePerformance, P_keyRelease, P_subOriginalMode, P_subWave, P_subSpeed,
         P_outputMode, P_voiceDispersion, P_drift, P_analogNoise,
         P_mpeOn, P_pitchBendRange, P_mpeBendRange, P_tuningRef,
         P_modWheelSub, P_modWheelVcf,

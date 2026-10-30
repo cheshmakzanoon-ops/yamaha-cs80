@@ -1,140 +1,123 @@
 # Playable release readiness
 
-Product/host audit, 2026-10-30. Baseline: `0273031` (all 22 nominal
-factory-source tabs; official JUCE 8.0.11 update). This is a bounded musician-use
-audit, not another analog-parity roadmap. Initial inspection was read-only;
-subsequently authorized usability fixes are summarized below. Their host
-parameters/defaults, audio and validation gates are unchanged. Checkpoint
-`0273031` has now passed all original CI gates and the separate official
-beta-validator comparison, including the locale update. That completed checkpoint
-does **not** qualify the newer local usability batch. No DAW was launched for this
-audit.
+Product/host audit, 2026-10-30. The initial audit baseline was `0273031` (all 22
+nominal factory-source tabs and official JUCE 8.0.11). That remains the latest
+fully green checkpoint recorded here: all original CI gates and the separate
+official beta-validator comparison passed. **Newer usability, packaging and
+source-performance work has separate pending qualification; it does not inherit
+that pass.** No DAW was launched for this audit.
 
-## Verdict
+The current implementation adds the approved, default-off `source_performance`
+parameter. Existing host IDs, ranges and defaults remain unchanged; the new
+Boolean is appended at host index 244 (245 total), AU version hint 7. Neither
+source mode is calibrated or establishes measured CS-80 equivalence. Missing
+hardware access is not an implementation or beta-acceptance gate.
 
-There is already a substantial playable instrument: eight dual-rank voices,
-panel/memories, 222 library programs, expressive input, a real editor, state
-migration, reported latency, and unusually strong numerical/host regressions.
-The next useful work is product plumbing, not another speculative circuit study.
+## Verdict and current status
 
-The principal mismatch is that **the latest source models are available only in
-a comparison mode that intentionally disables ordinary performance controllers**.
-This is an intentional fixture contract, not an accidental broken CC handler.
-It nevertheless prevents calling that path a controller-friendly production
-instrument. The default legacy path remains playable and must not be silently
-changed to solve this mismatch.
+The baseline already had a substantial playable instrument: eight dual-rank
+voices, panel/memories, 222 library programs, expressive input, an editor, state
+migration, latency reporting and strong numerical regressions. The identified
+product gaps are now being closed directly rather than deferred for analog
+research:
 
-## Current local fix status
+- **Source-performance/controller separation is implemented; qualification is
+  pending.** The nominal source models can now be combined with ordinary MIDI,
+  optional MPE and modern overlays without relaxing strict isolation. The
+  original default-off sound path remains the compatibility target.
+- **Mode/source clarity is implemented; final GUI evidence is pending.** Both
+  requested rank identities/routes and effective mode policy are visible.
+  Pedal help, library/PANEL behavior, precedence and note-reset warnings are
+  explicit. Readouts use parameter atomics and immutable tables, not render-thread
+  Engine diagnostics.
+- **MPE/tail metadata is implemented; exact-revision host checks remain required.**
+  MPE is advertised as a static capability without enabling it. Tail metadata
+  is positive infinity: voice-independent analog noise and retained bypassed FX
+  histories prevent a universal finite silence deadline. Idle CPU processing
+  may continue; exports need an explicit end/selection.
+- **Safe patch saving is implemented; exact-revision host checks remain required.**
+  Saving returns a result, stages beside the destination and publishes atomically
+  without a truncate/copy fallback. Filename collisions require confirmation;
+  cancellation/errors do not announce success. Atomic visibility is not a
+  power-loss durability guarantee.
+- **Packaging/upload and an install guide are implemented; native artifact and
+  installation results must be recorded separately.** CI now includes advertised
+  VST3/Standalone products and native macOS AU, without replacing validator
+  artifacts or weakening gates. See [install/quickstart](INSTALL_AND_QUICKSTART.md)
+  and [distribution limitations](CI_DISTRIBUTION_STATUS.md).
+- **Initial display fitting is implemented; it is not an undersized-screen
+  solution.** Initial size uses the logical usable display area, with room for
+  host chrome where possible, within 1120x700–1600x1000. Below **1120x700 logical
+  pixels**, the supported layout may not fit. Later host/manual sizing remains
+  authoritative; this does not add persisted window size or shrink the minimum.
 
-- **Mode/source clarity implemented; GUI verification pending.** Both requested
-  rank identities/routes and the controller policy are visible; pedal help,
-  library/PANEL distinction and note-reset warnings are corrected. Official
-  JUCE 8.0.11 syntax compilation passed; final linked UI smoke/screenshots remain
-  required.
-- **MPE/tail metadata implemented locally; host verification pending.** MPE is
-  now advertised as a static capability (`supportsMPE() == true`), without
-  enabling MPE or relaxing isolation. Tail metadata is positive infinity rather
-  than 8 s: supported voice-independent analog noise and bypassed-but-retained
-  FX histories mean there is no universal finite silence deadline. Hosts may
-  therefore continue processing idle instances; offline export must use an
-  explicit end/selection rather than automatic finite-tail termination. See the
-  original evidence and local-policy details below.
-- **Safe patch saving implemented locally; host verification pending.** Saving
-  returns an explicit result, stages output beside the destination, and uses
-  atomic publication without a truncate/copy fallback. A same-name or sanitized
-  filename collision prompts for overwrite; cancellation/error is visible and
-  does not announce a successful save. Atomic visibility is not a power-loss
-  durability guarantee. The new storage/UI regressions need final-commit CI.
-- **Next product priorities remain source-performance/controller separation and
-  complete artifact packaging/installation.** The first three local fixes do
-  not make the new source models respond to pitch bend/CC11/CC64/MPE, nor do they
-  produce all advertised installable formats. These remain explicit work, not
-  analog-research or hardware-access gates.
+The next bounded work is final-commit core/host/visual qualification, actual
+package installation and controller/session/bounce workflows, plus timing of the
+new source-performance combinations. No newer increment is called release-ready
+until its own relevant evidence exists.
 
-No new batch is called release-qualified here until its own CI and required
-host/visual results are established.
+## Current mode, source and controller contract
 
-## Priorities and bounded completion criteria
+Both switches are in **Advanced → About**. Choose the effective mode before
+playing; the toolbar reports the requested state, not audio-thread acceptance.
 
-This register preserves the **baseline findings**, not a claim that the locally
-implemented items above are still unedited. Pending verification is distinct
-from both an unfixed implementation and a passed release gate.
+| Behavior | Legacy performance | Source performance | Strict comparison isolation |
+|---|---|---|---|
+| Switches | Both OFF (fresh default) | `source_performance` ON, `parity_mode` OFF | `parity_mode` ON; source request is masked |
+| Hardware factory tabs | Legacy voicing-table adapter | All 22 source/hypothesis adapters: 7 complete columns, 15 inferred | Same 22 source/hypothesis classifications |
+| PANEL / memories | Existing programmer adapter | Programmer identity retained; shared source-policy improvements apply | Programmer identity retained; source-policy improvements plus isolation masks |
+| MIDI bend, CC1/11/64/74 | Active | Active | Ignored |
+| MPE | Optional; initially OFF | Optional | Disabled, stored setting retained |
+| Pressure, ribbon, on-screen PEDAL | Available | Available | Available |
+| Modern FX/LFOs/macros/arp, pan/bypass, variation | Available | Available software overlays, not original hardware behavior | Stored but masked under the existing comparison policy |
+| Library recall | Both selectors to PANEL; source flag OFF | Returns to legacy/PANEL | PANEL/source flag OFF; isolation remains ON |
 
-| Priority | Concrete gap at the baseline | Smallest useful completion |
-|---|---|---|
-| P0: qualify the candidate | The dependency/source checkpoint `0273031` is now green, including the separate beta comparison; the newer usability batch still needs its own completed evidence. | Record final commit, resolved JUCE SHA, all current CTests/builds/stable pluginval exits and relevant comparison results. Failed processes remain failed; do not change gates or transfer an old pass to new code. |
-| P1: make the actual instrument mode legible | Source tabs require isolation; isolation masks common controllers. Library recall resets both selectors to PANEL. The PEDAL description unconditionally says CC11 does the same. | Main-panel mode plus rank-I/rank-II routing status; accurate controller caveats beside the mode and pedal; explicit distinction between library studies and source tabs. Automated UI checks and new actual-editor screenshots at supported sizes. No parameter/DSP/default changes needed. |
-| P1: protect user patches | `saveUserPreset` ignores directory/write failure, can replace the same sanitized filename, and updates the displayed preset name even if writing failed. The browser always reports the normal post-save path. | Return/handle success and failure; do not mutate success metadata on failure; explicit overwrite choice or non-destructive unique-name policy; atomic replacement; test duplicate/sanitized-name collision, cancellation and unwritable destination. Keep state format and preset recall policy unchanged. |
-| P1: correct host capability/tail metadata | The baseline inherited `supportsMPE() == false` and reported an 8 s tail despite valid longer releases. Local fixes now advertise MPE and an explicitly unbounded tail. | Run the added processor-level assertions and native AU/host verification; retain exact legacy audio regression. Verify infinite-tail handling and document idle-processing/export-end consequences. See evidence below. |
-| P1: review a source-performance path | No existing mode combines the new source tab models with ordinary pitch bend/CC11/CC64/MPE. Changing the isolation masks would invalidate its explicit contract. | Agree a small versioned model-selection design, then test its compatibility matrix. Do not add a parameter or change defaults merely on this audit's authority. See proposed policy below. |
-| P1: qualify current CPU/headroom | Published timing is for `8bb9b81`, before source integration. Source stress peaks can exceed 1; no output meter or clipping cue is present. | Benchmark the current source route, not `setParams`/PANEL only; publish an honest initial rate/buffer support recommendation. Provide a visible headroom warning and a reproducible level-controlled audition, without altering source levels or adding a hidden limiter. |
-| P1 for distribution: deliver installable artifacts | CI uploads Linux/Windows VST3, but no macOS plugin bundle or any Standalone application. Build success is not an installation workflow. | Package all advertised formats/architectures, include commit/checksums and install/uninstall instructions, then verify fresh installation and launch. Explicitly state signing/notarization status. Do not change OS security settings to make installation pass. |
-| P2: everyday UI recovery/discovery | Editor always opens at 1600x1000 (minimum 1120x700); there is no visible panic, pressure amount readout, MIDI program-change support or CC121 reset handling. | First address small-display fit and a bounded non-audio-to-audio panic action. Document current MIDI limits. Treat program changes/CC121/new mapping as separately reviewed behavior, not silent compatibility fixes. |
+**Precedence and transitions.** Isolation wins when both switches are ON; it
+retains rather than clears the source request. Changing only that masked request
+while isolation remains ON does not reset notes. Turning isolation OFF applies
+whichever source request is then stored. An effective policy change clears
+voices, controllers and FX histories; the plugin reapplies its shared physical
+pedal position. This is not a seamless live morph. Changing a tone tab within a
+policy retains its existing state-continuity contract.
 
-P0 is about whether the candidate is verified, not a claim that a new defect was
-observed. P1 items are actionable product gaps; not every P2 item must block a
-clearly scoped beta. Missing hardware measurements block no item in this table.
+**Recall and migration.** Source performance is a sound-model choice: new user
+presets and full sessions save/restore it. The unchanged 222 factory/library
+programs reset it OFF and return both rank selectors to PANEL. Old user presets
+and sessions with a missing, malformed or non-Boolean saved source flag restore
+OFF, never a live prior opt-in. Isolation remains independent: factory/user
+preset recall preserves its current value; full session restore recalls it.
+Thus loading a user preset may change the source model and stop notes, while it
+cannot silently disable isolation.
 
-## Mode, source and controller truth table
+**What the switch selects.** Both opt-in source policies use the existing nominal
+factory-column adapter, state-continuous live envelopes/tail handling, PRA wah
+and output-network path. The source-performance policy retains ordinary MIDI and
+modern software overlays. PANEL/memories do not become factory columns; their
+programmer controls and identities remain intact. This does **not** integrate the
+separate experimental oscillator or claim recovered device laws. Current source
+outputs remain unnormalized and may exceed digital full scale.
 
-Evidence: `PluginProcessor::applyValues/readParameters`,
-`Engine::setControlFrame/buildSettings/pitchBend/controlChange`,
-[source runtime](SOURCE_FACTORY_RUNTIME.md) and
-[isolation contract](PARITY_ISOLATION.md).
+A selected factory tone or memory owns its 26 programmer controls; main-panel
+faders are retained for PANEL. Footage and global controls remain live.
+`SOURCE-COMPLETE` means no unresolved cells in that source-matrix column, not
+complete hardware equivalence; even those columns retain inferred device laws.
+`SOURCE-INFERRED` additionally uses explicit unresolved-cell hypotheses.
 
-| Input/behavior | Isolation off (fresh default) | Isolation on |
-|---|---|---|
-| Hardware factory tabs | Existing legacy parameter-table adapter | All 22 nominal source/hypothesis adapters: 7 complete source columns, 15 inferred columns |
-| Library program recall | Resets both hardware selectors to PANEL | Also resets both selectors to PANEL; **does not select a source tab** |
-| PANEL / four memories | Stored manual/programmer values | Still PANEL/programmer adapter, not a factory-source column |
-| MIDI pitch bend, CC1/11/64/74 | Active software transports/extensions | Ignored; UI PITCH/MOD use the same ignored path |
-| MPE | Optional; off initially | Disabled regardless of the retained setting |
-| Poly/channel pressure, relative ribbon | Available | Available |
-| On-screen PEDAL, physical footswitch controls | Available | Available; PEDAL reaches a separate direct-expression API |
-| Modern FX/LFOs/macros/arpeggiator | Available | Stored but masked |
-| Switching isolation | Clears voices/controller/effect state | Same transition reset; switch before playing |
+CC64 remains the MIDI pedal-hold software convention, separate from the original
+footswitch release/glide assigners. Source performance makes that existing
+convention usable with the newer models; it does not reassign CC64 to a different
+physical switch. Defaults, strict comparison masks and old program content are
+not silently rewritten.
 
-A player can currently audition the new tabs with note velocity, MIDI pressure,
-the ribbon, and UI/host-automated physical controls. They cannot drive those new
-tabs with an ordinary CC11 pedal or pitch wheel. CC64 pedal hold is explicitly a
-different software convention from the original footswitch release/glide
-assigners; mapping it to the original switch without a policy would change its
-meaning, not merely fix a cable.
+## Remaining practical priorities
 
-The baseline UI had useful SUB-mode status and source-tab lights, but those did not
-explain source-complete/source-inferred versus legacy/PANEL routing. The local
-clarification adds those distinctions and the ownership cue described below. Avoid
-overloading the single last-clicked preset name as a two-rank model readout.
-When a source owns the 26 programmer destinations, make clear why moving a main
-rank fader does not change that selected source; the fader value is retained for
-PANEL. Keep those retained values visible/editable with an ownership cue rather
-than silently overwriting them.
-
-### Compatibility-safe product policy for review
-
-Keep the existing `parity_mode` semantics and migration exactly as they are.
-Do **not** make CC11 exceptions inside isolation, reinterpret the Boolean as a
-three-way mode, alter existing program contents, or enable new audio by default.
-
-One coherent future design is an explicit, independently versioned **source
-performance model** selection, with Legacy as the unchanged fresh/missing-state
-default and the existing strict isolation policy taking precedence. That would
-provide three understandable user situations:
-
-1. **Legacy performance:** old sounds/controllers and existing compatibility.
-2. **Source performance:** selected factory tabs use the nominal source model,
-   with ordinary controller transports and declared modern-feature interactions.
-3. **Strict comparison:** the existing isolation fixture, unchanged masks and
-   reset policy, regardless of stored performance-model selection.
-
-This is a design proposal, **not approval to add a parameter**. Before any such
-change, review the appended host ID/AU version hint, missing-state migration,
-factory/user-preset policy, mode-transition behavior, output headroom and which
-live-envelope/wah/output improvements follow the model rather than the isolation
-mask. New source/modern combinations need interaction coverage; enabling the
-source gate alone is insufficient. Preserve existing default-off and strict
-fixture corpora, and separately record intentionally new source-performance
-audio. A fresh-default change would require a further explicit product decision.
+| Priority | Bounded outcome |
+|---|---|
+| P0: qualify the exact candidate | Record commit, resolved JUCE SHA, core/host/compatibility tests, every original platform/validator gate and actual-editor screenshots. Pending or failed is not passed; do not transfer `0273031` results. |
+| P1: controller/session workflow | Exercise source performance with bend, expression, sustain, pressure/MPE, paired tabs, modern overlays, policy transitions, patch saving and full-session recall; verify strict isolation remains inert to its masked controls. |
+| P1: native package/install workflow | Download/hash/extract each advertised package, verify permissions/bundles, scan/open in a named host or Standalone, and record architecture/signing/library limitations. Package presence alone is not a successful run. |
+| P1: CPU/headroom on the new path | Preserve the `932c6d4` dry source-isolation timing baseline; measure new source-performance/MIDI/FX combinations separately, then check actual target-host underruns. Keep level-controlled auditions and explicit monitoring headroom. |
+| P2: remaining UI conveniences | A visible bounded panic action, pressure amount display and broader MIDI program/reset handling remain candidates. Initial fitting retains the 1120x700 minimum; do not claim universal small-screen accessibility. These are separate behavior changes, not mandatory analog research. |
 
 ## Two narrow host findings
 
@@ -148,7 +131,7 @@ The AU client directly uses it for `kAudioUnitProperty_SupportsMPE`
 discovery reported no MPE even though the core and UI implemented an optional path.
 This is source-verified; no claim is made that a particular DAW was observed
 refusing or remapping input. The capability should describe what the plugin can
-do, not dynamically toggle with a patch or isolation. The local fix now returns
+do, not dynamically toggle with a patch or isolation. The implemented fix returns
 constant true. `tests/PluginHostMetadata.h` checks that queries do not mutate
 parameters, that capability is stable with MPE off/on and isolation, and that
 member-channel behavior and isolation masks are retained. These added host tests
@@ -161,9 +144,9 @@ arbitrary MPE zoning/automatic negotiation. Verify two simultaneous member notes
 independent pressure/bend, master/member sustain, and channel-scoped panic in a
 real supported host. No hardware CS-80 is needed.
 
-### Tail metadata under-reports audible output
+### Original tail under-report and implemented policy
 
-At the baseline, `getTailLengthSeconds()` returns 8.0. The legal per-rank VCA
+At the baseline, `getTailLengthSeconds()` returned 8.0. The legal per-rank VCA
 release is up to 20 s, before the modern envelope-time macro. A fresh ordinary
 core render confirmed audible output **after** the declared tail:
 
@@ -181,7 +164,7 @@ audio evidence of under-reporting, **not a reproduced DAW bounce truncation**.
 Engine SHA-256:
 `4d0c2277c4f4ad8ec3062aeb9116413940904af0a538b661e65c9cbefbd11f35`.
 
-The local fix changes only host metadata to positive infinity, leaving releases,
+The implemented fix changes only host metadata to positive infinity, leaving releases,
 FX and the 63-sample output latency unchanged. A finite replacement such as 20 s
 would still under-report supported slow-macro releases (roughly 61 s before FX
 decay). More fundamentally, supported analog noise can continue without any
@@ -213,23 +196,26 @@ a convenient finite number.
   reported at construction and prepare. This is not a major playability blocker.
   Driver/host buffer latency is additional. EXT's separate 63.5-sample control
   interpolation delay must not be confused with output compensation.
-- The prior timing audit is explicitly cloud-core-only and predates this source
-  adapter. Measure `setControlFrame` with both selected source ranks and eight
-  notes, sustained and changing tabs/pressure/wah, at 44.1/48 kHz and
-  64/128/256-frame blocks. Record CPU/compiler/commit, median/p99/max and budget
-  misses. Then verify actual audio operation on a named target configuration.
-  Treat 96/192 kHz as separately qualified options; existing 192 kHz numbers
-  do not support a blanket real-time recommendation.
+- The [new dry source-route audit](performance/2026-10-30-source/SUMMARY.md)
+  measures DSP commit **`932c6d4` only**, with eight notes/two ranks, all 22 tabs,
+  moving controls, idle/release cases and 44.1/48 kHz at 64/128/256-frame blocks.
+  Source-held medians were 0.238–0.290 RTF, with 152 deadline exceedances across
+  67,584 held callbacks. These cloud-core timings show typical margin and real
+  outliers, not a DAW/driver guarantee. They do **not** qualify the later source-
+  performance/MIDI/FX policy. Preserve this baseline and measure those new
+  combinations separately, then check actual target-host underruns. No 96/192 kHz
+  recommendation follows from it.
 - APVTS/state migration and keyboard handoff already have extensive tests.
-  Factory recall preserves physical setup and isolation; user recall restores
-  physical setup but preserves isolation; host state restores isolation.
+  Factory recall preserves physical setup and isolation but resets source
+  performance OFF/PANEL; user recall restores physical setup and source choice
+  but preserves isolation; host state restores both mode requests.
   Transient pedal position survives prepare/editor reopen but is deliberately
   not serialized. Explain these distinctions rather than promising every
   visible control is session-persistent.
 - UI pressure is a usable one-pointer stand-in, with same-block onset and
   poly-pressure tests. UI/host same-channel/same-pitch ownership ambiguity is
-  already documented. It is not a reason to rewrite the keyboard before fixing
-  patch saving and host metadata.
+  already documented. It is not a reason to rewrite the keyboard before
+  qualifying the narrow product fixes and actual performance workflow.
 
 ## Release acceptance, not an endless gate
 
@@ -254,9 +240,11 @@ one complete player workflow per advertised platform/format:
 Record the DAW/version, OS/architecture, rate/buffer, artifact SHA and result.
 Failure to access a DAW is a named unverified cell, not permission to call it
 passed; it need not block useful implementation or a narrower qualified beta.
-Do not claim every DAW is supported because pluginval passed. A controller-friendly
-**source-performance release** additionally needs the reviewed model/controller
-separation above; until then label new-model access as comparison/audition.
+Do not claim every DAW is supported because pluginval passed. The controller-
+friendly **source-performance implementation now exists**, but its own interaction,
+native-host, GUI and target-machine evidence must qualify that release. Keep the
+strict comparison fixture distinct; do not borrow its narrower timing/neutral-
+overlay results as proof of every source-performance combination.
 
 The repository has no tracked LICENSE/COPYING/NOTICE file at this baseline;
 the README's applicable-JUCE-license sentence is not a complete distribution
@@ -277,7 +265,7 @@ saving a patch, using a pedal, installing a plugin or completing this beta**.
 the software toolbar. This reads the existing parameter atomics and immutable
 route table on the message thread, **not render-thread Engine diagnostics**.
 It describes requested state, not an audio-frame acceptance acknowledgment.
-Six compile-time assertions cover the route-label helper's classifications.
+Compile-time assertions cover the route-label helper's classifications and policy precedence.
 The existing hardware control positions and colors are unchanged.
 
 A mode-policy line states the isolation controller masks and note-reset policy.
@@ -287,18 +275,21 @@ exception, and a local TooltipWindow override makes that description actual
 hover help without intercepting wheel gestures. Advanced/About describes the
 same restrictions, nominal source tabs, non-calibration and output headroom.
 
-Both changed translation units passed syntax-only compilation against the
+The original clarity increment's two translation units passed syntax-only compilation against the
 unmodified official JUCE 8.0.11 checkout with GCC 14.2.0. Two pre-existing
 enum-conditional warnings in `syncSubMode` remain. `git diff --check` passed.
-This is **not linked GUI execution or visual verification**; final-commit UI
-smoke and actual-editor screenshots remain required.
+That historical check is **not linked GUI execution or verification of later
+source-performance/display-fit edits**; final-commit UI smoke and actual-editor
+screenshots remain required.
 
 Host-test hooks are component IDs `performance_mode_status`,
 `source_route_status_1`, `source_route_status_2` and `expression_pedal`. Required
 UI scenarios: fresh PANEL; isolated rank-I String 3 complete and rank-II String 2
-inferred; isolation-off legacy classification; each memory's correct bank;
+inferred; source-performance routing and strict-isolation precedence;
+both-flags-off legacy classification; each memory's correct bank;
 library recall returning both to PANEL; timer-driven host automation refresh;
-no status-refresh parameter mutations; pedal hover/accessibility text; readable
+source choice recall/migration and masked-request continuity; no status-refresh
+parameter mutations; pedal hover/accessibility text; readable
 toolbar and About page at both supported screenshot sizes. These checks are
 coordinated with the existing `ui_snapshot` suite, not duplicated by a second GUI
 test binary.
