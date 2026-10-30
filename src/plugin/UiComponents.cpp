@@ -34,7 +34,7 @@ namespace
 const char* const kFeet[] = { "16'", "8'", "5 1/3'", "4'", "2 2/3'", "2'" };
 const char* const kSubWaves[] = { "SINE", "TRIANGLE", "SAW", "SQUARE", "S&H", "RANDOM" };
 const char* const kOriginalSubWaves[] = { "SINE", "SAW DOWN", "SAW UP", "SQUARE", "NOISE", "EXT" };
-const char* const kDestinations[] = { "OFF", "PITCH", "VCF", "VCA", "PWM", "PAN" };
+const char* const kDestinations[] = { "OFF", "PITCH", "VCF", "VCA", "PAN", "PWM" };
 const char* const kFxNames[] = { "OFF", "CHORUS", "PHASER", "TAPE DELAY", "PLATE REVERB", "DRIVE" };
 const char* const kArpModes[] = { "UP", "DOWN", "UP / DOWN", "RANDOM", "PLAYED" };
 const char* const kGlideModes[] = { "OFF", "PORTAMENTO", "GLISSANDO" };
