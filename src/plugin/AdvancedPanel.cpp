@@ -2414,7 +2414,7 @@ private:
                                      : "DEMO CHORD  " + names + "  -  HOLD KEYS FOR YOURS";
         if (! armed)
             head = "ARP OFF  -  PREVIEW  -  " + head;
-        text(g, head, { 14.0f, 5.0f, 430.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.02f);
+        text(g, head, { 14.0f, 5.0f, 476.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.02f);
         text(g, kArpModes[mode] + "  -  " + juce::String(octaves) + " OCT  -  " + juce::String((int) seq.size()) + " STEPS",
              { 400.0f, 5.0f, 298.0f, 22.0f }, 12.5f, true, on ? ivory : axisInk(), Just::centredRight, 0.03f);
         text(g, "STEP", { 4.0f, plot.getBottom() + 3.0f, 56.0f, 16.0f }, 12.5f, true, axisInk(), Just::centredRight);
@@ -3158,6 +3158,9 @@ public:
         art->setBounds(getLocalBounds());
         const float sx = (float) getWidth() / kW;
         const float sy = (float) getHeight() / kH;
+        // The same type floor as the rest of the page: 12.5 design px, whatever the window size.
+        for (auto* k : knobs)
+            k->setMinCaptionHeight(kMinFont * sx);
         for (auto& item : placed)
             item.component->setBounds(juce::Rectangle<int>(
                 juce::roundToInt(item.bounds.getX() * sx), juce::roundToInt(item.bounds.getY() * sy),
@@ -3283,9 +3286,11 @@ public:
         auto control = std::make_unique<ParamKnob>(proc, parameter, label);
         auto* raw = control.get();
         raw->setExplicitFocusOrder(++focusCounter);
+        raw->setMinCaptionHeight(kMinFont);
         addAndMakeVisible(*raw);
         owned.push_back(std::move(control));
         placed.push_back({ raw, r });
+        knobs.push_back(raw);
         return raw;
     }
 
@@ -3403,6 +3408,7 @@ private:
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> buttonAttachments;
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment>> comboAttachments;
     std::vector<Placed> placed;
+    std::vector<ParamKnob*> knobs;
     std::vector<LiveWidget*> widgets;
     std::vector<std::function<void()>> tickers;
     int focusCounter = 0;
@@ -3778,14 +3784,15 @@ void buildModulation(AdvancedPage& page)
                 "each note's own channel bends by MPE BEND instead; isolation disables MPE. A4 sets the reference frequency for twelve-tone equal "
                 "temperament; MIDI Tuning Standard and tuning-table import are not implemented. The ribbon is a separate continuous controller and "
                 "returns to centre. The main-panel PITCH knob adds a fine offset, included in the readout.");
-    page.knob({ 620.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND");
+    page.knob({ 620.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND")->setBipolar(true);
     page.custom([](juce::Graphics& g) { etchRect(g, { 878.0f, 598.0f, 340.0f, 152.0f }, 6.0f, 0.5f); });
     page.toggle({ 892.0f, 652.0f, 114.0f, 40.0f }, cs80::P_mpeOn, "MPE");
     auto* mpeBend = page.knob({ 1018.0f, 604.0f, 160.0f, 140.0f }, cs80::P_mpeBendRange, "MPE BEND");
+    mpeBend->setBipolar(true);
     page.dimWhen([&proc = page.processor()]
                  { return proc.getParamValue(cs80::P_mpeOn) < 0.5f || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
                  { mpeBend });
-    page.knob({ 1316.0f, 604.0f, 160.0f, 140.0f }, cs80::P_tuningRef, "A4 TUNING");
+    page.knob({ 1316.0f, 604.0f, 160.0f, 140.0f }, cs80::P_tuningRef, "A4 TUNING")->setBipolar(true);
     page.widget<TuningDisplay>({ 576.0f, 764.0f, 944.0f, 112.0f });
 }
 
@@ -3893,7 +3900,7 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
         auto* row = page.widget<FxSlotRow>({ 90.0f, y0, 544.0f, 102.0f }, i, sel);
         sel->peers.push_back(row);
         page.choice({ 90.0f + 70.0f, y0 + 30.0f, 170.0f, 34.0f }, typeParams[i], kFxTypes);
-        auto* mix = page.knob({ 90.0f + 258.0f, y0 + 10.0f, 100.0f, 90.0f }, mixParams[i], "MIX");
+        auto* mix = page.knob({ 90.0f + 258.0f, y0 + 8.0f, 100.0f, 87.0f }, mixParams[i], "MIX");
         // The mix does nothing while the slot is empty or the isolation fixture masks the effects.
         page.dimWhen([&proc, i]
                      { return juce::roundToInt(proc.getParamValue(cs80::P_fx1Type + i * 2)) == 0 || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
@@ -3940,7 +3947,7 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
     for (int i = 0; i < 4; ++i)
     {
         const float x = 80.0f + (float) i * 284.0f;
-        page.knob({ x + 54.0f, 610.0f, 164.0f, 144.0f }, cs80::P_macro1 + i, macroNames[i]);
+        page.knob({ x + 54.0f, 610.0f, 164.0f, 144.0f }, cs80::P_macro1 + i, macroNames[i])->setBipolar(true);
         page.widget<MacroBars>({ x + 2.0f, 764.0f, 268.0f, 112.0f }, i);
         if (i > 0)
             page.custom([x](juce::Graphics& g) { etchLine(g, x - 8.0f, 612.0f, x - 8.0f, 876.0f, 0.45f); });
