@@ -89,6 +89,20 @@ void drawFaderCap(juce::Graphics&, juce::Point<float> faceCentre, float faceWidt
                   juce::Colour colour, CapState state);
 // Recessed fader slot with a metal rail between two y positions, centred on x.
 void drawFaderSlot(juce::Graphics&, float centreX, float top, float bottom, float scale);
+// Editor scale relative to the 1600 px design width (top-level width / 1600; 1 when detached).
+float uiDesignScale(const juce::Component&);
+// On-screen type height for a design-space size at the current editor scale, never below
+// floorScreenPx (8 on screen by default). Use it for every legend so nothing falls under 8 px.
+float designFontHeight(const juce::Component&, float designSize, float floorScreenPx = 8.0f);
+// Returns `font` with its horizontal scale set so `text` fits `width`: first by shrinking toward
+// floorHeight, then by squeezing, and never below minScale of squeeze unless there is no other way.
+juce::Font fitFontToWidth(const juce::Font& font, const juce::String& text, float width,
+                          float minScale = 0.85f, float floorHeight = 8.0f);
+// Two-facet rocker paddle (lit facet, shaded facet, pivot ridge about 55 percent down) with an
+// illuminated legend lens on the active facet and a small LED; no light spills outside bounds.
+// `lens` is the lens colour when lit; the legend itself is drawn by the caller or LedButton.
+void drawRockerSwitch(juce::Graphics&, juce::Rectangle<float> bounds, bool on, bool pressed,
+                      bool hovered, juce::Colour lens, bool withLed);
 // Backlit translucent tone-selector tab inside its bounds; lit tabs bleed light onto the bezel.
 void drawTonePlate(juce::Graphics&, juce::Rectangle<float> bounds, juce::Colour colour,
                    bool lit, bool pressed, bool hovered);
@@ -102,6 +116,8 @@ void drawSatinPlate(juce::Graphics&, juce::Rectangle<float> bounds, bool on, boo
 // cached as an image keyed by size, seed and orientation, so calling it every paint is cheap.
 void drawWalnutGrain(juce::Graphics&, juce::Rectangle<float>, bool vertical, int seed,
                      bool bevel = true);
+// Keyboard focus ring for plates and tabs: gold outside with a dark inner ring, visible on lit plastic.
+void drawFocusRing(juce::Graphics&, juce::Rectangle<float> bounds);
 // Gold-accent primary button plate (what a Button with the "cs80Accent" property draws).
 void drawAccentPlate(juce::Graphics&, juce::Rectangle<float> bounds, bool pressed, bool hovered);
 
@@ -217,10 +233,7 @@ public:
     void paintOverChildren(juce::Graphics& g) override
     {
         if (hasKeyboardFocus(true))
-        {
-            g.setColour(juce::Colour(0xfff6df91));
-            g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 2.0f, 1.5f);
-        }
+            drawFocusRing(g, getLocalBounds().toFloat());
     }
 private:
     void showDragBubble();
@@ -241,6 +254,10 @@ public:
     void paint(juce::Graphics&) override;
     void resized() override;
     void mouseDoubleClick(const juce::MouseEvent&) override;
+    void mouseEnter(const juce::MouseEvent&) override;
+    void mouseExit(const juce::MouseEvent&) override;
+    void mouseDown(const juce::MouseEvent&) override;
+    void mouseUp(const juce::MouseEvent&) override;
 
     juce::Slider& getSlider() noexcept { return slider; }
     int getParameterIndex() const noexcept { return parameterIndex; }
@@ -277,14 +294,17 @@ public:
     void paintOverChildren(juce::Graphics& g) override
     {
         if (hasKeyboardFocus(true))
-        {
-            g.setColour(juce::Colour(0xfff6df91));
-            g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 2.0f, 1.5f);
-        }
+            drawFocusRing(g, getLocalBounds().toFloat());
     }
 
     juce::Colour accent { amber };
     bool hardwareTab = false;
+    // Draw as a compact two-facet rocker paddle with a lit legend lens and an LED instead of the
+    // satin plate (for footswitch, assign and output style switches). Off by default.
+    bool rockerStyle = false;
+
+private:
+    void paintRocker(juce::Graphics&, bool hovered, bool down, float physicalScale, bool deckTab);
 };
 
 // Pointer-to-pressure mapping for the on-screen keys. After the strike, pushing
