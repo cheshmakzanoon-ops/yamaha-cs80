@@ -911,7 +911,11 @@ public:
         const float mod = tri * clampf(depth, 0.0f, 1.0f);
         const float cutoff = clampf(680.0f * std::pow(2.0f, 2.9f * mod), 90.0f, sr * 0.42f);
         const float t = std::tan(kPi * cutoff / sr);
-        const float a = (t - 1.0f) / (t + 1.0f);
+        // The stage below is y = -a x + s, s = x + a y, i.e. H = (-a + z^-1) / (1 - a z^-1).
+        // Quarter-wave (90 degree) phase at `cutoff` needs the coefficient c = (t - 1) / (t + 1)
+        // in (c + z^-1) / (1 + c z^-1), so a = -c. The earlier a = c mirrored the sweep about
+        // fs/4 and put the notches near Nyquist.
+        const float a = (1.0f - t) / (1.0f + t);
 
         float yl = inL;
         float yr = inR;

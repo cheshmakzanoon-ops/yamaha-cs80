@@ -108,7 +108,7 @@ Three serial FX slots sit after the chorus. The type values are fixed by the UI:
 | --- | --- | --- |
 | 0 | Off | bypass |
 | 1 | Chorus | second, cleaner stereo chorus |
-| 2 | Phaser | six first-order all-pass stages, triangle LFO |
+| 2 | Phaser | six first-order all-pass stages, triangle LFO sweeping the 90 degree point over about 91 Hz to 5.1 kHz (an earlier coefficient sign error mirrored the sweep about fs/4; fixed, audible change for saved sessions using this slot) |
 | 3 | Tape Delay | 340 ms stereo delay, filtered cross-feedback, wow |
 | 4 | Plate Reverb | four stereo comb filters, two all-pass stages per side |
 | 5 | Drive | soft OTA-style saturation |

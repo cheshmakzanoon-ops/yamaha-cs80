@@ -120,6 +120,27 @@ void testSineFrequency()
     check(std::abs(crossings - 880) <= 3, "sine oscillator frequency");
 }
 
+void testPhaserQuarterWavePoint()
+{
+    // Depth 0 parks the sweep at 680 Hz. Six first-order all-pass stages are then 90 degrees
+    // each at 680 Hz, so the six-stage output is the input inverted (540 degrees total).
+    constexpr float sr = 48000.0f, hz = 680.0f;
+    Phaser p;
+    p.prepare(sr);
+    double inPhase = 0.0, quad = 0.0;
+    for (int n = 0; n < 48000 + 4800; ++n)
+    {
+        const float x = std::sin(2.0f * kPi * hz * (float) n / sr);
+        const auto y = p.process(x, x, 1.0f, 0.0f);
+        if (n >= 48000)
+        {
+            inPhase += (double) y.l * x;
+            quad += (double) y.l * std::cos(2.0f * kPi * hz * (float) n / sr);
+        }
+    }
+    check(inPhase / 4800.0 < -0.49 && std::abs(quad / 4800.0) < 0.02, "phaser is 90 degrees per stage at its cutoff");
+}
+
 void testFeetRatios()
 {
     checkNear(midiToHz(69.0f, 440.0f),440,0.01f,"A4 reference");
@@ -1872,6 +1893,7 @@ int main()
 {
     testParameterTable();
     testSineFrequency();
+    testPhaserQuarterWavePoint();
     testFeetRatios();
     testOscillatorDiscontinuities();
     testOscillatorComparatorPulse();
