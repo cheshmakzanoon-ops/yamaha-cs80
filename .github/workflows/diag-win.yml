@@ -12,7 +12,7 @@ jobs:
             ref: 2564d77e488a14036e8867fdca416b653c93848a
           - name: ui-wip
             ref: da00062b658b932dacb9ce1a74c7dbf2abab4450
-    name: windows core tests ${{ matrix.name }}
+    name: windows full tests ${{ matrix.name }}
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v5
@@ -22,7 +22,7 @@ jobs:
       - name: Configure and build core tests
         shell: pwsh
         run: |
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
           cmake --build build --config Release --parallel
       - name: Test
         shell: pwsh
