@@ -95,7 +95,8 @@ masked profiles. See [functional results](functional-results.json) and the
 The untimed timing-harness verification passes all **144 pairs / 1,152
 callbacks**, checking effective policy, active count, hidden-clock count,
 finite output and retired PANEL EG relaxation. Its `--verify` branch does not
-read a clock. Whole-Engine timing has **not** begun at this checkpoint.
+read a clock. The first timed result below followed the published, frozen
+pre-measurement checkpoint; it was not rerun or replaced.
 
 ## Frozen first-run timing contract
 
@@ -131,6 +132,66 @@ Passing recommends a separately reviewed opt-in integration design, never
 automatic production activation. A cost failure permits at most one separately
 identified exact-cache revision before revising/rejecting this integration
 budget; it does not permit replacement of the first observation.
+
+## First whole-Engine result — cost gates pass, not real-time qualification
+
+Measured published experiment commit
+`c2db96a317657ac214d7a1bd8d69c1af27d909bc`, tree
+`88cb4f0d82cb5b1f08044e3a8dcfe5003d24a3bf`, against pristine `428e4b2`.
+The shared Linux environment reported AMD EPYC 9V74 / GCC 14.2.0. The exclusive
+agent measurement window had no other known heavy local agent work; that is
+**not** a controlled operating-system scheduling or CPU-frequency guarantee.
+
+All **288 rows / 73,728 callbacks** completed with expected policy, active count,
+finite samples and zero circuit rejections. Every aggregate was recomputed
+from the retained raw observations:
+
+- All 36 eight-held median ratios were **1.02837–1.12591**, below 1.35.
+- All 24 48 kHz cold/post-retirement zero-audible medians were
+  **0.237665–0.298705 RTF**, below 0.35. Matched baseline zero-audible medians
+  were 0.029497–0.083851 RTF; paired incremental cost was **0.190958–0.227332
+  RTF**. Continuous idle processing is materially more expensive, not free.
+- At 48 kHz, eight-held candidate medians were **0.250092–0.302245 RTF**, versus
+  baseline 0.230305–0.292202. At 96 kHz they were 0.498569–0.630595 versus
+  0.457355–0.603032. These are ranges across declared rows, not averaged rates.
+- **143 overruns remain in the record: 46 baseline, 97 candidate.** The worst
+  RTF was baseline 17.446516 (23.262021 ms at 96 kHz / 128, moving mixed-source
+  one-held fixture); candidate maximum was 9.053369 RTF in that same fixture.
+  A separate 48 kHz / 256 candidate one-held PANEL row had p99 **2.935510 RTF**
+  and maximum duration **35.534910 ms**. Some 96 kHz rows also had p99 above1.
+  These observations cannot be discarded as "scheduler noise" without causal
+  evidence and do **not** establish dropout-free playback or WCET.
+
+See [results and exact gate decisions](first-measurement/summary.json),
+[all aggregate rows](first-measurement/results.csv),
+[every raw callback duration](first-measurement/callback-times.csv.gz), and
+[commit/tree/compiler/hash provenance](first-measurement/metadata.json).
+The uncompressed raw SHA is retained in metadata; deterministic gzip only
+reduces storage. No raw callback or outlier was trimmed.
+The [independent recomputation](first-measurement/INDEPENDENT_AUDIT.md) verifies
+all raw statistics, chronological pair ordering, exact rational gate tests,
+and all 40 actual source/executable manifest entries without using the primary
+analyzer.
+
+**FP-policy limit:** the frozen core harness does not install JUCE's
+`ScopedNoDenormals` policy, whereas production `processBlock` does. The first
+run did not record MXCSR. A subsequent **untimed**, separate inspection linked
+against the exact preserved bridge/core objects observed process-entry
+`MXCSR=0x1f80` and FTZ=0/DAZ=0 throughout both arms' retired-PANEL setup/callback
+(status flags changed to `0x1fa0`). See [inspection source/output](fp-policy-inspection/README.md).
+This corroborates the unaligned default-FP scope; it is not retroactive
+first-run telemetry and does not prove that denormals caused any outlier.
+A separately identified plugin-aligned FP diagnostic may investigate the
+difference, but cannot replace or retry this first result.
+
+**Decision: recommend a separately reviewed, default-off opt-in integration
+design.** The declared functional/compatibility and offline cost gates passed;
+the extra idle cost and real-time/host qualification limits remain explicit.
+There is no performance reason from this experiment to require a coefficient
+cache before that design decision. No production activation is performed here.
+Existing Legacy, Isolation and previously saved Source Performance sounds must
+remain unchanged; a future integration needs its own versioned opt-in state,
+mode-transition/GUI ownership tests, and target-native host qualification.
 
 ## Diagnostic auditions
 

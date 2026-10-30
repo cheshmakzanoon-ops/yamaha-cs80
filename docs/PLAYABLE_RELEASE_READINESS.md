@@ -1,17 +1,15 @@
 # Playable release readiness
 
-Product/host audit, 2026-10-30; terminal CI evidence reconciled at 04:52 UTC. The initial
-audit baseline was `0273031` (all 22 nominal factory-source tabs and official
-JUCE 8.0.11). The latest fully green checkpoint recorded here is now
-**`54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e`**: original build/validator gates,
-DSP measurements, editor screenshots and the separate official beta-validator
-comparison passed. Its usability fixes and native packaging are CI-verified.
-**Current executable `428e4b2bb0b4bcee0a8f3bb8826449f699bdb618` passes all four
-native build/test jobs, Windows/macOS validators, DSP/sanitizers, screenshots and
-the separate beta comparison, but its stable Linux fixed-seed validator exits
-139 after SUCCESS. The original build gate remains FAILED.** It is not a new
-fully green checkpoint. No actual DAW installation, DAW session or packaged
-Standalone playing session is claimed here.
+Product/host audit, 2026-10-30. The latest verified native-build/validator and
+capture checkpoint is **`deb34f495de6d78a30c7d5475243e0f5766520e9`**, successful
+on attempt 1; see the [current evidence append](#deb34f4-current-native-and-capture-evidence).
+Earlier `54a96f2` was fully green, while `428e4b2` and `00624e2` retain their
+recorded stable Linux exit139 failures. A later pass does not prove a repair.
+
+The audit sections below retain the **historical `428e4b2` status and evidence**;
+the final append distinguishes the new native/capture run from unchanged-source
+`00624e2` DSP/sanitizer lineage. No new DSP run, experimental activation, actual
+DAW installation/session or packaged Standalone playing session is claimed.
 
 The current implementation adds the approved, default-off `source_performance`
 parameter. Existing host IDs, ranges and defaults remain unchanged; the new
@@ -19,7 +17,7 @@ Boolean is appended at host index 244 (245 total), AU version hint 7. Neither
 source mode is calibrated or establishes measured CS-80 equivalence. Missing
 hardware access is not an implementation or beta-acceptance gate.
 
-## Current executable: terminal evidence, with a failed stable gate
+## Historical 428e4b2: terminal evidence, with a failed stable gate
 
 All results in this section are for **`428e4b2bb0b4bcee0a8f3bb8826449f699bdb618`**,
 not the later screenshot-bot workflow head.
@@ -114,7 +112,7 @@ Standalone playing session. Signing, runtime-library and distribution limitation
 still apply. The `54a96f2` bundles do not contain the later source-performance
 switch.
 
-## Verdict and current status
+## Historical 428e4b2 audit verdict and status
 
 The baseline already had a substantial playable instrument: eight dual-rank
 voices, panel/memories, 222 library programs, expressive input, an editor, state
@@ -445,3 +443,43 @@ parameter mutations; pedal hover/accessibility text; readable
 toolbar and About page at both supported screenshot sizes. These checks are
 coordinated with the existing `ui_snapshot` suite, not duplicated by a second GUI
 test binary.
+
+
+## deb34f4: current native and capture evidence
+
+Verified 2026-10-30, 06:32 UTC. Exact source
+**`deb34f495de6d78a30c7d5475243e0f5766520e9`** passed
+[build 41011794181, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181),
+including all four native builds/linked host-UI suites, stable Linux/Windows
+validators and both native macOS VST3/AU/GUI validations. Linux seeds
+`0x3980ffe` (headless), `0x5a0edc0` (GUI) and `0x2da72db` (fixed GUI) passed.
+
+| Native platform | CTest result | Source-matched install artifact |
+|---|---:|---|
+| Linux x86_64 | 45/45 | [12957648144](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12957648144) |
+| macOS arm64 | 40/40 | [12958327444](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12958327444) |
+| macOS x86_64 | 40/40 | [12958735030](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12958735030) |
+| Windows x86_64 | 38/38 | [12958651204](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12958651204) |
+
+All four artifacts are unexpired and match the exact source/build at this check.
+Downloaded native evidence verifies clean official JUCE 8.0.11 at
+`c352e2489000ffeb9e397051377d75eef2efe641` on all four platforms.
+[Screenshot run 41011794159](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159)
+passed with **17 verified editor images**, [artifact 12957961885](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159/artifacts/12957961885).
+[Beta run 41013202960](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41013202960)
+passed **25 headless / 31 GUI tests**. Both beta logs explicitly identify Linux
+VST3 artifact **12957867464**, originating build **41011794181**, and this exact
+`deb34f4` source; workflow head `cde6ba1` is not the tested plugin source.
+
+Production `src/core/` and `src/plugin/` files are byte-unchanged from both
+`00624e2` and `428e4b2`. The separate [00624e2 DSP run 41007847313](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313)
+passed all five jobs, including **40/40 leak-enabled ASan/UBSan suites**;
+that is unchanged-source evidence lineage, **not a new DSP execution at deb34f4**.
+Neither continuity kernel nor experimental oscillator is activated by this update.
+
+The historical `428e4b2` fixed-seed and `00624e2` primary-GUI exit139 invocations
+remain failed. This fresh passing build, normal diagnostic replays and beta
+comparison do **not** establish cause or prove the intermittent issue repaired.
+`54a96f2` is therefore no longer the newest successful native/validator checkpoint,
+but no blanket all-DAW, glitch-free, hardware-parity or installation/session
+qualification follows from the newer pass.

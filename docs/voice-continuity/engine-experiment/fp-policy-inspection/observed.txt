@@ -1,0 +1,3 @@
+process entry MXCSR=0x00001f80 FTZ=0 DAZ=0
+baseline after setup=0x00001fa0 after callback=0x00001fa0 FTZ=0 DAZ=0
+candidate after setup=0x00001fa0 after callback=0x00001fa0 FTZ=0 DAZ=0

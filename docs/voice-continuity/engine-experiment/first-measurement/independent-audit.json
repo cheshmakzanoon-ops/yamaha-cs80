@@ -1,0 +1,60 @@
+{
+  "status": "PASS; independent recomputation only, no benchmark rerun",
+  "published_commit": "c2db96a317657ac214d7a1bd8d69c1af27d909bc",
+  "baseline_commit": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "published_commit_precedes_run": true,
+  "source_manifest_entries": 40,
+  "actual_workspace_verified": true,
+  "executable_hash_verified": true,
+  "sha256": {
+    "callback-times.csv.gz": "d70de5c7fbeac40305a89bb278c32abc09682dfea620c4aa8ca04a805f2e8ee1",
+    "results.csv": "9b47fa56152dc98414dc25cdb7c488e9774d83cf47f53089d9fe27bd2663c858",
+    "metadata.json": "47f07025d1201bfb2cf15aee06892c5e713866d5e0a8a68ee0882e92fe91607c",
+    "summary.json": "e5d81a017caac62f871d696abf8bca3f6d8c859e0e715d573ee17c2b0feac8ea"
+  },
+  "criteria_sha256": "6fe9119d43d3cbfa7ae0f414bad4bff382966e43625ffb8ddbc22259b7cbfb65",
+  "source_manifest_sha256": "b3ff0c60495c18c68e12bfa026396fdb4d6a94d2a0315561824580529c866a94",
+  "pairs": 144,
+  "aggregate_rows": 288,
+  "raw_observations": 73728,
+  "every_raw_order_and_aggregate_verified": true,
+  "eight_active_pairs": 36,
+  "eight_active_ratio_range": [
+    1.028370794694061,
+    1.1259106823647014
+  ],
+  "eight_active_limit": 1.35,
+  "48000_zero_audible_rows": 24,
+  "48000_zero_audible_median_RTF_range": [
+    0.2376645,
+    0.2987049375
+  ],
+  "idle_limit": 0.35,
+  "gates_passed": true,
+  "total_overruns": 143,
+  "overruns_by_arm": {
+    "baseline_428": 46,
+    "candidate_enabled": 97
+  },
+  "maximum_RTF_by_arm": {
+    "baseline_428": 17.44651575,
+    "candidate_enabled": 9.0533685
+  },
+  "rows_p99_over_budget_by_arm": {
+    "baseline_428": 5,
+    "candidate_enabled": 8
+  },
+  "retired_prefix_internal_samples": {
+    "(44100, 'source_both')": 24064,
+    "(44100, 'source_panel')": 24064,
+    "(44100, 'panel_both')": 8704,
+    "(48000, 'source_both')": 25088,
+    "(48000, 'source_panel')": 25088,
+    "(48000, 'panel_both')": 8704,
+    "(96000, 'source_both')": 37376,
+    "(96000, 'source_panel')": 37376,
+    "(96000, 'panel_both')": 8704
+  },
+  "clock_scope": "Cold/held totals exact. Retired prefix matches256-frame preparation granularity and is identical across block/control variants per rate/scene; frozen probe also asserts exact post-warmup delta at runtime. Before-counter values are not separately stored.",
+  "limits": "Single shared-host wall-clock run; no outlier removal; no machine WCET, DAW hard-realtime, hardware-accuracy or audio-equivalence claim."
+}

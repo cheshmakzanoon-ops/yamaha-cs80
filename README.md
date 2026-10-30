@@ -14,7 +14,7 @@ An independent, code-first recreation of the Yamaha CS-80: eight voices, two ind
 - **Source Performance:** the current source-derived tone, live-envelope, PRA wah and loaded output models work with ordinary MIDI, optional MPE and the modern effects/modulation layer. Strict comparison isolation remains a separate mode.
 - **Everyday use:** searchable presets, explicit overwrite confirmation and save errors, display-aware initial sizing, a notes-only **PANIC** button, and read-only **SAMPLE PEAK / OVER-RANGE / NON-FINITE** indication.
 - **Formats:** VST3 and Standalone on Linux/Windows/macOS; AU on macOS, with separate Intel and Apple Silicon builds. These are development packages, not signed/notarized public releases.
-- **Known limits:** oscillator, nonlinear-filter, envelope, touch and effect laws still contain provisional assumptions. The old Linux validator has an unresolved post-SUCCESS crash; passing newer-validator and native UI tests do not erase that failed gate. No identified hardware instrument has been measured against this software.
+- **Known limits:** oscillator, nonlinear-filter, envelope, touch and effect laws still contain provisional assumptions. The old Linux validator has an unresolved intermittent post-SUCCESS crash; the fresh passing checkpoint below does not erase earlier failed invocations. No identified hardware instrument has been measured against this software.
 
 ### Play the current source models
 
@@ -26,14 +26,14 @@ Keep output headroom: source models are not normalized or limited. PANIC stops e
 
 ### Verified development packages
 
-These links identify the tested **00624e2** checkpoint. Its production core/plugin sources are unchanged from the playable **428e4b2** milestone; the added continuity kernel is **not selected by the plugin**. GitHub artifact downloads may require sign-in and expire under repository retention settings.
+These links identify **deb34f4**, whose native build/tests and stable validators passed [run 41011794181, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181). Its production core/plugin sources are unchanged from **00624e2 / 428e4b2**; the experimental continuity kernel is **not selected by the plugin**. GitHub artifact downloads may require sign-in and expire under repository retention settings.
 
 | Platform | Package |
 | --- | --- |
-| Windows x64 | [VST3 + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12957001700) |
-| macOS Apple Silicon | [VST3 + AU + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12956352402) |
-| macOS Intel | [VST3 + AU + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12956434256) |
-| Linux x86-64 | [VST3 + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12957080379) |
+| Windows x64 | [VST3 + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12958651204) |
+| macOS Apple Silicon | [VST3 + AU + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12958327444) |
+| macOS Intel | [VST3 + AU + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12958735030) |
+| Linux x86-64 | [VST3 + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181/artifacts/12957648144) |
 
 Verify package checksums and architecture; read the [distribution/signing limitations](docs/CI_DISTRIBUTION_STATUS.md). Package creation and validator loading are not a claim of a real musician's DAW installation/session test.
 
@@ -109,24 +109,21 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | Voice variation | Approximate | Per-voice tuning and pan scatter, slow drift, noise floor: arbitrary, not measured tolerances |
 | Host / plugin layer | Implemented | 245 append-only host parameters, state migration, safe preset saving, MPE discovery, Panic and read-only output metering; current validator outcomes are disclosed below |
 
-The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots, MPE, arpeggiator) are deliberate software extensions. The opt-in isolation mode makes them inert without rewriting stored patches. Separately, default-off **SOURCE PERFORMANCE** combines the current source models with these declared software overlays and ordinary expressive MIDI. Its native host/UI checks passed at `428e4b2`; the separate stable Linux validator failure is disclosed below. It does not change existing sessions by default.
+The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots, MPE, arpeggiator) are deliberate software extensions. The opt-in isolation mode makes them inert without rewriting stored patches. Separately, default-off **SOURCE PERFORMANCE** combines the current source models with these declared software overlays and ordinary expressive MIDI. Its native host/UI checks and stable validators passed at `deb34f4`; earlier intermittent Linux failures remain disclosed below. It does not change existing sessions by default.
 
 ### Current quality checkpoint
 
-The latest fully green recorded reference remains [`54a96f2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e). Newer development checkpoints have more functionality, but the intermittent stable Linux validator failure remains open.
-
-At [`00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/00624e2d5389b5ea30b0bb3dea2a81077d32b109):
+The latest verified **native-build/validator and capture checkpoint** is [`deb34f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/deb34f495de6d78a30c7d5475243e0f5766520e9), passing on **attempt 1**. This is a fresh successful invocation, not proof that the older intermittent Linux exit139 has been repaired.
 
 | Evidence | Exact result |
 | --- | --- |
-| [Native builds and tests](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302) | Linux 45/45, Apple Silicon 40/40, Intel Mac 40/40, Windows 38/38; all four packages created |
-| [DSP/compatibility/sanitizers](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313) | All five jobs passed; ASan/UBSan 40/40 with leak detection enabled in CI |
-| [Actual-editor captures](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847315) | Passed; images and source provenance recorded |
-| Windows/macOS strict validation | Passed |
-| Stable Linux validation | **FAILED:** primary GUI seed `0x322bd8b` printed SUCCESS, then exited 139. Normal diagnostic replays do not replace that failure |
-| [Official beta3 comparison](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41009257077) | Exact 00624e2 Linux artifact passed 25 headless / 31 GUI tests; different validator/tests/seeds do not establish a fix for the stable failure |
+| [Native builds, tests and stable validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181) | All six jobs passed: Linux 45/45, Apple Silicon 40/40, Intel Mac 40/40, Windows 38/38; all four packages created; Windows/macOS validation passed |
+| Stable Linux validation | Headless seed `0x3980ffe`, primary GUI `0x5a0edc0` and fixed GUI `0x2da72db` passed |
+| [Actual-editor captures](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159) | 17 verified images; [source-matched artifact 12957961885](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159/artifacts/12957961885) |
+| [Official beta3 comparison](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41013202960) | Exact `deb34f4` Linux artifact `12957867464`: 25 headless / 31 GUI tests passed |
+| [Earlier DSP/compatibility/sanitizer evidence: `00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313) | All five jobs passed; leak-enabled ASan/UBSan 40/40. Production core/plugin sources are byte-unchanged at `deb34f4`; **this is not a newly executed DSP workflow at `deb34f4`** |
 
-The preceding 428e4b2 checkpoint failed a different stable Linux GUI seed (`0x2da72db`). Crash ownership remains unproven. See [playable readiness](docs/PLAYABLE_RELEASE_READINESS.md) and the [00624e2 evidence appendix](docs/voice-continuity/AUDIT.md). These results establish software behavior and compatibility evidence, **not measured analog equivalence or support for every DAW**.
+Historical failures remain failed: [`428e4b2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) exited139 after SUCCESS in fixed GUI seed `0x2da72db`; [`00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123909705477) did so in primary GUI seed `0x322bd8b`. Neither normal diagnostic replays nor this later passing invocation establish crash ownership or a repair. See [playable readiness](docs/PLAYABLE_RELEASE_READINESS.md) and the [00624e2 evidence appendix](docs/voice-continuity/AUDIT.md). These results are software-test evidence, **not measured analog equivalence, experimental-model activation or a real DAW installation/session qualification**.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
@@ -165,7 +162,7 @@ A newer [all-22 source-route baseline](docs/performance/2026-10-30-source/SUMMAR
 
 A [source-pinned cloud timing audit](docs/performance/2026-10-29/SUMMARY.md) measured eight dual-rank voices: at 48kHz/256 samples, isolation median callback time was 1.24–1.29ms against a 5.33ms budget. At 192kHz the budget was tight and many callbacks exceeded it. These are limited cloud-core timings, not a DAW or hard-realtime guarantee.
 
-The core and performance suites have also been run under AddressSanitizer and UndefinedBehaviorSanitizer (leak detection off; no leak-clean claim). **None of this compares anything to hardware.** There is no reference capture corpus in the repository. Consult the exact-commit Actions results rather than this table for any specific revision. The known intermittent Linux validator post-SUCCESS exit139 remains a failed gate when it occurs; [recorded checkpoints](docs/VALIDATOR_DIAGNOSTICS.md) distinguish successful tests from unsuccessful process exit.
+Historical local core/performance sanitizer runs disabled leak detection; the separately linked `00624e2` CI run passed 40/40 with leak detection enabled. Neither is a general leak-free-host claim. **None of this compares anything to hardware.** There is no reference capture corpus in the repository. Consult the exact-commit Actions results rather than this table for any specific revision. The known intermittent Linux validator post-SUCCESS exit139 remains a failed gate when it occurs; [recorded checkpoints](docs/VALIDATOR_DIAGNOSTICS.md) distinguish successful tests from unsuccessful process exit.
 
 ---
 
@@ -230,7 +227,7 @@ The [output readout](docs/OUTPUT_METER.md) shows final-output **sample peak**, w
 - **SUB**: fresh instances use the original six functions and 0.7-60 Hz range; factory programs and old states keep the legacy waveforms/range ([ORIGINAL_SUB_OSCILLATOR.md](docs/ORIGINAL_SUB_OSCILLATOR.md)). EXT accepts an optional mono host input, disabled by default and modulation-only ([EXTERNAL_MODULATION.md](docs/EXTERNAL_MODULATION.md)).
 - **Voices**: the cyclic allocator rejects a ninth simultaneously held key rather than stealing; released tails can be reused. In either source mode, reassignment of a still-active unheld tail now preserves oscillator phase and HP/LP numerical state ([scope and evidence](docs/ACTIVE_TAIL_CONTINUITY.md)); inactive circuits still use the existing reset policy. Same-pitch duplicate note-ons on one channel are a MIDI ambiguity, not original behavior.
 - **Live envelopes in source modes**: attack, decay and release timing follow effective control changes on active voices without retriggering. The numerical time laws remain provisional; sustain-level and filter IL/AL target changes now follow the [inferred live-level model](docs/LIVE_ENVELOPE_LEVEL_MODEL.md) ([scope](docs/LIVE_ENVELOPE_TIMING.md)). [Double state, coefficients and clocks](docs/ENVELOPE_NUMERICAL_ACCURACY.md) prevent long envelopes from stalling at valid settings. Isolation capture responses intentionally change; legacy-off behavior is unchanged.
-- **Host capability and tail policy**: MPE capability is advertised while its actual mode still requires matching plugin/host setup. The instrument reports an unbounded tail because continuous analog-noise coloration is supported; hosts may keep processing while idle, and offline export should use an explicit endpoint. This is not a promise that a dry note rings forever. Preset saves now report errors and require confirmation before replacement. Native host/UI checks passed at `428e4b2`; the independent stable Linux validator failure remains as disclosed above.
+- **Host capability and tail policy**: MPE capability is advertised while its actual mode still requires matching plugin/host setup. The instrument reports an unbounded tail because continuous analog-noise coloration is supported; hosts may keep processing while idle, and offline export should use an explicit endpoint. This is not a promise that a dry note rings forever. Preset saves now report errors and require confirmation before replacement. Native host/UI checks and stable validators passed at `deb34f4`; earlier intermittent Linux failures remain unresolved as disclosed above.
 - **Latency**: the output decimator reports 63 host samples; let the host refresh delay compensation.
 - **Software conventions that are not original**: MIDI CC64 sustain (including MPE-master rule), the latching virtual footswitch, the sample-rate range 8-768 kHz (48 kHz fallback), digital normalisation of EXT, the on-screen key-pressure gesture. See [PERFORMANCE_CONTROLS.md](docs/PERFORMANCE_CONTROLS.md).
 - Footage uses nominal harmonic ratios 0.5, 1, 1.5, 2, 3, 4 (the fifths sit about 1.955 cents above equal temperament); these are nominal circuit targets, not measured tolerances of any instrument.
@@ -276,7 +273,7 @@ Headless assets:
 
 ### CI
 
-`.github/workflows/build.yml` builds and tests Linux, macOS and Windows and runs pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb with a bounded, diagnosed retry for the validator's own teardown crash; macOS VST3 and AU; Windows headless). Other workflows: `screenshots.yml`, `dsp-measurements.yml`, `circuit-inspection.yml` (reads the original service scans inside Actions) and `ci-evidence.yml` (publishes run outcomes as commit statuses). A passing run is software-quality evidence only.
+`.github/workflows/build.yml` builds and tests Linux, macOS and Windows and runs pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb with bounded retry eligibility for a logged exit139 shape of unproven ownership; macOS VST3 and AU; Windows headless). Other workflows: `screenshots.yml`, `dsp-measurements.yml`, `circuit-inspection.yml` (reads the original service scans inside Actions) and `ci-evidence.yml` (publishes run outcomes as commit statuses). A passing run is software-quality evidence only.
 
 ---
 

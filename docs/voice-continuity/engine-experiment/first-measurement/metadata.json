@@ -1,0 +1,22 @@
+{
+  "published_experiment_commit": "c2db96a317657ac214d7a1bd8d69c1af27d909bc",
+  "published_experiment_tree": "88cb4f0d82cb5b1f08044e3a8dcfe5003d24a3bf",
+  "baseline_commit": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "criterion_sha256": "6fe9119d43d3cbfa7ae0f414bad4bff382966e43625ffb8ddbc22259b7cbfb65",
+  "source_manifest_sha256": "b3ff0c60495c18c68e12bfa026396fdb4d6a94d2a0315561824580529c866a94",
+  "started_utc": "2026-10-30T06:25:00.712414+00:00",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++20 -O3 -DNDEBUG -Wall -Wextra -Werror; distinct core namespaces; no LTO",
+  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+  "cpu_affinity": "0-8",
+  "exclusive_window": "root confirmed no other heavy local agent work",
+  "rerun_policy": "first result retained, no replacement or trimming",
+  "production_integrated": false,
+  "completed_utc": "2026-10-30T06:26:13.569817+00:00",
+  "probe_exit": 0,
+  "raw_csv_uncompressed_sha256": "9e48a42267982ea6a2d223a51b1729caba2307149807b5191707b901e0d50b5d",
+  "raw_csv_uncompressed_bytes": 1335287,
+  "raw_gzip_sha256": "d70de5c7fbeac40305a89bb278c32abc09682dfea620c4aa8ca04a805f2e8ee1",
+  "gzip_mtime": 0
+}
