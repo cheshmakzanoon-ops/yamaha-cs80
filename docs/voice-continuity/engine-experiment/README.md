@@ -183,6 +183,11 @@ This corroborates the unaligned default-FP scope; it is not retroactive
 first-run telemetry and does not prove that denormals caused any outlier.
 A separately identified plugin-aligned FP diagnostic may investigate the
 difference, but cannot replace or retry this first result.
+That [targeted diagnostic is now complete](fp-policy-diagnostic/RESULTS.md):
+explicit OFF/ON policies produced no observed output-bit differences, subnormal
+outputs, or callback denormal/underflow flags in its bounded matrix; paired
+medians differed by roughly a few percent and overruns remained. It supplies no
+evidence for attributing the earlier outliers to FTZ/DAZ, and is not a DAW test.
 
 **Decision: recommend a separately reviewed, default-off opt-in integration
 design.** The declared functional/compatibility and offline cost gates passed;

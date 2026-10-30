@@ -1,0 +1,62 @@
+{
+  "status": "PASS independent artifact recomputation; no measurement rerun",
+  "cells": 33,
+  "rows": 132,
+  "raw_observations": 33792,
+  "all_raw_order_timing_and_mxcsr_flags_verified": true,
+  "all_current_manifest_sources_objects_executable_verified": 7,
+  "raw_sha256": "ff8db03fd0c20c96ee750455a41ee2ea0c8f0bc7f8d5114c8b26b67fbb64d614",
+  "results_sha256": "db50ec4ff03384f5cddb61247fe2cc770ecae31f74d3d7ac6612b8faf41944c5",
+  "source_manifest_sha256": "36d2ea84a04c5af20640ea8ec32a04b91f4d80a1f8fe2aa295f7c19930fbb16b",
+  "engines": {
+    "baseline": {
+      "median_ratio_range": [
+        0.9711474919265346,
+        1.007682747319891
+      ],
+      "median_of_ratios": 0.9941226893442265,
+      "policies": {
+        "FTZ_DAZ_OFF": {
+          "overruns": 14,
+          "maximum_RTF": 5.34683025,
+          "denormal_operand_callbacks": 0,
+          "underflow_callbacks": 0
+        },
+        "FTZ_DAZ_ON": {
+          "overruns": 10,
+          "maximum_RTF": 2.51774325,
+          "denormal_operand_callbacks": 0,
+          "underflow_callbacks": 0
+        }
+      },
+      "harness_reported_samples_compared": 3211264,
+      "harness_reported_bit_differences": 0
+    },
+    "candidate": {
+      "median_ratio_range": [
+        0.9790012803130728,
+        1.0115739083722044
+      ],
+      "median_of_ratios": 0.9963511392235124,
+      "policies": {
+        "FTZ_DAZ_OFF": {
+          "overruns": 37,
+          "maximum_RTF": 12.5556585,
+          "denormal_operand_callbacks": 0,
+          "underflow_callbacks": 0
+        },
+        "FTZ_DAZ_ON": {
+          "overruns": 35,
+          "maximum_RTF": 3.40480575,
+          "denormal_operand_callbacks": 0,
+          "underflow_callbacks": 0
+        }
+      },
+      "harness_reported_samples_compared": 3211264,
+      "harness_reported_bit_differences": 0
+    }
+  },
+  "all_measured_denormal_and_underflow_flags_zero": true,
+  "first_measurement_hashes_unchanged": true,
+  "limits": "No acceptance gate; no replacement first result. Numerical difference counts are source-auditable harness observations, not independently recomputed audio (samples not persisted). Equal aggregate state checksums are not full-state equality. No causal attribution of earlier outliers or DAW deadline qualification."
+}

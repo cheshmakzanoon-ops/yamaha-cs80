@@ -1,0 +1,23 @@
+{
+  "diagnostic": "targeted explicit FTZ+DAZ OFF/ON; not replacement first result",
+  "cost_gate": null,
+  "started_utc": "2026-10-30T07:15:41.588595+00:00",
+  "working_head": "38cef1ce4fa63369ea09094f9c7755bfbeaa115b",
+  "frozen_experiment_commit": "c2db96a317657ac214d7a1bd8d69c1af27d909bc",
+  "baseline_commit": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "source_manifest_sha256": "36d2ea84a04c5af20640ea8ec32a04b91f4d80a1f8fe2aa295f7c19930fbb16b",
+  "compiler": "g++ Debian14.2.0-19",
+  "flags": "-std=c++20 -O3 -DNDEBUG -Wall -Wextra -Werror; exact frozen four core/bridge objects; no LTO",
+  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+  "exclusive_window": "pressure worker and independent reviewer confirmed clear; root notified",
+  "FP_scope": "explicit policy during setup/warmup/callback; masks and rounding preserved; sticky status bits cleared before each callback; reads/setting/restoring outside timers",
+  "original_first_measurement_unchanged": true,
+  "completed_utc": "2026-10-30T07:16:12.787076+00:00",
+  "probe_exit": 0,
+  "raw_uncompressed_sha256": "83f5db68e3de1614ac0006e610c2f98c3d53e354c1da31040e714713e51afc35",
+  "raw_uncompressed_bytes": 963952,
+  "raw_gzip_sha256": "ff8db03fd0c20c96ee750455a41ee2ea0c8f0bc7f8d5114c8b26b67fbb64d614",
+  "gzip_mtime": 0,
+  "probe_entry_mxcsr": "0x00001f80 (observed probe stdout)",
+  "untimed_verification": "33 cells/528 observations pass after correcting assertion-mask typo; no timed retry"
+}
