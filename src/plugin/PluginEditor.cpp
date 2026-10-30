@@ -2,6 +2,7 @@
 
 #include "AdvancedPanel.h"
 #include "PresetBrowser.h"
+#include "OutputMeterDisplay.h"
 #include "UiComponents.h"
 #include "core/FactoryPresets.h"
 
@@ -349,6 +350,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
           browser(p),
           memoryProgrammer(p)
     {
+        // A new UI starts with fresh presentation history. This is the sole
+        // consumer; audio published after this clear remains for normal polls.
+        (void) processor.consumeOutputMeter();
+        outputMeterDisplay.reset(juce::Time::getMillisecondCounterHiRes() * 0.001);
         setOpaque(true);
         setLookAndFeel(&lookAndFeel);
         setWantsKeyboardFocus(true);
@@ -453,7 +458,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void buildTopBar()
     {
         for (auto* button : { &prevButton, &nextButton, &browseButton, &saveButton,
-                              &initButton, &advancedButton })
+                              &initButton, &advancedButton, &panicButton })
         {
             button->setWantsKeyboardFocus(true);
             addAndMakeVisible(*button);
@@ -475,6 +480,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         modeStatusLabel.setJustificationType(juce::Justification::centredLeft);
         modeStatusLabel.setColour(juce::Label::textColourId, cs80::ui::ivoryDim);
         addAndMakeVisible(modeStatusLabel);
+        outputMeterLabel.setComponentID("output_sample_peak");
+        outputMeterLabel.setTitle("Output sample peak and over-range events");
+        outputMeterLabel.setJustificationType(juce::Justification::centredLeft);
+        outputMeterLabel.setTooltip("Read-only final-output sample peak in dBFS, not true peak or loudness. Numeric peak releases at 12 dB per second. OVER-RANGE holds for one second after a finite sample magnitude exceeds 1; it does not prove hard clipping. NON-FINITE holds for two seconds after NaN or infinity is observed and is excluded from the numeric peak. These independently collected events may appear in adjacent polls. This display never limits, normalizes or changes audio: leave monitoring headroom. Opening an editor clears old display history.");
+        outputMeterLabel.setDescription(outputMeterLabel.getTooltip());
+        addAndMakeVisible(outputMeterLabel);
+        updateOutputMeterLabel();
         for (int rank = 0; rank < 2; ++rank)
         {
             auto& label = sourceStatusLabels[(size_t) rank];
@@ -491,6 +503,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         saveButton.setTitle("Save a user preset");
         initButton.setTitle("Load the initial patch");
         advancedButton.setTitle("Show advanced controls");
+        panicButton.setComponentID("panic_notes");
+        panicButton.setTitle("Panic: stop existing notes on all MIDI channels");
+        panicButton.setTooltip("Stop existing notes, sustain pedal latches and arpeggiator keys on all MIDI channels at the next audio block. "
+                               "Clear queued on-screen keys; patch and controls stay unchanged. "
+                               "FX tails and analog noise may remain; this is not output mute. New incoming notes can still play.");
+        panicButton.setDescription(panicButton.getTooltip());
+        panicButton.onClick = [this] { processor.requestPanicFromUI(); };
         prevButton.onClick = [this] { stepPreset(-1); };
         nextButton.onClick = [this] { stepPreset(1); };
         browseButton.onClick = [this]
@@ -933,6 +952,25 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
     }
 
+    void updateOutputMeterLabel()
+    {
+        const juce::String level = outputMeterDisplay.atFloor()
+            ? "<= -120"
+            : (outputMeterDisplay.peakDbfs() > 0.0f ? juce::String("+") : juce::String())
+                + juce::String(outputMeterDisplay.peakDbfs(), 1);
+        juce::String flags;
+        if (outputMeterDisplay.overRange()) flags = "OVER-RANGE";
+        if (outputMeterDisplay.nonFinite())
+            flags += (flags.isEmpty() ? "" : " | ") + juce::String("NON-FINITE");
+        if (flags.isEmpty()) flags = "READ-ONLY";
+        const auto text = "SAMPLE PEAK " + level + " dBFS\n" + flags;
+        if (outputMeterLabel.getText() != text)
+            outputMeterLabel.setText(text, juce::dontSendNotification);
+        outputMeterLabel.setColour(juce::Label::textColourId, outputMeterDisplay.nonFinite()
+            ? juce::Colour(0xffff7166) : outputMeterDisplay.overRange() ? cs80::ui::amberBright
+                                                                       : cs80::ui::ivoryDim);
+    }
+
     void tick()
     {
         processor.serviceKeyboardUI();
@@ -941,13 +979,16 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncPresetDisplay();
         syncToneMarks();
         syncSourceStatus();
+        outputMeterDisplay.update(processor.consumeOutputMeter(),
+                                  juce::Time::getMillisecondCounterHiRes() * 0.001);
+        updateOutputMeterLabel();
         // Follow the pedal when MIDI CC11 or a restart moved it; never fight a drag.
         if (! expressionPedal.isMouseButtonDown()
             && std::abs(expressionPedal.getValue() - processor.getExpressionValue()) > 1.0e-4f)
             expressionPedal.setValue(processor.getExpressionValue());
         if (memoryProgrammer.isVisible()) memoryProgrammer.refresh();
-        // The voice allocator is the only animated element; redrawing the
-        // whole panel at 8 Hz also keeps preset metadata current.
+        // The existing 8 Hz UI timer also presents output telemetry; audio
+        // publication never calls or repaints the editor.
         repaint();
     }
 
@@ -1105,7 +1146,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         // Software toolbar intentionally outside the hardware face.
         g.setColour(juce::Colour(0xff090c0d)); g.fillRect(0, 0, 1600, 78);
         panelText(g, "CS-80  /  REFERENCE", 28, 16, 320, 30, 17, juce::Justification::centredLeft);
-        panelText(g, "8 VOICES  /  DUAL CHANNEL", 1280, 18, 290, 22, 10);
         g.restoreState();
     }
 
@@ -1131,6 +1171,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         saveButton.setBounds(r(942.0f, 25.0f, 80.0f, 32.0f));
         initButton.setBounds(r(1030.0f, 25.0f, 64.0f, 32.0f));
         advancedButton.setBounds(r(1102.0f, 25.0f, 154.0f, 32.0f));
+        panicButton.setBounds(r(1504.0f, 5.0f, 78.0f, 30.0f));
+        outputMeterLabel.setBounds(r(1272.0f, 5.0f, 224.0f, 30.0f));
+        outputMeterLabel.setFont(displayFont(10.5f * sy));
         subModeLabel.setBounds(r(1272.0f, 40.0f, 310.0f, 20.0f));
         subModeLabel.setFont(displayFont(9.0f * sy));
         modeStatusLabel.setBounds(r(26.0f, 59.0f, 1552.0f, 18.0f));
@@ -1164,9 +1207,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     juce::TextButton saveButton { "SAVE" };
     juce::TextButton initButton { "INIT" };
     juce::TextButton advancedButton { "ADVANCED" };
+    juce::TextButton panicButton { "PANIC" };
     juce::Label presetLabel;
     juce::Label subModeLabel;
     juce::Label modeStatusLabel;
+    juce::Label outputMeterLabel;
+    cs80::ui::OutputMeterDisplay outputMeterDisplay;
     std::array<juce::Label, 2> sourceStatusLabels;
     cs80::ui::ParamKnob* subFunction = nullptr;
     cs80::ui::ParamKnob* subSpeed = nullptr;

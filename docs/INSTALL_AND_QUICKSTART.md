@@ -4,10 +4,14 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This revision describes the new opt-in **SOURCE PERFORMANCE** switch. Older
-artifacts may not contain it; use the guide bundled with your artifact and check
-its manifest commit. The fully green `0273031` checkpoint predates this switch;
-its results do not qualify a later source-performance build.
+This revision describes opt-in **SOURCE PERFORMANCE** and the new **PANIC** and
+**SAMPLE PEAK** helpers. Older artifacts may not contain them; use the guide
+bundled with your artifact and check its manifest commit. The latest fully green
+all-platform checkpoint recorded here, `54a96f2`, predates these additions. The
+corrected source-mode Linux/Apple Silicon lanes at `ce65ea0` and source-mode
+screenshots at `91ef916` have passed, but all-platform qualification and the new
+helpers' native host/UI tests remain pending. This is
+not a new release qualification.
 
 ## Choose and verify a build
 
@@ -106,6 +110,28 @@ distributions. No additional audio driver is bundled on any platform.
    independent isolation policy; full session restore recalls both flags.
    Transient pedal gestures are not saved.
 
+### Stuck notes and output headroom
+
+**PANIC**, in the software toolbar, requests a global hard stop of existing notes,
+MIDI sustain holds and arpeggiator keys at the next audio callback. It clears stale
+on-screen-key input without changing the patch, selectors or expression position.
+It is **notes-only, not output mute**: retained effect/filter histories and analog
+noise may remain audible. New host MIDI, including notes arriving in that same
+callback after the stop, can play normally. If processing is suspended, the
+request waits until it resumes. Use your host/output mute when complete silence
+is required. See [PANIC details](PANIC_CONTROL.md).
+
+The **SAMPLE PEAK** readout beside PANIC observes the final mono/stereo output
+samples in dBFS. **OVER-RANGE** means a finite sample's absolute value exceeded
+1.0 (0 dBFS), not proof that a floating-point host bus clipped. **NON-FINITE**
+separately reports NaN/Inf; those values are excluded from the numeric peak.
+Warnings hold briefly (one second / two seconds respectively), so they need not
+match the decaying number at that instant. This is a **read-only sample-peak
+indicator, not true peak, loudness measurement, a limiter or automatic gain
+control**. It does not mute or repair audio. Leave headroom and keep monitoring
+low; if NON-FINITE appears, report the patch, mode and steps rather than treating
+the indicator as protection. See [output-meter details](OUTPUT_METER.md).
+
 ### Choose the mode before playing
 
 | SOURCE PERFORMANCE | PARITY ISOLATION | Effective behavior |
@@ -136,10 +162,16 @@ screens, or tight screens with large host chrome, may not fit the editor. This
 initial fit does not override later host/manual resizing, remember window size,
 or create a smaller layout. OS/host scaling can reduce the available logical area.
 
-The dry eight-voice source-isolation timing audit is evidence for DSP commit
-`932c6d4` only. It found useful typical margin at 44.1/48 kHz but also deadline
-misses; it is not a real-time guarantee or qualification of the later
-source-performance/MIDI/FX path. Test your intended patches in the actual host.
+The [expressive Source Performance benchmark](performance/2026-10-30-source-performance/SUMMARY.md)
+measures immutable DSP commit `d7b6e85`: eight voices/both ranks, all 22 tabs,
+live MPE/controllers and two modest FX combinations at 44.1/48 kHz and
+128/256 samples. Typical held-callback medians used roughly **24–30% of the
+callback budget**, but **127 of 256,402 callbacks** across all measured modes and
+phases exceeded budget; one held callback took 29.143 ms. This is core-only
+cloud-machine evidence, excluding the plugin wrapper, UI, driver and DAW, and
+predates the new PANIC/meter helpers. It is not a glitch-free guarantee or a
+64-frame/high-rate qualification. Start host checks at 256 samples and test your
+intended patches; the older `932c6d4` dry-isolation audit remains separate.
 
 The host receives 63 samples of output latency. Tail metadata is unbounded
 because supported noise and retained effect histories have no universal finite

@@ -3,6 +3,9 @@
 #include "plugin/UiComponents.h"
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
+#include "../../tests/OutputMeterHostTests.h"
+#include "../../tests/OutputMeterUiTests.h"
+#include "../../tests/PluginPanicTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
@@ -1756,6 +1759,7 @@ int main(int argc, char** argv)
         return cs80::tests::runLocaleSmoke(argc, argv);
     juce::ScopedJuceInitialiser_GUI juceInit;
     cs80::tests::testPluginHostMetadata(check);
+    cs80::tests::testOutputMeterHost(check);
     cs80::tests::testSourcePerformanceHost(check);
     cs80::tests::testEditorInitialSize(check);
 
@@ -3244,7 +3248,9 @@ int main(int argc, char** argv)
 
     // All preset-save I/O is confined to fresh temporary fixtures.
     cs80::tests::PresetSaveAccess::run(check, flushGui);
+    cs80::tests::testPluginPanic(check, flushGui);
     cs80::tests::runUiReadinessTests(check, flushGui);
+    cs80::tests::testOutputMeterUi(check, flushGui);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

@@ -1,17 +1,68 @@
 # Playable release readiness
 
-Product/host audit, 2026-10-30. The initial audit baseline was `0273031` (all 22
-nominal factory-source tabs and official JUCE 8.0.11). That remains the latest
-fully green checkpoint recorded here: all original CI gates and the separate
-official beta-validator comparison passed. **Newer usability, packaging and
-source-performance work has separate pending qualification; it does not inherit
-that pass.** No DAW was launched for this audit.
+Product/host audit, 2026-10-30; CI evidence reconciled at 04:28 UTC. The initial
+audit baseline was `0273031` (all 22 nominal factory-source tabs and official
+JUCE 8.0.11). The latest fully green checkpoint recorded here is now
+**`54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e`**: original build/validator gates,
+DSP measurements, editor screenshots and the separate official beta-validator
+comparison passed. Its usability fixes and native packaging are CI-verified.
+**Source performance began at `d7b6e8510e42cf8bd7f35edad49c81795bc48801`;
+the corrected `ce65ea0` Linux/Apple Silicon lanes and `91ef916` source-mode
+screenshots have passed, but all-platform qualification remains pending.** The new PANIC/output-meter batch also needs its
+own native host/UI run. None inherits the `54a96f2` pass. No actual DAW
+installation, DAW session or packaged Standalone launch is claimed here.
 
 The current implementation adds the approved, default-off `source_performance`
 parameter. Existing host IDs, ranges and defaults remain unchanged; the new
 Boolean is appended at host index 244 (245 total), AU version hint 7. Neither
 source mode is calibrated or establishes measured CS-80 equivalence. Missing
 hardware access is not an implementation or beta-acceptance gate.
+
+## Verified checkpoint and pending candidate
+
+| Scope | Exact evidence | Result |
+|---|---|---|
+| `54a96f2` original build and stable validators | [Build 40995783558](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558) | All six jobs passed: Linux, Windows, both native macOS builds and the separate Linux/Windows pluginval jobs; macOS VST3/AU/GUI validation also passed. |
+| `54a96f2` numerical measurements | [DSP 40995783492](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783492) | Passed. |
+| `54a96f2` editor evidence | [Screenshots 40995783622](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783622) | Passed; this is not the later source-performance/display-fit editor. |
+| `54a96f2` separate prerelease comparison | [Beta 40997993577](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40997993577) | Both official beta3 lanes passed; not a replacement for the stable gates. |
+| `d7b6e85` original source-performance candidate | [Build 41001038174](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001038174), [screenshots 41001038061](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001038061) | Failed; the original Apple Silicon and screenshot jobs reported a source-toggle visibility-fixture assertion. These failures remain recorded, not relabelled as passes. |
+| `ce65ea0` real-editor-peer fixture correction | [Build 41001845570](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001845570), [Apple Silicon job 123887820589](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001845570/job/123887820589) | Linux and Apple Silicon lanes passed, including their validators and native packages; Intel/Windows still pending. The correction attaches a real editor peer in the UI test, not a DSP change. |
+| `91ef916` refreshed screenshot trigger | [Screenshots 41002244175](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41002244175), [artifact 12953893654](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41002244175/artifacts/12953893654) | Passed; all 13 PNGs verified and visually inspected. This qualifies source-mode screenshots, not the next PANIC/meter batch. |
+
+The beta run's workflow head is screenshot-only `a98057c`, **not its tested
+plugin source**. Both job logs explicitly select Linux VST3 artifact
+`12951866069` from build `40995783558`, source
+`54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e`. The
+[GUI-inclusive job 123875529215](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40997993577/job/123875529215)
+records `SUCCESS` and 31 verified tests; the
+[headless job 123875529400](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40997993577/job/123875529400)
+records `SUCCESS` and 25 verified tests. This provenance is verified from logs,
+not inferred from the comparison run's head SHA.
+
+All four native build logs verify clean JUCE **8.0.11**, SHA
+`c352e2489000ffeb9e397051377d75eef2efe641`. CTest passed 37/37 on Linux,
+33/33 on each macOS architecture and 31/31 on Windows, including the linked
+`cs80_ui_smoke` checks for the checkpoint's metadata, save feedback and route
+clarity. Native packaging then validated the actual built products and reopened
+its archives to check inventory, hashes, paths, types and Unix permissions/link
+targets where applicable. The helper's synthetic self-tests also passed: 34 checks
+on Linux/macOS, 22 on Windows (Unix chmod/symlink fixtures explicitly excluded;
+Windows packages reject symlinks).
+
+| `54a96f2` install bundle | Artifact ID | Packaged formats |
+|---|---:|---|
+| Linux x86_64 | [12951870661](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558/artifacts/12951870661) | VST3, Standalone |
+| macOS arm64 | [12951946583](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558/artifacts/12951946583) | VST3, AU, Standalone |
+| macOS x86_64 | [12952031695](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558/artifacts/12952031695) | VST3, AU, Standalone |
+| Windows x86_64 | [12952426100](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558/artifacts/12952426100) | VST3, Standalone |
+
+All four uploads are present and unexpired at this snapshot, with matching
+source/build metadata. These are **native package checks**, not evidence of
+end-user download/extraction, DAW installation/scan, audio-device setup or a
+Standalone playing session. Signing, runtime-library and distribution limitations
+still apply. The `54a96f2` bundles do not contain the later source-performance
+switch.
 
 ## Verdict and current status
 
@@ -25,26 +76,38 @@ research:
   pending.** The nominal source models can now be combined with ordinary MIDI,
   optional MPE and modern overlays without relaxing strict isolation. The
   original default-off sound path remains the compatibility target.
-- **Mode/source clarity is implemented; final GUI evidence is pending.** Both
-  requested rank identities/routes and effective mode policy are visible.
+- **Mode/source clarity passed checkpoint GUI tests; corrected source-performance
+  UI tests and screenshots now have Linux/Apple Silicon evidence, with
+  all-platform completion pending.** Both
+  requested rank identities/routes and
+  effective mode policy are visible.
   Pedal help, library/PANEL behavior, precedence and note-reset warnings are
   explicit. Readouts use parameter atomics and immutable tables, not render-thread
   Engine diagnostics.
-- **MPE/tail metadata is implemented; exact-revision host checks remain required.**
+- **MPE/tail metadata passed checkpoint linked tests; real DAW handling remains
+  unverified.**
   MPE is advertised as a static capability without enabling it. Tail metadata
   is positive infinity: voice-independent analog noise and retained bypassed FX
   histories prevent a universal finite silence deadline. Idle CPU processing
   may continue; exports need an explicit end/selection.
-- **Safe patch saving is implemented; exact-revision host checks remain required.**
+- **Safe patch saving passed checkpoint linked tests; a full DAW player workflow
+  remains unverified.**
   Saving returns a result, stages beside the destination and publishes atomically
   without a truncate/copy fallback. Filename collisions require confirmation;
   cancellation/errors do not announce success. Atomic visibility is not a
   power-loss durability guarantee.
-- **Packaging/upload and an install guide are implemented; native artifact and
-  installation results must be recorded separately.** CI now includes advertised
+- **Native packaging/upload passed at `54a96f2`; end-user installation remains
+  unverified.** CI now includes advertised
   VST3/Standalone products and native macOS AU, without replacing validator
   artifacts or weakening gates. See [install/quickstart](INSTALL_AND_QUICKSTART.md)
   and [distribution limitations](CI_DISTRIBUTION_STATUS.md).
+- **PANIC and read-only output telemetry are implemented for the next checkpoint;
+  native host/UI execution is pending.** PANIC stops existing notes, sustain holds
+  and arpeggiator keys without changing the patch; retained histories/noise and
+  newly received MIDI can still sound. SAMPLE PEAK observes final host output,
+  with separate OVER-RANGE and NON-FINITE warnings, not limiting or normalization.
+  The local core-only CTest run passed **38/38 suites**; that is not a linked
+  execution pass for the new plugin/GUI helpers.
 - **Initial display fitting is implemented; it is not an undersized-screen
   solution.** Initial size uses the logical usable display area, with room for
   host chrome where possible, within 1120x700–1600x1000. Below **1120x700 logical
@@ -52,8 +115,9 @@ research:
   authoritative; this does not add persisted window size or shrink the minimum.
 
 The next bounded work is final-commit core/host/visual qualification, actual
-package installation and controller/session/bounce workflows, plus timing of the
-new source-performance combinations. No newer increment is called release-ready
+package installation and controller/session/bounce workflows, plus actual-host
+underrun checks informed by the new `d7b6e85` expressive benchmark. No newer
+increment is called release-ready
 until its own relevant evidence exists.
 
 ## Current mode, source and controller contract
@@ -113,11 +177,34 @@ not silently rewritten.
 
 | Priority | Bounded outcome |
 |---|---|
-| P0: qualify the exact candidate | Record commit, resolved JUCE SHA, core/host/compatibility tests, every original platform/validator gate and actual-editor screenshots. Pending or failed is not passed; do not transfer `0273031` results. |
-| P1: controller/session workflow | Exercise source performance with bend, expression, sustain, pressure/MPE, paired tabs, modern overlays, policy transitions, patch saving and full-session recall; verify strict isolation remains inert to its masked controls. |
+| P0: qualify the exact candidate | Finish corrected source-mode all-platform evidence, then run the PANIC/meter batch's linked host/UI checks, every original platform/validator gate and actual-editor screenshots at its own commit. Pending or failed is not passed; do not transfer `54a96f2` or one platform's results. |
+| P1: controller/session workflow | Exercise source performance with bend, expression, sustain, pressure/MPE, paired tabs, modern overlays, policy transitions, PANIC, patch saving and full-session recall; verify strict isolation remains inert to its masked controls and the meter does not alter sound. |
 | P1: native package/install workflow | Download/hash/extract each advertised package, verify permissions/bundles, scan/open in a named host or Standalone, and record architecture/signing/library limitations. Package presence alone is not a successful run. |
-| P1: CPU/headroom on the new path | Preserve the `932c6d4` dry source-isolation timing baseline; measure new source-performance/MIDI/FX combinations separately, then check actual target-host underruns. Keep level-controlled auditions and explicit monitoring headroom. |
-| P2: remaining UI conveniences | A visible bounded panic action, pressure amount display and broader MIDI program/reset handling remain candidates. Initial fitting retains the 1120x700 minimum; do not claim universal small-screen accessibility. These are separate behavior changes, not mandatory analog research. |
+| P1: CPU/headroom on the new path | Preserve the separate `932c6d4` isolation and `d7b6e85` expressive core benchmarks, including every overrun. Check actual target-host underruns and the later telemetry batch's cost; neither core run qualifies the host/UI/driver. Keep explicit monitoring headroom. |
+| P2: remaining UI conveniences | Pressure amount display and broader MIDI program/reset handling remain candidates; PANIC is now implemented, awaiting native qualification. Initial fitting retains the 1120x700 minimum; do not claim universal small-screen accessibility. These are separate behavior changes, not mandatory analog research. |
+
+## PANIC and output indication: bounded helper scope
+
+The toolbar's [PANIC control](PANIC_CONTROL.md) queues an all-channel hard stop
+for the next audio callback. Existing voices, MIDI sustain latches, arpeggiator
+keys and stale on-screen-key ownership are cleared; patch parameters, selectors,
+expression and other controller positions are not rewritten. This is **notes-only,
+not output mute**: effect/filter/output histories and analog noise remain.
+New host notes are processed after the stop and can sound, including in the same
+callback. A suspended host must resume processing to consume the request.
+
+The [SAMPLE PEAK display](OUTPUT_METER.md), beside PANIC, reads final output
+samples after decimation and mono/stereo mapping. **OVER-RANGE** means finite
+absolute sample magnitude **greater than 1**, not proven hard clipping in a
+floating-point host. **NON-FINITE** reports NaN/Inf separately from the finite
+numeric peak. Warning holds are one/two seconds respectively; the numeric peak
+decays on GUI time, so number and flags need not describe one instant.
+It is not true peak, loudness measurement, a limiter, normalization, automatic
+mute or audio repair. No new host parameter or serialized meter state is added.
+PANIC does not clear genuine output telemetry: retained tails/noise remain
+observable. New primitive/display/core tests passed locally; native final-buffer
+oracles, helper UI/layout and player workflows still require the new commit's
+linked run.
 
 ## Two narrow host findings
 
@@ -134,8 +221,9 @@ refusing or remapping input. The capability should describe what the plugin can
 do, not dynamically toggle with a patch or isolation. The implemented fix returns
 constant true. `tests/PluginHostMetadata.h` checks that queries do not mutate
 parameters, that capability is stable with MPE off/on and isolation, and that
-member-channel behavior and isolation masks are retained. These added host tests
-are not declared passed until the new batch's linked smoke/CI actually runs.
+member-channel behavior and isolation masks are retained. These tests ran in
+`54a96f2`'s passing linked `cs80_ui_smoke` suite on all four native builds; the
+later source-performance candidate still needs its own run.
 
 The implemented convention is channel 1 as master and other channels as members,
 with manually configured bend ranges; system messages/RPN negotiation are not
@@ -174,7 +262,8 @@ unbounded policy, not a claim that every dry note actually rings forever.
 
 The added metadata tests cover the original long-release reproduction,
 slow-macro release, ordinary FX decay, continuous noise and retained histories.
-Final host execution remains pending. The policy lets a host keep idle instances
+Checkpoint linked execution passed; actual DAW bounce handling remains
+unverified. The policy lets a host keep idle instances
 processing and means an offline exporter needs an explicit end/selection rather
 than waiting for an automatic finite tail. Validate VST3/AU host handling and
 old/new bounces; do not shorten DSP releases or mute supported noise just to fit
@@ -202,9 +291,22 @@ a convenient finite number.
   Source-held medians were 0.238–0.290 RTF, with 152 deadline exceedances across
   67,584 held callbacks. These cloud-core timings show typical margin and real
   outliers, not a DAW/driver guarantee. They do **not** qualify the later source-
-  performance/MIDI/FX policy. Preserve this baseline and measure those new
-  combinations separately, then check actual target-host underruns. No 96/192 kHz
+  performance/MIDI/FX policy. Preserve this baseline separately; no 96/192 kHz
   recommendation follows from it.
+- The [expressive Source Performance audit](performance/2026-10-30-source-performance/SUMMARY.md)
+  measures immutable DSP **`d7b6e85`**, eight voices/two ranks across all 22 tabs,
+  at 44.1/48 kHz and 128/256 frames. Held medians were **0.236–0.274 RTF dry**,
+  **0.246–0.294 with MPE + chorus/reverb**, and **0.244–0.296 with MPE +
+  phaser/delay/drive**: roughly **24–30% of callback budget**, not whole-machine
+  CPU utilization or isolated FX cost. The full 156-case/400-row run retains
+  **127 budget exceedances in 256,402 callbacks** across all modes/phases
+  (88 in 135,168 source-held callbacks), including a 29.143 ms held callback.
+  MPE, moving CC11 and actual CC64-held releases passed integrity checks. Zero
+  nonfinite/full-scale samples at fixed master 0.12 do not establish headroom
+  for arbitrary settings. This cloud-core test excludes the plugin wrapper, UI,
+  driver and DAW, predates PANIC/meter, and does not qualify 64-frame/high-rate,
+  many-instance or long-session use. Start actual-host checks at 256 frames;
+  even that buffer had observed overruns, so it is not a guaranteed setting.
 - APVTS/state migration and keyboard handoff already have extensive tests.
   Factory recall preserves physical setup and isolation but resets source
   performance OFF/PANEL; user recall restores physical setup and source choice
@@ -278,9 +380,12 @@ same restrictions, nominal source tabs, non-calibration and output headroom.
 The original clarity increment's two translation units passed syntax-only compilation against the
 unmodified official JUCE 8.0.11 checkout with GCC 14.2.0. Two pre-existing
 enum-conditional warnings in `syncSubMode` remain. `git diff --check` passed.
-That historical check is **not linked GUI execution or verification of later
-source-performance/display-fit edits**; final-commit UI smoke and actual-editor
-screenshots remain required.
+Linked GUI smoke on all four native builds and the screenshot workflow later
+passed at `54a96f2`. Neither the historical syntax check nor that checkpoint
+verifies the later **source-performance/display-fit or PANIC/meter edits**.
+The source-mode real-peer fixture correction passed the `ce65ea0` Linux/Apple
+Silicon lanes and `91ef916` screenshots; Intel/Windows completion and the next
+helpers' own native run remain pending.
 
 Host-test hooks are component IDs `performance_mode_status`,
 `source_route_status_1`, `source_route_status_2` and `expression_pedal`. Required

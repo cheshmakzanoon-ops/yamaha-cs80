@@ -4,6 +4,7 @@
 #include "core/FactoryPresets.h"
 #include "core/Params.h"
 #include "KeyboardEventQueue.h"
+#include "OutputMeter.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -68,6 +69,10 @@ public:
     juce::MidiKeyboardState& getKeyboardState() noexcept { return keyboardState; }
     // Message-thread maintenance; clears lifecycle epochs and discards JUCE indirect MIDI.
     void serviceKeyboardUI();
+    // Non-audio request only. The next block hard-stops existing notes on all
+    // channels, clears sustain/arp and invalidates old UI-key ownership. New
+    // host MIDI in that block remains playable. FX histories/noise are retained.
+    void requestPanicFromUI() noexcept { pendingPanic.store(true, std::memory_order_release); }
     bool isHostKeyDown(int note) const noexcept
     {
         return note >= 0 && note < 128
@@ -77,6 +82,9 @@ public:
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    // One UI consumer; peak/events can describe adjacent polling intervals.
+    // Read-only audio telemetry, never a parameter or an output safety limiter.
+    cs80::OutputMeterReading consumeOutputMeter() noexcept { return outputMeter.consume(); }
     bool isVoiceActive(int i) const noexcept
     {
         return i >= 0 && i < 8 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
@@ -186,12 +194,15 @@ private:
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
     std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
     static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();
+    static_assert(std::atomic<bool>::is_always_lock_free, "Panic handoff must be lock-free");
+    std::atomic<bool> pendingPanic { false };
     std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl },
         pendingExpression { noPendingControl };
     std::array<std::atomic<float>, 128> pendingKeyPressure {};
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
+    cs80::OutputMeter outputMeter;
     std::vector<float> interleaved;
     std::vector<float> externalScratch;
     std::atomic<bool> externalInputEnabled { false };

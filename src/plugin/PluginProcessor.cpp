@@ -242,6 +242,7 @@ bool Cs80AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 
 void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
+    outputMeter.reset();
     engine.prepare(sampleRate);
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
@@ -264,6 +265,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 
 void Cs80AudioProcessor::releaseResources()
 {
+    outputMeter.reset();
     engine.reset();
     resetKeyboardHandoff();
 }
@@ -443,6 +445,17 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const float* input = inputEnabled && buffer.getNumChannels() > 0
                            ? buffer.getReadPointer(0) : nullptr;
 
+    if (pendingPanic.exchange(false, std::memory_order_acq_rel))
+    {
+        // Audio-owned global hard stop, not MIDI CC120/123's channel semantics.
+        // Retain the patch, performance controls, noise and existing FX tails.
+        engine.allNotesOff(false, 0);
+        resetKeyboardHandoff();
+        // The message thread clears the keyboard and acknowledges this epoch.
+        // Old queued UI strikes/releases cannot resurrect or claim host notes.
+        // Host events below are new input after the block-boundary panic.
+    }
+
     if (keyboardEvents.hasOverflow() && !keyboardEvents.needsAcknowledgment())
     {
         // No channel-wide panic: release only notes accepted from the UI.
@@ -578,6 +591,18 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         if (engine.getVoiceInfo(i).active) mask |= 1u << i;
     activeVoiceMask.store(mask, std::memory_order_relaxed);
     activeVoiceCount.store(engine.activeVoices(), std::memory_order_relaxed);
+
+    // Inspect the completed host buffer, not pre-decimator/internal stereo
+    // values: mono mapping/cancellation and its arithmetic are already applied.
+    // Only actual output channels count; neither input nor unused channels do.
+    // No output writes, audio allocations, locks or atomic retry loops here.
+    if (numSamples > 0 && numChannels > 0)
+    {
+        cs80::OutputMeterBlock measured;
+        for (int channel = 0; channel < numChannels; ++channel)
+            measured.addSamples(buffer.getReadPointer(channel), numSamples);
+        outputMeter.publish(measured);
+    }
 }
 
 

@@ -61,7 +61,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest fully verified executable checkpoint, [`0273031`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/0273031e840ed255d16214708d5f4c85f5a8053a), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872343), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872298), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872349). That checkpoint included the controlled keyboard-epoch interleaving regression. The newer source-performance candidate passes 35 local GNU core-only CTest suites; its native host/UI qualification remains separate and pending. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
+The latest fully verified executable checkpoint, [`54a96f2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783492), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783622). That checkpoint included the controlled keyboard-epoch interleaving regression. The newer source-performance candidate passes 38 local GNU core-only CTest suites; its native host/UI qualification remains separate and pending. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
@@ -92,6 +92,8 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 | BBD clock-event reference | 97,650 normalized signal-packet checks; not a charge, voltage or calibrated audio model |
 | DSP probe | deterministic numerical checks plus `scripts/analyze_dsp.py` plots |
 | CI (`build.yml`) | Linux, native Apple Silicon and Intel macOS (VST3, AU, Standalone), and Windows builds and tests; pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb, macOS VST3 and AU including AU GUI, Windows headless) |
+
+The [expressive Source Performance benchmark](docs/performance/2026-10-30-source-performance/SUMMARY.md) at `d7b6e85` covers eight voices with MPE, CC11/64/74 and two effect combinations: typical held-callback cost was 24–30% of budget at 44.1/48 kHz and 128/256 samples. All 156 cases passed integrity checks, but 127 of 256,402 callbacks exceeded budget, including a 29.143 ms callback. This is measured cloud-core behavior, not a glitch-free DAW guarantee.
 
 A newer [all-22 source-route baseline](docs/performance/2026-10-30-source/SUMMARY.md) at `932c6d4` measured typical eight-voice source-core cost at 24–29% of a callback budget at 44.1/48 kHz, with real deadline exceedances retained. It does not qualify the later source-performance/FX combinations or a DAW.
 
@@ -143,7 +145,7 @@ Calibrated recordings or instrument access remain valuable if they become availa
 - **KEYBED**: 61 keys with velocity. On screen, strike a key and drag further down it to press harder (a pointer stand-in for the per-key sensor).
 - **Advanced**: LFOs, SUB and ring detail, chorus, FX, macros, MPE, arpeggiator, original/legacy SUB switch, voice dispersion/drift/noise. **LIBRARY / SAVE**: searchable preset browser.
 
-Double-click any control to return it to its default.
+Double-click any control to return it to its default. The [PANIC button](docs/PANIC_CONTROL.md) stops existing notes, MIDI sustain holds and arpeggiator keys at the next audio block without changing the patch; retained effects/noise may remain, and newly received host notes can play.
 
 **MIDI**: notes, velocity, polyphonic and channel aftertouch, pitch bend, CC1 mod wheel, CC11 expression (also drives the pedal and EXP-WAH), CC64 sustain (a software convention; see below), CC74 brightness, CC120 / CC123 channel-scoped panic. MPE maps per-note bend and pressure on member channels with a separate bend range.
 
@@ -152,6 +154,8 @@ To play the source-derived tabs with normal MIDI expression, enable **Advanced �
 PARITY ISOLATION remains the separate strict comparison mode and wins when both switches are on. Effective mode changes stop notes. Source performance is saved with sound presets; old presets and library programs reset it off, while isolation retains its existing session-policy behavior. See the [mode and compatibility contract](docs/SOURCE_PERFORMANCE.md).
 
 A [reproducible all-22 audition tool](docs/SOURCE_FACTORY_AUDITION.md) renders the same phrase at one fixed quiet master setting, with segment/provenance metadata and no per-tone normalization.
+
+The [output readout](docs/OUTPUT_METER.md) shows final-output **sample peak**, with textual OVER-RANGE and NON-FINITE events. It does not measure true peak/loudness and never limits or changes audio; retain monitoring headroom.
 
 ### Behavior notes and compatibility
 
