@@ -88,8 +88,9 @@ private:
 };
 
 // The preset library: filter column, result list, inspector. Double-click or
-// LOAD replaces the sound with the chosen patch; REVERT returns to the sound
-// that was loaded when the library opened.
+// LOAD replaces the sound with the chosen patch (the key reads RELOAD when that
+// patch is already sounding); REVERT returns to the sound that was loaded when
+// the library opened.
 class PresetBrowser final : public juce::Component,
                             private juce::ListBoxModel,
                             private juce::ScrollBar::Listener,
@@ -111,6 +112,10 @@ public:
 
     std::function<void()> onClose;
     std::function<void()> onPresetLoaded;
+    // Optional: the editor's own "sounding patch has unsaved edits" state. When set, the
+    // LOADED / EDITED badge follows it, so it can never disagree with the header's EDITED
+    // lamp. Without it the library judges the edit state itself (see patchEdited()).
+    std::function<bool()> isPatchEdited;
 
 private:
     friend struct cs80::tests::PresetSaveAccess;
@@ -163,6 +168,7 @@ private:
     void listBoxItemDoubleClicked(int row, const juce::MouseEvent&) override;
     void returnKeyPressed(int lastRow) override;
     void deleteKeyPressed(int lastRow) override;
+    juce::String getTooltipForRow(int row) override;
 
     // ScrollBar::Listener (the viewport's own bar drives the custom rail)
     void scrollBarMoved(juce::ScrollBar*, double newRangeStart) override;
@@ -178,11 +184,16 @@ private:
     bool anyFilterActive() const;
     int activeFilterCount() const;
     bool isLoaded(const Entry& e) const { return loadedKey.isNotEmpty() && e.key == loadedKey; }
+    bool isLoadedAndEdited(const Entry& e) const { return isLoaded(e) && loadedEdited; }
     void loadSelected();
     void revertToOpening();
     void captureOpening();
     bool canRevert() const;
+    bool patchEdited();
     void syncLoaded();
+    void updateLoadLabel();
+    int userCount() const;
+    int sortArrow(int mode) const;
     void pollLoaded();
     void setCompactRows(bool compact, bool persist);
     void deleteSelected();
@@ -211,12 +222,19 @@ private:
     std::uint32_t typeFilter = 0;
     std::uint32_t styleFilter = 0;
     int sortMode = 0;                    // bank, A-Z, Z-A, type, newest
+    bool sortReverse = false;            // clicking the lit sort segment again flips its direction
     bool restoringSelection = false;
     bool compactRows = false;            // 44 px rows instead of full cards (remembered with the favourites)
 
     // The sound that is loaded now (marked in the list) and the one that was
     // loaded when the library opened (what REVERT returns to).
     juce::String loadedKey;
+    bool loadedEdited = false;           // the sounding patch differs from what the display names
+    juce::String editBaselineKey;        // patches that are not a plain library entry: the state first seen under this name
+    cs80::ParamValues editBaseline;
+    juce::String editFileKey;            // saved patches: the file the reference values were read from
+    cs80::ParamValues editFileValues;
+    std::vector<char> editFileUsed;
     bool hasOpening = false;
     juce::String openingName;
     int openingIndex = -1;
