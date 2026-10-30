@@ -314,9 +314,9 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.knob(186.0f, 434.0f, 126.0f, 104.0f, cs80::P_chorusDepth, "DEPTH");
         page.toggle(342.0f, 450.0f, 136.0f, 28.0f, cs80::P_chorusOn, "CHORUS");
         page.toggle(492.0f, 450.0f, 150.0f, 28.0f, cs80::P_chorusMode, "TREMOLO");
-        page.text("Current chorus/tremolo is a provisional delay-line model,\n"
-                  "not circuit-calibrated BBD equivalence. Its modulation and tonal response\n"
-                  "have not been validated against original hardware.",
+        page.text("Legacy: provisional generic delay line. Source Performance and Isolation:\n"
+                  "OE2 BBD delay path (256 clock periods, printed filters); clock range, wet\n"
+                  "level and polarity are inferred, not validated against original hardware.",
                   48.0f, 570.0f, 660.0f, 70.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 

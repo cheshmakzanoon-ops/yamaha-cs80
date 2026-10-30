@@ -6,6 +6,7 @@
 #include "Params.h"
 #include "PerformanceControls.h"
 #include "PraWahCircuit.h"
+#include "BbdChorus.h"
 #include "OutputTapCircuit.h"
 #include "SourceFactoryTones.h"
 
@@ -409,6 +410,7 @@ private:
     bool anyVoiceWasActive = false;
 
     Chorus chorus;
+    BbdChorus bbdChorus;
     Reverb reverb;
     DelayLine fxL, fxR;
     OnePole fxDampL, fxDampR;

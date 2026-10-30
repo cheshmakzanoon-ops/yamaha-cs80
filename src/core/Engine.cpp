@@ -25,6 +25,7 @@ void Engine::prepare(double hostSampleRate)
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
 
     chorus.prepare((float) internalRate);
+    bbdChorus.prepare((float) internalRate);
     fxChorus.prepare((float) internalRate);
     phaser.prepare((float) internalRate);
     reverb.prepare((float) internalRate);
@@ -106,6 +107,7 @@ void Engine::reset()
     for (auto& l : modLfos)
         l.reset(0.0f);
     chorus.reset();
+    bbdChorus.reset();
     fxChorus.reset();
     phaser.reset();
     reverb.reset();
@@ -1431,9 +1433,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     mixL += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
     mixR += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
 
-    // Provisional delay-line chorus/tremolo behavior, not a circuit-calibrated BBD model.
-    const auto ch = chorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
-                                   global.chorusOn, global.chorusTremolo);
+    // Legacy: provisional generic delay-line chorus/tremolo. Source policies: OE2 BBD
+    // delay path (docs/BBD_CHORUS_MODEL.md); its inferred constants are not calibrated.
+    const auto ch = usesSourceModels(global.renderPolicy)
+        ? bbdChorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
+                            global.chorusOn, global.chorusTremolo)
+        : chorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
+                         global.chorusOn, global.chorusTremolo);
     mixL = ch.l;
     mixR = ch.r;
 

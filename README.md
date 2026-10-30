@@ -105,7 +105,7 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | EXP / EXP-WAH, output HIGH/LOW | Circuit-derived networks in source modes; calibration inferred | Stateful four-capacitor PRA graph, always-clocked dry/wet histories and source-verified routing; optical/trim/loading profile inferred. Source-model HIGH/LOW uses the loaded 10µF/resistor graph with inferred source/load values; GENERAL is diagnostic-only. Legacy wah and scalar output retained in Legacy performance |
 | SUB, ring, ribbon | Approximate | Six original SUB functions (0.7-60 Hz), optional mono EXT modulation bus, frequency-envelope ring with documented calibration anchors, relative ribbon (~1 octave) |
 | Tone selectors, memories, presets | All 22 source/hypothesis tabs integrated / device laws inferred | 14 positions per rank, 4 independent memory banks (104 automatable controls), PANEL. Source modes use 7 complete matrix columns and 15 columns completed by explicit hypotheses for 25 unresolved cells; nominal device/touch laws remain inferred. The separate 22 legacy library studies are retained, not silently replaced |
-| Chorus / tremolo, output stage | Approximate / circuit-derived | Generic delay/tremolo remain. Both source modes use physical output-coupling states; legacy retains 10Hz DC block and soft clip. Both retain the 255-tap decimator (63 samples latency) |
+| Chorus / tremolo, output stage | Approximate / circuit-derived | Both source modes run chorus mode through an OE2 BBD delay path with inferred clock range, level and polarity ([model](docs/BBD_CHORUS_MODEL.md)); legacy and tremolo keep the generic laws. Both source modes use physical output-coupling states; legacy retains 10Hz DC block and soft clip. Both retain the 255-tap decimator (63 samples latency) |
 | Voice variation | Approximate | Per-voice tuning and pan scatter, slow drift, noise floor: arbitrary, not measured tolerances |
 | Host / plugin layer | Implemented | 245 append-only host parameters, state migration, safe preset saving, MPE discovery, Panic and read-only output metering; current validator outcomes are disclosed below |
 
@@ -282,6 +282,7 @@ Headless assets:
 ```text
 src/core/Params.h               parameter table shared by engine, UI, presets and tests (append-only)
 src/core/Dsp.h                  oscillator, filters, envelopes, LFO, chorus, phaser, reverb, decimator
+src/core/BbdChorus.h            OE2 BBD chorus for the source policies
 src/core/Engine.*               voice allocation, dual-rank engine, modulation, ring, wah, FX, arp, output
 src/core/PerformanceControls.h  keyboard-contour weights, footswitch gate, wah and output-switch constants
 src/core/HardwareControl.h      offline passive preset resistor-matrix model (does not drive audio)
