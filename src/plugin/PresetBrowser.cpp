@@ -20,6 +20,7 @@ struct PresetSignature
 {
     static constexpr int kEnvPoints = 56;
     static constexpr int kRadarAxes = 6;
+    static constexpr int kSpectrumBars = 28;
 
     struct Channel
     {
@@ -29,6 +30,9 @@ struct PresetSignature
         bool hpfOn = true, lpfOn = true;
         float saw = 0.0f, pulse = 0.0f, sine = 0.0f, noise = 0.0f;
         std::array<float, kEnvPoints> env {};   // amplitude on the shared time axis
+        // End of attack, decay and hold, and end of release, as fractions of
+        // the shared time axis (used for the labels under the envelope scope).
+        float markA = 0.0f, markD = 0.0f, markH = 0.0f, markEnd = 1.0f;
     };
 
     std::array<Channel, 2> ch;
@@ -38,6 +42,14 @@ struct PresetSignature
     float sustain = 0.0f, decay = 0.0f, chorus = 0.0f;
     int dominant = 0;
     std::uint32_t styles = 0;
+    // Harmonic fingerprint: the oscillator mix of both channels pushed through
+    // their filters, harmonics 1..28 of 220 Hz on a 40 dB scale, 0..1. This is
+    // the thumbnail on every result card, so patches that share an envelope
+    // still look different.
+    std::array<float, kSpectrumBars> spectrum {};
+    float layerOne = 0.5f;                  // share of the output carried by channel I
+    float detune = 0.0f, lfo = 0.0f, pwm = 0.0f, ring = 0.0f;
+    bool arp = false;
 };
 
 namespace
@@ -65,12 +77,25 @@ enum StyleTag : int { styleSwell, stylePercussive, styleBright, styleWarm, style
 const char* const kStyleNames[styleCount] = { "SWELL", "PERCUSSIVE", "BRIGHT", "WARM",
                                               "RESONANT", "MOVING", "WIDE", "LONG TAIL" };
 
+// One lamp colour per style so the chips, the card tags and the inspector agree.
+constexpr std::uint32_t kStyleColours[styleCount] = {
+    0xff5c9be0,   // SWELL       blue
+    0xffe8654f,   // PERCUSSIVE  coral
+    0xfff0dc5a,   // BRIGHT      yellow
+    0xffdb8a3a,   // WARM        orange
+    0xffd65cc0,   // RESONANT    magenta
+    0xff58c27a,   // MOVING      green
+    0xff4cc6c9,   // WIDE        cyan
+    0xff9a7ae6 }; // LONG TAIL   violet
+
 float unit01(float x) { return x < 0.0f ? 0.0f : (x > 1.0f ? 1.0f : x); }
 
 float logNorm(float t) // 1 ms .. 20 s onto 0..1
 {
     return unit01(std::log10(std::max(t, 0.001f) / 0.001f) / std::log10(20000.0f));
 }
+
+float filterMagnitudeDb(const PresetSignature::Channel& ch, float hz);
 
 PresetSignature computeSignature(const cs80::ParamValues& v)
 {
@@ -115,6 +140,10 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
     for (int c = 0; c < 2; ++c)
     {
         auto& ch = s.ch[(size_t) c];
+        ch.markA = segA[c] / axis;
+        ch.markD = (segA[c] + segD[c]) / axis;
+        ch.markH = (segA[c] + segD[c] + hold) / axis;
+        ch.markEnd = total[c] / axis;
         for (int i = 0; i < points; ++i)
         {
             const float x = axis * (float) i / (float) (points - 1);
@@ -169,6 +198,37 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
                         + 0.20f * std::min(v[P_detune] / 30.0f, 1.0f);
     s.radar = { unit01(brightness), unit01(s.resonance), logNorm(s.attack),
                 unit01(0.55f * s.sustain + 0.45f * logNorm(s.release)), unit01(motion), unit01(width) };
+    s.layerOne = weight[0];
+    s.detune = v[P_detune];
+    s.lfo = lfo;
+    s.pwm = pwm;
+    s.ring = ring;
+    s.arp = v[P_arpOn] >= 0.5f;
+
+    {
+        constexpr float f0 = 220.0f;
+        std::array<float, PresetSignature::kSpectrumBars> sum {};
+        float peak = 1.0e-6f;
+        for (int c = 0; c < 2; ++c)
+        {
+            const auto& ch = s.ch[(size_t) c];
+            const float pw = clampValue(v[chParam(c, CP_pw)], 0.06f, 0.94f);
+            for (int k = 1; k <= PresetSignature::kSpectrumBars; ++k)
+            {
+                const float kf = (float) k;
+                float amp = ch.saw / kf + ch.pulse * std::abs(std::sin(juce::MathConstants<float>::pi * kf * pw)) / kf
+                            + ch.noise * 0.03f;
+                if (k == 1)
+                    amp += ch.sine;
+                const float magnitude = std::pow(10.0f, filterMagnitudeDb(ch, f0 * kf) / 20.0f);
+                sum[(size_t) k - 1] += ch.gain * amp * magnitude;
+            }
+        }
+        for (const float value : sum)
+            peak = std::max(peak, value);
+        for (size_t k = 0; k < sum.size(); ++k)
+            s.spectrum[k] = unit01(1.0f + 20.0f * std::log10(std::max(sum[k] / peak, 1.0e-4f)) / 40.0f);
+    }
 
     const auto tag = [&](StyleTag t, bool on) { if (on) s.styles |= 1u << (unsigned) t; };
     tag(styleSwell, s.attack >= 0.45f);
@@ -261,15 +321,80 @@ constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY PR
 constexpr const char* kSortNames[] = { "BANK", "A-Z", "Z-A", "TYPE", "NEW" };
 constexpr const char* kSortTitles[] = { "Sort in bank order", "Sort A to Z", "Sort Z to A",
                                         "Sort by instrument type", "Sort newest user patches first" };
+// Arrow on the lit sort segment: +1 ascending (or oldest first), -1 descending.
+constexpr int kSortDirection[] = { 1, 1, -1, 1, -1 };
 constexpr int kScopeCount = 5;
 constexpr int kSortCount = 5;
 
-// Session-only favourites shared by every library window of this process.
-// Deliberately not persisted: the self-test must never write files.
+// Favourites, shared by every library window of this process. Keys are "F:" +
+// factory name or "U:" + user file name. They are kept in a plain text file,
+// one key per line, next to the user presets (CS80Reference/favourites.txt in
+// the application-data folder; CS80_FAVOURITES_FILE overrides the path for
+// portable installs and tests). The file is only read when the library opens
+// and only written when a star is toggled, so the UI self-test never writes.
+// Every file operation is best effort: a read-only or missing folder just
+// means favourites last for the session.
 juce::StringArray& favouriteKeys()
 {
     static juce::StringArray keys;
     return keys;
+}
+
+juce::File favouritesFile()
+{
+    const auto override = juce::SystemStats::getEnvironmentVariable("CS80_FAVOURITES_FILE", {});
+    if (override.isNotEmpty())
+        return juce::File(override);
+    return juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory)
+        .getChildFile("CS80Reference").getChildFile("favourites.txt");
+}
+
+// Remembers the file state we last saw, so another plugin instance's edits are
+// picked up on the next open but our own writes are not re-read.
+struct FavouritesStamp
+{
+    juce::String path;
+    juce::Time modified;
+};
+
+FavouritesStamp& favouritesStamp()
+{
+    static FavouritesStamp stamp;
+    return stamp;
+}
+
+void loadFavourites()
+{
+    const auto file = favouritesFile();
+    if (! file.existsAsFile())
+        return;
+    auto& stamp = favouritesStamp();
+    const auto modified = file.getLastModificationTime();
+    if (stamp.path == file.getFullPathName() && stamp.modified == modified)
+        return;
+    stamp.path = file.getFullPathName();
+    stamp.modified = modified;
+    juce::StringArray lines;
+    lines.addLines(file.loadFileAsString());
+    favouriteKeys().clear();
+    for (const auto& line : lines)
+        if (line.trim().isNotEmpty())
+            favouriteKeys().addIfNotAlreadyThere(line.trim());
+}
+
+void saveFavourites()
+{
+    const auto file = favouritesFile();
+    const auto folder = file.getParentDirectory();
+    if (! folder.exists() && folder.createDirectory().failed())
+        return;
+    const auto text = favouriteKeys().joinIntoString("\n") + (favouriteKeys().isEmpty() ? "" : "\n");
+    if (file.replaceWithText(text))
+    {
+        auto& stamp = favouritesStamp();
+        stamp.path = file.getFullPathName();
+        stamp.modified = file.getLastModificationTime();
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -346,6 +471,33 @@ juce::String formatTime(float seconds)
     if (seconds < 1.0f)
         return juce::String(juce::roundToInt(seconds * 1000.0f / 10.0f) * 10) + " ms";
     return juce::String(seconds, seconds < 10.0f ? 2 : 1) + " s";
+}
+
+// Short forms for the result-card stat line: "850", "3.6k", "250ms", "1.2s".
+juce::String shortHertz(float hz)
+{
+    if (hz >= 10000.0f)
+        return juce::String(juce::roundToInt(hz / 1000.0f)) + "k";
+    if (hz >= 1000.0f)
+        return juce::String(hz / 1000.0f, 1) + "k";
+    return juce::String(juce::roundToInt(hz));
+}
+
+juce::String shortTime(float seconds)
+{
+    if (seconds < 0.995f)
+        return juce::String(juce::roundToInt(seconds * 1000.0f)) + "ms";
+    return juce::String(seconds, seconds < 9.95f ? 1 : 0) + "s";
+}
+
+juce::String waveSummary(const PresetSignature::Channel& ch, bool shortForm)
+{
+    juce::StringArray waves;
+    if (ch.saw > 0.5f) waves.add("SAW");
+    if (ch.pulse > 0.5f) waves.add(shortForm ? "PUL" : "PULSE");
+    if (ch.sine > 0.05f) waves.add(shortForm ? "SIN" : "SINE");
+    if (ch.noise > 0.01f) waves.add(shortForm ? "NOI" : "NOISE");
+    return waves.isEmpty() ? juce::String("--") : waves.joinIntoString(shortForm ? "+" : " + ");
 }
 
 juce::String formatHertz(float hz)
@@ -434,6 +586,22 @@ float drawPill(Graphics& g, float x, float y, float height, const juce::String& 
     return w;
 }
 
+// Small style tag used on the result cards (9 px type, 14 px high).
+float drawTag(Graphics& g, float x, float y, const juce::String& text, Colour colour, bool lit)
+{
+    const auto font = tracked(uiFont(9.0f, juce::Font::bold), 0.08f);
+    const float w = textWidth(font, text) + 14.0f;
+    const Rectangle<float> r(x, y, w, 15.0f);
+    g.setColour(colour.withAlpha(lit ? 0.24f : 0.13f));
+    g.fillRoundedRectangle(r, 3.5f);
+    g.setColour(colour.withAlpha(lit ? 0.85f : 0.5f));
+    g.drawRoundedRectangle(r.reduced(0.5f), 3.5f, 1.0f);
+    g.setColour(colour.brighter(lit ? 0.5f : 0.35f));
+    g.setFont(font);
+    g.drawText(text, r, juce::Justification::centred, false);
+    return w;
+}
+
 void fillStar(Graphics& g, juce::Point<float> c, float radius, Colour fill, bool filled, float lineWidth)
 {
     juce::Path star;
@@ -450,8 +618,13 @@ void fillStar(Graphics& g, juce::Point<float> c, float radius, Colour fill, bool
     }
 }
 
-// Envelope sparkline in a tiny backlit window (result rows).
-void drawMiniSignature(Graphics& g, Rectangle<float> r, const PresetSignature& sig, bool lit)
+const Colour kChannelOne(0xffffc24d);
+const Colour kChannelTwo(0xffe9dfc2);
+
+// Result-card thumbnail: a tiny backlit window showing the patch's harmonic
+// fingerprint (spectrum after the filters) and, beneath it, how loud channels
+// I and II are. Presets that share an envelope still differ here.
+void drawThumbnail(Graphics& g, Rectangle<float> r, const PresetSignature& sig, bool lit)
 {
     g.setColour(Colour(0xff080a09));
     g.fillRoundedRectangle(r, 3.0f);
@@ -461,52 +634,44 @@ void drawMiniSignature(Graphics& g, Rectangle<float> r, const PresetSignature& s
     g.setColour(juce::Colours::white.withAlpha(0.07f));
     g.drawLine(r.getX() + 3.0f, r.getBottom() + 0.5f, r.getRight() - 3.0f, r.getBottom() + 0.5f, 1.0f);
 
-    const auto outer = r.reduced(5.0f, 6.0f);
-    const auto p = outer.withTrimmedBottom(6.0f);
+    constexpr int bars = PresetSignature::kSpectrumBars;
+    const auto inner = r.reduced(6.0f, 5.0f);
+    const auto plot = inner.withTrimmedBottom(13.0f);
     g.setColour(amber.withAlpha(0.07f));
-    for (int i = 1; i < 4; ++i)
-        g.drawVerticalLine(juce::roundToInt(p.getX() + p.getWidth() * (float) i / 4.0f), p.getY(), p.getBottom());
-    g.drawHorizontalLine(juce::roundToInt(p.getCentreY()), p.getX(), p.getRight());
-    g.setColour(amber.withAlpha(0.22f));
-    g.drawHorizontalLine(juce::roundToInt(p.getBottom()), p.getX(), p.getRight());
+    g.drawHorizontalLine(juce::roundToInt(plot.getCentreY()), plot.getX(), plot.getRight());
+    g.setColour(amber.withAlpha(0.25f));
+    g.drawHorizontalLine(juce::roundToInt(plot.getBottom()), plot.getX(), plot.getRight());
 
-    constexpr int points = PresetSignature::kEnvPoints;
-    for (int pass = 0; pass < 2; ++pass)
+    const float pitch = plot.getWidth() / (float) bars;
+    const float barW = std::max(1.6f, pitch * 0.66f);
+    for (int k = 0; k < bars; ++k)
     {
-        const int c = pass == 0 ? 1 - sig.dominant : sig.dominant;
-        const auto& env = sig.ch[(size_t) c].env;
-        juce::Path line;
-        for (int i = 0; i < points; ++i)
-        {
-            const float x = p.getX() + p.getWidth() * (float) i / (float) (points - 1);
-            const float y = p.getBottom() - env[(size_t) i] * p.getHeight();
-            if (i == 0) line.startNewSubPath(x, y); else line.lineTo(x, y);
-        }
-        if (pass == 0)
-        {
-            g.setColour(ivory.withAlpha(0.42f));
-            g.strokePath(line, juce::PathStrokeType(1.0f));
-            continue;
-        }
-        juce::Path area(line);
-        area.lineTo(p.getRight(), p.getBottom());
-        area.lineTo(p.getX(), p.getBottom());
-        area.closeSubPath();
-        g.setGradientFill(juce::ColourGradient(amber.withAlpha(lit ? 0.70f : 0.52f), 0.0f, p.getY(),
-                                               amber.withAlpha(0.05f), 0.0f, p.getBottom(), false));
-        g.fillPath(area);
-        g.setColour(lit ? amberBright : amberBright.withAlpha(0.9f));
-        g.strokePath(line, juce::PathStrokeType(1.3f));
+        const float h = std::max(1.5f, sig.spectrum[(size_t) k] * plot.getHeight());
+        const float x = plot.getX() + pitch * (float) k + (pitch - barW) * 0.5f;
+        const Rectangle<float> bar(x, plot.getBottom() - h, barW, h);
+        g.setColour((lit ? amber : amber.darker(0.15f)).withAlpha(0.45f + 0.35f * sig.spectrum[(size_t) k]));
+        g.fillRect(bar);
+        g.setColour((lit ? amberBright : amber).brighter(0.2f));
+        g.fillRect(bar.withHeight(1.6f));
     }
 
-    // Tone bar under the envelope: how far the low-pass opens (40 Hz .. 18 kHz).
-    // Patches that share an envelope still differ here.
-    const Rectangle<float> bar(outer.getX(), outer.getBottom() - 2.5f, outer.getWidth(), 2.5f);
-    const float open = juce::jlimit(0.0f, 1.0f, std::log(std::max(sig.cutoff, 40.0f) / 40.0f) / std::log(18000.0f / 40.0f));
-    g.setColour(juce::Colours::white.withAlpha(0.08f));
-    g.fillRoundedRectangle(bar, 1.2f);
-    g.setColour((lit ? amberBright : amber).withAlpha(0.9f));
-    g.fillRoundedRectangle(bar.withWidth(std::max(2.5f, bar.getWidth() * open)), 1.2f);
+    // Channel level meters: I on the left, II on the right.
+    const float meterY = inner.getBottom() - 8.0f;
+    const float half = inner.getWidth() * 0.5f;
+    const auto labelFont = tracked(uiFont(8.5f, juce::Font::bold), 0.05f);
+    for (int c = 0; c < 2; ++c)
+    {
+        const float x0 = inner.getX() + half * (float) c + (c == 1 ? 4.0f : 0.0f);
+        const float labelW = c == 0 ? 6.0f : 11.0f;
+        g.setFont(labelFont);
+        g.setColour((c == 0 ? kChannelOne : kChannelTwo).withAlpha(0.9f));
+        g.drawText(c == 0 ? "I" : "II", Rectangle<float>(x0, meterY - 2.0f, labelW + 2.0f, 12.0f), juce::Justification::centredLeft, false);
+        const Rectangle<float> track(x0 + labelW + 3.0f, meterY + 1.5f, half - labelW - 12.0f, 3.5f);
+        g.setColour(juce::Colours::white.withAlpha(0.09f));
+        g.fillRoundedRectangle(track, 1.7f);
+        g.setColour((c == 0 ? kChannelOne : kChannelTwo).withAlpha(0.95f));
+        g.fillRoundedRectangle(track.withWidth(std::max(2.5f, track.getWidth() * sig.ch[(size_t) c].gain)), 1.7f);
+    }
 
     g.setColour(juce::Colours::black.withAlpha(0.85f));
     g.drawRoundedRectangle(r, 3.0f, 1.0f);
@@ -532,9 +697,6 @@ float filterMagnitudeDb(const PresetSignature::Channel& ch, float hz)
     }
     return 10.0f * std::log10(std::max(power, 1.0e-9f));
 }
-
-const Colour kChannelOne(0xffffc24d);
-const Colour kChannelTwo(0xffe9dfc2);
 
 } // namespace
 
@@ -588,9 +750,25 @@ void PlateButton::paintButton(Graphics& g, bool hover, bool down)
             g.setColour(ivory.withAlpha(0.09f));
             g.fillRoundedRectangle(area, 3.5f * u);
         }
-        g.setFont(tracked(uiFont(11.5f * u, juce::Font::bold), 0.12f));
+        const auto font = tracked(uiFont(11.5f * u, juce::Font::bold), 0.12f);
+        g.setFont(font);
         g.setColour(on ? Colour(0xff2b1b05) : ivory.withAlpha(hover ? 0.95f : 0.7f));
-        g.drawText(getButtonText(), area, juce::Justification::centred, false);
+        if (on && arrow != 0)
+        {
+            // Sort direction: a small triangle after the label of the lit segment.
+            const float tw = textWidth(font, getButtonText());
+            const float gap = 5.0f * u, aw = 7.0f * u;
+            const float x0 = area.getCentreX() - (tw + gap + aw) * 0.5f;
+            g.drawText(getButtonText(), Rectangle<float>(x0, area.getY(), tw + 2.0f * u, area.getHeight()),
+                       juce::Justification::centredLeft, false);
+            const float ax = x0 + tw + gap, ay = area.getCentreY();
+            juce::Path tri;
+            if (arrow > 0) tri.addTriangle(ax, ay + 3.0f * u, ax + aw, ay + 3.0f * u, ax + aw * 0.5f, ay - 3.5f * u);
+            else           tri.addTriangle(ax, ay - 3.0f * u, ax + aw, ay - 3.0f * u, ax + aw * 0.5f, ay + 3.5f * u);
+            g.fillPath(tri);
+        }
+        else
+            g.drawText(getButtonText(), area, juce::Justification::centred, false);
         return;
     }
 
@@ -617,15 +795,30 @@ void PlateButton::paintButton(Graphics& g, bool hover, bool down)
     {
         const auto c = bounds.getCentre();
         const float radius = std::min(bounds.getWidth(), bounds.getHeight()) * 0.30f;
-        g.setColour(juce::Colours::black.withAlpha(0.55f));
+        g.setColour(juce::Colours::black.withAlpha(enabled ? 0.55f : 0.30f));
         g.fillEllipse(c.x - radius, c.y - radius + u, radius * 2.0f, radius * 2.0f);
-        g.setGradientFill(juce::ColourGradient(Colour(hover ? 0xff5c564b : 0xff45413a), c.x, c.y - radius,
-                                               Colour(0xff201e1b), c.x, c.y + radius, false));
+        g.setGradientFill(juce::ColourGradient(Colour(! enabled ? 0xff2c2a26 : (hover ? 0xff5c564b : 0xff45413a)), c.x, c.y - radius,
+                                               Colour(enabled ? 0xff201e1b : 0xff1a1917), c.x, c.y + radius, false));
         g.fillEllipse(c.x - radius, c.y - radius, radius * 2.0f, radius * 2.0f);
         const float k = radius * 0.42f;
-        g.setColour(hover ? amberBright : ivory.withAlpha(0.8f));
+        g.setColour(! enabled ? ivory.withAlpha(0.28f) : (hover ? amberBright : ivory.withAlpha(0.8f)));
         g.drawLine(c.x - k, c.y - k, c.x + k, c.y + k, 1.6f * u);
         g.drawLine(c.x - k, c.y + k, c.x + k, c.y - k, 1.6f * u);
+        return;
+    }
+
+    // A disabled plain key sits flush with the plate instead of standing proud,
+    // so CLEAR ALL FILTERS reads as dead until a filter is active.
+    if (! enabled && kind == Kind::standard)
+    {
+        const auto flat = bounds.reduced(1.5f * u, 1.5f * u).withTrimmedBottom(2.4f * u);
+        g.setColour(juce::Colours::black.withAlpha(0.30f));
+        g.fillRoundedRectangle(flat, 4.0f * u);
+        g.setColour(juce::Colours::white.withAlpha(0.05f));
+        g.drawRoundedRectangle(flat, 4.0f * u, 1.0f);
+        g.setFont(tracked(uiFont(12.5f * u, juce::Font::bold), 0.14f));
+        g.setColour(ivory.withAlpha(0.26f));
+        g.drawText(getButtonText(), flat, juce::Justification::centred, false);
         return;
     }
 
@@ -747,13 +940,17 @@ void ChipButton::paintButton(Graphics& g, bool hover, bool down)
     g.fillRoundedRectangle(b, radius);
     if (on)
     {
-        g.setGradientFill(juce::ColourGradient(accentColour.withAlpha(0.34f), b.getX(), b.getY(),
-                                               accentColour.withAlpha(0.10f), b.getX(), b.getBottom(), false));
+        // Selected: a lit gold key with a tick, readable at a glance even
+        // among a dozen coloured tabs.
+        g.setColour(Colour(0xffffc24d).withAlpha(0.22f));
+        g.drawRoundedRectangle(b.expanded(1.4f * u), radius + u, 1.6f * u);
+        g.setGradientFill(juce::ColourGradient(Colour(0xfff1c35e), b.getX(), b.getY(),
+                                               Colour(0xffbb8424), b.getX(), b.getBottom(), false));
         g.fillRoundedRectangle(b, radius);
-        g.setColour(accentColour.withAlpha(0.28f));
-        g.drawRoundedRectangle(b.expanded(1.3f * u), radius + u, 1.4f * u);
-        g.setColour(accentColour.withAlpha(0.95f));
-        g.drawRoundedRectangle(b, radius, 1.2f * u);
+        g.setColour(juce::Colours::white.withAlpha(0.42f));
+        g.drawLine(b.getX() + radius, b.getY() + 0.9f * u, b.getRight() - radius, b.getY() + 0.9f * u, 1.0f);
+        g.setColour(juce::Colours::black.withAlpha(0.5f));
+        g.drawRoundedRectangle(b, radius, 1.0f);
     }
     else
     {
@@ -764,31 +961,30 @@ void ChipButton::paintButton(Graphics& g, bool hover, bool down)
     }
 
     const float lampX = b.getX() + 12.0f * u, lampY = b.getCentreY();
-    if (starGlyph)
+    const Colour darkInk(0xff2b1b05);
+    if (on && ! starGlyph)
     {
-        if (on)
-        {
-            g.setColour(accentColour.withAlpha(0.28f));
-            g.fillEllipse(lampX - 8.0f * u, lampY - 8.0f * u, 16.0f * u, 16.0f * u);
-        }
-        fillStar(g, { lampX, lampY }, 5.6f * u, on ? accentColour.brighter(0.5f) : accentColour.withAlpha(faded ? 0.3f : 0.7f),
-                 on, 1.2f * u);
+        juce::Path tick;
+        tick.startNewSubPath(lampX - 4.6f * u, lampY + 0.2f * u);
+        tick.lineTo(lampX - 1.4f * u, lampY + 3.6f * u);
+        tick.lineTo(lampX + 4.8f * u, lampY - 3.8f * u);
+        g.setColour(darkInk);
+        g.strokePath(tick, juce::PathStrokeType(2.2f * u, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+    }
+    else if (starGlyph)
+    {
+        fillStar(g, { lampX, lampY }, 6.0f * u, on ? darkInk : accentColour.withAlpha(faded ? 0.3f : 0.7f), on, 1.2f * u);
     }
     else
     {
-        if (on)
-        {
-            g.setColour(accentColour.withAlpha(0.30f));
-            g.fillEllipse(lampX - 7.0f * u, lampY - 7.0f * u, 14.0f * u, 14.0f * u);
-        }
         g.setColour(juce::Colours::black.withAlpha(0.7f));
-        g.fillEllipse(lampX - 3.9f * u, lampY - 3.4f * u, 7.8f * u, 7.8f * u);
-        g.setColour(on ? accentColour.brighter(0.55f) : accentColour.withAlpha(faded ? 0.22f : 0.5f).darker(0.2f));
-        g.fillEllipse(lampX - 3.3f * u, lampY - 3.6f * u, 6.6f * u, 6.6f * u);
-        if (on)
+        g.fillEllipse(lampX - 4.4f * u, lampY - 3.9f * u, 8.8f * u, 8.8f * u);
+        g.setColour(accentColour.withAlpha(faded ? 0.25f : 0.95f));
+        g.fillEllipse(lampX - 3.7f * u, lampY - 4.1f * u, 7.4f * u, 7.4f * u);
+        if (! faded)
         {
-            g.setColour(juce::Colours::white.withAlpha(0.7f));
-            g.fillEllipse(lampX - 1.6f * u, lampY - 2.6f * u, 2.4f * u, 2.0f * u);
+            g.setColour(juce::Colours::white.withAlpha(0.45f));
+            g.fillEllipse(lampX - 1.7f * u, lampY - 3.0f * u, 2.6f * u, 2.2f * u);
         }
     }
 
@@ -797,15 +993,18 @@ void ChipButton::paintButton(Graphics& g, bool hover, bool down)
     const auto countFont = monoFont(10.0f * u, juce::Font::bold);
     const float countWidth = textWidth(countFont, countText);
     g.setFont(countFont);
-    g.setColour(on ? accentColour.brighter(0.4f) : ivoryDim.withAlpha(faded ? 0.35f : 0.8f));
+    g.setColour(on ? Colour(0xff4a3008) : ivoryDim.withAlpha(faded ? 0.35f : 0.8f));
     g.drawText(countText, text.removeFromRight(countWidth + 2.0f * u), juce::Justification::centredRight, false);
     text.removeFromRight(4.0f * u);
     const auto label = getButtonText();
     const auto font = fitFont(tracked(uiFont(10.5f * u, juce::Font::bold), 0.1f), label, text.getWidth());
     g.setFont(font);
-    g.setColour(juce::Colours::black.withAlpha(0.6f));
-    g.drawText(label, text.translated(0.0f, 1.0f), juce::Justification::centredLeft, false);
-    g.setColour(on ? accentColour.brighter(0.65f) : ivory.withAlpha(faded ? 0.38f : 0.9f));
+    if (! on)
+    {
+        g.setColour(juce::Colours::black.withAlpha(0.6f));
+        g.drawText(label, text.translated(0.0f, 1.0f), juce::Justification::centredLeft, false);
+    }
+    g.setColour(on ? darkInk : ivory.withAlpha(faded ? 0.38f : 0.9f));
     g.drawText(label, text, juce::Justification::centredLeft, false);
 }
 
@@ -905,6 +1104,32 @@ public:
         if (juce::ListBox::keyPressed(key))
             return true;
         return onExtraKey != nullptr && onExtraKey(key);
+    }
+
+    // Soft fades at the top and bottom edge say "more above / more below"
+    // without a cut-off card. Two small gradients, only while scrollable.
+    void paintOverChildren(Graphics& g) override
+    {
+        juce::ListBox::paintOverChildren(g);
+        auto* viewport = getViewport();
+        if (viewport == nullptr || viewport->getViewedComponent() == nullptr)
+            return;
+        const int position = viewport->getViewPositionY();
+        const int total = viewport->getViewedComponent()->getHeight();
+        const int visible = viewport->getMaximumVisibleHeight();
+        const float fade = (float) std::max(10, getRowHeight() / 5);
+        const Colour well(0xff0b0a09);
+        if (position > 0)
+        {
+            g.setGradientFill(juce::ColourGradient(well.withAlpha(0.92f), 0.0f, 0.0f, well.withAlpha(0.0f), 0.0f, fade, false));
+            g.fillRect(0.0f, 0.0f, (float) getWidth(), fade);
+        }
+        if (position + visible < total - 1)
+        {
+            g.setGradientFill(juce::ColourGradient(well.withAlpha(0.0f), 0.0f, (float) getHeight() - fade,
+                                                   well.withAlpha(0.92f), 0.0f, (float) getHeight(), false));
+            g.fillRect(0.0f, (float) getHeight() - fade, (float) getWidth(), fade);
+        }
     }
 
     void focusGained(juce::Component::FocusChangeType cause) override
@@ -1112,10 +1337,11 @@ private:
         g.drawText(shown + "/" + total, window, juce::Justification::centred, false);
         caption(g, "PATCHES SHOWN", { window.getRight() + 12.0f, window.getY(), 130.0f, window.getHeight() });
 
-        const auto hint = juce::String("UP / DOWN BROWSE   ENTER LOAD   SPACE FAVOURITE   DEL REMOVE USER");
-        legend(g, hint, { window.getRight() + 150.0f, window.getY(), L.strip.getRight() - window.getRight() - 150.0f,
-                          window.getHeight() },
-               tracked(uiFont(8.5f, juce::Font::bold), 0.1f), ivoryDim.withAlpha(0.75f), juce::Justification::centredRight, true);
+        const auto hint = juce::String("UP DOWN  BROWSE      ENTER  LOAD      SPACE  STAR      DEL  REMOVE");
+        const float hintX = window.getRight() + 140.0f, hintW = L.strip.getRight() - hintX;
+        legend(g, hint, { hintX, window.getY(), hintW, window.getHeight() },
+               fitFont(tracked(uiFont(10.0f, juce::Font::bold), 0.08f), hint, hintW), ivoryDim.withAlpha(0.95f),
+               juce::Justification::centredRight, true);
     }
 
     void paintFilterCaptions(Graphics& g)
@@ -1127,7 +1353,7 @@ private:
             caption(g, text, { x, y, 160.0f, 14.0f });
             if (hint.isNotEmpty())
                 legend(g, hint, { x + w - 90.0f, y, 90.0f, 14.0f },
-                       tracked(uiFont(8.5f, juce::Font::bold), 0.12f), ivoryDim.withAlpha(0.7f),
+                       tracked(uiFont(9.5f, juce::Font::bold), 0.12f), ivoryDim.withAlpha(0.85f),
                        juce::Justification::centredRight);
             etchLine(g, x, y + 17.0f, x + w, y + 17.0f, 0.35f);
         };
@@ -1249,27 +1475,59 @@ private:
             legend(g, "NO STYLE TAGS", { px, D.getY() + 122.0f, 160.0f, 20.0f },
                    tracked(uiFont(9.5f, juce::Font::bold), 0.12f), ivoryDim.withAlpha(0.6f));
 
+        // Origin strip: fills the band under the description with facts about
+        // where the patch lives, so the inspector never shows dead space.
+        paintOrigin(g, { x, D.getY() + 190.0f, w, 26.0f }, *e);
+
         // Signature
-        etchLine(g, x, D.getY() + 214.0f, x + w, D.getY() + 214.0f, 0.5f);
-        caption(g, "SIGNATURE", { x, D.getY() + 222.0f, 140.0f, 14.0f });
-        legend(g, "DRAWN FROM THE PATCH PARAMETERS", { x + w - 220.0f, D.getY() + 222.0f, 220.0f, 14.0f },
-               tracked(uiFont(8.5f, juce::Font::bold), 0.1f), ivoryDim.withAlpha(0.7f), juce::Justification::centredRight);
+        etchLine(g, x, D.getY() + 226.0f, x + w, D.getY() + 226.0f, 0.5f);
+        caption(g, "SIGNATURE", { x, D.getY() + 232.0f, 140.0f, 14.0f });
+        legend(g, "DRAWN FROM THE PATCH PARAMETERS", { x + w - 240.0f, D.getY() + 232.0f, 240.0f, 14.0f },
+               tracked(uiFont(9.5f, juce::Font::bold), 0.1f), ivoryDim.withAlpha(0.85f), juce::Justification::centredRight);
 
         if (e->signature == nullptr)
             return;
         const auto& sig = *e->signature;
-        paintEnvelopeScope(g, { x, D.getY() + 242.0f, w, 96.0f }, sig);
-        paintFilterScope(g, { x, D.getY() + 344.0f, w, 96.0f }, sig);
-        paintRadar(g, { x, D.getY() + 446.0f, 164.0f, 148.0f }, sig);
-        paintFacts(g, { x + 164.0f + 16.0f, D.getY() + 446.0f, w - 164.0f - 16.0f, 148.0f }, sig);
+        paintEnvelopeScope(g, { x, D.getY() + 252.0f, w, 106.0f }, sig);
+        paintFilterScope(g, { x, D.getY() + 362.0f, w, 88.0f }, sig);
+        paintRadar(g, { x, D.getY() + 456.0f, 188.0f, 144.0f }, sig);
+        paintFacts(g, { x + 188.0f + 14.0f, D.getY() + 456.0f, w - 188.0f - 14.0f, 144.0f }, sig);
 
         // Position counter between PREV and NEXT.
         const auto counter = (owner.selectedFilteredRow >= 0 ? juce::String(owner.selectedFilteredRow + 1) : juce::String("--"))
                              + " / " + juce::String((int) owner.filtered.size());
-        legend(g, counter, { x + 116.0f, D.getY() + 602.0f, w - 232.0f, 38.0f }, monoFont(15.0f), amberBright.withAlpha(0.95f),
+        legend(g, counter, { x + 116.0f, D.getY() + 608.0f, w - 232.0f, 36.0f }, monoFont(15.0f), amberBright.withAlpha(0.95f),
                juce::Justification::centred);
 
         caption(g, "SAVE CURRENT SOUND AS", { x, D.getY() + 706.0f, w, 14.0f });
+    }
+
+    // Three label/value cells: slot, origin, and either the save date or the layer balance.
+    static void paintOrigin(Graphics& g, Rectangle<float> r, const Entry& e)
+    {
+        const juce::String origin = e.isUser ? "USER FILE" : (e.category == "Hardware Studies" ? "HARDWARE STUDY" : "FACTORY PROGRAM");
+        juce::String thirdName = "LAYERS", thirdValue = "--";
+        if (e.isUser && e.modified > 0)
+        {
+            thirdName = "SAVED";
+            thirdValue = juce::Time(e.modified).toString(true, false).toUpperCase();
+        }
+        else if (e.signature != nullptr)
+        {
+            const int one = juce::roundToInt(e.signature->layerOne * 100.0f);
+            thirdValue = one >= 97 ? juce::String("I ONLY") : (one <= 3 ? juce::String("II ONLY")
+                                                                       : "I " + juce::String(one) + "  II " + juce::String(100 - one));
+        }
+        const struct { juce::String name, value; float width; } cells[] = {
+            { "SLOT", e.slot, 62.0f }, { "ORIGIN", origin, 138.0f }, { thirdName, thirdValue, r.getWidth() - 200.0f } };
+        float x = r.getX();
+        for (const auto& cell : cells)
+        {
+            caption(g, cell.name, { x, r.getY(), cell.width, 11.0f }, juce::Justification::centredLeft, 0.8f);
+            legend(g, cell.value, { x, r.getY() + 11.0f, cell.width - 6.0f, 16.0f }, monoFont(11.5f), ivory,
+                   juce::Justification::centredLeft, true);
+            x += cell.width;
+        }
     }
 
     static void scopeFrame(Graphics& g, Rectangle<float> r, const juce::String& title, const PresetSignature& sig,
@@ -1306,7 +1564,7 @@ private:
         for (int i = 0; i < points; ++i)
             diff = std::max(diff, std::abs(sig.ch[0].env[(size_t) i] - sig.ch[1].env[(size_t) i]));
         scopeFrame(g, r, "AMP ENVELOPE", sig, diff < 0.02f);
-        const auto p = Rectangle<float>(r.getX() + 12.0f, r.getY() + 26.0f, r.getWidth() - 24.0f, r.getHeight() - 36.0f);
+        const auto p = Rectangle<float>(r.getX() + 12.0f, r.getY() + 24.0f, r.getWidth() - 24.0f, r.getHeight() - 24.0f - 22.0f);
         g.setColour(amber.withAlpha(0.07f));
         for (int i = 1; i < 6; ++i)
             g.drawVerticalLine(juce::roundToInt(p.getX() + p.getWidth() * (float) i / 6.0f), p.getY(), p.getBottom());
@@ -1338,6 +1596,36 @@ private:
             g.setColour(colour.withAlpha(c == 0 ? 1.0f : 0.8f));
             g.strokePath(line, juce::PathStrokeType(c == 0 ? 1.7f : 1.3f));
         }
+
+        // Time axis for the louder channel: A, D, S and R segments with their
+        // settings. The axis is compressed (log-like), so ticks sit at the
+        // segment boundaries rather than at even seconds.
+        const auto& ch = sig.ch[(size_t) sig.dominant];
+        const float edges[5] = { 0.0f, ch.markA, ch.markD, ch.markH, ch.markEnd };
+        const juce::String names[4] = { "A " + shortTime(ch.attack), "D " + shortTime(ch.decay),
+                                        "S " + juce::String(juce::roundToInt(ch.sustain * 100.0f)) + "%",
+                                        "R " + shortTime(ch.release) };
+        const auto font = tracked(uiFont(9.5f, juce::Font::bold), 0.04f);
+        const float axisY = p.getBottom() + 3.0f;
+        float lastRight = p.getX() - 100.0f;
+        for (int i = 0; i < 5; ++i)
+        {
+            const float tx = p.getX() + p.getWidth() * edges[i];
+            g.setColour(amber.withAlpha(0.55f));
+            g.drawVerticalLine(juce::roundToInt(tx), p.getBottom(), p.getBottom() + 4.0f);
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            const float x0 = p.getX() + p.getWidth() * edges[i], x1 = p.getX() + p.getWidth() * edges[i + 1];
+            const float tw = textWidth(font, names[i]);
+            const float cx = (x0 + x1) * 0.5f;
+            const float left = cx - tw * 0.5f;
+            if (x1 - x0 < tw + 4.0f || left < lastRight + 6.0f)
+                continue;
+            legend(g, names[i], { left - 2.0f, axisY + 3.0f, tw + 6.0f, 13.0f }, font, ivoryDim.withAlpha(0.95f),
+                   juce::Justification::centred);
+            lastRight = left + tw;
+        }
     }
 
     static void paintFilterScope(Graphics& g, Rectangle<float> r, const PresetSignature& sig)
@@ -1354,7 +1642,7 @@ private:
         {
             return p.getY() + p.getHeight() * (dbTop - juce::jlimit(dbBottom, dbTop, db)) / (dbTop - dbBottom);
         };
-        const auto labelFont = tracked(uiFont(8.0f, juce::Font::bold), 0.08f);
+        const auto labelFont = tracked(uiFont(9.5f, juce::Font::bold), 0.06f);
         const float markHz[3] = { 100.0f, 1000.0f, 10000.0f };
         const char* const markText[3] = { "100", "1k", "10k" };
         for (int m = 0; m < 3; ++m)
@@ -1362,7 +1650,7 @@ private:
             const float mx = xForHz(markHz[m]);
             g.setColour(amber.withAlpha(0.09f));
             g.drawVerticalLine(juce::roundToInt(mx), p.getY(), p.getBottom());
-            legend(g, markText[m], { mx - 14.0f, p.getBottom() + 1.0f, 28.0f, 12.0f }, labelFont,
+            legend(g, markText[m], { mx - 16.0f, p.getBottom() + 1.0f, 32.0f, 13.0f }, labelFont,
                    ivoryDim.withAlpha(0.75f), juce::Justification::centred);
         }
         g.setColour(amber.withAlpha(0.18f));
@@ -1399,28 +1687,33 @@ private:
         drawWell(g, r, 5.0f);
         constexpr int axes = PresetSignature::kRadarAxes;
         const char* const names[axes] = { "BRIGHT", "RESO", "SWELL", "HOLD", "MOTION", "WIDE" };
-        const auto c = r.getCentre().translated(0.0f, 1.0f);
-        const float radius = 38.0f;
+        caption(g, "CHARACTER", { r.getX() + 10.0f, r.getY() + 5.0f, 90.0f, 13.0f }, juce::Justification::centredLeft, 0.85f);
+        const auto c = r.getCentre().translated(0.0f, 10.0f);
+        const float radius = 40.0f;
         const auto pointAt = [&](int axis, float amount)
         {
             const float a = -juce::MathConstants<float>::halfPi + (float) axis * juce::MathConstants<float>::twoPi / (float) axes;
             return juce::Point<float>(c.x + std::cos(a) * radius * amount, c.y + std::sin(a) * radius * amount);
         };
-        for (int ring = 1; ring <= 3; ++ring)
+        for (int ring = 1; ring <= 4; ++ring)
         {
             juce::Path hex;
             for (int a = 0; a < axes; ++a)
             {
-                const auto pt = pointAt(a, (float) ring / 3.0f);
+                const auto pt = pointAt(a, (float) ring / 4.0f);
                 if (a == 0) hex.startNewSubPath(pt); else hex.lineTo(pt);
             }
             hex.closeSubPath();
-            g.setColour(amber.withAlpha(ring == 3 ? 0.26f : 0.11f));
+            g.setColour(amber.withAlpha(ring == 4 ? 0.32f : 0.13f));
             g.strokePath(hex, juce::PathStrokeType(1.0f));
         }
-        g.setColour(amber.withAlpha(0.12f));
+        g.setColour(amber.withAlpha(0.14f));
         for (int a = 0; a < axes; ++a)
             g.drawLine({ c, pointAt(a, 1.0f) }, 1.0f);
+
+        // Scale: the rings are 25, 50, 75 and 100 percent.
+        legend(g, "RING = 25%", { r.getX() + 10.0f, r.getBottom() - 17.0f, 64.0f, 13.0f },
+               tracked(uiFont(9.0f, juce::Font::bold), 0.06f), ivoryDim.withAlpha(0.75f), juce::Justification::centredLeft);
 
         juce::Path shape;
         for (int a = 0; a < axes; ++a)
@@ -1433,52 +1726,57 @@ private:
                                                c.x, c.y - radius, true));
         g.fillPath(shape);
         g.setColour(amberBright);
-        g.strokePath(shape, juce::PathStrokeType(1.5f, juce::PathStrokeType::mitered));
+        g.strokePath(shape, juce::PathStrokeType(1.6f, juce::PathStrokeType::mitered));
         for (int a = 0; a < axes; ++a)
         {
             const auto pt = pointAt(a, std::max(0.07f, sig.radar[(size_t) a]));
             g.setColour(juce::Colours::black.withAlpha(0.7f));
-            g.fillEllipse(pt.x - 2.8f, pt.y - 2.2f, 5.6f, 5.6f);
+            g.fillEllipse(pt.x - 3.2f, pt.y - 2.6f, 6.4f, 6.4f);
             g.setColour(amberBright.brighter(0.4f));
-            g.fillEllipse(pt.x - 2.2f, pt.y - 2.6f, 4.4f, 4.4f);
+            g.fillEllipse(pt.x - 2.6f, pt.y - 3.0f, 5.2f, 5.2f);
         }
-        const auto font = tracked(uiFont(7.5f, juce::Font::bold), 0.08f);
+        const auto font = tracked(uiFont(10.0f, juce::Font::bold), 0.08f);
         for (int a = 0; a < axes; ++a)
         {
             const auto pt = pointAt(a, 1.0f);
-            const float dx = pt.x - c.x, dy = pt.y - c.y;
-            Rectangle<float> box(pt.x - 28.0f, pt.y - 6.0f, 56.0f, 12.0f);
+            const float dx = pt.x - c.x;
+            Rectangle<float> box;
             auto justification = juce::Justification::centred;
-            if (dx > 4.0f)       { box = { pt.x + 6.0f, pt.y - 6.0f, 40.0f, 12.0f }; justification = juce::Justification::centredLeft; }
-            else if (dx < -4.0f) { box = { pt.x - 46.0f, pt.y - 6.0f, 40.0f, 12.0f }; justification = juce::Justification::centredRight; }
-            else                 box = box.translated(0.0f, dy < 0.0f ? -9.0f : 9.0f);
-            legend(g, names[a], box, font, ivory.withAlpha(0.8f), justification);
+            if (dx > 4.0f)       { box = { pt.x + 7.0f, pt.y - 7.0f, 50.0f, 14.0f }; justification = juce::Justification::centredLeft; }
+            else if (dx < -4.0f) { box = { pt.x - 57.0f, pt.y - 7.0f, 50.0f, 14.0f }; justification = juce::Justification::centredRight; }
+            else                 box = { pt.x - 28.0f, pt.y + (pt.y < c.y ? -17.0f : 4.0f), 56.0f, 14.0f };
+            legend(g, names[a], box, font, ivory.withAlpha(0.9f), justification);
         }
     }
 
+    // Numbers that the radar cannot show: oscillator mix, filter points, envelope
+    // levels, detune, chorus and which modulation is active.
     static void paintFacts(Graphics& g, Rectangle<float> r, const PresetSignature& sig)
     {
         const auto& lead = sig.ch[(size_t) sig.dominant];
-        juce::StringArray waves;
-        if (lead.saw > 0.5f) waves.add("SAW");
-        if (lead.pulse > 0.5f) waves.add("PULSE");
-        if (lead.sine > 0.05f) waves.add("SINE");
-        if (lead.noise > 0.01f) waves.add("NOISE");
+        const juce::String filter = (lead.lpfOn ? "LP " + shortHertz(lead.lpf) : juce::String("LP OFF"))
+                                    + (lead.hpfOn ? "  HP " + shortHertz(lead.hpf) : juce::String());
+        juce::StringArray motion;
+        if (sig.lfo > 0.05f) motion.add("LFO");
+        if (sig.pwm > 0.05f) motion.add("PWM");
+        if (sig.ring > 0.05f) motion.add("RING");
+        if (sig.arp) motion.add("ARP");
         const struct { const char* name; juce::String value; } rows[] = {
-            { "WAVES", waves.isEmpty() ? juce::String("--") : waves.joinIntoString(" + ") },
-            { "CUTOFF", formatHertz(sig.cutoff) },
-            { "RESONANCE", juce::String(juce::roundToInt(sig.resonance * 100.0f)) + " %" },
-            { "ATTACK", formatTime(sig.attack) },
-            { "RELEASE", formatTime(sig.release) },
-            { "CHORUS", sig.chorus > 0.0f ? juce::String(juce::roundToInt(sig.chorus * 100.0f)) + " %" : juce::String("OFF") } };
+            { "WAVES", waveSummary(lead, false) },
+            { "FILTER", filter },
+            { "A  S  R", shortTime(lead.attack) + " " + juce::String(juce::roundToInt(lead.sustain * 100.0f)) + "% "
+                         + shortTime(lead.release) },
+            { "DETUNE", juce::String(juce::roundToInt(sig.detune)) + " ct" },
+            { "CHORUS", sig.chorus > 0.0f ? juce::String(juce::roundToInt(sig.chorus * 100.0f)) + " %" : juce::String("OFF") },
+            { "MOTION", motion.isEmpty() ? juce::String("STILL") : motion.joinIntoString(" + ") } };
         const float pitch = r.getHeight() / 6.0f;
         for (int i = 0; i < 6; ++i)
         {
             const Rectangle<float> row(r.getX(), r.getY() + pitch * (float) i, r.getWidth(), pitch);
             if (i > 0)
                 etchLine(g, row.getX(), row.getY(), row.getRight(), row.getY(), 0.16f);
-            caption(g, rows[i].name, row.withTrimmedRight(row.getWidth() * 0.5f), juce::Justification::centredLeft, 0.8f);
-            legend(g, rows[i].value, row.withTrimmedLeft(row.getWidth() * 0.38f), uiFont(12.0f, juce::Font::bold),
+            caption(g, rows[i].name, row.withTrimmedRight(row.getWidth() * 0.5f), juce::Justification::centredLeft, 0.85f);
+            legend(g, rows[i].value, row.withTrimmedLeft(row.getWidth() * 0.34f), uiFont(11.5f, juce::Font::bold),
                    ivory, juce::Justification::centredRight, true);
         }
     }
@@ -1511,7 +1809,7 @@ public:
     void paint(Graphics& g) override
     {
         const auto b = getLocalBounds().toFloat();
-        const float w = std::min(8.0f * std::max(0.6f, uiScale), b.getWidth());
+        const float w = std::min(12.0f * std::max(0.6f, uiScale), b.getWidth());
         const auto groove = Rectangle<float>(b.getCentreX() - w * 0.5f, b.getY(), w, b.getHeight());
         g.setColour(juce::Colours::black.withAlpha(0.7f));
         g.fillRoundedRectangle(groove, w * 0.5f);
@@ -1556,8 +1854,15 @@ public:
         onDrag(fraction * (total - visible));
     }
 
-    void mouseUp(const juce::MouseEvent&) override { dragging = false; repaint(); }
+    void mouseUp(const juce::MouseEvent&) override
+    {
+        dragging = false;
+        repaint();
+        if (onRelease != nullptr)
+            onRelease();
+    }
 
+    std::function<void()> onRelease;
     float uiScale = 1.0f;
 
 private:
@@ -1597,7 +1902,13 @@ public:
         const bool fav = owner.isFavourite(owner.entries[(size_t) index]);
         const bool selected = row == owner.selectedFilteredRow;
         const auto c = starArea().getCentre().toFloat();
-        const float radius = 9.5f * u;
+        const float radius = 10.5f * u;
+        // A 28 px socket marks the click target even before the pointer arrives.
+        const float socket = 14.0f * u;
+        g.setColour(juce::Colours::black.withAlpha(over ? 0.55f : 0.34f));
+        g.fillEllipse(c.x - socket, c.y - socket, socket * 2.0f, socket * 2.0f);
+        g.setColour((over ? amberBright : ivory).withAlpha(over ? 0.7f : 0.14f));
+        g.drawEllipse(c.x - socket, c.y - socket, socket * 2.0f, socket * 2.0f, 1.0f);
         if (fav)
         {
             g.setColour(amber.withAlpha(0.18f));
@@ -1627,7 +1938,7 @@ private:
     Rectangle<int> starArea() const
     {
         const float u = owner.layout.s;
-        return Rectangle<float>((float) getWidth() - 46.0f * u, 0.0f, 40.0f * u, (float) getHeight()).toNearestInt();
+        return Rectangle<float>((float) getWidth() - 48.0f * u, 0.0f, 44.0f * u, (float) getHeight()).toNearestInt();
     }
 
     PresetBrowser& owner;
@@ -1723,7 +2034,8 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     clearSearch.setTooltip("Clear the search box");
     clearSearch.setWantsKeyboardFocus(false);
     clearSearch.onClick = [this] { search.setText({}, true); search.grabKeyboardFocus(); };
-    addChildComponent(clearSearch);
+    clearSearch.setEnabled(false);          // lit only while there is text to clear
+    addAndMakeVisible(clearSearch);
 
     for (int i = 0; i < kSortCount; ++i)
     {
@@ -1792,6 +2104,10 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
         stopTimer();
         list->getViewport()->setViewPosition(0, juce::roundToInt(y));
     };
+    rail->onRelease = [this]
+    {
+        smoothScrollTo((double) list->getViewport()->getViewPositionY()); // settle on a whole card
+    };
     rail->onPage = [this](double delta)
     {
         smoothScrollTo((isTimerRunning() ? scrollTarget : (double) list->getViewport()->getViewPositionY()) + delta);
@@ -1800,7 +2116,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
 
     // Inspector.
     favouriteButton.setTitle("Favourite");
-    favouriteButton.setTooltip("Add or remove this patch from your favourites (session only). Space toggles it in the list.");
+    favouriteButton.setTooltip("Add or remove this patch from your favourites (kept between sessions). Space toggles it in the list.");
     favouriteButton.onClick = [this]
     {
         const int index = entryIndexForRow(selectedFilteredRow);
@@ -1936,7 +2252,7 @@ void PresetBrowser::buildFilterChips()
     }
     for (int s = 0; s < styleCount; ++s)
     {
-        auto chip = std::make_unique<ChipButton>(kStyleNames[s], amber);
+        auto chip = std::make_unique<ChipButton>(kStyleNames[s], Colour(kStyleColours[s]));
         chip->setTitle(juce::String("Style ") + kStyleNames[s]);
         chip->onClick = [this, s, raw = chip.get()]
         {
@@ -2080,12 +2396,32 @@ void PresetBrowser::layoutAll()
     resetButton.setBounds(px(cx, L.leftPlate.getBottom() - 20.0f - 38.0f, cw, 38.0f));
 
     // Results.
-    const int rowHeight = juce::jmax(24, juce::roundToInt(66.0f * s));
+    // A whole number of cards fills the well, so no card is ever cut mid-text
+    // and wheel scrolling can snap from card to card.
+    const float railW = 16.0f;
+    const float innerH = L.well.getHeight() - 16.0f;
+    const int innerPx = juce::roundToInt(innerH * s);
+    const int visibleRows = juce::jmax(3, juce::roundToInt(innerH / 76.0f));
+    const int rowHeight = juce::jmax(24, innerPx / visibleRows);
+    const int listPx = rowHeight * visibleRows;
+    const int listTop = juce::roundToInt((L.well.getY() + 8.0f) * s) + (innerPx - listPx) / 2;
     list->setRowHeight(rowHeight);
-    const float railW = 14.0f;
-    list->setBounds(px(L.well.getX() + 8.0f, L.well.getY() + 8.0f, L.well.getWidth() - 16.0f - railW - 4.0f, L.well.getHeight() - 16.0f));
+    list->setBounds(juce::roundToInt((L.well.getX() + 8.0f) * s), listTop,
+                    juce::roundToInt((L.well.getWidth() - 16.0f - railW - 4.0f) * s), listPx);
+    {
+        // The new card height changes what "whole cards" means: re-align the
+        // scroll position and keep the selection in view.
+        auto* viewport = list->getViewport();
+        const int y = viewport->getViewPositionY();
+        const int snapped = juce::roundToInt((double) y / (double) rowHeight) * rowHeight;
+        if (snapped != y)
+            viewport->setViewPosition(0, snapped);
+        if (selectedFilteredRow >= 0)
+            list->scrollToEnsureRowIsOnscreen(selectedFilteredRow);
+    }
     rail->uiScale = s;
-    rail->setBounds(px(L.well.getRight() - 8.0f - railW, L.well.getY() + 14.0f, railW, L.well.getHeight() - 28.0f));
+    rail->setBounds(juce::roundToInt((L.well.getRight() - 8.0f - railW) * s), listTop + juce::roundToInt(6.0f * s),
+                    juce::roundToInt(railW * s), listPx - juce::roundToInt(12.0f * s));
     emptyResetButton.setUiScale(s);
     emptyResetButton.setBounds(px(L.well.getCentreX() - 110.0f, L.well.getCentreY() + 18.0f, 220.0f, 40.0f));
     emptyResetButton.setVisible(filtered.empty());
@@ -2094,26 +2430,26 @@ void PresetBrowser::layoutAll()
     const float dx = L.detail.getX() + 22.0f, dy = L.detail.getY(), dw = L.detail.getWidth() - 44.0f;
     favouriteButton.setUiScale(s);
     favouriteButton.setBounds(px(dx + dw - 36.0f, dy + 10.0f, 36.0f, 34.0f));
-    description.setBounds(px(dx, dy + 150.0f, dw, 58.0f));
+    description.setBounds(px(dx, dy + 150.0f, dw, 36.0f));
     description.setFont(uiFont(12.5f * s));
     previousButton.setUiScale(s);
-    previousButton.setBounds(px(dx, dy + 602.0f, 108.0f, 38.0f));
+    previousButton.setBounds(px(dx, dy + 608.0f, 108.0f, 36.0f));
     nextButton.setUiScale(s);
-    nextButton.setBounds(px(dx + dw - 108.0f, dy + 602.0f, 108.0f, 38.0f));
+    nextButton.setBounds(px(dx + dw - 108.0f, dy + 608.0f, 108.0f, 36.0f));
     loadButton.setUiScale(s);
-    loadButton.setBounds(px(dx, dy + 650.0f, dw - 124.0f, 48.0f));
+    loadButton.setBounds(px(dx, dy + 652.0f, dw - 124.0f, 46.0f));
     deleteButton.setUiScale(s);
-    deleteButton.setBounds(px(dx + dw - 112.0f, dy + 650.0f, 112.0f, 48.0f));
+    deleteButton.setBounds(px(dx + dw - 112.0f, dy + 652.0f, 112.0f, 46.0f));
     saveName.setUiScale(s);
-    saveName.setBounds(px(dx, dy + 724.0f, dw - 124.0f, 36.0f));
+    saveName.setBounds(px(dx, dy + 724.0f, dw - 124.0f, 34.0f));
     saveName.setFont(uiFont(14.0f * s));
     saveName.applyFontToAllText(uiFont(14.0f * s));
     saveName.setIndents(juce::roundToInt(11.0f * s), 0);
     saveName.setBorder(juce::BorderSize<int>(0, 0, 0, 4));
     saveButton.setUiScale(s);
-    saveButton.setBounds(px(dx + dw - 112.0f, dy + 722.0f, 112.0f, 40.0f));
-    saveStatus.setBounds(px(dx, dy + 766.0f, dw, 26.0f));
-    saveStatus.setFont(uiFont(10.5f * s));
+    saveButton.setBounds(px(dx + dw - 112.0f, dy + 721.0f, 112.0f, 40.0f));
+    saveStatus.setBounds(px(dx, dy + 764.0f, dw, 26.0f));
+    saveStatus.setFont(uiFont(11.0f * s));
 
     surface->setBounds(getLocalBounds());
     legends->setBounds(getLocalBounds());
@@ -2127,6 +2463,7 @@ void PresetBrowser::layoutAll()
 // ---------------------------------------------------------------------------
 void PresetBrowser::refresh()
 {
+    loadFavourites();
     entries.clear();
     const auto& bank = processor.getFactoryPresets();
     entries.reserve(bank.size() + 32);
@@ -2338,9 +2675,12 @@ void PresetBrowser::rebuildFilter()
         styleChips[(size_t) t]->setToggleState((styleFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     }
     for (int i = 0; i < kSortCount; ++i)
+    {
         sortButtons[(size_t) i]->setToggleState(i == sortMode, juce::dontSendNotification);
+        sortButtons[(size_t) i]->setArrowDirection(i == sortMode ? kSortDirection[i] : 0);
+    }
     resetButton.setEnabled(anyFilterActive());
-    clearSearch.setVisible(search.getText().isNotEmpty());
+    clearSearch.setEnabled(search.getText().isNotEmpty());
     emptyResetButton.setVisible(filtered.empty());
 
     // Keep the selection across filtering when the patch is still listed;
@@ -2495,36 +2835,86 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
 
     // Slot number.
     g.setFont(monoFont(11.0f));
-    g.setColour((selected ? amberBright : ivoryDim).withAlpha(selected ? 0.95f : 0.7f));
+    g.setColour((selected ? amberBright : ivoryDim).withAlpha(selected ? 0.95f : 0.75f));
     g.drawText(e.slot, Rectangle<float>(card.getX() + 20.0f, card.getY(), 38.0f, card.getHeight()),
                juce::Justification::centredLeft, false);
 
-    // Mini signature window.
+    // Thumbnail window: the patch's own harmonic fingerprint.
     if (e.signature != nullptr)
-        drawMiniSignature(g, { card.getX() + 62.0f, card.getY() + 9.0f, 100.0f, card.getHeight() - 18.0f }, *e.signature, selected);
+        drawThumbnail(g, { card.getX() + 62.0f, card.getY() + 8.0f, 108.0f, card.getHeight() - 16.0f }, *e.signature, selected);
 
-    // Right cluster: type tag, source label; the star is a separate cell.
+    // Right cluster: type tag (and USER for saved patches). The star is a
+    // separate cell. Factory and hardware rows carry no source label: the
+    // library filter on the left already separates them.
     const float pillH = 20.0f;
     const auto pillFont = tracked(uiFont(10.0f, juce::Font::bold), 0.1f);
     const float pillW = std::max(78.0f, textWidth(pillFont, kTypes[e.type].label) + 20.0f);
     const float pillX = card.getRight() - 52.0f - pillW;
-    drawPill(g, pillX, card.getY() + 10.0f, pillH, kTypes[e.type].label, tc, selected || hover, pillW);
-    legend(g, e.isUser ? "USER" : (e.category == "Hardware Studies" ? "HARDWARE" : "FACTORY"),
-           { pillX, card.getY() + 33.0f, pillW, 14.0f }, tracked(uiFont(8.5f, juce::Font::bold), 0.14f),
-           e.isUser ? teal.brighter(0.5f) : ivoryDim.withAlpha(0.8f), juce::Justification::centred);
+    const float pillY = e.isUser ? card.getCentreY() - 18.0f : card.getCentreY() - pillH * 0.5f;
+    drawPill(g, pillX, pillY, pillH, kTypes[e.type].label, tc, selected || hover, pillW);
+    if (e.isUser)
+        legend(g, "USER", { pillX, pillY + pillH + 3.0f, pillW, 14.0f }, tracked(uiFont(9.5f, juce::Font::bold), 0.14f),
+               teal.brighter(0.5f), juce::Justification::centred);
 
-    // Name and description.
-    const float textX = card.getX() + 176.0f;
-    const float textW = pillX - 14.0f - textX;
-    if (textW > 20.0f)
+    // Name, stat line, style tags.
+    const float textX = card.getX() + 184.0f;
+    const float textW = pillX - 16.0f - textX;
+    if (textW <= 20.0f)
+        return;
+    const float blockH = 24.0f + 4.0f + 15.0f + 4.0f + 15.0f;
+    const float y0 = card.getY() + (card.getHeight() - blockH) * 0.5f;
+    legend(g, e.name, { textX, y0, textW, 24.0f }, fitFont(uiFont(17.0f, juce::Font::bold), e.name, textW),
+           selected ? Colour(0xfffff1cc) : ivory, juce::Justification::centredLeft, true);
+
+    if (e.signature != nullptr)
     {
-        legend(g, e.name, { textX, card.getY() + 7.0f, textW, 24.0f },
-               fitFont(uiFont(17.0f, juce::Font::bold), e.name, textW),
-               selected ? Colour(0xfffff1cc) : ivory, juce::Justification::centredLeft, true);
-        g.setFont(uiFont(11.5f));
-        g.setColour(ivoryDim.withAlpha(selected ? 0.95f : 0.8f));
-        g.drawText(e.description, Rectangle<float>(textX, card.getY() + 31.0f, textW, 18.0f),
-                   juce::Justification::centredLeft, true);
+        const auto& sig = *e.signature;
+        const auto& lead = sig.ch[(size_t) sig.dominant];
+        const struct { const char* name; juce::String value; } stats[] = {
+            { "CUT", shortHertz(sig.cutoff) + "Hz" },
+            { "ATK", shortTime(sig.attack) },
+            { "OSC", waveSummary(lead, true) } };
+        const auto capFont = tracked(uiFont(9.0f, juce::Font::bold), 0.12f);
+        const auto valFont = monoFont(11.5f);
+        float x = textX;
+        const float rowY = y0 + 28.0f;
+        for (const auto& st : stats)
+        {
+            const float cw = textWidth(capFont, st.name) + 5.0f;
+            const float vw = textWidth(valFont, st.value) + 1.0f;
+            if (x + cw + vw > textX + textW)
+                break;
+            g.setFont(capFont);
+            g.setColour(gold.withAlpha(selected ? 0.95f : 0.75f));
+            g.drawText(st.name, Rectangle<float>(x, rowY, cw, 15.0f), juce::Justification::centredLeft, false);
+            g.setFont(valFont);
+            g.setColour(selected ? Colour(0xfffff1cc) : ivory.withAlpha(0.92f));
+            g.drawText(st.value, Rectangle<float>(x + cw, rowY, vw + 2.0f, 15.0f), juce::Justification::centredLeft, false);
+            x += cw + vw + 16.0f;
+        }
+
+        float tx = textX;
+        const float tagY = y0 + 28.0f + 15.0f + 4.0f;
+        int shownTags = 0, hiddenTags = 0;
+        for (int t = 0; t < styleCount; ++t)
+        {
+            if ((e.styles & (1u << (unsigned) t)) == 0)
+                continue;
+            const auto tagFont = tracked(uiFont(9.0f, juce::Font::bold), 0.08f);
+            const float tw = textWidth(tagFont, kStyleNames[t]) + 14.0f;
+            if (shownTags >= 3 || tx + tw > textX + textW - 28.0f)
+            {
+                ++hiddenTags;
+                continue;
+            }
+            tx += drawTag(g, tx, tagY, kStyleNames[t], Colour(kStyleColours[t]), selected || hover) + 5.0f;
+            ++shownTags;
+        }
+        if (hiddenTags > 0)
+            legend(g, "+" + juce::String(hiddenTags), { tx, tagY, 26.0f, 15.0f }, monoFont(10.5f), ivoryDim);
+        else if (e.styles == 0)
+            legend(g, "NO STYLE TAGS", { textX, tagY, 160.0f, 15.0f }, tracked(uiFont(9.0f, juce::Font::bold), 0.12f),
+                   ivoryDim.withAlpha(0.55f));
     }
 }
 
@@ -2573,6 +2963,7 @@ void PresetBrowser::toggleFavourite(int entryIndex)
         favouriteKeys().removeString(key);
     else
         favouriteKeys().add(key);
+    saveFavourites();
     rebuildFilter(); // counts, the favourites scope, and the card stars
 }
 
@@ -2752,21 +3143,32 @@ void PresetBrowser::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseW
     auto* viewport = list->getViewport();
     const double maxY = std::max(0, viewport->getViewedComponent()->getHeight() - viewport->getMaximumVisibleHeight());
     const double current = (double) viewport->getViewPositionY();
-    const double delta = (double) wheel.deltaY * 14.0 * 12.0; // about a card and a half per notch
+    const double rowH = (double) std::max(1, list->getRowHeight());
+    if (wheel.deltaY == 0.0f)
+        return;
+
+    // Scrolling lands on whole cards. A virtual position collects the small
+    // steps of a trackpad so it still moves; a wheel notch moves one to three
+    // cards. Anything else that moved the list (keyboard, rail) resets it.
+    if (! isTimerRunning() && std::abs(current - scrollTarget) > 1.0)
+        scrollVirtual = current;
     if (wheel.isSmooth)
-    {
-        stopTimer();
-        viewport->setViewPosition(0, juce::roundToInt(juce::jlimit(0.0, maxY, current - delta)));
-    }
+        scrollVirtual -= (double) wheel.deltaY * 14.0 * 12.0 * (double) layout.s;
     else
-        smoothScrollTo((isTimerRunning() ? scrollTarget : current) - delta);
+    {
+        const double steps = std::max(1.0, std::round(std::abs((double) wheel.deltaY) * 3.0));
+        scrollVirtual -= (wheel.deltaY < 0.0f ? -steps : steps) * rowH;
+    }
+    scrollVirtual = juce::jlimit(0.0, maxY, scrollVirtual);
+    smoothScrollTo(scrollVirtual);
 }
 
 void PresetBrowser::smoothScrollTo(double y)
 {
     auto* viewport = list->getViewport();
     const double maxY = std::max(0, viewport->getViewedComponent()->getHeight() - viewport->getMaximumVisibleHeight());
-    scrollTarget = juce::jlimit(0.0, maxY, y);
+    const double rowH = (double) std::max(1, list->getRowHeight());
+    scrollTarget = juce::jlimit(0.0, maxY, std::round(y / rowH) * rowH);
     lastScrollSet = viewport->getViewPositionY();
     startTimerHz(60);
 }

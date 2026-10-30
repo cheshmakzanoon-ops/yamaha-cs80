@@ -25,12 +25,15 @@ public:
     explicit PlateButton(const juce::String& text, Kind kind = Kind::standard);
 
     void setUiScale(float pixelsPerUnit) noexcept { scale = pixelsPerUnit; repaint(); }
+    // Segment buttons only: +1 draws an up arrow on the lit segment, -1 a down arrow.
+    void setArrowDirection(int direction) noexcept { arrow = direction; repaint(); }
     void paintButton(juce::Graphics&, bool highlighted, bool down) override;
     void paintOverChildren(juce::Graphics&) override;
 
 private:
     Kind kind;
     float scale = 1.0f;
+    int arrow = 0;
 };
 
 // A backlit filter tab with a colour-coded lamp and a live match count.
@@ -199,6 +202,7 @@ private:
 
     // Scroll animation.
     double scrollTarget = 0.0;
+    double scrollVirtual = 0.0;          // unsnapped wheel position; targets snap to whole rows
     int lastScrollSet = -1;
 
     std::unique_ptr<Surface> surface;
