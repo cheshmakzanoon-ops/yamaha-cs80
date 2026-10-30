@@ -2,6 +2,9 @@
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
 #include "../../tests/PluginLocalePreservation.h"
+#include "../../tests/PluginHostMetadata.h"
+#include "../../tests/PresetSaveTests.h"
+#include "../../tests/UiReadinessTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -1750,6 +1753,7 @@ int main(int argc, char** argv)
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
     juce::ScopedJuceInitialiser_GUI juceInit;
+    cs80::tests::testPluginHostMetadata(check);
 
     juce::String outDir = "artifacts/ui";
     bool selfTest = false;
@@ -3233,56 +3237,9 @@ int main(int argc, char** argv)
     }
     else check(false, "physical memory lid can be opened");
 
-    // User preset save/load path. This touches the per-user application data
-    // directory, which is created on demand by the processor.
-    const juce::String smokePresetName = "UI Smoke Preset " + juce::Uuid().toString();
-    processor.setParamValue(cs80::P_subOriginalMode, 1.0f);
-    processor.setParamValue(cs80::P_subOriginalFunction, 5.0f);
-    processor.setParamValue(cs80::P_subOriginalSpeed, 0.7f);
-    processor.setParamValue(cs80::P_subExtLevel, 0.3f);
-    processor.saveUserPreset(smokePresetName);
-    const auto files = processor.getUserPresetFiles();
-    bool found = false;
-    for (const auto& file : files)
-        found = found || file.getFileNameWithoutExtension() == smokePresetName;
-    check(found, "user preset saved");
-    if (found)
-    {
-        processor.loadFactoryPreset(0);
-        for (const auto& file : processor.getUserPresetFiles())
-            if (file.getFileNameWithoutExtension() == smokePresetName)
-                processor.loadUserPreset(file);
-        check(processor.getPresetName() == smokePresetName, "user preset loaded");
-        check(processor.getParamValue(cs80::P_subOriginalMode) == 1.0f
-                  && processor.getParamValue(cs80::P_subOriginalFunction) == 5.0f
-                  && std::abs(processor.getParamValue(cs80::P_subOriginalSpeed) - 0.7f) < 0.00001f
-                  && std::abs(processor.getParamValue(cs80::P_subExtLevel) - 0.3f) < 0.00001f,
-              "user preset round-trips original SUB controls including EXT settings");
-        for (const auto& file : processor.getUserPresetFiles())
-            if (file.getFileNameWithoutExtension() == smokePresetName)
-            {
-                auto xml = juce::XmlDocument::parse(file);
-                check(xml != nullptr && xml->getIntAttribute("subOscStateVersion", 0) == 1,
-                      "user preset records original SUB migration version");
-                if (!xml) continue;
-                auto oldUserState = juce::ValueTree::fromXml(*xml);
-                for (const auto* id : originalSubIds)
-                    oldUserState.removeChild(oldUserState.getChildWithProperty("id", id), nullptr);
-                oldUserState.removeProperty("subOscStateVersion", nullptr);
-                auto oldXml = oldUserState.createXml();
-                check(oldXml->writeTo(file), "legacy user preset fixture written");
-                processor.loadUserPreset(file);
-                check(processor.getParamValue(cs80::P_subOriginalMode) == 0.0f
-                          && processor.getParamValue(cs80::P_subOriginalFunction) == 0.0f
-                          && std::abs(processor.getParamValue(cs80::P_subOriginalSpeed) - 4.2f) < 0.00001f
-                          && processor.getParamValue(cs80::P_subExtLevel) == 0.0f,
-                      "legacy user preset clears stale original mode and controls");
-            }
-
-        for (const auto& file : processor.getUserPresetFiles())
-            if (file.getFileNameWithoutExtension() == smokePresetName)
-                file.deleteFile();
-    }
+    // All preset-save I/O is confined to fresh temporary fixtures.
+    cs80::tests::PresetSaveAccess::run(check, flushGui);
+    cs80::tests::runUiReadinessTests(check, flushGui);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

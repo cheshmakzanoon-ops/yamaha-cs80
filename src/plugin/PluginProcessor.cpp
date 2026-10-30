@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <filesystem>
+#include <system_error>
 
 namespace
 {
@@ -33,10 +35,11 @@ juce::File makeUserPresetDirectory()
 }
 } // namespace
 
-Cs80AudioProcessor::Cs80AudioProcessor()
+Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     : AudioProcessor(BusesProperties()
           .withInput("External Modulation", juce::AudioChannelSet::mono(), false)
           .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
+      presetDirectoryOverride(presetDirectory),
       apvts(*this, nullptr, stateType, createParameterLayout())
 {
     keyboardState.addListener(this);
@@ -765,12 +768,25 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 
 juce::File Cs80AudioProcessor::userPresetDirectory() const
 {
-    auto dir = makeUserPresetDirectory();
-    dir.createDirectory();
-    return dir;
+    return presetDirectoryOverride == juce::File() ? makeUserPresetDirectory() : presetDirectoryOverride;
 }
 
-void Cs80AudioProcessor::saveUserPreset(const juce::String& name)
+Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::saveUserPreset(const juce::String& name,
+                                                                      PresetOverwrite overwrite)
+{
+    return writeUserPreset(name, overwrite, [](const juce::XmlElement& xml, const juce::File& file)
+    {
+        juce::FileOutputStream stream(file);
+        if (! stream.openedOk())
+            return stream.getStatus();
+        xml.writeTo(stream);
+        stream.flush();
+        return stream.getStatus();
+    });
+}
+
+Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
+    const juce::String& name, PresetOverwrite overwrite, const PresetWriter& write)
 {
     const auto dir = userPresetDirectory();
     const auto metadata = getPresetMetadata();
@@ -778,14 +794,67 @@ void Cs80AudioProcessor::saveUserPreset(const juce::String& name)
     auto safe = juce::File::createLegalFileName(savedName);
     if (safe.isEmpty())
         safe = "User Preset";
-    auto file = dir.getChildFile(safe + ".cs80xml");
+    const auto file = dir.getChildFile(safe + ".cs80xml");
+    const auto failure = [&file](const juce::String& message)
+    {
+        return PresetSaveResult { PresetSaveStatus::error, file, message };
+    };
+    if (file.isDirectory())
+        return failure("The destination is a folder, not a preset file.");
+    if (file.exists() && overwrite == PresetOverwrite::no)
+        return { PresetSaveStatus::alreadyExists, file, "A preset with this filename already exists." };
+    const auto created = dir.createDirectory();
+    if (created.failed())
+        return failure("Could not create the preset folder: " + created.getErrorMessage());
+
     auto state = apvts.copyState();
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
-    if (auto xml = state.createXml())
-        xml->writeTo(file);
+    const auto xml = state.createXml();
+    if (xml == nullptr)
+        return failure("Could not serialize the current patch.");
+
+    // Only this new, uniquely named staging file is cleaned up by the guard.
+    // Keep it beside the destination so publication never crosses filesystems.
+    // This guarantees atomic visibility, not power-loss/crash durability of
+    // the directory entry. Never fall back to truncating/copying the target.
+    juce::TemporaryFile temporary(file,
+        dir.getChildFile(".cs80-preset-" + juce::Uuid().toString() + ".tmp"));
+    const auto written = write(*xml, temporary.getFile());
+    if (written.failed())
+        return failure("Could not write the preset: " + written.getErrorMessage());
+
+    const auto path = [](const juce::File& f)
+    {
+       #if JUCE_WINDOWS
+        return std::filesystem::path(f.getFullPathName().toWideCharPointer());
+       #else
+        return std::filesystem::path(f.getFullPathName().toRawUTF8());
+       #endif
+    };
+    std::error_code error;
+    if (overwrite == PresetOverwrite::yes)
+    {
+        // Unlike JUCE File's move/copy fallback, filesystem::rename does not
+        // truncate an existing destination if the atomic replacement fails.
+        std::filesystem::rename(path(temporary.getFile()), path(file), error);
+    }
+    else
+    {
+        // Atomic no-replace publication also handles another instance saving
+        // this name after our initial existence check. Never check then rename.
+        std::filesystem::create_hard_link(path(temporary.getFile()), path(file), error);
+    }
+    if (error)
+    {
+        if (overwrite == PresetOverwrite::no && error == std::errc::file_exists)
+            return { PresetSaveStatus::alreadyExists, file, "A preset with this filename already exists." };
+        return failure("Could not publish the preset: " + juce::String(error.message()));
+    }
+
     setPresetName(savedName);
+    return { PresetSaveStatus::saved, file, {} };
 }
 
 juce::Array<juce::File> Cs80AudioProcessor::getUserPresetFiles() const

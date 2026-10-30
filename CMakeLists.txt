@@ -172,6 +172,9 @@ endif()
 add_executable(cs80_render src/tools/render_cli.cpp)
 target_link_libraries(cs80_render PRIVATE cs80_core)
 
+add_executable(cs80_source_factory_audition src/tools/source_factory_audition.cpp)
+target_link_libraries(cs80_source_factory_audition PRIVATE cs80_core)
+
 add_executable(cs80_dsp_probe src/tools/dsp_probe.cpp)
 target_link_libraries(cs80_dsp_probe PRIVATE cs80_core)
 add_executable(cs80_parity_capture src/tools/parity_capture.cpp)
@@ -272,7 +275,7 @@ if (CS80_BUILD_PLUGIN)
     # three desktop platforms rather than only Unix.
     add_test(NAME cs80_ui_smoke
              COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
-    set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 120)
+    set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
 
     if (CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
         # Reuse the snapshot target, but dispatch before its ordinary GUI setup.

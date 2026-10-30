@@ -6,6 +6,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
+namespace cs80::tests { struct PresetSaveAccess; }
 
 namespace cs80::ui
 {
@@ -30,6 +31,7 @@ public:
     std::function<void()> onPresetLoaded;
 
 private:
+    friend struct cs80::tests::PresetSaveAccess;
     struct Entry
     {
         juce::String name;
@@ -49,6 +51,7 @@ private:
 
     void rebuildFilter();
     void loadSelected();
+    void saveCurrentPreset(const juce::String& name, bool overwrite = false);
     const Entry* selectedEntry() const;
 
     Cs80AudioProcessor& processor;
@@ -65,7 +68,11 @@ private:
     juce::TextButton saveButton { "SAVE USER" };
     juce::TextButton closeButton { "CLOSE" };
     juce::Label description;
+    juce::Label saveStatus;
+    bool overwriteConfirmationPending = false;
     juce::String currentCategory { "All Categories" };
+    // Cancels both a queued dialog creation and a visible dialog on editor close.
+    juce::ScopedMessageBox overwriteDialog;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetBrowser)
 };

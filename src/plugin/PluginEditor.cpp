@@ -7,6 +7,7 @@
 
 #include <array>
 #include <cmath>
+#include <string_view>
 #include <vector>
 
 namespace
@@ -25,6 +26,41 @@ juce::Font displayFont(float height, int style = juce::Font::plain)
     return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
                                         height, style));
 }
+
+// UI-only classification of the requested APVTS selection. This immutable
+// lookup must not read Engine diagnostics, which belong to the render thread.
+constexpr std::string_view requestedSourceRouteTag(int rank, int source, bool isolated)
+{
+    switch (cs80::source_factory::route(rank, source, isolated))
+    {
+        case cs80::source_factory::Route::source_complete: return "SOURCE-COMPLETE";
+        case cs80::source_factory::Route::source_inferred: return "SOURCE-INFERRED";
+        case cs80::source_factory::Route::legacy_bridge: return "LEGACY STUDY";
+        case cs80::source_factory::Route::panel_or_memory: return source == 13 ? "PANEL" : "MEMORY";
+        case cs80::source_factory::Route::invalid: return "INVALID";
+    }
+    return "INVALID";
+}
+static_assert(requestedSourceRouteTag(0, 1, true) == "SOURCE-COMPLETE");
+static_assert(requestedSourceRouteTag(1, 0, true) == "SOURCE-INFERRED");
+static_assert(requestedSourceRouteTag(0, 1, false) == "LEGACY STUDY");
+static_assert(requestedSourceRouteTag(1, 12, true) == "MEMORY");
+static_assert(requestedSourceRouteTag(0, 13, false) == "PANEL");
+static_assert(requestedSourceRouteTag(-1, 0, true) == "INVALID");
+
+// Custom wheels are plain Components rather than TooltipClients. Reuse their
+// accessibility description for hover help without intercepting pedal gestures.
+class PanelTooltipWindow final : public juce::TooltipWindow
+{
+public:
+    using juce::TooltipWindow::TooltipWindow;
+    juce::String getTipFor(juce::Component& component) override
+    {
+        if (component.getComponentID() == "expression_pedal")
+            return component.getDescription();
+        return juce::TooltipWindow::getTipFor(component);
+    }
+};
 // Software-rendered key surfaces keep snapshots identical to the interactive
 // editor. The key depth, moulded front lip and black-key bevel are drawn here.
 class HardwareKeyboard final : public juce::MidiKeyboardComponent
@@ -321,6 +357,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncPresetDisplay();
         syncToneMarks();
         syncSubMode();
+        syncSourceStatus();
     }
 
     ~Impl() override
@@ -399,6 +436,20 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         subModeLabel.setColour(juce::Label::textColourId, cs80::ui::ivoryDim);
         subModeLabel.setInterceptsMouseClicks(false, false);
         addAndMakeVisible(subModeLabel);
+        modeStatusLabel.setComponentID("performance_mode_status");
+        modeStatusLabel.setTitle("Requested performance mode and MIDI controller policy");
+        modeStatusLabel.setJustificationType(juce::Justification::centredLeft);
+        modeStatusLabel.setColour(juce::Label::textColourId, cs80::ui::ivoryDim);
+        addAndMakeVisible(modeStatusLabel);
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            auto& label = sourceStatusLabels[(size_t) rank];
+            label.setComponentID("source_route_status_" + juce::String(rank + 1));
+            label.setTitle(juce::String(rank == 0 ? "Rank I" : "Rank II") + " requested source and model route");
+            label.setJustificationType(juce::Justification::centred);
+            label.setColour(juce::Label::textColourId, cs80::ui::ivoryDim);
+            addAndMakeVisible(label);
+        }
 
         prevButton.setTitle("Previous preset");
         nextButton.setTitle("Next preset");
@@ -627,7 +678,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::P_kbdLevelHigh, 429, 784, 40, 108, "HIGH", greyCap());
 
         expressionPedal.setTitle("Foot controller position (expression)");
-        expressionPedal.setDescription("On-screen foot controller. Drives volume, and the wah sweep in EXP-WAH. MIDI CC11 does the same.");
+        expressionPedal.setComponentID("expression_pedal");
+        expressionPedal.setDescription("On-screen foot controller: volume and the EXP-WAH sweep. MIDI CC11 follows this pedal only with parity isolation OFF. In isolation, CC11 is ignored; this on-screen pedal remains active.");
         expressionPedal.setValue(processor.getExpressionValue());
         expressionPedal.onValueChange = [this](float value) { processor.setExpressionFromUI(value); };
         addAndMakeVisible(expressionPedal);
@@ -806,6 +858,39 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             : "Legacy waveform and rate automation are preserved. Select Original mode in Advanced to use the hardware functions."));
     }
 
+    void syncSourceStatus()
+    {
+        // These atomics are a UI snapshot, not a render-thread acceptance report.
+        // Do not substitute getEngine().getSourceToneInfo() here.
+        const bool isolated = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
+        const juce::String mode = isolated
+            ? "COMPARISON ISOLATION / NOT CALIBRATED  |  MIDI OFF: BEND, CC1/11/64/74, MPE  |  PRESSURE, RIBBON + UI PEDAL LIVE  |  MODE CHANGE STOPS NOTES"
+            : "LEGACY PERFORMANCE / SOURCE MODEL OFF  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  SOURCE TABS: ADVANCED > ABOUT > ISOLATION";
+        if (modeStatusLabel.getText() != mode)
+            modeStatusLabel.setText(mode, juce::dontSendNotification);
+        modeStatusLabel.setTooltip("Requested mode from stored parameters; audio applies it on a control frame. Isolation is a comparison fixture, not a hardware-equivalence claim. It masks modern features and resets sounding notes when toggled. Library recall returns both ranks to PANEL; use the hardware tabs to audition the source model. Source output can exceed digital full scale: keep monitoring headroom.");
+
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const int source = processor.getHardwareSource(rank);
+            const auto route = requestedSourceRouteTag(rank, source, isolated);
+            const juce::String identity = source < 11
+                ? juce::String(cs80::hardwareToneName(source, rank)).toUpperCase()
+                : source == 13 ? juce::String("MAIN PANEL")
+                               : "BANK " + juce::String(rank + (source == 12 ? 3 : 1));
+            const juce::String text = juce::String(rank == 0 ? "I REQUEST: " : "II REQUEST: ")
+                + identity + " / " + juce::String(route.data());
+            auto& label = sourceStatusLabels[(size_t) rank];
+            if (label.getText() != text)
+                label.setText(text, juce::dontSendNotification);
+            label.setTooltip(text + ". Requested APVTS selection, not an audio-thread acknowledgment. "
+                "SOURCE-COMPLETE means the source-matrix column has no unresolved cells, not that the instrument is calibrated; device laws remain inferred. "
+                "SOURCE-INFERRED also uses explicit hypotheses for unresolved cells. LEGACY STUDY uses the older voicing table. "
+                "A selected tone or memory owns the 26 programmer controls; main-panel faders are retained for PANEL. Footage and global controls remain live. "
+                "Library programs reset both selectors to PANEL and do not select source tabs.");
+        }
+    }
+
     void tick()
     {
         processor.serviceKeyboardUI();
@@ -813,6 +898,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncSubMode();
         syncPresetDisplay();
         syncToneMarks();
+        syncSourceStatus();
         // Follow the pedal when MIDI CC11 or a restart moved it; never fight a drag.
         if (! expressionPedal.isMouseButtonDown()
             && std::abs(expressionPedal.getValue() - processor.getExpressionValue()) > 1.0e-4f)
@@ -975,7 +1061,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 g.setColour(juce::Colour(0xff272821)); g.drawLine(x-2,y,x+2,y,1);
             }
         // Software toolbar intentionally outside the hardware face.
-        g.setColour(juce::Colour(0xff090c0d)); g.fillRect(0, 0, 1600, 64);
+        g.setColour(juce::Colour(0xff090c0d)); g.fillRect(0, 0, 1600, 78);
         panelText(g, "CS-80  /  REFERENCE", 28, 16, 320, 30, 17, juce::Justification::centredLeft);
         panelText(g, "8 VOICES  /  DUAL CHANNEL", 1280, 18, 290, 22, 10);
         g.restoreState();
@@ -1005,6 +1091,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advancedButton.setBounds(r(1102.0f, 25.0f, 154.0f, 32.0f));
         subModeLabel.setBounds(r(1272.0f, 40.0f, 310.0f, 20.0f));
         subModeLabel.setFont(displayFont(9.0f * sy));
+        modeStatusLabel.setBounds(r(26.0f, 59.0f, 1552.0f, 18.0f));
+        modeStatusLabel.setFont(displayFont(11.0f * sy));
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            sourceStatusLabels[(size_t) rank].setBounds(r(416.0f + (float) rank * 422.0f,
+                                                          2.0f, 418.0f, 20.0f));
+            sourceStatusLabels[(size_t) rank].setFont(displayFont(11.5f * sy));
+        }
 
         ribbon.setBounds(r(320.0f, 713.0f, 960.0f, 23.0f));
         pitchWheel.setBounds(r(320.0f, 299.0f, 30.0f, 126.0f));
@@ -1020,7 +1114,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     Cs80AudioProcessor& processor;
     cs80::ui::LookAndFeel lookAndFeel;
-    juce::TooltipWindow tooltips { this, 600 };
+    PanelTooltipWindow tooltips { this, 600 };
 
     juce::TextButton prevButton { "<" };
     juce::TextButton nextButton { ">" };
@@ -1030,6 +1124,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     juce::TextButton advancedButton { "ADVANCED" };
     juce::Label presetLabel;
     juce::Label subModeLabel;
+    juce::Label modeStatusLabel;
+    std::array<juce::Label, 2> sourceStatusLabels;
     cs80::ui::ParamKnob* subFunction = nullptr;
     cs80::ui::ParamKnob* subSpeed = nullptr;
 

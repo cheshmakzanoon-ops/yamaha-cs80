@@ -247,7 +247,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.toggle(592.0f, 488.0f, 135.0f, 28.0f, cs80::P_outputMode, "STEREO");
         page.text("The CS-80's pressure and velocity are separate performance dimensions.\n"
                   "Initial touch sets the attack brightness; aftertouch bends the filter while held.\n"
-                  "MPE maps per-note pitch bend and pressure when the host sends it.",
+                  "MPE maps per-note bend/pressure when enabled; isolation disables MPE.",
                   48.0f, 544.0f, 670.0f, 70.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
@@ -399,7 +399,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         page.toggle(1200.0f, 150.0f, 210.0f, 28.0f, cs80::P_sustainMode, "SUSTAIN II");
         page.text("Portamento glides; Glissando steps in semitones. Both sustain modes\n"
                   "release notes. Sustain II also cuts previous release tails at a new key press.\n"
-                  "MIDI pedal hold is a separate software extension in either mode.",
+                  "MIDI CC64 hold is a separate extension, disabled by parity isolation.",
                   800.0f, 220.0f, 650.0f, 62.0f, 10.8f, false, ivoryDim,
                   juce::Justification::topLeft, 3);
 
@@ -410,25 +410,28 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
                   "original's high-pass into low-pass topology, linear VCA and global sub-oscillator.\n\n"
                   "The primary panel exposes the controls a player touches; this page exposes the modern\n"
                   "layer (LFOs, MPE, effects, dispersion) without cluttering the instrument. All controls are\n"
-                  "host-automatable and saved in the plugin state. The preset bank includes the 22 hardware\n"
-                  "tone-selector programs plus 200 performance patches.",
+                  "host-automatable and saved in plugin state, except transient performance gestures.\n"
+                  "The library has 22 legacy tone studies and 200 performance patches; loading one returns\n"
+                  "both ranks to PANEL. Source-model factory tabs require comparison isolation below.",
                   52.0f, 450.0f, 900.0f, 190.0f, 12.0f, false, ivoryDim,
-                  juce::Justification::topLeft, 8);
+                  juce::Justification::topLeft, 9);
         page.text("ENGINE  -  2x oversampled  -  8 voices  -  16 ranks  -  2x host rate\n"
-                  "FORMAT  -  VST3 + standalone  -  44.1-192 kHz  -  MPE + poly pressure\n"
+                  "FORMAT  -  VST3 + AU (macOS) + standalone  -  MPE + poly pressure\n"
                   "BUILD   -  Reference Instruments  -  circuit study no. 1977-CS80",
                   1000.0f, 450.0f, 440.0f, 90.0f, 11.0f, false, amber,
                   juce::Justification::topLeft, 4);
         auto* parity = page.toggle(1000.0f, 552.0f, 400.0f, 30.0f,
                                    cs80::P_parityMode, "PARITY ISOLATION");
         parity->setComponentID("parity_mode");
-        parity->setTooltip("Isolation only, not calibrated. Modern settings are retained but inert while on; presets remain available. No hardware match established.");
+        parity->setTooltip("Comparison fixture, not calibrated. Enable before playing: toggling stops notes and clears controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are retained but inert. Output may exceed digital full scale.");
         page.text("NOT CALIBRATED - no hardware match established.\n"
-                  "Modern settings are retained but inert while ON.\n"
-                  "Presets and physical expression remain usable.\n"
-                  "2x decimation remains a numerical backend.",
-                  1000.0f, 598.0f, 440.0f, 100.0f, 11.0f, false, amber,
-                  juce::Justification::topLeft, 4);
+                  "OFF: legacy performance. ON: source factory tabs.\n"
+                  "ON ignores bend, CC1/11/64/74 and MPE; masks modern FX.\n"
+                  "Pressure, ribbon and on-screen PEDAL stay active.\n"
+                  "MODE CHANGE STOPS NOTES. Keep output headroom.\n"
+                  "Complete source cells do not mean calibrated device laws.",
+                  1000.0f, 598.0f, 440.0f, 120.0f, 10.5f, false, amber,
+                  juce::Justification::topLeft, 6);
         page.text("Touch the ribbon above the keyboard to bend pitch. Drag the pitch lever (PITCH)\n"
                   "or modulation wheel (MOD) at the left of the keyboard. Double-click any knob to reset it.",
                   52.0f, 646.0f, 900.0f, 50.0f, 10.8f, false, ivoryDim,

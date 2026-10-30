@@ -13,14 +13,16 @@
 #include <array>
 #include <cmath>
 #include <limits>
+#include <functional>
 #include <vector>
 
 class Cs80AudioProcessorEditor;
+namespace cs80::tests { struct PresetSaveAccess; }
 
 class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener
 {
 public:
-    Cs80AudioProcessor();
+    explicit Cs80AudioProcessor(const juce::File& presetDirectory = {});
     ~Cs80AudioProcessor() override;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
@@ -36,8 +38,19 @@ public:
     const juce::String getName() const override { return "CS-80 Reference"; }
     bool acceptsMidi() const override { return true; }
     bool producesMidi() const override { return false; }
+    // Host discovery describes capability, not the current MPE/isolation switch.
+    // Enable MPE in both plugin and host: channel 1 is master, 2..16 members,
+    // with manually matched bend ranges (no RPN zone/range negotiation).
+    bool supportsMPE() const override { return true; }
     bool isMidiEffect() const override { return false; }
-    double getTailLengthSeconds() const override { return 8.0; }
+    // No universal finite silence deadline: playable-mode analog noise runs
+    // without voices, and bypassed FX retain histories. Even a noise-free dry
+    // note can release for ~61 s (20 s * 2^1.1 * ln(5000)/6) before FX decay.
+    // Keep this capability-level policy stable across patches/modes; infinity
+    // maps to VST3's kInfiniteTail, not an invented practical noise-floor cutoff.
+    // Hosts may therefore keep processing idle instances; offline exports need
+    // an explicit end/selection rather than an automatic finite-tail endpoint.
+    double getTailLengthSeconds() const override { return std::numeric_limits<double>::infinity(); }
 
     int getNumPrograms() override;
     int getCurrentProgram() override { return currentProgram.load(std::memory_order_relaxed); }
@@ -101,7 +114,19 @@ public:
     void setPresetName(const juce::String& name);
     void loadFactoryPreset(int index);
     void loadUserPreset(const juce::File& file);
-    void saveUserPreset(const juce::String& name);
+    enum class PresetSaveStatus { saved, alreadyExists, error };
+    enum class PresetOverwrite { no, yes };
+    struct PresetSaveResult
+    {
+        PresetSaveStatus status = PresetSaveStatus::error;
+        juce::File file;
+        juce::String message;
+        bool wasSaved() const noexcept { return status == PresetSaveStatus::saved; }
+    };
+    // Saving never overwrites an existing file without an explicit affirmative policy.
+    // Neither the sound nor the displayed preset metadata changes on failure.
+    [[nodiscard]] PresetSaveResult saveUserPreset(const juce::String& name,
+                                                  PresetOverwrite = PresetOverwrite::no);
     juce::Array<juce::File> getUserPresetFiles() const;
 
     // Physical selector: 0..10 factory, 11 memory A, 12 memory B, 13 PANEL.
@@ -127,6 +152,7 @@ public:
     static juce::String parameterId(int index) { return juce::String(cs80::paramId(index)); }
 
 private:
+    friend struct cs80::tests::PresetSaveAccess;
     void setPresetMetadata(const juce::String& name, int index);
     void readParameters();
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
@@ -138,6 +164,11 @@ private:
     void observeHostMidi(const juce::MidiMessage& message) noexcept;
     void applyValues(const cs80::ParamValues& values);
     juce::File userPresetDirectory() const;
+    using PresetWriter = std::function<juce::Result(const juce::XmlElement&, const juce::File&)>;
+    PresetSaveResult writeUserPreset(const juce::String&, PresetOverwrite, const PresetWriter&);
+    // An empty dependency uses the normal application-data folder. Isolated
+    // storage tests can supply a fresh temporary directory instead.
+    juce::File presetDirectoryOverride;
 
     cs80::Engine engine;
     juce::AudioProcessorValueTreeState apvts;

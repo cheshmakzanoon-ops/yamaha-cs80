@@ -45,6 +45,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p)
     saveName.setTextToShowWhenEmpty("New user patch name", ivoryDim.withAlpha(0.55f));
     saveName.setFont(juce::Font(juce::FontOptions(13.0f)));
     saveName.setText("User Patch", false);
+    saveName.setComponentID("presetSaveName");
     addAndMakeVisible(saveName);
 
     loadButton.setWantsKeyboardFocus(false);
@@ -57,10 +58,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p)
         auto name = saveName.getText().trim();
         if (name.isEmpty())
             name = processor.getPresetName() + " Edit";
-        processor.saveUserPreset(name);
-        refresh();
-        if (onPresetLoaded)
-            onPresetLoaded();
+        saveCurrentPreset(name);
     };
     addAndMakeVisible(saveButton);
 
@@ -77,10 +75,72 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p)
     description.setMinimumHorizontalScale(0.8f);
     addAndMakeVisible(description);
 
+    saveStatus.setComponentID("presetSaveStatus");
+    saveStatus.setJustificationType(juce::Justification::centredLeft);
+    saveStatus.setColour(juce::Label::textColourId, ivoryDim);
+    addAndMakeVisible(saveStatus);
+
     refresh();
 }
 
 PresetBrowser::~PresetBrowser() = default;
+
+void PresetBrowser::saveCurrentPreset(const juce::String& name, bool overwrite)
+{
+    if (overwriteConfirmationPending)
+        return;
+
+    const auto result = processor.saveUserPreset(name, overwrite
+        ? Cs80AudioProcessor::PresetOverwrite::yes : Cs80AudioProcessor::PresetOverwrite::no);
+    saveStatus.setTooltip(result.file.getFullPathName());
+    if (result.wasSaved())
+    {
+        refresh();
+        for (int row = 0; row < (int) filtered.size(); ++row)
+            if (entries[(size_t) filtered[(size_t) row]].userFile == result.file)
+            {
+                list.selectRow(row, false, true);
+                list.scrollToEnsureRowIsOnscreen(row);
+                break;
+            }
+        // Keep the requested name, not a factory row with the same source index.
+        saveName.setText(name, false);
+        saveStatus.setText("Saved \"" + name + "\".", juce::dontSendNotification);
+        if (onPresetLoaded)
+            onPresetLoaded();
+        return;
+    }
+
+    if (result.status == Cs80AudioProcessor::PresetSaveStatus::error)
+    {
+        saveStatus.setText("Not saved: " + result.message, juce::dontSendNotification);
+        return;
+    }
+
+    overwriteConfirmationPending = true;
+    saveButton.setEnabled(false);
+    saveStatus.setText("This filename already exists. Confirm overwrite or choose another name.",
+                       juce::dontSendNotification);
+    overwriteDialog = juce::AlertWindow::showScopedAsync(
+        juce::MessageBoxOptions::makeOptionsOkCancel(juce::MessageBoxIconType::WarningIcon,
+            "Overwrite user preset?",
+            "Saving \"" + name + "\" will replace the existing preset file:\n\n"
+                + result.file.getFullPathName()
+                + "\n\nDifferent patch names can map to the same filename. Overwrite this file?",
+            "Overwrite", "Cancel", this),
+        [safeThis = juce::Component::SafePointer<PresetBrowser>(this), name](int choice)
+        {
+            if (safeThis == nullptr)
+                return;
+            safeThis->overwriteConfirmationPending = false;
+            safeThis->saveButton.setEnabled(true);
+            if (choice == 1)
+                safeThis->saveCurrentPreset(name, true);
+            else
+                safeThis->saveStatus.setText("Save cancelled. Existing preset unchanged.",
+                                            juce::dontSendNotification);
+        });
+}
 
 void PresetBrowser::refresh()
 {
@@ -340,6 +400,8 @@ void PresetBrowser::resized()
     description.setBounds(r(24.0f, 614.0f, 1152.0f, 70.0f));
     description.setFont(displayFont(
                                    juce::jmax(9.0f, 11.5f * uiScale), juce::Font::plain));
+    saveStatus.setBounds(r(24.0f, 694.0f, 820.0f, 48.0f));
+    saveStatus.setFont(displayFont(juce::jmax(9.0f, 11.5f * uiScale)));
     loadButton.setBounds(r(874.0f, 700.0f, 150.0f, 38.0f));
     closeButton.setBounds(r(1092.0f, 14.0f, 84.0f, 30.0f));
 }
