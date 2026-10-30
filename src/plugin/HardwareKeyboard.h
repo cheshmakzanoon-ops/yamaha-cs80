@@ -206,7 +206,7 @@ inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
     }
     if (k.hover && d < 0.05f)
     {
-        g.setColour(Colour(0xfff3d691).withAlpha(0.18f));
+        g.setColour(Colour(0xfff3d691).withAlpha(0.22f));
         g.fillRect(x0, y0, w, yb - y0);
     }
     g.restoreState();
@@ -911,8 +911,8 @@ private:
         const float lx0 = kb.getX() + 12.0f * u, lx1 = kb.getRight() - 12.0f * u;
         g.setColour(black(0.75f));
         g.fillRect(lx0, ly + 0.9f * u, lx1 - lx0, 1.1f * u);
-        fillH(g, Rectangle<float>(lx0, ly - 0.1f * u, lx1 - lx0, 1.1f * u),
-              { { 0.0f, kGold.withAlpha(0.45f) }, { 0.5f, kGold.withAlpha(0.95f) }, { 1.0f, kGold.withAlpha(0.45f) } });
+        fillH(g, Rectangle<float>(lx0, ly - 0.2f * u, lx1 - lx0, 1.3f * u),
+              { { 0.0f, kGold.withAlpha(0.62f) }, { 0.5f, kGold.withAlpha(1.0f) }, { 1.0f, kGold.withAlpha(0.62f) } });
         for (float dx : { lx0 - 5.0f * u, lx1 + 5.0f * u })
         {
             juce::Path d;
