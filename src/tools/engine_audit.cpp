@@ -22,6 +22,7 @@
 #include <iomanip>
 #include <iostream>
 #include <locale>
+#include <numbers>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -167,7 +168,7 @@ double db(double x) { return 20.0 * std::log10(std::max(x, 1.0e-12)); }
 // Rough loudness weighting: 2nd-order Butterworth high-pass at 100 Hz (not K-weighting, not LUFS).
 double weightedRms(const Rendered& r, long a, long b)
 {
-    const double fc = 100.0, w = std::tan(M_PI * fc / r.rate), q = M_SQRT1_2;
+    const double fc = 100.0, w = std::tan(std::numbers::pi * fc / r.rate), q = (1.0 / std::numbers::sqrt2);
     const double n = 1.0 / (1.0 + w / q + w * w);
     const double b0 = n, b1 = -2.0 * n, b2 = n, a1 = 2.0 * (w * w - 1.0) * n, a2 = (1.0 - w / q + w * w) * n;
     double s = 0.0;
@@ -189,7 +190,7 @@ double weightedRms(const Rendered& r, long a, long b)
 // detector that an ordinary audible note does not excite.
 double subsonicPeak(const Rendered& r)
 {
-    const double w = std::tan(M_PI * 10.0 / r.rate), q = M_SQRT1_2, n = 1.0 / (1.0 + w / q + w * w);
+    const double w = std::tan(std::numbers::pi * 10.0 / r.rate), q = (1.0 / std::numbers::sqrt2), n = 1.0 / (1.0 + w / q + w * w);
     const double b0 = w * w * n, b1 = 2.0 * b0, b2 = b0, a1 = 2.0 * (w * w - 1.0) * n, a2 = (1.0 - w / q + w * w) * n;
     double p = 0;
     for (const auto* ch : { &r.l, &r.r })
@@ -374,7 +375,7 @@ void fft(std::vector<std::complex<double>>& a)
     }
     for (std::size_t len = 2; len <= n; len <<= 1)
     {
-        const double ang = -2.0 * M_PI / (double) len;
+        const double ang = -2.0 * std::numbers::pi / (double) len;
         const std::complex<double> wl(std::cos(ang), std::sin(ang));
         for (std::size_t i = 0; i < n; i += len)
         {
@@ -425,7 +426,7 @@ AliasResult aliasTest(int rate, int note, bool pulse, bool ring, bool source, in
     for (std::size_t i = 0; i < N; ++i)
     {
         const double x = (double) (i) / (double) (N - 1);
-        const double w = 0.35875 - 0.48829 * std::cos(2 * M_PI * x) + 0.14128 * std::cos(4 * M_PI * x) - 0.01168 * std::cos(6 * M_PI * x);
+        const double w = 0.35875 - 0.48829 * std::cos(2 * std::numbers::pi * x) + 0.14128 * std::cos(4 * std::numbers::pi * x) - 0.01168 * std::cos(6 * std::numbers::pi * x);
         a[i] = w * 0.5 * ((double) r.l[(std::size_t) start + i] + (double) r.r[(std::size_t) start + i]);
     }
     fft(a);
@@ -474,12 +475,12 @@ LatencyResult measureLatency(int rate, double freq)
         for (int os = 0; os < 2; ++os)
         {
             const double n = 2.0 * i + os;
-            dec.push((float) std::sin(2 * M_PI * freq * n / (2.0 * rate)));
+            dec.push((float) std::sin(2 * std::numbers::pi * freq * n / (2.0 * rate)));
             if (os == Decimator::kRetainedPhase) y = dec.output();
         }
         if (i >= skip)
         {
-            const double th = 2 * M_PI * freq * i / rate;
+            const double th = 2 * std::numbers::pi * freq * i / rate;
             cs += y * std::cos(th); sn += y * std::sin(th);
             ci += std::cos(th) * std::cos(th); si += std::sin(th) * std::sin(th);
         }
@@ -490,7 +491,7 @@ LatencyResult measureLatency(int rate, double freq)
     LatencyResult r;
     // The phase only fixes the delay modulo one period; resolve it against the reported 63 samples.
     const double period = rate / freq;
-    double d = phase / (2 * M_PI * freq / rate) - Decimator::kHostLatency;
+    double d = phase / (2 * std::numbers::pi * freq / rate) - Decimator::kHostLatency;
     d -= period * std::round(d / period);
     r.delay = d + Decimator::kHostLatency;
     r.gainDb = 20 * std::log10(a);
