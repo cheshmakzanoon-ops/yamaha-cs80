@@ -226,6 +226,8 @@ target_link_libraries(cs80_source_factory_benchmark PRIVATE cs80_core)
 
 add_executable(cs80_dsp_probe src/tools/dsp_probe.cpp)
 target_link_libraries(cs80_dsp_probe PRIVATE cs80_core)
+add_executable(cs80_engine_audit src/tools/engine_audit.cpp)
+target_link_libraries(cs80_engine_audit PRIVATE cs80_core)
 add_executable(cs80_parity_capture src/tools/parity_capture.cpp)
 target_link_libraries(cs80_parity_capture PRIVATE cs80_core)
 if (CS80_BUILD_TESTS)

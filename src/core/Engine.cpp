@@ -26,13 +26,8 @@ void Engine::prepare(double hostSampleRate)
 
     chorus.prepare((float) internalRate);
     bbdChorus.prepare((float) internalRate);
-    fxChorus.prepare((float) internalRate);
-    phaser.prepare((float) internalRate);
-    reverb.prepare((float) internalRate);
-    fxL.prepare(0.8f, (float) internalRate);
-    fxR.prepare(0.8f, (float) internalRate);
-    fxDampL.set(9000.0f, (float) internalRate);
-    fxDampR.set(9000.0f, (float) internalRate);
+    for (auto& slot : fxSlots)
+        slot.prepare((float) internalRate);
     decL.prepare((float) internalRate);
     decR.prepare((float) internalRate);
     externalInput.prepare((float) hostRate);
@@ -108,11 +103,8 @@ void Engine::reset()
         l.reset(0.0f);
     chorus.reset();
     bbdChorus.reset();
-    fxChorus.reset();
-    phaser.reset();
-    reverb.reset();
-    fxL.reset();
-    fxR.reset();
+    for (auto& slot : fxSlots)
+        slot.resetAudio();
     decL.reset();
     decR.reset();
     wahL.reset();
@@ -242,8 +234,8 @@ void Engine::applyParams(const ParamValues& values)
         reset();
         // Legacy reset left these OnePole histories intact. Clear only for
         // mode transitions to preserve mode-off historical rendering.
-        fxDampL.reset();
-        fxDampR.reset();
+        for (auto& slot : fxSlots)
+            slot.resetDamping();
     }
 
     // Gate edges act when parameters are applied, not by per-sample polling, so
@@ -802,7 +794,14 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.lpf.reset();
         }
         r.fenv.reset();
-        r.aenv.reset();
+        // Amplitude envelope: a reused sounding tail restarts its attack from the level it has
+        // reached instead of from zero (source policies only). Zeroing it removed the whole tail in
+        // one sample, a step of up to 0.022 full scale across eight sampled factory programs (0.007
+        // now), a tick under a passage. Inferred from the same reasoning as the oscillator and filter
+        // memories above (no traced reset path); the real envelope capacitor behaviour is not
+        // measured. Legacy keeps the reset.
+        if (!preserveAudioState)
+            r.aenv.reset();
         r.fenv.noteOn(filterInitialTarget(ch),
                       filterAttackTarget(ch),
                       std::max(0.001f, rs.fA * global.envTimeScale),
@@ -1448,23 +1447,32 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // 3 tape delay, 4 plate reverb, 5 drive.
     for (int slot = 0; slot < 3; ++slot)
     {
+        auto& fx = fxSlots[(std::size_t) slot];
         const int type = global.fxType[slot];
         const float amount = global.fxMix[slot];
-        if (amount <= 0.001f || type <= 0)
+        const int live = (amount <= 0.001f || type <= 0) ? 0 : type;
+        if (live != fx.liveType)
+        {
+            // A slot that goes quiet, or changes effect, must not keep the old effect's audio:
+            // it would replay it, late, the next time the slot is switched on.
+            fx.clear(fx.liveType);
+            fx.liveType = live;
+        }
+        if (live == 0)
             continue;
 
-        switch (type)
+        switch (live)
         {
             case 1: // modern stereo chorus
             {
-                const auto m = fxChorus.process(mixL, mixR, 0.62f, 0.62f, true, false);
+                const auto m = fx.chorus.process(mixL, mixR, 0.62f, 0.62f, true, false);
                 mixL = lerp(mixL, m.l, amount * 0.62f);
                 mixR = lerp(mixR, m.r, amount * 0.62f);
                 break;
             }
             case 2: // six-stage phaser
             {
-                const auto p = phaser.process(mixL, mixR, 0.32f, 0.72f);
+                const auto p = fx.phaser.process(mixL, mixR, 0.32f, 0.72f);
                 mixL = lerp(mixL, p.l, amount * 0.72f);
                 mixR = lerp(mixR, p.r, amount * 0.72f);
                 break;
@@ -1473,18 +1481,18 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             {
                 const float wow = std::sin(kTwoPi * driftPhase) * 0.0007f;
                 const float d = (0.34f + wow) * sr;
-                const float wl = fxDampL.process(fxL.read(d));
-                const float wr = fxDampR.process(fxR.read(d));
-                fxL.write(mixL + wr * 0.36f);
-                fxR.write(mixR + wl * 0.36f);
+                const float wl = fx.dampL.process(fx.delayL.read(d));
+                const float wr = fx.dampR.process(fx.delayR.read(d));
+                fx.delayL.write(mixL + wr * 0.36f);
+                fx.delayR.write(mixR + wl * 0.36f);
                 mixL = lerp(mixL, wl, amount * 0.58f);
                 mixR = lerp(mixR, wr, amount * 0.58f);
                 break;
             }
             case 4: // stereo plate reverb
             {
-                const float wl = reverb.process(mixL, 0);
-                const float wr = reverb.process(mixR, 1);
+                const float wl = fx.reverb.process(mixL, 0);
+                const float wr = fx.reverb.process(mixR, 1);
                 mixL = lerp(mixL, wl, amount * 0.62f);
                 mixR = lerp(mixR, wr, amount * 0.62f);
                 break;
