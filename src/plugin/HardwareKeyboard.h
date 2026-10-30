@@ -134,8 +134,9 @@ inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
     const float x0 = r.getX(), x1 = r.getRight() - seam;
     const float w = x1 - x0;
     const float y0 = r.getY(), yb = r.getBottom(), h = r.getHeight();
-    const float noseRest = h * 0.150f;
-    const float bevelH = juce::jmax(3.0f, h * 0.034f);
+    // Nose and lip keep their absolute size on a taller key: only the long face grows.
+    const float noseRest = juce::jmin(h * 0.150f, 30.0f * u);
+    const float bevelH = juce::jmax(3.0f, juce::jmin(h * 0.034f, 6.8f * u));
     const float d = k.depth;
     const float edgeY = yb - noseRest + k.sink + 3.0f * u * d; // bottom of the lip, top of the nose
     const float topEnd = edgeY - bevelH;
@@ -229,42 +230,73 @@ inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
 
     if (d > 0.0f)
     {
-        // A depressed key sits lower in the deck's shadow and takes a light warm wash from the lamp under it.
-        // The ivory is darkened about 8 percent first; the amber then grows from about 12 percent at the back to
-        // 25 percent at the front, so the grain and the face's own gradients still read through it.
+        // A depressed key sits lower than its neighbours. The ivory darkens about 8 percent and a faint amber wash
+        // (at most 20 percent, stronger toward the front) keeps it obvious at a glance; the sinking itself is
+        // drawn with depth: the back edge drops 3 px under the felt leaving a dark gap, the neighbours' side walls
+        // show as wedges that grow toward the front (the left one in shade, the right one lit), and the lip and nose
+        // fall into shadow.
         const float gl = juce::jlimit(0.0f, 1.0f, (k.glow - 0.5f) * 2.0f);
         const Colour wash(0xffee7c12);
+        const float drop = 3.0f * u * d;
         g.setColour(black(0.08f * d));
         g.fillRect(x0, y0, w, yb - y0);
         fillV(g, Rectangle<float>(x0, y0, w, yb - y0),
-              { { 0.0f, wash.withAlpha(d * (0.10f + 0.02f * gl)) }, { 0.55f, wash.withAlpha(d * (0.17f + 0.03f * gl)) },
-                { 1.0f, wash.withAlpha(d * (0.23f + 0.03f * gl)) } });
+              { { 0.0f, wash.withAlpha(d * (0.06f + 0.02f * gl)) }, { 0.55f, wash.withAlpha(d * (0.12f + 0.02f * gl)) },
+                { 1.0f, wash.withAlpha(d * (0.18f + 0.02f * gl)) } });
         // Back to front the face falls toward the felt: shaded under the deck, brighter once it clears it.
-        fillV(g, Rectangle<float>(x0, y0, w, h * 0.62f), { { 0.0f, black(0.20f * d) }, { 1.0f, black(0.0f) } });
-        // At the back, under the felt: a dark gap, a 4 px inner shadow, then ambient occlusion along the key.
-        g.setColour(black(0.90f * d));
-        g.fillRect(x0, y0, w, 1.3f * u);
-        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 4.0f * u), { { 0.0f, black(0.62f * d) }, { 1.0f, black(0.0f) } });
-        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 30.0f * u),
+        fillV(g, Rectangle<float>(x0, y0, w, h * 0.62f), { { 0.0f, black(0.24f * d) }, { 1.0f, black(0.0f) } });
+        // At the back, under the felt: the key's top edge drops 3 px, a 4 px inner shadow follows, then occlusion.
+        fillV(g, Rectangle<float>(x0, y0 + drop, w, 4.5f * u), { { 0.0f, black(0.72f * d) }, { 1.0f, black(0.0f) } });
+        fillV(g, Rectangle<float>(x0, y0 + drop, w, 30.0f * u),
               { { 0.0f, black(0.34f * d) }, { 0.22f, black(0.18f * d) }, { 1.0f, black(0.0f) } });
-        // Its higher neighbours shade the edges (light comes from the left, so the left edge takes more).
-        fillH(g, Rectangle<float>(x0, y0, 5.0f * u, yb - y0), { { 0.0f, black(0.40f * d) }, { 0.5f, black(0.14f * d) }, { 1.0f, black(0.0f) } });
-        fillH(g, Rectangle<float>(x1 - 4.0f * u, y0, 4.0f * u, yb - y0), { { 0.0f, black(0.0f) }, { 1.0f, black(0.30f * d) } });
+        // The neighbours' side walls: wedges from about 1 px at the back to 4 px at the front, light from the upper left.
+        {
+            const float wBack = 1.0f * u, wFront = 1.6f * u + 0.26f * k.sink;
+            const float yTop = y0 + drop;
+            juce::Path leftWall, rightWall;
+            leftWall.addQuadrilateral(x0, yTop, x0 + wBack, yTop, x0 + wFront, yb, x0, yb);
+            rightWall.addQuadrilateral(x1 - wBack, yTop, x1, yTop, x1, yb, x1 - wFront, yb);
+            g.saveState();
+            g.reduceClipRegion(leftWall);
+            fillH(g, Rectangle<float>(x0, yTop, wFront, yb - yTop),
+                  { { 0.0f, Colour(0xff0e0804).withAlpha(0.94f * d) }, { 1.0f, Colour(0xff4a3622).withAlpha(0.84f * d) } });
+            g.restoreState();
+            g.saveState();
+            g.reduceClipRegion(rightWall);
+            fillH(g, Rectangle<float>(x1 - wFront, yTop, wFront, yb - yTop),
+                  { { 0.0f, ivory.darker(0.50f).withAlpha(0.86f * d) }, { 1.0f, ivory.darker(0.20f).withAlpha(0.90f * d) } });
+            g.restoreState();
+            // Thin dark gaps down both sides where the key sinks below its neighbours.
+            g.setColour(black(0.90f * d));
+            g.fillRect(x0, yTop, 0.9f * u, yb - yTop);
+            g.fillRect(x1 - 0.9f * u, yTop, 0.9f * u, yb - yTop);
+            // A little occlusion on the face beside each wall.
+            fillH(g, Rectangle<float>(x0, yTop, 6.0f * u, yb - yTop), { { 0.0f, black(0.20f * d) }, { 1.0f, black(0.0f) } });
+            fillH(g, Rectangle<float>(x1 - 4.0f * u, yTop, 4.0f * u, yb - yTop), { { 0.0f, black(0.0f) }, { 1.0f, black(0.16f * d) } });
+        }
+        // Front lip and nose fall into shadow: the neighbours' higher lips shade the lip, the nose is darker still.
+        fillV(g, Rectangle<float>(x0, topEnd - 7.0f * u, w, 7.0f * u), { { 0.0f, black(0.0f) }, { 1.0f, black(0.16f * d) } });
+        fillV(g, Rectangle<float>(x0, topEnd, w, yb - topEnd),
+              { { 0.0f, black(0.14f * d) }, { 0.30f, black(0.28f * d) }, { 1.0f, black(0.30f * d) } });
+        fillH(g, Rectangle<float>(x0, topEnd, 9.0f * u, yb - topEnd), { { 0.0f, black(0.30f * d) }, { 1.0f, black(0.0f) } });
+        // The key's top edge itself: the dark gap that opens between its back end and the felt.
+        g.setColour(Colour(0xff050302).withAlpha(0.97f * d));
+        g.fillRect(x0, y0, w, drop + 0.7f * u * d);
         if (gd > 0.01f)
         {
             // A modest glow at the front: the nose, a warm rim along the lip and a bright line where it meets the rail.
             fillV(g, Rectangle<float>(x0, topEnd - 22.0f * u, w, 22.0f * u),
-                  { { 0.0f, amb.withAlpha(0.0f) }, { 1.0f, amb.withAlpha(0.08f * gd) } });
-            g.setColour(Colour(0xffffe2a6).withAlpha(0.55f * d));
+                  { { 0.0f, amb.withAlpha(0.0f) }, { 1.0f, amb.withAlpha(0.06f * gd) } });
+            g.setColour(Colour(0xffffe2a6).withAlpha(0.42f * d));
             g.fillRect(x0 + 0.4f * u, topEnd, w - 0.8f * u, 1.4f * u);
-            g.setColour(amb.withAlpha(0.24f * gd));
+            g.setColour(amb.withAlpha(0.20f * gd));
             g.fillRect(x0, topEnd - 1.2f * u, w, 1.2f * u);
-            fillV(g, nose, { { 0.0f, amb.withAlpha(0.08f * gd) }, { 0.50f, amb.withAlpha(0.22f * gd) }, { 1.0f, amb.withAlpha(0.46f * gd) } });
+            fillV(g, nose, { { 0.0f, amb.withAlpha(0.06f * gd) }, { 0.50f, amb.withAlpha(0.18f * gd) }, { 1.0f, amb.withAlpha(0.42f * gd) } });
         }
     }
 
     // Lit left edge of the whole key.
-    g.setColour(white(0.50f - 0.20f * d));
+    g.setColour(white(0.50f - 0.44f * d));
     g.fillRect(x0, y0, 1.0f * u, yb - y0);
 
     if (k.hover && d < 0.05f)
@@ -934,7 +966,7 @@ public:
     {
         setOpaque(true);
         keys.setBlackNoteWidthProportion(0.60f);
-        keys.setBlackNoteLengthProportion(0.65f);
+        keys.setBlackNoteLengthProportion(0.64f);
         addAndMakeVisible(keys);
     }
 
@@ -943,7 +975,8 @@ public:
     // front rail). They scale with the component width, so any size of Keybed keeps its proportions.
     // Design size 1504 x 228: key area 1504 x 193 (36 white keys of 41.78 px, spanning x 48..1552 of the
     // editor); 12 px of felt above the keys, 23 px below them (2 px dark gap, 21 px walnut rail with the
-    // printed legend). Black keys are 65 percent of the white key length.
+    // printed legend). Black keys are 64 percent of the white key length. Everything scales with the height it is given:
+    // the keys take whatever is left between the felt and the rail.
     juce::BorderSize<int> keyInsets { 12, 0, 23, 0 };
 
     void resized() override
