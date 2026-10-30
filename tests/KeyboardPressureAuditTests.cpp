@@ -114,6 +114,26 @@ void testOwnership(){
     owner.clear();before=v;v[1]={true,true,false,1,60};owner.allocated(before,v,b,1,60);
     check(!owner.allows(b,v),"clear revokes ALL origins, not only current gesture table");
 }
+void testEightSlotBound(){
+    static_assert(sizeof(Ownership)<=16*sizeof(Token));
+    check(sizeof(Ownership)<=1024,"owner storage is bounded by eight circuits rather than MIDI keyspace");
+    cs80::KeyboardEventQueue<16> queue;Ownership owner;Snapshot voices{};
+    std::array<Token,8> tokens{};
+    for(int i=0;i<8;++i){const auto before=voices;tokens[i]=onset(queue,i+1,60,static_cast<unsigned>(i+1));
+        voices[i]={true,true,false,i+1,60};check(owner.allocated(before,voices,tokens[i],i+1,60),"each physical slot accepts its own onset");}
+    for(const auto& token:tokens)check(owner.allows(token,voices),"all eight attributed UI origins remain distinct across channels");
+    owner.noteOff(4,60);
+    for(int i=0;i<8;++i)check(owner.allows(tokens[i],voices)==(i!=3),"channel-specific release scans slots without clearing other channel ownership");
+    owner.hostNote(60);
+    for(const auto& token:tokens)check(!owner.allows(token,voices),"host pitch event clears all matching slot owners across channels");
+    owner.clear();voices={};
+    auto before=voices;voices[7]={true,true,false,8,60};owner.allocated(before,voices,tokens[7],8,60);
+    voices[7].held=false;before=voices;voices[7]={true,true,false,2,75};owner.allocated(before,voices,{},2,75);
+    check(!owner.allows(tokens[7],voices),"host reuse invalidates last slot even on a different pitch/channel");
+    const auto fresh=onset(queue,8,60,9);
+    before=voices;voices[0]={true,true,false,8,60};owner.allocated(before,voices,fresh,8,60);
+    check(owner.allows(fresh,voices)&&!owner.allows(tokens[7],voices),"a reused empty current slot binds only the fresh allocated identity");
+}
 void testConsumerAllocationBoundary(){
     cs80::KeyboardEventQueue<8> q;cs80::KeyboardEventQueue<8>::Batch batch;const auto a=onset(q);q.pushPressure(a,.4f,2);
     Ownership owner;Snapshot before{},after{};after[0]={true,true,false,1,60};
@@ -126,5 +146,5 @@ void testConsumerAllocationBoundary(){
 void* operator new(std::size_t n){return allocate(n);}void* operator new[](std::size_t n){return allocate(n);}
 void operator delete(void* p) noexcept{std::free(p);}void operator delete[](void* p) noexcept{std::free(p);}
 void operator delete(void* p,std::size_t) noexcept{std::free(p);}void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
-int main(){testPublicationAndBoundaries();testCapture();testOwnership();testConsumerAllocationBoundary();
+int main(){testPublicationAndBoundaries();testCapture();testOwnership();testEightSlotBound();testConsumerAllocationBoundary();
     std::printf("Keyboard pressure independent audit: %d checks, %d failures\n",checks,failures);return failures?1:0;}

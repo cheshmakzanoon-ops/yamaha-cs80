@@ -8,9 +8,17 @@ namespace cs80
 class KeyboardPressureOwnership
 {
 public:
-    void clear() noexcept { for (auto& channel : current) channel.fill({}); origins.fill({}); }
-    void noteOff(int channel, int note) noexcept { current[(size_t) channel - 1][(size_t) note] = {}; }
-    void hostNote(int note) noexcept { for (auto& channel : current) channel[(size_t) note] = {}; }
+    void clear() noexcept { current.fill({}); origins.fill({}); }
+    void noteOff(int channel, int note) noexcept
+    {
+        for (auto& owner : current)
+            if (owner.channel == channel && owner.note == note) owner = {};
+    }
+    void hostNote(int note) noexcept
+    {
+        for (auto& owner : current)
+            if (owner.note == note) owner = {};
+    }
     template <class Snapshot>
     bool allocated(const Snapshot& before, const Snapshot& after, KeyPressureToken token,
                    int channel, int note) noexcept
@@ -25,7 +33,7 @@ public:
                 && after[i].channel == channel && after[i].note == note)
             {
                 origins[i] = token; // Host allocation/reuse clears old UI origin.
-                if (token) current[(size_t) channel - 1][(size_t) note] = token;
+                current[i] = token; // Host reuse also revokes the slot's old current gesture.
                 found = true;
             }
         return found;
@@ -33,8 +41,10 @@ public:
     template <class Snapshot>
     bool allows(KeyPressureToken token, const Snapshot& voices) const noexcept
     {
-        if (!token || token.channel < 1 || token.channel > 16 || token.note < 0 || token.note > 127
-            || !(current[(size_t) token.channel - 1][(size_t) token.note] == token)) return false;
+        if (!token || token.channel < 1 || token.channel > 16 || token.note < 0 || token.note > 127) return false;
+        bool currentGesture = false;
+        for (const auto& owner : current) currentGesture |= owner == token;
+        if (!currentGesture) return false;
         bool exactHeldOrigin = false;
         for (size_t i = 0; i < origins.size(); ++i)
         {
@@ -50,7 +60,11 @@ public:
         return exactHeldOrigin;
     }
 private:
-    std::array<std::array<KeyPressureToken, 128>, 16> current {};
+    // Only eight allocated circuits can own pressure. Index by physical slot,
+    // not a 16x128 MIDI-key table copied into every processor/test stack frame.
+    std::array<KeyPressureToken, 8> current {};
     std::array<KeyPressureToken, 8> origins {};
 };
+static_assert(sizeof(KeyboardPressureOwnership) <= 1024,
+              "Pressure ownership must remain bounded by eight physical voices");
 }

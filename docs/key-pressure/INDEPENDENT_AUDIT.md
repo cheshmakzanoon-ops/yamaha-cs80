@@ -1,6 +1,6 @@
 # Independent key-pressure helper review
 
-The independent `tests/KeyboardPressureAuditTests.cpp` passed **98 checks,0
+The independent `tests/KeyboardPressureAuditTests.cpp` passed **151 checks,0
 failures**, both native GCC14.2 and ASan+UBSan. Exact hashes, commands/flags and
 mutation counts are in [independent-audit.json](independent-audit.json).
 This is a helper-level pass; it does not substitute for actual processor/editor
@@ -28,6 +28,15 @@ Coverage uses the production JUCE-free headers directly:
   allocations under an instrumented `operator new`/`new[]`. This is not aligned
   allocation instrumentation, malloc interception, or entire-plugin coverage.
 
+The follow-up eight-slot representation also passes: all eight current UI
+owners coexist across channels; channel-specific note-off clears only that
+channel, a host pitch event clears every matching channel, and last-slot host
+reuse cannot preserve an old identity. The helper is **512 bytes** on this
+Linux x86-64 ABI (previous keyspace table:65,792 bytes); compile-time bounds
+limit it to sixteen tokens and1024 bytes. This removes unnecessary per-instance
+storage but does **not** establish the cause of the separate Windows native
+smoke SegFault. The original98-check result remains recorded in commit16735ee.
+
 Seven isolated temporary header mutants compiled and were rejected:
 
 | Fault | Failed checks |
@@ -35,7 +44,7 @@ Seven isolated temporary header mutants compiled and were rejected:
 | Omit pressure epoch validation |4|
 | Use global capture instead of thread-local capture |2|
 | Replace first-attempt capture with latest-attempt capture |2|
-| Ignore onset generation in token equality |3|
+| Ignore onset generation in token equality |4|
 | Admit unidentified same-pitch host aliases |11|
 | Assume allocation despite previously occupied held slots |3|
 | Retain slot origins during clear |1|
@@ -55,6 +64,14 @@ statically rechecked; native host/widget fixtures remain a separate runtime gate
 Genuinely overlapping same-channel/same-pitch UI and host held voices retain the
 Engine's pre-existing newest-note-off ambiguity; pressure attribution is not a
 new source-targeted note-off API, and Panic remains the documented recovery.
+
+The first native16735ee pointer fixture failed four pressure assertions. Static
+inspection found a concrete fixture precondition error: JUCE's real keyboard
+hit-test calls `reallyContains`, whose top-level `contains` requires a native
+peer. A constructed peerless editor cannot hit any key. The owner corrected
+the fixture to attach/show a real peer and assert that each test point resolves
+the requested note; pressure assertions are not weakened. Native corrected
+fixture execution remains a separate gate, not a result of this helper audit.
 
 Reproduction from repository root:
 
