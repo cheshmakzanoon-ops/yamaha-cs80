@@ -680,55 +680,140 @@ void fillStar(Graphics& g, juce::Point<float> c, float radius, Colour fill, bool
 const Colour kChannelOne(0xffffc24d);
 const Colour kChannelTwo(0xffe9dfc2);
 
-// The same embossed micro-relief the main panel and the advanced pages use for
-// the crinkle finish: white and black facets whose alpha is the relief
-// strength. One texel lands on one device pixel; callers set the opacity.
-juce::Image makeRelief(int n, int seed, float gain)
+// The instrument's own wrinkle-paint finish (the recipe of the main panel's tile, same seed and
+// scale): near-black enamel broken into crisp cells of 2 to 3 px, each a small facet with its own
+// tilt, a groove between neighbours and the odd pin-point pale fleck where a facet catches the
+// light from the upper left. Cells come from a toroidal jittered grid, so the tile wraps.
+juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
 {
+    const int cells = 96;                                   // 256 px / 96 = cells of about 2.7 px
+    const float cs = (float) n / (float) cells;
     juce::Random rng(seed);
-    auto layer = [&](int cell)
+    struct Cell { float px, py, tx, ty, tone; };
+    std::vector<Cell> grid((size_t) (cells * cells));
+    auto gauss = [&] { return (rng.nextFloat() + rng.nextFloat() + rng.nextFloat() + rng.nextFloat() - 2.0f) * 0.52f; };
+    for (int cy = 0; cy < cells; ++cy)
+        for (int cx = 0; cx < cells; ++cx)
+        {
+            auto& c = grid[(size_t) (cy * cells + cx)];
+            c.px = ((float) cx + 0.12f + 0.76f * rng.nextFloat()) * cs;
+            c.py = ((float) cy + 0.12f + 0.76f * rng.nextFloat()) * cs;
+            c.tx = gauss(); c.ty = gauss();
+            c.tone = 1.0f + 0.035f * (rng.nextFloat() - 0.5f) * 2.0f;
+        }
+    const float lx = -0.45f, ly = -0.55f, lz = 0.70f;
+    const float ll = std::sqrt(lx * lx + ly * ly + lz * lz);
+    const float Lx = lx / ll, Ly = ly / ll, Lz = lz / ll;
+    float hx = Lx, hy = Ly, hz = Lz + 1.0f;
+    const float hl = std::sqrt(hx * hx + hy * hy + hz * hz);
+    hx /= hl; hy /= hl; hz /= hl;
+
+    std::vector<float> rowGain((size_t) n), rowAmp((size_t) n), rowPhase((size_t) n);
+    std::vector<int> rowCycles((size_t) n);
+    for (int y = 0; y < n; ++y)
     {
-        const int cells = n / cell;
-        std::vector<float> lattice((size_t) (cells * cells));
-        for (auto& v : lattice) v = rng.nextFloat();
-        std::vector<float> out((size_t) (n * n));
-        for (int y = 0; y < n; ++y)
-            for (int x = 0; x < n; ++x)
-            {
-                const float fx = (float) x / (float) cell, fy = (float) y / (float) cell;
-                const int x0 = (int) fx, y0 = (int) fy;
-                float tx = fx - (float) x0, ty = fy - (float) y0;
-                tx = tx * tx * (3.0f - 2.0f * tx);
-                ty = ty * ty * (3.0f - 2.0f * ty);
-                auto at = [&](int xx, int yy) { return lattice[(size_t) ((yy % cells) * cells + (xx % cells))]; };
-                const float top = at(x0, y0) + (at(x0 + 1, y0) - at(x0, y0)) * tx;
-                const float bot = at(x0, y0 + 1) + (at(x0 + 1, y0 + 1) - at(x0, y0 + 1)) * tx;
-                out[(size_t) (y * n + x)] = top + (bot - top) * ty;
-            }
-        return out;
-    };
-    const auto coarse = layer(8), mid = layer(4), fine = layer(2);
-    std::vector<float> height((size_t) (n * n));
-    for (size_t i = 0; i < height.size(); ++i)
-        height[i] = 0.40f * coarse[i] + 0.38f * mid[i] + 0.34f * fine[i] + 0.28f * rng.nextFloat();
-    juce::Image image(juce::Image::ARGB, n, n, true);
+        rowGain[(size_t) y] = (rng.nextFloat() - 0.5f) * 2.0f;
+        rowAmp[(size_t) y] = rng.nextFloat();
+        rowPhase[(size_t) y] = rng.nextFloat() * juce::MathConstants<float>::twoPi;
+        rowCycles[(size_t) y] = 3 + rng.nextInt(6);
+    }
+
+    juce::Image image(juce::Image::RGB, n, n, false);
     juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
     for (int y = 0; y < n; ++y)
         for (int x = 0; x < n; ++x)
         {
-            const float here = height[(size_t) (y * n + x)];
-            const float diag = height[(size_t) (((y + 1) % n) * n + ((x + 1) % n))];
-            const float e = juce::jlimit(-1.0f, 1.0f, (here - diag) * gain);
-            data.setPixelColour(x, y, e > 0.0f ? juce::Colours::white.withAlpha(e)
-                                               : juce::Colours::black.withAlpha(-e));
+            const float fx = (float) x + 0.5f, fy = (float) y + 0.5f;
+            const int cx0 = (int) (fx / cs), cy0 = (int) (fy / cs);
+            float d1 = 1.0e9f, d2 = 1.0e9f;
+            const Cell* nearest = nullptr;
+            float nearDx = 0.0f, nearDy = 0.0f;
+            for (int oy = -1; oy <= 1; ++oy)
+                for (int ox = -1; ox <= 1; ++ox)
+                {
+                    int cx = cx0 + ox, cy = cy0 + oy;
+                    float wrapX = 0.0f, wrapY = 0.0f;
+                    if (cx < 0) { cx += cells; wrapX = -(float) n; } else if (cx >= cells) { cx -= cells; wrapX = (float) n; }
+                    if (cy < 0) { cy += cells; wrapY = -(float) n; } else if (cy >= cells) { cy -= cells; wrapY = (float) n; }
+                    const auto& c = grid[(size_t) (cy * cells + cx)];
+                    const float dx = fx - (c.px + wrapX), dy = fy - (c.py + wrapY);
+                    const float d = std::sqrt(dx * dx + dy * dy);
+                    if (d < d1) { d2 = d1; d1 = d; nearest = &c; nearDx = dx; nearDy = dy; }
+                    else if (d < d2) d2 = d;
+                }
+            const float sx = contrast * nearest->tx + 0.30f * nearDx / cs;
+            const float sy = contrast * nearest->ty + 0.30f * nearDy / cs;
+            const float inv = 1.0f / std::sqrt(sx * sx + sy * sy + 1.0f);
+            const float nx = -sx * inv, ny = -sy * inv, nz = inv;
+            const float diffuse = juce::jmax(0.0f, nx * Lx + ny * Ly + nz * Lz) / Lz;
+            const float edge = juce::jlimit(0.0f, 1.0f, (d2 - d1) / (cs * 0.34f));
+            const float groove = 0.50f + 0.50f * std::pow(edge, 0.8f);
+            const float brushed = 1.0f + 0.016f * (0.55f * rowGain[(size_t) y]
+                                                   + 0.45f * rowAmp[(size_t) y] * std::sin(juce::MathConstants<float>::twoPi * (float) rowCycles[(size_t) y] * (float) x / (float) n + rowPhase[(size_t) y]));
+            const float lum = (0.50f + 0.50f * juce::jlimit(0.0f, 1.4f, diffuse)) * groove * nearest->tone * brushed;
+            const float ndh = juce::jmax(0.0f, nx * hx + ny * hy + nz * hz);
+            const float spec = std::pow(ndh, 420.0f) * edge;               // very tight: only the odd facet ever flashes
+            auto channel = [&](float albedoChannel, float specTint)
+            {
+                const float v = albedoChannel * lum * 255.0f + spec * specTint * 0.17f;
+                return (juce::uint8) juce::jlimit(0, 255, juce::roundToInt(v));
+            };
+            data.setPixelColour(x, y, Colour(channel(albedo.getFloatRed(), 255.0f), channel(albedo.getFloatGreen(), 248.0f),
+                                             channel(albedo.getFloatBlue(), 232.0f)));
         }
     return image;
 }
 
-const juce::Image& crinkleTile()
+// The panel finish itself, as the toolbar and the main panel carry it.
+const juce::Image& wrinkleTile()
 {
-    static const juce::Image tile = makeRelief(192, 5, 1.3f);
+    static const juce::Image tile = makeWrinkleTile(256, 5, Colour(0xff1d1c19), 0.46f);
     return tile;
+}
+
+float tileLuma(Colour c) { return 0.299f * c.getFloatRed() + 0.587f * c.getFloatGreen() + 0.114f * c.getFloatBlue(); }
+
+// The average colour of the finish: laying it over the finish at some opacity calms the facets
+// without changing the tone, so text sits on a quieter surface than the main panel's.
+Colour wrinkleMean()
+{
+    static const Colour mean = []
+    {
+        const auto& tile = wrinkleTile();
+        double r = 0.0, g = 0.0, b = 0.0;
+        for (int y = 0; y < tile.getHeight(); ++y)
+            for (int x = 0; x < tile.getWidth(); ++x)
+            {
+                const auto c = tile.getPixelAt(x, y);
+                r += c.getFloatRed(); g += c.getFloatGreen(); b += c.getFloatBlue();
+            }
+        const double count = (double) tile.getWidth() * tile.getHeight();
+        return Colour::fromFloatRGBA((float) (r / count), (float) (g / count), (float) (b / count), 1.0f);
+    }();
+    return mean;
+}
+
+// The same finish as an overlay for plates that are lighter than the panel: white where a facet is
+// brighter than the average, black where it is darker, scaled so a plate keeps the finish's
+// proportional relief (a lit fleck stays a fleck, the grooves stay grooves).
+const juce::Image& wrinkleRelief()
+{
+    static const juce::Image relief = []
+    {
+        const auto& tile = wrinkleTile();
+        const float mean = std::max(0.01f, tileLuma(wrinkleMean()));
+        juce::Image image(juce::Image::ARGB, tile.getWidth(), tile.getHeight(), true);
+        juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
+        for (int y = 0; y < tile.getHeight(); ++y)
+            for (int x = 0; x < tile.getWidth(); ++x)
+            {
+                const float ratio = tileLuma(tile.getPixelAt(x, y)) / mean;
+                data.setPixelColour(x, y, ratio >= 1.0f ? juce::Colours::white.withAlpha(juce::jlimit(0.0f, 1.0f, 0.21f * (ratio - 1.0f)))
+                                                        : juce::Colours::black.withAlpha(juce::jlimit(0.0f, 1.0f, 1.0f - ratio)));
+            }
+        return image;
+    }();
+    return relief;
 }
 
 // Tile the relief over an area of a design-space context (`deviceScale` device
@@ -1338,9 +1423,11 @@ public:
             g.fillRect(left ? edge - 9.0f : edge, 0.0f, 9.0f, H);
         }
 
-        // The panel face carries the same crinkle finish as the instrument body.
-        fillPanelFace(g, L.face);
-        fillRelief(g, crinkleTile(), L.face, L.s, 0.30f, 11.0f, 7.0f);
+        // The panel face carries the instrument's own fine wrinkle finish at the same scale,
+        // calmed a little so text sits on a quiet surface.
+        fillRelief(g, wrinkleTile(), L.face, L.s, 1.0f, 11.0f, 7.0f);
+        g.setColour(wrinkleMean().withAlpha(0.42f));
+        g.fillRect(L.face);
         g.setGradientFill(juce::ColourGradient(juce::Colours::black.withAlpha(0.45f), L.face.getX(), 0.0f,
                                                juce::Colours::transparentBlack, L.face.getX() + 34.0f, 0.0f, false));
         g.fillRect(L.face.getX(), L.face.getY(), 34.0f, L.face.getHeight());
@@ -3232,6 +3319,25 @@ juce::String PresetBrowser::getTooltipForRow(int row)
     const float W = (float) rowComponent->getWidth() / s, H = (float) rowComponent->getHeight() / s;
     if (e.signature != nullptr && thumbnailRect(compactRows, H).expanded(3.0f).contains(mouse))
         return "Harmonic spectrum on a log frequency axis. Amber is tone I, white is tone II, each drawn against its own patch's loudest harmonic.";
+    // A name that did not fit and was shortened with an ellipsis is spelled out in full.
+    {
+        const bool compact = compactRows;
+        const float textX = 6.0f + (compact ? 150.0f : 188.0f);
+        const float edge = compact ? slimCluster(e.isUser, e.type, e.styles, W, H).rightEdge
+                                   : W - 6.0f - 52.0f - typePillWidth(e.type) - 16.0f;
+        const bool loaded = isLoaded(e);
+        const juce::String stateText = loaded ? (loadedEdited ? "EDITED" : "LOADED") : juce::String();
+        const float tagW = stateText.isEmpty() ? 0.0f : textWidth(styleTagFont(), stateText) + 14.0f;
+        const float budget = edge - textX - (tagW > 0.0f ? tagW + 8.0f : 0.0f);
+        const float cardY = compact ? 2.5f : 4.0f, cardH = H - (compact ? 5.0f : 8.0f);
+        const float nameH = compact ? 19.0f : 24.0f, statH = compact ? 16.0f : 17.0f;
+        const bool hasTags = ! compact && e.signature != nullptr && e.styles != 0;
+        const float y0 = cardY + (cardH - (nameH + 3.0f + statH + (hasTags ? 22.0f : 0.0f))) * 0.5f;
+        const auto font = uiFont(compact ? 15.5f : 17.0f, juce::Font::bold);
+        if (mouse.x >= textX && mouse.x <= textX + std::max(budget, 0.0f) && mouse.y >= y0 && mouse.y <= y0 + nameH
+            && textWidth(font, e.name) * 0.78f > budget)
+            return e.name;
+    }
     if (! compactRows || e.styles == 0)
         return {};
     const auto cluster = slimCluster(e.isUser, e.type, e.styles, W, H);
@@ -3258,7 +3364,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     const bool compact = compactRows;
     const auto tc = typeColour(e.type);
 
-    // An engraved plate sunk into the well: crinkle finish, a dark lip above and
+    // An engraved plate sunk into the well: the panel's wrinkle finish, a dark lip above and
     // a lit lip below, a lit stripe in a slot at the left. Selection tints the
     // plate gold; nothing glossy.
     const float radius = 3.0f;
@@ -3267,7 +3373,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     const Colour faceBottom = selected ? Colour(0xff37290f) : (hover ? Colour(0xff2d2a27) : Colour(0xff242220));
     g.setGradientFill(juce::ColourGradient(faceTop, 0.0f, card.getY(), faceBottom, 0.0f, card.getBottom(), false));
     g.fillRoundedRectangle(card, radius);
-    fillRelief(g, crinkleTile(), card, s, selected ? 0.20f : 0.17f, (float) (rowNumber * 37 % 191), (float) (rowNumber * 19 % 173));
+    fillRelief(g, wrinkleRelief(), card, s, selected ? 0.46f : 0.42f, (float) (rowNumber * 37 % 191), (float) (rowNumber * 19 % 173));
     g.setColour(juce::Colours::black.withAlpha(0.62f));
     g.drawLine(card.getX() + radius, card.getY() + 0.9f, card.getRight() - radius, card.getY() + 0.9f, 1.4f);
     g.drawLine(card.getX() + 0.9f, card.getY() + radius, card.getX() + 0.9f, card.getBottom() - radius, 1.2f);
@@ -3299,7 +3405,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
         drawJewelLamp(g, lc, compact ? 5.5f : 7.0f, edited ? Colour(0xffe6a832) : Colour(0xff58d27c), true);
         g.setColour(slotInk);
         if (compact)
-            g.drawText(e.slot, Rectangle<float>(card.getX() + 37.0f, card.getY(), 26.0f, card.getHeight()), juce::Justification::centredLeft, false);
+            g.drawText(e.slot, Rectangle<float>(card.getX() + 40.0f, card.getY(), 24.0f, card.getHeight()), juce::Justification::centredLeft, false);
         else
             g.drawText(e.slot, Rectangle<float>(card.getX() + 20.0f, card.getCentreY() + 1.0f, 38.0f, 20.0f), juce::Justification::centred, false);
     }
@@ -3432,7 +3538,10 @@ void PresetBrowser::selectedRowsChanged(int lastRowSelected)
     if (const auto* entry = selectedEntry())
     {
         if (! restoringSelection)
+        {
             saveName.setText(entry->name, false);
+            saveName.setCaretPosition(0);
+        }
     }
     updateSelectionWidgets();
     list->repaint();
