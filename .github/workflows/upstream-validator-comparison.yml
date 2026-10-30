@@ -1,0 +1,269 @@
+name: Upstream validator comparison
+
+on:
+  workflow_run:
+    workflows: ["build"]
+    branches: [main]
+    types: [completed]
+
+# This workflow neither publishes statuses nor changes the required stable gate.
+# Never use a privileged token, checkout, source patch or debugger here.
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  compare:
+    if: >-
+      github.repository == 'cheshmakzanoon-ops/yamaha-cs80' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.status == 'completed'
+    name: Official beta3 / ${{ matrix.lane }} / ${{ matrix.seed }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      # A failed headless comparison must not cancel the independent GUI lane.
+      fail-fast: false
+      matrix:
+        include:
+          - lane: headless-subset
+            seed: '0x4f31605'
+            skip_gui: 'true'
+          - lane: gui-inclusive
+            seed: '0x63421ca'
+            skip_gui: 'false'
+    env:
+      VALIDATOR_TAG: v2.0.0-beta3
+      VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+      VALIDATOR_ASSET: pluginval_Linux.zip
+      VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+      VALIDATOR_JUCE_TAG: 9.0.3
+      VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+      COMPARISON_WORKFLOW_SHA: ${{ github.workflow_sha }}
+      COMPARISON_LANE: ${{ matrix.lane }}
+      COMPARISON_SEED: ${{ matrix.seed }}
+      SKIP_GUI: ${{ matrix.skip_gui }}
+      JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+    steps:
+      - name: Verify exact originating build and artifact
+        id: source
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        with:
+          script: |
+            const fs = require('fs');
+            const eventRun = context.payload.workflow_run;
+            const repository = `${context.repo.owner}/${context.repo.repo}`;
+            fs.mkdirSync('reports', { recursive: true });
+            if (repository !== 'cheshmakzanoon-ops/yamaha-cs80' ||
+                context.eventName !== 'workflow_run' ||
+                eventRun?.head_repository?.full_name !== repository ||
+                eventRun?.event !== 'push' || eventRun?.head_branch !== 'main' ||
+                eventRun?.status !== 'completed') {
+              throw new Error('Refusing an origin other than a completed same-repository main push');
+            }
+            const { data: run } = await github.rest.actions.getWorkflowRun({
+              ...context.repo, run_id: eventRun.id
+            });
+            const { data: workflow } = await github.rest.actions.getWorkflow({
+              ...context.repo, workflow_id: 'build.yml'
+            });
+            if (run.id !== eventRun.id || run.run_attempt !== eventRun.run_attempt ||
+                run.head_sha !== eventRun.head_sha || !/^[0-9a-f]{40}$/.test(run.head_sha) ||
+                run.repository?.full_name !== repository ||
+                run.head_repository?.full_name !== repository ||
+                run.event !== 'push' || run.head_branch !== 'main' ||
+                run.status !== 'completed' || run.name !== 'build' ||
+                run.workflow_id !== workflow.id || workflow.path !== '.github/workflows/build.yml') {
+              throw new Error('Build metadata changed or does not match the trusted workflow');
+            }
+            const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
+              ...context.repo, run_id: run.id, per_page: 100
+            });
+            const matches = artifacts.filter(a => a.name === 'cs80-linux-vst3' && !a.expired);
+            if (matches.length !== 1) throw new Error('Expected exactly one non-expired cs80-linux-vst3 artifact');
+            const artifact = matches[0];
+            if (artifact.workflow_run?.id !== run.id ||
+                artifact.workflow_run?.head_sha !== run.head_sha ||
+                artifact.workflow_run?.repository_id !== run.repository.id ||
+                artifact.workflow_run?.head_repository_id !== run.head_repository.id) {
+              throw new Error('Artifact origin does not match the verified source build');
+            }
+            const provenance = {
+              schema_version: 1,
+              scope: 'separate official prerelease comparison; not a stable-gate replacement',
+              repository,
+              source_sha: run.head_sha,
+              source_run_id: run.id,
+              source_run_attempt: run.run_attempt,
+              source_run_url: run.html_url,
+              source_run_conclusion: run.conclusion,
+              source_workflow_id: run.workflow_id,
+              source_workflow_path: workflow.path,
+              source_artifact: {
+                id: artifact.id, name: artifact.name, size_bytes: artifact.size_in_bytes,
+                digest: artifact.digest ?? null, created_at: artifact.created_at,
+                updated_at: artifact.updated_at
+              },
+              comparison_run_id: context.runId,
+              comparison_run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+              comparison_workflow_sha: process.env.COMPARISON_WORKFLOW_SHA,
+              validator: {
+                repository: 'Tracktion/pluginval', tag: process.env.VALIDATOR_TAG,
+                commit: process.env.VALIDATOR_COMMIT, asset: process.env.VALIDATOR_ASSET,
+                asset_sha256: process.env.VALIDATOR_SHA256,
+                asset_url: `https://github.com/Tracktion/pluginval/releases/download/${process.env.VALIDATOR_TAG}/${process.env.VALIDATOR_ASSET}`,
+                juce_tag: process.env.VALIDATOR_JUCE_TAG,
+                juce_commit: process.env.VALIDATOR_JUCE_COMMIT,
+                source_modifications: false
+              },
+              lane: process.env.COMPARISON_LANE,
+              seed: process.env.COMPARISON_SEED,
+              strictness: 10, repeats: 1,
+              skip_gui_tests: process.env.SKIP_GUI === 'true',
+              sample_rates: [44100, 48000, 96000],
+              block_sizes: [64, 128, 256, 512, 1024],
+              test_timeout_ms: 120000, process_timeout_seconds: 600,
+              validation_retries: 0
+            };
+            fs.writeFileSync('reports/provenance.json', JSON.stringify(provenance, null, 2) + '\n');
+            core.setOutput('artifact_id', String(artifact.id));
+            core.setOutput('source_sha', run.head_sha);
+            core.info(`Using artifact ${artifact.id} from run ${run.id}, source ${run.head_sha}; original conclusion ${run.conclusion}`);
+
+      - name: Download only the verified build artifact
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          artifact-ids: ${{ steps.source.outputs.artifact_id }}
+          path: vst3
+          merge-multiple: true
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Install ordinary validator runtime dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libasound2t64 libfontconfig1 libfreetype6 libjack-jackd2-0 \
+            libx11-6 libxext6 libxi6 libxrandr2 libxcursor1 libxinerama1 \
+            libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \
+            fonts-dejavu-core xauth xvfb unzip
+          cat /etc/os-release > reports/os-release.txt
+          dpkg-query -W > reports/runtime-packages.txt
+
+      - name: Verify official archive before extracting or executing
+        run: |
+          set -euo pipefail
+          url="https://github.com/Tracktion/pluginval/releases/download/${VALIDATOR_TAG}/${VALIDATOR_ASSET}"
+          curl --fail --location --proto '=https' --proto-redir '=https' \
+            --connect-timeout 30 --max-time 180 --output pluginval.zip "$url"
+          printf '%s  pluginval.zip\n' "$VALIDATOR_SHA256" | sha256sum --check --strict \
+            | tee reports/archive-verification.txt
+          unzip -l pluginval.zip > reports/archive-contents.txt
+          unzip -q pluginval.zip -d official-pluginval
+          test -f official-pluginval/pluginval
+          test ! -L official-pluginval/pluginval
+          chmod +x official-pluginval/pluginval
+          sha256sum official-pluginval/pluginval > reports/validator-binary-sha256.txt
+          test -d 'vst3/CS-80 Reference.vst3'
+          find vst3 -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > reports/plugin-files-sha256.txt
+          test -s reports/plugin-files-sha256.txt
+          ldd official-pluginval/pluginval | tee reports/validator-libraries.txt
+          if grep -q 'not found' reports/validator-libraries.txt; then
+            echo '::error::The official validator has an unavailable runtime library'
+            exit 1
+          fi
+          ./official-pluginval/pluginval --version | tee reports/validator-version.txt
+          ./official-pluginval/pluginval strictness-help 10 | tee reports/strictness-10-inventory.txt
+
+      - name: Run one ordinary validation and preserve its result
+        id: validate
+        timeout-minutes: 12
+        run: |
+          set -euo pipefail
+          validator="$PWD/official-pluginval/pluginval"
+          plugin="$PWD/vst3/CS-80 Reference.vst3"
+          command=("$validator" validate --strictness-level 10
+            --random-seed "$COMPARISON_SEED" --repeat 1 --timeout-ms 120000
+            --sample-rates 44100,48000,96000 --block-sizes 64,128,256,512,1024
+            --output-dir "$PWD/reports" --output-filename validator
+            --json-results "$PWD/reports/results.json"
+            --junit-xml "$PWD/reports/results.xml")
+          if [ "$SKIP_GUI" = true ]; then
+            command+=(--skip-gui-tests)
+          else
+            command=(xvfb-run -a -s '-screen 0 1920x1200x24' "${command[@]}")
+          fi
+          command+=("$plugin")
+          printf '%q ' timeout --signal=TERM --kill-after=10s 600s "${command[@]}" > reports/command.txt
+          printf '\n' >> reports/command.txt
+          date --utc --iso-8601=seconds > reports/started-at.txt
+          set +e
+          timeout --signal=TERM --kill-after=10s 600s "${command[@]}" 2>&1 | tee reports/console.log
+          statuses=("${PIPESTATUS[@]}")
+          set -e
+          printf '%s\n' "${statuses[0]}" > reports/process-exit-code.txt
+          printf '%s\n' "${statuses[1]}" > reports/logging-exit-code.txt
+          date --utc --iso-8601=seconds > reports/finished-at.txt
+          # A SUCCESS line can never override a nonzero process/timeout status.
+          if [ "${statuses[0]}" -ne 0 ]; then exit "${statuses[0]}"; fi
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+
+          reports = pathlib.Path('reports')
+          log = (reports / 'console.log').read_text(errors='replace').splitlines()
+          if not any(line.strip() == 'SUCCESS' for line in log):
+              raise SystemExit('Missing explicit SUCCESS after an exit-zero comparison')
+          result = json.loads((reports / 'results.json').read_text())
+          summary = result['summary']
+          properties = result.get('properties', {})
+          if (result.get('command') != 'validate'
+                  or result.get('target') != str(pathlib.Path('vst3/CS-80 Reference.vst3').resolve())
+                  or properties.get('strictness_level') != '10'
+                  or properties.get('timeout_ms') != '120000'
+                  or properties.get('random_seed') != os.environ['COMPARISON_SEED']
+                  or any(type(summary.get(key)) is not int for key in ('tests', 'passed', 'failed', 'errors'))
+                  or summary['tests'] <= 0
+                  or summary.get('passed') != summary['tests']
+                  or summary.get('failed') != 0 or summary.get('errors') != 0
+                  or len(result.get('tests', [])) != summary['tests']
+                  or any(test.get('status') != 'passed' for test in result['tests'])):
+              raise SystemExit('Comparison report is incomplete or contains a failed/error test')
+          print(f"Verified clean comparison report: {summary['tests']} tests")
+          PY
+
+      - name: Summarize without changing either gate's result
+        if: always()
+        env:
+          VALIDATION_OUTCOME: ${{ steps.validate.outcome }}
+          SOURCE_SHA: ${{ steps.source.outputs.source_sha }}
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          {
+            echo '## Official pluginval prerelease comparison — not a stable-gate replacement'
+            echo "- Source build: $SOURCE_RUN_ID; source SHA: $SOURCE_SHA"
+            echo "- Validator: $VALIDATOR_TAG; lane: $COMPARISON_LANE; fixed seed: $COMPARISON_SEED"
+            echo "- Validation step: $VALIDATION_OUTCOME"
+            if [ -f reports/process-exit-code.txt ]; then
+              echo "- Process/timeout exit: $(cat reports/process-exit-code.txt)"
+            else
+              echo '- No completed process exit recorded; do not count this lane as passed.'
+            fi
+            echo '- Different validator/JUCE/test inventory. No retries, repair, crash reproduction or causality claim.'
+            echo '- The stable 1.0.4 build gate and every historical failure remain unchanged.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Preserve comparison provenance and all available reports
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: upstream-beta3-${{ matrix.lane }}-source-${{ github.event.workflow_run.id }}-attempt-${{ github.run_attempt }}
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 30
