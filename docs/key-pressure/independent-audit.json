@@ -1,0 +1,66 @@
+{
+  "scope": "Independent JUCE-free queue/capture/ownership helper audit; host integration reviewed separately",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "native_flags": "-std=c++20 -O2 -Wall -Wextra -Werror -pthread -Isrc",
+  "native": {
+    "checks": 98,
+    "failures": 0
+  },
+  "sanitizer_flags": "-std=c++20 -O1 -g -fno-omit-frame-pointer -fsanitize=address,undefined -Wall -Wextra -Werror -pthread -Isrc",
+  "sanitizer_environment": {
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "UBSAN_OPTIONS": "halt_on_error=1"
+  },
+  "asan_ubsan": {
+    "checks": 98,
+    "failures": 0
+  },
+  "source_sha256": {
+    "src/plugin/KeyboardEventQueue.h": "a88089cb79af5c2e4a131ffc30bec6b54150a8d0f8806738becc21f5c80f6221",
+    "src/plugin/KeyboardGestureCapture.h": "3806eea72ba11d17f053d2af072945124e98eaccb5e742e9c78f4ad18777e4c9",
+    "src/plugin/KeyboardPressureOwnership.h": "6583c32f8c52e918e981406fece17cc27fcdcc3a97e837ffd050f654dce63c0f",
+    "tests/KeyboardPressureAuditTests.cpp": "e02f92e82ef28437fd3acc05aeee1d0cca5106e802c9c152d5b8cb51096a9bc8"
+  },
+  "mutants": [
+    {
+      "mutant": "ignore_epoch",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 4 failures"
+    },
+    {
+      "mutant": "global_capture",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 2 failures"
+    },
+    {
+      "mutant": "latest_capture",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 2 failures"
+    },
+    {
+      "mutant": "ignore_onset_generation",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 3 failures"
+    },
+    {
+      "mutant": "ignore_host_alias",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 11 failures"
+    },
+    {
+      "mutant": "assume_allocation",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 3 failures"
+    },
+    {
+      "mutant": "retain_origin_on_clear",
+      "exit": 1,
+      "summary": "Keyboard pressure independent audit: 98 checks, 1 failures"
+    }
+  ],
+  "limits": [
+    "No leak check or TSan claim",
+    "Ordinary C++ allocation instrumentation covers exercised helper consumer/drain/reset paths only; not aligned allocation or entire plugin",
+    "Real host/widget execution requires native host tests; helper pass is not a host lifecycle pass"
+  ]
+}

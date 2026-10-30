@@ -43,8 +43,6 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
       apvts(*this, nullptr, stateType, createParameterLayout())
 {
     keyboardState.addListener(this);
-    for (auto& pressure : pendingKeyPressure)
-        pressure.store(noPendingControl, std::memory_order_relaxed);
     for (int i = 0; i < cs80::P_numParams; ++i)
         parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
     for (int channel = 0; channel < 2; ++channel)
@@ -85,12 +83,18 @@ Cs80AudioProcessor::~Cs80AudioProcessor()
 
 void Cs80AudioProcessor::handleNoteOn(juce::MidiKeyboardState*, int channel, int note, float velocity)
 {
-    if (!std::isfinite(velocity)) return;
+    if (!std::isfinite(velocity))
+    {
+        cs80::KeyboardGestureCapture::attempted(this, channel, note, {});
+        return;
+    }
     // Match the stock indirect MIDI route, including 7-bit velocity quantisation
     // and note-on velocity zero being interpreted as note-off by handleMidi.
     const auto message = juce::MidiMessage::noteOn(channel, note, velocity);
+    KeyPressureToken token;
     keyboardEvents.push(channel, note, message.getFloatVelocity(), message.isNoteOn(),
-                        juce::Time::getMillisecondCounter());
+                        juce::Time::getMillisecondCounter(), &token);
+    cs80::KeyboardGestureCapture::attempted(this, channel, note, token);
 }
 
 void Cs80AudioProcessor::handleNoteOff(juce::MidiKeyboardState*, int channel, int note, float velocity)
@@ -116,24 +120,28 @@ void Cs80AudioProcessor::resetKeyboardHandoff() noexcept
 {
     keyboardEvents.requestReset();
     uiHeldMasks.fill(0);
+    keyPressureOwnership.clear();
     for (auto& mask : hostKeyMasks) mask.store(0, std::memory_order_relaxed);
-    for (auto& pressure : pendingKeyPressure)
-        pressure.store(noPendingControl, std::memory_order_relaxed);
 }
 
 void Cs80AudioProcessor::observeHostMidi(const juce::MidiMessage& message) noexcept
 {
     const unsigned bit = 1u << (message.getChannel() - 1);
     if (message.isNoteOn())
+    {
         hostKeyMasks[(size_t) message.getNoteNumber()].fetch_or(bit, std::memory_order_relaxed);
+        keyPressureOwnership.hostNote(message.getNoteNumber());
+    }
     else if (message.isNoteOff())
     {
         const auto note = (size_t) message.getNoteNumber();
         hostKeyMasks[note].fetch_and(~bit, std::memory_order_relaxed);
         uiHeldMasks[note] &= ~bit;
+        keyPressureOwnership.hostNote((int) note);
     }
     else if (message.isAllNotesOff() || message.isAllSoundOff())
     {
+        keyPressureOwnership.clear(); // Conservative: channel modes revoke UI pressure attribution.
         for (size_t note = 0; note < uiHeldMasks.size(); ++note)
         {
             hostKeyMasks[note].fetch_and(~bit, std::memory_order_relaxed);
@@ -250,9 +258,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
-        // Effective policy transitions reset Engine voices. A stale UI release
-        // must not claim a subsequent host strike of the same pitch/channel.
-        uiHeldMasks.fill(0);
+        // The unconditional lifecycle handoff reset below also revokes gestures.
     }
     // prepare() resets the engine's expression to full; restore the pedal position.
     pendingExpression.store(expressionValue.load(std::memory_order_relaxed), std::memory_order_relaxed);
@@ -459,18 +465,18 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     if (keyboardEvents.hasOverflow() && !keyboardEvents.needsAcknowledgment())
     {
         // No channel-wide panic: release only notes accepted from the UI.
-        // Same-channel/same-pitch host collisions remain ambiguous in Engine.
+        // A successful later host allocation revokes the corresponding UI bit;
+        // a refused host onset must not strand the earlier accepted UI release.
         for (size_t note = 0; note < uiHeldMasks.size(); ++note)
             for (int channel = 1; channel <= 16; ++channel)
                 if ((uiHeldMasks[note] & (1u << (channel - 1))) != 0)
                     engine.noteOff((int) note, channel);
         keyboardEvents.requestReset();
         uiHeldMasks.fill(0);
-        for (auto& pressure : pendingKeyPressure)
-            pressure.store(noPendingControl, std::memory_order_relaxed);
+        keyPressureOwnership.clear();
     }
     cs80::KeyboardEventQueue<>::Batch uiEvents;
-    const auto uiCount = keyboardEvents.take(uiEvents);
+    auto uiCount = keyboardEvents.take(uiEvents);
 
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
@@ -478,10 +484,14 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
-        // Effective policy transitions reset Engine voices. A stale UI release
-        // must not claim a subsequent host strike of the same pitch/channel.
-        uiHeldMasks.fill(0);
+        // Discard the already-captured pre-transition batch too: otherwise its
+        // old onset could establish ownership again after the Engine reset.
+        resetKeyboardHandoff();
+        uiCount = 0;
     }
+    const bool pressureArpOn = !engine.isParityMode() && cached[cs80::P_arpOn] >= 0.5f;
+    if (pressureArpOn || pressureArpOn != pressureArpWasOn) keyPressureOwnership.clear();
+    pressureArpWasOn = pressureArpOn;
 
     const float ribbon = pendingRibbon.exchange(noPendingControl, std::memory_order_relaxed);
     const float pitch = pendingPitch.exchange(noPendingControl, std::memory_order_relaxed);
@@ -534,6 +544,12 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         }
     };
     size_t uiIndex = 0;
+    auto voiceSnapshot = [&]
+    {
+        std::array<cs80::Engine::VoiceInfo, 8> voices;
+        for (int i = 0; i < 8; ++i) voices[(size_t) i] = engine.getVoiceInfo(i);
+        return voices;
+    };
     auto uiPosition = [&]
     {
         return cs80::KeyboardEventQueue<>::samplePosition(uiEvents, uiCount, uiIndex, numSamples);
@@ -544,16 +560,25 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         const auto& event = uiEvents[uiIndex++];
         const unsigned bit = 1u << (event.channel - 1);
         auto& held = uiHeldMasks[(size_t) event.note];
-        if (event.on)
+        if (event.pressure)
         {
+            if (!pressureArpOn && keyPressureOwnership.allows(event.token, voiceSnapshot()))
+                engine.polyPressure(event.note, event.velocity, event.channel);
+        }
+        else if (event.on)
+        {
+            const auto before = voiceSnapshot();
             engine.noteOn(event.note, event.velocity, event.channel);
-            held |= bit;
+            if (pressureArpOn || keyPressureOwnership.allocated(before, voiceSnapshot(), event.token,
+                                                                event.channel, event.note))
+                held |= bit;
         }
         else if ((held & bit) != 0)
         {
             engine.noteOff(event.note, event.channel);
             held &= ~bit;
         }
+        if (!event.on && !event.pressure) keyPressureOwnership.noteOff(event.channel, event.note);
     };
     for (const auto metadata : midi)
     {
@@ -569,19 +594,17 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         while (uiIndex < uiCount && uiPosition() < pos) dispatchUI();
         advanceTo(pos);
         const auto message = metadata.getMessage();
+        std::array<cs80::Engine::VoiceInfo, 8> before;
+        const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn;
+        if (allocatingHostNote) before = voiceSnapshot();
         observeHostMidi(message);
         handleMidi(message);
+        if (message.isNoteOn()
+            && (pressureArpOn || keyPressureOwnership.allocated(before, voiceSnapshot(), {},
+                                                               message.getChannel(), message.getNoteNumber())))
+            uiHeldMasks[(size_t) message.getNoteNumber()] &= ~(1u << (message.getChannel() - 1));
     }
     while (uiIndex < uiCount) dispatchUI();
-
-    // Pressure from the on-screen keys is applied after this block's note-ons so a
-    // gesture that started in the same block cannot be consumed before its voice exists.
-    for (int note = 0; note < 128; ++note)
-    {
-        const float pressure = pendingKeyPressure[(size_t) note].exchange(noPendingControl, std::memory_order_relaxed);
-        if (std::isfinite(pressure))
-            engine.polyPressure(note, juce::jlimit(0.0f, 1.0f, pressure), 1);
-    }
 
     if (done < numSamples)
         renderSegment(done, numSamples - done);

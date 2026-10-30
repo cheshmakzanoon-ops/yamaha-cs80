@@ -68,11 +68,11 @@ void testPluginPanic(Check check, Flush flush)
             midi.addEvent(juce::MidiMessage::controllerEvent(channel, 64, 127), 0);
         for (int channel : { 1, 8, 16 })
             midi.addEvent(juce::MidiMessage::noteOn(channel, 40 + channel, (juce::uint8) 100), 0);
-        keyboard.noteOn(1, 60, 0.8f);
+        auto pressureToken = host.captureKeyboardGesture(1, 60, [&] { keyboard.noteOn(1, 60, 0.8f); });
         tick();
         check(host.getActiveVoiceCount() >= 4, "panic fixture contains UI and multichannel host voices");
         keyboard.noteOn(1, 61, 0.8f); // Never consumed: this must not sound after panic.
-        host.setKeyPressureFromUI(60, 0.9f);
+        host.setKeyPressureFromUI(pressureToken, 0.9f);
         const auto stateBefore = host.getAPVTS().copyState();
         const auto metadataBefore = host.getPresetMetadata();
         const int activeBefore = host.getActiveVoiceCount();
@@ -96,13 +96,13 @@ void testPluginPanic(Check check, Flush flush)
         for (int note = 0; note < 128; ++note)
             uiClear = uiClear && !keyboard.isNoteOnForChannels(0xffff, note);
         check(uiClear, "message-thread panic acknowledgment clears all displayed UI keys");
-        keyboard.noteOn(1, 60, 0.8f);
+        pressureToken = host.captureKeyboardGesture(1, 60, [&] { keyboard.noteOn(1, 60, 0.8f); });
         tick();
         check(host.getActiveVoiceCount() == 1, "acknowledgment restores on-screen keyboard playability");
 
         // Old UI releases/pressure must not claim a new host strike at the same
         // pitch. New host MIDI is intentionally processed after the panic.
-        host.setKeyPressureFromUI(60, 0.95f);
+        host.setKeyPressureFromUI(pressureToken, 0.95f);
         host.requestPanicFromUI();
         midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 110), 0);
         tick();

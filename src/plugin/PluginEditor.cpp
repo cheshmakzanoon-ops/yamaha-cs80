@@ -98,15 +98,33 @@ public:
 };
 // Software-rendered key surfaces keep snapshots identical to the interactive
 // editor. The key depth, moulded front lip and black-key bevel are drawn here.
-class HardwareKeyboard final : public juce::MidiKeyboardComponent
+class HardwareKeyboard final : public juce::MidiKeyboardComponent, public juce::SettableTooltipClient
 {
 public:
-    HardwareKeyboard(juce::MidiKeyboardState& state, Orientation orientation)
-        : MidiKeyboardComponent(state, orientation) {}
+    HardwareKeyboard(Cs80AudioProcessor& p, Orientation orientation)
+        : MidiKeyboardComponent(p.getKeyboardState(), orientation), processor(p) {}
 
     // Pointer gesture standing in for the original per-key pressure sensor.
-    std::function<void(int, float)> onKeyPressure;
     std::function<bool(int)> hostKeyDown;
+
+    void mouseDown(const juce::MouseEvent& e) override
+    {
+        token = processor.captureKeyboardGesture(getMidiChannel(), getNoteAndVelocityAtPosition(e.position).note, [&]
+        { MidiKeyboardComponent::mouseDown(e); });
+    }
+    void mouseDrag(const juce::MouseEvent& e) override
+    {
+        const int note = getNoteAndVelocityAtPosition(e.position).note;
+        const bool newStrike = note >= 0 && note != gesture.getNote();
+        const auto accepted = processor.captureKeyboardGesture(getMidiChannel(), note, [&]
+        { MidiKeyboardComponent::mouseDrag(e); });
+        // A same-key drag retains its original token even after reset+ack.
+        // Cross-key slides must bind the actual new onset or become invalid.
+        // A genuine accepted onset can also follow JUCE's enter/release path
+        // at the same pitch. Do not discard its proven new identity.
+        if (accepted && !newStrike) gesture.begin(note, e.position.y);
+        if (accepted || newStrike) token = accepted;
+    }
 
     bool mouseDownOnKey(int note, const juce::MouseEvent& e) override
     {
@@ -116,14 +134,23 @@ public:
     bool mouseDraggedToKey(int note, const juce::MouseEvent& e) override
     {
         const float pressure = gesture.drag(note, e.position.y, (float) getHeight());
-        if (pressure >= 0.0f && onKeyPressure)
-            onKeyPressure(note, pressure);
+        if (pressure >= 0.0f)
+            processor.setKeyPressureFromUI(token, pressure);
         return true;
     }
     void mouseUp(const juce::MouseEvent& e) override
     {
         MidiKeyboardComponent::mouseUp(e);
         gesture.end();
+        token = {};
+    }
+    void mouseExit(const juce::MouseEvent& e) override
+    {
+        // JUCE mouseExit releases its held pointer note. Re-entry onto even
+        // the same pitch is therefore a fresh strike, not the old gesture.
+        MidiKeyboardComponent::mouseExit(e);
+        gesture.end();
+        token = {};
     }
 
     void drawWhiteNote(int note, juce::Graphics& g, juce::Rectangle<float> area,
@@ -163,6 +190,8 @@ public:
     }
 
 private:
+    Cs80AudioProcessor& processor;
+    Cs80AudioProcessor::KeyPressureToken token {};
     cs80::ui::KeyPressureGesture gesture;
 };
 // Magnified view of the four independent analog-memory panels. This does not
@@ -343,7 +372,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 {
     explicit Impl(Cs80AudioProcessor& p)
         : processor(p),
-          keyboard(p.getKeyboardState(), juce::MidiKeyboardComponent::horizontalKeyboard),
+          keyboard(p, juce::MidiKeyboardComponent::horizontalKeyboard),
           pitchWheel("PITCH", true),
           modWheel("MOD", false),
           advanced(p),
@@ -760,6 +789,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void buildKeyboard()
     {
         processor.serviceKeyboardUI();
+        keyboard.setTooltip("Drag down a held key for pressure; slide sideways for a new strike. Pointer pressure is disabled while the arpeggiator runs and when an active host voice shares the pitch (including other channels and release tails). After a mode change or PANIC, lift and strike again. MIDI aftertouch is unchanged.");
         keyboard.hostKeyDown = [this](int note) { return processor.isHostKeyDown(note); };
         keyboard.setAvailableRange(24, 84);
         keyboard.setLowestVisibleKey(24);
@@ -776,11 +806,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         keyboard.setColour(juce::MidiKeyboardComponent::upDownButtonBackgroundColourId, juce::Colour(0xff111a21));
         keyboard.setWantsKeyboardFocus(false);
         addAndMakeVisible(keyboard);
-
-        keyboard.onKeyPressure = [this](int note, float pressure)
-        {
-            processor.setKeyPressureFromUI(note, pressure);
-        };
 
         ribbon.onValueChange = [this](float value)
         {

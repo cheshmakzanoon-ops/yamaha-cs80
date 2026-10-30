@@ -33,10 +33,19 @@ int main()
 {
     cs80::KeyboardEventQueue<4> queue;
     cs80::KeyboardEventQueue<4>::Batch batch;
+#ifdef PRESSURE_CASE
+    cs80::KeyPressureToken token;
+    queue.push(1, 60, 1.0f, true, 99, &token);
+    if (!token || queue.take(batch) != 1) return 3;
+#endif
     std::atomic<bool> accepted { false };
     std::thread producer([&]
     {
+#ifdef PRESSURE_CASE
+        accepted.store(queue.pushPressure(token, 0.9f, 100));
+#else
         accepted.store(queue.push(1, 60, 1.0f, true, 100));
+#endif
     });
     while (phase.load(std::memory_order_acquire) != 1)
         std::this_thread::yield();
@@ -66,7 +75,7 @@ def unique_replace(source: str, old: str, new: str) -> str:
     return source.replace(old, new, 1)
 
 
-def run_variant(directory: Path, compiler: str, header: str) -> subprocess.CompletedProcess:
+def run_variant(directory: Path, compiler: str, header: str, pressure: bool = False) -> subprocess.CompletedProcess:
     include = directory / "plugin"
     include.mkdir(parents=True)
     (include / "KeyboardEventQueue.h").write_text(header, encoding="utf-8")
@@ -75,6 +84,7 @@ def run_variant(directory: Path, compiler: str, header: str) -> subprocess.Compl
     executable = directory / "fixture"
     subprocess.run(
         [compiler, "-std=c++17", "-O1", "-pthread", "-Wall", "-Wextra",
+         *( ["-DPRESSURE_CASE=1"] if pressure else [] ),
          "-I", str(directory), str(fixture), "-o", str(executable)],
         check=True, capture_output=True, text=True, timeout=60,
     )
@@ -89,23 +99,22 @@ def main() -> None:
     args = parser.parse_args()
     header_path = Path(__file__).resolve().parents[1] / "src/plugin/KeyboardEventQueue.h"
     source = header_path.read_text(encoding="utf-8")
-    instrumented = unique_replace(
-        source, PAUSE_MARKER, "        ::pauseOldEpochProducer();\n" + PAUSE_MARKER,
-    )
-    mutant = unique_replace(
-        instrumented, FILTER_MARKER, "            destination[count++] = event;",
-    )
     with tempfile.TemporaryDirectory(prefix="cs80-keyboard-epoch-") as temporary:
         root = Path(temporary)
-        baseline = run_variant(root / "baseline", args.compiler, instrumented)
-        if baseline.returncode != 0 or "Controlled old-epoch interleave passed" not in baseline.stdout:
-            raise RuntimeError(f"Baseline failed ({baseline.returncode}): {baseline.stdout}{baseline.stderr}")
-        mutation = run_variant(root / "without-epoch-filter", args.compiler, mutant)
-        expected = "FAIL: old in-flight publication escaped epoch filter"
-        if mutation.returncode != 1 or expected not in mutation.stderr:
-            raise RuntimeError(f"Mutation was not detected as expected ({mutation.returncode}): "
-                               f"{mutation.stdout}{mutation.stderr}")
-    print("Keyboard epoch interleave: baseline passed; stale-filter mutant detected")
+        for pressure in (False, True):
+            kind = "pressure" if pressure else "note"
+            pause = "        if (event.pressure) ::pauseOldEpochProducer();\n" if pressure else "        ::pauseOldEpochProducer();\n"
+            instrumented = unique_replace(source, PAUSE_MARKER, pause + PAUSE_MARKER)
+            mutant = unique_replace(instrumented, FILTER_MARKER, "            destination[count++] = event;")
+            baseline = run_variant(root / kind / "baseline", args.compiler, instrumented, pressure)
+            if baseline.returncode != 0 or "Controlled old-epoch interleave passed" not in baseline.stdout:
+                raise RuntimeError(f"{kind} baseline failed ({baseline.returncode}): {baseline.stdout}{baseline.stderr}")
+            mutation = run_variant(root / kind / "without-epoch-filter", args.compiler, mutant, pressure)
+            expected = "FAIL: old in-flight publication escaped epoch filter"
+            if mutation.returncode != 1 or expected not in mutation.stderr:
+                raise RuntimeError(f"{kind} mutation was not detected as expected ({mutation.returncode}): "
+                                   f"{mutation.stdout}{mutation.stderr}")
+    print("Keyboard epoch interleave: note and pressure baselines passed; both stale-filter mutants detected")
 
 
 if __name__ == "__main__":

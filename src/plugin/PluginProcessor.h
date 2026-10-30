@@ -4,6 +4,8 @@
 #include "core/FactoryPresets.h"
 #include "core/Params.h"
 #include "KeyboardEventQueue.h"
+#include "KeyboardGestureCapture.h"
+#include "KeyboardPressureOwnership.h"
 #include "OutputMeter.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -106,12 +108,20 @@ public:
     // reads it back; otherwise wheel and sound would disagree after a transport restart
     // or after reopening the window.
     float getExpressionValue() const noexcept { return expressionValue.load(std::memory_order_relaxed); }
-    // On-screen per-key pressure gesture, delivered as polyphonic aftertouch on channel 1.
-    void setKeyPressureFromUI(int note, float pressure) noexcept
+    using KeyPressureToken = cs80::KeyPressureToken;
+    // Non-audio only. Wrap the real synchronous JUCE onset, not a later pitch
+    // lookup. Nested scopes restore their predecessor even if dispatch throws.
+    template <class Dispatch>
+    KeyPressureToken captureKeyboardGesture(int channel, int note, Dispatch&& dispatch)
     {
-        if (note >= 0 && note < 128)
-            pendingKeyPressure[(size_t) note].store(pressure, std::memory_order_relaxed);
+        cs80::KeyboardGestureCapture capture(this, channel, note);
+        dispatch();
+        return capture.result();
     }
+    // Tagged pressure shares bounded FIFO/timestamp order with its actual onset.
+    // Producer locking is permitted here; the audio consumer never locks.
+    bool setKeyPressureFromUI(KeyPressureToken token, float pressure)
+    { return keyboardEvents.pushPressure(token, pressure, juce::Time::getMillisecondCounter()); }
     struct PresetMetadata
     {
         juce::String name;
@@ -184,6 +194,8 @@ private:
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;
     std::array<unsigned, 128> uiHeldMasks {}; // Audio-owned source recovery tracking.
+    cs80::KeyboardPressureOwnership keyPressureOwnership;
+    bool pressureArpWasOn = false; // Audio-owned effective arp edge tracking.
     std::array<std::atomic<unsigned>, 128> hostKeyMasks {};
     cs80::ParamValues cached;
     // Captured once with the effective programmer controls; never serialized as
@@ -198,7 +210,6 @@ private:
     std::atomic<bool> pendingPanic { false };
     std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl },
         pendingExpression { noPendingControl };
-    std::array<std::atomic<float>, 128> pendingKeyPressure {};
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };

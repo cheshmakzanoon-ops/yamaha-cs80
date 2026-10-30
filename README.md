@@ -205,7 +205,7 @@ Calibrated recordings or instrument access remain valuable if they become availa
 - **PERFORMANCE**: sustain, portamento, glide mode, chorus / tremolo, sustain II.
 - **KEYBOARD / FOOT**: LOW/HIGH BRILLIANCE and LEVEL contour levers (centre = neutral; double-click re-centres), on-screen PEDAL, footswitch PLUG and PRESS, SUSTAIN and PORTA assigners, WAH (EXP-WAH), HIGH (output).
 - **RIBBON**: first contact sets the reference; relative motion bends pitch; release restores neutral (up to about an octave).
-- **KEYBED**: 61 keys with velocity. On screen, strike a key and drag further down it to press harder (a pointer stand-in for the per-key sensor).
+- **KEYBED**: 61 keys with velocity. On screen, strike a key and drag further down it to press harder (a pointer stand-in for the per-key sensor). On-screen pressure is tied to an accepted UI strike; it is conservatively suppressed during arpeggiation or ambiguous host-note overlap. Host MIDI aftertouch remains available. See [pressure ownership and reset safety](docs/KEY_PRESSURE_HANDOFF.md).
 - **Advanced**: LFOs, SUB and ring detail, chorus, FX, macros, MPE, arpeggiator, original/legacy SUB switch, voice dispersion/drift/noise. **LIBRARY / SAVE**: searchable preset browser.
 
 Double-click any control to return it to its default. The [PANIC button](docs/PANIC_CONTROL.md) stops existing notes, MIDI sustain holds and arpeggiator keys at the next audio block without changing the patch; retained effects/noise may remain, and newly received host notes can play.

@@ -6,6 +6,7 @@
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/PluginPanicTests.h"
+#include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
@@ -627,6 +628,7 @@ void testKeyPressureGesture(bool isolated = false)
     host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
     host.setParamValue(cs80::P_voiceDispersion, 0.0f);
     host.prepareToPlay(48000.0, 256);
+    host.serviceKeyboardUI();
     auto block = [&](const juce::MidiBuffer& events = {})
     {
         juce::AudioBuffer<float> audio(2, 256);
@@ -644,25 +646,29 @@ void testKeyPressureGesture(bool isolated = false)
     };
     // The note-on and the first pressure message arrive in the same block, which
     // is the case a drain at the start of the block would lose.
-    juce::MidiBuffer strike;
-    strike.addEvent(juce::MidiMessage::noteOn(1, 64, (juce::uint8) 100), 0);
-    host.setKeyPressureFromUI(64, 0.6f);
-    block(strike);
+    const auto first = host.captureKeyboardGesture(1, 64, [&] { host.getKeyboardState().noteOn(1, 64, 0.8f); });
+    host.setKeyPressureFromUI(first, 0.6f);
+    block();
     check(std::abs(pressureOf(64) - 0.6f) < 1e-6f, "pressure sent with the strike is not lost");
-    host.setKeyPressureFromUI(64, 0.25f);
-    host.setKeyPressureFromUI(200, 0.9f);   // out of range: ignored
-    host.setKeyPressureFromUI(64, std::numeric_limits<float>::quiet_NaN());
-    host.setKeyPressureFromUI(64, 0.25f);
+    host.setKeyPressureFromUI(first, 0.25f);
+    host.setKeyPressureFromUI({}, 0.9f);   // no captured onset: ignored
+    host.setKeyPressureFromUI(first, std::numeric_limits<float>::quiet_NaN());
+    host.setKeyPressureFromUI(first, 0.25f);
     block();
     check(std::abs(pressureOf(64) - 0.25f) < 1e-6f, "later pressure updates the held key");
     block();
-    check(std::abs(pressureOf(64) - 0.25f) < 1e-6f, "the mailbox is consumed once and the pressure holds");
-    juce::MidiBuffer second;
-    second.addEvent(juce::MidiMessage::noteOn(1, 67, (juce::uint8) 100), 0);
-    host.setKeyPressureFromUI(67, 1.0f);
-    block(second);
+    check(std::abs(pressureOf(64) - 0.25f) < 1e-6f, "the pressure event is consumed once and its value holds");
+    const auto second = host.captureKeyboardGesture(1, 67, [&] { host.getKeyboardState().noteOn(1, 67, 0.8f); });
+    host.setKeyPressureFromUI(second, 1.0f);
+    block();
     check(std::abs(pressureOf(64) - 0.25f) < 1e-6f && pressureOf(67) == 1.0f,
           "pressure is polyphonic: each key keeps its own value");
+    juce::MidiBuffer hostPressure;
+    hostPressure.addEvent(juce::MidiMessage::noteOn(2, 72, (juce::uint8) 100), 0);
+    hostPressure.addEvent(juce::MidiMessage::aftertouchChange(2, 72, 79), 1);
+    block(hostPressure);
+    check(std::abs(pressureOf(72) - 79.0f / 127.0f) < 1e-6f,
+          "host MIDI poly-aftertouch remains independent of UI gesture tokens");
 }
 
 // Sequential host/message-thread handoff regressions. These are behavioral tests,
@@ -700,9 +706,9 @@ void testKeyboardHandoffHost(bool isolated)
     };
     reset();
     auto& keyboard = host.getKeyboardState(); // All uses here are non-audio producers.
-    keyboard.noteOn(1, 60, 0.8f);
+    const auto pressureToken = host.captureKeyboardGesture(1, 60, [&] { keyboard.noteOn(1, 60, 0.8f); });
     check(held(60) == 0, "UI strike does not mutate the engine before processBlock");
-    host.setKeyPressureFromUI(60, 0.65f);
+    host.setKeyPressureFromUI(pressureToken, 0.65f);
     tick();
     check(held(60) == 1 && !host.isHostKeyDown(60), "queued UI strike reaches DSP without host feedback");
     for (int v = 0; v < 8; ++v)
@@ -3380,6 +3386,8 @@ int main(int argc, char** argv)
     // All preset-save I/O is confined to fresh temporary fixtures.
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::testPluginPanic(check, flushGui);
+    cs80::tests::testKeyboardPressureOwnershipHost(check);
+    cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
 

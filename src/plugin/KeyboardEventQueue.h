@@ -7,9 +7,22 @@
 #include <cstddef>
 #include <cstdint>
 #include <mutex>
+#include <limits>
 
 namespace cs80
 {
+// Identity of one successfully published UI onset, never a current-pitch lookup.
+struct KeyPressureToken
+{
+    const void* queue = nullptr;
+    std::uint64_t onset = 0;
+    std::uint32_t epoch = 0;
+    int channel = 0, note = -1;
+    explicit operator bool() const noexcept { return queue != nullptr && onset != 0; }
+    friend bool operator==(const KeyPressureToken& a, const KeyPressureToken& b) noexcept
+    { return a.queue == b.queue && a.onset == b.onset && a.epoch == b.epoch
+          && a.channel == b.channel && a.note == b.note; }
+};
 // Multiple non-audio producers, one audio consumer. Only producers take mutex.
 // Lifecycle calls are consumer operations and require stopped audio processing.
 template <std::size_t Capacity = 256>
@@ -23,17 +36,37 @@ public:
         int channel = 1, note = 0;
         float velocity = 0;
         bool on = false;
+        bool pressure = false;
+        KeyPressureToken token {};
     };
     using Batch = std::array<Event, Capacity>;
 
-    bool push(int channel, int note, float velocity, bool on, std::uint32_t milliseconds)
+    bool push(int channel, int note, float velocity, bool on, std::uint32_t milliseconds,
+              KeyPressureToken* acceptedOnset = nullptr)
     {
+        if (acceptedOnset != nullptr) *acceptedOnset = {};
         if (channel < 1 || channel > 16 || note < 0 || note > 127 || !std::isfinite(velocity))
             return false;
+        return publish({ milliseconds, 0, channel, note, velocity, on }, acceptedOnset);
+    }
+
+    bool pushPressure(KeyPressureToken token, float pressure, std::uint32_t milliseconds)
+    {
+        if (!token || token.queue != this || token.channel < 1 || token.channel > 16
+            || token.note < 0 || token.note > 127 || !std::isfinite(pressure)) return false;
+        return publish({ milliseconds, token.epoch, token.channel, token.note,
+                         std::clamp(pressure, 0.0f, 1.0f), false, true, token }, nullptr);
+    }
+
+private:
+    bool publish(Event event, KeyPressureToken* acceptedOnset)
+    {
         const std::lock_guard<std::mutex> lock(producerMutex);
         const auto current = epoch.load(std::memory_order_acquire);
         if (acknowledged.load(std::memory_order_acquire) != current
             || overflow.load(std::memory_order_acquire)) return false;
+        if (event.pressure && event.token.epoch != current) return false;
+        if (event.on && nextOnset == std::numeric_limits<std::uint64_t>::max()) return false;
         const auto w = write.load(std::memory_order_relaxed);
         if (w - read.load(std::memory_order_acquire) == Capacity)
         {
@@ -44,15 +77,19 @@ public:
         // Clamp regressions (including >2^31 ms ambiguous jumps) in publication
         // order; a small unsigned forward delta still supports clock wrap.
         if (timestampEpoch == current
-            && std::uint32_t(milliseconds - lastTimestamp) > 0x7fffffffu)
-            milliseconds = lastTimestamp;
-        lastTimestamp = milliseconds;
+            && std::uint32_t(event.milliseconds - lastTimestamp) > 0x7fffffffu)
+            event.milliseconds = lastTimestamp;
+        lastTimestamp = event.milliseconds;
         timestampEpoch = current;
-        events[w % Capacity] = { milliseconds, current, channel, note, velocity, on };
+        event.epoch = current;
+        if (event.on) event.token = { this, ++nextOnset, current, event.channel, event.note };
+        events[w % Capacity] = event;
         write.store(w + 1, std::memory_order_release);
+        if (acceptedOnset != nullptr && event.on) *acceptedOnset = event.token;
         return true;
     }
 
+public:
     bool hasOverflow() const noexcept { return overflow.load(std::memory_order_acquire); }
     std::uint32_t requestedEpoch() const noexcept { return epoch.load(std::memory_order_acquire); }
     bool needsAcknowledgment() const noexcept
@@ -115,6 +152,7 @@ private:
     std::array<Event, Capacity> events {};
     std::mutex producerMutex;
     std::uint32_t lastTimestamp = 0, timestampEpoch = 0; // Producer mutex only.
+    std::uint64_t nextOnset = 0; // Never reset/reused, producer mutex only.
     std::atomic<std::size_t> read { 0 }, write { 0 };
     std::atomic<std::uint32_t> epoch { 1 }, acknowledged { 1 };
     std::atomic<bool> overflow { false };
