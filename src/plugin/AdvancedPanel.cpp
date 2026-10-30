@@ -38,9 +38,19 @@ const juce::Colour kGlowDeep { 0xffc98f2a };     // lit amber glass, bottom
 
 // Colours are read at call time: the shared palette lives in another translation unit.
 juce::Colour axisInk() { return ivoryDim.withAlpha(0.92f); }
+// The three LFOs use cool scope colours so they never read as one of the page cap colours.
 juce::Colour lfoColour(int i)
 {
-    return i == 0 ? capGreen.brighter(0.3f) : (i == 1 ? capPink.brighter(0.2f) : capYellow);
+    return i == 0 ? juce::Colour(0xff46c8dc) : (i == 1 ? juce::Colour(0xff8aa4f7) : juce::Colour(0xffc994f2));
+}
+// The shortcut modifier as the platform names it.
+juce::String shortcutName()
+{
+#if JUCE_MAC
+    return "Cmd";
+#else
+    return "Ctrl";
+#endif
 }
 juce::Colour pageColour(int i)
 {
@@ -60,8 +70,8 @@ juce::Colour inkFor(juce::Colour plate)
 // Small drawing vocabulary
 // ---------------------------------------------------------------------------
 
-// No readable text is set below 11 design px (about 8 px on screen in the smallest window).
-constexpr float kMinFont = 11.0f;
+// No readable text is set below 12.5 design px (about 8.75 px on screen in the smallest window).
+constexpr float kMinFont = 12.5f;
 
 juce::Font fnt(float height, bool bold = false, float kern = 0.0f)
 {
@@ -81,10 +91,10 @@ void text(juce::Graphics& g, const juce::String& s, Rect r, float h, bool bold, 
     g.drawText(s, r, j, false);
 }
 
-// Axis numeral: 11 px, contrast above 3:1 on the glass.
+// Axis numeral at the type floor, contrast above 4:1 on the glass.
 void axisText(juce::Graphics& g, const juce::String& s, Rect r, Just j = Just::centred)
 {
-    text(g, s, r, 11.0f, false, axisInk(), j);
+    text(g, s, r, kMinFont, false, axisInk(), j);
 }
 
 // Silkscreen legend pressed into the panel: dark undercut, bright ink.
@@ -322,12 +332,12 @@ void inertOverlay(juce::Graphics& g, Rect r, const char* label = "ISOLATION  -  
     for (float x = r.getX() - r.getHeight(); x < r.getRight(); x += 10.0f)
         g.drawLine(x, r.getBottom(), x + r.getHeight(), r.getY(), 1.3f);
     g.restoreState();
-    const Rect badge = Rect(0.0f, 0.0f, 196.0f, 20.0f).withCentre(r.getCentre());
+    const Rect badge = Rect(0.0f, 0.0f, textWidth(label, 12.5f, true, 0.08f) + 28.0f, 22.0f).withCentre(r.getCentre());
     g.setColour(kInk.withAlpha(0.9f));
     g.fillRoundedRectangle(badge, 3.0f);
     g.setColour(amber.withAlpha(0.7f));
     g.drawRoundedRectangle(badge, 3.0f, 1.0f);
-    text(g, label, badge, 10.0f, true, amber, Just::centred, 0.08f);
+    text(g, label, badge, 12.5f, true, amber, Just::centred, 0.08f);
 }
 
 juce::String periodString(float seconds)
@@ -708,11 +718,15 @@ private:
         const bool noiseFn = original ? fn == 4 : fn == 5;
 
         juce::Path path;
+        const bool bus = proc.isExternalInputEnabled();
         if (ext)
         {
-            g.setColour(ivoryDim.withAlpha(0.7f));
+            // No input meter exists: a disabled bus is a faint line, an enabled one a firmer line.
+            g.setColour(ivoryDim.withAlpha(bus ? 0.8f : 0.22f));
             const float dash[] = { 5.0f, 4.0f };
             g.drawDashedLine(juce::Line<float>(plot.getX(), cy, plot.getRight(), cy), dash, 2, 1.4f);
+            text(g, bus ? "EXTERNAL INPUT ROUTED FROM THE HOST  -  LEVEL IS NOT METERED" : "EXT BUS DISABLED  -  NO SIGNAL",
+                 { plot.getX() + 40.0f, cy - 30.0f, plot.getWidth() - 80.0f, 22.0f }, 12.5f, true, bus ? ivory : amber, Just::centred, 0.06f);
         }
         else if (noiseFn)
         {
@@ -808,27 +822,29 @@ private:
                                      { "VCA", cs80::P_subVca, 0.45f, " lvl" } };
         static const Row right[3] = { { "AT SPEED", cs80::P_subAtSpeed, 0.0f, "" }, { "AT VCO", cs80::P_subAtVco, 1.5f, " st" },
                                       { "AT VCF", cs80::P_subAtVcf, 1.5f, " oct" } };
-        text(g, "DEPTH, AT FULL AMOUNT", { 14.0f, 0.0f, 330.0f, 18.0f }, 11.0f, true, gold, Just::centredLeft, 0.12f);
-        text(g, "PRESSURE, AT FULL KEY PRESSURE", { 370.0f, 0.0f, 330.0f, 18.0f }, 11.0f, true, gold, Just::centredLeft, 0.12f);
+        text(g, "DEPTH NOW  (MAX)", { 14.0f, 0.0f, 330.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.1f);
+        text(g, "PRESSURE AT FULL TOUCH  (MAX)", { 370.0f, 0.0f, 330.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.1f);
         vline(g, 356.0f, 4.0f, designH - 4.0f, 0.18f, gold);
         auto cell = [&](float x, float y, const Row& r)
         {
             const float amount = v(r.param);
-            const bool lit = amount > 0.001f && ! iso;
-            text(g, r.name, { x, y, 86.0f, 22.0f }, 12.0f, true, lit ? ivory : ivoryDim, Just::centredLeft, 0.04f);
+            const bool zero = amount <= 0.001f;
+            const bool lit = ! zero && ! iso;
+            text(g, r.name, { x, y, 80.0f, 22.0f }, 12.5f, true, lit ? ivory : ivoryDim, Just::centredLeft, 0.03f);
             g.setColour(juce::Colours::black.withAlpha(0.75f));
-            g.fillRoundedRectangle(x + 90.0f, y + 8.0f, 120.0f, 7.0f, 3.5f);
-            if (amount > 0.001f)
+            g.fillRoundedRectangle(x + 84.0f, y + 8.0f, 72.0f, 7.0f, 3.5f);
+            if (! zero)
             {
                 g.setColour(iso ? ivoryDim.withAlpha(0.4f) : amber);
-                g.fillRoundedRectangle(x + 90.0f, y + 8.0f, juce::jmax(4.0f, 120.0f * amount), 7.0f, 3.5f);
+                g.fillRoundedRectangle(x + 84.0f, y + 8.0f, juce::jmax(4.0f, 72.0f * amount), 7.0f, 3.5f);
             }
+            // The bright figure is what the setting gives now; the dim one is what full amount would give.
             // AT SPEED multiplies the rate by 1 + 2 x amount at full key pressure.
-            // At zero the row shows the range the amount can reach instead of a bare +0.00.
-            const bool zero = amount <= 0.001f;
-            const juce::String val = r.full > 0.0f ? (zero ? "MAX " : "+") + juce::String(amount > 0.001f ? amount * r.full : r.full, 2) + r.unit
-                                                   : (zero ? "MAX x3.00" : "x" + juce::String(1.0f + 2.0f * amount, 2));
-            text(g, val, { x + 214.0f, y, 112.0f, 22.0f }, 12.0f, lit, lit ? amberBright : axisInk(), Just::centredRight, 0.02f);
+            const juce::String now = r.full > 0.0f ? (zero ? juce::String("0") + r.unit : "+" + juce::String(amount * r.full, 2) + r.unit)
+                                                   : (zero ? juce::String("0") : "x" + juce::String(1.0f + 2.0f * amount, 2));
+            const juce::String top = r.full > 0.0f ? "max " + juce::String(r.full, 2) : juce::String("max x3.00");
+            text(g, now, { x + 158.0f, y, 90.0f, 22.0f }, 12.5f, lit, lit ? amberBright : ivoryDim, Just::centredRight, 0.02f);
+            text(g, top, { x + 254.0f, y, 74.0f, 22.0f }, 12.5f, false, axisInk(), Just::centredRight);
         };
         for (int i = 0; i < 3; ++i)
         {
@@ -850,7 +866,7 @@ public:
     void paintStatic(juce::Graphics& g) override { glassWell(g, { 0.0f, 0.0f, designW, designH }); }
 
 private:
-    static Rect plotRect() { return { 84.0f, 58.0f, 562.0f, 224.0f }; }
+    static Rect plotRect() { return { 84.0f, 58.0f, 562.0f, 208.0f }; }
 
     struct Geo
     {
@@ -999,12 +1015,12 @@ private:
         const float peak = gm.speed * (1.0f + gm.ed);
         hline(g, plot.getX(), plot.getRight(), plot.getBottom(), 0.34f);
         hline(g, plot.getX(), plot.getRight(), yOf(gm.speed), 0.26f);
-        axisText(g, "0", { 4.0f, plot.getBottom() - 7.0f, 72.0f, 14.0f }, Just::centredRight);
-        axisText(g, hzText(gm.speed) + " Hz", { 0.0f, yOf(gm.speed) - 7.0f, 76.0f, 14.0f }, Just::centredRight);
-        if (std::abs(yOf(gm.speed) - yOf(peak)) > 15.0f)
+        axisText(g, "0", { 4.0f, plot.getBottom() - 8.0f, 72.0f, 16.0f }, Just::centredRight);
+        axisText(g, hzText(gm.speed) + " Hz", { 0.0f, yOf(gm.speed) - 8.0f, 78.0f, 16.0f }, Just::centredRight);
+        if (std::abs(yOf(gm.speed) - yOf(peak)) > 17.0f)
         {
             hline(g, plot.getX(), plot.getRight(), yOf(peak), 0.16f);
-            axisText(g, hzText(peak) + " Hz", { 0.0f, yOf(peak) - 7.0f, 76.0f, 14.0f }, Just::centredRight);
+            axisText(g, hzText(peak) + " Hz", { 0.0f, yOf(peak) - 8.0f, 78.0f, 16.0f }, Just::centredRight);
         }
         for (int i = 0; i <= 4; ++i)
             vline(g, plot.getX() + plot.getWidth() * (float) i / 4.0f, plot.getY(), plot.getBottom(), i == 0 ? 0.34f : 0.14f);
@@ -1059,7 +1075,7 @@ private:
             g.fillEllipse(c.x - 9.0f, c.y - 9.0f, 18.0f, 18.0f);
             g.setColour(juce::Colours::black.withAlpha(0.88f));
             g.fillEllipse(c.x - 7.0f, c.y - 7.0f, 14.0f, 14.0f);
-            text(g, which == 1 ? "A" : "D", { c.x - 7.0f, c.y - 7.0f, 14.0f, 14.0f }, 11.0f, true, ink, Just::centred);
+            text(g, which == 1 ? "A" : "D", { c.x - 8.0f, c.y - 8.0f, 16.0f, 16.0f }, 12.5f, true, ink, Just::centred);
         }
 
         // Time axis: each bracket and label sits under the segment it describes.
@@ -1072,25 +1088,26 @@ private:
             g.drawLine(x0 + 1.0f, by, x1 - 1.0f, by, 1.2f);
             g.drawLine(x0 + 1.0f, by - 3.0f, x0 + 1.0f, by + 3.0f, 1.2f);
             g.drawLine(x1 - 1.0f, by - 3.0f, x1 - 1.0f, by + 3.0f, 1.2f);
-            const float tw = textWidth(s, 11.5f, true, 0.02f) + 8.0f;
+            const float tw = textWidth(s, 12.5f, true, 0.02f) + 8.0f;
             const float cx = juce::jlimit(plot.getX() + tw * 0.5f, plot.getRight() - tw * 0.5f, (x0 + x1) * 0.5f);
-            text(g, s, { cx - tw * 0.5f, by + 4.0f, tw, 16.0f }, 11.5f, true, c, Just::centred, 0.02f);
+            text(g, s, { cx - tw * 0.5f, by + 4.0f, tw, 17.0f }, 12.5f, true, c, Just::centred, 0.02f);
         };
         bracket(plot.getX(), xa, "A " + timeText(gm.a), amber);
         bracket(xa, xe, "D " + timeText(gm.d), ivory);
-        axisText(g, "0", { plot.getX() - 12.0f, plot.getBottom() + 29.0f, 24.0f, 14.0f });
-        axisText(g, timeText(gm.total), { plot.getRight() - 60.0f, plot.getBottom() + 29.0f, 60.0f, 14.0f }, Just::centredRight);
+        axisText(g, "0", { plot.getX() - 12.0f, plot.getBottom() + 29.0f, 24.0f, 16.0f });
+        axisText(g, timeText(gm.total), { plot.getRight() - 70.0f, plot.getBottom() + 29.0f, 70.0f, 16.0f }, Just::centredRight);
 
-        text(g, "CARRIER FREQUENCY, KEY HELD", { 14.0f, 6.0f, 300.0f, 18.0f }, 11.0f, true, axisInk(), Just::centredLeft, 0.05f);
-        text(g, wet ? "WET " + juce::String(juce::roundToInt(gm.amount * 100.0f)) + "%" : juce::String("BYPASSED  -  AMOUNT 0%"),
-             { 330.0f, 6.0f, 324.0f, 18.0f }, 12.0f, true, wet ? amberBright : amber, Just::centredRight, 0.05f);
+        text(g, "CARRIER FREQUENCY, KEY HELD", { 14.0f, 6.0f, 300.0f, 20.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.04f);
+        text(g, wet ? "WET " + juce::String(juce::roundToInt(gm.amount * 100.0f)) + "%" : juce::String("BYPASSED  -  MOD 0%"),
+             { 330.0f, 6.0f, 324.0f, 20.0f }, 12.5f, true, wet ? amberBright : amber, Just::centredRight, 0.05f);
         text(g, hzText(gm.speed) + " > " + hzText(peak) + " Hz", { 14.0f, 26.0f, 300.0f, 22.0f }, 15.0f, true,
              live ? ivory : ivoryDim, Just::centredLeft, 0.03f);
         text(g, gm.ghost ? juce::String("DEPTH 0%  -  PREVIEW AT 100%") : "DEPTH " + juce::String(juce::roundToInt(gm.depth * 100.0f)) + "%",
-             { 330.0f, 28.0f, 324.0f, 18.0f }, 12.0f, true, gm.ghost ? amber : ivory, Just::centredRight, 0.05f);
-        text(g, "DRAG A: ATTACK AND DEPTH      DRAG D: DECAY", { 14.0f, 338.0f, 640.0f, 16.0f }, 11.0f, true, axisInk(), Just::centredLeft, 0.04f);
-        text(g, "RELEASE 0.35 s, FIXED   -   THE FIRST KEY OF A PHRASE TRIGGERS IT", { 14.0f, 355.0f, 640.0f, 16.0f }, 11.0f, false, axisInk(),
+             { 330.0f, 28.0f, 324.0f, 20.0f }, 12.5f, true, gm.ghost ? amber : ivory, Just::centredRight, 0.04f);
+        text(g, "DRAG A: ATTACK AND DEPTH      DRAG D: DECAY", { 14.0f, 316.0f, 640.0f, 18.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.03f);
+        text(g, "RELEASE 0.35 s, FIXED   -   THE FIRST KEY OF A PHRASE TRIGGERS IT", { 14.0f, 335.0f, 640.0f, 18.0f }, 12.5f, false, axisInk(),
              Just::centredLeft);
+        text(g, "SET ON THE MAIN PANEL:  SPEED, DEPTH, ATTACK, DECAY, MOD", { 14.0f, 354.0f, 640.0f, 18.0f }, 12.5f, true, gold, Just::centredLeft, 0.04f);
     }
 
     int hover = 0, dragging = 0;
@@ -1107,7 +1124,7 @@ public:
     explicit ChorusSweep(Cs80AudioProcessor& p) : LiveWidget(p, 572.0f, 276.0f) {}
 
 private:
-    static Rect plotRect() { return { 66.0f, 40.0f, 486.0f, 140.0f }; }
+    static Rect plotRect() { return { 70.0f, 40.0f, 482.0f, 120.0f }; }
 
     void sample(Sig& s) const override
     {
@@ -1124,23 +1141,32 @@ private:
         const auto plot = plotRect();
         constexpr float two = juce::MathConstants<float>::twoPi;
 
-        float lo = 0.0f, hi = 20.0f;
+        // The extremes the trace reaches, so the vertical axis can close in on them.
+        const float bbdBase = 1000.0f * 256.0f / 106904.5f;
+        float vmin, vmax, step, minSpan;
         juce::String unit = " ms", title = "LEGACY  -  GENERIC DELAY LINE";
-        if (trem) { hi = 1.0f; unit = ""; title = "TREMOLO  -  GENERIC AMPLITUDE LAW  -  GAIN"; }
-        else if (bbd) { hi = 4.0f; title = "OE2 BBD DELAY  -  CLOCK RANGE INFERRED"; }
+        if (trem) { vmin = 1.0f - depth * 0.45f; vmax = 1.0f; step = 0.05f; minSpan = 0.1f; unit = ""; title = "TREMOLO  -  GENERIC AMPLITUDE LAW  -  GAIN"; }
+        else if (bbd) { vmin = bbdBase / std::exp2(depth * 0.5f); vmax = bbdBase * std::exp2(depth * 0.5f); step = 0.5f; minSpan = 1.0f;
+                        title = "OE2 BBD DELAY  -  CLOCK RANGE INFERRED"; }
+        else { vmin = 13.5f; vmax = 13.5f + 4.5f * depth; step = 1.0f; minSpan = 4.0f; }
+        const float centre = std::round(0.5f * (vmin + vmax) / step) * step;
+        const float half = std::ceil((juce::jmax((vmax - vmin) * 1.5f, minSpan) + step) * 0.5f / step) * step;
+        float lo = centre - half, hi = centre + half;
+        if (lo < 0.0f) { hi -= lo; lo = 0.0f; }
+        if (trem && hi > 1.0f) { lo -= hi - 1.0f; hi = 1.0f; lo = juce::jmax(0.0f, lo); }
 
         for (int i = 0; i <= 2; ++i)
         {
             const float y = plot.getBottom() - plot.getHeight() * (float) i / 2.0f;
             hline(g, plot.getX(), plot.getRight(), y, i == 0 ? 0.34f : 0.16f);
             const float val = lo + (hi - lo) * (float) i / 2.0f;
-            axisText(g, juce::String(val, hi <= 1.0f ? 1 : 0) + (i == 2 ? unit : juce::String()), { 0.0f, y - 7.0f, 60.0f, 14.0f },
+            axisText(g, juce::String(val, trem ? 2 : (step < 1.0f ? 1 : 0)) + (i == 2 ? unit : juce::String()), { 0.0f, y - 8.0f, 66.0f, 16.0f },
                      Just::centredRight);
         }
         for (int i = 0; i <= 4; ++i)
             vline(g, plot.getX() + plot.getWidth() * (float) i / 4.0f, plot.getY(), plot.getBottom(), i % 2 == 0 ? 0.24f : 0.10f);
-        axisText(g, "0", { plot.getX() - 12.0f, plot.getBottom() + 3.0f, 24.0f, 14.0f });
-        axisText(g, "2 PERIODS  =  " + periodString(2.0f / juce::jmax(0.05f, speed)), { plot.getRight() - 150.0f, plot.getBottom() + 3.0f, 150.0f, 14.0f },
+        axisText(g, "0", { plot.getX() - 12.0f, plot.getBottom() + 3.0f, 24.0f, 16.0f });
+        axisText(g, "2 PERIODS  =  " + periodString(2.0f / juce::jmax(0.05f, speed)), { plot.getRight() - 190.0f, plot.getBottom() + 3.0f, 190.0f, 16.0f },
                  Just::centredRight);
 
         auto trace = [&](float phaseOffset)
@@ -1155,7 +1181,7 @@ private:
                 if (trem)
                     value = 1.0f - depth * 0.45f * (0.5f + 0.5f * mod);
                 else if (bbd)
-                    value = 1000.0f * 256.0f / (106904.5f * std::exp2(depth * 0.5f * mod));
+                    value = bbdBase / std::exp2(depth * 0.5f * mod);
                 else
                     value = 13.5f + 4.5f * depth * (0.5f + 0.5f * mod);
                 const float x = plot.getX() + plot.getWidth() * t;
@@ -1177,32 +1203,37 @@ private:
         g.setColour(on ? amberBright : ivoryDim);
         g.strokePath(main, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
-        text(g, title, { 14.0f, 6.0f, 410.0f, 20.0f }, 12.0f, true, on ? amber : axisInk(), Just::centredLeft, 0.04f);
-        text(g, on ? "ON" : "OFF  -  BYPASSED", { 420.0f, 6.0f, 138.0f, 20.0f }, 12.0f, true, on ? amberBright : amber, Just::centredRight, 0.08f);
+        text(g, title, { 14.0f, 6.0f, 410.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.03f);
+        text(g, on ? "ON" : "OFF  -  BYPASSED", { 420.0f, 6.0f, 138.0f, 22.0f }, 12.5f, true, on ? amberBright : amber, Just::centredRight, 0.06f);
 
-        // Readouts: the three numbers that define the sweep.
+        // Readouts. SPEED and DEPTH are main-panel settings shown here for reference, so they are flat
+        // figures between hairlines in ivory; the delay or gain range is derived from them and lit.
         juce::String range;
         if (trem) range = "1.00 - " + juce::String(1.0f - depth * 0.45f, 2);
-        else if (bbd) range = juce::String(1000.0f * 256.0f / (106904.5f * std::exp2(depth * 0.5f)), 2) + " - "
-                              + juce::String(1000.0f * 256.0f / (106904.5f * std::exp2(-depth * 0.5f)), 2) + " ms";
+        else if (bbd) range = juce::String(bbdBase / std::exp2(depth * 0.5f), 2) + " - " + juce::String(bbdBase * std::exp2(depth * 0.5f), 2) + " ms";
         else range = "13.5 - " + juce::String(13.5f + 4.5f * depth, 1) + " ms";
-        struct Cell { const char* k; juce::String val; };
-        const Cell cells[3] = { { "SPEED", juce::String(speed, speed < 10.0f ? 2 : 1) + " Hz" },
-                                { "DEPTH", juce::String(juce::roundToInt(depth * 100.0f)) + "%" },
-                                { trem ? "GAIN RANGE" : "DELAY RANGE", range } };
+        struct Cell { const char* k; juce::String val; bool derived; };
+        const Cell cells[3] = { { "SPEED", juce::String(speed, speed < 10.0f ? 2 : 1) + " Hz", false },
+                                { "DEPTH", juce::String(juce::roundToInt(depth * 100.0f)) + "%", false },
+                                { trem ? "GAIN RANGE" : "DELAY RANGE", range, true } };
+        const float cellW[3] = { 150.0f, 130.0f, 240.0f };
+        float cx = 14.0f;
+        const float cy = 186.0f;
+        hline(g, 14.0f, 558.0f, cy, 0.20f);
+        hline(g, 14.0f, 558.0f, cy + 50.0f, 0.20f);
         for (int i = 0; i < 3; ++i)
         {
-            const Rect c(14.0f + (float) i * 186.0f, 208.0f, 176.0f, 50.0f);
-            g.setColour(juce::Colours::black.withAlpha(0.55f));
-            g.fillRoundedRectangle(c, 4.0f);
-            g.setColour(juce::Colours::white.withAlpha(0.08f));
-            g.drawRoundedRectangle(c, 4.0f, 1.0f);
-            text(g, cells[i].k, c.withTrimmedLeft(10.0f).withHeight(22.0f), 11.0f, true, ivoryDim, Just::centredLeft, 0.1f);
-            text(g, cells[i].val, c.withTrimmedLeft(10.0f).withTrimmedTop(20.0f), 18.0f, true, on ? amberBright : ivoryDim, Just::centredLeft, 0.02f);
+            if (i > 0)
+                vline(g, cx - 8.0f, cy + 6.0f, cy + 44.0f, 0.22f);
+            text(g, cells[i].k, { cx, cy + 3.0f, cellW[i] - 10.0f, 20.0f }, 12.5f, true, ivoryDim, Just::centredLeft, 0.08f);
+            text(g, cells[i].val, { cx, cy + 22.0f, cellW[i] - 10.0f, 26.0f }, 18.0f, true,
+                 ! on ? ivoryDim : (cells[i].derived ? amberBright : ivory), Just::centredLeft, 0.02f);
+            cx += cellW[i] + 12.0f;
         }
         text(g, on ? (bbd ? "ONE SHARED WET PATH  (LEFT = RIGHT)" : "FAINT TRACE = RIGHT CHANNEL, PHASE +0.95 PI")
                    : "SWITCH CHORUS ON AT THE MAIN PANEL TO HEAR THIS STAGE",
-             { 14.0f, 258.0f, 548.0f, 16.0f }, 11.0f, false, axisInk(), Just::centredLeft, 0.03f);
+             { 14.0f, 240.0f, 548.0f, 18.0f }, 12.5f, false, axisInk(), Just::centredLeft, 0.01f);
+        text(g, "SET ON THE MAIN PANEL:  SPEED, DEPTH, CHORUS, TREMOLO", { 14.0f, 258.0f, 548.0f, 18.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
     }
 };
 
@@ -1629,14 +1660,10 @@ private:
         const Rect badge(10.0f, 36.0f, 46.0f, 34.0f);
         capChip(g, badge, working ? capYellow : juce::Colour(0xff3a3731));
         text(g, "FX " + juce::String(slotIndex + 1), badge, 12.5f, true, working ? juce::Colour(0xff17120a) : ivoryDim, Just::centred, 0.05f);
-        drawControlCaption(g, "EFFECT", { 70.0f, 8.0f, 170.0f, 17.0f }, Just::centred, 11.5f);
+        drawControlCaption(g, "EFFECT", { 70.0f, 8.0f, 170.0f, 17.0f }, Just::centred, 12.5f);
 
-        if (type == 0)
-        {
-            text(g, "NO EFFECT", { 372.0f, 38.0f, 168.0f, 22.0f }, 13.0f, true, ivoryDim.withAlpha(0.6f), Just::centredLeft, 0.1f);
-            text(g, "SIGNAL PASSES", { 372.0f, 60.0f, 168.0f, 20.0f }, 11.0f, false, axisInk().withAlpha(0.8f), Just::centredLeft);
-        }
-        else
+        // An empty slot says nothing here: the chain strip and the type list already show it is off.
+        if (type != 0)
         {
             text(g, kFxTypes[type], { 372.0f, 30.0f, 168.0f, 22.0f }, 14.0f, true, masked ? ivoryDim : ivory, Just::centredLeft, 0.06f);
             text(g, masked ? "MASKED BY ISOLATION"
@@ -1644,7 +1671,7 @@ private:
                                  + juce::String(juce::roundToInt(juce::jlimit(0.0f, 1.0f, mix * factor[type]) * 100.0f)) + "%",
                  { 372.0f, 54.0f, 168.0f, 20.0f }, 12.0f, true, masked ? amber : (mix > 0.001f ? amberBright : ivoryDim), Just::centredLeft, 0.03f);
             if (mix <= 0.001f && ! masked)
-                text(g, "MIX 0: BYPASSED", { 372.0f, 76.0f, 168.0f, 20.0f }, 11.0f, false, axisInk(), Just::centredLeft);
+                text(g, "MIX 0: BYPASSED", { 372.0f, 76.0f, 168.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft);
         }
     }
 
@@ -1662,6 +1689,7 @@ public:
         cs80::Rng rng(0x7a11u);
         for (auto& x : scatter)
             x = rng.nextUnipolar();
+        enableMouse(false);
     }
 
 private:
@@ -1674,11 +1702,17 @@ private:
         static const char* const names[5] = { "CHORUS", "PHASER", "TAPE DELAY", "PLATE REVERB", "DRIVE" };
         static const char* const notes[5] = { "13.5 - 16.3 ms sweep", "6 all-pass stages", "340 ms taps", "dense decaying tail", "x3.2 soft clip" };
         const Rect r = tileRect(i);
+        const bool hot = hover == i;
+        if (hot)
+        {
+            g.setColour(amber.withAlpha(0.12f));
+            g.fillRoundedRectangle(r.expanded(4.0f), 7.0f);
+        }
+        g.setColour(juce::Colours::black.withAlpha(hot ? 0.28f : 0.45f));
+        g.fillRoundedRectangle(r, 5.0f);
+        g.setColour(hot ? amber.withAlpha(0.85f) : juce::Colours::white.withAlpha(0.10f));
+        g.drawRoundedRectangle(r, 5.0f, hot ? 1.6f : 1.0f);
         const Rect gl(r.getX(), r.getY(), r.getWidth(), 110.0f);
-        g.setColour(juce::Colours::black.withAlpha(0.45f));
-        g.fillRoundedRectangle(gl, 4.0f);
-        g.setColour(juce::Colours::white.withAlpha(0.07f));
-        g.drawRoundedRectangle(gl, 4.0f, 1.0f);
         juce::Path p;
         const juce::Colour ink = amber.withAlpha(0.7f);
         constexpr float two = juce::MathConstants<float>::twoPi;
@@ -1747,15 +1781,57 @@ private:
                 g.strokePath(p, juce::PathStrokeType(1.8f));
                 break;
         }
-        text(g, names[i], { r.getX(), r.getY() + 118.0f, r.getWidth(), 22.0f }, 12.5f, true, ivory.withAlpha(0.8f), Just::centred, 0.06f);
-        text(g, notes[i], { r.getX(), r.getY() + 142.0f, r.getWidth(), 20.0f }, 11.0f, false, axisInk(), Just::centred);
+        text(g, names[i], { r.getX(), r.getY() + 118.0f, r.getWidth(), 22.0f }, 12.5f, true, hot ? amberBright : ivory.withAlpha(0.9f), Just::centred, 0.04f);
+        text(g, notes[i], { r.getX() + 2.0f, r.getY() + 142.0f, r.getWidth() - 4.0f, 20.0f }, 12.5f, false, axisInk(), Just::centred);
+        text(g, hot ? "CLICK TO LOAD" : "", { r.getX(), r.getY() + 168.0f, r.getWidth(), 20.0f }, 12.5f, true, amber, Just::centred, 0.06f);
     }
 
     void sample(Sig& s) const override
     {
         const int slot = sel->slot;
         s[0] = v(cs80::P_fx1Type + slot * 2); s[1] = v(cs80::P_fx1Mix + slot * 2); s[2] = v(cs80::P_parityMode);
-        s[3] = (float) slot;
+        s[3] = (float) slot; s[4] = (float) hover;
+    }
+
+    // The gallery of an empty slot is a row of buttons: a click loads that effect through the same
+    // parameter the type list uses. Nothing else on this plot takes the mouse.
+    int tileAt(Pt p) const
+    {
+        if (isolated() || juce::roundToInt(v(cs80::P_fx1Type + sel->slot * 2)) != 0)
+            return -1;
+        for (int i = 0; i < 5; ++i)
+            if (tileRect(i).contains(p))
+                return i;
+        return -1;
+    }
+    void mouseMove(const juce::MouseEvent& e) override
+    {
+        const int h = tileAt(toDesign(e.getPosition()));
+        if (h != hover)
+        {
+            hover = h;
+            setMouseCursor(h >= 0 ? juce::MouseCursor::PointingHandCursor : juce::MouseCursor::NormalCursor);
+            repaint();
+        }
+    }
+    void mouseExit(const juce::MouseEvent&) override
+    {
+        if (hover != -1)
+        {
+            hover = -1;
+            setMouseCursor(juce::MouseCursor::NormalCursor);
+            repaint();
+        }
+    }
+    void mouseDown(const juce::MouseEvent& e) override
+    {
+        const int h = tileAt(toDesign(e.getPosition()));
+        if (h < 0)
+            return;
+        setParameterOnce(proc, cs80::P_fx1Type + sel->slot * 2, (float) (h + 1));
+        hover = -1;
+        setMouseCursor(juce::MouseCursor::NormalCursor);
+        refresh();
     }
 
     void draw(juce::Graphics& g) override
@@ -1783,11 +1859,11 @@ private:
 
         if (type == 0)
         {
-            title = "FX " + juce::String(slot + 1) + "  -  EMPTY SLOT";
-            text(g, "AVAILABLE EFFECTS  -  CHOOSE ONE IN THE LIST AT LEFT", { 14.0f, 42.0f, 790.0f, 20.0f }, 11.0f, true, gold, Just::centredLeft, 0.14f);
+            title = "FX " + juce::String(slot + 1);
+            text(g, "CLICK AN EFFECT TO LOAD IT INTO FX " + juce::String(slot + 1) + ", OR PICK ONE IN THE LIST AT LEFT",
+                 { 14.0f, 42.0f, 792.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.1f);
             for (int i = 0; i < 5; ++i)
                 drawTile(g, i);
-            foot = "AN EMPTY SLOT PASSES THE SIGNAL THROUGH UNCHANGED";
         }
         else
         {
@@ -1949,6 +2025,7 @@ private:
 
     std::shared_ptr<FxSel> sel;
     std::array<float, 110> scatter {};
+    int hover = -1;
 };
 
 // ---- Macro destinations: a flat bipolar bar and three equal destination rows ---------------------
@@ -1978,7 +2055,7 @@ private:
                              { "LFO DEPTH", signedString(juce::jmax(0.0f, x) * 18.0f, 0, "%"), "0 - +18%" } }; break;
             case 2: rows = { { "DETUNE II", signedString(x * 12.0f, 1, " ct"), plusMinus() + "12.0 ct" },
                              { "DISPERSION", pct(0.22f), range(0.22f) }, { "CHORUS DEPTH", pct(0.25f), range(0.25f) } }; break;
-            default: rows = { { "RING AMOUNT", pct(0.22f), range(0.22f) }, { "SUB > VCF", pct(0.20f), range(0.20f) },
+            default: rows = { { "RING MOD", pct(0.22f), range(0.22f) }, { "SUB > VCF", pct(0.20f), range(0.20f) },
                               { "SUB > VCA", pct(0.12f), range(0.12f) } }; break;
         }
         // Flat bipolar bar: centre is neutral.
@@ -2009,6 +2086,23 @@ private:
     }
 
     int m;
+};
+
+// ---- A caption that can be dimmed together with the control under it --------------------------------
+class CaptionWidget final : public LiveWidget
+{
+public:
+    CaptionWidget(Cs80AudioProcessor& p, float w, float h, juce::String t, Just j, float size)
+        : LiveWidget(p, w, h), label(std::move(t)), just(j), fontSize(size) {}
+    void paintStatic(juce::Graphics&) override {}
+
+private:
+    void sample(Sig&) const override {}
+    void draw(juce::Graphics& g) override { drawControlCaption(g, label, { 0.0f, 0.0f, designW, designH }, just, fontSize); }
+
+    juce::String label;
+    Just just;
+    float fontSize;
 };
 
 // ---- Output channels: stereo or mono, and what the output stage does to the signal ------------------
@@ -2058,7 +2152,7 @@ private:
         text(g, stereo ? "LEFT AND RIGHT KEPT SEPARATE" : "L AND R AVERAGED AFTER THE EFFECTS", { 2.0f, 136.0f, 250.0f, 18.0f }, 11.0f, false,
              axisInk(), Just::centredLeft);
         text(g, "ENGINE RUNS AT 2x OVERSAMPLING", { 2.0f, 154.0f, 250.0f, 18.0f }, 11.0f, false, axisInk(), Just::centredLeft);
-        text(g, pol == 0 ? "OVERLOAD SHOWS ON THE OVR LAMP" : "CAN EXCEED FULL SCALE - KEEP HEADROOM", { 2.0f, 174.0f, 250.0f, 20.0f }, 11.0f, true,
+        text(g, pol == 0 ? "OVERLOAD SHOWS ON THE OVR LAMP" : "CAN CLIP: KEEP HEADROOM", { 2.0f, 174.0f, 250.0f, 20.0f }, 11.0f, true,
              pol == 0 ? axisInk() : amberBright, Just::centredLeft, 0.02f);
     }
 };
@@ -2097,10 +2191,10 @@ private:
 class ArpPattern final : public LiveWidget
 {
 public:
-    explicit ArpPattern(Cs80AudioProcessor& p) : LiveWidget(p, 712.0f, 184.0f) {}
+    explicit ArpPattern(Cs80AudioProcessor& p) : LiveWidget(p, 712.0f, 250.0f) {}
 
 private:
-    static Rect plotRect() { return { 64.0f, 30.0f, 634.0f, 120.0f }; }
+    static Rect plotRect() { return { 64.0f, 32.0f, 634.0f, 184.0f }; }
 
     void sample(Sig& s) const override
     {
@@ -2155,7 +2249,7 @@ private:
         for (int n : used)
         {
             const float y = plot.getBottom() - ((float) (n - lowest) + 0.5f) * rowH;
-            axisText(g, noteName(n), { 8.0f, y - 7.0f, 46.0f, 14.0f }, Just::centredRight);
+            axisText(g, noteName(n), { 6.0f, y - 8.0f, 50.0f, 16.0f }, Just::centredRight);
             g.setColour(axisInk().withAlpha(0.5f));
             g.fillRect(plot.getX() - 4.0f, y - 0.5f, 4.0f, 1.0f);
         }
@@ -2202,16 +2296,16 @@ private:
             }
             // Step number: one per step, centred under its gate bar.
             if (stepW > 15.0f)
-                axisText(g, juce::String((int) i + 1), { plot.getX() + stepW * (float) i, plot.getBottom() + 3.0f, stepW, 14.0f });
+                axisText(g, juce::String((int) i + 1), { plot.getX() + stepW * (float) i, plot.getBottom() + 3.0f, stepW, 16.0f });
         }
         if (random)
-            text(g, "RANDOM STEP FROM THE HELD NOTES, ALL OCTAVES", plot, 12.0f, true, on ? amberBright : axisInk(), Just::centred, 0.1f);
-        text(g, (on ? juce::String("DEMO CHORD C4 E4 G4") : juce::String("ARP OFF  -  PREVIEW, DEMO CHORD C4 E4 G4"))
-                    + (mode == 4 ? "  PRESSED E4 G4 C4" : "") + "  -  " + juce::String((int) seq.size()) + " STEPS",
-             { 14.0f, 5.0f, 520.0f, 20.0f }, 11.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.05f);
+            text(g, "RANDOM STEP FROM THE HELD NOTES, ALL OCTAVES", plot, 12.5f, true, on ? amberBright : axisInk(), Just::centred, 0.08f);
+        const juce::String chord = mode == 4 ? juce::String("DEMO CHORD, PLAYED E4 G4 C4") : juce::String("DEMO CHORD C4 E4 G4");
+        text(g, (on ? chord : "ARP OFF  -  PREVIEW  -  " + chord) + "  -  " + juce::String((int) seq.size()) + " STEPS",
+             { 14.0f, 5.0f, 490.0f, 22.0f }, 12.5f, true, on ? amber : axisInk(), Just::centredLeft, 0.02f);
         text(g, kArpModes[mode] + "  -  " + juce::String(octaves) + (octaves == 1 ? " OCTAVE" : " OCTAVES"),
-             { 500.0f, 5.0f, 198.0f, 20.0f }, 11.5f, true, on ? ivory : axisInk(), Just::centredRight, 0.06f);
-        text(g, "STEP", { 4.0f, plot.getBottom() + 3.0f, 52.0f, 14.0f }, 11.0f, true, axisInk(), Just::centredRight);
+             { 504.0f, 5.0f, 196.0f, 22.0f }, 12.5f, true, on ? ivory : axisInk(), Just::centredRight, 0.04f);
+        text(g, "STEP", { 4.0f, plot.getBottom() + 3.0f, 56.0f, 16.0f }, 12.5f, true, axisInk(), Just::centredRight);
         if (isolated())
             inertOverlay(g, { 0.0f, 0.0f, designW, designH });
     }
@@ -2224,7 +2318,7 @@ private:
 class GlideCurve final : public LiveWidget
 {
 public:
-    explicit GlideCurve(Cs80AudioProcessor& p) : LiveWidget(p, 648.0f, 172.0f) {}
+    explicit GlideCurve(Cs80AudioProcessor& p) : LiveWidget(p, 648.0f, 208.0f) {}
 
     void paintStatic(juce::Graphics& g) override
     {
@@ -2234,13 +2328,13 @@ public:
         {
             const float y = plot.getBottom() - plot.getHeight() * (float) i / 4.0f;
             hline(g, plot.getX(), plot.getRight(), y, i == 0 ? 0.34f : 0.15f);
-            axisText(g, juce::String(i * 3) + (i == 4 ? " st" : ""), { 0.0f, y - 7.0f, 52.0f, 14.0f }, Just::centredRight);
+            axisText(g, juce::String(i * 3) + (i == 4 ? " st" : ""), { 0.0f, y - 8.0f, 54.0f, 16.0f }, Just::centredRight);
         }
         vline(g, plot.getX(), plot.getY(), plot.getBottom(), 0.34f);
     }
 
 private:
-    static Rect plotRect() { return { 60.0f, 30.0f, 572.0f, 88.0f }; }
+    static Rect plotRect() { return { 60.0f, 32.0f, 572.0f, 116.0f }; }
 
     void sample(Sig& s) const override { s[0] = v(cs80::P_portamento); s[1] = v(cs80::P_glideMode); }
 
@@ -2261,13 +2355,15 @@ private:
         for (int i = 0; i <= 5; ++i)
         {
             vline(g, xOfT((float) i / 5.0f), plot.getY(), plot.getBottom(), i == 0 ? 0.34f : 0.13f);
-            text(g, i == 0 ? "0" : periodString(showTau * (float) i), { xOfT((float) i / 5.0f) - 34.0f, plot.getBottom() + 3.0f, 68.0f, 14.0f },
-                 11.0f, false, axisCol, Just::centred);
+            // The last label hangs from the plot's right edge so it stays inside the glass.
+            const float shift = i == 5 ? -22.0f : 0.0f;
+            text(g, i == 0 ? "0" : periodString(showTau * (float) i), { xOfT((float) i / 5.0f) - 36.0f + shift, plot.getBottom() + 3.0f, 72.0f, 16.0f },
+                 12.5f, false, axisCol, Just::centred);
             if (i > 0)
                 text(g, juce::String(i) + juce::String(juce::CharPointer_UTF8("\xcf\x84")),
-                     { xOfT((float) i / 5.0f) - 20.0f, plot.getBottom() + 18.0f, 40.0f, 14.0f }, 11.0f, false, axisCol.withAlpha(0.8f), Just::centred);
+                     { xOfT((float) i / 5.0f) - 20.0f + shift, plot.getBottom() + 19.0f, 40.0f, 16.0f }, 12.5f, false, axisCol, Just::centred);
         }
-        text(g, "TIME", { 2.0f, plot.getBottom() + 3.0f, 52.0f, 14.0f }, 11.0f, true, axisInk(), Just::centredRight);
+        text(g, "TIME", { 0.0f, plot.getBottom() + 3.0f, 44.0f, 16.0f }, 12.5f, true, axisInk(), Just::centredRight);
         // 63 / 86 / 95 percent reference lines.
         for (float level : { 0.632f, 0.865f, 0.95f })
             hline(g, plot.getX(), plot.getRight(), plot.getBottom() - plot.getHeight() * level, 0.07f, amber);
@@ -2318,12 +2414,13 @@ private:
             g.setColour(ivoryDim);
             g.strokePath(jump, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
         }
-        text(g, "ONE OCTAVE UP FROM THE PREVIOUS NOTE", { 14.0f, 5.0f, 330.0f, 20.0f }, 11.5f, true, axisInk(), Just::centredLeft, 0.05f);
+        text(g, "ONE-OCTAVE LEAP", { 14.0f, 5.0f, 150.0f, 22.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.03f);
         juce::String right;
         if (mode == 0) right = "GLIDE OFF  -  PITCH JUMPS  -  DASHED: " + periodString(showTau);
-        else if (tau <= 0.0001f) right = "GLIDE TIME 0  -  PITCH JUMPS  -  DASHED: " + periodString(showTau);
-        else right = mode == 2 ? "GLISSANDO  -  SEMITONE STEPS  -  DASHED: SMOOTH" : "PORTAMENTO  -  TIME CONSTANT = GLIDE TIME";
-        text(g, right, { 250.0f, 5.0f, 384.0f, 20.0f }, 11.5f, true, gliding ? amber : axisInk(), Just::centredRight, 0.04f);
+        else if (tau <= 0.0001f) right = "PORTA 0  -  PITCH JUMPS  -  DASHED: " + periodString(showTau);
+        else right = mode == 2 ? "GLISSANDO  -  SEMITONE STEPS  -  DASHED: SMOOTH" : "PORTAMENTO  -  TIME CONSTANT = PORTA";
+        text(g, right, { 160.0f, 5.0f, 478.0f, 22.0f }, 12.5f, true, gliding ? amber : axisInk(), Just::centredRight, 0.02f);
+        text(g, "SET ON THE MAIN PANEL:  PORTA (TIME) AND GLIDE (MODE)", { 14.0f, 186.0f, 620.0f, 18.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
     }
 
     float lastTau = 0.0f;
@@ -2334,10 +2431,10 @@ private:
 class ReleaseCurve final : public LiveWidget
 {
 public:
-    explicit ReleaseCurve(Cs80AudioProcessor& p) : LiveWidget(p, 490.0f, 134.0f) {}
+    explicit ReleaseCurve(Cs80AudioProcessor& p) : LiveWidget(p, 490.0f, 168.0f) {}
 
 private:
-    static Rect plotRect() { return { 52.0f, 30.0f, 420.0f, 64.0f }; }
+    static Rect plotRect() { return { 56.0f, 34.0f, 416.0f, 82.0f }; }
 
     void sample(Sig& s) const override
     {
@@ -2360,10 +2457,10 @@ private:
         hline(g, plot.getX(), plot.getRight(), plot.getBottom(), 0.34f);
         hline(g, plot.getX(), plot.getRight(), plot.getY(), 0.15f);
         vline(g, plot.getX(), plot.getY(), plot.getBottom(), 0.34f);
-        axisText(g, "full", { 0.0f, plot.getY() - 7.0f, 48.0f, 14.0f }, Just::centredRight);
-        axisText(g, "0", { 0.0f, plot.getBottom() - 7.0f, 48.0f, 14.0f }, Just::centredRight);
-        axisText(g, "KEY UP", { plot.getX() - 22.0f, plot.getBottom() + 3.0f, 52.0f, 14.0f });
-        axisText(g, periodString(span), { plot.getRight() - 56.0f, plot.getBottom() + 3.0f, 56.0f, 14.0f }, Just::centredRight);
+        axisText(g, "full", { 0.0f, plot.getY() - 8.0f, 52.0f, 16.0f }, Just::centredRight);
+        axisText(g, "0", { 0.0f, plot.getBottom() - 8.0f, 52.0f, 16.0f }, Just::centredRight);
+        axisText(g, "KEY UP", { plot.getX() - 12.0f, plot.getBottom() + 3.0f, 64.0f, 16.0f }, Just::centredLeft);
+        axisText(g, periodString(span), { plot.getRight() - 70.0f, plot.getBottom() + 3.0f, 70.0f, 16.0f }, Just::centredRight);
         if (floorT > 0.001f)
         {
             const float fx = xOf(floorT * scale);
@@ -2391,12 +2488,12 @@ private:
         g.setColour(amberBright);
         g.strokePath(main, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
-        text(g, "VCA LEVEL AFTER KEY UP", { 14.0f, 5.0f, 260.0f, 20.0f }, 11.5f, true, axisInk(), Just::centredLeft, 0.05f);
-        text(g, "RANK I " + periodString(r1) + "    RANK II " + periodString(r2), { 250.0f, 5.0f, 228.0f, 20.0f }, 11.5f, true, amberBright,
-             Just::centredRight, 0.03f);
-        text(g, floorT > 0.001f ? "DASHED: KEY RELEASE FLOOR " + periodString(floorT * scale) + "  -  THE LONGER RELEASE WINS"
+        text(g, "VCA LEVEL AFTER KEY UP", { 14.0f, 5.0f, 230.0f, 22.0f }, 12.5f, true, axisInk(), Just::centredLeft, 0.03f);
+        text(g, "RANK I " + periodString(r1) + "    RANK II " + periodString(r2), { 240.0f, 5.0f, 242.0f, 22.0f }, 12.5f, true, amberBright,
+             Just::centredRight, 0.02f);
+        text(g, floorT > 0.001f ? "DASHED: KEY RELEASE FLOOR " + periodString(floorT * scale) + "  -  THE LONGER WINS"
                                 : juce::String("KEY RELEASE OFF  -  EACH RANK USES ITS OWN RELEASE"),
-             { 14.0f, 112.0f, 480.0f, 20.0f }, 11.0f, false, axisInk(), Just::centredLeft, 0.02f);
+             { 14.0f, 142.0f, 474.0f, 20.0f }, 12.5f, false, axisInk(), Just::centredLeft, 0.01f);
     }
 };
 
@@ -2404,11 +2501,11 @@ private:
 class PolicyTable final : public LiveWidget
 {
 public:
-    explicit PolicyTable(Cs80AudioProcessor& p) : LiveWidget(p, 1440.0f, 224.0f) {}
+    explicit PolicyTable(Cs80AudioProcessor& p) : LiveWidget(p, 1440.0f, 184.0f) {}
     void paintStatic(juce::Graphics&) override {}
 
 private:
-    static constexpr float labelW = 312.0f, rowH = 22.0f, pad = 22.0f;
+    static constexpr float labelW = 312.0f, rowH = 20.0f, pad = 20.0f;
 
     void sample(Sig& s) const override
     {
@@ -2425,37 +2522,32 @@ private:
             { "MIDI BEND, CC1 / 11 / 64 / 74", { "LIVE", "LIVE", "OFF" }, { 1, 1, 2 } },
             { "MPE  (WHEN SWITCHED ON)", { "LIVE", "LIVE", "OFF" }, { 1, 1, 2 } },
             { "MACROS, FX, PAN, BYPASS", { "LIVE", "LIVE", "MASKED" }, { 1, 1, 3 } },
-            { "PRESSURE, RIBBON, ON-SCREEN PEDAL", { "LIVE", "LIVE", "LIVE" }, { 1, 1, 1 } },
+            { "PRESSURE, RIBBON, SCREEN PEDAL", { "LIVE", "LIVE", "LIVE" }, { 1, 1, 1 } },
             { "SUB OSCILLATOR", { "STORED MODE", "STORED MODE", "ORIGINAL, FORCED" }, { 0, 0, 0 } },
             { "CHORUS", { "GENERIC DELAY", "OE2 BBD", "OE2 BBD" }, { 0, 0, 0 } },
             { "OUTPUT", { "DC BLOCK + SOFT LIMIT", "RAW, KEEP HEADROOM", "RAW, KEEP HEADROOM" }, { 0, 0, 0 } },
             { "CALIBRATION", { "STUDY, NOT A MATCH", "NOT CALIBRATED", "NOT CALIBRATED" }, { 0, 0, 0 } },
         };
-        static const char* const heads[3] = { "LEGACY", "SOURCE PERFORMANCE", "PARITY ISOLATION" };
-        // Effective column band.
+        // The column of the policy in force is banded; the switch above it is the column head.
         const Rect band(labelW + colW * (float) pol, 0.0f, colW, designH);
         g.setGradientFill(juce::ColourGradient(amber.withAlpha(0.16f), band.getX(), 0.0f, amber.withAlpha(0.06f), band.getX(), designH, false));
         g.fillRoundedRectangle(band.reduced(2.0f, 0.0f), 4.0f);
         g.setColour(amber.withAlpha(0.55f));
         g.drawRoundedRectangle(band.reduced(2.0f, 0.5f), 4.0f, 1.0f);
-        for (int c = 0; c < 3; ++c)
-            text(g, heads[c], { labelW + colW * (float) c + pad, 0.0f, colW - pad, rowH }, 12.0f, true, c == pol ? amberBright : gold,
-                 Just::centredLeft, 0.12f);
-        hline(g, 0.0f, designW, rowH, 0.3f, gold);
         for (size_t r = 0; r < std::size(rows); ++r)
         {
-            const float y = rowH + 2.0f + (float) r * rowH;
+            const float y = 2.0f + (float) r * rowH;
             if (r % 2 == 1)
             {
                 g.setColour(juce::Colours::white.withAlpha(0.03f));
                 g.fillRect(0.0f, y, designW, rowH);
             }
-            text(g, rows[r].label, { 8.0f, y, labelW - 12.0f, rowH }, 12.0f, true, ivory, Just::centredLeft, 0.04f);
+            text(g, rows[r].label, { 8.0f, y, labelW - 12.0f, rowH }, 12.5f, true, ivory, Just::centredLeft, 0.02f);
             for (int c = 0; c < 3; ++c)
             {
                 const int kind = rows[r].kind[c];
                 const juce::Colour ink = kind == 1 ? amberBright : (kind == 2 ? ivoryDim.withAlpha(0.8f) : (kind == 3 ? amber : (c == pol ? ivory : axisInk())));
-                text(g, rows[r].cell[c], { labelW + colW * (float) c + pad, y, colW - pad, rowH }, 12.0f, kind != 0, ink, Just::centredLeft, 0.03f);
+                text(g, rows[r].cell[c], { labelW + colW * (float) c + pad, y, colW - pad - 6.0f, rowH }, 12.5f, kind != 0, ink, Just::centredLeft, 0.02f);
             }
         }
     }
@@ -2491,7 +2583,7 @@ public:
 
     void paintButton(juce::Graphics& g, bool hovered, bool down) override
     {
-        constexpr float dw = 472.0f, dh = 58.0f;
+        constexpr float dw = 368.0f, dh = 54.0f;
         g.addTransform(juce::AffineTransform::scale((float) getWidth() / dw, (float) getHeight() / dh));
         const int pol = effective();
         const bool lit = pol == index;
@@ -2513,16 +2605,16 @@ public:
         g.setColour(lit ? juce::Colour(0xff6b4510) : juce::Colours::black.withAlpha(0.9f));
         g.drawRoundedRectangle(r, 5.0f, 1.0f);
         const juce::Colour ink = lit ? juce::Colour(0xff2a1c07) : ivory;
-        jewel(g, { r.getX() + 24.0f, r.getCentreY() }, 5.5f, lit ? juce::Colour(0xff7a1d0a) : amber, lit);
+        jewel(g, { r.getX() + 22.0f, r.getCentreY() }, 5.5f, lit ? juce::Colour(0xff7a1d0a) : amber, lit);
         if (masked)
         {
             g.setColour(amber);
-            g.drawEllipse(r.getX() + 24.0f - 8.0f, r.getCentreY() - 8.0f, 16.0f, 16.0f, 1.3f);
+            g.drawEllipse(r.getX() + 22.0f - 8.0f, r.getCentreY() - 8.0f, 16.0f, 16.0f, 1.3f);
         }
-        ui::text(g, getButtonText() + (masked ? "  (MASKED)" : ""), { r.getX() + 46.0f, r.getY() + 8.0f, r.getWidth() - 56.0f, 20.0f }, 13.5f, true,
-                 masked ? amberBright : ink, Just::centredLeft, 0.1f);
-        ui::text(g, sub, { r.getX() + 46.0f, r.getY() + 29.0f, r.getWidth() - 56.0f, 18.0f }, 11.0f, false,
-                 lit ? juce::Colour(0xff3c260a) : axisInk(), Just::centredLeft, 0.02f);
+        ui::text(g, getButtonText() + (masked ? "  (MASKED)" : ""), { r.getX() + 44.0f, r.getY() + 6.0f, r.getWidth() - 52.0f, 20.0f }, 13.5f, true,
+                 masked ? amberBright : ink, Just::centredLeft, 0.06f);
+        ui::text(g, sub, { r.getX() + 44.0f, r.getY() + 27.0f, r.getWidth() - 52.0f, 18.0f }, 12.5f, false,
+                 lit ? juce::Colour(0xff3c260a) : axisInk(), Just::centredLeft, 0.0f);
         if (hasKeyboardFocus(true))
         {
             g.setColour(juce::Colour(0xfff6df91));
@@ -2634,40 +2726,59 @@ public:
         const bool iso = proc.getParamValue(cs80::P_parityMode) >= 0.5f;
         const bool lit = dest == destination;
         const auto colour = lfoColour(lfoIndex);
+        // OFF is not a route: lit, it is a pressed gunmetal key with ivory legend and no cap colour at all.
+        const bool offKey = destination == 0;
         const Rect r = Rect(1.0f, 1.0f, dw - 2.0f, dh - 4.0f).translated(0.0f, down ? 1.0f : 0.0f);
-        if (lit)
+        if (lit && ! offKey)
         {
             g.setColour(colour.withAlpha(iso ? 0.10f : 0.24f));
             g.fillRoundedRectangle(r.expanded(3.0f), 7.0f);
         }
-        g.setColour(juce::Colours::black.withAlpha(0.6f));
-        g.fillRoundedRectangle(r.translated(0.0f, 1.5f), 5.0f);
-        if (lit)
+        if (! (lit && offKey))
+        {
+            g.setColour(juce::Colours::black.withAlpha(0.6f));
+            g.fillRoundedRectangle(r.translated(0.0f, 1.5f), 5.0f);
+        }
+        if (lit && offKey)
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff1a1918), r.getX(), r.getY(), juce::Colour(0xff4a4843), r.getX(), r.getBottom(), false));
+        else if (lit)
             g.setGradientFill(juce::ColourGradient(colour.brighter(0.18f).withAlpha(iso ? 0.55f : 1.0f), r.getX(), r.getY(),
                                                    colour.darker(0.42f).withAlpha(iso ? 0.55f : 1.0f), r.getX(), r.getBottom(), false));
         else
             g.setGradientFill(juce::ColourGradient(juce::Colour(hovered ? 0xff2f2c27 : 0xff24221e), r.getX(), r.getY(),
                                                    juce::Colour(0xff131210), r.getX(), r.getBottom(), false));
         g.fillRoundedRectangle(r, 5.0f);
-        g.setColour(juce::Colours::white.withAlpha(lit ? 0.38f : 0.08f));
-        g.drawLine(r.getX() + 5.0f, r.getY() + 1.1f, r.getRight() - 5.0f, r.getY() + 1.1f, 1.0f);
-        g.setColour(hovered ? colour.brighter(0.2f) : (lit ? colour.darker(0.6f) : juce::Colours::black.withAlpha(0.9f)));
+        if (lit && offKey)
+        {
+            // Pressed: the cap's top edge is in shadow and a hairline of light runs along the bottom.
+            g.setColour(juce::Colours::black.withAlpha(0.7f));
+            g.drawLine(r.getX() + 5.0f, r.getY() + 1.4f, r.getRight() - 5.0f, r.getY() + 1.4f, 1.6f);
+            g.setColour(juce::Colours::white.withAlpha(0.10f));
+            g.drawLine(r.getX() + 5.0f, r.getBottom() - 1.0f, r.getRight() - 5.0f, r.getBottom() - 1.0f, 1.0f);
+        }
+        else
+        {
+            g.setColour(juce::Colours::white.withAlpha(lit ? 0.38f : 0.08f));
+            g.drawLine(r.getX() + 5.0f, r.getY() + 1.1f, r.getRight() - 5.0f, r.getY() + 1.1f, 1.0f);
+        }
+        const juce::Colour edge = offKey ? ivory.withAlpha(0.55f) : colour.brighter(0.2f);
+        g.setColour(hovered ? edge : (lit && ! offKey ? colour.darker(0.6f) : juce::Colours::black.withAlpha(0.9f)));
         g.drawRoundedRectangle(r, 5.0f, hovered ? 1.6f : 1.0f);
 
-        const juce::Colour ink = lit ? inkFor(colour) : (hovered ? ivory : ivory.withAlpha(0.88f));
-        if (destination == 0)
+        const juce::Colour ink = lit ? (offKey ? ivory : inkFor(colour)) : (hovered ? ivory : ivory.withAlpha(0.9f));
+        if (offKey)
         {
             ui::text(g, "OFF", r, 12.5f, true, lit ? ink : ivoryDim, Just::centred, 0.1f);
         }
         else
         {
-            ui::text(g, kDestinations[destination], { r.getX() + 6.0f, r.getY() + 3.0f, r.getWidth() - 12.0f, 18.0f }, 12.0f, true, ink,
-                     Just::centred, 0.08f);
+            ui::text(g, kDestinations[destination], { r.getX() + 4.0f, r.getY() + 3.0f, r.getWidth() - 8.0f, 18.0f }, 12.5f, true, ink,
+                     Just::centred, 0.04f);
             const bool have = depth > 0.001f;
             const float amount = have ? depth * kLfoScale[destination] : kLfoScale[destination];
             ui::text(g, plusMinus() + juce::String(amount, amount < 1.0f ? 2 : (have ? 2 : 1)) + kLfoUnit[destination],
-                     { r.getX() + 4.0f, r.getY() + 21.0f, r.getWidth() - 8.0f, 16.0f }, 11.0f, lit,
-                     lit ? ink : axisInk().withAlpha(have ? 0.9f : 0.7f), Just::centred);
+                     { r.getX() + 2.0f, r.getY() + 21.0f, r.getWidth() - 4.0f, 16.0f }, 12.5f, lit,
+                     lit ? ink : axisInk(), Just::centred);
         }
         if (hasKeyboardFocus(true))
         {
@@ -2897,20 +3008,20 @@ public:
         return raw;
     }
 
-    void label(const juce::String& s, Rect r, float size = 10.5f, juce::Colour c = ivoryDim,
+    void label(const juce::String& s, Rect r, float size = 12.5f, juce::Colour c = ivoryDim,
                Just j = Just::centredLeft, float kern = 0.09f)
     {
         artOps.push_back([=](juce::Graphics& g) { engrave(g, s, r, size, true, c, j, kern); });
     }
 
     // Quiet running text for a plot or a group: 11 px or more, never an engraved legend.
-    void note(const juce::String& s, Rect r, float size = 11.0f, Just j = Just::centredLeft, bool bold = false)
+    void note(const juce::String& s, Rect r, float size = 12.5f, Just j = Just::centredLeft, bool bold = false)
     {
         artOps.push_back([=](juce::Graphics& g) { text(g, s, r, size, bold, axisInk(), j, 0.02f); });
     }
 
     // Dim controls that do nothing in the present state. They stay editable: a value set now is used later.
-    void dimWhen(std::function<bool()> inert, std::vector<juce::Component*> parts, float alpha = 0.42f)
+    void dimWhen(std::function<bool()> inert, std::vector<juce::Component*> parts, float alpha = 0.68f)
     {
         auto last = std::make_shared<int>(-1);
         tickers.push_back([inert = std::move(inert), parts = std::move(parts), alpha, last]
@@ -2926,12 +3037,18 @@ public:
     }
 
     // The one caption style for control headings: same area height as a knob title keeps baselines level.
-    void caption(const juce::String& s, Rect area, Just j = Just::centred, float size = 11.5f)
+    void caption(const juce::String& s, Rect area, Just j = Just::centred, float size = 12.5f)
     {
         artOps.push_back([=](juce::Graphics& g) { drawControlCaption(g, s, area, j, size); });
     }
 
-    void bracket(float x0, float x1, float y, const juce::String& title, float size = 11.0f)
+    // The same caption as a live component, for a heading that must dim together with its control.
+    CaptionWidget* captionLive(const juce::String& s, Rect area, Just j = Just::centred, float size = 12.5f)
+    {
+        return widget<CaptionWidget>(area, area.getWidth(), area.getHeight(), s, j, size);
+    }
+
+    void bracket(float x0, float x1, float y, const juce::String& title, float size = 12.5f)
     {
         artOps.push_back([=](juce::Graphics& g) { bracketTitle(g, x0, x1, y, title, size); });
     }
@@ -3155,9 +3272,9 @@ public:
         setMouseClickGrabsKeyboardFocus(false);
         setExplicitFocusOrder(index + 1);
         setTitle(name);
-        setDescription("Advanced page " + juce::String(index + 1) + " of 4: " + caption + ". Shortcut Control+" + juce::String(index + 1)
+        setDescription("Advanced page " + juce::String(index + 1) + " of 4: " + caption + ". Shortcut " + shortcutName() + "+" + juce::String(index + 1)
                        + ". Left and Right arrows move between pages.");
-        setTooltip(name + "  (Ctrl+" + juce::String(index + 1) + ")  -  " + caption);
+        setTooltip(name + "  (" + shortcutName() + "+" + juce::String(index + 1) + ")  -  " + caption);
     }
 
     std::function<void(int)> onStep;
@@ -3179,7 +3296,7 @@ public:
 
         // A flat moulded plate in the page's cap colour: bright when this page is open, deep when not.
         // No gloss and no cast shadow; the glass slot behind it carries the depth.
-        juce::Colour fill = on ? colour : colour.darker(0.66f).withMultipliedSaturation(0.85f);
+        juce::Colour fill = on ? colour : inactiveTab(colour);
         if (hovered && ! on) fill = fill.brighter(0.14f);
         if (down) fill = fill.darker(0.12f);
         g.setColour(fill);
@@ -3198,10 +3315,10 @@ public:
         g.setColour(colour.withAlpha(on ? 0.9f : 0.7f));
         g.drawEllipse(bc.x - 10.0f, bc.y - 10.0f, 20.0f, 20.0f, 1.2f);
         ui::text(g, juce::String(page + 1), { bc.x - 10.0f, bc.y - 10.0f, 20.0f, 20.0f }, 12.0f, true, juce::Colours::white, Just::centred);
-        // Name: 11.5 px bold on one line.
-        g.setFont(fnt(11.5f, true, 0.05f));
+        // Name: 12.5 px bold on one line.
+        g.setFont(fnt(12.5f, true, 0.01f));
         g.setColour(ink);
-        g.drawText(getButtonText(), Rect(face.getX() + 67.0f, face.getY(), face.getWidth() - 69.0f, face.getHeight()), Just::centredLeft, false);
+        g.drawText(getButtonText(), Rect(face.getX() + 65.0f, face.getY(), face.getWidth() - 66.0f, face.getHeight()), Just::centredLeft, false);
         // Active page: a lit underline in the page colour.
         if (on)
         {
@@ -3217,6 +3334,17 @@ public:
     }
 
 private:
+    // Every idle plate is scaled to one relative luminance, so the pale cream page does not sit as bright as an open page.
+    static juce::Colour inactiveTab(juce::Colour c)
+    {
+        auto lin = [](float v) { return v <= 0.03928f ? v / 12.92f : std::pow((v + 0.055f) / 1.055f, 2.4f); };
+        const float lum = 0.2126f * lin(c.getFloatRed()) + 0.7152f * lin(c.getFloatGreen()) + 0.0722f * lin(c.getFloatBlue());
+        // A neutral plate looks brighter than a saturated one of the same luminance, so it is set a little lower.
+        const float target = c.getSaturation() < 0.3f ? 0.05f : 0.064f;
+        const float k = juce::jmin(0.62f, std::pow(target / juce::jmax(0.01f, lum), 1.0f / 2.2f));
+        return c.withMultipliedBrightness(k).withMultipliedSaturation(0.9f);
+    }
+
     static void drawIcon(juce::Graphics& g, int which, Rect b, juce::Colour c, bool on)
     {
         g.setColour(c);
@@ -3357,8 +3485,8 @@ public:
     void paint(juce::Graphics& g) override
     {
         g.addTransform(juce::AffineTransform::scale((float) getWidth() / 1472.0f, (float) getHeight() / 26.0f));
-        text(g, "Ctrl+1 to 4 switch pages   -   Esc closes   -   double-click any knob to reset it", { 22.0f, 0.0f, 640.0f, 26.0f }, 11.0f, false,
-             axisInk(), Just::centredLeft, 0.02f);
+        text(g, shortcutName() + "+1 to 4 switch pages   -   Esc closes   -   double-click any knob to reset it", { 22.0f, 0.0f, 760.0f, 26.0f }, 12.5f,
+             false, axisInk(), Just::centredLeft, 0.02f);
     }
 };
 
@@ -3401,7 +3529,7 @@ void buildModulation(AdvancedPage& page)
         for (int k = 0; k < 6; ++k)
             page.lfoChip({ x + 288.0f + (float) (k % 2) * 84.0f, y + 276.0f + (float) (k / 2) * 50.0f, 80.0f, 44.0f }, i, chipOrder[k]);
         page.dimWhen([&proc = page.processor(), i] { return juce::roundToInt(proc.getParamValue(cs80::P_lfo1Dest + i * 3)) == 0; },
-                     { rate, depth }, 0.5f);
+                     { rate, depth });
     }
 
     page.module({ 64.0f, 564.0f, 520.0f, 332.0f }, "Wheels", true, juce::Colours::transparentBlack,
@@ -3420,7 +3548,10 @@ void buildModulation(AdvancedPage& page)
     page.knob({ 685.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND");
     page.custom([](juce::Graphics& g) { etchRect(g, { 898.0f, 598.0f, 340.0f, 152.0f }, 6.0f, 0.5f); });
     page.toggle({ 912.0f, 652.0f, 114.0f, 40.0f }, cs80::P_mpeOn, "MPE");
-    page.knob({ 1038.0f, 604.0f, 160.0f, 140.0f }, cs80::P_mpeBendRange, "MPE BEND");
+    auto* mpeBend = page.knob({ 1038.0f, 604.0f, 160.0f, 140.0f }, cs80::P_mpeBendRange, "MPE BEND");
+    page.dimWhen([&proc = page.processor()]
+                 { return proc.getParamValue(cs80::P_mpeOn) < 0.5f || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
+                 { mpeBend });
     page.knob({ 1291.0f, 604.0f, 160.0f, 140.0f }, cs80::P_tuningRef, "A4 TUNING");
     page.widget<TuningDisplay>({ 630.0f, 764.0f, 880.0f, 112.0f });
 }
@@ -3435,7 +3566,15 @@ void buildSubRing(AdvancedPage& page)
                 "EXT: optional mono input, disabled by default; host routing required. Six original functions; analog waveform, depth and touch laws "
                 "remain provisional. Full depth moves VCO 1.5 st, VCF 1.5 oct, VCA 0.45 level.",
                 [](Cs80AudioProcessor& p)
-                { return p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_subOriginalMode) >= 0.5f; });
+                {
+                    const int depths[] = { cs80::P_subVco, cs80::P_subVcf, cs80::P_subVca, cs80::P_subAtVco, cs80::P_subAtVcf };
+                    for (int index : depths)
+                        if (p.getParamValue(index) > 0.001f)
+                            return true;
+                    const bool original = p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_subOriginalMode) >= 0.5f;
+                    return original && juce::roundToInt(p.getParamValue(cs80::P_subOriginalFunction)) == 5 && p.isExternalInputEnabled()
+                        && p.getParamValue(cs80::P_subExtLevel) > 0.001f;
+                });
     auto* originalMode = page.switchButton({ 88.0f, 158.0f, 236.0f, 40.0f }, cs80::P_subOriginalMode, "STORED ORIGINAL MODE", "ORIGINAL WAVEFORMS");
     originalMode->setComponentID("sub_original_mode");
     originalMode->setTooltip("Original waveforms: on selects the six original functions and 0.7-60 Hz; off selects the legacy set. The choice is stored "
@@ -3460,9 +3599,9 @@ void buildSubRing(AdvancedPage& page)
 
     // --- Ring modulator ---------------------------------------------------------------------------------
     page.module({ 840.0f, 108.0f, 696.0f, 440.0f }, "Ring modulator", true, pageColour(1),
-                "A global ring modulator feeds the output alongside the voices. SPEED, DEPTH, ATTACK, DECAY and AMOUNT are on the main panel; this "
+                "A global ring modulator feeds the output alongside the voices. SPEED, DEPTH, ATTACK, DECAY and MOD are on the main panel; this "
                 "plot is where their combined effect is read. The envelope is retriggered by the first key of a phrase. DEPTH sweeps oscillator "
-                "frequency; AMOUNT sets the dry/wet mix. The curve shows the carrier frequency in Hz; drag the A node to set ATTACK and DEPTH, the "
+                "frequency; MOD sets the dry/wet mix. The curve shows the carrier frequency in Hz; drag the A node to set ATTACK and DEPTH, the "
                 "D node to set DECAY. At zero depth a dashed preview shows the curve at full depth. The analog response remains provisional.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_ringAmount) > 0.001f; });
     page.widget<RingCurve>({ 854.0f, 148.0f, 668.0f, 376.0f });
@@ -3523,7 +3662,11 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
         auto* row = page.widget<FxSlotRow>({ 90.0f, y0, 544.0f, 102.0f }, i, sel);
         sel->peers.push_back(row);
         page.choice({ 90.0f + 70.0f, y0 + 30.0f, 170.0f, 34.0f }, typeParams[i], kFxTypes);
-        page.knob({ 90.0f + 258.0f, y0 + 10.0f, 100.0f, 90.0f }, mixParams[i], "MIX");
+        auto* mix = page.knob({ 90.0f + 258.0f, y0 + 10.0f, 100.0f, 90.0f }, mixParams[i], "MIX");
+        // The mix does nothing while the slot is empty or the isolation fixture masks the effects.
+        page.dimWhen([&proc, i]
+                     { return juce::roundToInt(proc.getParamValue(cs80::P_fx1Type + i * 2)) == 0 || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
+                     { mix });
     }
 
     page.module({ 676.0f, 190.0f, 860.0f, 370.0f }, "Effect detail", true, pageColour(2), {},
@@ -3572,35 +3715,34 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
             page.custom([x](juce::Graphics& g) { etchLine(g, x - 8.0f, 612.0f, x - 8.0f, 876.0f, 0.45f); });
     }
 
-    page.module({ 1248.0f, 576.0f, 288.0f, 320.0f }, "Output", true, pageColour(2),
+    page.module({ 1248.0f, 576.0f, 288.0f, 320.0f }, "Output", true, juce::Colours::transparentBlack,
                 "Stereo retains the left and right outputs. Mono averages them after effects and limiting; phase cancellation can change the result. "
                 "VOLUME and the MIX I/II crossfade are on the main panel, and the toolbar meter shows the output level. The engine runs at 2x. "
                 "Legacy output is DC-blocked and soft-limited. Source modes keep raw source output, which can exceed digital full scale: leave "
-                "monitoring headroom.",
-                [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_outputMode) >= 0.5f; });
+                "monitoring headroom.");
     page.toggle({ 1274.0f, 622.0f, 236.0f, 40.0f }, cs80::P_outputMode, "STEREO");
     page.widget<OutputPanel>({ 1264.0f, 678.0f, 256.0f, 200.0f });
 }
 
 void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
 {
-    page.module({ 64.0f, 108.0f, 760.0f, 364.0f }, "Arpeggiator", true, pageColour(3),
+    page.module({ 64.0f, 108.0f, 760.0f, 448.0f }, "Arpeggiator", true, pageColour(3),
                 "The arpeggiator holds the chord and retriggers the CS-80 voice envelopes at the selected clock. Up/Down, random and played-order "
                 "modes cover the patterns used on the classic records. The pattern shows a demonstration chord, not a live readout of the notes "
                 "you hold; with the arpeggiator off it is drawn as a dashed preview. Isolation masks the arpeggiator.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_arpOn) >= 0.5f && p.getParamValue(cs80::P_parityMode) < 0.5f; });
     page.toggle({ 88.0f, 172.0f, 112.0f, 36.0f }, cs80::P_arpOn, "ARP");
-    page.caption("MODE", { 216.0f, 146.0f, 176.0f, 17.0f });
+    auto* modeCaption = page.captionLive("MODE", { 216.0f, 146.0f, 176.0f, 17.0f });
     auto* mode = page.choice({ 216.0f, 172.0f, 176.0f, 36.0f }, cs80::P_arpMode, kArpModes);
     auto* rate = page.knob({ 408.0f, 146.0f, 128.0f, 124.0f }, cs80::P_arpRate, "RATE");
     auto* oct = page.knob({ 544.0f, 146.0f, 120.0f, 124.0f }, cs80::P_arpOctaves, "OCTAVES");
     auto* clock = page.widget<ArpClock>({ 676.0f, 150.0f, 132.0f, 104.0f });
-    page.widget<ArpPattern>({ 88.0f, 280.0f, 712.0f, 184.0f });
-    page.dimWhen([&proc] { return proc.getParamValue(cs80::P_arpOn) < 0.5f; }, { mode, rate, oct, clock });
+    page.widget<ArpPattern>({ 88.0f, 280.0f, 712.0f, 250.0f });
+    page.dimWhen([&proc] { return proc.getParamValue(cs80::P_arpOn) < 0.5f; }, { modeCaption, mode, rate, oct, clock });
 
-    page.module({ 840.0f, 108.0f, 696.0f, 364.0f }, "Performance", true, pageColour(3),
-                "KEY RELEASE is a floor under every rank's own release: the longer of the two wins, scaled by the MOTION macro. GLIDE, GLIDE MODE, "
-                "INIT BEND and SUSTAIN II are on the main panel (PORTA, GLIDE, INIT BEND, SUS II). Portamento glides; Glissando steps in "
+    page.module({ 840.0f, 108.0f, 696.0f, 448.0f }, "Performance", true, pageColour(3),
+                "KEY RELEASE is a floor under every rank's own release: the longer of the two wins, scaled by the MOTION macro. PORTA (the glide "
+                "time), GLIDE (the glide mode), BEND (the initial bend) and SUS II are on the main panel. Portamento glides; Glissando steps in "
                 "semitones. Both sustain modes release notes. Sustain II also cuts previous release tails at a new key press. MIDI CC64 hold is a "
                 "separate extension, disabled by parity isolation. The glide plot shows the pitch path the main-panel settings give, with a dashed "
                 "preview while glide is off.",
@@ -3609,19 +3751,22 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
                     return p.getParamValue(cs80::P_keyRelease) > 0.001f
                         || (p.getParamValue(cs80::P_portamento) > 0.0001f && juce::roundToInt(p.getParamValue(cs80::P_glideMode)) != 0);
                 });
-    page.knob({ 862.0f, 146.0f, 150.0f, 130.0f }, cs80::P_keyRelease, "KEY RELEASE");
-    page.widget<ReleaseCurve>({ 1030.0f, 146.0f, 490.0f, 134.0f });
-    page.widget<GlideCurve>({ 864.0f, 288.0f, 648.0f, 172.0f });
+    page.knob({ 862.0f, 165.0f, 150.0f, 130.0f }, cs80::P_keyRelease, "KEY RELEASE");
+    page.widget<ReleaseCurve>({ 1030.0f, 146.0f, 490.0f, 168.0f });
+    page.widget<GlideCurve>({ 864.0f, 326.0f, 648.0f, 208.0f });
 
     // --- Render policy: one three-way switch, the table of what it changes, and About -------------------
-    page.module({ 64.0f, 488.0f, 1472.0f, 408.0f }, "Render policy", true, pageColour(3),
+    page.module({ 64.0f, 572.0f, 1472.0f, 324.0f }, "Render policy", true, pageColour(3),
                 "NOT CALIBRATED - no hardware match established. SOURCE: current source models with MIDI, optional MPE and the modern overlays. "
                 "ISOLATION wins when both are on: bend, CC1/11/64/74 and MPE are off and the modern effects are masked; pressure, ribbon and the "
                 "on-screen pedal stay active. An effective mode change stops notes; keep headroom. The stored source request is retained but masked "
                 "while isolation is on. Library programs reset the source request off and return both rank selectors to PANEL.",
                 [](Cs80AudioProcessor& p)
                 { return p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_sourcePerformance) >= 0.5f; });
-    auto* legacy = page.policyCell({ 80.0f, 530.0f, 472.0f, 58.0f }, 0, "LEGACY", "Study voicing. MIDI and modern overlays live.");
+    // The three switches are the column heads of the table below them.
+    page.label("WHAT EACH POLICY CHANGES", { 96.0f, 618.0f, 290.0f, 22.0f }, 12.5f, gold, Just::centredLeft, 0.1f);
+    page.note("THE BANDED COLUMN IS IN FORCE", { 96.0f, 642.0f, 290.0f, 20.0f }, 12.5f, Just::centredLeft, false);
+    auto* legacy = page.policyCell({ 396.0f, 612.0f, 368.0f, 54.0f }, 0, "LEGACY", "Study voicing, overlays live");
     legacy->setComponentID("render_policy_legacy");
     legacy->setTitle("Legacy render policy");
     legacy->setTooltip("Legacy: the older voicing table with ordinary MIDI and the modern overlays. Selecting it clears both stored requests, "
@@ -3633,7 +3778,7 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
         setParameterOnce(proc, cs80::P_parityMode, 0.0f);
     };
 
-    auto* sourcePerformance = page.policyCell({ 564.0f, 530.0f, 472.0f, 58.0f }, 1, "SOURCE PERFORMANCE", "Source models. MIDI and modern overlays live.");
+    auto* sourcePerformance = page.policyCell({ 772.0f, 612.0f, 368.0f, 54.0f }, 1, "SOURCE PERFORMANCE", "Source models, overlays live");
     sourcePerformance->setComponentID("source_performance");
     sourcePerformance->setTitle("Source performance (uncalibrated)");
     sourcePerformance->setTooltip("Opt-in source-performance policy: current source models with ordinary MIDI pitch bend, CC1/11/64/74, optional MPE and "
@@ -3644,7 +3789,7 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
                                   "and memories still own only the 26 programmer controls; footage and global controls remain live.");
     sourcePerformance->setDescription(sourcePerformance->getTooltip());
 
-    auto* parity = page.policyCell({ 1048.0f, 530.0f, 472.0f, 58.0f }, 2, "PARITY ISOLATION", "Nominal source models. MIDI and overlays masked.");
+    auto* parity = page.policyCell({ 1148.0f, 612.0f, 368.0f, 54.0f }, 2, "PARITY ISOLATION", "Nominal models, overlays masked");
     parity->setComponentID("parity_mode");
     parity->setTooltip("Comparison fixture, not calibrated. No hardware match established. Enable before playing: toggling stops notes and clears "
                        "controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal "
@@ -3653,20 +3798,17 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
                        "Output may exceed digital full scale.");
     parity->setDescription(parity->getTooltip());
 
-    page.widget<PolicyTable>({ 80.0f, 600.0f, 1440.0f, 224.0f });
+    page.widget<PolicyTable>({ 80.0f, 672.0f, 1440.0f, 184.0f });
 
-    // About: one slim strip; the long text is behind its info button.
+    // About: one line; the long text is behind its info button.
     page.custom([](juce::Graphics& g)
     {
-        const Rect strip(96.0f, 832.0f, 1408.0f, 46.0f);
-        glassWell(g, strip, 5.0f);
-        etchRect(g, strip.reduced(4.0f), 3.0f, 0.4f);
-        engrave(g, "CS-80 REFERENCE", { 116.0f, 834.0f, 250.0f, 42.0f }, 16.0f, true, ivory, Just::centredLeft, 0.1f);
-        text(g, "ENGINE  2x oversampled, 8 voices, 16 ranks", { 400.0f, 834.0f, 420.0f, 42.0f }, 12.0f, true, amber, Just::centredLeft, 0.03f);
-        text(g, "FORMAT  VST3, AU (macOS), standalone", { 830.0f, 834.0f, 340.0f, 42.0f }, 12.0f, true, amber, Just::centredLeft, 0.03f);
-        text(g, "BUILD  Reference Instruments - 1977-CS80", { 1126.0f, 834.0f, 340.0f, 42.0f }, 12.0f, true, amber, Just::centredLeft, 0.03f);
+        etchLine(g, 96.0f, 861.0f, 1504.0f, 861.0f, 0.4f);
+        engrave(g, "CS-80 REFERENCE", { 96.0f, 862.0f, 210.0f, 30.0f }, 14.0f, true, ivory, Just::centredLeft, 0.08f);
+        text(g, "ENGINE  2x oversampled, 8 voices x 2 ranks", { 320.0f, 862.0f, 420.0f, 30.0f }, 12.5f, true, amber, Just::centredLeft, 0.02f);
+        text(g, "NOT CALIBRATED  -  NO HARDWARE MATCH ESTABLISHED", { 760.0f, 862.0f, 640.0f, 30.0f }, 12.5f, true, gold, Just::centredLeft, 0.04f);
     });
-    page.infoButton({ 1462.0f, 837.0f, 36.0f, 36.0f }, "About this instrument",
+    page.infoButton({ 1462.0f, 859.0f, 36.0f, 34.0f }, "About this instrument",
                     "A circuit-informed recreation of the Yamaha CS-80 (1977): eight voices, each with two independent ranks, for sixteen "
                     "oscillator/filter/VCA chains. The signal path follows the original's high-pass into low-pass topology, linear VCA and global "
                     "sub-oscillator.\n\nThe primary panel exposes the controls a player touches; these pages expose the modern layer (LFOs, MPE, "
