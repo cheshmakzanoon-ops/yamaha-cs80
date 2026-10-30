@@ -1,6 +1,6 @@
-# CS-80 editor: design spec (round 2 redesign)
+# CS-80 editor: design spec
 
-Goal from the owner: the editor must look like the Yamaha CS-80 itself, in our own original design, at the polish level of the best commercial software recreations (for example Arturia's CS-80 V). Round 1 only recoloured the old layout; round 2 changes layout, controls, menus and keys. The quality bar: a stranger who has seen photos of a CS-80 should recognise it at a glance, and every surface should have depth, material and light.
+Goal: the editor must look like the Yamaha CS-80 itself, in our own original design, at the polish level of the best commercial software recreations. The quality bar: a stranger who has seen photos of a CS-80 should recognise it at a glance, and every surface should have depth, material and light.
 
 Never copy another product's artwork, icons, text or layout. Design from the hardware and from this spec. Never use Yamaha or Arturia bitmaps; everything is drawn with JUCE vector calls.
 
@@ -19,37 +19,36 @@ Panel 0xff1b1a18 to 0xff2e2b27, cream 0xffe9dfc2, gold 0xffcdb878, amber 0xffd9a
 ## Target layout (design space stays 1600 x 1000; min window 1120 x 700, aspect locked as today)
 
 ```text
-y    0-64    Toolbar: brand, preset display (illuminated window), prev/next, LIBRARY, SAVE, INIT, ADVANCED, PANIC, meter
-y   64-660   Control surface: left voice-flow plate | channel I row | channel II row | centre/ring/sub/tone/global row
-y  660-772   Performance deck: performance block | ribbon + YAMAHA nameplate | keyboard/foot block
-y  772-1000  Keybed: full-width 61-key keyboard in a wood-and-felt frame (keys about 40 px wide, 190+ px tall)
+y    0-64    Toolbar: brand, preset display (illuminated window), prev/next, LIBRARY, SAVE, INIT, ADVANCED, voice and MIDI lamps, meter, PANIC
+y   64-72    Ledge under the toolbar (status strip above it, vent grille detail)
+y   72-632   Control surface: voice-flow plate (left) | channel I row | channel II row, then the centre row (ring, sub, feet, tone selector, global)
+y  640-745   Performance deck: performance block | nameplate and 804 px ribbon | brilliance/level/foot block
+y  748-1000  Keybed: full-width 61-key keyboard in a walnut frame (keys 41.8 px wide, about 5:1 length to width)
 ```
 
-The old arrangement put performance and foot controls beside a short keyboard. The new one gives the keyboard the full width and moves those controls to the deck.
+Both side cheeks (x 0-48 and x 1552-1600) are one continuous walnut surface drawn in the backdrop; overlays leave them visible.
 
-## Ownership (each agent edits only its own files)
+## Source map
 
-| Owner | Files | Scope |
+| Area | Files | Scope |
 |---|---|---|
-| KEYS | `src/plugin/HardwareKeyboard.h` | Key rendering, depression animation, glow, keybed frame (`Keybed`), key slip, felt, end blocks, note labels |
-| CONTROLS | `src/plugin/UiComponents.h`, `UiComponents.cpp` | LookAndFeel, faders, caps, knobs, tabs, rockers, LED buttons, wheels, ribbon, tooltips, drag value bubble, shared drawing helpers |
-| CHASSIS | `src/plugin/PluginEditor.cpp`, `PluginEditor.h` | New layout, chassis art, toolbar and display, left plate, memory programmer, overlay transitions |
-| BROWSER | `src/plugin/PresetBrowser.cpp`, `PresetBrowser.h` | Library UI |
-| ADVANCED | `src/plugin/AdvancedPanel.cpp`, `AdvancedPanel.h` | Advanced pages |
+| Keys | `src/plugin/HardwareKeyboard.h` | Key rendering, depression, glow, keybed frame, felt, rail, note labels |
+| Controls | `src/plugin/UiComponents.h`, `UiComponents.cpp` | LookAndFeel, faders, caps, knobs, tabs, rockers, LED buttons, ribbon, tooltips, shared drawing helpers |
+| Chassis | `src/plugin/PluginEditor.cpp`, `PluginEditor.h` | Layout, chassis art, toolbar and display, voice-flow plate, memory programmer, overlay transitions |
+| Library | `src/plugin/PresetBrowser.cpp`, `PresetBrowser.h` | Preset library UI |
+| Advanced | `src/plugin/AdvancedPanel.cpp`, `AdvancedPanel.h` | Advanced pages |
 
-Shared rules:
+Rules for UI changes:
 
-- Do not remove or change the signature of an existing declaration in `UiComponents.h`; add new ones. Others compile against them.
+- Do not remove or change the signature of an existing declaration in `UiComponents.h`; add new ones. Other files compile against them.
 - The accessibility names, titles, parameter bindings, keyboard focus and tab order of every control must survive. Tests in `src/tools/ui_snapshot.cpp` check them.
 - No pixel-level assertions exist; the self-test checks bounds, accessibility, focus, at least 40 hardware sliders, snapshot sizes.
 - Everything static is drawn once into a buffered image (see `Backdrop`). Per-frame repaints must stay cheap: no blur filters, no per-frame gradients over large areas. The editor repaints at 8 Hz; animation needs its own small timer on its own small component.
 - JUCE 8.0.11, C++20, software renderer. Fonts in CI are DejaVu only: build the engraved look from bold weights, `withHorizontalScale`, `withExtraKerningFactor` and drop shadows rather than a custom typeface.
 
-## Process
+## Checking a change
 
-- One shared source tree and one build tree. Build and render with `/home/claude/work/render.sh <outdir>`; it serialises builds across agents. If it reports an error in a file you do not own, another agent is mid-edit: wait 60 s and rerun. Never edit another agent's file.
-- Look at your PNGs with the Read tool, critique them against this spec, and iterate at least four times before reporting. Zoom by cropping with PIL (`Image.crop().resize()`) and read the crops.
-- Commit only your own files: `git add <your files> && git commit -m "..." -- <your files>`. Never `git add -A`, `git stash`, `git reset`, `git checkout` or `git push`. If `index.lock` exists, wait and retry.
-- A passing run has no `FAIL` line in `<outdir>/run.log` (the process may exit 1 with only an `X Error BadAtom` line; that is the missing window manager and is fine).
-- Commit message style: plain prose, imperative, no emoji, end with the two trailer lines
-  `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>` and `Claude-Session: https://claude.ai/code/session_01MxucX1TjDGxNX6pJvnvHnf`.
+- Build and render with the `CS80Snapshots` target: `CS80Snapshots --out <dir> --self-test`. On Linux run it through `scripts/run-ui-smoke-linux.sh` (Xvfb plus Openbox); a bare X server aborts with `BadAtom` partway through and silently skips the later checks.
+- A passing run ends with `UI SMOKE TEST PASSED` and has no `FAIL` line in the log.
+- Look at the PNGs, and zoom into crops of the area you changed, at 1600x1000 and at the 1120x700 minimum.
+- Never use Yamaha or Arturia bitmaps; everything is drawn with JUCE vector calls.
