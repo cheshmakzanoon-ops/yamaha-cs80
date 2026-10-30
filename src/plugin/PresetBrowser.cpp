@@ -22,7 +22,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p)
 {
     list.setRowHeight(26);
     list.setMultipleSelectionEnabled(false);
-    list.setColour(juce::ListBox::backgroundColourId, juce::Colour(0xff070d12));
+    list.setColour(juce::ListBox::backgroundColourId, juce::Colour(0xff12110f));
     list.setOutlineThickness(1);
     list.setWantsKeyboardFocus(false);
     addAndMakeVisible(list);
@@ -231,7 +231,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, juce::Graphics& g, int width
     if (rowIsSelected)
         g.fillAll(amber.withAlpha(0.18f));
     else if (rowNumber % 2 == 0)
-        g.fillAll(juce::Colour(0xff0b1218).withAlpha(0.55f));
+        g.fillAll(juce::Colour(0xff1b1916).withAlpha(0.7f));
 
     g.setColour(lineColour.withAlpha(0.35f));
     g.drawHorizontalLine(height - 1, 0.0f, (float) width);
@@ -343,14 +343,9 @@ void PresetBrowser::paint(juce::Graphics& g)
     g.saveState();
     g.addTransform(juce::AffineTransform::scale(sx, sy));
 
-    juce::ColourGradient sheet(juce::Colour(0xff101a22), 0.0f, 0.0f,
-                                juce::Colour(0xff060c11), 0.0f, 760.0f, false);
-    g.setGradientFill(sheet);
-    g.fillRoundedRectangle(0.0f, 0.0f, 1200.0f, 760.0f, 7.0f);
-    g.setColour(amber.withAlpha(0.65f));
-    g.drawRoundedRectangle(0.5f, 0.5f, 1199.0f, 759.0f, 7.0f, 1.2f);
+    paintSheet(g, { 0.0f, 0.0f, 1200.0f, 760.0f }, 7.0f);
 
-    g.setColour(juce::Colour(0xff0b141b));
+    g.setColour(juce::Colour(0xff0f0e0c));
     g.fillRect(0.0f, 0.0f, 1200.0f, 56.0f);
     g.setColour(lineColour.withAlpha(0.8f));
     g.drawHorizontalLine(56, 0.0f, 1200.0f);

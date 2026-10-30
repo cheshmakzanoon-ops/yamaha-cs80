@@ -3,6 +3,8 @@ name: DSP numerical measurements
 on:
   workflow_dispatch:
   push:
+    branches-ignore:
+      - ui-wip
     paths:
       - 'src/core/**'
       - 'src/reference/**'

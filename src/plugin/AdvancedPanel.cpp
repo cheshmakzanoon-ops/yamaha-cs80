@@ -65,8 +65,9 @@ public:
 
         for (const auto& section : sections)
         {
-            juce::ColourGradient fill(juce::Colour(0xff17232d), section.bounds.getX(), section.bounds.getY(),
-                                      juce::Colour(0xff0b131a), section.bounds.getX(), section.bounds.getBottom(), false);
+            softShadow(g, section.bounds, 5.0f, 0.0f, 2.5f, 5.0f, 0.55f);
+            juce::ColourGradient fill(juce::Colour(0xff35322d), section.bounds.getX(), section.bounds.getY(),
+                                      juce::Colour(0xff1f1d1a), section.bounds.getX(), section.bounds.getBottom(), false);
             g.setGradientFill(fill);
             g.fillRoundedRectangle(section.bounds, 5.0f);
             g.setColour(lineColour.withAlpha(0.75f));
@@ -471,14 +472,9 @@ void AdvancedPanel::paint(juce::Graphics& g)
     g.saveState();
     g.addTransform(juce::AffineTransform::scale(sx, sy));
 
-    juce::ColourGradient backdrop(juce::Colour(0xff090f15), 0.0f, 0.0f,
-                                   juce::Colour(0xff04080b), 0.0f, 892.0f, false);
-    g.setGradientFill(backdrop);
-    g.fillRoundedRectangle(0.0f, 0.0f, 1552.0f, 892.0f, 7.0f);
-    g.setColour(amber.withAlpha(0.55f));
-    g.drawRoundedRectangle(0.5f, 0.5f, 1551.0f, 891.0f, 7.0f, 1.2f);
+    paintSheet(g, { 0.0f, 0.0f, 1552.0f, 892.0f }, 7.0f);
 
-    g.setColour(juce::Colour(0xff0d161d));
+    g.setColour(juce::Colour(0xff0f0e0c));
     g.fillRect(0.0f, 0.0f, 1552.0f, 68.0f);
     g.setColour(lineColour.withAlpha(0.75f));
     g.drawHorizontalLine(68, 0.0f, 1552.0f);

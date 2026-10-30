@@ -21,9 +21,32 @@ extern const juce::Colour charcoal;
 extern const juce::Colour panelDark;
 extern const juce::Colour panelMid;
 extern const juce::Colour lineColour;
+extern const juce::Colour gold;        // engraved gold silkscreen lines
+extern const juce::Colour capCream;    // original slider-cap / tab colours
+extern const juce::Colour capGreen;
+extern const juce::Colour capPink;
+extern const juce::Colour capYellow;
+extern const juce::Colour capBlack;
+extern const juce::Colour capGrey;
 
 juce::String formatParamValue(int parameterIndex, float value);
 juce::String shortParamName(int parameterIndex);
+
+// 2.5D drawing helpers shared by the chassis, controls and overlay sheets.
+// Light comes from the upper left; depth is shown by bevels and layered
+// shadows (no per-frame blur, so repainting 140 controls stays cheap).
+void softShadow(juce::Graphics&, juce::Rectangle<float>, float radius,
+                float dx, float dy, float spread, float alpha);
+void drawChiclet(juce::Graphics&, juce::Rectangle<float> face, juce::Colour colour, float depth);
+void drawRocker(juce::Graphics&, juce::Rectangle<float> area, bool on, bool hovered);
+void drawKnob(juce::Graphics&, juce::Point<float> centre, float radius, float angle);
+void drawScrew(juce::Graphics&, juce::Point<float> centre, float radius, float turn);
+void drawWell(juce::Graphics&, juce::Rectangle<float>, float radius);
+void etchLine(juce::Graphics&, float x1, float y1, float x2, float y2, float alpha = 0.85f);
+void etchRect(juce::Graphics&, juce::Rectangle<float>, float radius, float alpha = 0.85f);
+juce::Colour panelFaceAt(float y, float top, float bottom);
+void fillPanelFace(juce::Graphics&, juce::Rectangle<float>);
+void paintSheet(juce::Graphics&, juce::Rectangle<float>, float radius);
 
 // Original vector rendering of the hardware's colored slider caps and rocker
 // tabs. Rotary controls remain available for the software extension pages.
