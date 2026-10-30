@@ -233,7 +233,7 @@ struct Pipeline
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;
     Adsr envelope;
     PraWahCircuit wah;
-    Chorus chorus;
+    BbdChorus chorus; // isolation policy: OE2 delay path
     std::array<Decimator, 2> decimator;
     std::array<OutputOracle, 3> taps;
 };

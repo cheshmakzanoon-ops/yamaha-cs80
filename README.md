@@ -2,9 +2,27 @@
 
 An independent, code-first recreation of the Yamaha CS-80: eight voices, two independent synthesis ranks per voice (sixteen oscillator / filter / VCA chains), polyphonic pressure, ribbon, ring modulation, SUB oscillator, chorus/tremolo and a modern performance layer. C++20 / JUCE 8, built as **VST3, AU (macOS) and Standalone**, with a JUCE-free core library that renders offline.
 
-![Source Performance: current actual CS-80 Reference editor](docs/screenshots/main-source-performance-1600x1000.png)
+![The CS-80 Reference editor at 1600×1000 with Brass tones on both ranks, three LFOs, three effects and the arpeggiator set up for the capture](docs/screenshots/main-populated-1600x1000.png)
 
-*Actual editor: Source Performance ON, isolation OFF; rank I String 3 uses a complete source column and rank II String 2 an inferred column. Captured from `deb34f4` in [GitHub Actions](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159), not a mockup.*
+*The actual plugin editor, rendered by the real code in GitHub Actions, not a mockup. Tone tabs BRASS 1 and BRASS 2 are lit and two keys are held. [provenance.json](docs/screenshots/provenance.json) records the exact commit and run of every image in this README.*
+
+## The editor
+
+The editor is an original vector drawing of a CS-80 front panel, built from JUCE paint calls with no bitmaps: no Yamaha or Arturia artwork, icons or text are used. It evokes the instrument. It is **not** a pixel copy of a particular hardware unit, and no side-by-side comparison against photographs was measured.
+
+| Area | What is there |
+| --- | --- |
+| Toolbar | Preset display with provenance (`FACTORY` or `USER`, slot, an **EDITED** flag), previous/next, **LIBRARY**, **SAVE**, **INIT**, **ADVANCED**, eight voice lamps, MIDI lamp, output sample-peak meter, **PANIC** |
+| Voice signal flow plate | Live VCO → HPF → LPF → VCA chain, filter and amplifier contour curves and the filter response of the viewed rank (I or II) |
+| Channel I and II rows | Two identical rows of long faders (VCO, VCF, VCA, initial and after touch) with colour-coded caps, PULSE/SAW rocker switches and engraved value readouts |
+| Centre row | Ring modulator, SUB oscillator, feet, the 14-position × 2-rank backlit **tone selector**, and the global / touch-response faders with the volume and pitch knobs |
+| Performance deck | Sustain / porta / glide, chorus and tremolo keys, nameplate, a wide ribbon controller, brilliance and level levers, pedal, footswitch and output switches |
+| Keybed | Full-width 61-key keyboard in a walnut frame. Depressed keys sink and are tinted; drag down a key for pressure |
+| Overlays | Searchable preset **library** (filters, favourites, sort, spectrum thumbnails, loaded/edited markers), four-page **Advanced** panel and the **memory lid** with four miniature programmer panels |
+
+The material language is dark walnut cheeks, a fine black crinkle finish, cream and gold silkscreen legends, lit-from-upper-left bevels and cast shadows. The window opens between 1120×700 and 1600×1000 and scales the 1600×1000 design space. See the [design specification](docs/UI_DESIGN_SPEC.md).
+
+**Known editor limits.** Independent review passes judged it clearly a CS-80 but not photographic. The control surface is evenly lit, with few bezels, ambient occlusion or translucency. At 1120×700 the smallest legends and readouts are tight. Hover, drag and tooltip states were checked only in test harnesses, not in a DAW.
 
 ## Current working instrument
 
@@ -24,9 +42,9 @@ An independent, code-first recreation of the Yamaha CS-80: eight voices, two ind
 
 Keep output headroom: source models are not normalized or limited. PANIC stops existing notes/holds, not retained effects or noise. The [mode contract](docs/SOURCE_PERFORMANCE.md), [Panic behavior](docs/PANIC_CONTROL.md), and [meter scope](docs/OUTPUT_METER.md) explain these boundaries.
 
-### Verified development packages
+### Development packages (last fully verified: `deb34f4`)
 
-These links identify **deb34f4**, whose native build/tests and stable validators passed [run 41011794181, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181). Its production core/plugin sources are unchanged from **00624e2 / 428e4b2**; the experimental continuity kernel is **not selected by the plugin**. GitHub artifact downloads may require sign-in and expire under repository retention settings.
+These links identify **deb34f4**, the last commit whose full-platform build, tests and stable validators all passed ([run 41011794181, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794181)). **They contain the previous editor.** Packages for the current editor are the artifacts of the `build` workflow run for the head of `main`. Its production core/plugin sources are unchanged from **00624e2 / 428e4b2**; the experimental continuity kernel is **not selected by the plugin**. GitHub artifact downloads may require sign-in and expire under repository retention settings.
 
 | Platform | Package |
 | --- | --- |
@@ -57,33 +75,50 @@ Start with the [original hardware references](docs/HARDWARE_REFERENCES.md), the 
 
 ## Actual editor screenshots
 
-All **17 images** were rendered by the real editor and passed the screenshot/UI smoke in [run 41011794159](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159). The source commit is recorded in [provenance.json](docs/screenshots/provenance.json), with [PNG checksums](docs/screenshots/SHA256SUMS). A screenshot does not validate later code changes or prove analog equivalence.
+All **23 images** were rendered by the real plugin editor in the [screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml), which also runs the full plugin/UI self-test (control bounds, accessibility names, keyboard focus, hardware-slider count, initial size, host, state and gesture fixtures) and must pass before images are published. The commit and run are recorded in [provenance.json](docs/screenshots/provenance.json), with [PNG checksums](docs/screenshots/SHA256SUMS). A screenshot does not validate later code changes or prove analog equivalence.
 
-### Minimum supported size: Source Performance at 1120×700
+### Default state at 1600×1000
 
-![Source Performance at 1120×700](docs/screenshots/main-source-performance-1120x700.png)
+![Default editor state at 1600×1000](docs/screenshots/main-1600x1000.png)
+
+### Minimum supported size, 1120×700
+
+![Editor at 1120×700](docs/screenshots/main-1120x700.png)
+
+### Preset library and memory programmer
+
+![Preset library](docs/screenshots/browser-1600x1000.png)
+
+![Memory lid open with memory 2 selected: the heard row is ringed, the others read NOT ACTIVE](docs/screenshots/memory-programmer-selected-1600x1000.png)
+
+### Advanced panel (modulation page, populated)
+
+![Advanced panel page 1 with three LFOs routed](docs/screenshots/advanced-populated-page1.png)
 
 ### Source Performance and comparison isolation are separate
+
+![Source Performance at 1120×700](docs/screenshots/main-source-performance-1120x700.png)
 
 ![Advanced About with Source Performance enabled and isolation disabled](docs/screenshots/advanced-source-performance-about.png)
 
 | View | Actual capture |
 | --- | --- |
+| Populated panel (Brass tones, LFOs, effects, arpeggiator) | [1600×1000](docs/screenshots/main-populated-1600x1000.png) |
 | Full-size Source Performance | [1600×1000 panel](docs/screenshots/main-source-performance-1600x1000.png) |
 | Deliberate high-output fixture | [Real +11.9 dBFS / OVER-RANGE indication](docs/screenshots/main-source-performance-over-range-1600x1000.png) |
 | Legacy/PANEL workflow | [Legacy panel](docs/screenshots/main-legacy-1600x1000.png) |
+| Panel after repeated overlay open/close transitions | [Restored panel](docs/screenshots/main-restored-1600x1000.png) |
 | 1200×760 layout | [Panel at intermediate size](docs/screenshots/main-1200x760.png) |
-| Modulation / expression | [Advanced page 1](docs/screenshots/advanced-page1.png) |
-| Sub oscillator / ring / chorus / analog voice | [Advanced page 2](docs/screenshots/advanced-page2.png) |
-| FX / macros / output | [Advanced page 3](docs/screenshots/advanced-page3.png) |
-| Arp / performance / about | [Advanced page 4](docs/screenshots/advanced-page4.png) |
-| External modulation input | [EXT-enabled panel](docs/screenshots/main-ext-enabled-1600x1000.png) |
-| Searchable preset library | [Preset browser](docs/screenshots/browser-1600x1000.png) |
+| Modulation / expression | [Advanced page 1](docs/screenshots/advanced-page1.png), [populated](docs/screenshots/advanced-populated-page1.png) |
+| Sub oscillator / ring / chorus / analog voice | [Advanced page 2](docs/screenshots/advanced-page2.png), [populated](docs/screenshots/advanced-populated-page2.png) |
+| FX / macros / output | [Advanced page 3](docs/screenshots/advanced-page3.png), [populated](docs/screenshots/advanced-populated-page3.png) |
+| Arp / performance / about | [Advanced page 4](docs/screenshots/advanced-page4.png), [populated](docs/screenshots/advanced-populated-page4.png) |
+| External modulation input | [EXT-enabled panel](docs/screenshots/main-ext-enabled-1600x1000.png), [Advanced sub page](docs/screenshots/advanced-sub-ext-enabled.png) |
 | Four memory programmer panels | [Memory lid open](docs/screenshots/memory-programmer-1600x1000.png) |
 
 The over-range image deliberately uses legal high-level PANEL settings and eight notes. Its actual host output peak was finite and above full scale; the normal meter timer produced the warning. This is a **stress demonstration, not a recommended listening level**, and no meter text/telemetry was fabricated. Nonfinite warning behavior is covered by tests, not presented as an observed DSP failure.
 
-The [screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml) refreshes repository images only after its checks pass and while the source commit remains current.
+The workflow refreshes the repository images from `main` only after its checks pass and while the source commit remains current.
 
 ---
 
@@ -105,7 +140,7 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | EXP / EXP-WAH, output HIGH/LOW | Circuit-derived networks in source modes; calibration inferred | Stateful four-capacitor PRA graph, always-clocked dry/wet histories and source-verified routing; optical/trim/loading profile inferred. Source-model HIGH/LOW uses the loaded 10µF/resistor graph with inferred source/load values; GENERAL is diagnostic-only. Legacy wah and scalar output retained in Legacy performance |
 | SUB, ring, ribbon | Approximate | Six original SUB functions (0.7-60 Hz), optional mono EXT modulation bus, frequency-envelope ring with documented calibration anchors, relative ribbon (~1 octave) |
 | Tone selectors, memories, presets | All 22 source/hypothesis tabs integrated / device laws inferred | 14 positions per rank, 4 independent memory banks (104 automatable controls), PANEL. Source modes use 7 complete matrix columns and 15 columns completed by explicit hypotheses for 25 unresolved cells; nominal device/touch laws remain inferred. The separate 22 legacy library studies are retained, not silently replaced |
-| Chorus / tremolo, output stage | Approximate / circuit-derived | Generic delay/tremolo remain. Both source modes use physical output-coupling states; legacy retains 10Hz DC block and soft clip. Both retain the 255-tap decimator (63 samples latency) |
+| Chorus / tremolo, output stage | Approximate / circuit-derived | Both source modes run chorus mode through an OE2 BBD delay path with inferred clock range, level and polarity ([model](docs/BBD_CHORUS_MODEL.md)); legacy and tremolo keep the generic laws. Both source modes use physical output-coupling states; legacy retains 10Hz DC block and soft clip. Both retain the 255-tap decimator (63 samples latency) |
 | Voice variation | Approximate | Per-voice tuning and pan scatter, slow drift, noise floor: arbitrary, not measured tolerances |
 | Host / plugin layer | Implemented | 245 append-only host parameters, state migration, safe preset saving, MPE discovery, Panic and read-only output metering; current validator outcomes are disclosed below |
 
@@ -113,7 +148,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest verified **native-build/validator and capture checkpoint** is [`deb34f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/deb34f495de6d78a30c7d5475243e0f5766520e9), passing on **attempt 1**. This is a fresh successful invocation, not proof that the older intermittent Linux exit139 has been repaired.
+The last **full-platform native-build/validator and capture checkpoint** is [`deb34f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/deb34f495de6d78a30c7d5475243e0f5766520e9), passing on **attempt 1**. This is a fresh successful invocation, not proof that the older intermittent Linux exit139 has been repaired.
 
 | Evidence | Exact result |
 | --- | --- |
@@ -123,6 +158,8 @@ The latest verified **native-build/validator and capture checkpoint** is [`deb34
 | [Official beta3 comparison](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41013202960) | Exact `deb34f4` Linux artifact `12957867464`: 25 headless / 31 GUI tests passed |
 | [Earlier DSP/compatibility/sanitizer evidence: `00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313) | All five jobs passed; leak-enabled ASan/UBSan 40/40. Production core/plugin sources are byte-unchanged at `deb34f4`; **this is not a newly executed DSP workflow at `deb34f4`** |
 
+**Since `deb34f4`.** The editor was redesigned, and the engine gained an OE2 BBD chorus for the source policies, a phaser sign fix, rate-independent reverb timing, per-slot effect state and release-tail envelope continuity ([audit](docs/ENGINE_AUDIT.md)). At the head that was merged to `main`, the Linux and both macOS builds with their test suites pass, the Linux pluginval run passed, the screenshot workflow passed and Windows builds. The Windows **Test** step still fails, as it did on `main` before this work; its log was not retrievable for diagnosis, so no cause is claimed here. Linux pluginval failed intermittently in earlier runs on the development branch, so one pass does not clear the disclosed crash history below. Check the exact-commit Actions results for any later revision.
+
 Historical failures remain failed: [`428e4b2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) exited139 after SUCCESS in fixed GUI seed `0x2da72db`; [`00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123909705477) did so in primary GUI seed `0x322bd8b`. Neither normal diagnostic replays nor this later passing invocation establish crash ownership or a repair. See [playable readiness](docs/PLAYABLE_RELEASE_READINESS.md) and the [00624e2 evidence appendix](docs/voice-continuity/AUDIT.md). These results are software-test evidence, **not measured analog equivalence, experimental-model activation or a real DAW installation/session qualification**.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
@@ -131,12 +168,13 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 
 | Check | Count / scope |
 | --- | --- |
-| Core engine suite (`cs80_tests`) | 11,272 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
+| Core engine suite (`cs80_tests`) | 11,300 checks: parameters, oscillator/filter/envelope behavior, voice allocation, pressure, MIDI, ring/ribbon, sample rates, all 222 presets render |
 | Keyboard handoff | Bounded non-audio-producer/audio-consumer queue, epoch/overflow regressions and host integration tests; not a whole-plugin hard-realtime claim |
 | Live envelope timing | 91,672 checks of isolation-only A/D/R refresh without retrigger; level behavior now has a separate inferred model |
 | Live envelope levels | 221,594 checks of state-continuous S/IL/AL response and high-rate convergence; stage-selection/tracking laws explicitly inferred |
 | Envelope numerical accuracy | 22,732 checks of long-envelope convergence, double state/clocks/coefficients and valid high-rate settings; three reduced-precision mutants rejected |
-| Active-tail continuity | 49,584 checks of opt-in isolation phase/filter-state retention; no full idle-clock claim |
+| Active-tail continuity | 49,696 checks of opt-in isolation phase/filter-state retention and release-tail envelope continuity; no full idle-clock claim |
+| OE2 BBD chorus (`cs80_bbd_chorus_tests`) | 70 checks of the source-policy chorus path; clock range and polarity are inferred |
 | Parity isolation / harness | 126 core isolation checks, 22 comparison-harness tests and 13 candidate-export tests; no hardware evidence |
 | Performance controls (`cs80_performance_control_tests`) | 113 checks, mutation-checked: contour, footswitch truth table and edges, EXP-WAH, output switch |
 | Offline reference models | passive preset matrix (4,702 checks), conditional IG00156 graph (112), settled-DC keyboard-contour network (160,459), conditional loaded cutoff-control pair (8,132) eight-voice rank network (14,012), and conditional RC transients (1,882) |
@@ -282,6 +320,7 @@ Headless assets:
 ```text
 src/core/Params.h               parameter table shared by engine, UI, presets and tests (append-only)
 src/core/Dsp.h                  oscillator, filters, envelopes, LFO, chorus, phaser, reverb, decimator
+src/core/BbdChorus.h            OE2 BBD chorus for the source policies
 src/core/Engine.*               voice allocation, dual-rank engine, modulation, ring, wah, FX, arp, output
 src/core/PerformanceControls.h  keyboard-contour weights, footswitch gate, wah and output-switch constants
 src/core/HardwareControl.h      offline passive preset resistor-matrix model (does not drive audio)
@@ -306,6 +345,8 @@ docs/                           evidence ledgers and audits (index below)
 | [BA617_SOURCE_REVIEW.md](docs/BA617_SOURCE_REVIEW.md) | Verified clock pin roles and installed alignment constraints, not a complete clock law |
 | [REFERENCE_CAPTURE_REQUEST.md](docs/REFERENCE_CAPTURE_REQUEST.md) | M1 external-first reference intake, metadata/rights/calibration requirements and unfilled checklist |
 | [PRESET_RECEIVER_PORTS.md](docs/PRESET_RECEIVER_PORTS.md) | Reviewed 26-output rank-I first-hop ledger with explicit missing loads/paths |
+| [UI_DESIGN_SPEC.md](docs/UI_DESIGN_SPEC.md) | Editor design brief: instrument look, palette, layout grid, component ownership and the review process |
+| [ENGINE_AUDIT.md](docs/ENGINE_AUDIT.md) | Engine QA audit: measured results (aliasing, level, FX behavior), fixes made and items left open, with inferred versus measured labelled |
 | [PARITY_ROADMAP.md](docs/PARITY_ROADMAP.md) | **The plan to 1:1**: definition of done, blockers, workstreams, provisional-value register, order, rules |
 | [ANALOG_FIDELITY_REQUIREMENT.md](docs/ANALOG_FIDELITY_REQUIREMENT.md) | The target, as the owner stated it |
 | [FIDELITY_AUDIT.md](docs/FIDELITY_AUDIT.md) | Dated gap register and every correction so far |
@@ -358,7 +399,7 @@ These keep the project honest; the roadmap's section 9 expands them.
 
 ## Honest scope
 
-The current audio engine is a circuit-informed behavioral reconstruction, not yet a complete component-level simulation or a measured emulation, and not a copy of Arturia's product (no Arturia artwork, code or presets are used; Yamaha-authored documentation is cited as hardware evidence). The oscillator/filter/envelope topologies, dual-rank structure, pressure routing and performance controls follow the CS-80 architecture; the modern FX, macros, MPE and arpeggiator are original additions. The panel is drawn from Yamaha's photographs and manuals with original code. The plugin should be exercised in the target DAW before any release.
+The current audio engine is a circuit-informed behavioral reconstruction, not yet a complete component-level simulation or a measured emulation, and not a copy of Arturia's product (no Arturia artwork, code or presets are used; Yamaha-authored documentation is cited as hardware evidence). The oscillator/filter/envelope topologies, dual-rank structure, pressure routing and performance controls follow the CS-80 architecture; the modern FX, macros, MPE and arpeggiator are original additions. The editor is original vector artwork designed with reference to the instrument's published appearance; no Yamaha or Arturia bitmaps are used. The plugin should be exercised in the target DAW before any release.
 
 ## References
 

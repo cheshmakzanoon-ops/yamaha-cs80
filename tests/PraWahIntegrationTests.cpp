@@ -256,6 +256,7 @@ struct PipelineOracle
     {
         envelope.noteOn(0.001f, 0.04f, 0.7f, 0.1f);
         chorus.prepare(static_cast<float>(rate));
+        bbd.prepare(static_cast<float>(rate));
         for (auto& d : decimator) d.prepare(static_cast<float>(rate));
         outputHigh = p[P_outputLevel] != 0.0f;
         for (auto& output : outputs) output.reset(outputHigh);
@@ -306,7 +307,9 @@ struct PipelineOracle
                               * (kProvisionalWahMakeup/kProvisionalWahQ), mix);
             }
             else if (legacyRunning) { legacyWah.reset(); legacyRunning = false; }
-            const auto ch = chorus.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo);
+            // Isolation selects the OE2 delay path; the legacy policy keeps the generic chorus.
+            const auto ch = isolated ? bbd.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo)
+                                     : chorus.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo);
             const std::array<float, 2> stereo {ch.l, ch.r};
             for (int channel = 0; channel < 2; ++channel)
             {
@@ -334,6 +337,7 @@ struct PipelineOracle
     Adsr envelope;
     NodalCircuit circuit;
     Chorus chorus;
+    BbdChorus bbd;
     std::array<Decimator, 2> decimator;
     std::array<NodalOutputCircuit, 2> outputs;
     std::array<float, 2> lastInput{}, lastDc{};

@@ -6,6 +6,7 @@
 #include "Params.h"
 #include "PerformanceControls.h"
 #include "PraWahCircuit.h"
+#include "BbdChorus.h"
 #include "OutputTapCircuit.h"
 #include "SourceFactoryTones.h"
 
@@ -409,9 +410,7 @@ private:
     bool anyVoiceWasActive = false;
 
     Chorus chorus;
-    Reverb reverb;
-    DelayLine fxL, fxR;
-    OnePole fxDampL, fxDampR;
+    BbdChorus bbdChorus;
     Decimator decL, decR;
     Rng audioRng { 0x51c80u };
     Rng modRng { 0x9e3779b9u };
@@ -423,8 +422,59 @@ private:
     bool ringKeyDown = false;
     int heldCount = 0;
     std::array<bool, 17> sustainPedals {}; // MIDI channels1..16; index0 unused
-    Chorus fxChorus;
-    Phaser phaser;
+
+    // Modern FX slots. Each slot owns one instance of every effect, so two slots set to the
+    // same type run two independent effects instead of sharing (and double-advancing) one set
+    // of delay lines, and a slot that is switched off or changes type can drop the stale audio
+    // of its previous effect instead of replaying it when it is next switched on.
+    struct FxSlot
+    {
+        Chorus chorus;
+        Phaser phaser;
+        Reverb reverb;
+        DelayLine delayL, delayR;
+        OnePole dampL, dampR;
+        int liveType = 0; // effect whose state may hold audio; 0 = none
+
+        void prepare(float rate)
+        {
+            chorus.prepare(rate);
+            phaser.prepare(rate);
+            reverb.prepare(rate);
+            delayL.prepare(0.8f, rate);
+            delayR.prepare(0.8f, rate);
+            dampL.set(9000.0f, rate);
+            dampR.set(9000.0f, rate);
+            dampL.reset();
+            dampR.reset();
+            liveType = 0;
+        }
+        // Delay-line and filter history only; the tape-delay damping OnePoles are left alone so
+        // that Engine::reset keeps its historical arithmetic (see applyParams).
+        void resetAudio() noexcept
+        {
+            chorus.reset();
+            phaser.reset();
+            reverb.reset();
+            delayL.reset();
+            delayR.reset();
+            liveType = 0;
+        }
+        void resetDamping() noexcept { dampL.reset(); dampR.reset(); }
+        // Drop the audio held by one effect type (1 chorus, 2 phaser, 3 tape, 4 plate, 5 drive).
+        void clear(int type) noexcept
+        {
+            switch (type)
+            {
+                case 1: chorus.reset(); break;
+                case 2: phaser.reset(); break;
+                case 3: delayL.reset(); delayR.reset(); resetDamping(); break;
+                case 4: reverb.reset(); break;
+                default: break;
+            }
+        }
+    };
+    std::array<FxSlot, 3> fxSlots;
     float driftPhase = 0.0f;
     float voiceDrift[kNumVoices] {};
 

@@ -92,7 +92,7 @@ The ribbon uses first-touch-relative displacement, a provisional linear frequenc
 
 ## Voice dispersion and drift
 
-`voice_dispersion` scales deterministic per-voice, per-rank random trims. Only two of the five trims that are generated are consumed: **tuning** (up to 7 cents at full dispersion, `kProvisionalVoiceTuneSpreadCents`, so about 2.5 cents at the 0.35 default) and **pan**. Cutoff, level and envelope trims are generated but not yet read by the audio path. At zero the eight voices are exactly in tune. The scatter is arbitrary software variation, not a measured tolerance.
+`voice_dispersion` scales deterministic per-voice, per-rank random trims. Only two of the five trims that are generated are consumed: **tuning** (up to 7 cents at full dispersion, `kProvisionalVoiceTuneSpreadCents`, so about 2.5 cents at the 0.35 default) and **pan**. Cutoff, level and envelope trims are generated but not yet read by the audio path (wiring them was reviewed in the engine audit and deferred: it would change the default sound of every program and there is no source for the distributions, see [ENGINE_AUDIT.md](ENGINE_AUDIT.md)). At zero the eight voices are exactly in tune. The scatter is arbitrary software variation, not a measured tolerance.
 
 Until 2026-10-29 the tuning trim was added to a semitone pitch without the cents conversion, so default voices sat up to about 2 semitones off pitch. Older pitch tests all zeroed dispersion and could not see it; `testDefaultVoiceTuning` now covers the default.
 
@@ -108,12 +108,18 @@ Three serial FX slots sit after the chorus. The type values are fixed by the UI:
 | --- | --- | --- |
 | 0 | Off | bypass |
 | 1 | Chorus | second, cleaner stereo chorus |
-| 2 | Phaser | six first-order all-pass stages, triangle LFO |
+| 2 | Phaser | six first-order all-pass stages, triangle LFO sweeping the 90 degree point over about 91 Hz to 5.1 kHz (an earlier coefficient sign error mirrored the sweep about fs/4; fixed, audible change for saved sessions using this slot) |
 | 3 | Tape Delay | 340 ms stereo delay, filtered cross-feedback, wow |
 | 4 | Plate Reverb | four stereo comb filters, two all-pass stages per side |
 | 5 | Drive | soft OTA-style saturation |
 
 Each slot has an independent mix. A slot at 0% is bypassed. The output stage then applies a 10 Hz DC blocker, a smoothed master volume, expression and a soft limiter.
+
+The engine drives the phaser at 0.32 Hz and depth 0.72, so the actual sweep is about 160 Hz to 2.9 kHz; the 91 Hz to 5.1 kHz range above is the depth-1 limit of the `Phaser` class.
+
+**Slot state (audit fixes, 2026-10-30).** Each slot owns its own instance of every effect (`Engine::FxSlot`). Earlier code kept one chorus, one phaser, one reverb and one tape-delay pair for all three slots, so two slots set to the same type shared and double-advanced one set of delay lines (two tape slots echoed at about 170 ms instead of 340 ms and 680 ms) and one slot's effect changed another's. A slot that is switched off (type 0 or mix at or below 0.001) or changes type now clears the state of the effect it was running, so it cannot replay that audio later, late, when it is switched on again. A single slot at a 48 kHz host is bit-identical to before. These are generic modern-FX behaviours, not CS-80 circuit models; sessions that used two slots of the same type, or that toggled a slot, sound different, by design.
+
+**Reverb time base.** The plate reverb's comb and all-pass delays are in seconds and no longer depend on the host sample rate. The old code applied `sampleRate / 44100` on top of the seconds-to-samples conversion, so the first comb echo was 59 ms at a 44.1 kHz host, 65 ms at 48 kHz and 129 ms at 96 kHz (the decay time scaled with it). `kReverbTimeScale` fixes the factor at the value a 48 kHz host always had, so 48 kHz is bit-identical and 44.1 and 96 kHz hosts now match it; that is an audible change for those two rates. The 65 ms-scale delays and the 0.78 comb feedback are unchanged software constants, not measured plate values.
 
 ## Arpeggiator
 
@@ -164,6 +170,8 @@ The editor is drawn at a 1600x1000 design resolution and scaled to the window. C
 ## Verification
 
 `tests/CoreTests.cpp` exercises the engine without JUCE. `src/tools/ui_snapshot.cpp --self-test` instantiates the JUCE processor and editor, checks the APVTS, latency reporting, round-trips state, renders MIDI audio, checks the editor at two sizes, opens all advanced pages and the browser, and saves/loads a user preset. CTest registers both tests on Linux, macOS and Windows.
+
+`src/tools/engine_audit.cpp` (`cs80_engine_audit`, not a CTest target) is an offline sound-quality audit: NaN and DC checks, level and loudness spread, clicks at note boundaries and voice steals, aliasing, output latency and the modern FX slots, for the factory bank and tabs under the legacy and Source Performance policies at 44.1, 48 and 96 kHz. Metric definitions, results and their limits are in [ENGINE_AUDIT.md](ENGINE_AUDIT.md); none of it is a hardware measurement.
 
 A dedicated Linux job downloads the built VST3 and runs pluginval 1.0.4 at strictness 10 with `--validate-in-process`, first with `--skip-gui-tests`, then GUI tests under Xvfb and a fixed-seed GUI regression. A clean SUCCESS **and exit zero** are required. `scripts/run-pluginval-linux.sh` has bounded retry eligibility only for exit139 after a completed test phase, without SUCCESS or FAILED; eligibility is not proof of crash ownership or suite completion. The crashed attempt's log is preserved. A post-SUCCESS exit139 is not eligible and remains failed. The exact `428e4b2` [Linux validator job123895901926](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) passed headless and ordinary GUI, but its fixed seed `0x2da72db` printed SUCCESS and then exited139. No local ELF core or crash stack was obtained for that failure.
 

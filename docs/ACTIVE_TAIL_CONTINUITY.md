@@ -36,7 +36,26 @@ At entry to `startVoice`, preserve the oscillator phase and HP/LP numerical
 integrator memories **only** if parity isolation is enabled and the selected
 voice was active, unheld and not MIDI-pedal-held. Each rank still consumes its
 legacy random-phase draw at exactly the former point, discarding the value if
-preserving. The EG and initial-touch retriggers are unchanged.
+preserving. The filter-EG and initial-touch retriggers are unchanged.
+
+**Amplitude envelope (engine audit, 2026-10-30; inferred).** Under the same
+condition the VCA envelope of the reused circuit is no longer zeroed at
+assignment: its attack restarts from the level the release tail has reached.
+Zeroing it removed the whole tail in one sample: the largest sample-to-sample
+difference between an engine that steals four tails and a twin that does not was
+0.0006 to 0.022 full scale under Source Performance (0.0003 to 0.027 under
+legacy) over eight factory programs, audible as a tick under a passage, while
+the oscillator phase and filter memories beside it were already continuous.
+With the change the Source Performance range is 0.0006 to 0.0074 (the remainder
+is the new note's different pitch); legacy is unchanged.
+This extends the reasoning above (no traced reset path
+for the envelope capacitor either); it is not a measurement of the original
+envelope generator, whose retrigger-from-nonzero behaviour is unverified. Only
+the amplitude envelope changes; the filter envelope and initial-touch retriggers
+still reset, and the legacy policy keeps the zeroing exactly. This is an audible
+change for the two source policies only. `ActiveTailContinuityTests` asserts the
+level at assignment for both policies and that the attack does not dip below the
+tail level; restoring the unconditional reset fails both assertions.
 
 Default-off executes the old draw/reset operations in their old order. Cold or
 fully inactive circuits still reset on assignment. Sustain-II termination makes

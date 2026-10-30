@@ -70,6 +70,17 @@ juce::Button* findButton(juce::Component& parent, const juce::String& text)
     return nullptr;
 }
 
+void collectButtons(juce::Component& parent, const juce::String& text, std::vector<juce::Button*>& out)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (!child->isVisible()) continue;
+        if (auto* button = dynamic_cast<juce::Button*>(child))
+            if (button->getButtonText() == text) out.push_back(button);
+        collectButtons(*child, text, out);
+    }
+}
+
 juce::Component* findControl(juce::Component& parent, const juce::String& id)
 {
     for (auto* child : parent.getChildren())
@@ -3293,6 +3304,47 @@ int main(int argc, char** argv)
     flushGui(80);
     save("main-restored-1600x1000");
 
+    // Populated states for design review: a lit tone tab, routed LFOs, loaded effects and a
+    // running arpeggiator. The earlier captures all show the quiet Init Patch.
+    {
+        juce::MemoryBlock before;
+        processor.getStateInformation(before);
+        processor.loadFactoryPreset(4);
+        processor.setParamValue(cs80::P_lfo1Rate, 5.2f);
+        processor.setParamValue(cs80::P_lfo1Depth, 0.6f);
+        processor.setParamValue(cs80::P_lfo1Dest, 2.0f);
+        processor.setParamValue(cs80::P_lfo2Rate, 0.7f);
+        processor.setParamValue(cs80::P_lfo2Depth, 0.5f);
+        processor.setParamValue(cs80::P_lfo2Dest, 1.0f);
+        processor.setParamValue(cs80::P_lfo3Rate, 2.1f);
+        processor.setParamValue(cs80::P_lfo3Depth, 0.4f);
+        processor.setParamValue(cs80::P_lfo3Dest, 4.0f);
+        processor.setParamValue(cs80::P_fx1Type, 1.0f);
+        processor.setParamValue(cs80::P_fx1Mix, 0.4f);
+        processor.setParamValue(cs80::P_fx2Type, 3.0f);
+        processor.setParamValue(cs80::P_fx2Mix, 0.3f);
+        processor.setParamValue(cs80::P_fx3Type, 4.0f);
+        processor.setParamValue(cs80::P_fx3Mix, 0.25f);
+        processor.setParamValue(cs80::P_arpOn, 1.0f);
+        for (const char* tone : { "BRASS\n1", "BRASS\n2" })      // one lit tab per channel row
+            if (auto* tab = findButton(editor, tone)) tab->triggerClick();
+        flushGui(150);
+        save("main-populated-1600x1000");
+        editor.showAdvancedPanel(true);
+        for (int page = 0; page < 4; ++page)
+        {
+            editor.showAdvancedPage(page);
+            flushGui(80);
+            save("advanced-populated-page" + juce::String(page + 1));
+        }
+        editor.showAdvancedPanel(false);
+        std::vector<juce::Button*> panelTabs;                      // both PANEL tabs back on
+        collectButtons(editor, "PANEL", panelTabs);
+        for (auto* tab : panelTabs) tab->triggerClick();
+        processor.setStateInformation(before.getData(), (int) before.getSize());
+        flushGui(100);
+    }
+
     if (auto* lid = findButton(editor, "OPEN MEMORY LID"))
     {
         lid->triggerClick();
@@ -3371,6 +3423,16 @@ int main(int argc, char** argv)
         }
         else check(false, "miniature switch discoverable");
         save("memory-programmer-1600x1000");
+        if (auto* memory = findButton(editor, "MEMORY 2"))              // lit-row state of the lid
+        {
+            juce::MemoryBlock beforeSelect;
+            processor.getStateInformation(beforeSelect);
+            memory->triggerClick();
+            flushGui(100);
+            save("memory-programmer-selected-1600x1000");
+            processor.setStateInformation(beforeSelect.getData(), (int) beforeSelect.getSize());
+            flushGui(100);
+        }
         if (auto* close = findButton(editor, "CLOSE LID"))
         {
             close->triggerClick();

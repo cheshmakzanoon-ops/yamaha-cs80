@@ -54,6 +54,7 @@ remains an independent session policy, so preset recall cannot disengage it.
 | Hardware factory-tab routing | Legacy bridge | Source complete/inferred | Source complete/inferred |
 | Precise/live envelope backend and active-tail audio-state continuity | Existing legacy | Enabled | Existing enabled |
 | PRA EXP-WAH and loaded output circuit | Existing legacy path | Enabled | Existing enabled |
+| CHORUS mode delay path | Generic delay line | OE2 BBD model ([BBD_CHORUS_MODEL.md](BBD_CHORUS_MODEL.md)) | OE2 BBD model |
 | Existing output soft conditioner/scalar HIGH–LOW path | Unchanged | Not used | Not used |
 | Pitch bend, CC1/11/64/74, optional MPE | Live | Live | Existing ignored/masked behavior |
 | FX, LFOs, macros, arp, dispersion, drift/noise, tuning, mono | Existing | Existing software overlays | Existing isolation masks |

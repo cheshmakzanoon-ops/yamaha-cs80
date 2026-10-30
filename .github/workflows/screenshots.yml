@@ -3,6 +3,8 @@ name: Hardware panel screenshots
 on:
   workflow_dispatch:
   push:
+    branches-ignore:
+      - ui-preview
     paths:
       - 'src/plugin/**'
       - 'src/core/**'
@@ -38,7 +40,15 @@ jobs:
       - name: Capture actual editor at every supported size and page
         run: |
           mkdir -p artifacts/ui
-          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test
+          status=0
+          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test > artifacts/run.log 2>&1 || status=$?
+          cat artifacts/run.log
+          if (( status != 0 )); then
+              # Run logs are not always downloadable; surface the evidence as an annotation too.
+              msg=$(tail -n 40 artifacts/run.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+              echo "::error title=UI smoke exit ${status}::${msg}"
+              exit "$status"
+          fi
           printf '{"commit":"%s","run":"%s","renderer":"JUCE software, actual plugin editor"}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/ui/provenance.json
           sha256sum artifacts/ui/*.png > artifacts/ui/SHA256SUMS
       - name: Publish screenshot evidence
@@ -47,6 +57,19 @@ jobs:
           name: cs80-panel-${{ github.sha }}
           path: artifacts/ui
           if-no-files-found: error
+      - name: Publish preview PNGs to the ui-preview branch (non-main only)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/preview" && mkdir "$RUNNER_TEMP/preview"
+          cp artifacts/ui/*.png artifacts/ui/provenance.json "$RUNNER_TEMP/preview/"
+          cd "$RUNNER_TEMP/preview"
+          git init -q -b ui-preview
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "preview screenshots for ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ui-preview
       - name: Refresh repository screenshots from this exact source
         if: github.ref == 'refs/heads/main'
         run: |
