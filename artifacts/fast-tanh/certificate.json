@@ -1,0 +1,22 @@
+{
+  "certificate": {
+    "intervals": 5000,
+    "intervalWidthZ": "1/1000",
+    "domainX": "[-20,20]",
+    "maxIntervalX": [
+      6.792,
+      6.796
+    ],
+    "certifiedRealAbsoluteError": "<1.86e-11",
+    "conditionalBinary64Roundoff": "<100*2^-53",
+    "combinedAbsoluteError": "<2e-11",
+    "saturationError": "<2e-17",
+    "assumptions": "Lambert convergent bracketing; IEEE round-to-nearest normal operations; no unsafe fast-math. No native CPU or full-engine qualification."
+  },
+  "denseCheck": {
+    "samples": 400001,
+    "maximumAbsoluteError": 1.7548074104922762e-11,
+    "witness": -6.7234,
+    "role": "empirical sanity check, not the uniform proof or a native performance result"
+  }
+}
