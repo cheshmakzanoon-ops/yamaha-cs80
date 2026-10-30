@@ -1494,6 +1494,35 @@ void testEffects()
     }
 }
 
+double energyBetween(const std::vector<float>& stereo, double sampleRate, double t0, double t1)
+{
+    double e = 0.0;
+    const size_t a = (size_t) (t0 * sampleRate) * 2, b = std::min(stereo.size(), (size_t) (t1 * sampleRate) * 2);
+    for (size_t i = a; i < b; ++i)
+        e += (double) stereo[i] * (double) stereo[i];
+    return e;
+}
+
+// Short, dry, silent-before-and-after burst: only the effect under test can put energy
+// after the first ~25 ms (decimator latency plus the burst itself).
+ParamValues fxBurstPatch()
+{
+    ParamValues p;
+    p[P_chorusOn] = 0.0f;
+    p[P_analogNoise] = 0.0f;
+    p[P_drift] = 0.0f;
+    p[P_keyRelease] = 0.0f;
+    p[P_volume] = 0.55f;
+    for (int ch = 0; ch < 2; ++ch)
+    {
+        p[chParam(ch, CP_vA)] = 0.001f;
+        p[chParam(ch, CP_vD)] = 0.05f;
+        p[chParam(ch, CP_vS)] = 0.0f;
+        p[chParam(ch, CP_vR)] = 0.001f;
+    }
+    return p;
+}
+
 void testReverbDelayTimesAreRateIndependent()
 {
     // The comb and all-pass times are seconds. Earlier code multiplied them by sampleRate / 44100 as
@@ -1537,6 +1566,72 @@ void testReverbDelayTimesAreRateIndependent()
                   "reverb energy centre in ms is the same at every rate");
     // 205 ms is what the 48 kHz host (96 kHz internal) has always produced for this burst.
     checkNear((float) centreMs[1], 205.1f, 1.0f, "reverb energy centre unchanged at a 48 kHz host");
+}
+
+void testFxSlotsAreIndependent()
+{
+    for (double sr : { 44100.0, 48000.0, 96000.0 })
+    {
+        const std::string at = " at " + std::to_string((int) sr);
+        auto run = [&](const ParamValues& p, double seconds, double switchOffAt = -1.0, double switchOnAt = -1.0) {
+            Engine engine;
+            engine.prepare(sr);
+            engine.setParams(p);
+            engine.noteOn(60, 0.9f, 1);
+            std::vector<float> out;
+            const int block = 64;
+            bool off = false, on = false;
+            for (int done = 0; done < (int) (seconds * sr); done += block)
+            {
+                if (!off && switchOffAt >= 0.0 && done >= (int) (switchOffAt * sr))
+                {
+                    ParamValues q = p;
+                    q[P_fx1Mix] = 0.0f;
+                    engine.setParams(q);
+                    off = true;
+                }
+                if (!on && switchOnAt >= 0.0 && done >= (int) (switchOnAt * sr))
+                {
+                    engine.setParams(p);
+                    on = true;
+                }
+                if (done == (int) (0.010 * sr) / block * block)
+                    engine.noteOff(60, 1);
+                const auto chunk = render(engine, sr, block, block);
+                out.insert(out.end(), chunk.begin(), chunk.end());
+            }
+            return out;
+        };
+
+        // One tape-delay slot: echo at 340 ms.
+        ParamValues one = fxBurstPatch();
+        one[P_fx1Type] = 3.0f;
+        one[P_fx1Mix] = 1.0f;
+        const auto single = run(one, 1.0);
+        const double echo = energyBetween(single, sr, 0.33, 0.37);
+        check(echo > 1.0e-6, "tape echo exists" + at);
+
+        // The same effect in slot 3 must sound identical: each slot owns its own state.
+        ParamValues third = fxBurstPatch();
+        third[P_fx3Type] = 3.0f;
+        third[P_fx3Mix] = 1.0f;
+        check(run(third, 1.0) == single, "an effect sounds the same in any slot" + at);
+
+        // Two tape-delay slots are two delays in series (echoes at 340 and 680 ms). With one shared
+        // delay line that is written twice per sample the echo moved to about 170 ms.
+        ParamValues two = one;
+        two[P_fx2Type] = 3.0f;
+        two[P_fx2Mix] = 1.0f;
+        const auto doubled = run(two, 1.0);
+        check(energyBetween(doubled, sr, 0.33, 0.37) > 0.3 * echo, "two tape slots keep the 340 ms echo" + at);
+        check(energyBetween(doubled, sr, 0.10, 0.30) < 1.0e-4 * echo, "two tape slots do not echo early" + at);
+
+        // A slot that is switched off must not replay its old audio when it is switched on again.
+        // Burst at 0, slot off at 0.2 s and on again at 0.3 s: with a retained buffer the echo comes back
+        // at 0.44 s, 140 ms of writing after the slot reopens.
+        const auto gap = run(one, 1.0, 0.2, 0.3);
+        check(energyBetween(gap, sr, 0.34, 0.60) < 1.0e-4 * echo, "a switched-off slot drops its stale echo" + at);
+    }
 }
 
 void testMacros()
@@ -1971,6 +2066,7 @@ int main()
     testArpeggiatorModes();
     testEffects();
     testReverbDelayTimesAreRateIndependent();
+    testFxSlotsAreIndependent();
     testMacros();
     testPresetDefaults();
     testFactoryBank();

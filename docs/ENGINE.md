@@ -115,6 +115,10 @@ Three serial FX slots sit after the chorus. The type values are fixed by the UI:
 
 Each slot has an independent mix. A slot at 0% is bypassed. The output stage then applies a 10 Hz DC blocker, a smoothed master volume, expression and a soft limiter.
 
+The engine drives the phaser at 0.32 Hz and depth 0.72, so the actual sweep is about 160 Hz to 2.9 kHz; the 91 Hz to 5.1 kHz range above is the depth-1 limit of the `Phaser` class.
+
+**Slot state (audit fixes, 2026-10-30).** Each slot owns its own instance of every effect (`Engine::FxSlot`). Earlier code kept one chorus, one phaser, one reverb and one tape-delay pair for all three slots, so two slots set to the same type shared and double-advanced one set of delay lines (two tape slots echoed at about 170 ms instead of 340 ms and 680 ms) and one slot's effect changed another's. A slot that is switched off (type 0 or mix at or below 0.001) or changes type now clears the state of the effect it was running, so it cannot replay that audio later, late, when it is switched on again. A single slot at a 48 kHz host is bit-identical to before. These are generic modern-FX behaviours, not CS-80 circuit models; sessions that used two slots of the same type, or that toggled a slot, sound different, by design.
+
 **Reverb time base.** The plate reverb's comb and all-pass delays are in seconds and no longer depend on the host sample rate. The old code applied `sampleRate / 44100` on top of the seconds-to-samples conversion, so the first comb echo was 59 ms at a 44.1 kHz host, 65 ms at 48 kHz and 129 ms at 96 kHz (the decay time scaled with it). `kReverbTimeScale` fixes the factor at the value a 48 kHz host always had, so 48 kHz is bit-identical and 44.1 and 96 kHz hosts now match it; that is an audible change for those two rates. The 65 ms-scale delays and the 0.78 comb feedback are unchanged software constants, not measured plate values.
 
 ## Arpeggiator
