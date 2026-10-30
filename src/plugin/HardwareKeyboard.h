@@ -26,8 +26,8 @@
 //    timer runs while some depth is non-zero and repaints only dirty keys. While the keyboard
 //    is visible and the editor has wired `hostKeyDown`, the same timer idles at 30 Hz to catch
 //    host-played notes, which raise no event on the UI side.
-//  - Keybed paints the felt strip, the ruler with its gold line and labels (middle C marked),
-//    the base rail and the stepped walnut end blocks once into a cached image, and lays the
+//  - Keybed paints the felt strip, the walnut front rail with its printed note names (middle C marked)
+//    and the stepped walnut end blocks once into a cached image, and lays the
 //    deck-overhang shadow, the blocks' cap fronts and the ruler glow of pressed keys over the keys.
 // Everything is lit from the upper left.
 namespace cs80::ui
@@ -223,30 +223,31 @@ inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
 
     if (d > 0.0f)
     {
-        // The body of a depressed key is a few percent darker and warmer: it sits lower in the deck's shadow.
-        g.setColour(Colour(0xff4a2e12).withAlpha(0.10f * d));
+        // A depressed key sits lower in the deck's shadow and takes on the warm light of the lamp under it:
+        // its whole face is tinted amber, laid over the ivory so the grain and gradients still show through.
+        const float tint = d * (0.56f + 0.14f * juce::jlimit(0.0f, 1.0f, (k.glow - 0.5f) * 2.0f));
+        g.setColour(Colour(0xffbc7638).withAlpha(tint));
         g.fillRect(x0, y0, w, yb - y0);
         // At the back, under the felt: a dark gap, then ambient occlusion falling away along the key.
         g.setColour(black(0.90f * d));
         g.fillRect(x0, y0, w, 1.3f * u);
-        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 32.0f * u),
-              { { 0.0f, black(0.62f * d) }, { 0.22f, black(0.30f * d) }, { 1.0f, black(0.0f) } });
-        // Its lower neighbours shade the edges (light comes from the left, so the left edge takes more).
-        fillH(g, Rectangle<float>(x0, y0, 5.0f * u, yb - y0), { { 0.0f, black(0.34f * d) }, { 1.0f, black(0.0f) } });
-        fillH(g, Rectangle<float>(x1 - 3.0f * u, y0, 3.0f * u, yb - y0), { { 0.0f, black(0.0f) }, { 1.0f, black(0.16f * d) } });
+        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 38.0f * u),
+              { { 0.0f, black(0.70f * d) }, { 0.22f, black(0.36f * d) }, { 1.0f, black(0.0f) } });
+        // Its higher neighbours shade the edges (light comes from the left, so the left edge takes more).
+        fillH(g, Rectangle<float>(x0, y0, 6.0f * u, yb - y0), { { 0.0f, black(0.56f * d) }, { 0.5f, black(0.20f * d) }, { 1.0f, black(0.0f) } });
+        fillH(g, Rectangle<float>(x1 - 4.5f * u, y0, 4.5f * u, yb - y0), { { 0.0f, black(0.0f) }, { 1.0f, black(0.40f * d) } });
         if (gd > 0.01f)
         {
-            // Warm bounce on the front of the top face, then the glow proper: the nose, a bright rim and a hot line
-            // where it meets the ruler.
-            fillV(g, Rectangle<float>(x0, topEnd - 28.0f * u, w, 28.0f * u),
-                  { { 0.0f, amb.withAlpha(0.0f) }, { 1.0f, amb.withAlpha(0.20f * gd) } });
-            g.setColour(Colour(0xffffe2a6).withAlpha(0.85f * d));
-            g.fillRect(x0 + 0.4f * u, topEnd, w - 0.8f * u, 1.5f * u);
-            g.setColour(amb.withAlpha(0.45f * gd));
-            g.fillRect(x0, topEnd - 1.4f * u, w, 1.4f * u);
-            fillV(g, nose, { { 0.0f, amb.withAlpha(0.14f * gd) }, { 0.50f, amb.withAlpha(0.46f * gd) }, { 1.0f, amb.withAlpha(0.94f * gd) } });
-            g.setColour(Colour(0xffffe6b4).withAlpha(0.80f * gd));
-            g.fillRect(x0 + 0.6f * u, yb - 1.8f * u, w - 1.2f * u, 1.4f * u);
+            // A modest glow at the front: the nose, a warm rim along the lip and a bright line where it meets the rail.
+            fillV(g, Rectangle<float>(x0, topEnd - 24.0f * u, w, 24.0f * u),
+                  { { 0.0f, amb.withAlpha(0.0f) }, { 1.0f, amb.withAlpha(0.10f * gd) } });
+            g.setColour(Colour(0xffffe2a6).withAlpha(0.60f * d));
+            g.fillRect(x0 + 0.4f * u, topEnd, w - 0.8f * u, 1.4f * u);
+            g.setColour(amb.withAlpha(0.28f * gd));
+            g.fillRect(x0, topEnd - 1.2f * u, w, 1.2f * u);
+            fillV(g, nose, { { 0.0f, amb.withAlpha(0.08f * gd) }, { 0.50f, amb.withAlpha(0.22f * gd) }, { 1.0f, amb.withAlpha(0.52f * gd) } });
+            g.setColour(Colour(0xffffe0a8).withAlpha(0.55f * gd));
+            g.fillRect(x0 + 0.6f * u, yb - 1.6f * u, w - 1.2f * u, 1.3f * u);
         }
     }
 
@@ -299,7 +300,7 @@ inline void drawBlackShadow(Graphics& g, Rectangle<float> r, const KeyLook& k, f
     if (gd > 0.01f)
     {
         const Colour amb = glowColour(k);
-        fillBlob(g, x + w * 0.5f, tip + 1.0f * u, w * 1.0f, 18.0f * u, amb.withAlpha(0.60f * gd), amb.withAlpha(0.24f * gd),
+        fillBlob(g, x + w * 0.5f, tip + 1.0f * u, w * 0.9f, 14.0f * u, amb.withAlpha(0.36f * gd), amb.withAlpha(0.14f * gd),
                  Rectangle<float>(x - w * 0.55f, tip - 18.0f * u, w * 2.1f, 38.0f * u));
     }
 }
@@ -364,7 +365,7 @@ inline void drawBlackKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
     }
     if (gd > 0.01f)
         fillV(g, Rectangle<float>(x, capFront, w, fh + 1.0f),
-              { { 0.0f, amb.withAlpha(0.0f) }, { 0.45f, amb.withAlpha(0.26f * gd) }, { 1.0f, amb.withAlpha(0.90f * gd) } });
+              { { 0.0f, amb.withAlpha(0.06f * gd) }, { 0.40f, amb.withAlpha(0.34f * gd) }, { 1.0f, amb.withAlpha(0.92f * gd) } });
     g.restoreState();
 
     // Cap: a dome, lit from the upper left, falling off toward the right edge.
@@ -393,6 +394,8 @@ inline void drawBlackKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
     if (d > 0.0f)
     {
         g.setColour(black(0.30f * d));
+        g.fillRect(cap);
+        g.setColour(Colour(0xffb07034).withAlpha(0.16f * d)); // the same warm tint as the white keys
         g.fillRect(cap);
         fillV(g, Rectangle<float>(capL, ys, cap.getWidth(), 36.0f * u),
               { { 0.0f, black(0.46f * d) }, { 1.0f, black(0.0f) } }); // hinge shadow
@@ -423,17 +426,17 @@ inline void drawBlackKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
 }
 
 // Warm light that a pressed key throws just in front of it: a bright line in the gap under the nose and a
-// faint, shallow halo (about 7 px, 20 % at most) on the ruler, which never washes out the printed legend.
+// barely visible halo (5 px, 8 % at most) on the rail, so the printed legend is never washed out.
 inline void drawFeltGlow(Graphics& g, float cx, float top, float keyW, float u, float strength, float glow, Rectangle<float> clip)
 {
     if (strength < 0.01f) return;
     const Colour amb = glowColour(glow);
     const float st = juce::jmin(1.0f, 1.2f * strength);
-    const auto area = Rectangle<float>(cx - keyW * 0.95f, top - 1.0f, keyW * 1.9f, 11.0f * u);
+    const auto area = Rectangle<float>(cx - keyW * 0.8f, top - 1.0f, keyW * 1.6f, 8.0f * u);
     if (!area.intersects(clip)) return;
-    const auto gapArea = Rectangle<float>(cx - keyW * 0.55f, top, keyW * 1.1f, 2.0f * u);
-    fillBlob(g, cx, top + 1.0f * u, keyW * 0.60f, 3.0f * u, Colour(0xffffd9a0).withAlpha(0.80f * st), amb.withAlpha(0.45f * st), gapArea);
-    fillBlob(g, cx, top + 2.0f * u, keyW * 0.85f, 7.0f * u, amb.withAlpha(0.20f * st), amb.withAlpha(0.10f * st),
+    const auto gapArea = Rectangle<float>(cx - keyW * 0.5f, top, keyW * 1.0f, 2.0f * u);
+    fillBlob(g, cx, top + 1.0f * u, keyW * 0.55f, 3.0f * u, Colour(0xffffd9a0).withAlpha(0.55f * st), amb.withAlpha(0.28f * st), gapArea);
+    fillBlob(g, cx, top + 2.0f * u, keyW * 0.70f, 5.0f * u, amb.withAlpha(0.08f * st), amb.withAlpha(0.04f * st),
              area.withTop(top + 2.0f * u));
 }
 
@@ -476,37 +479,15 @@ inline void paintFelt(Graphics& g, Rectangle<float> r, Colour top, Colour bottom
     g.restoreState();
 }
 
-// The flat printed strip under the keys: satin black with a very fine grain, hairline gold borders and no texture to speak of.
-inline void paintPrintedStrip(Graphics& g, Rectangle<float> r, int seed, float u)
-{
-    g.saveState();
-    g.reduceClipRegion(r.getSmallestIntegerContainer());
-    fillV(g, r, { { 0.0f, Colour(0xff161310) }, { 1.0f, Colour(0xff1f1b17) } });
-    juce::Random rng(seed);
-    const int specks = (int) (r.getWidth() * r.getHeight() * 0.18f / (u * u));
-    for (int i = 0; i < specks; ++i)
-    {
-        g.setColour((rng.nextBool() ? white(0.035f) : black(0.10f)).withMultipliedAlpha(0.6f + rng.nextFloat()));
-        g.fillRect(r.getX() + rng.nextFloat() * r.getWidth(), r.getY() + rng.nextFloat() * r.getHeight(), 0.9f * u, 0.9f * u);
-    }
-    g.setColour(black(0.80f));
-    g.fillRect(r.getX(), r.getY(), r.getWidth(), 1.0f * u);
-    g.setColour(kGold.withAlpha(0.22f));
-    g.fillRect(r.getX(), r.getBottom() - 1.8f * u, r.getWidth(), 0.7f * u);
-    g.setColour(black(0.85f));
-    g.fillRect(r.getX(), r.getBottom() - 1.0f * u, r.getWidth(), 1.0f * u);
-    g.restoreState();
-}
-
 // Walnut face that continues the chassis cheek: the shared figured-grain helper pulled down to the cheek's deep brown.
-inline void paintWalnutFace(Graphics& g, Rectangle<float> r, bool vertical, int seed, float veil)
+inline void paintWalnutFace(Graphics& g, Rectangle<float> r, bool vertical, int seed, float lift)
 {
     g.saveState();
     g.reduceClipRegion(r.getSmallestIntegerContainer());
     g.setColour(Colour(0xff3a2014));
     g.fillRect(r);
     drawWalnutGrain(g, r, vertical, seed, false);
-    g.setColour(Colour(0xff1f0e07).withAlpha(veil));
+    g.setColour(Colour(0xff9a5a2e).withAlpha(lift)); // warm the helper's figure toward the cheek's walnut brown
     g.fillRect(r);
     g.restoreState();
 }
@@ -531,9 +512,9 @@ inline void paintEndBlock(Graphics& g, Rectangle<float> r, bool left, int seed, 
     const float outer = left ? r.getX() : r.getRight();
 
     // Slab.
-    paintWalnutFace(g, r, true, seed, 0.50f);
+    paintWalnutFace(g, r, true, seed, 0.54f);
     fillV(g, r, { { 0.0f, varnish(0.0f) }, { 0.14f, varnish(0.06f) }, { 0.30f, varnish(0.10f) }, { 0.55f, varnish(0.0f) } }); // varnish sheen
-    fillV(g, r, { { 0.0f, black(0.0f) }, { 0.04f, black(0.0f) }, { 1.0f, black(0.56f) } }); // sinks into shade like the cheek
+    fillV(g, r, { { 0.0f, black(0.0f) }, { 0.04f, black(0.0f) }, { 1.0f, black(0.34f) } }); // sinks into shade like the cheek
     fillH(g, r, { { left ? 0.0f : 1.0f, white(0.0f) }, { left ? 0.45f : 0.55f, white(0.05f) }, { left ? 1.0f : 0.0f, white(0.0f) } });
     // Chamfer on the face toward the keys, in shade on the left block and lit on the right one.
     const float cw = 3.4f * u;
@@ -567,7 +548,7 @@ inline void paintEndBlock(Graphics& g, Rectangle<float> r, bool left, int seed, 
                                  !left, left, false, false);
     g.saveState();
     g.reduceClipRegion(capShape);
-    paintWalnutFace(g, lip, false, seed + 7, 0.34f);
+    paintWalnutFace(g, lip, false, seed + 7, 0.60f);
     fillV(g, lip, { { 0.0f, varnish(0.36f) }, { 0.22f, varnish(0.12f) }, { 0.60f, varnish(0.0f) }, { 1.0f, black(0.30f) } });
     g.setColour(varnish(0.55f));
     g.fillRect(lip.getX(), lip.getY() + 0.8f * u, lip.getWidth(), 0.9f * u); // lit top edge
@@ -602,8 +583,8 @@ inline void paintLipOverhang(Graphics& g, float edgeX, float y0, bool left, int 
     else
         fillBlob(g, edgeX - ov, yb, 6.0f * u, 6.0f * u, black(0.40f), black(0.16f),
                  Rectangle<float>(edgeX - ov - 7.0f * u, yb - 4.0f * u, ov + 7.0f * u, 11.0f * u));
-    paintWalnutFace(g, face, false, seed, left ? 0.40f : 0.24f);
-    fillV(g, face, { { 0.0f, varnish(left ? 0.30f : 0.46f) }, { 0.35f, varnish(0.06f) }, { 1.0f, black(left ? 0.42f : 0.30f) } });
+    paintWalnutFace(g, face, false, seed, left ? 0.52f : 0.64f);
+    fillV(g, face, { { 0.0f, varnish(left ? 0.26f : 0.40f) }, { 0.35f, varnish(0.05f) }, { 1.0f, black(left ? 0.40f : 0.28f) } });
     g.setColour(varnish(left ? 0.40f : 0.62f));
     g.fillRect(face.getX(), y0 + 0.8f * u, face.getWidth(), 0.9f * u);
     g.setColour(black(0.90f));
@@ -992,9 +973,9 @@ public:
     // Insets of the key area inside the assembly, in design pixels at the 1512 x 228 design size
     // (top: back felt rail under the panel lip, sides: wood end blocks, bottom: front felt slip and
     // rail). They scale with the component width, so any size of Keybed keeps its proportions.
-    // Design size 1512 x 228: key area 1476 x 188, exactly 41 px per white key; 11 px of felt above the keys,
-    // 29 px below them (2 px gap, 15 px ruler, 12 px base rail).
-    juce::BorderSize<int> keyInsets { 11, 18, 29, 18 };
+    // Design size 1512 x 228: key area 1476 x 195, exactly 41 px per white key; 9 px of felt above the keys,
+    // 24 px below them (2 px dark gap, 22 px walnut rail with the printed legend).
+    juce::BorderSize<int> keyInsets { 9, 18, 24, 18 };
 
     void resized() override
     {
@@ -1006,7 +987,7 @@ public:
         keys.setBounds(scaled.subtractedFrom(getLocalBounds()));
         if (keys.getWidth() > 0)
             keys.setKeyWidth((float) keys.getWidth() / 36.0f);
-        keys.feltGlowReach = juce::roundToInt(20.0f * u);
+        keys.feltGlowReach = juce::roundToInt(12.0f * u);
         frameDirty = true;
     }
 
@@ -1076,8 +1057,8 @@ private:
         frameW = w; frameH = h; frameScale = ps; frameKeys = kb;
     }
 
-    // Everything static behind the keys: back felt, the ruler with its gold line and labels, the base rail
-    // and the end blocks. Layout from the top: 11 px felt, keys, 2 px gap, 15 px ruler, 12 px base rail.
+    // Everything static behind the keys: the back felt, the walnut front rail with its printed legend, and the
+    // end blocks. Layout from the top: 9 px felt, keys, a 2 px dark gap under the noses, then a 22 px rail.
     void paintFrame(juce::Graphics& g, float u)
     {
         using namespace keys_detail;
@@ -1085,63 +1066,47 @@ private:
         const auto kb = keys.getBounds().toFloat();
         g.fillAll(Colour(0xff0a0807));
 
-        // Back rail: woven maroon felt lying in the shade of the deck overhang.
+        // Back rail: felt lying in the shade of the deck overhang.
         const auto back = Rectangle<float>(kb.getX(), 0.0f, kb.getWidth(), kb.getY());
         paintFelt(g, back, Colour(0xff55201a), Colour(0xff733028), 11, u);
         fillV(g, back, { { 0.0f, black(0.78f) }, { 0.45f, black(0.40f) }, { 1.0f, black(0.08f) } });
         g.setColour(white(0.11f));
-        g.fillRect(kb.getX(), kb.getY() - 2.2f * u, kb.getWidth(), 0.8f * u); // raised lip of the felt
+        g.fillRect(kb.getX(), kb.getY() - 2.0f * u, kb.getWidth(), 0.8f * u); // raised lip of the felt
         g.setColour(black(0.92f));
         g.fillRect(kb.getX(), kb.getY() - 1.0f * u, kb.getWidth(), 1.0f * u);
 
-        // Front: the dark gap under the key noses, the flat printed ruler, then the walnut front rail.
+        // Front: the dark gap under the key noses, then one walnut rail carrying the printed note names.
         const float slipTop = kb.getBottom();
-        const float rulerTop = slipTop + 2.0f * u;
-        const float railTop = H - 12.0f * u;
+        const float railTop = slipTop + 2.0f * u;
+        const auto rail = Rectangle<float>(kb.getX(), railTop, kb.getWidth(), H - railTop);
         g.setColour(Colour(0xff040302));
         g.fillRect(kb.getX(), slipTop, kb.getWidth(), 2.0f * u);
-        paintPrintedStrip(g, Rectangle<float>(kb.getX(), rulerTop, kb.getWidth(), railTop - rulerTop), 23, u);
-        fillV(g, Rectangle<float>(kb.getX(), rulerTop, kb.getWidth(), 6.0f * u),
-              { { 0.0f, black(0.55f) }, { 1.0f, black(0.0f) } }); // shadow of the key noses
-        {
-            const auto rail = Rectangle<float>(kb.getX(), railTop, kb.getWidth(), H - railTop);
-            paintWalnutFace(g, rail, false, 411, 0.16f);
-            fillH(g, rail, { { 0.0f, varnish(0.0f) }, { 0.22f, varnish(0.12f) }, { 0.50f, varnish(0.0f) }, { 0.78f, varnish(0.08f) },
-                             { 1.0f, varnish(0.0f) } });
-            // Rolled front edge: a lit chamfer along the top, turning into shade toward the bottom.
-            fillV(g, Rectangle<float>(rail.getX(), railTop, rail.getWidth(), 4.0f * u),
-                  { { 0.0f, varnish(0.50f) }, { 0.30f, varnish(0.22f) }, { 1.0f, varnish(0.0f) } });
-            fillV(g, Rectangle<float>(rail.getX(), railTop + 5.0f * u, rail.getWidth(), rail.getHeight() - 5.0f * u + 1.0f),
-                  { { 0.0f, black(0.0f) }, { 1.0f, black(0.52f) } });
-            g.setColour(black(0.88f));
-            g.fillRect(rail.getX(), railTop - 1.0f * u, rail.getWidth(), 1.0f * u);
-            g.setColour(varnish(0.78f));
-            g.fillRect(rail.getX(), railTop, rail.getWidth(), 0.8f * u);
-        }
+        paintWalnutFace(g, rail, false, 411, 0.56f);
+        fillH(g, rail, { { 0.0f, varnish(0.0f) }, { 0.20f, varnish(0.14f) }, { 0.50f, varnish(0.0f) }, { 0.78f, varnish(0.10f) },
+                         { 1.0f, varnish(0.0f) } });
+        // Lacquer: a thin reflection across the face, a lit chamfer along the top and a roll into shade below.
+        fillV(g, Rectangle<float>(rail.getX(), railTop + rail.getHeight() * 0.40f, rail.getWidth(), 2.4f * u),
+              { { 0.0f, varnish(0.0f) }, { 0.5f, varnish(0.13f) }, { 1.0f, varnish(0.0f) } });
+        fillV(g, Rectangle<float>(rail.getX(), railTop, rail.getWidth(), 4.5f * u),
+              { { 0.0f, varnish(0.60f) }, { 0.30f, varnish(0.26f) }, { 1.0f, varnish(0.0f) } });
+        fillV(g, Rectangle<float>(rail.getX(), railTop + 9.0f * u, rail.getWidth(), rail.getHeight() - 9.0f * u + 1.0f),
+              { { 0.0f, black(0.0f) }, { 1.0f, black(0.40f) } });
+        g.setColour(varnish(0.85f));
+        g.fillRect(rail.getX(), railTop, rail.getWidth(), 0.9f * u);
+        fillV(g, Rectangle<float>(rail.getX(), railTop, rail.getWidth(), 5.0f * u),
+              { { 0.0f, black(0.40f) }, { 1.0f, black(0.0f) } }); // shadow of the key noses on the rail
 
         // The end blocks shade the strips beside them.
         fillH(g, Rectangle<float>(kb.getX(), 0.0f, 7.0f * u, H), { { 0.0f, black(0.55f) }, { 1.0f, black(0.0f) } });
         fillH(g, Rectangle<float>(kb.getRight() - 5.0f * u, 0.0f, 5.0f * u, H), { { 0.0f, black(0.0f) }, { 1.0f, black(0.30f) } });
 
-        // Gold etched line with a bright centre, small end diamonds, a tick at each C and a pip at middle C.
-        const float ly = rulerTop + 3.2f * u;
-        const float lx0 = kb.getX() + 12.0f * u, lx1 = kb.getRight() - 12.0f * u;
-        g.setColour(black(0.75f));
-        g.fillRect(lx0, ly + 0.9f * u, lx1 - lx0, 1.1f * u);
-        fillH(g, Rectangle<float>(lx0, ly - 0.2f * u, lx1 - lx0, 1.3f * u),
-              { { 0.0f, kGold.withAlpha(0.62f) }, { 0.5f, kGold.withAlpha(1.0f) }, { 1.0f, kGold.withAlpha(0.62f) } });
-        for (float dx : { lx0 - 5.0f * u, lx1 + 5.0f * u })
-        {
-            juce::Path d;
-            d.addTriangle(dx - 3.0f * u, ly + 0.45f * u, dx, ly - 2.6f * u, dx + 3.0f * u, ly + 0.45f * u);
-            d.addTriangle(dx - 3.0f * u, ly + 0.45f * u, dx, ly + 3.5f * u, dx + 3.0f * u, ly + 0.45f * u);
-            g.setColour(kGold.withAlpha(0.85f));
-            g.fillPath(d);
-        }
+        // Note names printed in cream ink on the rail, with a small tick at each C and a pip at middle C.
         // Labels never go below 8 px, even in a small editor.
-        const float fontPx = juce::jmax(8.0f, 9.2f * u);
+        const float fontPx = juce::jmax(8.0f, 9.4f * u);
         g.setFont(juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), fontPx, juce::Font::bold))
                       .withExtraKerningFactor(0.07f));
+        const float textTop = railTop + 8.4f * u, textBottom = H - 1.2f * u;
+        const Colour ink(0xffeee2c4);
         for (int n = keys.getRangeStart(); n <= keys.getRangeEnd(); ++n)
         {
             if (n % 12 != 0) continue;
@@ -1150,28 +1115,27 @@ private:
             const float cx = r.getCentreX();
             if (middleC)
             {
-                const float py = ly + 0.3f * u;
-                fillBlob(g, cx, py, 6.0f * u, 6.0f * u, kAmber.withAlpha(0.50f), kAmber.withAlpha(0.20f), Rectangle<float>(cx - 7.0f * u, py - 7.0f * u, 14.0f * u, 14.0f * u));
-                g.setColour(black(0.85f));
-                g.fillEllipse(cx - 3.2f * u, py - 3.0f * u, 6.4f * u, 6.4f * u);
+                const float py = railTop + 5.4f * u;
+                g.setColour(black(0.55f));
+                g.fillEllipse(cx - 2.9f * u, py - 2.7f * u, 5.8f * u, 5.8f * u);
                 g.setColour(Colour(0xffffb84a));
-                g.fillEllipse(cx - 2.5f * u, py - 2.5f * u, 5.0f * u, 5.0f * u);
-                g.setColour(white(0.70f));
-                g.fillEllipse(cx - 1.4f * u, py - 1.7f * u, 1.7f * u, 1.3f * u);
+                g.fillEllipse(cx - 2.2f * u, py - 2.2f * u, 4.4f * u, 4.4f * u);
+                g.setColour(white(0.65f));
+                g.fillEllipse(cx - 1.3f * u, py - 1.6f * u, 1.5f * u, 1.1f * u);
             }
             else
             {
-                g.setColour(kGold.withAlpha(0.85f));
-                g.fillRect(cx - 0.5f * u, ly - 2.2f * u, 1.0f * u, 4.6f * u);
+                g.setColour(black(0.40f));
+                g.fillRect(cx - 0.1f * u, railTop + 4.9f * u, 1.0f * u, 3.4f * u);
+                g.setColour(ink.withAlpha(0.88f));
+                g.fillRect(cx - 0.6f * u, railTop + 4.5f * u, 1.0f * u, 3.4f * u);
             }
             const auto name = middleC ? juce::String("C4 MIDDLE C")
                                       : juce::MidiMessage::getMidiNoteName(n, true, true, keys.getOctaveForMiddleC());
-            const auto box = Rectangle<float>(cx - 44.0f * u, ly + 2.4f * u, 88.0f * u, railTop - 0.6f * u - (ly + 2.4f * u));
-            g.setColour(white(0.14f));
-            g.drawText(name, box.translated(0.7f * u, 0.7f * u), juce::Justification::centred, false);
-            g.setColour(black(0.85f));
-            g.drawText(name, box.translated(-0.6f * u, -0.6f * u), juce::Justification::centred, false);
-            g.setColour(middleC ? Colour(0xffefcf7c) : Colour(0xffc4ad66).withAlpha(0.92f));
+            const auto box = Rectangle<float>(cx - 44.0f * u, textTop, 88.0f * u, textBottom - textTop);
+            g.setColour(black(0.42f));
+            g.drawText(name, box.translated(0.6f * u, 0.7f * u), juce::Justification::centred, false);
+            g.setColour(middleC ? Colour(0xfff4dc9a) : ink.withAlpha(0.94f));
             g.drawText(name, box, juce::Justification::centred, false);
         }
 
