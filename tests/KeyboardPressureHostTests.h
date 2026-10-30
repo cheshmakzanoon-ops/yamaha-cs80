@@ -2,6 +2,9 @@
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 
+#include <chrono>
+#include <cstdio>
+
 namespace cs80::tests
 {
 namespace pressure_detail
@@ -168,24 +171,63 @@ void testKeyboardPointerPressure(Check check)
     Cs80AudioProcessor host(fixture.getFile());
     host.prepareToPlay(48000.0, 32);
     Cs80AudioProcessorEditor editor(host);
-    editor.setSize(1600, 1000);
+    // Keep the supported minimum layout, not the screenshot's 1600x1000.
+    // On smaller desktops the upper panel may extend off-screen deliberately:
+    // this fixture exposes its tested keybed, not a claim that the whole UI fits.
+    editor.setSize(1120, 700);
+    const auto* display = juce::Desktop::getInstance().getDisplays().getPrimaryDisplay();
+    check(display != nullptr, "pointer-pressure fixture has a real display for native pointer coordinates");
+    const auto usable = display != nullptr ? display->userArea : juce::Rectangle<int>();
+    editor.setTopLeftPosition(usable.getX() + (usable.getWidth() - editor.getWidth()) / 2,
+                             usable.getBottom() - editor.getHeight());
     // JUCE keyboard hit testing calls reallyContains(), which recurses through
     // Component::contains to the top-level native peer. A detached component
     // cannot receive a real pointer note, even when its bounds look correct.
     editor.addToDesktop(0);
     editor.setVisible(true);
+    editor.toFront(true);
     auto* keyboard = pressure_detail::keyboard(editor);
     check(keyboard != nullptr, "actual editor contains the pointer-pressure keyboard");
     if (keyboard == nullptr) return;
     check(editor.getPeer() != nullptr && editor.isShowing() && keyboard->isShowing(),
           "pointer-pressure fixture owns a visible native editor peer for JUCE hit testing");
+    auto positionFor = [&](int note, float depth)
+    {
+        const auto key = keyboard->getRectangleForKey(note);
+        return juce::Point<float>(key.getCentreX(), keyboard->getHeight() * depth);
+    };
+    auto nativePointsReady = [&]
+    {
+        for (int note : { 60, 62, 64 })
+            for (float depth : { 0.65f, 0.85f, 0.95f })
+            {
+                const auto position = positionFor(note, depth);
+                if (!usable.contains(keyboard->localPointToGlobal(position.roundToInt()))
+                    || keyboard->getNoteAndVelocityAtPosition(position).note != note) return false;
+            }
+        return true;
+    };
+    // macOS additionally checks the actual frontmost NSWindow at each screen
+    // point. Let native realization/ordering settle through the normal loop;
+    // do not bypass hit testing or inject a pretend note into the keyboard.
+    const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+    while (!nativePointsReady() && std::chrono::steady_clock::now() < deadline)
+        juce::MessageManager::getInstance()->runDispatchLoopUntil(20);
+    check(nativePointsReady(), "pointer-pressure native window is frontmost at all tested on-screen key points");
+    const auto firstScreenPoint = keyboard->localPointToGlobal(positionFor(60, 0.65f).roundToInt());
+    std::printf("Pointer fixture: editor=%d,%d %dx%d; usable=%d,%d %dx%d; key60 screen=%d,%d hit=%d\n",
+                editor.getX(), editor.getY(), editor.getWidth(), editor.getHeight(),
+                usable.getX(), usable.getY(), usable.getWidth(), usable.getHeight(),
+                firstScreenPoint.x, firstScreenPoint.y,
+                keyboard->getNoteAndVelocityAtPosition(positionFor(60, 0.65f)).note);
     juce::AudioBuffer<float> audio(2, 0);
     juce::MidiBuffer midi;
     auto tick = [&] { host.processBlock(audio, midi); midi.clear(); };
     auto event = [&](int note, float depth, bool down)
     {
-        const auto key = keyboard->getRectangleForKey(note);
-        const juce::Point<float> position(key.getCentreX(), keyboard->getHeight() * depth);
+        const auto position = positionFor(note, depth);
+        check(usable.contains(keyboard->localPointToGlobal(position.roundToInt())),
+              "pointer-pressure fixture event lies inside the actual usable display");
         check(keyboard->getNoteAndVelocityAtPosition(position).note == note,
               "pointer-pressure fixture point resolves to the intended key through real JUCE hit testing");
         return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), position,
