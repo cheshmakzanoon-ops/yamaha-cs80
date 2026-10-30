@@ -2,6 +2,10 @@
 
 An independent, code-first recreation of the Yamaha CS-80: eight voices, two independent synthesis ranks per voice (sixteen oscillator / filter / VCA chains), polyphonic pressure, ribbon, ring modulation, SUB oscillator, chorus/tremolo and a modern performance layer. C++20 / JUCE 8, built as **VST3, AU (macOS) and Standalone**, with a JUCE-free core library that renders offline.
 
+![Source Performance: current actual CS-80 Reference editor](docs/screenshots/main-source-performance-1600x1000.png)
+
+*Actual editor: Source Performance ON, isolation OFF; rank I String 3 uses a complete source column and rank II String 2 an inferred column. Captured from `deb34f4` in [GitHub Actions](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159), not a mockup.*
+
 ## Current working instrument
 
 **A playable development build, not a claimed measured 1:1 hardware clone.**
@@ -53,22 +57,33 @@ Start with the [original hardware references](docs/HARDWARE_REFERENCES.md), the 
 
 ## Actual editor screenshots
 
-These are rendered by the real plugin editor in GitHub Actions, not design mockups.
+All **17 images** were rendered by the real editor and passed the screenshot/UI smoke in [run 41011794159](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159). The source commit is recorded in [provenance.json](docs/screenshots/provenance.json), with [PNG checksums](docs/screenshots/SHA256SUMS). A screenshot does not validate later code changes or prove analog equivalence.
 
-![CS-80 Reference main panel](docs/screenshots/main-1600x1000.png)
+### Minimum supported size: Source Performance at 1120×700
 
-The [screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml) captures the actual editor and, on `main`, refreshes the images in `docs/screenshots` only when the source commit is still current (see `docs/screenshots/provenance.json`). Never infer that an image validates a newer commit.
+![Source Performance at 1120×700](docs/screenshots/main-source-performance-1120x700.png)
 
-![CS-80 Reference at 1200x760](docs/screenshots/main-1200x760.png)
+### Source Performance and comparison isolation are separate
 
-| Advanced page | Image |
+![Advanced About with Source Performance enabled and isolation disabled](docs/screenshots/advanced-source-performance-about.png)
+
+| View | Actual capture |
 | --- | --- |
-| Modulation / expression | [advanced-page1.png](docs/screenshots/advanced-page1.png) |
-| Sub oscillator / ring / chorus / analog voice | [advanced-page2.png](docs/screenshots/advanced-page2.png) |
-| FX / macros / output | [advanced-page3.png](docs/screenshots/advanced-page3.png) |
-| Arp / performance / about | [advanced-page4.png](docs/screenshots/advanced-page4.png) |
-| Searchable preset library | [browser-1600x1000.png](docs/screenshots/browser-1600x1000.png) |
-| Memory programmer (four miniature panels) | [memory-programmer-1600x1000.png](docs/screenshots/memory-programmer-1600x1000.png) |
+| Full-size Source Performance | [1600×1000 panel](docs/screenshots/main-source-performance-1600x1000.png) |
+| Deliberate high-output fixture | [Real +11.9 dBFS / OVER-RANGE indication](docs/screenshots/main-source-performance-over-range-1600x1000.png) |
+| Legacy/PANEL workflow | [Legacy panel](docs/screenshots/main-legacy-1600x1000.png) |
+| 1200×760 layout | [Panel at intermediate size](docs/screenshots/main-1200x760.png) |
+| Modulation / expression | [Advanced page 1](docs/screenshots/advanced-page1.png) |
+| Sub oscillator / ring / chorus / analog voice | [Advanced page 2](docs/screenshots/advanced-page2.png) |
+| FX / macros / output | [Advanced page 3](docs/screenshots/advanced-page3.png) |
+| Arp / performance / about | [Advanced page 4](docs/screenshots/advanced-page4.png) |
+| External modulation input | [EXT-enabled panel](docs/screenshots/main-ext-enabled-1600x1000.png) |
+| Searchable preset library | [Preset browser](docs/screenshots/browser-1600x1000.png) |
+| Four memory programmer panels | [Memory lid open](docs/screenshots/memory-programmer-1600x1000.png) |
+
+The over-range image deliberately uses legal high-level PANEL settings and eight notes. Its actual host output peak was finite and above full scale; the normal meter timer produced the warning. This is a **stress demonstration, not a recommended listening level**, and no meter text/telemetry was fabricated. Nonfinite warning behavior is covered by tests, not presented as an observed DSP failure.
+
+The [screenshot workflow](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml) refreshes repository images only after its checks pass and while the source commit remains current.
 
 ---
 
