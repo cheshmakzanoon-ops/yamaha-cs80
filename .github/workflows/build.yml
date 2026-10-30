@@ -2,8 +2,6 @@ name: build
 
 on:
   push:
-    branches-ignore:
-      - ui-wip
     paths-ignore:
       - 'scripts/inspect_circuit_sources.py'
       - '.github/workflows/circuit-inspection.yml'
