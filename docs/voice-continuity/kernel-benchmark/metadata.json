@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-30T05:18:38.949484+00:00",
+  "baseline_ref": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "working_head": "9741058dc670a1d17bbe5c70978684f09793a76d",
+  "command": "/tmp/cs80-idle-audit/voice-continuity-probe --benchmark docs/voice-continuity/kernel-benchmark/results.csv 256",
+  "compile": "g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror -Isrc src/tools/voice_continuity_probe.cpp -o /tmp/cs80-idle-audit/voice-continuity-probe",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "source_sha256": {
+    "src/experimental/ContinuousVoiceCircuit.h": "e55baa85f381ffef857c7521b9ef5e8b11b43ac01ebaa19a67c1210590e6d560",
+    "src/tools/voice_continuity_probe.cpp": "161b5e1cbe89909148c3d4a2633d76b19c910adae9e5c4c7a45dba3013d66c97",
+    "tests/ContinuousVoiceCircuitTests.cpp": "8a077c5e9b49bbc003e97963ded97a91eb611a6e346ef6d99cfc01dded35a988",
+    "tests/ContinuousVoiceCircuitAuditTests.cpp": "934aa91d871be9f3d1109da8b3fe1afa1aafebd009317ee88cf4bce106df2397",
+    "src/core/Dsp.h": "4e0457f36af2ea27304de47e863cb4ec77b10521adf7c00607e9202c79fe07b7"
+  },
+  "binary_sha256": "79717910a1e104373f0bc7e81557731188c448cf6efeb60a7ec9433a422c2f2b",
+  "criterion_sha256": "42971888e5adefb6183e74ea995d3e6ca3f9ac1e2faf2a5eafb9c04d4f05ff5f",
+  "contract_sha256_before_measurement": "76662a5f88d1dcbb1f51361e55fb02189a06421ae08a1db396ab64096646e235",
+  "callbacks_per_row": 256,
+  "rows": 72,
+  "external_noise": "Explicit deterministic counter-based sequence; same in synthetic skip and continuous; no Engine RNG",
+  "cold_key": "filterKeyVolts(48+voice*3), eight explicitly supplied values",
+  "cold_phases": "fmod((voice*2+rank+1)*.61803398875f,1.f), explicitly supplied nominal spread",
+  "hz_per_volt": "midiToHz(60)/.5, production A4=440 interface",
+  "latency_scope": "internal2x kernel only, no decimator/host output",
+  "exclusive_window": "Parent and independent reviewer confirmed no competing heavy build/test work"
+}
