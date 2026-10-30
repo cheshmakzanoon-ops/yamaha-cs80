@@ -305,6 +305,12 @@ public:
     // and readouts are never squeezed below 85 percent: a word that does not fit is abbreviated.
     void setMinCaptionHeight(float px);
     float getMinCaptionHeight() const noexcept { return minCaption; }
+    // Aligns a rotary with the faders beside it. Give the knob the same top and height as those faders and
+    // pass the pixel width of one of them: the caption and readout are then painted in the same bands and
+    // the same type as a fader column of that width, and the dial sits centred between them. 0 (default)
+    // keeps the knob's own layout. Call again after a resize (the width is in screen pixels).
+    void setLegendColumnWidth(float referenceFaderWidth);
+    float getLegendColumnWidth() const noexcept { return legendColumnWidth; }
     // A rotary whose value ring and fill start at 12 o'clock (A4 tuning, bend ranges, macros) and run
     // left or right of it. Default false (the fill starts at the minimum).
     void setBipolar(bool isBipolar);
@@ -316,6 +322,7 @@ private:
     juce::String name;
     juce::String captionOverride;
     float minCaption = 0.0f;
+    float legendColumnWidth = 0.0f;
     bool bipolar = false;
     bool hardwareSlider = false;
     bool horizontalFader = false;

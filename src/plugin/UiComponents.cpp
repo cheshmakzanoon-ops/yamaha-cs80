@@ -1086,11 +1086,44 @@ juce::String formatParamValueFit(int parameterIndex, float value, const juce::Fo
             return trimmed.substring(0, cut).trim() + "k";
         return trimmed.substring(0, cut).trim();
     };
-    const juce::String stages[] = { closeGap(full), dropUnit(closeGap(full)) };
+    // Trailing zeros of a decimal go first ("0.40 Hz" -> "0.4Hz", "1.00 s" -> "1s"): the unit survives
+    // where the figure alone would have had to be printed.
+    auto trimZeros = [](const juce::String& t)
+    {
+        int end = t.length();
+        while (end > 0 && (juce::CharacterFunctions::isLetter(t[end - 1]) || t[end - 1] == '%'))
+            --end;
+        auto number = t.substring(0, end);
+        const auto unit = t.substring(end);
+        if (number.containsChar('.'))
+        {
+            while (number.endsWithChar('0'))
+                number = number.dropLastCharacters(1);
+            if (number.endsWithChar('.'))
+                number = number.dropLastCharacters(1);
+        }
+        return number.isEmpty() ? t : number + unit;
+    };
+    // A two-digit figure with decimals ("12.6Hz") drops its decimals before it drops its unit
+    // ("13Hz"): a rounded readout with the unit reads better than a bare number.
+    auto roundWhole = [](const juce::String& t)
+    {
+        int end = t.length();
+        while (end > 0 && (juce::CharacterFunctions::isLetter(t[end - 1]) || t[end - 1] == '%'))
+            --end;
+        const auto number = t.substring(0, end);
+        if (end <= 0 || ! number.containsChar('.') || std::abs(number.getDoubleValue()) < 9.5)
+            return t;
+        const auto whole = juce::roundToInt(number.getDoubleValue());
+        return (number.startsWithChar('+') && whole > 0 ? juce::String("+") : juce::String())
+               + juce::String(whole) + t.substring(end);
+    };
+    const juce::String closed = closeGap(full), trimmed = trimZeros(closed), whole = roundWhole(trimmed);
+    const juce::String stages[] = { closed, trimmed, whole, dropUnit(closed), dropUnit(trimmed) };
     for (const auto& candidate : stages)
         if (candidate.isNotEmpty() && legendFits(font, candidate, width, minScale, floorHeight))
             return candidate;
-    return stages[1];
+    return stages[3];
 }
 
 juce::String parameterLongName(int parameterIndex)
@@ -2067,22 +2100,7 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float 
             if (side < 0 && clearLeftEnds && (i == 0 || i == 10))
                 continue;
             if (side > 0 && numerals && major)
-            {
-                // Printed scale numeral (10 at the top, 5, 0 at the bottom) where the dash would be.
-                const juce::String label = i == 0 ? "10" : (i == 5 ? "5" : "0");
-                const float fh = 7.8f * f.s;
-                g.setFont(displayFont(fh, juce::Font::bold));
-                const juce::Rectangle<float> box(cx + 5.6f * f.s, yy - fh * 0.62f, 12.0f * f.s, fh * 1.24f);
-                // 1 px dark halo, then the numeral in bright cream (about 8:1 on the panel).
-                g.setColour(blackInk(0.70f));
-                for (const auto& d : { juce::Point<float>(-1.0f, 0.0f), juce::Point<float>(1.0f, 0.0f),
-                                       juce::Point<float>(0.0f, -1.0f), juce::Point<float>(0.0f, 1.0f),
-                                       juce::Point<float>(1.0f, 1.0f) })
-                    g.drawText(label, box.translated(d.x, d.y), juce::Justification::centred, false);
-                g.setColour(juce::Colour(0xffefe6c6).withAlpha(0.94f));
-                g.drawText(label, box, juce::Justification::centred, false);
-                continue;
-            }
+                continue; // the numerals are printed per paint, so a cap never half-covers one
             const float x0 = cx + (float) side * 6.2f * f.s;
             const float x1 = cx + (float) side * (major ? 13.0f : 9.8f) * f.s;
             g.setColour(blackInk(0.60f * a));
@@ -2299,6 +2317,29 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
             paintFaderTrack(ig, fullW, fullH, f, defaultProp, numerals, clearLeft);
     });
     blit(g, track, 0.0f, 0.0f);
+    if (numerals)
+    {
+        // Printed scale numerals (10 at the top, 5, 0 at the bottom), right of the slot. The cap is wider
+        // than the room beside the slot, so a numeral the cap is on (or touching) is left out rather
+        // than shown half covered; it returns as soon as the cap moves on.
+        const float yA = f.r - f.ey * 0.5f, yB = (float) fullH - f.r - f.ey * 0.5f;
+        const float cx = (float) fullW * 0.5f;
+        const float fh = 7.8f * f.s;
+        const auto font = displayFont(fh, juce::Font::bold);
+        const float capCentre = sliderPos - f.ey * 0.5f;
+        const float capTop = capCentre - f.faceH * 0.5f - 1.6f * f.s;
+        const float capBottom = capCentre + f.faceH * 0.5f + f.ey + 1.6f * f.s;
+        for (int i = 0; i <= 10; i += 5)
+        {
+            const float yy = yA + (yB - yA) * (float) i / 10.0f;
+            const float top = yy - fh * 0.62f, bottom = yy + fh * 0.62f;
+            if (bottom > capTop && top < capBottom)
+                continue;
+            const juce::String label = i == 0 ? "10" : (i == 5 ? "5" : "0");
+            drawEngravedText(g, label, { cx + 5.6f * f.s, top, 12.0f * f.s, fh * 1.24f }, font,
+                             juce::Justification::centred, juce::Colour(0xffefe6c6));
+        }
+    }
     if (clearLeft)
     {
         // End legends (for example I and II beside the MIX fader, EXT and SINE on FUNCTION) sit left of
@@ -3184,6 +3225,16 @@ void ParamKnob::setMinCaptionHeight(float px)
     repaint();
 }
 
+void ParamKnob::setLegendColumnWidth(float referenceFaderWidth)
+{
+    referenceFaderWidth = juce::jmax(0.0f, referenceFaderWidth);
+    if (referenceFaderWidth == legendColumnWidth)
+        return;
+    legendColumnWidth = referenceFaderWidth;
+    resized();
+    repaint();
+}
+
 void ParamKnob::setBipolar(bool isBipolar)
 {
     if (bipolar == isBipolar)
@@ -3228,7 +3279,7 @@ void ParamKnob::paint(juce::Graphics& g)
         // Legends shrink toward the floor, then squeeze by at most 15 percent; a word that still does
         // not fit is replaced by its printed abbreviation (FUNCTION -> FUNC) instead of being crushed.
         // A 3 px gap is kept between neighbouring legends so the dark halo never joins them.
-        const float nameW = (float) getWidth() - 3.0f;
+        const float nameW = (float) getWidth() - 4.0f;
         auto nameFont = displayFont(juce::jmax(floorPx, minCaption, 9.5f * scale), juce::Font::bold);
         nameFont.setExtraKerningFactor(0.02f);
         const auto nameText = fitLegendText(nameFont, painted, nameW, 0.85f, floorPx);
@@ -3236,16 +3287,46 @@ void ParamKnob::paint(juce::Graphics& g)
         nameFont = fitFontToWidth(nameFont, nameText, nameW, 0.85f, floorPx, fitted);
         drawEngravedText(g, nameText, { ((float) getWidth() - nameW) * 0.5f, 0.0f, nameW, nameBox }, nameFont,
                          juce::Justification::centred, juce::Colour(0xffe6dcbc));
-        const float valueW = (float) getWidth() - 2.0f;
+        // Neighbouring readouts keep at least 4 px between them: the text is shortened (units compacted,
+        // then dropped) before it is ever squeezed past 85 percent.
+        const float valueW = (float) getWidth() - 4.5f;
         auto valueFont = displayFont(juce::jmax(kValueFloor, minCaption, 9.0f * scale), juce::Font::bold);
         const auto valueText = formatParamValueFit(parameterIndex, (float) slider.getValue(), valueFont, valueW, 0.85f, kValueFloor);
         valueFont = fitFontToWidth(valueFont, valueText, valueW, 0.85f, kValueFloor, fitted);
-        const juce::Rectangle<float> valueArea(1.0f, (float) getHeight() - valueBox, valueW, valueBox);
+        const juce::Rectangle<float> valueArea(1.0f, (float) getHeight() - valueBox, (float) getWidth() - 2.0f, valueBox);
         const bool active = slider.isMouseOverOrDragging() || slider.isMouseButtonDown() || slider.hasKeyboardFocus(true);
         if (active)
             drawValuePill(g, valueText, valueArea.reduced(0.0f, 1.0f), valueFont.getHeight());
         else
             // At rest the readout is a printed figure (about 4.5:1 on the panel); the lit pill is for hover and drag.
+            drawEngravedText(g, valueText, valueArea, valueFont, juce::Justification::centred, juce::Colour(0xffc4ba96));
+        return;
+    }
+
+    if (legendColumnWidth > 0.0f)
+    {
+        // A knob standing in a fader row: caption and readout sit in the same bands, with the same type, as
+        // the faders beside it, so the legends share one baseline across the row.
+        const float scale = juce::jlimit(0.65f, 1.5f, legendColumnWidth / 42.0f);
+        float nameBox = 0.0f, valueBox = 0.0f;
+        hardwareFaderBands(scale, minCaption, nameBox, valueBox);
+        const float nameW = (float) getWidth() - 4.0f;
+        auto nameFont = displayFont(juce::jmax(kNameFloor, minCaption, 9.5f * scale), juce::Font::bold);
+        nameFont.setExtraKerningFactor(0.02f);
+        const auto nameText = fitLegendText(nameFont, painted, nameW, 0.85f, kNameFloor);
+        bool fitted = true;
+        nameFont = fitFontToWidth(nameFont, nameText, nameW, 0.85f, kNameFloor, fitted);
+        drawEngravedText(g, nameText, { ((float) getWidth() - nameW) * 0.5f, 0.0f, nameW, nameBox }, nameFont,
+                         juce::Justification::centred, juce::Colour(0xffe6dcbc));
+        const float valueW = (float) getWidth() - 4.5f;
+        auto valueFont = displayFont(juce::jmax(kValueFloor, minCaption, 9.0f * scale), juce::Font::bold);
+        const auto valueText = formatParamValueFit(parameterIndex, (float) slider.getValue(), valueFont, valueW, 0.85f, kValueFloor);
+        valueFont = fitFontToWidth(valueFont, valueText, valueW, 0.85f, kValueFloor, fitted);
+        const juce::Rectangle<float> valueArea(1.0f, (float) getHeight() - valueBox, (float) getWidth() - 2.0f, valueBox);
+        const bool active = slider.isMouseOverOrDragging() || slider.isMouseButtonDown() || slider.hasKeyboardFocus(true);
+        if (active)
+            drawValuePill(g, valueText, valueArea.reduced(0.0f, 1.0f), valueFont.getHeight());
+        else
             drawEngravedText(g, valueText, valueArea, valueFont, juce::Justification::centred, juce::Colour(0xffc4ba96));
         return;
     }
@@ -3312,6 +3393,18 @@ void ParamKnob::resized()
         return;
     }
 
+    if (legendColumnWidth > 0.0f)
+    {
+        const float scale = juce::jlimit(0.65f, 1.5f, legendColumnWidth / 42.0f);
+        float nameBox = 0.0f, valueBox = 0.0f;
+        hardwareFaderBands(scale, minCaption, nameBox, valueBox);
+        const float top = nameBox + 2.0f * scale, bottom = valueBox + 2.0f * scale;
+        const float avail = juce::jmax(8.0f, (float) getHeight() - top - bottom);
+        // The dial keeps its natural size (about 1.2 fader widths across) and sits centred between the bands.
+        const float d = juce::jmax(8.0f, juce::jmin((float) getWidth() - 4.0f, avail, 1.22f * legendColumnWidth));
+        slider.setBounds(juce::Rectangle<float>(((float) getWidth() - d) * 0.5f, top + (avail - d) * 0.5f, d, d).toNearestInt());
+        return;
+    }
     float nameHeight = 0.0f, valueHeight = 0.0f;
     knobBands((float) getHeight(), minCaption, nameHeight, valueHeight);
     const int top = (int) nameHeight;
