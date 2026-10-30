@@ -24,7 +24,7 @@ const juce::Colour lineColour { 0xff4d4739 };
 const juce::Colour gold { 0xffcdb878 };
 const juce::Colour capCream { 0xffdcd8c4 };
 const juce::Colour capGreen { 0xff2b9a50 };
-const juce::Colour capPink { 0xffe0205f };
+const juce::Colour capPink { 0xffe04377 };
 const juce::Colour capYellow { 0xfff0cc3a };
 const juce::Colour capBlack { 0xff1a1a1f };
 const juce::Colour capGrey { 0xffbdb7ae };
@@ -344,7 +344,7 @@ void blit(juce::Graphics& g, const PaintCache::Entry& e, float x, float y)
 enum CacheKind
 {
     kindCap = 1, kindTrack, kindKnob, kindTonePlate, kindSatinPlate, kindRocker,
-    kindRibbon, kindWheel, kindComboArrow, kindWalnut, kindAccentPlate, kindRockerSwitch
+    kindRibbon, kindWheel, kindComboArrow, kindWalnut, kindAccentPlate, kindRockerSwitch, kindBloom
 };
 
 juce::Colour glowFor(juce::Colour c)
@@ -508,8 +508,8 @@ void paintKnobBody(juce::Graphics& g, float cx, float cy, float R)
     g.fillEllipse(cx - R + R * 0.09f, cy - R + R * 0.12f, R * 2.0f, R * 2.0f);
 
     // Skirt: machined black body with a knurled band.
-    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff55555a), cx - R * 0.7f, cy - R * 0.8f,
-                                           juce::Colour(0xff060607), cx + R * 0.8f, cy + R * 0.95f, false));
+    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff737379), cx - R * 0.7f, cy - R * 0.8f,
+                                           juce::Colour(0xff0a0a0b), cx + R * 0.8f, cy + R * 0.95f, false));
     g.fillEllipse(cx - R, cy - R, R * 2.0f, R * 2.0f);
 
     const int teeth = R >= 20.0f ? 48 : (R >= 11.0f ? 36 : 24);
@@ -522,19 +522,19 @@ void paintKnobBody(juce::Graphics& g, float cx, float cy, float R)
         g.drawLine(cx + std::cos(a) * k0, cy + std::sin(a) * k0, cx + std::cos(a) * k1, cy + std::sin(a) * k1, lineW);
         const float a2 = a + kPi / (float) teeth; // crest between two grooves
         const float lit = facetLight(a2);
-        g.setColour(juce::Colour(0xff1d1d20).interpolatedWith(juce::Colour(0xffe2e2e8), lit * 0.92f).withAlpha(0.62f));
+        g.setColour(juce::Colour(0xff26262a).interpolatedWith(juce::Colour(0xffe8e8ee), lit * 0.95f).withAlpha(0.74f));
         g.drawLine(cx + std::cos(a2) * k0, cy + std::sin(a2) * k0, cx + std::cos(a2) * k1, cy + std::sin(a2) * k1, lineW);
     }
     // Outer rim and chamfer between the knurl and the cap: two machined conic rings.
-    conicRing(g, cx, cy, R - 0.5f, juce::jmax(1.0f, R * 0.045f), juce::Colour(0xff0b0b0c), juce::Colour(0xffe4e4ea), 0.95f);
+    conicRing(g, cx, cy, R - 0.6f, juce::jmax(1.2f, R * 0.07f), juce::Colour(0xff1a1a1d), juce::Colour(0xfff2f2f6), 1.15f);
     conicRing(g, cx, cy, R * 0.795f, juce::jmax(1.0f, R * 0.05f), juce::Colour(0xff111113), juce::Colour(0xffd0d0d8), 0.9f);
     g.setColour(blackInk(0.85f));
     g.drawEllipse(cx - R * 0.765f, cy - R * 0.765f, R * 1.53f, R * 1.53f, juce::jmax(1.0f, R * 0.05f));
 
     // Cap: dark satin disc with fine circular brushing and a conic specular sheen.
     const float rc = R * 0.745f;
-    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff4a4a50), cx - rc * 0.42f, cy - rc * 0.5f,
-                                           juce::Colour(0xff080809), cx + rc * 0.75f, cy + rc * 0.9f, true));
+    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff5f5f66), cx - rc * 0.42f, cy - rc * 0.5f,
+                                           juce::Colour(0xff0b0b0c), cx + rc * 0.75f, cy + rc * 0.9f, true));
     g.fillEllipse(cx - rc, cy - rc, rc * 2.0f, rc * 2.0f);
     {
         juce::Graphics::ScopedSaveState state(g);
@@ -857,6 +857,204 @@ juce::Font fitFontToWidth(const juce::Font& font, const juce::String& text, floa
     return f;
 }
 
+juce::Font fitFontToWidth(const juce::Font& font, const juce::String& text, float width, float minScale,
+                          float floorHeight, bool& fitted)
+{
+    juce::Font f(font);
+    f.setHorizontalScale(1.0f);
+    fitted = true;
+    auto measure = [&] { return (float) juce::GlyphArrangement::getStringWidthInt(f, text); };
+    float w = measure();
+    if (w <= width || width <= 1.0f)
+        return f;
+    const float need = width / w;
+    if (need < minScale && f.getHeight() > floorHeight)
+    {
+        f.setHeight(juce::jmax(floorHeight, f.getHeight() * need / minScale));
+        w = measure();
+    }
+    if (w > width)
+    {
+        // Squeeze up to (1 - minScale); beyond that the caller must shorten the text.
+        const float scale = width / w;
+        fitted = scale >= minScale - 0.002f;
+        f.setHorizontalScale(juce::jmax(minScale, scale));
+    }
+    return f;
+}
+
+bool legendFits(const juce::Font& font, const juce::String& text, float width, float minScale, float floorHeight)
+{
+    if (text.isEmpty())
+        return true;
+    // The type never drops below floorHeight, so that is the smallest it can be printed.
+    auto probe = font.withHeight(floorHeight);
+    probe.setHorizontalScale(1.0f);
+    return (float) juce::GlyphArrangement::getStringWidthInt(probe, text) * minScale <= width + 0.01f;
+}
+
+juce::String legendAbbreviation(const juce::String& text)
+{
+    static const struct { const char* word; const char* abbr; } table[] = {
+        { "FUNCTION", "FUNC" }, { "SUSTAIN", "SUS" }, { "DETUNE", "DET" }, { "ATTACK", "ATK" },
+        { "DECAY", "DEC" }, { "RELEASE", "REL" }, { "SPEED", "SPD" }, { "DEPTH", "DPT" },
+        { "LEVEL", "LVL" }, { "PULSE", "PLS" }, { "TREMOLO", "TREM" }, { "CHORUS", "CHOR" },
+        { "PRESS", "PRES" }, { "PORTAMENTO", "PORT" }, { "PORTA", "PORT" }, { "GLISSANDO", "GLISS" },
+        { "BRILLIANCE", "BRILL" }, { "RESONANCE", "RESO" }, { "VOLUME", "VOL" }, { "MODULATION", "MOD" },
+        { "INITIAL", "INIT" }, { "NOISE", "NSE" }, { "CUTOFF", "CUT" }, { "FOOTSWITCH", "FOOT" },
+        { "PERFORMANCE", "PERF" }, { "SYNTHESIZER", "SYNTH" }, { "PITCH", "PCH" }, { "EXPRESSION", "EXP" },
+        { "SUS II", "SUS2" }, { "SUS I", "SUS1" }, { "HOLD", "HLD" }, { "FEET", "FT" }, { "FEET I", "FT I" },
+        { "FEET II", "FT II" }, { "RELEASE", "REL" }, { "BRILL", "BRL" }, { "RESO", "RES" } };
+    const auto key = text.trim().toUpperCase();
+    for (const auto& e : table)
+        if (key == e.word)
+            return e.abbr;
+    return text;
+}
+
+juce::String fitLegendText(const juce::Font& font, const juce::String& text, float width, float minScale,
+                           float floorHeight)
+{
+    if (legendFits(font, text, width, minScale, floorHeight))
+        return text;
+    const auto abbr = legendAbbreviation(text);
+    if (abbr != text && legendFits(font, abbr, width, minScale, floorHeight))
+        return abbr;
+    // No printed abbreviation: keep the first letter and the consonants (HOLD -> HLD), and for
+    // "WORD II" shorten only the word so the numeral survives.
+    auto consonants = [](const juce::String& word)
+    {
+        juce::String out;
+        for (int i = 0; i < word.length(); ++i)
+        {
+            const auto c = juce::CharacterFunctions::toUpperCase(word[i]);
+            if (i == 0 || ! juce::String("AEIOU").containsChar(c))
+                out << word[i];
+        }
+        return out;
+    };
+    const int split = text.lastIndexOfChar(' ');
+    const juce::String head = split > 0 ? text.substring(0, split) : text;
+    const juce::String tail = split > 0 ? text.substring(split) : juce::String();
+    for (const auto& form : { consonants(head), head })
+    {
+        juce::String candidate = form;
+        while (candidate.length() >= 2)
+        {
+            if (legendFits(font, candidate + tail, width, minScale, floorHeight))
+                return candidate + tail;
+            candidate = candidate.dropLastCharacters(1);
+        }
+    }
+    return abbr.length() > 2 ? abbr.substring(0, 2) : abbr;
+}
+
+juce::String formatParamValueFit(int parameterIndex, float value, const juce::Font& font, float width,
+                                 float minScale, float floorHeight)
+{
+    const juce::String full = formatParamValue(parameterIndex, value);
+    if (legendFits(font, full, width, minScale, floorHeight))
+        return full;
+    auto closeGap = [](const juce::String& t)
+    {
+        juce::String out;
+        for (int i = 0; i < t.length(); ++i)
+        {
+            const auto c = t[i];
+            const bool afterDigit = i > 0 && (juce::CharacterFunctions::isDigit(t[i - 1]) || t[i - 1] == '.');
+            const bool beforeLetter = i + 1 < t.length() && juce::CharacterFunctions::isLetter(t[i + 1]);
+            if (c == ' ' && afterDigit && beforeLetter)
+                continue;
+            out << c;
+        }
+        return out;
+    };
+    auto dropZero = [](const juce::String& t)
+    {
+        // "+0.12" -> "+.12", "0.38s" -> ".38s": only for values below one.
+        if (t.startsWith("0.")) return t.substring(1);
+        if ((t.startsWith("+0.") || t.startsWith("-0."))) return t.substring(0, 1) + t.substring(2);
+        return t;
+    };
+    auto shortUnit = [](juce::String t)
+    {
+        t = t.replace("oct", "o").replace("kHz", "k");
+        return t;
+    };
+    const juce::String stages[] = { closeGap(full), dropZero(full), dropZero(closeGap(full)),
+                                    shortUnit(dropZero(closeGap(full))) };
+    for (const auto& candidate : stages)
+        if (candidate.isNotEmpty() && legendFits(font, candidate, width, minScale, floorHeight))
+            return candidate;
+    return stages[3];
+}
+
+juce::String parameterLongName(int parameterIndex)
+{
+    const auto& def = cs80::paramDef(parameterIndex);
+    if (parameterIndex >= cs80::P_numGlobals && parameterIndex < cs80::P_legacyNumParams)
+    {
+        switch ((parameterIndex - cs80::P_ch1Start) % cs80::CP_count)
+        {
+            case cs80::CP_saw: return "Sawtooth";
+            case cs80::CP_pulse: return "Pulse";
+            case cs80::CP_sine: return "Sine Level";
+            case cs80::CP_noise: return "Noise Level";
+            case cs80::CP_pw: return "Pulse Width";
+            case cs80::CP_pwmSpeed: return "PWM Speed";
+            case cs80::CP_pwmDepth: return "PWM Depth";
+            case cs80::CP_feet: return "Feet";
+            case cs80::CP_hpfCutoff: return "HPF Cutoff";
+            case cs80::CP_hpfRes: return "HPF Resonance";
+            case cs80::CP_hpfOn: return "HPF On";
+            case cs80::CP_lpfCutoff: return "LPF Cutoff";
+            case cs80::CP_lpfRes: return "LPF Resonance";
+            case cs80::CP_lpfOn: return "LPF On";
+            case cs80::CP_fIl: return "VCF Initial Level";
+            case cs80::CP_fAl: return "VCF Attack Level";
+            case cs80::CP_fA: return "VCF Attack";
+            case cs80::CP_fD: return "VCF Decay";
+            case cs80::CP_fR: return "VCF Release";
+            case cs80::CP_vcfLevel: return "VCF Level";
+            case cs80::CP_vA: return "VCA Attack";
+            case cs80::CP_vD: return "VCA Decay";
+            case cs80::CP_vS: return "VCA Sustain";
+            case cs80::CP_vR: return "VCA Release";
+            case cs80::CP_vLevel: return "VCA Level";
+            case cs80::CP_initBrill: return "Initial Touch Brilliance";
+            case cs80::CP_initLevel: return "Initial Touch Level";
+            case cs80::CP_afterBrill: return "Aftertouch Brilliance";
+            case cs80::CP_afterLevel: return "Aftertouch Level";
+            case cs80::CP_pan: return "Pan";
+            default: break;
+        }
+    }
+    return juce::String(def.name);
+}
+
+void drawLightBloom(juce::Graphics& g, juce::Rectangle<float> bounds, float reach, juce::Colour colour, float strength)
+{
+    if (reach < 1.0f || strength <= 0.0f || bounds.isEmpty())
+        return;
+    const int R = (int) std::ceil(reach);
+    const int w = (int) std::ceil(bounds.getWidth()), h = (int) std::ceil(bounds.getHeight());
+    const int key = juce::roundToInt(juce::jlimit(0.0f, 4.0f, strength) * 100.0f) | (R << 12);
+    const auto img = PaintCache::get().fetch(kindBloom, w + R * 2, h + R * 2, colour.getARGB(), key, physicalScaleOf(g),
+                                             [&](juce::Graphics& ig)
+    {
+        const juce::Rectangle<float> core((float) R, (float) R, (float) w, (float) h);
+        constexpr int layers = 10;
+        for (int i = 0; i < layers; ++i)
+        {
+            const float t = (float) (i + 1) / (float) layers; // outermost (faintest) first
+            const float grow = (float) R * (1.0f - (float) i / (float) layers);
+            ig.setColour(colour.withAlpha(juce::jlimit(0.0f, 1.0f, strength * 0.040f * (0.35f + 1.9f * t * t))));
+            ig.fillRoundedRectangle(core.expanded(grow), 3.0f + grow);
+        }
+    });
+    blit(g, img, std::round(bounds.getX()) - (float) R, std::round(bounds.getY()) - (float) R);
+}
+
 void drawLampGlow(juce::Graphics& g, juce::Point<float> c, float radius, juce::Colour colour, float intensity)
 {
     if (intensity <= 0.0f || radius <= 0.0f)
@@ -899,12 +1097,13 @@ void drawFaderSlot(juce::Graphics& g, float cx, float top, float bottom, float s
     const float rr = slotW * 0.5f;
     const juce::Rectangle<float> body(cx - rr, top, slotW, bottom - top);
     // Cut edge: lit chamfer on the lower right, shadowed wall on the upper left.
-    g.setColour(whiteInk(0.17f));
-    g.fillRoundedRectangle(body.expanded(0.7f * s).translated(0.5f * s, 0.95f * s), rr + 0.7f * s);
+    g.setColour(whiteInk(0.27f));
+    g.fillRoundedRectangle(body.expanded(0.8f * s).translated(0.55f * s, 1.05f * s), rr + 0.8f * s);
     g.setColour(blackInk(0.75f));
     g.fillRoundedRectangle(body.expanded(0.9f * s).translated(-0.4f * s, -0.8f * s), rr + 0.9f * s);
-    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff000000), body.getX(), 0.0f,
-                                           juce::Colour(0xff0a0908), body.getRight(), 0.0f, false));
+    // The floor of the slot is dark steel, not a black pit: lighter toward the lit right wall.
+    g.setGradientFill(juce::ColourGradient(juce::Colour(0xff0a0908), body.getX(), 0.0f,
+                                           juce::Colour(0xff1d1b17), body.getRight(), 0.0f, false));
     g.fillRoundedRectangle(body, rr);
     {
         juce::Graphics::ScopedSaveState state(g);
@@ -912,17 +1111,21 @@ void drawFaderSlot(juce::Graphics& g, float cx, float top, float bottom, float s
         clip.addRoundedRectangle(body, rr);
         g.reduceClipRegion(clip);
         // Inner shadow: a crisp 1px wall on the upper left plus a soft falloff, so the slot reads as cut in.
-        g.setGradientFill(juce::ColourGradient(blackInk(0.95f), 0.0f, body.getY(),
-                                               juce::Colours::transparentBlack, 0.0f, body.getY() + 10.0f * s, false));
+        g.setGradientFill(juce::ColourGradient(blackInk(0.88f), 0.0f, body.getY(),
+                                               juce::Colours::transparentBlack, 0.0f, body.getY() + 12.0f * s, false));
         g.fillRect(body);
-        g.setGradientFill(juce::ColourGradient(blackInk(0.9f), body.getX(), 0.0f,
+        g.setGradientFill(juce::ColourGradient(blackInk(0.80f), body.getX(), 0.0f,
                                                juce::Colours::transparentBlack, body.getX() + 2.8f * s, 0.0f, false));
         g.fillRect(body);
+        // A faint lit floor strip down the middle of the slot, so the rail reads as steel below the cap.
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff3a3730).withAlpha(0.0f), 0.0f, body.getY(),
+                                               juce::Colour(0xff3a3730).withAlpha(0.55f), 0.0f, body.getBottom(), false));
+        g.fillRect(body.getX() + body.getWidth() * 0.34f, body.getY(), body.getWidth() * 0.32f, body.getHeight());
         g.setColour(blackInk(1.0f));
         g.fillRect(body.getX(), body.getY(), body.getWidth(), 1.0f);
         g.fillRect(body.getX(), body.getY(), 1.0f, body.getHeight());
         // Lit inner wall on the lower right.
-        g.setColour(whiteInk(0.13f));
+        g.setColour(whiteInk(0.20f));
         g.fillRect(body.getRight() - 1.0f, body.getY() + 3.0f * s, 1.0f, body.getHeight() - 6.0f * s);
 
     }
@@ -1003,18 +1206,23 @@ void faderCapImpl(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
         clip.addRoundedRectangle(plate, rad * 0.7f);
         g.reduceClipRegion(clip);
         // Glossy sheen: a diagonal window reflection from the upper left.
-        g.setGradientFill(juce::ColourGradient(whiteInk(pale ? 0.34f : (dark ? 0.30f : 0.26f)), plate.getX(), plate.getY(),
+        g.setGradientFill(juce::ColourGradient(whiteInk(pale ? 0.22f : (dark ? 0.20f : 0.15f)), plate.getX(), plate.getY(),
                                                whiteInk(0.0f), plate.getX() + plate.getWidth() * 0.55f, plate.getY() + plate.getHeight() * 0.85f, false));
         g.fillRect(plate);
-        // Window reflection: a slanted bright streak across the plastic.
+        // Moulded plastic, not jelly: a thin lit top edge and fine micro-grain, with no bright streak.
+        g.setColour(whiteInk(pale ? 0.60f : 0.40f));
+        g.fillRect(plate.getX() + 0.6f * s, plate.getY(), plate.getWidth() - 1.2f * s, juce::jmax(0.7f, 0.8f * s));
         {
-            juce::Path streak;
-            const float pw = plate.getWidth();
-            const float vx = (float) ((variant & 3) - 1) * 0.035f * pw; // each cap catches the window a hair differently
-            streak.addQuadrilateral(plate.getX() + pw * 0.14f + vx, plate.getY(), plate.getX() + pw * 0.34f + vx, plate.getY(),
-                                    plate.getX() + pw * 0.18f + vx, plate.getBottom(), plate.getX() - pw * 0.02f + vx, plate.getBottom());
-            g.setColour(whiteInk(pale ? 0.30f : (dark ? 0.15f : 0.20f)));
-            g.fillPath(streak);
+            juce::Random grain(97 + (variant & 3) * 13 + (int) faceW);
+            const int specks = (int) (plate.getWidth() * plate.getHeight() * 0.55f);
+            for (int i = 0; i < specks; ++i)
+            {
+                const float px = plate.getX() + grain.nextFloat() * plate.getWidth();
+                const float py = plate.getY() + grain.nextFloat() * plate.getHeight();
+                g.setColour((grain.nextBool() ? juce::Colours::white : juce::Colours::black)
+                                .withAlpha((pale ? 0.045f : 0.035f) + grain.nextFloat() * 0.04f));
+                g.fillRect(px, py, 0.8f * s, 0.8f * s);
+            }
         }
         g.setColour(blackInk(0.18f));
         g.fillRect(plate.getX(), plate.getBottom() - 1.4f * s, plate.getWidth(), 1.4f * s);
@@ -1061,11 +1269,10 @@ void faderCapImpl(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
         g.drawLine(face.getX() + rad, face.getY() - 0.5f, face.getRight() - rad, face.getY() - 0.5f, 1.0f);
         g.drawLine(face.getX() - 0.5f, face.getY() + rad, face.getX() - 0.5f, face.getBottom() - rad, 1.0f);
     }
-    g.setColour(whiteInk(pale ? 0.90f : (dark ? 0.70f : 0.60f)));
+    // One small corner glint, placed a hair differently per cap.
+    g.setColour(whiteInk(pale ? 0.55f : (dark ? 0.45f : 0.36f)));
     const float gj = (float) (variant & 3) * 0.55f * s;
-    g.fillEllipse(plate.getX() + 1.2f * s + gj, plate.getY() + 1.0f * s, 3.6f * s, 1.8f * s);
-    g.setColour(whiteInk(pale ? 0.5f : 0.35f));
-    g.fillEllipse(plate.getX() + 1.8f * s + gj, plate.getY() + 1.5f * s, 7.0f * s, 1.1f * s);
+    g.fillEllipse(plate.getX() + 1.0f * s + gj, plate.getY() + 0.7f * s, 2.4f * s, 1.1f * s);
     if (hover || drag)
     {
         g.setColour(juce::Colour(0xfff6df91).withAlpha(drag ? 0.80f : 0.50f));
@@ -1326,16 +1533,16 @@ RockerGeo rockerGeo(juce::Rectangle<float> bounds)
 {
     RockerGeo r;
     r.small = bounds.getHeight() < 34.0f;
-    r.body = bounds.reduced(1.6f, 1.2f).withTrimmedBottom(1.6f);
+    r.body = r.small ? bounds.reduced(1.0f, 0.8f).withTrimmedBottom(1.2f) : bounds.reduced(1.6f, 1.2f).withTrimmedBottom(1.6f);
     r.radius = juce::jlimit(2.0f, 4.0f, juce::jmin(r.body.getWidth(), r.body.getHeight()) * 0.16f);
-    r.paddle = r.body.reduced(1.3f);
-    // The ridge sits at about 55 percent; a paddle under 22 px tall moves it to 60 percent so the
-    // 8 px legend still fits inside the lens.
+    r.paddle = r.body.reduced(r.small ? 0.9f : 1.3f);
+    // Deck tabs keep the ridge at about 55 percent. A small footswitch paddle is mostly legend, so
+    // its ridge sits lower (66 percent, 70 under 22 px tall) and the lens takes the room.
     const bool tiny = bounds.getHeight() < 22.0f;
-    r.pivot = r.paddle.getY() + r.paddle.getHeight() * (tiny ? 0.60f : 0.55f);
+    r.pivot = r.paddle.getY() + r.paddle.getHeight() * (r.small ? (tiny ? 0.70f : 0.66f) : 0.55f);
     r.upper = r.paddle.withBottom(r.pivot);
     r.lower = r.paddle.withTop(r.pivot);
-    r.lens = r.upper.reduced(r.small ? (tiny ? 1.1f : 1.4f) : 2.2f, r.small ? (tiny ? 0.7f : 1.1f) : 2.0f);
+    r.lens = r.upper.reduced(r.small ? (tiny ? 0.9f : 1.2f) : 2.2f, r.small ? (tiny ? 0.5f : 0.7f) : 2.0f);
     return r;
 }
 
@@ -1488,8 +1695,9 @@ struct TabGeometry
 // The face leaves a margin of bezel all round, where the lit lamp bleeds its halo.
 TabGeometry tabGeometry(juce::Rectangle<float> b, bool lit, bool pressed)
 {
-    const float m = juce::jlimit(1.8f, 3.2f, b.getWidth() * 0.08f);
-    const float d = juce::jlimit(1.8f, 3.2f, b.getWidth() * 0.08f);
+    const float k = b.getWidth() < 30.0f ? 0.065f : 0.08f; // compact tabs give the legend more of their width
+    const float m = juce::jlimit(1.5f, 3.2f, b.getWidth() * k);
+    const float d = juce::jlimit(1.5f, 3.2f, b.getWidth() * k);
     const float travel = pressed ? d * 0.8f : (lit ? d * 0.45f : 0.0f);
     return { b.reduced(m).withTrimmedRight(d).withTrimmedBottom(d).translated(travel, travel), d - travel,
              juce::jlimit(1.6f, 3.2f, b.getWidth() * 0.07f) };
@@ -1508,7 +1716,9 @@ float contrastBetween(juce::Colour a, juce::Colour b)
 }
 
 // Translucent plastic: dull and dim while the lamp is off, bright with the lamp rising from the
-// bottom when lit. The printed ink is picked for contrast against the plastic as lit or unlit.
+// bottom when lit. One ink rule for every family: whichever of the near-black ink (21,18,12) and the
+// cream ink has more contrast on the plastic wins, and the plastic is nudged lighter or darker until
+// that contrast is at least 4.8:1 (unlit tabs only; lit plastic keeps its colour).
 struct TabPlastic
 {
     juce::Colour body, top, mid, bottom, lamp, ink;
@@ -1518,6 +1728,8 @@ TabPlastic tabPlastic(juce::Colour c, bool lit)
 {
     float h = 0.0f, sat = 0.0f, v = 0.0f;
     c.getHSB(h, sat, v);
+    const juce::Colour darkInk(0xff15120c), lightInk(0xfff6f0dc);
+    constexpr float target = 4.8f;
     TabPlastic p;
     if (lit)
     {
@@ -1526,21 +1738,34 @@ TabPlastic tabPlastic(juce::Colour c, bool lit)
         p.mid = juce::Colour::fromHSV(h, sat * 0.80f, juce::jmin(1.0f, v * 1.02f + 0.08f), 1.0f);
         p.bottom = juce::Colour::fromHSV(h, sat * 0.58f, 1.0f, 1.0f).interpolatedWith(juce::Colour(0xfffff1c8), 0.22f);
         p.lamp = juce::Colour::fromHSV(h, sat * 0.30f, 1.0f, 1.0f).interpolatedWith(juce::Colour(0xfffff4d0), 0.5f);
+        p.ink = contrastBetween(p.mid, darkInk) >= contrastBetween(p.mid, lightInk) ? darkInk : lightInk;
+        return p;
     }
-    else
-    {
-        // A dim lens, not a painted keycap: about 55 percent brightness, darker at the top and
-        // lighter toward the bottom centre, with the hue and most of the saturation kept so the
-        // tabs stay in the same colour family as the fader caps.
-        const float sd = juce::jmin(1.0f, sat * 0.92f);
-        p.body = juce::Colour::fromHSV(h, sd, v * 0.55f, 1.0f);
-        p.top = juce::Colour::fromHSV(h, sd, v * 0.42f, 1.0f);
-        p.mid = juce::Colour::fromHSV(h, sd, v * 0.56f, 1.0f);
-        p.bottom = juce::Colour::fromHSV(h, sd * 0.88f, v * 0.70f, 1.0f);
-        p.lamp = juce::Colour::fromHSV(h, sd * 0.62f, juce::jmin(1.0f, v * 0.85f), 1.0f);
-    }
-    const juce::Colour light(0xfff6f0dc), dark(0xff15120c);
-    p.ink = contrastBetween(p.mid, dark) >= contrastBetween(p.mid, light) ? dark : light;
+    // Unlit: a dim lens, not a painted keycap. Saturation is about 15 percent below the lit plastic
+    // (crimson goes further so it does not read as active beside the white tabs). Dark above, lighter
+    // toward the bulb at the bottom.
+    const bool red = (h > 0.90f || h < 0.04f) && sat > 0.35f;
+    const float sd = juce::jmin(1.0f, sat * (red ? 0.60f : 0.78f));
+    auto midAt = [&](float k) { return juce::Colour::fromHSV(h, sd, juce::jmin(1.0f, v * k), 1.0f); };
+    // Pick the ink that needs the smaller change in brightness to reach the target contrast.
+    constexpr float k0 = 0.58f;
+    float kDark = k0, kLight = k0;
+    while (kDark < 1.0f && contrastBetween(midAt(kDark), darkInk) < target) kDark += 0.02f;
+    while (kLight > 0.30f && contrastBetween(midAt(kLight), lightInk) < target) kLight -= 0.02f;
+    const bool darkOk = contrastBetween(midAt(juce::jmin(kDark, 1.0f)), darkInk) >= target - 0.05f;
+    const bool lightOk = contrastBetween(midAt(juce::jmax(kLight, 0.30f)), lightInk) >= target - 0.05f;
+    bool useDark;
+    if (darkOk && lightOk) useDark = (kDark - k0) < (k0 - kLight);
+    else if (darkOk) useDark = true;
+    else if (lightOk) useDark = false;
+    else useDark = contrastBetween(midAt(1.0f), darkInk) > contrastBetween(midAt(0.30f), lightInk);
+    const float k = useDark ? juce::jmin(kDark, 1.0f) : juce::jmax(kLight, 0.30f);
+    p.ink = useDark ? darkInk : lightInk;
+    p.mid = midAt(k);
+    p.body = midAt(k * 0.98f);
+    p.top = juce::Colour::fromHSV(h, sd, juce::jmin(1.0f, v * k * 0.66f), 1.0f);
+    p.bottom = juce::Colour::fromHSV(h, sd * 0.80f, juce::jmin(1.0f, v * k * 1.55f), 1.0f);
+    p.lamp = juce::Colour::fromHSV(h, sd * 0.50f, juce::jmin(1.0f, v * k * 1.55f + 0.08f), 1.0f);
     return p;
 }
 } // namespace
@@ -1555,20 +1780,26 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
     const auto pl = tabPlastic(c, on);
     const auto glow = glowFor(c).interpolatedWith(juce::Colour(0xffffcf7a), 0.30f); // warm bleed
 
-    // Lamp light bleeding onto the black bezel around the tab; it fades to nothing at the bounds.
+    // Lamp light bleeding onto the black bezel around the tab. Both layers reach exactly zero at
+    // the component bounds, so there is no visible rectangle; the wider spill onto the panel is
+    // done by LightSpill, which can paint outside this component.
     if (on)
     {
         juce::Graphics::ScopedSaveState state(g);
         const auto centre = b.getCentre();
         g.addTransform(juce::AffineTransform::scale(1.0f, b.getHeight() / b.getWidth(), centre.x, centre.y));
-        drawLampGlow(g, centre, b.getWidth() * 0.5f, glow, lit ? 1.6f : 1.1f);
-        // Tight halo hugging the tab edge: the lit plastic washes the bezel right beside it.
+        drawLampGlow(g, centre, b.getWidth() * 0.5f, glow, lit ? 1.1f : 0.8f);
+    }
+    if (on)
+    {
         const float reach = juce::jmax(0.5f, juce::jmin(face.getX() - b.getX(), face.getY() - b.getY()) - 0.2f);
-        for (int i = 4; i >= 1; --i)
+        constexpr int layers = 8;
+        for (int i = 0; i < layers; ++i)
         {
-            const float e = reach * (float) i / 4.0f;
-            g.setColour(glow.withAlpha((lit ? 0.17f : 0.10f) * (float) (5 - i) / 2.0f * 0.8f));
-            g.fillRoundedRectangle(face.expanded(e).translated(e * 0.25f, e * 0.25f), geo.radius + e);
+            const float t = (float) (i + 1) / (float) layers; // outermost first, and the outermost is ~0
+            const float e = reach * (1.0f - (float) i / (float) layers);
+            g.setColour(glow.withAlpha((lit ? 0.19f : 0.11f) * t * t));
+            g.fillRoundedRectangle(face.expanded(e).translated(e * 0.2f, e * 0.2f), geo.radius + e);
         }
     }
     // Cast shadow (tight when the tab is pushed in).
@@ -1613,9 +1844,13 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
         const juce::Point<float> bulb(win.getCentreX(), win.getBottom() + win.getHeight() * 0.04f);
         if (! on)
         {
-            // Unlit lens: the diffuser still catches ambient light, +22 percent toward the bottom centre.
-            g.setGradientFill(juce::ColourGradient(pl.mid.withMultipliedBrightness(1.25f).withAlpha(0.85f), bulb.x, bulb.y - win.getHeight() * 0.1f,
-                                                   pl.mid.withAlpha(0.0f), bulb.x + win.getWidth() * 0.85f, bulb.y, true));
+            // Unlit lens: the cold filament behind the diffuser still warms the plastic toward the
+            // slit at the bottom, so the lens reads as a lit-from-behind window and not a painted key.
+            g.setGradientFill(juce::ColourGradient(pl.lamp.withAlpha(0.60f), bulb.x, bulb.y - win.getHeight() * 0.04f,
+                                                   pl.lamp.withAlpha(0.0f), bulb.x + win.getWidth() * 0.95f, bulb.y, true));
+            g.fillRect(win);
+            g.setGradientFill(juce::ColourGradient(pl.lamp.withAlpha(0.22f), win.getCentreX(), win.getBottom(),
+                                                   pl.lamp.withAlpha(0.0f), win.getCentreX(), win.getY() + win.getHeight() * 0.35f, false));
             g.fillRect(win);
         }
         if (on)
@@ -1650,16 +1885,18 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
             g.fillRect(win);
         }
         // Lamp bar: the small LED at the foot of the window.
-        const float barH = juce::jlimit(1.8f, 2.8f, win.getHeight() * 0.075f);
-        const juce::Rectangle<float> bar(win.getCentreX() - win.getWidth() * 0.22f, win.getBottom() - barH - 1.6f,
-                                         win.getWidth() * 0.44f, barH);
+        const bool compactTab = b.getWidth() < 30.0f;
+        const float barH = compactTab ? 1.3f : juce::jlimit(1.8f, 2.8f, win.getHeight() * 0.075f);
+        const juce::Rectangle<float> bar(win.getCentreX() - win.getWidth() * (compactTab ? 0.30f : 0.22f),
+                                         win.getBottom() - barH - (compactTab ? 0.9f : 1.6f),
+                                         win.getWidth() * (compactTab ? 0.60f : 0.44f), barH);
         if (on)
         {
             drawLampGlow(g, bar.getCentre(), win.getWidth() * 0.62f, juce::Colour(0xffffefb0), 0.85f);
             g.setColour(juce::Colour(0xfffffbe6));
         }
         else
-            g.setColour(pl.lamp.withAlpha(0.55f)); // dim lamp dash: the filament is warm but not lit
+            g.setColour(pl.lamp.withAlpha(0.80f)); // dim lamp dash: the filament is warm but not lit
         g.fillRoundedRectangle(bar, barH * 0.5f);
         if (! on)
         {
@@ -1701,7 +1938,8 @@ FaderGeom faderGeom(int sliderWidth)
     return f;
 }
 
-void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float defaultProp)
+void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float defaultProp,
+                     bool numerals = false, bool clearLeftEnds = false)
 {
     const float cx = (float) W * 0.5f;
     const float yA = f.r - f.ey * 0.5f, yB = (float) H - f.r - f.ey * 0.5f;
@@ -1714,6 +1952,21 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float 
         const float a = major ? 0.88f : 0.50f;
         for (int side = -1; side <= 1; side += 2)
         {
+            if (side < 0 && clearLeftEnds && (i == 0 || i == 10))
+                continue;
+            if (side > 0 && numerals && major)
+            {
+                // Printed scale numeral (10 at the top, 5, 0 at the bottom) where the dash would be.
+                const juce::String label = i == 0 ? "10" : (i == 5 ? "5" : "0");
+                const float fh = 5.6f * f.s;
+                g.setFont(displayFont(fh, juce::Font::bold));
+                const juce::Rectangle<float> box(cx + 5.6f * f.s, yy - fh * 0.62f, 8.6f * f.s, fh * 1.24f);
+                g.setColour(blackInk(0.45f));
+                g.drawText(label, box.translated(0.0f, 0.8f), juce::Justification::centred, false);
+                g.setColour(juce::Colour(0xffdcd3b4).withAlpha(0.60f));
+                g.drawText(label, box, juce::Justification::centred, false);
+                continue;
+            }
             const float x0 = cx + (float) side * 6.2f * f.s;
             const float x1 = cx + (float) side * (major ? 13.0f : 9.8f) * f.s;
             g.setColour(blackInk(0.60f * a));
@@ -1729,101 +1982,79 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float 
         for (int side = -1; side <= 1; side += 2)
         {
             const float x0 = cx + (float) side * 5.2f * f.s;
-            const float x1 = cx + (float) side * 14.6f * f.s;
+            const float x1 = cx + (float) side * 13.6f * f.s;
             g.setColour(blackInk(0.65f));
             g.drawLine(x0, yy + 1.0f, x1, yy + 1.0f, th * 1.7f);
             g.setColour(juce::Colour(0xfff0cf70));
             g.drawLine(x0, yy, x1, yy, th * 1.7f);
-            g.setColour(juce::Colour(0xfffff0b0));
-            g.fillEllipse(x1 - 1.1f * f.s, yy - 1.1f * f.s, 2.2f * f.s, 2.2f * f.s);
         }
     }
     drawFaderSlot(g, cx, 0.6f * f.s, (float) H - 0.6f * f.s, f.s);
 }
 
-// Compact printed code for a tone tab from its accessibility title ("STRING 1" -> "SR1"). Empty
-// when the title is not a known tone, in which case the long legend is used.
-juce::String toneCode(const juce::String& title)
+// Printed legend lines for a tone tab from its accessibility title: three letters over the number
+// ("STRING 1" -> STR / 1), or one line for the unnumbered tones (FLT, EP, BASS, PNL). Empty when the
+// title is not a known tone, in which case the button text is used.
+juce::StringArray toneLegend(const juce::String& title)
 {
     static const struct { const char* word; const char* code; bool numbered; } table[] = {
-        { "STRING", "SR", true }, { "BRASS", "BR", true }, { "FLUTE", "FL", false }, { "E. PIANO", "EP", false },
-        { "E.PIANO", "EP", false }, { "CLAVICHORD", "CV", true }, { "HARPSICHORD", "HC", true },
-        { "ORGAN", "OG", true }, { "GUITAR", "GT", true }, { "FUNKY", "FK", true }, { "MEMORY", "MM", true },
-        { "BASS", "BAS", false }, { "PANEL", "PNL", false } };
+        { "STRING", "STR", true }, { "BRASS", "BRS", true }, { "FLUTE", "FLT", false }, { "E. PIANO", "EP", false },
+        { "E.PIANO", "EP", false }, { "CLAVICHORD", "CLV", true }, { "HARPSICHORD", "HRP", true },
+        { "ORGAN", "ORG", true }, { "GUITAR", "GTR", true }, { "FUNKY", "FNK", true }, { "MEMORY", "MEM", true },
+        { "BASS", "BASS", false }, { "PANEL", "PNL", false } };
     const auto t = title.trim().toUpperCase();
     for (const auto& e : table)
         if (t.startsWith(e.word))
-            return juce::String(e.code) + (e.numbered ? t.fromLastOccurrenceOf(" ", false, false).retainCharacters("0123456789")
-                                                      : juce::String());
+        {
+            juce::StringArray lines;
+            lines.add(e.code);
+            if (e.numbered)
+            {
+                const auto digits = t.fromLastOccurrenceOf(" ", false, false).retainCharacters("0123456789");
+                if (digits.isNotEmpty())
+                    lines.add(digits);
+            }
+            return lines;
+        }
     return {};
 }
 
 void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, bool pressed,
-                   juce::Colour base, const juce::String& longText, const juce::String& compactCode = {})
+                   juce::Colour base, const juce::String& longText, const juce::String& title = {})
 {
-    juce::String text = longText;
     const auto geo = tabGeometry(bounds, lit, pressed);
-    const float bev = juce::jlimit(1.1f, 2.0f, bounds.getWidth() * 0.055f);
-    auto area = geo.face.reduced(bev + 0.6f, bev);
-    area.removeFromBottom(4.6f);
+    const bool compact = bounds.getWidth() < 30.0f;
+    const float bev = juce::jlimit(1.0f, 2.0f, bounds.getWidth() * 0.055f);
+    auto area = geo.face.reduced(bev);
+    area.removeFromBottom(compact ? 1.8f : 4.4f);
     const auto ink = tabPlastic(base, lit || pressed).ink;
-    float fontPx = juce::jlimit(8.0f, 9.5f, bounds.getWidth() * 0.25f);
-    // If the long legend would need squeezing below 0.85 even at the 8 px floor, print the compact
-    // code instead (the accessibility title keeps the full name).
-    if (compactCode.isNotEmpty())
-    {
-        float widest = 0.0f;
-        const auto probe = displayFont(8.0f, juce::Font::bold);
-        for (const auto& line : juce::StringArray::fromLines(text))
-            widest = juce::jmax(widest, (float) juce::GlyphArrangement::getStringWidthInt(probe, line));
-        if (widest * 0.85f > area.getWidth() - 1.0f)
-        {
-            text = compactCode;
-            fontPx = juce::jlimit(8.0f, 10.5f, bounds.getWidth() * 0.30f);
-        }
-    }
-    // Shrink long legends toward an 8 px floor before squeezing them, so type is not crushed.
-    {
-        const float widest = [&]
-        {
-            float w = 0.0f;
-            for (const auto& line : juce::StringArray::fromLines(text))
-                w = juce::jmax(w, (float) juce::GlyphArrangement::getStringWidthInt(displayFont(fontPx, juce::Font::bold), line));
-            return w;
-        }();
-        const float avail = area.getWidth() - 1.0f;
-        if (widest * 0.82f > avail)
-            fontPx = juce::jmax(8.0f, fontPx * avail / (widest * 0.82f));
-    }
-    const auto font = displayFont(fontPx, juce::Font::bold);
-    auto lines = juce::StringArray::fromLines(text);
-    // "SUSTAIN II" stays on one line while it can be fitted without crushing the type; otherwise it
-    // breaks at the last space.
-    if (lines.size() == 1 && text.containsChar(' '))
-    {
-        const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, text);
-        if (tw > area.getWidth() / 0.82f)
-        {
-            const int split = text.lastIndexOfChar(' ');
-            lines = juce::StringArray(text.substring(0, split), text.substring(split + 1));
-        }
-    }
+    // The ink may run over the bevel ring, but never past the tab body. 9 px is the floor and a
+    // squeeze never goes below 0.85: the unnumbered words are the longest strings here.
+    const float room = compact ? bounds.getWidth() - 1.4f : geo.face.getWidth() - 0.8f;
+    const float fontPx = juce::jlimit(9.0f, 10.0f, bounds.getWidth() * 0.29f);
+
+    juce::StringArray lines = toneLegend(title);
+    const bool known = lines.size() > 0;
+    if (! known)
+        lines = juce::StringArray::fromLines(longText);
     const int count = juce::jmax(1, lines.size());
-    // Lines sit close together as one block centred on the face, however tall the plate is.
-    const float lineHeight = juce::jmin(area.getHeight() / (float) count, font.getHeight() * 1.45f);
-    const float blockTop = area.getCentreY() - lineHeight * (float) count * 0.5f;
+    const float pitch = juce::jlimit(fontPx * 0.9f, fontPx * 1.22f, area.getHeight() / (float) count);
+    const float blockTop = area.getCentreY() - pitch * (float) count * 0.5f;
     for (int i = 0; i < lines.size(); ++i)
     {
-        auto lineFont = font;
-        const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, lines[i]);
-        const float avail = area.getWidth() - 1.0f;
-        if (tw > avail)
-            lineFont = font.withHorizontalScale(juce::jmax(0.6f, avail / tw));
+        auto font = displayFont(fontPx, juce::Font::bold);
+        font.setExtraKerningFactor(0.01f);
+        auto text = lines[i];
+        if (! known)
+            text = fitLegendText(font, text, room, 0.85f, 9.0f);
+        bool fitted = true;
+        font = fitFontToWidth(font, text, room, 0.85f, 9.0f, fitted);
         // Crisp printed ink: one pass, no drop shadow.
-        g.setFont(lineFont);
+        g.setFont(font);
         g.setColour(ink);
-        g.drawFittedText(lines[i], juce::Rectangle<float>(area.getX(), blockTop + (float) i * lineHeight, area.getWidth(), lineHeight).toNearestInt(),
-                         juce::Justification::centred, 1, 0.5f);
+        g.drawText(text, juce::Rectangle<float>(geo.face.getCentreX() - room * 0.5f - (compact ? 0.0f : 0.0f),
+                                                blockTop + (float) i * pitch, room, pitch).toNearestInt(),
+                   juce::Justification::centred, false);
     }
 }
 } // namespace
@@ -1909,8 +2140,13 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     if (slider.isDoubleClickReturnEnabled())
         defaultProp = juce::jlimit(0.0f, 1.0f, (float) slider.valueToProportionOfLength(slider.getDoubleClickReturnValue()));
     const int defaultKey = defaultProp < 0.0f ? 0 : 1 + juce::roundToInt(defaultProp * 100.0f);
+    const bool hasLegends = legendTop.isNotEmpty() || legendBottom.isNotEmpty();
+    // Printed 0-5-10 numerals where there is room (they would be under 5 px type on a small editor).
+    const bool numerals = ! horiz && ! hasLegends && 5.6f * f.s >= 4.9f;
+    const bool clearLeft = ! horiz && hasLegends;
     const auto track = PaintCache::get().fetch(kindTrack, fullW, fullH, 0,
-                                               juce::roundToInt(f.s * 100.0f) | (horiz ? 1 << 16 : 0) | (defaultKey << 17), ps,
+                                               juce::roundToInt(f.s * 100.0f) | (horiz ? 1 << 16 : 0) | (defaultKey << 17)
+                                                   | (numerals ? 1 << 28 : 0) | (clearLeft ? 1 << 29 : 0), ps,
                                                [&](juce::Graphics& ig)
     {
         if (horiz)
@@ -1919,19 +2155,20 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
             paintFaderTrack(ig, fullH, fullW, f, defaultProp < 0.0f ? -1.0f : 1.0f - defaultProp);
         }
         else
-            paintFaderTrack(ig, fullW, fullH, f, defaultProp);
+            paintFaderTrack(ig, fullW, fullH, f, defaultProp, numerals, clearLeft);
     });
     blit(g, track, 0.0f, 0.0f);
-    if (! horiz && (legendTop.isNotEmpty() || legendBottom.isNotEmpty()))
+    if (clearLeft)
     {
-        const float lx = (float) fullW * 0.5f + 13.0f * f.s;
-        const auto font = displayFont(juce::jmax(7.0f, 7.0f * f.s), juce::Font::bold);
+        // End legends (for example I and II beside the MIX fader) sit left of the slot, where the end
+        // ticks were, in 8 px type.
+        const auto font = displayFont(juce::jmax(8.0f, 8.0f * f.s), juce::Font::bold);
+        const float yTop = f.r - f.ey * 0.5f, yBottom = (float) fullH - f.r - f.ey * 0.5f;
+        const juce::Rectangle<float> box((float) fullW * 0.5f - 14.4f * f.s, 0.0f, 9.0f * f.s, 10.0f);
         if (legendTop.isNotEmpty())
-            drawEngravedText(g, legendTop, { lx, f.r - f.ey * 0.5f - 4.5f, 11.0f * f.s, 9.0f },
-                             font, juce::Justification::centredLeft, juce::Colour(0xffd8cfb0));
+            drawEngravedText(g, legendTop, box.withY(yTop - 5.0f), font, juce::Justification::centred, juce::Colour(0xffd8cfb0));
         if (legendBottom.isNotEmpty())
-            drawEngravedText(g, legendBottom, { lx, (float) fullH - f.r - f.ey * 0.5f - 4.5f, 11.0f * f.s, 9.0f },
-                             font, juce::Justification::centredLeft, juce::Colour(0xffd8cfb0));
+            drawEngravedText(g, legendBottom, box.withY(yBottom - 5.0f), font, juce::Justification::centred, juce::Colour(0xffd8cfb0));
     }
 
     // The cap: pre-rendered moulded block, blitted at the slider position.
@@ -2074,7 +2311,7 @@ void LookAndFeel::drawButtonText(juce::Graphics& g, juce::TextButton& button,
         const auto base = button.findColour(juce::TextButton::buttonColourId);
         const bool lit = button.getToggleState();
         drawTabLegend(g, button.getLocalBounds().toFloat(), lit, shouldDrawButtonAsDown, base,
-                      button.getButtonText(), toneCode(button.getTitle()));
+                      button.getButtonText(), button.getTitle());
         return;
     }
     auto font = displayFont(juce::jlimit(8.0f, 14.0f, (float) button.getHeight() * 0.43f), juce::Font::bold);
@@ -2174,7 +2411,21 @@ juce::String capTooltipText(const juce::String& text)
 
 juce::TextLayout tooltipLayout(const juce::String& rawText)
 {
-    const auto text = capTooltipText(rawText);
+    // A trailing "NAME: ON|OFF" line is the control's state; it is kept whole however long the tip is.
+    juce::String stateLine, bodyText = rawText;
+    {
+        const int nl = bodyText.lastIndexOfChar('\n');
+        if (nl > 0)
+        {
+            const auto last = bodyText.substring(nl + 1).trim();
+            if ((last.endsWith(": ON") || last.endsWith(": OFF")) && last.length() < 56)
+            {
+                stateLine = last;
+                bodyText = bodyText.substring(0, nl).trimEnd();
+            }
+        }
+    }
+    const auto text = capTooltipText(bodyText);
     juce::AttributedString s;
     s.setJustification(juce::Justification::centredLeft);
     const auto body = displayFont(12.0f, juce::Font::plain);
@@ -2191,6 +2442,14 @@ juce::TextLayout tooltipLayout(const juce::String& rawText)
     }
     else
         s.append(text, body, ivory);
+    if (stateLine.isNotEmpty())
+    {
+        const int colon = stateLine.lastIndexOf(": ");
+        const auto state = stateLine.substring(colon + 2);
+        s.append("\n", body, ivory);
+        s.append(stateLine.substring(0, colon + 1) + " ", head, gold);
+        s.append(state, head, state == "ON" ? amberBright : ivoryDim);
+    }
     juce::TextLayout layout;
     layout.createLayoutWithBalancedLineLengths(s, 360.0f);
     return layout;
@@ -2210,6 +2469,17 @@ void fillBubblePlate(juce::Graphics& g, const juce::Path& plate, juce::Rectangle
     g.strokePath(plate, juce::PathStrokeType(1.2f));
 }
 } // namespace
+
+juce::MouseCursor LookAndFeel::getMouseCursorFor(juce::Component& component)
+{
+    const auto base = juce::LookAndFeel_V4::getMouseCursorFor(component);
+    if (base != juce::MouseCursor::NormalCursor || ! component.isEnabled())
+        return base;
+    if (dynamic_cast<juce::Button*>(&component) != nullptr || dynamic_cast<juce::Slider*>(&component) != nullptr
+        || dynamic_cast<juce::ComboBox*>(&component) != nullptr)
+        return juce::MouseCursor::PointingHandCursor;
+    return base;
+}
 
 juce::Rectangle<int> LookAndFeel::getTooltipBounds(const juce::String& tipText, juce::Point<int> screenPos,
                                                    juce::Rectangle<int> parentArea)
@@ -2596,13 +2866,21 @@ juce::String parameterTooltip(int index, const juce::String& title, float value)
 // bare name (A, D, R, LEVEL...) would be ambiguous.
 juce::String bubbleNameFor(int index, const juce::String& panelName)
 {
-    const auto& def = cs80::paramDef(index);
-    juce::String name = def.name;
-    if (name.length() <= 3 || name == "LEVEL")
-        name = juce::String(def.group) + " " + name;
+    // The descriptive name ("VCA Attack", "Initial Touch Level"), with the channel in front.
+    juce::String name = parameterLongName(index);
     if (index >= cs80::P_numGlobals && index < cs80::P_legacyNumParams)
         name = juce::String(index < cs80::P_ch2Start ? "I " : "II ") + name;
     juce::ignoreUnused(panelName);
+    return name;
+}
+
+// Tooltip heading and accessibility description name: "Channel I VCA Attack". The slider title is
+// unchanged ("Channel I A"); only the words people read and hear are expanded.
+juce::String tooltipNameFor(int index)
+{
+    juce::String name = parameterLongName(index);
+    if (index >= cs80::P_numGlobals && index < cs80::P_legacyNumParams)
+        name = juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") + name;
     return name;
 }
 } // namespace
@@ -2621,9 +2899,9 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
         ? juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
     slider.setTitle(channelName + juce::String(cs80::paramDef(index).name));
     slider.setComponentID(Cs80AudioProcessor::parameterId(index));
-    slider.setDescription("Use the arrow keys to adjust this control. Double-click to restore its default.");
+    slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Double-click to restore its default.");
     slider.onValueChange = [this] {
-        slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
+        slider.setTooltip(parameterTooltip(parameterIndex, tooltipNameFor(parameterIndex), (float) slider.getValue()));
         repaint();
     };
     slider.addMouseListener(this, false); // hover and drag state redraws the readout
@@ -2633,7 +2911,7 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
 
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
-    slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(parameterIndex, tooltipNameFor(parameterIndex), (float) slider.getValue()));
 
 }
 
@@ -2649,20 +2927,36 @@ bool ParamKnob::bindParameter(int index)
     parameterIndex = index;
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
     slider.setTitle(juce::String(cs80::paramDef(index).name));
+    slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Double-click to restore its default.");
     slider.setComponentID(Cs80AudioProcessor::parameterId(index));
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
-    slider.setTooltip(parameterTooltip(index, slider.getTitle(), (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(index, tooltipNameFor(index), (float) slider.getValue()));
     repaint();
     return true;
+}
+
+void ParamKnob::setCaption(const juce::String& painted)
+{
+    captionOverride = painted;
+    repaint();
 }
 
 void ParamKnob::setHardwareSlider(juce::Colour capColour)
 {
     hardwareSlider = true;
+    if (parameterIndex == cs80::P_mix)
+    {
+        // The readout is channel I over channel II ("68/32"): the ends say which is which. A
+        // value of 1 is all channel I, at the top of the fader.
+        if (slider.getProperties()["faderLegendTop"].toString().isEmpty())
+            slider.getProperties().set("faderLegendTop", "I");
+        if (slider.getProperties()["faderLegendBottom"].toString().isEmpty())
+            slider.getProperties().set("faderLegendBottom", "II");
+    }
     slider.setSliderStyle(juce::Slider::LinearVertical);
     slider.setColour(juce::Slider::thumbColourId, capColour);
-    slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(parameterIndex, tooltipNameFor(parameterIndex), (float) slider.getValue()));
     resized();
     repaint();
 }
@@ -2678,7 +2972,7 @@ void ParamKnob::setCapFader(juce::Colour capColour, bool horizontal)
     horizontalFader = true;
     slider.setSliderStyle(juce::Slider::LinearHorizontal);
     slider.setColour(juce::Slider::thumbColourId, capColour);
-    slider.setTooltip(parameterTooltip(parameterIndex, slider.getTitle(), (float) slider.getValue()));
+    slider.setTooltip(parameterTooltip(parameterIndex, tooltipNameFor(parameterIndex), (float) slider.getValue()));
     resized();
     repaint();
 }
@@ -2696,7 +2990,8 @@ void ParamKnob::paint(juce::Graphics& g)
         // Compact horizontal cap fader: caption left and readout right on one line, the fader below.
         const float h = (float) getHeight();
         const float titleH = juce::jlimit(11.0f, 15.0f, h * 0.38f);
-        drawControlCaption(g, name, { 1.0f, 0.0f, (float) getWidth() * 0.58f, titleH }, juce::Justification::centredLeft,
+        drawControlCaption(g, captionOverride.isNotEmpty() ? captionOverride : name,
+                           { 1.0f, 0.0f, (float) getWidth() * 0.58f, titleH }, juce::Justification::centredLeft,
                            juce::jlimit(8.5f, 10.5f, titleH * 0.80f));
         const auto text = formatParamValue(parameterIndex, (float) slider.getValue());
         const float size = juce::jlimit(9.0f, 11.0f, titleH * 0.78f);
@@ -2709,20 +3004,29 @@ void ParamKnob::paint(juce::Graphics& g)
     {
         const float scale = juce::jlimit(0.65f, 1.5f, (float) getWidth() / 42.0f);
         const float floorPx = legendFloor(*this);
-        // Legends shrink toward the 8 px floor before they squeeze (never below 0.85 scale if it can
-        // be avoided); a small gutter keeps neighbours from touching.
-        const float nameW = (float) getWidth() - 3.0f;
+        // Legends shrink toward the floor, then squeeze by at most 15 percent; a word that still does
+        // not fit is replaced by its printed abbreviation (FUNCTION -> FUNC) instead of being crushed.
+        const juce::String& painted = captionOverride.isNotEmpty() ? captionOverride : name;
+        const float nameW = (float) getWidth() - 1.5f;
         auto nameFont = displayFont(juce::jmax(floorPx, 9.5f * scale), juce::Font::bold);
         nameFont.setExtraKerningFactor(0.02f);
-        nameFont = fitFontToWidth(nameFont, name, nameW, 0.85f, floorPx);
-        drawEngravedText(g, name, { 1.5f, 0.0f, nameW, 24.0f * scale }, nameFont,
+        const auto nameText = fitLegendText(nameFont, painted, nameW, 0.85f, floorPx);
+        bool fitted = true;
+        nameFont = fitFontToWidth(nameFont, nameText, nameW, 0.85f, floorPx, fitted);
+        drawEngravedText(g, nameText, { ((float) getWidth() - nameW) * 0.5f, 0.0f, nameW, 24.0f * scale }, nameFont,
                          juce::Justification::centred, juce::Colour(0xffe6dcbc));
         const float vh = 16.0f * scale;
-        const auto valueText = formatParamValue(parameterIndex, (float) slider.getValue());
-        const auto valueFont = fitFontToWidth(displayFont(juce::jmax(floorPx, 8.5f * scale), juce::Font::bold), valueText,
-                                              (float) getWidth() - 1.0f, 0.85f, floorPx);
-        drawEngravedText(g, valueText, { 0.5f, (float) getHeight() - vh, (float) getWidth() - 1.0f, vh }, valueFont,
-                         juce::Justification::centred, juce::Colour(0xffeadfb4));
+        const float valueW = (float) getWidth() - 1.0f;
+        auto valueFont = displayFont(juce::jmax(floorPx, 8.5f * scale), juce::Font::bold);
+        const auto valueText = formatParamValueFit(parameterIndex, (float) slider.getValue(), valueFont, valueW, 0.85f, floorPx);
+        valueFont = fitFontToWidth(valueFont, valueText, valueW, 0.85f, floorPx, fitted);
+        const juce::Rectangle<float> valueArea(0.5f, (float) getHeight() - vh, valueW, vh);
+        const bool active = slider.isMouseOverOrDragging() || slider.isMouseButtonDown() || slider.hasKeyboardFocus(true);
+        if (active)
+            drawValuePill(g, valueText, valueArea.reduced(0.0f, 1.0f), valueFont.getHeight());
+        else
+            // At rest the readout is a printed figure (about 4.5:1 on the panel); the lit pill is for hover and drag.
+            drawEngravedText(g, valueText, valueArea, valueFont, juce::Justification::centred, juce::Colour(0xffb9af8c));
         return;
     }
 
@@ -2735,8 +3039,8 @@ void ParamKnob::paint(juce::Graphics& g)
     float nameSize = juce::jlimit(8.5f, 11.5f, h * 0.155f);
     if ((bool) slider.getProperties()["hardwareRotary"])
         nameSize = juce::jmin(nameSize, juce::jmax(legendFloor(*this) + 1.0f, 10.0f * uiDesignScale(*this)));
-    drawControlCaption(g, name, { 0.0f, 0.0f, (float) getWidth(), nameHeight + 2.0f }, juce::Justification::centred,
-                       nameSize);
+    drawControlCaption(g, captionOverride.isNotEmpty() ? captionOverride : name,
+                       { 0.0f, 0.0f, (float) getWidth(), nameHeight + 2.0f }, juce::Justification::centred, nameSize);
     const auto readout = formatParamValue(parameterIndex, (float) slider.getValue());
     const juce::Rectangle<float> readoutArea(1.0f, h - valueHeight - 1.0f, (float) getWidth() - 2.0f, valueHeight + 0.5f);
     const float readoutSize = juce::jlimit(9.5f, 11.5f, h * 0.15f);
@@ -2744,9 +3048,11 @@ void ParamKnob::paint(juce::Graphics& g)
     if ((bool) slider.getProperties()["hardwareRotary"] && ! active)
     {
         // At rest the machined knobs carry a silkscreen-style readout; the full pill lights up on hover or drag.
-        const auto font = fitFontToWidth(displayFont(juce::jmax(8.0f, readoutSize - 1.5f), juce::Font::bold), readout,
-                                         readoutArea.getWidth());
-        drawEngravedText(g, readout, readoutArea, font, juce::Justification::centred, juce::Colour(0xffb9b090));
+        auto font = displayFont(juce::jmax(8.0f, readoutSize - 1.5f), juce::Font::bold);
+        const auto fitText = formatParamValueFit(parameterIndex, (float) slider.getValue(), font, readoutArea.getWidth(), 0.85f, 8.0f);
+        bool fitted = true;
+        font = fitFontToWidth(font, fitText, readoutArea.getWidth(), 0.85f, 8.0f, fitted);
+        drawEngravedText(g, fitText, readoutArea, font, juce::Justification::centred, juce::Colour(0xffb9b090));
     }
     else
         drawValuePill(g, readout, readoutArea, readoutSize);
@@ -2800,10 +3106,27 @@ LedButton::LedButton(const juce::String& text, bool momentary)
     setWantsKeyboardFocus(true);
     setTitle(text);
     setDescription("Press Space or Return to operate this switch.");
-    onStateChange = [this] {
-        setTooltip(getTitle() + (getToggleState() ? ": ON" : ": OFF"));
-    };
-    setTooltip(text + ": OFF");
+    onStateChange = [this] { refreshTooltip(); };
+    refreshTooltip();
+}
+
+void LedButton::setTooltip(const juce::String& tip)
+{
+    customTip = tip.trim();
+    // The plain "<title>: ON|OFF" form is what the state line already says.
+    const auto stateOn = getTitle() + ": ON", stateOff = getTitle() + ": OFF";
+    if (customTip == stateOn || customTip == stateOff || customTip == getButtonText() + ": ON"
+        || customTip == getButtonText() + ": OFF")
+        customTip.clear();
+    refreshTooltip();
+}
+
+void LedButton::refreshTooltip()
+{
+    // The control's own sentence first, then its state on a last line: hovering (a state change)
+    // no longer replaces the explanation with a bare "ON".
+    const auto state = getTitle() + (getToggleState() ? ": ON" : ": OFF");
+    juce::SettableTooltipClient::setTooltip(customTip.isEmpty() ? state : customTip + "\n" + state);
 }
 
 void LedButton::paintRocker(juce::Graphics& g, bool hovered, bool down, float ps, bool deckTab)
@@ -2828,29 +3151,19 @@ void LedButton::paintRocker(juce::Graphics& g, bool hovered, bool down, float ps
     const juce::Rectangle<float> bounds(0.0f, oy, (float) w, (float) h);
     auto area = rockerLegendArea(juce::Rectangle<float>(0.0f, 0.0f, (float) w, (float) h), true).translated(0.0f, oy);
     juce::ignoreUnused(bounds);
-    auto font = displayFont(juce::jlimit(8.0f, 10.5f, area.getHeight() * 0.9f), juce::Font::bold);
+    auto font = displayFont(juce::jlimit(9.0f, 10.5f, area.getHeight() * 0.9f), juce::Font::bold);
     font.setExtraKerningFactor(0.03f);
-    // Never squeeze below 0.85: when the full word does not fit, print a short code instead.
-    // The button keeps its full name for accessibility and the tooltip.
-    juce::String legend = getButtonText();
+    // 9 px floor, never squeezed below 0.85: when the full word does not fit, print its short form
+    // (SUSTAIN -> SUS). The button keeps its full name for accessibility and the tooltip.
     // Deck-size lenses keep a little ink-free margin so a long word does not touch the rim.
-    const float room = area.getWidth() - (area.getHeight() > 12.0f ? 5.0f : 1.0f);
-    // Measured at the 8 px floor: fitFontToWidth shrinks the height to the floor before it squeezes.
-    const auto probe = font.withHeight(8.0f);
-    auto widthAt = [&](const juce::String& t) { return (float) juce::GlyphArrangement::getStringWidthInt(probe, t); };
-    if (widthAt(legend) * 0.85f > room)
-    {
-        const juce::String code = rockerLegendCode(legend);
-        legend = code;
-        // A last resort for names without a code: keep as many whole letters as fit.
-        while (legend.length() > 2 && widthAt(legend) * 0.85f > room)
-            legend = legend.dropLastCharacters(1);
-    }
+    const float room = area.getWidth() - (area.getHeight() > 12.0f ? 3.0f : 1.0f);
+    juce::String legend = fitLegendText(font, getButtonText(), room, 0.85f, 9.0f);
     // Roman numerals (the channel I and II switches) are printed in a serif so they read as numerals
     // and not as a bar above a lamp.
     if (legend.containsOnly("IV") && legend.isNotEmpty())
         font = juce::Font(juce::FontOptions(juce::Font::getDefaultSerifFontName(), font.getHeight() * 1.05f, juce::Font::bold));
-    font = fitFontToWidth(font, legend, room, 0.85f, 8.0f);
+    bool fitted = true;
+    font = fitFontToWidth(font, legend, room, 0.85f, 9.0f, fitted);
     g.setFont(font);
     g.setColour(litLens ? juce::Colour(0xff1d1507) : juce::Colour(0xffeadfbc).withAlpha(0.92f));
     g.drawText(legend, area.toNearestInt(), juce::Justification::centred, false);
@@ -2885,12 +3198,17 @@ void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
             }
             g.setColour(blackInk(0.7f));
             g.strokePath(glyph, juce::PathStrokeType(1.4f), juce::AffineTransform::translation(0.6f, 0.9f));
-            // Amber glyph and label when on; plain cream when off.
-            g.setColour(on ? juce::Colour(0xffffc65c) : juce::Colour(0xffc9c1a2));
+            // The printed legend stays put and keeps its ink in both states; only the facet, the amber
+            // bar and the lamp change with the switch.
+            g.setColour(juce::Colour(0xffd6cdac));
             g.strokePath(glyph, juce::PathStrokeType(1.4f));
-            auto font = displayFont(juce::jlimit(8.0f, 9.5f, r.getWidth() * 0.26f), juce::Font::bold);
-            drawEngravedText(g, getButtonText(), r.withTrimmedTop(r.getHeight() * 0.54f).withTrimmedBottom(1.5f), font,
-                             juce::Justification::centred, on ? juce::Colour(0xffffd88f) : juce::Colour(0xffddd4b2));
+            auto font = displayFont(juce::jlimit(9.0f, 9.5f, r.getWidth() * 0.26f), juce::Font::bold);
+            const float labelW = r.getWidth() - 2.0f;
+            const auto label = fitLegendText(font, getButtonText(), labelW, 0.85f, 9.0f);
+            bool fitted = true;
+            font = fitFontToWidth(font, label, labelW, 0.85f, 9.0f, fitted);
+            drawEngravedText(g, label, r.withTrimmedTop(r.getHeight() * 0.54f).withTrimmedBottom(1.5f), font,
+                             juce::Justification::centred, juce::Colour(0xffddd4b2));
             return;
         }
         paintRocker(g, hovered, down, ps, true);
@@ -3050,7 +3368,67 @@ RibbonStrip::RibbonStrip()
 {
     setMouseCursor(juce::MouseCursor::LeftRightResizeCursor);
     setRepaintsOnMouseActivity(true);
+    // Reachable with Tab; a click does not steal the keyboard from the keys.
+    setWantsKeyboardFocus(true);
+    setMouseClickGrabsKeyboardFocus(false);
+}
 
+bool RibbonStrip::keyPressed(const juce::KeyPress& key)
+{
+    const bool left = key == juce::KeyPress::leftKey, right = key == juce::KeyPress::rightKey;
+    if (left || right)
+    {
+        if (! touching)
+        {
+            touching = true;
+            keyboardBend = true;
+            anchorX = (float) getWidth() * 0.5f;
+            value = 0.0f;
+        }
+        if (keyboardBend)
+        {
+            value = juce::jlimit(-1.0f, 1.0f, value + (right ? 0.04f : -0.04f));
+            if (onValueChange) onValueChange(value);
+            repaint();
+        }
+        return true;
+    }
+    if (keyboardBend && (key == juce::KeyPress::homeKey || key == juce::KeyPress::endKey
+                         || key == juce::KeyPress::spaceKey || key == juce::KeyPress::returnKey
+                         || key == juce::KeyPress::escapeKey))
+    {
+        releaseKeyboardBend();
+        return true;
+    }
+    return false;
+}
+
+bool RibbonStrip::keyStateChanged(bool)
+{
+    if (keyboardBend && ! juce::KeyPress::isKeyCurrentlyDown(juce::KeyPress::leftKey)
+        && ! juce::KeyPress::isKeyCurrentlyDown(juce::KeyPress::rightKey))
+    {
+        releaseKeyboardBend();
+        return true;
+    }
+    return false;
+}
+
+void RibbonStrip::releaseKeyboardBend()
+{
+    if (! keyboardBend)
+        return;
+    keyboardBend = false;
+    touching = false;
+    value = 0.0f;
+    if (onValueChange) onValueChange(0.0f);
+    repaint();
+}
+
+void RibbonStrip::paintOverChildren(juce::Graphics& g)
+{
+    if (hasKeyboardFocus(false))
+        drawFocusRing(g, getLocalBounds().toFloat());
 }
 
 void RibbonStrip::paint(juce::Graphics& g)
@@ -3223,7 +3601,7 @@ void paintWheelHousing(juce::Graphics& g, juce::Rectangle<float> track, bool spr
 void PerformanceWheel::paint(juce::Graphics& g)
 {
     auto full = getLocalBounds().toFloat();
-    const float legendPx = juce::jlimit(8.0f, 9.0f, (float) getHeight() * 0.07f);
+    const float legendPx = juce::jlimit(9.0f, 10.0f, (float) getHeight() * 0.08f);
     const auto title = full.removeFromTop(std::ceil(legendPx * 1.3f));
     drawEngravedText(g, wheelLabel, title, displayFont(legendPx, juce::Font::bold),
                      juce::Justification::centred, juce::Colour(0xffe0d6b6));
@@ -3247,11 +3625,12 @@ void PerformanceWheel::paint(juce::Graphics& g)
         clip.addRoundedRectangle(win, 2.4f);
         g.reduceClipRegion(clip);
         juce::ColourGradient cylinder(juce::Colour(0xff050505), 0.0f, win.getY(), juce::Colour(0xff040404), 0.0f, win.getBottom(), false);
-        cylinder.addColour(0.10, juce::Colour(0xff26251f));
-        cylinder.addColour(0.30, juce::Colour(0xff79766c));
-        cylinder.addColour(0.42, juce::Colour(0xff9c988b));
-        cylinder.addColour(0.60, juce::Colour(0xff4b4944));
-        cylinder.addColour(0.85, juce::Colour(0xff161513));
+        // A broad, low-contrast sheen: the ribs are moulded rubber, not a polished drum.
+        cylinder.addColour(0.10, juce::Colour(0xff2a2923));
+        cylinder.addColour(0.30, juce::Colour(0xff55534b));
+        cylinder.addColour(0.42, juce::Colour(0xff625f56));
+        cylinder.addColour(0.60, juce::Colour(0xff45433e));
+        cylinder.addColour(0.85, juce::Colour(0xff1a1916));
         g.setGradientFill(cylinder);
         g.fillRect(win);
         g.setGradientFill(juce::ColourGradient(whiteInk(0.16f), win.getX(), 0.0f, blackInk(0.40f), win.getRight(), 0.0f, false));
@@ -3278,9 +3657,9 @@ void PerformanceWheel::paint(juce::Graphics& g)
                 g.fillRect(win.getX() + 0.5f, y - 1.2f * c, win.getWidth() - 1.0f, 0.8f);
                 continue;
             }
-            g.setColour(blackInk(0.60f * (0.35f + 0.65f * c)));
+            g.setColour(blackInk(0.46f * (0.35f + 0.65f * c)));
             g.fillRect(win.getX(), y - 0.6f * c - 0.2f, win.getWidth(), 1.2f * c + 0.4f);
-            g.setColour(whiteInk(0.16f * c));
+            g.setColour(whiteInk(0.07f * c));
             g.fillRect(win.getX(), y + 0.6f * c + 0.2f, win.getWidth(), 0.8f);
         }
         // Housing lips shade the ends of the wheel.
@@ -3341,5 +3720,187 @@ void PerformanceWheel::mouseUp(const juce::MouseEvent&)
         repaint();
     }
 }
+
+// ---------------------------------------------------------------------------
+// LightSpill
+// ---------------------------------------------------------------------------
+LightSpill::LightSpill()
+{
+    setInterceptsMouseClicks(false, false);
+    setWantsKeyboardFocus(false);
+    setAccessible(false);
+    setOpaque(false);
+    startTimerHz(10);
+}
+
+LightSpill::~LightSpill() { stopTimer(); }
+
+void LightSpill::gather(const juce::Component& parent, std::vector<Source>& out) const
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (child == this || ! child->isVisible())
+            continue;
+        if (auto* button = dynamic_cast<juce::Button*>(child))
+        {
+            if (button->getToggleState() && button->isShowing())
+            {
+                Source src;
+                src.bounds = getLocalArea(button, button->getLocalBounds());
+                if (auto* led = dynamic_cast<LedButton*>(button))
+                {
+                    if (led->hardwareTab)
+                    {
+                        // Deck tab or black rocker: the lens colour, or the amber lamp for a dark accent.
+                        src.colour = led->accent.getPerceivedBrightness() < 0.2f ? juce::Colour(0xffffa24a)
+                                                                                  : glowFor(led->accent);
+                        src.reach = 9.0f;
+                        src.gain = 0.55f;
+                    }
+                    else if (led->rockerStyle)
+                    {
+                        src.colour = juce::Colour(0xffff9a40);
+                        src.reach = 6.0f;
+                        src.gain = 0.5f;
+                    }
+                    else
+                    {
+                        src.colour = amber;
+                        src.reach = 5.0f;
+                        src.gain = 0.35f;
+                    }
+                    out.push_back(src);
+                }
+                else if ((bool) button->getProperties()["hardwareTab"])
+                {
+                    src.colour = glowFor(button->findColour(juce::TextButton::buttonColourId))
+                                     .interpolatedWith(juce::Colour(0xffffcf7a), 0.30f);
+                    src.reach = 9.0f;
+                    src.gain = 0.9f;
+                    out.push_back(src);
+                }
+            }
+        }
+        gather(*child, out);
+    }
+}
+
+void LightSpill::collect(std::vector<Source>& out) const
+{
+    if (auto* parent = getParentComponent())
+        gather(*parent, out);
+}
+
+void LightSpill::refresh()
+{
+    std::vector<Source> now;
+    collect(now);
+    auto same = [](const Source& a, const Source& b)
+    {
+        return a.bounds == b.bounds && a.colour == b.colour && a.reach == b.reach && a.gain == b.gain;
+    };
+    if (now.size() == sources.size() && std::equal(now.begin(), now.end(), sources.begin(), same))
+        return;
+    juce::Rectangle<int> dirty;
+    for (const auto& src : sources) dirty = dirty.getUnion(src.bounds.expanded((int) std::ceil(src.reach) + 2));
+    for (const auto& src : now) dirty = dirty.getUnion(src.bounds.expanded((int) std::ceil(src.reach) + 2));
+    sources = std::move(now);
+    repaint(dirty);
+}
+
+void LightSpill::timerCallback()
+{
+    if (isShowing())
+        refresh();
+}
+
+void LightSpill::paint(juce::Graphics& g)
+{
+    std::vector<Source> now;
+    collect(now);
+    sources = std::move(now);
+    const auto clip = g.getClipBounds();
+    for (const auto& src : sources)
+    {
+        if (! src.bounds.expanded((int) std::ceil(src.reach)).intersects(clip))
+            continue;
+        drawLightBloom(g, src.bounds.toFloat(), src.reach, src.colour, src.gain * strength);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// RovingFocusGroup
+// ---------------------------------------------------------------------------
+RovingFocusGroup::~RovingFocusGroup()
+{
+    stopTimer();
+    clear();
+}
+
+void RovingFocusGroup::add(juce::Button& button)
+{
+    button.addKeyListener(this);
+    buttons.emplace_back(&button);
+    refreshStops();
+    if (! isTimerRunning())
+        startTimerHz(8);
+}
+
+void RovingFocusGroup::clear()
+{
+    stopTimer();
+    for (auto& b : buttons)
+        if (b != nullptr)
+        {
+            b->removeKeyListener(this);
+            b->setWantsKeyboardFocus(true);
+        }
+    buttons.clear();
+}
+
+void RovingFocusGroup::refreshStops()
+{
+    int stop = -1;
+    for (size_t i = 0; i < buttons.size() && stop < 0; ++i)
+        if (buttons[i] != nullptr && buttons[i]->hasKeyboardFocus(false))
+            stop = (int) i;
+    for (size_t i = 0; i < buttons.size() && stop < 0; ++i)
+        if (buttons[i] != nullptr && buttons[i]->getToggleState())
+            stop = (int) i;
+    if (stop < 0)
+        stop = 0;
+    for (size_t i = 0; i < buttons.size(); ++i)
+        if (buttons[i] != nullptr)
+            buttons[i]->setWantsKeyboardFocus((int) i == stop);
+}
+
+void RovingFocusGroup::timerCallback() { refreshStops(); }
+
+bool RovingFocusGroup::keyPressed(const juce::KeyPress& key, juce::Component* origin)
+{
+    int index = -1;
+    for (size_t i = 0; i < buttons.size(); ++i)
+        if (buttons[i] != nullptr && buttons[i].getComponent() == origin)
+            index = (int) i;
+    if (index < 0 || key.getModifiers().isAnyModifierKeyDown())
+        return false;
+    const int last = (int) buttons.size() - 1;
+    int target = index;
+    if (key == juce::KeyPress::leftKey) target = index - 1;
+    else if (key == juce::KeyPress::rightKey) target = index + 1;
+    else if (key == juce::KeyPress::upKey) target = index - cols;
+    else if (key == juce::KeyPress::downKey) target = index + cols;
+    else if (key == juce::KeyPress::homeKey) target = 0;
+    else if (key == juce::KeyPress::endKey) target = last;
+    else return false;
+    target = juce::jlimit(0, last, target);
+    if (target != index && buttons[(size_t) target] != nullptr)
+    {
+        buttons[(size_t) target]->setWantsKeyboardFocus(true);
+        buttons[(size_t) target]->grabKeyboardFocus();
+    }
+    return true;
+}
+
 
 } // namespace cs80::ui

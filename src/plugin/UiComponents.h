@@ -98,6 +98,27 @@ float designFontHeight(const juce::Component&, float designSize, float floorScre
 // floorHeight, then by squeezing, and never below minScale of squeeze unless there is no other way.
 juce::Font fitFontToWidth(const juce::Font& font, const juce::String& text, float width,
                           float minScale = 0.85f, float floorHeight = 8.0f);
+// Same, but never squeezes below minScale: `fitted` reports whether the text fits at all. When it
+// does not, shorten the text (see fitLegendText) instead of crushing the type.
+juce::Font fitFontToWidth(const juce::Font& font, const juce::String& text, float width,
+                          float minScale, float floorHeight, bool& fitted);
+// True when `text` fits `width` at floorHeight type with at most (1 - minScale) of squeeze.
+bool legendFits(const juce::Font& font, const juce::String& text, float width,
+                float minScale = 0.85f, float floorHeight = 8.0f);
+// Printed short form of a legend word (FUNCTION -> FUNC, SUSTAIN -> SUS, ATTACK -> ATK...), or the
+// word itself when it has none.
+juce::String legendAbbreviation(const juce::String& text);
+// The text as it should be printed in `width`: the word when it fits, else its abbreviation, else
+// the longest leading part that fits. Never needs a squeeze below minScale at floorHeight type.
+juce::String fitLegendText(const juce::Font& font, const juce::String& text, float width,
+                           float minScale = 0.85f, float floorHeight = 8.0f);
+// Readout text for a narrow column: the normal string when it fits, otherwise progressively
+// compact forms ("0.38s", "+.12 oct", "+.12o") so that it never needs a squeeze below minScale.
+juce::String formatParamValueFit(int parameterIndex, float value, const juce::Font& font, float width,
+                                 float minScale = 0.85f, float floorHeight = 8.0f);
+// Descriptive parameter name without the channel ("VCA Attack", "Initial Touch Level", "HPF Cutoff"),
+// for tooltips, descriptions and drag bubbles. Accessibility titles do not change.
+juce::String parameterLongName(int parameterIndex);
 // Two-facet rocker paddle (lit facet, shaded facet, pivot ridge about 55 percent down) with an
 // illuminated legend lens on the active facet and a small LED; no light spills outside bounds.
 // `lens` is the lens colour when lit; the legend itself is drawn by the caller or LedButton.
@@ -118,6 +139,10 @@ void drawWalnutGrain(juce::Graphics&, juce::Rectangle<float>, bool vertical, int
                      bool bevel = true);
 // Keyboard focus ring for plates and tabs: gold outside with a dark inner ring, visible on lit plastic.
 void drawFocusRing(juce::Graphics&, juce::Rectangle<float> bounds);
+// Soft cached bloom (no blur filter) of `colour` around `bounds`, reaching `reach` px beyond it.
+// Intended for lit tabs, lamps and rocker lenses; it is a few translucent layers in one image.
+void drawLightBloom(juce::Graphics&, juce::Rectangle<float> bounds, float reach, juce::Colour colour,
+                    float strength = 1.0f);
 // Gold-accent primary button plate (what a Button with the "cs80Accent" property draws).
 void drawAccentPlate(juce::Graphics&, juce::Rectangle<float> bounds, bool pressed, bool hovered);
 
@@ -175,6 +200,10 @@ public:
     void drawScrollbar(juce::Graphics&, juce::ScrollBar&, int x, int y, int width, int height,
                        bool isScrollbarVertical, int thumbStartPosition, int thumbSize,
                        bool isMouseOver, bool isMouseDown) override;
+
+    // Round 4: a pointing hand over buttons, sliders and drop-downs unless the component set a
+    // cursor of its own.
+    juce::MouseCursor getMouseCursorFor(juce::Component&) override;
 };
 
 // Native slider semantics and accessibility are retained. Only the focus
@@ -268,11 +297,15 @@ public:
     void setCapFader(juce::Colour capColour, bool horizontal);
     // Message-thread only. Keep an in-flight host gesture on its original parameter.
     bool bindParameter(int index);
+    // Replaces the painted caption only (for example FUNC at small editor sizes). Titles, accessibility
+    // names, tooltips and drag-bubble names are unchanged. An empty string restores the constructor name.
+    void setCaption(const juce::String& painted);
 
 private:
     Cs80AudioProcessor& processor;
     int parameterIndex;
     juce::String name;
+    juce::String captionOverride;
     bool hardwareSlider = false;
     bool horizontalFader = false;
     FocusSlider slider;
@@ -297,6 +330,12 @@ public:
             drawFocusRing(g, getLocalBounds().toFloat());
     }
 
+    // Tooltips: the control's own sentence first, then its state on a last line ("PLUG: ON"). Call this
+    // (not Button::setTooltip) to keep a long tip; the state is appended again on every toggle. A tip
+    // of the plain form "<title>: ON|OFF" is treated as no custom tip.
+    void setTooltip(const juce::String& customTip);
+    const juce::String& getCustomTooltip() const noexcept { return customTip; }
+
     juce::Colour accent { amber };
     bool hardwareTab = false;
     // Draw as a compact two-facet rocker paddle with a lit legend lens and an LED instead of the
@@ -305,6 +344,54 @@ public:
 
 private:
     void paintRocker(juce::Graphics&, bool hovered, bool down, float physicalScale, bool deckTab);
+    void refreshTooltip();
+    juce::String customTip;
+};
+
+// Optional light layer: add it to the editor BEFORE the controls (so it sits behind them), give it
+// the full editor bounds, and lit tone tabs, deck tabs and rocker switches under the same parent
+// spill a soft warm bloom onto the panel around them. It finds the controls itself, takes no mouse
+// or focus, is hidden from accessibility and repaints only when a lamp changes.
+class LightSpill final : public juce::Component, private juce::Timer
+{
+public:
+    LightSpill();
+    ~LightSpill() override;
+    void paint(juce::Graphics&) override;
+    // Rescans now (a 10 Hz timer does it too); repaints the lamps that changed.
+    void refresh();
+    float strength = 1.0f;
+
+private:
+    struct Source { juce::Rectangle<int> bounds; juce::Colour colour; float reach = 6.0f; float gain = 1.0f; };
+    void timerCallback() override;
+    void collect(std::vector<Source>& out) const;
+    void gather(const juce::Component& parent, std::vector<Source>& out) const;
+    std::vector<Source> sources;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LightSpill)
+};
+
+// Roving focus for a row of radio-style buttons (the tone selector): the row is one Tab stop,
+// Left/Right/Up/Down (and Home/End) move focus along it without changing the selection, and
+// Space or Return selects as usual. Call add() for each button in order; keep the group alive as long
+// as the buttons. The tab that takes Tab focus is the selected one, or the first.
+class RovingFocusGroup final : private juce::KeyListener, private juce::Timer
+{
+public:
+    RovingFocusGroup() = default;
+    ~RovingFocusGroup() override;
+    void add(juce::Button&);
+    void clear();
+    // Optionally split a long list into rows: Up/Down move by `columns` buttons.
+    void setColumns(int columns) noexcept { cols = juce::jmax(1, columns); }
+
+private:
+    bool keyPressed(const juce::KeyPress&, juce::Component*) override;
+    void timerCallback() override;
+    void refreshStops();
+    std::vector<juce::Component::SafePointer<juce::Button>> buttons;
+    int cols = 1;
 };
 
 // Pointer-to-pressure mapping for the on-screen keys. After the strike, pushing
@@ -352,11 +439,20 @@ public:
     void mouseUp(const juce::MouseEvent&) override;
     void mouseMove(const juce::MouseEvent&) override;
     void mouseExit(const juce::MouseEvent&) override;
+    // Keyboard: Left/Right bend while held (the ribbon springs back to centre on release), Home,
+    // End, Space or Return centre it. The ribbon takes focus with Tab, not from a click.
+    bool keyPressed(const juce::KeyPress&) override;
+    bool keyStateChanged(bool isKeyDown) override;
+    void focusGained(juce::Component::FocusChangeType) override { repaint(); }
+    void focusLost(juce::Component::FocusChangeType) override { releaseKeyboardBend(); repaint(); }
+    void paintOverChildren(juce::Graphics&) override;
 
     std::function<void(float)> onValueChange;
 
 private:
     void setFromX(float x);
+    void releaseKeyboardBend();
+    bool keyboardBend = false;
     float value = 0.0f;
     float anchorX = 0.0f;
     float hoverX = -1.0f;
