@@ -161,6 +161,150 @@ void flushGui(int milliseconds)
     juce::MessageManager::getInstance()->runDispatchLoopUntil(milliseconds);
 }
 
+void saveSnapshot(Cs80AudioProcessorEditor& editor, const juce::File& dir,
+                  const juce::String& name)
+{
+    validateVisibleControls(editor);
+    auto image = editor.createComponentSnapshot(editor.getLocalBounds(), true, 1.0f);
+    check(! image.isNull(), "snapshot image created");
+    check(image.getWidth() == editor.getWidth(), "snapshot width");
+    check(image.getHeight() == editor.getHeight(), "snapshot height");
+    auto file = dir.getChildFile(name + ".png");
+    file.deleteFile();
+    juce::FileOutputStream stream(file);
+    juce::PNGImageFormat png;
+    if (stream.openedOk() && png.writeImageToStream(image, stream))
+        std::printf("wrote %s\n", file.getFullPathName().toRawUTF8());
+    else
+    {
+        std::printf("FAILED %s\n", file.getFullPathName().toRawUTF8());
+        ++failures;
+    }
+}
+
+// Keep documentation views independent of the long-lived legacy regression
+// fixture. These are actual editors, APVTS selections and rendered host audio,
+// not injected status text or meter telemetry. Never inspect a user's presets.
+void captureSourcePerformanceViews(const juce::File& dir)
+{
+    for (bool headroom : {false, true})
+    {
+        juce::TemporaryFile root("-cs80-source-screenshots");
+        Cs80AudioProcessor host(root.getFile().getChildFile("presets"));
+        auto values = headroom ? cs80::ParamValues{} : host.currentValues();
+        values[cs80::P_sourcePerformance] = 1.0f;
+        values[cs80::P_parityMode] = 0.0f;
+        values[cs80::P_drift] = values[cs80::P_voiceDispersion]
+            = values[cs80::P_analogNoise] = values[cs80::P_chorusOn] = 0.0f;
+        values[cs80::P_volume] = headroom ? 1.0f : 0.25f;
+        if (headroom)
+        {
+            // The legal PANEL fixture used by OutputMeterHostTests, with
+            // Source Performance rather than isolation. No gain injection.
+            values[cs80::P_mpeOn] = 1.0f;
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                for (int local : {cs80::CP_saw, cs80::CP_pulse, cs80::CP_sine,
+                                  cs80::CP_vS, cs80::CP_vLevel, cs80::CP_vcfLevel,
+                                  cs80::CP_initLevel, cs80::CP_afterLevel})
+                    values[cs80::chParam(rank, local)] = 1.0f;
+                values[cs80::chParam(rank, cs80::CP_vA)] = 0.001f;
+                values[cs80::chParam(rank, cs80::CP_vD)] = 0.01f;
+                values[cs80::chParam(rank, cs80::CP_vR)] = 0.2f;
+            }
+        }
+        host.applyParameterValues(values);
+        host.setParamValue(cs80::P_parityMode, 0.0f);
+        host.selectHardwareSource(0, headroom ? 13 : 1); // STRING 3: source-complete.
+        host.selectHardwareSource(1, headroom ? 13 : 0); // STRING 2: source-inferred.
+        host.prepareToPlay(48000.0, 256);
+
+        cs80::tests::ui_readiness_detail::RefreshProbe unchanged(host);
+        Cs80AudioProcessorEditor editor(host);
+        editor.setSize(1600, 1000);
+        editor.addToDesktop(0);
+        editor.setVisible(true);
+        check(editor.getPeer() != nullptr && editor.isShowing(),
+              "source screenshot fixture has a showing native editor");
+        auto* mode = dynamic_cast<juce::Label*>(findControl(editor, "performance_mode_status"));
+        auto* rankI = dynamic_cast<juce::Label*>(findControl(editor, "source_route_status_1"));
+        auto* rankII = dynamic_cast<juce::Label*>(findControl(editor, "source_route_status_2"));
+        auto* meter = dynamic_cast<juce::Label*>(findControl(editor, "output_sample_peak"));
+        auto* source = dynamic_cast<juce::Button*>(findControl(editor, "source_performance"));
+        auto* isolation = dynamic_cast<juce::Button*>(findControl(editor, "parity_mode"));
+        check(mode && rankI && rankII && meter && source && isolation,
+              "source screenshot finds actual mode, route, meter and policy controls");
+        if (!mode || !rankI || !rankII || !meter || !source || !isolation) continue;
+        const auto waitFor = [&](auto ready)
+        {
+            const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+            while (!ready() && std::chrono::steady_clock::now() < deadline) flushGui(20);
+            return ready();
+        };
+        check(waitFor([&]
+        {
+            return mode->getText().startsWith("SOURCE PERFORMANCE / NOT CALIBRATED")
+                && source->getToggleState() && !isolation->getToggleState()
+                && rankI->getText().contains(headroom ? "MAIN PANEL / PANEL" : "STRING 3 / SOURCE-COMPLETE")
+                && rankII->getText().contains(headroom ? "MAIN PANEL / PANEL" : "STRING 2 / SOURCE-INFERRED");
+        }), "source screenshots show opt-in performance policy and exact complete/inferred or PANEL routes");
+
+        juce::AudioBuffer<float> audio(2, 256);
+        juce::MidiBuffer midi;
+        for (int note = 0; note < (headroom ? 8 : 3); ++note)
+            midi.addEvent(juce::MidiMessage::noteOn(headroom ? 2 + note % 2 : 1,
+                                                  48 + note * (headroom ? 1 : 7),
+                                                  (juce::uint8) (headroom ? 127 : 85)), 0);
+        float actualPeak = 0.0f;
+        bool finite = true;
+        for (int block = 0; block < 32; ++block)
+        {
+            audio.clear();
+            host.processBlock(audio, midi);
+            midi.clear();
+            for (int channel = 0; channel < audio.getNumChannels(); ++channel)
+                for (int sample = 0; sample < audio.getNumSamples(); ++sample)
+                {
+                    const float value = audio.getSample(channel, sample);
+                    finite = finite && std::isfinite(value);
+                    actualPeak = std::max(actualPeak, std::abs(value));
+                }
+        }
+        check(finite && actualPeak > (headroom ? 1.0f : 0.000001f),
+              "source screenshot renders real finite audible or above-full-scale host output");
+        check(waitFor([&]
+        {
+            return meter->getText().contains("SAMPLE PEAK")
+                && !meter->getText().contains("<= -120")
+                && !meter->getText().contains("NON-FINITE")
+                && (!headroom || meter->getText().contains("OVER-RANGE"));
+        }), "source screenshot meter reflects real rendered audio through its normal GUI timer");
+        std::printf("source screenshot fixture: %s, finite=%d, actual host sample peak=%.9g, meter=%s\n",
+                    headroom ? "PANEL headroom" : "STRING 3 complete / STRING 2 inferred",
+                    finite ? 1 : 0, actualPeak, meter->getText().replaceCharacter('\n', ' ').toRawUTF8());
+        if (headroom)
+            saveSnapshot(editor, dir, "main-source-performance-over-range-1600x1000");
+        else
+        {
+            saveSnapshot(editor, dir, "main-source-performance-1600x1000");
+            editor.setSize(1120, 700);
+            flushGui(100);
+            saveSnapshot(editor, dir, "main-source-performance-1120x700");
+            editor.setSize(1600, 1000);
+            editor.showAdvancedPanel(true);
+            editor.showAdvancedPage(3);
+            flushGui(100);
+            check(source->isShowing() && isolation->isShowing()
+                      && source->getToggleState() && !isolation->getToggleState()
+                      && !source->getBounds().intersects(isolation->getBounds()),
+                  "source About screenshot visibly distinguishes enabled source performance from isolation");
+            saveSnapshot(editor, dir, "advanced-source-performance-about");
+        }
+        check(unchanged.unchanged(), "source screenshot rendering and UI refresh preserve APVTS and host gestures");
+        host.releaseResources();
+    }
+}
+
 void testExternalInputHost()
 {
     auto settings = [] {
@@ -3051,22 +3195,7 @@ int main(int argc, char** argv)
           "original controls can be restored after legacy state migration");
 
     auto save = [&](const juce::String& name) {
-        validateVisibleControls(editor);
-        auto image = editor.createComponentSnapshot(editor.getLocalBounds(), true, 1.0f);
-        check(! image.isNull(), "snapshot image created");
-        check(image.getWidth() == editor.getWidth(), "snapshot width");
-        check(image.getHeight() == editor.getHeight(), "snapshot height");
-        auto file = dir.getChildFile(name + ".png");
-        file.deleteFile();
-        juce::FileOutputStream stream(file);
-        juce::PNGImageFormat png;
-        if (stream.openedOk() && png.writeImageToStream(image, stream))
-            std::printf("wrote %s\n", file.getFullPathName().toRawUTF8());
-        else
-        {
-            std::printf("FAILED %s\n", file.getFullPathName().toRawUTF8());
-            ++failures;
-        }
+        saveSnapshot(editor, dir, name);
     };
 
     validateKeyboardControls(editor);
@@ -3245,6 +3374,8 @@ int main(int argc, char** argv)
         check(findButton(editor, "OPEN MEMORY LID") != nullptr, "memory lid reopens after close");
     }
     else check(false, "physical memory lid can be opened");
+
+    captureSourcePerformanceViews(dir);
 
     // All preset-save I/O is confined to fresh temporary fixtures.
     cs80::tests::PresetSaveAccess::run(check, flushGui);

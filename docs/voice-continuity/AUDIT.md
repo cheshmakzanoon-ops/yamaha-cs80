@@ -84,3 +84,36 @@ could miss a coefficient-only write that the next valid sample overwrites. The
 same-object byte snapshot detects it. The unmodified source then passed native
 and sanitizer runs at the hashes above. No production blocker was found within
 this kernel boundary; integration and CPU acceptance remain separate work.
+
+## Native/CI checkpoint — `00624e2` (2026-10-30)
+
+Exact source: `00624e2d5389b5ea30b0bb3dea2a81077d32b109`. This adds the
+experimental kernel and its tests, **not production activation**. The entire
+`src/core/` and `src/plugin/` trees are byte-unchanged from `428e4b2`, including
+Engine, Dsp, Params and PluginProcessor. The local audit and hashes above remain
+a separate result, not rewritten by the later CI run.
+
+[Build 41007847302](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302)
+completed **FAILED** because of the stable Linux validator; all four native
+build/test/package jobs and the Windows validator succeeded:
+
+| Native job | CTest suites passed | Install artifact |
+|---|---:|---:|
+| [Linux 123906692801](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123906692801) | 45/45 | 12957080379 |
+| [macOS arm64 123906693025](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123906693025) | 40/40 | 12956352402 |
+| [macOS x86_64 123906693699](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123906693699) | 40/40 | 12956434256 |
+| [Windows 123906693051](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123906693051) | 38/38 | 12957001700 |
+
+All four logs verify clean official JUCE 8.0.11 at
+`c352e2489000ffeb9e397051377d75eef2efe641`; package metadata matches this source
+and build, and all four artifacts were unexpired when checked. Native archive
+checks passed (34 synthetic package checks on Unix, 22 on Windows).
+
+- [DSP 41007847313](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313): all five jobs passed. [Sanitizer job 123906692947](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313/job/123906692947) passed **40/40 suites in 951.06 s**, with ASan/UBSan halt-on-error and **leak detection enabled**. This does not retroactively make the earlier local leak-disabled audit a leak check.
+- [Screenshots 41007847315](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847315) passed; source-matched [panel artifact 12956606577](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847315/artifacts/12956606577). The experimental kernel is not selected by those editor renders.
+- [Stable Linux validator job 123909705477](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123909705477): headless seed `0x4b613e9` and fixed GUI seed `0x2da72db` passed. **Primary GUI seed `0x322bd8b` printed SUCCESS, then exited139.** This is distinct from `428e4b2`'s fixed-seed failure. No local ELF core was available. Existing same-seed GDB and handler diagnostics exited0, but nonreproduction proves neither cause nor repair and does not substitute for the failed original invocation. [Reports artifact 12956981178](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12956981178).
+- [Official beta comparison 41009257077](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41009257077) passed **31 GUI-inclusive / 25 headless tests**. Both job logs explicitly select Linux VST3 artifact **12955684456**, originating run **41007847302**, source **00624e2d5389b5ea30b0bb3dea2a81077d32b109**, original conclusion **failure**. Workflow head `2b523cd` is not the tested plugin source. Different validator/JUCE versions, inventories and seeds cannot establish that the stable failure is fixed.
+
+The stable gate remains **FAILED**. These results establish software-test scope,
+not active continuous-voice Engine behavior, hardware equivalence, CPU/DAW-session
+qualification or a new fully green release.

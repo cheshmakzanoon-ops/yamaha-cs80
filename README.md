@@ -2,7 +2,40 @@
 
 An independent, code-first recreation of the Yamaha CS-80: eight voices, two independent synthesis ranks per voice (sixteen oscillator / filter / VCA chains), polyphonic pressure, ribbon, ring modulation, SUB oscillator, chorus/tremolo and a modern performance layer. C++20 / JUCE 8, built as **VST3, AU (macOS) and Standalone**, with a JUCE-free core library that renders offline.
 
-> **Where this stands now.** This is a working, extensively regression-tested cross-platform synthesizer with a hardware-inspired CS-80 panel, eight dual-rank voices, a broad original-control surface, 245 automatable parameters and 222 programs. Recent work adds active-tail state continuity, live A/D/R timing and inferred state-continuous level tracking in both opt-in source modes, safer state restoration, a bounded UI-to-audio keyboard handoff, and reproducible dynamic capture evidence. The audible engine is still a **circuit-informed behavioral reconstruction**: important oscillator, nonlinear-filter, envelope, touch, effect and preset laws remain inferred or provisional. Both source modes use a circuit-derived, stateful PRA wah with explicitly inferred optical/loading/trim values. Their output also models the HIGH/LOW resistor network and three coupling-capacitor histories with inferred source/load boundaries. Other reviewed circuit-reference models are mostly not yet integrated into audio. **No comparison against an identified real CS-80 has been performed.** Strong software-quality evidence is not a claim of measured analog equivalence.
+## Current working instrument
+
+**A playable development build, not a claimed measured 1:1 hardware clone.**
+
+- **Sound and control:** eight dual-rank voices, 245 automatable parameters, 22 source-model hardware tone tabs, four memory panels, and 222 separate library programs. Seven source columns are complete; fifteen use explicitly documented hypotheses. Neither classification means calibrated device behavior.
+- **Source Performance:** the current source-derived tone, live-envelope, PRA wah and loaded output models work with ordinary MIDI, optional MPE and the modern effects/modulation layer. Strict comparison isolation remains a separate mode.
+- **Everyday use:** searchable presets, explicit overwrite confirmation and save errors, display-aware initial sizing, a notes-only **PANIC** button, and read-only **SAMPLE PEAK / OVER-RANGE / NON-FINITE** indication.
+- **Formats:** VST3 and Standalone on Linux/Windows/macOS; AU on macOS, with separate Intel and Apple Silicon builds. These are development packages, not signed/notarized public releases.
+- **Known limits:** oscillator, nonlinear-filter, envelope, touch and effect laws still contain provisional assumptions. The old Linux validator has an unresolved post-SUCCESS crash; passing newer-validator and native UI tests do not erase that failed gate. No identified hardware instrument has been measured against this software.
+
+### Play the current source models
+
+1. Follow the [installation and first-play guide](docs/INSTALL_AND_QUICKSTART.md), select audio/MIDI routing, and start with low monitoring volume.
+2. In **Advanced → About**, turn **SOURCE PERFORMANCE on** and **PARITY ISOLATION off** before playing. Effective mode changes stop existing notes.
+3. Select the hardware tone tabs. The toolbar identifies each rank's requested source and whether it uses a complete or inferred column. Library recall instead returns to PANEL and turns Source Performance off.
+
+Keep output headroom: source models are not normalized or limited. PANIC stops existing notes/holds, not retained effects or noise. The [mode contract](docs/SOURCE_PERFORMANCE.md), [Panic behavior](docs/PANIC_CONTROL.md), and [meter scope](docs/OUTPUT_METER.md) explain these boundaries.
+
+### Verified development packages
+
+These links identify the tested **00624e2** checkpoint. Its production core/plugin sources are unchanged from the playable **428e4b2** milestone; the added continuity kernel is **not selected by the plugin**. GitHub artifact downloads may require sign-in and expire under repository retention settings.
+
+| Platform | Package |
+| --- | --- |
+| Windows x64 | [VST3 + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12957001700) |
+| macOS Apple Silicon | [VST3 + AU + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12956352402) |
+| macOS Intel | [VST3 + AU + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12956434256) |
+| Linux x86-64 | [VST3 + Standalone](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/artifacts/12957080379) |
+
+Verify package checksums and architecture; read the [distribution/signing limitations](docs/CI_DISTRIBUTION_STATUS.md). Package creation and validator loading are not a claim of a real musician's DAW installation/session test.
+
+### Research code versus playable behavior
+
+The [continuous voice-circuit kernel](docs/VOICE_CIRCUIT_CONTINUITY.md) and its timing evidence are experimental. They do **not** yet change the plugin's idle oscillator/filter behavior. The experimental reconstructed oscillator is also not activated. Current production behavior and unresolved work are kept separate in the [roadmap](docs/PARITY_ROADMAP.md).
 
 ## Development mandate: best reconstruction from public knowledge
 
@@ -17,6 +50,10 @@ An independent, code-first recreation of the Yamaha CS-80: eight voices, two ind
 The [fidelity requirement](docs/ANALOG_FIDELITY_REQUIREMENT.md) and [roadmap](docs/PARITY_ROADMAP.md) define this policy. They supersede older hardware-first implementation gates in historical audits. Existing **offline**, **unmeasured** or **unknown** labels still describe today's implementation/evidence; they are not permanent bans on completing an explicitly inferred model.
 
 Start with the [original hardware references](docs/HARDWARE_REFERENCES.md), the [fidelity audit](docs/FIDELITY_AUDIT.md) and the [row-by-row hardware coverage ledger](docs/HARDWARE_COVERAGE.md). They separate documented behavior, implemented corrections, provisional calibration and missing circuit models.
+
+## Actual editor screenshots
+
+These are rendered by the real plugin editor in GitHub Actions, not design mockups.
 
 ![CS-80 Reference main panel](docs/screenshots/main-1600x1000.png)
 
@@ -61,7 +98,20 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest fully verified executable checkpoint, [`54a96f2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783492), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783622). That checkpoint included the controlled keyboard-epoch interleaving regression. The newer [`428e4b2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/428e4b2bb0b4bcee0a8f3bb8826449f699bdb618) adds Source Performance, safe saving, Panic and read-only metering. Its native suites passed 43/43 on Linux, 38/38 on each Mac architecture and 36/36 on Windows; all four install bundles, screenshots and the 38-suite ASan/UBSan CI run passed. However, the stable Linux validator printed SUCCESS then exited 139 on seed `0x2da72db`: **that gate remains failed**. Both official beta3 comparison lanes passed the exact plugin artifact, but do not prove the older failure is fixed. See the [terminal evidence and package links](docs/PLAYABLE_RELEASE_READINESS.md). These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
+The latest fully green recorded reference remains [`54a96f2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e). Newer development checkpoints have more functionality, but the intermittent stable Linux validator failure remains open.
+
+At [`00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/00624e2d5389b5ea30b0bb3dea2a81077d32b109):
+
+| Evidence | Exact result |
+| --- | --- |
+| [Native builds and tests](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302) | Linux 45/45, Apple Silicon 40/40, Intel Mac 40/40, Windows 38/38; all four packages created |
+| [DSP/compatibility/sanitizers](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313) | All five jobs passed; ASan/UBSan 40/40 with leak detection enabled in CI |
+| [Actual-editor captures](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847315) | Passed; images and source provenance recorded |
+| Windows/macOS strict validation | Passed |
+| Stable Linux validation | **FAILED:** primary GUI seed `0x322bd8b` printed SUCCESS, then exited 139. Normal diagnostic replays do not replace that failure |
+| [Official beta3 comparison](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41009257077) | Exact 00624e2 Linux artifact passed 25 headless / 31 GUI tests; different validator/tests/seeds do not establish a fix for the stable failure |
+
+The preceding 428e4b2 checkpoint failed a different stable Linux GUI seed (`0x2da72db`). Crash ownership remains unproven. See [playable readiness](docs/PLAYABLE_RELEASE_READINESS.md) and the [00624e2 evidence appendix](docs/voice-continuity/AUDIT.md). These results establish software behavior and compatibility evidence, **not measured analog equivalence or support for every DAW**.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
