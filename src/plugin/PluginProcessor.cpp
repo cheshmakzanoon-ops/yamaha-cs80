@@ -442,6 +442,8 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
 void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)
 {
     juce::ScopedNoDenormals noDenormals;
+    if (! midi.isEmpty())
+        hostMidiEvents.fetch_add((unsigned) midi.getNumEvents(), std::memory_order_relaxed);   // lock-free UI activity telemetry
     const int numSamples = buffer.getNumSamples();
     const int numChannels = std::min(buffer.getNumChannels(), getTotalNumOutputChannels());
     const bool inputEnabled = getTotalNumInputChannels() == 1;

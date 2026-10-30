@@ -84,6 +84,9 @@ public:
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
+    // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
+    unsigned getHostMidiEventCount() const noexcept { return hostMidiEvents.load(std::memory_order_relaxed); }
     // One UI consumer; peak/events can describe adjacent polling intervals.
     // Read-only audio telemetry, never a parameter or an output safety limiter.
     cs80::OutputMeterReading consumeOutputMeter() noexcept { return outputMeter.consume(); }
@@ -212,6 +215,7 @@ private:
         pendingExpression { noPendingControl };
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
+    std::atomic<unsigned> hostMidiEvents { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
     std::vector<float> interleaved;
