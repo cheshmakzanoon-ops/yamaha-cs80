@@ -147,6 +147,9 @@ private:
     std::array<unsigned, 128> uiHeldMasks {}; // Audio-owned source recovery tracking.
     std::array<std::atomic<unsigned>, 128> hostKeyMasks {};
     cs80::ParamValues cached;
+    // Captured once with the effective programmer controls; never serialized as
+    // a second authority beside the existing APVTS selector parameters.
+    std::array<int, 2> cachedHardwareSources { 13, 13 };
     std::array<std::atomic<float>*, 2> hardwareSources {};
     std::array<std::array<std::atomic<float>*, cs80::CP_count>, 4> hardwareMemories {};
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};

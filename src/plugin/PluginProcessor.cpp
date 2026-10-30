@@ -237,7 +237,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     engine.prepare(sampleRate);
     readParameters();
     const bool wasIsolated = engine.isParityMode();
-    engine.setParams(cached);
+    engine.setControlFrame({ cached, cachedHardwareSources });
     if (engine.isParityMode() != wasIsolated)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
@@ -270,6 +270,7 @@ void Cs80AudioProcessor::readParameters()
     for (int channel = 0; channel < 2; ++channel)
     {
         const int source = getHardwareSource(channel);
+        cachedHardwareSources[(size_t) channel] = source;
         if (source == 13) continue;
         for (int local = 0; local < cs80::CP_count; ++local)
         {
@@ -452,7 +453,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 
     readParameters();
     const bool wasIsolated = engine.isParityMode();
-    engine.setParams(cached);
+    engine.setControlFrame({ cached, cachedHardwareSources });
     if (engine.isParityMode() != wasIsolated)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));

@@ -588,8 +588,10 @@ No hardware/access blocker was found for this proposal. The web reader failed
 to display the two JPEG URLs; direct primary-source retrieval supplied IC52 and
 already-present local IC42 supplied native pixels. Missing chip laws and the
 25 source exclusions are explicit model uncertainties with implementable choices
-above, not reasons to pause. This proposal itself still needs independent model
-review, implementation and exact-commit tests before an audible-delivery claim.
+above, not reasons to pause. At proposal drafting, independent model review, implementation and exact-commit
+tests were still pending. Section 8 records the subsequent standalone converter
+and independent numerical/source review; audio integration and its exact-commit
+acceptance tests are still required before an audible-delivery claim.
 
 ## 8. Standalone converter implemented (2026-10-29; integration still pending)
 
@@ -638,7 +640,7 @@ Further independent primary inspection of the already cited adjustment PDF
 resolves printed **C1 as the lowest C**, with **K1–K8 = 125.0 mV ±0.1%** on printed
 p3/PDF5. Under the retained MIDI60/.5 V interface convention, that is MIDI36,
 not MIDI60. FEET 2′ gives a 4× oscillator ratio while the key input remains
-0.125 V; the A440 square excitation is 261.6255653 Hz. The native PDF5 render
+0.125 V; the A440 square excitation is 261.6255653 Hz. The PDF5 render (`pdftoppm -f 5 -l 5 -scale-to 1600 -png`)
 SHA-256 is `ad7c08b72ea60a5c826835f497758daaab81bd571ba31d29e10bd0e9b0233194`;
 the original PDF hash in section 7 is unchanged.
 
@@ -669,7 +671,7 @@ independently checked using the exact four-state continuous periodic square
 solution and derivative-root extrema. The latter gave reference effective-CV
 offsets HP **4.05640724586** and LP **4.07460544278**; V1 freezes rounded values
 **4.05640725 / 4.07460544** for every tone. A 1,001-point logarithmic ratio scan
-from .01 to 100 identified the fundamental-region global maxima; the resulting
+from .01 to 100 found its largest sampled peak in the fundamental region; the resulting
 reference cutoff ratios are approximately .9936652495 / 1.0062787580. No
 per-tone fit, plugin-output normalization or CP3 gain calibration is applied.
 The test suite pins these declared anchors; it does not call them measurements.

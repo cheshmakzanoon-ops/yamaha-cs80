@@ -10,7 +10,9 @@ namespace cs80::hardware
 // Source snapshots: docs/PRESET_CIRCUIT_LEDGER.md and PRESET_FULL_MATRIX_AUDIT.md.
 // All22 tone columns; only independently verified, unmarked cells are classified.
 // These are electrical branches, NOT slider positions, envelope times, IC input
-// voltages, or calibrated factory patches. No connection to the audio engine.
+// voltages, or calibrated factory patches. SourceFactoryTones.h separately maps
+// complete source columns into an explicitly inferred isolation audio model;
+// this evidence table itself supplies no calibrated device/control law.
 inline constexpr std::string_view t51Source =
     "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/31%20-%20T51%20Circuit%20Diagram.jpg";
 inline constexpr std::string_view t53Source =

@@ -7,12 +7,22 @@
 #include "PerformanceControls.h"
 #include "PraWahCircuit.h"
 #include "OutputTapCircuit.h"
+#include "SourceFactoryTones.h"
 
 #include <array>
 #include <cstdint>
 
 namespace cs80
 {
+
+// One render-thread transaction: effective PANEL/memory/legacy values and their
+// existing rank-local selector identities. No new host parameter or saved bank.
+struct ControlFrame
+{
+    ParamValues effectiveValues;
+    std::array<int, 2> hardwareSources { 13, 13 };
+    std::uint32_t modelVersion = source_factory::modelVersion;
+};
 
 struct RankSettings
 {
@@ -130,7 +140,25 @@ public:
 
     void prepare(double hostSampleRate);
     void reset();
+    // Legacy entry point retains sanitization and denotes PANEL/no source model.
     void setParams(const ParamValues& values);
+    enum class ControlFrameStatus { accepted, invalidSelector, unsupportedModel, nonfiniteParameter, compileFailure };
+    // Invalid frames are rejected as a whole, preserving parameters, compiled
+    // controls and audio state. Finite core values retain established clamping.
+    bool setControlFrame(const ControlFrame& frame);
+    ControlFrameStatus getControlFrameStatus() const noexcept { return controlFrameStatus; }
+    struct SourceToneInfo
+    {
+        int selector = 13;
+        source_factory::Route route = source_factory::Route::panel_or_memory;
+        source_factory::Provenance provenance;
+    };
+    SourceToneInfo getSourceToneInfo(int rank) const noexcept;
+    std::uint64_t getSourceCompileCount() const noexcept { return sourceCompileCount; }
+    // Last same-sample receiver traces, not physical measurements. Cleared on a
+    // valid source transaction; render-thread diagnostics only, like RankInfo.
+    source_factory::CutoffReadout getSourceCutoffReadout(int rank) const noexcept;
+    source_factory::SharedReadout getSourceSharedReadout() const noexcept { return sourceShared; }
     const ParamValues& getParams() const noexcept { return params; }
 
     void noteOn(int midiNote, float velocity, int midiChannel = 1);
@@ -271,7 +299,11 @@ private:
         uint64_t order = 0;
     };
 
+    void applyParams(const ParamValues& values);
     void buildSettings();
+    float filterInitialTarget(int rank) const noexcept;
+    float filterAttackTarget(int rank) const noexcept;
+    void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     void releaseVoice(Voice& voice);
@@ -295,6 +327,18 @@ private:
     ParamValues params;
     GlobalSettings global;
     RankSettings rankSettings[kNumRanks];
+    std::array<int, kNumRanks> hardwareSources { 13, 13 };
+    std::array<source_factory::Route, kNumRanks> sourceRoutes {
+        source_factory::Route::panel_or_memory, source_factory::Route::panel_or_memory };
+    std::array<bool, kNumRanks> sourceActive {};
+    // Immutable per-selection maps; compiled only when an active address changes.
+    std::array<source_factory::ToneControls, kNumRanks> sourceTones;
+    std::array<source_factory::RankBoundary, kNumRanks> sourceBoundaries;
+    std::array<source_factory::CutoffReadout, kNumRanks> sourceCutoff;
+    source_factory::SharedReadout sourceShared;
+    std::array<std::array<float, kNumVoices>, kNumRanks> sourceFilterValues {};
+    std::uint64_t sourceCompileCount = 0;
+    ControlFrameStatus controlFrameStatus = ControlFrameStatus::accepted;
 
     std::array<Voice, kNumVoices> voices;
     uint64_t voiceCounter = 0;

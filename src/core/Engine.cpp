@@ -66,7 +66,9 @@ void Engine::prepare(double hostSampleRate)
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
     reset();
-    setParams(params);
+    // Resource changes retain the accepted source identity; public setParams
+    // intentionally means PANEL and would discard it here.
+    applyParams(params);
 }
 
 void Engine::reset()
@@ -145,6 +147,73 @@ void Engine::reset()
 
 void Engine::setParams(const ParamValues& values)
 {
+    hardwareSources = {13, 13};
+    sourceRoutes.fill(source_factory::Route::panel_or_memory);
+    sourceActive.fill(false);
+    sourceCutoff = {};
+    sourceShared = {};
+    controlFrameStatus = ControlFrameStatus::accepted;
+    applyParams(values);
+}
+
+bool Engine::setControlFrame(const ControlFrame& frame)
+{
+    if (frame.modelVersion != source_factory::modelVersion)
+    {
+        controlFrameStatus = ControlFrameStatus::unsupportedModel;
+        return false;
+    }
+    for (int selector : frame.hardwareSources)
+        if (selector < 0 || selector > 13)
+        {
+            controlFrameStatus = ControlFrameStatus::invalidSelector;
+            return false;
+        }
+    for (float value : frame.effectiveValues.v)
+        if (!std::isfinite(value))
+        {
+            controlFrameStatus = ControlFrameStatus::nonfiniteParameter;
+            return false;
+        }
+
+    // Validate/compile both ranks before publishing any part of the transaction.
+    // Incomplete columns are valid legacy bridges, never compile failures and
+    // never an excuse to reuse the previously active source identity.
+    auto tones = sourceTones;
+    auto routes = sourceRoutes;
+    std::uint64_t compilations = 0;
+    for (int rank = 0; rank < kNumRanks; ++rank)
+    {
+        const int selector = frame.hardwareSources[rank];
+        const bool isolated = frame.effectiveValues[P_parityMode] >= 0.5f;
+        if (selector != hardwareSources[rank] || isolated != global.parityMode)
+            routes[rank] = source_factory::route(rank, selector, isolated);
+        if (routes[rank] == source_factory::Route::source_complete
+            && (!tones[rank].compiled || tones[rank].source.selector != selector))
+        {
+            if (!source_factory::compileTone(rank, selector, tones[rank]))
+            {
+                controlFrameStatus = ControlFrameStatus::compileFailure;
+                return false;
+            }
+            ++compilations;
+        }
+    }
+    hardwareSources = frame.hardwareSources;
+    sourceRoutes = routes;
+    sourceTones = tones;
+    sourceCompileCount += compilations;
+    for (int rank = 0; rank < kNumRanks; ++rank)
+        sourceActive[rank] = routes[rank] == source_factory::Route::source_complete;
+    sourceCutoff = {};
+    sourceShared = {};
+    applyParams(frame.effectiveValues);
+    controlFrameStatus = ControlFrameStatus::accepted;
+    return true;
+}
+
+void Engine::applyParams(const ParamValues& values)
+{
     params = values;
     // Sanitize once at the core boundary before integer casts and DSP laws.
     for (int i = 0; i < P_numParams; ++i)
@@ -187,17 +256,21 @@ void Engine::setParams(const ParamValues& values)
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
         for (auto& voice : voices)
         {
-            if (!voice.active) continue;
             for (int ch = 0; ch < kNumRanks; ++ch)
             {
+                // Source TP1 remains electrically connected after its VCA has
+                // become idle. Its target/timing ports therefore stay live for
+                // all eight circuits, not only currently audible voices.
+                if (!voice.active && !sourceActive[ch]) continue;
                 auto& rank = voice.ranks[ch];
                 const auto& settings = rankSettings[ch];
-                rank.aenv.setSustain(settings.vS);
-                rank.fenv.setLevels(filterInitialOffset(settings.fIl), filterAttackOffset(settings.fAl));
-                rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale),
-                                   std::max(0.001f, settings.vD * global.envTimeScale),
-                                   std::max({settings.vR, global.keyRelease, performanceRelease})
-                                       * global.envTimeScale);
+                if (voice.active) rank.aenv.setSustain(settings.vS);
+                rank.fenv.setLevels(filterInitialTarget(ch), filterAttackTarget(ch));
+                if (voice.active)
+                    rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale),
+                                       std::max(0.001f, settings.vD * global.envTimeScale),
+                                       std::max({settings.vR, global.keyRelease, performanceRelease})
+                                           * global.envTimeScale);
                 rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale),
                                    std::max(0.001f, settings.fD * global.envTimeScale),
                                    std::max({settings.fR, global.keyRelease, performanceRelease})
@@ -394,7 +467,90 @@ void Engine::buildSettings()
             r.hpfOn = r.lpfOn = true;
             r.pan = 0.0f; // neutral fixture; physical output routing remains W8
         }
+        if (sourceActive[ch])
+        {
+            const auto& tone = sourceTones[ch];
+            r.saw = tone.wsc.sawEnabled;
+            r.pulse = tone.wsc.pulseEnabled;
+            // Named panel-duty bridge only. This increment does not integrate
+            // the separate oscillator model or pretend PW is the WSC pin law.
+            r.pulseWidth = static_cast<float>(tone.dutyProxy);
+            r.pwmSpeed = static_cast<float>(tone.pwmRateHz);
+            r.pwmDepth = static_cast<float>(tone.pwmDepth);
+            r.noise = static_cast<float>(tone.noiseGain);
+            r.sine = static_cast<float>(tone.sinePathGain);
+            r.vcfLevel = static_cast<float>(tone.filterPathGain);
+            r.fA = static_cast<float>(tone.filterEnvelope.attackSeconds);
+            r.fD = static_cast<float>(tone.filterEnvelope.decaySeconds);
+            r.fR = static_cast<float>(tone.filterEnvelope.releaseSeconds);
+            r.vA = static_cast<float>(tone.amplitudeEnvelope.attackSeconds);
+            r.vD = static_cast<float>(tone.amplitudeEnvelope.decaySeconds);
+            r.vR = static_cast<float>(tone.amplitudeEnvelope.releaseSeconds);
+            r.vS = static_cast<float>(tone.amplitudeEnvelope.sustainRatio);
+            sourceBoundaries[ch] = tone.boundary;
+        }
+        else
+        {
+            // Preserve the other rank's eight Q and LC receiver ports in a
+            // mixed frame. These nominal stiff sources do not change its audio.
+            source_factory::bridgeBoundary(r.hpfRes, r.lpfRes, r.vLevel,
+                                           r.initLevel, r.afterLevel, sourceBoundaries[ch]);
+        }
     }
+}
+
+float Engine::filterInitialTarget(int rank) const noexcept
+{
+    return sourceActive[rank]
+        ? static_cast<float>(source_factory::envelopeStateFromVolts(sourceTones[rank].filterEnvelope.initialVolts))
+        : filterInitialOffset(rankSettings[rank].fIl);
+}
+
+float Engine::filterAttackTarget(int rank) const noexcept
+{
+    return sourceActive[rank]
+        ? static_cast<float>(source_factory::envelopeStateFromVolts(sourceTones[rank].filterEnvelope.attackVolts))
+        : filterAttackOffset(rankSettings[rank].fAl);
+}
+
+void Engine::updateSourceReadouts(float sampleRate) noexcept
+{
+    source_factory::BothRankDrives drives {};
+    for (int rank = 0; rank < kNumRanks; ++rank)
+        for (int voice = 0; voice < kNumVoices; ++voice)
+        {
+            auto& v = voices[static_cast<std::size_t>(voice)];
+            auto& fenv = v.ranks[rank].fenv;
+            // The common FH/FL sources see all eight receivers at the SAME
+            // interval. Tick each source-selected envelope here exactly once,
+            // before any voice is rendered; never copy a one-voice solution.
+            if (sourceActive[rank] && !v.active && !v.held && !v.pedalHeld)
+            {
+                // A prior legacy hard panic may have retired audio without an
+                // EG gate event. Reconcile at the first control interval, NOT
+                // during source selection, so zero-frame continuity survives.
+                // Never restart an already-releasing/completed control tail.
+                const auto stage = fenv.getState().stage;
+                if (stage == FilterEnv::Stage::Attack || stage == FilterEnv::Stage::Decay
+                    || stage == FilterEnv::Stage::Sustain)
+                    fenv.noteOff();
+            }
+            const float z = sourceActive[rank]
+                ? fenv.tick(sampleRate, true, true) : fenv.getValue();
+            sourceFilterValues[rank][voice] = z;
+            // Continuous control-state inference: a source-selected filter EG
+            // continues to relax after VCA retirement, avoiding a permanently
+            // frozen common-bus bias. Cold never-triggered Idle remains at zero.
+            // Inactive touch is explicitly zero; no idle oscillator/audio-filter
+            // clocks or state resets are introduced by this control-only model.
+            drives[rank][voice] = {z, v.active ? v.velocity : 0.0f, v.active ? v.pressure : 0.0f};
+        }
+    for (int rank = 0; rank < kNumRanks; ++rank)
+        if (sourceActive[rank])
+            source_factory::evaluateCutoff(sourceTones[rank], drives[rank], sourceCutoff[rank]);
+    // One 32-Q/16-LC network. Shared RES/AM/KB use the documented nominal
+    // stiff boundaries; no independent per-voice or per-rank master copies.
+    source_factory::evaluateShared(sourceBoundaries, global.resonance, drives, sourceShared);
 }
 
 int Engine::chooseVoice()
@@ -641,8 +797,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
         }
         r.fenv.reset();
         r.aenv.reset();
-        r.fenv.noteOn(filterInitialOffset(rs.fIl),
-                      filterAttackOffset(rs.fAl),
+        r.fenv.noteOn(filterInitialTarget(ch),
+                      filterAttackTarget(ch),
                       std::max(0.001f, rs.fA * global.envTimeScale),
                       std::max(0.001f, rs.fD * global.envTimeScale),
                       std::max(0.001f, rs.fR * global.envTimeScale),
@@ -841,7 +997,22 @@ void Engine::allNotesOff(bool release, int midiChannel)
         if (! allChannels && voice.midiChannel != midiChannel)
             continue;
         if (! release)
+        {
+            // Explicit inferred MIDI-panic gate policy: hard-mute audio as
+            // before, but source TP1 controls must be released from their
+            // retained value rather than held forever in a pre-panic stage.
+            // Legacy/PANEL paths and Sustain-II reset semantics are unchanged.
+            for (int rank = 0; rank < kNumRanks; ++rank)
+                if (sourceActive[rank])
+                {
+                    auto& fenv = voice.ranks[rank].fenv;
+                    const auto stage = fenv.getState().stage;
+                    if (stage == FilterEnv::Stage::Attack || stage == FilterEnv::Stage::Decay
+                        || stage == FilterEnv::Stage::Sustain)
+                        fenv.noteOff();
+                }
             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
+        }
         else if (allChannels)
         {
             voice.pedalHeld = false;
@@ -1034,6 +1205,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                 ? std::exp(-1.0 / ((double) global.portamento * sr))
                                 : 0.0;
 
+    if (sourceActive[0] || sourceActive[1])
+        updateSourceReadouts(sr);
+
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
@@ -1103,8 +1277,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // pitch and key portamento move it; ribbon routing is unverified.
             const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune);
             const float brillOct = global.brilliance
-                                   + rs.initBrill * v.velocity * 2.0f
-                                   + rs.afterBrill * v.pressure * 2.0f
+                                   + (sourceActive[ch] ? 0.0f : rs.initBrill * v.velocity * 2.0f)
+                                   + (sourceActive[ch] ? 0.0f : rs.afterBrill * v.pressure * 2.0f)
                                    + v.timbre * 0.8f
                                    + modWheel * global.modWheelVcf * 1.5f
                                    // Owner manual p39: pressure adds SUB VCF depth,
@@ -1116,14 +1290,21 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                    + keyboardBrillianceOctaves(global.kbdBrillianceLow,
                                                                global.kbdBrillianceHigh, v.contour);
 
-            const float fenv = r.fenv.tick(sr, true, global.parityMode);
+            const float fenv = sourceActive[ch] ? sourceFilterValues[ch][vi]
+                : r.fenv.tick(sr, true, global.parityMode);
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
-            const float cutoffLp = nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp);
-            const float cutoffHp = nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp);
-            const float qLp = provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
-            const float qHp = provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
+            const float cutoffLp = sourceActive[ch]
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct)
+                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp);
+            const float cutoffHp = sourceActive[ch]
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct)
+                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp);
+            const float qLp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
+                : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
+            const float qHp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
+                : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
             float filtered = x;
             if (rs.hpfOn)
@@ -1138,7 +1319,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             }
 
             const float sine = osc.sine * rs.sine;
-            const float levelCv = clampf(rs.vLevel
+            // Source LC/LI is linear in its explicit unit scale. Retain global
+            // effective transports once; floor negative total gain at zero,
+            // but do NOT apply the legacy 2.6 cap or per-tone normalization.
+            const float levelCv = sourceActive[ch]
+                ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
+                             + subValue * global.subVca * 0.45f + lfoAmp
+                             + keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour))
+                : clampf(rs.vLevel
                                              + rs.initLevel * v.velocity
                                              + rs.afterLevel * v.pressure
                                              + subValue * global.subVca * 0.45f
@@ -1387,6 +1575,32 @@ int Engine::activeVoices() const noexcept
         if (v.active)
             ++n;
     return n;
+}
+
+Engine::SourceToneInfo Engine::getSourceToneInfo(int rank) const noexcept
+{
+    if (rank < 0 || rank >= kNumRanks)
+    {
+        SourceToneInfo result;
+        result.selector = -1;
+        result.route = source_factory::Route::invalid;
+        return result;
+    }
+    SourceToneInfo result;
+    result.selector = hardwareSources[rank];
+    result.route = sourceRoutes[rank];
+    if (sourceActive[rank]) result.provenance = sourceTones[rank].provenance;
+    else if (const auto* address = source_factory::address(rank, result.selector))
+    {
+        result.provenance.unknownCells = source_factory::unknownMask(*address);
+        result.provenance.knownCells = source_factory::allOutputsMask & ~result.provenance.unknownCells;
+    }
+    return result;
+}
+
+source_factory::CutoffReadout Engine::getSourceCutoffReadout(int rank) const noexcept
+{
+    return rank >= 0 && rank < kNumRanks ? sourceCutoff[rank] : source_factory::CutoffReadout{};
 }
 
 Engine::VoiceInfo Engine::getVoiceInfo(int index) const

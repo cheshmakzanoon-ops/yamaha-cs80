@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdio>
 #include <memory>
+#include <array>
 #include <atomic>
 #include <thread>
 #include <chrono>
@@ -777,6 +778,33 @@ void testParityIsolationHost()
     check(host.getParamValue(cs80::P_parityMode) == 0.0f, "missing isolation value restores off");
 }
 
+// Source selector 3 is the complete T51/D Flute and T53/D Brass 3 pair. Build
+// its envelope oracle directly from the classified cells and the declared
+// nominal laws, not Engine::getParams (which deliberately retains the legacy
+// effective snapshot), Engine settings, or the production tone compiler.
+struct SourceEnvelopeExpectation
+{
+    float amplitudeAttack, amplitudeDecay, amplitudeRelease, amplitudeSustain;
+    float filterAttack, filterDecay, filterRelease, filterInitial, filterTarget;
+};
+
+SourceEnvelopeExpectation completePairEnvelopeExpectation(int rank)
+{
+    const auto unit = [rank](int output)
+    {
+        const auto branch = cs80::hardware::findBranch(rank == 0 ? 51 : 53, 'D', output);
+        check(branch.kind != cs80::hardware::BranchKind::unknown,
+              "complete host envelope fixture has a classified source cell");
+        if (branch.kind == cs80::hardware::BranchKind::open) return 0.0;
+        if (branch.kind == cs80::hardware::BranchKind::direct) return 1.0;
+        return 10000.0 / (10000.0 + branch.resistanceOhms());
+    };
+    const auto attack = [&](int output) { return (float) std::pow(10.0, -3.0 * unit(output)); };
+    const auto decay = [&](int output) { return (float) (10.0 * std::pow(10.0, -3.0 * unit(output))); };
+    return { attack(18), decay(19), decay(21), (float) unit(20),
+             attack(13), decay(14), decay(15), (float) (-3.0 * unit(11)), (float) (3.0 * unit(12)) };
+}
+
 // Host routing test only: the primitive envelopes retain their provisional law.
 // Separate primitive instances are the oracle so a missing Engine timing refresh
 // cannot be hidden by comparing two processors with the same routing bug.
@@ -943,13 +971,25 @@ void testLiveEnvelopeTimingHost()
                       "zero-frame source switch preserves oscillator and filter memories");
                 if (isolated)
                 {
-                    const auto effective = host.getEngine().getParams();
-                    auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
-                    expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
-                    expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
-                    expectedAmplitude[rank].setSustain(value(cs80::CP_vS));
-                    expectedFilter[rank].setLevels(cs80::filterInitialOffset(value(cs80::CP_fIl)),
-                                                   cs80::filterAttackOffset(value(cs80::CP_fAl)));
+                    if (host.getHardwareSource(rank) == 3)
+                    {
+                        const auto source = completePairEnvelopeExpectation(rank);
+                        expectedAmplitude[rank].setTimes(source.amplitudeAttack, source.amplitudeDecay,
+                                                        source.amplitudeRelease);
+                        expectedAmplitude[rank].setSustain(source.amplitudeSustain);
+                        expectedFilter[rank].setTimes(source.filterAttack, source.filterDecay, source.filterRelease);
+                        expectedFilter[rank].setLevels(source.filterInitial, source.filterTarget);
+                    }
+                    else
+                    {
+                        const auto effective = host.getEngine().getParams();
+                        auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
+                        expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
+                        expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
+                        expectedAmplitude[rank].setSustain(value(cs80::CP_vS));
+                        expectedFilter[rank].setLevels(cs80::filterInitialOffset(value(cs80::CP_fIl)),
+                                                       cs80::filterAttackOffset(value(cs80::CP_fAl)));
+                    }
                 }
             }
             compare();
@@ -966,7 +1006,7 @@ void testLiveEnvelopeTimingHost()
                     const float expected = source == 13 ? host.getParamValue(index)
                         : source == 11 ? host.getMemoryValue(rank, control) : factory[index];
                     check(std::abs(host.getEngine().getParams()[index] - expected) < 2e-5f,
-                          "selected hardware source supplies every live A D R timing port");
+                          "selected source preserves the legacy-effective A D R snapshot without putting source volts in Params");
                     check(std::abs(host.getParamValue(index) - onset[index]) < 2e-5f,
                           "source selection preserves stored panel envelope timings");
                 }
@@ -984,7 +1024,7 @@ void testLiveEnvelopeTimingHost()
                     const float expected = source == 13 ? host.getParamValue(index)
                         : source == 11 ? host.getMemoryValue(rank, control) : factory[index];
                     check(std::abs(host.getEngine().getParams()[index] - expected) < 2e-5f,
-                          "selected source supplies live S IL AL targets");
+                          "selected source preserves the legacy-effective S IL AL snapshot separately from source targets");
                     check(std::abs(host.getParamValue(index) - panel[index]) < 2e-5f,
                           "source selection preserves separately stored panel level targets");
                 }
@@ -1040,6 +1080,19 @@ void testLiveEnvelopeTimingHost()
         checkSourceTimings(11);
         checkSourceLevels(11);
         render(64);
+        host.selectHardwareSource(0, 3);
+        host.selectHardwareSource(1, 3);
+        applyWithoutAdvancing();
+        checkSourceTimings(3);
+        checkSourceLevels(3);
+        for (int rank = 0; rank < 2; ++rank)
+            check(host.getEngine().getSourceToneInfo(rank).route
+                      == (isolated ? cs80::source_factory::Route::source_complete
+                                   : cs80::source_factory::Route::legacy_bridge),
+                  "complete Flute and Brass 3 selectors reach source routing only with isolation on");
+        render(16);
+        // Complete -> incomplete must clear the typed source controls, without
+        // losing the existing attack/decay/release/sustain history.
         host.selectHardwareSource(0, 2);
         host.selectHardwareSource(1, 2);
         applyWithoutAdvancing();
@@ -1069,6 +1122,287 @@ void testLiveEnvelopeTimingHost()
         checkSourceLevels(13);
         render(64);
     }
+}
+
+// Genuine processor/APVTS integration: the core tests cover malformed-frame
+// atomic rejection; here every frame is obtained through the real callback and
+// existing host selectors, with no new parameter or serialization authority.
+void testSourceFactoryHost()
+{
+    namespace sf = cs80::source_factory;
+    const auto complete = [](int rank, int selector)
+    {
+        return rank == 0 ? selector == 1 || selector == 3 || selector == 9
+                         : selector == 3 || selector == 7 || selector == 9 || selector == 10;
+    };
+    const auto apply = [](Cs80AudioProcessor& host)
+    {
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer midi;
+        host.processBlock(empty, midi);
+    };
+    const auto automate = [](Cs80AudioProcessor& host, int rank, int selector)
+    {
+        auto* p = host.getAPVTS().getParameter(Cs80AudioProcessor::hardwareSourceParameterId(rank));
+        check(p != nullptr, "existing hardware selector is available without an editor");
+        if (p) p->setValueNotifyingHost(p->convertTo0to1((float) selector));
+    };
+    Cs80AudioProcessor routing;
+    routing.prepareToPlay(48000.0, 64);
+    for (bool isolated : { false, true })
+    {
+        routing.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        int sourceCount = 0, bridgeCount = 0;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            automate(routing, 1 - rank, 13);
+            for (int selector = 0; selector < 14; ++selector)
+            {
+                automate(routing, rank, selector);
+                apply(routing);
+                const auto info = routing.getEngine().getSourceToneInfo(rank);
+                const auto expected = selector >= 11 ? sf::Route::panel_or_memory
+                    : isolated && complete(rank, selector) ? sf::Route::source_complete : sf::Route::legacy_bridge;
+                check(info.selector == selector && info.route == expected,
+                      "real host automation delivers the canonical rank-local selector and route");
+                check(routing.getEngine().getSourceToneInfo(1 - rank).selector == 13,
+                      "a rank-local source selection never selects the other rank");
+                check(routing.getEngine().getControlFrameStatus() == cs80::Engine::ControlFrameStatus::accepted,
+                      "host callback publishes an accepted whole control frame");
+                const auto compileCount = routing.getEngine().getSourceCompileCount();
+                apply(routing);
+                check(routing.getEngine().getSourceCompileCount() == compileCount,
+                      "repeated host callbacks do not compile an unchanged source");
+                if (info.route == sf::Route::source_complete)
+                {
+                    ++sourceCount;
+                    check(info.provenance.knownCells == sf::allOutputsMask && info.provenance.unknownCells == 0
+                              && info.provenance.inferredCells == 0 && !info.provenance.hardwareMeasured
+                              && info.provenance.version == sf::modelVersion
+                              && info.provenance.sourceHash == sf::sourceFingerprint,
+                          "host source provenance identifies all 26 classified cells without claiming measured parity");
+                }
+                if (info.route == sf::Route::legacy_bridge) ++bridgeCount;
+            }
+        }
+        check(sourceCount == (isolated ? 7 : 0) && bridgeCount == (isolated ? 15 : 22),
+              "host enables exactly seven complete sources and explicitly retains all incomplete/legacy bridges");
+    }
+
+    // A source selected before MIDI must initialize the typed targets too, not
+    // merely refresh them on the first callback after a PANEL-origin strike.
+    {
+        Cs80AudioProcessor host;
+        host.setParamValue(cs80::P_parityMode, 1.0f);
+        host.setParamValue(cs80::P_masterSustain, 0.0f);
+        host.setParamValue(cs80::P_keyRelease, 0.0f);
+        for (int rank = 0; rank < 2; ++rank) automate(host, rank, 3);
+        host.prepareToPlay(48000.0, 64);
+        cs80::Adsr amplitude[2];
+        cs80::FilterEnv filter[2];
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const auto expected = completePairEnvelopeExpectation(rank);
+            amplitude[rank].noteOn(expected.amplitudeAttack, expected.amplitudeDecay,
+                                   expected.amplitudeSustain, expected.amplitudeRelease);
+            filter[rank].noteOn(expected.filterInitial, expected.filterTarget,
+                                expected.filterAttack, expected.filterDecay, expected.filterRelease, 0.0f);
+        }
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer midi;
+        midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+        host.processBlock(empty, midi);
+        midi.clear();
+        for (int block = 0; block < 4; ++block)
+        {
+            juce::AudioBuffer<float> audio(2, 64);
+            host.processBlock(audio, midi);
+            for (int sample = 0; sample < 128; ++sample)
+                for (int rank = 0; rank < 2; ++rank)
+                {
+                    amplitude[rank].tick(96000.0f, true, true);
+                    filter[rank].tick(96000.0f, true, true);
+                }
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                const auto actual = host.getEngine().getRankEnvelopeState(0, rank);
+                const auto a = amplitude[rank].getState();
+                const auto f = filter[rank].getState();
+                check(actual.amplitude.stage == a.stage && std::abs(actual.amplitude.value - a.value) < 2e-5f
+                          && std::abs(actual.amplitude.elapsed - a.elapsed) < 2e-6f
+                          && actual.filter.stage == f.stage && std::abs(actual.filter.value - f.value) < 2e-5f
+                          && std::abs(actual.filter.elapsed - f.elapsed) < 2e-6f,
+                      "source-selected host note-on uses explicit matrix envelope targets and times from the first tick");
+            }
+        }
+    }
+
+    // Each of the seven tones owns all 26 programmer inputs. Change every
+    // hidden PANEL input and all four inactive memories through the real APVTS,
+    // then compare sounding callbacks against an independently hosted control.
+    for (int rank = 0; rank < 2; ++rank)
+    for (int selector = 0; selector < 11; ++selector)
+    {
+        if (!complete(rank, selector)) continue;
+        Cs80AudioProcessor reference, edited;
+        for (auto* host : { &reference, &edited })
+        {
+            host->setParamValue(cs80::P_parityMode, 1.0f);
+            automate(*host, rank, selector);
+            automate(*host, 1 - rank, 13);
+            host->prepareToPlay(48000.0, 64);
+            juce::AudioBuffer<float> empty(2, 0);
+            juce::MidiBuffer midi;
+            midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 97), 0);
+            midi.addEvent(juce::MidiMessage::channelPressureChange(1, 73), 0);
+            host->processBlock(empty, midi);
+        }
+        const auto compileCount = edited.getEngine().getSourceCompileCount();
+        int ownedControls = 0;
+        double energy = 0.0;
+        for (int control = 0; control < cs80::CP_count; ++control)
+        {
+            if (!Cs80AudioProcessor::isMemoryControl(control)) continue;
+            ++ownedControls;
+            const auto& def = cs80::kChannelDefs[control];
+            const int index = cs80::chParam(rank, control);
+            const float panelValue = edited.getParamValue(index);
+            edited.setParamValue(index, panelValue == def.min ? def.max : def.min);
+            check(edited.getParamValue(index) != panelValue, "ownership test really changes each hidden PANEL control");
+            for (int bank = 0; bank < 4; ++bank)
+            {
+                const float old = edited.getMemoryValue(bank, control);
+                edited.setMemoryValue(bank, control, old == def.min ? def.max : def.min);
+                check(edited.getMemoryValue(bank, control) != old,
+                      "ownership test really changes each inactive memory control");
+            }
+            juce::AudioBuffer<float> expected(2, 64), actual(2, 64);
+            juce::MidiBuffer midi;
+            reference.processBlock(expected, midi);
+            edited.processBlock(actual, midi);
+            bool identical = true;
+            for (int channel = 0; channel < 2; ++channel)
+                for (int sample = 0; sample < 64; ++sample)
+                {
+                    const float value = actual.getSample(channel, sample);
+                    identical = identical && std::isfinite(value) && value == expected.getSample(channel, sample);
+                    energy += (double) value * value;
+                }
+            check(identical, "every inactive PANEL/memory edit leaves the selected source's actual host audio bit-identical");
+            check(edited.getEngine().getSourceToneInfo(rank).selector == selector
+                      && edited.getEngine().getSourceToneInfo(rank).route == sf::Route::source_complete
+                      && edited.getEngine().getSourceCompileCount() == compileCount,
+                  "inactive edits retain source identity without recompiling the tone");
+        }
+        check(ownedControls == 26 && energy > 1e-10, "all 26 source-owned host controls were tested on non-silent finite audio");
+
+        // Every exit uses this same instance, after real source audio. The
+        // selected PANEL/memory values must remain stored, become effective on
+        // selection, and never inherit a stale typed source cutoff readout.
+        for (int destination : { 2, 13, 11, 12 })
+        {
+            automate(edited, rank, selector);
+            apply(edited);
+            automate(edited, rank, destination);
+            apply(edited);
+            const auto info = edited.getEngine().getSourceToneInfo(rank);
+            check(info.selector == destination && info.route == (destination == 2 ? sf::Route::legacy_bridge
+                                                                                 : sf::Route::panel_or_memory),
+                  "complete source clears on incomplete factory, PANEL and either memory selection");
+            cs80::ParamValues factory;
+            cs80::applyHardwareTone(factory, rank, 2);
+            for (int control = 0; control < cs80::CP_count; ++control)
+            {
+                if (!Cs80AudioProcessor::isMemoryControl(control)) continue;
+                const int index = cs80::chParam(rank, control);
+                const float expected = destination == 2 ? factory[index] : destination == 13 ? edited.getParamValue(index)
+                    : edited.getMemoryValue(rank + (destination == 12 ? 2 : 0), control);
+                check(edited.getEngine().getParams()[index] == expected,
+                      "leaving a source exposes every retained destination control without overwriting PANEL or memories");
+            }
+            juce::AudioBuffer<float> audio(2, 1);
+            juce::MidiBuffer midi;
+            edited.processBlock(audio, midi);
+            const auto cutoff = edited.getEngine().getSourceCutoffReadout(rank);
+            check(cutoff.pinVolts == sf::CutoffReadout{}.pinVolts
+                      && cutoff.effectiveCv == sf::CutoffReadout{}.effectiveCv,
+                  "non-source callback does not render stale source cutoff receiver data");
+        }
+    }
+
+    // Full session restore, including restore over an already-active source.
+    // Use T51/B and T54/E, not just selector 3, to catch fixture-order mixups.
+    for (bool isolated : { false, true })
+    for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
+    {
+        Cs80AudioProcessor saved, restored;
+        saved.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        for (int rank = 0; rank < 2; ++rank) automate(saved, rank, selectors[(size_t) rank]);
+        saved.setParamValue(cs80::chParam(0, cs80::CP_fIl), 0.17f);
+        saved.setMemoryValue(0, cs80::CP_fIl, 0.31f);
+        saved.setMemoryValue(3, cs80::CP_fIl, 0.73f);
+        juce::MemoryBlock state;
+        saved.getStateInformation(state);
+        restored.setParamValue(cs80::P_parityMode, 1.0f);
+        automate(restored, 0, 3);
+        automate(restored, 1, 3);
+        restored.prepareToPlay(48000.0, 64);
+        restored.setStateInformation(state.getData(), (int) state.getSize());
+        apply(restored);
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const int selector = selectors[(size_t) rank];
+            const auto expected = selector >= 11 ? sf::Route::panel_or_memory
+                : isolated && complete(rank, selector) ? sf::Route::source_complete : sf::Route::legacy_bridge;
+            check(restored.getHardwareSource(rank) == selector
+                      && restored.getEngine().getSourceToneInfo(rank).selector == selector
+                      && restored.getEngine().getSourceToneInfo(rank).route == expected,
+                  "session restore reconstructs the saved rank identities and current isolation route at the real callback");
+        }
+        check(std::abs(restored.getParamValue(cs80::chParam(0, cs80::CP_fIl)) - saved.getParamValue(cs80::chParam(0, cs80::CP_fIl))) < 1e-6f
+                  && std::abs(restored.getMemoryValue(0, cs80::CP_fIl) - saved.getMemoryValue(0, cs80::CP_fIl)) < 1e-6f
+                  && std::abs(restored.getMemoryValue(3, cs80::CP_fIl) - saved.getMemoryValue(3, cs80::CP_fIl)) < 1e-6f,
+              "source session restores independent hidden PANEL and memory authorities");
+    }
+
+    // Default-off must still use the exact historical setParams audio path,
+    // even for a newly available complete tone. This is not a source-to-source
+    // comparison that could share the same accidental activation bug.
+    Cs80AudioProcessor legacy;
+    legacy.selectHardwareSource(0, 3);
+    legacy.selectHardwareSource(1, 3);
+    legacy.prepareToPlay(48000.0, 64);
+    cs80::ParamValues effective;
+    for (int index = 0; index < cs80::P_numParams; ++index) effective[index] = legacy.getParamValue(index);
+    const auto stored = effective;
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        cs80::ParamValues factory;
+        cs80::applyHardwareTone(factory, rank, 3);
+        for (int control = 0; control < cs80::CP_count; ++control)
+            if (Cs80AudioProcessor::isMemoryControl(control)) effective[cs80::chParam(rank, control)] = factory[cs80::chParam(rank, control)];
+    }
+    cs80::Engine historical;
+    // Match the pre-render resource lifecycle too: the processor was prepared
+    // with its stored panel before applying its selected effective snapshot.
+    historical.setParams(stored);
+    historical.prepare(48000.0);
+    historical.setParams(effective);
+    historical.noteOn(60, 100.0f / 127.0f);
+    bool identical = true;
+    for (int block = 0; block < 8; ++block)
+    {
+        juce::AudioBuffer<float> audio(2, 64);
+        juce::MidiBuffer midi;
+        if (block == 0) midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+        legacy.processBlock(audio, midi);
+        float expected[128] {};
+        historical.render(expected, 64);
+        for (int sample = 0; sample < 64; ++sample)
+            for (int channel = 0; channel < 2; ++channel)
+                identical = identical && audio.getSample(channel, sample) == expected[sample * 2 + channel];
+    }
+    check(identical && !legacy.getEngine().isParityMode(), "default-off complete selectors retain bit-identical historical host audio");
 }
 
 // Keyboard contour, footswitch/assigners, EXP-WAH and output switch at the host boundary.
@@ -1357,6 +1691,7 @@ int main(int argc, char** argv)
     testKeyboardHandoffHost(true);
     testExpressionPersistence();
     testLiveEnvelopeTimingHost();
+    testSourceFactoryHost();
 
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");

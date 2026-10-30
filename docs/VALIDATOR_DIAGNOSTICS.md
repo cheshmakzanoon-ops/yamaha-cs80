@@ -70,3 +70,7 @@ Commit `411452eb071cf6a8c4cd6530d45f25e77e90442b`, [build run40967809044, Linux 
 - The separate macOS ARM rollback-fixture failure from `a494118` is resolved in this checkpoint's ARM job: all tests and native validators passed. DSP/sanitizer/legacy-compatibility workflow40967809049 passed. Other platform results must be read from the exact run rather than assumed.
 
 No validator or production DSP repair is included in the fixture correction. The intermittent Linux GUI failure remains unresolved and visible; this checkpoint is not fully qualified.
+
+## 2026-10-30 standalone source-tone checkpoint
+
+Commit `feff6b9606a150b5627187554c39b8ddd47e6bc9`, [build run40977141585, Linux validator job123809934341](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40977141585/job/123809934341): headless seed `0x4f31605` exited139 after the logged completion of `Fuzz parameters`, **without an overall SUCCESS line**. This is not labeled a post-SUCCESS pass. No local ELF core or new crash stack was obtained. GUI and fixed-seed stages were not reached. All four platform builds/tests, both native macOS validation jobs and Windows validation passed; DSP/sanitizer/compatibility and screenshots also passed. The Linux validator failure remains a failed overall gate with unestablished ownership. This commit added a standalone converter, not an audible source route or validator repair.
