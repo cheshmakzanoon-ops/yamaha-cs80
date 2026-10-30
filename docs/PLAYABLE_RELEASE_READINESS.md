@@ -1,16 +1,17 @@
 # Playable release readiness
 
-Product/host audit, 2026-10-30; CI evidence reconciled at 04:28 UTC. The initial
+Product/host audit, 2026-10-30; terminal CI evidence reconciled at 04:52 UTC. The initial
 audit baseline was `0273031` (all 22 nominal factory-source tabs and official
 JUCE 8.0.11). The latest fully green checkpoint recorded here is now
 **`54a96f2af4bc5ce3fe8fd68695afa8ddaec8961e`**: original build/validator gates,
 DSP measurements, editor screenshots and the separate official beta-validator
 comparison passed. Its usability fixes and native packaging are CI-verified.
-**Source performance began at `d7b6e8510e42cf8bd7f35edad49c81795bc48801`;
-the corrected `ce65ea0` Linux/Apple Silicon lanes and `91ef916` source-mode
-screenshots have passed, but all-platform qualification remains pending.** The new PANIC/output-meter batch also needs its
-own native host/UI run. None inherits the `54a96f2` pass. No actual DAW
-installation, DAW session or packaged Standalone launch is claimed here.
+**Current executable `428e4b2bb0b4bcee0a8f3bb8826449f699bdb618` passes all four
+native build/test jobs, Windows/macOS validators, DSP/sanitizers, screenshots and
+the separate beta comparison, but its stable Linux fixed-seed validator exits
+139 after SUCCESS. The original build gate remains FAILED.** It is not a new
+fully green checkpoint. No actual DAW installation, DAW session or packaged
+Standalone playing session is claimed here.
 
 The current implementation adds the approved, default-off `source_performance`
 parameter. Existing host IDs, ranges and defaults remain unchanged; the new
@@ -18,7 +19,56 @@ Boolean is appended at host index 244 (245 total), AU version hint 7. Neither
 source mode is calibrated or establishes measured CS-80 equivalence. Missing
 hardware access is not an implementation or beta-acceptance gate.
 
-## Verified checkpoint and pending candidate
+## Current executable: terminal evidence, with a failed stable gate
+
+All results in this section are for **`428e4b2bb0b4bcee0a8f3bb8826449f699bdb618`**,
+not the later screenshot-bot workflow head.
+
+| Scope | Exact evidence | Terminal result |
+|---|---|---|
+| Original build/validator workflow | [41003223729](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729) | **FAILED**: stable Linux fixed-seed validator; the other five jobs passed. |
+| Stable Linux validator | [Job 123895901926](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) | Headless and ordinary GUI passed. GUI regression seed `0x2da72db` printed SUCCESS, then exited 139. No successful-retry substitution; no local ELF core/new crash stack. [Reports 12954349539](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/artifacts/12954349539). |
+| Windows stable validator | [Job 123898092280](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123898092280) | Ordinary and fixed-seed passes succeeded. Both native macOS jobs also passed VST3, AU and GUI validation. |
+| DSP, compatibility and sanitizers | [41003223701](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223701) | All five jobs passed, including unchanged-default raw audio and source-tone comparisons. Remote ASan/UBSan: 38/38 suites, 946.83 s, leak detection enabled. |
+| Actual-editor screenshots | [41003223759](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223759), [artifact 12954850981](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223759/artifacts/12954850981) | Passed; all 13 PNGs verified and visually inspected, including visible PANIC and SAMPLE PEAK. |
+| Separate official beta3 comparison | [41005121210](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41005121210) | Headless 25 tests and GUI-inclusive 31 tests passed. This does **not** replace or repair the failed stable gate. |
+
+Beta [headless job 123898167092](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41005121210/job/123898167092)
+and [GUI job 123898167341](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41005121210/job/123898167341)
+both log Linux VST3 artifact **`12955130625`**, originating build **`41003223729`**,
+source **`428e4b2bb0b4bcee0a8f3bb8826449f699bdb618`**, original conclusion
+**failure**. Comparison workflow head `c8a27f5` is not the tested plugin source.
+Its different validator/JUCE versions, inventories and seeds do not establish
+crash ownership or prove a fix.
+
+| Native build / linked host-UI tests | CTest result | Install bundle artifact |
+|---|---:|---|
+| [Linux x86_64, job 123892190404](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123892190404) | 43/43 | [12955265829](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/artifacts/12955265829) |
+| [macOS arm64, job 123892190452](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123892190452) | 38/38 | [12955036436](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/artifacts/12955036436) |
+| [macOS x86_64, job 123892190464](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123892190464) | 38/38 | [12954812150](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/artifacts/12954812150) |
+| [Windows x86_64, job 123892190184](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123892190184) | 36/36 | [12954682918](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/artifacts/12954682918) |
+
+Each native log verifies clean official JUCE **8.0.11** at
+`c352e2489000ffeb9e397051377d75eef2efe641`. All four linked `cs80_ui_smoke`
+suites passed, including the new source-policy, PANIC and final-output-meter
+checks. Native archive validation and uploads passed; synthetic package checks
+were 34 on Unix and 22 on Windows. All four install artifacts are unexpired and
+source/build-matched at this snapshot. They include VST3/Standalone, plus AU on
+macOS; **package availability is not an all-green or DAW-install claim**.
+
+The separate local ASan/UBSan run also passed 38/38 in 556.13 s, but disabled
+leak detection because of the local ptrace limitation. Do not transfer the
+remote leak-enabled result to that local run or claim a general leak-free host.
+
+A read-only official-source investigation found a relevant callback-map lifetime
+fix in newer JUCE; historical replay evidence includes the RunLoop callback path
+but an unsymbolized frame 0. **The exact `428e4b2` failure has no crash stack.**
+Dependency ownership remains a hypothesis and plugin memory corruption is not
+excluded. See [ENGINE verification notes](ENGINE.md#verification) and
+[validator diagnostics](VALIDATOR_DIAGNOSTICS.md). No gate, validator binary or
+production code was changed for this evidence reconciliation.
+
+## Earlier checkpoints (not substitute passes)
 
 | Scope | Exact evidence | Result |
 |---|---|---|
@@ -27,7 +77,7 @@ hardware access is not an implementation or beta-acceptance gate.
 | `54a96f2` editor evidence | [Screenshots 40995783622](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783622) | Passed; this is not the later source-performance/display-fit editor. |
 | `54a96f2` separate prerelease comparison | [Beta 40997993577](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40997993577) | Both official beta3 lanes passed; not a replacement for the stable gates. |
 | `d7b6e85` original source-performance candidate | [Build 41001038174](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001038174), [screenshots 41001038061](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001038061) | Failed; the original Apple Silicon and screenshot jobs reported a source-toggle visibility-fixture assertion. These failures remain recorded, not relabelled as passes. |
-| `ce65ea0` real-editor-peer fixture correction | [Build 41001845570](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001845570), [Apple Silicon job 123887820589](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001845570/job/123887820589) | Linux and Apple Silicon lanes passed, including their validators and native packages; Intel/Windows still pending. The correction attaches a real editor peer in the UI test, not a DSP change. |
+| `ce65ea0` real-editor-peer fixture correction | [Build 41001845570](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001845570), [Apple Silicon job 123887820589](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41001845570/job/123887820589) | Historical 04:28 snapshot: Linux/Apple Silicon passed while Intel/Windows were pending. The test-only real-editor-peer correction is included in the current executable's completed native tests above. |
 | `91ef916` refreshed screenshot trigger | [Screenshots 41002244175](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41002244175), [artifact 12953893654](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41002244175/artifacts/12953893654) | Passed; all 13 PNGs verified and visually inspected. This qualifies source-mode screenshots, not the next PANIC/meter batch. |
 
 The beta run's workflow head is screenshot-only `a98057c`, **not its tested
@@ -40,7 +90,7 @@ records `SUCCESS` and 31 verified tests; the
 records `SUCCESS` and 25 verified tests. This provenance is verified from logs,
 not inferred from the comparison run's head SHA.
 
-All four native build logs verify clean JUCE **8.0.11**, SHA
+At the earlier `54a96f2` checkpoint, all four native build logs verify clean JUCE **8.0.11**, SHA
 `c352e2489000ffeb9e397051377d75eef2efe641`. CTest passed 37/37 on Linux,
 33/33 on each macOS architecture and 31/31 on Windows, including the linked
 `cs80_ui_smoke` checks for the checkpoint's metadata, save feedback and route
@@ -57,7 +107,7 @@ Windows packages reject symlinks).
 | macOS x86_64 | [12952031695](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558/artifacts/12952031695) | VST3, AU, Standalone |
 | Windows x86_64 | [12952426100](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40995783558/artifacts/12952426100) | VST3, Standalone |
 
-All four uploads are present and unexpired at this snapshot, with matching
+At that earlier snapshot, all four uploads were present and unexpired, with matching
 source/build metadata. These are **native package checks**, not evidence of
 end-user download/extraction, DAW installation/scan, audio-device setup or a
 Standalone playing session. Signing, runtime-library and distribution limitations
@@ -72,15 +122,12 @@ migration, latency reporting and strong numerical regressions. The identified
 product gaps are now being closed directly rather than deferred for analog
 research:
 
-- **Source-performance/controller separation is implemented; qualification is
-  pending.** The nominal source models can now be combined with ordinary MIDI,
+- **Source-performance/controller separation passed current native host/core
+  tests; the named stable Linux validator failure still blocks an all-green claim.** The nominal source models can now be combined with ordinary MIDI,
   optional MPE and modern overlays without relaxing strict isolation. The
   original default-off sound path remains the compatibility target.
-- **Mode/source clarity passed checkpoint GUI tests; corrected source-performance
-  UI tests and screenshots now have Linux/Apple Silicon evidence, with
-  all-platform completion pending.** Both
-  requested rank identities/routes and
-  effective mode policy are visible.
+- **Mode/source clarity passed all four current native GUI suites and screenshot
+  checks.** Both requested rank identities/routes and effective mode policy are visible.
   Pedal help, library/PANEL behavior, precedence and note-reset warnings are
   explicit. Readouts use parameter atomics and immutable tables, not render-thread
   Engine diagnostics.
@@ -96,29 +143,28 @@ research:
   without a truncate/copy fallback. Filename collisions require confirmation;
   cancellation/errors do not announce success. Atomic visibility is not a
   power-loss durability guarantee.
-- **Native packaging/upload passed at `54a96f2`; end-user installation remains
+- **Native packaging/upload passed at `428e4b2`; end-user installation remains
   unverified.** CI now includes advertised
   VST3/Standalone products and native macOS AU, without replacing validator
   artifacts or weakening gates. See [install/quickstart](INSTALL_AND_QUICKSTART.md)
   and [distribution limitations](CI_DISTRIBUTION_STATUS.md).
-- **PANIC and read-only output telemetry are implemented for the next checkpoint;
-  native host/UI execution is pending.** PANIC stops existing notes, sustain holds
+- **PANIC and read-only output telemetry passed the current native host/UI suites.** PANIC stops existing notes, sustain holds
   and arpeggiator keys without changing the patch; retained histories/noise and
   newly received MIDI can still sound. SAMPLE PEAK observes final host output,
   with separate OVER-RANGE and NON-FINITE warnings, not limiting or normalization.
-  The local core-only CTest run passed **38/38 suites**; that is not a linked
-  execution pass for the new plugin/GUI helpers.
+  Local core-only and remote sanitizer tests also passed **38/38 suites**;
+  those are separate from the linked native results above.
 - **Initial display fitting is implemented; it is not an undersized-screen
   solution.** Initial size uses the logical usable display area, with room for
   host chrome where possible, within 1120x700–1600x1000. Below **1120x700 logical
   pixels**, the supported layout may not fit. Later host/manual sizing remains
   authoritative; this does not add persisted window size or shrink the minimum.
 
-The next bounded work is final-commit core/host/visual qualification, actual
+The next bounded work is the unresolved stable Linux validator gate, actual
 package installation and controller/session/bounce workflows, plus actual-host
-underrun checks informed by the new `d7b6e85` expressive benchmark. No newer
-increment is called release-ready
-until its own relevant evidence exists.
+underrun checks informed by the `d7b6e85` expressive benchmark. The completed
+native tests are useful evidence, but neither they nor the beta comparison make
+`428e4b2` release-qualified or erase its failed original gate.
 
 ## Current mode, source and controller contract
 
@@ -177,11 +223,11 @@ not silently rewritten.
 
 | Priority | Bounded outcome |
 |---|---|
-| P0: qualify the exact candidate | Finish corrected source-mode all-platform evidence, then run the PANIC/meter batch's linked host/UI checks, every original platform/validator gate and actual-editor screenshots at its own commit. Pending or failed is not passed; do not transfer `54a96f2` or one platform's results. |
+| P0: unresolved stable validator gate | Preserve the exact `428e4b2` Linux fixed-seed exit139 failure. Establish ownership from evidence before claiming a repair; beta passes, different seeds or a successful retry cannot substitute for this failed invocation. All-green promotion requires its own exact evidence, not transferred `54a96f2` results. |
 | P1: controller/session workflow | Exercise source performance with bend, expression, sustain, pressure/MPE, paired tabs, modern overlays, policy transitions, PANIC, patch saving and full-session recall; verify strict isolation remains inert to its masked controls and the meter does not alter sound. |
 | P1: native package/install workflow | Download/hash/extract each advertised package, verify permissions/bundles, scan/open in a named host or Standalone, and record architecture/signing/library limitations. Package presence alone is not a successful run. |
 | P1: CPU/headroom on the new path | Preserve the separate `932c6d4` isolation and `d7b6e85` expressive core benchmarks, including every overrun. Check actual target-host underruns and the later telemetry batch's cost; neither core run qualifies the host/UI/driver. Keep explicit monitoring headroom. |
-| P2: remaining UI conveniences | Pressure amount display and broader MIDI program/reset handling remain candidates; PANIC is now implemented, awaiting native qualification. Initial fitting retains the 1120x700 minimum; do not claim universal small-screen accessibility. These are separate behavior changes, not mandatory analog research. |
+| P2: remaining UI conveniences | Pressure amount display and broader MIDI program/reset handling remain candidates; PANIC now has native CI evidence, but not a real player-session claim. Initial fitting retains the 1120x700 minimum; do not claim universal small-screen accessibility. These are separate behavior changes, not mandatory analog research. |
 
 ## PANIC and output indication: bounded helper scope
 
@@ -202,9 +248,10 @@ decays on GUI time, so number and flags need not describe one instant.
 It is not true peak, loudness measurement, a limiter, normalization, automatic
 mute or audio repair. No new host parameter or serialized meter state is added.
 PANIC does not clear genuine output telemetry: retained tails/noise remain
-observable. New primitive/display/core tests passed locally; native final-buffer
-oracles, helper UI/layout and player workflows still require the new commit's
-linked run.
+observable. Primitive/display/core tests passed locally; final-buffer oracles
+and helper UI/layout checks passed in `428e4b2`'s four linked native suites.
+Actual player workflows remain unverified, and the stable Linux validator
+failure remains separate and unresolved.
 
 ## Two narrow host findings
 
@@ -222,8 +269,8 @@ do, not dynamically toggle with a patch or isolation. The implemented fix return
 constant true. `tests/PluginHostMetadata.h` checks that queries do not mutate
 parameters, that capability is stable with MPE off/on and isolation, and that
 member-channel behavior and isolation masks are retained. These tests ran in
-`54a96f2`'s passing linked `cs80_ui_smoke` suite on all four native builds; the
-later source-performance candidate still needs its own run.
+the passing linked `cs80_ui_smoke` suite on all four native builds at both
+`54a96f2` and current `428e4b2`; that does not qualify real DAW MPE behavior.
 
 The implemented convention is channel 1 as master and other channels as members,
 with manually configured bend ranges; system messages/RPN negotiation are not
@@ -383,9 +430,9 @@ enum-conditional warnings in `syncSubMode` remain. `git diff --check` passed.
 Linked GUI smoke on all four native builds and the screenshot workflow later
 passed at `54a96f2`. Neither the historical syntax check nor that checkpoint
 verifies the later **source-performance/display-fit or PANIC/meter edits**.
-The source-mode real-peer fixture correction passed the `ce65ea0` Linux/Apple
-Silicon lanes and `91ef916` screenshots; Intel/Windows completion and the next
-helpers' own native run remain pending.
+Those later edits now have their own `428e4b2` evidence: all four native UI
+suites and the 13-image screenshot workflow passed. The original stable Linux
+fixed-seed validator still failed; successful UI evidence does not change it.
 
 Host-test hooks are component IDs `performance_mode_status`,
 `source_route_status_1`, `source_route_status_2` and `expression_pedal`. Required
