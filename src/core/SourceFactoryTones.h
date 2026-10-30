@@ -1,6 +1,7 @@
 #pragma once
 
 #include "HardwareControl.h"
+#include "FactoryToneHypotheses.h"
 
 #include <algorithm>
 #include <array>
@@ -13,8 +14,8 @@
 // engineering inference; see docs/FACTORY_TONE_INTEGRATION_PROPOSAL.md.
 // No allocations, lazy initialization, locks, exceptions, or offline solvers.
 namespace cs80::source_factory {
-inline constexpr std::uint32_t modelVersion = 1;
-inline constexpr std::string_view modelId = "nominal-factory-v1-seven-complete";
+inline constexpr std::uint32_t modelVersion = 2;
+inline constexpr std::string_view modelId = "nominal-factory-v2-all22-median-overlay-v1";
 inline constexpr std::uint32_t allOutputsMask = (1u << 26) - 1u;
 inline constexpr int voiceCount = 8;
 
@@ -55,12 +56,15 @@ constexpr std::uint32_t unknownMask(const Address& a) noexcept {
             mask |= 1u << (output - 1);
     return mask;
 }
-enum class Route { invalid, panel_or_memory, legacy_bridge, source_complete };
+enum class Route { invalid, panel_or_memory, legacy_bridge, source_complete, source_inferred };
+constexpr bool isSourceDriven(Route value) noexcept {
+    return value == Route::source_complete || value == Route::source_inferred;
+}
 constexpr Route route(int rank, int selector, bool isolation) noexcept {
     if (rank < 0 || rank > 1 || selector < 0 || selector > 13) return Route::invalid;
     if (selector >= 11) return Route::panel_or_memory;
-    return isolation && unknownMask(*address(rank, selector)) == 0
-        ? Route::source_complete : Route::legacy_bridge;
+    if (!isolation) return Route::legacy_bridge;
+    return unknownMask(*address(rank, selector)) == 0 ? Route::source_complete : Route::source_inferred;
 }
 
 // Canonical-address FNV-1a digest, independent of fixture row/column order.
@@ -136,7 +140,11 @@ inline constexpr std::uint32_t retainedBridges = (1u << 14) - 1u;
 struct Provenance {
     std::uint32_t version = modelVersion;
     std::uint64_t sourceHash = sourceFingerprint;
+    // unknownCells is the ORIGINAL evidence exclusion mask, not absence of a
+    // computable nominal hypothesis. It intentionally overlaps inferredCells.
     std::uint32_t knownCells = 0, inferredCells = 0, unknownCells = 0;
+    std::uint32_t hypothesisVersion = 0, hypothesisOverrideMask = 0;
+    std::uint64_t hypothesisHash = 0;
     std::uint32_t bridgeMask = retainedBridges;
     // Complete source cells still use inferred device laws. Never conflate the
     // classified-cell mask with a measured/recovered control-voltage mask.
@@ -259,10 +267,21 @@ struct RankBoundary {
     SourceEquivalent qHp, qLp, level;
     double initialLevelVolts = 0.0, afterLevelVolts = 0.0;
 };
+struct InferenceOverride { int output = 0; double excitation = 0.0; };
+// Research-only constructor input. The ordinary production compileTone uses the
+// frozen nominal manifest; this is not an Engine/host parameter or second enable.
+struct InferenceScenario {
+    std::array<InferenceOverride, 26> overrides {};
+    std::size_t count = 0;
+};
 struct ToneControls {
     Address source {-1,-1,0,'?',{}, {}};
     Provenance provenance;
     std::array<SourceEquivalent, 26> sources {}; // open-circuit equivalents, NOT loaded buses
+    // Null for classified cells. Inferred entries point into the immutable
+    // versioned manifest with every accepted basis cell and original exclusion.
+    std::array<const factory_hypotheses::InferredCell*, 26> hypotheses {};
+    std::array<double, 26> hypothesisExcitations {};
     std::array<double, 26> busVolts {}; // zero-envelope/touch, master RES=0V operating point
     std::uint32_t analogShuntMask = allOutputsMask & ~((1u << 3) | (1u << 4));
     WscControls wsc;
@@ -291,19 +310,48 @@ inline double loadedLevelBus(SourceEquivalent source, double touchSumVolts) noex
 }
 // Compile is cheap bounded scalar work suitable for a block-boundary control
 // transaction. It never invokes a throwing solver. Failed compile preserves the
-// caller's previous valid result, including incomplete/unknown source columns.
-inline bool compileTone(int rank, int selector, ToneControls& result,
-                        Grade hpGrade = Grade::B, Grade lpGrade = Grade::B) noexcept {
+// caller's previous valid result. Unknown source cells can ONLY enter through
+// the separately frozen, address-matched inference manifest (never analogEquivalent).
+namespace detail {
+inline bool compileToneWithScenario(int rank, int selector, ToneControls& result,
+                                   const InferenceScenario& scenario,
+                                   Grade hpGrade, Grade lpGrade) noexcept {
     const auto* a = address(rank, selector);
-    if (!a || unknownMask(*a) != 0 || !valid(hpGrade) || !valid(lpGrade)) return false;
+    if (!a || !valid(hpGrade) || !valid(lpGrade) || scenario.count > scenario.overrides.size()) return false;
+    const std::uint32_t unknown = unknownMask(*a);
+    std::uint32_t overrideMask = 0;
+    for (std::size_t i=0;i<scenario.count;++i) {
+        const auto& entry = scenario.overrides[i];
+        if (entry.output < 1 || entry.output > 26 || !std::isfinite(entry.excitation)
+            || entry.excitation < 0.0 || entry.excitation > 1.0) return false;
+        const std::uint32_t bit = 1u << (entry.output-1);
+        if ((unknown & bit) == 0 || (overrideMask & bit) != 0) return false;
+        overrideMask |= bit;
+    }
     ToneControls next;
     next.source = *a;
-    next.provenance.knownCells = allOutputsMask;
+    next.provenance.knownCells = allOutputsMask & ~unknown;
+    next.provenance.unknownCells = unknown;
+    next.provenance.inferredCells = unknown;
+    next.provenance.hypothesisOverrideMask = overrideMask;
+    if (unknown != 0) {
+        next.provenance.hypothesisVersion = factory_hypotheses::version;
+        next.provenance.hypothesisHash = factory_hypotheses::fingerprint;
+    }
     next.hpGrade = hpGrade; next.lpGrade = lpGrade;
     for (int output = 1; output <= 26; ++output) {
         const auto b = hardware::findBranch(a->board, a->column, output);
         const auto i = static_cast<std::size_t>(output - 1);
-        if (output == 4 || output == 5) {
+        if (b.kind == hardware::BranchKind::unknown) {
+            const auto* hypothesis = factory_hypotheses::find(a->board,a->column,output);
+            if (!hypothesis || output == 4 || output == 5) return false;
+            double x = hypothesis->nominalExcitation;
+            for (std::size_t j=0;j<scenario.count;++j)
+                if (scenario.overrides[j].output == output) x = scenario.overrides[j].excitation;
+            next.hypotheses[i] = hypothesis;
+            next.hypothesisExcitations[i] = x;
+            next.sources[i] = {10.0*x, 10000.0*(1.0-x)};
+        } else if (output == 4 || output == 5) {
             bool enabled = false;
             if (!switchEnabled(b, enabled)) return false;
             next.sources[i] = {enabled ? 10.0 : 0.0, 0.0}; // logical, no 10k shunt
@@ -334,6 +382,16 @@ inline bool compileTone(int rank, int selector, ToneControls& result,
     next.compiled = true;
     result = next;
     return true;
+}
+} // namespace detail
+inline bool compileTone(int rank, int selector, ToneControls& result,
+                        Grade hpGrade = Grade::B, Grade lpGrade = Grade::B) noexcept {
+    return detail::compileToneWithScenario(rank,selector,result,{},hpGrade,lpGrade);
+}
+inline bool compileToneForSensitivity(int rank, int selector, const InferenceScenario& scenario,
+                                      ToneControls& result, Grade hpGrade = Grade::B,
+                                      Grade lpGrade = Grade::B) noexcept {
+    return detail::compileToneWithScenario(rank,selector,result,scenario,hpGrade,lpGrade);
 }
 
 // PANEL/memory remain on their legacy audio adapter. These proxies merely retain
@@ -369,7 +427,10 @@ struct CutoffReadout {
 inline bool evaluateCutoff(const ToneControls& tone, const RankDrives& drives,
                            CutoffReadout& result) noexcept {
     if (!tone.compiled || tone.provenance.version != modelVersion
-        || tone.provenance.sourceHash != sourceFingerprint) return false;
+        || tone.provenance.sourceHash != sourceFingerprint
+        || (tone.provenance.inferredCells != 0
+            && (tone.provenance.hypothesisVersion != factory_hypotheses::version
+                || tone.provenance.hypothesisHash != factory_hypotheses::fingerprint))) return false;
     std::array<double, voiceCount> touch {}, envelope {};
     double touchSum = 0.0, envelopeSum = 0.0;
     CutoffReadout next;

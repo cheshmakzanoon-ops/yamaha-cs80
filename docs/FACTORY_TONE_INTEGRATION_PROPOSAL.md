@@ -715,3 +715,136 @@ cutoff interpretation, retained global transports, mixed-source proxies, and
 settled-DC omission of capacitor/switch transients. None requires a hardware
 permission gate; each is a documented refinement target. The fifteen-tone
 inference overlay remains the separately reviewable next increment.
+
+## 9. V2 standalone all-22 inference overlay (2026-10-30)
+
+This section supersedes the seven-tone-only availability described in the V1
+checkpoint above. `SourceFactoryTones.h` now exposes model version **2**, ID
+`nominal-factory-v2-all22-median-overlay-v1`. All 22 canonical selectors compile
+into source-informed receiver controls; seven use wholly classified columns and
+fifteen additionally use the explicit hypotheses below. **This section records
+standalone model validation; all-22 Engine/plugin activation, audio captures and
+exact-commit CI acceptance are reported separately, not presumed here.**
+
+### Frozen inference manifest, not new source evidence
+
+`src/core/FactoryToneHypotheses.h` is a separate, immutable compile-time manifest
+with exactly the **25 original excluded addresses**. It implements section 4's
+same-rank/same-output median-excitation policy, ID
+`same-rank-same-output-median-excitation-v1`, overlay version **1**:
+
+- Every entry retains its original audit exclusion reason and every accepted
+  basis address, raw branch kind, printed resistance unit/value and dimensionless
+  excitation. Only classified same-rank/same-output cells vote. No other rank,
+  neighboring patch, disputed revision candidate or unreadable glyph enters the
+  median. Even-count populations use the arithmetic mean of the middle pair.
+- Each frozen median `x` produces the explicitly inferred equivalent
+  `E=10*x V`, `Rth=10000*(1−x) Ω`. These are **model boundary hypotheses**, not
+  recovered resistors, measured bus voltages or edits to a circuit transcription.
+- Every entry declares the nominal passive-family domain `x∈[0,1]`, including
+  medians exactly zero or one. This is neither a confidence interval nor a proof
+  that all historical revision topologies lie in that family.
+- The original audit's visible resistor/diode/bypass markings are preserved as
+  **32 separately labeled alternative excitations** across the 25 cells. They
+  never vote in the median or become classified branches. In particular
+  T53/B/14 remains an uncertain **25K-looking glyph/readability** exclusion;
+  its 25K-looking alternative is not a resolved revision or recovered value.
+- The manifest fingerprint is **`e5f877a025fc52c6`**, pinned independently in
+  the header and tests. Its canonical payload includes policy/version, addresses,
+  reason strings, nominal excitation/equivalent, domain limits, raw accepted
+  bases and basis excitations, and labeled visible alternatives. Integer
+  quantization for the noncryptographic digest is explicit in the implementation.
+
+The original source fingerprint remains **`a95212770767733c`**.
+`HardwareControl.h`, `findBranch`, all 547 classifications and all 25 unknown
+classifications are unchanged. No hypothetical resistor has been inserted into
+`verifiedOutputs`. The accepted-cell counts/medians in section 4 are independently
+recomputed and checked against literal numeric anchors, not copied as rounded
+control values from the display table.
+
+### Availability and diagnostic contracts
+
+`Route::source_complete` identifies the seven wholly classified columns;
+`Route::source_inferred` identifies the fifteen overlay-assisted columns.
+`isSourceDriven(route)` is the central predicate for both routes. With isolation
+off all factory selectors remain `legacy_bridge`; PANEL and memories retain their
+existing route and stored ownership. This introduces **no host parameter, hidden
+enable flag, legacy-bank rewrite or independent activation switch**.
+
+Each compiled tone reports:
+
+- `knownCells`: original classified-source mask;
+- `inferredCells`: addresses whose controls actually use hypotheses;
+- `unknownCells`: original source-exclusion mask, intentionally overlapping the
+  inferred mask rather than falsely declaring that the source is now known;
+- model version, unchanged source hash, applied hypothesis version/hash and
+  explicit sensitivity-override mask;
+- for every inferred output, a pointer into the frozen per-cell manifest and
+  the excitation actually used. Classified outputs have no hypothesis pointer.
+
+For all 22, `knownCells | inferredCells` covers 26 usable nominal controls and
+those two masks are disjoint. `unknownCells` is an evidence-status diagnostic,
+not a claim that the nominal model has an unresolved computational input. The
+inference metadata never upgrades either path to measured hardware parity.
+
+Ordinary `compileTone` always uses the frozen nominal manifest. The separate
+research-only `compileToneForSensitivity` accepts explicit `x` overrides only for
+that selected tone's original unknown addresses. Known-address overrides,
+duplicates, invalid outputs, nonfinite/out-of-domain excitations, invalid grades
+and invalid selections reject the entire construction without modifying the
+previous output. This diagnostic constructor is not exposed as a host parameter.
+It records every supplied override even if its value equals the nominal median;
+subsequent ordinary construction still uses the unchanged frozen nominal policy.
+
+### Numerical preservation, alternatives and independent checks
+
+The seven complete tones preserve their numerical V1 controls and receiver
+readouts. Before V2 edits, an independent reviewer captured **16,632 values**:
+all seven tones × nine HP/LP grade fixtures, all source equivalents, bus readouts,
+typed targets/scalars/maps and unequal-voice cutoff/Q/LC readouts. The same-compiler
+V2 hexadecimal-float output is **byte-for-byte identical** (corpus SHA-256
+`e5d4f00f14e404de85968e41805dbd62316702241eca8af015988d019f4b2261`). Version and
+provenance metadata are deliberately excluded from this numerical comparison.
+The committed test preserves an additional quantized 1e−9 digest of those 16,632
+values for last-bit `libm` portability; that digest is not itself a bit-exact
+cross-platform claim.
+
+The expanded standalone strict C++20 suite currently passes **373,977 checks**,
+also passing AddressSanitizer/UndefinedBehaviorSanitizer with leak detection disabled.
+It tests all 22 tones, all nine grade pairs, all 484 ordered synthetic tone-pair boundary
+combinations (beyond the 121 physically rank-local selector pairs) and mixed legacy/source proxies; original source counts, every
+median basis and exclusion reason; transactional invalid-input handling; and
+independent literal-source/overlaid-equivalent cutoff nodal assembly plus the
+separate Q32/LC16 reference solvers. It also exercises:
+
+- every missing address individually at `x=0` and `x=1`;
+- all 32 labeled visible-marking alternative excitations;
+- joint low/high alternatives for every tone;
+- zero/nonzero velocity and pressure, including removal of aftertouch
+  contributions at zero pressure;
+- Organ 1's LP-only cutoff alternative, String 4's decay endpoints, sustain
+  targets and loaded level/touch polarity and scale;
+- exact inferred/unknown masks and single-address isolation of source changes.
+
+Independent reviewer validation adds **955,607 checks across 5,031 scenario/grade
+fixtures**, including single-address intermediate values and randomized joint
+excitation cases. The maximum compared node/bus-voltage discrepancy was about
+**7.11×10⁻¹⁵ V**. A further **437** independent endpoint, touch-polarity and invalid
+scenario checks passed. These are numerical checks under declared synthetic
+boundaries, not physical voltage measurements or audio-fidelity percentages.
+
+Eight V2-specific mutations were also rejected: wrong even-population median,
+unknown-as-zero median votes, cross-rank median borrowing, erased inferred mask,
+erased original-unknown mask, inferred route mislabeled complete, omitted
+hypothesis source impedance, and permission to override a classified address.
+For algorithm mutations, the digest assertion was deliberately removed so that
+basis invariants and independent arithmetic checks, rather than only the pinned
+fingerprint, had to detect the error.
+
+Neither endpoint cases, intermediate samples, random samples nor visible-marking
+alternatives are claimed to bound every nonlinear audio metric. Audio sensitivity
+captures must preserve these scenario IDs/addresses/excitations and per-cell
+inference masks, alongside all retained bridges from sections 3/8. Ideal BA/diode
+and receiver boundaries, device laws, pulse-width bridge, global transports,
+settled-DC capacitor omission and mixed-source assumptions remain explicit
+refinement work; completing the source overlay does not resolve them.

@@ -177,8 +177,9 @@ bool Engine::setControlFrame(const ControlFrame& frame)
         }
 
     // Validate/compile both ranks before publishing any part of the transaction.
-    // Incomplete columns are valid legacy bridges, never compile failures and
-    // never an excuse to reuse the previously active source identity.
+    // Originally incomplete columns use the separate, versioned inference
+    // manifest. Their source_inferred identity and original unknown masks remain
+    // explicit; PANEL/memory/off routes never reuse a stale source adapter.
     auto tones = sourceTones;
     auto routes = sourceRoutes;
     std::uint64_t compilations = 0;
@@ -188,7 +189,7 @@ bool Engine::setControlFrame(const ControlFrame& frame)
         const bool isolated = frame.effectiveValues[P_parityMode] >= 0.5f;
         if (selector != hardwareSources[rank] || isolated != global.parityMode)
             routes[rank] = source_factory::route(rank, selector, isolated);
-        if (routes[rank] == source_factory::Route::source_complete
+        if (source_factory::isSourceDriven(routes[rank])
             && (!tones[rank].compiled || tones[rank].source.selector != selector))
         {
             if (!source_factory::compileTone(rank, selector, tones[rank]))
@@ -204,7 +205,7 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     sourceTones = tones;
     sourceCompileCount += compilations;
     for (int rank = 0; rank < kNumRanks; ++rank)
-        sourceActive[rank] = routes[rank] == source_factory::Route::source_complete;
+        sourceActive[rank] = source_factory::isSourceDriven(routes[rank]);
     sourceCutoff = {};
     sourceShared = {};
     applyParams(frame.effectiveValues);

@@ -12,6 +12,7 @@ on:
       - 'src/tools/dsp_probe.cpp'
       - 'src/tools/parity_capture.cpp'
       - 'src/tools/compatibility_probe.cpp'
+      - 'src/tools/source_factory_compatibility_probe.cpp'
       - 'scripts/analyze_dsp.py'
       - 'scripts/parity_harness.py'
       - 'CMakeLists.txt'
@@ -47,7 +48,7 @@ jobs:
           ./build-probe/cs80_parity_capture --out artifacts/engine-live-adr --fixture live-adr-v1
           for capture in artifacts/engine-candidate artifacts/engine-live-adr; do
             printf '{"commit":"%s","run":"%s","analog_evidence":false}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > "$capture/provenance.json"
-            sha256sum src/core/Engine.cpp src/core/Engine.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/PraWahCircuit.h src/core/OutputTapCircuit.h src/core/SourceFactoryTones.h src/core/HardwareControl.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > "$capture/SOURCE_SHA256SUMS"
+            sha256sum src/core/Engine.cpp src/core/Engine.h src/core/Dsp.h src/core/Params.h src/core/PerformanceControls.h src/core/PraWahCircuit.h src/core/OutputTapCircuit.h src/core/SourceFactoryTones.h src/core/FactoryToneHypotheses.h src/core/HardwareControl.h src/core/OriginalSubOscillator.h src/core/ExternalModulationInterpolator.h src/tools/parity_capture.cpp > "$capture/SOURCE_SHA256SUMS"
             sha256sum build-probe/cs80_parity_capture > "$capture/BINARY_SHA256SUMS"
             { c++ --version; cmake --version; uname -sm; grep -E '^CMAKE_(BUILD_TYPE|CXX_COMPILER|CXX_FLAGS)' build-probe/CMakeCache.txt; } > "$capture/build-environment.txt"
             (cd "$capture" && sha256sum *.csv *.json SOURCE_SHA256SUMS BINARY_SHA256SUMS build-environment.txt > SHA256SUMS)
@@ -110,6 +111,43 @@ jobs:
             artifacts/compatibility/compiler.txt
           if-no-files-found: error
 
+
+  source-factory-compatibility:
+    name: Seven complete source tones versus V1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build immutable V1 and current core with one compiler
+        run: |
+          git fetch --depth=1 origin "$SOURCE_V1"
+          git worktree add --detach source-v1 "$SOURCE_V1"
+          for source in source-v1 .; do
+            cmake -S "$source" -B "$source/build-source-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF
+            cmake --build "$source/build-source-compat" --target cs80_core --parallel 2
+          done
+          c++ -O2 -std=c++20 -Isource-v1/src src/tools/source_factory_compatibility_probe.cpp source-v1/build-source-compat/libcs80_core.a -o source-v1-probe
+          c++ -O2 -std=c++20 -Isrc src/tools/source_factory_compatibility_probe.cpp build-source-compat/libcs80_core.a -o source-current-probe
+      - name: Require unchanged seven-tone audio and numerical history
+        run: |
+          mkdir -p artifacts/source-factory-compatibility
+          ./source-v1-probe artifacts/source-factory-compatibility/baseline.bin
+          ./source-current-probe artifacts/source-factory-compatibility/current.bin
+          cmp artifacts/source-factory-compatibility/baseline.bin artifacts/source-factory-compatibility/current.bin
+          sha256sum artifacts/source-factory-compatibility/*.bin > artifacts/source-factory-compatibility/SHA256SUMS
+          printf '{"baseline":"%s","candidate":"%s","source_tones":7,"sample_rates":[44100,48000,96000,192000],"audio_and_numeric_state_byte_identical":true,"model_metadata_excluded":true,"analog_evidence":false}\n' "$SOURCE_V1" "$GITHUB_SHA" > artifacts/source-factory-compatibility/report.json
+          c++ --version > artifacts/source-factory-compatibility/compiler.txt
+      - uses: actions/upload-artifact@v5
+        with:
+          name: cs80-source-factory-v1-compatibility-${{ github.sha }}
+          path: |
+            artifacts/source-factory-compatibility/report.json
+            artifacts/source-factory-compatibility/SHA256SUMS
+            artifacts/source-factory-compatibility/compiler.txt
+          if-no-files-found: error
+
   parity-harness:
     name: Synthetic reference comparison (not hardware evidence)
     runs-on: ubuntu-24.04
@@ -131,7 +169,7 @@ jobs:
 
   sanitizers:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
       - name: Configure ASan and UBSan core build

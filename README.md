@@ -52,7 +52,7 @@ Of the 85 control and connector rows in the coverage ledger, counted by first st
 | Footswitch and assigners | Implemented / Approximate | Jack plugged + contact + independent SUSTAIN and PORTA/GLISS assigners (`!assigned or !plugged or pressed`); tail-shortening and glide-snap edge policy provisional |
 | EXP / EXP-WAH, output HIGH/LOW | Circuit-derived networks in isolation; calibration inferred | Stateful four-capacitor PRA graph, always-clocked dry/wet histories and source-verified routing; optical/trim/loading profile inferred. Isolation HIGH/LOW now uses the loaded 10µF/resistor graph with inferred source/load values; GENERAL is diagnostic-only. Legacy wah and scalar output retained outside isolation |
 | SUB, ring, ribbon | Approximate | Six original SUB functions (0.7-60 Hz), optional mono EXT modulation bus, frequency-envelope ring with documented calibration anchors, relative ribbon (~1 octave) |
-| Tone selectors, memories, presets | Seven source tabs integrated / remaining laws approximate | 14 positions per rank, 4 independent memory banks (104 automatable controls), PANEL; **all 22 factory tone voicings are placeholders**. A 547-cell passive resistor-matrix solver is offline only (25 cells unresolved) |
+| Tone selectors, memories, presets | All 22 source/hypothesis tabs integrated / device laws inferred | 14 positions per rank, 4 independent memory banks (104 automatable controls), PANEL; **all 22 factory tone voicings are placeholders**. A 547-cell passive resistor-matrix solver is offline only (25 cells unresolved) |
 | Chorus / tremolo, output stage | Approximate / circuit-derived | Generic delay/tremolo remain. Isolation uses physical output-coupling states; legacy retains 10Hz DC block and soft clip. Both retain the 255-tap decimator (63 samples latency) |
 | Voice variation | Approximate | Per-voice tuning and pan scatter, slow drift, noise floor: arbitrary, not measured tolerances |
 | Host / plugin layer | Implemented | 244 append-only host parameters, state migration, preset library, pluginval 10 on every platform |
@@ -81,7 +81,7 @@ The next priority is **audible, integrated fidelity improvements**, not accumula
 | Plugin / UI smoke (`cs80_ui_smoke`) | APVTS contract, append-only IDs and AU hints, state round trips and migration, editor at two sizes, every page, controls and gestures, pedal and key-pressure paths |
 | Legacy compatibility CI | Same-compiler byte comparison against pinned baseline: shipped 222 presets at 3 rates, normal and noisy reassignment scenarios |
 | Experimental oscillator (not selected) | 1,418,466 standalone checks; linear 2x path passes, but nonlinear-filter aliasing and full-bank CPU gates remain unqualified |
-| Source factory-tone converter | 60,959 standalone and 67,936 integration checks; 76,680 independent model and 4,608 staggered-voice comparisons; seven source-selected tabs now drive audio in isolation |
+| Source factory-tone converter | 373,977 standalone and 135,739 integration checks; independent overlay/network review and exact V1 seven-tone regression; 7 complete + 15 inferred tabs |
 | Realtime output network | 6,506,427 module checks and 184,745 Engine integration checks; loaded HIGH/LOW, coupling charge and separate GENERAL diagnostics; inferred symmetric profile |
 | Output-tap AC reference | 11,016 checks of conditional HIGH/LOW loading, DC/open/short limits and explicit conflicting resistor values; independent oracle for the realtime model |
 | Level control DC reference | 54,272 checks of 16 separately loaded LC nodes and 43 explicit source ports; no IC5 gain or loudness calibration |
@@ -145,7 +145,7 @@ Double-click any control to return it to its default.
 
 **MIDI**: notes, velocity, polyphonic and channel aftertouch, pitch bend, CC1 mod wheel, CC11 expression (also drives the pedal and EXP-WAH), CC64 sustain (a software convention; see below), CC74 brightness, CC120 / CC123 channel-scoped panic. MPE maps per-note bend and pressure on member channels with a separate bend range.
 
-To audition the source-derived tabs, enable **Advanced → About → PARITY ISOLATION before playing**, then select rank I String 3, Flute or Funky 1, or rank II Brass 3, Organ 2, Funky 2 or Funky 4. These are the hardware-panel tabs, not replacements for the library programs. The nominal model is unnormalized and can exceed digital full scale on extreme chords; leave monitoring headroom.
+To audition the source-derived tabs, enable **Advanced → About → PARITY ISOLATION before playing**, then select any of the 11 hardware tone tabs per rank. Rank I String 3/Flute/Funky 1 and rank II Brass 3/Organ 2/Funky 2/Funky 4 use complete classified columns; the other 15 use explicit hypotheses. These are the hardware-panel tabs, not replacements for the library programs. The nominal model is unnormalized and can exceed digital full scale on extreme chords; leave monitoring headroom.
 
 ### Behavior notes and compatibility
 
@@ -233,8 +233,8 @@ docs/                           evidence ledgers and audits (index below)
 | [HARDWARE_REFERENCES.md](docs/HARDWARE_REFERENCES.md) | Primary sources, tone-selector order, IC-level facts, calibration anchors |
 | [MN3001_CLOCK_EVENT_DESIGN.md](docs/MN3001_CLOCK_EVENT_DESIGN.md) | Offline, explicitly idealized clock-event packet reference and physical-model exclusions |
 | [OSCILLATOR_EXPERIMENTAL_CHECKPOINT.md](docs/OSCILLATOR_EXPERIMENTAL_CHECKPOINT.md) | Shared-state experimental VCO/WSC, positive results, failed nonlinear/CPU gates; not used by Engine |
-| [SOURCE_FACTORY_RUNTIME.md](docs/SOURCE_FACTORY_RUNTIME.md) | Audible seven-tone routing, live state/ownership, inactive control decay, panic policy and headroom |
-| [FACTORY_TONE_INTEGRATION_PROPOSAL.md](docs/FACTORY_TONE_INTEGRATION_PROPOSAL.md) | Seven-tone electrical converter, immutable source ledger and explicit inferred laws |
+| [SOURCE_FACTORY_RUNTIME.md](docs/SOURCE_FACTORY_RUNTIME.md) | Audible all-22 routing, provenance, live state/ownership, inactive control decay, panic policy and headroom |
+| [FACTORY_TONE_INTEGRATION_PROPOSAL.md](docs/FACTORY_TONE_INTEGRATION_PROPOSAL.md) | All-22 electrical converter, immutable source ledger and separate 25-cell hypothesis overlay |
 | [OUTPUT_REALTIME_PROPOSAL.md](docs/OUTPUT_REALTIME_PROPOSAL.md) | Integrated isolation output graph, inferred boundaries, independent tests and retained legacy contract |
 | [OUTPUT_LEVEL_SOURCE_REVIEW.md](docs/OUTPUT_LEVEL_SOURCE_REVIEW.md) | Three-pole output routing, retained component conflicts and conditional passive AC reference |
 | [LEVEL_CONTROL_REFERENCE_DESIGN.md](docs/LEVEL_CONTROL_REFERENCE_DESIGN.md), [TRG_LEVEL_RECIPROCAL_REVIEW.md](docs/TRG_LEVEL_RECIPROCAL_REVIEW.md) | Conditional loaded level network and reviewed reciprocal touch-wiring evidence |

@@ -778,31 +778,68 @@ void testParityIsolationHost()
     check(host.getParamValue(cs80::P_parityMode) == 0.0f, "missing isolation value restores off");
 }
 
-// Source selector 3 is the complete T51/D Flute and T53/D Brass 3 pair. Build
-// its envelope oracle directly from the classified cells and the declared
-// nominal laws, not Engine::getParams (which deliberately retains the legacy
-// effective snapshot), Engine settings, or the production tone compiler.
+// Independent envelope oracle: classified cells use their nominal passive
+// excitation directly. Unknown cells use a separately evaluated same-rank/output
+// median of CLASSIFIED cells only, not the production manifest or tone compiler.
+// These are frozen engineering hypotheses, never recovered source values.
 struct SourceEnvelopeExpectation
 {
     float amplitudeAttack, amplitudeDecay, amplitudeRelease, amplitudeSustain;
     float filterAttack, filterDecay, filterRelease, filterInitial, filterTarget;
 };
 
-SourceEnvelopeExpectation completePairEnvelopeExpectation(int rank)
+cs80::hardware::Branch sourceFixtureBranch(int rank, int selector, int output)
 {
-    const auto unit = [rank](int output)
+    return cs80::hardware::findBranch(51 + 2 * rank + (selector >= 6 ? 1 : 0),
+                                     (char) ('A' + (selector >= 6 ? selector - 6 : selector)), output);
+}
+
+std::uint32_t sourceFixtureUnknownMask(int rank, int selector)
+{
+    std::uint32_t result = 0;
+    for (int output = 1; output <= 26; ++output)
+        if (sourceFixtureBranch(rank, selector, output).kind == cs80::hardware::BranchKind::unknown)
+            result |= 1u << (output - 1);
+    return result;
+}
+
+SourceEnvelopeExpectation sourceEnvelopeExpectation(int rank, int selector)
+{
+    const auto classified = [](cs80::hardware::Branch branch)
     {
-        const auto branch = cs80::hardware::findBranch(rank == 0 ? 51 : 53, 'D', output);
-        check(branch.kind != cs80::hardware::BranchKind::unknown,
-              "complete host envelope fixture has a classified source cell");
         if (branch.kind == cs80::hardware::BranchKind::open) return 0.0;
         if (branch.kind == cs80::hardware::BranchKind::direct) return 1.0;
         return 10000.0 / (10000.0 + branch.resistanceOhms());
+    };
+    const auto unit = [&](int output)
+    {
+        const auto branch = sourceFixtureBranch(rank, selector, output);
+        if (branch.kind != cs80::hardware::BranchKind::unknown) return classified(branch);
+        std::array<double, 11> accepted {};
+        int count = 0;
+        for (int candidate = 0; candidate < 11; ++candidate)
+        {
+            const auto basis = sourceFixtureBranch(rank, candidate, output);
+            if (basis.kind != cs80::hardware::BranchKind::unknown)
+                accepted[(size_t) count++] = classified(basis);
+        }
+        check(count > 0, "inferred host envelope fixture has independent classified median evidence");
+        if (count == 0) return 0.0;
+        std::sort(accepted.begin(), accepted.begin() + count);
+        return count % 2 != 0 ? accepted[(size_t) (count / 2)]
+            : (accepted[(size_t) (count / 2 - 1)] + accepted[(size_t) (count / 2)]) * 0.5;
     };
     const auto attack = [&](int output) { return (float) std::pow(10.0, -3.0 * unit(output)); };
     const auto decay = [&](int output) { return (float) (10.0 * std::pow(10.0, -3.0 * unit(output))); };
     return { attack(18), decay(19), decay(21), (float) unit(20),
              attack(13), decay(14), decay(15), (float) (-3.0 * unit(11)), (float) (3.0 * unit(12)) };
+}
+
+SourceEnvelopeExpectation completePairEnvelopeExpectation(int rank)
+{
+    check(sourceFixtureUnknownMask(rank, 3) == 0,
+          "Flute and Brass 3 retain the original complete raw-matrix envelope oracle");
+    return sourceEnvelopeExpectation(rank, 3);
 }
 
 // Host routing test only: the primitive envelopes retain their provisional law.
@@ -971,9 +1008,11 @@ void testLiveEnvelopeTimingHost()
                       "zero-frame source switch preserves oscillator and filter memories");
                 if (isolated)
                 {
-                    if (host.getHardwareSource(rank) == 3)
+                    if (host.getHardwareSource(rank) < 11)
                     {
-                        const auto source = completePairEnvelopeExpectation(rank);
+                        const int selector = host.getHardwareSource(rank);
+                        const auto source = selector == 3 ? completePairEnvelopeExpectation(rank)
+                                                          : sourceEnvelopeExpectation(rank, selector);
                         expectedAmplitude[rank].setTimes(source.amplitudeAttack, source.amplitudeDecay,
                                                         source.amplitudeRelease);
                         expectedAmplitude[rank].setSustain(source.amplitudeSustain);
@@ -1091,14 +1130,27 @@ void testLiveEnvelopeTimingHost()
                                    : cs80::source_factory::Route::legacy_bridge),
                   "complete Flute and Brass 3 selectors reach source routing only with isolation on");
         render(16);
-        // Complete -> incomplete must clear the typed source controls, without
-        // losing the existing attack/decay/release/sustain history.
+        // Complete -> inferred retains source ownership with new explicit targets,
+        // without losing the existing attack/decay/release/sustain history.
         host.selectHardwareSource(0, 2);
         host.selectHardwareSource(1, 2);
         applyWithoutAdvancing();
         checkSourceTimings(2);
         checkSourceLevels(2);
+        for (int rank = 0; rank < 2; ++rank)
+            check(host.getEngine().getSourceToneInfo(rank).route
+                      == (isolated ? cs80::source_factory::Route::source_inferred
+                                   : cs80::source_factory::Route::legacy_bridge),
+                  "previously incomplete Brass selectors use the versioned inferred source path only in isolation");
         render(64);
+        // T53/B/14 exercises the formerly excluded filter decay cell, rather
+        // than testing only inferred sustain/touch controls.
+        host.selectHardwareSource(0, 1);
+        host.selectHardwareSource(1, 1);
+        applyWithoutAdvancing();
+        checkSourceTimings(1);
+        checkSourceLevels(1);
+        render(16);
         host.selectHardwareSource(0, 13);
         host.selectHardwareSource(1, 13);
         applyWithoutAdvancing();
@@ -1152,7 +1204,8 @@ void testSourceFactoryHost()
     for (bool isolated : { false, true })
     {
         routing.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
-        int sourceCount = 0, bridgeCount = 0;
+        int sourceCount = 0, inferredCount = 0, bridgeCount = 0;
+        int knownCells = 0, unknownCells = 0, inferredCells = 0;
         for (int rank = 0; rank < 2; ++rank)
         {
             automate(routing, 1 - rank, 13);
@@ -1162,7 +1215,8 @@ void testSourceFactoryHost()
                 apply(routing);
                 const auto info = routing.getEngine().getSourceToneInfo(rank);
                 const auto expected = selector >= 11 ? sf::Route::panel_or_memory
-                    : isolated && complete(rank, selector) ? sf::Route::source_complete : sf::Route::legacy_bridge;
+                    : !isolated ? sf::Route::legacy_bridge
+                    : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
                 check(info.selector == selector && info.route == expected,
                       "real host automation delivers the canonical rank-local selector and route");
                 check(routing.getEngine().getSourceToneInfo(1 - rank).selector == 13,
@@ -1173,36 +1227,57 @@ void testSourceFactoryHost()
                 apply(routing);
                 check(routing.getEngine().getSourceCompileCount() == compileCount,
                       "repeated host callbacks do not compile an unchanged source");
-                if (info.route == sf::Route::source_complete)
+                if (sf::isSourceDriven(info.route))
                 {
-                    ++sourceCount;
-                    check(info.provenance.knownCells == sf::allOutputsMask && info.provenance.unknownCells == 0
-                              && info.provenance.inferredCells == 0 && !info.provenance.hardwareMeasured
-                              && info.provenance.version == sf::modelVersion
-                              && info.provenance.sourceHash == sf::sourceFingerprint,
-                          "host source provenance identifies all 26 classified cells without claiming measured parity");
+                    if (info.route == sf::Route::source_complete) ++sourceCount;
+                    else ++inferredCount;
+                    const auto unknown = sourceFixtureUnknownMask(rank, selector);
+                    check(info.provenance.knownCells == (sf::allOutputsMask & ~unknown)
+                              && info.provenance.unknownCells == unknown && info.provenance.inferredCells == unknown
+                              && (info.provenance.knownCells & info.provenance.inferredCells) == 0
+                              && !info.provenance.hardwareMeasured && info.provenance.version == 2
+                              && info.provenance.sourceHash == sf::sourceFingerprint
+                              && info.provenance.hypothesisOverrideMask == 0,
+                          "host source provenance preserves known evidence and overlapping original-unknown/inferred masks");
+                    check(info.provenance.hypothesisVersion == (unknown == 0 ? 0u : 1u)
+                              && info.provenance.hypothesisHash == (unknown == 0 ? 0ull : 0xe5f877a025fc52c6ull),
+                          "host distinguishes seven unchanged complete tones from the frozen version-one inference manifest");
+                    for (int output = 0; output < 26; ++output)
+                    {
+                        knownCells += (info.provenance.knownCells >> output) & 1u;
+                        unknownCells += (info.provenance.unknownCells >> output) & 1u;
+                        inferredCells += (info.provenance.inferredCells >> output) & 1u;
+                    }
                 }
                 if (info.route == sf::Route::legacy_bridge) ++bridgeCount;
             }
         }
-        check(sourceCount == (isolated ? 7 : 0) && bridgeCount == (isolated ? 15 : 22),
-              "host enables exactly seven complete sources and explicitly retains all incomplete/legacy bridges");
+        check(sourceCount == (isolated ? 7 : 0) && inferredCount == (isolated ? 15 : 0)
+                  && bridgeCount == (isolated ? 0 : 22),
+              "host enables seven complete plus fifteen inferred sources, retaining legacy bridges only when isolation is off");
+        check(knownCells == (isolated ? 547 : 0) && unknownCells == (isolated ? 25 : 0)
+                  && inferredCells == (isolated ? 25 : 0),
+              "all 22 host source identities expose exactly 547 classified and 25 separately inferred original unknown cells");
     }
 
     // A source selected before MIDI must initialize the typed targets too, not
     // merely refresh them on the first callback after a PANEL-origin strike.
+    // All 22 envelopes include the seven unchanged raw-cell paths and inferred
+    // sustain plus String 4 filter-decay hypotheses.
+    for (int selector = 0; selector < 11; ++selector)
     {
         Cs80AudioProcessor host;
         host.setParamValue(cs80::P_parityMode, 1.0f);
         host.setParamValue(cs80::P_masterSustain, 0.0f);
         host.setParamValue(cs80::P_keyRelease, 0.0f);
-        for (int rank = 0; rank < 2; ++rank) automate(host, rank, 3);
+        for (int rank = 0; rank < 2; ++rank) automate(host, rank, selector);
         host.prepareToPlay(48000.0, 64);
         cs80::Adsr amplitude[2];
         cs80::FilterEnv filter[2];
         for (int rank = 0; rank < 2; ++rank)
         {
-            const auto expected = completePairEnvelopeExpectation(rank);
+            const auto expected = selector == 3 ? completePairEnvelopeExpectation(rank)
+                                                 : sourceEnvelopeExpectation(rank, selector);
             amplitude[rank].noteOn(expected.amplitudeAttack, expected.amplitudeDecay,
                                    expected.amplitudeSustain, expected.amplitudeRelease);
             filter[rank].noteOn(expected.filterInitial, expected.filterTarget,
@@ -1237,13 +1312,12 @@ void testSourceFactoryHost()
         }
     }
 
-    // Each of the seven tones owns all 26 programmer inputs. Change every
+    // Each of the 22 tones owns all 26 programmer inputs. Change every
     // hidden PANEL input and all four inactive memories through the real APVTS,
     // then compare sounding callbacks against an independently hosted control.
     for (int rank = 0; rank < 2; ++rank)
     for (int selector = 0; selector < 11; ++selector)
     {
-        if (!complete(rank, selector)) continue;
         Cs80AudioProcessor reference, edited;
         for (auto* host : { &reference, &edited })
         {
@@ -1290,7 +1364,7 @@ void testSourceFactoryHost()
                 }
             check(identical, "every inactive PANEL/memory edit leaves the selected source's actual host audio bit-identical");
             check(edited.getEngine().getSourceToneInfo(rank).selector == selector
-                      && edited.getEngine().getSourceToneInfo(rank).route == sf::Route::source_complete
+                      && sf::isSourceDriven(edited.getEngine().getSourceToneInfo(rank).route)
                       && edited.getEngine().getSourceCompileCount() == compileCount,
                   "inactive edits retain source identity without recompiling the tone");
         }
@@ -1299,23 +1373,20 @@ void testSourceFactoryHost()
         // Every exit uses this same instance, after real source audio. The
         // selected PANEL/memory values must remain stored, become effective on
         // selection, and never inherit a stale typed source cutoff readout.
-        for (int destination : { 2, 13, 11, 12 })
+        for (int destination : { 13, 11, 12 })
         {
             automate(edited, rank, selector);
             apply(edited);
             automate(edited, rank, destination);
             apply(edited);
             const auto info = edited.getEngine().getSourceToneInfo(rank);
-            check(info.selector == destination && info.route == (destination == 2 ? sf::Route::legacy_bridge
-                                                                                 : sf::Route::panel_or_memory),
-                  "complete source clears on incomplete factory, PANEL and either memory selection");
-            cs80::ParamValues factory;
-            cs80::applyHardwareTone(factory, rank, 2);
+            check(info.selector == destination && info.route == sf::Route::panel_or_memory,
+                  "complete or inferred source clears only on PANEL and either memory selection");
             for (int control = 0; control < cs80::CP_count; ++control)
             {
                 if (!Cs80AudioProcessor::isMemoryControl(control)) continue;
                 const int index = cs80::chParam(rank, control);
-                const float expected = destination == 2 ? factory[index] : destination == 13 ? edited.getParamValue(index)
+                const float expected = destination == 13 ? edited.getParamValue(index)
                     : edited.getMemoryValue(rank + (destination == 12 ? 2 : 0), control);
                 check(edited.getEngine().getParams()[index] == expected,
                       "leaving a source exposes every retained destination control without overwriting PANEL or memories");
@@ -1333,7 +1404,7 @@ void testSourceFactoryHost()
     // Full session restore, including restore over an already-active source.
     // Use T51/B and T54/E, not just selector 3, to catch fixture-order mixups.
     for (bool isolated : { false, true })
-    for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
+    for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{0, 1}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
     {
         Cs80AudioProcessor saved, restored;
         saved.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
@@ -1353,11 +1424,17 @@ void testSourceFactoryHost()
         {
             const int selector = selectors[(size_t) rank];
             const auto expected = selector >= 11 ? sf::Route::panel_or_memory
-                : isolated && complete(rank, selector) ? sf::Route::source_complete : sf::Route::legacy_bridge;
+                : !isolated ? sf::Route::legacy_bridge
+                    : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
             check(restored.getHardwareSource(rank) == selector
                       && restored.getEngine().getSourceToneInfo(rank).selector == selector
                       && restored.getEngine().getSourceToneInfo(rank).route == expected,
                   "session restore reconstructs the saved rank identities and current isolation route at the real callback");
+            if (isolated && selector < 11)
+                check(restored.getEngine().getSourceToneInfo(rank).provenance.version == 2
+                          && restored.getEngine().getSourceToneInfo(rank).provenance.inferredCells
+                              == sourceFixtureUnknownMask(rank, selector),
+                      "existing isolated sessions rebuild model-two controls without adding a saved model parameter");
         }
         check(std::abs(restored.getParamValue(cs80::chParam(0, cs80::CP_fIl)) - saved.getParamValue(cs80::chParam(0, cs80::CP_fIl))) < 1e-6f
                   && std::abs(restored.getMemoryValue(0, cs80::CP_fIl) - saved.getMemoryValue(0, cs80::CP_fIl)) < 1e-6f
@@ -1368,41 +1445,44 @@ void testSourceFactoryHost()
     // Default-off must still use the exact historical setParams audio path,
     // even for a newly available complete tone. This is not a source-to-source
     // comparison that could share the same accidental activation bug.
-    Cs80AudioProcessor legacy;
-    legacy.selectHardwareSource(0, 3);
-    legacy.selectHardwareSource(1, 3);
-    legacy.prepareToPlay(48000.0, 64);
-    cs80::ParamValues effective;
-    for (int index = 0; index < cs80::P_numParams; ++index) effective[index] = legacy.getParamValue(index);
-    const auto stored = effective;
-    for (int rank = 0; rank < 2; ++rank)
+    for (int selector = 0; selector < 11; ++selector)
     {
-        cs80::ParamValues factory;
-        cs80::applyHardwareTone(factory, rank, 3);
-        for (int control = 0; control < cs80::CP_count; ++control)
-            if (Cs80AudioProcessor::isMemoryControl(control)) effective[cs80::chParam(rank, control)] = factory[cs80::chParam(rank, control)];
+        Cs80AudioProcessor legacy;
+        legacy.selectHardwareSource(0, selector);
+        legacy.selectHardwareSource(1, selector);
+        legacy.prepareToPlay(48000.0, 64);
+        cs80::ParamValues effective;
+        for (int index = 0; index < cs80::P_numParams; ++index) effective[index] = legacy.getParamValue(index);
+        const auto stored = effective;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            cs80::ParamValues factory;
+            cs80::applyHardwareTone(factory, rank, selector);
+            for (int control = 0; control < cs80::CP_count; ++control)
+                if (Cs80AudioProcessor::isMemoryControl(control)) effective[cs80::chParam(rank, control)] = factory[cs80::chParam(rank, control)];
+        }
+        cs80::Engine historical;
+        // Match the pre-render resource lifecycle too: the processor was prepared
+        // with its stored panel before applying its selected effective snapshot.
+        historical.setParams(stored);
+        historical.prepare(48000.0);
+        historical.setParams(effective);
+        historical.noteOn(60, 100.0f / 127.0f);
+        bool identical = true;
+        for (int block = 0; block < 8; ++block)
+        {
+            juce::AudioBuffer<float> audio(2, 64);
+            juce::MidiBuffer midi;
+            if (block == 0) midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+            legacy.processBlock(audio, midi);
+            float expected[128] {};
+            historical.render(expected, 64);
+            for (int sample = 0; sample < 64; ++sample)
+                for (int channel = 0; channel < 2; ++channel)
+                    identical = identical && audio.getSample(channel, sample) == expected[sample * 2 + channel];
+        }
+        check(identical && !legacy.getEngine().isParityMode(), "all 22 default-off source selectors retain bit-identical historical host audio");
     }
-    cs80::Engine historical;
-    // Match the pre-render resource lifecycle too: the processor was prepared
-    // with its stored panel before applying its selected effective snapshot.
-    historical.setParams(stored);
-    historical.prepare(48000.0);
-    historical.setParams(effective);
-    historical.noteOn(60, 100.0f / 127.0f);
-    bool identical = true;
-    for (int block = 0; block < 8; ++block)
-    {
-        juce::AudioBuffer<float> audio(2, 64);
-        juce::MidiBuffer midi;
-        if (block == 0) midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
-        legacy.processBlock(audio, midi);
-        float expected[128] {};
-        historical.render(expected, 64);
-        for (int sample = 0; sample < 64; ++sample)
-            for (int channel = 0; channel < 2; ++channel)
-                identical = identical && audio.getSample(channel, sample) == expected[sample * 2 + channel];
-    }
-    check(identical && !legacy.getEngine().isParityMode(), "default-off complete selectors retain bit-identical historical host audio");
 }
 
 // Keyboard contour, footswitch/assigners, EXP-WAH and output switch at the host boundary.

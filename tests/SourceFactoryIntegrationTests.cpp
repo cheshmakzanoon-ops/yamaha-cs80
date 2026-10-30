@@ -1,10 +1,12 @@
-// Integration of the seven complete columns is a nominal reconstruction, not
+// All 22 source columns (seven complete, fifteen explicitly inferred) are a
+// nominal reconstruction, not
 // measured CS-80 parity. The independent circuit oracle is SourceFactoryToneTests.
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
 
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <cmath>
 #include <iostream>
 #include <limits>
@@ -54,7 +56,7 @@ std::vector<float> render(Engine& e, int count, int block = 0, const ControlFram
 void routingAndAtomicity()
 {
     Engine e;
-    int complete = 0, bridges = 0;
+    int complete = 0, inferred = 0, inferredCells = 0;
     for (int rank = 0; rank < 2; ++rank)
         for (int selector = 0; selector < 14; ++selector)
             for (bool isolated : {false, true})
@@ -74,17 +76,37 @@ void routingAndAtomicity()
                               && info.provenance.inferredCells == 0 && info.provenance.unknownCells == 0
                               && !info.provenance.hardwareMeasured, "active source provenance honest and complete");
                     }
-                    else { ++bridges; check(info.provenance.unknownCells != 0, "unavailable source has explicit unknown mask"); }
+                    else
+                    {
+                        ++inferred;
+                        const auto unknown = sf::unknownMask(*sf::address(rank, selector));
+                        inferredCells += std::popcount(unknown);
+                        check(info.route == sf::Route::source_inferred && sf::isSourceDriven(info.route),
+                              "originally incomplete columns use an explicitly inferred source route");
+                        check(unknown != 0 && info.provenance.unknownCells == unknown
+                              && info.provenance.inferredCells == unknown
+                              && info.provenance.knownCells == (sf::allOutputsMask & ~unknown),
+                              "inferred source retains original unknown mask, disjoint known mask, and inference overlap");
+                        check(info.provenance.version == sf::modelVersion
+                              && info.provenance.hypothesisVersion == factory_hypotheses::version
+                              && info.provenance.hypothesisHash == factory_hypotheses::fingerprint
+                              && info.provenance.hypothesisOverrideMask == 0 && !info.provenance.hardwareMeasured,
+                              "runtime inference is the frozen nominal manifest, not measurement or a sensitivity override");
+                    }
                 }
             }
-    check(complete == 7 && bridges == 15, "exactly seven source routes and fifteen explicit bridges");
+    check(complete == 7 && inferred == 15 && inferredCells == 25,
+          "all22 source routes distinguish seven complete from fifteen inferred with exactly25 original exclusions");
     auto good = frame(); good.hardwareSources = {1, 3};
     check(e.setControlFrame(good), "source pair accepted");
     e.prepare(48000); // resource initialization must retain accepted identity
     check(e.getSourceToneInfo(0).route == sf::Route::source_complete && e.getSourceToneInfo(1).selector == 3,
           "prepare retains control frame identity");
+    // Reject atomically from an inferred active frame too, retaining its masks.
+    good.hardwareSources = {0, 1};
+    check(e.setControlFrame(good), "inferred source pair accepted");
     e.noteOn(60, .8f); render(e, 128);
-    for (int invalid = 0; invalid < 5; ++invalid)
+    for (int invalid = 0; invalid < 6; ++invalid)
     {
         auto bad = good; bad.effectiveValues[P_volume] = .1f;
         if (invalid == 0) bad.hardwareSources[0] = -1;
@@ -92,13 +114,16 @@ void routingAndAtomicity()
         if (invalid == 2) ++bad.modelVersion;
         if (invalid == 3) bad.effectiveValues[P_brilliance] = std::numeric_limits<float>::quiet_NaN();
         if (invalid == 4) bad.effectiveValues[chParam(1, CP_vA)] = std::numeric_limits<float>::infinity();
+        if (invalid == 5) bad.modelVersion = 1; // prior seven-tone model is not a hidden opt-out
         const auto params = e.getParams().v;
         const auto audio = e.getRankAudioState(0, 0);
         const auto envelope = e.getRankEnvelopeState(0, 0);
         const auto count = e.getSourceCompileCount();
         check(!e.setControlFrame(bad), "malformed frame rejected");
         check(e.getControlFrameStatus() != Engine::ControlFrameStatus::accepted, "rejection diagnostic is visible");
-        check(e.getParams().v == params && e.getSourceToneInfo(0).selector == 1 && e.getSourceToneInfo(1).selector == 3
+        check(e.getParams().v == params && e.getSourceToneInfo(0).selector == 0 && e.getSourceToneInfo(1).selector == 1
+              && e.getSourceToneInfo(0).route == sf::Route::source_inferred
+              && e.getSourceToneInfo(0).provenance.inferredCells == sf::unknownMask(*sf::address(0, 0))
               && e.getSourceCompileCount() == count, "rejected whole frame leaves all parameters and compiled sources unchanged");
         check(same(audio, e.getRankAudioState(0, 0)) && same(envelope, e.getRankEnvelopeState(0, 0)),
               "rejected frame preserves exact audio and envelope state");
@@ -115,7 +140,7 @@ void receiverRouting(double rate)
 {
     for (int rank = 0; rank < 2; ++rank) for (int selector = 0; selector < 11; ++selector)
     {
-        if (sf::route(rank, selector, true) != sf::Route::source_complete) continue;
+        check(sf::isSourceDriven(sf::route(rank, selector, true)), "every valid isolated factory selector is source driven");
         auto f = frame(); f.hardwareSources[rank] = selector;
         f.effectiveValues[P_resonance] = .37f;
         Engine e; e.prepare(rate); check(e.setControlFrame(f), "receiver fixture accepted");
@@ -207,7 +232,7 @@ void ownershipAndClearing(double rate)
 {
     for (int rank = 0; rank < 2; ++rank) for (int selector = 0; selector < 11; ++selector)
     {
-        if (sf::route(rank, selector, true) != sf::Route::source_complete) continue;
+        check(sf::isSourceDriven(sf::route(rank, selector, true)), "every valid isolated factory selector is source driven");
         auto a = frame(); a.hardwareSources[rank] = selector;
         auto b = a;
         for (int control = 0; control < CP_count; ++control)
@@ -226,15 +251,15 @@ void ownershipAndClearing(double rate)
         Engine monoEngine; monoEngine.prepare(rate); monoEngine.setControlFrame(mono); monoEngine.noteOn(60, .8f);
         Engine stereoEngine; stereoEngine.prepare(rate); stereoEngine.setControlFrame(a); stereoEngine.noteOn(60, .8f);
         check(render(monoEngine, 1024) == render(stereoEngine, 1024), "modern mono selector remains inert in isolated source path");
-        for (int destination : {13, 11, 12, 0})
+        for (int destination : {13, 11, 12})
         {
             // The plugin resolves PANEL/memory/legacy tables before this seam.
             // Setting a valid non-source selection must never reuse old voltage controls.
             auto next = b; next.hardwareSources[rank] = destination;
             applyHardwareTone(next.effectiveValues, rank, 0);
             first.setControlFrame(next);
-            check(first.getSourceToneInfo(rank).route != sf::Route::source_complete,
-                  "PANEL/memory/unavailable source immediately clears active compiled route");
+            check(!sf::isSourceDriven(first.getSourceToneInfo(rank).route),
+                  "PANEL/memory immediately clears complete or inferred active source route");
             Engine fresh, framed;
             fresh.prepare(rate); framed.prepare(rate);
             fresh.setParams(next.effectiveValues); framed.setControlFrame(next);
@@ -267,9 +292,9 @@ void transitions(double rate)
         for (int rank = 0; rank < 2; ++rank)
             check(static_cast<int>(e.getRankEnvelopeState(0, rank).amplitude.stage) == phase + 1,
                   "transition stage fixture reached");
-        for (int selector : {1, 3, 9, 13, 11, 12, 0})
+        for (int selector = 0; selector < 14; ++selector)
         {
-            auto selected = base; selected.hardwareSources = {selector, selector == 1 ? 7 : selector};
+            auto selected = base; selected.hardwareSources = {selector, selector};
             std::array<Engine::RankEnvelopeState, 2> envelopes;
             std::array<Engine::RankAudioState, 2> audio;
             for (int rank = 0; rank < 2; ++rank)
@@ -297,7 +322,7 @@ void audioStressAndTailReuse(double rate)
     constexpr std::array<int, 8> notes {0, 21, 36, 60, 84, 108, 120, 127};
     for (int rank = 0; rank < 2; ++rank) for (int selector = 0; selector < 11; ++selector)
     {
-        if (sf::route(rank, selector, true) != sf::Route::source_complete) continue;
+        check(sf::isSourceDriven(sf::route(rank, selector, true)), "every valid isolated factory selector is source driven");
         auto f = frame(); f.hardwareSources[rank] = selector;
         f.effectiveValues[P_mix] = static_cast<float>(rank); // dry single-rank audition, not saved patch rewrite
         Engine e; e.prepare(rate); e.setControlFrame(f);
@@ -305,9 +330,17 @@ void audioStressAndTailReuse(double rate)
         auto audio = render(e, static_cast<int>(rate * .2));
         bool finite = true; float peak = 0;
         for (float x : audio) { finite = finite && std::isfinite(x); peak = std::max(peak, std::abs(x)); }
-        check(finite && peak > 1e-6f, "each complete source is audible and finite across keyboard extremes and eight voices");
+        check(finite && peak > 1e-6f, "all22 complete or inferred sources are audible and finite across keyboard extremes and eight voices");
         // Do not require peak<=1 or normalize the capture: nominal linear LI can
         // exceed digital full scale, an explicitly reported headroom limitation.
+        e.allNotesOff();
+        audio = render(e, static_cast<int>(rate * 1.5));
+        check(e.activeVoices() == 0
+              && std::all_of(audio.begin(), audio.end(), [](float x) { return std::isfinite(x); }),
+              "each original source release settles without relying on a later tab change");
+        e.reset(); e.setControlFrame(f);
+        for (int voice = 0; voice < 8; ++voice) e.noteOn(notes[voice], .125f * (voice + 1));
+        render(e, static_cast<int>(rate * .1));
         e.noteOff(notes[0]); render(e, 1);
         const auto oldAudio = e.getRankAudioState(0, rank);
         const auto oldVoice = e.getVoiceInfo(0);
