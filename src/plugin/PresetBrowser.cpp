@@ -20,7 +20,7 @@ struct PresetSignature
 {
     static constexpr int kEnvPoints = 56;
     static constexpr int kRadarAxes = 6;
-    static constexpr int kSpectrumBars = 28;
+    static constexpr int kTrace = 72;
 
     struct Channel
     {
@@ -42,11 +42,14 @@ struct PresetSignature
     float sustain = 0.0f, decay = 0.0f, chorus = 0.0f;
     int dominant = 0;
     std::uint32_t styles = 0;
-    // Harmonic fingerprint: the oscillator mix of both channels pushed through
-    // their filters, harmonics 1..28 of 220 Hz on a 40 dB scale, 0..1. This is
-    // the thumbnail on every result card, so patches that share an envelope
-    // still look different.
-    std::array<float, kSpectrumBars> spectrum {};
+    // Spectrum fingerprint, one trace per channel: each channel's oscillator mix
+    // pushed through its own filters, harmonics 1..72 of 220 Hz (drawn on a log
+    // frequency axis), 0..1 on a 42 dB window. Both traces share one reference,
+    // the loudest harmonic of the patch, so the channels keep their balance and
+    // every patch fills its own picture. This is the thumbnail on every result
+    // row, so patches that share an envelope still look different.
+    std::array<std::array<float, kTrace>, 2> trace {};
+    bool traceIdentical = false;
     float layerOne = 0.5f;                  // share of the output carried by channel I
     float detune = 0.0f, lfo = 0.0f, pwm = 0.0f, ring = 0.0f;
     bool arp = false;
@@ -77,16 +80,10 @@ enum StyleTag : int { styleSwell, stylePercussive, styleBright, styleWarm, style
 const char* const kStyleNames[styleCount] = { "SWELL", "PERCUSSIVE", "BRIGHT", "WARM",
                                               "RESONANT", "MOVING", "WIDE", "LONG TAIL" };
 
-// One lamp colour per style so the chips, the card tags and the inspector agree.
-constexpr std::uint32_t kStyleColours[styleCount] = {
-    0xff5c9be0,   // SWELL       blue
-    0xffe8654f,   // PERCUSSIVE  coral
-    0xfff0dc5a,   // BRIGHT      yellow
-    0xffdb8a3a,   // WARM        orange
-    0xffd65cc0,   // RESONANT    magenta
-    0xff58c27a,   // MOVING      green
-    0xff4cc6c9,   // WIDE        cyan
-    0xff9a7ae6 }; // LONG TAIL   violet
+// Style tags carry no colour: colour belongs to the instrument (round dots) and
+// nothing else in the library, so the two codes can never be confused. Slim rows
+// show short codes; the tooltip and the card/inspector tags spell them out.
+const char* const kStyleCodes[styleCount] = { "SWL", "PERC", "BRT", "WRM", "RES", "MOV", "WID", "TAIL" };
 
 float unit01(float x) { return x < 0.0f ? 0.0f : (x > 1.0f ? 1.0f : x); }
 
@@ -207,13 +204,14 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
 
     {
         constexpr float f0 = 220.0f;
-        std::array<float, PresetSignature::kSpectrumBars> sum {};
+        constexpr int n = PresetSignature::kTrace;
+        std::array<std::array<float, n>, 2> level {};
         float peak = 1.0e-6f;
         for (int c = 0; c < 2; ++c)
         {
             const auto& ch = s.ch[(size_t) c];
             const float pw = clampValue(v[chParam(c, CP_pw)], 0.06f, 0.94f);
-            for (int k = 1; k <= PresetSignature::kSpectrumBars; ++k)
+            for (int k = 1; k <= n; ++k)
             {
                 const float kf = (float) k;
                 float amp = ch.saw / kf + ch.pulse * std::abs(std::sin(juce::MathConstants<float>::pi * kf * pw)) / kf
@@ -221,13 +219,18 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
                 if (k == 1)
                     amp += ch.sine;
                 const float magnitude = std::pow(10.0f, filterMagnitudeDb(ch, f0 * kf) / 20.0f);
-                sum[(size_t) k - 1] += ch.gain * amp * magnitude;
+                const float value = ch.gain * amp * magnitude;
+                level[(size_t) c][(size_t) k - 1] = value;
+                peak = std::max(peak, value);
             }
         }
-        for (const float value : sum)
-            peak = std::max(peak, value);
-        for (size_t k = 0; k < sum.size(); ++k)
-            s.spectrum[k] = unit01(1.0f + 20.0f * std::log10(std::max(sum[k] / peak, 1.0e-4f)) / 40.0f);
+        float apart = 0.0f;
+        for (int c = 0; c < 2; ++c)
+            for (int k = 0; k < n; ++k)
+                s.trace[(size_t) c][(size_t) k] = unit01(1.0f + 20.0f * std::log10(std::max(level[(size_t) c][(size_t) k] / peak, 1.0e-4f)) / 42.0f);
+        for (int k = 0; k < n; ++k)
+            apart = std::max(apart, std::abs(s.trace[0][(size_t) k] - s.trace[1][(size_t) k]));
+        s.traceIdentical = apart < 0.03f;
     }
 
     const auto tag = [&](StyleTag t, bool on) { if (on) s.styles |= 1u << (unsigned) t; };
@@ -521,14 +524,15 @@ juce::String formatTime(float seconds)
     return juce::String(seconds, seconds < 10.0f ? 2 : 1) + " s";
 }
 
-// Short forms for the result-card stat line: "850", "3.6k", "250ms", "1.2s".
+// Short forms for the result-card stat line: "850Hz", "3.6kHz", "250ms", "1.2s".
+// The unit is never dropped, so every cutoff on every row reads the same way.
 juce::String shortHertz(float hz)
 {
     if (hz >= 10000.0f)
-        return juce::String(juce::roundToInt(hz / 1000.0f)) + "k";
+        return juce::String(juce::roundToInt(hz / 1000.0f)) + "kHz";
     if (hz >= 1000.0f)
-        return juce::String(hz / 1000.0f, 1) + "k";
-    return juce::String(juce::roundToInt(hz));
+        return juce::String(hz / 1000.0f, 1) + "kHz";
+    return juce::String(juce::roundToInt(hz)) + "Hz";
 }
 
 juce::String shortTime(float seconds)
@@ -546,6 +550,16 @@ juce::String waveSummary(const PresetSignature::Channel& ch, bool shortForm)
     if (ch.sine > 0.05f) waves.add(shortForm ? "SIN" : "SINE");
     if (ch.noise > 0.01f) waves.add(shortForm ? "NOI" : "NOISE");
     return waves.isEmpty() ? juce::String("--") : waves.joinIntoString(shortForm ? "+" : " + ");
+}
+
+// "850 Hz", "7.2 kHz", "12 kHz": the unit always travels with the number.
+juce::String unitHertz(float hz)
+{
+    if (hz >= 10000.0f)
+        return juce::String(juce::roundToInt(hz / 1000.0f)) + " kHz";
+    if (hz >= 1000.0f)
+        return juce::String(hz / 1000.0f, 1) + " kHz";
+    return juce::String(juce::roundToInt(hz)) + " Hz";
 }
 
 juce::String formatHertz(float hz)
@@ -586,65 +600,62 @@ void etchFrame(Graphics& g, Rectangle<float> r, float radius, const juce::String
            juce::Justification::centredLeft);
 }
 
-// Rosewood side cheek: same recipe as the chassis so the library reads as the
-// same instrument.
-void paintCheek(Graphics& g, Rectangle<float> r, bool left)
-{
-    softShadow(g, r, 6.0f, left ? 3.0f : -3.0f, 5.0f, 10.0f, 0.85f);
-    g.setGradientFill(juce::ColourGradient(Colour(left ? 0xffa5522b : 0xff743419), r.getX(), 0.0f,
-                                           Colour(left ? 0xff5c2a14 : 0xff3a180b), r.getRight(), 0.0f, false));
-    g.fillRoundedRectangle(r, 6.0f);
-    juce::Random rng(left ? 11 : 12);
-    for (int i = 0; i < 30; ++i)
-    {
-        const float gx = r.getX() + 2.0f + rng.nextFloat() * (r.getWidth() - 4.0f);
-        const float wob = (rng.nextFloat() - 0.5f) * 9.0f;
-        juce::Path grain;
-        grain.startNewSubPath(gx, r.getY() + 5.0f);
-        grain.cubicTo(gx + wob, r.getY() + r.getHeight() * 0.33f, gx - wob * 0.8f,
-                      r.getY() + r.getHeight() * 0.66f, gx + wob * 0.3f, r.getBottom() - 5.0f);
-        g.setColour((rng.nextBool() ? Colour(0xffe09a5e) : Colour(0xff2a1006))
-                        .withAlpha(0.05f + rng.nextFloat() * 0.10f));
-        g.strokePath(grain, juce::PathStrokeType(0.6f + rng.nextFloat() * 1.3f));
-    }
-    g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(0.16f), 0.0f, r.getY(),
-                                           juce::Colours::transparentWhite, 0.0f,
-                                           r.getY() + r.getHeight() * 0.45f, false));
-    g.fillRoundedRectangle(r, 6.0f);
-    g.setColour(Colour(0xffe9a96c).withAlpha(0.5f));
-    const float edge = left ? r.getX() + 1.0f : r.getRight() - 1.0f;
-    g.drawLine(edge, r.getY() + 6.0f, edge, r.getBottom() - 6.0f, 1.2f);
-    g.setColour(juce::Colours::black.withAlpha(0.55f));
-    g.drawRoundedRectangle(r, 6.0f, 1.0f);
-}
-
-float drawPill(Graphics& g, float x, float y, float height, const juce::String& text, Colour colour,
-               bool lit, float minWidth = 0.0f)
+// Instrument tag: a neutral capsule with a round dot in the instrument's colour.
+// Round dots mean "instrument" everywhere in the library (chips, rows, inspector).
+float drawTypePill(Graphics& g, float x, float y, float height, const juce::String& text, Colour colour,
+                   bool lit, float minWidth = 0.0f)
 {
     const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
-    const float w = std::max(minWidth, textWidth(font, text) + 20.0f);
+    const float tw = textWidth(font, text);
+    const float w = std::max(minWidth, tw + 30.0f);
     const Rectangle<float> r(x, y, w, height);
-    g.setColour(colour.withAlpha(lit ? 0.24f : 0.11f));
-    g.fillRoundedRectangle(r, 2.5f);
-    g.setColour(colour.withAlpha(lit ? 0.9f : 0.6f));
-    g.drawRoundedRectangle(r.reduced(0.5f), 2.5f, 1.0f);
+    g.setColour(juce::Colours::black.withAlpha(0.30f));
+    g.fillRoundedRectangle(r, height * 0.5f);
+    g.setColour(ivory.withAlpha(lit ? 0.78f : 0.5f));
+    g.drawRoundedRectangle(r.reduced(0.5f), height * 0.5f, 1.0f);
+    const float content = 10.0f + 7.0f + tw;
+    const float cx = r.getX() + (w - content) * 0.5f, cy = r.getCentreY();
+    g.setColour(juce::Colours::black.withAlpha(0.75f));
+    g.fillEllipse(cx - 1.0f, cy - 6.0f, 12.0f, 12.0f);
+    g.setColour(colour);
+    g.fillEllipse(cx, cy - 5.0f, 10.0f, 10.0f);
+    g.setColour(juce::Colours::white.withAlpha(0.35f));
+    g.fillEllipse(cx + 2.0f, cy - 4.0f, 4.0f, 3.0f);
     g.setFont(font);
-    g.setColour(colour.brighter(lit ? 0.45f : 0.35f));
+    g.setColour(ivory.withAlpha(0.95f));
+    g.drawText(text, Rectangle<float>(cx + 17.0f, y, tw + 6.0f, height), juce::Justification::centredLeft, false);
+    return w;
+}
+
+juce::Font styleTagFont() { return tracked(uiFont(kMinText, juce::Font::bold), 0.06f); }
+float styleTagWidth(const juce::String& text) { return textWidth(styleTagFont(), text) + 14.0f; }
+
+// Style tag: a square-cornered neutral outline, never coloured.
+float drawStyleTag(Graphics& g, float x, float y, float height, const juce::String& text, bool lit)
+{
+    const float w = styleTagWidth(text);
+    const Rectangle<float> r(x, y, w, height);
+    g.setColour(juce::Colours::black.withAlpha(0.28f));
+    g.fillRect(r);
+    g.setColour(ivory.withAlpha(lit ? 0.72f : 0.5f));
+    g.drawRect(r.reduced(0.5f), 1.0f);
+    g.setColour(ivory.withAlpha(lit ? 1.0f : 0.92f));
+    g.setFont(styleTagFont());
     g.drawText(text, r, juce::Justification::centred, false);
     return w;
 }
 
-// Small style tag used on the result rows (12.5 px type, 18 px high).
-float drawTag(Graphics& g, float x, float y, const juce::String& text, Colour colour, bool lit)
+// State tag (LOADED green, EDITED amber) on the row that is sounding.
+float drawStatusTag(Graphics& g, float x, float y, const juce::String& text, Colour colour)
 {
-    const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
+    const auto font = styleTagFont();
     const float w = textWidth(font, text) + 14.0f;
     const Rectangle<float> r(x, y, w, 18.0f);
-    g.setColour(colour.withAlpha(lit ? 0.26f : 0.15f));
+    g.setColour(colour.withAlpha(0.26f));
     g.fillRoundedRectangle(r, 2.5f);
-    g.setColour(colour.withAlpha(lit ? 0.9f : 0.62f));
+    g.setColour(colour.withAlpha(0.9f));
     g.drawRoundedRectangle(r.reduced(0.5f), 2.5f, 1.0f);
-    g.setColour(colour.brighter(lit ? 0.5f : 0.4f));
+    g.setColour(colour.brighter(0.5f));
     g.setFont(font);
     g.drawText(text, r, juce::Justification::centred, false);
     return w;
@@ -733,10 +744,12 @@ void fillRelief(Graphics& g, const juce::Image& tile, Rectangle<float> area, flo
     g.fillRect(area);
 }
 
-// Result-row thumbnail: a tiny backlit window showing the patch's harmonic
-// fingerprint (spectrum after the filters) and, beneath it when there is room,
-// how loud channels I and II are. Presets that share an envelope still differ.
-void drawThumbnail(Graphics& g, Rectangle<float> r, const PresetSignature& sig, bool lit, bool withMeters)
+// Result-row thumbnail: a tiny backlit window with the patch's spectrum, one
+// trace per channel (I gold, II ivory) on a log-frequency axis with octave
+// gridlines, normalised to the patch's own loudest harmonic. Beneath it, when
+// there is room, a legend in the same two colours. Patches that share an envelope
+// still differ in where their filters bend and how the two layers differ.
+void drawThumbnail(Graphics& g, Rectangle<float> r, const PresetSignature& sig, bool lit, bool withLegend)
 {
     g.setColour(Colour(0xff080a09));
     g.fillRoundedRectangle(r, 2.0f);
@@ -746,45 +759,70 @@ void drawThumbnail(Graphics& g, Rectangle<float> r, const PresetSignature& sig, 
     g.setColour(juce::Colours::white.withAlpha(0.09f));
     g.drawLine(r.getX() + 3.0f, r.getBottom() + 0.5f, r.getRight() - 3.0f, r.getBottom() + 0.5f, 1.0f);
 
-    constexpr int bars = PresetSignature::kSpectrumBars;
-    const auto inner = r.reduced(6.0f, withMeters ? 5.0f : 4.0f);
-    const auto plot = withMeters ? inner.withTrimmedBottom(16.0f) : inner;
-    g.setColour(amber.withAlpha(0.07f));
-    g.drawHorizontalLine(juce::roundToInt(plot.getCentreY()), plot.getX(), plot.getRight());
+    constexpr int n = PresetSignature::kTrace;
+    const auto inner = r.reduced(6.0f, withLegend ? 5.0f : 4.0f);
+    const auto plot = withLegend ? inner.withTrimmedBottom(17.0f) : inner;
+    const auto xFor = [&](int k) { return plot.getX() + plot.getWidth() * std::log((float) k) / std::log((float) n); };
+    const auto yFor = [&](float v) { return plot.getBottom() - 1.0f - v * (plot.getHeight() - 2.0f); };
+    g.setColour(amber.withAlpha(0.10f));
+    for (int octave = 2; octave < n; octave *= 2)
+        g.drawVerticalLine(juce::roundToInt(xFor(octave)), plot.getY(), plot.getBottom());
     g.setColour(amber.withAlpha(0.25f));
     g.drawHorizontalLine(juce::roundToInt(plot.getBottom()), plot.getX(), plot.getRight());
 
-    const float pitch = plot.getWidth() / (float) bars;
-    const float barW = std::max(1.6f, pitch * 0.66f);
-    for (int k = 0; k < bars; ++k)
+    for (int pass = 0; pass < 2; ++pass)
     {
-        const float h = std::max(1.5f, sig.spectrum[(size_t) k] * plot.getHeight());
-        const float x = plot.getX() + pitch * (float) k + (pitch - barW) * 0.5f;
-        const Rectangle<float> bar(x, plot.getBottom() - h, barW, h);
-        g.setColour((lit ? amber : amber.darker(0.15f)).withAlpha(0.45f + 0.35f * sig.spectrum[(size_t) k]));
-        g.fillRect(bar);
-        g.setColour((lit ? amberBright : amber).brighter(0.2f));
-        g.fillRect(bar.withHeight(1.6f));
+        const int c = pass == 0 ? 1 : 0;                        // II first, so I stays readable on top
+        if (c == 1 && sig.traceIdentical)
+            continue;
+        juce::Path line;
+        for (int k = 1; k <= n; ++k)
+        {
+            const float x = xFor(k), y = yFor(sig.trace[(size_t) c][(size_t) k - 1]);
+            if (k == 1) line.startNewSubPath(x, y); else line.lineTo(x, y);
+        }
+        if (c == 0)
+        {
+            juce::Path area(line);
+            area.lineTo(plot.getRight(), plot.getBottom());
+            area.lineTo(plot.getX(), plot.getBottom());
+            area.closeSubPath();
+            g.setGradientFill(juce::ColourGradient(kChannelOne.withAlpha(lit ? 0.34f : 0.26f), 0.0f, plot.getY(),
+                                                   kChannelOne.withAlpha(0.03f), 0.0f, plot.getBottom(), false));
+            g.fillPath(area);
+        }
+        g.setColour((c == 0 ? kChannelOne : kChannelTwo).withAlpha(c == 0 ? 1.0f : 0.85f));
+        g.strokePath(line, juce::PathStrokeType(c == 0 ? 1.5f : 1.2f, juce::PathStrokeType::curved));
     }
 
-    if (withMeters)
+    if (withLegend)
     {
-        // Channel level meters: I on the left, II on the right.
-        const float meterY = inner.getBottom() - 12.0f;
-        const float half = inner.getWidth() * 0.5f;
+        // Legend: what each colour is, in the colours the traces use.
+        const float y = inner.getBottom() - 13.0f;
         const auto labelFont = monoFont(kMinText);
-        for (int c = 0; c < 2; ++c)
+        g.setFont(labelFont);
+        float x = inner.getX() + 1.0f;
+        const auto key = [&](const juce::String& text, Colour c, bool swatch)
         {
-            const float x0 = inner.getX() + half * (float) c + (c == 1 ? 4.0f : 0.0f);
-            const float labelW = c == 0 ? 7.0f : 13.0f;
-            g.setFont(labelFont);
-            g.setColour((c == 0 ? kChannelOne : kChannelTwo).withAlpha(0.95f));
-            g.drawText(c == 0 ? "I" : "II", Rectangle<float>(x0, meterY, labelW + 3.0f, 13.0f), juce::Justification::centredLeft, false);
-            const Rectangle<float> track(x0 + labelW + 3.0f, meterY + 5.0f, half - labelW - 12.0f, 3.5f);
-            g.setColour(juce::Colours::white.withAlpha(0.11f));
-            g.fillRoundedRectangle(track, 1.7f);
-            g.setColour((c == 0 ? kChannelOne : kChannelTwo).withAlpha(0.95f));
-            g.fillRoundedRectangle(track.withWidth(std::max(2.5f, track.getWidth() * sig.ch[(size_t) c].gain)), 1.7f);
+            const float tw = textWidth(labelFont, text) + 2.0f;
+            g.setColour(c.withAlpha(0.95f));
+            g.drawText(text, Rectangle<float>(x, y, tw + 2.0f, 13.0f), juce::Justification::centredLeft, false);
+            x += tw + 2.0f;
+            if (swatch)
+            {
+                g.fillRoundedRectangle(x, y + 5.5f, 12.0f, 2.4f, 1.2f);
+                x += 12.0f + 8.0f;
+            }
+        };
+        if (sig.traceIdentical)
+        {
+            key("I", kChannelOne, true);
+            key("= II", kChannelTwo, false);
+        }
+        else
+        {
+            key("I", kChannelOne, true);
+            key("II", kChannelTwo, true);
         }
     }
 
@@ -868,7 +906,7 @@ void PlateButton::paintButton(Graphics& g, bool hover, bool down)
         }
         const auto font = tracked(uiFont(kMinText * u, juce::Font::bold), 0.1f);
         g.setFont(font);
-        g.setColour(! enabled ? ivory.withAlpha(0.34f) : (on ? Colour(0xff2b1b05) : ivory.withAlpha(hover ? 1.0f : 0.82f)));
+        g.setColour(! enabled ? ivory.withAlpha(0.46f) : (on ? Colour(0xff2b1b05) : ivory.withAlpha(hover ? 1.0f : 0.82f)));
         if (on && arrow != 0)
         {
             // Sort direction: a small triangle after the label of the lit segment.
@@ -931,15 +969,38 @@ void PlateButton::paintButton(Graphics& g, bool hover, bool down)
     if (kind == Kind::primary) ink = Colour(0xff2b1b05);
     else if (kind == Kind::danger) ink = Colour(0xffff9d89);
 
+    if (kind == Kind::danger && armed && enabled)
+    {
+        // Armed: the next press deletes. A red plate with white type, unmistakable beside the grey keys.
+        const auto lit = face.translated(0.0f, down ? 1.0f : 0.0f);
+        g.setColour(juce::Colours::black.withAlpha(0.7f));
+        g.fillRoundedRectangle(lit.translated(0.0f, 1.8f * u), 3.0f);
+        g.setGradientFill(juce::ColourGradient(Colour(0xffd0472f), lit.getX(), lit.getY(),
+                                               Colour(0xff8f2616), lit.getX(), lit.getBottom(), false));
+        g.fillRoundedRectangle(lit, 3.0f);
+        g.setColour(juce::Colours::white.withAlpha(0.32f));
+        g.drawLine(lit.getX() + 3.0f, lit.getY() + 1.0f, lit.getRight() - 3.0f, lit.getY() + 1.0f, 1.0f);
+        g.setColour(juce::Colours::black.withAlpha(0.7f));
+        g.drawRoundedRectangle(lit, 3.0f, 1.0f);
+        g.setFont(font);
+        g.setColour(juce::Colours::black.withAlpha(0.45f));
+        g.drawText(getButtonText(), lit.translated(0.0f, u), juce::Justification::centred, false);
+        g.setColour(juce::Colours::white);
+        g.drawText(getButtonText(), lit, juce::Justification::centred, false);
+        return;
+    }
+
     if (! enabled)
     {
         // A disabled key sits flush with the plate instead of standing proud.
+        // Dimmer than a live key and flush with the plate, but still legible (3:1 or better):
+        // a tooltip on every disabled key says why it is off.
         g.setColour(juce::Colours::black.withAlpha(0.32f));
         g.fillRoundedRectangle(face, 3.0f);
-        g.setColour(juce::Colours::white.withAlpha(0.06f));
+        g.setColour(juce::Colours::white.withAlpha(0.13f));
         g.drawRoundedRectangle(face, 3.0f, 1.0f);
         g.setFont(font);
-        g.setColour(ivory.withAlpha(0.34f));
+        g.setColour(ivory.withAlpha(0.46f));
         g.drawText(getButtonText(), face, juce::Justification::centred, false);
         return;
     }
@@ -1043,7 +1104,7 @@ void ChipButton::paintButton(Graphics& g, bool hover, bool down)
 
     const float lampX = b.getX() + 12.5f * u, lampY = b.getCentreY();
     const Colour darkInk(0xff2b1b05);
-    if (on && ! starGlyph)
+    if (on && ! starGlyph && lampShape != Lamp::round)
     {
         juce::Path tick;
         tick.startNewSubPath(lampX - 4.6f * u, lampY + 0.2f * u);
@@ -1056,19 +1117,37 @@ void ChipButton::paintButton(Graphics& g, bool hover, bool down)
     {
         fillStar(g, { lampX, lampY }, 6.4f * u, on ? darkInk : accentColour.withAlpha(faded ? 0.4f : 0.85f), on, 1.3f * u);
     }
-    else
+    else if (lampShape == Lamp::round)
     {
-        // Square lamp window with the colour behind it.
-        const Rectangle<float> window(lampX - 4.8f * u, lampY - 4.8f * u, 9.6f * u, 9.6f * u);
+        // Instrument: a round dot in the instrument's colour.
+        const float rr = 5.2f * u;
         g.setColour(juce::Colours::black.withAlpha(0.85f));
-        g.fillRoundedRectangle(window, 1.2f * u);
-        g.setColour(accentColour.withAlpha(faded ? 0.32f : 1.0f));
-        g.fillRect(window.reduced(1.5f * u));
+        g.fillEllipse(lampX - rr - u, lampY - rr - u, (rr + u) * 2.0f, (rr + u) * 2.0f);
+        g.setColour(accentColour.withAlpha(faded ? 0.38f : 1.0f));
+        g.fillEllipse(lampX - rr, lampY - rr, rr * 2.0f, rr * 2.0f);
         if (! faded)
         {
             g.setColour(juce::Colours::white.withAlpha(0.38f));
-            g.fillRect(window.reduced(1.5f * u).withHeight(2.0f * u));
+            g.fillEllipse(lampX - rr * 0.45f, lampY - rr * 0.75f, rr * 0.9f, rr * 0.6f);
         }
+    }
+    else if (lampShape == Lamp::hollow)
+    {
+        // Style: a square neutral outline, never coloured.
+        const Rectangle<float> window(lampX - 4.8f * u, lampY - 4.8f * u, 9.6f * u, 9.6f * u);
+        g.setColour(juce::Colours::black.withAlpha(0.85f));
+        g.fillRect(window);
+        g.setColour(ivory.withAlpha(faded ? 0.5f : 0.9f));
+        g.drawRect(window.reduced(0.6f * u), 1.3f * u);
+    }
+    else
+    {
+        // Library scope: a plain neutral square.
+        const Rectangle<float> window(lampX - 4.8f * u, lampY - 4.8f * u, 9.6f * u, 9.6f * u);
+        g.setColour(juce::Colours::black.withAlpha(0.85f));
+        g.fillRoundedRectangle(window, 1.2f * u);
+        g.setColour(accentColour.withAlpha(faded ? 0.4f : 1.0f));
+        g.fillRect(window.reduced(1.5f * u));
     }
 
     auto text = b.withTrimmedLeft(25.0f * u).withTrimmedRight(6.0f * u);
@@ -1236,7 +1315,9 @@ class PresetBrowser::Surface final : public juce::Component
 public:
     explicit Surface(PresetBrowser& o) : owner(o)
     {
-        setOpaque(true);
+        // Transparent outside the panel face: the cheek columns show the instrument's own
+        // walnut (the Backdrop), exactly as they do beside the memory lid.
+        setOpaque(false);
         setInterceptsMouseClicks(false, false);
         setBufferedToImage(true);
         setAccessible(false);
@@ -1245,12 +1326,17 @@ public:
     void paint(Graphics& g) override
     {
         const auto& L = owner.layout;
-        g.fillAll(Colour(0xff0a0908));
         g.addTransform(juce::AffineTransform::scale(L.s));
         const float W = L.width, H = L.height;
 
-        paintCheek(g, { 4.0f, 6.0f, 40.0f, H - 12.0f }, true);
-        paintCheek(g, { W - 44.0f, 6.0f, 40.0f, H - 12.0f }, false);
+        // Where the face meets the walnut: a cast shadow on the wood and a gold hairline on the panel edge.
+        for (const bool left : { true, false })
+        {
+            const float edge = left ? L.face.getX() : L.face.getRight();
+            g.setGradientFill(juce::ColourGradient(juce::Colours::black.withAlpha(0.55f), edge, 0.0f,
+                                                   juce::Colours::transparentBlack, edge + (left ? -9.0f : 9.0f), 0.0f, false));
+            g.fillRect(left ? edge - 9.0f : edge, 0.0f, 9.0f, H);
+        }
 
         // The panel face carries the same crinkle finish as the instrument body.
         fillPanelFace(g, L.face);
@@ -1271,10 +1357,9 @@ public:
             g.setGradientFill(edge);
             g.fillRect(L.face);
         }
-        g.setColour(Colour(0xff77726a).withAlpha(0.75f));
-        g.drawLine(L.face.getX(), L.face.getY() + 1.0f, L.face.getRight(), L.face.getY() + 1.0f, 1.6f);
-        g.setColour(juce::Colours::black.withAlpha(0.7f));
-        g.drawLine(L.face.getX(), L.face.getBottom(), L.face.getRight(), L.face.getBottom(), 1.5f);
+        g.setColour(Colour(0xffcdb878).withAlpha(0.34f));
+        g.drawLine(L.face.getX() + 0.5f, 0.0f, L.face.getX() + 0.5f, H, 1.0f);
+        g.drawLine(L.face.getRight() - 0.5f, 0.0f, L.face.getRight() - 0.5f, H, 1.0f);
 
         // Header band: a darker strip with a double etched rule beneath it.
         g.setColour(juce::Colours::black.withAlpha(0.22f));
@@ -1288,11 +1373,11 @@ public:
         caption(g, "SORT BY", { L.sortStrip.getX() + 4.0f, 21.0f, 120.0f, 16.0f });
         caption(g, "ROWS", { L.viewStrip.getX() + 4.0f, 21.0f, 120.0f, 16.0f });
 
-        const float cornerX = L.face.getX() + 13.0f, cornerY = L.face.getY() + 13.0f;
+        const float cornerX = L.face.getX() + 13.0f, cornerY = 27.0f;
         drawScrew(g, { cornerX, cornerY }, 4.6f, 0.4f);
         drawScrew(g, { L.face.getRight() - 13.0f, cornerY }, 4.6f, 1.1f);
-        drawScrew(g, { cornerX, L.face.getBottom() - 13.0f }, 4.6f, 2.0f);
-        drawScrew(g, { L.face.getRight() - 13.0f, L.face.getBottom() - 13.0f }, 4.6f, 0.9f);
+        drawScrew(g, { cornerX, H - 27.0f }, 4.6f, 2.0f);
+        drawScrew(g, { L.face.getRight() - 13.0f, H - 27.0f }, 4.6f, 0.9f);
 
         // Sort and view strip troughs.
         drawWell(g, L.sortStrip.expanded(2.0f), 6.0f);
@@ -1481,7 +1566,7 @@ private:
         // drop away first when the strip is narrow.
         struct Hint { juce::String key, action; };
         const Hint hints[] = { { "^v", "BROWSE" },
-                               { "ENTER", "LOAD" }, { "SPACE", "STAR" }, { "DEL", "REMOVE" } };
+                               { "ENTER", "LOAD" }, { "SPACE", "STAR" }, { "DEL", "DELETE" } };
         const auto keyFont = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
         const auto actionFont = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
         const float minX = window.getRight() + 24.0f;
@@ -1605,20 +1690,19 @@ private:
         // Type pill, then one pill per style tag. A patch with no tags simply has none.
         float cursor = x;
         const float pillY = D.getY() + 90.0f;
-        cursor += drawPill(g, cursor, pillY, 22.0f, kTypes[e->type].label, typeColour(e->type), true) + 8.0f;
+        cursor += drawTypePill(g, cursor, pillY, 22.0f, kTypes[e->type].label, typeColour(e->type), true) + 8.0f;
         int hidden = 0;
         for (int t = 0; t < styleCount; ++t)
         {
             if ((e->styles & (1u << (unsigned) t)) == 0)
                 continue;
-            const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
-            const float pw = textWidth(font, kStyleNames[t]) + 20.0f;
+            const float pw = styleTagWidth(kStyleNames[t]);
             if (cursor + pw > x + w - 36.0f)
             {
                 ++hidden;
                 continue;
             }
-            cursor += drawPill(g, cursor, pillY, 22.0f, kStyleNames[t], Colour(kStyleColours[t]), false) + 8.0f;
+            cursor += drawStyleTag(g, cursor, pillY, 22.0f, kStyleNames[t], true) + 8.0f;
         }
         if (hidden > 0)
             legend(g, "+" + juce::String(hidden), { cursor, pillY, 34.0f, 22.0f }, uiFont(kMinText, juce::Font::bold), ivoryDim);
@@ -1738,36 +1822,41 @@ private:
             g.strokePath(line, juce::PathStrokeType(c == 0 ? 1.7f : 1.3f));
         }
 
-        // Time axis for the louder channel: A, D, S and R segments with their
-        // settings. The axis is compressed (log-like), so ticks sit at the
-        // segment boundaries rather than at even seconds. A label that does
-        // not fit its segment is left out, not shrunk.
+        // Time axis for the louder channel: A, D, S and R with their settings. The axis
+        // is compressed (log-like), so ticks sit at the segment boundaries rather than
+        // at even seconds. Each label sits under its own segment when it can; a short
+        // stage (a 3 ms attack) pushes its neighbours aside instead of being left out.
         const auto& ch = sig.ch[(size_t) sig.dominant];
         const float edges[5] = { 0.0f, ch.markA, ch.markD, ch.markH, ch.markEnd };
-        const juce::String names[4] = { "A " + shortTime(ch.attack), "D " + shortTime(ch.decay),
-                                        "S " + juce::String(juce::roundToInt(ch.sustain * 100.0f)) + "%",
-                                        "R " + shortTime(ch.release) };
+        const juce::String names[4] = { "A " + formatTime(ch.attack), "D " + formatTime(ch.decay),
+                                        "S " + juce::String(juce::roundToInt(ch.sustain * 100.0f)) + " %",
+                                        "R " + formatTime(ch.release) };
         const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.02f);
         const float axisY = p.getBottom() + 3.0f;
-        float lastRight = p.getX() - 100.0f;
         for (int i = 0; i < 5; ++i)
         {
             const float tx = p.getX() + p.getWidth() * edges[i];
             g.setColour(amber.withAlpha(0.55f));
             g.drawVerticalLine(juce::roundToInt(tx), p.getBottom(), p.getBottom() + 4.0f);
         }
+        float width[4], left[4];
+        float cursor = p.getX();
         for (int i = 0; i < 4; ++i)
         {
-            const float x0 = p.getX() + p.getWidth() * edges[i], x1 = p.getX() + p.getWidth() * edges[i + 1];
-            const float tw = textWidth(font, names[i]);
-            const float cx = (x0 + x1) * 0.5f;
-            const float left = cx - tw * 0.5f;
-            if (x1 - x0 < tw + 4.0f || left < lastRight + 6.0f)
-                continue;
-            legend(g, names[i], { left - 2.0f, axisY + 3.0f, tw + 6.0f, 16.0f }, font, ivoryDim.withAlpha(0.98f),
-                   juce::Justification::centred);
-            lastRight = left + tw;
+            width[i] = textWidth(font, names[i]);
+            const float centre = p.getX() + p.getWidth() * (edges[i] + edges[i + 1]) * 0.5f;
+            left[i] = std::max(cursor, centre - width[i] * 0.5f);
+            cursor = left[i] + width[i] + 12.0f;
         }
+        float limit = p.getRight();
+        for (int i = 3; i >= 0; --i)
+        {
+            left[i] = std::min(left[i], limit - width[i]);
+            limit = left[i] - 12.0f;
+        }
+        for (int i = 0; i < 4; ++i)
+            legend(g, names[i], { left[i] - 2.0f, axisY + 3.0f, width[i] + 6.0f, 16.0f }, font, ivoryDim.withAlpha(0.98f),
+                   juce::Justification::centred);
     }
 
     static void paintFilterScope(Graphics& g, Rectangle<float> r, const PresetSignature& sig)
@@ -1786,13 +1875,13 @@ private:
         };
         const auto labelFont = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
         const float markHz[3] = { 100.0f, 1000.0f, 10000.0f };
-        const char* const markText[3] = { "100", "1k", "10k" };
+        const char* const markText[3] = { "100 Hz", "1 kHz", "10 kHz" };
         for (int m = 0; m < 3; ++m)
         {
             const float mx = xForHz(markHz[m]);
             g.setColour(amber.withAlpha(0.09f));
             g.drawVerticalLine(juce::roundToInt(mx), p.getY(), p.getBottom());
-            legend(g, markText[m], { mx - 18.0f, p.getBottom() + 1.0f, 36.0f, 16.0f }, labelFont,
+            legend(g, markText[m], { mx - 36.0f, p.getBottom() + 1.0f, 72.0f, 16.0f }, labelFont,
                    ivoryDim.withAlpha(0.95f), juce::Justification::centred);
         }
         g.setColour(amber.withAlpha(0.18f));
@@ -1889,13 +1978,11 @@ private:
         }
     }
 
-    // Numbers that the radar cannot show: oscillator mix, filter points, envelope
-    // levels, detune, chorus and which modulation is active.
+    // Numbers that the radar cannot show: oscillator mix, filter points, detune,
+    // chorus and which modulation is active (the envelope times sit under the envelope scope).
     static void paintFacts(Graphics& g, Rectangle<float> r, const PresetSignature& sig)
     {
         const auto& lead = sig.ch[(size_t) sig.dominant];
-        const juce::String filter = (lead.lpfOn ? "LP " + shortHertz(lead.lpf) : juce::String("LP OFF"))
-                                    + (lead.hpfOn ? "  HP " + shortHertz(lead.hpf) : juce::String());
         juce::StringArray motion;
         if (sig.lfo > 0.05f) motion.add("LFO");
         if (sig.pwm > 0.05f) motion.add("PWM");
@@ -1903,12 +1990,11 @@ private:
         if (sig.arp) motion.add("ARP");
         const struct { const char* name; juce::String value; } rows[] = {
             { "WAVES", waveSummary(lead, true) },
-            { "FILTER", filter },
-            { "A  S  R", shortTime(lead.attack) + " " + juce::String(juce::roundToInt(lead.sustain * 100.0f)) + "% "
-                         + shortTime(lead.release) },
+            { "LOW-PASS", lead.lpfOn ? unitHertz(lead.lpf) : juce::String("OFF") },
+            { "HIGH-PASS", lead.hpfOn ? unitHertz(lead.hpf) : juce::String("OFF") },
             { "DETUNE", juce::String(juce::roundToInt(sig.detune)) + " ct" },
             { "CHORUS", sig.chorus > 0.0f ? juce::String(juce::roundToInt(sig.chorus * 100.0f)) + " %" : juce::String("OFF") },
-            { "MOTION", motion.isEmpty() ? juce::String("STILL") : motion.joinIntoString(" + ") } };
+            { "MOTION", motion.isEmpty() ? juce::String("STILL") : motion.joinIntoString(" ") } };
         const float pitch = r.getHeight() / 6.0f;
         for (int i = 0; i < 6; ++i)
         {
@@ -2144,7 +2230,7 @@ private:
 // ===========================================================================
 PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
 {
-    setOpaque(true);
+    setOpaque(false);
     setTitle("Preset library");
     setWantsKeyboardFocus(false);
 
@@ -2416,16 +2502,15 @@ PresetBrowser::~PresetBrowser()
     }
 }
 
-void PresetBrowser::paint(Graphics& g)
+void PresetBrowser::paint(Graphics&)
 {
-    g.fillAll(Colour(0xff0a0908));
 }
 
 void PresetBrowser::buildFilterChips()
 {
     for (int i = 0; i < kScopeCount; ++i)
     {
-        auto chip = std::make_unique<ChipButton>(kScopeNames[i], i == 1 ? amberBright : amber);
+        auto chip = std::make_unique<ChipButton>(kScopeNames[i], i == 1 ? amberBright : ivory.withAlpha(0.8f));
         chip->setRadioGroupId(7001);
         chip->setStarGlyph(i == 1);
         chip->setTitle(juce::String("Show ") + kScopeNames[i]);
@@ -2439,6 +2524,7 @@ void PresetBrowser::buildFilterChips()
     for (int t = 0; t < typeCount; ++t)
     {
         auto chip = std::make_unique<ChipButton>(kTypes[t].label, typeColour(t));
+        chip->setLamp(ChipButton::Lamp::round);
         chip->setTitle(juce::String("Instrument type ") + kTypes[t].label);
         chip->onClick = [this, t, raw = chip.get()]
         {
@@ -2451,7 +2537,8 @@ void PresetBrowser::buildFilterChips()
     }
     for (int s = 0; s < styleCount; ++s)
     {
-        auto chip = std::make_unique<ChipButton>(kStyleNames[s], Colour(kStyleColours[s]));
+        auto chip = std::make_unique<ChipButton>(kStyleNames[s], ivory);
+        chip->setLamp(ChipButton::Lamp::hollow);
         chip->setTitle(juce::String("Style ") + kStyleNames[s]);
         chip->onClick = [this, s, raw = chip.get()]
         {
@@ -2493,8 +2580,8 @@ void PresetBrowser::layoutAll()
     };
     const auto pxr = [&px](Rectangle<float> r) { return px(r.getX(), r.getY(), r.getWidth(), r.getHeight()); };
 
-    L.face = { 44.0f, 14.0f, W - 88.0f, H - 28.0f };
-    L.header = { 44.0f, 14.0f, W - 88.0f, 84.0f };
+    L.face = { 44.0f, 0.0f, W - 88.0f, H };
+    L.header = { 44.0f, 0.0f, W - 88.0f, 98.0f };
     const float top = 114.0f, bottom = H - 32.0f;
     L.leftPlate = { 66.0f, top, 326.0f, bottom - top };
     L.detail = { W - 66.0f - 440.0f, top, 440.0f, bottom - top };
@@ -2948,8 +3035,8 @@ void PresetBrowser::rebuildFilter()
     for (int i = 0; i < kSortCount; ++i)
     {
         sortButtons[(size_t) i]->setEnabled(i != 4 || anyUser);
-        sortButtons[(size_t) i]->setTooltip(juce::String(kSortTitles[i]) + (i == 4 && ! anyUser ? " (save a patch to enable)"
-                                                                                           : " (click again to reverse)"));
+        sortButtons[(size_t) i]->setTooltip(i == 4 && ! anyUser ? juce::String("No saved patches yet: save one to sort by NEW")
+                                                                : juce::String(kSortTitles[i]) + " (click again to reverse)");
         sortButtons[(size_t) i]->setToggleState(i == sortMode, juce::dontSendNotification);
         sortButtons[(size_t) i]->setArrowDirection(i == sortMode ? sortArrow(i) : 0);
     }
@@ -2993,13 +3080,14 @@ void PresetBrowser::updateSelectionWidgets()
 {
     const auto* e = selectedEntry();
     loadButton.setEnabled(e != nullptr);
-    deleteButton.setEnabled(e != nullptr && e->isUser && ! deleteConfirmationPending);
+    deleteButton.setEnabled(e != nullptr && e->isUser);
     favouriteButton.setEnabled(e != nullptr);
     favouriteButton.setToggleState(e != nullptr && isFavourite(*e), juce::dontSendNotification);
     previousButton.setEnabled(selectedFilteredRow > 0);
     nextButton.setEnabled(selectedFilteredRow >= 0 && selectedFilteredRow + 1 < (int) filtered.size());
     revertButton.setEnabled(canRevert());
     updateLoadLabel();
+    updateActionTips();
     if (e != nullptr)
         description.setText(e->description, juce::dontSendNotification);
     else
@@ -3054,32 +3142,50 @@ juce::Component* PresetBrowser::refreshComponentForRow(int rowNumber, bool, juce
 
 namespace
 {
-// Right-hand side of a slim row in design units: type pill, USER mark and the
-// style lamps. The painter and the tooltip both read it, so the hover area is
-// exactly what is drawn. More than two tags show two lamps and a "+N" count.
+// Right-hand side of a slim row in design units: the instrument pill, and on the
+// name line the USER mark and the style codes. The painter and the tooltip both
+// read it, so the hover area is exactly what is drawn. More than two tags show
+// two codes and a "+N" count; the tooltip spells every tag out.
 struct SlimCluster
 {
     float pillX = 0.0f, pillW = 80.0f;
     Rectangle<float> user, more, hover;
-    Rectangle<float> lamps[2];
-    int lampTag[2] = { -1, -1 };
-    int lampCount = 0, tagCount = 0;
-    float rightEdge = 0.0f;               // name and stats may run up to here
+    Rectangle<float> codes[2];
+    int codeTag[2] = { -1, -1 };
+    int codeCount = 0, tagCount = 0;
+    float rightEdge = 0.0f;               // the name may run up to here
+    float statsEdge = 0.0f;               // the stats line may run up to here
 };
+
+// The spectrum window of a row, in the row's design units.
+Rectangle<float> thumbnailRect(bool compact, float H)
+{
+    const float cardY = compact ? 2.5f : 4.0f, cardH = H - (compact ? 5.0f : 8.0f);
+    return compact ? Rectangle<float>(72.0f, cardY + 5.0f, 76.0f, cardH - 10.0f)
+                   : Rectangle<float>(72.0f, cardY + 8.0f, 108.0f, cardH - 16.0f);
+}
+
+float typePillWidth(int type)
+{
+    const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+    return std::max(84.0f, textWidth(font, kTypes[type].label) + 30.0f);
+}
 
 SlimCluster slimCluster(bool isUser, int type, std::uint32_t styles, float W, float H)
 {
     SlimCluster c;
     const Rectangle<float> card(6.0f, 2.5f, W - 12.0f, H - 5.0f);
-    const auto pillFont = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
-    c.pillW = std::max(80.0f, textWidth(pillFont, kTypes[type].label) + 20.0f);
+    c.pillW = typePillWidth(type);
     c.pillX = card.getRight() - 52.0f - c.pillW;
-    float right = c.pillX - 10.0f;
+    c.statsEdge = c.pillX - 12.0f;
+    float right = c.statsEdge;
+    const float blockH = 19.0f + 3.0f + 16.0f;
+    const float lineY = card.getY() + (card.getHeight() - blockH) * 0.5f + 0.5f;
     if (isUser)
     {
         const float uw = textWidth(tracked(uiFont(kMinText, juce::Font::bold), 0.14f), "USER") + 2.0f;
-        c.user = { right - uw, card.getY(), uw, card.getHeight() };
-        right -= uw + 12.0f;
+        c.user = { right - uw, lineY - 0.5f, uw, 19.0f };
+        right -= uw + 10.0f;
     }
     int tags[styleCount] = {}, n = 0;
     for (int t = 0; t < styleCount; ++t)
@@ -3088,24 +3194,24 @@ SlimCluster slimCluster(bool isUser, int type, std::uint32_t styles, float W, fl
     c.tagCount = n;
     if (n > 0)
     {
-        constexpr float lamp = 10.0f, pitch = 16.0f;
         float x = right;
         if (n > 2)
         {
             const float cw = textWidth(monoFont(kMinText), "+" + juce::String(n - 2)) + 2.0f;
-            c.more = { x - cw, card.getY(), cw, card.getHeight() };
+            c.more = { x - cw, lineY - 0.5f, cw, 19.0f };
             x -= cw + 5.0f;
         }
-        c.lampCount = std::min(n, 2);
-        for (int i = c.lampCount - 1; i >= 0; --i)
+        c.codeCount = std::min(n, 2);
+        for (int i = c.codeCount - 1; i >= 0; --i)
         {
-            c.lamps[i] = { x - lamp, card.getCentreY() - lamp * 0.5f, lamp, lamp };
-            c.lampTag[i] = tags[i];
-            x -= pitch;
+            const float w = styleTagWidth(kStyleCodes[tags[i]]);
+            c.codes[i] = { x - w, lineY, w, 18.0f };
+            c.codeTag[i] = tags[i];
+            x -= w + 5.0f;
         }
-        const auto last = c.more.isEmpty() ? c.lamps[c.lampCount - 1] : c.more;
-        c.hover = Rectangle<float>(c.lamps[0].getX() - 4.0f, card.getY(), last.getRight() - c.lamps[0].getX() + 8.0f, card.getHeight());
-        right = c.lamps[0].getX() - 10.0f;
+        const auto last = c.more.isEmpty() ? c.codes[c.codeCount - 1] : c.more;
+        c.hover = Rectangle<float>(c.codes[0].getX() - 3.0f, lineY - 1.0f, last.getRight() - c.codes[0].getX() + 6.0f, 20.0f);
+        right = c.codes[0].getX() - 12.0f;
     }
     c.rightEdge = right;
     return c;
@@ -3114,18 +3220,22 @@ SlimCluster slimCluster(bool isUser, int type, std::uint32_t styles, float W, fl
 
 juce::String PresetBrowser::getTooltipForRow(int row)
 {
-    if (! compactRows || layout.s <= 0.0f || list == nullptr)
+    if (layout.s <= 0.0f || list == nullptr)
         return {};
     const int index = entryIndexForRow(row);
     auto* rowComponent = list->getComponentForRowNumber(row);
-    if (index < 0 || rowComponent == nullptr || entries[(size_t) index].styles == 0)
+    if (index < 0 || rowComponent == nullptr)
         return {};
     const auto& e = entries[(size_t) index];
     const float s = layout.s;
-    const auto cluster = slimCluster(e.isUser, e.type, e.styles, (float) rowComponent->getWidth() / s,
-                                     (float) rowComponent->getHeight() / s);
-    const auto mouse = rowComponent->getLocalPoint(nullptr, juce::Desktop::getInstance().getMainMouseSource().getScreenPosition());
-    if (! cluster.hover.contains(mouse / s))
+    const auto mouse = rowComponent->getLocalPoint(nullptr, juce::Desktop::getInstance().getMainMouseSource().getScreenPosition()) / s;
+    const float W = (float) rowComponent->getWidth() / s, H = (float) rowComponent->getHeight() / s;
+    if (e.signature != nullptr && thumbnailRect(compactRows, H).expanded(3.0f).contains(mouse))
+        return "Harmonic spectrum on a log frequency axis. Amber is tone I, white is tone II, each drawn against its own patch's loudest harmonic.";
+    if (! compactRows || e.styles == 0)
+        return {};
+    const auto cluster = slimCluster(e.isUser, e.type, e.styles, W, H);
+    if (! cluster.hover.contains(mouse))
         return {};
     juce::StringArray names;
     for (int t = 0; t < styleCount; ++t)
@@ -3166,47 +3276,27 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     g.setColour(selected ? amberBright.withAlpha(0.9f) : juce::Colours::black.withAlpha(0.75f));
     g.drawRoundedRectangle(card, radius, selected ? 1.4f : 1.0f);
 
-    // Lit stripe in its slot at the left edge: gold for the browsing selection,
-    // otherwise the instrument-type colour.
+    // A grip slot at the left edge. Purely engraved decoration: it never changes colour,
+    // so nothing on the row has to be decoded from it (the selection is the gold plate,
+    // the instrument is the dot in the pill, the sounding patch is the lamp by the number).
     const Rectangle<float> lamp(card.getX() + 7.0f, card.getY() + (compact ? 6.0f : 9.0f), 5.0f,
                                 card.getHeight() - (compact ? 12.0f : 18.0f));
     g.setColour(juce::Colours::black.withAlpha(0.8f));
     g.fillRoundedRectangle(lamp.expanded(1.2f), 2.0f);
-    if (selected)
-    {
-        g.setColour(amber.withAlpha(0.35f));
-        g.fillRoundedRectangle(lamp.expanded(2.5f), 3.0f);
-        g.setColour(amberBright);
-        g.fillRoundedRectangle(lamp, 1.5f);
-    }
-    else
-    {
-        g.setColour(tc.withAlpha(hover ? 0.6f : 0.34f));
-        g.fillRoundedRectangle(lamp, 1.5f);
-    }
+    g.setColour(ivory.withAlpha(0.20f));
+    g.fillRoundedRectangle(lamp, 1.5f);
 
-    // Slot number, and the loaded marker: a green play lamp on the row that is
-    // sounding now (the gold stripe only says where the browsing cursor is).
+    // Slot number, and the loaded marker: a jewel lamp on the row that is sounding
+    // now, green, or amber while the sound has been edited. A LOADED / EDITED tag
+    // after the name says the same in words; the gold stripe only says where the
+    // browsing cursor is, and there is no preview on a row, so nothing here is a play key.
     g.setFont(monoFont(kMinText));
     const auto slotInk = (selected ? amberBright : ivory).withAlpha(selected ? 0.98f : 0.82f);
+    const bool edited = loaded && loadedEdited;
     if (loaded)
     {
-        const float lr = compact ? 7.0f : 9.5f;
         const juce::Point<float> lc(card.getX() + (compact ? 27.0f : 38.0f), compact ? card.getCentreY() : card.getCentreY() - 15.0f);
-        const bool edited = loadedEdited;
-        const Colour green(edited ? 0xffe6a832 : 0xff58d27c);
-        g.setColour(green.withAlpha(0.22f));
-        g.fillEllipse(lc.x - lr * 1.55f, lc.y - lr * 1.55f, lr * 3.1f, lr * 3.1f);
-        g.setColour(juce::Colours::black.withAlpha(0.8f));
-        g.fillEllipse(lc.x - lr - 1.0f, lc.y - lr - 0.5f, lr * 2.0f + 2.0f, lr * 2.0f + 2.0f);
-        g.setGradientFill(juce::ColourGradient(Colour(edited ? 0xffffe29a : 0xff9af0b4), lc.x, lc.y - lr,
-                                               Colour(edited ? 0xffb97c20 : 0xff2e9b52), lc.x, lc.y + lr, false));
-        g.fillEllipse(lc.x - lr, lc.y - lr, lr * 2.0f, lr * 2.0f);
-        juce::Path play;
-        const float t = lr * 0.52f;
-        play.addTriangle(lc.x - t * 0.55f, lc.y - t, lc.x - t * 0.55f, lc.y + t, lc.x + t * 0.95f, lc.y);
-        g.setColour(Colour(edited ? 0xff2b1b05 : 0xff0b2b15));
-        g.fillPath(play);
+        drawJewelLamp(g, lc, compact ? 5.5f : 7.0f, edited ? Colour(0xffe6a832) : Colour(0xff58d27c), true);
         g.setColour(slotInk);
         if (compact)
             g.drawText(e.slot, Rectangle<float>(card.getX() + 37.0f, card.getY(), 26.0f, card.getHeight()), juce::Justification::centredLeft, false);
@@ -3220,25 +3310,18 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     }
 
     // Thumbnail window: the patch's own harmonic fingerprint.
-    const float thumbX = card.getX() + 66.0f;
     if (e.signature != nullptr)
-    {
-        if (compact)
-            drawThumbnail(g, { thumbX, card.getY() + 5.0f, 76.0f, card.getHeight() - 10.0f }, *e.signature, selected, false);
-        else
-            drawThumbnail(g, { thumbX, card.getY() + 8.0f, 108.0f, card.getHeight() - 16.0f }, *e.signature, selected, true);
-    }
+        drawThumbnail(g, thumbnailRect(compact, H), *e.signature, selected, ! compact);
 
-    // Right cluster: type pill (and USER for saved patches). The star is a
+    // Right cluster: instrument pill (and USER for saved patches). The star is a
     // separate cell. Factory and hardware rows carry no source label: the
     // library filter on the left already separates them.
     const float pillH = 20.0f;
     const auto cluster = compact ? slimCluster(e.isUser, e.type, e.styles, W, H) : SlimCluster{};
-    const auto pillFont = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
-    const float pillW = compact ? cluster.pillW : std::max(80.0f, textWidth(pillFont, kTypes[e.type].label) + 20.0f);
+    const float pillW = compact ? cluster.pillW : typePillWidth(e.type);
     const float pillX = compact ? cluster.pillX : card.getRight() - 52.0f - pillW;
     const float pillY = (e.isUser && ! compact) ? card.getCentreY() - 19.0f : card.getCentreY() - pillH * 0.5f;
-    drawPill(g, pillX, pillY, pillH, kTypes[e.type].label, tc, selected || hover, pillW);
+    drawTypePill(g, pillX, pillY, pillH, kTypes[e.type].label, tc, selected || hover, pillW);
     float rightEdge = compact ? cluster.rightEdge : pillX - 10.0f;
     if (e.isUser)
     {
@@ -3253,21 +3336,17 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     const float textX = card.getX() + (compact ? 150.0f : 188.0f);
     if (compact)
     {
-        // One square lamp per style tag in the tag's own colour (two at most, then a "+N"
-        // count); hovering them names every tag.
-        for (int i = 0; i < cluster.lampCount; ++i)
-        {
-            const auto lamp = cluster.lamps[i];
-            g.setColour(juce::Colours::black.withAlpha(0.8f));
-            g.fillRect(lamp.expanded(1.0f));
-            g.setColour(Colour(kStyleColours[cluster.lampTag[i]]).withAlpha(selected || hover ? 1.0f : 0.88f));
-            g.fillRect(lamp);
-        }
+        // Neutral short codes (square outlines, never coloured: colour belongs to the
+        // instrument dot); hovering them names every tag.
+        for (int i = 0; i < cluster.codeCount; ++i)
+            drawStyleTag(g, cluster.codes[i].getX(), cluster.codes[i].getY(), cluster.codes[i].getHeight(),
+                         kStyleCodes[cluster.codeTag[i]], selected || hover);
         if (! cluster.more.isEmpty())
             legend(g, "+" + juce::String(cluster.tagCount - 2), cluster.more,
                    monoFont(kMinText), ivory.withAlpha(0.88f), juce::Justification::centredLeft);
     }
     const float textW = (compact ? rightEdge : pillX - 16.0f) - textX;
+    const float statsW = (compact ? cluster.statsEdge : pillX - 10.0f) - textX;
     if (textW <= 20.0f)
         return;
 
@@ -3276,8 +3355,17 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     const float statH = compact ? 16.0f : 17.0f;
     const float blockH = nameH + 3.0f + statH + (hasTags ? 4.0f + 18.0f : 0.0f);
     const float y0 = card.getY() + (card.getHeight() - blockH) * 0.5f;
-    legend(g, e.name, { textX, y0, textW, nameH }, fitFont(uiFont(compact ? 15.5f : 17.0f, juce::Font::bold), e.name, textW),
-           selected ? Colour(0xfffff1cc) : ivory, juce::Justification::centredLeft, true);
+    {
+        const juce::String stateText = edited ? "EDITED" : (loaded ? "LOADED" : "");
+        const float tagW = stateText.isEmpty() ? 0.0f : textWidth(styleTagFont(), stateText) + 14.0f;
+        const float nameMax = textW - (tagW > 0.0f ? tagW + 8.0f : 0.0f);
+        const auto nameFont = fitFont(uiFont(compact ? 15.5f : 17.0f, juce::Font::bold), e.name, nameMax);
+        legend(g, e.name, { textX, y0, nameMax, nameH }, nameFont,
+               selected ? Colour(0xfffff1cc) : ivory, juce::Justification::centredLeft, true);
+        if (tagW > 0.0f)
+            drawStatusTag(g, textX + std::min(textWidth(nameFont, e.name) + 8.0f, nameMax + 2.0f), y0 + (nameH - 18.0f) * 0.5f, stateText,
+                          edited ? Colour(0xffe6a832) : Colour(0xff58d27c));
+    }
 
     if (e.signature == nullptr)
         return;
@@ -3285,22 +3373,8 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     const auto& lead = sig.ch[(size_t) sig.dominant];
     const auto capFont = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
     const auto valFont = monoFont(kMinText);
-    const float statGap = compact ? 14.0f : 16.0f;
-    juce::String cut = shortHertz(sig.cutoff) + "Hz";
-    {
-        // Drop the unit before dropping a stat: "CUT 850" still reads, a missing OSC does not.
-        const auto widthWith = [&](const juce::String& cutText)
-        {
-            const juce::String values[] = { cutText, shortTime(sig.attack), waveSummary(lead, true) };
-            const char* const names[] = { "CUT", "ATK", "OSC" };
-            float w = 0.0f;
-            for (int k = 0; k < 3; ++k)
-                w += textWidth(capFont, names[k]) + 5.0f + textWidth(valFont, values[k]) + 1.0f + (k < 2 ? statGap : 0.0f);
-            return w;
-        };
-        if (widthWith(cut) > textW)
-            cut = shortHertz(sig.cutoff);
-    }
+    const float statGap = compact ? 14.0f : 14.0f;
+    const juce::String cut = shortHertz(sig.cutoff);   // always with its unit: 850Hz, 2.6kHz
     const struct { const char* name; juce::String value; } stats[] = {
         { "CUT", cut },
         { "ATK", shortTime(sig.attack) },
@@ -3311,7 +3385,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     {
         const float cw = textWidth(capFont, st.name) + 5.0f;
         const float vw = textWidth(valFont, st.value) + 1.0f;
-        if (x + cw + vw > textX + textW)
+        if (x + cw + vw > textX + statsW)
             break;
         g.setFont(capFont);
         g.setColour(gold.withAlpha(selected ? 1.0f : 0.88f));
@@ -3332,14 +3406,13 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
         {
             if ((e.styles & (1u << (unsigned) t)) == 0)
                 continue;
-            const auto tagFont = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
-            const float tw = textWidth(tagFont, kStyleNames[t]) + 14.0f;
+            const float tw = styleTagWidth(kStyleNames[t]);
             if (shownTags >= 3 || tx + tw > textX + textW - 30.0f)
             {
                 ++hiddenTags;
                 continue;
             }
-            tx += drawTag(g, tx, tagY, kStyleNames[t], Colour(kStyleColours[t]), selected || hover) + 5.0f;
+            tx += drawStyleTag(g, tx, tagY, 18.0f, kStyleNames[t], selected || hover) + 5.0f;
             ++shownTags;
         }
         if (hiddenTags > 0)
@@ -3350,6 +3423,12 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
 void PresetBrowser::selectedRowsChanged(int lastRowSelected)
 {
     selectedFilteredRow = lastRowSelected;
+    if (deleteArmedKey.isNotEmpty())
+    {
+        const auto* armed = selectedEntry();
+        if (armed == nullptr || armed->userFile.getFullPathName() != deleteArmedKey)
+            disarmDelete(true);
+    }
     if (const auto* entry = selectedEntry())
     {
         if (! restoringSelection)
@@ -3574,13 +3653,39 @@ void PresetBrowser::updateLoadLabel()
     const juce::String text = again ? "RELOAD" : "LOAD";
     if (loadButton.getButtonText() != text)
         loadButton.setButtonText(text);
-    loadButton.setTooltip(! again ? "Load the selected patch, replacing the current sound (Enter or double-click)"
-                                  : (loadedEdited ? "Load this patch again and discard the edits (Enter or double-click)"
-                                                  : "Load this patch again (Enter or double-click)"));
+    loadButton.setTooltip(e == nullptr ? "Select a patch in the list first"
+                                       : (! again ? "Load the selected patch, replacing the current sound (Enter or double-click)"
+                                                  : (loadedEdited ? "Load this patch again and discard the edits (Enter or double-click)"
+                                                                  : "Load this patch again (Enter or double-click)")));
+}
+
+// Every key that can be dimmed says why when the pointer rests on it.
+void PresetBrowser::updateActionTips()
+{
+    const auto* e = selectedEntry();
+    revertButton.setTooltip(revertButton.isEnabled()
+                                ? "Return to the sound that was loaded when the library opened (" + openingName + ")"
+                                : "Nothing to revert: the sound is still the one loaded when the library opened");
+    juce::String deleteTip = "Move the selected user patch to the trash. Press once to arm, again to confirm (Delete key)";
+    if (e == nullptr)
+        deleteTip = "Select a saved patch to delete it";
+    else if (! e->isUser)
+        deleteTip = "Factory and hardware programs cannot be deleted, only patches you saved";
+    else if (deleteArmedKey.isNotEmpty())
+        deleteTip = "Press again to move \"" + e->name + "\" to the trash. Waiting a few seconds or choosing another patch cancels";
+    deleteButton.setTooltip(deleteTip);
+    resetButton.setTooltip(resetButton.isEnabled() ? "Clear every filter and the search box"
+                                                   : "No filters or search text are active");
+    previousButton.setTooltip(previousButton.isEnabled() ? "Select the previous patch in the list"
+                                                          : (e == nullptr ? "Select a patch in the list first" : "This is the first patch in the list"));
+    nextButton.setTooltip(nextButton.isEnabled() ? "Select the next patch in the list"
+                                                  : (e == nullptr ? "Select a patch in the list first" : "This is the last patch in the list"));
 }
 
 void PresetBrowser::pollLoaded()
 {
+    if (deleteArmedKey.isNotEmpty() && juce::Time::getMillisecondCounter() - deleteArmedAt > 4500)
+        disarmDelete(true);
     const auto before = loadedKey;
     const bool wasEdited = loadedEdited;
     syncLoaded();
@@ -3592,7 +3697,10 @@ void PresetBrowser::pollLoaded()
     }
     const bool can = canRevert();
     if (can != revertButton.isEnabled())
+    {
         revertButton.setEnabled(can);
+        updateActionTips();
+    }
 }
 
 void PresetBrowser::setCompactRows(bool compact, bool persist)
@@ -3623,43 +3731,55 @@ void PresetBrowser::visibilityChanged()
         watcher->startTimerHz(4);
     }
     else
+    {
+        disarmDelete(false);
         watcher->stopTimer();
+    }
 }
 
+// DELETE is two presses: the first arms the key (it turns red and reads CONFIRM, the status line
+// names the patch), the second moves the file to the trash. Waiting, hiding the library or choosing
+// another patch disarms it. A press that follows within a third of a second (key repeat) is ignored.
 void PresetBrowser::deleteSelected()
 {
     const auto* entry = selectedEntry();
-    if (entry == nullptr || ! entry->isUser || deleteConfirmationPending)
+    if (entry == nullptr || ! entry->isUser)
         return;
 
     const auto file = entry->userFile;
     const auto name = entry->name;
-    deleteConfirmationPending = true;
-    deleteButton.setEnabled(false);
-    deleteDialog = juce::AlertWindow::showScopedAsync(
-        juce::MessageBoxOptions::makeOptionsOkCancel(juce::MessageBoxIconType::WarningIcon,
-            "Delete user preset?",
-            "Delete \"" + name + "\"?\n\nThe preset file will be moved to the trash:\n\n"
-                + file.getFullPathName(),
-            "Delete", "Cancel", this),
-        [safeThis = juce::Component::SafePointer<PresetBrowser>(this), file, name](int choice)
-        {
-            if (safeThis == nullptr)
-                return;
-            safeThis->deleteConfirmationPending = false;
-            if (choice == 1)
-            {
-                const bool removed = file.moveToTrash() || file.deleteFile();
-                safeThis->refresh();
-                safeThis->setStatus(removed ? "Deleted \"" + name + "\"." : "Could not delete \"" + name + "\".",
-                                    removed ? 1 : -1);
-            }
-            else
-            {
-                safeThis->updateSelectionWidgets();
-                safeThis->setStatus("Delete cancelled. The preset is unchanged.", 0);
-            }
-        });
+    const auto key = file.getFullPathName();
+    const auto now = juce::Time::getMillisecondCounter();
+
+    if (deleteArmedKey != key)
+    {
+        deleteArmedKey = key;
+        deleteArmedAt = now;
+        deleteButton.setButtonText("CONFIRM");
+        deleteButton.setArmed(true);
+        setStatus("Press DELETE again to move \"" + name + "\" to the trash.", -1);
+        updateActionTips();
+        return;
+    }
+    if (now - deleteArmedAt < 300)
+        return;
+
+    disarmDelete(false);
+    const bool removed = file.moveToTrash() || file.deleteFile();
+    refresh();
+    setStatus(removed ? "Deleted \"" + name + "\"." : "Could not delete \"" + name + "\".", removed ? 1 : -1);
+}
+
+void PresetBrowser::disarmDelete(bool announce)
+{
+    if (deleteArmedKey.isEmpty())
+        return;
+    deleteArmedKey = {};
+    deleteButton.setArmed(false);
+    deleteButton.setButtonText("DELETE");
+    updateActionTips();
+    if (announce)
+        setStatus("Delete cancelled. The preset is unchanged.", 0);
 }
 
 void PresetBrowser::saveCurrentPreset(const juce::String& name, bool overwrite)

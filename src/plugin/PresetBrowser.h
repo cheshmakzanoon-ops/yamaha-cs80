@@ -27,6 +27,8 @@ public:
     void setUiScale(float pixelsPerUnit) noexcept { scale = pixelsPerUnit; repaint(); }
     // Segment buttons only: +1 draws an up arrow on the lit segment, -1 a down arrow.
     void setArrowDirection(int direction) noexcept { arrow = direction; repaint(); }
+    // DANGER keys only: lit red while the next press will do the destructive thing.
+    void setArmed(bool shouldBeArmed) noexcept { armed = shouldBeArmed; repaint(); }
     void paintButton(juce::Graphics&, bool highlighted, bool down) override;
     void paintOverChildren(juce::Graphics&) override;
 
@@ -34,6 +36,7 @@ private:
     Kind kind;
     float scale = 1.0f;
     int arrow = 0;
+    bool armed = false;
 };
 
 // A backlit filter tab with a colour-coded lamp and a live match count.
@@ -45,6 +48,9 @@ public:
     void setCount(int newCount);
     int getCount() const noexcept { return count; }
     void setStarGlyph(bool useStar) noexcept { starGlyph = useStar; }
+    // What the lamp says: round = instrument (coloured dot), hollow = style (neutral outline), square = library scope.
+    enum class Lamp { square, round, hollow };
+    void setLamp(Lamp shape) noexcept { lampShape = shape; repaint(); }
     void setUiScale(float pixelsPerUnit) noexcept { scale = pixelsPerUnit; repaint(); }
     void paintButton(juce::Graphics&, bool highlighted, bool down) override;
     void paintOverChildren(juce::Graphics&) override;
@@ -53,6 +59,7 @@ private:
     juce::Colour accentColour;
     int count = 0;
     bool starGlyph = false;
+    Lamp lampShape = Lamp::square;
     float scale = 1.0f;
 };
 
@@ -192,11 +199,13 @@ private:
     bool patchEdited();
     void syncLoaded();
     void updateLoadLabel();
+    void updateActionTips();
     int userCount() const;
     int sortArrow(int mode) const;
     void pollLoaded();
     void setCompactRows(bool compact, bool persist);
     void deleteSelected();
+    void disarmDelete(bool announce);
     void saveCurrentPreset(const juce::String& name, bool overwrite = false);
     void stepSelection(int delta);
     void toggleFavourite(int entryIndex);
@@ -275,9 +284,9 @@ private:
     InfoLabel description;
     InfoLabel saveStatus;
     bool overwriteConfirmationPending = false;
-    bool deleteConfirmationPending = false;
-    // Cancel both a queued dialog creation and a visible dialog on editor close.
-    juce::ScopedMessageBox deleteDialog;
+    juce::String deleteArmedKey;         // the saved patch the next DELETE press will remove (arm, then confirm)
+    juce::uint32 deleteArmedAt = 0;
+    // Cancel a visible dialog on editor close.
     juce::ScopedMessageBox overwriteDialog;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetBrowser)
