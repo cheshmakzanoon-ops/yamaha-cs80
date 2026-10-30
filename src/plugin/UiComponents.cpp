@@ -337,7 +337,7 @@ void blit(juce::Graphics& g, const PaintCache::Entry& e, float x, float y)
 enum CacheKind
 {
     kindCap = 1, kindTrack, kindKnob, kindTonePlate, kindSatinPlate, kindRocker,
-    kindRibbon, kindWheel, kindComboArrow
+    kindRibbon, kindWheel, kindComboArrow, kindWalnut, kindAccentPlate
 };
 
 juce::Colour glowFor(juce::Colour c)
@@ -1004,6 +1004,175 @@ void drawSatinPlate(juce::Graphics& g, juce::Rectangle<float> bounds, bool on, b
 
 namespace
 {
+// Figured walnut painted into a w x h image. u runs along the grain, v across it.
+void paintWalnut(juce::Graphics& g, int w, int h, bool vertical, int seed, bool bevel)
+{
+    const float fw = (float) w, fh = (float) h;
+    const float U = vertical ? fh : fw; // length along the grain
+    const float V = vertical ? fw : fh; // width across the grain
+    auto pt = [vertical](float u, float v) { return vertical ? juce::Point<float>(v, u) : juce::Point<float>(u, v); };
+    juce::Random rng(seed * 7919 + 17);
+
+    // Base: dark walnut, a little lighter toward the lit upper-left edge.
+    const juce::Colour base(0xff3a2014);
+    g.setGradientFill(juce::ColourGradient(base.brighter(0.18f), 0.0f, 0.0f, base.darker(0.22f), fw, fh, false));
+    g.fillRect(0.0f, 0.0f, fw, fh);
+
+    // Broad tonal bands: heartwood against sapwood streaks.
+    for (float v = -4.0f; v < V; v += 5.0f + rng.nextFloat() * 14.0f)
+    {
+        const float bw = 4.0f + rng.nextFloat() * 14.0f;
+        const bool light = rng.nextFloat() > 0.45f;
+        g.setColour((light ? juce::Colour(0xff6a3d20) : juce::Colour(0xff1d0d06)).withAlpha(0.10f + rng.nextFloat() * 0.12f));
+        juce::Path band;
+        const float p1 = rng.nextFloat() * kTwoPi, f1 = 0.004f + rng.nextFloat() * 0.006f, a1 = 1.0f + rng.nextFloat() * 3.0f;
+        for (float u = -6.0f; u <= U + 6.0f; u += 8.0f)
+        {
+            const auto q = pt(u, v + a1 * std::sin(u * f1 + p1));
+            if (u < 0.0f) band.startNewSubPath(q); else band.lineTo(q);
+        }
+        g.strokePath(band, juce::PathStrokeType(bw));
+    }
+
+    // Fine grain lines with a slow wander.
+    for (float v = -2.0f; v < V + 2.0f; v += 0.8f + rng.nextFloat() * 1.9f)
+    {
+        const float p1 = rng.nextFloat() * kTwoPi, p2 = rng.nextFloat() * kTwoPi;
+        const float f1 = 0.006f + rng.nextFloat() * 0.01f, f2 = 0.03f + rng.nextFloat() * 0.05f;
+        const float a1 = 0.6f + rng.nextFloat() * 2.2f, a2 = 0.15f + rng.nextFloat() * 0.5f;
+        juce::Path line;
+        for (float u = -6.0f; u <= U + 6.0f; u += 6.0f)
+        {
+            const auto q = pt(u, v + a1 * std::sin(u * f1 + p1) + a2 * std::sin(u * f2 + p2));
+            if (u < 0.0f) line.startNewSubPath(q); else line.lineTo(q);
+        }
+        const bool dark = rng.nextFloat() < 0.62f;
+        g.setColour((dark ? juce::Colour(0xff150803) : juce::Colour(0xff8a5530)).withAlpha(dark ? 0.12f + rng.nextFloat() * 0.20f
+                                                                                              : 0.05f + rng.nextFloat() * 0.11f));
+        g.strokePath(line, juce::PathStrokeType(0.45f + rng.nextFloat() * 1.25f));
+    }
+
+    // Cathedral figure: nested parabolic arcs where the growth rings cut across the board.
+    const int figures = juce::jmax(1, (int) (U / 260.0f) + 1);
+    for (int n = 0; n < figures; ++n)
+    {
+        const float u0 = rng.nextFloat() * U, v0 = rng.nextFloat() * V;
+        for (int k = 1; k <= 7; ++k)
+        {
+            const float half = 4.0f + (float) k * 2.4f, depth = (float) k * 6.5f;
+            juce::Path arc;
+            for (int i = 0; i <= 14; ++i)
+            {
+                const float t = (float) i / 14.0f * 2.0f - 1.0f;
+                const auto q = pt(u0 - depth * (1.0f - t * t), v0 + t * half);
+                if (i == 0) arc.startNewSubPath(q); else arc.lineTo(q);
+            }
+            g.setColour(juce::Colour(0xff7b4a28).withAlpha(0.14f - (float) k * 0.012f));
+            g.strokePath(arc, juce::PathStrokeType(0.9f));
+        }
+    }
+
+    // Open pores: short dark dashes along the grain, each with a faint lit lip.
+    const int pores = juce::jmax(20, (int) (fw * fh / 55.0f));
+    for (int i = 0; i < pores; ++i)
+    {
+        const float u = rng.nextFloat() * U, v = rng.nextFloat() * V, len = 1.2f + rng.nextFloat() * 3.4f;
+        g.setColour(juce::Colour(0xff0d0502).withAlpha(0.34f + rng.nextFloat() * 0.32f));
+        g.drawLine({ pt(u, v), pt(u + len, v) }, 0.7f);
+        g.setColour(juce::Colour(0xff9a6a40).withAlpha(0.10f));
+        g.drawLine({ pt(u, v + 0.8f), pt(u + len, v + 0.8f) }, 0.5f);
+    }
+
+    // Varnish: broad diagonal sheen bands and an edge falloff.
+    {
+        auto warmInk = [](float a) { return juce::Colour(0xffffd2a0).withAlpha(a); };
+        const float L = juce::jmax(fw, fh);
+        const juce::Point<float> c(fw * 0.5f, fh * 0.5f);
+        juce::ColourGradient sheen(warmInk(0.0f), c.x - L * 0.5f, c.y - L * 0.5f, warmInk(0.0f), c.x + L * 0.5f, c.y + L * 0.5f, false);
+        sheen.addColour(0.16, warmInk(0.06f));
+        sheen.addColour(0.30, warmInk(0.17f));
+        sheen.addColour(0.44, warmInk(0.02f));
+        sheen.addColour(0.62, warmInk(0.0f));
+        sheen.addColour(0.78, warmInk(0.08f));
+        sheen.addColour(0.90, warmInk(0.0f));
+        g.setGradientFill(sheen);
+        g.fillRect(0.0f, 0.0f, fw, fh);
+        g.setGradientFill(juce::ColourGradient(blackInk(0.0f), c.x - L * 0.5f, c.y - L * 0.5f, blackInk(0.30f), c.x + L * 0.5f, c.y + L * 0.5f, false));
+        g.fillRect(0.0f, 0.0f, fw, fh);
+    }
+
+    if (bevel)
+    {
+        g.setColour(whiteInk(0.30f));
+        g.fillRect(0.0f, 0.0f, fw, 1.0f);
+        g.fillRect(0.0f, 0.0f, 1.0f, fh);
+        g.setColour(whiteInk(0.08f));
+        g.fillRect(1.0f, 1.0f, fw - 2.0f, 1.0f);
+        g.setColour(blackInk(0.55f));
+        g.fillRect(0.0f, fh - 1.0f, fw, 1.0f);
+        g.fillRect(fw - 1.0f, 0.0f, 1.0f, fh);
+    }
+}
+} // namespace
+
+void drawWalnutGrain(juce::Graphics& g, juce::Rectangle<float> r, bool vertical, int seed, bool bevel)
+{
+    const auto box = r.toNearestInt();
+    if (box.getWidth() < 2 || box.getHeight() < 2)
+        return;
+    const auto img = PaintCache::get().fetch(kindWalnut, box.getWidth(), box.getHeight(), (juce::uint32) seed,
+                                             (vertical ? 1 : 0) | (bevel ? 2 : 0), physicalScaleOf(g),
+                                             [&](juce::Graphics& ig) { paintWalnut(ig, box.getWidth(), box.getHeight(), vertical, seed, bevel); });
+    blit(g, img, (float) box.getX(), (float) box.getY());
+}
+
+void drawAccentPlate(juce::Graphics& g, juce::Rectangle<float> bounds, bool pressed, bool hovered)
+{
+    auto face = bounds.reduced(1.8f, 1.2f).withTrimmedBottom(1.8f);
+    if (pressed)
+        face = face.translated(0.0f, 1.0f);
+    const float rad = 3.2f;
+    if (pressed)
+        softShadow(g, face, rad, 0.0f, 0.8f, 1.4f, 0.55f);
+    else
+        softShadow(g, face, rad, 0.0f, 2.6f, 2.8f, 0.80f);
+    juce::Colour top(0xffd2ab4e), bottom(0xff7a5a20);
+    if (pressed)
+    {
+        top = top.darker(0.25f);
+        bottom = bottom.darker(0.2f);
+    }
+    else if (hovered)
+    {
+        top = top.brighter(0.18f);
+        bottom = bottom.brighter(0.12f);
+    }
+    g.setGradientFill(juce::ColourGradient(top, face.getX(), face.getY(), bottom, face.getX(), face.getBottom(), false));
+    g.fillRoundedRectangle(face, rad);
+    {
+        juce::Graphics::ScopedSaveState state(g);
+        juce::Path clip;
+        clip.addRoundedRectangle(face, rad);
+        g.reduceClipRegion(clip);
+        for (float y = face.getY() + 1.0f; y < face.getBottom(); y += 2.0f)
+        {
+            g.setColour(whiteInk(0.035f));
+            g.drawHorizontalLine((int) y, face.getX(), face.getRight());
+        }
+        g.setGradientFill(juce::ColourGradient(whiteInk(pressed ? 0.04f : 0.26f), face.getX(), face.getY(),
+                                               whiteInk(0.0f), face.getX() + face.getWidth() * 0.4f, face.getY() + face.getHeight() * 0.7f, false));
+        g.fillRect(face);
+    }
+    g.setColour(whiteInk(pressed ? 0.10f : 0.62f));
+    g.drawLine(face.getX() + rad, face.getY() + 1.0f, face.getRight() - rad, face.getY() + 1.0f, 1.0f);
+    g.setColour(blackInk(0.45f));
+    g.drawLine(face.getX() + rad, face.getBottom() - 1.0f, face.getRight() - rad, face.getBottom() - 1.0f, 1.0f);
+    g.setColour(juce::Colour(0xff3d2a0c));
+    g.drawRoundedRectangle(face, rad, 1.0f);
+}
+
+namespace
+{
 struct TabGeometry
 {
     juce::Rectangle<float> face;
@@ -1399,6 +1568,16 @@ void LookAndFeel::drawButtonBackground(juce::Graphics& g, juce::Button& button,
     if (w < 2 || h < 2)
         return;
     const float ps = physicalScaleOf(g);
+    if ((bool) button.getProperties()["cs80Accent"])
+    {
+        const int bits = (down ? 2 : 0) | (hovered ? 4 : 0);
+        const auto plate = PaintCache::get().fetch(kindAccentPlate, w, h, 0, bits, ps, [&](juce::Graphics& ig)
+        {
+            drawAccentPlate(ig, juce::Rectangle<float>(0.0f, 0.0f, (float) w, (float) h), down, hovered);
+        });
+        blit(g, plate, 0.0f, 0.0f);
+        return;
+    }
     if ((bool) button.getProperties()["hardwareTab"])
     {
         const auto base = button.findColour(juce::TextButton::buttonColourId);
@@ -1438,6 +1617,13 @@ void LookAndFeel::drawButtonText(juce::Graphics& g, juce::TextButton& button,
     }
     auto font = displayFont(juce::jlimit(8.0f, 14.0f, (float) button.getHeight() * 0.43f), juce::Font::bold);
     font.setExtraKerningFactor(0.08f);
+    if ((bool) button.getProperties()["cs80Accent"])
+    {
+        drawEngravedText(g, button.getButtonText(),
+                         button.getLocalBounds().toFloat().reduced(4.0f, 1.0f).translated(0.0f, shouldDrawButtonAsDown ? 1.0f : -0.5f),
+                         font, juce::Justification::centred, juce::Colour(0xff1c1307));
+        return;
+    }
     drawEngravedText(g, button.getButtonText(),
                      button.getLocalBounds().toFloat().reduced(4.0f, 1.0f).translated(0.0f, shouldDrawButtonAsDown ? 1.0f : -0.5f),
                      font, juce::Justification::centred,

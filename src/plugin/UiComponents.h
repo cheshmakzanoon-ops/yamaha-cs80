@@ -87,8 +87,23 @@ void drawTonePlate(juce::Graphics&, juce::Rectangle<float> bounds, juce::Colour 
 void drawSatinPlate(juce::Graphics&, juce::Rectangle<float> bounds, bool on, bool pressed,
                     bool hovered, bool withLamp);
 
+// Dark figured walnut with pores, grain, a broad varnish sheen and an optional lit bevel. The
+// grain runs along the long axis when vertical is true (side cheeks) or horizontally otherwise
+// (end blocks). The seed picks the figure, so neighbouring parts do not repeat. The result is
+// cached as an image keyed by size, seed and orientation, so calling it every paint is cheap.
+void drawWalnutGrain(juce::Graphics&, juce::Rectangle<float>, bool vertical, int seed,
+                     bool bevel = true);
+// Gold-accent primary button plate (what a Button with the "cs80Accent" property draws).
+void drawAccentPlate(juce::Graphics&, juce::Rectangle<float> bounds, bool pressed, bool hovered);
+
 // Original vector rendering of the hardware's colored slider caps and rocker
 // tabs. Rotary controls remain available for the software extension pages.
+//
+// Component properties understood by the look and feel (set with getProperties().set):
+//   "hardwareTab"  (bool, Button)  backlit translucent tone-selector tab; the button colour is the plastic.
+//   "cs80Accent"   (bool, Button)  gold-accent primary button (for example SAVE in the toolbar).
+//   "hardwareRotary" (bool, Slider) machined knob with engraved tick dots instead of a lit value ring.
+//   "faderLegendTop"/"faderLegendBottom" (String, Slider) end legends engraved beside a fader.
 class LookAndFeel final : public juce::LookAndFeel_V4
 {
 public:
