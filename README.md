@@ -148,7 +148,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest verified **native-build/validator and capture checkpoint** is [`deb34f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/deb34f495de6d78a30c7d5475243e0f5766520e9), passing on **attempt 1**. This is a fresh successful invocation, not proof that the older intermittent Linux exit139 has been repaired.
+The last **full-platform native-build/validator and capture checkpoint** is [`deb34f4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/deb34f495de6d78a30c7d5475243e0f5766520e9), passing on **attempt 1**. This is a fresh successful invocation, not proof that the older intermittent Linux exit139 has been repaired.
 
 | Evidence | Exact result |
 | --- | --- |
@@ -157,6 +157,8 @@ The latest verified **native-build/validator and capture checkpoint** is [`deb34
 | [Actual-editor captures](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159) | 17 verified images; [source-matched artifact 12957961885](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41011794159/artifacts/12957961885) |
 | [Official beta3 comparison](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41013202960) | Exact `deb34f4` Linux artifact `12957867464`: 25 headless / 31 GUI tests passed |
 | [Earlier DSP/compatibility/sanitizer evidence: `00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313) | All five jobs passed; leak-enabled ASan/UBSan 40/40. Production core/plugin sources are byte-unchanged at `deb34f4`; **this is not a newly executed DSP workflow at `deb34f4`** |
+
+**Since `deb34f4`.** The editor was redesigned, and the engine gained an OE2 BBD chorus for the source policies, a phaser sign fix, rate-independent reverb timing, per-slot effect state and release-tail envelope continuity ([audit](docs/ENGINE_AUDIT.md)). At the head that was merged to `main`, the Linux and both macOS builds with their test suites pass, the Linux pluginval run passed, the screenshot workflow passed and Windows builds. The Windows **Test** step still fails, as it did on `main` before this work; its log was not retrievable for diagnosis, so no cause is claimed here. Linux pluginval failed intermittently in earlier runs on the development branch, so one pass does not clear the disclosed crash history below. Check the exact-commit Actions results for any later revision.
 
 Historical failures remain failed: [`428e4b2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) exited139 after SUCCESS in fixed GUI seed `0x2da72db`; [`00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123909705477) did so in primary GUI seed `0x322bd8b`. Neither normal diagnostic replays nor this later passing invocation establish crash ownership or a repair. See [playable readiness](docs/PLAYABLE_RELEASE_READINESS.md) and the [00624e2 evidence appendix](docs/voice-continuity/AUDIT.md). These results are software-test evidence, **not measured analog equivalence, experimental-model activation or a real DAW installation/session qualification**.
 
