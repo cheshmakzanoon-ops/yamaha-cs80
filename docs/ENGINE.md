@@ -92,7 +92,7 @@ The ribbon uses first-touch-relative displacement, a provisional linear frequenc
 
 ## Voice dispersion and drift
 
-`voice_dispersion` scales deterministic per-voice, per-rank random trims. Only two of the five trims that are generated are consumed: **tuning** (up to 7 cents at full dispersion, `kProvisionalVoiceTuneSpreadCents`, so about 2.5 cents at the 0.35 default) and **pan**. Cutoff, level and envelope trims are generated but not yet read by the audio path. At zero the eight voices are exactly in tune. The scatter is arbitrary software variation, not a measured tolerance.
+`voice_dispersion` scales deterministic per-voice, per-rank random trims. Only two of the five trims that are generated are consumed: **tuning** (up to 7 cents at full dispersion, `kProvisionalVoiceTuneSpreadCents`, so about 2.5 cents at the 0.35 default) and **pan**. Cutoff, level and envelope trims are generated but not yet read by the audio path (wiring them was reviewed in the engine audit and deferred: it would change the default sound of every program and there is no source for the distributions, see [ENGINE_AUDIT.md](ENGINE_AUDIT.md)). At zero the eight voices are exactly in tune. The scatter is arbitrary software variation, not a measured tolerance.
 
 Until 2026-10-29 the tuning trim was added to a semitone pitch without the cents conversion, so default voices sat up to about 2 semitones off pitch. Older pitch tests all zeroed dispersion and could not see it; `testDefaultVoiceTuning` now covers the default.
 
@@ -164,6 +164,8 @@ The editor is drawn at a 1600x1000 design resolution and scaled to the window. C
 ## Verification
 
 `tests/CoreTests.cpp` exercises the engine without JUCE. `src/tools/ui_snapshot.cpp --self-test` instantiates the JUCE processor and editor, checks the APVTS, latency reporting, round-trips state, renders MIDI audio, checks the editor at two sizes, opens all advanced pages and the browser, and saves/loads a user preset. CTest registers both tests on Linux, macOS and Windows.
+
+`src/tools/engine_audit.cpp` (`cs80_engine_audit`, not a CTest target) is an offline sound-quality audit: NaN and DC checks, level and loudness spread, clicks at note boundaries and voice steals, aliasing, output latency and the modern FX slots, for the factory bank and tabs under the legacy and Source Performance policies at 44.1, 48 and 96 kHz. Metric definitions, results and their limits are in [ENGINE_AUDIT.md](ENGINE_AUDIT.md); none of it is a hardware measurement.
 
 A dedicated Linux job downloads the built VST3 and runs pluginval 1.0.4 at strictness 10 with `--validate-in-process`, first with `--skip-gui-tests`, then GUI tests under Xvfb and a fixed-seed GUI regression. A clean SUCCESS **and exit zero** are required. `scripts/run-pluginval-linux.sh` has bounded retry eligibility only for exit139 after a completed test phase, without SUCCESS or FAILED; eligibility is not proof of crash ownership or suite completion. The crashed attempt's log is preserved. A post-SUCCESS exit139 is not eligible and remains failed. The exact `428e4b2` [Linux validator job123895901926](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) passed headless and ordinary GUI, but its fixed seed `0x2da72db` printed SUCCESS and then exited139. No local ELF core or crash stack was obtained for that failure.
 
