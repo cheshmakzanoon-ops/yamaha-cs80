@@ -5,6 +5,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#include <functional>
 #include <memory>
 
 class Cs80AudioProcessor;
@@ -48,12 +49,51 @@ juce::Colour panelFaceAt(float y, float top, float bottom);
 void fillPanelFace(juce::Graphics&, juce::Rectangle<float>);
 void paintSheet(juce::Graphics&, juce::Rectangle<float>, float radius);
 
+// ---- Shared drawing helpers (round 2). Light comes from the upper left; none uses a blur
+// filter. Helpers named draw* paint immediately; call them from a cached juce::Image when the
+// same artwork repaints often (the control look-and-feel does exactly that).
+
+// Bevelled plate: lit top-left edge and dark bottom-right edge (raised), or the reverse (recessed).
+void drawBevelRect(juce::Graphics&, juce::Rectangle<float>, float radius, juce::Colour base,
+                   float bevel, bool raised);
+// Fine-grained brushed steel/brass rectangle; grain runs along its long axis unless forced.
+void drawBrushedMetal(juce::Graphics&, juce::Rectangle<float>, float radius, juce::Colour tint,
+                      bool horizontalGrain);
+// Smoked-glass window (display, readout, bezel): tinted dark fill, inner shadow, diagonal sheen.
+void drawGlassPanel(juce::Graphics&, juce::Rectangle<float>, float radius, juce::Colour tint,
+                    float sheen = 1.0f);
+// Printed/engraved legend: dark drop shadow under light ink, or a lit lower edge under dark ink.
+void drawEngravedText(juce::Graphics&, const juce::String& text, juce::Rectangle<float> area,
+                      const juce::Font&, juce::Justification,
+                      juce::Colour ink = juce::Colour(0xffe6dcbc));
+// Soft radial light bloom (one gradient fill) for lamps, lit plastic and contact points.
+void drawLampGlow(juce::Graphics&, juce::Point<float> centre, float radius, juce::Colour colour,
+                  float intensity);
+// Round indicator lamp in a brass bezel: dark glass when off, glowing jewel when on.
+void drawJewelLamp(juce::Graphics&, juce::Point<float> centre, float radius, juce::Colour colour,
+                   bool on);
+
+enum class CapState { idle, hover, dragging };
+// Moulded plastic fader cap (lit top face, darker front/right faces, grip grooves, cast shadow).
+// faceWidth is the width of the lit top face; 24.5 gives the nominal size, other widths scale it.
+void drawFaderCap(juce::Graphics&, juce::Point<float> faceCentre, float faceWidth,
+                  juce::Colour colour, CapState state);
+// Recessed fader slot with a metal rail between two y positions, centred on x.
+void drawFaderSlot(juce::Graphics&, float centreX, float top, float bottom, float scale);
+// Backlit translucent tone-selector tab inside its bounds; lit tabs bleed light onto the bezel.
+void drawTonePlate(juce::Graphics&, juce::Rectangle<float> bounds, juce::Colour colour,
+                   bool lit, bool pressed, bool hovered);
+// Raised satin-black key plate with optional amber jewel lamp (software pages, toolbar).
+void drawSatinPlate(juce::Graphics&, juce::Rectangle<float> bounds, bool on, bool pressed,
+                    bool hovered, bool withLamp);
+
 // Original vector rendering of the hardware's colored slider caps and rocker
 // tabs. Rotary controls remain available for the software extension pages.
 class LookAndFeel final : public juce::LookAndFeel_V4
 {
 public:
     LookAndFeel();
+    ~LookAndFeel() override;
 
     void drawRotarySlider(juce::Graphics&, int x, int y, int width, int height,
                           float sliderPosProportional, float rotaryStartAngle,
@@ -73,6 +113,28 @@ public:
     juce::Font getComboBoxFont(juce::ComboBox&) override;
     juce::Font getLabelFont(juce::Label&) override;
     juce::Font getTextButtonFont(juce::TextButton&, int buttonHeight) override;
+
+    // Round 2 additions.
+    int getSliderThumbRadius(juce::Slider&) override;
+    void drawTooltip(juce::Graphics&, const juce::String& text, int width, int height) override;
+    juce::Rectangle<int> getTooltipBounds(const juce::String& tipText, juce::Point<int> screenPos,
+                                          juce::Rectangle<int> parentArea) override;
+    void drawBubble(juce::Graphics&, juce::BubbleComponent&, const juce::Point<float>& tip,
+                    const juce::Rectangle<float>& body) override;
+    void drawPopupMenuBackground(juce::Graphics&, int width, int height) override;
+    void drawPopupMenuItem(juce::Graphics&, const juce::Rectangle<int>& area, bool isSeparator,
+                           bool isActive, bool isHighlighted, bool isTicked, bool hasSubMenu,
+                           const juce::String& text, const juce::String& shortcutKeyText,
+                           const juce::Drawable* icon, const juce::Colour* textColour) override;
+    void drawPopupMenuSectionHeader(juce::Graphics&, const juce::Rectangle<int>& area,
+                                    const juce::String& sectionName) override;
+    juce::Font getPopupMenuFont() override;
+    int getPopupMenuBorderSize() override;
+    void fillTextEditorBackground(juce::Graphics&, int width, int height, juce::TextEditor&) override;
+    void drawTextEditorOutline(juce::Graphics&, int width, int height, juce::TextEditor&) override;
+    void drawScrollbar(juce::Graphics&, juce::ScrollBar&, int x, int y, int width, int height,
+                       bool isScrollbarVertical, int thumbStartPosition, int thumbSize,
+                       bool isMouseOver, bool isMouseDown) override;
 };
 
 // Native slider semantics and accessibility are retained. Only the focus
@@ -80,7 +142,17 @@ public:
 class FocusSlider final : public juce::Slider
 {
 public:
-    FocusSlider() { setWantsKeyboardFocus(true); }
+    FocusSlider()
+    {
+        setWantsKeyboardFocus(true);
+        setRepaintsOnMouseActivity(true);
+    }
+    ~FocusSlider() override;
+    // Optional drag-bubble text. Without them the bubble shows the title and the slider's own
+    // value text. Only shown while the pointer drags; never changes bounds or accessibility.
+    std::function<juce::String()> bubbleTitleText;
+    std::function<juce::String(double)> bubbleValueText;
+    void valueChanged() override { juce::Slider::valueChanged(); updateDragBubble(); }
     bool isGestureInProgress() const noexcept { return gestureActive; }
     bool keyPressed(const juce::KeyPress& key) override
     {
@@ -100,10 +172,12 @@ public:
     {
         gestureActive = true;
         juce::Slider::startedDragging();
+        showDragBubble();
     }
     void stoppedDragging() override
     {
         gestureActive = false;
+        hideDragBubble();
         juce::Slider::stoppedDragging();
     }
     void focusGained(juce::Component::FocusChangeType cause) override
@@ -125,7 +199,11 @@ public:
         }
     }
 private:
+    void showDragBubble();
+    void hideDragBubble();
+    void updateDragBubble();
     bool gestureActive = false;
+    std::unique_ptr<juce::Component> dragBubble;
 };
 
 // Parameter-bound rotary or hardware linear slider with a unit-aware readout.
@@ -223,6 +301,8 @@ public:
     void mouseDown(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
     void mouseUp(const juce::MouseEvent&) override;
+    void mouseMove(const juce::MouseEvent&) override;
+    void mouseExit(const juce::MouseEvent&) override;
 
     std::function<void(float)> onValueChange;
 
@@ -230,6 +310,7 @@ private:
     void setFromX(float x);
     float value = 0.0f;
     float anchorX = 0.0f;
+    float hoverX = -1.0f;
     bool touching = false;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RibbonStrip)
@@ -253,6 +334,7 @@ public:
 
 private:
     void setFromY(float y);
+    juce::Rectangle<float> trackArea() const;
     juce::String wheelLabel;
     bool spring;
     float value = 0.0f;
