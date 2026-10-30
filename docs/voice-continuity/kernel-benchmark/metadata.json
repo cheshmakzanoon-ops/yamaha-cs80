@@ -23,5 +23,11 @@
   "cold_phases": "fmod((voice*2+rank+1)*.61803398875f,1.f), explicitly supplied nominal spread",
   "hz_per_volt": "midiToHz(60)/.5, production A4=440 interface",
   "latency_scope": "internal2x kernel only, no decimator/host output",
-  "exclusive_window": "Parent and independent reviewer confirmed no competing heavy build/test work"
+  "exclusive_window": "Parent and independent reviewer confirmed no competing heavy build/test work",
+  "published_kernel_commit": "00624e2d5389b5ea30b0bb3dea2a81077d32b109",
+  "measurement_source_commit": "00624e2d5389b5ea30b0bb3dea2a81077d32b109",
+  "measurement_start_utc": "2026-10-30T05:20:47.878063+00:00",
+  "measurement_end_utc": "2026-10-30T05:21:33.115100+00:00",
+  "results_sha256": "e06f591b80e14e5944b6dd5c8d6bf36ea11c903ce48d52a4373eb632e5f8a1a4",
+  "trace_sha256": "7f7acbf43ae6febe88a6baa6e04a882c14fb4ad26bc43e679d9bf5c5ddd3d24e"
 }

@@ -159,13 +159,51 @@ outliers. Process CPU and callback wall clocks have different scopes.
 | Old behavior | Production files unchanged; later integration must replay the original Legacy/Isolation/**existing Source Performance** corpora byte-for-byte. |
 | Incremental cost | Predeclared continuous-eight median overhead no more than10% versus matched skipped-eight; investigate a failure before the adapter. Publish the larger0/1-voice cost and all tail timings regardless. This is not a full Engine/host realtime gate. |
 
-Initial owned suite: **151,578 checks passed**, strict GCC14 build. Independent
-suite/sanitizer and exclusive timing results are recorded after their final runs;
-the first prototype has not been called production-qualified.
+Owned suite: **151,578 checks passed**, strict GCC14 build. The
+[independent audit](voice-continuity/AUDIT.md) passed **33,962 checks** in strict
+native and ASan/UBSan runs and rejected seven targeted clock/routing/validation
+mutations. Leak detection was disabled, so this is not a leak-check result;
+there is no concurrent-use/TSan or hardware-accuracy claim.
+
+### First, exclusive kernel timing result
+
+Measured published kernel commit
+`00624e2d5389b5ea30b0bb3dea2a81077d32b109`, GCC14.2 `-O3`, cloud AMD EPYC9V74.
+The first result was retained, not rerun until it passed. Frozen
+[criterion](voice-continuity/kernel-benchmark/predeclared-criterion.txt),
+[source/compiler metadata](voice-continuity/kernel-benchmark/metadata.json),
+[machine context](voice-continuity/kernel-benchmark/context.txt),
+[all72 rows](voice-continuity/kernel-benchmark/results.csv),
+[computed summary](voice-continuity/kernel-benchmark/summary.json), and
+[528-row trace](voice-continuity/kernel-benchmark/trace.csv) are preserved.
+
+All12 paired-eight median ratios passed the predeclared1.10 gate: the observed
+range was **0.9930–1.0046**. All matched audible checksums agreed and eight-voice
+state checksums agreed. Source hashes matched before and after measurement.
+
+| Host rate | Continuous0-audible median RTF | Continuous1-audible median RTF | Continuous8-audible median RTF |
+|---|---:|---:|---:|
+| 44.1kHz | .1312–.1329 | .1308–.1337 | .1304–.1330 |
+| 48kHz | .1431–.1448 | .1425–.1456 | .1423–.1454 |
+| 96kHz | .2793–.2855 | .2795–.3042 | .2818–.2841 |
+
+Each range spans static/moving controls and128/256 frames. Synthetic skipped
+zero-audible median RTF across the entire matrix was .000409–.004514; the
+continuous idle cost is real, not free. These numbers exclude source loaded
+buses, actual EGs, global effects, decimation and the plugin/host.
+
+**One deadline overrun among18,432 callbacks remains part of the result:**
+continuous one-audible, static controls,96kHz/256 frames: maximum3.912669ms
+against2.666667ms budget (**1.46725 RTF**). That case's median was.30421 and
+p99.58923 RTF. No cause is assigned or outlier discarded. There were no other
+observed kernel overruns, but this finite cloud run is not a realtime guarantee.
+The reported median is the upper-middle order statistic; p99 uses the
+nearest-rank `ceil(.99*N)` value. Raw per-callback traces were not retained;
+all per-case aggregates and observed maxima are retained.
 
 ## Bounded next decision, not indefinite quarantine
 
-If the kernel gates pass, the recommendation is **proceed to one thin,
+The kernel gates passed. The recommendation is **proceed to one thin,
 immutable-Engine integration experiment**, not enable a host feature. That
 experiment must pin/hash checkpoint428 and its small adapter patch, keep the
 original engine branch and compare its three-mode audio corpus exactly, while

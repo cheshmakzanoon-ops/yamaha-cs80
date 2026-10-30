@@ -1,0 +1,136 @@
+{
+  "rows": 72,
+  "timed_callbacks": 18432,
+  "paired_eight": [
+    {
+      "host_hz": "44100",
+      "frames": "128",
+      "profile": "static",
+      "ratio": 0.9994523920038803,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "44100",
+      "frames": "128",
+      "profile": "moving",
+      "ratio": 0.9961505166411875,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "44100",
+      "frames": "256",
+      "profile": "static",
+      "ratio": 0.9991018212780096,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "44100",
+      "frames": "256",
+      "profile": "moving",
+      "ratio": 0.9943773124686895,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "48000",
+      "frames": "128",
+      "profile": "static",
+      "ratio": 1.0017302577848513,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "48000",
+      "frames": "128",
+      "profile": "moving",
+      "ratio": 0.9934456095530764,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "48000",
+      "frames": "256",
+      "profile": "static",
+      "ratio": 1.0045531677871475,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "48000",
+      "frames": "256",
+      "profile": "moving",
+      "ratio": 0.9980751776560743,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "96000",
+      "frames": "128",
+      "profile": "static",
+      "ratio": 1.0030514373806376,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "96000",
+      "frames": "128",
+      "profile": "moving",
+      "ratio": 1.002593431574229,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "96000",
+      "frames": "256",
+      "profile": "static",
+      "ratio": 0.9930156083917552,
+      "pass_gate": true
+    },
+    {
+      "host_hz": "96000",
+      "frames": "256",
+      "profile": "moving",
+      "ratio": 0.9988183070889639,
+      "pass_gate": true
+    }
+  ],
+  "all_pairs_pass": true,
+  "overruns": 1,
+  "worst_max_ms": 3.912669,
+  "worst_rtf": 1.467250875,
+  "skip_inaudible_0": {
+    "median_rtf_min": 0.0004087863281,
+    "median_rtf_max": 0.00451425,
+    "worst_p99_rtf": 0.02948925,
+    "worst_max_ms": 0.123155,
+    "overruns": 0
+  },
+  "continuous_0": {
+    "median_rtf_min": 0.1311844078,
+    "median_rtf_max": 0.2855415,
+    "worst_p99_rtf": 0.4763655,
+    "worst_max_ms": 1.784261,
+    "overruns": 0
+  },
+  "skip_inaudible_1": {
+    "median_rtf_min": 0.01573612031,
+    "median_rtf_max": 0.0387435,
+    "worst_p99_rtf": 0.131653875,
+    "worst_max_ms": 0.799602,
+    "overruns": 0
+  },
+  "continuous_1": {
+    "median_rtf_min": 0.1308254062,
+    "median_rtf_max": 0.304214625,
+    "worst_p99_rtf": 0.589226625,
+    "worst_max_ms": 3.912669,
+    "overruns": 1
+  },
+  "skip_inaudible_8": {
+    "median_rtf_min": 0.1309394461,
+    "median_rtf_max": 0.286120125,
+    "worst_p99_rtf": 0.448100625,
+    "worst_max_ms": 2.121077,
+    "overruns": 0
+  },
+  "continuous_8": {
+    "median_rtf_min": 0.1304353969,
+    "median_rtf_max": 0.28412175,
+    "worst_p99_rtf": 0.51563475,
+    "worst_max_ms": 2.459336,
+    "overruns": 0
+  }
+}

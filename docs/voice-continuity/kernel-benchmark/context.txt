@@ -10,3 +10,7 @@ Cpus_allowed_list:	0-8
 ?? src/tools/voice_continuity_probe.cpp
 ?? tests/ContinuousVoiceCircuitAuditTests.cpp
 ?? tests/ContinuousVoiceCircuitTests.cpp
+
+Machine context fallback: lscpu could not read unavailable /sys/devices/system/cpu/possible; no inferred CPU count.
+model name	: AMD EPYC 9V74 80-Core Processor
+cpu MHz		: 2596.128
