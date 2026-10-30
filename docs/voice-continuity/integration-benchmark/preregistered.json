@@ -1,0 +1,45 @@
+{
+  "status": "preregistered before any candidate timing; awaiting production core freeze",
+  "purpose": "matched default-OFF and masked-request overhead, not enabled-continuity qualification",
+  "baseline_commit": "16735ee2ae23d8c27f6122c8a72e294e31aa4d5b",
+  "baseline_core_tree": "fd17b98613abd6d18d53f7e02ecf3d9a46c5769e",
+  "candidate": "first production nominal-v1 integration core freeze supplied by owner; hash before build and timing",
+  "matrix": {
+    "rates": [44100, 48000],
+    "blocks": [128, 256],
+    "scenes": {"source_both": [1, 3], "panel_both": [13, 13]},
+    "conditions": ["cold_idle", "retired_idle", "eight_held"],
+    "controls": ["static", "moving"],
+    "policies": ["legacy_off", "isolation_off", "source_performance_off", "legacy_masked", "isolation_masked"],
+    "masked_request": "static=1; moving alternates 1/0 every32 callbacks; effective continuity must always remain false",
+    "pairs": 240,
+    "aggregate_rows": 480,
+    "warmup_callbacks_per_arm": 64,
+    "measured_callbacks_per_arm": 512,
+    "raw_observations": 245760,
+    "untimed_verification_callbacks_per_arm": 4
+  },
+  "build": "GCC14.2 C++20 -O3 -DNDEBUG -fPIC -Wall -Wextra -Wpedantic -Werror; no native/LTO/fast-math/sanitizer; opaque bridges and separate cs80 namespaces per immutable source tree",
+  "fp_policy": "x86 FTZ+DAZ ON equally for both arms during setup/warmup/render; unchanged rounding/masks; controls checked outside timers and restored at exit",
+  "timed_scope": "same opaque callback in both arms: setControlFrame every block, configured moving Engine controller events, render; input generation/frame preparation, allocation, numerical comparison, inspection and raw recording outside",
+  "ordering": {
+    "pair_order": "deterministic Fisher-Yates using mt19937 seed167350139 and raw rng modulo remaining count",
+    "arm_order": "first arm=(execution_pair+callback)&1, then the other; creation/warmup arm order also alternates per execution_pair"
+  },
+  "integrity": [
+    "all-matrix untimed verification before timing",
+    "baseline/candidate callback output bits identical, including signed zero, during warmup and measured callbacks",
+    "expected active-voice counts before/after; accepted base policy; effective continuity false in all candidate rows",
+    "candidate effective kernel samples and rejected counts zero; finite output and rank state",
+    "all raw timings/order retained; no audio samples persisted, comparison counts/hashes are scoped evidence"
+  ],
+  "statistics": {
+    "median": "mean of sorted indices255 and256 for512 observations",
+    "p99": "nearest rank ceil(.99*N)-1",
+    "overrun": "duration_ns > 1e9*block/rate",
+    "cpu_context": "thread/process clocks around each whole paired phase, outside callback timers; includes both arms and untimed checks, not per-arm DSP CPU"
+  },
+  "material_overhead_flag": "candidate median - baseline median > max(0.05*baseline median,1000ns) in any pair",
+  "decision": "report every flagged pair with ratios, absolute deltas, tails and scope; no universal no-overhead/DAW/WCET claim even with zero flags",
+  "failure_policy": "preserve first measured attempt and all outliers; no trimming/replacement/rerun-to-green; an invariant failure stops timing and is retained; a later revised candidate requires separate explicit identity/authorization"
+}
