@@ -169,9 +169,16 @@ void testKeyboardPointerPressure(Check check)
     host.prepareToPlay(48000.0, 32);
     Cs80AudioProcessorEditor editor(host);
     editor.setSize(1600, 1000);
+    // JUCE keyboard hit testing calls reallyContains(), which recurses through
+    // Component::contains to the top-level native peer. A detached component
+    // cannot receive a real pointer note, even when its bounds look correct.
+    editor.addToDesktop(0);
+    editor.setVisible(true);
     auto* keyboard = pressure_detail::keyboard(editor);
     check(keyboard != nullptr, "actual editor contains the pointer-pressure keyboard");
     if (keyboard == nullptr) return;
+    check(editor.getPeer() != nullptr && editor.isShowing() && keyboard->isShowing(),
+          "pointer-pressure fixture owns a visible native editor peer for JUCE hit testing");
     juce::AudioBuffer<float> audio(2, 0);
     juce::MidiBuffer midi;
     auto tick = [&] { host.processBlock(audio, midi); midi.clear(); };
@@ -179,6 +186,8 @@ void testKeyboardPointerPressure(Check check)
     {
         const auto key = keyboard->getRectangleForKey(note);
         const juce::Point<float> position(key.getCentreX(), keyboard->getHeight() * depth);
+        check(keyboard->getNoteAndVelocityAtPosition(position).note == note,
+              "pointer-pressure fixture point resolves to the intended key through real JUCE hit testing");
         return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), position,
             juce::ModifierKeys(down ? juce::ModifierKeys::leftButtonModifier : 0),
             1.0f, 0.0f, 0.0f, 0.0f, 0.0f, keyboard, keyboard, juce::Time::getCurrentTime(),
