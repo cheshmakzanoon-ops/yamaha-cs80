@@ -1,5 +1,8 @@
 #include "PluginEditor.h"
 
+#include <map>
+#include <tuple>
+
 #include "AdvancedPanel.h"
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
@@ -142,7 +145,7 @@ namespace geo
 using Rf = juce::Rectangle<float>;
 
 // The instrument body (toolbar, panel, deck) sits between the wooden cheeks.
-const float bodyLeft = 44.0f, bodyRight = 1556.0f;
+const float bodyLeft = 48.0f, bodyRight = 1552.0f;
 
 // Toolbar y 0-64
 const Rf brandBadge   { 54, 8, 34, 34 };
@@ -158,41 +161,46 @@ const Rf nextBtn      { 712, 9, 34, 34 };
 const Rf cluster      { 762, 6, 350, 40 };
 const Rf libraryBtn   { 768, 10, 90, 32 };
 const Rf saveBtn      { 862, 10, 66, 32 };
-const Rf initBtn      { 940, 10, 66, 32 };
+const Rf initBtn      { 944, 13, 58, 26 };
 const Rf advancedBtn  { 1014, 10, 92, 32 };
 const Rf lampWell     { 1122, 6, 128, 40 };
 const Rf meterWell    { 1258, 6, 196, 40 };
 const Rf meterText    { 1262, 17, 52, 20 };
 const Rf meterBar     { 1318, 11, 128, 14 };
 const Rf panicBtn     { 1472, 12, 66, 28 };
-const Rf ticker       { 54, 48, 1492, 14 };
-const Rf rankI        { 64, 48, 212, 14 };
-const Rf rankII       { 290, 48, 212, 14 };
-const Rf voiceStatus  { 1300, 48, 100, 14 };      // (blank: the lamps in the toolbar already show voices and MIDI)
-const Rf midiStatus   { 1410, 48, 100, 14 };
-const Rf subStatus    { 516, 48, 230, 14 };
-const Rf modeStatus   { 760, 48, 440, 14 };
+// The status strip is a recessed window under the toolbar whose length follows what it prints (see layoutStrip).
+const float stripX = 52.0f, stripY = 46.0f, stripH = 16.0f, stripPad = 12.0f, stripGap = 24.0f;
+const Rf ticker       { 54, 47, 1492, 14 };
+const Rf rankI        { 64, 47, 150, 14 };
+const Rf rankII       { 238, 47, 150, 14 };
+const Rf voiceStatus  { 1300, 47, 100, 14 };      // (blank: the lamps in the toolbar already show voices and MIDI)
+const Rf midiStatus   { 1410, 47, 100, 14 };
+const Rf subStatus    { 412, 47, 200, 14 };
+const Rf modeStatus   { 636, 47, 300, 14 };
 const std::array<float, 5> tickerRules { 283.0f, 509.0f, 673.0f, 797.0f, 1001.0f };
 
 // Control surface y 64-660
 const float faceTop = 64.0f, faceBottom = 660.0f, deckBottom = 772.0f;
-const Rf plate        { 54, 98, 360, 378 };
-const Rf memoryLidKey { 68, 436, 160, 24 };
-const Rf voiceKey     { 236, 436, 160, 24 };
-const Rf viewKeyI     { 338, 112, 26, 22 };
-const Rf viewKeyII    { 366, 112, 30, 22 };
+const Rf plate        { 48, 98, 360, 378 };
+const Rf memoryLidKey { 62, 436, 160, 24 };
+const Rf voiceKey     { 230, 436, 160, 24 };
+const Rf viewKeyI     { 332, 112, 26, 22 };
+const Rf viewKeyII    { 360, 112, 30, 22 };
 const std::array<float, 2> rowY0 { 104.0f, 296.0f };
 const Rf lowerPlate   { 48, 484, 1504, 166 };
 const Rf toneBezel    { 660, 520, 537, 102 };
-const float toneX0 = 688.0f, tonePitch = 36.0f, toneW = 33.0f;
+const float toneX0 = 683.0f, tonePitch = 36.4f, toneW = 34.0f;
 
-// Performance deck y 660-772 (outer edges line up with the key area at x62..1538)
-const Rf deckLeft     { 62, 664, 414, 104 };
-const Rf deckRight    { 1130, 664, 408, 104 };
-const Rf nameplate    { 640, 668, 320, 40 };
-const Rf ribbonRect   { 504, 732, 592, 28 };
-const Rf keybed       { 44, 772, 1512, 228 };
+// Performance deck y 660-772 (outer edges at x48 and x1552 like the lower plate and the key area). The two
+// blocks are kept to 342 px so the ribbon can run 804 px between them.
+const Rf deckLeft     { 48, 664, 342, 104 };
+const Rf deckRight    { 1210, 664, 342, 104 };
+const Rf nameplate    { 640, 667, 320, 38 };
+const Rf ribbonRect   { 398, 724, 804, 36 };
+const Rf keybed       { 48, 772, 1504, 228 };
 const Rf overlay      { 0, 64, 1600, 936 };
+// Dimming and the toolbar's shadow stop at the walnut cheeks, which stay lit behind every overlay.
+const Rf overlayBody  { 48, 64, 1504, 936 };
 // The lid component also carries its hinge band above and its cast shadow below.
 const Rf memoryLid    { 48, 90, 1504, 590 };
 const float lidTop = 10.0f, lidHeight = 552.0f;
@@ -210,7 +218,7 @@ inline Colour black(float a) { return juce::Colours::black.withAlpha(a); }
 // Matte instrument plate colour (voice plate, memory lid, status strip): also the halo under its type.
 inline Colour plateColour() { return Colour(0xff262421); }
 // The smoked glass of the voice-flow window (also the halo under its type).
-inline Colour glassColour() { return Colour(0xff181611); }
+inline Colour glassColour() { return Colour(0xff13151a); }
 inline Colour white(float a) { return juce::Colours::white.withAlpha(a); }
 inline juce::ColourGradient vgrad(Colour top, Colour bottom, Rf r)
 {
@@ -426,6 +434,28 @@ void stamped(juce::Graphics& g, const juce::String& text, Rf area, const juce::F
     g.drawText(text, area, just, false);
 }
 
+// Gold line art of the panel (frames, grouping rules): 1.25 px of gold at about 55 percent over a 1 px dark
+// shadow offset down and to the right, so the line reads as etched into the enamel and holds up at 1x.
+inline float etchAlpha(float a) { return a < 0.4f ? a : 0.40f + 0.28f * a; }
+
+void etchLine(juce::Graphics& g, float x1, float y1, float x2, float y2, float alpha)
+{
+    const float a = etchAlpha(alpha);
+    g.setColour(black(0.70f * juce::jmin(1.0f, a * 1.6f)));
+    g.drawLine(x1 + 0.9f, y1 + 1.0f, x2 + 0.9f, y2 + 1.0f, 1.0f);
+    g.setColour(Colour(0xffd6bb68).withAlpha(a));
+    g.drawLine(x1, y1, x2, y2, 1.25f);
+}
+
+void etchRect(juce::Graphics& g, Rf r, float radius, float alpha)
+{
+    const float a = etchAlpha(alpha);
+    g.setColour(black(0.70f * juce::jmin(1.0f, a * 1.6f)));
+    g.drawRoundedRectangle(r.translated(0.9f, 1.0f), radius, 1.0f);
+    g.setColour(Colour(0xffd6bb68).withAlpha(a));
+    g.drawRoundedRectangle(r, radius, 1.25f);
+}
+
 // Gold etched grouping bracket: a rule with its title sitting in a gap and short end ticks. When the
 // title does not fit the span at the current type size, the short title is used, and if that does not fit
 // either the bracket is printed without text rather than letting it run into its neighbours.
@@ -441,14 +471,14 @@ void bracket(juce::Graphics& g, const juce::String& title, float x, float ruleY,
     const float gap = text.isEmpty() ? 0.0f : textWidth(font, text) * 0.5f + 8.0f;
     const float mid = x + w * 0.5f;
     if (text.isEmpty())
-        ui::etchLine(g, x, ruleY, x + w, ruleY, 0.8f);
+        art::etchLine(g, x, ruleY, x + w, ruleY, 0.8f);
     else
     {
-        ui::etchLine(g, x, ruleY, mid - gap, ruleY, 0.8f);
-        ui::etchLine(g, mid + gap, ruleY, x + w, ruleY, 0.8f);
+        art::etchLine(g, x, ruleY, mid - gap, ruleY, 0.8f);
+        art::etchLine(g, mid + gap, ruleY, x + w, ruleY, 0.8f);
     }
-    ui::etchLine(g, x, ruleY, x, ruleY + tick, 0.8f);
-    ui::etchLine(g, x + w, ruleY, x + w, ruleY + tick, 0.8f);
+    art::etchLine(g, x, ruleY, x, ruleY + tick, 0.8f);
+    art::etchLine(g, x + w, ruleY, x + w, ruleY + tick, 0.8f);
     if (text.isNotEmpty())
         legend(g, text, { x, ruleY - 8.0f, w, 16.0f }, font);
 }
@@ -480,7 +510,7 @@ juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
             c.px = ((float) cx + 0.12f + 0.76f * rng.nextFloat()) * cs;
             c.py = ((float) cy + 0.12f + 0.76f * rng.nextFloat()) * cs;
             c.tx = gauss(); c.ty = gauss();
-            c.tone = 1.0f + 0.10f * (rng.nextFloat() - 0.5f) * 2.0f;      // faint pigment variation, per cell
+            c.tone = 1.0f + 0.035f * (rng.nextFloat() - 0.5f) * 2.0f;     // faint pigment variation, per cell
         }
     // light from the upper left; the viewer looks straight down
     const float lx = -0.45f, ly = -0.55f, lz = 0.70f;
@@ -489,6 +519,18 @@ juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
     float hx = Lx, hy = Ly, hz = Lz + 1.0f;
     const float hl = std::sqrt(hx * hx + hy * hy + hz * hz);
     hx /= hl; hy /= hl; hz /= hl;
+
+    // A very faint directional grain: each row carries its own small gain and a slow wave along its length, so
+    // the finish has a brushed direction at close range without ever reading as stripes. Periodic over the tile.
+    std::vector<float> rowGain((size_t) n), rowAmp((size_t) n), rowPhase((size_t) n);
+    std::vector<int> rowCycles((size_t) n);
+    for (int y = 0; y < n; ++y)
+    {
+        rowGain[(size_t) y] = (rng.nextFloat() - 0.5f) * 2.0f;
+        rowAmp[(size_t) y] = rng.nextFloat();
+        rowPhase[(size_t) y] = rng.nextFloat() * juce::MathConstants<float>::twoPi;
+        rowCycles[(size_t) y] = 3 + rng.nextInt(6);
+    }
 
     juce::Image image(juce::Image::RGB, n, n, false);
     juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
@@ -514,19 +556,21 @@ juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
                     else if (d < d2) d2 = d;
                 }
             // facet normal: the cell's own tilt plus a little dome so a highlight is a point inside the cell
-            const float sx = contrast * nearest->tx + 0.50f * nearDx / cs;
-            const float sy = contrast * nearest->ty + 0.50f * nearDy / cs;
+            const float sx = contrast * nearest->tx + 0.30f * nearDx / cs;
+            const float sy = contrast * nearest->ty + 0.30f * nearDy / cs;
             const float inv = 1.0f / std::sqrt(sx * sx + sy * sy + 1.0f);
             const float nx = -sx * inv, ny = -sy * inv, nz = inv;
             const float diffuse = juce::jmax(0.0f, nx * Lx + ny * Ly + nz * Lz) / Lz;
             const float edge = juce::jlimit(0.0f, 1.0f, (d2 - d1) / (cs * 0.34f));
-            const float groove = 0.28f + 0.72f * std::pow(edge, 0.8f);
-            float lum = (0.22f + 0.88f * juce::jlimit(0.0f, 1.4f, diffuse)) * groove * nearest->tone;
+            const float groove = 0.50f + 0.50f * std::pow(edge, 0.8f);
+            const float brushed = 1.0f + 0.016f * (0.55f * rowGain[(size_t) y]
+                                                   + 0.45f * rowAmp[(size_t) y] * std::sin(juce::MathConstants<float>::twoPi * (float) rowCycles[(size_t) y] * (float) x / (float) n + rowPhase[(size_t) y]));
+            float lum = (0.50f + 0.50f * juce::jlimit(0.0f, 1.4f, diffuse)) * groove * nearest->tone * brushed;
             const float ndh = juce::jmax(0.0f, nx * hx + ny * hy + nz * hz);
-            const float spec = std::pow(ndh, 170.0f) * edge;               // tight, so only a few facets flash
+            const float spec = std::pow(ndh, 420.0f) * edge;               // very tight: only the odd facet ever flashes
             auto channel = [&](float albedoChannel, float specTint)
             {
-                const float v = albedoChannel * lum * 255.0f + spec * specTint * 0.40f;
+                const float v = albedoChannel * lum * 255.0f + spec * specTint * 0.17f;
                 return (juce::uint8) juce::jlimit(0, 255, juce::roundToInt(v));
             };
             data.setPixelColour(x, y, Colour(channel(albedo.getFloatRed(), 255.0f), channel(albedo.getFloatGreen(), 248.0f),
@@ -538,7 +582,7 @@ juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
 // The one finish used by the toolbar, panel, deck and memory lid: near-black, neutral to very slightly warm.
 const juce::Image& panelTile()
 {
-    static const juce::Image tile = makeWrinkleTile(256, 5, Colour(0xff1d1c19), 0.80f);
+    static const juce::Image tile = makeWrinkleTile(256, 5, Colour(0xff1d1c19), 0.46f);
     return tile;
 }
 
@@ -587,18 +631,132 @@ void gearGlyph(juce::Graphics& g, juce::Point<float> c, float radius, Colour ink
     g.fillPath(gear);
 }
 
-// Walnut cheek that runs the full height of the case: a warm mid-brown with long grain and cathedral
-// figure strong enough to read at 1x, lacquer highlights (a soft vertical band about 30 percent across and
-// a broad diagonal sheen), a lit bevel on the inner edge, and a top that is the sloped end-grain face of the
-// block rather than a rounded cap. The darkening toward the foot is limited so the cheek never merges with
-// the panel beside it.
-void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
+// Walnut cheek that runs the full height of the case, shaded as a convex bullnosed block lit from the upper
+// left: a dark rim, a broad lit shoulder about 30 percent from the left edge, and a dark fall-off toward the
+// right. The grain is long and nearly straight with the occasional cathedral where the rings are pushed
+// sideways, a thin varnish streak rides the shoulder, and the top is the sloped end-grain face of the block.
+// The left cheek turns its outer edge toward the light; the right cheek takes the same light more softly on
+// the panel side and falls into shadow on its outer edge. Palette (design px, 8-bit):
+//   grain (lightest .. darkest early/late wood)  0x5a2c16 .. 0x34170b
+//   lit shoulder after shading                   about 0x5e2e16 (left) / 0x4c2412 (right)
+//   rim and joint                                about 0x26110a
+// The face is built per pixel at device resolution so the grain stays crisp at every window size.
+inline float wHash(int x, int y, int seed)
+{
+    uint32_t h = (uint32_t) x * 374761393u + (uint32_t) y * 668265263u + (uint32_t) seed * 2246822519u;
+    h = (h ^ (h >> 13)) * 1274126177u;
+    return (float) ((h ^ (h >> 16)) & 0xffffffu) / 16777216.0f;
+}
+
+inline float wNoise(float x, float y, int seed)
+{
+    const int xi = (int) std::floor(x), yi = (int) std::floor(y);
+    float fx = x - (float) xi, fy = y - (float) yi;
+    fx = fx * fx * (3.0f - 2.0f * fx);
+    fy = fy * fy * (3.0f - 2.0f * fy);
+    const float a = wHash(xi, yi, seed), b = wHash(xi + 1, yi, seed), c = wHash(xi, yi + 1, seed), d = wHash(xi + 1, yi + 1, seed);
+    return (a + (b - a) * fx) + ((c + (d - c) * fx) - (a + (b - a) * fx)) * fy;
+}
+
+inline float wStep(float a, float b, float x)
+{
+    const float t = juce::jlimit(0.0f, 1.0f, (x - a) / (b - a));
+    return t * t * (3.0f - 2.0f * t);
+}
+
+juce::Image makeWalnutFace(Rf r, bool left, float scale)
+{
+    const int iw = juce::jmax(1, (int) std::ceil(r.getWidth() * scale)), ih = juce::jmax(1, (int) std::ceil(r.getHeight() * scale));
+    juce::Image image(juce::Image::RGB, iw, ih, false);
+    juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
+    const int s0 = left ? 11 : 83;
+    const float w = r.getWidth(), h = r.getHeight();
+
+    // Cathedral figures: centre across the block, along it, half length, half width, push in px.
+    struct Figure { float cx, cy, half, wide, push; };
+    juce::Random rng(left ? 3 : 29);
+    std::array<Figure, 3> figures;
+    for (auto& f : figures)
+        f = { w * (0.30f + 0.40f * rng.nextFloat()), 120.0f + rng.nextFloat() * (h - 330.0f), 70.0f + rng.nextFloat() * 70.0f,
+              w * (0.22f + 0.12f * rng.nextFloat()), (rng.nextBool() ? 1.0f : -1.0f) * (5.0f + 4.0f * rng.nextFloat()) };
+
+    const Colour early(0xff6a3418), late(0xff3e1c0d);
+    for (int py = 0; py < ih; ++py)
+        for (int px = 0; px < iw; ++px)
+        {
+            const float u = ((float) px + 0.5f) / scale, v = ((float) py + 0.5f) / scale;
+            const float xn = u / w;
+            // Ring coordinate: nearly straight vertical grain that wanders slowly along the block.
+            float ring = u + 3.2f * (wNoise(v / 190.0f, 0.5f, s0) - 0.5f) + 1.3f * (wNoise(v / 51.0f, 1.7f, s0 + 1) - 0.5f)
+                         + 2.4f * (wNoise(u / 11.0f, v / 360.0f, s0 + 2) - 0.5f);
+            for (const auto& f : figures)
+            {
+                const float dv = (v - f.cy) / f.half, du = (u - f.cx) / f.wide;
+                ring += f.push * std::exp(-dv * dv * 1.6f) * juce::jmax(0.0f, 1.0f - std::abs(du)) * (1.0f - 0.35f * du * du);
+            }
+            // Tone from contours of long, stretched noise: broad early-wood runs, thin late-wood lines.
+            const float broad = wNoise(ring / 6.5f, v / 520.0f, s0 + 3);
+            const float mid = wNoise(ring / 2.6f, v / 140.0f, s0 + 4);
+            float tone = 0.50f + 0.58f * (broad - 0.5f) + 0.30f * (mid - 0.5f);
+            const float line = 1.0f - wStep(0.0f, 0.030f, std::abs(wNoise(ring * 0.24f, v / 430.0f, s0 + 5) - 0.5f));
+            const float fine = 1.0f - wStep(0.0f, 0.045f, std::abs(wNoise(ring * 0.61f, v / 260.0f, s0 + 6) - 0.5f));
+            tone = juce::jlimit(0.0f, 1.0f, tone - 0.55f * line - 0.25f * fine);
+            float cr = late.getFloatRed() + (early.getFloatRed() - late.getFloatRed()) * tone;
+            float cg = late.getFloatGreen() + (early.getFloatGreen() - late.getFloatGreen()) * tone;
+            float cb = late.getFloatBlue() + (early.getFloatBlue() - late.getFloatBlue()) * tone;
+            // Pores: short dark dashes along the grain.
+            const float pore = wStep(0.80f, 0.94f, wNoise(u * 1.9f, v / 5.0f, s0 + 7));
+            const float poreDark = 1.0f - 0.34f * pore;
+
+            // Convex section lit from the upper left.
+            float shade;
+            if (left)
+            {
+                const float k = (xn - 0.28f) / 0.21f;
+                shade = 0.60f + 0.72f * std::exp(-k * k) + 0.14f * std::exp(-(xn * xn) / 0.0064f);
+                shade *= 1.0f - 0.30f * wStep(0.78f, 1.0f, xn);
+            }
+            else
+            {
+                const float k = (xn - 0.26f) / 0.21f;
+                shade = 0.58f + 0.50f * std::exp(-k * k);
+                shade *= 1.0f - 0.40f * wStep(0.66f, 1.0f, xn);
+                shade *= 0.78f + 0.22f * wStep(0.0f, 0.10f, xn);
+            }
+            // The block darkens toward the foot, never below about 80 percent of its value at the top.
+            const float along = 1.0f - 0.20f * wStep(0.30f, 1.0f, v / h);
+            float m = shade * along * poreDark;
+            // Thin varnish streak on the shoulder: the reflection of a tube light.
+            const float sx = left ? 0.24f : 0.22f;
+            const float streak = std::exp(-((xn - sx) * w) * ((xn - sx) * w) / 2.6f)
+                                 * (0.45f + 0.55f * wNoise(v / 240.0f, 3.3f, s0 + 8)) * wStep(10.0f, 70.0f, v) * (1.0f - wStep(h - 90.0f, h - 20.0f, v));
+            const float streakGain = (left ? 0.20f : 0.12f) * streak;
+            cr = cr * m + (0.91f - cr * m) * streakGain;
+            cg = cg * m + (0.69f - cg * m) * streakGain;
+            cb = cb * m + (0.50f - cb * m) * streakGain;
+            data.setPixelColour(px, py, Colour::fromFloatRGBA(juce::jlimit(0.0f, 1.0f, cr), juce::jlimit(0.0f, 1.0f, cg), juce::jlimit(0.0f, 1.0f, cb), 1.0f));
+        }
+    return image;
+}
+
+// The face is expensive to build and the chassis repaints whenever the status strip changes length, so keep the
+// last few sizes. Message thread only (it is only called from painting).
+juce::Image cachedWalnutFace(Rf r, bool left, float scale)
+{
+    static std::map<std::tuple<int, int, int, bool>, juce::Image> cache;
+    const auto key = std::make_tuple(juce::roundToInt(r.getWidth() * 10.0f), juce::roundToInt(r.getHeight()), juce::roundToInt(scale * 1000.0f), left);
+    if (const auto found = cache.find(key); found != cache.end()) return found->second;
+    if (cache.size() > 8) cache.clear();
+    return cache[key] = makeWalnutFace(r, left, scale);
+}
+
+void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom, float scale)
 {
     // Shadow thrown on the panel (and, below the panel, left to the keybed's own frame).
     {
         const float w = 14.0f;
         const float x0 = left ? r.getRight() : r.getX() - w;
-        g.setGradientFill(juce::ColourGradient(black(0.62f), left ? r.getRight() : r.getX(), 0.0f,
+        g.setGradientFill(juce::ColourGradient(black(left ? 0.58f : 0.46f), left ? r.getRight() : r.getX(), 0.0f,
                                                juce::Colours::transparentBlack, left ? r.getRight() + w : r.getX() - w, 0.0f, false));
         g.fillRect(x0, r.getY(), w, shadowBottom - r.getY());
     }
@@ -614,145 +772,28 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
     {
     juce::Graphics::ScopedSaveState state(g);
     g.reduceClipRegion(shape);
+    const auto face = cachedWalnutFace(r, left, scale);
+    g.drawImage(face, r.getX(), r.getY(), r.getWidth(), r.getHeight(), 0, 0, face.getWidth(), face.getHeight());
 
-    g.setColour(Colour(0xffae6028));
-    g.fillRect(r);
-    ui::drawWalnutGrain(g, r, true, left ? 31 : 47, false);
-    // Warm walnut grade: the grain helper is neutral, so lay a saturated red-brown over it. It runs a little
-    // deeper toward the foot but never below about 60 percent of the value at the top.
-    g.setGradientFill(juce::ColourGradient(Colour(0xffd8640e).withAlpha(0.42f), 0.0f, r.getY(),
-                                           Colour(0xffb44a0c).withAlpha(0.36f), 0.0f, r.getBottom(), false));
-    g.fillRect(r);
-    g.setGradientFill(juce::ColourGradient(juce::Colours::transparentBlack, 0.0f, r.getY() + r.getHeight() * 0.35f,
-                                           black(0.16f), 0.0f, r.getBottom(), false));
-    g.fillRect(r);
-
-    juce::Random rng(left ? 7 : 19);
-    // Long-grain stripes: broad soft dark and light runs that carry the figure at 1x.
-    for (int i = 0; i < 34; ++i)
+    // Edges: the left cheek's outer edge turns toward the light and catches a hairline; its inner edge is a
+    // dark joint against the panel. The right cheek's panel side takes a faint lit chamfer, its outer edge none.
+    if (left)
     {
-        const float x = r.getX() + 1.0f + rng.nextFloat() * (r.getWidth() - 2.0f);
-        const float y0 = r.getY() + rng.nextFloat() * r.getHeight() * 0.85f;
-        const float len = 160.0f + rng.nextFloat() * 520.0f;
-        const float phase = rng.nextFloat() * 6.28f, amp = 0.6f + rng.nextFloat() * 2.2f, freq = 0.006f + rng.nextFloat() * 0.012f;
-        juce::Path run;
-        run.startNewSubPath(x, y0);
-        for (float d = 6.0f; d <= len; d += 6.0f)
-            run.lineTo(x + std::sin(phase + d * freq) * amp, y0 + d);
-        const bool dark = rng.nextFloat() < 0.58f;
-        g.setColour((dark ? Colour(0xff25100a) : Colour(0xffd09860)).withAlpha(dark ? 0.12f + rng.nextFloat() * 0.12f : 0.07f + rng.nextFloat() * 0.09f));
-        g.strokePath(run, juce::PathStrokeType(2.0f + rng.nextFloat() * 5.0f));
+        g.setColour(Colour(0xffe2a874).withAlpha(0.30f));
+        g.fillRect(r.getX() + 1.0f, r.getY(), 1.0f, r.getHeight());
     }
-    // Cathedral figure: nested arches that open downward, each set a different size and drift.
-    for (int figure = 0; figure < 7; ++figure)
+    else
     {
-        const float cx = r.getX() + r.getWidth() * (0.25f + 0.5f * rng.nextFloat());
-        const float cy = r.getY() + 60.0f + rng.nextFloat() * (r.getHeight() - 260.0f);
-        const float sharp = 0.012f + rng.nextFloat() * 0.03f;
-        const float gap = 8.0f + rng.nextFloat() * 12.0f;
-        const int rings = 4 + (int) (rng.nextFloat() * 5.0f);
-        for (int k = 0; k < rings; ++k)
-        {
-            juce::Path arch;
-            const float apex = cy - (float) k * gap;
-            for (float x = r.getX() - 2.0f; x <= r.getRight() + 2.0f; x += 2.0f)
-            {
-                const float dx = x - cx;
-                const float y = apex + dx * dx * sharp * (1.0f + 0.07f * (float) k);
-                if (x == r.getX() - 2.0f) arch.startNewSubPath(x, y); else arch.lineTo(x, y);
-            }
-            const float fade = 1.0f - (float) k / (float) rings;
-            g.setColour(Colour(0xff1a0a05).withAlpha(0.11f + 0.12f * fade));      // broad late-wood band
-            g.strokePath(arch, juce::PathStrokeType(2.6f + rng.nextFloat() * 2.4f));
-            g.setColour(Colour(0xff120704).withAlpha(0.16f + 0.14f * fade));      // fine line inside it
-            g.strokePath(arch, juce::PathStrokeType(0.6f + rng.nextFloat() * 0.6f));
-            g.setColour(Colour(0xffc88a52).withAlpha(0.10f));                     // lit flank
-            g.strokePath(arch, juce::PathStrokeType(1.6f), juce::AffineTransform::translation(0.0f, 2.6f));
-        }
+        g.setColour(Colour(0xffc88a58).withAlpha(0.14f));
+        g.fillRect(r.getX() + 1.0f, r.getY(), 1.0f, r.getHeight());
     }
-    // Fine grain lines that wander slightly, dark and pale, with the odd heavier figure line.
-    for (int i = 0; i < 80; ++i)
-    {
-        const float x = r.getX() + 2.0f + rng.nextFloat() * (r.getWidth() - 4.0f);
-        float y = r.getY() + 18.0f + rng.nextFloat() * (r.getHeight() * 0.8f);
-        const float len = 60.0f + rng.nextFloat() * 380.0f;
-        const float phase = rng.nextFloat() * 6.28f, amp = 0.4f + rng.nextFloat() * 1.6f, freq = 0.012f + rng.nextFloat() * 0.02f;
-        juce::Path streak;
-        streak.startNewSubPath(x, y);
-        for (float d = 4.0f; d <= len; d += 4.0f)
-            streak.lineTo(x + std::sin(phase + d * freq) * amp, y + d);
-        const bool dark = rng.nextFloat() < 0.7f;
-        g.setColour((dark ? Colour(0xff180904) : Colour(0xffb88050)).withAlpha(dark ? 0.16f + rng.nextFloat() * 0.26f : 0.07f + rng.nextFloat() * 0.09f));
-        g.strokePath(streak, juce::PathStrokeType(dark && rng.nextFloat() < 0.15f ? 1.6f : 0.7f));
-    }
-    // Pores: short dark dashes with a faint highlight beside them, and a few deeper ones.
-    for (int i = 0; i < 360; ++i)
-    {
-        const float x = r.getX() + 3.0f + rng.nextFloat() * (r.getWidth() - 6.0f);
-        const float y = r.getY() + 24.0f + rng.nextFloat() * (r.getHeight() - 28.0f);
-        const float len = 2.0f + rng.nextFloat() * 9.0f;
-        g.setColour(black(0.16f + rng.nextFloat() * 0.22f));
-        g.fillRect(x, y, 0.7f, len);
-        g.setColour(Colour(0xffd09a6a).withAlpha(0.07f));
-        g.fillRect(x + 0.8f, y, 0.6f, len * 0.8f);
-    }
-    for (int i = 0; i < 26; ++i)
-    {
-        const float x = r.getX() + 4.0f + rng.nextFloat() * (r.getWidth() - 8.0f);
-        const float y = r.getY() + 28.0f + rng.nextFloat() * (r.getHeight() - 34.0f);
-        g.setColour(black(0.55f));
-        g.fillEllipse(x, y, 1.5f, 3.0f + rng.nextFloat() * 4.0f);
-    }
-    // Bullnose: the face turns away at both long edges.
-    {
-        juce::ColourGradient round(black(0.46f), r.getX(), 0.0f, black(0.46f), r.getRight(), 0.0f, false);
-        round.addColour(0.20, juce::Colours::transparentBlack);
-        round.addColour(0.70, juce::Colours::transparentBlack);
-        g.setGradientFill(round);
-        g.fillRect(r);
-    }
-    // Lacquer: a soft vertical highlight about 30 percent across, a tighter core inside it, and two broad
-    // diagonal sheens down the length.
-    {
-        const float bandX = r.getX() + r.getWidth() * 0.30f;
-        juce::ColourGradient band(juce::Colours::transparentWhite, bandX - r.getWidth() * 0.26f, 0.0f,
-                                  juce::Colours::transparentWhite, bandX + r.getWidth() * 0.26f, 0.0f, false);
-        band.addColour(0.5, white(0.20f));
-        g.setGradientFill(band);
-        g.fillRect(r.withTrimmedTop(18.0f));
-        juce::ColourGradient core(juce::Colours::transparentWhite, bandX - r.getWidth() * 0.09f, 0.0f,
-                                  juce::Colours::transparentWhite, bandX + r.getWidth() * 0.09f, 0.0f, false);
-        core.addColour(0.5, white(0.12f));
-        g.setGradientFill(core);
-        g.fillRect(r.withTrimmedTop(18.0f));
-        const float h = r.getHeight();
-        juce::ColourGradient sheen(juce::Colours::transparentWhite, r.getX(), r.getY() + h * 0.10f,
-                                   juce::Colours::transparentWhite, r.getRight(), r.getY() + h * 0.38f, false);
-        sheen.addColour(0.5, white(0.14f));
-        g.setGradientFill(sheen);
-        g.fillRect(r);
-        juce::ColourGradient sheen2(juce::Colours::transparentWhite, r.getX(), r.getY() + h * 0.52f,
-                                    juce::Colours::transparentWhite, r.getRight(), r.getY() + h * 0.80f, false);
-        sheen2.addColour(0.5, white(0.10f));
-        g.setGradientFill(sheen2);
-        g.fillRect(r);
-    }
-    // Inner bevel: a broad lit chamfer facing the light, a crisp lit edge, then a dark joint against the panel.
-    const float innerX = left ? r.getRight() - 5.0f : r.getX();
-    g.setGradientFill(hgrad(white(left ? 0.0f : 0.34f), white(left ? 0.34f : 0.0f), { innerX, r.getY(), 5.0f, r.getHeight() }));
-    g.fillRect(innerX, r.getY(), 5.0f, r.getHeight());
-    g.setColour(white(0.40f));
-    g.fillRect(left ? r.getRight() - 3.0f : r.getX() + 2.0f, r.getY() + 14.0f, 1.0f, r.getHeight());
-    g.setColour(black(0.9f));
+    g.setColour(black(0.92f));
     g.fillRect(left ? r.getRight() - 1.0f : r.getX(), r.getY(), 1.0f, r.getHeight());
-    // Outer edge falls away into shadow.
-    const float outerX = left ? r.getX() : r.getRight() - 5.0f;
-    g.setGradientFill(hgrad(black(left ? 0.5f : 0.0f), black(left ? 0.0f : 0.5f), { outerX, r.getY(), 5.0f, r.getHeight() }));
-    g.fillRect(outerX, r.getY(), 5.0f, r.getHeight());
 
     // End-grain top: the sloped face of the block, 18 px deep with tight rays and growth rings, a lit chamfer
     // along its upper edge and a dark joint below it.
     {
+        juce::Random rng(left ? 5 : 17);
         juce::Path cap;
         cap.startNewSubPath(r.getX(), topAt(r.getX()));
         cap.lineTo(r.getRight(), topAt(r.getRight()));
@@ -762,13 +803,13 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
         juce::Graphics::ScopedSaveState capState(g);
         g.reduceClipRegion(cap);
         const Rf box(r.getX(), r.getY(), r.getWidth(), drop + 18.0f);
-        g.setGradientFill(vgrad(Colour(0xffa06a40), Colour(0xff5a3318), box));
+        g.setGradientFill(vgrad(Colour(0xff5c3018), Colour(0xff2e170a), box));
         g.fillRect(box);
         const float fanX = r.getCentreX();
         for (float x = box.getX() - 6.0f; x < box.getRight() + 6.0f; x += 1.5f)
         {
             const float topX = fanX + (x - fanX) * 1.35f;
-            g.setColour((rng.nextBool() ? Colour(0xff2a140a) : Colour(0xffc99262)).withAlpha(0.10f + rng.nextFloat() * 0.26f));
+            g.setColour((rng.nextBool() ? Colour(0xff1c0c06) : Colour(0xff9a6038)).withAlpha(0.10f + rng.nextFloat() * 0.22f));
             g.drawLine(x, topAt(x) + 18.0f, topX, topAt(topX) - 2.0f, 0.7f);
         }
         for (float k = 3.0f; k < 18.0f; k += 5.0f)                                     // faint growth rings
@@ -776,18 +817,14 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
             juce::Path ring;
             ring.startNewSubPath(r.getX(), topAt(r.getX()) + k);
             ring.lineTo(r.getRight(), topAt(r.getRight()) + k);
-            g.setColour(Colour(0xff2a140a).withAlpha(0.16f));
+            g.setColour(Colour(0xff1c0c06).withAlpha(0.18f));
             g.strokePath(ring, juce::PathStrokeType(0.8f));
         }
-        // lit chamfer along the top slope
-        juce::Path edge;
+        juce::Path edge;                                                                  // lit chamfer along the top slope
         edge.startNewSubPath(r.getX(), topAt(r.getX()) + 1.0f);
         edge.lineTo(r.getRight(), topAt(r.getRight()) + 1.0f);
-        g.setColour(Colour(0xfff0c898).withAlpha(0.65f));
-        g.strokePath(edge, juce::PathStrokeType(1.6f));
-        g.setGradientFill(juce::ColourGradient(white(0.26f), r.getX() + 3.0f, topAt(r.getX() + 3.0f) + 3.0f,
-                                               juce::Colours::transparentWhite, r.getX() + 30.0f, topAt(r.getX() + 30.0f) + 12.0f, true));
-        g.fillRect(box);
+        g.setColour(Colour(0xffc08858).withAlpha(left ? 0.42f : 0.28f));
+        g.strokePath(edge, juce::PathStrokeType(1.4f));
         juce::Path joint;
         joint.startNewSubPath(r.getX(), topAt(r.getX()) + 18.0f);
         joint.lineTo(r.getRight(), topAt(r.getRight()) + 18.0f);
@@ -973,9 +1010,9 @@ public:
             switch (style)
             {
                 case Style::plate:    top = juce::Colour(0xff3d3a35); bottom = juce::Colour(0xff1b1917); break;
-                case Style::quiet:    top = juce::Colour(0xff4a463f); bottom = juce::Colour(0xff24221f); break;
+                case Style::quiet:    top = juce::Colour(0xff2a2825); bottom = juce::Colour(0xff1b1a17); break;
                 case Style::accent:   top = juce::Colour(0xff4c4535); bottom = juce::Colour(0xff25211a); break;   // SAVE with nothing to save
-                case Style::selector: top = juce::Colour(0xff35332f); bottom = juce::Colour(0xff1c1a18); break;
+                case Style::selector: top = juce::Colour(0xff4a4740); bottom = juce::Colour(0xff26241f); break;
                 default:              top = juce::Colour(0xff625d54); bottom = juce::Colour(0xff2c2a26); break;
             }
             if (on) { top = top.interpolatedWith(juce::Colour(0xffa9772b), 0.46f); bottom = bottom.interpolatedWith(juce::Colour(0xff5a3a10), 0.5f); }
@@ -997,8 +1034,8 @@ public:
                  : accent ? juce::Colour(0xff2b1c06)
                  : style == Style::accent ? juce::Colour(0xffd9b968)
                  : style == Style::plate ? juce::Colour(0xffd9c88e)
-                 : style == Style::quiet ? juce::Colour(0xffd6ccb0)
-                 : style == Style::selector ? juce::Colour(0xff9d947c)
+                 : style == Style::quiet ? juce::Colour(0xffa9a088)
+                 : style == Style::selector ? juce::Colour(0xffddd4b8)
                  : on ? juce::Colour(0xffffe3a0) : juce::Colour(0xffeee6cc);
         const juce::String shown = armed ? juce::String("DISCARD?") : getButtonText();
         if ((style == Style::previous || style == Style::next) && armed)
@@ -1024,7 +1061,7 @@ public:
         }
         else
         {
-            const float size = juce::jlimit(8.0f, 15.0f, r.getHeight() * (style == Style::plate ? 0.40f : style == Style::quiet ? 0.34f : 0.37f));
+            const float size = juce::jlimit(8.0f, 15.0f, r.getHeight() * (style == Style::plate ? 0.40f : style == Style::quiet ? 0.40f : 0.37f));
             auto font = displayFont(size, juce::Font::bold);
             font.setExtraKerningFactor(0.09f);
             auto area = r.reduced(4.0f, 1.0f).translated(0.0f, down ? 0.0f : -0.5f);
@@ -1152,6 +1189,14 @@ public:
     }
     // A small circled "i" before the text: the tooltip carries the detail.
     void setInfoGlyph(bool value) { if (value != info) { info = value; repaint(); } }
+    // What the label prints, and how much room the text, its dot and its glyph take at the given font height.
+    juce::String shownText() const { return hasDisplay ? display : getText(); }
+    float contentWidth(const juce::Font& font) const
+    {
+        const auto text = shownText();
+        if (text.isEmpty()) return 0.0f;
+        return textWidth(font, text) + (dot.isTransparent() ? 0.0f : 11.0f) + (info ? 14.0f : 0.0f) + (float) leftPad;
+    }
     void paint(juce::Graphics& g) override
     {
         auto f = getFont();
@@ -1306,9 +1351,9 @@ public:
         const float sx = (float) getWidth() / geo::lampWell.getWidth();
         FloorScope floor(sx);
         g.addTransform(juce::AffineTransform::scale(sx, (float) getHeight() / geo::lampWell.getHeight()));
-        art::legend(g, "VOICES", { 10.0f, 3.0f, 70.0f, 12.0f }, spacedFont(8.0f, 0.12f), juce::Justification::centredLeft,
+        art::legend(g, "VOICES", { 10.0f, 2.0f, 70.0f, 13.0f }, spacedFont(9.5f, 0.10f), juce::Justification::centredLeft,
                     juce::Colour(0xffd8c68a), 0.8f);
-        art::legend(g, "MIDI", { 90.0f, 3.0f, 36.0f, 12.0f }, spacedFont(8.0f, 0.12f), juce::Justification::centred,
+        art::legend(g, "MIDI", { 88.0f, 2.0f, 38.0f, 13.0f }, spacedFont(9.5f, 0.10f), juce::Justification::centred,
                     juce::Colour(0xffd8c68a), 0.8f);
         for (int i = 0; i < 8; ++i)
             lamp(g, { 14.0f + (float) i * 10.5f, 27.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
@@ -1400,23 +1445,13 @@ public:
             g.setColour(juce::Colour(0xffffcf70).withAlpha(0.55f));
             g.drawRoundedRectangle(w.reduced(0.8f), 4.0f, 1.0f);
         }
-        const auto c = juce::Point<float>(geo::presetChevron.getCentreX() - geo::presetWell.getX(),
-                                          geo::presetChevron.getCentreY() - geo::presetWell.getY());
-        juce::Path chevron;
-        chevron.startNewSubPath(c.x - 5.0f, c.y - 2.5f);
-        chevron.lineTo(c.x, c.y + 2.5f);
-        chevron.lineTo(c.x + 5.0f, c.y - 2.5f);
-        g.setColour(art::black(0.7f));
-        g.strokePath(chevron, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded),
-                     juce::AffineTransform::translation(0.0f, 1.0f));
-        g.setColour(hovered ? juce::Colour(0xffffe3a0) : juce::Colour(0xffd09a3c));
-        g.strokePath(chevron, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
         if (dirty)
         {
-            // A small "EDITED" tag at the right of the name row, clear of the name and the chevron.
-            const auto font = spacedFont(8.0f, 0.12f);
+            // A small "EDITED" tag at the right end of the name row. (The well itself is the control: it has no
+            // chevron, and lights up under the pointer.)
+            const auto font = spacedFont(9.0f, 0.10f);
             const float tw = textWidth(font, "EDITED") + 8.0f;
-            const juce::Rectangle<float> tag(geo::presetChevron.getX() - geo::presetWell.getX() - tw - 6.0f,
+            const juce::Rectangle<float> tag(geo::presetWell.getWidth() - tw - 10.0f,
                                              geo::presetName.getBottom() - geo::presetWell.getY() - 14.0f, tw, 12.0f);
             g.setColour(juce::Colour(0xffffa530).withAlpha(0.16f));
             g.fillRoundedRectangle(tag, 2.5f);
@@ -1618,7 +1653,7 @@ private:
     {
         const char* names[] = { "VCO", "HPF", "LPF", "VCA" };
         const bool active[] = { true, p(cs80::CP_hpfOn) >= 0.5f, p(cs80::CP_lpfOn) >= 0.5f, true };
-        const float y = 64.0f, h = 26.0f, w = 62.0f;
+        const float y = 62.0f, h = 30.0f, w = 62.0f;
         for (int i = 0; i < 4; ++i)
         {
             const Rf box(14.0f + (float) i * 84.0f, y, w, h);
@@ -1640,32 +1675,30 @@ private:
             g.fillRoundedRectangle(box, 2.5f);
             g.setColour(gold().withAlpha(active[i] ? 0.85f : 0.35f));
             g.drawRoundedRectangle(box.reduced(0.5f), 2.5f, active[i] ? 1.0f : 0.8f);
-            art::haloText(g, names[i], box.withTrimmedBottom(i == 0 ? 5.0f : 0.0f), spacedFont(11.0f, 0.10f),
-                          juce::Justification::centred, active[i] ? ink() : juce::Colour(0xff8a8168), juce::Colours::transparentBlack);
+            // Name above, and under it what the stage is doing: the oscillator waves that sound, the cutoff, the level.
+            // Small editors have no room for the second line and print the names alone.
+            juce::String detail;
             if (i == 0)
             {
-                const float levels[] = { p(cs80::CP_saw), p(cs80::CP_pulse), p(cs80::CP_noise) };
-                for (int k = 0; k < 3; ++k)
-                {
-                    const juce::Point<float> c(box.getCentreX() + (float) (k - 1) * 11.0f, box.getBottom() - 4.5f);
-                    const bool lit = levels[k] > 0.02f;
-                    g.setColour(lit ? curve() : juce::Colour(0xff4a4437));
-                    g.fillEllipse(c.x - 1.6f, c.y - 1.6f, 3.2f, 3.2f);
-                }
+                juce::StringArray waves;
+                if (p(cs80::CP_saw) > 0.02f) waves.add("SAW");
+                if (p(cs80::CP_pulse) > 0.02f) waves.add("PLS");
+                if (p(cs80::CP_noise) > 0.02f) waves.add("NSE");
+                detail = waves.isEmpty() ? juce::String("---") : waves.joinIntoString("+");
             }
-            if (i == 3)
-            {
-                // VCA level as a thin rule under the label
-                const float lvl = juce::jlimit(0.0f, 1.0f, p(cs80::CP_vLevel));
-                g.setColour(juce::Colour(0xff4a4437));
-                g.fillRect(box.getX() + 8.0f, box.getBottom() - 5.0f, w - 16.0f, 1.8f);
-                g.setColour(curve());
-                g.fillRect(box.getX() + 8.0f, box.getBottom() - 5.0f, (w - 16.0f) * lvl, 1.8f);
-            }
+            else if (i == 1) detail = active[i] ? hertz(p(cs80::CP_hpfCutoff)) + "Hz" : juce::String("OFF");
+            else if (i == 2) detail = active[i] ? hertz(p(cs80::CP_lpfCutoff)) + "Hz" : juce::String("OFF");
+            else detail = juce::String(juce::roundToInt(juce::jlimit(0.0f, 1.0f, p(cs80::CP_vLevel)) * 100.0f)) + "%";
+            const bool two = ! gSmallEditor;
+            art::haloText(g, names[i], two ? box.withTrimmedBottom(h * 0.40f).translated(0.0f, 1.0f) : box, spacedFont(11.0f, 0.10f),
+                          juce::Justification::centred, active[i] ? ink() : juce::Colour(0xff8a8168), juce::Colours::transparentBlack);
+            if (two)
+                art::haloText(g, detail, box.withTrimmedTop(h * 0.56f).withTrimmedBottom(1.0f), spacedFont(8.5f, 0.04f),
+                              juce::Justification::centred, active[i] ? curve() : juce::Colour(0xff7c745e), juce::Colours::transparentBlack);
         }
         // sine path under the filters straight to the amplifier
         const float sine = juce::jlimit(0.0f, 1.0f, p(cs80::CP_sine));
-        const float yy = y + h + 14.0f;
+        const float yy = y + h + 11.0f;
         juce::Path route;
         route.startNewSubPath(45.0f, y + h);
         route.lineTo(45.0f, yy);
@@ -1816,8 +1849,8 @@ private:
         const float il = p(cs80::CP_fIl), al = p(cs80::CP_fAl);
         const float a = p(cs80::CP_fA), d = p(cs80::CP_fD), rel = p(cs80::CP_fR);
         scopeFrame(g, r, "VCF ENVELOPE",
-                   { { "A " + time(a) + "   D " + time(d), "S 0   R " + time(rel) },
-                     { "A " + time(a) + " D " + time(d), "S 0 R " + time(rel) },
+                   { { "A " + time(a) + "   D " + time(d), "S 0%   R " + time(rel) },
+                     { "A " + time(a) + " D " + time(d), "S 0% R " + time(rel) },
                      { "A " + time(a) + " D " + time(d) + " R " + time(rel), {} } }, false);
         const auto plot = plotArea(r, gSmallEditor ? 0.0f : 14.0f);       // IL gutter: the tag sits left of the start dot
         grid(g, plot, 8, 4);
@@ -2038,7 +2071,7 @@ public:
         g.setFont(font);
         g.setColour(juce::Colour(0xffffc060));
         g.drawText(mainLine, juce::Rectangle<float>(14.0f, 3.0f, 702.0f, 22.0f), juce::Justification::centredLeft, false);
-        auto hint = spacedFont(10.0f, 0.04f);
+        auto hint = spacedFont(11.0f, 0.04f);
         hint = ui::fitFontToWidth(hint, hintLine, 702.0f, 0.8f, 9.0f);
         g.setFont(hint);
         g.setColour(juce::Colour(0xffb6aa86));
@@ -2146,20 +2179,44 @@ public:
                 item.toggle->setTooltip(item.toggle->getTitle() + (item.toggle->getToggleState() ? ": ON" : ": OFF"));
             }
         }
+        bool changed = false;
         for (int bank = 0; bank < 4; ++bank)
-            bankButtons[(size_t) bank]->setToggleState(
-                processor.getHardwareSource(bank % 2) == (bank < 2 ? 11 : 12), juce::dontSendNotification);
-        if (hovered == nullptr) showIdle();
-        else describe(*hovered);
+        {
+            const bool active = processor.getHardwareSource(bank % 2) == (bank < 2 ? 11 : 12);
+            bankButtons[(size_t) bank]->setToggleState(active, juce::dontSendNotification);
+            if (active != rowActive[(size_t) bank]) { rowActive[(size_t) bank] = active; changed = true; }
+        }
+        if (changed)
+        {
+            // Rows that are not the sounding memory sit back; the one that is heard stands out.
+            for (auto& item : items)
+            {
+                const float alpha = rowActive[(size_t) item.bank] ? 1.0f : 0.62f;
+                if (item.slider) item.slider->setAlpha(alpha);
+                if (item.toggle) item.toggle->setAlpha(alpha);
+            }
+            repaint();
+        }
+        if (hovered != nullptr) describe(*hovered, false);
+        else if (lastTouched != nullptr) describe(*lastTouched, true);
+        else showIdle();
     }
 
     // -- live readout ----------------------------------------------------------------------
     void mouseEnter(const juce::MouseEvent& e) override { track(e); }
     void mouseMove(const juce::MouseEvent& e) override { track(e); }
     void mouseDrag(const juce::MouseEvent& e) override { track(e); }
+    void mouseDown(const juce::MouseEvent& e) override
+    {
+        if (auto* item = findItem(e.eventComponent)) { lastTouched = item; hovered = item; describe(*item, false); }
+    }
     void mouseExit(const juce::MouseEvent& e) override
     {
-        if (findItem(e.eventComponent) != nullptr) { hovered = nullptr; showIdle(); }
+        if (findItem(e.eventComponent) != nullptr)
+        {
+            hovered = nullptr;
+            if (lastTouched != nullptr) describe(*lastTouched, true); else showIdle();
+        }
     }
 
     void paint(juce::Graphics& g) override
@@ -2215,7 +2272,7 @@ public:
             g.fillRect(inner);
         }
         art::insetShadow(g, inner, 5.0f, 12.0f, 0.5f);
-        ui::etchRect(g, inner.reduced(7.0f), 3.0f, 0.55f);
+        art::etchRect(g, inner.reduced(7.0f), 3.0f, 0.55f);
         for (float sx : { lid.getX() + 5.0f, lid.getRight() - 5.0f })
             for (float sy : { lid.getY() + 5.0f, lid.getBottom() - 5.0f })
                 art::slotScrew(g, { sx, sy }, 3.0f, sx + sy);
@@ -2243,7 +2300,7 @@ public:
         // One header strip for all four memories: group brackets and a caption over every column, so each
         // row carries only its sliders. The columns line up exactly with the rows below.
         {
-            ui::etchRect(g, { 24.0f, 62.0f, 1424.0f, 50.0f }, 4.0f, 0.6f);
+            art::etchRect(g, { 24.0f, 62.0f, 1424.0f, 50.0f }, 4.0f, 0.6f);
             const struct { const char* title; int first, last; } groups[] = {
                 { "VCO", 0, 5 }, { "VCF", 6, 14 }, { "VCA", 15, 21 }, { "INITIAL", 22, 23 }, { "AFTER", 24, 25 } };
             for (const auto& group : groups)
@@ -2258,9 +2315,25 @@ public:
         for (int bank = 0; bank < 4; ++bank)
         {
             const float y = rowY(bank);
-            ui::etchRect(g, { 24.0f, y, 1424.0f, 98.0f }, 4.0f, 0.6f);
+            const bool active = rowActive[(size_t) bank];
+            const juce::Rectangle<float> row(24.0f, y, 1424.0f, 98.0f);
+            if (active)
+            {
+                // The heard row: a lit ring, a soft glow and a mark at its left end.
+                g.setColour(juce::Colour(0xffffc060).withAlpha(0.10f));
+                g.fillRoundedRectangle(row.reduced(1.0f), 4.0f);
+                g.setColour(juce::Colour(0xffffc060).withAlpha(0.28f));
+                g.drawRoundedRectangle(row.expanded(2.0f), 6.0f, 3.0f);
+                art::etchRect(g, row, 4.0f, 1.0f);
+                g.setColour(juce::Colour(0xffffc060));
+                g.fillRoundedRectangle(row.getX() + 3.0f, row.getY() + 12.0f, 3.0f, row.getHeight() - 24.0f, 1.5f);
+            }
+            else
+                art::etchRect(g, row, 4.0f, 0.34f);
             art::legend(g, bank % 2 == 0 ? "CHANNEL I" : "CHANNEL II", { 33.0f, y + 10.0f, 100.0f, 16.0f },
-                        spacedFont(11.0f, 0.12f), juce::Justification::centred, juce::Colour(0xffeee4c4));
+                        spacedFont(11.0f, 0.12f), juce::Justification::centred, juce::Colour(active ? 0xfffff0cc : 0xffb8ae8e));
+            art::legend(g, active ? "HEARD" : "NOT ACTIVE", { 33.0f, y + 72.0f, 100.0f, 14.0f },
+                        spacedFont(10.0f, 0.10f), juce::Justification::centred, juce::Colour(active ? 0xffffc060 : 0xff9a9174), 0.6f);
         }
         g.restoreState();
     }
@@ -2301,7 +2374,7 @@ private:
     }
     void track(const juce::MouseEvent& e)
     {
-        if (auto* item = findItem(e.eventComponent)) { hovered = item; describe(*item); }
+        if (auto* item = findItem(e.eventComponent)) { hovered = item; describe(*item, false); }
     }
     static juce::String sourceName(int source, int channel)
     {
@@ -2310,21 +2383,32 @@ private:
     }
     void showIdle()
     {
+        const bool anyActive = rowActive[0] || rowActive[1] || rowActive[2] || rowActive[3];
         readout.setLines("CH I: " + sourceName(processor.getHardwareSource(0), 0) + "      CH II: " + sourceName(processor.getHardwareSource(1), 1),
-                         "HOVER OR DRAG A CONTROL TO READ IT   /   PRESS A LIT MEMORY KEY AGAIN TO RETURN ITS CHANNEL TO PANEL");
+                         anyActive ? "HOVER OR DRAG A CONTROL TO READ ITS VALUE" : "BOTH CHANNELS ON PANEL  /  PRESS A MEMORY KEY TO HEAR ITS ROW");
     }
-    void describe(const Item& item)
+    void describe(const Item& item, bool lastTouch)
     {
-        const auto& def = cs80::kChannelDefs[item.local];
         const juce::String value = item.slider != nullptr
             ? ui::formatParamValue(cs80::chParam(item.bank % 2, item.local), (float) item.slider->getValue())
             : (item.toggle->getToggleState() ? juce::String("ON") : juce::String("OFF"));
+        const bool active = rowActive[(size_t) item.bank];
+        const juce::String hint = ! active ? "NOT ACTIVE - PRESS MEMORY " + juce::String(item.bank + 1) + " TO HEAR THIS ROW"
+                                : lastTouch ? juce::String("LAST TOUCHED  /  DRAG TO CHANGE  /  DOUBLE-CLICK FOR DEFAULT")
+                                            : juce::String("DRAG TO CHANGE  /  DOUBLE-CLICK FOR DEFAULT");
         readout.setLines("MEMORY " + juce::String(item.bank + 1) + "  /  CH " + (item.bank % 2 == 0 ? "I" : "II") + "  /  "
-                             + juce::String(def.name).toUpperCase() + "   " + value,
-                         "DRAG TO CHANGE   /   DOUBLE-CLICK FOR DEFAULT");
+                             + panelName(item.local) + "   " + value, hint);
+    }
+    // The front-panel name of a channel control (the lid prints the same names as the main panel).
+    static juce::String panelName(int local)
+    {
+        if (local == cs80::CP_vcfLevel) return "VCF LV";
+        return juce::String(cs80::kChannelDefs[local].name).toUpperCase();
     }
     LidReadout readout;
     Item* hovered = nullptr;
+    Item* lastTouched = nullptr;
+    std::array<bool, 4> rowActive { false, false, false, false };
     static float rowY(int bank) { return 118.0f + (float) bank * 104.0f; }
     static float colX(int col) { return 145.0f + (float) col * 50.0f; }
 
@@ -2350,7 +2434,7 @@ private:
     }};
     const std::array<const char*,26> labels {{
         "SPEED","PWM","PW","PULSE","SAW","NOISE","HPF","RES H","LPF","RES L",
-        "IL","AL","A","D","R","VCF\nLEVEL","SINE","A","D","S","R","LEVEL",
+        "IL","AL","A","D","R","VCF LV","SINE","A","D","S","R","LEVEL",
         "BRILL","LEVEL","BRILL","LEVEL"
     }};
 };
@@ -2788,7 +2872,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             addAndMakeVisible(tag);
             tag.setViewed(channel == 0);
             tag.onClick = [this, channel] { showChannel(channel); };
-            place(tag, 430.0f, geo::rowY0[(size_t) channel] + 66.0f, 24.0f, 40.0f);
+            place(tag, 424.0f, geo::rowY0[(size_t) channel] + 66.0f, 24.0f, 40.0f);
         }
         // Which channel the live curves describe.
         for (int channel = 0; channel < 2; ++channel)
@@ -2810,10 +2894,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         {
             const float y = 232.0f + (float) channel * 82.0f;
             auto p = [channel](int local) { return cs80::chParam(channel, local); };
-            auto& pan = addKnob(p(cs80::CP_pan), 100, y, 66, 72, "PAN");
-            auto& level = addKnob(p(cs80::CP_vLevel), 172, y, 66, 72, "LEVEL");
-            auto& hp = addLed(p(cs80::CP_hpfOn), "HPF", 246, y + 10, 60, 24);
-            auto& lp = addLed(p(cs80::CP_lpfOn), "LPF", 246, y + 40, 60, 24);
+            auto& pan = addKnob(p(cs80::CP_pan), 94, y, 66, 72, "PAN");
+            auto& level = addKnob(p(cs80::CP_vLevel), 166, y, 66, 72, "LEVEL");
+            auto& hp = addLed(p(cs80::CP_hpfOn), "HPF", 240, y + 10, 60, 24);
+            auto& lp = addLed(p(cs80::CP_lpfOn), "LPF", 240, y + 40, 60, 24);
             optionComponents.insert(optionComponents.end(), { &pan, &level, &hp, &lp });
         }
         for (auto* component : optionComponents) component->setVisible(false);
@@ -2865,16 +2949,17 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // form one group; chorus speed and depth sit beside the three-state chorus selector.
     void buildPerformance()
     {
-        const float y = 675.0f, h = 93.0f;       // 3 px lower than before: the captions clear the bracket legends
-        // Everything sits between x66 and x470 so the block lines up with the key area (x62..1538).
-        shortCaption(addFader(cs80::P_masterSustain, 66, y, 40, h, "SUSTAIN", yellowCap()), "SUSTAIN", "SUS");
-        addFader(cs80::P_portamento, 108, y, 40, h, "PORTA", whiteCap());
-        addFader(cs80::P_glideMode, 150, y, 40, h, "GLIDE", greyCap());
-        auto& sus = addLed(cs80::P_sustainMode, "SUS II", 192, y + 23, 56, 62);
-        sus.hardwareTab = true; sus.accent = whiteCap();
+        const float y = 679.0f, h = 89.0f;       // 4 px below the header rule so type stays clear of it even at the 9 px floor
+        // Everything sits between x50 and x386, inside the 342 px block (x48..390) that leaves the ribbon its width.
+        shortCaption(addFader(cs80::P_masterSustain, 50, y, 36, h, "SUSTAIN", yellowCap()), "SUSTAIN", "SUS");
+        addFader(cs80::P_portamento, 86, y, 36, h, "PORTA", whiteCap());
+        addFader(cs80::P_glideMode, 122, y, 36, h, "GLIDE", greyCap());
+        susToggle = &addLed(cs80::P_sustainMode, "SUS I", 160, 698, 52, 62);
+        susToggle->hardwareTab = true; susToggle->accent = whiteCap();
+        susToggle->setTooltip("Sustain mode: I (lamp dark) or II (lamp lit).");
         // Knobs are sized so their engraved legends match the faders' (about 10 px).
-        chorusSpeedKnob = &addKnob(cs80::P_chorusSpeed, 256, y + 15, 54, 66, "SPEED");
-        chorusDepthKnob = &addKnob(cs80::P_chorusDepth, 312, y + 15, 54, 66, "DEPTH");
+        chorusSpeedKnob = &addKnob(cs80::P_chorusSpeed, 214, 690, 48, 66, "SPEED");
+        chorusDepthKnob = &addKnob(cs80::P_chorusDepth, 262, 690, 48, 66, "DEPTH");
 
         // Chorus: one three-position selector (OFF / CHORUS / TREMOLO) over the two switches it stands for.
         const char* names[] = { "OFF", "CHORUS", "TREMOLO" };
@@ -2889,7 +2974,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             key.setWantsKeyboardFocus(true);
             key.onClick = [this, i] { setChorusState(i); };
             addAndMakeVisible(key);
-            place(key, 374.0f, 687.0f + (float) i * 27.0f, 96.0f, 25.0f);
+            place(key, 314.0f, 687.0f + (float) i * 27.0f, 72.0f, 25.0f);
         }
         syncChorusState();
     }
@@ -2961,11 +3046,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // assigners, EXP/WAH and the output switch. The right side of the deck.
     void buildKeyboardControls()
     {
-        const float y = 675.0f, h = 93.0f;
-        addFader(cs80::P_kbdBrillianceLow, 1134, y, 38, h, "LOW", greenCap());
-        addFader(cs80::P_kbdBrillianceHigh, 1174, y, 38, h, "HIGH", greenCap());
-        addFader(cs80::P_kbdLevelLow, 1224, y, 38, h, "LOW", greyCap());
-        addFader(cs80::P_kbdLevelHigh, 1264, y, 38, h, "HIGH", greyCap());
+        const float y = 679.0f, h = 89.0f;
+        addFader(cs80::P_kbdBrillianceLow, 1212, y, 32, h, "LOW", greenCap());
+        addFader(cs80::P_kbdBrillianceHigh, 1246, y, 32, h, "HIGH", greenCap());
+        addFader(cs80::P_kbdLevelLow, 1284, y, 32, h, "LOW", greyCap());
+        addFader(cs80::P_kbdLevelHigh, 1318, y, 32, h, "HIGH", greyCap());
 
         expressionPedal.setTitle("Foot controller position (expression)");
         expressionPedal.setComponentID("expression_pedal");
@@ -2973,29 +3058,29 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         expressionPedal.setValue(processor.getExpressionValue());
         expressionPedal.onValueChange = [this](float value) { processor.setExpressionFromUI(value); };
         addAndMakeVisible(expressionPedal);
-        place(expressionPedal, 1314, 683, 36, 81);
+        place(expressionPedal, 1358, 685, 32, 79);
 
         // Three columns of 54 px keep the block inside the key edge (x1538).
         // Rocker switches 54 x 26: a comfortable target, lit legend and LED.
         auto toggle = [this](int parameter, const char* label, const char* tip, float x, float y) -> ui::LedButton&
         {
-            auto& led = addLed(parameter, label, x, y, 54, 26);
+            auto& led = addLed(parameter, label, x, y, 48, 26);
             led.rockerStyle = true;
             led.setTooltip(tip);
             return led;
         };
         toggle(cs80::P_footswitchPlugged, "PLUG",
-               "Footswitch plugged into the jack. With no plug the switched jack acts as a pressed switch.", 1358, 684);
+               "Footswitch plugged into the jack. With no plug the switched jack acts as a pressed switch.", 1400, 684);
         holdToggle = &toggle(cs80::P_footswitchPressed, "HOLD",
-               "Footswitch contact (PRESS). Latches; toggle it to play the switch.", 1416, 684);
+               "Footswitch contact (PRESS). Latches; toggle it to play the switch.", 1450, 684);
         wahToggle = &toggle(cs80::P_footMode, "EXP",
-               "Foot controller selector: EXP = volume only, WAH = EXP-WAH sweep.", 1474, 684);
+               "Foot controller selector: EXP = volume only, WAH = EXP-WAH sweep.", 1500, 684);
         toggle(cs80::P_sustainAssign, "SUSTAIN",
-               "Assign the footswitch to SUSTAIN. Plugged and open switch removes the sustain release.", 1358, 731);
+               "Assign the footswitch to SUSTAIN. Plugged and open switch removes the sustain release.", 1400, 731);
         toggle(cs80::P_glideAssign, "PORTA",
-               "Assign the footswitch to portamento/glissando. Plugged and open switch suppresses gliding.", 1416, 731);
+               "Assign the footswitch to portamento/glissando. Plugged and open switch suppresses gliding.", 1450, 731);
         outputToggle = &toggle(cs80::P_outputLevel, "LOW",
-               "Output level switch: HIGH = unity, LOW = reduced.", 1474, 731);
+               "Output level switch: HIGH = unity, LOW = reduced.", 1500, 731);
         syncDeckLegends();
     }
 
@@ -3084,23 +3169,34 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (presetLabel.getText() != metadata.name)
             presetLabel.setText(metadata.name, juce::dontSendNotification);
         const auto& bank = processor.getFactoryPresets();
-        juce::String tag = "USER PATCH", index = "---";
-        if (metadata.factoryIndex >= 0 && metadata.factoryIndex < (int) bank.size()
-            && juce::String(bank[(size_t) metadata.factoryIndex].name) == metadata.name)
+        // Provenance: the program is a factory program when its slot and name still agree (a fresh instance
+        // adds a " / Original SUB" suffix), or when its name is a factory program's name. The library resolves
+        // it the same way, so the toolbar and the library inspector always name the same slot.
+        int slot = -1;
+        bool exactName = false;
+        if (metadata.factoryIndex >= 0 && metadata.factoryIndex < (int) bank.size())
         {
-            tag = juce::String(bank[(size_t) metadata.factoryIndex].category).toUpperCase();
-            index = juce::String(metadata.factoryIndex + 1).paddedLeft('0', 3) + " / " + juce::String((int) bank.size());
+            const juce::String factoryName(bank[(size_t) metadata.factoryIndex].name);
+            if (metadata.name == factoryName) { slot = metadata.factoryIndex; exactName = true; }
+            else if (metadata.name.startsWith(factoryName + " / ")) slot = metadata.factoryIndex;
         }
+        if (slot < 0)
+            for (int i = 0; i < (int) bank.size(); ++i)
+                if (juce::String(bank[(size_t) i].name).equalsIgnoreCase(metadata.name)) { slot = i; exactName = true; break; }
+        const bool isFactory = slot >= 0;
+        const juce::String category = isFactory ? juce::String(bank[(size_t) slot].category).toUpperCase() : juce::String();
+        const juce::String tag = isFactory ? category : juce::String("USER PATCH");
+        const juce::String index = isFactory ? juce::String(slot + 1).paddedLeft('0', 3) + " / " + juce::String((int) bank.size()) : juce::String("---");
         if (presetTagLabel.getText() != tag) presetTagLabel.setText(tag, juce::dontSendNotification);
+        presetTagLabel.setDisplayText(isFactory ? "FACTORY  " + category : juce::String("USER PATCH"));
         if (presetIndexLabel.getText() != index) presetIndexLabel.setText(index, juce::dontSendNotification);
-        const bool isFactory = tag != "USER PATCH";
         presetIndexLabel.setDisplayText(isFactory ? "OF " + juce::String((int) bank.size()) : juce::String());
-        const auto number = isFactory ? juce::String(metadata.factoryIndex + 1).paddedLeft('0', 3) : juce::String("USR");
+        const auto number = isFactory ? juce::String(slot + 1).paddedLeft('0', 3) : juce::String("USR");
         const auto numberInk = isFactory ? juce::Colour(0xffffb347) : juce::Colour(0xff9a6a2c);
         if (presetNumberLabel.findColour(juce::Label::textColourId) != numberInk)
             presetNumberLabel.setColour(juce::Label::textColourId, numberInk);
         if (presetNumberLabel.getText() != number) presetNumberLabel.setText(number, juce::dontSendNotification);
-        const bool dirty = patchHasUnsavedEdits(metadata, isFactory);
+        const bool dirty = patchHasUnsavedEdits(metadata, isFactory && exactName, slot);
         presetDirty = dirty;
         if (! dirty) disarmKey();
         presetWindow.setDirty(dirty);
@@ -3108,8 +3204,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     }
 
     // True when the sounding patch differs from the program that is named in the display. Factory programs
-    // compare against the stored values; other programs against the state first seen under that name.
-    bool patchHasUnsavedEdits(const Cs80AudioProcessor::PresetMetadata& metadata, bool isFactory)
+    // compare against the stored values; other programs (and variants such as "Init Patch / Original SUB")
+    // against the state first seen under that name.
+    bool patchHasUnsavedEdits(const Cs80AudioProcessor::PresetMetadata& metadata, bool compareToFactory, int slot)
     {
         const auto current = processor.currentValues();
         auto differs = [&](const cs80::ParamValues& reference)
@@ -3124,8 +3221,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             }
             return false;
         };
-        if (isFactory)
-            return differs(processor.getFactoryPresets()[(size_t) metadata.factoryIndex].values);
+        if (compareToFactory && slot >= 0)
+            return differs(processor.getFactoryPresets()[(size_t) slot].values);
         const auto key = metadata.name + "|" + juce::String(metadata.factoryIndex);
         if (key != baselineKey)
         {
@@ -3462,10 +3559,62 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             const juce::String text = wahToggle->getToggleState() ? "WAH" : "EXP";
             if (wahToggle->getButtonText() != text) wahToggle->setButtonText(text);
         }
+        if (susToggle != nullptr)
+        {
+            const juce::String text = susToggle->getToggleState() ? "SUS II" : "SUS I";
+            if (susToggle->getButtonText() != text) susToggle->setButtonText(text);
+        }
         if (outputToggle != nullptr)
         {
             const juce::String text = outputToggle->getToggleState() ? "HIGH" : "LOW";
             if (outputToggle->getButtonText() != text) outputToggle->setButtonText(text);
+        }
+    }
+
+    // The status strip prints up to four short readouts (rank I, rank II, SUB, MODE). It is one recessed window
+    // that is exactly as long as what it says: the labels are packed left to right at the size they print at,
+    // thin dividers sit between them, and the window ends in a bezel just after the last one. An empty readout
+    // takes no room, so the quiet case is a short window and the long mode text never leaves a dead bar behind.
+    void layoutStrip(bool force)
+    {
+        if (getWidth() <= 0) return;
+        const float sx = (float) getWidth() / kDesignWidth, sy = (float) getHeight() / kDesignHeight;
+        PanelLabel* order[] = { &sourceStatusLabels[0], &sourceStatusLabels[1], &subModeLabel, &modeStatusLabel };
+        juce::String key;
+        for (auto* label : order) key << label->shownText() << '|';
+        key << getWidth();
+        if (! force && key == stripKey) return;
+        stripKey = key;
+        float x = geo::stripX + geo::stripPad, end = x;
+        std::vector<float> dividers;
+        bool any = false;
+        for (auto* label : order)
+        {
+            label->setFont(displayFont(11.5f * sy, juce::Font::bold));
+            label->setMinimumPixels(9.5f);
+            label->setLeftPad(0);
+            auto font = label->getFont();
+            if (font.getHeight() < 9.5f) font = font.withHeight(9.5f);
+            const float width = label->contentWidth(font);
+            if (width <= 0.0f)
+            {
+                label->setBounds(juce::roundToInt(x * sx), juce::roundToInt(geo::ticker.getY() * sy), 1, juce::roundToInt(geo::ticker.getHeight() * sy));
+                continue;
+            }
+            if (any) { dividers.push_back(x - geo::stripGap * 0.5f); }
+            const float design = width / sx + 6.0f;
+            label->setBounds(juce::roundToInt(x * sx), juce::roundToInt(geo::ticker.getY() * sy),
+                             juce::roundToInt(design * sx), juce::roundToInt(geo::ticker.getHeight() * sy));
+            end = x + design;
+            x = end + geo::stripGap;
+            any = true;
+        }
+        const float newEnd = end + geo::stripPad;
+        if (std::abs(newEnd - stripEnd) > 0.4f || dividers != stripDividers)
+        {
+            stripEnd = newEnd;
+            stripDividers = dividers;
+            backdrop.repaint();
         }
     }
 
@@ -3489,6 +3638,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncPresetDisplay();
         syncToneMarks();
         syncSourceStatus();
+        layoutStrip(false);
         updateMeter();
         syncVoicePlate();
         syncChorusState();
@@ -3532,7 +3682,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         art::ambient(g, r, 5.0f, 8.0f, 0.55f);
         ui::softShadow(g, r, 5.0f, 0.0f, 5.0f, 10.0f, 0.8f);
         // bezel body: dark anodised metal, lit from the upper left
-        g.setGradientFill(art::vgrad(juce::Colour(0xff55524b), juce::Colour(0xff191714), r));
+        g.setGradientFill(art::vgrad(juce::Colour(0xff3a3a3d), juce::Colour(0xff121214), r));
         g.fillRoundedRectangle(r, 5.0f);
         // four chamfer facets between the outer edge and the glass
         const auto outer = r.reduced(1.0f), inner = r.reduced(7.0f);
@@ -3544,13 +3694,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             g.fillPath(pth);
         };
         facet(outer.getTopLeft(), outer.getTopRight(), inner.getTopRight(), inner.getTopLeft(),
-              juce::Colour(0xff8a867c), juce::Colour(0xff4a4741), { x0, y0 }, { x0, y0 + 7.0f });                                // top: lit
+              juce::Colour(0xff6a6a70), juce::Colour(0xff35353a), { x0, y0 }, { x0, y0 + 7.0f });                                // top: lit
         facet(outer.getTopLeft(), inner.getTopLeft(), inner.getBottomLeft(), outer.getBottomLeft(),
-              juce::Colour(0xff6c685f), juce::Colour(0xff35332e), { x0, y0 }, { x0 + 7.0f, y0 });                                // left: lit
+              juce::Colour(0xff55555a), juce::Colour(0xff2a2a2e), { x0, y0 }, { x0 + 7.0f, y0 });                                // left: lit
         facet(outer.getTopRight(), outer.getBottomRight(), inner.getBottomRight(), inner.getTopRight(),
-              juce::Colour(0xff2f2d29), juce::Colour(0xff1b1a17), { r.getRight() - 7.0f, y0 }, { r.getRight(), y0 });            // right: shaded
+              juce::Colour(0xff222225), juce::Colour(0xff141416), { r.getRight() - 7.0f, y0 }, { r.getRight(), y0 });            // right: shaded
         facet(outer.getBottomLeft(), inner.getBottomLeft(), inner.getBottomRight(), outer.getBottomRight(),
-              juce::Colour(0xff211f1c), juce::Colour(0xff100f0d), { x0, r.getBottom() - 7.0f }, { x0, r.getBottom() });          // bottom: darkest
+              juce::Colour(0xff18181a), juce::Colour(0xff0b0b0c), { x0, r.getBottom() - 7.0f }, { x0, r.getBottom() });          // bottom: darkest
         // facet seams: a bright arris along the top/left, a dark one along the bottom/right
         g.setColour(art::white(0.42f));
         g.drawLine(outer.getX() + 4.0f, outer.getY(), outer.getRight() - 4.0f, outer.getY(), 1.0f);
@@ -3567,7 +3717,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         const auto glass = inner;
         g.setGradientFill(art::vgrad(art::glassColour().brighter(0.08f), art::glassColour().darker(0.10f), glass));
         g.fillRect(glass);
-        g.setGradientFill(juce::ColourGradient(juce::Colour(0xffe39a38).withAlpha(0.055f), glass.getCentreX(), glass.getCentreY() - 20.0f,
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff9cc4e0).withAlpha(0.050f), glass.getCentreX(), glass.getCentreY() - 20.0f,
                                                juce::Colours::transparentBlack, glass.getX(), glass.getBottom(), true));
         g.fillRect(glass);
         art::insetShadow(g, glass, 0.5f, 9.0f, 0.55f);
@@ -3587,17 +3737,17 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                       juce::Colour(0xffeadfb8), art::glassColour());
         art::legend(g, "VIEW", { x0 + 222, y0 + 14, 58, 22 }, spacedFont(8.5f, 0.16f), juce::Justification::centredRight,
                     juce::Colour(0xffb5a878), 0.0f);
-        ui::etchLine(g, x0 + 14, y0 + 52, x0 + 346, y0 + 52, 0.45f);
-        ui::etchLine(g, x0 + 14, y0 + 330, x0 + 346, y0 + 330, 0.30f);
+        art::etchLine(g, x0 + 14, y0 + 52, x0 + 346, y0 + 52, 0.45f);
+        art::etchLine(g, x0 + 14, y0 + 330, x0 + 346, y0 + 330, 0.30f);
         if (optionsVisible)
         {
             const juce::Rectangle<float> well(x0 + 12, y0 + 116, 336, 188);
-            ui::etchRect(g, well, 3.0f, 0.5f);
+            art::etchRect(g, well, 3.0f, 0.5f);
             art::haloText(g, "VOICE SETTINGS  /  SOFTWARE", { well.getX() + 8, well.getY() + 4, 240, 11 }, spacedFont(8.0f, 0.14f),
                           juce::Justification::centredLeft, juce::Colour(0xffcdb878), art::glassColour());
             panelText(g, "I", x0 + 24, 232 + 22, 20, 28, 12);
             panelText(g, "II", x0 + 24, 314 + 22, 20, 28, 12);
-            ui::etchLine(g, x0 + 20, 306, x0 + 340, 306, 0.35f);
+            art::etchLine(g, x0 + 20, 306, x0 + 340, 306, 0.35f);
         }
     }
 
@@ -3616,8 +3766,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.fillRect(lip.getX(), 96.0f, lip.getWidth(), 9.0f);
         if (! gSmallEditor)
         {
-            art::louvre(g, { 76.0f, 71.0f, 690.0f, 19.0f });
-            art::louvre(g, { 834.0f, 71.0f, 690.0f, 19.0f });
+            art::louvre(g, { 300.0f, 71.0f, 466.0f, 19.0f });
+            art::louvre(g, { 834.0f, 71.0f, 466.0f, 19.0f });
         }
         for (float sx : { 60.0f, 800.0f, 1540.0f })
             art::slotScrew(g, { sx, 80.5f }, 3.6f, sx * 0.07f);
@@ -3627,8 +3777,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void paintChannel(juce::Graphics& g, int channel)
     {
         const float y0 = geo::rowY0[(size_t) channel];
-        const juce::Rectangle<float> frame(424.0f, y0 - 6.0f, 1124.0f, 186.0f);
-        ui::etchRect(g, frame, 4.0f, 0.62f);
+        const juce::Rectangle<float> frame(418.0f, y0 - 6.0f, 1134.0f, 186.0f);
+        art::etchRect(g, frame, 4.0f, 0.62f);
         // (the channel numeral is an engraved ChannelTag component, lit while its curves are on the plate)
         art::bracket(g, "VCO", 459, y0 + 10, 235);
         art::bracket(g, "VCF", 706, y0 + 10, 354);
@@ -3637,7 +3787,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         art::bracket(g, "AFTER", 1445, y0 + 10, 76);
         // faint column separators between functional groups
         for (float x : { 702.0f, 1071.0f, 1360.0f })
-            ui::etchLine(g, x, y0 + 22.0f, x, y0 + 170.0f, 0.22f);
+            art::etchLine(g, x, y0 + 22.0f, x, y0 + 170.0f, 0.22f);
     }
 
     void paintToneBezel(juce::Graphics& g)
@@ -3656,7 +3806,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         for (int row = 0; row < 2; ++row)
         {
             const float cy = 527.0f + (float) row * 45.0f + 20.5f;
-            art::legend(g, row == 0 ? "I" : "II", { 665.0f, cy - 9.0f, 21.0f, 18.0f }, spacedFont(11.5f, 0.06f),
+            art::legend(g, row == 0 ? "I" : "II", { 662.0f, cy - 9.0f, 19.0f, 18.0f }, spacedFont(11.5f, 0.04f),
                         juce::Justification::centred, juce::Colour(0xfff0e6c4), 0.8f);
         }
     }
@@ -3669,18 +3819,18 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.setGradientFill(art::vgrad(art::black(0.55f), juce::Colours::transparentBlack, { deck.getX(), deck.getY(), deck.getWidth(), 18.0f }));
         g.fillRect(deck.getX(), deck.getY(), deck.getWidth(), 18.0f);
         for (const auto& block : { geo::deckLeft, geo::deckRight })
-            ui::etchRect(g, block, 5.0f, 0.5f);
+            art::etchRect(g, block, 5.0f, 0.5f);
         // One bracket style for every deck header.
-        const float ruleY = 673.0f;
-        art::bracket(g, "PERFORMANCE", 66, ruleY, 182, 4.0f);
-        art::bracket(g, "CHORUS / TREMOLO", 252, ruleY, 218, 4.0f, 9.5f, "CHORUS");
-        art::bracket(g, "BRILLIANCE", 1134, ruleY, 78, 4.0f, 9.5f, "BRILL");
-        art::bracket(g, "LEVEL", 1222, ruleY, 80, 4.0f);
-        art::bracket(g, "FOOT", 1316, ruleY, 34, 4.0f);
-        art::bracket(g, "FOOTSWITCH", 1358, ruleY, 112, 4.0f);
-        art::bracket(g, "FOOT MODE", 1474, ruleY, 58, 4.0f, 9.5f, "MODE");
-        art::bracket(g, "ASSIGN TO", 1358, 719.0f, 112, 4.0f);
-        art::bracket(g, "OUTPUT", 1474, 719.0f, 58, 4.0f, 9.5f, "OUT");
+        const float ruleY = 672.0f;
+        art::bracket(g, "PERFORMANCE", 50, ruleY, 162, 4.0f);
+        art::bracket(g, "CHORUS / TREMOLO", 214, ruleY, 174, 4.0f, 9.5f, "CHORUS");
+        art::bracket(g, "BRILLIANCE", 1212, ruleY, 66, 4.0f, 9.5f, "BRILL");
+        art::bracket(g, "LEVEL", 1284, ruleY, 66, 4.0f);
+        art::bracket(g, "FOOT", 1352, ruleY, 44, 4.0f);
+        art::bracket(g, "FOOTSWITCH", 1400, ruleY, 98, 4.0f, 9.5f, "SWITCH");
+        art::bracket(g, "ASSIGN TO", 1400, 719.0f, 98, 4.0f);
+        art::bracket(g, "OUTPUT", 1500, 719.0f, 48, 4.0f, 9.5f, "OUT");
+        art::bracket(g, "MODE", 1500, ruleY, 48, 4.0f);
 
         // centre: nameplate and the ribbon slot
         const auto np = geo::nameplate;
@@ -3705,24 +3855,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         art::legend(g, "POLYPHONIC", { 490, 679, 136, 20 }, spacedFont(10.5f, 0.2f), juce::Justification::centredRight, juce::Colour(0xffe6dcbc));
         art::legend(g, "SYNTHESIZER", { 974, 679, 136, 20 }, spacedFont(10.5f, 0.2f), juce::Justification::centredLeft, juce::Colour(0xffe6dcbc));
 
-        const float rule = 718.0f;
-        ui::etchLine(g, 504, rule, 568, rule, 0.7f);
-        ui::etchLine(g, 1032, rule, 1096, rule, 0.7f);
-        art::legend(g, "RIBBON CONTROLLER", { 568, rule - 7, 464, 14 }, spacedFont(9.0f, 0.2f));
-        ui::etchLine(g, 504, rule, 504, rule + 5, 0.7f);
-        ui::etchLine(g, 1096, rule, 1096, rule + 5, 0.7f);
-        // printed scale along the ribbon
-        for (int i = 0; i <= 24; ++i)
-        {
-            const float x = 508.0f + (float) i * (584.0f / 24.0f);
-            const bool major = i % 6 == 0;
-            g.setColour(juce::Colour(0xffd8cfb0).withAlpha(major ? 0.8f : 0.4f));
-            g.fillRect(x - 0.4f, 724.5f, 0.9f, major ? 5.0f : 3.0f);
-        }
-        const auto slot = geo::ribbonRect.expanded(8.0f, 3.0f);
+        // The ribbon's own caption: one bracket over the whole slot. (The scale along the ribbon is printed by the
+        // ribbon component itself.)
+        art::bracket(g, "RIBBON CONTROLLER", geo::ribbonRect.getX() + 2.0f, 713.0f, geo::ribbonRect.getWidth() - 4.0f, 4.0f, 9.5f);
+        const auto slot = geo::ribbonRect.expanded(5.0f, 3.0f);
         art::recessTray(g, slot, 5.0f, juce::Colour(0xff101010), juce::Colour(0xff070707), 8.0f, 0.8f);
-        for (float sx : { slot.getX() + 6.0f, slot.getRight() - 6.0f })
-            art::slotScrew(g, { sx, slot.getCentreY() }, 3.0f, sx);
     }
 
     // Toolbar furniture only: the finish itself is the panel's. Controls are laid on the panel, with the
@@ -3788,7 +3925,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             g.fillRect(dx, w.getY() + 7.0f, 1.0f, w.getHeight() - 14.0f);
         }
         // button cluster: one etched outline, the keys sit on the panel
-        ui::etchRect(g, geo::cluster, 5.0f, 0.5f);
+        art::etchRect(g, geo::cluster, 5.0f, 0.5f);
         for (float x : { 860.0f, 934.0f, 1010.0f })
         {
             g.setColour(art::black(0.5f));
@@ -3796,7 +3933,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             g.setColour(art::white(0.07f));
             g.fillRect(x + 1.0f, 12.0f, 1.0f, 28.0f);
         }
-        ui::etchRect(g, geo::lampWell, 5.0f, 0.5f);
+        art::etchRect(g, geo::lampWell, 5.0f, 0.5f);
         // output meter window: a flat bezel around dark glass, the scale printed under the bar
         {
             const auto w = geo::meterWell;
@@ -3804,9 +3941,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             art::recessTray(g, w, 4.0f, juce::Colour(0xff0e0f0c), juce::Colour(0xff050504), 8.0f, 0.9f);
             g.setGradientFill(art::vgrad(art::white(0.07f), juce::Colours::transparentWhite, w.withHeight(w.getHeight() * 0.5f)));
             g.fillRoundedRectangle(w.reduced(1.0f).withHeight(w.getHeight() * 0.5f), 3.0f);
-            art::legend(g, "OUT", { 1264, 8, 46, 10 }, spacedFont(8.0f, 0.1f), juce::Justification::centredLeft, juce::Colour(0xffe0cf94), 0.8f);
-            art::legend(g, "dBFS", { 1264, 36, 42, 8 }, spacedFont(8.0f, 0.08f), juce::Justification::centredLeft, juce::Colour(0xffc4b583), 0.8f);
-            ui::etchLine(g, 1315, 11, 1315, 41, 0.35f);
+            art::legend(g, "OUT", { 1264, 6.5f, 46, 11 }, spacedFont(9.5f, 0.1f), juce::Justification::centredLeft, juce::Colour(0xffe0cf94), 0.8f);
+            art::legend(g, "dBFS", { 1264, 34.5f, 46, 11 }, spacedFont(9.5f, 0.06f), juce::Justification::centredLeft, juce::Colour(0xffc4b583), 0.8f);
+            art::etchLine(g, 1315, 11, 1315, 41, 0.35f);
             // dB scale under the bar, on the same 20-segment geometry the bar uses (its OVR lamp takes the right end)
             const float usable = geo::meterBar.getWidth() - MeterBar::lampWidthNow() - 2.0f;
             const std::pair<float, const char*> marks[] = { { -60.0f, "-60" }, { -40.0f, "-40" }, { -20.0f, "-20" }, { -10.0f, "-10" }, { 0.0f, "0" } };
@@ -3815,21 +3952,28 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 const float x = geo::meterBar.getX() + (m.first + 60.0f) / 60.0f * usable - (m.first >= 0.0f ? 0.6f : 0.0f);
                 g.setColour(juce::Colour(0xffd8cfb0).withAlpha(0.7f));
                 g.fillRect(x - 0.4f, 26.5f, 0.9f, 3.5f);
-                // hide a number that would run into the next one (small editors print larger type)
-                if (gSmallEditor && (m.first == -10.0f || m.first == -60.0f)) continue;
-                art::legend(g, m.second, { x - 11.0f, 30.0f, 22.0f, 10.0f }, displayFont(8.0f, juce::Font::bold),
+                // -10 keeps its tick but not its number: it would touch -20 and 0 (small editors also drop -60)
+                if (m.first == -10.0f || (gSmallEditor && m.first == -60.0f)) continue;
+                art::legend(g, m.second, { x - 12.0f, 29.5f, 24.0f, 12.0f }, displayFont(9.5f, juce::Font::bold),
                             juce::Justification::centred, juce::Colour(0xffe6dcbc), 0.0f);
             }
             const float x3 = geo::meterBar.getX() + (-3.0f + 60.0f) / 60.0f * usable;
             g.setColour(juce::Colour(0xffff6a4a).withAlpha(0.9f));
             g.fillRect(x3 - 0.4f, 26.5f, 0.9f, 3.5f);
         }
-        // player status strip: a recessed black window with the status text lit inside it
+        // player status strip: a recessed black window with the status text lit inside it, as long as its text
         {
-            const auto t = geo::ticker.withWidth(1160.0f).expanded(1.0f, 1.5f);
-            art::recessTray(g, t, 3.0f, juce::Colour(0xff0b0b0a), juce::Colour(0xff040403), 5.0f, 0.9f);
+            const juce::Rectangle<float> t(geo::stripX, geo::stripY, juce::jmax(40.0f, stripEnd - geo::stripX), geo::stripH);
+            art::recessTray(g, t, 4.0f, juce::Colour(0xff0b0b0a), juce::Colour(0xff040403), 5.0f, 0.9f);
             g.setGradientFill(art::vgrad(art::white(0.05f), juce::Colours::transparentWhite, t.withHeight(t.getHeight() * 0.5f)));
-            g.fillRoundedRectangle(t.reduced(1.0f).withHeight(t.getHeight() * 0.5f), 2.5f);
+            g.fillRoundedRectangle(t.reduced(1.0f).withHeight(t.getHeight() * 0.5f), 3.0f);
+            for (float x : stripDividers)
+            {
+                g.setColour(art::black(0.7f));
+                g.fillRect(x, t.getY() + 3.0f, 1.0f, t.getHeight() - 6.0f);
+                g.setColour(art::white(0.10f));
+                g.fillRect(x + 1.0f, t.getY() + 3.0f, 1.0f, t.getHeight() - 6.0f);
+            }
         }
     }
 
@@ -3876,7 +4020,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         // ---- lower row: ring / sub / feet | tone selector | global ------------
         {
             const auto lp = geo::lowerPlate;
-            ui::etchRect(g, lp, 5.0f, 0.55f);
+            art::etchRect(g, lp, 5.0f, 0.55f);
             art::bracket(g, "RING MODULATOR", 158, 499, 200);
             art::bracket(g, "SUB OSCILLATOR", 370, 499, 205, 6.0f, 9.5f, "SUB OSC");
             art::bracket(g, "FEET", 580, 499, 80);
@@ -3914,8 +4058,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             art::slotScrew(g, { x, 645.0f }, 4.4f, (x + 645.0f) * 0.7f);
 
         // ---- walnut cheeks run the full height of the case, over everything --
-        art::walnutCheek(g, { 0, 0, geo::bodyLeft, kDesignHeight }, true, geo::deckBottom);
-        art::walnutCheek(g, { geo::bodyRight, 0, kDesignWidth - geo::bodyRight, kDesignHeight }, false, geo::deckBottom);
+        art::walnutCheek(g, { 0, 0, geo::bodyLeft, kDesignHeight }, true, geo::deckBottom, scale);
+        art::walnutCheek(g, { geo::bodyRight, 0, kDesignWidth - geo::bodyRight, kDesignHeight }, false, geo::deckBottom, scale);
         g.restoreState();
     }
 
@@ -3978,33 +4122,17 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         outputMeterLabel.setLines(1);
         outputMeterLabel.setLeftPad(juce::roundToInt(2.0f * sx));
         meterBar.setBounds(rr(geo::meterBar));
-        for (int rank = 0; rank < 2; ++rank)
-        {
-            auto& label = sourceStatusLabels[(size_t) rank];
-            label.setBounds(rr(rank == 0 ? geo::rankI : geo::rankII));
-            label.setFont(displayFont(10.0f * sy, juce::Font::bold));
-            label.setMinimumPixels(9.0f);
-        }
         voiceStatusLabel.setBounds(rr(geo::voiceStatus));
-        voiceStatusLabel.setFont(displayFont(10.0f * sy, juce::Font::bold));
-        voiceStatusLabel.setMinimumPixels(9.0f);
         midiStatusLabel.setBounds(rr(geo::midiStatus));
-        midiStatusLabel.setFont(displayFont(10.0f * sy, juce::Font::bold));
-        midiStatusLabel.setMinimumPixels(9.0f);
-        subModeLabel.setBounds(rr(geo::subStatus));
-        subModeLabel.setFont(displayFont(10.0f * sy, juce::Font::bold));
-        subModeLabel.setMinimumPixels(9.0f);
-        modeStatusLabel.setBounds(rr(geo::modeStatus));
-        modeStatusLabel.setFont(displayFont(10.0f * sy, juce::Font::bold));
-        modeStatusLabel.setMinimumPixels(9.0f);
+        layoutStrip(true);
 
         ribbon.setBounds(rr(geo::ribbonRect));
-        pitchWheel.setBounds(r(318.0f, 230.0f, 30.0f, 150.0f));
-        modWheel.setBounds(r(356.0f, 230.0f, 30.0f, 150.0f));
+        pitchWheel.setBounds(r(312.0f, 230.0f, 30.0f, 150.0f));
+        modWheel.setBounds(r(350.0f, 230.0f, 30.0f, 150.0f));
         keybed.setBounds(rr(geo::keybed));
 
-        scrim.setBounds(rr(geo::overlay));
-        shade.setBounds(rr(geo::overlay));
+        scrim.setBounds(rr(geo::overlayBody));
+        shade.setBounds(rr(geo::overlayBody));
         advanced.setBounds(rr(geo::overlay));
         browser.setBounds(rr(geo::overlay));
         memoryProgrammer.setBounds(rr(geo::memoryLid));
@@ -4061,6 +4189,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     std::array<TouchView, 2> touchViews;
     ui::ParamKnob* chorusSpeedKnob = nullptr;
     ui::ParamKnob* chorusDepthKnob = nullptr;
+    juce::String stripKey;
+    float stripEnd = 400.0f;
+    std::vector<float> stripDividers;
+    ui::LedButton* susToggle = nullptr;
     ui::LedButton* holdToggle = nullptr;
     ui::LedButton* wahToggle = nullptr;
     ui::LedButton* outputToggle = nullptr;
