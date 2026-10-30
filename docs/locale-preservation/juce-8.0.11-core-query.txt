@@ -1,0 +1,29 @@
+Fresh post-recovery locale-only candidate verification (2026-10-30 UTC).
+Official JUCE tag: 8.0.11
+Official JUCE source SHA: c352e2489000ffeb9e397051377d75eef2efe641
+Source checkout status: clean
+Probe source SHA256: 71be1342cbf9bafe26bae8bf61a6f2615cd99b0917bba5087eeda39087d44216
+Probe binary SHA256: 4f06368d8c2d92f0c9bedd8139565245d0e9da53b7338a4e69eb91a56a611d71
+g++ (Debian 14.2.0-19) 14.2.0
+Compile exit: 0
+Compile: g++ -std=c++20 -O0 -DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1 -DJUCE_STANDALONE_APPLICATION=1 -DJUCE_USE_CURL=0 -I<JUCE>/modules core-query.cpp <JUCE>/modules/juce_core/juce_core.cpp <JUCE>/modules/juce_core/juce_core_CompilationTime.cpp -ldl -lpthread -lrt -o <probe>
+Only the official JUCE core module is linked. No GUI/plugin/validator execution.
+Environment for each fresh process: LC_ALL=C.UTF-8 LANG=C.UTF-8
+Each fixture is executed exactly once; no retries.
+
+fixture=C process_exit=0
+Official JUCE8.0.11 core-only query; startup=[C]; fixture=[C]
+getUserLanguage: before=[C] after=[C]
+getUserRegion: before=[C] after=[C]
+getDisplayLanguage: before=[C] after=[C]
+First changed stage: none; failed checks: 0
+
+fixture=mixed process_exit=0
+Official JUCE8.0.11 core-only query; startup=[C]; fixture=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C]
+getUserLanguage: before=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C] after=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C]
+getUserRegion: before=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C] after=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C]
+getDisplayLanguage: before=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C] after=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C]
+First changed stage: none; failed checks: 0
+
+Scope: these completed-call query checks are not a GUI/full-host pass or proof of concurrent locale race freedom.
+The older failed control remains in juce-8.0.6-negative-control.txt; it was not retried here.

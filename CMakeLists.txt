@@ -194,7 +194,8 @@ if (CS80_BUILD_PLUGIN)
     else()
         include(FetchContent)
         FetchContent_Declare(JUCE GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-                                  GIT_TAG 8.0.6)
+                                  # Official 8.0.11: fixes Linux locale-query restoration.
+                                  GIT_TAG c352e2489000ffeb9e397051377d75eef2efe641)
         FetchContent_MakeAvailable(JUCE)
     endif()
 
@@ -272,4 +273,26 @@ if (CS80_BUILD_PLUGIN)
     add_test(NAME cs80_ui_smoke
              COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 120)
+
+    if (CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        # Reuse the snapshot target, but dispatch before its ordinary GUI setup.
+        # Each mode/fixture starts a fresh process: no preceding query or paint
+        # can warm up JUCE and hide a locale mutation. Never skip a missing fixture.
+        find_program(CS80_XVFB_RUN xvfb-run REQUIRED)
+        find_program(CS80_XAUTH xauth REQUIRED)
+        foreach(locale_mode IN ITEMS query editor)
+            add_test(NAME cs80_locale_${locale_mode}
+                     COMMAND ${CMAKE_COMMAND} -E env LC_ALL=C.UTF-8 LANG=C.UTF-8
+                             JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu
+                             ${CS80_XVFB_RUN} -a -s "-screen 0 1920x1200x24"
+                             $<TARGET_FILE:CS80Snapshots> --locale-smoke ${locale_mode})
+            add_test(NAME cs80_locale_${locale_mode}_mixed
+                     COMMAND ${CMAKE_COMMAND} -E env LC_ALL=C.UTF-8 LANG=C.UTF-8
+                             JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu
+                             ${CS80_XVFB_RUN} -a -s "-screen 0 1920x1200x24"
+                             $<TARGET_FILE:CS80Snapshots> --locale-smoke ${locale_mode} mixed)
+            set_tests_properties(cs80_locale_${locale_mode} cs80_locale_${locale_mode}_mixed
+                                 PROPERTIES TIMEOUT 60)
+        endforeach()
+    endif()
 endif()

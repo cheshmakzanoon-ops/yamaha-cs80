@@ -1,0 +1,32 @@
+RECOVERED HISTORICAL EVIDENCE -- not a fresh run or the original lost artifact.
+The former execution workspace and /tmp files were lost after these tool results.
+The text below is reconstructed from the retained execution output on 2026-10-30.
+
+Official JUCE 8.0.6 source SHA: 51a8a6d7aeae7326956d747737ccf1575e61e209
+Source SHA-256 observed before loss: 9873a00557a500b5c6ab96d3cf99fd591c275287d5e5cfd013af938d5de6b89e
+Old binary SHA-256 observed before loss: 42039f507435cef0ccaee4ed4c80100a70449173092dc906bbb7a152e5ad86d6
+The old binary is unavailable and its hash cannot now be rechecked.
+Compiler executable: g++; exact compiler version was not retained in the accessible output.
+Build exit: 0
+Compilation flags: -std=c++20 -O0 -DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1 -DJUCE_STANDALONE_APPLICATION=1 -DJUCE_USE_CURL=0
+Linked unmodified juce_core.cpp and juce_core_CompilationTime.cpp; -ldl -lpthread -lrt.
+Test-only environment: LC_ALL=C.UTF-8 LANG=C.UTF-8
+No GUI/plugin/validator execution; no callback-memory instrumentation or source repair.
+
+fixture=C process_exit=1
+Official JUCE8.0.6 core-only query; startup=[C]; fixture=[C]
+getUserLanguage: before=[C] after=[C.UTF-8]
+getUserRegion: before=[C] after=[C.UTF-8]
+getDisplayLanguage: before=[C] after=[C.UTF-8]
+First changed stage: getUserLanguage; failed checks: 3
+
+fixture=mixed process_exit=1
+Official JUCE8.0.6 core-only query; startup=[C]; fixture=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C]
+getUserLanguage: before=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C] after=[C.UTF-8]
+getUserRegion: before=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C] after=[C.UTF-8]
+getDisplayLanguage: before=[LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C] after=[C.UTF-8]
+First changed stage: getUserLanguage; failed checks: 3
+
+Both exit1 results remain failures of the old getter's preservation contract.
+They do not attribute the exact first changing call in the earlier full GUI run,
+and do not qualify the candidate dependency or any new source revision.

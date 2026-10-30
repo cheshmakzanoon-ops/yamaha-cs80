@@ -31,7 +31,7 @@ jobs:
             libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
             libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
             libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
-            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth
 
       - name: Configure
         run: >

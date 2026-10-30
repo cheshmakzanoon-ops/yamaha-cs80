@@ -1,6 +1,7 @@
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
+#include "../../tests/PluginLocalePreservation.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -1746,6 +1747,8 @@ void testIsolatedFootControllerHost()
 
 int main(int argc, char** argv)
 {
+    if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
+        return cs80::tests::runLocaleSmoke(argc, argv);
     juce::ScopedJuceInitialiser_GUI juceInit;
 
     juce::String outDir = "artifacts/ui";
