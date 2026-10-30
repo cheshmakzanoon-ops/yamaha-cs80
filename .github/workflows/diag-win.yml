@@ -3,31 +3,21 @@ on:
   push:
     branches: [diag-win]
 jobs:
-  core-tests:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: main
-            ref: 2564d77e488a14036e8867fdca416b653c93848a
-          - name: ui-wip
-            ref: da00062b658b932dacb9ce1a74c7dbf2abab4450
-    name: windows full tests ${{ matrix.name }}
+  win-build:
+    name: windows build ui-wip head
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v5
         with:
           repository: cheshmakzanoon-ops/yamaha-cs80
-          ref: ${{ matrix.ref }}
-      - name: Configure and build core tests
+          ref: 9eca476fd3c3e3581dd0d8082ddd406d3b1ca249
+      - name: Configure
         shell: pwsh
-        run: |
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
-          cmake --build build --config Release --parallel
-      - name: Test
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+      - name: Build
         shell: pwsh
         continue-on-error: true
         run: |
-          ctest --test-dir build -C Release --output-on-failure *> ctest.log
-          $sel = Select-String -Path ctest.log -Pattern 'Failed|FAIL|tests passed|tests failed|\*\*\*' | Select-Object -First 60 | ForEach-Object { $_.Line }
-          Write-Output ("::error title=ctest ${{ matrix.name }}::" + ($sel -join '%0A'))
+          cmake --build build --config Release --parallel *> build.log
+          $sel = Select-String -Path build.log -Pattern 'error C|error LNK|fatal error|: error ' | Select-Object -First 25 | ForEach-Object { $_.Line.Substring(0, [Math]::Min(300, $_.Line.Length)) }
+          if ($sel) { Write-Output ("::error title=windows build errors::" + ($sel -join '%0A')) } else { Write-Output "::notice title=windows build::no compiler errors matched" }
