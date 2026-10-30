@@ -2380,6 +2380,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         addAndMakeVisible(backdrop);
         backdrop.draw = [this](juce::Graphics& g) { paintChassis(g); };
+        addAndMakeVisible(spill);
         addAndMakeVisible(voicePlate);
 
         buildTopBar();
@@ -2408,6 +2409,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
         advanced.onClose = [this] { showAdvanced(false, true); };
         browser.onClose = [this] { showBrowser(false, true); };
+        browser.isPatchEdited = [this] { return presetDirty; };
         browser.onPresetLoaded = [this]
         {
             syncPresetDisplay();
@@ -3939,6 +3941,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         auto rr = [&r](const juce::Rectangle<float>& b) { return r(b.getX(), b.getY(), b.getWidth(), b.getHeight()); };
 
         backdrop.setBounds(getLocalBounds());
+        spill.setBounds(getLocalBounds());
         applyCaptions();
         voicePlate.setBounds(rr(geo::plate));
         for (const auto& item : placements)
@@ -4009,6 +4012,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     Cs80AudioProcessor& processor;
     Backdrop backdrop;
+    ui::LightSpill spill;
     VoicePlate voicePlate;
     ui::LookAndFeel lookAndFeel;
     PanelTooltipWindow tooltips { this, 600 };
