@@ -105,7 +105,12 @@ juce::String formatParamValue(int parameterIndex, float value)
         {
             case cs80::P_masterTune: return (value >= 0.0f ? "+" : "") + number(value, 2) + " st";
             case cs80::P_detune: return number(value, 1) + " ct";
-            case cs80::P_mix: return "I " + juce::String(juce::roundToInt(value * 100.0f));
+            case cs80::P_mix:
+            {
+                // Level of channel I against channel II, as a ratio that stays readable on a 38 px fader.
+                const int one = juce::roundToInt(value * 100.0f);
+                return juce::String(one) + "/" + juce::String(100 - one);
+            }
             case cs80::P_brilliance:
                 return (value >= 0.0f ? "+" : "") + number(value, 2) + " oct";
             case cs80::P_resonance:
@@ -901,7 +906,7 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
     const bool pale = c.getPerceivedBrightness() > 0.60f;
     const bool dark = c.getPerceivedBrightness() < 0.30f;
     // Dark plastic is lifted toward a charcoal so the top face does not sink into the panel.
-    const juce::Colour fc = dark ? c.brighter(0.42f) : c;
+    const juce::Colour fc = dark ? c.brighter(0.12f) : c;
 
     // Hover / drag: warm light spilling around the cap.
     if (hover || drag)
@@ -944,7 +949,7 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
         clip.addRoundedRectangle(plate, rad * 0.7f);
         g.reduceClipRegion(clip);
         // Glossy sheen: a diagonal window reflection from the upper left.
-        g.setGradientFill(juce::ColourGradient(whiteInk(pale ? 0.34f : (dark ? 0.34f : 0.26f)), plate.getX(), plate.getY(),
+        g.setGradientFill(juce::ColourGradient(whiteInk(pale ? 0.34f : (dark ? 0.30f : 0.26f)), plate.getX(), plate.getY(),
                                                whiteInk(0.0f), plate.getX() + plate.getWidth() * 0.55f, plate.getY() + plate.getHeight() * 0.85f, false));
         g.fillRect(plate);
         // Window reflection: a slanted bright streak across the plastic.
@@ -953,7 +958,7 @@ void drawFaderCap(juce::Graphics& g, juce::Point<float> centre, float faceWidth,
             const float pw = plate.getWidth();
             streak.addQuadrilateral(plate.getX() + pw * 0.14f, plate.getY(), plate.getX() + pw * 0.34f, plate.getY(),
                                     plate.getX() + pw * 0.18f, plate.getBottom(), plate.getX() - pw * 0.02f, plate.getBottom());
-            g.setColour(whiteInk(pale ? 0.30f : 0.20f));
+            g.setColour(whiteInk(pale ? 0.30f : (dark ? 0.15f : 0.20f)));
             g.fillPath(streak);
         }
         g.setColour(blackInk(0.18f));
@@ -1331,6 +1336,14 @@ void drawTonePlate(juce::Graphics& g, juce::Rectangle<float> b, juce::Colour c, 
         const auto centre = b.getCentre();
         g.addTransform(juce::AffineTransform::scale(1.0f, b.getHeight() / b.getWidth(), centre.x, centre.y));
         drawLampGlow(g, centre, b.getWidth() * 0.5f, glow, lit ? 1.6f : 1.1f);
+        // Tight halo hugging the tab edge: the lit plastic washes the bezel right beside it.
+        const float reach = juce::jmax(0.5f, juce::jmin(face.getX() - b.getX(), face.getY() - b.getY()) - 0.2f);
+        for (int i = 4; i >= 1; --i)
+        {
+            const float e = reach * (float) i / 4.0f;
+            g.setColour(glow.withAlpha((lit ? 0.17f : 0.10f) * (float) (5 - i) / 2.0f * 0.8f));
+            g.fillRoundedRectangle(face.expanded(e).translated(e * 0.25f, e * 0.25f), geo.radius + e);
+        }
     }
     // Cast shadow (tight when the tab is pushed in).
     if (depth > 0.3f)
@@ -1503,7 +1516,20 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
     auto area = geo.face.reduced(bev + 0.6f, bev);
     area.removeFromBottom(4.6f);
     const auto ink = tabPlastic(base, lit || pressed).ink;
-    const float fontPx = juce::jlimit(7.5f, 9.5f, bounds.getWidth() * 0.25f);
+    float fontPx = juce::jlimit(7.5f, 9.5f, bounds.getWidth() * 0.25f);
+    // Shrink long legends toward an 8 px floor before squeezing them, so type is not crushed.
+    {
+        const float widest = [&]
+        {
+            float w = 0.0f;
+            for (const auto& line : juce::StringArray::fromLines(text))
+                w = juce::jmax(w, (float) juce::GlyphArrangement::getStringWidthInt(displayFont(fontPx, juce::Font::bold), line));
+            return w;
+        }();
+        const float avail = area.getWidth() - 1.0f;
+        if (widest * 0.82f > avail)
+            fontPx = juce::jmax(bounds.getWidth() >= 34.0f ? 8.0f : 7.5f, fontPx * avail / (widest * 0.82f));
+    }
     const auto font = displayFont(fontPx, juce::Font::bold);
     auto lines = juce::StringArray::fromLines(text);
     // "SUSTAIN II" stays on one line while it can be fitted without crushing the type; otherwise it
@@ -2426,9 +2452,13 @@ void ParamKnob::paint(juce::Graphics& g)
     const float nameHeight = juce::jlimit(10.0f, 15.0f, h * 0.20f);
     const float valueHeight = juce::jlimit(9.0f, 14.0f, h * 0.18f);
 
-    // Same caption and readout styles that the shared helpers give other pages.
+    // Same caption and readout styles that the shared helpers give other pages. Machined hardware
+    // knobs sit beside fader legends, so their names stay close to the fader legend size.
+    float nameSize = juce::jlimit(8.5f, 11.5f, h * 0.155f);
+    if ((bool) slider.getProperties()["hardwareRotary"])
+        nameSize = juce::jmin(nameSize, juce::jmax(legendFloor(*this) + 1.0f, 10.0f * uiDesignScale(*this)));
     drawControlCaption(g, name, { 0.0f, 0.0f, (float) getWidth(), nameHeight + 2.0f }, juce::Justification::centred,
-                       juce::jlimit(8.5f, 11.5f, h * 0.155f));
+                       nameSize);
     drawValuePill(g, formatParamValue(parameterIndex, (float) slider.getValue()),
                   { 1.0f, h - valueHeight - 1.0f, (float) getWidth() - 2.0f, valueHeight + 0.5f },
                   juce::jlimit(9.5f, 11.5f, h * 0.15f));
