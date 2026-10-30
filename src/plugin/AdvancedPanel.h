@@ -17,6 +17,7 @@ class AdvPageTab;
 class AdvCloseButton;
 class AdvTitleBlock;
 class AdvFooterStatus;
+class AdvInfoLayer;
 
 // The modern control layer, drawn as a second instrument panel. It deliberately
 // sits behind its own overlay so the primary surface remains a CS-80, not a
@@ -50,6 +51,7 @@ private:
     std::unique_ptr<AdvTitleBlock> titleBlock;
     std::unique_ptr<AdvFooterStatus> footer;
     std::unique_ptr<AdvCloseButton> closeButton;
+    std::unique_ptr<AdvInfoLayer> info;
     int activePage = 0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AdvancedPanel)
