@@ -1494,6 +1494,51 @@ void testEffects()
     }
 }
 
+void testReverbDelayTimesAreRateIndependent()
+{
+    // The comb and all-pass times are seconds. Earlier code multiplied them by sampleRate / 44100 as
+    // well as by sampleRate, so the first echo moved from 59 ms (44.1 kHz host) to 129 ms (96 kHz host).
+    // 0.0297 s x kReverbTimeScale = 64.65 ms is what a 48 kHz host has always produced.
+    double firstMs[4] {}, centreMs[4] {};
+    int k = 0;
+    for (double internal : { 88200.0, 96000.0, 192000.0, 384000.0 })
+    {
+        // A 0.5 ms Hann burst keeps the stimulus the same band-limited signal at every rate; a
+        // one-sample impulse is not (its spectrum, and so the damped energy, changes with the rate).
+        Reverb r;
+        r.prepare((float) internal);
+        const int n = (int) (1.2 * internal), burst = (int) (0.0005 * internal);
+        std::vector<double> h((size_t) n);
+        for (int i = 0; i < n; ++i)
+            h[(size_t) i] = r.process(i < burst ? 0.5f - 0.5f * std::cos(2.0f * kPi * ((float) i + 0.5f) / (float) burst) : 0.0f, 0);
+        int first = -1;
+        double total = 0.0;
+        for (int i = 0; i < n; ++i)
+        {
+            if (first < 0 && std::abs(h[(size_t) i]) > 1.0e-6)
+                first = i;
+            total += h[(size_t) i] * h[(size_t) i];
+        }
+        double run = 0.0;
+        int centre = 0;
+        for (int i = 0; i < n && run < 0.5 * total; ++i)
+        {
+            run += h[(size_t) i] * h[(size_t) i];
+            centre = i;
+        }
+        // The first echo is the shortest comb: 0.0297 s x kReverbTimeScale, less the burst's own lead-in.
+        firstMs[k] = 1000.0 * first / internal;
+        centreMs[k] = 1000.0 * centre / internal;
+        checkNear((float) firstMs[k], 64.65f, 0.6f, "reverb first echo in ms at internal rate " + std::to_string((int) internal));
+        ++k;
+    }
+    for (int i = 1; i < 4; ++i)
+        checkNear((float) centreMs[i], (float) centreMs[0], 0.01f * (float) centreMs[0],
+                  "reverb energy centre in ms is the same at every rate");
+    // 205 ms is what the 48 kHz host (96 kHz internal) has always produced for this burst.
+    checkNear((float) centreMs[1], 205.1f, 1.0f, "reverb energy centre unchanged at a 48 kHz host");
+}
+
 void testMacros()
 {
     ParamValues base;
@@ -1925,6 +1970,7 @@ int main()
     testArpeggiator();
     testArpeggiatorModes();
     testEffects();
+    testReverbDelayTimesAreRateIndependent();
     testMacros();
     testPresetDefaults();
     testFactoryBank();

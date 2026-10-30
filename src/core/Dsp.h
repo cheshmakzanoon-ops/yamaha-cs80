@@ -1017,13 +1017,24 @@ private:
 // Schroeder/plate hybrid for the modern FX section. Left and right have
 // independent delay networks, so the tail is genuinely stereo and the plate
 // does not collapse when the effect is panned.
+//
+// Delay times are in seconds and independent of the sample rate. The base times
+// below are multiplied by kReverbTimeScale, the factor that the previous code
+// applied at a 48 kHz host (96 kHz internal rate), so that configuration is
+// bit-identical. The previous code applied the factor as sampleRate / 44100 on
+// top of the seconds-to-samples conversion, so every delay (and the reverb time)
+// grew with the sample rate: first comb echo 59 ms at a 44.1 kHz host, 65 ms at
+// 48 kHz, 129 ms at 96 kHz. These are generic modern-FX constants, not CS-80
+// circuit values.
+inline constexpr float kReverbTimeScale = 96000.0f / 44100.0f;
+
 class Reverb
 {
 public:
     void prepare(float sampleRate)
     {
         sr = sampleRate;
-        const float scale = sampleRate / 44100.0f;
+        const float scale = kReverbTimeScale;
         for (int ch = 0; ch < 2; ++ch)
         {
             for (int i = 0; i < 4; ++i)
@@ -1066,7 +1077,7 @@ public:
         for (int i = 0; i < 4; ++i)
         {
             const float spread = 1.0f + (ch == 0 ? 0.0f : 0.071f) + 0.031f * (float) i;
-            const float d = (0.0297f + 0.011f * (float) i) * (sr / 44100.0f) * spread * sr;
+            const float d = (0.0297f + 0.011f * (float) i) * kReverbTimeScale * spread * sr;
             const float y = combo[ch][i].read(d);
             const float fed = x + damp[ch][i].process(y) * 0.78f;
             combo[ch][i].write(fed);
@@ -1075,7 +1086,7 @@ public:
         wet *= 0.25f;
         for (int i = 0; i < 2; ++i)
         {
-            const float d = (0.005f + 0.0017f * (float) i) * (sr / 44100.0f) * sr;
+            const float d = (0.005f + 0.0017f * (float) i) * kReverbTimeScale * sr;
             const float y = allpass[ch][i].read(d);
             const float z = wet + y * 0.5f;
             allpass[ch][i].write(z);
