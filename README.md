@@ -34,6 +34,12 @@ The material language is dark walnut cheeks, a fine black crinkle finish, cream 
 - **Formats:** VST3 and Standalone on Linux/Windows/macOS; AU on macOS, with separate Intel and Apple Silicon builds. These are development packages, not signed/notarized public releases.
 - **Known limits:** oscillator, nonlinear-filter, envelope, touch and effect laws still contain provisional assumptions. The old Linux validator has an unresolved intermittent post-SUCCESS crash; the fresh passing checkpoint below does not erase earlier failed invocations. No identified hardware instrument has been measured against this software.
 
+### Main branch and branch-consolidation snapshot (2026-10-30)
+
+The current `main` contains the merged 2.5D/vector editor work from PR #1, the OE2 BBD chorus path for source modes, phaser/reverb/effect-tail fixes, and a Windows-portability fix in the engine audit tool. The 23 editor captures under [`docs/screenshots/`](docs/screenshots/) were refreshed from commit [`da166cd`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/da166cd41a13afa5d7a0d354beef590cb616a45f) in a [passing screenshot run](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41145694683). Those captures document the actual editor at that source commit, not analog fidelity.
+
+The `claude/peaceful-dirac-y8is3k`, `freebuff/98848ef40b5d961a964f7ad8` and `ui-wip` branch tips were already included in `main`. The independent `ui-preview` and `diag-win` histories have been joined to `main` as merge parents. The superseded preview PNG set remains available in Git history without duplicating it in the working tree; the one-off Windows diagnostic is retained at [`docs/archive/diag-win-legacy.yml`](docs/archive/diag-win-legacy.yml), **not** as an active workflow. None of this establishes a release-quality or measured 1:1 instrument.
+
 ### Play the current source models
 
 1. Follow the [installation and first-play guide](docs/INSTALL_AND_QUICKSTART.md), select audio/MIDI routing, and start with low monitoring volume.
@@ -158,7 +164,17 @@ The last **full-platform native-build/validator and capture checkpoint** is [`de
 | [Official beta3 comparison](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41013202960) | Exact `deb34f4` Linux artifact `12957867464`: 25 headless / 31 GUI tests passed |
 | [Earlier DSP/compatibility/sanitizer evidence: `00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847313) | All five jobs passed; leak-enabled ASan/UBSan 40/40. Production core/plugin sources are byte-unchanged at `deb34f4`; **this is not a newly executed DSP workflow at `deb34f4`** |
 
-**Since `deb34f4`.** The editor was redesigned, and the engine gained an OE2 BBD chorus for the source policies, a phaser sign fix, rate-independent reverb timing, per-slot effect state and release-tail envelope continuity ([audit](docs/ENGINE_AUDIT.md)). At the head that was merged to `main`, the Linux and both macOS builds with their test suites pass, the Linux pluginval run passed, the screenshot workflow passed and Windows builds. The Windows **Test** step still fails, as it did on `main` before this work; its log was not retrievable for diagnosis, so no cause is claimed here. Linux pluginval failed intermittently in earlier runs on the development branch, so one pass does not clear the disclosed crash history below. Check the exact-commit Actions results for any later revision.
+**Since `deb34f4`.** The editor was redesigned, and the engine gained an OE2 BBD chorus for the source policies, a phaser sign fix, rate-independent reverb timing, per-slot effect state and release-tail envelope continuity ([audit](docs/ENGINE_AUDIT.md)). Prior to merging PR #1, the Linux and macOS suites, Linux pluginval and screenshots passed, while the Windows **Test** step remained failing; its log was not available for a root-cause finding. Linux pluginval had also failed intermittently in earlier runs, so a single pass does not clear the disclosed crash history.
+
+**Post-merge evidence snapshot (2026-10-30; source commit `da166cd`, inherited by the later screenshot-only commit `02597c8`):**
+
+| Gate | Observed result at documentation time |
+| --- | --- |
+| [Editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41145694683) | **Passed**; 23 actual-editor captures refreshed under `docs/screenshots/` |
+| [Cross-platform build and tests](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41145694536) | **In progress** when checked: Apple Silicon job passed; Linux, Intel macOS and Windows jobs had not completed |
+| [DSP numerical measurements](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41145694634) | **Not green**: seven complete source tones versus V1 failed byte-for-byte comparison (baseline/current differ from byte 1). Default-off legacy audio, numerical measurements and synthetic-reference comparison passed; sanitizer job was still running |
+
+These are time-stamped observations, **not** permanent run statuses. Follow each run to see its final conclusion. In particular, the failing seven-tone regression is an unresolved compatibility finding, not proof of a corrected source-model path. The earlier `deb34f4` checkpoint remains the last *confirmed fully green* platform/validator run documented here.
 
 Historical failures remain failed: [`428e4b2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41003223729/job/123895901926) exited139 after SUCCESS in fixed GUI seed `0x2da72db`; [`00624e2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41007847302/job/123909705477) did so in primary GUI seed `0x322bd8b`. Neither normal diagnostic replays nor this later passing invocation establish crash ownership or a repair. See [playable readiness](docs/PLAYABLE_RELEASE_READINESS.md) and the [00624e2 evidence appendix](docs/voice-continuity/AUDIT.md). These results are software-test evidence, **not measured analog equivalence, experimental-model activation or a real DAW installation/session qualification**.
 
@@ -311,7 +327,7 @@ Headless assets:
 
 ### CI
 
-`.github/workflows/build.yml` builds and tests Linux, macOS and Windows and runs pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb with bounded retry eligibility for a logged exit139 shape of unproven ownership; macOS VST3 and AU; Windows headless). Other workflows: `screenshots.yml`, `dsp-measurements.yml`, `circuit-inspection.yml` (reads the original service scans inside Actions) and `ci-evidence.yml` (publishes run outcomes as commit statuses). A passing run is software-quality evidence only.
+`.github/workflows/build.yml` builds and tests Linux, macOS and Windows and runs pluginval 1.0.4 at strictness 10 (Linux headless and GUI under Xvfb with bounded retry eligibility for a logged exit139 shape of unproven ownership; macOS VST3 and AU; Windows headless). Other workflows: `screenshots.yml`, `dsp-measurements.yml`, `upstream-validator-comparison.yml`, `circuit-inspection.yml` (reads the original service scans inside Actions) and `ci-evidence.yml` (publishes run outcomes as commit statuses). A passing run is software-quality evidence only.
 
 ---
 

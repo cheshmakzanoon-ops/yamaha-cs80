@@ -1,0 +1,25 @@
+# Archived diagnostic workflow from the unrelated diag-win branch.
+# Historical reference only; not an active GitHub Actions workflow.
+name: diag-win
+on:
+  push:
+    branches: [diag-win]
+jobs:
+  win-build:
+    name: windows build ui-wip head
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: cheshmakzanoon-ops/yamaha-cs80
+          ref: 9eca476fd3c3e3581dd0d8082ddd406d3b1ca249
+      - name: Configure
+        shell: pwsh
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+      - name: Build
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          cmake --build build --config Release --parallel *> build.log
+          $sel = Select-String -Path build.log -Pattern 'error C|error LNK|fatal error|: error ' | Select-Object -First 25 | ForEach-Object { $_.Line.Substring(0, [Math]::Min(300, $_.Line.Length)) }
+          if ($sel) { Write-Output ("::error title=windows build errors::" + ($sel -join '%0A')) } else { Write-Output "::notice title=windows build::no compiler errors matched" }
