@@ -60,7 +60,7 @@ The delay is 1.7-3.4 ms instead of up to 18 ms, so chorus mode sounds like a sho
 - bit-exact bypass, bit-exact tremolo against the legacy `Chorus`, state continuity while off, and reset;
 - bounded finite output at 16 kHz to 1.536 MHz with SPEED and DEPTH at maximum.
 
-The expected delay uses a literal 256 in the test, so changing the library constant cannot change the expectation. Mutants built outside the repository and rejected: 255 and 257 periods, clock modulation removed, output-coupling high-pass removed, interstage high-pass removed, reconstruction low-pass removed, tremolo no longer delegating to the legacy law, bypass no longer exact, and half the clock excursion. Not detected: Catmull-Rom replaced by linear interpolation (the test tones are too low to separate them) and an instantaneous-delay formulation in place of the clock integral (the difference is below the test tolerance for these settings).
+The expected delay uses a literal 256 in the test, so changing the library constant cannot change the expectation. Mutants built outside the repository and rejected: 255 and 257 periods, clock modulation removed, an instantaneous `256 / clock` delay in place of the clock integral, output-coupling high-pass removed, interstage high-pass removed, reconstruction low-pass removed, tremolo no longer delegating to the legacy law, bypass no longer exact, and half the clock excursion. Not detected: Catmull-Rom replaced by linear interpolation, because the test tones are too low to separate them.
 
 `OutputTapIntegrationTests` and `PraWahIntegrationTests` mirror the engine pipeline; their oracles now use `BbdChorus` in isolation and `Chorus` in the legacy policy, and fail if the engine path is reverted.
 
