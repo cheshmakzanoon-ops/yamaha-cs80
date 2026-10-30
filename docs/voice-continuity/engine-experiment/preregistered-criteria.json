@@ -1,0 +1,47 @@
+{
+  "status": "frozen before the first whole-Engine timing run",
+  "production_integrated": false,
+  "baseline_commit": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "candidate_profile": "engine-continuity-nominal-v1",
+  "kernel_variant": "voice-continuity-electrical-v2-engine-domain",
+  "functional_prerequisites": [
+    "disabled full-Engine corpora byte-identical to pristine428",
+    "explicit-disabled and masked-profile corpora byte-identical",
+    "owned and independent functional tests pass",
+    "no rejected legal-control circuit transaction",
+    "all-matrix untimed invariant verification passes"
+  ],
+  "matrix": {
+    "host_rates": [44100, 48000, 96000],
+    "host_block_sizes": [128, 256],
+    "scenes": {"source_both": [1, 3], "source_panel": [1, 13], "panel_both": [13, 13]},
+    "render_policy_all_rows": "Source Performance, never Isolation",
+    "controls": ["static", "moving"],
+    "voice_conditions": ["cold zero", "post-retirement zero", "one held", "eight held"],
+    "paired_arms": ["pristine428", "candidate enabled"],
+    "pairs": 144,
+    "aggregate_rows": 288,
+    "warmup_callbacks_per_arm_per_row": 32,
+    "measured_callbacks_per_row": 256,
+    "raw_callback_observations": 73728
+  },
+  "timing_scope": "steady-clock interval contains the opaque Engine callback, moving setControlFrame if selected, and render; initial MIDI/release, preparation, warmup, allocation, input generation, checksum, inspection and raw recording are outside",
+  "pair_order": "for pair p and callback b, first arm=(p+b)&1; the other follows; identical inputs and events",
+  "noise_policy": "primary timing fixtures use zero rank/global noise controls; existing mandatory RNG draws remain; noise-bearing behavior tested separately",
+  "statistics": {
+    "median": "average of sorted observations127 and128 (zero-indexed)",
+    "p99": "nearest-rank ceil(0.99*256), index253",
+    "overrun": "observed nanoseconds strictly greater than 1e9*block/rate",
+    "raw_observations_retained": true
+  },
+  "cost_gates": {
+    "all_36_eight_active_pairs_candidate_median_divided_by_baseline_median_at_most": 1.35,
+    "all_24_48000Hz_zero_audible_candidate_rows_median_RTF_at_most": 0.35
+  },
+  "decision": {
+    "functional_failure": "stop and revise the explicit contract/implementation before timing",
+    "cost_pass": "recommend a separately reviewed compatibility-safe opt-in integration design; no automatic production activation or DAW real-time qualification",
+    "cost_failure": "retain first result and every outlier; revise at most one separately identified exact coefficient-cache variant or reject integration at this budget",
+    "outliers": "retain every callback and report p99/max/overruns separately; no trimming, replacement, rerun-until-pass, or claim of machine WCET"
+  }
+}

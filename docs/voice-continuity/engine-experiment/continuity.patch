@@ -1,0 +1,316 @@
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -8,6 +8,7 @@
+ #include "PraWahCircuit.h"
+ #include "OutputTapCircuit.h"
+ #include "SourceFactoryTones.h"
++#include "experimental/ExperimentalVoiceContinuityProfile.h"
+ 
+ #include <array>
+ #include <cstdint>
+@@ -156,6 +157,11 @@
+ 
+     void prepare(double hostSampleRate);
+     void reset();
++    // TEST-ONLY immutable-tree adapter: no host parameter/state integration.
++    bool setExperimentalVoiceContinuity(const experimental::ExperimentalVoiceContinuityProfile&) noexcept;
++    bool isExperimentalVoiceContinuityActive() const noexcept;
++    experimental::ContinuousVoiceCircuit::State getExperimentalVoiceCircuitState(int voice) const noexcept;
++    std::uint64_t getExperimentalRejectedSamples() const noexcept { return isExperimentalVoiceContinuityActive() ? experimentalRejectedSamples : 0; }
+     // Legacy entry point retains sanitization and denotes PANEL/no source model.
+     void setParams(const ParamValues& values);
+     enum class ControlFrameStatus { accepted, invalidSelector, unsupportedModel, nonfiniteParameter, compileFailure };
+@@ -343,6 +349,12 @@
+     void rememberHeldKey(int note, float velocity, int midiChannel);
+     void forgetHeldKey(int note, int midiChannel);
+ 
++    experimental::ExperimentalVoiceContinuityProfile experimentalProfile;
++    std::array<experimental::ContinuousVoiceCircuit, kNumVoices> experimentalCircuits;
++    std::array<std::array<Rng, kNumRanks>, kNumVoices> experimentalIdleNoise;
++    std::uint64_t experimentalRejectedSamples = 0;
++    void resetExperimentalCircuits() noexcept;
++
+     ParamValues params;
+     GlobalSettings global;
+     RankSettings rankSettings[kNumRanks];
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -13,6 +13,56 @@
+     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
+     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+     setParams(params);
++}
++
++bool Engine::isExperimentalVoiceContinuityActive() const noexcept
++{
++    return experimentalProfile.enabled && global.renderPolicy == RenderPolicy::sourcePerformance;
++}
++
++bool Engine::setExperimentalVoiceContinuity(
++    const experimental::ExperimentalVoiceContinuityProfile& profile) noexcept
++{
++    if (!profile.valid()) return false; // entire transaction before any mutation
++    if (profile == experimentalProfile) return true;
++    const bool wasActive = isExperimentalVoiceContinuityActive();
++    experimentalProfile = profile;
++    if (wasActive || isExperimentalVoiceContinuityActive())
++    {
++        reset();
++        fxDampL.reset();
++        fxDampR.reset();
++        applyParams(params);
++    }
++    return true;
++}
++
++experimental::ContinuousVoiceCircuit::State
++Engine::getExperimentalVoiceCircuitState(int voice) const noexcept
++{
++    if (!isExperimentalVoiceContinuityActive() || voice < 0 || voice >= kNumVoices) return {};
++    return experimentalCircuits[(size_t) voice].getState();
++}
++
++void Engine::resetExperimentalCircuits() noexcept
++{
++    Rng phases(experimentalProfile.phaseSeed), noiseSeeds(experimentalProfile.idleNoiseSeed);
++    experimentalRejectedSamples = 0;
++    for (int vi = 0; vi < kNumVoices; ++vi)
++    {
++        auto& v = voices[(size_t) vi];
++        // Fields previously overwritten only on assignment now feed cold circuits.
++        v.note = experimentalProfile.coldMidiNote;
++        v.midiChannel = 1;
++        v.velocity = v.pressure = v.timbre = v.mpeBend = 0.0f;
++        v.glidePitch = v.targetPitch = (float) v.note;
++        v.ribbonRatio = 1.0f;
++        v.contour = keyboardContourWeights(v.note);
++        for (auto& rank : v.ranks) rank.info = {};
++        experimentalCircuits[(size_t) vi].prepare(internalRate,
++            experimentalProfile.initialKeyVolts, { phases.nextUnipolar(), phases.nextUnipolar() });
++        for (auto& rng : experimentalIdleNoise[(size_t) vi]) rng = Rng(noiseSeeds.nextUInt());
++    }
+ }
+ 
+ void Engine::prepare(double hostSampleRate)
+@@ -143,6 +193,7 @@
+     arpClock = 0.0f;
+     arpGateTime = 0.0f;
+     dcL = dcR = dcInL = dcInR = 0.0f;
++    if (isExperimentalVoiceContinuityActive()) resetExperimentalCircuits();
+ }
+ 
+ void Engine::setParams(const ParamValues& values)
+@@ -264,7 +315,7 @@
+                 // Source TP1 remains electrically connected after its VCA has
+                 // become idle. Its target/timing ports therefore stay live for
+                 // all eight circuits, not only currently audible voices.
+-                if (!voice.active && !sourceActive[ch]) continue;
++                if (!voice.active && !sourceActive[ch] && !isExperimentalVoiceContinuityActive()) continue;
+                 auto& rank = voice.ranks[ch];
+                 const auto& settings = rankSettings[ch];
+                 if (voice.active) rank.aenv.setSustain(settings.vS);
+@@ -761,8 +812,8 @@
+ {
+     // Bounded continuity only: inactive circuits still use the legacy reset.
+     // This does not clock idle circuits or model their unknown held key voltage.
+-    const bool preserveAudioState = usesSourceModels(global.renderPolicy) && v.active
+-                                    && !v.held && !v.pedalHeld;
++    const bool preserveAudioState = isExperimentalVoiceContinuityActive()
++        || (usesSourceModels(global.renderPolicy) && v.active && !v.held && !v.pedalHeld);
+     // chooseVoice only returns an unheld circuit.
+     v.active = true;
+     v.held = true;
+@@ -1141,6 +1192,8 @@
+ {
+     const float sr = (float) internalRate;
+     const float invSr = 1.0f / sr;
++    const bool continuity = isExperimentalVoiceContinuityActive();
++    const float circuitHzPerVolt = continuity ? midiToHz(60.0f, global.tuningRef) / kReferenceKeyVolts : 0.0f;
+ 
+     updateArpeggiator(invSr);
+ 
+@@ -1215,8 +1268,32 @@
+     for (int vi = 0; vi < kNumVoices; ++vi)
+     {
+         auto& v = voices[(size_t) vi];
+-        if (! v.active)
+-            continue;
++        if (!v.active && !continuity) continue;
++        const bool wasActive = v.active;
++        if (continuity && !wasActive)
++        {
++            // Explicit retired-expression profile, not recovered touch circuitry.
++            v.velocity = v.pressure = v.timbre = v.mpeBend = 0.0f;
++            for (int ch = 0; ch < kNumRanks; ++ch)
++            {
++                auto& r = v.ranks[ch];
++                r.aenv.reset(); // stale hard-panic amplitude cannot reopen a circuit
++                if (!sourceActive[ch])
++                {
++                    const auto stage = r.fenv.getState().stage;
++                    if (stage == FilterEnv::Stage::Attack || stage == FilterEnv::Stage::Decay
++                        || stage == FilterEnv::Stage::Sustain) r.fenv.noteOff();
++                }
++            }
++        }
++        experimental::ContinuousVoiceCircuit::Controls circuitControls;
++        std::array<float, kNumRanks> levelGains {}, amplitudes {}, pans {};
++        if (continuity)
++        {
++            // Nominal software TR extension: pedal-held counts as electrically keyed.
++            circuitControls.trHigh = !(v.held || v.pedalHeld);
++            circuitControls.susHigh = global.sustainMode == 0;
++        }
+ 
+         if (v.held || v.pedalHeld)
+             ++stillHeld;
+@@ -1266,16 +1343,28 @@
+ 
+             // Transposition is a separate nominal harmonic ratio, not rounded
+             // equal-tempered fifths and not part of the shared filter key CV.
+-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
++            const float freq = continuity ? 0.0f : midiToHz(pitch, global.tuningRef) * v.ribbonRatio
+                                * kFeetRatios[std::clamp(rs.feet, 0, 5)];
+             const float pwm = std::sin(kTwoPi * pwmPhase[ch]);
+             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
+ 
+-            const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
+-
+-            float x = osc.saw + osc.pulse;
+-            x += audioRng.nextBipolar() * rs.noise * 0.8f;
+-            x *= 0.9f;
++            Oscillator::Output osc {};
++            float x = 0.0f;
++            float circuitNoise = 0.0f;
++            if (!continuity)
++            {
++                osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
++                x = osc.saw + osc.pulse;
++                x += audioRng.nextBipolar() * rs.noise * 0.8f;
++                x *= 0.9f;
++            }
++            else
++            {
++                // Preserve active/output shared RNG order. Idle-only streams are
++                // an explicit experimental assumption, NOT the hardware noise law.
++                auto& rng = wasActive ? audioRng : experimentalIdleNoise[(size_t) vi][(size_t) ch];
++                circuitNoise = rng.nextBipolar() * rs.noise * 0.8f;
++            }
+ 
+             // Shared key-voltage domain precedes VCO footage/vibrato. Master
+             // pitch and key portamento move it; ribbon routing is unverified.
+@@ -1299,10 +1388,10 @@
+             const float envLp = fenv;
+             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
+ 
+-            const float cutoffLp = sourceActive[ch]
++            const float cutoffLp = continuity ? 0.0f : sourceActive[ch]
+                 ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct)
+                 : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp);
+-            const float cutoffHp = sourceActive[ch]
++            const float cutoffHp = continuity ? 0.0f : sourceActive[ch]
+                 ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct)
+                 : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp);
+             const float qLp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
+@@ -1311,12 +1400,12 @@
+                 : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
+ 
+             float filtered = x;
+-            if (rs.hpfOn)
++            if (!continuity && rs.hpfOn)
+             {
+                 r.hpf.set(cutoffHp, qHp, sr);
+                 filtered = r.hpf.process(filtered).hp;
+             }
+-            if (rs.lpfOn)
++            if (!continuity && rs.lpfOn)
+             {
+                 r.lpf.set(cutoffLp, qLp, sr);
+                 filtered = r.lpf.process(filtered).lp;
+@@ -1338,7 +1427,8 @@
+                                              + keyboardLevelOffset(global.kbdLevelLow,
+                                                                    global.kbdLevelHigh, v.contour),
+                                          0.0f, 2.6f);
+-            const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
++            const float amp = continuity && !wasActive ? 0.0f
++                : r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
+             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
+             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+             // Velocity acts through the selected initial-touch destinations.
+@@ -1347,11 +1437,62 @@
+                              * levelCv * amp * chGain * 0.17f;
+ 
+             float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan, -1.0f, 1.0f);
+-            mixL += voiceOut * (0.5f - 0.5f * pan);
+-            mixR += voiceOut * (0.5f + 0.5f * pan);
++            if (!continuity)
++            {
++                mixL += voiceOut * (0.5f - 0.5f * pan);
++                mixR += voiceOut * (0.5f + 0.5f * pan);
++            }
++            else
++            {
++                circuitControls.keyInputVolts = keyVolts;
++                auto& cc = circuitControls.ranks[(size_t) ch];
++                cc.hzPerVolt = circuitHzPerVolt;
++                cc.vcoMultiplier = std::exp2((pitch - (float) (v.glidePitch + global.masterTune)) / 12.0f)
++                    * v.ribbonRatio * kFeetRatios[std::clamp(rs.feet, 0, 5)];
++                cc.pulseWidth = pw;
++                cc.sawEnabled = rs.saw; cc.pulseEnabled = rs.pulse;
++                cc.noiseInput = circuitNoise;
++                cc.hpfEffectiveCv = sourceActive[ch]
++                    ? static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct
++                    : rs.hpfEffectiveCv + brillOct + envHp;
++                cc.lpfEffectiveCv = sourceActive[ch]
++                    ? static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct
++                    : rs.lpfEffectiveCv + brillOct + envLp;
++                cc.hpfQ = qHp; cc.lpfQ = qLp;
++                cc.hpfEnabled = rs.hpfOn; cc.lpfEnabled = rs.lpfOn;
++                cc.filterLevel = rs.vcfLevel; cc.sineLevel = rs.sine;
++                cc.outputGain = wasActive ? 1.0f : 0.0f;
++                levelGains[(size_t) ch] = levelCv;
++                amplitudes[(size_t) ch] = amp;
++                pans[(size_t) ch] = pan;
++            }
+ 
+             if (! r.aenv.isIdle())
+                 ++stillActive;
++        }
++
++        if (continuity)
++        {
++            const auto result = experimentalCircuits[(size_t) vi].processSample(circuitControls);
++            if (!result.accepted) ++experimentalRejectedSamples; // a test failure, never silently clamped
++            for (int ch = 0; ch < kNumRanks; ++ch)
++            {
++                const auto& out = result.ranks[(size_t) ch];
++                auto& info = v.ranks[ch].info;
++                info.oscillatorHz = out.oscillatorHz;
++                info.keyVolts = result.heldKeyVolts;
++                info.hpfHz = out.hpfHz; info.lpfHz = out.lpfHz;
++                // Allocation mute is separate from physical clocks. Retained
++                // shared FX/decimator/noise histories are deliberately not erased.
++                if (wasActive && result.accepted)
++                {
++                    const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
++                    const float voiceOut = out.audio * levelGains[(size_t) ch]
++                        * amplitudes[(size_t) ch] * chGain * 0.17f;
++                    mixL += voiceOut * (0.5f - 0.5f * pans[(size_t) ch]);
++                    mixR += voiceOut * (0.5f + 0.5f * pans[(size_t) ch]);
++                }
++            }
+         }
+ 
+         if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
+@@ -1627,6 +1768,11 @@
+     if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
+         return {};
+     const auto& r = voices[(size_t) voice].ranks[rank];
++    if (isExperimentalVoiceContinuityActive())
++    {
++        const auto state = experimentalCircuits[(size_t) voice].getState().ranks[(size_t) rank];
++        return {state.phase, state.hpf, state.lpf};
++    }
+     return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState() };
+ }
+ 

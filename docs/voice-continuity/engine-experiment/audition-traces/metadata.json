@@ -1,0 +1,46 @@
+{
+  "sample_rate": 48000,
+  "frames": 96000,
+  "format": "IEEE float32 stereo WAV, no normalization/limiter",
+  "noise_policy": "rank and global controls zero; existing RNG draws retained",
+  "phase_alignment": "candidate phaseSeed0x51c80 matches baseline first16 assignment draws, not hardware startup calibration",
+  "events_host_samples": {
+    "0": "8 note on, notes48..69 in3-semitone steps",
+    "12032": "all8 physical note off",
+    "40064": "both HP and LP bypassed",
+    "64000": "both HP and LP enabled",
+    "72064": "note72 on",
+    "84096": "note72 off"
+  },
+  "files": {
+    "base-source_both": {
+      "wav_sha256": "03d0ac8d2be8c4c51f97def1800418a6072d6573988120aa70969f01ebf3d4f4",
+      "wav_bytes": 768044,
+      "sample_peak": 0.7601438760757446,
+      "trace": "base-source_both.csv.gz",
+      "trace_uncompressed_sha256": "8e842b5af2480faba34327abc51168f3e6498f67a5b6ace9096fd172c65f9459"
+    },
+    "base-panel_both": {
+      "wav_sha256": "620cc6abcf23c0684edddfc59da79e4d4d95488af466198bad882b0527dd7842",
+      "wav_bytes": 768044,
+      "sample_peak": 0.23398596048355103,
+      "trace": "base-panel_both.csv.gz",
+      "trace_uncompressed_sha256": "32553277086c6a6329f98ce9cfc246dc1d73e78346eaef9fb6453ed92531d929"
+    },
+    "candidate-source_both": {
+      "wav_sha256": "f7788f098809f118e1f6446c9ae246d8c3d21ddc722386082aedfd649f0c4a4c",
+      "wav_bytes": 768044,
+      "sample_peak": 0.7601438760757446,
+      "trace": "candidate-source_both.csv.gz",
+      "trace_uncompressed_sha256": "bf2cea2dff959795fdbbcec780ad3e67e0bf2f28c3dc6d2dd68402386f040515"
+    },
+    "candidate-panel_both": {
+      "wav_sha256": "4e309500b186f6681a4fc6bbf9e1014bfd5d1eafb6e3133dad60003b73b57d26",
+      "wav_bytes": 768044,
+      "sample_peak": 0.23398596048355103,
+      "trace": "candidate-panel_both.csv.gz",
+      "trace_uncompressed_sha256": "217ffb3ad078a3f6cb05fbcc685f22b0cc2f165b6f3d85cadefa462068def508"
+    }
+  },
+  "limits": "Audition compares this nominal enabled profile with baseline; audio/state differences are not hardware accuracy or subjective-quality scores."
+}

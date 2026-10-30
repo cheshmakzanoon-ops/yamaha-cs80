@@ -1,0 +1,104 @@
+{
+  "status": "independent functional audit passed; experimental only; no performance qualification",
+  "baseline_commit": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "native_flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "candidate_only_define": "CS80_CONTINUITY_AUDIT_CANDIDATE=1",
+  "sanitizer_flags": [
+    "-std=c++20",
+    "-O1",
+    "-g",
+    "-fno-omit-frame-pointer",
+    "-fsanitize=address,undefined",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "sanitizer_environment": {
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "UBSAN_OPTIONS": "halt_on_error=1"
+  },
+  "native": {
+    "checks": 8051,
+    "failures": 0,
+    "exit": 0
+  },
+  "asan_ubsan": {
+    "checks": 8051,
+    "failures": 0,
+    "exit": 0,
+    "scope": "no leak check; no race detector; offline numeric/core test, not host callback teardown"
+  },
+  "sources_sha256": {
+    "EngineContinuityAuditTests.cpp": "ddb3516c14d9fb900bafd4596a251d78da1782fd33f488a02b01ccf06726ae9b",
+    "ExperimentalVoiceContinuityProfile.h": "5f6ba80b5f22ea138ee59571683aa2101226dd5e0dd9d8683585092c0ac13ac4",
+    "continuity.patch": "d9059d1004a88c6c5598161c39733aad7b3216b7d2f6d63c857c2598f35d1d17",
+    "kernel-domain.patch": "f66f30fa3011179ebf47a74c22c4be973164712a5b6b53ddbf4224a8fd4d4e40"
+  },
+  "candidate_sha256": {
+    "core/Engine.cpp": "c59274577a227f540ee9380fd8c362046a29e545877955042108776675e7b443",
+    "core/Engine.h": "5280fe5bdf92f2db7364c9d8bcef679e992c73730ec18e86cc7be5d2f62590c1",
+    "core/Dsp.h": "4e0457f36af2ea27304de47e863cb4ec77b10521adf7c00607e9202c79fe07b7",
+    "experimental/ContinuousVoiceCircuit.h": "b9e49f9937d53c91e0ca1d3533d640b8da1fa0b212499e490be9812e5efd319c"
+  },
+  "raw_comparisons": [
+    {
+      "baseline": "baseline-final.raw",
+      "candidate": "default.raw",
+      "cases": 126,
+      "bytes_each": 10183824,
+      "sha256": "f1c46b9ba7c756a869aea68eee61ba1c0460ace32653dfda774ab46e73ddc4aa",
+      "cmp_exit": 0
+    },
+    {
+      "baseline": "baseline-final.raw",
+      "candidate": "disabled.raw",
+      "cases": 126,
+      "bytes_each": 10183824,
+      "sha256": "f1c46b9ba7c756a869aea68eee61ba1c0460ace32653dfda774ab46e73ddc4aa",
+      "cmp_exit": 0
+    },
+    {
+      "baseline": "baseline-masked-final.raw",
+      "candidate": "masked.raw",
+      "cases": 84,
+      "bytes_each": 6789216,
+      "sha256": "c876e6ac62e26c7b4a0ff97e9d3518b7ee4cbd5e0ce47af5fbeca82286d0fbe1",
+      "cmp_exit": 0
+    }
+  ],
+  "mutants": [
+    {
+      "name": "freeze_inactive",
+      "exit": 1,
+      "summary": "Engine continuity independent audit: 8051 checks, 444 failures"
+    },
+    {
+      "name": "double_source_eg",
+      "exit": 1,
+      "summary": "Engine continuity independent audit: 8051 checks, 864 failures"
+    },
+    {
+      "name": "stale_panic_amplitude",
+      "exit": 1,
+      "summary": "Engine continuity independent audit: 8051 checks, 80 failures"
+    },
+    {
+      "name": "shared_idle_rng",
+      "exit": 1,
+      "summary": "Engine continuity independent audit: 8051 checks, 1 failures"
+    },
+    {
+      "name": "stale_glide_reset",
+      "exit": 1,
+      "summary": "Engine continuity independent audit: 8051 checks, 16 failures"
+    }
+  ],
+  "production_check": "git diff428e4b2 -- src/core/Engine.cpp src/core/Engine.h src/core/Dsp.h src/core/Params.h was empty; no production files edited by this audit"
+}

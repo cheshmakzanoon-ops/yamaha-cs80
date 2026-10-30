@@ -1,0 +1,20 @@
+--- a/src/experimental/ContinuousVoiceCircuit.h
++++ b/src/experimental/ContinuousVoiceCircuit.h
+@@ -12,7 +12,7 @@
+ {
+ public:
+     static constexpr bool productionIntegrated = false;
+-    static constexpr const char* modelId = "voice-continuity-electrical-v1";
++    static constexpr const char* modelId = "voice-continuity-electrical-v2-engine-domain";
+ 
+     struct RankControls
+     {
+@@ -159,7 +159,7 @@
+     static bool inDomain(const RankControls& c) noexcept
+     {
+         return bounded(c.hzPerVolt, 0.0f, 4096.0f)
+-            && bounded(c.vcoMultiplier, 0.0f, 4096.0f)
++            && bounded(c.vcoMultiplier, 0.0f, 262144.0f)
+             && bounded(c.pulseWidth, 0.05f, 0.95f)
+             && bounded(c.noiseInput, -64.0f, 64.0f)
+             && bounded(c.hpfEffectiveCv, -64.0f, 64.0f)

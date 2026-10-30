@@ -1,0 +1,54 @@
+{
+  "production_integrated": false,
+  "baseline_commit": "428e4b2bb0b4bcee0a8f3bb8826449f699bdb618",
+  "compiler": "g++ Debian14.2.0-19",
+  "flags": [
+    "-std=c++20",
+    "-O3",
+    "-DNDEBUG",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "owned_engine_checks": 1675,
+  "kernel_primitive_checks": 151578,
+  "kernel_v2_audit_checks": 33962,
+  "kernel_v2_audit_adjustment": "temporary audit copy changes only the vcoMultiplier domain-table endpoint4096 to262144",
+  "corpora": {
+    "three-policies": {
+      "bytes_per_arm": 10183824,
+      "sha256": "f1c46b9ba7c756a869aea68eee61ba1c0460ace32653dfda774ab46e73ddc4aa",
+      "byte_identical": true
+    },
+    "factory": {
+      "bytes_per_arm": 32863104,
+      "sha256": "4a3483f77c9df9895386b98eaa169358d19b463c21283231f994c5d0f6c523de",
+      "byte_identical": true
+    },
+    "factory-tails": {
+      "bytes_per_arm": 98589312,
+      "sha256": "fe447882e3ea3560eefb7b5ae4a474b151efe5ced775b5ab36f2609c5fde0660",
+      "byte_identical": true
+    },
+    "source-factory": {
+      "bytes_per_arm": 9332176,
+      "sha256": "038357d28e188020f7d61ab6aab4b87cdee818cda022b02844520507204003fb",
+      "byte_identical": true
+    }
+  },
+  "additional_independent_evidence": "audit-results.json",
+  "untimed_benchmark_verification": {
+    "pairs": 144,
+    "callbacks": 1152,
+    "clock_reads": false,
+    "status": "PASS"
+  },
+  "source_sha256": {
+    "continuity.patch": "d9059d1004a88c6c5598161c39733aad7b3216b7d2f6d63c857c2598f35d1d17",
+    "kernel-domain.patch": "f66f30fa3011179ebf47a74c22c4be973164712a5b6b53ddbf4224a8fd4d4e40",
+    "ExperimentalVoiceContinuityProfile.h": "5f6ba80b5f22ea138ee59571683aa2101226dd5e0dd9d8683585092c0ac13ac4",
+    "EngineContinuityTests.cpp": "588bdc9330f137a867c9c062f6343aad44def4a9d59e636b66f6cc228304867c",
+    "EngineContinuityAuditTests.cpp": "ddb3516c14d9fb900bafd4596a251d78da1782fd33f488a02b01ccf06726ae9b",
+    "reproduce.sh": "9ba25f828181484145d2776f9169d4d16a6157f04febb3aa6a463e45099aec14"
+  }
+}

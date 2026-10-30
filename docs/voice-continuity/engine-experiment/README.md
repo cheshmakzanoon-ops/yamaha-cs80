@@ -1,0 +1,152 @@
+# Immutable full-Engine continuity experiment
+
+**Not production-integrated.** No host parameter, default, preset field, golden
+test or production Engine is changed. The baseline is
+`428e4b2bb0b4bcee0a8f3bb8826449f699bdb618`; `reproduce.sh` extracts two private
+trees and applies the small `continuity.patch` only to one. Each executable
+uses its own tree's headers, including exactly one `Dsp.h`.
+
+## Explicit nominal profile
+
+`ExperimentalVoiceContinuityProfile.h` is a test-only API: version 1, disabled
+by default, cold MIDI note 60, initial held K 0.5, deterministic phase and
+idle-noise seeds. Invalid profiles are rejected before any state mutation.
+Changing an effective profile resets notes/controllers/effect histories;
+identical profiles and changes masked by Legacy/Isolation do not reset.
+The profile is effective **only** when enabled and Source Performance is the
+accepted policy. State diagnostics follow that effective condition.
+
+The enabled adapter clocks eight two-rank kernels regardless of allocation.
+Assignment does not reset phase/SVF history; established envelope retrigger
+behavior remains. Source filter EGs retain their existing single tick in the
+shared-control solver. PANEL/memory filter EGs acquire one continuous tick and
+a release gate when retired. Inactive amplitude is explicitly zero, independently
+of circuit clocks: retained shared FX, decimator and output noise are not erased.
+This is a proposed Engine boundary, not a new hard-mute definition of Panic.
+
+The following are **declared software assumptions, not a recovered KAS model**:
+
+- Electrical TR is high when neither physical-key-held nor `pedalHeld` is true.
+  Counting a pedal-held key as electrically keyed is a modern extension.
+- Electrical SUS is high in Sustain I. Thus I tracks while keyed and holds K on
+  release; II tracks each circuit's retained note/glide/master-tune KI. It does
+  **not** make every free CS-80 channel follow the global last MIDI note.
+- K is the existing linear-frequency quantity
+  `0.5 * exp2((MIDI - 60)/12)`, not a 1 V/oct coordinate. VCO bend, ribbon,
+  footage, SUB/LFO and trim remain separate multiplicative overlays. The explicit
+  calibration is `midiToHz(60, tuningRef)/0.5`, not the rounded sheet42 anchor.
+- Retired velocity, pressure, timbre and member bend become zero. Global
+  modulation, glide and the initial-pitch transient keep advancing; the shipped
+  ribbon coupling rule remains. These choices are not a complete touch model.
+- Active rank RNG draws, assignment's two discarded phase draws, and output
+  noise keep the existing shared-stream order. Retired ranks use separately
+  seeded idle-only noise streams. This isolates noise-free continuity fixtures
+  and avoids shifting existing shared noise; it is **not** a recovered common
+  physical-noise topology. Noise-bearing auditions must be labeled accordingly.
+- All newly observed cold fields are explicitly initialized. No guessed
+  capacitor, leakage, power-up delay or physical phase law is introduced.
+
+Both bypassed SVFs continue processing, with the existing software bypass
+routing. The existing production oscillator, SVF, oversampling and 63-sample
+output latency remain unchanged. Source/PANEL selection and strict/inferred
+provenance remain independent of this profile.
+
+## Declared kernel-domain extension
+
+`kernel-domain.patch` leaves the published v1 kernel and its original timing
+evidence untouched. The temporary variant identifies itself as
+`voice-continuity-electrical-v2-engine-domain` and changes **only** the allowed
+VCO multiplier from 4096 to 262144. No oscillator/SVF law changes.
+
+The v1 cap cannot cover legal combined master/member bends: 48+96 semitones
+already give 4096, before ribbon (up to 2) and footage (up to 4). The unchanged
+255-tap FIR's two coefficient absolute sums are 1.3481754856870793 and
+1.0511648928331851. With sanitized external input in [-1,1], the larger
+polyphase bound is 2.6963509713741587. Conservatively combining bend 144,
+detune 0.5, three pitch LFOs 6, SUB/mod-wheel depth at most 5 times that bound,
+trim 0.07, drift 0.9 and gliss rounding 0.5 semitones gives a multiplier below
+113132 after ribbon/footage. Master tune/glide cancel in the VCO-only ratio;
+initial pitch is nonpositive. The 262144 domain includes margin for float
+rounding. Requested high rates still encounter the **unchanged** production
+oscillator's numerical frequency clamp, not a new adapter limiter.
+
+The entire two-rank kernel transaction validates before any K/audio-state
+mutation, including masked controls. An adapter rejection increments a visible
+counter and fails tests; it is not silently accepted as clamped behavior.
+
+## Status and reproduction
+
+Run `bash docs/voice-continuity/engine-experiment/reproduce.sh [new-output-dir]`.
+The output directory must not already exist. It retains baseline/candidate raw
+corpora and hashes, compiler information, and test logs. Baseline executables
+never see candidate API headers. The independent audit's common raw fixture
+builds in both trees; candidate-only tests use its explicit compile definition.
+
+Functional testing is complete: **1,675 owned checks**, **8,051 independent
+checks** (native and ASan/UBSan), and five independently rejected mutants.
+The original primitive suite passes 151,578 checks against the v2 variant;
+the independent kernel audit passes 33,962 with only its temporary multiplier
+domain-table endpoint updated. No original repository test is loosened.
+Four baseline/candidate corpora totaling **150,968,416 bytes per arm** compare
+exactly; the independent audit additionally covers explicit-disabled and
+masked profiles. See [functional results](functional-results.json) and the
+[independent audit](AUDIT.md), including sanitizer and physical-accuracy limits.
+
+The untimed timing-harness verification passes all **144 pairs / 1,152
+callbacks**, checking effective policy, active count, hidden-clock count,
+finite output and retired PANEL EG relaxation. Its `--verify` branch does not
+read a clock. Whole-Engine timing has **not** begun at this checkpoint.
+
+## Frozen first-run timing contract
+
+[Preregistered criteria](preregistered-criteria.json) define the first result:
+all 36 eight-held candidate/baseline median ratios must be at most **1.35**;
+all 24 48 kHz zero-audible candidate medians must be at most **0.35 RTF**.
+The budget is newly declared for the full Engine, not inherited from the
+kernel's different 10% self-comparison. Both cold and post-retirement zero
+conditions are measured. "Source both" is Source Performance with tabs 1/3,
+**not** isolated parity. Mixed 1/PANEL and both-PANEL scenes are also measured.
+
+Build with `bash build-benchmark.sh VERIFIED-REPLAY-WORK-DIRECTORY`, then run
+the resulting `engine-continuity-probe NEW-OUTPUT-DIRECTORY` only after the
+source/criteria checkpoint and exclusive measurement window. For untimed
+verification use `engine-continuity-probe --verify NEW-OUTPUT-DIRECTORY`.
+Each arm is compiled from its own private tree in a separately renamed
+namespace; the tiny opaque bridge avoids cross-revision headers/ODR mixing.
+There is no LTO. Moving parameter application and render are both timed;
+preparation, initial MIDI/release, warmup, input generation, observation,
+checksums and allocation are outside. Pair order alternates per callback.
+
+The first run retains all 73,728 callback durations; `analyse-benchmark.py`
+recomputes every median/p99/max/overrun before applying the frozen gates. Every
+outlier and any gate failure remains evidence. Checksums make work observable
+and verify finiteness; enabled-vs-baseline audio/state is intentionally different
+and is **not** a parity or quality equivalence test. See
+[source hashes](premeasurement-source-sha256.txt), which include both complete
+core source trees, kernel/profile, bridge, build script and executable.
+
+No actual AudioProcessor/DAW callback, machine WCET, native platform CPU or
+audio-dropout qualification follows from this offline Engine measurement.
+Passing recommends a separately reviewed opt-in integration design, never
+automatic production activation. A cost failure permits at most one separately
+identified exact-cache revision before revising/rejecting this integration
+budget; it does not permit replacement of the first observation.
+
+## Diagnostic auditions
+
+`engine_continuity_audition.cpp` produces two-second 48 kHz float WAVs and
+per-128-frame traces for both-source and both-PANEL fixtures, with noise controls
+zero and no normalization or limiter. Build it separately against each replay
+tree's `Engine.o`; define `CS80_BENCH_CANDIDATE=1` only for the candidate. Run
+each executable with a **new** output directory. The
+[saved trace metadata](audition-traces/metadata.json) records exact event times,
+WAV hashes and peaks; compressed CSV traces are retained alongside it. WAVs are
+reproducible rather than duplicated in Git. The phase seed aligns the first
+sixteen baseline assignment draws purely to make the later gap/reassignment
+comparison easier; it is not a hardware startup assertion. Listen at a sensible
+level. These are diagnostic examples, not a blinded quality preference test.
+
+See [circuit evidence](../CIRCUIT_REVIEW.md), [kernel audit](../AUDIT.md), and
+[the preceding kernel experiment](../../VOICE_CIRCUIT_CONTINUITY.md). The next
+decision is integrate/revise/reject based on functional, compatibility and
+matched whole-Engine cost evidence, not indefinite quarantine.
