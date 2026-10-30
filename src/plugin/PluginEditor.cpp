@@ -167,7 +167,7 @@ const Rf lampWell     { 1122, 6, 128, 40 };
 const Rf meterWell    { 1258, 6, 196, 40 };
 const Rf meterText    { 1262, 17, 52, 20 };
 const Rf meterBar     { 1318, 11, 128, 14 };
-const Rf panicBtn     { 1472, 12, 66, 28 };
+const Rf panicBtn     { 1466, 10, 74, 32 };   // >= 50 x 20 px at the 1120 x 700 minimum (PluginPanicTests)
 // The status strip is a recessed window under the toolbar whose length follows what it prints (see layoutStrip).
 const float stripX = 52.0f, stripY = 46.0f, stripH = 16.0f, stripPad = 12.0f, stripGap = 24.0f;
 const Rf ticker       { 54, 47, 1492, 14 };
