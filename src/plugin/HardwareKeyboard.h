@@ -27,8 +27,9 @@
 //    is visible and the editor has wired `hostKeyDown`, the same timer idles at 30 Hz to catch
 //    host-played notes, which raise no event on the UI side.
 //  - Keybed paints the felt strip, the walnut front rail with its printed note names (middle C marked)
-//    and the stepped walnut end blocks once into a cached image, and lays the
-//    deck-overhang shadow, the blocks' cap fronts and the ruler glow of pressed keys over the keys.
+//    and the thin walnut side walls once into a cached image, and lays the felt's shadow and the wall
+//    shading over the keys; pressed keys dip 3 px over the rail and light it, drawn live over the keys.
+//  - Key edges are snapped to whole device pixels, so the 1.2 px seams stay crisp at any scale.
 // Everything is lit from the upper left.
 namespace cs80::ui
 {
@@ -40,10 +41,14 @@ using juce::Rectangle;
 using Stop = std::pair<float, Colour>;
 
 // Design-space size of the keybed assembly and its frame (1512 x 228 at a 1600 wide editor).
-// 18 px side blocks leave 1476 px for 36 white keys: exactly 41 px per key.
+// 4 px side walls leave 1504 px for 36 white keys (41.78 px each); the keys span the same 48..1552 as the
+// control rows above. Key edges are snapped to whole device pixels when drawn, so the seams stay crisp.
 constexpr float kDesignWidth = 1512.0f;
 constexpr float kDesignHeight = 228.0f;
-constexpr float kDesignKeyWidth = 41.0f;
+constexpr float kDesignKeyWidth = 1504.0f / 36.0f;
+
+// Width of the dark seam between two white keys: about 1.2 design px, but always a whole number of device pixels.
+inline float seamWidth(float ps) { return juce::jmax(1.0f, std::round(1.2f * ps)) / ps; }
 
 inline const Colour kSeam { 0xff090706 };
 inline const Colour kAmber { 0xffffa63a };
@@ -118,21 +123,21 @@ inline Colour glowColour(float glow) { return kAmber.interpolatedWith(Colour(0xf
 inline Colour glowColour(const KeyLook& k) { return glowColour(k.glow); }
 
 // White key. `r` is the full key slot from JUCE (full height, no gap): the key is inset by half a
-// seam on each side. Layers, back to front: top face with ivory grain, light reflection, edge falloff,
-// rounded lip, vertical nose with a per-key highlight and contact shadow. Pressed, the key is still
-// ivory: its front edge drops, the whole body darkens a few percent warm, a dark gap and ambient occlusion
-// open at the back under the felt, the neighbours shade its edges, and only the nose glows amber.
-inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLook& k, float u)
+// seam on its right (`seam`, a whole number of device pixels). Layers, back to front: top face with ivory
+// grain, light reflection, edge falloff, rounded lip, vertical nose with a per-key highlight and contact
+// shadow. Pressed, the key is still ivory: it darkens a few percent and takes a light amber wash that grows
+// toward the front, its lip and nose drop, a dark gap and a 4 px inner shadow open at the back under the felt,
+// the neighbours shade its edges, and the nose glows amber. The Keybed lets the tip dip 3 px over the rail.
+inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLook& k, float u, float seam)
 {
-    const float gap = 2.3f * u;
-    const float x0 = r.getX() + gap * 0.5f, x1 = r.getRight() - gap * 0.5f;
+    const float x0 = r.getX(), x1 = r.getRight() - seam;
     const float w = x1 - x0;
     const float y0 = r.getY(), yb = r.getBottom(), h = r.getHeight();
     const float noseRest = h * 0.150f;
     const float bevelH = juce::jmax(3.0f, h * 0.034f);
-    const float edgeY = yb - noseRest + k.sink; // bottom of the lip, top of the nose
-    const float topEnd = edgeY - bevelH;
     const float d = k.depth;
+    const float edgeY = yb - noseRest + k.sink + 3.0f * u * d; // bottom of the lip, top of the nose
+    const float topEnd = edgeY - bevelH;
     const float gd = juce::jmin(1.0f, k.glow * d * 1.25f);
     const Colour ivory = ivoryFor(note);
     const Colour amb = glowColour(k);
@@ -223,31 +228,37 @@ inline void drawWhiteKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
 
     if (d > 0.0f)
     {
-        // A depressed key sits lower in the deck's shadow and takes on the warm light of the lamp under it:
-        // its whole face is tinted amber, laid over the ivory so the grain and gradients still show through.
-        const float tint = d * (0.56f + 0.14f * juce::jlimit(0.0f, 1.0f, (k.glow - 0.5f) * 2.0f));
-        g.setColour(Colour(0xffbc7638).withAlpha(tint));
+        // A depressed key sits lower in the deck's shadow and takes a light warm wash from the lamp under it.
+        // The ivory is darkened about 8 percent first; the amber then grows from about 12 percent at the back to
+        // 25 percent at the front, so the grain and the face's own gradients still read through it.
+        const float gl = juce::jlimit(0.0f, 1.0f, (k.glow - 0.5f) * 2.0f);
+        const Colour wash(0xffee7c12);
+        g.setColour(black(0.08f * d));
         g.fillRect(x0, y0, w, yb - y0);
-        // At the back, under the felt: a dark gap, then ambient occlusion falling away along the key.
+        fillV(g, Rectangle<float>(x0, y0, w, yb - y0),
+              { { 0.0f, wash.withAlpha(d * (0.10f + 0.02f * gl)) }, { 0.55f, wash.withAlpha(d * (0.17f + 0.03f * gl)) },
+                { 1.0f, wash.withAlpha(d * (0.23f + 0.03f * gl)) } });
+        // Back to front the face falls toward the felt: shaded under the deck, brighter once it clears it.
+        fillV(g, Rectangle<float>(x0, y0, w, h * 0.62f), { { 0.0f, black(0.20f * d) }, { 1.0f, black(0.0f) } });
+        // At the back, under the felt: a dark gap, a 4 px inner shadow, then ambient occlusion along the key.
         g.setColour(black(0.90f * d));
         g.fillRect(x0, y0, w, 1.3f * u);
-        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 38.0f * u),
-              { { 0.0f, black(0.70f * d) }, { 0.22f, black(0.36f * d) }, { 1.0f, black(0.0f) } });
+        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 4.0f * u), { { 0.0f, black(0.62f * d) }, { 1.0f, black(0.0f) } });
+        fillV(g, Rectangle<float>(x0, y0 + 1.3f * u, w, 30.0f * u),
+              { { 0.0f, black(0.34f * d) }, { 0.22f, black(0.18f * d) }, { 1.0f, black(0.0f) } });
         // Its higher neighbours shade the edges (light comes from the left, so the left edge takes more).
-        fillH(g, Rectangle<float>(x0, y0, 6.0f * u, yb - y0), { { 0.0f, black(0.56f * d) }, { 0.5f, black(0.20f * d) }, { 1.0f, black(0.0f) } });
-        fillH(g, Rectangle<float>(x1 - 4.5f * u, y0, 4.5f * u, yb - y0), { { 0.0f, black(0.0f) }, { 1.0f, black(0.40f * d) } });
+        fillH(g, Rectangle<float>(x0, y0, 5.0f * u, yb - y0), { { 0.0f, black(0.40f * d) }, { 0.5f, black(0.14f * d) }, { 1.0f, black(0.0f) } });
+        fillH(g, Rectangle<float>(x1 - 4.0f * u, y0, 4.0f * u, yb - y0), { { 0.0f, black(0.0f) }, { 1.0f, black(0.30f * d) } });
         if (gd > 0.01f)
         {
             // A modest glow at the front: the nose, a warm rim along the lip and a bright line where it meets the rail.
-            fillV(g, Rectangle<float>(x0, topEnd - 24.0f * u, w, 24.0f * u),
-                  { { 0.0f, amb.withAlpha(0.0f) }, { 1.0f, amb.withAlpha(0.10f * gd) } });
-            g.setColour(Colour(0xffffe2a6).withAlpha(0.60f * d));
+            fillV(g, Rectangle<float>(x0, topEnd - 22.0f * u, w, 22.0f * u),
+                  { { 0.0f, amb.withAlpha(0.0f) }, { 1.0f, amb.withAlpha(0.08f * gd) } });
+            g.setColour(Colour(0xffffe2a6).withAlpha(0.55f * d));
             g.fillRect(x0 + 0.4f * u, topEnd, w - 0.8f * u, 1.4f * u);
-            g.setColour(amb.withAlpha(0.28f * gd));
+            g.setColour(amb.withAlpha(0.24f * gd));
             g.fillRect(x0, topEnd - 1.2f * u, w, 1.2f * u);
-            fillV(g, nose, { { 0.0f, amb.withAlpha(0.08f * gd) }, { 0.50f, amb.withAlpha(0.22f * gd) }, { 1.0f, amb.withAlpha(0.52f * gd) } });
-            g.setColour(Colour(0xffffe0a8).withAlpha(0.55f * gd));
-            g.fillRect(x0 + 0.6f * u, yb - 1.6f * u, w - 1.2f * u, 1.3f * u);
+            fillV(g, nose, { { 0.0f, amb.withAlpha(0.08f * gd) }, { 0.50f, amb.withAlpha(0.22f * gd) }, { 1.0f, amb.withAlpha(0.46f * gd) } });
         }
     }
 
@@ -315,7 +326,7 @@ inline void drawBlackKey(Graphics& g, int note, Rectangle<float> r, const KeyLoo
     const float d = k.depth;
     const float lift = k.sink * 0.9f;
     const float tipY = r.getBottom() + lift;
-    const float capFront = r.getY() + r.getHeight() * 0.775f + lift * 0.7f;
+    const float capFront = r.getY() + r.getHeight() * 0.80f + lift * 0.7f;
     const float ins = w * 0.13f;
     const float capL = x + ins, capR = x + w - ins;
     const float gd = juce::jmin(1.0f, k.glow * d * 1.25f);
@@ -495,103 +506,30 @@ inline void paintWalnutFace(Graphics& g, Rectangle<float> r, bool vertical, int 
 // Warm varnish highlight for wood (a white one would turn the walnut grey).
 inline Colour varnish(float a) { return Colour(0xffe8b080).withAlpha(a); }
 
-// Height of an end block's stepped cap, in design pixels.
-constexpr float kLipHeight = 14.0f;
-// How far the cap overhangs the first and last key, in design pixels.
-constexpr float kLipOverhang = 5.0f;
-
-// End block beside the keys: a walnut slab with vertical grain that continues the cheek, topped by a
-// stepped cap in cross grain that casts a shadow on the slab below it. The part of the cap that
-// overhangs the keys is drawn by paintLipOverhang, over them. `r` runs the full height of the keybed.
-inline void paintEndBlock(Graphics& g, Rectangle<float> r, bool left, int seed, float u)
+// Side wall beside the keys: a 4 px strip of walnut with vertical grain that continues the chassis cheek
+// beside it (same warm tone, sinking into shade toward the foot), with a dark joint against the cheek and a
+// dark line against the key slip. `r` runs the full height of the keybed.
+inline void paintWall(Graphics& g, Rectangle<float> r, bool left, int seed, float u)
 {
     g.saveState();
     g.reduceClipRegion(r.getSmallestIntegerContainer());
-    const float lipH = kLipHeight * u;
-    const float inner = left ? r.getRight() : r.getX();
-    const float outer = left ? r.getX() : r.getRight();
-
-    // Slab.
-    paintWalnutFace(g, r, true, seed, 0.54f);
-    fillV(g, r, { { 0.0f, varnish(0.0f) }, { 0.14f, varnish(0.06f) }, { 0.30f, varnish(0.10f) }, { 0.55f, varnish(0.0f) } }); // varnish sheen
-    fillV(g, r, { { 0.0f, black(0.0f) }, { 0.04f, black(0.0f) }, { 1.0f, black(0.34f) } }); // sinks into shade like the cheek
-    fillH(g, r, { { left ? 0.0f : 1.0f, white(0.0f) }, { left ? 0.45f : 0.55f, white(0.05f) }, { left ? 1.0f : 0.0f, white(0.0f) } });
-    // Chamfer on the face toward the keys, in shade on the left block and lit on the right one.
-    const float cw = 3.4f * u;
-    const auto cham = Rectangle<float>(left ? inner - cw : inner, r.getY(), cw, r.getHeight());
-    if (left)
-    {
-        fillH(g, cham, { { 0.0f, black(0.0f) }, { 1.0f, black(0.55f) } });
-        g.setColour(black(0.88f));
-        g.fillRect(inner - 1.0f * u, r.getY(), 1.0f * u, r.getHeight());
-    }
-    else
-    {
-        fillH(g, cham, { { 0.0f, varnish(0.30f) }, { 0.6f, varnish(0.08f) }, { 1.0f, black(0.0f) } });
-        g.setColour(black(0.88f));
-        g.fillRect(inner, r.getY(), 1.0f * u, r.getHeight());
-    }
-    // Dark joint where the block meets the cheek, so the cheek's grain does not look sliced off.
-    {
-        const auto joint = Rectangle<float>(left ? outer : outer - 3.6f * u, r.getY(), 3.6f * u, r.getHeight());
-        if (left) fillH(g, joint, { { 0.0f, black(0.80f) }, { 0.3f, black(0.55f) }, { 1.0f, black(0.0f) } });
-        else      fillH(g, joint, { { 0.0f, black(0.0f) }, { 0.7f, black(0.55f) }, { 1.0f, black(0.80f) } });
-    }
-
-    // Cap: cross grain, lit on top, rounded at its inner corner.
-    const auto lip = Rectangle<float>(r.getX(), r.getY(), r.getWidth(), lipH);
-    // Cast shadow of the cap on the slab below it.
-    fillV(g, Rectangle<float>(r.getX(), lip.getBottom(), r.getWidth(), 8.0f * u),
-          { { 0.0f, black(0.62f) }, { 0.35f, black(0.30f) }, { 1.0f, black(0.0f) } });
-    juce::Path capShape;
-    capShape.addRoundedRectangle(lip.getX(), lip.getY(), lip.getWidth(), lip.getHeight(), 3.0f * u, 3.0f * u,
-                                 !left, left, false, false);
-    g.saveState();
-    g.reduceClipRegion(capShape);
-    paintWalnutFace(g, lip, false, seed + 7, 0.60f);
-    fillV(g, lip, { { 0.0f, varnish(0.36f) }, { 0.22f, varnish(0.12f) }, { 0.60f, varnish(0.0f) }, { 1.0f, black(0.30f) } });
-    g.setColour(varnish(0.55f));
-    g.fillRect(lip.getX(), lip.getY() + 0.8f * u, lip.getWidth(), 0.9f * u); // lit top edge
-    {
-        const auto edge = Rectangle<float>(left ? inner - 2.2f * u : inner, lip.getY(), 2.2f * u, lip.getHeight());
-        if (left) fillH(g, edge, { { 0.0f, black(0.0f) }, { 1.0f, black(0.45f) } });
-        else      fillH(g, edge, { { 0.0f, varnish(0.22f) }, { 1.0f, black(0.0f) } });
-    }
-    g.restoreState();
-    g.setColour(black(0.90f));
-    g.fillRect(r.getX(), lip.getBottom() - 0.2f * u, r.getWidth(), 1.1f * u); // underside of the step
-    g.setColour(varnish(0.16f));
-    g.fillRect(r.getX(), lip.getBottom() - 1.3f * u, r.getWidth(), 0.8f * u); // rolled lower edge
+    paintWalnutFace(g, r, true, seed, 0.52f);
+    fillV(g, r, { { 0.0f, varnish(0.04f) }, { 0.30f, varnish(0.12f) }, { 0.60f, varnish(0.02f) }, { 1.0f, varnish(0.0f) } });
+    fillV(g, r, { { 0.0f, black(0.0f) }, { 0.05f, black(0.0f) }, { 1.0f, black(0.34f) } }); // sinks into shade like the cheek
+    const float e = juce::jmax(1.0f, 1.0f * u);
+    const float outer = left ? r.getX() : r.getRight() - e;
+    const float inner = left ? r.getRight() - e : r.getX();
+    g.setColour(black(0.62f));
+    g.fillRect(outer, r.getY(), e, r.getHeight()); // joint against the cheek
+    g.setColour(black(0.92f));
+    g.fillRect(inner, r.getY(), e, r.getHeight()); // edge of the key slip
+    // A lit bevel on the face toward the keys on the right wall, shade on the left one.
+    const float bw = juce::jmax(1.0f, 1.0f * u);
+    g.setColour(left ? black(0.26f) : varnish(0.20f));
+    g.fillRect(left ? inner - bw : inner + e, r.getY(), bw, r.getHeight());
     g.restoreState();
 }
 
-// The overhanging front of the cap, laid over the first or last key: a face of end-grain walnut from the
-// shared grain helper with a lit top bevel and a soft shadow on the key tops (only the left block casts
-// one: light comes from the left). `edgeX` is the block's inner edge and `y0` the top of the cap, both in
-// the coordinates of `g`.
-inline void paintLipOverhang(Graphics& g, float edgeX, float y0, bool left, int seed, float u)
-{
-    const float ov = kLipOverhang * u, lipH = kLipHeight * u, yb = y0 + lipH;
-    const float x = left ? edgeX : edgeX - ov;
-    const auto face = Rectangle<float>(x, y0, ov, lipH);
-    if (left)
-    {
-        // Shadow of the cap on the key tops: a soft oval around its lower outer corner.
-        fillBlob(g, edgeX + ov, y0 + lipH * 0.58f, 10.0f * u, lipH * 0.58f + 9.0f * u, black(0.62f), black(0.26f),
-                 Rectangle<float>(edgeX, y0, ov + 12.0f * u, lipH + 12.0f * u));
-    }
-    else
-        fillBlob(g, edgeX - ov, yb, 6.0f * u, 6.0f * u, black(0.40f), black(0.16f),
-                 Rectangle<float>(edgeX - ov - 7.0f * u, yb - 4.0f * u, ov + 7.0f * u, 11.0f * u));
-    paintWalnutFace(g, face, false, seed, left ? 0.52f : 0.64f);
-    fillV(g, face, { { 0.0f, varnish(left ? 0.26f : 0.40f) }, { 0.35f, varnish(0.05f) }, { 1.0f, black(left ? 0.40f : 0.28f) } });
-    g.setColour(varnish(left ? 0.40f : 0.62f));
-    g.fillRect(face.getX(), y0 + 0.8f * u, face.getWidth(), 0.9f * u);
-    g.setColour(black(0.90f));
-    g.fillRect(face.getX(), yb - 0.2f * u, face.getWidth(), 1.1f * u);
-    g.setColour(black(0.85f));
-    g.fillRect(left ? face.getRight() - 0.8f * u : face.getX(), y0, 0.8f * u, lipH);
-}
 } // namespace keys_detail
 
 // Software-rendered key surfaces keep snapshots identical to the interactive
@@ -615,6 +553,15 @@ public:
 
     // Pixels below the keys that a pressed key's glow reaches (set by the Keybed that owns the felt).
     int feltGlowReach = 0;
+
+    // A key's slot (what JUCE hit-tests) with its left and right edges moved onto whole device pixels at
+    // pixel density `ps`, so neighbouring keys tile exactly and the seams between them stay crisp.
+    juce::Rectangle<float> slotRect(int note, float ps) const
+    {
+        const auto r = getRectangleForKey(note);
+        const float l = std::round(r.getX() * ps) / ps, rt = std::round(r.getRight() * ps) / ps;
+        return { l, r.getY(), juce::jmax(1.0f / ps, rt - l), r.getHeight() };
+    }
 
     // Animation state for the Keybed's felt glow: 0..1 depth and 0..1 glow strength of a key.
     float getKeyDepth(int note) const noexcept { return isIndex(note) ? depth[(size_t) note] : 0.0f; }
@@ -697,15 +644,24 @@ public:
         if (isMouseOver(false))
             hover = getNoteAndVelocityAtPosition(getMouseXYRelative().toFloat()).note;
 
-        const auto clip = g.getClipBounds();
+        const auto clip = g.getClipBounds().toFloat();
         for (int n = getRangeStart(); n <= getRangeEnd(); ++n)
         {
             if (depth[(size_t) n] <= 0.0f && n != hover) continue;
-            const auto cluster = clusterRect(n).getIntersection(clip);
+            // A white key redraws exactly its own slot (edges on device pixels), so its neighbours' pixels are never touched.
+            auto cluster = (juce::MidiMessage::isMidiNoteBlack(n) ? clusterRect(n).toFloat() : slotRect(n, ps)).getIntersection(clip);
             if (cluster.isEmpty()) continue;
+            {
+                // Edges on device pixels, so the clip never blends the redraw with the cached image at its border.
+                const float l = std::round(cluster.getX() * ps) / ps, t = std::round(cluster.getY() * ps) / ps;
+                cluster = { l, t, std::round(cluster.getRight() * ps) / ps - l, std::round(cluster.getBottom() * ps) / ps - t };
+                if (cluster.isEmpty()) continue;
+            }
+            juce::Path region;
+            region.addRectangle(cluster);
             g.saveState();
-            g.reduceClipRegion(cluster);
-            drawKeys(g, cluster.toFloat(), true, hover);
+            g.reduceClipRegion(region);
+            drawKeys(g, cluster, true, hover, ps);
             g.restoreState();
         }
     }
@@ -888,32 +844,33 @@ private:
 
     // Draw every key that intersects `clip`. `live` = true uses the animated state (and hover); false
     // renders the whole keyboard at rest for the cache. Fills opaque, so it replaces whatever was there.
-    void drawKeys(juce::Graphics& g, juce::Rectangle<float> clip, bool live, int hover)
+    void drawKeys(juce::Graphics& g, juce::Rectangle<float> clip, bool live, int hover, float ps)
     {
         const float u = unit();
+        const float seam = keys_detail::seamWidth(ps);
         g.setColour(keys_detail::kSeam);
         g.fillRect(clip);
         const int lo = juce::jmax(0, getRangeStart()), hi = juce::jmin(127, getRangeEnd());
         for (int n = lo; n <= hi; ++n)
             if (!juce::MidiMessage::isMidiNoteBlack(n))
             {
-                const auto r = getRectangleForKey(n);
-                if (r.intersects(clip)) keys_detail::drawWhiteKey(g, n, r, look(n, live, hover), u);
+                const auto r = slotRect(n, ps);
+                if (r.intersects(clip)) keys_detail::drawWhiteKey(g, n, r, look(n, live, hover), u, seam);
             }
         for (int n = lo; n <= hi; ++n)
             if (juce::MidiMessage::isMidiNoteBlack(n))
             {
-                const auto r = getRectangleForKey(n);
+                const auto r = slotRect(n, ps);
                 if (clusterRect(n).toFloat().intersects(clip))
                 {
-                    const float rightWhite = n + 1 <= hi ? getRectangleForKey(n + 1).getX() : r.getRight();
+                    const float rightWhite = n + 1 <= hi ? slotRect(n + 1, ps).getX() : r.getRight();
                     keys_detail::drawBlackShadow(g, r, look(n, live, hover), u, rightWhite);
                 }
             }
         for (int n = lo; n <= hi; ++n)
             if (juce::MidiMessage::isMidiNoteBlack(n))
             {
-                const auto r = getRectangleForKey(n);
+                const auto r = slotRect(n, ps);
                 if (clusterRect(n).toFloat().intersects(clip)) keys_detail::drawBlackKey(g, n, r, look(n, live, hover), u);
             }
     }
@@ -931,7 +888,7 @@ private:
         {
             juce::Graphics ig(restImage);
             ig.addTransform(juce::AffineTransform::scale(ps));
-            drawKeys(ig, getLocalBounds().toFloat(), false, -1);
+            drawKeys(ig, getLocalBounds().toFloat(), false, -1, ps);
         }
         restDirty = false;
         restW = w; restH = h; restScale = ps; restKeyWidth = kw; restLo = getRangeStart(); restHi = getRangeEnd();
@@ -957,7 +914,7 @@ private:
     float restScale = 0.0f, restKeyWidth = 0.0f;
 };
 
-// The keybed assembly (frame, key slip, end blocks) around the keys. The editor
+// The keybed assembly (frame, key slip, side walls) around the keys. The editor
 // places this one component; `keys` is the playable MIDI keyboard inside it.
 class Keybed final : public juce::Component
 {
@@ -966,16 +923,17 @@ public:
     {
         setOpaque(true);
         keys.setBlackNoteWidthProportion(0.60f);
-        keys.setBlackNoteLengthProportion(0.62f);
+        keys.setBlackNoteLengthProportion(0.65f);
         addAndMakeVisible(keys);
     }
 
     // Insets of the key area inside the assembly, in design pixels at the 1512 x 228 design size
-    // (top: back felt rail under the panel lip, sides: wood end blocks, bottom: front felt slip and
+    // (top: back felt rail under the panel lip, sides: thin walnut walls, bottom: dark gap and front
     // rail). They scale with the component width, so any size of Keybed keeps its proportions.
-    // Design size 1512 x 228: key area 1476 x 195, exactly 41 px per white key; 9 px of felt above the keys,
-    // 24 px below them (2 px dark gap, 22 px walnut rail with the printed legend).
-    juce::BorderSize<int> keyInsets { 9, 18, 24, 18 };
+    // Design size 1512 x 228: key area 1504 x 193 (36 white keys of 41.78 px, spanning x 48..1552 of the
+    // editor); 12 px of felt above the keys, 23 px below them (2 px dark gap, 21 px walnut rail with the
+    // printed legend). Black keys are 65 percent of the white key length.
+    juce::BorderSize<int> keyInsets { 12, 4, 23, 4 };
 
     void resized() override
     {
@@ -1003,8 +961,11 @@ public:
         const auto kb = keys.getBounds();
         keys_detail::drawCache(g, overlayImage, physicalScale(g), kb.getPosition());
 
-        // Warm light of the pressed keys on the felt in front of them.
+        // A pressed key's tip dips about 3 px over the dark gap and the top of the rail, and throws a warm
+        // light on the rail in front of it.
         const float u = unit();
+        const float ps = physicalScale(g);
+        const float seam = keys_detail::seamWidth(ps);
         const auto clip = g.getClipBounds().toFloat();
         const float kw = keys.getKeyWidth();
         for (int n = keys.getRangeStart(); n <= keys.getRangeEnd(); ++n)
@@ -1012,9 +973,25 @@ public:
             if (juce::MidiMessage::isMidiNoteBlack(n)) continue;
             const float d = keys.getKeyDepth(n);
             if (d < 0.02f) continue;
-            const auto r = keys.getRectangleForKey(n);
-            keys_detail::drawFeltGlow(g, (float) kb.getX() + r.getCentreX(), (float) kb.getBottom(), kw, u,
-                                      d * keys.getKeyGlow(n), keys.getKeyGlow(n), clip);
+            const auto slot = keys.slotRect(n, ps);
+            const float x0 = (float) kb.getX() + slot.getX(), x1 = (float) kb.getX() + slot.getRight() - seam;
+            const float top = (float) kb.getBottom(), ext = 3.0f * u * d;
+            const auto tip = juce::Rectangle<float>(x0, top - 0.6f * u, x1 - x0, ext + 0.6f * u);
+            if (tip.intersects(clip))
+            {
+                juce::Path nose;
+                nose.addRoundedRectangle(tip.getX(), tip.getY(), tip.getWidth(), tip.getHeight(), 1.5f * u, 1.5f * u, false, false, true, true);
+                g.saveState();
+                g.reduceClipRegion(nose);
+                keys_detail::fillV(g, tip, { { 0.0f, keys_detail::Colour(0xff8a6038) }, { 1.0f, keys_detail::Colour(0xff4a301a) } });
+                g.setColour(keys_detail::white(0.30f));
+                g.fillRect(x0, tip.getY(), 1.0f * u, tip.getHeight()); // lit left corner
+                g.setColour(keys_detail::black(0.34f));
+                g.fillRect(x1 - 1.0f * u, tip.getY(), 1.0f * u, tip.getHeight());
+                g.restoreState();
+            }
+            const float glow = keys.getKeyGlow(n);
+            keys_detail::drawFeltGlow(g, (float) kb.getX() + slot.getCentreX(), top + ext, kw, u, d * glow, glow, clip);
         }
     }
 
@@ -1058,7 +1035,7 @@ private:
     }
 
     // Everything static behind the keys: the back felt, the walnut front rail with its printed legend, and the
-    // end blocks. Layout from the top: 9 px felt, keys, a 2 px dark gap under the noses, then a 22 px rail.
+    // side walls. Layout from the top: 12 px felt, keys, a 2 px dark gap under the noses, then a 21 px rail.
     void paintFrame(juce::Graphics& g, float u)
     {
         using namespace keys_detail;
@@ -1066,14 +1043,14 @@ private:
         const auto kb = keys.getBounds().toFloat();
         g.fillAll(Colour(0xff0a0807));
 
-        // Back rail: felt lying in the shade of the deck overhang.
+        // Back rail: felt lying in the shade of the deck overhang, 12 px deep, with a raised lip at its front edge.
         const auto back = Rectangle<float>(kb.getX(), 0.0f, kb.getWidth(), kb.getY());
         paintFelt(g, back, Colour(0xff55201a), Colour(0xff733028), 11, u);
-        fillV(g, back, { { 0.0f, black(0.78f) }, { 0.45f, black(0.40f) }, { 1.0f, black(0.08f) } });
-        g.setColour(white(0.11f));
-        g.fillRect(kb.getX(), kb.getY() - 2.0f * u, kb.getWidth(), 0.8f * u); // raised lip of the felt
-        g.setColour(black(0.92f));
-        g.fillRect(kb.getX(), kb.getY() - 1.0f * u, kb.getWidth(), 1.0f * u);
+        fillV(g, back, { { 0.0f, black(0.78f) }, { 0.45f, black(0.36f) }, { 1.0f, black(0.06f) } });
+        g.setColour(white(0.13f));
+        g.fillRect(kb.getX(), kb.getY() - 2.6f * u, kb.getWidth(), 0.9f * u); // raised lip of the felt
+        g.setColour(black(0.94f));
+        g.fillRect(kb.getX(), kb.getY() - 1.2f * u, kb.getWidth(), 1.2f * u);
 
         // Front: the dark gap under the key noses, then one walnut rail carrying the printed note names.
         const float slipTop = kb.getBottom();
@@ -1081,31 +1058,63 @@ private:
         const auto rail = Rectangle<float>(kb.getX(), railTop, kb.getWidth(), H - railTop);
         g.setColour(Colour(0xff040302));
         g.fillRect(kb.getX(), slipTop, kb.getWidth(), 2.0f * u);
-        paintWalnutFace(g, rail, false, 411, 0.56f);
-        fillH(g, rail, { { 0.0f, varnish(0.0f) }, { 0.20f, varnish(0.14f) }, { 0.50f, varnish(0.0f) }, { 0.78f, varnish(0.10f) },
+        paintWalnutFace(g, rail, false, 411, 0.50f);
+        {
+            // Long grain along the rail: fine dark and pale lines that wander a little, and a few heavier ones.
+            g.saveState();
+            g.reduceClipRegion(rail.getSmallestIntegerContainer());
+            juce::Random rng(4111);
+            for (int i = 0; i < 150; ++i)
+            {
+                const float x = rng.nextFloat() * W - 20.0f * u;
+                const float y = railTop + 1.0f * u + rng.nextFloat() * (rail.getHeight() - 2.0f * u);
+                const float len = (50.0f + rng.nextFloat() * 280.0f) * u;
+                const float amp = (0.15f + rng.nextFloat() * 0.5f) * u, phase = rng.nextFloat() * 6.28f, freq = 0.01f + rng.nextFloat() * 0.02f;
+                juce::Path line;
+                line.startNewSubPath(x, y);
+                for (float dx = 8.0f * u; dx <= len; dx += 8.0f * u)
+                    line.lineTo(x + dx, y + std::sin(phase + dx * freq / u) * amp);
+                const bool dark = rng.nextFloat() < 0.66f;
+                g.setColour((dark ? Colour(0xff1c0c06) : Colour(0xffd9a46c)).withAlpha(dark ? 0.16f + rng.nextFloat() * 0.22f : 0.06f + rng.nextFloat() * 0.10f));
+                g.strokePath(line, juce::PathStrokeType((dark && rng.nextFloat() < 0.18f ? 1.3f : 0.7f) * u));
+            }
+            g.restoreState();
+        }
+        fillH(g, rail, { { 0.0f, varnish(0.0f) }, { 0.20f, varnish(0.12f) }, { 0.50f, varnish(0.0f) }, { 0.78f, varnish(0.09f) },
                          { 1.0f, varnish(0.0f) } });
-        // Lacquer: a thin reflection across the face, a lit chamfer along the top and a roll into shade below.
-        fillV(g, Rectangle<float>(rail.getX(), railTop + rail.getHeight() * 0.40f, rail.getWidth(), 2.4f * u),
-              { { 0.0f, varnish(0.0f) }, { 0.5f, varnish(0.13f) }, { 1.0f, varnish(0.0f) } });
-        fillV(g, Rectangle<float>(rail.getX(), railTop, rail.getWidth(), 4.5f * u),
-              { { 0.0f, varnish(0.60f) }, { 0.30f, varnish(0.26f) }, { 1.0f, varnish(0.0f) } });
-        fillV(g, Rectangle<float>(rail.getX(), railTop + 9.0f * u, rail.getWidth(), rail.getHeight() - 9.0f * u + 1.0f),
-              { { 0.0f, black(0.0f) }, { 1.0f, black(0.40f) } });
-        g.setColour(varnish(0.85f));
+        // Lacquer: a thin reflection across the face, a lit chamfer along the top, and a rounded front edge below:
+        // a lit band where the face rolls over, then a dark roll into the shadow under the rail.
+        fillV(g, Rectangle<float>(rail.getX(), railTop + rail.getHeight() * 0.36f, rail.getWidth(), 2.4f * u),
+              { { 0.0f, varnish(0.0f) }, { 0.5f, varnish(0.11f) }, { 1.0f, varnish(0.0f) } });
+        fillV(g, Rectangle<float>(rail.getX(), railTop, rail.getWidth(), 3.6f * u),
+              { { 0.0f, varnish(0.50f) }, { 0.35f, varnish(0.22f) }, { 1.0f, varnish(0.0f) } });
+        fillV(g, Rectangle<float>(rail.getX(), railTop + 8.0f * u, rail.getWidth(), rail.getHeight() - 8.0f * u + 1.0f),
+              { { 0.0f, black(0.0f) }, { 1.0f, black(0.34f) } });
+        {
+            const float bevelTop = H - 5.6f * u;
+            fillV(g, Rectangle<float>(rail.getX(), bevelTop, rail.getWidth(), 2.4f * u),
+                  { { 0.0f, varnish(0.0f) }, { 0.45f, varnish(0.34f) }, { 1.0f, varnish(0.10f) } });
+            fillV(g, Rectangle<float>(rail.getX(), bevelTop + 2.4f * u, rail.getWidth(), 3.2f * u + 1.0f),
+                  { { 0.0f, black(0.10f) }, { 1.0f, black(0.66f) } });
+        }
+        g.setColour(varnish(0.80f));
         g.fillRect(rail.getX(), railTop, rail.getWidth(), 0.9f * u);
         fillV(g, Rectangle<float>(rail.getX(), railTop, rail.getWidth(), 5.0f * u),
-              { { 0.0f, black(0.40f) }, { 1.0f, black(0.0f) } }); // shadow of the key noses on the rail
+              { { 0.0f, black(0.36f) }, { 1.0f, black(0.0f) } }); // shadow of the key noses on the rail
 
-        // The end blocks shade the strips beside them.
-        fillH(g, Rectangle<float>(kb.getX(), 0.0f, 7.0f * u, H), { { 0.0f, black(0.55f) }, { 1.0f, black(0.0f) } });
-        fillH(g, Rectangle<float>(kb.getRight() - 5.0f * u, 0.0f, 5.0f * u, H), { { 0.0f, black(0.0f) }, { 1.0f, black(0.30f) } });
+        // The walls shade the strips beside them.
+        fillH(g, Rectangle<float>(kb.getX(), 0.0f, 6.0f * u, H), { { 0.0f, black(0.40f) }, { 1.0f, black(0.0f) } });
+        fillH(g, Rectangle<float>(kb.getRight() - 4.0f * u, 0.0f, 4.0f * u, H), { { 0.0f, black(0.0f) }, { 1.0f, black(0.22f) } });
 
         // Note names printed in cream ink on the rail, with a small tick at each C and a pip at middle C.
         // Labels never go below 8 px, even in a small editor.
         const float fontPx = juce::jmax(8.0f, 9.4f * u);
         g.setFont(juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), fontPx, juce::Font::bold))
                       .withExtraKerningFactor(0.07f));
-        const float textTop = railTop + 8.4f * u, textBottom = H - 1.2f * u;
+        const float textTop = railTop + 4.4f * u, textBottom = textTop + 12.0f * u;
+        const float capTop = textTop + (textBottom - textTop - 0.72f * fontPx) * 0.5f; // top of the capital letters
+        const float tickBottom = juce::jmin(railTop + 5.8f * u, capTop - 1.0f);
+        const float tickTop = juce::jmax(railTop + 1.0f, tickBottom - 3.2f * u);
         const Colour ink(0xffeee2c4);
         for (int n = keys.getRangeStart(); n <= keys.getRangeEnd(); ++n)
         {
@@ -1115,20 +1124,20 @@ private:
             const float cx = r.getCentreX();
             if (middleC)
             {
-                const float py = railTop + 5.4f * u;
+                const float py = juce::jmin(railTop + 3.8f * u, capTop - 1.0f - 1.8f * u);
                 g.setColour(black(0.55f));
-                g.fillEllipse(cx - 2.9f * u, py - 2.7f * u, 5.8f * u, 5.8f * u);
+                g.fillEllipse(cx - 2.5f * u, py - 2.3f * u, 5.0f * u, 5.0f * u);
                 g.setColour(Colour(0xffffb84a));
-                g.fillEllipse(cx - 2.2f * u, py - 2.2f * u, 4.4f * u, 4.4f * u);
+                g.fillEllipse(cx - 1.8f * u, py - 1.8f * u, 3.6f * u, 3.6f * u);
                 g.setColour(white(0.65f));
-                g.fillEllipse(cx - 1.3f * u, py - 1.6f * u, 1.5f * u, 1.1f * u);
+                g.fillEllipse(cx - 1.0f * u, py - 1.3f * u, 1.3f * u, 0.9f * u);
             }
             else
             {
                 g.setColour(black(0.40f));
-                g.fillRect(cx - 0.1f * u, railTop + 4.9f * u, 1.0f * u, 3.4f * u);
+                g.fillRect(cx - 0.1f * u, tickTop + 0.4f * u, 1.0f * u, tickBottom - tickTop);
                 g.setColour(ink.withAlpha(0.88f));
-                g.fillRect(cx - 0.6f * u, railTop + 4.5f * u, 1.0f * u, 3.4f * u);
+                g.fillRect(cx - 0.6f * u, tickTop, 1.0f * u, tickBottom - tickTop);
             }
             const auto name = middleC ? juce::String("C4 MIDDLE C")
                                       : juce::MidiMessage::getMidiNoteName(n, true, true, keys.getOctaveForMiddleC());
@@ -1139,26 +1148,22 @@ private:
             g.drawText(name, box, juce::Justification::centred, false);
         }
 
-        // End blocks run the full height and meet the chassis cheeks at x = 0 and x = width.
-        paintEndBlock(g, Rectangle<float>(0.0f, 0.0f, kb.getX(), H), true, 301, u);
-        paintEndBlock(g, Rectangle<float>(kb.getRight(), 0.0f, W - kb.getRight(), H), false, 302, u);
-        paintLipOverhang(g, kb.getX(), 0.0f, true, 308, u);
-        paintLipOverhang(g, kb.getRight(), 0.0f, false, 309, u);
+        // Thin walnut walls run the full height and meet the chassis cheeks at x = 0 and x = width.
+        paintWall(g, Rectangle<float>(0.0f, 0.0f, kb.getX(), H), true, 301, u);
+        paintWall(g, Rectangle<float>(kb.getRight(), 0.0f, W - kb.getRight(), H), false, 302, u);
     }
 
-    // Light and shadow that fall across the keys: the deck overhang above them and the end blocks beside
-    // them, plus the front of each block's overhanging cap. Drawn over the keys; size equals the key area.
+    // Light and shadow that fall across the keys: the raised felt above them and the walls beside them.
+    // Drawn over the keys; size equals the key area.
     void paintOverlay(juce::Graphics& g, juce::Rectangle<float> area, float u)
     {
         using namespace keys_detail;
-        fillV(g, Rectangle<float>(0.0f, 0.0f, area.getWidth(), 26.0f * u),
-              { { 0.0f, black(0.76f) }, { 0.28f, black(0.42f) }, { 0.62f, black(0.15f) }, { 1.0f, black(0.0f) } });
-        fillH(g, Rectangle<float>(0.0f, 0.0f, 16.0f * u, area.getHeight()), { { 0.0f, black(0.38f) }, { 0.45f, black(0.13f) }, { 1.0f, black(0.0f) } });
-        fillH(g, Rectangle<float>(area.getWidth() - 7.0f * u, 0.0f, 7.0f * u, area.getHeight()),
-              { { 0.0f, black(0.0f) }, { 1.0f, black(0.22f) } });
-        const float capTop = -(float) keys.getY(); // the cap starts above the key area
-        paintLipOverhang(g, 0.0f, capTop, true, 308, u);
-        paintLipOverhang(g, area.getWidth(), capTop, false, 309, u);
+        // The felt stands proud of the key tops: a dense 6 px shadow right under it, then a long soft fall-off.
+        fillV(g, Rectangle<float>(0.0f, 0.0f, area.getWidth(), 30.0f * u),
+              { { 0.0f, black(0.74f) }, { 0.20f, black(0.38f) }, { 0.55f, black(0.12f) }, { 1.0f, black(0.0f) } });
+        fillH(g, Rectangle<float>(0.0f, 0.0f, 12.0f * u, area.getHeight()), { { 0.0f, black(0.30f) }, { 0.45f, black(0.10f) }, { 1.0f, black(0.0f) } });
+        fillH(g, Rectangle<float>(area.getWidth() - 6.0f * u, 0.0f, 6.0f * u, area.getHeight()),
+              { { 0.0f, black(0.0f) }, { 1.0f, black(0.20f) } });
     }
 
     juce::Image frameImage, overlayImage;
