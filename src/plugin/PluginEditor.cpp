@@ -1035,7 +1035,7 @@ public:
                  : style == Style::accent ? juce::Colour(0xffd9b968)
                  : style == Style::plate ? juce::Colour(0xffd9c88e)
                  : style == Style::quiet ? juce::Colour(0xffa9a088)
-                 : style == Style::selector ? juce::Colour(0xffddd4b8)
+                 : style == Style::selector ? juce::Colour(0xffe6dcc0)
                  : on ? juce::Colour(0xffffe3a0) : juce::Colour(0xffeee6cc);
         const juce::String shown = armed ? juce::String("DISCARD?") : getButtonText();
         if ((style == Style::previous || style == Style::next) && armed)
@@ -3824,13 +3824,21 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         const float ruleY = 672.0f;
         art::bracket(g, "PERFORMANCE", 50, ruleY, 162, 4.0f);
         art::bracket(g, "CHORUS / TREMOLO", 214, ruleY, 174, 4.0f, 9.5f, "CHORUS");
-        art::bracket(g, "BRILLIANCE", 1212, ruleY, 66, 4.0f, 9.5f, "BRILL");
-        art::bracket(g, "LEVEL", 1284, ruleY, 66, 4.0f);
-        art::bracket(g, "FOOT", 1352, ruleY, 44, 4.0f);
-        art::bracket(g, "FOOTSWITCH", 1400, ruleY, 98, 4.0f, 9.5f, "SWITCH");
-        art::bracket(g, "ASSIGN TO", 1400, 719.0f, 98, 4.0f);
-        art::bracket(g, "OUTPUT", 1500, 719.0f, 48, 4.0f, 9.5f, "OUT");
-        art::bracket(g, "MODE", 1500, ruleY, 48, 4.0f);
+        // Small editors print these at the 9 px floor, which is wider in design units: the wide headers are pulled
+        // in a little so neighbouring headers (LEVEL, FOOT, SWITCH, MODE) keep a gap between their rules, while
+        // the narrow ones (FOOT, MODE) keep every pixel their text needs.
+        const float pull = gSmallEditor ? 2.0f : 0.0f;
+        auto header = [&](const char* title, float x, float y, float w, float inset, const char* shortTitle = "")
+        {
+            art::bracket(g, title, x + inset, y, w - 2.0f * inset, 4.0f, 9.5f, shortTitle);
+        };
+        header("BRILLIANCE", 1212, ruleY, 66, pull, "BRILL");
+        header("LEVEL", 1284, ruleY, 66, pull);
+        header("FOOT", 1352, ruleY, 44, 0.0f);
+        header("FOOTSWITCH", 1400, ruleY, 98, pull, "SWITCH");
+        header("ASSIGN TO", 1400, 719.0f, 98, pull);
+        header("OUTPUT", 1500, 719.0f, 48, 0.0f, "OUT");
+        header("MODE", 1500, ruleY, 48, 0.0f);
 
         // centre: nameplate and the ribbon slot
         const auto np = geo::nameplate;
