@@ -1617,14 +1617,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::chParam(0, cs80::CP_feet), 582, y, 36, h, "FEET I", greyCap());
         addFader(cs80::chParam(1, cs80::CP_feet), 620, y, 36, h, "FEET II", greyCap());
         // Pitch follows the width of each engraved name so the legends never touch.
-        addFader(cs80::P_mix, 1205, y, 38, h, "MIX", redCap());
-        addFader(cs80::P_brilliance, 1243, y, 38, h, "BRILLIANCE", greenCap());
-        addFader(cs80::P_resonance, 1289, y, 38, h, "RESONANCE", redCap());
-        addFader(cs80::P_initBend, 1333, y, 38, h, "INIT BEND", whiteCap());
-        addFader(cs80::P_subAtSpeed, 1373, y, 38, h, "AT SPEED", whiteCap());
-        addFader(cs80::P_subAtVco, 1411, y, 38, h, "AT VCO", whiteCap());
-        addFader(cs80::P_subAtVcf, 1449, y, 38, h, "AT VCF", greenCap());
-        addKnob(cs80::P_volume, 1494, y + 24, 52, 84, "VOLUME");
+        addFader(cs80::P_mix, 1203, y, 38, h, "MIX", redCap());
+        addFader(cs80::P_brilliance, 1241, y, 38, h, "BRILLIANCE", greenCap());
+        addFader(cs80::P_resonance, 1285, y, 38, h, "RESONANCE", redCap());
+        addFader(cs80::P_initBend, 1330, y, 38, h, "INIT BEND", whiteCap());
+        addFader(cs80::P_subAtSpeed, 1374, y, 38, h, "AT SPEED", whiteCap());
+        addFader(cs80::P_subAtVco, 1417, y, 38, h, "AT VCO", whiteCap());
+        addFader(cs80::P_subAtVcf, 1456, y, 38, h, "AT VCF", greenCap());
+        addKnob(cs80::P_volume, 1497, y + 24, 50, 84, "VOLUME");
     }
 
     void buildChannel(int channel, float y0)
@@ -1942,15 +1942,15 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         frames.start();
     }
 
-    void applyOverlayPhase(float t)
+    // phase 0 = sheet fully away, 1 = sheet settled in place.
+    void applyOverlayPhase(float phase)
     {
         if (animTarget == nullptr) return;
-        const float e = 1.0f - (1.0f - t) * (1.0f - t) * (1.0f - t);
         const float slide = 22.0f * ((float) getHeight() / kDesignHeight);
-        animTarget->setTransform(t >= 1.0f ? juce::AffineTransform()
-                                           : juce::AffineTransform::translation(0.0f, (1.0f - e) * slide));
-        animTarget->setAlpha(t >= 1.0f ? 1.0f : 0.15f + 0.85f * e);
-        scrim.setAmount(e);
+        animTarget->setTransform(phase >= 1.0f ? juce::AffineTransform()
+                                               : juce::AffineTransform::translation(0.0f, (1.0f - phase) * slide));
+        animTarget->setAlpha(phase >= 1.0f ? 1.0f : 0.15f + 0.85f * phase);
+        scrim.setAmount(phase);
         shade.setVisible(true);
     }
 
@@ -1959,8 +1959,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (animTarget == nullptr) { frames.stop(); return; }
         const double elapsed = juce::Time::getMillisecondCounterHiRes() - animStart;
         const float raw = juce::jlimit(0.0f, 1.0f, (float) (elapsed / animDurationMs));
-        const float t = animOpening ? raw : 1.0f - raw;
-        applyOverlayPhase(t);
+        const float eased = 1.0f - (1.0f - raw) * (1.0f - raw) * (1.0f - raw);
+        applyOverlayPhase(animOpening ? eased : 1.0f - eased);
         if (raw >= 1.0f)
         {
             frames.stop();
@@ -2289,6 +2289,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         const float y0 = geo::rowY0[(size_t) channel];
         const juce::Rectangle<float> tray(424.0f, y0 - 6.0f, 1124.0f, 186.0f);
         art::recessTray(g, tray, 5.0f, juce::Colour(0xff1f1d1a), juce::Colour(0xff151311), 12.0f, 0.72f);
+        ui::etchRect(g, tray.reduced(5.0f), 3.0f, 0.30f);
         g.setGradientFill(juce::ColourGradient(art::white(0.045f), tray.getX(), tray.getY(),
                                                juce::Colours::transparentWhite, tray.getX() + 500.0f, tray.getBottom(), false));
         g.fillRoundedRectangle(tray.reduced(1.0f), 5.0f);
