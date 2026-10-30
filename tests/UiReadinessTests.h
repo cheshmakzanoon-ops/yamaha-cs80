@@ -104,7 +104,13 @@ void runUiReadinessTests(Check check, Flush flush)
     Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
     RefreshProbe construction(host);
     Cs80AudioProcessorEditor editor(host);
+    // isShowing() requires a real native peer even if every ancestor's visible
+    // flag is true. Keep the visibility assertion meaningful: this temporary
+    // fixture owns its window, removed automatically with the editor below.
+    editor.addToDesktop(0);
     editor.setVisible(true);
+    check(editor.getPeer() != nullptr && editor.isShowing(),
+          "readiness visibility fixture has a showing native editor peer");
     check(construction.unchanged(), "opening readiness UI preserves all APVTS values and metadata");
 
     auto* mode = findComponent<juce::Label>(editor, "performance_mode_status");
