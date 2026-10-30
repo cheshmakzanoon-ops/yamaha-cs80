@@ -61,7 +61,7 @@ The 200 "performance" patches and the modern layer (3 LFOs, 4 macros, 3 FX slots
 
 ### Current quality checkpoint
 
-The latest fully verified executable checkpoint, [`0273031`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/0273031e840ed255d16214708d5f4c85f5a8053a), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872343), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872298), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872349). The local GNU core-only configuration has 31 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
+The latest fully verified executable checkpoint, [`0273031`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/0273031e840ed255d16214708d5f4c85f5a8053a), passed [all platform builds, host tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872343), [DSP/sanitizer/raw-compatibility checks](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872298), and [actual-editor screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40990872349). The local GNU core-only configuration has 32 passing CTest suites, including a controlled keyboard-epoch interleaving regression. These results establish a strong software foundation, not measured tone matching or release qualification in every DAW.
 
 The next priority is **audible, integrated fidelity improvements**, not accumulating offline models indefinitely: replace generic/provisional behavior with the best source-constrained engineering models, complete missing feature behavior, and improve the 22 hardware-tone studies while retaining explicit uncertainty and regression coverage. The coverage counts are feature-ledger categories, not a fidelity percentage.
 
@@ -163,9 +163,13 @@ A [reproducible all-22 audition tool](docs/SOURCE_FACTORY_AUDITION.md) renders t
 
 ---
 
+## Install development artifacts
+
+CI packages the already-built standalone applications and plugins for Linux, Windows, and separate Intel/Apple Silicon macOS. Follow the [install and first-play guide](docs/INSTALL_AND_QUICKSTART.md), verify the exact commit and all its CI results, and read the [distribution/signing limitations](docs/CI_DISTRIBUTION_STATUS.md). An uploaded artifact alone is not a qualified release.
+
 ## Build
 
-Requirements: CMake 3.22+, Python 3.10+ (test harness), a C++20 compiler, Ninja (recommended) or Visual Studio 2022; Linux needs ALSA, X11, FreeType, Fontconfig and OpenGL development packages; macOS needs the Xcode command-line tools. JUCE 8.0.6 is fetched by CMake when `deps/juce` is absent.
+Requirements: CMake 3.22+, Python 3.10+ (test harness), a C++20 compiler, Ninja (recommended) or Visual Studio 2022; Linux needs ALSA, X11, FreeType, Fontconfig and OpenGL development packages; macOS needs the Xcode command-line tools. Linux GUI smoke tests also require Xvfb, xauth, Openbox and x11-utils. JUCE 8.0.11 is fetched by CMake when `deps/juce` is absent.
 
 Ubuntu 24.04:
 

@@ -273,8 +273,14 @@ if (CS80_BUILD_PLUGIN)
     # editor at two sizes, all advanced pages, and user preset storage. The
     # console tool uses JUCE's software renderer, so it is registered on all
     # three desktop platforms rather than only Unix.
-    add_test(NAME cs80_ui_smoke
-             COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_ui_smoke
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
+    else()
+        add_test(NAME cs80_ui_smoke
+                 COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
+    endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
 
     if (CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")

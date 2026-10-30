@@ -26,7 +26,7 @@ jobs:
       - name: Install official Ubuntu build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends cmake ninja-build g++ pkg-config libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev libfreetype-dev libfontconfig1-dev fonts-dejavu-core xvfb xauth
+          sudo apt-get install -y --no-install-recommends cmake ninja-build g++ pkg-config libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev libfreetype-dev libfontconfig1-dev fonts-dejavu-core xvfb xauth openbox x11-utils
       - name: Configure exact source
         run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
       - name: Build screenshot renderer and core tests
@@ -36,7 +36,7 @@ jobs:
       - name: Capture actual editor at every supported size and page
         run: |
           mkdir -p artifacts/ui
-          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu xvfb-run -a ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test
+          JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test
           printf '{"commit":"%s","run":"%s","renderer":"JUCE software, actual plugin editor"}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/ui/provenance.json
           sha256sum artifacts/ui/*.png > artifacts/ui/SHA256SUMS
       - name: Publish screenshot evidence

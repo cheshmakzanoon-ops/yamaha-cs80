@@ -31,7 +31,7 @@ jobs:
             libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
             libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
             libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
-            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth openbox x11-utils
 
       - name: Configure
         run: >
@@ -65,7 +65,7 @@ jobs:
           mkdir -p artifacts/ui
           ./build/cs80_render --out artifacts/cs80-demo.wav --seconds 12
           JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu \
-            ./build/CS80Snapshots_artefacts/Release/CS80Snapshots \
+            bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots \
             --out artifacts/ui --self-test
 
       - name: Upload render artifacts
@@ -74,6 +74,19 @@ jobs:
           name: cs80-linux-artifacts
           path: artifacts
           if-no-files-found: error
+
+      - name: Package Linux VST3 and Standalone
+        run: |
+          python scripts/package-ci-artifacts.py --self-test
+          python scripts/package-ci-artifacts.py --platform linux --build-dir build --out-dir packages
+
+      - name: Upload Linux install bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-install-bundle
+          path: packages/
+          if-no-files-found: error
+          compression-level: 0
 
       - name: Upload test and JUCE source evidence
         if: always()
@@ -485,6 +498,19 @@ jobs:
             2>&1 | tee pluginval-au-gui.log
           grep -qx 'SUCCESS' pluginval-au-gui.log
 
+      - name: Package native macOS VST3, AU and Standalone
+        run: |
+          python scripts/package-ci-artifacts.py --self-test
+          python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages
+
+      - name: Upload native macOS install bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-${{ matrix.runner }}-install-bundle
+          path: packages/
+          if-no-files-found: error
+          compression-level: 0
+
       - name: AU registration diagnostics
         if: failure()
         run: |
@@ -576,6 +602,21 @@ jobs:
           name: cs80-windows-vst3
           path: build/CS80Reference_artefacts/Release/VST3
           if-no-files-found: error
+
+      - name: Package Windows VST3 and Standalone
+        if: steps.configure.outcome == 'success'
+        run: |
+          python scripts/package-ci-artifacts.py --self-test
+          python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages
+
+      - name: Upload Windows install bundle
+        if: steps.configure.outcome == 'success'
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-install-bundle
+          path: packages/
+          if-no-files-found: error
+          compression-level: 0
 
       - name: Upload test and JUCE source evidence
         if: always()
