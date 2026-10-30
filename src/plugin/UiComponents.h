@@ -300,12 +300,23 @@ public:
     // Replaces the painted caption only (for example FUNC at small editor sizes). Titles, accessibility
     // names, tooltips and drag-bubble names are unchanged. An empty string restores the constructor name.
     void setCaption(const juce::String& painted);
+    // Smallest painted type for the caption and the value chip, in screen pixels. 0 (the default) keeps
+    // the automatic sizing; a value such as 12.5 also grows the caption and readout bands to fit. Names
+    // and readouts are never squeezed below 85 percent: a word that does not fit is abbreviated.
+    void setMinCaptionHeight(float px);
+    float getMinCaptionHeight() const noexcept { return minCaption; }
+    // A rotary whose value ring and fill start at 12 o'clock (A4 tuning, bend ranges, macros) and run
+    // left or right of it. Default false (the fill starts at the minimum).
+    void setBipolar(bool isBipolar);
+    bool isBipolar() const noexcept { return bipolar; }
 
 private:
     Cs80AudioProcessor& processor;
     int parameterIndex;
     juce::String name;
     juce::String captionOverride;
+    float minCaption = 0.0f;
+    bool bipolar = false;
     bool hardwareSlider = false;
     bool horizontalFader = false;
     FocusSlider slider;
