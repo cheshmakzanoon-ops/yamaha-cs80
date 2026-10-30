@@ -70,6 +70,17 @@ juce::Button* findButton(juce::Component& parent, const juce::String& text)
     return nullptr;
 }
 
+void collectButtons(juce::Component& parent, const juce::String& text, std::vector<juce::Button*>& out)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (!child->isVisible()) continue;
+        if (auto* button = dynamic_cast<juce::Button*>(child))
+            if (button->getButtonText() == text) out.push_back(button);
+        collectButtons(*child, text, out);
+    }
+}
+
 juce::Component* findControl(juce::Component& parent, const juce::String& id)
 {
     for (auto* child : parent.getChildren())
@@ -3315,6 +3326,8 @@ int main(int argc, char** argv)
         processor.setParamValue(cs80::P_fx3Type, 4.0f);
         processor.setParamValue(cs80::P_fx3Mix, 0.25f);
         processor.setParamValue(cs80::P_arpOn, 1.0f);
+        for (const char* tone : { "BRASS\n1", "BRASS\n2" })      // one lit tab per channel row
+            if (auto* tab = findButton(editor, tone)) tab->triggerClick();
         flushGui(150);
         save("main-populated-1600x1000");
         editor.showAdvancedPanel(true);
@@ -3325,6 +3338,9 @@ int main(int argc, char** argv)
             save("advanced-populated-page" + juce::String(page + 1));
         }
         editor.showAdvancedPanel(false);
+        std::vector<juce::Button*> panelTabs;                      // both PANEL tabs back on
+        collectButtons(editor, "PANEL", panelTabs);
+        for (auto* tab : panelTabs) tab->triggerClick();
         processor.setStateInformation(before.getData(), (int) before.getSize());
         flushGui(100);
     }
