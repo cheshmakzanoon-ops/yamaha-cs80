@@ -1,0 +1,106 @@
+{
+  "model": "w3-current-fold-v1; independent denseFFT continuous periodic RC/fold/shaper; ideal lowpass to INTERNAL Nyquist BEFORE sample",
+  "delay_internal": 8,
+  "rows": [
+    {
+      "fs": 88200.0,
+      "target": 1046.0,
+      "bin": 194,
+      "f": 1044.3603515625,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 42,
+      "reference_sha256": "729a472cf329cbd630129f8622a5e9cc7e3032cac94125601a6dc5bcd1f07a48"
+    },
+    {
+      "fs": 88200.0,
+      "target": 4186.0,
+      "bin": 778,
+      "f": 4188.2080078125,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 10,
+      "reference_sha256": "ea1660abe2f7215242b6d38ebfc88e64876c50cdc57f20d217c883ee4391be6b"
+    },
+    {
+      "fs": 88200.0,
+      "target": 8372.0,
+      "bin": 1555,
+      "f": 8371.03271484375,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 5,
+      "reference_sha256": "4ebe9f7e76b3ce16eca8bae1754a97e9a2451b8f42d2bf9d2a731cd4182b04e0"
+    },
+    {
+      "fs": 88200.0,
+      "target": 16744.0,
+      "bin": 3110,
+      "f": 16742.0654296875,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 2,
+      "reference_sha256": "1631215d56a9b4115b5f7993d5365f546bcb602066a7ef84b838c604af3c5f4b"
+    },
+    {
+      "fs": 88200.0,
+      "target": 23000.0,
+      "bin": 4272,
+      "f": 22997.4609375,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 1,
+      "reference_sha256": "43186b477fe72e0523a8fb1a6a3c6a937ee59d3ba250ee4afe3221babaec4949"
+    },
+    {
+      "fs": 96000.0,
+      "target": 1046.0,
+      "bin": 179,
+      "f": 1048.828125,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 45,
+      "reference_sha256": "c92f2b6cb1fcf76f4e67d4b39b1a1d569c423fc7f801e84b812967ac3d424304"
+    },
+    {
+      "fs": 96000.0,
+      "target": 4186.0,
+      "bin": 714,
+      "f": 4183.59375,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 11,
+      "reference_sha256": "3680eb6ec02ad0faa14e973b20459b33a46fb7c1176f45e34b9a63bc43e218f5"
+    },
+    {
+      "fs": 96000.0,
+      "target": 8372.0,
+      "bin": 1429,
+      "f": 8373.046875,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 5,
+      "reference_sha256": "a15e754db9003151ed092267a3796578510d6f47d1bd76457b8b272ccbc118ac"
+    },
+    {
+      "fs": 96000.0,
+      "target": 16744.0,
+      "bin": 2858,
+      "f": 16746.09375,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 2,
+      "reference_sha256": "2cc4616059b2e935ca04027bbeb186f2a54a91ebd704b944b7b0171a6d891e01"
+    },
+    {
+      "fs": 96000.0,
+      "target": 23000.0,
+      "bin": 3925,
+      "f": 22998.046875,
+      "internal_samples": 16384,
+      "period_quadrature_points": 1048576,
+      "internal_nyquist_harmonics": 2,
+      "reference_sha256": "d6d95e93169fe28464caa2c502a219f52273dd18292fd64e9b6c8039256b805b"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "REJECTED before production integration",
+  "method": "full-length real-cepstrum homomorphic; no half-length sqrt conversion",
+  "prototype_length_samples": 64,
+  "fractional_phases": 64,
+  "fft_size": 32768,
+  "cutoff_cycles_per_sample": 0.4,
+  "magnitude_floor": 1e-12,
+  "unretained_tail_L1": 0.07025094721129384,
+  "retained_L1": 2.9518413581064356,
+  "initial_Cpp_reported_unretained_tail_L1": 0.070251,
+  "reason": "finite support truncation error and expected nonlinearphase gate risk; not adopted",
+  "numpy_version": "2.3.5"
+}
