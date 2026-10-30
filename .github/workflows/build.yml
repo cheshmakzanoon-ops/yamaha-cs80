@@ -554,10 +554,11 @@ jobs:
 
       - name: Verify configured JUCE source
         if: steps.configure.outcome == 'success'
+        # Quote complete -D arguments so PowerShell preserves dotted versions.
         run: >
-          cmake -DBUILD_DIR=build
-          -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
-          -DEXPECTED_JUCE_VERSION=8.0.11
+          cmake "-DBUILD_DIR=build"
+          "-DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641"
+          "-DEXPECTED_JUCE_VERSION=8.0.11"
           -P scripts/verify-ci-juce-source.cmake
 
       - name: Build

@@ -423,7 +423,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
         auto* parity = page.toggle(1000.0f, 552.0f, 400.0f, 30.0f,
                                    cs80::P_parityMode, "PARITY ISOLATION");
         parity->setComponentID("parity_mode");
-        parity->setTooltip("Comparison fixture, not calibrated. Enable before playing: toggling stops notes and clears controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are retained but inert. Output may exceed digital full scale.");
+        parity->setTooltip("Comparison fixture, not calibrated. No hardware match established. Enable before playing: toggling stops notes and clears controller/effect history. MIDI pitch bend, CC1/11/64/74 and MPE are ignored; pressure, ribbon and the on-screen pedal remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are retained but inert. Output may exceed digital full scale.");
         page.text("NOT CALIBRATED - no hardware match established.\n"
                   "OFF: legacy performance. ON: source factory tabs.\n"
                   "ON ignores bend, CC1/11/64/74 and MPE; masks modern FX.\n"
