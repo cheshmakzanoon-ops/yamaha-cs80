@@ -1,0 +1,33 @@
+name: diag-win
+on:
+  push:
+    branches: [diag-win]
+jobs:
+  core-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: main
+            ref: 2564d77e488a14036e8867fdca416b653c93848a
+          - name: ui-wip
+            ref: da00062b658b932dacb9ce1a74c7dbf2abab4450
+    name: windows core tests ${{ matrix.name }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: cheshmakzanoon-ops/yamaha-cs80
+          ref: ${{ matrix.ref }}
+      - name: Configure and build core tests
+        shell: pwsh
+        run: |
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON
+          cmake --build build --config Release --parallel
+      - name: Test
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          ctest --test-dir build -C Release --output-on-failure *> ctest.log
+          $sel = Select-String -Path ctest.log -Pattern 'Failed|FAIL|tests passed|tests failed|\*\*\*' | Select-Object -First 60 | ForEach-Object { $_.Line }
+          Write-Output ("::error title=ctest ${{ matrix.name }}::" + ($sel -join '%0A'))
