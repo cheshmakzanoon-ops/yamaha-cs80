@@ -56,10 +56,27 @@ static_assert(initialEditorSizeForArea(1366, 728).height == 700);
 static_assert(initialEditorSizeForArea(1024, 600).width == 1120);
 static_assert(initialEditorSizeForArea(0, 0).height == 1000);
 
+// Painters that draw in the 1600 x 1000 design space (chassis, plate, lid, meter, lamps) run under a
+// floor, so printed type never falls under 8 screen pixels when the editor is scaled down. Code that
+// sizes fonts in screen pixels (labels, buttons) is not inside such a scope and is unaffected.
+float gDesignFloor = 0.0f;
+bool gSmallEditor = false;
+struct FloorScope
+{
+    explicit FloorScope(float screenScale) : previous(gDesignFloor), previousSmall(gSmallEditor)
+    {
+        gDesignFloor = screenScale > 0.0f ? 8.0f / screenScale : 0.0f;
+        gSmallEditor = screenScale > 0.0f && screenScale < 0.85f;
+    }
+    ~FloorScope() { gDesignFloor = previous; gSmallEditor = previousSmall; }
+    float previous;
+    bool previousSmall;
+};
+
 juce::Font displayFont(float height, int style = juce::Font::plain)
 {
     return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
-                                        height, style));
+                                        juce::jmax(height, gDesignFloor), style));
 }
 
 juce::Font spacedFont(float height, float kerning, float hscale = 1.0f, int style = juce::Font::bold)
@@ -110,7 +127,8 @@ public:
     using juce::TooltipWindow::TooltipWindow;
     juce::String getTipFor(juce::Component& component) override
     {
-        if (component.getComponentID() == "expression_pedal")
+        const auto id = component.getComponentID();
+        if (id == "expression_pedal" || id == "ribbon_controller")
             return component.getDescription();
         return juce::TooltipWindow::getTipFor(component);
     }
@@ -159,10 +177,10 @@ const std::array<float, 5> tickerRules { 283.0f, 509.0f, 673.0f, 797.0f, 1001.0f
 // Control surface y 64-660
 const float faceTop = 64.0f, faceBottom = 660.0f, deckBottom = 772.0f;
 const Rf plate        { 54, 98, 360, 378 };
-const Rf memoryLidKey { 64, 444, 166, 24 };
-const Rf voiceKey     { 238, 444, 166, 24 };
-const Rf viewKeyI     { 340, 106, 26, 24 };
-const Rf viewKeyII    { 368, 106, 30, 24 };
+const Rf memoryLidKey { 68, 436, 160, 24 };
+const Rf voiceKey     { 236, 436, 160, 24 };
+const Rf viewKeyI     { 338, 112, 26, 22 };
+const Rf viewKeyII    { 366, 112, 30, 22 };
 const std::array<float, 2> rowY0 { 104.0f, 296.0f };
 const Rf lowerPlate   { 48, 484, 1504, 166 };
 const Rf toneBezel    { 660, 520, 537, 102 };
@@ -191,6 +209,8 @@ using juce::Colour;
 inline Colour black(float a) { return juce::Colours::black.withAlpha(a); }
 // Matte instrument plate colour (voice plate, memory lid, status strip): also the halo under its type.
 inline Colour plateColour() { return Colour(0xff262421); }
+// The smoked glass of the voice-flow window (also the halo under its type).
+inline Colour glassColour() { return Colour(0xff181611); }
 inline Colour white(float a) { return juce::Colours::white.withAlpha(a); }
 inline juce::ColourGradient vgrad(Colour top, Colour bottom, Rf r)
 {
@@ -359,18 +379,25 @@ void slotScrew(juce::Graphics& g, juce::Point<float> c, float r, float turn)
 
 void louvre(juce::Graphics& g, Rf r)
 {
-    recessTray(g, r, 2.5f, Colour(0xff0b0a09), Colour(0xff050505), 6.0f, 0.8f);
+    recessTray(g, r, 2.5f, Colour(0xff0b0a09), Colour(0xff050505), 6.0f, 0.9f);
     juce::Graphics::ScopedSaveState state(g);
     g.reduceClipRegion(r.reduced(1.5f).toNearestIntEdges());
-    for (float y = r.getY() + 2.2f; y < r.getBottom() - 1.0f; y += 3.1f)
+    for (float y = r.getY() + 2.0f; y < r.getBottom() - 1.5f; y += 3.6f)
     {
         g.setColour(Colour(0xff000000));
-        g.fillRect(r.getX() + 2.0f, y, r.getWidth() - 4.0f, 1.5f);
-        g.setColour(Colour(0xff6b6453).withAlpha(0.95f));
-        g.fillRect(r.getX() + 2.0f, y + 1.5f, r.getWidth() - 4.0f, 0.8f);
-        g.setColour(white(0.05f));
-        g.fillRect(r.getX() + 2.0f, y - 0.8f, r.getWidth() - 4.0f, 0.6f);
+        g.fillRect(r.getX() + 2.0f, y, r.getWidth() - 4.0f, 1.7f);
+        g.setColour(Colour(0xff9a917a));                         // lit chamfer of the slat
+        g.fillRect(r.getX() + 2.0f, y + 1.7f, r.getWidth() - 4.0f, 1.0f);
+        g.setColour(Colour(0xff3a362d));                         // its flank, falling into the next cut
+        g.fillRect(r.getX() + 2.0f, y + 2.7f, r.getWidth() - 4.0f, 0.7f);
     }
+    // The top of the opening shades what is behind it; the ends fall away into the frame.
+    g.setGradientFill(vgrad(black(0.55f), juce::Colours::transparentBlack, { r.getX(), r.getY(), r.getWidth(), 4.0f }));
+    g.fillRect(r.getX(), r.getY(), r.getWidth(), 4.0f);
+    g.setGradientFill(hgrad(black(0.5f), juce::Colours::transparentBlack, { r.getX(), r.getY(), 14.0f, r.getHeight() }));
+    g.fillRect(r.getX(), r.getY(), 14.0f, r.getHeight());
+    g.setGradientFill(hgrad(juce::Colours::transparentBlack, black(0.5f), { r.getRight() - 14.0f, r.getY(), 14.0f, r.getHeight() }));
+    g.fillRect(r.getRight() - 14.0f, r.getY(), 14.0f, r.getHeight());
 }
 
 // Printed legend with a drop shadow, in the cream silkscreen colour.
@@ -399,60 +426,118 @@ void stamped(juce::Graphics& g, const juce::String& text, Rf area, const juce::F
     g.drawText(text, area, just, false);
 }
 
-// Gold etched grouping bracket: a rule with its title sitting in a gap and short end ticks.
+// Gold etched grouping bracket: a rule with its title sitting in a gap and short end ticks. When the
+// title does not fit the span at the current type size, the short title is used, and if that does not fit
+// either the bracket is printed without text rather than letting it run into its neighbours.
 void bracket(juce::Graphics& g, const juce::String& title, float x, float ruleY, float w,
-             float tick = 6.0f, float fontSize = 9.5f)
+             float tick = 6.0f, float fontSize = 9.5f, const juce::String& shortTitle = {})
 {
     const auto font = spacedFont(fontSize, 0.10f);
-    const float gap = textWidth(font, title) * 0.5f + 8.0f;
+    juce::String text = title;
+    if (shortTitle.isNotEmpty() && textWidth(font, text) > w - 4.0f)
+        text = shortTitle;
+    if (textWidth(font, text) > w - 4.0f)
+        text = {};
+    const float gap = text.isEmpty() ? 0.0f : textWidth(font, text) * 0.5f + 8.0f;
     const float mid = x + w * 0.5f;
-    ui::etchLine(g, x, ruleY, mid - gap, ruleY, 0.8f);
-    ui::etchLine(g, mid + gap, ruleY, x + w, ruleY, 0.8f);
+    if (text.isEmpty())
+        ui::etchLine(g, x, ruleY, x + w, ruleY, 0.8f);
+    else
+    {
+        ui::etchLine(g, x, ruleY, mid - gap, ruleY, 0.8f);
+        ui::etchLine(g, mid + gap, ruleY, x + w, ruleY, 0.8f);
+    }
     ui::etchLine(g, x, ruleY, x, ruleY + tick, 0.8f);
     ui::etchLine(g, x + w, ruleY, x + w, ruleY + tick, 0.8f);
-    legend(g, title, { x, ruleY - 8.0f, w, 16.0f }, font);
+    if (text.isNotEmpty())
+        legend(g, text, { x, ruleY - 8.0f, w, 16.0f }, font);
 }
 
-// One fine crinkle finish for the whole instrument body. The tile is opaque
-// (base colour modulated per pixel), so lightness and grain are set directly:
-// lum ~44 with a ~8 level standard deviation at one texel per device pixel.
+// Soft contact shadow all around an object that stands on the panel (no offset, so it also darkens
+// the seam above it): tone tray, nameplate, knobs, row seams.
+void ambient(juce::Graphics& g, Rf r, float radius, float spread = 6.0f, float alpha = 0.40f)
+{
+    ui::softShadow(g, r, radius, 0.0f, 1.5f, spread, alpha);
+}
+
+// One fine crinkle finish for the whole instrument body. A height field is built from two octaves
+// of blurred noise (features of about 2 and 4 px) plus a little white noise, a surface normal is
+// derived from it and lit from the upper left, so ridges catch light on one side and shade on the other
+// instead of reading as isotropic grain. The tile wraps, is opaque, and is cached by the caller.
 juce::Image makeCrinkleTile(int n, int seed, Colour base, float relativeStd)
 {
     juce::Random rng(seed);
     const size_t count = (size_t) (n * n);
-    std::vector<float> a(count), b(count), z(count);
-    for (auto& v : a) v = rng.nextFloat() - 0.5f;
-    for (auto& v : b) v = rng.nextFloat() - 0.5f;
-    auto at = [n](const std::vector<float>& v, int x, int y)
-    { return v[(size_t) (((y % n + n) % n) * n + ((x % n + n) % n))]; };
-    double sum = 0.0, sumSq = 0.0;
+    auto idx = [n](int x, int y) { return (size_t) (((y % n + n) % n) * n + ((x % n + n) % n)); };
+    auto noise = [&]
+    {
+        std::vector<float> v(count);
+        for (auto& x : v) x = rng.nextFloat() - 0.5f;
+        return v;
+    };
+    auto blur = [&](const std::vector<float>& in, int radius)
+    {
+        std::vector<float> tmp(count), out(count);
+        const float norm = 1.0f / (float) (2 * radius + 1);
+        for (int y = 0; y < n; ++y)
+            for (int x = 0; x < n; ++x)
+            {
+                float sum = 0.0f;
+                for (int k = -radius; k <= radius; ++k) sum += in[idx(x + k, y)];
+                tmp[idx(x, y)] = sum * norm;
+            }
+        for (int y = 0; y < n; ++y)
+            for (int x = 0; x < n; ++x)
+            {
+                float sum = 0.0f;
+                for (int k = -radius; k <= radius; ++k) sum += tmp[idx(x, y + k)];
+                out[idx(x, y)] = sum * norm;
+            }
+        return out;
+    };
+    auto normalise = [&](std::vector<float>& v)
+    {
+        double sum = 0.0, sumSq = 0.0;
+        for (float x : v) { sum += x; sumSq += (double) x * x; }
+        const double mean = sum / (double) count;
+        const double sd = std::sqrt(juce::jmax(1.0e-9, sumSq / (double) count - mean * mean));
+        for (auto& x : v) x = (float) ((x - mean) / sd);
+    };
+    auto fine = blur(blur(noise(), 1), 1);
+    auto coarse = blur(blur(noise(), 2), 1);
+    auto white = noise();
+    normalise(fine); normalise(coarse); normalise(white);
+    std::vector<float> height(count);
+    for (size_t i = 0; i < count; ++i)
+        height[i] = 1.0f * fine[i] + 0.75f * coarse[i] + 0.22f * white[i];
+    // Slope facing the light (upper left): rises toward +x/+y.
+    std::vector<float> shade(count);
     for (int y = 0; y < n; ++y)
         for (int x = 0; x < n; ++x)
-        {
-            // Raised facets: a short embossed noise plus a softer 2 x 2 undulation.
-            const float soft = 0.25f * (at(b, x, y) + at(b, x + 1, y) + at(b, x, y + 1) + at(b, x + 1, y + 1));
-            const float emboss = at(a, x, y) - 0.7f * at(a, x + 1, y + 1) - 0.3f * at(a, x - 1, y);
-            const float v = 0.5f * emboss + 1.5f * soft;
-            z[(size_t) (y * n + x)] = v;
-            sum += v;
-            sumSq += (double) v * v;
-        }
-    const double mean = sum / (double) count;
-    const double sd = std::sqrt(juce::jmax(1.0e-9, sumSq / (double) count - mean * mean));
+            shade[idx(x, y)] = (height[idx(x + 1, y)] - height[idx(x - 1, y)]) + (height[idx(x, y + 1)] - height[idx(x, y - 1)]);
+    normalise(shade);
     juce::Image image(juce::Image::RGB, n, n, false);
     juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
     for (int y = 0; y < n; ++y)
         for (int x = 0; x < n; ++x)
         {
-            float m = 1.0f + relativeStd * (float) ((z[(size_t) (y * n + x)] - mean) / sd);
+            const float soft = 0.55f * shade[idx(x, y)] + 0.30f * (fine[idx(x, y)] - 0.0f) * 0.5f;
+            float m = 1.0f + relativeStd * juce::jlimit(-2.4f, 2.4f, soft) + 0.40f * relativeStd * white[idx(x, y)] * 0.5f;
             const float speck = rng.nextFloat();
-            if (speck < 0.02f) m *= 0.78f;        // fissure between facets
-            else if (speck > 0.992f) m *= 1.22f;  // catch-light on a ridge
-            m = juce::jlimit(0.45f, 1.7f, m);
+            if (speck < 0.012f) m *= 0.90f;
+            else if (speck > 0.996f) m *= 1.10f;
+            m = juce::jlimit(0.55f, 1.55f, m);
             data.setPixelColour(x, y, Colour::fromFloatRGBA(base.getFloatRed() * m, base.getFloatGreen() * m,
                                                             base.getFloatBlue() * m, 1.0f));
         }
     return image;
+}
+
+// The one crinkle tile used by the toolbar, panel, deck and memory lid. Warm olive-grey, built once.
+const juce::Image& panelTile()
+{
+    static const juce::Image tile = makeCrinkleTile(256, 5, Colour(0xff2c2823), 0.19f);
+    return tile;
 }
 
 void fillTile(juce::Graphics& g, const juce::Image& tile, Rf area, float deviceScale, float shiftX = 0.0f, float shiftY = 0.0f)
@@ -500,9 +585,10 @@ void gearGlyph(juce::Graphics& g, juce::Point<float> c, float radius, Colour ink
     g.fillPath(gear);
 }
 
-// Dark walnut cheek that runs the full height of the case: figure from the shared
-// grain helper pulled down to a deep brown, a broad diagonal varnish sheen, a lit
-// bevel on the inner edge, a rounded end-grain cap and a cast shadow on the panel.
+// Dark walnut cheek that runs the full height of the case: figure from the shared grain helper pulled
+// down to a deep brown, cathedral figure and a few dark pores over it, a soft vertical specular band
+// and a broad diagonal varnish sheen, a lit bevel on the inner edge, a chamfered end-grain cap with
+// rays, and a cast shadow on the panel.
 void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
 {
     // Shadow thrown on the panel (and, below the panel, left to the keybed's own frame).
@@ -515,6 +601,7 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
     }
     juce::Path shape;
     shape.addRoundedRectangle(r.getX(), r.getY(), r.getWidth(), r.getHeight(), 15.0f, 15.0f, true, true, false, false);
+    {
     juce::Graphics::ScopedSaveState state(g);
     g.reduceClipRegion(shape);
 
@@ -531,17 +618,38 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
     g.setGradientFill(round);
     g.fillRect(r);
 
+    // Warm the figure toward walnut-brown: the shared grain helper is neutral-brown.
+    g.setGradientFill(vgrad(Colour(0xff8a4416).withAlpha(0.20f), Colour(0xff5a280c).withAlpha(0.12f), r));
+    g.fillRect(r);
+
     juce::Random rng(left ? 7 : 19);
-    // Pores: short dark dashes with a faint highlight beside them.
-    for (int i = 0; i < 360; ++i)
+    // Cathedral figure: nested arches that open downward, each set a different size and drift.
+    for (int figure = 0; figure < 7; ++figure)
     {
-        const float x = r.getX() + 3.0f + rng.nextFloat() * (r.getWidth() - 6.0f);
-        const float y = r.getY() + 16.0f + rng.nextFloat() * (r.getHeight() - 20.0f);
-        const float len = 2.0f + rng.nextFloat() * 9.0f;
-        g.setColour(black(0.16f + rng.nextFloat() * 0.22f));
-        g.fillRect(x, y, 0.7f, len);
-        g.setColour(Colour(0xffd09a6a).withAlpha(0.05f));
-        g.fillRect(x + 0.8f, y, 0.6f, len * 0.8f);
+        const float cx = r.getX() + r.getWidth() * (0.25f + 0.5f * rng.nextFloat());
+        const float cy = r.getY() + 40.0f + rng.nextFloat() * (r.getHeight() - 220.0f);
+        const float sharp = 0.012f + rng.nextFloat() * 0.03f;
+        const float gap = 8.0f + rng.nextFloat() * 12.0f;
+        const int rings = 4 + (int) (rng.nextFloat() * 5.0f);
+        for (int k = 0; k < rings; ++k)
+        {
+            juce::Path arch;
+            const float apex = cy - (float) k * gap;
+            for (float x = r.getX() - 2.0f; x <= r.getRight() + 2.0f; x += 2.0f)
+            {
+                const float dx = x - cx;
+                const float y = apex + dx * dx * sharp * (1.0f + 0.07f * (float) k);
+                if (x == r.getX() - 2.0f) arch.startNewSubPath(x, y); else arch.lineTo(x, y);
+            }
+            // a broad soft band (the dark late-wood of one growth ring) with a finer line inside it
+            const float fade = 1.0f - (float) k / (float) rings;
+            g.setColour(Colour(0xff1a0a05).withAlpha(0.05f + 0.07f * fade));
+            g.strokePath(arch, juce::PathStrokeType(2.4f + rng.nextFloat() * 2.4f));
+            g.setColour(Colour(0xff120704).withAlpha(0.07f + 0.10f * fade));
+            g.strokePath(arch, juce::PathStrokeType(0.6f + rng.nextFloat() * 0.6f));
+            g.setColour(Colour(0xffb07a4a).withAlpha(0.04f));
+            g.strokePath(arch, juce::PathStrokeType(1.4f), juce::AffineTransform::translation(0.0f, 2.2f));
+        }
     }
     // Long grain lines that wander slightly, dark and pale, with the odd heavier figure line.
     for (int i = 0; i < 70; ++i)
@@ -558,17 +666,41 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
         g.setColour((dark ? Colour(0xff0e0503) : Colour(0xff9a6a42)).withAlpha(dark ? 0.16f + rng.nextFloat() * 0.26f : 0.05f + rng.nextFloat() * 0.07f));
         g.strokePath(streak, juce::PathStrokeType(dark && rng.nextFloat() < 0.15f ? 1.6f : 0.7f));
     }
-    // Broad diagonal varnish sheen with a second, fainter reflection.
+    // Pores: short dark dashes with a faint highlight beside them, and a few deeper ones.
+    for (int i = 0; i < 360; ++i)
     {
+        const float x = r.getX() + 3.0f + rng.nextFloat() * (r.getWidth() - 6.0f);
+        const float y = r.getY() + 20.0f + rng.nextFloat() * (r.getHeight() - 24.0f);
+        const float len = 2.0f + rng.nextFloat() * 9.0f;
+        g.setColour(black(0.16f + rng.nextFloat() * 0.22f));
+        g.fillRect(x, y, 0.7f, len);
+        g.setColour(Colour(0xffd09a6a).withAlpha(0.05f));
+        g.fillRect(x + 0.8f, y, 0.6f, len * 0.8f);
+    }
+    for (int i = 0; i < 26; ++i)
+    {
+        const float x = r.getX() + 4.0f + rng.nextFloat() * (r.getWidth() - 8.0f);
+        const float y = r.getY() + 24.0f + rng.nextFloat() * (r.getHeight() - 30.0f);
+        g.setColour(black(0.55f));
+        g.fillEllipse(x, y, 1.5f, 3.0f + rng.nextFloat() * 4.0f);
+    }
+    // Soft vertical specular band about a quarter of the way across, then the broad diagonal sheen.
+    {
+        const float bandX = r.getX() + r.getWidth() * 0.27f;
+        juce::ColourGradient band(juce::Colours::transparentWhite, bandX - r.getWidth() * 0.22f, 0.0f,
+                                  juce::Colours::transparentWhite, bandX + r.getWidth() * 0.22f, 0.0f, false);
+        band.addColour(0.5, white(0.11f));
+        g.setGradientFill(band);
+        g.fillRect(r.withTrimmedTop(18.0f));
         const float h = r.getHeight();
         juce::ColourGradient sheen(juce::Colours::transparentWhite, r.getX(), r.getY() + h * 0.10f,
                                    juce::Colours::transparentWhite, r.getRight(), r.getY() + h * 0.38f, false);
-        sheen.addColour(0.5, white(0.20f));
+        sheen.addColour(0.5, white(0.16f));
         g.setGradientFill(sheen);
         g.fillRect(r);
         juce::ColourGradient sheen2(juce::Colours::transparentWhite, r.getX(), r.getY() + h * 0.50f,
                                     juce::Colours::transparentWhite, r.getRight(), r.getY() + h * 0.78f, false);
-        sheen2.addColour(0.5, white(0.10f));
+        sheen2.addColour(0.5, white(0.09f));
         g.setGradientFill(sheen2);
         g.fillRect(r);
     }
@@ -576,6 +708,8 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
     const float innerX = left ? r.getRight() - 4.0f : r.getX();
     g.setGradientFill(hgrad(white(left ? 0.0f : 0.24f), white(left ? 0.24f : 0.0f), { innerX, r.getY(), 4.0f, r.getHeight() }));
     g.fillRect(innerX, r.getY(), 4.0f, r.getHeight());
+    g.setColour(white(0.30f));                                           // crisp 1 px lit edge
+    g.fillRect(left ? r.getRight() - 2.5f : r.getX() + 1.5f, r.getY() + 12.0f, 1.0f, r.getHeight());
     g.setColour(black(0.9f));
     g.fillRect(left ? r.getRight() - 1.0f : r.getX(), r.getY(), 1.0f, r.getHeight());
     // Outer edge falls away into shadow.
@@ -587,25 +721,38 @@ void walnutCheek(juce::Graphics& g, Rf r, bool left, float shadowBottom)
                                            black(0.5f), 0.0f, r.getBottom(), false));
     g.fillRect(r);
 
-    // End-grain cap: tight, pale rings across the top 18 px, rounded like the case end.
+    // End-grain cap: tight rays fanning across the top 18 px, a lit chamfer along the front edge and a
+    // top-left highlight, rounded like the case end.
     {
         const Rf cap(r.getX(), r.getY(), r.getWidth(), 18.0f);
         g.setGradientFill(vgrad(Colour(0xff8a5a36), Colour(0xff4a2916), cap));
         g.fillRect(cap);
-        for (float y = cap.getY() + 1.0f; y < cap.getBottom(); y += 1.6f)
+        const float fanX = r.getCentreX();
+        for (float x = cap.getX() - 6.0f; x < cap.getRight() + 6.0f; x += 1.5f)
         {
-            g.setColour((rng.nextBool() ? Colour(0xff2a140a) : Colour(0xffb88458)).withAlpha(0.10f + rng.nextFloat() * 0.25f));
+            const float topX = fanX + (x - fanX) * 1.35f;
+            g.setColour((rng.nextBool() ? Colour(0xff2a140a) : Colour(0xffb88458)).withAlpha(0.10f + rng.nextFloat() * 0.26f));
+            g.drawLine(x, cap.getBottom(), topX, cap.getY(), 0.7f);
+        }
+        for (float y = cap.getY() + 3.0f; y < cap.getBottom(); y += 5.0f)           // faint growth rings
+        {
+            g.setColour(Colour(0xff2a140a).withAlpha(0.14f));
             g.drawHorizontalLine((int) y, cap.getX(), cap.getRight());
         }
-        g.setGradientFill(vgrad(white(0.30f), juce::Colours::transparentWhite, cap.withHeight(8.0f)));
-        g.fillRect(cap.withHeight(8.0f));
+        g.setGradientFill(vgrad(white(0.34f), juce::Colours::transparentWhite, cap.withHeight(7.0f)));
+        g.fillRect(cap.withHeight(7.0f));
+        g.setGradientFill(juce::ColourGradient(white(0.30f), cap.getX() + 3.0f, cap.getY() + 3.0f,
+                                               juce::Colours::transparentWhite, cap.getX() + 26.0f, cap.getY() + 12.0f, true));
+        g.fillRect(cap);
+        // chamfer: a thin lit strip along the lower edge of the cap, then the dark joint
+        g.setColour(Colour(0xffd0a070).withAlpha(0.55f));
+        g.fillRect(cap.getX(), cap.getBottom() - 2.2f, cap.getWidth(), 1.0f);
         g.setColour(black(0.75f));
         g.fillRect(cap.getX(), cap.getBottom(), cap.getWidth(), 1.2f);
         g.setGradientFill(vgrad(juce::Colours::transparentBlack, black(0.35f), { cap.getX(), cap.getBottom() + 1.0f, cap.getWidth(), 6.0f }));
         g.fillRect(cap.getX(), cap.getBottom() + 1.0f, cap.getWidth(), 6.0f);
     }
-    g.restoreState();
-    g.saveState();
+    }
     g.setColour(black(0.8f));
     g.strokePath(shape, juce::PathStrokeType(1.0f));
 }
@@ -739,18 +886,24 @@ public:
 class KeyButton final : public juce::TextButton
 {
 public:
-    enum class Style { key, previous, next, alert, plate, accent, quiet, rocker };
+    // key: toolbar key; previous/next: transport arrows; alert: red lens-cap pushbutton; plate: dark plate key;
+    // accent: gold primary key (SAVE); quiet: low-key but enabled-looking key (INIT); satin: the software
+    // keycap family with a lamp (memory lid, voice settings); selector: a gold-lit choice among several.
+    enum class Style { key, previous, next, alert, plate, accent, quiet, satin, selector };
     enum class Glyph { none, gear };
     explicit KeyButton(const juce::String& text, Style s = Style::key) : juce::TextButton(text), style(s) {}
     void setGlyph(Glyph value) { glyph = value; repaint(); }
+    // An accent key is bright only while it has something to do (SAVE: the program has unsaved edits).
+    void setEmphasis(bool value) { if (value != emphasis) { emphasis = value; repaint(); } }
 
     void paintButton(juce::Graphics& g, bool hovered, bool down) override
     {
-        if (style == Style::rocker) { paintRocker(g, hovered, down); return; }
+        if (style == Style::satin) { paintSatin(g, hovered, down); return; }
+        if (style == Style::alert) { paintLensCap(g, hovered, down); return; }
         auto r = getLocalBounds().toFloat().reduced(1.0f);
         const float rad = juce::jmin(4.0f, r.getHeight() * 0.2f);
         const bool on = getToggleState();
-        const bool accent = style == Style::accent;
+        const bool accent = (style == Style::accent && emphasis) || (style == Style::selector && on);
         if (accent)
             ui::drawAccentPlate(g, getLocalBounds().toFloat(), down, hovered);
         else
@@ -758,18 +911,19 @@ public:
             juce::Colour top, bottom;
             switch (style)
             {
-                case Style::alert: top = juce::Colour(0xff9a3a2c); bottom = juce::Colour(0xff4a140e); break;
-                case Style::plate: top = juce::Colour(0xff3d3a35); bottom = juce::Colour(0xff1b1917); break;
-                case Style::quiet: top = juce::Colour(0xff34322e); bottom = juce::Colour(0xff201e1b); break;
-                default:           top = juce::Colour(0xff625d54); bottom = juce::Colour(0xff2c2a26); break;
+                case Style::plate:    top = juce::Colour(0xff3d3a35); bottom = juce::Colour(0xff1b1917); break;
+                case Style::quiet:    top = juce::Colour(0xff4a463f); bottom = juce::Colour(0xff24221f); break;
+                case Style::accent:   top = juce::Colour(0xff4c4535); bottom = juce::Colour(0xff25211a); break;   // SAVE with nothing to save
+                case Style::selector: top = juce::Colour(0xff35332f); bottom = juce::Colour(0xff1c1a18); break;
+                default:              top = juce::Colour(0xff625d54); bottom = juce::Colour(0xff2c2a26); break;
             }
             if (on) { top = top.interpolatedWith(juce::Colour(0xffa9772b), 0.46f); bottom = bottom.interpolatedWith(juce::Colour(0xff5a3a10), 0.5f); }
             if (hovered) { top = top.brighter(0.14f); bottom = bottom.brighter(0.10f); }
             if (down) { std::swap(top, bottom); r = r.translated(0.0f, 1.0f); }
-            else if (style != Style::quiet) ui::softShadow(g, r, rad, 0.0f, 1.8f, 2.4f, 0.7f);
+            else ui::softShadow(g, r, rad, 0.0f, 1.8f, 2.4f, 0.7f);
             g.setGradientFill(art::vgrad(top, bottom, r));
             g.fillRoundedRectangle(r, rad);
-            g.setColour(art::white(down ? 0.05f : (style == Style::quiet ? 0.10f : 0.24f)));
+            g.setColour(art::white(down ? 0.05f : 0.22f));
             g.drawLine(r.getX() + rad, r.getY() + 1.0f, r.getRight() - rad, r.getY() + 1.0f, 1.0f);
             g.setColour(art::black(0.45f));
             g.drawLine(r.getX() + rad, r.getBottom() - 1.0f, r.getRight() - rad, r.getBottom() - 1.0f, 1.0f);
@@ -777,11 +931,12 @@ public:
             g.drawRoundedRectangle(r, rad, on ? 1.2f : 1.0f);
         }
 
-        const auto ink = accent ? juce::Colour(0xff2b1c06)
-                        : style == Style::alert ? juce::Colour(0xffffc8b8)
-                        : style == Style::plate ? juce::Colour(0xffd9c88e)
-                        : style == Style::quiet ? juce::Colour(0xffb5ab92)
-                        : on ? juce::Colour(0xffffe3a0) : juce::Colour(0xffeee6cc);
+        auto ink = accent ? juce::Colour(0xff2b1c06)
+                 : style == Style::accent ? juce::Colour(0xffd9b968)
+                 : style == Style::plate ? juce::Colour(0xffd9c88e)
+                 : style == Style::quiet ? juce::Colour(0xffd6ccb0)
+                 : style == Style::selector ? juce::Colour(0xff9d947c)
+                 : on ? juce::Colour(0xffffe3a0) : juce::Colour(0xffeee6cc);
         if (style == Style::previous || style == Style::next)
         {
             const float s = r.getHeight() * 0.20f;
@@ -796,10 +951,9 @@ public:
         }
         else
         {
-            const float size = juce::jlimit(8.0f, 15.0f, r.getHeight() * (style == Style::plate ? 0.40f : style == Style::quiet ? 0.31f : 0.37f));
+            const float size = juce::jlimit(8.0f, 15.0f, r.getHeight() * (style == Style::plate ? 0.40f : style == Style::quiet ? 0.34f : 0.37f));
             auto font = displayFont(size, juce::Font::bold);
             font.setExtraKerningFactor(0.09f);
-            g.setFont(font);
             auto area = r.reduced(4.0f, 1.0f).translated(0.0f, down ? 0.0f : -0.5f);
             if (glyph == Glyph::gear)
             {
@@ -808,20 +962,15 @@ public:
                 art::gearGlyph(g, { cx, area.getCentreY() + 0.3f }, 6.0f, ink);
                 area.removeFromLeft(11.0f);
             }
-            if (! accent)
-            {
-                g.setColour(art::black(0.6f));
-                g.drawFittedText(getButtonText(), area.translated(0.0f, 1.0f).toNearestInt(), juce::Justification::centred, 1, 0.7f);
-            }
-            else
-            {
-                g.setColour(art::white(0.45f));
-                g.drawFittedText(getButtonText(), area.translated(0.0f, 1.0f).toNearestInt(), juce::Justification::centred, 1, 0.7f);
-            }
+            // Never squeeze the legend below 85 percent: shrink the type toward its floor first.
+            font = ui::fitFontToWidth(font, getButtonText(), area.getWidth(), 0.85f, 8.0f);
+            g.setFont(font);
+            g.setColour(accent ? art::white(0.45f) : art::black(0.6f));
+            g.drawFittedText(getButtonText(), area.translated(0.0f, 1.0f).toNearestInt(), juce::Justification::centred, 1, 0.85f);
             g.setColour(ink);
-            g.drawFittedText(getButtonText(), area.toNearestInt(), juce::Justification::centred, 1, 0.7f);
+            g.drawFittedText(getButtonText(), area.toNearestInt(), juce::Justification::centred, 1, 0.85f);
         }
-        if (on && (style == Style::key))
+        if (on && style == Style::key)
         {
             g.setColour(juce::Colour(0xffffc65a));
             g.fillRoundedRectangle(r.getCentreX() - r.getWidth() * 0.22f, r.getBottom() - 4.0f, r.getWidth() * 0.44f, 1.8f, 0.9f);
@@ -839,105 +988,120 @@ private:
         }
     }
 
-    // Small black rocker with a pilot lamp: the top half stands proud when released,
-    // the lower half when latched on.
-    void paintRocker(juce::Graphics& g, bool hovered, bool down)
+    // Red translucent lens in a machined bezel, like an indicator cap: PANIC.
+    void paintLensCap(juce::Graphics& g, bool hovered, bool down)
     {
         auto r = getLocalBounds().toFloat().reduced(1.0f);
-        const bool on = getToggleState();
-        const float rad = 2.6f;
-        ui::softShadow(g, r, rad, 0.0f, down ? 0.8f : 1.8f, down ? 1.4f : 2.6f, 0.75f);
-        juce::Path body;
-        body.addRoundedRectangle(r.getX(), r.getY(), r.getWidth(), r.getHeight(), rad);
-        g.setColour(juce::Colour(0xff0a0a09));
-        g.fillPath(body);
+        const float rad = juce::jmin(7.0f, r.getHeight() * 0.3f);
+        ui::softShadow(g, r, rad, 0.0f, down ? 1.0f : 2.6f, down ? 1.8f : 3.4f, 0.8f);
+        // machined bezel ring
+        g.setGradientFill(art::vgrad(juce::Colour(0xff8c887f), juce::Colour(0xff2a2825), r));
+        g.fillRoundedRectangle(r, rad);
+        g.setColour(art::black(0.85f));
+        g.drawRoundedRectangle(r, rad, 1.0f);
+        auto lens = r.reduced(3.2f);
+        if (down) lens = lens.translated(0.0f, 0.8f);
+        const auto top = juce::Colour(hovered ? 0xffff6a52 : 0xffec4c38), bottom = juce::Colour(hovered ? 0xffa8261a : 0xff8c1d14);
+        g.setGradientFill(art::vgrad(down ? bottom : top, down ? top.darker(0.3f) : bottom, lens));
+        g.fillRoundedRectangle(lens, rad - 2.0f);
         {
             juce::Graphics::ScopedSaveState state(g);
-            g.reduceClipRegion(body);
-            const float split = r.getY() + r.getHeight() * (on ? 0.42f : 0.58f);
-            const auto upper = juce::Rectangle<float>(r.getX(), r.getY(), r.getWidth(), split - r.getY());
-            const auto lower = juce::Rectangle<float>(r.getX(), split, r.getWidth(), r.getBottom() - split);
-            g.setGradientFill(art::vgrad(juce::Colour(on ? 0xff1f1e1c : 0xff3a3936).brighter(hovered ? 0.12f : 0.0f),
-                                         juce::Colour(on ? 0xff161513 : 0xff23221f), upper));
-            g.fillRect(upper);
-            g.setGradientFill(art::vgrad(juce::Colour(on ? 0xff343330 : 0xff191816).brighter(hovered ? 0.12f : 0.0f),
-                                         juce::Colour(on ? 0xff1e1d1a : 0xff0d0d0c), lower));
-            g.fillRect(lower);
-            g.setColour(art::white(0.20f));
-            g.fillRect(r.getX(), r.getY() + 0.5f, r.getWidth(), 1.0f);
-            g.setColour(art::black(0.9f));
-            g.fillRect(r.getX(), split - 0.4f, r.getWidth(), 1.0f);
-            g.setColour(art::white(0.10f));
-            g.fillRect(r.getX(), split + 0.6f, r.getWidth(), 1.0f);
+            juce::Path clip;
+            clip.addRoundedRectangle(lens, rad - 2.0f);
+            g.reduceClipRegion(clip);
+            // moulded facets: a lit upper-left ramp, shaded lower-right, and a gloss band
+            g.setGradientFill(juce::ColourGradient(art::white(0.28f), lens.getX(), lens.getY(),
+                                                   juce::Colours::transparentWhite, lens.getCentreX(), lens.getCentreY(), false));
+            g.fillRect(lens);
+            g.setGradientFill(art::vgrad(art::white(down ? 0.08f : 0.30f), juce::Colours::transparentWhite, lens.withHeight(lens.getHeight() * 0.48f)));
+            g.fillRect(lens.withHeight(lens.getHeight() * 0.48f));
+            g.setGradientFill(juce::ColourGradient(juce::Colours::transparentBlack, lens.getCentreX(), lens.getCentreY(),
+                                                   art::black(0.40f), lens.getRight(), lens.getBottom(), false));
+            g.fillRect(lens);
         }
-        g.setColour(art::black(0.9f));
-        g.drawRoundedRectangle(r, rad, 1.0f);
-
-        const juce::Point<float> lamp(r.getX() + 9.0f, r.getCentreY());
-        if (on)
-        {
-            g.setColour(juce::Colour(0xffffa530).withAlpha(0.28f));
-            g.fillEllipse(lamp.x - 5.5f, lamp.y - 5.5f, 11.0f, 11.0f);
-        }
-        g.setColour(on ? juce::Colour(0xffffc65a) : juce::Colour(0xff3a1c10));
-        g.fillEllipse(lamp.x - 2.6f, lamp.y - 2.6f, 5.2f, 5.2f);
-        g.setColour(art::black(0.75f));
-        g.drawEllipse(lamp.x - 2.6f, lamp.y - 2.6f, 5.2f, 5.2f, 0.7f);
-        if (on)
-        {
-            g.setColour(art::white(0.7f));
-            g.fillEllipse(lamp.x - 1.3f, lamp.y - 1.6f, 1.5f, 1.2f);
-        }
-        auto font = displayFont(juce::jlimit(8.0f, 11.0f, r.getHeight() * 0.38f), juce::Font::bold);
-        font.setExtraKerningFactor(0.08f);
+        g.setColour(art::black(0.55f));
+        g.drawRoundedRectangle(lens, rad - 2.0f, 1.0f);
+        auto font = displayFont(juce::jlimit(8.0f, 15.0f, lens.getHeight() * 0.42f), juce::Font::bold);
+        font.setExtraKerningFactor(0.10f);
+        font = ui::fitFontToWidth(font, getButtonText(), lens.getWidth() - 8.0f, 0.85f, 8.0f);
         g.setFont(font);
-        auto text = r.withTrimmedLeft(18.0f).withTrimmedRight(4.0f).toNearestInt();
-        g.setColour(art::black(0.7f));
-        g.drawFittedText(getButtonText(), text.translated(0, 1), juce::Justification::centredLeft, 1, 0.75f);
-        g.setColour(on ? juce::Colour(0xffffe3a0) : juce::Colour(0xffd8ceac));
-        g.drawFittedText(getButtonText(), text, juce::Justification::centredLeft, 1, 0.75f);
+        g.setColour(art::black(0.6f));
+        g.drawText(getButtonText(), lens.translated(0.0f, 1.0f), juce::Justification::centred, false);
+        g.setColour(juce::Colour(0xfffff0e6));
+        g.drawText(getButtonText(), lens, juce::Justification::centred, false);
         paintFocus(g, rad + 1.0f);
+    }
+
+    // The software keycap family the controls use (satin plate with a jewel lamp).
+    void paintSatin(juce::Graphics& g, bool hovered, bool down)
+    {
+        const bool on = getToggleState();
+        const auto bounds = getLocalBounds().toFloat();
+        ui::drawSatinPlate(g, bounds, on, down, hovered, true);
+        const auto face = bounds.reduced(1.8f, 1.2f).withTrimmedBottom(1.8f);
+        const float lr = juce::jlimit(1.8f, 3.4f, face.getHeight() * 0.15f);
+        auto textArea = face.withTrimmedLeft(7.0f + lr * 2.6f + 4.0f).withTrimmedRight(3.0f).translated(0.0f, down ? 1.0f : 0.0f);
+        auto font = displayFont(juce::jlimit(8.0f, 11.5f, face.getHeight() * 0.46f), juce::Font::bold);
+        font.setExtraKerningFactor(0.03f);
+        font = ui::fitFontToWidth(font, getButtonText(), textArea.getWidth(), 0.85f, 8.0f);
+        ui::drawEngravedText(g, getButtonText(), textArea, font, juce::Justification::centredLeft,
+                             on ? ui::amberBright : ui::ivory.withAlpha(0.92f));
+        paintFocus(g, 4.0f);
     }
 
     Style style;
     Glyph glyph = Glyph::none;
+    bool emphasis = false;
 };
 
 // A Label that honours its own font (the shared look-and-feel derives label fonts
 // from the component height). It can show a compact player-facing string while the
-// full engineering text stays in getText() for accessibility and tooltips.
+// full engineering text stays in getText() for accessibility and tooltips; the
+// compact string may be deliberately blank.
 class PanelLabel final : public juce::Label
 {
 public:
-    PanelLabel() { setMinimumHorizontalScale(0.78f); }
+    PanelLabel() { setMinimumHorizontalScale(0.85f); }
     void setMinimumPixels(float px) { minPixels = px; }
     void setLines(int n) { lines = n; }
     void setShadow(float alpha) { shadow = alpha; }
     void setDisplayText(const juce::String& text)
     {
-        if (text != display) { display = text; repaint(); }
+        if (! hasDisplay || text != display) { display = text; hasDisplay = true; repaint(); }
     }
     // A status dot before the text; pass a transparent colour to hide it.
     void setDot(juce::Colour c)
     {
         if (c != dot) { dot = c; repaint(); }
     }
+    // A small circled "i" before the text: the tooltip carries the detail.
+    void setInfoGlyph(bool value) { if (value != info) { info = value; repaint(); } }
     void paint(juce::Graphics& g) override
     {
         auto f = getFont();
         if (minPixels > 0.0f && f.getHeight() < minPixels) f = f.withHeight(minPixels);
-        g.setFont(f);
         auto area = getLocalBounds();
+        const float cy = (float) area.getCentreY();
         if (! dot.isTransparent())
         {
-            const float cy = (float) area.getCentreY();
             g.setColour(dot.withAlpha(0.30f));
             g.fillEllipse(0.5f, cy - 4.0f, 8.0f, 8.0f);
             g.setColour(dot);
             g.fillEllipse(2.0f, cy - 2.5f, 5.0f, 5.0f);
             area.removeFromLeft(11);
         }
-        const auto text = display.isNotEmpty() ? display : getText();
+        if (info)
+        {
+            g.setColour(juce::Colour(0xffb8aa7c));
+            g.drawEllipse(0.8f, cy - 4.6f, 9.2f, 9.2f, 1.0f);
+            g.setFont(displayFont(8.0f, juce::Font::bold));
+            g.drawText("i", juce::Rectangle<float>(0.8f, cy - 4.6f, 9.2f, 9.2f), juce::Justification::centred, false);
+            area.removeFromLeft(14);
+        }
+        const auto text = hasDisplay ? display : getText();
+        if (text.isEmpty()) return;
+        f = ui::fitFontToWidth(f, text, (float) area.getWidth(), getMinimumHorizontalScale(), minPixels > 0.0f ? minPixels : 8.0f);
+        g.setFont(f);
         if (shadow > 0.0f)
         {
             g.setColour(juce::Colours::black.withAlpha(shadow));
@@ -950,6 +1114,8 @@ private:
     float minPixels = 0.0f;
     float shadow = 0.0f;
     int lines = 1;
+    bool hasDisplay = false;
+    bool info = false;
     juce::String display;
     juce::Colour dot = juce::Colours::transparentBlack;
 };
@@ -968,13 +1134,22 @@ public:
             repaint();
         }
     }
+    // Width of the OVR lamp at the given scale (it grows when the type floor grows).
+    static float lampWidthNow() { return juce::jmax(23.0f, textWidth(displayFont(8.0f, juce::Font::bold), "OVR") + 7.0f); }
+    static float lampWidth(float scale)
+    {
+        FloorScope floor(scale);
+        return lampWidthNow();
+    }
     void paint(juce::Graphics& g) override
     {
         const float sx = (float) getWidth() / geo::meterBar.getWidth();
         const float sy = (float) getHeight() / geo::meterBar.getHeight();
+        FloorScope floor(sx);
         g.addTransform(juce::AffineTransform::scale(sx, sy));
         const float w = geo::meterBar.getWidth(), h = geo::meterBar.getHeight();
-        const float pitch = (w - 25.0f) / (float) segments;
+        const float lampW = lampWidth(sx);
+        const float pitch = (w - lampW - 2.0f) / (float) segments;
         for (int i = 0; i < segments; ++i)
         {
             const float db = floorDb + (float) (i + 1) * stepDb;
@@ -995,7 +1170,7 @@ public:
                 g.fillRect(seg.getX() + 0.5f, seg.getY() + 0.5f, seg.getWidth() - 1.0f, 1.0f);
             }
         }
-        const auto lamp = juce::Rectangle<float>(w - 23.0f, 0.0f, 23.0f, h);
+        const auto lamp = juce::Rectangle<float>(w - lampW, 0.0f, lampW, h);
         const bool alarm = over || nonFinite;
         const juce::Colour hue = nonFinite ? juce::Colour(0xffff3b30) : juce::Colour(0xffff8a2e);
         if (alarm)
@@ -1003,11 +1178,11 @@ public:
             g.setColour(hue.withAlpha(0.45f));
             g.fillRoundedRectangle(lamp.expanded(2.5f), 4.0f);
         }
-        g.setGradientFill(art::vgrad(alarm ? hue.brighter(0.5f) : juce::Colour(0xff4a2218), alarm ? hue : juce::Colour(0xff22100a), lamp));
+        g.setGradientFill(art::vgrad(alarm ? hue.brighter(0.5f) : juce::Colour(0xff5a2a1e), alarm ? hue : juce::Colour(0xff2a140c), lamp));
         g.fillRoundedRectangle(lamp, 2.5f);
         g.setColour(art::black(0.8f));
         g.drawRoundedRectangle(lamp, 2.5f, 0.8f);
-        g.setColour(alarm ? juce::Colour(0xff2a0a05) : juce::Colour(0xffc88a6e));
+        g.setColour(alarm ? juce::Colour(0xff2a0a05) : juce::Colour(0xffe0a88c));
         g.setFont(displayFont(8.0f, juce::Font::bold));
         g.drawText("OVR", lamp, juce::Justification::centred, false);
     }
@@ -1050,15 +1225,16 @@ public:
     void paint(juce::Graphics& g) override
     {
         shown = sample();
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / geo::lampWell.getWidth(),
-                                                    (float) getHeight() / geo::lampWell.getHeight()));
-        art::legend(g, "VOICES", { 10.0f, 4.0f, 56.0f, 10.0f }, spacedFont(8.0f, 0.12f), juce::Justification::centredLeft,
-                    juce::Colour(0xffcdb878), 0.8f);
-        art::legend(g, "MIDI", { 94.0f, 4.0f, 28.0f, 10.0f }, spacedFont(8.0f, 0.12f), juce::Justification::centred,
-                    juce::Colour(0xffcdb878), 0.8f);
+        const float sx = (float) getWidth() / geo::lampWell.getWidth();
+        FloorScope floor(sx);
+        g.addTransform(juce::AffineTransform::scale(sx, (float) getHeight() / geo::lampWell.getHeight()));
+        art::legend(g, "VOICES", { 10.0f, 3.0f, 70.0f, 12.0f }, spacedFont(8.0f, 0.12f), juce::Justification::centredLeft,
+                    juce::Colour(0xffd8c68a), 0.8f);
+        art::legend(g, "MIDI", { 90.0f, 3.0f, 36.0f, 12.0f }, spacedFont(8.0f, 0.12f), juce::Justification::centred,
+                    juce::Colour(0xffd8c68a), 0.8f);
         for (int i = 0; i < 8; ++i)
-            lamp(g, { 14.0f + (float) i * 10.5f, 25.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
-        lamp(g, { 108.0f, 25.0f }, 4.4f, shown.midi, juce::Colour(0xff5cf08a));
+            lamp(g, { 14.0f + (float) i * 10.5f, 27.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
+        lamp(g, { 108.0f, 27.0f }, 4.4f, shown.midi, juce::Colour(0xff5cf08a));
     }
 
 private:
@@ -1107,9 +1283,9 @@ private:
     double lastMidiMs = -1.0e9;
 };
 
-// The program display is also a button: hovering lights it, clicking opens the
-// library. It draws only the hover glow, chevron and unsaved-edit dot; the glass
-// itself is part of the buffered chassis and the text is carried by labels.
+// The program display is also a button: hovering lights it, clicking opens the library. It draws only
+// the hover glow, chevron and the EDITED tag; the glass is part of the buffered chassis and the text is
+// carried by labels.
 class PresetWindow final : public juce::Button
 {
 public:
@@ -1130,8 +1306,9 @@ public:
     }
     void paintButton(juce::Graphics& g, bool hovered, bool down) override
     {
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / geo::presetWell.getWidth(),
-                                                    (float) getHeight() / geo::presetWell.getHeight()));
+        const float sx = (float) getWidth() / geo::presetWell.getWidth();
+        FloorScope floor(sx);
+        g.addTransform(juce::AffineTransform::scale(sx, (float) getHeight() / geo::presetWell.getHeight()));
         const auto w = juce::Rectangle<float>(0.0f, 0.0f, geo::presetWell.getWidth(), geo::presetWell.getHeight());
         if (hovered || down)
         {
@@ -1154,17 +1331,76 @@ public:
         g.strokePath(chevron, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
         if (dirty)
         {
-            const juce::Point<float> d(geo::presetName.getX() - geo::presetWell.getX() - 8.0f, geo::presetName.getCentreY() - geo::presetWell.getY() + 1.0f);
-            g.setColour(juce::Colour(0xffffa530).withAlpha(0.35f));
-            g.fillEllipse(d.x - 5.0f, d.y - 5.0f, 10.0f, 10.0f);
-            g.setColour(juce::Colour(0xffffc65a));
-            g.fillEllipse(d.x - 2.8f, d.y - 2.8f, 5.6f, 5.6f);
-            g.setColour(art::white(0.7f));
-            g.fillEllipse(d.x - 1.3f, d.y - 1.7f, 1.6f, 1.2f);
+            // A small "EDITED" tag at the right of the name row, clear of the name and the chevron.
+            const auto font = spacedFont(8.0f, 0.12f);
+            const float tw = textWidth(font, "EDITED") + 8.0f;
+            const juce::Rectangle<float> tag(geo::presetChevron.getX() - geo::presetWell.getX() - tw - 6.0f,
+                                             geo::presetName.getBottom() - geo::presetWell.getY() - 14.0f, tw, 12.0f);
+            g.setColour(juce::Colour(0xffffa530).withAlpha(0.16f));
+            g.fillRoundedRectangle(tag, 2.5f);
+            g.setColour(juce::Colour(0xffffb347).withAlpha(0.85f));
+            g.drawRoundedRectangle(tag.reduced(0.5f), 2.5f, 0.9f);
+            art::legend(g, "EDITED", tag, font, juce::Justification::centred, juce::Colour(0xffffcf70), 0.0f);
         }
     }
 private:
     bool dirty = false;
+};
+
+// Engraved channel tag: a small brushed plate with the numeral cut into it. The tag of the channel the
+// voice plate is showing carries a lit pilot.
+class ChannelTag final : public juce::Component
+{
+public:
+    explicit ChannelTag(bool second) : isSecond(second) { setInterceptsMouseClicks(false, false); setOpaque(false); }
+    void setViewed(bool value) { if (value != viewed) { viewed = value; repaint(); } }
+    void paint(juce::Graphics& g) override
+    {
+        const float sx = (float) getWidth() / 24.0f, sy = (float) getHeight() / 40.0f;
+        FloorScope floor(sx);
+        g.addTransform(juce::AffineTransform::scale(sx, sy));
+        const juce::Rectangle<float> r(0.0f, 0.0f, 24.0f, 40.0f);
+        ui::softShadow(g, r.reduced(1.0f), 2.5f, 0.0f, 1.6f, 3.0f, 0.7f);
+        art::brushedMetal(g, r.reduced(1.0f), 2.5f, viewed ? 0.5f : -0.2f, isSecond ? 71 : 70);
+        if (! viewed)
+        {
+            g.setColour(art::black(0.34f));
+            g.fillRoundedRectangle(r.reduced(1.0f), 2.5f);
+        }
+        g.setColour(art::white(0.55f));
+        g.drawRoundedRectangle(r.reduced(1.4f), 2.2f, 0.7f);
+        g.setColour(art::black(0.85f));
+        g.drawRoundedRectangle(r.reduced(0.5f), 2.8f, 1.0f);
+        // The numeral is cut as a Roman capital with serifs, so a lone I does not read as a slot.
+        const int count = isSecond ? 2 : 1;
+        const float pitch = 9.0f, stem = 3.4f, top = 7.0f, bottom = 26.0f;
+        const float startX = r.getCentreX() - (float) (count - 1) * pitch * 0.5f;
+        for (int i = 0; i < count; ++i)
+        {
+            const float cx = startX + (float) i * pitch;
+            juce::Path numeral;
+            numeral.addRectangle(cx - stem * 0.5f, top, stem, bottom - top);
+            numeral.addRectangle(cx - 4.2f, top, 8.4f, 2.4f);
+            numeral.addRectangle(cx - 4.2f, bottom - 2.4f, 8.4f, 2.4f);
+            g.setColour(art::white(0.65f));
+            g.fillPath(numeral, juce::AffineTransform::translation(0.0f, 0.9f));
+            g.setColour(juce::Colour(0xff1d1b17));
+            g.fillPath(numeral);
+        }
+        // pilot lamp
+        const juce::Point<float> c(r.getCentreX(), r.getBottom() - 5.0f);
+        g.setColour(art::black(0.8f));
+        g.fillEllipse(c.x - 3.0f, c.y - 3.0f, 6.0f, 6.0f);
+        if (viewed)
+        {
+            g.setColour(juce::Colour(0xffffa530).withAlpha(0.35f));
+            g.fillEllipse(c.x - 5.0f, c.y - 5.0f, 10.0f, 10.0f);
+        }
+        g.setColour(viewed ? juce::Colour(0xffffcf70) : juce::Colour(0xff3a2412));
+        g.fillEllipse(c.x - 2.1f, c.y - 2.1f, 4.2f, 4.2f);
+    }
+private:
+    bool isSecond, viewed = false;
 };
 
 // ---------------------------------------------------------------------------
@@ -1211,14 +1447,25 @@ public:
 
     void paint(juce::Graphics& g) override
     {
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / geo::plate.getWidth(),
-                                                    (float) getHeight() / geo::plate.getHeight()));
+        const float sx = (float) getWidth() / geo::plate.getWidth();
+        FloorScope floor(sx);
+        g.addTransform(juce::AffineTransform::scale(sx, (float) getHeight() / geo::plate.getHeight()));
         paintCaption(g);
         paintFlow(g);
-        if (! scopes) return;
-        paintVcfScope(g, { 14.0f, 116.0f, 160.0f, 106.0f });
-        paintVcaScope(g, { 186.0f, 116.0f, 160.0f, 106.0f });
-        paintFilterScope(g, { 14.0f, 230.0f, 332.0f, 100.0f });
+        if (scopes)
+        {
+            paintVcfScope(g, { 14.0f, 116.0f, 160.0f, 106.0f });
+            paintVcaScope(g, { 186.0f, 116.0f, 160.0f, 106.0f });
+            paintFilterScope(g, { 14.0f, 230.0f, 332.0f, 96.0f });
+        }
+        // the glass over everything: one soft diagonal reflection from the upper left
+        juce::Path glass;
+        glass.startNewSubPath(9.0f, 9.0f);
+        glass.lineTo(196.0f, 9.0f);
+        glass.lineTo(9.0f, 206.0f);
+        glass.closeSubPath();
+        g.setGradientFill(juce::ColourGradient(art::white(0.060f), 9.0f, 9.0f, juce::Colours::transparentWhite, 120.0f, 110.0f, false));
+        g.fillPath(glass);
     }
 
 private:
@@ -1227,8 +1474,8 @@ private:
     static juce::Colour gold() { return juce::Colour(0xffcdb878); }
     static juce::Colour goldDim() { return juce::Colour(0xff9a8a5c); }
     static juce::Colour curve() { return juce::Colour(0xfff2dc98); }
-    static juce::Colour plate() { return art::plateColour(); }
-    static juce::Colour field() { return art::plateColour().darker(0.22f); }
+    static juce::Colour plate() { return art::glassColour(); }
+    static juce::Colour field() { return art::glassColour().darker(0.30f); }
 
     float p(int local) const { return snap.v[(size_t) local]; }
 
@@ -1336,24 +1583,36 @@ private:
     }
 
     // -- scope framing -------------------------------------------------------
-    // A printed field: a slightly darker flat tint inside a hairline gold frame.
-    void scopeFrame(juce::Graphics& g, Rf r, const juce::String& title, const juce::String& readout, bool readoutOnTop)
+    // A printed field: a slightly darker flat tint inside a hairline gold frame. The readout is the first
+    // candidate that fits the free width at the current type size (the full spaced form, a tighter one, none).
+    void scopeFrame(juce::Graphics& g, Rf r, const juce::String& title, const std::vector<juce::String>& readouts, bool readoutOnTop)
     {
         g.setColour(field());
         g.fillRoundedRectangle(r, 2.5f);
         g.setColour(gold().withAlpha(0.55f));
         g.drawRoundedRectangle(r.reduced(0.5f), 2.5f, 0.9f);
-        art::legend(g, title, { r.getX() + 6.0f, r.getY() + 3.0f, r.getWidth() - 12.0f, 10.0f }, spacedFont(8.0f, 0.12f),
+        const auto titleFont = spacedFont(8.0f, 0.12f);
+        const float titleW = textWidth(titleFont, title);
+        art::legend(g, title, { r.getX() + 6.0f, r.getY() + 3.0f, r.getWidth() - 12.0f, 10.0f }, titleFont,
                     juce::Justification::centredLeft, gold(), 0.0f);
-        if (readoutOnTop)
-            art::legend(g, readout, { r.getX() + 90.0f, r.getY() + 3.0f, r.getWidth() - 96.0f, 10.0f }, displayFont(8.0f, juce::Font::bold),
-                        juce::Justification::centredRight, juce::Colour(0xffd6cba6), 0.0f);
-        else
-            art::legend(g, readout, { r.getX() + 4.0f, r.getBottom() - 12.0f, r.getWidth() - 8.0f, 10.0f }, displayFont(8.0f, juce::Font::bold),
-                        juce::Justification::centred, juce::Colour(0xffd6cba6), 0.0f);
+        const auto font = spacedFont(8.0f, 0.05f);
+        const float avail = readoutOnTop ? r.getWidth() - 12.0f - titleW - 8.0f : r.getWidth() - 10.0f;
+        for (const auto& candidate : readouts)
+        {
+            if (candidate.isEmpty() || textWidth(font, candidate) > avail) continue;
+            if (readoutOnTop)
+                art::legend(g, candidate, { r.getX() + 6.0f, r.getY() + 3.0f, r.getWidth() - 12.0f, 10.0f }, font,
+                            juce::Justification::centredRight, juce::Colour(0xffd6cba6), 0.0f);
+            else
+                art::legend(g, candidate, { r.getX() + 5.0f, r.getBottom() - 13.0f, r.getWidth() - 10.0f, 10.0f }, font,
+                            juce::Justification::centred, juce::Colour(0xffd6cba6), 0.0f);
+            break;
+        }
     }
 
-    Rf plotArea(Rf r) const { return { r.getX() + 8.0f, r.getY() + 16.0f, r.getWidth() - 16.0f, r.getHeight() - 31.0f }; }
+    // The plot leaves a strip under it for the stage letters (they never sit on the curve) and the readout below that.
+    Rf plotArea(Rf r, float gutter = 0.0f) const
+    { return { r.getX() + 8.0f + gutter, r.getY() + 16.0f, r.getWidth() - 16.0f - gutter, r.getHeight() - (gSmallEditor ? 31.0f : 40.0f) }; }
 
     void grid(juce::Graphics& g, Rf plot, int cols, int rows)
     {
@@ -1408,18 +1667,20 @@ private:
         const float dash[] = { 1.5f, 2.5f };
         for (int i = 1; i < 4; ++i)
             g.drawDashedLine(juce::Line<float>(xs[i], plot.getY(), xs[i], plot.getBottom()), dash, 2, 0.8f);
+        if (gSmallEditor) return;
         for (int i = 0; i < 4; ++i)
-            art::haloText(g, juce::String::charToString((juce::juce_wchar) letters[i]),
-                          { xs[i], plot.getBottom() - 9.0f, xs[i + 1] - xs[i], 9.0f }, displayFont(8.0f, juce::Font::bold),
-                          juce::Justification::centred, gold(), field());
+            art::legend(g, juce::String::charToString((juce::juce_wchar) letters[i]),
+                        { xs[i], plot.getBottom() + 1.0f, xs[i + 1] - xs[i], 9.0f }, displayFont(8.0f, juce::Font::bold),
+                        juce::Justification::centred, gold(), 0.0f);
     }
 
     void paintVcfScope(juce::Graphics& g, Rf r)
     {
         const float il = p(cs80::CP_fIl), al = p(cs80::CP_fAl);
         const float a = p(cs80::CP_fA), d = p(cs80::CP_fD), rel = p(cs80::CP_fR);
-        scopeFrame(g, r, "VCF ENVELOPE", "A" + time(a) + " D" + time(d) + " R" + time(rel), false);
-        const auto plot = plotArea(r);
+        scopeFrame(g, r, "VCF ENVELOPE", { "A " + time(a) + "  D " + time(d) + "  R " + time(rel),
+                                           "A" + time(a) + " D" + time(d) + " R" + time(rel) }, false);
+        const auto plot = plotArea(r, gSmallEditor ? 0.0f : 14.0f);       // IL gutter: the tag sits left of the start dot
         grid(g, plot, 8, 4);
         const auto s = stages(plot, a, d, rel);
         const float mid = plot.getCentreY(), span = plot.getHeight() * 0.46f;
@@ -1453,8 +1714,8 @@ private:
             strokeCurve(g, line, fill);
         }
         stageTicks(g, plot, s, "ADSR");
-        marker(g, { s.x0, yOf(v0) }, "IL", plot, true);
-        marker(g, { s.xA, yOf(vA) }, "AL", plot, false);
+        marker(g, { s.x0, yOf(v0) }, gSmallEditor ? "" : "IL", plot, true);
+        marker(g, { s.xA, yOf(vA) }, gSmallEditor ? "" : "AL", plot, false);
     }
 
     // A dot on the curve with a haloed tag. The tag sits below-right of the start point and
@@ -1466,19 +1727,24 @@ private:
         g.setColour(field());
         g.drawEllipse(c.x - 2.2f, c.y - 2.2f, 4.4f, 4.4f, 0.8f);
         if (juce::String(text).isEmpty()) return;
-        Rf tag(start ? c.x + 4.0f : c.x - 17.0f, start ? c.y + 3.0f : c.y - 12.0f, 14.0f, 9.0f);
-        if (tag.getBottom() > plot.getBottom() - 9.0f) tag.setY(c.y - 12.0f);
-        if (tag.getY() < plot.getY()) tag.setY(c.y + 3.0f);
-        tag.setX(juce::jlimit(plot.getX() + 1.0f, plot.getRight() - tag.getWidth() - 1.0f, tag.getX()));
+        // IL lives in the gutter left of the plot; AL sits above-left of the peak, clamped inside the plot.
+        Rf tag(start ? plot.getX() - 15.0f : c.x - 17.0f, start ? c.y - 4.5f : c.y - 12.0f, 14.0f, 9.0f);
+        if (! start)
+        {
+            if (tag.getY() < plot.getY()) tag.setY(c.y + 3.0f);
+            tag.setX(juce::jlimit(plot.getX() + 1.0f, plot.getRight() - tag.getWidth() - 1.0f, tag.getX()));
+        }
         art::haloText(g, text, tag, displayFont(8.0f, juce::Font::bold),
-                      start ? juce::Justification::centredLeft : juce::Justification::centredRight, ink(), field());
+                      start ? juce::Justification::centredRight : juce::Justification::centredRight, ink(), field());
     }
 
     void paintVcaScope(juce::Graphics& g, Rf r)
     {
         const float a = p(cs80::CP_vA), d = p(cs80::CP_vD), s = juce::jlimit(0.0f, 1.0f, p(cs80::CP_vS)), rel = p(cs80::CP_vR);
-        scopeFrame(g, r, "VCA ENVELOPE",
-                   "A" + time(a) + " D" + time(d) + " S" + juce::String(juce::roundToInt(s * 100.0f)) + "% R" + time(rel), false);
+        const auto sus = juce::String(juce::roundToInt(s * 100.0f)) + "%";
+        scopeFrame(g, r, "VCA ENVELOPE", { "A " + time(a) + "  D " + time(d) + "  S " + sus + "  R " + time(rel),
+                                           "A" + time(a) + " D" + time(d) + " S" + sus + " R" + time(rel),
+                                           "A" + time(a) + " D" + time(d) + " R" + time(rel) }, false);
         const auto plot = plotArea(r);
         grid(g, plot, 8, 4);
         const auto st = stages(plot, a, d, rel);
@@ -1525,8 +1791,10 @@ private:
         const float hpf = p(cs80::CP_hpfCutoff), lpf = p(cs80::CP_lpfCutoff);
         const float hq = 1.0f / (2.0f - 1.8f * juce::jlimit(0.0f, 1.0f, p(cs80::CP_hpfRes)));
         const float lq = 1.0f / (2.0f - 1.8f * juce::jlimit(0.0f, 1.0f, p(cs80::CP_lpfRes)));
-        scopeFrame(g, r, "FILTER RESPONSE",
-                   juce::String(hpOn ? "HPF " + hertz(hpf) + "Hz" : "HPF OFF") + "   " + (lpOn ? "LPF " + hertz(lpf) + "Hz" : "LPF OFF"), true);
+        const auto hpText = hpOn ? "HPF " + hertz(hpf) + "Hz" : juce::String("HPF OFF");
+        const auto lpText = lpOn ? "LPF " + hertz(lpf) + "Hz" : juce::String("LPF OFF");
+        scopeFrame(g, r, "FILTER RESPONSE", { hpText + "   " + lpText, hpText + " " + lpText,
+                                              (hpOn ? "HP " + hertz(hpf) : juce::String("HP OFF")) + " " + (lpOn ? "LP " + hertz(lpf) : juce::String("LP OFF")) }, true);
         // The frequency axis has its own strip under the plot, so its numbers never sit on the curve.
         const Rf plot(r.getX() + 10.0f, r.getY() + 17.0f, r.getWidth() - 20.0f, r.getHeight() - 17.0f - 15.0f);
         const float fLo = 20.0f, fHi = 20000.0f;
@@ -1574,11 +1842,12 @@ private:
             tri.addTriangle(x, y - 5.0f, x - 3.4f, y + 0.5f, x + 3.4f, y + 0.5f);
             g.setColour(ink());
             g.fillPath(tri);
-            art::haloText(g, tag, { x - 5.0f, y - 15.0f, 10.0f, 9.0f }, displayFont(8.0f, juce::Font::bold),
-                          juce::Justification::centred, ink(), field());
+            if (juce::String(tag).isNotEmpty())
+                art::haloText(g, tag, { x - 5.0f, y - 15.0f, 10.0f, 9.0f }, displayFont(8.0f, juce::Font::bold),
+                              juce::Justification::centred, ink(), field());
         };
-        cutoffMark(hpf, "H", hpOn);
-        cutoffMark(lpf, "L", lpOn);
+        cutoffMark(hpf, gSmallEditor ? "" : "H", hpOn);
+        cutoffMark(lpf, gSmallEditor ? "" : "L", lpOn);
     }
 
     Snapshot snap;
@@ -1623,7 +1892,7 @@ public:
         close.onClick = [this] { if (onClose) onClose(); };
         for (int bank = 0; bank < 4; ++bank)
         {
-            auto button = std::make_unique<KeyButton>("MEMORY " + juce::String(bank + 1), KeyButton::Style::plate);
+            auto button = std::make_unique<KeyButton>("MEMORY " + juce::String(bank + 1), KeyButton::Style::selector);
             button->setClickingTogglesState(false);
             button->setWantsKeyboardFocus(true);
             button->setTitle("Select memory " + juce::String(bank + 1));
@@ -1699,13 +1968,15 @@ public:
 
     void paint(juce::Graphics& g) override
     {
+        const float scale = (float) getWidth() / kW;
+        FloorScope floor(scale);
         g.saveState();
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / kW, (float) getHeight() / kH));
+        g.addTransform(juce::AffineTransform::scale(scale, (float) getHeight() / kH));
         const juce::Rectangle<float> lid(0.0f, geo::lidTop, kW, geo::lidHeight);
 
-        // Shadow of the raised lid on the deck below it, and a little on either side.
-        ui::softShadow(g, lid, 9.0f, 0.0f, 16.0f, 26.0f, 0.9f);
-        g.setGradientFill(art::vgrad(art::black(0.42f), juce::Colours::transparentBlack, { 0.0f, lid.getBottom(), kW, kH - lid.getBottom() }));
+        // Shadow of the raised lid on the deck below it, kept short so it does not smear over the keys.
+        ui::softShadow(g, lid, 9.0f, 0.0f, 9.0f, 15.0f, 0.85f);
+        g.setGradientFill(art::vgrad(art::black(0.32f), juce::Colours::transparentBlack, { 0.0f, lid.getBottom(), kW, kH - lid.getBottom() }));
         g.fillRect(8.0f, lid.getBottom(), kW - 16.0f, kH - lid.getBottom());
 
         // Hinge: a brushed barrel strip along the back edge with three knuckles.
@@ -1726,7 +1997,7 @@ public:
             }
         }
 
-        // Machined rim, then the matte plate set into it.
+        // Machined rim, then the plate set into it: the same crinkle finish as the instrument panel.
         g.setGradientFill(art::vgrad(juce::Colour(0xff55514a), juce::Colour(0xff1c1a16), lid));
         g.fillRoundedRectangle(lid, 9.0f);
         g.setColour(art::white(0.30f));
@@ -1734,64 +2005,67 @@ public:
         g.setColour(art::black(0.85f));
         g.drawRoundedRectangle(lid, 9.0f, 1.0f);
         const auto inner = lid.reduced(9.0f);
-        art::matteSheet(g, inner, 5.0f, juce::Colour(0xff1f1d1a), 77);
+        {
+            juce::Graphics::ScopedSaveState state(g);
+            juce::Path clip;
+            clip.addRoundedRectangle(inner, 5.0f);
+            g.reduceClipRegion(clip);
+            art::fillTile(g, art::panelTile(), inner, scale);
+            g.setGradientFill(juce::ColourGradient(art::white(0.08f), inner.getX() + 160.0f, inner.getY(), juce::Colours::transparentWhite,
+                                                   inner.getX() + 900.0f, inner.getBottom(), true));
+            g.fillRect(inner);
+            g.setGradientFill(juce::ColourGradient(juce::Colours::transparentBlack, inner.getX() + 500.0f, inner.getY() + 100.0f,
+                                                   art::black(0.28f), inner.getRight(), inner.getBottom(), false));
+            g.fillRect(inner);
+        }
+        art::insetShadow(g, inner, 5.0f, 12.0f, 0.5f);
         ui::etchRect(g, inner.reduced(7.0f), 3.0f, 0.55f);
         for (float sx : { lid.getX() + 5.0f, lid.getRight() - 5.0f })
             for (float sy : { lid.getY() + 5.0f, lid.getBottom() - 5.0f })
                 art::slotScrew(g, { sx, sy }, 3.0f, sx + sy);
+        // Front rail: two latch catches that hold the lid down.
+        for (float lx : { 330.0f, kW - 330.0f })
+        {
+            const juce::Rectangle<float> catchPlate(lx - 42.0f, lid.getBottom() - 9.0f, 84.0f, 13.0f);
+            ui::softShadow(g, catchPlate, 3.0f, 0.0f, 2.0f, 4.0f, 0.7f);
+            art::brushedMetal(g, catchPlate, 3.0f, 0.3f, (int) lx);
+            g.setColour(art::black(0.85f));
+            g.drawRoundedRectangle(catchPlate, 3.0f, 1.0f);
+            art::slotScrew(g, { catchPlate.getX() + 11.0f, catchPlate.getCentreY() }, 2.5f, lx);
+            art::slotScrew(g, { catchPlate.getRight() - 11.0f, catchPlate.getCentreY() }, 2.5f, lx + 3.0f);
+            g.setColour(art::black(0.7f));
+            g.fillRoundedRectangle(catchPlate.getCentreX() - 14.0f, catchPlate.getY() + 3.5f, 28.0f, 6.0f, 2.5f);
+        }
 
         // Everything below is laid out in the programmer's own 1472 x 554 frame.
         g.addTransform(juce::AffineTransform::translation(kOffsetX, geo::lidTop));
-        art::legend(g, "MEMORY PROGRAMMER", { 34, 20, 520, 26 }, spacedFont(19.0f, 0.16f),
+        art::legend(g, "MEMORY PROGRAMMER", { 34, 14, 520, 26 }, spacedFont(19.0f, 0.16f),
                     juce::Justification::centredLeft, juce::Colour(0xffe9d695));
-        art::legend(g, "FOUR INDEPENDENT MINIATURE PANELS  /  MAGNIFIED VIEW", { 35, 48, 760, 14 },
-                    spacedFont(9.0f, 0.16f), juce::Justification::centredLeft, juce::Colour(0xffb5ab8c));
-        ui::etchLine(g, 34, 66, 480, 66, 0.7f);
+        art::legend(g, "FOUR INDEPENDENT MINIATURE PANELS", { 35, 41, 520, 14 },
+                    spacedFont(10.0f, 0.14f), juce::Justification::centredLeft, juce::Colour(0xffcfc4a2));
+
+        // One header strip for all four memories: group brackets and a caption over every column, so each
+        // row carries only its sliders. The columns line up exactly with the rows below.
         {
-            // Gold signal-flow diagram: the programmer owns everything from VCO to VCA.
-            const char* stages[] = { "VCO", "HPF", "LPF", "VCA" };
-            for (int i = 0; i < 4; ++i)
-            {
-                const juce::Rectangle<float> box(620.0f + (float) i * 140.0f, 22.0f, 90.0f, 28.0f);
-                g.setColour(juce::Colour(0xff2a2723));
-                g.fillRoundedRectangle(box, 3.0f);
-                g.setColour(juce::Colour(0xffcdb878).withAlpha(0.7f));
-                g.drawRoundedRectangle(box.reduced(0.5f), 3.0f, 0.9f);
-                art::legend(g, stages[i], box, spacedFont(11.0f, 0.12f), juce::Justification::centred, juce::Colour(0xffe9d695), 0.0f);
-                if (i < 3)
-                {
-                    const float x0 = box.getRight() + 3.0f, x1 = x0 + 44.0f, yy = box.getCentreY();
-                    ui::etchLine(g, x0, yy, x1 - 5.0f, yy, 0.8f);
-                    juce::Path head;
-                    head.addTriangle(x1, yy, x1 - 6.0f, yy - 3.4f, x1 - 6.0f, yy + 3.4f);
-                    g.setColour(juce::Colour(0xffcdb878).withAlpha(0.85f));
-                    g.fillPath(head);
-                }
-            }
-            art::legend(g, "26 CONTROLS PER MEMORY", { 620, 52, 380, 12 }, spacedFont(8.0f, 0.2f),
-                        juce::Justification::centredLeft, juce::Colour(0xffa99f80));
-        }
-        for (int bank = 0; bank < 4; ++bank)
-        {
-            const float y = rowY(bank);
-            const juce::Rectangle<float> row(24.0f, y, 1424.0f, 103.0f);
-            ui::etchRect(g, row, 4.0f, 0.6f);
-            art::legend(g, bank % 2 == 0 ? "CHANNEL I" : "CHANNEL II", { 33.0f, y + 12.0f, 100.0f, 16.0f },
-                        spacedFont(10.0f, 0.14f), juce::Justification::centred, juce::Colour(0xffe6dcbc));
-            // Group brackets as on the main panel, then the legend of each control.
+            ui::etchRect(g, { 24.0f, 62.0f, 1424.0f, 50.0f }, 4.0f, 0.6f);
             const struct { const char* title; int first, last; } groups[] = {
                 { "VCO", 0, 5 }, { "VCF", 6, 14 }, { "VCA", 15, 21 }, { "INITIAL", 22, 23 }, { "AFTER", 24, 25 } };
             for (const auto& group : groups)
             {
                 const float x0 = colX(group.first) + 1.0f, x1 = colX(group.last) + 47.0f;
-                art::bracket(g, group.title, x0, y + 9.0f, x1 - x0, 4.0f, 8.5f);
+                art::bracket(g, group.title, x0, 75.0f, x1 - x0, 4.0f, 10.0f);
             }
             for (int col = 0; col < 26; ++col)
-                art::legend(g, labels[(size_t) col], { colX(col), y + 17.0f, 48.0f, 20.0f }, displayFont(8.0f, juce::Font::bold),
-                            juce::Justification::centred, juce::Colour(0xffe6dcbc), 0.7f);
+                art::legend(g, labels[(size_t) col], { colX(col), 82.0f, 48.0f, 27.0f }, displayFont(9.5f, juce::Font::bold),
+                            juce::Justification::centred, juce::Colour(0xffeee4c4), 0.7f);
         }
-        art::legend(g, "Miniature controls are independent of the main panel. Select a memory to hear it; PANEL returns to the unchanged front-panel settings.",
-                    { 34, 524, 1400, 16 }, displayFont(9.0f), juce::Justification::centredLeft, juce::Colour(0xffb0a688));
+        for (int bank = 0; bank < 4; ++bank)
+        {
+            const float y = rowY(bank);
+            ui::etchRect(g, { 24.0f, y, 1424.0f, 98.0f }, 4.0f, 0.6f);
+            art::legend(g, bank % 2 == 0 ? "CHANNEL I" : "CHANNEL II", { 33.0f, y + 10.0f, 100.0f, 16.0f },
+                        spacedFont(10.0f, 0.14f), juce::Justification::centred, juce::Colour(0xffeee4c4));
+        }
         g.restoreState();
     }
 
@@ -1806,12 +2080,12 @@ public:
         for (int bank = 0; bank < 4; ++bank)
         {
             const float y = rowY(bank);
-            bankButtons[(size_t) bank]->setBounds(r(34, y + 42, 98, 30));
+            bankButtons[(size_t) bank]->setBounds(r(34, y + 36, 98, 32));
             for (int col = 0; col < 26; ++col)
             {
                 auto& item = items[(size_t)(bank * 26 + col)];
-                if (item.slider) item.slider->setBounds(r(colX(col), y + 38, 48, 62));
-                if (item.toggle) item.toggle->setBounds(r(colX(col) + 8.0f, y + 41, 32, 52));
+                if (item.slider) item.slider->setBounds(r(colX(col), y + 6, 48, 86));
+                if (item.toggle) item.toggle->setBounds(r(colX(col) + 8.0f, y + 20, 32, 58));
             }
         }
     }
@@ -1819,7 +2093,7 @@ public:
 
 private:
     static constexpr float kW = 1504.0f, kH = 590.0f, kOffsetX = 16.0f;
-    static float rowY(int bank) { return 75.0f + (float) bank * 111.0f; }
+    static float rowY(int bank) { return 118.0f + (float) bank * 104.0f; }
     static float colX(int col) { return 145.0f + (float) col * 50.0f; }
 
     struct Item
@@ -1845,7 +2119,7 @@ private:
     const std::array<const char*,26> labels {{
         "SPEED","PWM","PW","PULSE","SAW","NOISE","HPF","RES H","LPF","RES L",
         "IL","AL","A","D","R","VCF\nLEVEL","SINE","A","D","S","R","LEVEL",
-        "INITIAL\nBRILL","INITIAL\nLEVEL","AFTER\nBRILL","AFTER\nLEVEL"
+        "BRILL","LEVEL","BRILL","LEVEL"
     }};
 };
 
@@ -2016,7 +2290,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         for (auto* label : { &voiceStatusLabel, &midiStatusLabel })
         {
             label->setJustificationType(juce::Justification::centredLeft);
-            label->setColour(juce::Label::textColourId, juce::Colour(0xffd9cfae));
+            label->setColour(juce::Label::textColourId, stripInk());
             label->setInterceptsMouseClicks(true, false);
             addAndMakeVisible(*label);
         }
@@ -2029,13 +2303,15 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         subModeLabel.setComponentID("sub_mode_status");
         subModeLabel.setTitle("Sub oscillator compatibility and input status");
         subModeLabel.setJustificationType(juce::Justification::centredLeft);
-        subModeLabel.setColour(juce::Label::textColourId, ui::ivoryDim);
-        subModeLabel.setInterceptsMouseClicks(false, false);
+        subModeLabel.setColour(juce::Label::textColourId, stripInk());
+        subModeLabel.setInterceptsMouseClicks(true, false);
+        subModeLabel.setInfoGlyph(true);
         addAndMakeVisible(subModeLabel);
         modeStatusLabel.setComponentID("performance_mode_status");
         modeStatusLabel.setTitle("Requested performance mode and MIDI controller policy");
         modeStatusLabel.setJustificationType(juce::Justification::centredLeft);
-        modeStatusLabel.setColour(juce::Label::textColourId, ui::ivoryDim);
+        modeStatusLabel.setColour(juce::Label::textColourId, stripInk());
+        modeStatusLabel.setInfoGlyph(true);
         addAndMakeVisible(modeStatusLabel);
         outputMeterLabel.setComponentID("output_sample_peak");
         outputMeterLabel.setTitle("Output sample peak and over-range events");
@@ -2052,7 +2328,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             label.setComponentID("source_route_status_" + juce::String(rank + 1));
             label.setTitle(juce::String(rank == 0 ? "Rank I" : "Rank II") + " requested source and model route");
             label.setJustificationType(juce::Justification::centredLeft);
-            label.setColour(juce::Label::textColourId, ui::ivoryDim);
+            label.setColour(juce::Label::textColourId, stripInk());
             addAndMakeVisible(label);
         }
 
@@ -2098,6 +2374,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncLampStatus(false);
     }
 
+    // Printed status text on the panel: cream, bright enough to read against the crinkle at a glance.
+    static juce::Colour stripInk() { return juce::Colour(0xffeee4c4); }
+
     ui::ParamKnob& addFader(int parameter, float x, float y, float w, float h,
                             const juce::String& label, juce::Colour colour)
     {
@@ -2138,8 +2417,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::P_mix, 1203, y, 38, h, "MIX", redCap());
         addFader(cs80::P_brilliance, 1241, y, 38, h, "BRILL", greenCap());
         addFader(cs80::P_resonance, 1285, y, 38, h, "RESO", redCap());
-        addFader(cs80::P_initBend, 1330, y, 38, h, "INIT BEND", whiteCap());
-        addFader(cs80::P_subAtSpeed, 1374, y, 38, h, "AT SPEED", whiteCap());
+        addFader(cs80::P_initBend, 1330, y, 38, h, "BEND", whiteCap());
+        addFader(cs80::P_subAtSpeed, 1374, y, 38, h, "AT SPD", whiteCap());
         addFader(cs80::P_subAtVco, 1417, y, 38, h, "AT VCO", whiteCap());
         addFader(cs80::P_subAtVcf, 1456, y, 38, h, "AT VCF", greenCap());
         addKnob(cs80::P_volume, 1497, y + 28, 50, 72, "VOLUME");
@@ -2174,7 +2453,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         fader(cs80::CP_fD, "D", blackCap());
         fader(cs80::CP_fR, "R", yellowCap());
         x += 9;
-        fader(cs80::CP_vcfLevel, "VCF LEVEL", greyCap());
+        fader(cs80::CP_vcfLevel, "VCF LV", greyCap());
         fader(cs80::CP_sine, "SINE", greyCap());
         fader(cs80::CP_vA, "A", blackCap());
         fader(cs80::CP_vD, "D", blackCap());
@@ -2220,6 +2499,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         };
         place(memoryLid, geo::memoryLidKey.getX(), geo::memoryLidKey.getY(), geo::memoryLidKey.getWidth(), geo::memoryLidKey.getHeight());
 
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            auto& tag = channelTags[(size_t) channel];
+            addAndMakeVisible(tag);
+            tag.setViewed(channel == 0);
+            place(tag, 430.0f, geo::rowY0[(size_t) channel] + 66.0f, 24.0f, 40.0f);
+        }
         // Which channel the live curves describe.
         for (int channel = 0; channel < 2; ++channel)
         {
@@ -2291,7 +2577,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
     }
 
-    // Performance block: the left side of the deck.
+    // Performance block: the left side of the deck. Sustain, portamento, glide and the sustain-mode tab
+    // form one group; chorus speed and depth sit beside the three-state chorus selector.
     void buildPerformance()
     {
         const float y = 672.0f, h = 96.0f;
@@ -2299,15 +2586,61 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addFader(cs80::P_masterSustain, 66, y, 40, h, "SUSTAIN", yellowCap());
         addFader(cs80::P_portamento, 108, y, 40, h, "PORTA", whiteCap());
         addFader(cs80::P_glideMode, 150, y, 40, h, "GLIDE", greyCap());
-        // Knobs are sized so their engraved legends match the faders' (about 10 px).
-        addKnob(cs80::P_chorusSpeed, 196, y + 18, 54, 66, "SPEED");
-        addKnob(cs80::P_chorusDepth, 252, y + 18, 54, 66, "DEPTH");
-        auto& sus = addLed(cs80::P_sustainMode, "SUS II", 314, y + 26, 51, 62);
+        auto& sus = addLed(cs80::P_sustainMode, "SUS II", 192, y + 26, 56, 62);
         sus.hardwareTab = true; sus.accent = whiteCap();
-        auto& chorus = addLed(cs80::P_chorusOn, "CHORUS", 367, y + 26, 51, 62);
-        chorus.hardwareTab = true; chorus.accent = yellowCap();
-        auto& tremolo = addLed(cs80::P_chorusMode, "TREMOLO", 420, y + 26, 51, 62);
-        tremolo.hardwareTab = true; tremolo.accent = whiteCap();
+        // Knobs are sized so their engraved legends match the faders' (about 10 px).
+        addKnob(cs80::P_chorusSpeed, 256, y + 18, 54, 66, "SPEED");
+        addKnob(cs80::P_chorusDepth, 312, y + 18, 54, 66, "DEPTH");
+
+        // Chorus: one three-position selector (OFF / CHORUS / TREMOLO) over the two switches it stands for.
+        const char* names[] = { "OFF", "CHORUS", "TREMOLO" };
+        const char* tips[] = { "Chorus section off.", "Chorus: the ensemble delay.", "Tremolo: amplitude modulation instead of the chorus delay." };
+        for (int i = 0; i < 3; ++i)
+        {
+            auto& key = chorusKeys[(size_t) i];
+            key.setButtonText(names[i]);
+            key.setTitle(juce::String("Chorus section: ") + names[i]);
+            key.setTooltip(tips[i]);
+            key.setClickingTogglesState(false);
+            key.setWantsKeyboardFocus(true);
+            key.onClick = [this, i] { setChorusState(i); };
+            addAndMakeVisible(key);
+            place(key, 374.0f, 687.0f + (float) i * 27.0f, 96.0f, 25.0f);
+        }
+        syncChorusState();
+    }
+
+    // 0 = off, 1 = chorus, 2 = tremolo, as the two stored switches say it.
+    int readChorusState() const
+    {
+        auto& apvts = processor.getAPVTS();
+        const auto* on = apvts.getRawParameterValue(Cs80AudioProcessor::parameterId(cs80::P_chorusOn));
+        const auto* mode = apvts.getRawParameterValue(Cs80AudioProcessor::parameterId(cs80::P_chorusMode));
+        if (on == nullptr || mode == nullptr || on->load() < 0.5f) return 0;
+        return mode->load() >= 0.5f ? 2 : 1;
+    }
+
+    void setChorusState(int state)
+    {
+        auto set = [this](int index, float value)
+        {
+            if (auto* parameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index)))
+            {
+                parameter->beginChangeGesture();
+                parameter->setValueNotifyingHost(parameter->convertTo0to1(value));
+                parameter->endChangeGesture();
+            }
+        };
+        if (state == 0) set(cs80::P_chorusOn, 0.0f);
+        else { set(cs80::P_chorusMode, state == 2 ? 1.0f : 0.0f); set(cs80::P_chorusOn, 1.0f); }
+        syncChorusState();
+    }
+
+    void syncChorusState()
+    {
+        const int state = readChorusState();
+        for (int i = 0; i < 3; ++i)
+            chorusKeys[(size_t) i].setToggleState(i == state, juce::dontSendNotification);
     }
 
     // Owner controls 9/10 (keyboard contour) plus the foot-controller group that
@@ -2330,23 +2663,27 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         place(expressionPedal, 1312, 680, 40, 84);
 
         // Three columns of 54 px keep the block inside the key edge (x1538).
-        auto toggle = [this](int parameter, const char* label, const char* tip, float x, float y)
+        // Rocker switches 54 x 26: a comfortable target, lit legend and LED.
+        auto toggle = [this](int parameter, const char* label, const char* tip, float x, float y) -> ui::LedButton&
         {
-            auto& led = addLed(parameter, label, x, y, 54, 22);
+            auto& led = addLed(parameter, label, x, y, 54, 26);
+            led.rockerStyle = true;
             led.setTooltip(tip);
+            return led;
         };
         toggle(cs80::P_footswitchPlugged, "PLUG",
-               "Footswitch plugged into the jack. With no plug the switched jack acts as a pressed switch.", 1358, 686);
+               "Footswitch plugged into the jack. With no plug the switched jack acts as a pressed switch.", 1358, 684);
         toggle(cs80::P_footswitchPressed, "PRESS",
-               "Footswitch contact. Latches; toggle it to play the switch.", 1416, 686);
-        toggle(cs80::P_footMode, "WAH",
-               "Foot controller selector: off = EXP (volume only), on = EXP-WAH.", 1474, 686);
+               "Footswitch contact. Latches; toggle it to play the switch.", 1416, 684);
+        wahToggle = &toggle(cs80::P_footMode, "EXP",
+               "Foot controller selector: EXP = volume only, WAH = EXP-WAH sweep.", 1474, 684);
         toggle(cs80::P_sustainAssign, "SUSTAIN",
-               "Assign the footswitch to SUSTAIN. Plugged and open switch removes the sustain release.", 1358, 730);
+               "Assign the footswitch to SUSTAIN. Plugged and open switch removes the sustain release.", 1358, 731);
         toggle(cs80::P_glideAssign, "PORTA",
-               "Assign the footswitch to portamento/glissando. Plugged and open switch suppresses gliding.", 1416, 730);
-        toggle(cs80::P_outputLevel, "HIGH",
-               "Output level switch: lit = HIGH (unity), unlit = LOW.", 1474, 730);
+               "Assign the footswitch to portamento/glissando. Plugged and open switch suppresses gliding.", 1416, 731);
+        outputToggle = &toggle(cs80::P_outputLevel, "LOW",
+               "Output level switch: HIGH = unity, LOW = reduced.", 1474, 731);
+        syncDeckLegends();
     }
 
     void buildKeyboard()
@@ -2370,6 +2707,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         keyboard.setWantsKeyboardFocus(false);
         addAndMakeVisible(keybed);
 
+        ribbon.setComponentID("ribbon_controller");
+        ribbon.setTitle("Ribbon controller");
+        ribbon.setDescription("Ribbon controller: touch it where you like to set the zero point, then slide left or right to bend the pitch. Lift off to return to centre.");
         ribbon.onValueChange = [this](float value)
         {
             processor.setRibbonFromUI(value);
@@ -2442,9 +2782,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (presetIndexLabel.getText() != index) presetIndexLabel.setText(index, juce::dontSendNotification);
         const bool isFactory = tag != "USER PATCH";
         presetIndexLabel.setDisplayText(isFactory ? "OF " + juce::String((int) bank.size()) : juce::String());
-        const auto number = isFactory ? juce::String(metadata.factoryIndex + 1).paddedLeft('0', 3) : juce::String("USR");
+        const auto number = isFactory ? juce::String(metadata.factoryIndex + 1).paddedLeft('0', 3) : juce::String("---");
         if (presetNumberLabel.getText() != number) presetNumberLabel.setText(number, juce::dontSendNotification);
-        presetWindow.setDirty(patchHasUnsavedEdits(metadata, isFactory));
+        const bool dirty = patchHasUnsavedEdits(metadata, isFactory);
+        presetWindow.setDirty(dirty);
+        saveButton.setEmphasis(dirty);   // SAVE lights only when there is something to save
     }
 
     // True when the sounding patch differs from the program that is named in the display. Factory programs
@@ -2631,9 +2973,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (subModeLabel.getText() != status)
             subModeLabel.setText(status, juce::dontSendNotification);
         // Players read a short tag; the full engineering status stays in the text and tooltip.
-        subModeLabel.setDisplayText(status.startsWith("SUB MODE CHANGED") ? "SUB  RELEASE CONTROL"
-                                    : status.contains("EXT BUS") ? (status.contains("DISABLED") ? "SUB  EXT BUS OFF" : "SUB  EXT BUS ON")
-                                    : status.contains("LEGACY") ? "SUB  LEGACY" : "SUB  ORIGINAL");
+        subModeLabel.setDisplayText(status.startsWith("SUB MODE CHANGED") ? "SUB  MOVE CONTROL TO RESUME"
+                                    : status.contains("EXT BUS") ? (status.contains("DISABLED") ? "SUB  EXT INPUT OFF" : "SUB  EXT INPUT ON")
+                                    : status.contains("LEGACY") ? "SUB  CLASSIC" : "SUB  ORIGINAL");
         subModeLabel.setTooltip((isolated
             ? juce::String("Parity isolation forces original SUB controls; the stored mode and legacy settings are retained. Not calibrated. ")
             : juce::String()) + (original
@@ -2655,9 +2997,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 : "LEGACY PERFORMANCE / SOURCE MODEL OFF  |  MIDI BEND + CC1/11/64/74 LIVE; MPE OPTIONAL  |  SOURCE MODE: ADVANCED > ABOUT";
         if (modeStatusLabel.getText() != mode)
             modeStatusLabel.setText(mode, juce::dontSendNotification);
-        modeStatusLabel.setDisplayText(policy == cs80::RenderPolicy::isolation ? "MODE  ISOLATION  (HOVER FOR DETAILS)"
-                                       : policy == cs80::RenderPolicy::sourcePerformance ? "MODE  SOURCE PERFORMANCE  (HOVER FOR DETAILS)"
-                                                                                         : "MODE  LEGACY PERFORMANCE  (HOVER FOR DETAILS)");
+        modeStatusLabel.setDisplayText(policy == cs80::RenderPolicy::isolation ? "MODE  ISOLATED COMPARISON"
+                                       : policy == cs80::RenderPolicy::sourcePerformance ? "MODE  SOURCE PERFORMANCE"
+                                                                                         : "MODE  LEGACY PERFORMANCE");
         modeStatusLabel.setTooltip(juce::String("Requested mode from stored parameters; audio applies it on a control frame. Source performance uses current source models with MIDI, optional MPE and modern software overlays (macros, FX, pan and bypass). Neither source mode is calibrated or establishes a hardware match. Isolation wins when both switches are ON: it masks MIDI bend, CC1/11/64/74, MPE and modern features. Pressure, ribbon and the on-screen pedal remain live. An effective mode change resets sounding notes and controller/effect history. Changing the source switch while isolation stays ON is masked and does not stop notes. Library recall returns both ranks to PANEL and resets source performance OFF, while retaining isolation. Source output can exceed digital full scale: keep monitoring headroom.")
             + (policy == cs80::RenderPolicy::isolation && sourceRequest >= 0.5f
                 ? " Source-performance request is ON but masked by isolation; turning isolation OFF applies that request."
@@ -2676,7 +3018,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             auto& label = sourceStatusLabels[(size_t) rank];
             if (label.getText() != text)
                 label.setText(text, juce::dontSendNotification);
-            label.setDisplayText(juce::String(rank == 0 ? "I   " : "II  ") + identity);
+            // The strip says "MEMORY n" and "PANEL"; the verbose text keeps the engineering words.
+            const juce::String plain = source < 11 ? identity : source == 13 ? juce::String("PANEL")
+                                                                             : "MEMORY " + juce::String(rank + (source == 12 ? 3 : 1));
+            label.setDisplayText(juce::String(rank == 0 ? "I   " : "II  ") + plain);
             label.setDot(source < 11 ? juce::Colour(0xffe8ac3c) : source == 13 ? juce::Colour(0xffd9cfae) : juce::Colour(0xff58d6c0));
             label.setTooltip(text + ". Requested APVTS selection, not an audio-thread acknowledgment. "
                 "SOURCE-COMPLETE means the source-matrix column has no unresolved cells, not that the instrument is calibrated; device laws remain inferred. "
@@ -2717,6 +3062,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // selected tone's voicing or the memory bank that owns the 26 controls.
     void syncVoicePlate()
     {
+        for (int channel = 0; channel < 2; ++channel)
+            channelTags[(size_t) channel].setViewed(channel == viewChannel);
         VoicePlate::Snapshot snap;
         snap.channel = viewChannel;
         snap.source = processor.getHardwareSource(viewChannel);
@@ -2748,6 +3095,21 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         voicePlate.setSnapshot(snap, name);
     }
 
+    // The two-way deck switches print the position they are in.
+    void syncDeckLegends()
+    {
+        if (wahToggle != nullptr)
+        {
+            const juce::String text = wahToggle->getToggleState() ? "WAH" : "EXP";
+            if (wahToggle->getButtonText() != text) wahToggle->setButtonText(text);
+        }
+        if (outputToggle != nullptr)
+        {
+            const juce::String text = outputToggle->getToggleState() ? "HIGH" : "LOW";
+            if (outputToggle->getButtonText() != text) outputToggle->setButtonText(text);
+        }
+    }
+
     void syncLampStatus(bool midi)
     {
         const int voices = juce::jlimit(0, 8, processor.getActiveVoiceCount());
@@ -2771,6 +3133,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                                   juce::Time::getMillisecondCounterHiRes() * 0.001);
         updateOutputMeterLabel();
         syncVoicePlate();
+        syncChorusState();
+        syncDeckLegends();
         // Follow the pedal when MIDI CC11 or a restart moved it; never fight a drag.
         if (! expressionPedal.isMouseButtonDown()
             && std::abs(expressionPedal.getValue() - processor.getExpressionValue()) > 1.0e-4f)
@@ -2800,36 +3164,86 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.drawFittedText(text, area, align, 2, 0.7f);
     }
 
-    // The voice-flow plate: a matte instrument plate printed in flat gold and cream.
+    // The voice-flow plate: a machined bezel with four chamfer facets around a window of smoked glass.
     // The live curves are drawn on top of it by VoicePlate.
     void paintVoicePlate(juce::Graphics& g)
     {
         const auto r = geo::plate;
-        ui::softShadow(g, r, 4.0f, 0.0f, 4.0f, 9.0f, 0.8f);
-        art::matteSheet(g, r, 4.0f, art::plateColour(), 21);
-        for (float sx : { r.getX() + 5.5f, r.getRight() - 5.5f })
-            for (float sy : { r.getY() + 5.5f, r.getBottom() - 5.5f })
-                art::slotScrew(g, { sx, sy }, 2.7f, sx * 0.3f + sy);
         const float x0 = r.getX(), y0 = r.getY();
-        art::haloText(g, "VOICE SIGNAL FLOW", { x0 + 14, y0 + 8, 220, 18 }, spacedFont(11.5f, 0.14f), juce::Justification::centredLeft,
-                      juce::Colour(0xffeadfb8), art::plateColour());
-        art::legend(g, "VIEW", { x0 + 232, y0 + 8, 52, 24 }, spacedFont(8.5f, 0.16f), juce::Justification::centredRight,
+        art::ambient(g, r, 5.0f, 8.0f, 0.55f);
+        ui::softShadow(g, r, 5.0f, 0.0f, 5.0f, 10.0f, 0.8f);
+        // bezel body: dark anodised metal, lit from the upper left
+        g.setGradientFill(art::vgrad(juce::Colour(0xff55524b), juce::Colour(0xff191714), r));
+        g.fillRoundedRectangle(r, 5.0f);
+        // four chamfer facets between the outer edge and the glass
+        const auto outer = r.reduced(1.0f), inner = r.reduced(7.0f);
+        auto facet = [&](juce::Point<float> a, juce::Point<float> b, juce::Point<float> c, juce::Point<float> d, juce::Colour top, juce::Colour bottom, juce::Point<float> from, juce::Point<float> to)
+        {
+            juce::Path pth;
+            pth.startNewSubPath(a); pth.lineTo(b); pth.lineTo(c); pth.lineTo(d); pth.closeSubPath();
+            g.setGradientFill(juce::ColourGradient(top, from.x, from.y, bottom, to.x, to.y, false));
+            g.fillPath(pth);
+        };
+        facet(outer.getTopLeft(), outer.getTopRight(), inner.getTopRight(), inner.getTopLeft(),
+              juce::Colour(0xff8a867c), juce::Colour(0xff4a4741), { x0, y0 }, { x0, y0 + 7.0f });                                // top: lit
+        facet(outer.getTopLeft(), inner.getTopLeft(), inner.getBottomLeft(), outer.getBottomLeft(),
+              juce::Colour(0xff6c685f), juce::Colour(0xff35332e), { x0, y0 }, { x0 + 7.0f, y0 });                                // left: lit
+        facet(outer.getTopRight(), outer.getBottomRight(), inner.getBottomRight(), inner.getTopRight(),
+              juce::Colour(0xff2f2d29), juce::Colour(0xff1b1a17), { r.getRight() - 7.0f, y0 }, { r.getRight(), y0 });            // right: shaded
+        facet(outer.getBottomLeft(), inner.getBottomLeft(), inner.getBottomRight(), outer.getBottomRight(),
+              juce::Colour(0xff211f1c), juce::Colour(0xff100f0d), { x0, r.getBottom() - 7.0f }, { x0, r.getBottom() });          // bottom: darkest
+        // facet seams: a bright arris along the top/left, a dark one along the bottom/right
+        g.setColour(art::white(0.42f));
+        g.drawLine(outer.getX() + 4.0f, outer.getY(), outer.getRight() - 4.0f, outer.getY(), 1.0f);
+        g.setColour(art::white(0.20f));
+        g.drawLine(outer.getX(), outer.getY() + 4.0f, outer.getX(), outer.getBottom() - 4.0f, 1.0f);
+        g.setColour(art::black(0.8f));
+        g.drawRoundedRectangle(r, 5.0f, 1.0f);
+        g.setColour(art::black(0.65f));
+        g.drawLine(inner.getX(), inner.getY(), inner.getRight(), inner.getY(), 1.0f);           // shadow under the lit lip
+        g.setColour(art::white(0.10f));
+        g.drawLine(inner.getX(), inner.getBottom(), inner.getRight(), inner.getBottom(), 1.0f); // the glass edge catching light
+
+        // smoked glass: nearly flat so printed type keeps a clean halo; a warm glow from the lamps behind it
+        const auto glass = inner;
+        g.setGradientFill(art::vgrad(art::glassColour().brighter(0.08f), art::glassColour().darker(0.10f), glass));
+        g.fillRect(glass);
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xffe39a38).withAlpha(0.055f), glass.getCentreX(), glass.getCentreY() - 20.0f,
+                                               juce::Colours::transparentBlack, glass.getX(), glass.getBottom(), true));
+        g.fillRect(glass);
+        art::insetShadow(g, glass, 0.5f, 9.0f, 0.55f);
+        // hairline frame printed on the glass, and a rule under the title row
+        g.setColour(juce::Colour(0xffcdb878).withAlpha(0.22f));
+        g.drawRect(glass.reduced(2.5f), 0.8f);
+        // screw bosses in the four corners of the bezel
+        for (float sx : { x0 + 3.9f, r.getRight() - 3.9f })
+            for (float sy : { y0 + 3.9f, r.getBottom() - 3.9f })
+            {
+                g.setColour(art::black(0.7f));
+                g.fillEllipse(sx - 3.5f, sy - 3.0f, 7.0f, 7.0f);
+                art::slotScrew(g, { sx, sy }, 2.7f, sx * 0.3f + sy);
+            }
+
+        art::haloText(g, "VOICE SIGNAL FLOW", { x0 + 14, y0 + 14, 220, 22 }, spacedFont(11.5f, 0.14f), juce::Justification::centredLeft,
+                      juce::Colour(0xffeadfb8), art::glassColour());
+        art::legend(g, "VIEW", { x0 + 222, y0 + 14, 58, 22 }, spacedFont(8.5f, 0.16f), juce::Justification::centredRight,
                     juce::Colour(0xffb5a878), 0.0f);
         ui::etchLine(g, x0 + 14, y0 + 52, x0 + 346, y0 + 52, 0.45f);
+        ui::etchLine(g, x0 + 14, y0 + 330, x0 + 346, y0 + 330, 0.30f);
         if (optionsVisible)
         {
             const juce::Rectangle<float> well(x0 + 12, y0 + 116, 336, 188);
             ui::etchRect(g, well, 3.0f, 0.5f);
             art::haloText(g, "VOICE SETTINGS  /  SOFTWARE", { well.getX() + 8, well.getY() + 4, 240, 11 }, spacedFont(8.0f, 0.14f),
-                          juce::Justification::centredLeft, juce::Colour(0xffcdb878), art::plateColour());
+                          juce::Justification::centredLeft, juce::Colour(0xffcdb878), art::glassColour());
             panelText(g, "I", x0 + 24, 232 + 22, 20, 28, 12);
             panelText(g, "II", x0 + 24, 314 + 22, 20, 28, 12);
             ui::etchLine(g, x0 + 20, 306, x0 + 340, 306, 0.35f);
         }
     }
 
-    // The raised back edge of the panel: a vent strip in the panel's own finish with louvres either
-    // side of a silkscreen legend.
+    // The raised back edge of the panel: a vent strip in the panel's own finish, louvres either side of
+    // a plain centre. No printed legend: the strip is architecture, not information.
     void paintTopLip(juce::Graphics& g)
     {
         const juce::Rectangle<float> lip(geo::bodyLeft, 64, geo::bodyRight - geo::bodyLeft, 32);
@@ -2841,10 +3255,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.fillRect(lip.getX(), 94.5f, lip.getWidth(), 1.5f);
         g.setGradientFill(art::vgrad(art::black(0.42f), juce::Colours::transparentBlack, { lip.getX(), 96.0f, lip.getWidth(), 9 }));
         g.fillRect(lip.getX(), 96.0f, lip.getWidth(), 9.0f);
-        art::louvre(g, { 76.0f, 72.0f, 472.0f, 17.0f });
-        art::louvre(g, { 1052.0f, 72.0f, 472.0f, 17.0f });
-        art::bracket(g, "8 VOICES  /  2 CHANNELS  /  4 MEMORIES", 566.0f, 80.5f, 468.0f, 4.0f, 9.0f);
-        for (float sx : { 60.0f, 557.0f, 1043.0f, 1540.0f })
+        if (! gSmallEditor)
+        {
+            art::louvre(g, { 76.0f, 71.0f, 690.0f, 19.0f });
+            art::louvre(g, { 834.0f, 71.0f, 690.0f, 19.0f });
+        }
+        for (float sx : { 60.0f, 800.0f, 1540.0f })
             art::slotScrew(g, { sx, 80.5f }, 3.6f, sx * 0.07f);
     }
 
@@ -2854,10 +3270,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         const float y0 = geo::rowY0[(size_t) channel];
         const juce::Rectangle<float> frame(424.0f, y0 - 6.0f, 1124.0f, 186.0f);
         ui::etchRect(g, frame, 4.0f, 0.62f);
-        // channel numeral in a small etched box
-        const juce::Rectangle<float> boss(430.0f, y0 + 66.0f, 24.0f, 40.0f);
-        ui::etchRect(g, boss, 3.0f, 0.5f);
-        panelText(g, channel == 0 ? "I" : "II", boss.getX(), boss.getY() + 6.0f, boss.getWidth(), 28.0f, channel == 0 ? 22.0f : 17.0f);
+        // (the channel numeral is an engraved ChannelTag component, lit while its curves are on the plate)
         art::bracket(g, "VCO", 459, y0 + 10, 235);
         art::bracket(g, "VCF", 706, y0 + 10, 354);
         art::bracket(g, "VCA", 1075, y0 + 10, 272);
@@ -2900,13 +3313,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             ui::etchRect(g, block, 5.0f, 0.5f);
         // One bracket style for every deck header.
         const float ruleY = 673.0f;
-        art::bracket(g, "PERFORMANCE", 66, ruleY, 124, 4.0f);
-        art::bracket(g, "CHORUS / TREMOLO", 196, ruleY, 270, 4.0f);
-        art::bracket(g, "BRILLIANCE", 1134, ruleY, 78, 4.0f);
+        art::bracket(g, "PERFORMANCE", 66, ruleY, 182, 4.0f);
+        art::bracket(g, "CHORUS / TREMOLO", 252, ruleY, 218, 4.0f, 9.5f, "CHORUS");
+        art::bracket(g, "BRILLIANCE", 1134, ruleY, 78, 4.0f, 9.5f, "BRILL");
         art::bracket(g, "LEVEL", 1222, ruleY, 80, 4.0f);
         art::bracket(g, "FOOT", 1312, ruleY, 40, 4.0f);
         art::bracket(g, "FOOTSWITCH", 1358, ruleY, 112, 4.0f);
-        art::bracket(g, "EXP / WAH", 1474, ruleY, 58, 4.0f);
+        art::bracket(g, "FOOT MODE", 1474, ruleY, 58, 4.0f, 9.5f, "MODE");
         art::bracket(g, "ASSIGN TO", 1358, 719.0f, 112, 4.0f);
         art::bracket(g, "OUTPUT", 1474, 719.0f, 58, 4.0f);
 
@@ -2985,7 +3398,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             g.drawText("CS-80", word.translated(0, 1.5f), juce::Justification::centredLeft, false);
             g.setGradientFill(art::vgrad(juce::Colour(0xfff6e8ac), juce::Colour(0xffb08d3c), word));
             g.drawText("CS-80", word, juce::Justification::centredLeft, false);
-            art::legend(g, "REFERENCE EDITION", { 97, 33, 150, 11 }, spacedFont(8.0f, 0.2f), juce::Justification::centredLeft, juce::Colour(0xffb5a678));
+            if (! gSmallEditor)
+                art::legend(g, "REFERENCE EDITION", { 97, 33, 150, 11 }, spacedFont(8.0f, 0.2f), juce::Justification::centredLeft, juce::Colour(0xffb5a678));
         }
 
         // preset window: dark glass with a warm backlight, a printed divider after the program number
@@ -3019,37 +3433,32 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             g.fillRect(x + 1.0f, 12.0f, 1.0f, 28.0f);
         }
         ui::etchRect(g, geo::lampWell, 5.0f, 0.5f);
-        // output meter window
+        // output meter window: a flat bezel around dark glass, the scale printed under the bar
         {
             const auto w = geo::meterWell;
+            art::raisedPlate(g, w.expanded(3.0f), 6.0f, juce::Colour(0xff6c675e), juce::Colour(0xff1f1d19), 0.4f);
             art::recessTray(g, w, 4.0f, juce::Colour(0xff0e0f0c), juce::Colour(0xff050504), 8.0f, 0.9f);
-            g.setGradientFill(art::vgrad(art::white(0.06f), juce::Colours::transparentWhite, w.withHeight(w.getHeight() * 0.5f)));
+            g.setGradientFill(art::vgrad(art::white(0.07f), juce::Colours::transparentWhite, w.withHeight(w.getHeight() * 0.5f)));
             g.fillRoundedRectangle(w.reduced(1.0f).withHeight(w.getHeight() * 0.5f), 3.0f);
-            art::legend(g, "OUT", { 1264, 8, 32, 10 }, spacedFont(8.0f, 0.2f), juce::Justification::centredLeft, juce::Colour(0xffcdb878), 0.8f);
-            art::legend(g, "dBFS", { 1264, 36, 42, 8 }, spacedFont(8.0f, 0.08f), juce::Justification::centredLeft, juce::Colour(0xffa99a6c), 0.8f);
+            art::legend(g, "OUT", { 1264, 8, 32, 10 }, spacedFont(8.0f, 0.2f), juce::Justification::centredLeft, juce::Colour(0xffe0cf94), 0.8f);
+            art::legend(g, "dBFS", { 1264, 36, 42, 8 }, spacedFont(8.0f, 0.08f), juce::Justification::centredLeft, juce::Colour(0xffc4b583), 0.8f);
             ui::etchLine(g, 1315, 11, 1315, 41, 0.35f);
-            // dB scale under the bar: every printed number is at least 8 px and clear of its neighbours
-            const float usable = geo::meterBar.getWidth() - 25.0f;
+            // dB scale under the bar, on the same 20-segment geometry the bar uses (its OVR lamp takes the right end)
+            const float usable = geo::meterBar.getWidth() - MeterBar::lampWidthNow() - 2.0f;
             const std::pair<float, const char*> marks[] = { { -60.0f, "-60" }, { -40.0f, "-40" }, { -20.0f, "-20" }, { -10.0f, "-10" }, { 0.0f, "0" } };
             for (const auto& m : marks)
             {
-                const float x = geo::meterBar.getX() + (m.first + 60.0f) / 60.0f * usable;
-                g.setColour(juce::Colour(0xffd8cfb0).withAlpha(0.6f));
-                g.fillRect(x - 0.4f, 27.0f, 0.9f, 3.0f);
+                const float x = geo::meterBar.getX() + (m.first + 60.0f) / 60.0f * usable - (m.first >= 0.0f ? 0.6f : 0.0f);
+                g.setColour(juce::Colour(0xffd8cfb0).withAlpha(0.7f));
+                g.fillRect(x - 0.4f, 26.5f, 0.9f, 3.5f);
+                // hide a number that would run into the next one (small editors print larger type)
+                if (gSmallEditor && (m.first == -10.0f || m.first == -60.0f)) continue;
                 art::legend(g, m.second, { x - 11.0f, 30.0f, 22.0f, 10.0f }, displayFont(8.0f, juce::Font::bold),
-                            juce::Justification::centred, juce::Colour(0xffd8cfb0), 0.0f);
+                            juce::Justification::centred, juce::Colour(0xffe6dcbc), 0.0f);
             }
             const float x3 = geo::meterBar.getX() + (-3.0f + 60.0f) / 60.0f * usable;
-            g.setColour(juce::Colour(0xffff6a4a).withAlpha(0.8f));
-            g.fillRect(x3 - 0.4f, 27.0f, 0.9f, 3.0f);
-        }
-        // PANIC guard: a red etched outline
-        {
-            const auto p = geo::panicBtn.expanded(4.0f);
-            g.setColour(juce::Colour(0xffa8442f).withAlpha(0.55f));
-            g.drawRoundedRectangle(p.reduced(0.5f), 5.0f, 1.0f);
-            g.setColour(art::black(0.6f));
-            g.drawRoundedRectangle(p.expanded(1.0f), 6.0f, 0.8f);
+            g.setColour(juce::Colour(0xffff6a4a).withAlpha(0.9f));
+            g.fillRect(x3 - 0.4f, 26.5f, 0.9f, 3.5f);
         }
         // player status strip: printed directly on the panel between hairlines
         {
@@ -3066,26 +3475,42 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
     }
 
+    // A groove across the whole panel between two functional rows: a dark cut, a lit lower lip, and a soft
+    // fall of shadow beneath it.
+    static void seamGroove(juce::Graphics& g, float y)
+    {
+        const float x = geo::bodyLeft, w = geo::bodyRight - geo::bodyLeft;
+        g.setGradientFill(art::vgrad(art::black(0.30f), juce::Colours::transparentBlack, { x, y, w, 6.0f }));
+        g.fillRect(x, y, w, 6.0f);
+        g.setColour(art::black(0.78f));
+        g.fillRect(x, y - 0.8f, w, 1.6f);
+        g.setColour(art::white(0.11f));
+        g.fillRect(x, y + 0.8f, w, 1.0f);
+    }
+
     void paintChassis(juce::Graphics& g)
     {
         const float sx = (float) getWidth() / kDesignWidth;
         const float sy = (float) getHeight() / kDesignHeight;
         const float scale = sx;
+        FloorScope floor(scale);
         g.saveState();
         g.addTransform(juce::AffineTransform::scale(sx, sy));
         g.fillAll(juce::Colour(0xff070605));
 
         // ---- one fine crinkle finish for the toolbar, panel and deck ---------
-        static const juce::Image crinkle = art::makeCrinkleTile(256, 5, juce::Colour(0xff302e2b), 0.17f);
         const juce::Rectangle<float> body(geo::bodyLeft, 0.0f, geo::bodyRight - geo::bodyLeft, geo::deckBottom);
-        art::fillTile(g, crinkle, body, scale);
-        // soft light from the upper left, falling away toward the far corner
-        g.setGradientFill(juce::ColourGradient(art::white(0.06f), 300.0f, 90.0f, juce::Colours::transparentWhite, 1000.0f, 600.0f, true));
+        art::fillTile(g, art::panelTile(), body, scale);
+        // One light over the whole panel: it comes from the upper left, so the left runs bright and the
+        // lower right falls away. Nothing else lights the surface.
+        g.setGradientFill(juce::ColourGradient(art::white(0.105f), 230.0f, 70.0f, juce::Colours::transparentWhite, 1050.0f, 520.0f, true));
         g.fillRect(body);
-        g.setGradientFill(juce::ColourGradient(juce::Colours::transparentBlack, 800.0f, 330.0f, art::black(0.14f), 1560.0f, 770.0f, true));
+        g.setGradientFill(juce::ColourGradient(juce::Colours::transparentBlack, 680.0f, 260.0f, art::black(0.34f), 1560.0f, 775.0f, false));
         g.fillRect(body);
 
         paintTopLip(g);
+        seamGroove(g, 287.0f);
+        seamGroove(g, 480.0f);
         paintChannel(g, 0);
         paintChannel(g, 1);
         paintVoicePlate(g);
@@ -3095,12 +3520,21 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             const auto lp = geo::lowerPlate;
             ui::etchRect(g, lp, 5.0f, 0.55f);
             art::bracket(g, "RING MODULATOR", 158, 499, 200);
-            art::bracket(g, "SUB OSCILLATOR", 370, 499, 205);
+            art::bracket(g, "SUB OSCILLATOR", 370, 499, 205, 6.0f, 9.5f, "SUB OSC");
             art::bracket(g, "FEET", 580, 499, 80);
             art::bracket(g, "TONE SELECTOR", 675, 505, 514);
-            art::bracket(g, "GLOBAL / TOUCH RESPONSE", 1208, 499, 340);
+            art::bracket(g, "GLOBAL / TOUCH RESPONSE", 1208, 499, 340, 6.0f, 9.5f, "GLOBAL");
             paintToneBezel(g);
         }
+        // knobs stand on the panel: a soft contact shadow all around the cap
+        for (const auto& item : placements)
+            if (auto* knob = dynamic_cast<ui::ParamKnob*>(item.component);
+                knob != nullptr && knob->isVisible() && knob->getSlider().getSliderStyle() == juce::Slider::RotaryHorizontalVerticalDrag)
+            {
+                const float d = juce::jmin(item.bounds.getWidth() - 14.0f, 46.0f);
+                art::ambient(g, juce::Rectangle<float>(d, d).withCentre({ item.bounds.getCentreX(), item.bounds.getY() + 7.0f + d * 0.5f }),
+                             d * 0.5f, 5.0f, 0.42f);
+            }
 
         // front edge of the control surface over the deck
         g.setColour(art::white(0.05f));
@@ -3253,9 +3687,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> buttonAttachments;
     std::array<std::array<std::unique_ptr<juce::TextButton>, 14>, 2> toneButtons;
     std::vector<Placement> placements;
-    KeyButton voiceOptions { "VOICE SETTINGS", KeyButton::Style::rocker };
-    KeyButton memoryLid { "OPEN MEMORY LID", KeyButton::Style::rocker };
+    KeyButton voiceOptions { "VOICE SETTINGS", KeyButton::Style::satin };
+    KeyButton memoryLid { "OPEN MEMORY LID", KeyButton::Style::satin };
     std::array<KeyButton, 2> viewButtons { KeyButton("I", KeyButton::Style::plate), KeyButton("II", KeyButton::Style::plate) };
+    std::array<KeyButton, 3> chorusKeys { KeyButton("OFF", KeyButton::Style::selector), KeyButton("CHORUS", KeyButton::Style::selector),
+                                          KeyButton("TREMOLO", KeyButton::Style::selector) };
+    std::array<ChannelTag, 2> channelTags { ChannelTag(false), ChannelTag(true) };
+    ui::LedButton* wahToggle = nullptr;
+    ui::LedButton* outputToggle = nullptr;
     std::vector<juce::Component*> optionComponents;
     bool optionsVisible = false;
     int viewChannel = 0;
