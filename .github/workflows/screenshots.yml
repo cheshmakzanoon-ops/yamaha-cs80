@@ -7,6 +7,8 @@ on:
       - 'src/plugin/**'
       - 'src/core/**'
       - 'src/tools/ui_snapshot.cpp'
+      - 'tests/*.h'
+      - 'scripts/run-ui-smoke-linux.sh'
       - 'CMakeLists.txt'
       - '.github/workflows/screenshots.yml'
 
