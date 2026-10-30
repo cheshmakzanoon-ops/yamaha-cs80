@@ -87,8 +87,9 @@ private:
     float scale = 1.0f;
 };
 
-// The preset library: filter column, result cards, inspector. Double-click or
-// LOAD auditions a patch in place, which is how a player chooses a CS-80 sound.
+// The preset library: filter column, result list, inspector. Double-click or
+// LOAD replaces the sound with the chosen patch; REVERT returns to the sound
+// that was loaded when the library opened.
 class PresetBrowser final : public juce::Component,
                             private juce::ListBoxModel,
                             private juce::ScrollBar::Listener,
@@ -100,6 +101,7 @@ public:
 
     void paint(juce::Graphics&) override;
     void resized() override;
+    void visibilityChanged() override;
     bool keyPressed(const juce::KeyPress&) override;
     void mouseWheelMove(const juce::MouseEvent&, const juce::MouseWheelDetails&) override;
 
@@ -129,6 +131,7 @@ private:
         juce::String slot;            // "017" or "U03"
         juce::int64 modified = 0;     // user files: milliseconds since epoch
         juce::String haystack;        // lower-case text the search box matches against
+        bool ownDescription = false;  // false when many patches share the same sentence
         std::shared_ptr<const PresetSignature> signature;
     };
 
@@ -138,13 +141,14 @@ private:
     class StarCell;
     class ResultList;
     class HoverTracker;
+    class Watcher;
 
     // Panel geometry in design units (1600 x 936 reference); `s` converts to pixels.
     struct Layout
     {
         float s = 1.0f;
         float width = 1600.0f, height = 936.0f;
-        juce::Rectangle<float> face, header, leftPlate, results, strip, well, detail, sortStrip, searchRect;
+        juce::Rectangle<float> face, header, leftPlate, results, strip, well, detail, sortStrip, viewStrip, searchRect, filterRow;
         float scopeCaptionY = 0.0f, typeCaptionY = 0.0f, styleCaptionY = 0.0f, chipsBottom = 0.0f;
     };
 
@@ -167,11 +171,20 @@ private:
 
     void buildFilterChips();
     void layoutAll();
+    void layoutDescription();
     void rebuildFilter();
     void updateSelectionWidgets();
     void clearFilters();
     bool anyFilterActive() const;
+    int activeFilterCount() const;
+    bool isLoaded(const Entry& e) const { return loadedKey.isNotEmpty() && e.key == loadedKey; }
     void loadSelected();
+    void revertToOpening();
+    void captureOpening();
+    bool canRevert() const;
+    void syncLoaded();
+    void pollLoaded();
+    void setCompactRows(bool compact, bool persist);
     void deleteSelected();
     void saveCurrentPreset(const juce::String& name, bool overwrite = false);
     void stepSelection(int delta);
@@ -199,6 +212,15 @@ private:
     std::uint32_t styleFilter = 0;
     int sortMode = 0;                    // bank, A-Z, Z-A, type, newest
     bool restoringSelection = false;
+    bool compactRows = false;            // 44 px rows instead of full cards (remembered with the favourites)
+
+    // The sound that is loaded now (marked in the list) and the one that was
+    // loaded when the library opened (what REVERT returns to).
+    juce::String loadedKey;
+    bool hasOpening = false;
+    juce::String openingName;
+    int openingIndex = -1;
+    cs80::ParamValues openingValues;
 
     // Scroll animation.
     double scrollTarget = 0.0;
@@ -211,21 +233,24 @@ private:
     GlassField search { GlassField::Icon::search };
     PlateButton clearSearch { "CLEAR SEARCH", PlateButton::Kind::clear };
     std::vector<std::unique_ptr<PlateButton>> sortButtons;
+    std::vector<std::unique_ptr<PlateButton>> viewButtons;
     std::vector<std::unique_ptr<ChipButton>> scopeChips;
     std::vector<std::unique_ptr<ChipButton>> typeChips;
     std::vector<std::unique_ptr<ChipButton>> styleChips;
-    PlateButton resetButton { "CLEAR ALL FILTERS" };
+    PlateButton resetButton { "CLEAR ALL" };
     PlateButton emptyResetButton { "CLEAR ALL FILTERS" };
 
     std::unique_ptr<ResultList> list;
     std::unique_ptr<RailBar> rail;
     std::unique_ptr<HoverTracker> hoverTracker;
+    std::unique_ptr<Watcher> watcher;
 
     PlateButton favouriteButton { "Favourite", PlateButton::Kind::star };
     PlateButton previousButton { "PREV", PlateButton::Kind::previous };
     PlateButton nextButton { "NEXT", PlateButton::Kind::next };
     GlassField saveName;
     PlateButton loadButton { "LOAD", PlateButton::Kind::primary };
+    PlateButton revertButton { "REVERT" };
     PlateButton deleteButton { "DELETE", PlateButton::Kind::danger };
     PlateButton saveButton { "SAVE AS" };
     PlateButton closeButton { "CLOSE", PlateButton::Kind::close };
