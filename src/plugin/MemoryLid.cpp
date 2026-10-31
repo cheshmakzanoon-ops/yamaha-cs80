@@ -181,7 +181,34 @@ void MemoryLid::mouseExit(const juce::MouseEvent& e)
     }
 }
 
+unsigned MemoryLid::activeRowMask() const noexcept
+{
+    unsigned mask = 0;
+    for (int bank = 0; bank < 4; ++bank)
+        if (rowActive[(size_t) bank]) mask |= 1u << bank;
+    return mask;
+}
+
 void MemoryLid::paint(juce::Graphics& g)
+{
+    const float pixelScale = juce::jmax(1.0f, g.getInternalContext().getPhysicalPixelScaleFactor());
+    const auto rows = activeRowMask();
+    if (artCache.isNull() || artBounds != getLocalBounds() || artPixelScale != pixelScale || artRows != rows)
+    {
+        artBounds = getLocalBounds();
+        artPixelScale = pixelScale;
+        artRows = rows;
+        artCache = juce::Image(juce::Image::ARGB, juce::jmax(1, juce::roundToInt((float) getWidth() * pixelScale)),
+                               juce::jmax(1, juce::roundToInt((float) getHeight() * pixelScale)), true);
+        juce::Graphics ig(artCache);
+        ig.addTransform(juce::AffineTransform::scale((float) artCache.getWidth() / (float) juce::jmax(1, getWidth()),
+                                                     (float) artCache.getHeight() / (float) juce::jmax(1, getHeight())));
+        paintArt(ig);
+    }
+    g.drawImage(artCache, getLocalBounds().toFloat());
+}
+
+void MemoryLid::paintArt(juce::Graphics& g)
 {
     const float scale = (float) getWidth() / kW;
     FloorScope floor(scale);

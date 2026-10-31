@@ -57,6 +57,9 @@ private:
         std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> buttonAttachment;
     };
 
+    // The lid's own art (hinge, rim, crinkle plate, captions, row frames) for the current rows.
+    void paintArt(juce::Graphics& g);
+    unsigned activeRowMask() const noexcept;
     Item* findItem(const juce::Component* c);
     void track(const juce::MouseEvent& e);
     static juce::String sourceName(int source, int channel);
@@ -72,6 +75,12 @@ private:
     Item* hovered = nullptr;
     Item* lastTouched = nullptr;
     std::array<bool, 4> rowActive { false, false, false, false };
+    // The art is expensive (brushed metal, crinkle tile, four etched rows) and every slider move repaints the
+    // part of the lid under it, so it is rendered once per size, pixel scale and lit-row set and then blitted.
+    juce::Image artCache;
+    juce::Rectangle<int> artBounds;
+    float artPixelScale = 0.0f;
+    unsigned artRows = ~0u;
     KeyButton close { "CLOSE LID", KeyButton::Style::plate };
     std::array<std::unique_ptr<KeyButton>, 4> bankButtons;
     std::vector<Item> items;
