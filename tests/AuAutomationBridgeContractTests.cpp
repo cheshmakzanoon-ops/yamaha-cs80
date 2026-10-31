@@ -4,11 +4,14 @@
 #include "plugin/AuAutomationQueue.h"
 #include "Ws1Tolerances.h"
 #include <array>
+#include <atomic>
 #include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <filesystem>
 #include <iostream>
 #include <memory>
+#include <thread>
 #include <vector>
 
 using UInt32 = std::uint32_t;
@@ -30,9 +33,11 @@ class AudioProcessorParameter
 {
 public:
     virtual ~AudioProcessorParameter()=default;
-    float value=0.2f;
-    float getValue() const {return value;}
-    void setValueNotifyingHost(float next){value=next;}
+    float value=0.2f, projectionOffset=0.0f;
+    void* observerContext=nullptr;
+    void (*duringSet)(void*)=nullptr;
+    float getValue() const {return value+projectionOffset;}
+    void setValueNotifyingHost(float next){value=next;if(duringSet!=nullptr)duringSet(observerContext);}
 };
 }
 using juce::AudioProcessorParameter;
@@ -67,6 +72,33 @@ class JuceAU:public Base
     OSStatus SetParameter(UInt32 parameter,UInt32,UInt32,float value,UInt32)
     {if(auto* p=getParameterForAUParameterID(parameter)){p->setValueNotifyingHost(value);return noErr;}return kAudioUnitErr_InvalidParameter;}
     #include "plugin/AuAutomationHooks.inc"
+    // Keep the original reviewed JUCE GetParameter expression as the fallback
+    // so the same witness can run before publication support exists. There is
+    // no skipped assertion: that original path must fail the exact knot gate.
+    template<class Unit> static float readPublished(Unit& unit,AudioProcessorParameter& parameter)
+    {
+        if constexpr(requires {unit.cs80ReadAuParameter(parameter);})
+            return unit.cs80ReadAuParameter(parameter);
+        return parameter.getValue();
+    }
+    template<class Unit> static void notifyExternal(Unit& unit,AudioProcessorParameter& parameter)
+    {if constexpr(requires {unit.cs80InvalidateAuParameter(parameter);})unit.cs80InvalidateAuParameter(parameter);}
+    template<class Unit> static void resetPublication(Unit& unit)
+    {if constexpr(requires {unit.cs80ResetAuPublications();})unit.cs80ResetAuPublications();}
+    template<class Unit> static float readPair(Unit& unit,float current)
+    {
+        if constexpr(requires {unit.cs80AuPublications[0].read(current);})
+            return unit.cs80AuPublications[0].read(current);
+        return current;
+    }
+    template<class Unit> static void publishPair(Unit& unit,float normalized,float current)
+    {
+        if constexpr(requires {unit.cs80AuPublications[0].begin();})
+        {
+            auto& publication=unit.cs80AuPublications[0];
+            const auto token=publication.begin();publication.publish(token,normalized,current);
+        }
+    }
 public:
     std::vector<double> render(int frames)
     {
@@ -79,6 +111,17 @@ public:
     void setModern(bool value){juceFilter->modern=value;}
     void setCurrent(float value){juceFilter->parameters[0].value=value;}
     float value()const{return juceFilter->parameters[0].getValue();}
+    float hostValue(){return readPublished(*this,juceFilter->parameters[0]);}
+    void projectionOffset(float value){juceFilter->parameters[0].projectionOffset=value;}
+    void notifyExternal(){notifyExternal(*this,juceFilter->parameters[0]);}
+    void resetPublication(){resetPublication(*this);}
+    float readPair(float current){return readPair(*this,current);}
+    void publishPair(float normalized,float current){publishPair(*this,normalized,current);}
+    void invalidateDuringCommit()
+    {
+        auto& parameter=juceFilter->parameters[0];parameter.observerContext=this;
+        parameter.duringSet=[](void* context){static_cast<JuceAU*>(context)->notifyExternal();};
+    }
     OSStatus direct(float value,UInt32 offset){return cs80ScheduleAuImmediate(juceFilter->parameters[0],value,offset);}
 };
 AudioUnitParameterEvent immediate(UInt32 offset,float value)
@@ -90,6 +133,9 @@ int main(int argc,char** argv)
     int failures=0;const auto check=[&](bool pass,const char* text){if(!pass){++failures;std::cerr<<"FAIL: "<<text<<'\n';}};
     try {
         const ws1::Tolerances limits(argc>1?argv[1]:"tests/parity/tolerances-v2/host-automation.json","host_automation");
+        const ws1::Tolerances publicationLimits((std::filesystem::path(argc>1?argv[1]:
+            "tests/parity/tolerances-v2/host-automation.json").parent_path()/"au-normalized-publication.json").string(),
+            "au_normalized_publication");
         const auto close=[&](double a,double b){return std::abs(a-b)<=limits["normalized_curve_error"];};
         JuceAU unit;
         const std::array events {ramp(-4,8,0.1f,0.9f),immediate(9,0.3f),ramp(12,24,0.3f,0.7f)};
@@ -125,6 +171,63 @@ int main(int argc,char** argv)
         bad=immediate(0,0.7f);bad.scope=1;
         check(invalid.ScheduleParameter(&bad,1)==kAudioUnitErr_InvalidScope,"AU hook rejects unsupported scope");
         check(invalid.ScheduleParameter(nullptr,1)==kAudioUnitErr_InvalidParameter,"AU hook rejects null event storage");
+
+        // Model the independently proven nonidentity storage round trip without
+        // depending on this machine's floating-point contraction or libm. The
+        // real Intel AU witness supplies the physical-range evidence separately.
+        JuceAU publication;
+        publication.projectionOffset(0x1p-23f);
+        const auto same=[&](float a,float b,const char* limit){return std::abs(double(a)-double(b))<=publicationLimits[limit];};
+        check(same(publication.hostValue(),publication.value(),"external_readback_error"),
+              "unpublished AU parameter retains its original storage getter");
+        constexpr float accepted=0.62851631641387939f;
+        const auto publish=[&] {
+            const auto event=immediate(0,accepted);
+            check(publication.ScheduleParameter(&event,1)==noErr,"AU publication witness schedules an accepted Float32");
+            check(publication.render(1).size()==1,"AU publication witness renders its complete event");
+        };
+        publish();
+        check(publication.value()!=accepted,"storage-projection witness has a nonzero independent positive control");
+        check(same(publication.hostValue(),accepted,"scheduled_value_error"),
+              "AU hook preserves its accepted normalized Float32 despite physical storage projection");
+        publication.setModern(false);
+        check(same(publication.hostValue(),publication.value(),"protected_readback_error"),
+              "Pure/Legacy retain the original storage getter after a modern publication");
+        publication.setModern(true);
+        publication.setCurrent(0.4f);
+        check(same(publication.hostValue(),publication.value(),"external_readback_error"),
+              "changed underlying storage supersedes the preceding AU publication");
+        publish();
+        publication.notifyExternal();
+        check(same(publication.hostValue(),publication.value(),"external_readback_error"),
+              "external notification invalidates AU ownership even with unchanged storage readback");
+        publish();
+        publication.resetPublication();
+        check(same(publication.hostValue(),publication.value(),"external_readback_error"),
+              "AU lifecycle reset discards preceding publication ownership");
+        publication.invalidateDuringCommit();
+        publish();
+        check(same(publication.hostValue(),publication.value(),"external_readback_error"),
+              "an external invalidation during commit cannot be overwritten by the older AU publication");
+        JuceAU concurrent;
+        constexpr float first=0.25f,second=0.75f,firstReadback=first+0x1p-23f,secondReadback=second+0x1p-23f;
+        std::atomic<bool> finished=false;
+        std::uint64_t incoherent=0;
+        std::thread reader([&] {
+            do {
+                const auto a=concurrent.readPair(firstReadback),b=concurrent.readPair(secondReadback);
+                if(a!=first&&a!=firstReadback)++incoherent;
+                if(b!=second&&b!=secondReadback)++incoherent;
+            } while(!finished.load());
+        });
+        for(int repeat=0;repeat<16384;++repeat)
+        {
+            concurrent.publishPair(first,firstReadback);
+            concurrent.publishPair(second,secondReadback);
+        }
+        finished.store(true);reader.join();
+        check(incoherent<=publicationLimits["incoherent_read_count"],
+              "concurrent AU readers never combine an endpoint with another publication's readback");
     }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 2;}
     return failures==0?0:1;
 }

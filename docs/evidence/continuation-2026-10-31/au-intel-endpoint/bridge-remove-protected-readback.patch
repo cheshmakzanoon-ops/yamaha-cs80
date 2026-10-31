@@ -1,0 +1,11 @@
+--- a/src/plugin/AuAutomationHooks.inc
++++ b/src/plugin/AuAutomationHooks.inc
+@@ -23,7 +23,7 @@
+     {
+         const float current = parameter.getValue();
+         const int lane = cs80AutomationIndex (parameter);
+-        if (auto* client = cs80AutomationClient(); lane >= 0 && client != nullptr && client->usesHostAutomationTiming())
++        if (auto* client = cs80AutomationClient(); lane >= 0 && client != nullptr)
+             return cs80AuPublications[static_cast<size_t> (lane)].read (current);
+         return current;
+     }

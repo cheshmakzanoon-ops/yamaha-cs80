@@ -12,6 +12,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -272,6 +273,99 @@ AudioUnitParameterEvent immediateEvent(int parameter,int offset,double value)
     event.eventValues.immediate.bufferOffset=static_cast<UInt32>(offset);event.eventValues.immediate.value=static_cast<float>(value);
     return event;
 }
+void verifyNormalizedPublication(Module& module,const cs80::ParamValues& parameters,
+                                 const ws1::Tolerances& limits)
+{
+    Instance instance(module,parameters,13);
+    unsigned checks=0,publicationFailures=0;
+    double maximumError=0;
+    const auto read=[&](int parameter) {
+        AudioUnitParameterValue value=0;
+        require(AudioUnitGetParameter(instance.unit,parameterId(cs80::paramId(parameter)),
+            kAudioUnitScope_Global,0,&value)==noErr,"AU publication readback");
+        return value;
+    };
+    const auto set=[&](int parameter,float value) {
+        require(AudioUnitSetParameter(instance.unit,parameterId(cs80::paramId(parameter)),
+            kAudioUnitScope_Global,0,value,0)==noErr,"AU publication external setter");
+    };
+    const auto verify=[&](const auto& expected,const char* limit,const char* message) {
+        for(size_t lane=0;lane<cs80::kSampleAccurateParameters.size();++lane)
+        {
+            const double error=std::abs(double(read(cs80::kSampleAccurateParameters[lane]))-expected[lane]);
+            ++checks;
+            if(error>limits[limit])++publicationFailures;
+            maximumError=std::max(maximumError,error);
+            check(error<=limits[limit],message);
+        }
+    };
+    std::array<float,cs80::kSampleAccurateParameters.size()> expected {};
+    for(int parameter:cs80::kSampleAccurateParameters)set(parameter,0.0f);
+    // Native ClassInfo reaches the processor's existing locked/synchronised
+    // state API. Exact range endpoints avoid an assumed Float32 inverse.
+    struct SavedState { CFPropertyListRef value=nullptr;~SavedState(){if(value!=nullptr)CFRelease(value);} } state;
+    UInt32 stateBytes=sizeof(state.value);
+    require(AudioUnitGetProperty(instance.unit,kAudioUnitProperty_ClassInfo,kAudioUnitScope_Global,
+        0,&state.value,&stateBytes)==noErr&&state.value!=nullptr,"AU captures the exact zero-key state");
+    std::vector<float> output;
+    int frame=0;
+    const auto eventsFor=[&](float value) {
+        std::vector<AudioUnitParameterEvent> events;
+        for(int parameter:cs80::kSampleAccurateParameters)events.push_back(immediateEvent(parameter,0,value));
+        return events;
+    };
+    for(float target:{0.62851631641387939f,0.21951219439506531f,0.7349656816f,0.0f,1.0f})
+    {
+        expected.fill(target);
+        auto events=eventsFor(target);
+        instance.process(frame++,1,events,output,false);
+        verify(expected,"scheduled_value_error","AU retains the accepted normalized Float32 immediate knot exactly");
+        for(auto& event:events)
+        {
+            event.eventType=kParameterEvent_Ramped;
+            event.eventValues.ramp.startBufferOffset=0;
+            event.eventValues.ramp.durationInFrames=7;
+            event.eventValues.ramp.startValue=0.25f;
+            event.eventValues.ramp.endValue=target;
+        }
+        instance.process(frame,8,events,output,false);frame+=8;
+        verify(expected,"scheduled_value_error","AU retains the accepted normalized Float32 ramp knot exactly");
+    }
+    for(int parameter:cs80::kSampleAccurateParameters)set(parameter,0.0f);
+    expected.fill(0.0f);
+    verify(expected,"external_readback_error","a later native offset-zero setter owns AU readback");
+    instance.process(frame++,1,eventsFor(0.62851631641387939f),output,false);
+    require(AudioUnitSetProperty(instance.unit,kAudioUnitProperty_ClassInfo,kAudioUnitScope_Global,
+        0,&state.value,sizeof(state.value))==noErr,"AU restores the captured exact zero-key state");
+    verify(expected,"external_readback_error","restored native AU state supersedes a scheduled publication");
+    instance.process(frame++,1,eventsFor(0.62851631641387939f),output,false);
+    SavedState identicalState;stateBytes=sizeof(identicalState.value);
+    require(AudioUnitGetProperty(instance.unit,kAudioUnitProperty_ClassInfo,kAudioUnitScope_Global,
+        0,&identicalState.value,&stateBytes)==noErr&&identicalState.value!=nullptr,"AU captures its current physical state");
+    require(AudioUnitSetProperty(instance.unit,kAudioUnitProperty_ClassInfo,kAudioUnitScope_Global,
+        0,&identicalState.value,sizeof(identicalState.value))==noErr,"AU restores identical physical state");
+    std::array<float,cs80::kSampleAccurateParameters.size()> restored {};
+    for(size_t lane=0;lane<restored.size();++lane)restored[lane]=read(cs80::kSampleAccurateParameters[lane]);
+    set(cs80::P_parityMode,1.0f);
+    for(size_t lane=0;lane<restored.size();++lane)
+    {
+        const double error=std::abs(double(restored[lane])-read(cs80::kSampleAccurateParameters[lane]));
+        ++checks;if(error>limits["external_readback_error"])++publicationFailures;
+        maximumError=std::max(maximumError,error);
+        check(error<=limits["external_readback_error"],"identical physical AU state restore discards normalized publication ownership");
+    }
+    set(cs80::P_parityMode,0.0f);
+    instance.process(frame++,1,eventsFor(0.62851631641387939f),output,false);
+    // Pure exposes the unchanged storage getter. Reset must discard the old
+    // modern publication without inventing a second physical projection here.
+    set(cs80::P_parityMode,1.0f);
+    for(size_t lane=0;lane<expected.size();++lane)expected[lane]=read(cs80::kSampleAccurateParameters[lane]);
+    set(cs80::P_parityMode,0.0f);
+    require(AudioUnitReset(instance.unit,kAudioUnitScope_Global,0)==noErr,"AU lifecycle reset");
+    verify(expected,"external_readback_error","native AU reset discards preceding publication ownership");
+    std::cout<<"native AU normalized publication checks="<<checks<<" failures="<<publicationFailures
+        <<" maximum error="<<std::setprecision(std::numeric_limits<double>::max_digits10)<<maximumError<<'\n';
+}
 enum class Kind { ramp, immediate, scalarRamp, scalarImmediate, flatImmediate, off, directImmediate };
 std::vector<float> render(Module& module,const cs80::ParamValues& parameters,const Curves& curves,int block,
                           Kind kind,int source=13)
@@ -346,10 +440,13 @@ int main(int argc,char** argv)
     try {
         require(argc==3,"usage: cs80_au_automation_host_tests COMPONENT TOLERANCES");
         const ws1::Tolerances limits(argv[2],"host_automation");
+        const ws1::Tolerances publicationLimits((std::filesystem::path(argv[2]).parent_path()
+            /"au-normalized-publication.json").string(),"au_normalized_publication");
         curveTolerance=limits["normalized_curve_error"];
         Module module(argv[1]);
         auto parameters=cs80::defaultValues();parameters[cs80::P_sourcePerformance]=1;parameters[cs80::P_parityMode]=0;
         parameters[cs80::P_drift]=parameters[cs80::P_voiceDispersion]=parameters[cs80::P_analogNoise]=0;
+        verifyNormalizedPublication(module,parameters,publicationLimits);
         const auto curves=curvesFor(parameters);
         const auto scalarRamp=render(module,parameters,curves,1,Kind::scalarRamp);
         const auto scalarStep=render(module,parameters,curves,1,Kind::scalarImmediate);

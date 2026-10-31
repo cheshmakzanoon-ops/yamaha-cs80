@@ -1,0 +1,1259 @@
+﻿2026-10-31T21:37:58.8795810Z Current runner version: '2.338.2'
+2026-10-31T21:37:58.8828740Z ##[group]Runner Image Provisioner
+2026-10-31T21:37:58.8845040Z Hosted Compute Agent
+2026-10-31T21:37:58.8845750Z Version: 20260819.586
+2026-10-31T21:37:58.8846500Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+2026-10-31T21:37:58.8847360Z Build Date: 2026-08-18T23:20:18Z
+2026-10-31T21:37:58.8848140Z Worker ID: {32222282-f2b4-4219-9c7e-618ff470d631}
+2026-10-31T21:37:58.8848990Z Azure Region: westus
+2026-10-31T21:37:58.8849640Z ##[endgroup]
+2026-10-31T21:37:58.8851750Z ##[group]Operating System
+2026-10-31T21:37:58.8852470Z macOS
+2026-10-31T21:37:58.8853050Z 15.7.9
+2026-10-31T21:37:58.8853620Z 24G830
+2026-10-31T21:37:58.8854360Z ##[endgroup]
+2026-10-31T21:37:58.8855660Z ##[group]Runner Image
+2026-10-31T21:37:58.8856690Z Image: macos-15
+2026-10-31T21:37:58.8857340Z Version: 20260824.0482.1
+2026-10-31T21:37:58.8859280Z Included Software: https://github.com/actions/runner-images/blob/macos-15/20260824.0482/images/macos/macos-15-Readme.md
+2026-10-31T21:37:58.8861940Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15%2F20260824.0482
+2026-10-31T21:37:58.8863250Z ##[endgroup]
+2026-10-31T21:37:58.8865150Z ##[group]GITHUB_TOKEN Permissions
+2026-10-31T21:37:58.8868590Z Contents: read
+2026-10-31T21:37:58.8869460Z Metadata: read
+2026-10-31T21:37:58.8870110Z Packages: read
+2026-10-31T21:37:58.8870740Z ##[endgroup]
+2026-10-31T21:37:58.8873580Z Secret source: Actions
+2026-10-31T21:37:58.8874670Z Cache mode: write
+2026-10-31T21:37:58.8876790Z Prepare workflow directory
+2026-10-31T21:37:58.9383920Z Prepare all required actions
+2026-10-31T21:37:58.9451760Z Getting action download info
+2026-10-31T21:37:59.1404410Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-10-31T21:37:59.3361010Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-10-31T21:37:59.6445630Z Complete job name: macOS / macos-15-intel / VST3 + AU + Standalone
+2026-10-31T21:37:59.7768150Z ##[group]Run actions/checkout@v5
+2026-10-31T21:37:59.7769700Z with:
+2026-10-31T21:37:59.7770450Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T21:37:59.7776900Z   token: ***
+2026-10-31T21:37:59.7777780Z   ssh-strict: true
+2026-10-31T21:37:59.7778450Z   ssh-user: git
+2026-10-31T21:37:59.7779120Z   persist-credentials: true
+2026-10-31T21:37:59.7779880Z   clean: true
+2026-10-31T21:37:59.7780580Z   sparse-checkout-cone-mode: true
+2026-10-31T21:37:59.7781410Z   fetch-depth: 1
+2026-10-31T21:37:59.7782080Z   fetch-tags: false
+2026-10-31T21:37:59.7782760Z   show-progress: true
+2026-10-31T21:37:59.7783440Z   lfs: false
+2026-10-31T21:37:59.7784080Z   submodules: false
+2026-10-31T21:37:59.7784760Z   set-safe-directory: true
+2026-10-31T21:37:59.7785540Z   allow-unsafe-pr-checkout: false
+2026-10-31T21:37:59.7787140Z ##[endgroup]
+2026-10-31T21:38:00.1179820Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T21:38:00.1183190Z ##[group]Getting Git version info
+2026-10-31T21:38:00.1184860Z Working directory is '/Users/runner/work/yamaha-cs80/yamaha-cs80'
+2026-10-31T21:38:00.1186640Z [command]/usr/local/bin/git version
+2026-10-31T21:38:00.1482310Z git version 2.55.0
+2026-10-31T21:38:00.1507910Z ##[endgroup]
+2026-10-31T21:38:00.1517940Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/39d76662-a87e-4ea1-a5c0-544f9a2a4c72/.gitconfig'
+2026-10-31T21:38:00.1533190Z Temporarily overriding HOME='/Users/runner/work/_temp/39d76662-a87e-4ea1-a5c0-544f9a2a4c72' before making global git config changes
+2026-10-31T21:38:00.1536260Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-31T21:38:00.1540660Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/yamaha-cs80/yamaha-cs80
+2026-10-31T21:38:00.1706000Z Deleting the contents of '/Users/runner/work/yamaha-cs80/yamaha-cs80'
+2026-10-31T21:38:00.1710410Z ##[group]Initializing the repository
+2026-10-31T21:38:00.1720060Z [command]/usr/local/bin/git init /Users/runner/work/yamaha-cs80/yamaha-cs80
+2026-10-31T21:38:00.2074840Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-31T21:38:00.2076500Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-31T21:38:00.2078040Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-31T21:38:00.2079270Z hint: call:
+2026-10-31T21:38:00.2079930Z hint:
+2026-10-31T21:38:00.2080730Z hint: 	git config --global init.defaultBranch <name>
+2026-10-31T21:38:00.2081900Z hint:
+2026-10-31T21:38:00.2082850Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-31T21:38:00.2085150Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-31T21:38:00.2087320Z hint:
+2026-10-31T21:38:00.2088030Z hint: 	git branch -m <name>
+2026-10-31T21:38:00.2088810Z hint:
+2026-10-31T21:38:00.2090290Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-31T21:38:00.2092520Z Initialized empty Git repository in /Users/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-10-31T21:38:00.2097340Z [command]/usr/local/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T21:38:00.2255530Z ##[endgroup]
+2026-10-31T21:38:00.2257110Z ##[group]Disabling automatic garbage collection
+2026-10-31T21:38:00.2259540Z [command]/usr/local/bin/git config --local gc.auto 0
+2026-10-31T21:38:00.2385340Z ##[endgroup]
+2026-10-31T21:38:00.2386650Z ##[group]Setting up auth
+2026-10-31T21:38:00.2392980Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T21:38:00.2510370Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-31T21:38:00.4089710Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T21:38:00.4162090Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-31T21:38:00.5603510Z [command]/usr/local/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T21:38:00.5687900Z [command]/usr/local/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-31T21:38:00.8059190Z [command]/usr/local/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-31T21:38:00.8416430Z ##[endgroup]
+2026-10-31T21:38:00.8424900Z ##[group]Fetching the repository
+2026-10-31T21:38:00.8448990Z [command]/usr/local/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ce8b127f7ee9466ca6f2627131ff6311bd031b47:refs/remotes/origin/finish/cs80-qualification-20261031
+2026-10-31T21:38:03.1138680Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T21:38:03.1145760Z  * [new ref]         ce8b127f7ee9466ca6f2627131ff6311bd031b47 -> origin/finish/cs80-qualification-20261031
+2026-10-31T21:38:03.1149330Z ##[endgroup]
+2026-10-31T21:38:03.1150260Z ##[group]Determining the checkout info
+2026-10-31T21:38:03.1151230Z ##[endgroup]
+2026-10-31T21:38:03.1151980Z [command]/usr/local/bin/git sparse-checkout disable
+2026-10-31T21:38:03.1269650Z [command]/usr/local/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-31T21:38:03.1367790Z ##[group]Checking out the ref
+2026-10-31T21:38:03.1377820Z [command]/usr/local/bin/git checkout --progress --force -B finish/cs80-qualification-20261031 refs/remotes/origin/finish/cs80-qualification-20261031
+2026-10-31T21:38:04.0005870Z Switched to a new branch 'finish/cs80-qualification-20261031'
+2026-10-31T21:38:04.0127250Z branch 'finish/cs80-qualification-20261031' set up to track 'origin/finish/cs80-qualification-20261031'.
+2026-10-31T21:38:04.0365790Z ##[endgroup]
+2026-10-31T21:38:04.0370390Z [command]/usr/local/bin/git log -1 --format=%H
+2026-10-31T21:38:04.0371930Z ce8b127f7ee9466ca6f2627131ff6311bd031b47
+2026-10-31T21:38:04.0575820Z ##[group]Run uname -m
+2026-10-31T21:38:04.0576590Z [36;1muname -m[0m
+2026-10-31T21:38:04.0577090Z [36;1msw_vers[0m
+2026-10-31T21:38:04.0577590Z [36;1mxcodebuild -version[0m
+2026-10-31T21:38:04.0645540Z shell: /bin/bash -e {0}
+2026-10-31T21:38:04.0646160Z ##[endgroup]
+2026-10-31T21:38:04.0877830Z x86_64
+2026-10-31T21:38:04.1016230Z ProductName:		macOS
+2026-10-31T21:38:04.1021480Z ProductVersion:		15.7.9
+2026-10-31T21:38:04.1022560Z BuildVersion:		24G830
+2026-10-31T21:38:04.1963920Z Xcode 16.4
+2026-10-31T21:38:04.1969640Z Build version 16F6
+2026-10-31T21:38:04.2048200Z ##[group]Run cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+2026-10-31T21:38:04.2049920Z [36;1mcmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON[0m
+2026-10-31T21:38:04.2107600Z shell: /bin/bash -e {0}
+2026-10-31T21:38:04.2108170Z ##[endgroup]
+2026-10-31T21:38:06.7275370Z -- The C compiler identification is AppleClang 17.0.0.17000013
+2026-10-31T21:38:08.5983520Z -- The CXX compiler identification is AppleClang 17.0.0.17000013
+2026-10-31T21:38:08.7045590Z -- Detecting C compiler ABI info
+2026-10-31T21:38:09.0153400Z -- Detecting C compiler ABI info - done
+2026-10-31T21:38:09.0718610Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-10-31T21:38:09.0740570Z -- Detecting C compile features
+2026-10-31T21:38:09.0741380Z -- Detecting C compile features - done
+2026-10-31T21:38:09.0885790Z -- Detecting CXX compiler ABI info
+2026-10-31T21:38:09.3840400Z -- Detecting CXX compiler ABI info - done
+2026-10-31T21:38:09.4859810Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-10-31T21:38:09.5002340Z -- Detecting CXX compile features
+2026-10-31T21:38:09.5010360Z -- Detecting CXX compile features - done
+2026-10-31T21:38:09.9446400Z -- Found Python3: /usr/local/Frameworks/Python.framework/Versions/3.14/bin/python3.14 (found suitable version "3.14.7", minimum required is "3.10") found components: Interpreter
+2026-10-31T21:38:09.9529390Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-10-31T21:38:10.3963230Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-10-31T21:38:10.4046240Z -- Found Threads: TRUE
+2026-10-31T21:38:48.0009750Z -- Configuring juceaide
+2026-10-31T21:38:49.4417160Z -- Building juceaide
+2026-10-31T21:39:30.2131770Z -- Exporting juceaide
+2026-10-31T21:39:30.2155230Z -- Testing juceaide
+2026-10-31T21:39:30.4726890Z -- Finished setting up juceaide
+2026-10-31T21:39:30.7588290Z -- Found Python3: /usr/local/Frameworks/Python.framework/Versions/3.14/bin/python3.14 (found version "3.14.7") found components: Interpreter
+2026-10-31T21:39:32.6578260Z -- Configuring done (88.3s)
+2026-10-31T21:39:32.8228830Z -- Generating done (0.2s)
+2026-10-31T21:39:32.8271260Z -- Build files have been written to: /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+2026-10-31T21:39:32.8423130Z ##[group]Run cmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake
+2026-10-31T21:39:32.8425760Z [36;1mcmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake[0m
+2026-10-31T21:39:32.8487290Z shell: /bin/bash -e {0}
+2026-10-31T21:39:32.8487780Z ##[endgroup]
+2026-10-31T21:39:33.0597460Z -- Verified clean JUCE 8.0.11 at c352e2489000ffeb9e397051377d75eef2efe641; evidence: /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ci-juce-provenance.txt
+2026-10-31T21:39:33.0661960Z ##[group]Run cmake --build build --parallel
+2026-10-31T21:39:33.0662650Z [36;1mcmake --build build --parallel[0m
+2026-10-31T21:39:33.0718970Z shell: /bin/bash -e {0}
+2026-10-31T21:39:33.0719530Z ##[endgroup]
+2026-10-31T21:39:33.1150540Z [0/2] Re-checking globbed directories...
+2026-10-31T21:39:33.2390380Z [1/318] Copying OS X Content 'CS80Reference_artefacts/Release/Standalone/CS-80 Reference.app/Contents/Resources/RecentFilesMenuTemplate.nib'
+2026-10-31T21:39:33.7729230Z [2/318] Generating juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/PanelFontData.h
+2026-10-31T21:39:34.0364880Z [3/318] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp.o
+2026-10-31T21:39:34.3746270Z [4/318] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp.o
+2026-10-31T21:39:36.4549760Z [5/318] Building CXX object CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o
+2026-10-31T21:39:41.6518640Z [6/318] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-10-31T21:39:42.6181980Z [7/318] Building CXX object CMakeFiles/CS80Reference_vst3_helper.dir/_deps/juce-src/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.mm.o
+2026-10-31T21:39:44.9897500Z [8/318] Building CXX object CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o
+2026-10-31T21:39:45.5643430Z [9/318] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-10-31T21:39:45.6179410Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Engine.cpp:1:
+2026-10-31T21:39:45.6860550Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Engine.h:791:10: warning: private field 'ringGate' is not used [-Wunused-private-field]
+2026-10-31T21:39:45.7863830Z   791 |     bool ringGate = false;
+2026-10-31T21:39:45.8822020Z       |          ^
+2026-10-31T21:39:45.9400840Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Engine.h:792:10: warning: private field 'anyVoiceWasActive' is not used [-Wunused-private-field]
+2026-10-31T21:39:45.9892410Z   792 |     bool anyVoiceWasActive = false;
+2026-10-31T21:39:46.0894880Z       |          ^
+2026-10-31T21:39:46.1602360Z 2 warnings generated.
+2026-10-31T21:39:49.3411390Z [10/318] Linking CXX static library libcs80_core.a
+2026-10-31T21:39:52.4466300Z [11/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessor.cpp.o
+2026-10-31T21:39:57.0140240Z [12/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/MtsEspClient.cpp.o
+2026-10-31T21:40:00.9114540Z [13/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ParameterContext.cpp.o
+2026-10-31T21:40:01.0117810Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ParameterContext.cpp:5:
+2026-10-31T21:40:01.1121080Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:01.2127010Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:01.3073060Z       |          ^
+2026-10-31T21:40:01.3553720Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:01.4557420Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:01.5561350Z       |          ^
+2026-10-31T21:40:01.6403030Z 1 warning generated.
+2026-10-31T21:40:10.1483670Z [14/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/UiComponents.cpp.o
+2026-10-31T21:40:10.2486060Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.cpp:1:
+2026-10-31T21:40:10.3489790Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:10.4489340Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:10.5492150Z       |          ^
+2026-10-31T21:40:10.6498370Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:10.7499270Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:10.8501720Z       |          ^
+2026-10-31T21:40:10.9505070Z 1 warning generated.
+2026-10-31T21:40:13.1948640Z [15/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessorAutomation.cpp.o
+2026-10-31T21:40:14.6434950Z [16/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginEditor.cpp.o
+2026-10-31T21:40:14.7081370Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PluginEditor.cpp:6:
+2026-10-31T21:40:14.8122180Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-10-31T21:40:14.9126220Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-10-31T21:40:15.0129610Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:15.1131450Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:15.2133280Z       |          ^
+2026-10-31T21:40:15.3136230Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:15.3892110Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:15.4894930Z       |          ^
+2026-10-31T21:40:15.5897210Z 1 warning generated.
+2026-10-31T21:40:18.7802330Z [17/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/KeyboardTuningPage.cpp.o
+2026-10-31T21:40:18.8804570Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/KeyboardTuningPage.cpp:5:
+2026-10-31T21:40:18.9807180Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:19.0808040Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:19.1809160Z       |          ^
+2026-10-31T21:40:19.2811810Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:19.3812120Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:19.4814240Z       |          ^
+2026-10-31T21:40:19.5433560Z 1 warning generated.
+2026-10-31T21:40:22.8972150Z [18/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PresetBrowser.cpp.o
+2026-10-31T21:40:22.9977020Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.cpp:1:
+2026-10-31T21:40:23.0979390Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.h:3:
+2026-10-31T21:40:23.1400410Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:23.2410470Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:23.3411660Z       |          ^
+2026-10-31T21:40:23.3967890Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:23.4973030Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:23.5356850Z       |          ^
+2026-10-31T21:40:23.6360020Z 1 warning generated.
+2026-10-31T21:40:24.8818360Z [19/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ModernLayerState.cpp.o
+2026-10-31T21:40:32.7488200Z [20/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessorLibrary.cpp.o
+2026-10-31T21:40:35.1424250Z [21/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ArtCommon.cpp.o
+2026-10-31T21:40:35.2425420Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ArtCommon.cpp:3:
+2026-10-31T21:40:35.3427460Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:35.4428640Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:35.5432530Z       |          ^
+2026-10-31T21:40:35.6437000Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:35.7437500Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:35.8406690Z       |          ^
+2026-10-31T21:40:35.9214050Z 1 warning generated.
+2026-10-31T21:40:38.5207590Z [22/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ModernModulationUi.cpp.o
+2026-10-31T21:40:38.6209350Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ModernModulationUi.cpp:5:
+2026-10-31T21:40:38.7212430Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:38.8212010Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:38.9215070Z       |          ^
+2026-10-31T21:40:39.0219000Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:39.1225650Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:39.2229730Z       |          ^
+2026-10-31T21:40:39.3234750Z 1 warning generated.
+2026-10-31T21:40:40.2251080Z [23/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/AdvancedPanel.cpp.o
+2026-10-31T21:40:40.3255100Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.cpp:1:
+2026-10-31T21:40:40.4261940Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-10-31T21:40:40.4547550Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-10-31T21:40:40.5552950Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:40.6557880Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:40.7564700Z       |          ^
+2026-10-31T21:40:40.8360430Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:40.9365170Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:41.0367980Z       |          ^
+2026-10-31T21:40:41.1364340Z 1 warning generated.
+2026-10-31T21:40:46.1279510Z [24/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PanelWidgets.cpp.o
+2026-10-31T21:40:46.2281100Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.cpp:1:
+2026-10-31T21:40:46.3283670Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:40:46.4287000Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:46.5286950Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:46.6292100Z       |          ^
+2026-10-31T21:40:46.7294900Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:46.8296220Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:46.9297980Z       |          ^
+2026-10-31T21:40:46.9580290Z 1 warning generated.
+2026-10-31T21:40:47.0583540Z [25/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ChannelRow.cpp.o
+2026-10-31T21:40:47.0585500Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.cpp:1:
+2026-10-31T21:40:47.1589390Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.h:3:
+2026-10-31T21:40:47.2593760Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:40:47.3602910Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:47.4607710Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:47.5414730Z       |          ^
+2026-10-31T21:40:47.6418940Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:47.6988200Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:47.7995330Z       |          ^
+2026-10-31T21:40:47.8998050Z 1 warning generated.
+2026-10-31T21:40:48.0002540Z [26/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/EditorPreferences.cpp.o
+2026-10-31T21:40:55.2162380Z [27/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/CentreRow.cpp.o
+2026-10-31T21:40:55.3164390Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.cpp:1:
+2026-10-31T21:40:55.4166250Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.h:3:
+2026-10-31T21:40:55.5168370Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:40:55.6172300Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:40:55.7172590Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:40:55.8175590Z       |          ^
+2026-10-31T21:40:55.9180050Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:40:56.0181880Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:40:56.1183040Z       |          ^
+2026-10-31T21:40:56.2190710Z 1 warning generated.
+2026-10-31T21:41:02.3929340Z [28/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PerformanceDeck.cpp.o
+2026-10-31T21:41:02.4930870Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.cpp:1:
+2026-10-31T21:41:02.5935140Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.h:3:
+2026-10-31T21:41:02.6937520Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:41:02.7943510Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:41:02.8943400Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:41:02.9945260Z       |          ^
+2026-10-31T21:41:03.0948860Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:41:03.1950140Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:41:03.2950810Z       |          ^
+2026-10-31T21:41:03.3953190Z 1 warning generated.
+2026-10-31T21:41:08.7912630Z [29/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/UndoHistory.cpp.o
+2026-10-31T21:41:09.9886290Z [30/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/MemoryLid.cpp.o
+2026-10-31T21:41:10.0887180Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.cpp:1:
+2026-10-31T21:41:10.1890930Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.h:3:
+2026-10-31T21:41:10.2893220Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:41:10.3284080Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:41:10.4289240Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:41:10.5292800Z       |          ^
+2026-10-31T21:41:10.6295610Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:41:10.7300660Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:41:10.8160830Z       |          ^
+2026-10-31T21:41:10.9163700Z 1 warning generated.
+2026-10-31T21:41:15.7236800Z [31/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/StudioDrawers.cpp.o
+2026-10-31T21:41:15.8241320Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.cpp:1:
+2026-10-31T21:41:15.8753820Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.h:3:
+2026-10-31T21:41:15.9576780Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:41:16.1038560Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:41:16.2041880Z       |          ^
+2026-10-31T21:41:16.3045570Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:41:16.4046830Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:41:16.5051940Z       |          ^
+2026-10-31T21:41:16.6054360Z 1 warning generated.
+2026-10-31T21:41:19.0843460Z [32/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/StudioTour.cpp.o
+2026-10-31T21:41:19.1844560Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.cpp:1:
+2026-10-31T21:41:19.2849200Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.h:3:
+2026-10-31T21:41:19.3855110Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:41:19.4273350Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:41:19.5274310Z       |          ^
+2026-10-31T21:41:19.5278640Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:41:19.6283200Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:41:19.7286750Z       |          ^
+2026-10-31T21:41:19.8289660Z 1 warning generated.
+2026-10-31T21:41:20.8704740Z [33/318] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/StudioToolbar.cpp.o
+2026-10-31T21:41:20.9707310Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.cpp:1:
+2026-10-31T21:41:21.0708700Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.h:3:
+2026-10-31T21:41:21.1713950Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:41:21.2719740Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:41:21.3713230Z       |          ^
+2026-10-31T21:41:21.4609990Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:41:21.5614540Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:41:21.6616610Z       |          ^
+2026-10-31T21:41:21.7414490Z 1 warning generated.
+2026-10-31T21:41:22.1128350Z [34/318] Building C object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+2026-10-31T21:41:44.5014240Z [35/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_events/juce_events.mm.o
+2026-10-31T21:41:44.6019040Z [36/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_core/juce_core_CompilationTime.cpp.o
+2026-10-31T21:41:46.9040880Z [37/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.mm.o
+2026-10-31T21:41:55.4749980Z [38/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.mm.o
+2026-10-31T21:41:55.5759970Z [39/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+2026-10-31T21:41:55.6596330Z [40/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+2026-10-31T21:41:59.4910600Z [41/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_data_structures/juce_data_structures.mm.o
+2026-10-31T21:42:39.3693200Z [42/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.mm.o
+2026-10-31T21:42:43.0728680Z [43/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_basics/juce_audio_basics.mm.o
+2026-10-31T21:43:08.1844220Z [44/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_core/juce_core.mm.o
+2026-10-31T21:43:19.4327180Z [45/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_utils/juce_audio_utils.mm.o
+2026-10-31T21:43:24.3476400Z [46/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+2026-10-31T21:43:24.5898870Z [47/318] Linking CXX static library libcs80_panel_fonts.a
+2026-10-31T21:43:25.1063160Z [48/318] Linking CXX executable CS80Reference_vst3_helper
+2026-10-31T21:43:32.8318520Z [49/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_graphics/juce_graphics.mm.o
+2026-10-31T21:43:36.0229310Z [50/318] Building CXX object CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o
+2026-10-31T21:43:38.5063320Z [51/318] Building CXX object CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o
+2026-10-31T21:43:39.0087470Z [52/318] Building CXX object CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o
+2026-10-31T21:43:44.0495110Z [53/318] Building CXX object CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o
+2026-10-31T21:43:45.9070330Z [54/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_formats/juce_audio_formats.mm.o
+2026-10-31T21:43:46.5306200Z [55/318] Building CXX object CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o
+2026-10-31T21:43:49.8003820Z [56/318] Building CXX object CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o
+2026-10-31T21:43:53.2271540Z [57/318] Building CXX object CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o
+2026-10-31T21:43:54.8947450Z [58/318] Building CXX object CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o
+2026-10-31T21:43:57.9701420Z [59/318] Building CXX object CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o
+2026-10-31T21:44:00.8325760Z [60/318] Building CXX object CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o
+2026-10-31T21:44:02.3891810Z [61/318] Building CXX object CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o
+2026-10-31T21:44:03.2344540Z [62/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.mm.o
+2026-10-31T21:44:05.1737690Z [63/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.mm.o
+2026-10-31T21:44:05.6809360Z [64/318] Building CXX object CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o
+2026-10-31T21:44:10.6210510Z [65/318] Building CXX object CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o
+2026-10-31T21:44:11.7640210Z [66/318] Building CXX object CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o
+2026-10-31T21:44:12.0111890Z [67/318] Building CXX object CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o
+2026-10-31T21:44:14.1586990Z [68/318] Building CXX object CMakeFiles/cs80_cold_idle_timing_tests.dir/tests/ColdIdleTimingTests.cpp.o
+2026-10-31T21:44:16.0986960Z [69/318] Building CXX object CMakeFiles/cs80_cold_filter_envelope_tests.dir/tests/ColdFilterEnvelopeTests.cpp.o
+2026-10-31T21:44:17.7655920Z [70/318] Building CXX object CMakeFiles/cs80_note_off_continuity_tests.dir/tests/NoteOffContinuityTests.cpp.o
+2026-10-31T21:44:20.9529510Z [71/318] Building CXX object CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o
+2026-10-31T21:44:22.2615130Z [72/318] Building CXX object CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o
+2026-10-31T21:44:22.5575690Z [73/318] Building CXX object CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o
+2026-10-31T21:44:22.7287720Z [74/318] Building CXX object CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o
+2026-10-31T21:44:23.3630550Z [75/318] Building CXX object CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o
+2026-10-31T21:44:26.6519540Z [76/318] Building CXX object CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o
+2026-10-31T21:44:27.3909980Z [77/318] Building CXX object CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o
+2026-10-31T21:44:27.4485130Z [78/318] Building CXX object CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o
+2026-10-31T21:44:27.5502830Z [79/318] Building CXX object CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o
+2026-10-31T21:44:32.4013390Z [80/318] Building CXX object CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o
+2026-10-31T21:44:33.1135790Z [81/318] Building CXX object CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o
+2026-10-31T21:44:34.3474890Z [82/318] Building CXX object CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o
+2026-10-31T21:44:34.7483920Z [83/318] Building CXX object CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o
+2026-10-31T21:44:36.5256460Z [84/318] Building CXX object CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o
+2026-10-31T21:44:39.8889900Z [85/318] Building CXX object CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o
+2026-10-31T21:44:41.1317490Z [86/318] Building CXX object CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o
+2026-10-31T21:44:42.8776610Z [87/318] Building CXX object CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o
+2026-10-31T21:44:44.5734730Z [88/318] Building CXX object CMakeFiles/cs80_chorus_tabs_tests.dir/tests/ChorusTabsTests.cpp.o
+2026-10-31T21:44:44.6471590Z [89/318] Building CXX object CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o
+2026-10-31T21:44:45.1751130Z [90/318] Building CXX object CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o
+2026-10-31T21:44:45.3592000Z [91/318] Building CXX object CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o
+2026-10-31T21:44:47.7312920Z [92/318] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm.o
+2026-10-31T21:44:47.7812470Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm:35:
+2026-10-31T21:44:47.8823060Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: warning: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [-W#pragma-messages]
+2026-10-31T21:44:47.9818960Z    61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-10-31T21:44:48.0832000Z       |  ^
+2026-10-31T21:44:48.1356240Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: expanded from macro 'JUCE_COMPILER_WARNING'
+2026-10-31T21:44:48.2360830Z   292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+2026-10-31T21:44:48.2656000Z       |                                      ^
+2026-10-31T21:44:48.3658230Z <scratch space>:126:2: note: expanded from here
+2026-10-31T21:44:48.4661320Z   126 |  message ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-10-31T21:44:48.5549080Z       |  ^
+2026-10-31T21:44:48.6572730Z 1 warning generated.
+2026-10-31T21:44:48.6957940Z [93/318] Linking CXX static library "CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a"
+2026-10-31T21:44:48.8093200Z /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a(juce_audio_processors_headless_ara.cpp.o) has no symbols
+2026-10-31T21:44:48.8639230Z /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a(juce_audio_processors_headless_lv2_libs.cpp.o) has no symbols
+2026-10-31T21:44:48.9648910Z /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a(juce_audio_processors_headless_ara.cpp.o) has no symbols
+2026-10-31T21:44:48.9855830Z /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: file: CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a(juce_audio_processors_headless_lv2_libs.cpp.o) has no symbols
+2026-10-31T21:44:49.0866090Z [94/318] Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_AU/PkgInfo
+2026-10-31T21:44:49.1983910Z [95/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+2026-10-31T21:44:49.2503680Z [96/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+2026-10-31T21:44:49.3438330Z [97/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+2026-10-31T21:44:49.4694770Z [98/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+2026-10-31T21:44:49.5805230Z [99/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+2026-10-31T21:44:49.9978270Z [100/318] Building CXX object CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o
+2026-10-31T21:44:50.1245030Z [101/318] Building CXX object CMakeFiles/cs80_oscillator_cache_tests.dir/tests/OscillatorCacheTests.cpp.o
+2026-10-31T21:44:50.2254060Z [102/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+2026-10-31T21:44:50.3095930Z [103/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+2026-10-31T21:44:50.3606710Z [104/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+2026-10-31T21:44:50.5374410Z [105/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+2026-10-31T21:44:51.2113720Z [106/318] Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_Standalone/PkgInfo
+2026-10-31T21:44:51.4127280Z [107/318] Building CXX object CMakeFiles/cs80_ig00156_phase_correction_tests.dir/tests/Ig00156PhaseCorrectionTests.cpp.o
+2026-10-31T21:44:51.5376720Z [108/318] Building CXX object CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o
+2026-10-31T21:44:52.0390420Z [109/318] Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_VST3/PkgInfo
+2026-10-31T21:44:56.0169890Z [110/318] Building CXX object CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o
+2026-10-31T21:44:58.2980580Z [111/318] Building CXX object CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o
+2026-10-31T21:44:59.4889130Z [112/318] Building CXX object CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o
+2026-10-31T21:44:59.8122190Z [113/318] Building CXX object CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o
+2026-10-31T21:45:01.9139740Z [114/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+2026-10-31T21:45:03.9828360Z [115/318] Building CXX object CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o
+2026-10-31T21:45:07.2158080Z [116/318] Building CXX object CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o
+2026-10-31T21:45:07.3153390Z [117/318] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o
+2026-10-31T21:45:07.6439210Z [118/318] Building CXX object CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o
+2026-10-31T21:45:07.9826670Z [119/318] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-10-31T21:45:10.2917120Z [120/318] Building CXX object CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o
+2026-10-31T21:45:10.3927250Z [121/318] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-10-31T21:45:11.5463220Z [122/318] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-10-31T21:45:12.0587970Z [123/318] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o
+2026-10-31T21:45:14.2945450Z [124/318] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o
+2026-10-31T21:45:15.7174120Z [125/318] Building CXX object CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o
+2026-10-31T21:45:15.9945490Z [126/318] Building CXX object CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o
+2026-10-31T21:45:16.6206910Z [127/318] Building CXX object CMakeFiles/CS80Reference_AU.dir/cs80-juce-wrappers/juce_audio_plugin_client_AU_1.mm.o
+2026-10-31T21:45:17.7573530Z [128/318] Building CXX object CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o
+2026-10-31T21:45:23.1498970Z [129/318] Building CXX object CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o
+2026-10-31T21:45:23.6282320Z [130/318] Building CXX object CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o
+2026-10-31T21:45:24.0657650Z [131/318] Building CXX object CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o
+2026-10-31T21:45:24.5055290Z [132/318] Building CXX object CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o
+2026-10-31T21:45:24.9022530Z [133/318] Building CXX object CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o
+2026-10-31T21:45:25.4101810Z [134/318] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+2026-10-31T21:45:27.9213800Z [135/318] Building CXX object CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o
+2026-10-31T21:45:28.2051310Z [136/318] Building CXX object CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o
+2026-10-31T21:45:28.4192410Z [137/318] Building CXX object CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o
+2026-10-31T21:45:28.9223820Z [138/318] Building CXX object CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o
+2026-10-31T21:45:29.5502370Z [139/318] Building CXX object CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o
+2026-10-31T21:45:33.0748180Z [140/318] Building CXX object CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o
+2026-10-31T21:45:33.8294850Z [141/318] Building CXX object CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o
+2026-10-31T21:45:35.0497670Z [142/318] Building CXX object CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o
+2026-10-31T21:45:35.1286030Z [143/318] Building CXX object CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o
+2026-10-31T21:45:35.3240050Z [144/318] Building CXX object CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o
+2026-10-31T21:45:36.6786520Z [145/318] Building CXX object CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o
+2026-10-31T21:45:37.5960880Z [146/318] Building CXX object CMakeFiles/cs80_programmer_integration_tests.dir/tests/ProgrammerIntegrationTests.cpp.o
+2026-10-31T21:45:38.5603530Z [147/318] Building CXX object CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o
+2026-10-31T21:45:39.0944460Z [148/318] Building CXX object CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o
+2026-10-31T21:45:39.9491310Z [149/318] Building CXX object CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o
+2026-10-31T21:45:41.2764960Z [150/318] Building CXX object CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o
+2026-10-31T21:45:42.7665270Z [151/318] Building CXX object CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o
+2026-10-31T21:45:42.8936220Z [152/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+2026-10-31T21:45:43.0203160Z [153/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+2026-10-31T21:45:44.9074180Z [154/318] Building CXX object CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o
+2026-10-31T21:45:45.0105580Z [155/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+2026-10-31T21:45:45.1937580Z [156/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+2026-10-31T21:45:45.3001740Z [157/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+2026-10-31T21:45:45.4033920Z [158/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+2026-10-31T21:45:45.6121970Z [159/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+2026-10-31T21:45:46.0774720Z [160/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+2026-10-31T21:45:46.4491090Z [161/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+2026-10-31T21:45:46.6065940Z [162/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+2026-10-31T21:45:47.6469930Z [163/318] Linking CXX CFBundle shared module "CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+2026-10-31T21:45:47.6774630Z [164/318] Building CXX object CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o
+2026-10-31T21:45:47.7779430Z [165/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+2026-10-31T21:45:47.8556320Z [166/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+2026-10-31T21:45:47.9298090Z [167/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+2026-10-31T21:45:48.0304710Z [168/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+2026-10-31T21:45:48.0918150Z [169/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+2026-10-31T21:45:48.1922980Z [170/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+2026-10-31T21:45:48.2331350Z [171/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+2026-10-31T21:45:48.3337400Z [172/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+2026-10-31T21:45:48.4080910Z [173/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+2026-10-31T21:45:48.5081760Z [174/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+2026-10-31T21:45:49.7855880Z [175/318] Building CXX object CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o
+2026-10-31T21:45:51.1967210Z [176/318] Building CXX object CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o
+2026-10-31T21:45:53.6192260Z [177/318] Building CXX object CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o
+2026-10-31T21:45:54.2966330Z [178/318] Building CXX object CMakeFiles/cs80_au_automation_host_tests.dir/tests/AuAutomationHostTests.cpp.o
+2026-10-31T21:45:59.3635980Z [179/318] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+2026-10-31T21:46:10.1130160Z [180/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+2026-10-31T21:46:11.6000860Z [181/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContext.cpp.o
+2026-10-31T21:46:11.6394220Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ParameterContext.cpp:5:
+2026-10-31T21:46:11.7269220Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:11.7599680Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:11.8557880Z       |          ^
+2026-10-31T21:46:11.9501300Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:12.0218980Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:12.0612820Z       |          ^
+2026-10-31T21:46:12.1577780Z 1 warning generated.
+2026-10-31T21:46:14.0657880Z [182/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o
+2026-10-31T21:46:18.3078580Z [183/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+2026-10-31T21:46:18.3558720Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.cpp:1:
+2026-10-31T21:46:18.4487460Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:18.5356030Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:18.6214460Z       |          ^
+2026-10-31T21:46:18.6584890Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:18.7589630Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:18.7827940Z       |          ^
+2026-10-31T21:46:18.7830570Z 1 warning generated.
+2026-10-31T21:46:24.0335630Z [184/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+2026-10-31T21:46:24.1338680Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PluginEditor.cpp:6:
+2026-10-31T21:46:24.2339750Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-10-31T21:46:24.3044790Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-10-31T21:46:24.4023860Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:24.4703250Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:24.5375920Z       |          ^
+2026-10-31T21:46:24.6057870Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:24.6732960Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:24.7062820Z       |          ^
+2026-10-31T21:46:24.8051940Z 1 warning generated.
+2026-10-31T21:46:25.0242280Z [185/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+2026-10-31T21:46:25.2400000Z [186/318] Building CXX object CMakeFiles/CS80Reference_VST3.dir/cs80-juce-wrappers/juce_audio_plugin_client_VST3.mm.o
+2026-10-31T21:46:31.1383520Z [187/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+2026-10-31T21:46:31.1990530Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/KeyboardTuningPage.cpp:5:
+2026-10-31T21:46:31.3002460Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:31.4005760Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:31.4423650Z       |          ^
+2026-10-31T21:46:31.5136060Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:31.6072780Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:31.6775410Z       |          ^
+2026-10-31T21:46:31.7757410Z 1 warning generated.
+2026-10-31T21:46:33.9430060Z [188/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+2026-10-31T21:46:33.9523740Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.cpp:1:
+2026-10-31T21:46:33.9907900Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.h:3:
+2026-10-31T21:46:34.0910470Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:34.1852290Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:34.2539870Z       |          ^
+2026-10-31T21:46:34.3095280Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:34.4060840Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:34.4863840Z       |          ^
+2026-10-31T21:46:34.5153810Z 1 warning generated.
+2026-10-31T21:46:35.4790530Z [189/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o
+2026-10-31T21:46:37.9673670Z [190/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+2026-10-31T21:46:38.8958690Z [191/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+2026-10-31T21:46:38.9962570Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.cpp:1:
+2026-10-31T21:46:39.0329910Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-10-31T21:46:39.1300090Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-10-31T21:46:39.2083440Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:39.3042070Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:39.3677260Z       |          ^
+2026-10-31T21:46:39.4422620Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:39.5425960Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:39.5548100Z       |          ^
+2026-10-31T21:46:39.6551330Z 1 warning generated.
+2026-10-31T21:46:41.6342660Z [192/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+2026-10-31T21:46:41.6835080Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ModernModulationUi.cpp:5:
+2026-10-31T21:46:41.7681120Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:41.8644340Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:41.9647560Z       |          ^
+2026-10-31T21:46:41.9986280Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:42.0916080Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:42.1676790Z       |          ^
+2026-10-31T21:46:42.2555800Z 1 warning generated.
+2026-10-31T21:46:42.2996780Z [193/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o
+2026-10-31T21:46:42.3944760Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ArtCommon.cpp:3:
+2026-10-31T21:46:42.4797080Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:42.5855380Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:42.6211700Z       |          ^
+2026-10-31T21:46:42.7286390Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:42.8123160Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:42.9041880Z       |          ^
+2026-10-31T21:46:42.9389280Z 1 warning generated.
+2026-10-31T21:46:45.9272280Z [194/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o
+2026-10-31T21:46:46.8444040Z [195/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+2026-10-31T21:46:46.8582480Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.cpp:1:
+2026-10-31T21:46:46.9484010Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:46:47.0290410Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:47.0993630Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:47.1552330Z       |          ^
+2026-10-31T21:46:47.2396160Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:47.3400430Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:47.3780300Z       |          ^
+2026-10-31T21:46:47.4769720Z 1 warning generated.
+2026-10-31T21:46:47.5603040Z [196/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+2026-10-31T21:46:47.6503890Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.cpp:1:
+2026-10-31T21:46:47.6788530Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.h:3:
+2026-10-31T21:46:47.7792520Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:46:47.8746020Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:47.9540250Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:47.9940420Z       |          ^
+2026-10-31T21:46:48.0883090Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:48.1759440Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:48.2553560Z       |          ^
+2026-10-31T21:46:48.3004420Z 1 warning generated.
+2026-10-31T21:46:49.4091890Z [197/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+2026-10-31T21:46:49.4345970Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.cpp:1:
+2026-10-31T21:46:49.5349580Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.h:3:
+2026-10-31T21:46:49.6021120Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:46:49.6894030Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:49.7671230Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:49.8363580Z       |          ^
+2026-10-31T21:46:49.9073530Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:49.9908610Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:50.0553050Z       |          ^
+2026-10-31T21:46:50.1208880Z 1 warning generated.
+2026-10-31T21:46:51.0163970Z [198/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+2026-10-31T21:46:51.0802020Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.cpp:1:
+2026-10-31T21:46:51.1805190Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.h:3:
+2026-10-31T21:46:51.2167550Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:46:51.2984910Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:51.4012660Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:51.4693990Z       |          ^
+2026-10-31T21:46:51.5373090Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:51.6293940Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:51.7296410Z       |          ^
+2026-10-31T21:46:51.7682620Z 1 warning generated.
+2026-10-31T21:46:55.0825080Z [199/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+2026-10-31T21:46:55.1827790Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.cpp:1:
+2026-10-31T21:46:55.2504430Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.h:3:
+2026-10-31T21:46:55.3156930Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-10-31T21:46:55.3397390Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:46:55.3466290Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:46:55.3780750Z       |          ^
+2026-10-31T21:46:55.4785520Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:46:55.4933970Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:46:55.5938370Z       |          ^
+2026-10-31T21:46:55.6617880Z 1 warning generated.
+2026-10-31T21:46:55.7552760Z [200/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o
+2026-10-31T21:47:00.1077150Z [201/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o
+2026-10-31T21:47:00.1941210Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.cpp:1:
+2026-10-31T21:47:00.2448640Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.h:3:
+2026-10-31T21:47:00.3452280Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:47:00.4473310Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:47:00.4958790Z       |          ^
+2026-10-31T21:47:00.5877940Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:47:00.6576040Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:47:00.7343460Z       |          ^
+2026-10-31T21:47:00.8227620Z 1 warning generated.
+2026-10-31T21:47:00.8607520Z [202/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+2026-10-31T21:47:00.9560340Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.cpp:1:
+2026-10-31T21:47:01.0567320Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.h:3:
+2026-10-31T21:47:01.0569700Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:47:01.0582330Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:47:01.0583240Z       |          ^
+2026-10-31T21:47:01.0585100Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:47:01.0587410Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:47:01.0588330Z       |          ^
+2026-10-31T21:47:01.0588860Z 1 warning generated.
+2026-10-31T21:47:01.1422010Z [203/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+2026-10-31T21:47:01.1740670Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.cpp:1:
+2026-10-31T21:47:01.2743660Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.h:3:
+2026-10-31T21:47:01.3554470Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:47:01.4240230Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:47:01.4940760Z       |          ^
+2026-10-31T21:47:01.5875710Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:47:01.6875670Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:47:01.7412400Z       |          ^
+2026-10-31T21:47:01.8375830Z 1 warning generated.
+2026-10-31T21:47:15.3290290Z [204/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_utils/juce_audio_utils.mm.o
+2026-10-31T21:47:15.6830220Z [205/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.mm.o
+2026-10-31T21:47:16.6624760Z [206/318] Building C object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+2026-10-31T21:47:20.8815580Z [207/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.mm.o
+2026-10-31T21:47:21.0128370Z [208/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_core/juce_core_CompilationTime.cpp.o
+2026-10-31T21:47:22.1364690Z [209/318] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+2026-10-31T21:47:22.1910610Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:4:
+2026-10-31T21:47:22.2749630Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-10-31T21:47:22.3613560Z   426 |     void setTooltip(const juce::String& customTip);
+2026-10-31T21:47:22.4404500Z       |          ^
+2026-10-31T21:47:22.4923900Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-10-31T21:47:22.5619930Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-10-31T21:47:22.6333110Z       |          ^
+2026-10-31T21:47:22.6948720Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3283:54: warning: conditional expression between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::GlobalParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-10-31T21:47:22.7766230Z  3283 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+2026-10-31T21:47:22.8580810Z       |                                                      ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~
+2026-10-31T21:47:22.9021350Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3284:54: warning: conditional expression between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::GlobalParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-10-31T21:47:22.9864800Z  3284 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+2026-10-31T21:47:23.0782010Z       |                                                      ^ ~~~~~~~~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~
+2026-10-31T21:47:23.1575460Z 3 warnings generated.
+2026-10-31T21:47:24.9810950Z [210/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_events/juce_events.mm.o
+2026-10-31T21:47:25.0815950Z [211/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+2026-10-31T21:47:25.0930170Z [212/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+2026-10-31T21:47:27.9939020Z [213/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_data_structures/juce_data_structures.mm.o
+2026-10-31T21:47:41.0706610Z [214/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.mm.o
+2026-10-31T21:47:43.9345130Z [215/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_basics/juce_audio_basics.mm.o
+2026-10-31T21:47:53.4861330Z [216/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_core/juce_core.mm.o
+2026-10-31T21:47:53.6868190Z [217/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+2026-10-31T21:47:54.6537760Z [218/318] Building CXX object CMakeFiles/cs80_au_wrapper_macro_environment_tests.dir/tests/AuWrapperMacroEnvironmentTests.cpp.o
+2026-10-31T21:47:56.3945600Z [219/318] Building CXX object CMakeFiles/cs80_exact_control_transform_tests.dir/tests/ExactControlTransformTests.cpp.o
+2026-10-31T21:47:56.4258690Z [220/318] Linking CXX executable cs80_tests
+2026-10-31T21:47:56.5261600Z [221/318] Linking CXX executable cs80_continuous_voice_circuit_tests
+2026-10-31T21:47:56.5665650Z [222/318] Linking CXX executable cs80_continuous_voice_circuit_audit_tests
+2026-10-31T21:47:56.6588350Z [223/318] Linking CXX executable cs80_output_meter_display_tests
+2026-10-31T21:47:56.7315210Z [224/318] Linking CXX executable cs80_output_meter_tests
+2026-10-31T21:47:56.8317920Z [225/318] Linking CXX executable cs80_output_meter_audit_tests
+2026-10-31T21:47:56.9261740Z [226/318] Linking CXX executable cs80_keyboard_pressure_audit_tests
+2026-10-31T21:47:56.9810160Z [227/318] Linking CXX executable cs80_keyboard_event_queue_tests
+2026-10-31T21:47:57.1639540Z [228/318] Linking CXX executable cs80_parity_mode_tests
+2026-10-31T21:47:57.2357270Z [229/318] Linking CXX executable cs80_source_performance_tests
+2026-10-31T21:47:57.3361260Z [230/318] Linking CXX executable cs80_source_performance_audit_tests
+2026-10-31T21:47:57.3539120Z [231/318] Linking CXX executable cs80_envelope_precision_tests
+2026-10-31T21:47:57.4008330Z [232/318] Linking CXX executable cs80_ig00156_filter_tests
+2026-10-31T21:47:57.5011260Z [233/318] Linking CXX executable cs80_envelope_rc_model_tests
+2026-10-31T21:47:57.6011750Z [234/318] Linking CXX executable cs80_live_envelope_level_tests
+2026-10-31T21:47:57.7014970Z [235/318] Linking CXX executable cs80_live_envelope_timing_tests
+2026-10-31T21:47:57.8929770Z [236/318] Linking CXX executable cs80_active_tail_continuity_tests
+2026-10-31T21:47:57.9932580Z [237/318] Linking CXX executable cs80_cold_idle_timing_tests
+2026-10-31T21:47:58.0818860Z [238/318] Linking CXX executable cs80_cold_filter_envelope_tests
+2026-10-31T21:47:58.2330590Z [239/318] Linking CXX executable cs80_note_off_continuity_tests
+2026-10-31T21:47:58.3333370Z [240/318] Linking CXX executable cs80_experimental_oscillator_tests
+2026-10-31T21:47:58.3545440Z [241/318] Linking CXX executable cs80_source_factory_integration_tests
+2026-10-31T21:47:58.4372890Z [242/318] Linking CXX executable cs80_source_factory_tone_tests
+2026-10-31T21:47:58.5371910Z [243/318] Linking CXX executable cs80_hardware_control_tests
+2026-10-31T21:47:58.6313340Z [244/318] Linking CXX executable cs80_ig00156_reference_tests
+2026-10-31T21:47:58.7807100Z [245/318] Linking CXX executable cs80_keyboard_contour_reference_tests
+2026-10-31T21:47:58.8366300Z [246/318] Linking CXX executable cs80_loaded_control_reference_tests
+2026-10-31T21:47:58.9529830Z [247/318] Linking CXX executable cs80_loaded_control_rank_tests
+2026-10-31T21:47:58.9942850Z [248/318] Linking CXX executable cs80_loaded_control_transient_tests
+2026-10-31T21:47:59.0841200Z [249/318] Linking CXX executable cs80_output_tap_integration_tests
+2026-10-31T21:47:59.2198920Z [250/318] Linking CXX executable cs80_output_tap_circuit_tests
+2026-10-31T21:47:59.2705750Z [251/318] Linking CXX executable cs80_output_taps_tests
+2026-10-31T21:47:59.3651430Z [252/318] Linking CXX executable cs80_level_control_tests
+2026-10-31T21:47:59.4209420Z [253/318] Linking CXX executable cs80_resonance_control_tests
+2026-10-31T21:47:59.5212240Z [254/318] Linking CXX executable cs80_oe2_filters_tests
+2026-10-31T21:47:59.6536290Z [255/318] Linking CXX executable cs80_pra_wah_integration_tests
+2026-10-31T21:47:59.7149930Z [256/318] Linking CXX executable cs80_pra_wah_circuit_tests
+2026-10-31T21:47:59.8152460Z [257/318] Linking CXX executable cs80_pra_wah_tests
+2026-10-31T21:47:59.8798470Z [258/318] Linking CXX executable cs80_chorus_tabs_tests
+2026-10-31T21:47:59.9871070Z [259/318] Linking CXX executable cs80_bbd_chorus_tests
+2026-10-31T21:48:00.0619670Z [260/318] Linking CXX executable cs80_mn3001_packet_tests
+2026-10-31T21:48:00.2578900Z [261/318] Linking CXX executable cs80_performance_control_tests
+2026-10-31T21:48:00.4035730Z [262/318] Linking CXX executable cs80_oscillator_cache_tests
+2026-10-31T21:48:00.5049080Z [263/318] Linking CXX executable cs80_ig00156_cache_tests
+2026-10-31T21:48:00.7015950Z [264/318] Linking CXX executable cs80_ig00156_nodal_tests
+2026-10-31T21:48:00.8018280Z [265/318] Linking CXX executable cs80_ig00156_phase_correction_tests
+2026-10-31T21:48:00.8537900Z [266/318] Linking CXX executable cs80_oscillator_promotion_tests
+2026-10-31T21:48:00.9507500Z [267/318] Linking CXX executable cs80_ig00151_vca_tests
+2026-10-31T21:48:01.0848850Z [268/318] Linking CXX executable cs80_tolerance_drift_tests
+2026-10-31T21:48:01.1478210Z [269/318] Linking CXX executable cs80_oversampling_tests
+2026-10-31T21:48:01.2976040Z [270/318] Linking CXX executable cs80_smoothing_tests
+2026-10-31T21:48:01.3492340Z [271/318] Linking CXX executable cs80_output_listening_tests
+2026-10-31T21:48:01.4497440Z [272/318] Linking CXX executable cs80_noise_tests
+2026-10-31T21:48:01.5074370Z [273/318] Linking CXX executable cs80_mts_esp_native_tests
+2026-10-31T21:48:01.6001960Z [274/318] Linking CXX executable cs80_mts_esp_shim_tests
+2026-10-31T21:48:01.7224220Z [275/318] Linking CXX executable cs80_mts_esp_fallback_tests
+2026-10-31T21:48:01.7657570Z [276/318] Linking CXX executable cs80_host_automation_curve_tests
+2026-10-31T21:48:01.8897610Z [277/318] Linking CXX executable cs80_au_automation_curve_tests
+2026-10-31T21:48:01.9501440Z [278/318] Linking CXX executable cs80_au_automation_bridge_contract_tests
+2026-10-31T21:48:02.0376490Z [279/318] Linking CXX executable cs80_free_running_voice_tests
+2026-10-31T21:48:02.1378830Z [280/318] Linking CXX executable cs80_kas_scanner_tests
+2026-10-31T21:48:02.2187520Z [281/318] Linking CXX executable cs80_keyboard_contour_key_map_tests
+2026-10-31T21:48:02.3083560Z [282/318] Linking CXX executable cs80_touch_circuit_tests
+2026-10-31T21:48:02.4035110Z [283/318] Linking CXX executable cs80_tuning_midi_tests
+2026-10-31T21:48:02.5500640Z [284/318] Linking CXX executable cs80_ig00150_sub_tests
+2026-10-31T21:48:02.6217570Z [285/318] Linking CXX executable cs80_ring_modulator_circuit_tests
+2026-10-31T21:48:02.7194820Z [286/318] Linking CXX executable cs80_oe2_stereo_chorus_tests
+2026-10-31T21:48:02.8507860Z [287/318] Linking CXX executable cs80_pra_optical_cell_tests
+2026-10-31T21:48:02.9370020Z [288/318] Linking CXX executable cs80_modern_lfo_tests
+2026-10-31T21:48:03.0294080Z [289/318] Linking CXX executable cs80_mseg_tests
+2026-10-31T21:48:03.1296470Z [290/318] Linking CXX executable cs80_mod_matrix_tests
+2026-10-31T21:48:03.1831010Z [291/318] Linking CXX executable cs80_modern_fx_tests
+2026-10-31T21:48:03.2561010Z [292/318] Linking CXX executable cs80_library_audit_tests
+2026-10-31T21:48:03.3566590Z [293/318] Linking CXX executable cs80_randomise_tests
+2026-10-31T21:48:03.5062080Z [294/318] Linking CXX executable cs80_source_factory_boundary_tests
+2026-10-31T21:48:03.5660800Z [295/318] Linking CXX executable cs80_programmer_integration_tests
+2026-10-31T21:48:03.6663690Z [296/318] Linking CXX executable cs80_memory_panel_tests
+2026-10-31T21:48:03.7067450Z [297/318] Linking CXX executable cs80_fast_math_tests
+2026-10-31T21:48:03.8069770Z [298/318] Linking CXX executable cs80_evidence_register_tests
+2026-10-31T21:48:03.8587090Z [299/318] Linking CXX executable cs80_midi_learn_tests
+2026-10-31T21:48:03.9372680Z [300/318] Linking CXX executable cs80_render
+2026-10-31T21:48:04.0218080Z [301/318] Linking CXX executable cs80_source_factory_audition
+2026-10-31T21:48:04.1167460Z [302/318] Linking CXX executable cs80_voice_continuity_probe
+2026-10-31T21:48:04.2454830Z [303/318] Linking CXX executable cs80_source_factory_benchmark
+2026-10-31T21:48:04.3245450Z [304/318] Linking CXX executable cs80_dsp_probe
+2026-10-31T21:48:04.4253160Z [305/318] Linking CXX executable cs80_engine_audit
+2026-10-31T21:48:04.5211500Z [306/318] Linking CXX executable cs80_parity_capture
+2026-10-31T21:48:05.1734470Z [307/318] Linking CXX executable "CS80Reference_artefacts/Release/Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference"
+2026-10-31T21:48:10.6818570Z [308/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_formats/juce_audio_formats.mm.o
+2026-10-31T21:48:10.8618620Z [309/318] Linking CXX executable cs80_au_automation_host_tests
+2026-10-31T21:48:10.9494570Z [310/318] Linking CXX executable cs80_au_wrapper_macro_environment_tests
+2026-10-31T21:48:10.9615410Z [311/318] Linking CXX executable cs80_exact_control_transform_tests
+2026-10-31T21:48:11.4062980Z [312/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.mm.o
+2026-10-31T21:48:11.7417800Z [313/318] Linking CXX CFBundle shared module "CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference"
+2026-10-31T21:48:11.7421320Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3: code object is not signed at all
+2026-10-31T21:48:11.7424030Z In architecture: x86_64
+2026-10-31T21:48:11.7425450Z -- Replacing invalid signature with ad-hoc signature
+2026-10-31T21:48:11.7426980Z removing moduleinfo.json
+2026-10-31T21:48:11.7429070Z creating /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3
+2026-10-31T21:48:12.0762510Z [314/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics.mm.o
+2026-10-31T21:48:14.7366770Z [315/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.mm.o
+2026-10-31T21:48:25.0735160Z [316/318] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm.o
+2026-10-31T21:48:25.0745420Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm:35:
+2026-10-31T21:48:25.0757870Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: warning: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [-W#pragma-messages]
+2026-10-31T21:48:25.0765030Z    61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-10-31T21:48:25.0766550Z       |  ^
+2026-10-31T21:48:25.0768400Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: expanded from macro 'JUCE_COMPILER_WARNING'
+2026-10-31T21:48:25.0770850Z   292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+2026-10-31T21:48:25.0772150Z       |                                      ^
+2026-10-31T21:48:25.0773010Z <scratch space>:126:2: note: expanded from here
+2026-10-31T21:48:25.0774220Z   126 |  message ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-10-31T21:48:25.0775200Z       |  ^
+2026-10-31T21:48:25.0775500Z 1 warning generated.
+2026-10-31T21:48:25.4874370Z [317/318] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+2026-10-31T21:48:25.6082750Z ##[group]Run ctest --test-dir build --output-on-failure
+2026-10-31T21:48:25.6083870Z [36;1mctest --test-dir build --output-on-failure[0m
+2026-10-31T21:48:25.6206700Z shell: /bin/bash -e {0}
+2026-10-31T21:48:25.6207110Z ##[endgroup]
+2026-10-31T21:48:25.7345140Z Test project /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+2026-10-31T21:48:25.7387460Z       Start  1: cs80_parity_harness_tests
+2026-10-31T21:48:30.4416190Z  1/92 Test  #1: cs80_parity_harness_tests ...................   Passed    4.70 sec
+2026-10-31T21:48:30.4421630Z       Start  2: cs80_continuous_voice_circuit_tests
+2026-10-31T21:48:30.4731510Z  2/92 Test  #2: cs80_continuous_voice_circuit_tests .........   Passed    0.03 sec
+2026-10-31T21:48:30.4733490Z       Start  3: cs80_continuous_voice_circuit_audit_tests
+2026-10-31T21:48:31.3474130Z  3/92 Test  #3: cs80_continuous_voice_circuit_audit_tests ...   Passed    0.87 sec
+2026-10-31T21:48:31.3476420Z       Start  4: cs80_output_meter_display_tests
+2026-10-31T21:48:31.3515490Z  4/92 Test  #4: cs80_output_meter_display_tests .............   Passed    0.00 sec
+2026-10-31T21:48:31.3516360Z       Start  5: cs80_output_meter_tests
+2026-10-31T21:48:31.3550700Z  5/92 Test  #5: cs80_output_meter_tests .....................   Passed    0.00 sec
+2026-10-31T21:48:31.3552700Z       Start  6: cs80_output_meter_audit_tests
+2026-10-31T21:48:31.3639350Z  6/92 Test  #6: cs80_output_meter_audit_tests ...............   Passed    0.01 sec
+2026-10-31T21:48:31.3641150Z       Start  7: cs80_keyboard_pressure_audit_tests
+2026-10-31T21:48:31.6120940Z  7/92 Test  #7: cs80_keyboard_pressure_audit_tests ..........   Passed    0.25 sec
+2026-10-31T21:48:31.6137450Z       Start  8: cs80_keyboard_event_queue_tests
+2026-10-31T21:48:31.6391610Z  8/92 Test  #8: cs80_keyboard_event_queue_tests .............   Passed    0.02 sec
+2026-10-31T21:48:31.6407050Z       Start  9: cs80_keyboard_epoch_interleaving_tests
+2026-10-31T21:48:35.9950050Z  9/92 Test  #9: cs80_keyboard_epoch_interleaving_tests ......   Passed    4.35 sec
+2026-10-31T21:48:35.9953130Z       Start 10: cs80_parity_mode_tests
+2026-10-31T21:48:41.1686850Z 10/92 Test #10: cs80_parity_mode_tests ......................   Passed    5.17 sec
+2026-10-31T21:48:41.1689800Z       Start 11: cs80_source_performance_tests
+2026-10-31T21:48:53.6218580Z 11/92 Test #11: cs80_source_performance_tests ...............   Passed   12.45 sec
+2026-10-31T21:48:53.6221150Z       Start 12: cs80_source_performance_audit_tests
+2026-10-31T21:48:58.1791150Z 12/92 Test #12: cs80_source_performance_audit_tests .........   Passed    4.56 sec
+2026-10-31T21:48:58.1794820Z       Start 13: cs80_envelope_precision_tests
+2026-10-31T21:50:06.5241370Z 13/92 Test #13: cs80_envelope_precision_tests ...............   Passed   68.34 sec
+2026-10-31T21:50:06.5243170Z       Start 14: cs80_ig00156_filter_tests
+2026-10-31T21:50:07.0579180Z 14/92 Test #14: cs80_ig00156_filter_tests ...................   Passed    0.53 sec
+2026-10-31T21:50:07.0582240Z       Start 15: cs80_envelope_rc_model_tests
+2026-10-31T21:50:07.3143230Z 15/92 Test #15: cs80_envelope_rc_model_tests ................   Passed    0.26 sec
+2026-10-31T21:50:07.3144800Z       Start 16: cs80_live_envelope_level_tests
+2026-10-31T21:50:13.8701750Z 16/92 Test #16: cs80_live_envelope_level_tests ..............   Passed    6.56 sec
+2026-10-31T21:50:13.8705910Z       Start 17: cs80_live_envelope_timing_tests
+2026-10-31T21:50:16.5820180Z 17/92 Test #17: cs80_live_envelope_timing_tests .............   Passed    2.71 sec
+2026-10-31T21:50:16.5821100Z       Start 18: cs80_active_tail_continuity_tests
+2026-10-31T21:50:33.1937560Z 18/92 Test #18: cs80_active_tail_continuity_tests ...........   Passed   16.61 sec
+2026-10-31T21:50:33.1939890Z       Start 19: cs80_cold_idle_timing_tests
+2026-10-31T21:50:44.1425560Z 19/92 Test #19: cs80_cold_idle_timing_tests .................   Passed   10.95 sec
+2026-10-31T21:50:44.1427830Z       Start 20: cs80_cold_filter_envelope_tests
+2026-10-31T21:51:27.7845230Z 20/92 Test #20: cs80_cold_filter_envelope_tests .............   Passed   43.64 sec
+2026-10-31T21:51:27.7846590Z       Start 21: cs80_note_off_continuity_tests
+2026-10-31T21:52:01.7951030Z 21/92 Test #21: cs80_note_off_continuity_tests ..............   Passed   34.01 sec
+2026-10-31T21:52:01.7953890Z       Start 22: cs80_core_tests
+2026-10-31T21:52:15.8324690Z 22/92 Test #22: cs80_core_tests .............................   Passed   14.04 sec
+2026-10-31T21:52:15.8326340Z       Start 23: cs80_experimental_oscillator_tests
+2026-10-31T21:52:26.3220550Z 23/92 Test #23: cs80_experimental_oscillator_tests ..........   Passed   10.49 sec
+2026-10-31T21:52:26.3223470Z       Start 24: cs80_source_factory_integration_tests
+2026-10-31T21:57:10.1034270Z 24/92 Test #24: cs80_source_factory_integration_tests .......   Passed  283.78 sec
+2026-10-31T21:57:10.1039740Z       Start 25: cs80_source_factory_tone_tests
+2026-10-31T21:57:10.1952300Z 25/92 Test #25: cs80_source_factory_tone_tests ..............   Passed    0.09 sec
+2026-10-31T21:57:10.1954710Z       Start 26: cs80_hardware_control_tests
+2026-10-31T21:57:10.2008760Z 26/92 Test #26: cs80_hardware_control_tests .................   Passed    0.00 sec
+2026-10-31T21:57:10.2010760Z       Start 27: cs80_ig00156_reference_tests
+2026-10-31T21:57:10.2340850Z 27/92 Test #27: cs80_ig00156_reference_tests ................   Passed    0.03 sec
+2026-10-31T21:57:10.2343060Z       Start 28: cs80_keyboard_contour_reference_tests
+2026-10-31T21:57:10.2462530Z 28/92 Test #28: cs80_keyboard_contour_reference_tests .......   Passed    0.01 sec
+2026-10-31T21:57:10.2465270Z       Start 29: cs80_loaded_control_reference_tests
+2026-10-31T21:57:10.2515720Z 29/92 Test #29: cs80_loaded_control_reference_tests .........   Passed    0.00 sec
+2026-10-31T21:57:10.2518000Z       Start 30: cs80_loaded_control_rank_tests
+2026-10-31T21:57:10.2613170Z 30/92 Test #30: cs80_loaded_control_rank_tests ..............   Passed    0.01 sec
+2026-10-31T21:57:10.2615430Z       Start 31: cs80_loaded_control_transient_tests
+2026-10-31T21:57:10.2805080Z 31/92 Test #31: cs80_loaded_control_transient_tests .........   Passed    0.02 sec
+2026-10-31T21:57:10.2807540Z       Start 32: cs80_output_tap_integration_tests
+2026-10-31T21:57:12.8789170Z 32/92 Test #32: cs80_output_tap_integration_tests ...........   Passed    2.60 sec
+2026-10-31T21:57:12.8791090Z       Start 33: cs80_output_tap_circuit_tests
+2026-10-31T21:57:15.3749090Z 33/92 Test #33: cs80_output_tap_circuit_tests ...............   Passed    2.50 sec
+2026-10-31T21:57:15.3780120Z       Start 34: cs80_output_taps_tests
+2026-10-31T21:57:15.3841770Z 34/92 Test #34: cs80_output_taps_tests ......................   Passed    0.01 sec
+2026-10-31T21:57:15.3843340Z       Start 35: cs80_level_control_tests
+2026-10-31T21:57:15.4563090Z 35/92 Test #35: cs80_level_control_tests ....................   Passed    0.07 sec
+2026-10-31T21:57:15.4566640Z       Start 36: cs80_resonance_control_tests
+2026-10-31T21:57:15.4790800Z 36/92 Test #36: cs80_resonance_control_tests ................   Passed    0.02 sec
+2026-10-31T21:57:15.4793550Z       Start 37: cs80_oe2_filters_tests
+2026-10-31T21:57:15.4922090Z 37/92 Test #37: cs80_oe2_filters_tests ......................   Passed    0.01 sec
+2026-10-31T21:57:15.4924050Z       Start 38: cs80_pra_wah_integration_tests
+2026-10-31T21:57:18.1999830Z 38/92 Test #38: cs80_pra_wah_integration_tests ..............   Passed    2.71 sec
+2026-10-31T21:57:18.2005520Z       Start 39: cs80_pra_wah_circuit_tests
+2026-10-31T21:57:19.7835250Z 39/92 Test #39: cs80_pra_wah_circuit_tests ..................   Passed    1.58 sec
+2026-10-31T21:57:19.7837390Z       Start 40: cs80_pra_wah_tests
+2026-10-31T21:57:19.8310280Z 40/92 Test #40: cs80_pra_wah_tests ..........................   Passed    0.05 sec
+2026-10-31T21:57:19.8312850Z       Start 41: cs80_chorus_tabs_tests
+2026-10-31T21:57:21.2396560Z 41/92 Test #41: cs80_chorus_tabs_tests ......................   Passed    1.41 sec
+2026-10-31T21:57:21.2398700Z       Start 42: cs80_bbd_chorus_tests
+2026-10-31T21:57:22.4118780Z 42/92 Test #42: cs80_bbd_chorus_tests .......................   Passed    1.17 sec
+2026-10-31T21:57:22.4120890Z       Start 43: cs80_mn3001_packet_tests
+2026-10-31T21:57:22.4478980Z 43/92 Test #43: cs80_mn3001_packet_tests ....................   Passed    0.04 sec
+2026-10-31T21:57:22.4482280Z       Start 44: cs80_performance_control_tests
+2026-10-31T21:57:29.2869600Z 44/92 Test #44: cs80_performance_control_tests ..............   Passed    6.84 sec
+2026-10-31T21:57:29.2873110Z       Start 45: cs80_validator_retry_tests
+2026-10-31T21:57:34.5809840Z 45/92 Test #45: cs80_validator_retry_tests ..................   Passed    5.29 sec
+2026-10-31T21:57:34.6229180Z       Start 46: cs80_oscillator_cache_tests
+2026-10-31T21:57:34.6878770Z 46/92 Test #46: cs80_oscillator_cache_tests .................   Passed    0.06 sec
+2026-10-31T21:57:34.6882660Z       Start 47: cs80_ig00156_cache_tests
+2026-10-31T21:57:35.3594980Z 47/92 Test #47: cs80_ig00156_cache_tests ....................   Passed    0.67 sec
+2026-10-31T21:57:35.3597270Z       Start 48: cs80_ig00156_nodal_tests
+2026-10-31T21:58:01.3106250Z 48/92 Test #48: cs80_ig00156_nodal_tests ....................   Passed   25.95 sec
+2026-10-31T21:58:01.3110260Z       Start 49: cs80_ig00156_phase_correction_tests
+2026-10-31T21:58:02.3826350Z 49/92 Test #49: cs80_ig00156_phase_correction_tests .........   Passed    1.07 sec
+2026-10-31T21:58:02.3831920Z       Start 50: cs80_oscillator_promotion_tests
+2026-10-31T21:58:09.6740590Z 50/92 Test #50: cs80_oscillator_promotion_tests .............   Passed    7.29 sec
+2026-10-31T21:58:09.6743830Z       Start 51: cs80_ig00151_vca_tests
+2026-10-31T21:58:11.9012590Z 51/92 Test #51: cs80_ig00151_vca_tests ......................   Passed    2.23 sec
+2026-10-31T21:58:11.9014210Z       Start 52: cs80_tolerance_drift_tests
+2026-10-31T21:58:17.6920390Z 52/92 Test #52: cs80_tolerance_drift_tests ..................   Passed    5.79 sec
+2026-10-31T21:58:17.6922720Z       Start 53: cs80_oversampling_tests
+2026-10-31T21:58:20.5297760Z 53/92 Test #53: cs80_oversampling_tests .....................   Passed    2.84 sec
+2026-10-31T21:58:20.5300840Z       Start 54: cs80_smoothing_tests
+2026-10-31T21:58:25.2375030Z 54/92 Test #54: cs80_smoothing_tests ........................   Passed    4.71 sec
+2026-10-31T21:58:25.2379080Z       Start 55: cs80_output_listening_tests
+2026-10-31T21:58:27.5693770Z 55/92 Test #55: cs80_output_listening_tests .................   Passed    2.33 sec
+2026-10-31T21:58:27.5697670Z       Start 56: cs80_noise_tests
+2026-10-31T21:58:34.0549920Z 56/92 Test #56: cs80_noise_tests ............................   Passed    6.48 sec
+2026-10-31T21:58:34.0554130Z       Start 57: cs80_mts_esp_native_tests
+2026-10-31T21:58:34.0639190Z 57/92 Test #57: cs80_mts_esp_native_tests ...................   Passed    0.01 sec
+2026-10-31T21:58:34.0646130Z       Start 58: cs80_mts_esp_shim_tests
+2026-10-31T21:58:34.2985700Z 58/92 Test #58: cs80_mts_esp_shim_tests .....................   Passed    0.23 sec
+2026-10-31T21:58:34.2987880Z       Start 59: cs80_mts_esp_fallback_tests
+2026-10-31T21:58:34.3028780Z 59/92 Test #59: cs80_mts_esp_fallback_tests .................   Passed    0.00 sec
+2026-10-31T21:58:34.3030500Z       Start 60: cs80_host_automation_curve_tests
+2026-10-31T21:58:35.0868930Z 60/92 Test #60: cs80_host_automation_curve_tests ............   Passed    0.78 sec
+2026-10-31T21:58:35.0871410Z       Start 61: cs80_au_automation_curve_tests
+2026-10-31T21:58:35.1325280Z 61/92 Test #61: cs80_au_automation_curve_tests ..............   Passed    0.04 sec
+2026-10-31T21:58:35.1328310Z       Start 62: cs80_au_automation_bridge_contract_tests
+2026-10-31T21:58:35.1400020Z 62/92 Test #62: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec
+2026-10-31T21:58:35.1402170Z       Start 63: cs80_free_running_voice_tests
+2026-10-31T21:58:44.2445010Z 63/92 Test #63: cs80_free_running_voice_tests ...............   Passed    9.10 sec
+2026-10-31T21:58:44.2447530Z       Start 64: cs80_kas_scanner_tests
+2026-10-31T21:58:47.8599800Z 64/92 Test #64: cs80_kas_scanner_tests ......................   Passed    3.61 sec
+2026-10-31T21:58:47.8605690Z       Start 65: cs80_keyboard_contour_key_map_tests
+2026-10-31T21:59:11.7707720Z 65/92 Test #65: cs80_keyboard_contour_key_map_tests .........   Passed   23.91 sec
+2026-10-31T21:59:11.7710640Z       Start 66: cs80_touch_circuit_tests
+2026-10-31T21:59:17.3494770Z 66/92 Test #66: cs80_touch_circuit_tests ....................   Passed    5.58 sec
+2026-10-31T21:59:17.3497670Z       Start 67: cs80_tuning_midi_tests
+2026-10-31T21:59:17.8073380Z 67/92 Test #67: cs80_tuning_midi_tests ......................   Passed    0.46 sec
+2026-10-31T21:59:17.8075310Z       Start 68: cs80_ig00150_sub_tests
+2026-10-31T21:59:33.1217320Z 68/92 Test #68: cs80_ig00150_sub_tests ......................   Passed   15.31 sec
+2026-10-31T21:59:33.1220860Z       Start 69: cs80_ring_modulator_circuit_tests
+2026-10-31T21:59:38.3552480Z 69/92 Test #69: cs80_ring_modulator_circuit_tests ...........   Passed    5.23 sec
+2026-10-31T21:59:38.3555770Z       Start 70: cs80_oe2_stereo_chorus_tests
+2026-10-31T21:59:39.7629370Z 70/92 Test #70: cs80_oe2_stereo_chorus_tests ................   Passed    1.41 sec
+2026-10-31T21:59:39.7632110Z       Start 71: cs80_pra_optical_cell_tests
+2026-10-31T21:59:46.4650880Z 71/92 Test #71: cs80_pra_optical_cell_tests .................   Passed    6.70 sec
+2026-10-31T21:59:46.4652860Z       Start 72: cs80_modern_lfo_tests
+2026-10-31T21:59:48.7276390Z 72/92 Test #72: cs80_modern_lfo_tests .......................   Passed    2.26 sec
+2026-10-31T21:59:48.7278130Z       Start 73: cs80_mseg_tests
+2026-10-31T21:59:51.2643070Z 73/92 Test #73: cs80_mseg_tests .............................   Passed    2.54 sec
+2026-10-31T21:59:51.2646950Z       Start 74: cs80_mod_matrix_tests
+2026-10-31T22:00:30.6793440Z 74/92 Test #74: cs80_mod_matrix_tests .......................   Passed   39.41 sec
+2026-10-31T22:00:30.6801990Z       Start 75: cs80_modern_fx_tests
+2026-10-31T22:02:59.5862530Z 75/92 Test #75: cs80_modern_fx_tests ........................   Passed  148.91 sec
+2026-10-31T22:02:59.5868880Z       Start 76: cs80_library_audit_tests
+2026-10-31T22:07:43.3610300Z 76/92 Test #76: cs80_library_audit_tests ....................   Passed  283.77 sec
+2026-10-31T22:07:43.3617920Z       Start 77: cs80_randomise_tests
+2026-10-31T22:09:00.8050020Z 77/92 Test #77: cs80_randomise_tests ........................   Passed   77.44 sec
+2026-10-31T22:09:00.8055840Z       Start 78: cs80_source_factory_boundary_tests
+2026-10-31T22:09:01.3416530Z 78/92 Test #78: cs80_source_factory_boundary_tests ..........   Passed    0.53 sec
+2026-10-31T22:09:01.3419040Z       Start 79: cs80_programmer_integration_tests
+2026-10-31T22:09:11.7483110Z 79/92 Test #79: cs80_programmer_integration_tests ...........   Passed   10.40 sec
+2026-10-31T22:09:11.7503030Z       Start 80: cs80_memory_panel_tests
+2026-10-31T22:09:12.3284950Z 80/92 Test #80: cs80_memory_panel_tests .....................   Passed    0.58 sec
+2026-10-31T22:09:12.3289120Z       Start 81: cs80_fast_math_tests
+2026-10-31T22:09:12.3751960Z 81/92 Test #81: cs80_fast_math_tests ........................   Passed    0.05 sec
+2026-10-31T22:09:12.3755170Z       Start 82: cs80_evidence_register_tests
+2026-10-31T22:09:12.3855470Z 82/92 Test #82: cs80_evidence_register_tests ................   Passed    0.01 sec
+2026-10-31T22:09:12.3857390Z       Start 83: cs80_midi_learn_tests
+2026-10-31T22:09:12.5840490Z 83/92 Test #83: cs80_midi_learn_tests .......................   Passed    0.20 sec
+2026-10-31T22:09:12.5843310Z       Start 84: cs80_parity_capture_tests
+2026-10-31T22:09:17.8459720Z 84/92 Test #84: cs80_parity_capture_tests ...................   Passed    5.26 sec
+2026-10-31T22:09:17.8462620Z       Start 85: cs80_dsp_probe_tests
+2026-10-31T22:09:19.3562800Z 85/92 Test #85: cs80_dsp_probe_tests ........................   Passed    1.51 sec
+2026-10-31T22:09:19.3565530Z       Start 86: cs80_au_automation_host_tests
+2026-10-31T22:09:25.6411350Z 86/92 Test #86: cs80_au_automation_host_tests ...............***Failed    6.28 sec
+2026-10-31T22:09:25.6419640Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=266 count=7 frame=272 actual_au=0.62851643562316895 au_max=1 actual_normalized=0.62851643562316895 expected_normalized=0.62851632581695904 expected_float=0.62851631641387939 error=1.0980620990252987e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75140655040740967 expected_physical_projection=0.75140655040740967 expected_round_trip=0.62851643562316895 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6426770Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6433860Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=273 count=7 frame=279 actual_au=0.62699234485626221 au_max=1 actual_normalized=0.62699234485626221 expected_normalized=0.62699220563628677 expected_float=0.62699222564697266 error=1.3921997543686615e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75079691410064697 expected_physical_projection=0.75079691410064697 expected_round_trip=0.62699234485626221 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6441430Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6453540Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=448 count=7 frame=454 actual_au=0.56102490425109863 au_max=1 actual_normalized=0.56102490425109863 expected_normalized=0.56102476670191836 expected_float=0.56102478504180908 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72440993785858154 expected_physical_projection=0.72440993785858154 expected_round_trip=0.56102490425109863 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6459320Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6465670Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=462 count=7 frame=468 actual_au=0.55940037965774536 au_max=1 actual_normalized=0.55940037965774536 expected_normalized=0.55940025586348319 expected_float=0.55940026044845581 error=1.2379426217457024e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72376012802124023 expected_physical_projection=0.72376012802124023 expected_round_trip=0.55940037965774536 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6472840Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6479360Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=476 count=7 frame=482 actual_au=0.55777585506439209 au_max=1 actual_normalized=0.55777585506439209 expected_normalized=0.5577757450250479 expected_float=0.55777573585510254 error=1.1003934419218098e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72311031818389893 expected_physical_projection=0.72311031818389893 expected_round_trip=0.55777585506439209 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6487070Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6493950Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=595 count=7 frame=601 actual_au=0.54396754503250122 au_max=1 actual_normalized=0.54396754503250122 expected_normalized=0.54396740289834822 expected_float=0.54396742582321167 error=1.4213415300279308e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71758699417114258 expected_physical_projection=0.71758699417114258 expected_round_trip=0.54396754503250122 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6503320Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6516180Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=609 count=7 frame=615 actual_au=0.54234302043914795 au_max=1 actual_normalized=0.54234302043914795 expected_normalized=0.54234289205991304 expected_float=0.5423429012298584 error=1.2837923490938152e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71693718433380127 expected_physical_projection=0.71693718433380127 expected_round_trip=0.54234302043914795 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6529790Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6542830Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=623 count=7 frame=629 actual_au=0.55078631639480591 au_max=1 actual_normalized=0.55078631639480591 expected_normalized=0.5507861966026808 expected_float=0.55078619718551636 error=1.1979212510837556e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72031450271606445 expected_physical_projection=0.72031450271606445 expected_round_trip=0.55078631639480591 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6549280Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6555640Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=623 count=7 frame=629 actual_au=0.54071849584579468 au_max=1 actual_normalized=0.54071849584579468 expected_normalized=0.54071838122147786 expected_float=0.54071837663650513 error=1.1462431681596996e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71628737449645996 expected_physical_projection=0.71628737449645996 expected_round_trip=0.54071849584579468 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6562100Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6568640Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=637 count=7 frame=643 actual_au=0.53909397125244141 au_max=1 actual_normalized=0.53909397125244141 expected_normalized=0.53909387038304257 expected_float=0.53909385204315186 error=1.008693988335807e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71563756465911865 expected_physical_projection=0.71563756465911865 expected_round_trip=0.53909397125244141 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6575230Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6582300Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=693 count=7 frame=699 actual_au=0.53554511070251465 au_max=1 actual_normalized=0.53554511070251465 expected_normalized=0.53554499479595963 expected_float=0.5355449914932251 error=1.1590655502047298e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71421802043914795 expected_physical_projection=0.71421802043914795 expected_round_trip=0.53554511070251465 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6594650Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6607690Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=700 count=7 frame=706 actual_au=0.53402101993560791 au_max=1 actual_normalized=0.53402101993560791 expected_normalized=0.53402087461528747 expected_float=0.53402090072631836 error=1.4532032044378695e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71360838413238525 expected_physical_projection=0.71360838413238525 expected_round_trip=0.53402101993560791 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6615200Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6626770Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=742 count=7 frame=748 actual_au=0.52691018581390381 au_max=1 actual_normalized=0.52691018581390381 expected_normalized=0.52691003909477818 expected_float=0.52691006660461426 error=1.4671912562658207e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71076405048370361 expected_physical_projection=0.71076405048370361 expected_round_trip=0.52691018581390381 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6638790Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6650390Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=756 count=7 frame=762 actual_au=0.52528566122055054 au_max=1 actual_normalized=0.52528566122055054 expected_normalized=0.52528552825634289 expected_float=0.52528554201126099 error=1.3296420764419281e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.7101142406463623 expected_physical_projection=0.7101142406463623 expected_round_trip=0.52528566122055054 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6655750Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6667030Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=763 count=7 frame=769 actual_au=0.52030390501022339 au_max=1 actual_normalized=0.52030390501022339 expected_normalized=0.52030379298923846 expected_float=0.52030378580093384 error=1.120209849325704e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70812153816223145 expected_physical_projection=0.70812153816223145 expected_round_trip=0.52030390501022339 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6672370Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6677800Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=770 count=7 frame=776 actual_au=0.51877981424331665 au_max=1 actual_normalized=0.51877981424331665 expected_normalized=0.51877967280856629 expected_float=0.5187796950340271 error=1.4143475035588438e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70751190185546875 expected_physical_projection=0.70751190185546875 expected_round_trip=0.51877981424331665 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6683660Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6688820Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=770 count=7 frame=776 actual_au=0.52366113662719727 au_max=1 actual_normalized=0.52366113662719727 expected_normalized=0.52366101741790771 expected_float=0.52366101741790771 error=1.1920928955078125e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.709464430809021 expected_physical_projection=0.709464430809021 expected_round_trip=0.52366113662719727 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6696270Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6702130Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=784 count=7 frame=790 actual_au=0.52203661203384399 au_max=1 actual_normalized=0.52203661203384399 expected_normalized=0.52203650657947254 expected_float=0.52203649282455444 error=1.0545437145736969e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70881462097167969 expected_physical_projection=0.70881462097167969 expected_round_trip=0.52203661203384399 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6707400Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6712520Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=833 count=7 frame=839 actual_au=0.50506269931793213 au_max=1 actual_normalized=0.50506269931793213 expected_normalized=0.50506259118251728 expected_float=0.50506258010864258 error=1.0813541484466782e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70202505588531494 expected_physical_projection=0.70202505588531494 expected_round_trip=0.50506269931793213 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6722870Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6731040Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=840 count=7 frame=846 actual_au=0.50353860855102539 au_max=1 actual_normalized=0.50353860855102539 expected_normalized=0.50353847100184512 expected_float=0.50353848934173584 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70141541957855225 expected_physical_projection=0.70141541957855225 expected_round_trip=0.50353860855102539 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6738630Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6745730Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=861 count=7 frame=867 actual_au=0.49896600842475891 au_max=1 actual_normalized=0.49896600842475891 expected_normalized=0.49896611045982875 expected_float=0.49896609783172607 error=1.0203506983774702e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.69958639144897461 expected_physical_projection=0.69958639144897461 expected_round_trip=0.49896600842475891 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6752790Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6759890Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=903 count=7 frame=909 actual_au=0.50822830200195312 au_max=1 actual_normalized=0.50822830200195312 expected_normalized=0.50822816445277286 expected_float=0.50822818279266357 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70329129695892334 expected_physical_projection=0.70329129695892334 expected_round_trip=0.50822830200195312 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6766880Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6772420Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=910 count=7 frame=916 actual_au=0.48829737305641174 au_max=1 actual_normalized=0.48829737305641174 expected_normalized=0.48829726919512395 expected_float=0.48829728364944458 error=1.0386128779238391e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.69531893730163574 expected_physical_projection=0.69531893730163574 expected_round_trip=0.48829737305641174 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:09:25.6778570Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6785370Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=917 count=7 frame=923 actual_au=0.50660377740859985 au_max=1 actual_normalized=0.50660377740859985 expected_normalized=0.50660365361433768 expected_float=0.5066036581993103 error=1.2379426217457024e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70264148712158203 expected_physical_projection=0.70264148712158203 expected_round_trip=0.50660377740859985 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6798660Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6804980Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=931 count=7 frame=937 actual_au=0.50497925281524658 au_max=1 actual_normalized=0.50497925281524658 expected_normalized=0.50497914277590239 expected_float=0.50497913360595703 error=1.1003934419218098e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70199167728424072 expected_physical_projection=0.70199167728424072 expected_round_trip=0.50497925281524658 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:09:25.6811510Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6818200Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1029 count=7 frame=1035 actual_au=0.49530479311943054 au_max=1 actual_normalized=0.49530479311943054 expected_normalized=0.49530469253659248 expected_float=0.49530470371246338 error=1.0058283805847168e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.69812190532684326 expected_physical_projection=0.69812190532684326 expected_round_trip=0.49530479311943054 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6830290Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6846530Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1162 count=7 frame=1168 actual_au=0.47887685894966125 au_max=1 actual_normalized=0.47887685894966125 expected_normalized=0.47887695950339548 expected_float=0.47887694835662842 error=1.0055373422801495e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.69155073165893555 expected_physical_projection=0.69155073165893555 expected_round_trip=0.47887685894966125 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.6853210Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6859580Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1232 count=7 frame=1238 actual_au=0.50045913457870483 au_max=1 actual_normalized=0.50045913457870483 expected_normalized=0.50045899394899607 expected_float=0.50045901536941528 error=1.4062970876693726e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70018362998962402 expected_physical_projection=0.70018362998962402 expected_round_trip=0.50045913457870483 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6867400Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6879800Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1253 count=7 frame=1259 actual_au=0.5009922981262207 au_max=1 actual_normalized=0.5009922981262207 expected_normalized=0.50099219754338264 expected_float=0.50099217891693115 error=1.0058283805847168e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70039689540863037 expected_physical_projection=0.70039689540863037 expected_round_trip=0.5009922981262207 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6886450Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6893910Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1288 count=7 frame=1294 actual_au=0.50188100337982178 au_max=1 actual_normalized=0.50188100337982178 expected_normalized=0.50188087020069361 expected_float=0.50188088417053223 error=1.3317912817001343e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.7007523775100708 expected_physical_projection=0.7007523775100708 expected_round_trip=0.50188100337982178 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6901890Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6908360Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1344 count=7 frame=1350 actual_au=0.50330287218093872 au_max=1 actual_normalized=0.50330287218093872 expected_normalized=0.50330274645239115 expected_float=0.50330275297164917 error=1.257285475730896e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70132112503051758 expected_physical_projection=0.70132112503051758 expected_round_trip=0.50330287218093872 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6914830Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6921960Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1386 count=7 frame=1392 actual_au=0.50031459331512451 au_max=1 actual_normalized=0.50031459331512451 expected_normalized=0.50031446383218281 expected_float=0.50031447410583496 error=1.2948294170200825e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70012581348419189 expected_physical_projection=0.70012581348419189 expected_round_trip=0.50031459331512451 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.6933000Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:09:25.6940640Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1400 count=7 frame=1406 actual_au=0.50472474098205566 au_max=1 actual_normalized=0.50472474098205566 expected_normalized=0.50472462270408869 expected_float=0.50472462177276611 error=1.1827796697616577e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70188987255096436 expected_physical_projection=0.70188987255096436 expected_round_trip=0.50472474098205566 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6952920Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1442 count=7 frame=1448 actual_au=0.50567394495010376 au_max=1 actual_normalized=0.50567394495010376 expected_normalized=0.50567383991437964 expected_float=0.50567382574081421 error=1.0503572411835194e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70226955413818359 expected_physical_projection=0.70226955413818359 expected_round_trip=0.50567394495010376 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.6966730Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1449 count=7 frame=1455 actual_au=0.50634390115737915 au_max=1 actual_normalized=0.50634390115737915 expected_normalized=0.50634376192465425 expected_float=0.5063437819480896 error=1.3923272490501404e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70253753662109375 expected_physical_projection=0.70253753662109375 expected_round_trip=0.50634390115737915 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.6978080Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1456 count=7 frame=1462 actual_au=0.50614660978317261 au_max=1 actual_normalized=0.50614660978317261 expected_normalized=0.50614649895578623 expected_float=0.50614649057388306 error=1.1082738637924194e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70245862007141113 expected_physical_projection=0.70245862007141113 expected_round_trip=0.50614660978317261 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.6990080Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1491 count=7 frame=1497 actual_au=0.50703531503677368 au_max=1 actual_normalized=0.50703531503677368 expected_normalized=0.50703517161309719 expected_float=0.50703519582748413 error=1.4342367649078369e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70281410217285156 expected_physical_projection=0.70281410217285156 expected_round_trip=0.50703531503677368 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7000840Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1505 count=7 frame=1511 actual_au=0.5117032527923584 au_max=1 actual_normalized=0.5117032527923584 expected_normalized=0.51170313800685108 expected_float=0.51170313358306885 error=1.1478550732135773e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70468127727508545 expected_physical_projection=0.70468127727508545 expected_round_trip=0.5117032527923584 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7011560Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1512 count=7 frame=1518 actual_au=0.51237320899963379 au_max=1 actual_normalized=0.51237320899963379 expected_normalized=0.51237306001712568 expected_float=0.51237308979034424 error=1.4898250810801983e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70494925975799561 expected_physical_projection=0.70494925975799561 expected_round_trip=0.51237320899963379 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7022160Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1512 count=7 frame=1518 actual_au=0.50756847858428955 au_max=1 actual_normalized=0.50756847858428955 expected_normalized=0.50756837520748377 expected_float=0.507568359375 error=1.0337680578231812e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70302736759185791 expected_physical_projection=0.70302736759185791 expected_round_trip=0.50756847858428955 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7035370Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1547 count=7 frame=1553 actual_au=0.50845718383789062 au_max=1 actual_normalized=0.50845718383789062 expected_normalized=0.50845704786479473 expected_float=0.50845706462860107 error=1.3597309589385986e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70338284969329834 expected_physical_projection=0.70338284969329834 expected_round_trip=0.50845718383789062 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7046480Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1568 count=7 frame=1574 actual_au=0.51773256063461304 au_max=1 actual_normalized=0.51773256063461304 expected_normalized=0.51773243609932251 expected_float=0.51773244142532349 error=1.2453529052436352e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.7070930004119873 expected_physical_projection=0.7070930004119873 expected_round_trip=0.51773256063461304 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7058540Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1603 count=7 frame=1609 actual_au=0.50987905263900757 au_max=1 actual_normalized=0.50987905263900757 expected_normalized=0.50987892411649227 expected_float=0.50987893342971802 error=1.2852251529693604e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70395159721374512 expected_physical_projection=0.70395159721374512 expected_round_trip=0.50987905263900757 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7070700Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1624 count=7 frame=1630 actual_au=0.52309191226959229 au_max=1 actual_normalized=0.52309191226959229 expected_normalized=0.52309181218151934 expected_float=0.52309179306030273 error=1.0008807294070721e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.709236741065979 expected_physical_projection=0.709236741065979 expected_round_trip=0.52309191226959229 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7082050Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1631 count=7 frame=1637 actual_au=0.52376186847686768 au_max=1 actual_normalized=0.52376186847686768 expected_normalized=0.52376173419179395 expected_float=0.52376174926757812 error=1.3428507372736931e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70950472354888916 expected_physical_projection=0.70950472354888916 expected_round_trip=0.52376186847686768 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7094660Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1659 count=7 frame=1665 actual_au=0.51130092144012451 au_max=1 actual_normalized=0.51130092144012451 expected_normalized=0.51130080036818981 expected_float=0.51130080223083496 error=1.2107193470001221e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70452034473419189 expected_physical_projection=0.70452034473419189 expected_round_trip=0.51130092144012451 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7105130Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1687 count=7 frame=1693 actual_au=0.52912122011184692 au_max=1 actual_normalized=0.52912122011184692 expected_normalized=0.52912111027399078 expected_float=0.52912110090255737 error=1.09837856143713e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71164846420288086 expected_physical_projection=0.71164846420288086 expected_round_trip=0.52912122011184692 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7115340Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1694 count=7 frame=1700 actual_au=0.52979117631912231 au_max=1 actual_normalized=0.52979117631912231 expected_normalized=0.52979103228426538 expected_float=0.52979105710983276 error=1.440348569303751e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71191644668579102 expected_physical_projection=0.71191644668579102 expected_round_trip=0.52979117631912231 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7127230Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1715 count=7 frame=1721 actual_au=0.51272279024124146 au_max=1 actual_normalized=0.51272279024124146 expected_normalized=0.51272267661988735 expected_float=0.5127226710319519 error=1.1362135410308838e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70508909225463867 expected_physical_projection=0.70508909225463867 expected_round_trip=0.51272279024124146 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7138540Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1750 count=7 frame=1756 actual_au=0.53515052795410156 au_max=1 actual_normalized=0.53515052795410156 expected_normalized=0.53515040836646222 expected_float=0.53515040874481201 error=1.1958763934671879e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71406018733978271 expected_physical_projection=0.71406018733978271 expected_round_trip=0.53515052795410156 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7151320Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1750 count=7 frame=1756 actual_au=0.51361149549484253 au_max=1 actual_normalized=0.51361149549484253 expected_normalized=0.51361134927719831 expected_float=0.51361137628555298 error=1.4621764421463013e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.7054445743560791 expected_physical_projection=0.7054445743560791 expected_round_trip=0.51361149549484253 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7164450Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1771 count=7 frame=1777 actual_au=0.5141446590423584 au_max=1 actual_normalized=0.5141446590423584 expected_normalized=0.51414455287158489 expected_float=0.51414453983306885 error=1.0617077350616455e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70565783977508545 expected_physical_projection=0.70565783977508545 expected_round_trip=0.5141446590423584 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7176180Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1806 count=7 frame=1812 actual_au=0.51503336429595947 au_max=1 actual_normalized=0.51503336429595947 expected_normalized=0.51503322552889585 expected_float=0.51503324508666992 error=1.387670636177063e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70601332187652588 expected_physical_projection=0.70601332187652588 expected_round_trip=0.51503336429595947 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7188390Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1813 count=7 frame=1819 actual_au=0.5411798357963562 au_max=1 actual_normalized=0.5411798357963562 expected_normalized=0.54117970645893365 expected_float=0.54117971658706665 error=1.2933742254972458e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71647191047668457 expected_physical_projection=0.71647191047668457 expected_round_trip=0.5411798357963562 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7202570Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1862 count=7 frame=1868 actual_au=0.51645523309707642 au_max=1 actual_normalized=0.51645523309707642 expected_normalized=0.5164551017805934 expected_float=0.51645511388778687 error=1.3131648302078247e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70658206939697266 expected_physical_projection=0.70658206939697266 expected_round_trip=0.51645523309707642 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7214470Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1869 count=7 frame=1875 actual_au=0.54653918743133545 au_max=1 actual_normalized=0.54653918743133545 expected_normalized=0.54653908254113048 expected_float=0.5465390682220459 error=1.0489020496606827e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71861565113067627 expected_physical_projection=0.71861565113067627 expected_round_trip=0.54653918743133545 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7227260Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1876 count=7 frame=1882 actual_au=0.54720914363861084 au_max=1 actual_normalized=0.54720914363861084 expected_normalized=0.54720900455140509 expected_float=0.54720902442932129 error=1.3908720575273037e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.71888363361358643 expected_physical_projection=0.71888363361358643 expected_round_trip=0.54720914363861084 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7237460Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1918 count=7 frame=1924 actual_au=0.51787710189819336 au_max=1 actual_normalized=0.51787710189819336 expected_normalized=0.51787697803229094 expected_float=0.51787698268890381 error=1.2386590242385864e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70715081691741943 expected_physical_projection=0.70715081691741943 expected_round_trip=0.51787710189819336 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7247410Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1932 count=7 frame=1938 actual_au=0.55256849527359009 au_max=1 actual_normalized=0.55256849527359009 expected_normalized=0.55256838063360192 expected_float=0.55256837606430054 error=1.1463998816907406e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72102737426757812 expected_physical_projection=0.72102737426757812 expected_round_trip=0.55256849527359009 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7257110Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1939 count=7 frame=1945 actual_au=0.55323845148086548 au_max=1 actual_normalized=0.55323845148086548 expected_normalized=0.55323830264387652 expected_float=0.55323833227157593 error=1.4883698895573616e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72129535675048828 expected_physical_projection=0.72129535675048828 expected_round_trip=0.55323845148086548 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7267290Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=1974 count=7 frame=1980 actual_au=0.5192989706993103 au_max=1 actual_normalized=0.5192989706993103 expected_normalized=0.51929885428398848 expected_float=0.51929885149002075 error=1.1641532182693481e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70771956443786621 expected_physical_projection=0.70771956443786621 expected_round_trip=0.5192989706993103 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7277400Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=1995 count=7 frame=2001 actual_au=0.55859780311584473 au_max=1 actual_normalized=0.55859780311584473 expected_normalized=0.55859767872607335 expected_float=0.55859768390655518 error=1.2438977137207985e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72343909740447998 expected_physical_projection=0.72343909740447998 expected_round_trip=0.55859780311584473 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.46500000357627869 segment_end=2047 segment_end_value=0.56300002336502075
+2026-10-31T22:09:25.7286770Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=2030 count=7 frame=2036 actual_au=0.52072083950042725 au_max=1 actual_normalized=0.52072083950042725 expected_normalized=0.52072073053568602 expected_float=0.5207207202911377 error=1.0896474123001099e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70828831195831299 expected_physical_projection=0.70828831195831299 expected_round_trip=0.52072083950042725 actual_minus_round_trip=0 segment_start=1023 segment_start_value=0.49500000476837158 segment_end=2047 segment_end_value=0.52100002765655518
+2026-10-31T22:09:25.7295990Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=2135 count=7 frame=2141 actual_au=0.50530290603637695 au_max=1 actual_normalized=0.50530290603637695 expected_normalized=0.50530275894561782 expected_float=0.5053027868270874 error=1.4709075912833214e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.70212113857269287 expected_physical_projection=0.70212113857269287 expected_round_trip=0.50530290603637695 actual_minus_round_trip=0 segment_start=2047 segment_start_value=0.52100002765655518 segment_end=3071 segment_end_value=0.34999999403953552
+2026-10-31T22:09:25.7301190Z native AU ramp error=1.16415e-10 immediate error=2.90223e-07 sixteen-voice error=0
+2026-10-31T22:09:25.7302960Z AU endpoint summary: parameter=ch1_pw failures=60 worst_error=1.4898250810801983e-07 actual=0.51237320899963379 expected=0.51237306001712568 block=7 frame=1518
+2026-10-31T22:09:25.7305620Z AU endpoint summary: parameter=ch2_pw failures=58 worst_error=1.4709075912833214e-07 actual=0.50530290603637695 expected=0.50530275894561782 block=7 frame=2141
+2026-10-31T22:09:25.7307140Z 
+2026-10-31T22:09:25.7307580Z       Start 87: cs80_au_automation_native_mutations
+2026-10-31T22:10:52.2024940Z 87/92 Test #87: cs80_au_automation_native_mutations .........***Failed   86.56 sec
+2026-10-31T22:10:52.2026090Z old-block-adapter: native host exit 1
+2026-10-31T22:10:52.2033160Z AU endpoint diagnostic: lane=0 parameter=volume enum=6 block=7 start=0 count=7 frame=6 actual_au=0.62000000476837158 au_max=1 actual_normalized=0.62000000476837158 expected_normalized=0.61058823992224298 expected_float=0.61058825254440308 error=0.0094117648461286008 tolerance=9.9999999999999995e-08 actual_physical_projection=0.62000000476837158 expected_physical_projection=0.61058825254440308 expected_round_trip=0.61058825254440308 actual_minus_round_trip=0.0094117522239685059 segment_start=0 segment_start_value=0.62000000476837158 segment_end=255 segment_end_value=0.2199999988079071
+2026-10-31T22:10:52.2038440Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2043280Z AU endpoint diagnostic: lane=1 parameter=mix enum=2 block=7 start=0 count=7 frame=6 actual_au=0.5 au_max=1 actual_normalized=0.5 expected_normalized=0.49364705892170174 expected_float=0.49364706873893738 error=0.0063529410782982576 tolerance=9.9999999999999995e-08 actual_physical_projection=0.5 expected_physical_projection=0.49364706873893738 expected_round_trip=0.49364706873893738 actual_minus_round_trip=0.0063529312610626221 segment_start=0 segment_start_value=0.5 segment_end=255 segment_end_value=0.23000000417232513
+2026-10-31T22:10:52.2048650Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2054310Z AU endpoint diagnostic: lane=2 parameter=brilliance enum=3 block=7 start=0 count=7 frame=6 actual_au=0.5 au_max=1 actual_normalized=0.5 expected_normalized=0.49388235281495485 expected_float=0.49388235807418823 error=0.0061176471850451497 tolerance=9.9999999999999995e-08 actual_physical_projection=0 expected_physical_projection=-0.02447056770324707 expected_round_trip=0.49388235807418823 actual_minus_round_trip=0.0061176419258117676 segment_start=0 segment_start_value=0.5 segment_end=255 segment_end_value=0.23999999463558197
+2026-10-31T22:10:52.2058990Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2063810Z AU endpoint diagnostic: lane=3 parameter=resonance enum=4 block=7 start=0 count=7 frame=6 actual_au=0.2199999988079071 au_max=1 actual_normalized=0.2199999988079071 expected_normalized=0.22070588118889753 expected_float=0.22070588171482086 error=0.00070588238099042466 tolerance=9.9999999999999995e-08 actual_physical_projection=0.2199999988079071 expected_physical_projection=0.22070588171482086 expected_round_trip=0.22070588171482086 actual_minus_round_trip=-0.00070588290691375732 segment_start=0 segment_start_value=0.2199999988079071 segment_end=255 segment_end_value=0.25
+2026-10-31T22:10:52.2068540Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2069760Z immediate-offset-zero: native host exit 1
+2026-10-31T22:10:52.2095780Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=266 count=7 frame=272 actual_au=0.62851643562316895 au_max=1 actual_normalized=0.62851643562316895 expected_normalized=0.62851632581695904 expected_float=0.62851631641387939 error=1.0980620990252987e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75140655040740967 expected_physical_projection=0.75140655040740967 expected_round_trip=0.62851643562316895 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2100580Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2105360Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=273 count=7 frame=279 actual_au=0.62699234485626221 au_max=1 actual_normalized=0.62699234485626221 expected_normalized=0.62699220563628677 expected_float=0.62699222564697266 error=1.3921997543686615e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75079691410064697 expected_physical_projection=0.75079691410064697 expected_round_trip=0.62699234485626221 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2110230Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2115640Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=448 count=7 frame=454 actual_au=0.56102490425109863 au_max=1 actual_normalized=0.56102490425109863 expected_normalized=0.56102476670191836 expected_float=0.56102478504180908 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72440993785858154 expected_physical_projection=0.72440993785858154 expected_round_trip=0.56102490425109863 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2120750Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2126180Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=462 count=7 frame=468 actual_au=0.55940037965774536 au_max=1 actual_normalized=0.55940037965774536 expected_normalized=0.55940025586348319 expected_float=0.55940026044845581 error=1.2379426217457024e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72376012802124023 expected_physical_projection=0.72376012802124023 expected_round_trip=0.55940037965774536 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2131240Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2132560Z pure-legacy-mask-removed: native host exit 1
+2026-10-31T22:10:52.2140040Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=266 count=7 frame=272 actual_au=0.62851643562316895 au_max=1 actual_normalized=0.62851643562316895 expected_normalized=0.62851632581695904 expected_float=0.62851631641387939 error=1.0980620990252987e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75140655040740967 expected_physical_projection=0.75140655040740967 expected_round_trip=0.62851643562316895 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2146340Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2151650Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=273 count=7 frame=279 actual_au=0.62699234485626221 au_max=1 actual_normalized=0.62699234485626221 expected_normalized=0.62699220563628677 expected_float=0.62699222564697266 error=1.3921997543686615e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75079691410064697 expected_physical_projection=0.75079691410064697 expected_round_trip=0.62699234485626221 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2156430Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2161230Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=448 count=7 frame=454 actual_au=0.56102490425109863 au_max=1 actual_normalized=0.56102490425109863 expected_normalized=0.56102476670191836 expected_float=0.56102478504180908 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72440993785858154 expected_physical_projection=0.72440993785858154 expected_round_trip=0.56102490425109863 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2165990Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2170910Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=462 count=7 frame=468 actual_au=0.55940037965774536 au_max=1 actual_normalized=0.55940037965774536 expected_normalized=0.55940025586348319 expected_float=0.55940026044845581 error=1.2379426217457024e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72376012802124023 expected_physical_projection=0.72376012802124023 expected_round_trip=0.55940037965774536 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2175680Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2176470Z future-endpoint-published: native host exit 1
+2026-10-31T22:10:52.2181100Z AU endpoint diagnostic: lane=0 parameter=volume enum=6 block=7 start=0 count=7 frame=6 actual_au=0.2199999988079071 au_max=1 actual_normalized=0.2199999988079071 expected_normalized=0.61058823992224298 expected_float=0.61058825254440308 error=0.39058824111433588 tolerance=9.9999999999999995e-08 actual_physical_projection=0.2199999988079071 expected_physical_projection=0.61058825254440308 expected_round_trip=0.61058825254440308 actual_minus_round_trip=-0.39058825373649597 segment_start=0 segment_start_value=0.62000000476837158 segment_end=255 segment_end_value=0.2199999988079071
+2026-10-31T22:10:52.2186170Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2190830Z AU endpoint diagnostic: lane=1 parameter=mix enum=2 block=7 start=0 count=7 frame=6 actual_au=0.23000000417232513 au_max=1 actual_normalized=0.23000000417232513 expected_normalized=0.49364705892170174 expected_float=0.49364706873893738 error=0.26364705474937661 tolerance=9.9999999999999995e-08 actual_physical_projection=0.23000000417232513 expected_physical_projection=0.49364706873893738 expected_round_trip=0.49364706873893738 actual_minus_round_trip=-0.26364706456661224 segment_start=0 segment_start_value=0.5 segment_end=255 segment_end_value=0.23000000417232513
+2026-10-31T22:10:52.2195930Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2200690Z AU endpoint diagnostic: lane=2 parameter=brilliance enum=3 block=7 start=0 count=7 frame=6 actual_au=0.24000000953674316 au_max=1 actual_normalized=0.24000000953674316 expected_normalized=0.49388235281495485 expected_float=0.49388235807418823 error=0.25388234327821169 tolerance=9.9999999999999995e-08 actual_physical_projection=-1.0399999618530273 expected_physical_projection=-0.02447056770324707 expected_round_trip=0.49388235807418823 actual_minus_round_trip=-0.25388234853744507 segment_start=0 segment_start_value=0.5 segment_end=255 segment_end_value=0.23999999463558197
+2026-10-31T22:10:52.2205420Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2209800Z AU endpoint diagnostic: lane=3 parameter=resonance enum=4 block=7 start=0 count=7 frame=6 actual_au=0.25 au_max=1 actual_normalized=0.25 expected_normalized=0.22070588118889753 expected_float=0.22070588171482086 error=0.029294118811102471 tolerance=9.9999999999999995e-08 actual_physical_projection=0.25 expected_physical_projection=0.22070588171482086 expected_round_trip=0.22070588171482086 actual_minus_round_trip=0.029294118285179138 segment_start=0 segment_start_value=0.2199999988079071 segment_end=255 segment_end_value=0.25
+2026-10-31T22:10:52.2214180Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2215050Z unsupported-ramp-capability: native host exit 1
+2026-10-31T22:10:52.2215780Z FAIL: non-key AU parameter does not advertise unsupported ramps
+2026-10-31T22:10:52.2216590Z FAIL: non-key AU parameter does not advertise unsupported ramps
+2026-10-31T22:10:52.2217390Z FAIL: non-key AU parameter does not advertise unsupported ramps
+2026-10-31T22:10:52.2222070Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=266 count=7 frame=272 actual_au=0.62851643562316895 au_max=1 actual_normalized=0.62851643562316895 expected_normalized=0.62851632581695904 expected_float=0.62851631641387939 error=1.0980620990252987e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75140655040740967 expected_physical_projection=0.75140655040740967 expected_round_trip=0.62851643562316895 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2226920Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2232740Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=273 count=7 frame=279 actual_au=0.62699234485626221 au_max=1 actual_normalized=0.62699234485626221 expected_normalized=0.62699220563628677 expected_float=0.62699222564697266 error=1.3921997543686615e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75079691410064697 expected_physical_projection=0.75079691410064697 expected_round_trip=0.62699234485626221 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2237700Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2243560Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=448 count=7 frame=454 actual_au=0.56102490425109863 au_max=1 actual_normalized=0.56102490425109863 expected_normalized=0.56102476670191836 expected_float=0.56102478504180908 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72440993785858154 expected_physical_projection=0.72440993785858154 expected_round_trip=0.56102490425109863 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2250190Z restored: native host exit 1
+2026-10-31T22:10:52.2255560Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=266 count=7 frame=272 actual_au=0.62851643562316895 au_max=1 actual_normalized=0.62851643562316895 expected_normalized=0.62851632581695904 expected_float=0.62851631641387939 error=1.0980620990252987e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75140655040740967 expected_physical_projection=0.75140655040740967 expected_round_trip=0.62851643562316895 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2260580Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2265500Z AU endpoint diagnostic: lane=11 parameter=ch1_pw enum=66 block=7 start=273 count=7 frame=279 actual_au=0.62699234485626221 au_max=1 actual_normalized=0.62699234485626221 expected_normalized=0.62699220563628677 expected_float=0.62699222564697266 error=1.3921997543686615e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.75079691410064697 expected_physical_projection=0.75079691410064697 expected_round_trip=0.62699234485626221 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.63200002908706665 segment_end=1023 segment_end_value=0.46500000357627869
+2026-10-31T22:10:52.2270270Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2275050Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=448 count=7 frame=454 actual_au=0.56102490425109863 au_max=1 actual_normalized=0.56102490425109863 expected_normalized=0.56102476670191836 expected_float=0.56102478504180908 error=1.375491802679818e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72440993785858154 expected_physical_projection=0.72440993785858154 expected_round_trip=0.56102490425109863 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2279970Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2284780Z AU endpoint diagnostic: lane=17 parameter=ch2_pw enum=96 block=7 start=462 count=7 frame=468 actual_au=0.55940037965774536 au_max=1 actual_normalized=0.55940037965774536 expected_normalized=0.55940025586348319 expected_float=0.55940026044845581 error=1.2379426217457024e-07 tolerance=9.9999999999999995e-08 actual_physical_projection=0.72376012802124023 expected_physical_projection=0.72376012802124023 expected_round_trip=0.55940037965774536 actual_minus_round_trip=0 segment_start=256 segment_start_value=0.58399999141693115 segment_end=1023 segment_end_value=0.49500000476837158
+2026-10-31T22:10:52.2290240Z FAIL: AU publishes the current buffer endpoint, not a future ramp endpoint
+2026-10-31T22:10:52.2291350Z Restored AU module failed its native gate
+2026-10-31T22:10:52.2291710Z 
+2026-10-31T22:10:52.2291860Z       Start 88: cs80_ui_smoke
+2026-10-31T22:12:31.9009510Z 88/92 Test #88: cs80_ui_smoke ...............................   Passed   99.70 sec
+2026-10-31T22:12:31.9430130Z       Start 89: cs80_teardown_probe
+2026-10-31T22:12:32.4004350Z 89/92 Test #89: cs80_teardown_probe .........................   Passed    0.46 sec
+2026-10-31T22:12:32.4007630Z       Start 90: cs80_au_wrapper_macro_environment_tests
+2026-10-31T22:12:32.4052800Z 90/92 Test #90: cs80_au_wrapper_macro_environment_tests .....   Passed    0.00 sec
+2026-10-31T22:12:32.4054490Z       Start 91: cs80_exact_control_transform_tests
+2026-10-31T22:12:32.4135030Z 91/92 Test #91: cs80_exact_control_transform_tests ..........   Passed    0.01 sec
+2026-10-31T22:12:32.4137190Z       Start 92: cs80_host_wrapper_platform_tests
+2026-10-31T22:12:38.2190250Z 92/92 Test #92: cs80_host_wrapper_platform_tests ............   Passed    5.80 sec
+2026-10-31T22:12:38.2209770Z 
+2026-10-31T22:12:38.2210500Z 98% tests passed, 2 tests failed out of 92
+2026-10-31T22:12:38.2210900Z 
+2026-10-31T22:12:38.2211050Z Total Test time (real) = 1452.49 sec
+2026-10-31T22:12:38.2211380Z 
+2026-10-31T22:12:38.2211540Z The following tests FAILED:
+2026-10-31T22:12:38.2212040Z 	 86 - cs80_au_automation_host_tests (Failed)
+2026-10-31T22:12:38.2213070Z 	 87 - cs80_au_automation_native_mutations (Failed)
+2026-10-31T22:12:38.2217870Z Errors while running CTest
+2026-10-31T22:12:38.2334970Z ##[error]Process completed with exit code 8.
+2026-10-31T22:12:38.2651260Z ##[group]Run echo '--- installed component ---'
+2026-10-31T22:12:38.2652240Z [36;1mecho '--- installed component ---'[0m
+2026-10-31T22:12:38.2652890Z [36;1mls -la "$HOME/Library/Audio/Plug-Ins/Components" || true[0m
+2026-10-31T22:12:38.2653900Z [36;1mcodesign -dv "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" || true[0m
+2026-10-31T22:12:38.2654840Z [36;1mecho '--- registered audio units ---'[0m
+2026-10-31T22:12:38.2655410Z [36;1mauval -a 2>&1 | grep -i 'cs-80' || true[0m
+2026-10-31T22:12:38.2726520Z shell: /bin/bash -e {0}
+2026-10-31T22:12:38.2726920Z ##[endgroup]
+2026-10-31T22:12:38.2919820Z --- installed component ---
+2026-10-31T22:12:38.2969560Z ls: /Users/runner/Library/Audio/Plug-Ins/Components: No such file or directory
+2026-10-31T22:12:38.3041040Z /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component: No such file or directory
+2026-10-31T22:12:38.3044790Z --- registered audio units ---
+2026-10-31T22:12:40.6848410Z ##[group]Run for log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log; do
+2026-10-31T22:12:40.6849710Z [36;1mfor log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log; do[0m
+2026-10-31T22:12:40.6850830Z [36;1m  if [ -f "$log" ]; then[0m
+2026-10-31T22:12:40.6851660Z [36;1m    echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"[0m
+2026-10-31T22:12:40.6852560Z [36;1m  fi[0m
+2026-10-31T22:12:40.6852930Z [36;1mdone[0m
+2026-10-31T22:12:40.6906740Z shell: /bin/bash -e {0}
+2026-10-31T22:12:40.6907180Z ##[endgroup]
+2026-10-31T22:12:40.7452870Z ##[group]Run actions/upload-artifact@v5
+2026-10-31T22:12:40.7453780Z with:
+2026-10-31T22:12:40.7454370Z   name: cs80-pluginval-macos-15-intel
+2026-10-31T22:12:40.7455250Z   path: pluginval-reports
+pluginval-vst3.log
+pluginval-au.log
+pluginval-au-gui.log
+
+2026-10-31T22:12:40.7456500Z   if-no-files-found: warn
+2026-10-31T22:12:40.7456980Z   compression-level: 6
+2026-10-31T22:12:40.7457560Z   overwrite: false
+2026-10-31T22:12:40.7458130Z   include-hidden-files: false
+2026-10-31T22:12:40.7458620Z ##[endgroup]
+2026-10-31T22:12:41.3576300Z (node:28281) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-31T22:12:41.3577930Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-31T22:12:41.3652430Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-31T22:12:41.3659090Z The least common ancestor is /Users/runner/work/yamaha-cs80/yamaha-cs80. This will be the root directory of the artifact
+2026-10-31T22:12:41.3679380Z ##[warning]No files were found with the provided path: pluginval-reports
+pluginval-vst3.log
+pluginval-au.log
+pluginval-au-gui.log. No artifacts will be uploaded.
+2026-10-31T22:12:41.3967720Z ##[group]Run actions/upload-artifact@v5
+2026-10-31T22:12:41.3971340Z with:
+2026-10-31T22:12:41.3971750Z   name: cs80-macos-15-intel-test-evidence
+2026-10-31T22:12:41.3972520Z   path: build/Testing/Temporary/LastTest.log
+build/ci-juce-provenance.txt
+
+2026-10-31T22:12:41.3973330Z   if-no-files-found: warn
+2026-10-31T22:12:41.3973780Z   compression-level: 6
+2026-10-31T22:12:41.3974180Z   overwrite: false
+2026-10-31T22:12:41.3974780Z   include-hidden-files: false
+2026-10-31T22:12:41.3975260Z ##[endgroup]
+2026-10-31T22:12:41.6562280Z (node:28282) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-31T22:12:41.6563810Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-31T22:12:41.6614390Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-31T22:12:41.6617550Z The least common ancestor is /Users/runner/work/yamaha-cs80/yamaha-cs80/build. This will be the root directory of the artifact
+2026-10-31T22:12:41.6619240Z With the provided path, there will be 2 files uploaded
+2026-10-31T22:12:41.6623350Z Artifact name is valid!
+2026-10-31T22:12:41.6624330Z Root directory input is valid!
+2026-10-31T22:12:41.8636310Z Beginning upload of artifact content to blob storage
+2026-10-31T22:12:41.9561270Z (node:28282) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-31T22:12:42.0026570Z Uploaded bytes 22832
+2026-10-31T22:12:42.0208750Z Finished uploading artifact content to blob storage!
+2026-10-31T22:12:42.0210490Z SHA256 digest of uploaded artifact zip is c5213913275ec71749b4cf82d167c827820b73d3594459bf8bfddc0b0a59e5db
+2026-10-31T22:12:42.0212010Z Finalizing artifact upload
+2026-10-31T22:12:42.4261430Z Artifact cs80-macos-15-intel-test-evidence.zip successfully finalized. Artifact ID 13059950633
+2026-10-31T22:12:42.4263310Z Artifact cs80-macos-15-intel-test-evidence has been successfully uploaded! Final size is 22832 bytes. Artifact ID is 13059950633
+2026-10-31T22:12:42.4273910Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41243861802/artifacts/13059950633
+2026-10-31T22:12:42.4568760Z Post job cleanup.
+2026-10-31T22:12:42.5972120Z [command]/usr/local/bin/git version
+2026-10-31T22:12:42.6076220Z git version 2.55.0
+2026-10-31T22:12:42.6118880Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/bba9ddc9-01a9-4c7d-a484-e25d861b7078/.gitconfig'
+2026-10-31T22:12:42.6135580Z Temporarily overriding HOME='/Users/runner/work/_temp/bba9ddc9-01a9-4c7d-a484-e25d861b7078' before making global git config changes
+2026-10-31T22:12:42.6138150Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-31T22:12:42.6140920Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/yamaha-cs80/yamaha-cs80
+2026-10-31T22:12:42.6247290Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T22:12:42.6363170Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-31T22:12:42.7572370Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T22:12:42.7649630Z http.https://github.com/.extraheader
+2026-10-31T22:12:42.7661820Z [command]/usr/local/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-31T22:12:42.7755390Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-31T22:12:42.8992520Z [command]/usr/local/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T22:12:42.9082560Z [command]/usr/local/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-31T22:12:43.0495590Z Cleaning up orphan processes
+2026-10-31T22:12:43.3632760Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

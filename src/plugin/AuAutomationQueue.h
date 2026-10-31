@@ -3,12 +3,47 @@
 #include "HostAutomationBridge.h"
 #include <algorithm>
 #include <array>
+#include <atomic>
+#include <bit>
 #include <cmath>
 #include <cstdint>
 #include <limits>
 
 namespace cs80
 {
+// Native Intel evidence: docs/evidence/continuation-2026-10-31/au-intel-endpoint.
+// AU's normalized endpoint and JUCE's physical Float32 getter are different
+// representations. Keep a coherent pair, with one render-thread publisher and
+// arbitrary readers/invalidators. An edit during publication advances revision,
+// so an older publisher cannot reclaim ownership after that edit's notification.
+class AuNormalizedPublication
+{
+public:
+    using Token = std::uint64_t;
+    Token begin() noexcept { return revision.fetch_add(1) + 1; }
+    void publish(Token token, float normalized, float readback) noexcept
+    {
+        values.store((std::uint64_t(std::bit_cast<std::uint32_t>(normalized)) << 32)
+            | std::bit_cast<std::uint32_t>(readback));
+        committedRevision.store(token);
+    }
+    void invalidate() noexcept { revision.fetch_add(1); }
+    float read(float current) const noexcept
+    {
+        const auto before = revision.load();
+        if (committedRevision.load() != before) return current;
+        const auto pair = values.load();
+        if (revision.load() != before) return current;
+        const auto readback = std::bit_cast<float>(static_cast<std::uint32_t>(pair));
+        return readback == current ? std::bit_cast<float>(static_cast<std::uint32_t>(pair >> 32)) : current;
+    }
+private:
+    static_assert(std::atomic<Token>::is_always_lock_free);
+    // Sequentially consistent revision checks bracket one indivisible pair.
+    // No callback acquires a lock, waits, or allocates.
+    std::atomic<Token> revision {0}, committedRevision {std::numeric_limits<Token>::max()}, values {0};
+};
+
 // Audio Unit v2 scheduled parameters apply to the current render only:
 // https://developer.apple.com/documentation/audiotoolbox/audiounitscheduleparameters(_:_:_:)
 // Preallocated storage lets ScheduleParameter report a capacity error before

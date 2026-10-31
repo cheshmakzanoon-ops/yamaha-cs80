@@ -34,6 +34,10 @@ def main() -> int:
         ("pure-legacy-mask-removed", hooks, "if (! client->usesHostAutomationTiming())", "if (false)"),
         ("future-endpoint-published", queue,
          "if (pointCount > firstPoint && points[pointCount - 1].position >= frames)", "if (false)"),
+        ("normalized-publication-discarded", hooks,
+         "return cs80AuPublications[static_cast<size_t> (lane)].read (current);", "return current;"),
+        ("publication-reset-removed", hooks,
+         "for (auto& publication : cs80AuPublications) publication.invalidate();", "// mutation: retain old publication ownership"),
         ("unsupported-ramp-capability", wrapper,
          "if (! isParameterDiscrete && cs80AutomationIndex (*param) >= 0)", "if (! isParameterDiscrete)"),
     ]

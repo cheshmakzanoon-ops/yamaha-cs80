@@ -79,12 +79,21 @@ def patch_au(source: str) -> str:
         """                if (! isParameterDiscrete && cs80AutomationIndex (*param) >= 0)
                     outParameterInfo.flags |= kAudioUnitParameterFlag_CanRamp;""")
     source = replace_once(source,
+        """                const auto normValue = param->getValue();""",
+        """                const auto normValue = cs80ReadAuParameter (*param);""")
+    source = replace_once(source,
         """                auto value = inValue / getMaximumParameterValue (param);""",
         """                if (inBufferOffsetInFrames != 0 && cs80AutomationIndex (*param) >= 0)
                     if (auto* client = cs80AutomationClient(); client != nullptr && client->usesHostAutomationTiming())
                         return cs80ScheduleAuImmediate (*param, inValue, inBufferOffsetInFrames);
 
+                cs80InvalidateAuParameter (*param);
                 auto value = inValue / getMaximumParameterValue (param);""")
+    source = replace_once(source,
+        """        sendAUEvent (kAudioUnitEvent_ParameterValueChange, index);""",
+        """        if (auto* parameter = juceParameters.getParamForIndex (index))
+            cs80InvalidateAuParameter (*parameter);
+        sendAUEvent (kAudioUnitEvent_ParameterValueChange, index);""")
     source = replace_once(source,
         """        lastTimeStamp = inTimeStamp;
 
@@ -97,7 +106,11 @@ def patch_au(source: str) -> str:
         // prepare buffers""")
     for signature in ["ComponentResult Initialize() override", "void Cleanup() override",
                       "ComponentResult Reset (AudioUnitScope inScope, AudioUnitElement inElement) override"]:
-        source = replace_once(source, signature + "\n    {", signature + "\n    {\n        cs80AuAutomation.clearPending();")
+        source = replace_once(source, signature + "\n    {", signature
+            + "\n    {\n        cs80AuAutomation.clearPending();\n        cs80ResetAuPublications();")
+    source = replace_once(source,
+        "ComponentResult RestoreState (CFPropertyListRef inData) override\n    {",
+        "ComponentResult RestoreState (CFPropertyListRef inData) override\n    {\n        cs80ResetAuPublications();")
     return source
 
 

@@ -8,6 +8,7 @@ private:
         AudioProcessorParameter* parameter = nullptr;
     };
     std::array<Cs80AuCommit, cs80::AuAutomationQueue::lanes> cs80AuParameters {};
+    std::array<cs80::AuNormalizedPublication, cs80::AuAutomationQueue::lanes> cs80AuPublications {};
 
     cs80::HostAutomationClient* cs80AutomationClient() const noexcept
     { return dynamic_cast<cs80::HostAutomationClient*> (juceFilter.get()); }
@@ -18,14 +19,40 @@ private:
         return -1;
     }
 
+    float cs80ReadAuParameter (AudioProcessorParameter& parameter) const noexcept
+    {
+        const float current = parameter.getValue();
+        const int lane = cs80AutomationIndex (parameter);
+        if (auto* client = cs80AutomationClient(); lane >= 0 && client != nullptr && client->usesHostAutomationTiming())
+            return cs80AuPublications[static_cast<size_t> (lane)].read (current);
+        return current;
+    }
+
+    void cs80InvalidateAuParameter (AudioProcessorParameter& parameter) noexcept
+    {
+        const int lane = cs80AutomationIndex (parameter);
+        if (lane >= 0) cs80AuPublications[static_cast<size_t> (lane)].invalidate();
+    }
+
+    void cs80ResetAuPublications() noexcept
+    {
+        for (auto& publication : cs80AuPublications) publication.invalidate();
+    }
+
     static void cs80CommitAuParameter (void* context, float value) noexcept
     {
         auto& commit = *static_cast<Cs80AuCommit*> (context);
+        const int lane = commit.owner->cs80AutomationIndex (*commit.parameter);
+        auto* publication = lane >= 0 ? &commit.owner->cs80AuPublications[static_cast<size_t> (lane)] : nullptr;
+        const auto token = publication != nullptr ? publication->begin() : 0;
         if (! approximatelyEqual (value, commit.parameter->getValue()))
         {
             commit.owner->inParameterChangedCallback = true;
             commit.parameter->setValueNotifyingHost (value);
         }
+        if (auto* client = commit.owner->cs80AutomationClient(); publication != nullptr
+            && client != nullptr && client->usesHostAutomationTiming())
+            publication->publish (token, value, commit.parameter->getValue());
     }
 
     bool cs80DecodeAuEvent (const AudioUnitParameterEvent& source, AudioProcessorParameter& parameter,

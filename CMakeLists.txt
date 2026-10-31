@@ -331,6 +331,7 @@ if (CS80_BUILD_TESTS)
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
     add_executable(cs80_au_automation_bridge_contract_tests tests/AuAutomationBridgeContractTests.cpp)
     target_include_directories(cs80_au_automation_bridge_contract_tests PRIVATE src)
+    target_link_libraries(cs80_au_automation_bridge_contract_tests PRIVATE Threads::Threads)
     add_test(NAME cs80_au_automation_bridge_contract_tests COMMAND cs80_au_automation_bridge_contract_tests
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
     set_tests_properties(cs80_mts_esp_fallback_tests PROPERTIES TIMEOUT 30)
