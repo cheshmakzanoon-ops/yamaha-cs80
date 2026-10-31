@@ -11,6 +11,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/ProgramLibraryHostTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -2464,11 +2465,19 @@ int main(int argc, char** argv)
         Cs80AudioProcessor migration;
         check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "new processor starts in original SUB mode");
+        // ws6-library: the 222 shipped programs (Legacy Library, host 0..221)
+        // keep legacy SUB; the curated circuit-engine library appended at 222+
+        // intentionally uses the original six-function SUB.
         for (int program = 0; program < migration.getNumPrograms(); ++program)
         {
             migration.setCurrentProgram(program);
-            check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
-                  "every shipped factory program explicitly retains legacy SUB behavior");
+            if (program < cs80::legacyProgramCount)
+                check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+                      "every shipped factory program explicitly retains legacy SUB behavior");
+            else
+                check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                          && migration.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+                      "curated library programs select the original SUB on the circuit engine");
         }
         migration.prepareToPlay(48000.0, 64);
         migration.setParamValue(cs80::P_subOriginalMode, 1.0f);
@@ -3472,6 +3481,8 @@ int main(int argc, char** argv)
     std::puts("UI SMOKE PHASE: preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::testPluginPanic(check, flushGui);
+    std::puts("UI SMOKE PHASE: program library, Program Change, A/B and randomise");
+    cs80::tests::testProgramLibraryHost(check);
     std::puts("UI SMOKE PHASE: pressure ownership and UI readiness");
     cs80::tests::testKeyboardPressureOwnershipHost(check);
     cs80::tests::testKeyboardPointerPressure(check);

@@ -81,7 +81,9 @@ public:
             && hostKeyMasks[(size_t) note].load(std::memory_order_relaxed) != 0;
     }
 
-    const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
+    // Host program list: Legacy Library 0..221 (shipped indexes unchanged), then
+    // the curated circuit-engine library (cs80::programLibrary()).
+    const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
@@ -175,11 +177,38 @@ public:
     cs80::ParamValues currentValues() const;
     void applyParameterValues(const cs80::ParamValues& values);
 
+    // [ws6-library] A/B compare and randomise (PluginProcessorLibrary.cpp).
+    // Message thread. A snapshot is the whole sound: panel values, both tone
+    // selectors, the four memory banks and the preset name/index. Physical
+    // setup (jack, pedal, selector, output switch) and isolation stay live.
+    // abToggle() stores the sounding patch in the active slot and recalls the
+    // other one; an empty slot starts as a copy, so the first toggle is silent.
+    void abToggle();
+    // Copy the sounding patch into slot 0 (A) or 1 (B). From A, slot 1 is "A->B".
+    void abCopyCurrentTo(int slot);
+    int getAbSlot() const noexcept;
+    bool isAbSlotStored(int slot) const;
+    // Original CS-80 panel controls only, inside safe sub-ranges of their
+    // hardware ranges (src/core/Randomise.h); seedable and deterministic.
+    void randomiseWithinOriginalRanges(juce::uint32 seed);
+
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     static juce::String parameterId(int index) { return juce::String(cs80::paramId(index)); }
 
 private:
     friend struct cs80::tests::PresetSaveAccess;
+    // [ws6-library] program change, bank select, A/B state (PluginProcessorLibrary.cpp).
+    struct LibraryState;
+    std::unique_ptr<LibraryState> library;
+    void initialiseLibrary();
+    // Audio thread. Returns true when the recalled program changed the render
+    // policy (the caller then discards the pre-transition UI batch).
+    bool handleProgramChange(int midiChannel, int program);
+    void handleBankSelect(int controller, int value, int midiChannel) noexcept;
+    void writeLibraryState(juce::ValueTree& state) const;
+    void readLibraryState(const juce::ValueTree& state);
+    void captureAbSnapshot(int slot);
+    void recallAbSnapshot(int slot);
     void setPresetMetadata(const juce::String& name, int index);
     void readParameters();
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;

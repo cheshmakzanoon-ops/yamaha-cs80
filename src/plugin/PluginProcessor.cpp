@@ -1,6 +1,7 @@
 #include "PluginProcessor.h"
 
 #include "PluginEditor.h"
+#include "PluginProcessorLibrary.h"
 
 #include <algorithm>
 #include <cmath>
@@ -47,6 +48,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
         parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
     for (int channel = 0; channel < 2; ++channel)
         hardwareSources[(size_t) channel] = apvts.getRawParameterValue(hardwareSourceParameterId(channel));
+    initialiseLibrary(); // [ws6-library] program change, A/B, randomise
     for (int bank = 0; bank < 4; ++bank)
         for (int local = 0; local < cs80::CP_count; ++local)
             if (isMemoryControl(local))
@@ -383,6 +385,11 @@ void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
 Cs80AudioProcessor::PresetMetadata Cs80AudioProcessor::getPresetMetadata() const
 {
     const juce::ScopedLock lock(presetMetadataLock);
+    // [ws6-library] A MIDI Program Change publishes only its index (audio thread, no lock).
+    const int fromMidi = library != nullptr ? library->midiProgram.load(std::memory_order_acquire) : -1;
+    const auto& programs = getFactoryPresets();
+    if (fromMidi >= 0 && fromMidi < (int) programs.size())
+        return { juce::String(programs[(size_t) fromMidi].name), fromMidi };
     return { presetName, currentProgram.load(std::memory_order_relaxed) };
 }
 
@@ -391,12 +398,15 @@ void Cs80AudioProcessor::setPresetMetadata(const juce::String& name, int index)
     const juce::ScopedLock lock(presetMetadataLock);
     presetName = name;
     currentProgram.store(index, std::memory_order_relaxed);
+    if (library != nullptr) library->midiProgram.store(-1, std::memory_order_release);
 }
 
 void Cs80AudioProcessor::setPresetName(const juce::String& name)
 {
     {
         const juce::ScopedLock lock(presetMetadataLock);
+        // A rename of a MIDI-recalled program keeps its index, not its old name.
+        if (library != nullptr) library->midiProgram.store(-1, std::memory_order_release);
         presetName = name;
     }
     // Host callbacks may reenter metadata getters; never hold the lock here.
@@ -452,6 +462,8 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     {
         if (message.getControllerNumber() == 11 && !engine.isParityMode())
             expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
+        if (message.getControllerNumber() == 0 || message.getControllerNumber() == 32)
+            handleBankSelect(message.getControllerNumber(), message.getControllerValue(), message.getChannel());
         engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
     }
 }
@@ -602,16 +614,22 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     for (const auto metadata : midi)
     {
         // Filter BEFORE getMessage(): long/system messages otherwise own heap data.
-        // Only channel messages handled below are supported; program changes remain ignored.
+        // Only channel messages handled below are supported.
         if (metadata.numBytes < 2 || metadata.numBytes > 3) continue;
         const auto status = metadata.data[0] & 0xf0;
-        if (status < 0x80 || status >= 0xf0 || status == 0xc0) continue;
-        if (metadata.numBytes != (status == 0xd0 ? 2 : 3)) continue;
+        if (status < 0x80 || status >= 0xf0) continue;
+        if (metadata.numBytes != (status == 0xd0 || status == 0xc0 ? 2 : 3)) continue;
         if (metadata.data[1] >= 0x80 || (metadata.numBytes == 3 && metadata.data[2] >= 0x80)) continue;
         const int pos = juce::jlimit(0, numSamples, metadata.samplePosition);
         // Existing host events win equal-sample ties, matching JUCE addEvent order.
         while (uiIndex < uiCount && uiPosition() < pos) dispatchUI();
         advanceTo(pos);
+        if (status == 0xc0) // [ws6-library] MIDI Program Change, sample-accurate
+        {
+            if (handleProgramChange((metadata.data[0] & 0x0f) + 1, metadata.data[1]))
+                uiIndex = uiCount; // a policy transition discards the pre-transition UI batch
+            continue;
+        }
         const auto message = metadata.getMessage();
         std::array<cs80::Engine::VoiceInfo, 8> before;
         const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn;
@@ -788,7 +806,7 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     }
     // Do not serialize a second, potentially stale copy of automated controls.
     for (int i = result.getNumChildren(); --i >= 0;)
-        if (result.getChild(i).hasType("HARDWARE"))
+        if (result.getChild(i).hasType("HARDWARE") || result.getChild(i).hasType("AB_COMPARE"))
             result.removeChild(i, nullptr);
     return result;
 }
@@ -829,6 +847,7 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
     state.setProperty(stateSchemaKey, stateSchemaVersion, nullptr);
+    writeLibraryState(state); // [ws6-library] A/B compare slot
     if (auto xml = state.createXml())
     {
         auto text = xml->toString();
@@ -849,6 +868,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
+            readLibraryState(tree); // [ws6-library] A/B compare slot
             // DSP state is updated by the next audio block, not the state-loading thread.
         }
     }
