@@ -48,7 +48,7 @@ the Source Performance and PURE CS-80 policies.
 | Envelopes | `Adsr`/`FilterEnv` float path | inferred single-RC law | [ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md) |
 | VCA | linear multiply | IG00151: LI node, exponential SUB input, pedestal, AC coupling, constant-power pan (`Vca.h`) | [IG00151_VCA_MODEL.md](IG00151_VCA_MODEL.md) |
 | Voice variation | uniform tune/pan trims, 0.031 Hz sine drift | declared 5 % R / 10 % C card draws into tune, cutoff, Q, level, EG times; 1/f thermal drift with warm-up; sine as "worn unit" (`ToleranceModel.h`) | [TOLERANCE_DRIFT_MODEL.md](TOLERANCE_DRIFT_MODEL.md) |
-| Idle voices | frozen, reset on reuse | all 16 chains free-run (closed-form idle oscillator, decimated stages, snapshot replay); cold circuits start warm | [workstreams/ws3-keyboard.md](workstreams/ws3-keyboard.md), truth `reference/FreeRunningVoiceTruth.h` |
+| Idle voices | frozen, reset on reuse | all 16 chains free-run (closed-form idle oscillator, decimated stages, snapshot replay); untriggered filter envelopes settle continuously | [workstreams/ws3-keyboard.md](workstreams/ws3-keyboard.md), truth `reference/FreeRunningVoiceTruth.h` |
 | Keyboard | MIDI note to channel | KAS scan option, SH7 hold and droop, ninth-key reconsideration, KBC contour network | ws3 report, `KasScanner.h`, `KbcContour.h` |
 | Touch | raw MIDI velocity/pressure | TWS a/b/C nodes, TRG5 diode-OR bus | ws3 report, `TouchCircuit.h` |
 | Tone tabs | legacy bridge voicings | `SourceFactoryTones.h` (7 complete, 15 inferred; 25 cells are labelled hypotheses) | [PRESET_CIRCUIT_LEDGER.md](PRESET_CIRCUIT_LEDGER.md), ws6 report |
@@ -74,14 +74,14 @@ this register is a measurement of a CS-80. The in-app evidence view
 | --- | --- | --- |
 | Plan recorded | done | `97cc815` |
 | 0.1 Coefficient caching | done; bit-identical | `7b55d34` |
-| 0.1 Split, fast math, structure of arrays | partial: bounded-error tan in the nodal stage (`00ceccf`); fast exp2/pow measured no faster than glibc's and dropped; `processInternalSample` split and SoA not done | `00ceccf` |
+| 0.1 Split, fast math, structure of arrays | global/rank/mix/output split and 16-chain SoA done; oscillator, Jacobian and receiver caches done; whole-engine CPU target still open | `1207068`, `6bf6055`, `031a333`, `c3c0f5c` |
 | 0.2 Parameter smoothing | done (circuit engine), ws2 | `d29f6eb` |
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
 | 0.5 This status page | done | `eb486cb` |
 | 1.1 IG00156 filter, first stage | done | `f6b126d` |
-| 1.1b IG00156 nodal stage | done with two reported misses (top-octave small signal at 2x/4x; ADJ p11 HP point) | `c9f8cf0`, `cbd2442` |
+| 1.1b IG00156 nodal stage | original full-band small-signal limits pass at 2x/4x after phase correction; ADJ p11 HP voltage discrepancy remains evidence, not fitted | `4917708`, `651c74d` |
 | 1.2 Oscillator promotion | done; CPU over budget | `a6a574f` |
-| 1.3 RC envelopes | done | `131f72b` |
+| 1.3 RC envelopes | done; first-assignment and Sustain II filter charge retained | `131f72b`, `c54c476` |
 | 1.4 IG00151 VCA | done; model doc and mutation checks `0dfe4ee`; steal criterion met, retrigger 1.51 on one legacy-bank program (scorecard) | `5e857f5`, `1edc6c0`, `0dfe4ee` |
 | 1.5 Gain staging | done | `228459c` |
 | 1.6 Oversampling quality | done; Standard set to 2x from the measured alias | `ed877d4`, `ebbe75b` |
@@ -103,7 +103,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
 | 6 Sample-accurate automation | not done | — |
-| 7 Release qualification | release workflow, installers, licence AGPLv3 done; signing needs secrets; exit 139 open | `d9b98c6`, `06eb8f3`, `80cbe8c` |
+| 7 Release qualification | identified Linux validator-host lifetime mechanism removed by checked fixed-host pin; full continuation CI/release pending; signing remains owner-only | `f39af47`, `9af0b35` |
 
 ## Scorecard (2026-10-31, `00ceccf`)
 
@@ -311,15 +311,45 @@ are integrated and measured independently. After the separate pin commit,
 strict compatibility passes all four complete captures: both Legacy traces,
 V1 numerics, and V2 audio against the published charge-preservation commit.
 
+## Continuation: complete host/UI ownership and live monitoring
+
+`3c08e8e8d25f0ee1427f2467a199f37940a2ea3d` feeds the monitor from coherent
+engine taps and includes all sixteen physical voices when the second engine
+is active. The physical slot selector updates immediately after a capacity
+change and has explicit keyboard focus order. Output metering and tagged
+on-screen key pressure include both engines; assignment serials prevent a
+stolen or reused slot from accepting an old pressure gesture. Pure remains
+eight voices and keeps its modern-feature masks. Telemetry is read-only and
+only collected when the monitor is enabled.
+
+Earlier UI commits `0d9f522` and `2c0866e` add balanced host gestures around
+undo/redo and complete context menus/MIDI learn for APVTS-backed switches,
+combo boxes and memory miniatures. All four production APVTS copy/replace
+sites explicitly synchronize under the undoable state's tree lock.
+`9af0b35` gives graphics resources instance-owned teardown; this is defensive
+plugin cleanup, separate from the diagnosed validator-host defect.
+
+The dedicated UI continuation passed the entire real-window smoke suite:
+**151 pressure-ownership checks**, all new focus/gesture/monitor checks,
+seven deliberate UI/ownership mutations, teardown loops and both original
+image goldens (0.0000% difference). The modern-control audit has 314 controls
+with zero undersized targets; the 26 existing hardware exceptions remain
+explicit. Combined-feature UI/native-host qualification and final screenshots
+are repeated on the frozen integration tree. The complete strict audio check
+after the separate V2 pin passes both Legacy captures, V1 numerics, and V2
+against the published ownership commit. See
+[workstreams/ui-completion.md](workstreams/ui-completion.md).
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`c54c476c2ee8a3d332846579ce9433f219fe996c`** (retained filter-envelope
-  charge from first assignment). Pin commit `70ec7fd068b265d3d6fcdd7a0ac319efc41da77d`.
-  Earlier V2 pins, for historical circuit-engine renders: `d66d298` (electrical
+  **`3c08e8e8d25f0ee1427f2467a199f37940a2ea3d`** (complete voice ownership
+  and live engine taps). Pin commit `8f93feb5767f4fcd9f28256b8c9e53130a22a332`.
+  Earlier V2 pins, for historical circuit-engine renders: `c54c476` (filter
+  charge continuity), `d66d298` (electrical
   programmer), `4917708` (full-band
   nodal phase correction), `031a333` (Jacobian
   cache), `6bf6055` (oscillator
@@ -401,19 +431,19 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 
 ## Open issues
 
-- Intermittent Linux pluginval exit 139 after SUCCESS: code review and a memcheck
-  teardown probe found no fault in project code; root cause not established
-  ([VALIDATOR_DIAGNOSTICS.md](VALIDATOR_DIAGNOSTICS.md)).
+- Final cross-platform continuation build/pluginval, DSP and screenshot CI and
+  release dispatch remain to be completed. The historical Linux RunLoop
+  lifetime mechanism has been identified and removed from the pinned validator
+  host; see [VALIDATOR_HOST_LIFETIME.md](evidence/VALIDATOR_HOST_LIFETIME.md).
 - CPU above target (above). Idle above target.
-- Nodal filter top-octave small-signal accuracy at 2x/4x internal; ADJ p11 HP point.
+- ADJ p11 HP setup voltage remains discrepant; native evidence and the M41
+  topology conflict are recorded. Full-band small-signal numerical limits now pass.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
-- MTS-ESP client library not vendored (shim only); 16-voice mode meter and
-  pressure ownership cover the first engine only.
-- Memory-panel electrical model not wired into audio; 25 tone-tab cells remain
-  hypotheses; tremolo/chorus both-off/both-on states need an engine parameter.
-- Context menu and MIDI learn for switches, combo boxes and lid miniatures;
-  undo-applied values reach the host without gestures; the voice monitor
-  illustrates settings rather than tapping the engine.
+- MTS-ESP is now vendored and compile-tested (`fa2016c2`, upstream 0BSD
+  licence); final integrated plugin qualification remains in progress.
+- All 25 tone-tab cells have native-crop review records; unresolved markings
+  and board revision choices remain labelled hypotheses. Tremolo/chorus
+  independent both-off/both-on parameter integration is pending.
 - Sample-accurate automation not done.
 - Signing and notarization need the owner's certificates; real-DAW sessions,
   trademark review and AAX are owner actions
