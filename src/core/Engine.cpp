@@ -225,6 +225,7 @@ void Engine::prepareWarmColdOscillators() noexcept
 
 void Engine::reset()
 {
+    sourceReadoutCacheValid = false;
     // Circuit engine: every circuit starts cold but free-running (Phase 2.1).
     const bool freeRunning = freeRunningVoices();
     Rng coldPhases(kColdPhaseSeed);
@@ -415,6 +416,7 @@ bool Engine::setControlFrame(const ControlFrame& frame)
 
 void Engine::applyParams(const ParamValues& values)
 {
+    sourceReadoutCacheValid = false;
     params = values;
     // Sanitize once at the core boundary before integer casts and DSP laws.
     for (int i = 0; i < P_numParams; ++i)
@@ -810,6 +812,23 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
             // relaxes once the key is up). Formerly inactive touch was zero.
             drives[rank][voice] = {z, v.touchB, v.touchA};
         }
+    // These networks are memoryless algebra, not time integration. After a
+    // control tail settles, identical inputs imply identical readouts. Keep
+    // every EG/TWS clock above running; invalidate on any parameter/selection
+    // transaction and reset. Equality is exact (no threshold or decimation).
+    bool unchanged = sourceReadoutCacheValid && global.resonance == sourceReadoutResonance;
+    for (int rank = 0; unchanged && rank < kNumRanks; ++rank)
+        for (int voice = 0; unchanged && voice < kNumVoices; ++voice)
+        {
+            const auto& a = drives[rank][voice];
+            const auto& b = sourceReadoutDrives[rank][voice];
+            unchanged = a.filterEnvelopeZ == b.filterEnvelopeZ
+                     && a.velocity == b.velocity && a.pressure == b.pressure;
+        }
+    if (unchanged) return;
+    sourceReadoutDrives = drives;
+    sourceReadoutResonance = global.resonance;
+    sourceReadoutCacheValid = true;
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
             source_factory::evaluateCutoff(sourceTones[rank], drives[rank], sourceCutoff[rank]);

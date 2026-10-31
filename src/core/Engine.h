@@ -653,6 +653,10 @@ private:
     std::array<source_factory::RankBoundary, kNumRanks> sourceBoundaries;
     std::array<source_factory::CutoffReadout, kNumRanks> sourceCutoff;
     source_factory::SharedReadout sourceShared;
+    // Exact memoization of algebraic receiver networks; capacitor clocks still run.
+    source_factory::BothRankDrives sourceReadoutDrives {};
+    float sourceReadoutResonance = 0.0f;
+    bool sourceReadoutCacheValid = false;
     std::array<std::array<float, kNumVoices>, kNumRanks> sourceFilterValues {};
     std::uint64_t sourceCompileCount = 0;
     ControlFrameStatus controlFrameStatus = ControlFrameStatus::accepted;
