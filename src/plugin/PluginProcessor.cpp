@@ -653,6 +653,7 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
     // [ws8-studio] A program load is not an undo step and starts a fresh history (as replaceState does).
     if (auto* mm = juce::MessageManager::getInstanceWithoutCreating(); mm != nullptr && mm->isThisTheMessageThread())
     {
+        const juce::ScopedLock treeLock(apvts.treeLock());
         apvts.syncNow();
         undoManager.clearUndoHistory();
     }
@@ -1538,12 +1539,14 @@ void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
 // ---------------------------------------------------------------------------
 bool Cs80AudioProcessor::undo()
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     apvts.syncNow();
     return undoManager.undo();
 }
 
 bool Cs80AudioProcessor::redo()
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     apvts.syncNow();
     return undoManager.redo();
 }

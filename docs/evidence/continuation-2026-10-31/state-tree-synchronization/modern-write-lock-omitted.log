@@ -1,0 +1,11 @@
+UI smoke: WM_PROTOCOLS absent before window-manager startup.
+UI smoke: Openbox ready on :99; WM_PROTOCOLS present; running unchanged test command.
+UI SMOKE START: processor=356544 bytes engine=323776 bytes
+UI SMOKE PHASE: JUCE initialization
+FAIL: modern child insertion owns the common APVTS tree lock during actual callbacks
+FAIL: modern child replacement owns the common APVTS tree lock during actual callbacks
+FAIL: modern subtree undo holds the common lock across its actual mutation callbacks
+FAIL: modern subtree redo holds the common lock across its actual mutation callbacks
+State tree exact host-value matrix: 1701 cases; 161 normalized-roundtrip/APVTS-atomic differences before synchronization
+State tree MSEG precision matrix: 14 cases; 9 admitted subnormal fields; 0 round-trip mismatches
+State tree synchronization: 4 failures

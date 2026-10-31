@@ -79,10 +79,10 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
-    juce::AudioProcessorValueTreeState& getAPVTS() noexcept { return apvts; }
+    cs80::UndoableParameterState& getAPVTS() noexcept { return apvts; }
     // Modern modulation layer session data (MSEG shapes, matrix routing; ws5-modern).
     cs80::ModernLayerState& getModernLayer() noexcept { return modernLayer; }
-    const juce::AudioProcessorValueTreeState& getAPVTS() const noexcept { return apvts; }
+    const cs80::UndoableParameterState& getAPVTS() const noexcept { return apvts; }
     cs80::Engine& getEngine() noexcept { return engine; }
     // Non-audio producers only. Never feed host MIDI into this state.
     juce::MidiKeyboardState& getKeyboardState() noexcept { return keyboardState; }

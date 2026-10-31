@@ -942,10 +942,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             actions.clearMidiLearn = [this] { processor.getMidiLearn().clearAll(); };
             actions.undo = [this] { processor.undo(); centreRow.syncToneMarks(); };
             actions.redo = [this] { processor.redo(); centreRow.syncToneMarks(); };
-            actions.canUndo = [this] { return processor.getUndoManager().canUndo(); };
-            actions.canRedo = [this] { return processor.getUndoManager().canRedo(); };
-            actions.undoName = [this] { return processor.getUndoManager().getUndoDescription(); };
-            actions.redoName = [this] { return processor.getUndoManager().getRedoDescription(); };
+            actions.canUndo = [this] { return processor.getUndoableState().getHistorySnapshot().canUndo; };
+            actions.canRedo = [this] { return processor.getUndoableState().getHistorySnapshot().canRedo; };
+            actions.undoName = [this] { return processor.getUndoableState().getHistorySnapshot().undoDescription; };
+            actions.redoName = [this] { return processor.getUndoableState().getHistorySnapshot().redoDescription; };
             actions.startTour = [this] { studio->tour.start(); };
             actions.zoomPresets.assign(panel::EditorPreferences::zoomPresets.begin(), panel::EditorPreferences::zoomPresets.end());
             actions.setZoom = [this](int percent) { if (onZoom) onZoom(percent); };

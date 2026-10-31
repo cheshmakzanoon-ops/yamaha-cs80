@@ -19,6 +19,7 @@
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
 #include "../../tests/ParameterContextTests.h"
 #include "../../tests/VoiceMonitorHostTests.h"
+#include "../../tests/StateTreeSynchronizationTests.h"
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
@@ -2118,9 +2119,16 @@ int main(int argc, char** argv)
         std::printf("Chorus tab UI: %d failures\n", failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--state-tree-test") == 0)
+    {
+        cs80::tests::testStateTreeSynchronization(check);
+        std::printf("State tree synchronization: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--ui-completion-test") == 0)
     {
         cs80::tests::studio::testUndoRedo(check, flushGui);
+        cs80::tests::testStateTreeSynchronization(check);
         cs80::tests::ui_completion::testParameterContexts(check, flushGui);
         cs80::tests::ui_completion::testVoiceMonitorAndPressure(check, flushGui);
         cs80::tests::testWs3KeyboardHost(check);
@@ -3696,6 +3704,8 @@ int main(int argc, char** argv)
     cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio undo and redo");
     cs80::tests::studio::testUndoRedo(check, flushGui);
+    std::puts("UI SMOKE PHASE: worker snapshots and common state-tree lock");
+    cs80::tests::testStateTreeSynchronization(check);
     std::puts("UI SMOKE PHASE: parameter context completion");
     cs80::tests::ui_completion::testParameterContexts(check, flushGui);
     std::puts("UI SMOKE PHASE: engine taps and sixteen-voice ownership");

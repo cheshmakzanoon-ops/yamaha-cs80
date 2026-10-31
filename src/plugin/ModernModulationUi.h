@@ -1,5 +1,6 @@
 #pragma once
 #include "ParameterContext.h"
+#include "UndoHistory.h"
 
 #include "core/ModernLayer.h"
 
@@ -65,6 +66,7 @@ private:
     int nearestPoint(float x) const;
 
     Cs80AudioProcessor& processor;
+    std::unique_ptr<UndoableParameterState::ScopedUserEdit> userEdit;
     int msegIndex = 0;
     cs80::modern::MsegShape shape;
     Drag drag = Drag::none;

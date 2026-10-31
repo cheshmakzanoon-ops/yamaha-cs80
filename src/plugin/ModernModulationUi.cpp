@@ -342,8 +342,8 @@ void MsegEditor::mouseDown(const juce::MouseEvent& e)
     frozenViewLength = viewLength();
     dragStart = e.position;
     drag = Drag::none;
-    if (auto* undo = processor.getAPVTS().undoManager)
-        undo->beginNewTransaction("MSEG edit");
+    userEdit.reset();
+    userEdit = std::make_unique<UndoableParameterState::ScopedUserEdit>(processor.getUndoableState(), "MSEG edit");
     if (shape.loop != MsegLoop::off && loopMarkerArea(true).expanded(2.0f).contains(e.position))
         drag = Drag::loopEnd;
     else if (shape.loop != MsegLoop::off && loopMarkerArea(false).expanded(2.0f).contains(e.position))
@@ -406,6 +406,7 @@ void MsegEditor::mouseUp(const juce::MouseEvent&)
 {
     drag = Drag::none;
     frozenViewLength = 0.0f;
+    userEdit.reset();
     repaint();
 }
 
