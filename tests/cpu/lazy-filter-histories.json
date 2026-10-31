@@ -1,0 +1,32 @@
+{
+  "registered": "2026-10-31",
+  "operation": "Compute phase-corrected filter companion histories only when exported or required for a coefficient/clock transition",
+  "oracle": "Frozen Ig00156Stage class from44e321c; same already-qualified phase correction and physical network; existing independent filter/wake gates unchanged",
+  "maximum_output_difference": 0,
+  "maximum_exported_node_history_slope_difference": 0,
+  "comparison": "bitwise float and double equality",
+  "fixtures": [
+    "HP and LP networks at88200,96000,192000,384000Hz",
+    "static and moving cutoff/Q",
+    "hard-noise and two-tone inputs",
+    "audio-to-idle and idle-to-audio clock changes with reReference",
+    "copy, reset, physical-state restore, complete-memory restore",
+    "export immediately after set() and before process()",
+    "repeated reads of a settled exported history"
+  ],
+  "efficiency": "A static audio segment with no state export performs no companion-history reconstruction; one export after any number of samples performs exactly one reconstruction",
+  "mutations": [
+    "omit pending state export",
+    "overwrite coefficients before pending histories materialize",
+    "forget to clear pending flag on reset",
+    "reconstruct histories every audio sample",
+    "lose pending state when copying or restoring memory"
+  ],
+  "additional_gates": [
+    "Ig00156 nodal original grid",
+    "phase correction independent matrix and nonlinear gate",
+    "kernel cache",
+    "free-running wake",
+    "legacy/V1/currentV2 byte identity"
+  ]
+}
