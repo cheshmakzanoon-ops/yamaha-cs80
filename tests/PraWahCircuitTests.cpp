@@ -93,12 +93,13 @@ void setupAndGuards(){
  const auto beforeBytes=circuitBytes(a);
  for(double invalid:{-1.,0.,7999.,1536001.,std::numeric_limits<double>::infinity(),std::numeric_limits<double>::quiet_NaN()})
   check(!a.prepare(invalid,p,.4),"invalid rate rejected");
- for(int field=0;field<8;++field){auto bad=p;double* ptrs[]={&bad.parallelOhms,&bad.vr1Ohms,&bad.vr2Ohms,&bad.sourceOhms,&bad.dryLoadSiemens,&bad.heelOhms,&bad.toeOhms,&bad.opticalTauSeconds};*ptrs[field]=std::numeric_limits<double>::quiet_NaN();check(!a.prepare(96000,bad,.4),"nonfinite profile rejected");}
+ // ws4 Step 4 adds the ninth profile field, the optical decay (darkening) time constant.
+ for(int field=0;field<9;++field){auto bad=p;double* ptrs[]={&bad.parallelOhms,&bad.vr1Ohms,&bad.vr2Ohms,&bad.sourceOhms,&bad.dryLoadSiemens,&bad.heelOhms,&bad.toeOhms,&bad.opticalTauSeconds,&bad.opticalDecaySeconds};*ptrs[field]=std::numeric_limits<double>::quiet_NaN();check(!a.prepare(96000,bad,.4),"nonfinite profile rejected");}
  // Every declared finite bound and nonfinite setup pedal must fail atomically.
- const std::array<double,8> low{10000,0,0,0,0,100,100,0};
- const std::array<double,8> high{10000000,25000,100000,100000,.001,10000000,10000000,1};
- for(int field=0;field<8;++field)for(int side=0;side<2;++side){
-  auto bad=p;double* ptrs[]={&bad.parallelOhms,&bad.vr1Ohms,&bad.vr2Ohms,&bad.sourceOhms,&bad.dryLoadSiemens,&bad.heelOhms,&bad.toeOhms,&bad.opticalTauSeconds};
+ const std::array<double,9> low{10000,0,0,0,0,100,100,0,0};
+ const std::array<double,9> high{10000000,25000,100000,100000,.001,10000000,10000000,1,5};
+ for(int field=0;field<9;++field)for(int side=0;side<2;++side){
+  auto bad=p;double* ptrs[]={&bad.parallelOhms,&bad.vr1Ohms,&bad.vr2Ohms,&bad.sourceOhms,&bad.dryLoadSiemens,&bad.heelOhms,&bad.toeOhms,&bad.opticalTauSeconds,&bad.opticalDecaySeconds};
   *ptrs[field]=std::nextafter(side?high[field]:low[field],side?std::numeric_limits<double>::infinity():-std::numeric_limits<double>::infinity());
   check(!a.prepare(96000,bad,.4),"finite profile boundary violation rejected");
  }
@@ -120,18 +121,19 @@ void setupAndGuards(){
 }
 void atomicRollbackAndBoundaryControls(){
  using Profile=PraWahCircuit::Profile;
- constexpr std::array<double Profile::*,8> fields{
+ constexpr std::array<double Profile::*,9> fields{
   &Profile::parallelOhms,&Profile::vr1Ohms,&Profile::vr2Ohms,&Profile::sourceOhms,
-  &Profile::dryLoadSiemens,&Profile::heelOhms,&Profile::toeOhms,&Profile::opticalTauSeconds
+  &Profile::dryLoadSiemens,&Profile::heelOhms,&Profile::toeOhms,&Profile::opticalTauSeconds,
+  &Profile::opticalDecaySeconds
  };
- constexpr std::array<double,8> low{10000,0,0,0,0,100,100,0};
- constexpr std::array<double,8> high{10000000,25000,100000,100000,.001,10000000,10000000,1};
+ constexpr std::array<double,9> low{10000,0,0,0,0,100,100,0,0};
+ constexpr std::array<double,9> high{10000000,25000,100000,100000,.001,10000000,10000000,1,5};
  const double inf=std::numeric_limits<double>::infinity(), nan=std::numeric_limits<double>::quiet_NaN();
  // Deliberately nondefault active state, charged and partway through a slew.
  // Rejected candidates differ in every field, rate and target, so premature
  // writes cannot hide behind the same nominal settings used by the old guard.
- const Profile active{220000,12345,34567,5432,.000123,700,7000000,.037};
- const Profile candidate{100000,23456,76543,9876,.000321,900000,300,.091};
+ const Profile active{220000,12345,34567,5432,.000123,700,7000000,.037,.21};
+ const Profile candidate{100000,23456,76543,9876,.000321,900000,300,.091,.43};
  PraWahCircuit charged;
  check(charged.prepare(44100,active,.23),"rollback fixture setup");
  for(int n=0;n<401;++n)charged.process(.4*std::sin(n*.027));
@@ -215,6 +217,9 @@ void opticalAndCharge(){
  for(int k=0;k<4;++k){check(before[k].voltage==a.capacitorState()[k].voltage,"pedal setter preserves charge");check(before[k].current==a.capacitorState()[k].current,"pedal setter preserves current");}
  for(int k=0;k<1152;++k)a.process(0);
  near(std::log(a.opticalResistance()),std::log(p.toeOhms)+(std::log(p.heelOhms)-std::log(p.toeOhms))*std::exp(-1.),"12ms is log-R time constant",2e-12);
+ // ws4 Step 4: darkening (resistance rising) uses the slower 60 ms decay time constant.
+ {const double from=std::log(a.opticalResistance());a.setPedal(0);for(int k=0;k<5760;++k)a.process(0);
+  near(std::log(a.opticalResistance()),std::log(p.heelOhms)+(from-std::log(p.heelOhms))*std::exp(-1.),"60ms is the darkening log-R time constant",2e-12);}
  before=a.capacitorState();a.setOpticalResistance(12345);
  for(int k=0;k<4;++k){check(before[k].voltage==a.capacitorState()[k].voltage,"resistance setter preserves charge");check(before[k].current==a.capacitorState()[k].current,"resistance setter preserves current");}
 }
@@ -271,7 +276,7 @@ void lifecycleAndSweeps(){
  // loose and applies only to these bounded-input fixtures, not all modulation.
  double extremePeak=0;
  for(double fs:{8000.,96000.,1536000.})for(int fixture=0;fixture<24;++fixture){
-  PraWahCircuit::Profile q;q.parallelOhms=std::array{1e4,1e5,2.2e5,4.7e5,1e6,1e7}[fixture%6];q.vr1Ohms=std::array{0.,1000.,12500.,25000.}[fixture%4];q.vr2Ohms=std::array{0.,10000.,20000.,50000.,100000.}[fixture%5];q.sourceOhms=std::array{0.,1000.,5000.,10000.,100000.}[fixture%5];q.dryLoadSiemens=std::array{0.,1e-5,1e-4,.001}[fixture%4];q.opticalTauSeconds=std::array{0.,.003,.012,.03,.1,1.}[fixture%6];q.heelOhms=fixture%2?100:1e7;q.toeOhms=fixture%2?1e7:100;
+  PraWahCircuit::Profile q;q.parallelOhms=std::array{1e4,1e5,2.2e5,4.7e5,1e6,1e7}[fixture%6];q.vr1Ohms=std::array{0.,1000.,12500.,25000.}[fixture%4];q.vr2Ohms=std::array{0.,10000.,20000.,50000.,100000.}[fixture%5];q.sourceOhms=std::array{0.,1000.,5000.,10000.,100000.}[fixture%5];q.dryLoadSiemens=std::array{0.,1e-5,1e-4,.001}[fixture%4];q.opticalTauSeconds=std::array{0.,.003,.012,.03,.1,1.}[fixture%6];q.opticalDecaySeconds=std::array{0.,.01,.06,.3,1.,5.}[(fixture/2)%6];q.heelOhms=fixture%2?100:1e7;q.toeOhms=fixture%2?1e7:100;
   PraWahCircuit z;check(z.prepare(fs,q,0),"supported extreme profile");for(int n=0;n<12000;++n){if(n%97==0)z.setPedal((n/97)%2);auto out=z.process(n<6000?std::sin(n*.137):0);for(double val:values(out))check(std::isfinite(val),"dynamic extreme nodes finite");extremePeak=std::max(extremePeak,std::abs(out.y));}
  }
  check(extremePeak<100,"tested sensitivity trajectories bounded");std::cout<<"dynamic fixture peaks nominal="<<maxPeak<<" sensitivity="<<extremePeak<<'\n';

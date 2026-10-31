@@ -240,6 +240,7 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     extras = {
         "INSTALL_AND_QUICKSTART.md": (ROOT / "docs/INSTALL_AND_QUICKSTART.md").read_bytes(),
         "DISTRIBUTION_STATUS.md": (ROOT / "docs/CI_DISTRIBUTION_STATUS.md").read_bytes(),
+        "LICENSE": (ROOT / "LICENSE").read_bytes(),
         "licenses/JUCE-LICENSE.md": license_file.read_bytes(),
         "evidence/juce-provenance.txt": report_data,
         "SOURCE.txt": (f"Source commit: {commit}\n"

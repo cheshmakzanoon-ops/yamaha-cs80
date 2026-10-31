@@ -58,6 +58,8 @@ The original envelope changes modulation frequency; MODULATION controls the effe
 
 **Explicit provisional calibration:** `ringModulationFrequency()` uses `baseHz * (1 + kProvisionalRingFrequencyExcursion * depth * envelope)`. The constant is currently `1`, giving a one-octave peak excursion at maximum depth. This is a bounded, speed-dependent behavioral approximation, **not a measured transfer function**. The constant has a deliberately conspicuous name to prevent accidental promotion to circuit truth. Do not claim ring-model completion until the SUB board and oscillator/envelope transfer are traced and measured.
 
+**Circuit engine update (2026-10-31, ws4-circuits Step 2):** Source Performance and Isolation no longer use this constant. They use an exponential converter fitted to the adjustment-procedure p19 anchors (150 ms at VC1 = +5 V, 5 ms at maximum SPEED), with DEPTH x envelope added at the converter node (declared +5 V envelope peak, 4.9 octaves at full depth), and an offset multiplier with declared carrier/signal feedthrough. The legacy policy keeps the law above. See [ws4-circuits.md](workstreams/ws4-circuits.md).
+
 **Tests:** Zero depth and zero envelope preserve base speed; nonzero depth raises frequency; peak depends on base speed; legato notes do not reset the phrase envelope; a new phrase does. Maximum parameter/rate combinations remain finite at four sample rates. Tests assert topology and stability, not hardware accuracy.
 
 **Compatibility:** Old ring-heavy patches change sound because the previous envelope was attached to the wrong property. Host parameter names and IDs remain intact.

@@ -148,4 +148,19 @@ inline ReconstructionResponse solveReconstruction(const ReconstructionBoundary& 
                       out.followerCurrent, out.amplifierCurrent}) requireFinite(z);
     return out;
 }
+
+// ws4-circuits Step 3: one complete OE2 wet branch, from I(53) to the IC5 (upper) or IC6
+// (lower) amplifier output, for a supplied MN3001 baseband transfer that already includes
+// the output-pair hold (see NonidealChannel in Mn3001Packet.h). The input stage is driven
+// by the OE1 IC1 buffer (stiff source, no extra load). recombinationOhms is the Thevenin
+// resistance of the two equal 2.2 k OUT1/OUT2 resistors from stiff pins; that boundary is
+// a DECLARED fixture, not a measured source impedance. The recombined node is the average
+// of the two pins, i.e. 0.5 x the normalized packet sum; the caller owns that scale.
+inline Complex branchTransfer(double frequencyHz, Branch branch, Complex bbdTransfer,
+                              double recombinationOhms = 1100.0) {
+    const InputBoundary input {0.0, {0.0, 0.0}};
+    const ReconstructionBoundary reconstruction {recombinationOhms, {0.0, 0.0}, {0.0, 0.0}, branch};
+    return solveInput(input, frequencyHz, 1.0).y * bbdTransfer
+         * solveReconstruction(reconstruction, frequencyHz, 1.0).v;
+}
 } // namespace cs80::reference::oe2_filters
