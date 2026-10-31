@@ -163,15 +163,37 @@ The compiler, source hashes, complete row distributions, CPU time and deadline
 misses remain in the raw evidence. Subsequent kernel and engine-layout changes
 are qualified separately.
 
+## Continuation: constant nodal Jacobian cache
+
+Audio commit `031a3330ca86e4ee2251ffa39bb665ebb7032d3f` caches only the
+coefficient-dependent entries of the IG00156 scalar Jacobian. Nonlinear OTA
+derivatives still follow the current signal; the existing `1e-7` residual
+limit and four-step cap are unchanged. A converged starting estimate skips
+unneeded Newton steps. Forced coefficient rebuild comparison is exactly zero;
+maximum accepted residual is `9.99993e-8`. Four cache/residual mutations fail
+the preregistered gate. A stale nonlinear-Jacobian alternative was rejected
+because it was slower and failed an existing hard-noise row.
+
+Three full 48 kHz / 256-frame rounds are archived beside the oscillator
+measurements. Held-pair minimum-of-three medians are `0.58495–0.81223` RTF;
+moving controls `0.77993`; quiet idle `0.13394`. Compared with the preceding
+oscillator tree, this is not a material overall speedup. CPU targets remain
+open. Strict compatibility passed after the separate pin commit
+`85e048eac316969764acfb5791716412638ad33b`: both legacy captures and V1 remain
+byte-identical, and V2 matches the published audio commit. See
+[KERNEL_CACHE_QUALIFICATION.md](KERNEL_CACHE_QUALIFICATION.md) for the exact
+oracle, residual guard and rejected alternative.
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`6bf605592e162a1910c71f9cc5ebf7d014008527`** (oscillator analytic-segment
-  event cache). Pin commit `19555add94fec3ba5d70acefab45975a8ac4cc6d`.
-  Earlier V2 pins, for historical circuit-engine renders: `00ceccf` (integrated
+  **`031a3330ca86e4ee2251ffa39bb665ebb7032d3f`** (constant nodal Jacobian
+  cache). Pin commit `85e048eac316969764acfb5791716412638ad33b`.
+  Earlier V2 pins, for historical circuit-engine renders: `6bf6055` (oscillator
+  event cache), `00ceccf` (integrated
   model),
   `f6b126d` (Phase 1.1 filter), `131f72b` (Phase 1.3 envelopes), `228459c`
   (Phase 1.5 gain staging), `6e5892f` before that.
