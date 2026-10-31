@@ -16,7 +16,17 @@ class Ig00156PhaseCorrection
 public:
     using Vector = std::array<double, 4>;
     using Matrix = std::array<Vector, 4>;
-    explicit Ig00156PhaseCorrection(const Network& n) noexcept : net(n) {}
+    explicit Ig00156PhaseCorrection(const Network& n) noexcept : net(n)
+    {
+        gs = 1 / net.sourceOhms; gg = 1 / net.groundOhms; gf = 1 / net.feedbackOhms;
+        gt = gs + gg + gf;
+        scale = gt / (2 * gs);
+        ff = 1 / (net.feedforwardOhms * net.integratorFarads);
+        b = {gs / net.inputFarads, gs / net.feedbackFarads, 0, 0};
+        inputRow = -gs / net.inputFarads;
+        feedbackInput = -gs / net.feedbackFarads;
+        feedbackDiagonal = -gt / net.feedbackFarads;
+    }
     void reset() noexcept { v = {}; inputs = {}; slope1 = slope2 = 1.0; previousHpTanh = previousBpTanh = 0.0; }
     const Vector& nodes() const noexcept { return v; }
     struct Output { float lp = 0.0f, hp = 0.0f, bp = 0.0f; };
@@ -47,27 +57,28 @@ public:
         // physical nodes remain untouched. The idle replay rebuilds its past.
         if (lastFs > 0.0f && lastFs != fs) inputs.fill(inputs[0]);
         lastFc = cutoff; lastQ = q; lastFs = fs;
-        const double gs=1/net.sourceOhms, gg=1/net.groundOhms, gf=1/net.feedbackOhms;
-        const double gt=gs+gg+gf;
-        scale = gt / (2*gs);
         const double gq=std::max(0.0, gt/(2*std::clamp(double(q),.35,9.0))-gf);
-        const double ff=1/(net.feedforwardOhms*net.integratorFarads);
         const double fc=std::clamp(double(cutoff),0.0,.45*fs-ff/(2*3.14159265358979323846))+ff/(2*3.14159265358979323846);
         const double w=ig00156IntegratorRate(net,fc,gq);
         gm=std::max(0.0,w-ff);
         h=1.0/fs; beta=h*h/12;
         Matrix a {};
-        a[0]={-gs/net.inputFarads,-gs/net.inputFarads,-gs/net.inputFarads,0};
-        a[1]={-gs/net.feedbackFarads,-gt/net.feedbackFarads,(gq-gs-gg)/net.feedbackFarads,0};
+        a[0]={inputRow,inputRow,inputRow,0};
+        a[1]={feedbackInput,feedbackDiagonal,(gq-gs-gg)/net.feedbackFarads,0};
         a[2]={0,-2*w,-2*w,w};
         a[3]={0,0,-w,0};
-        b={gs/net.inputFarads,gs/net.feedbackFarads,0,0};
-        ab={};
-        Matrix a2 {};
-        for(int i=0;i<4;++i) for(int k=0;k<4;++k) {
-            ab[i]+=a[i][k]*b[k];
-            for(int j=0;j<4;++j) a2[i][j]+=a[i][k]*a[k][j];
-        }
+        // Fixed sparse nodal graph. Each nonzero product retains the original
+        // k=0,1,2,3 summation order; no numerical or OTA law is changed.
+        const double ai=inputRow, bi=feedbackInput, ci=feedbackDiagonal;
+        const double di=a[1][2], ei=-2*w;
+        ab={ai*b[0]+ai*b[1], bi*b[0]+ci*b[1], ei*b[1], 0};
+        const double ai2=ai*ai, aibi=ai*bi, bici=bi*ci, ei2=ei*ei, minusW2=(-w)*w;
+        Matrix a2 {{
+            {ai2+aibi, ai2+ai*ci+ai*ei, ai2+ai*di+ai*ei, ai*w},
+            {bi*ai+bici, bi*ai+ci*ci+di*ei, bi*ai+ci*di+di*ei, di*w},
+            {ei*bi, ei*ci+ei2, ei*di+ei2+minusW2, ei*w},
+            {0, (-w)*ei, (-w)*ei, minusW2}
+        }};
         for(int i=0;i<4;++i) for(int j=0;j<4;++j) {
             const double identity=i==j?1:0;
             left[i][j]=identity-h*.5*a[i][j]+beta*a2[i][j];
@@ -138,11 +149,13 @@ public:
             hp=hp0+hpBp*bp+hpTanh*t2;
             t1=fastTanh(hp*invLevel);
             const double residual=residual0+residualBp*bp+residualTanh*t2+nonlinear*t1;
-            const double d2=(1-t2*t2)*invLevel, d1=(1-t1*t1)*invLevel;
-            const double jacobian=residualBp+residualTanh*d2+nonlinear*d1*(hpBp+hpTanh*d2);
             if(std::abs(residual)<1e-10 || it==7) {
                 residualAtExit = residual; stepsAtExit = static_cast<unsigned>(it); break;
             }
+            // Converged states need no Jacobian or Newton correction. Retain
+            // the same current derivatives whenever a correction is required.
+            const double d2=(1-t2*t2)*invLevel, d1=(1-t1*t1)*invLevel;
+            const double jacobian=residualBp+residualTanh*d2+nonlinear*d1*(hpBp+hpTanh*d2);
             bp-=residual/jacobian;
         }
         for(int i=0;i<3;++i) v[e[i]]=zero[i]+fromBp[i]*bp+fromTanh[i]*t2;
@@ -161,6 +174,8 @@ private:
         previousBpTanh = fastTanh(v[2] / kIg00156OtaLevel);
     }
     Network net;
+    double gs=0,gg=0,gf=0,gt=0,ff=0;
+    double inputRow=0,feedbackInput=0,feedbackDiagonal=0;
     Vector v {}, inputs {}, b {}, ab {};
     Matrix left {}, right {};
     double inverse[3][3] {};

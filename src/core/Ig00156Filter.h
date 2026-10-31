@@ -202,6 +202,15 @@ public:
         kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
         gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
         ffPart = kHalf * ffRate;
+        if (!couplingsUnwarped)
+        {
+            // Audio consumes the corrected four-state step. The trapezoidal
+            // elimination below belongs only to the separately clocked idle
+            // path; its coefficients are rebuilt on the next idle transition.
+            correction.set(gmCutoffHz, q, sampleRate);
+            ++coefficientRevision;
+            return;
+        }
         // Linear block (vin, x) given BP: [a11 a12; a21 a22] [vin; x] = rhs.
         const double ki = kHalfCoupling / net.inputFarads, kf = kHalfCoupling / net.feedbackFarads;
         kiGs = ki * gs;
@@ -220,7 +229,6 @@ public:
         hpFromBp = 2.0 * (xFromBp + 1.0);
         otaJacobianBase = gmPart + ffPart;
         hpJacobianBase = hpFromBp + gmPart + ffPart;
-        if (!couplingsUnwarped) correction.set(gmCutoffHz, q, sampleRate);
         ++coefficientRevision;
     }
 

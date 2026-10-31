@@ -132,3 +132,38 @@ so numerical integration improvements do not repair its source/topology
 uncertainty. No gain was fitted. CPU comparison and compatibility captures
 belong to the integration evidence; numerical accuracy alone is not a CPU or
 hardware-fidelity certification.
+
+
+## Coefficient setup refactor
+
+A subsequent CPU refactor preserves the corrected integrator and its `1e-10`
+Newton residual target. The audio path no longer builds the separate idle
+trapezoid's elimination coefficients on every cutoff/Q update. An audio/idle
+clock transition still forces the required method's full setup. Fixed network
+conductances and constant nodal rows are cached once at construction. The
+sparse `A^2` product is expanded with each nonzero term in its original
+summation order. Once the current residual passes, the solver returns without
+calculating an unused Jacobian; when another step is needed it uses the same
+current OTA derivatives as before.
+
+A frozen copy of the preceding kernel was compared against this refactor at
+88.2/96/192/384 kHz, for both stage networks, over 40,000 moving-cutoff/Q samples
+per network/rate. The input alternates a two-tone signal and uniform hard noise
+in ±8. All 960,000 HP/BP/LP output floats match bit for bit (peak difference 0)
+in the local Release build. This checks arithmetic preservation; the independent
+matrix, nonlinear, stability and wake gates remain the accuracy authority.
+The fixed source constants are immutable because the stage's network has no
+runtime setter. No signal-dependent Jacobian is reused across nonlinear states.
+
+The qualified before/after benchmark snapshots are `cs80-cold-filter-benchmark`
+and `cs80-phase-cache-benchmark`; the integration evidence supplies the required
+three timing rounds. CPU benefit is not inferred from operation counts alone.
+
+
+The refactored build passes all four focused CTest suites: the original full
+nodal grid, independent phase matrix/direct sweep, forced-rebuild coefficient
+cache continuation and free-running wake tests. The wake suite now has 73,965
+checks because its obsolete SUSTAIN-II reset expectation was strengthened into
+exact all-circuit retention plus explicit Legacy reset checks. Its numerical
+wake limits and grid are unchanged. Results are in
+`evidence/continuation-2026-10-31/filter-coefficient-cache-qualification.txt`.
