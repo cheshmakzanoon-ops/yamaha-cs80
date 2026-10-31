@@ -31,13 +31,16 @@
 //   frequency depression (ig00156IntegratorRate). Uncompensated alternative:
 //   -2.3 % at 1 kHz, -4.4 % at 2 kHz, -20 % at 12 kHz.
 //
-// Discretization: trapezoidal companion model with every capacitor prewarped
-// by the same factor p = tan(theta) / theta, theta = pi * fTotal / fs (the
-// bilinear transform warped to pin the total cutoff exactly). The linear
-// states are eliminated per sample; one scalar Newton solve on BP remains, with
-// the same cached-slope start and 1e-7 tolerance as the first-stage model.
+// Audio discretization: fourth-order Pade [2/2] correction of the linear
+// nodal system, causal cubic input reconstruction and the same nonlinear OTA
+// currents in the implicit trapezoidal residual. Three linear states are
+// eliminated; a scalar Newton solve remains. See IG00156_PHASE_CORRECTION.md.
+// The decimated idle step retains its original prewarped-integrator/unwarped-
+// coupling trapezoid. Physical node voltages and derivatives transfer between
+// clocks; idle snapshots also retain the audio input-reconstruction history.
 #include "Dsp.h"
 #include "FastMath.h"
+#include "Ig00156PhaseCorrection.h"
 
 #include <algorithm>
 #include <cmath>
@@ -90,7 +93,7 @@ inline double ig00156IntegratorRate(const Ig00156Network& n, double targetHz, do
 class Ig00156Stage
 {
 public:
-    explicit Ig00156Stage(const Ig00156Network& n = kIg00156HighPassNetwork) noexcept : net(n)
+    explicit Ig00156Stage(const Ig00156Network& n = kIg00156HighPassNetwork) noexcept : net(n), correction(n)
     {
         gs = 1.0 / net.sourceOhms;
         gg = 1.0 / net.groundOhms;
@@ -100,7 +103,8 @@ public:
         feedforwardHz = 1.0 / (2.0 * 3.14159265358979323846 * net.feedforwardOhms * net.integratorFarads);
     }
 
-    // Trapezoidal companion histories, volts at the normalized scale.
+    // Companion histories v + halfStep * dv/dt, volts at normalized scale.
+    // Physical-state interchange for idle clocks; the audio step advances v.
     struct State { double input = 0.0, feedback = 0.0, bp = 0.0, lp = 0.0; };
     State getState() const noexcept { return { zIn, zFb, zBp, zLp }; }
     void reset() noexcept
@@ -108,6 +112,7 @@ public:
         zIn = zFb = zBp = zLp = 0.0;
         vIn = vFb = vBp = vLp = 0.0;
         slope1 = slope2 = 1.0;
+        correction.reset();
     }
 
     // Node voltages of the last processed sample (the same four capacitors).
@@ -115,28 +120,38 @@ public:
     Nodes getNodes() const noexcept { return { vIn, vFb, vBp, vLp }; }
     // Free-running idle path (plan step 2.1): restore histories and the node
     // voltages they belong to, e.g. from an independent reference.
-    void setState(const State& histories, const Nodes& nodes) noexcept
+    void setState(const State& histories, const Nodes& nodes, const std::array<double, 4>& inputHistory = {}) noexcept
     {
         zIn = histories.input; zFb = histories.feedback; zBp = histories.bp; zLp = histories.lp;
         vIn = nodes.input; vFb = nodes.feedback; vBp = nodes.bp; vLp = nodes.lp;
+        correction.restore({ vIn, vFb, vBp, vLp }, inputHistory, slope1, slope2, lastRate);
     }
+    const std::array<double, 4>& getInputHistory() const noexcept { return correction.inputHistory(); }
     // Compact memory for the idle snapshot ring (histories, node voltages,
-    // Newton slope caches and the half steps they were clocked with). Restoring
+    // Newton slopes, half steps and causal input reconstruction). Restoring
     // it forces the next set() to recompute every coefficient.
-    struct Memory { State z; Nodes v; double slope1 = 1.0, slope2 = 1.0, halfIntegrators = 0.0, halfCouplings = 0.0; };
+    struct Memory
+    {
+        State z; Nodes v;
+        double slope1 = 1.0, slope2 = 1.0, halfIntegrators = 0.0, halfCouplings = 0.0;
+        std::array<double, 4> inputs {};
+        double inputRate = 0.0;
+    };
     Memory getMemory() const noexcept
     {
-        return { getState(), getNodes(), slope1, slope2, kHalf, kHalfCoupling };
+        return { getState(), getNodes(), slope1, slope2, kHalf, kHalfCoupling,
+                 correction.inputHistory(), correction.inputRate() };
     }
     void restoreMemory(const Memory& m) noexcept
     {
         setState(m.z, m.v);
         slope1 = m.slope1; slope2 = m.slope2;
         kHalf = m.halfIntegrators; kHalfCoupling = m.halfCouplings;
+        correction.restore({ vIn, vFb, vBp, vLp }, m.inputs, slope1, slope2, m.inputRate);
         lastCutoff = lastQ = lastRate = -1.0f;
     }
-    // Half steps of the present coefficients: integrators (p * T / 2) and the
-    // two coupling capacitors (equal unless couplingsUnwarped).
+    // Audio half steps are T/2. Idle integrators use p*T/2 while the slow
+    // coupling capacitors use T/2; they retain their existing idle law.
     struct HalfSteps { double integrators = 0.0, couplings = 0.0; };
     HalfSteps halfSteps() const noexcept { return { kHalf, kHalfCoupling }; }
     // Re-express the trapezoidal histories for a new clock. For every
@@ -164,10 +179,10 @@ public:
     // feedforward adds feedforwardHz internally. q is the low-frequency Q.
     // couplingsUnwarped (free-running idle path only, plan step 2.1): the two
     // non-integrator capacitors (1 uF input coupling, 180 pF branch) use the
-    // plain trapezoidal half step instead of the integrators' prewarp. At the
+    // plain trapezoidal half step instead of the idle integrators' prewarp. At the
     // 3 kHz idle step a cutoff clamped near Nyquist would otherwise stretch the
     // 0.1-0.2 s coupling poles by tan(theta)/theta (about 4.5x). The audio path
-    // never sets it, so its coefficients are unchanged.
+    // uses the separately qualified phase-corrected nodal step.
     void set(float gmCutoffHz, float q, float sampleRate, bool couplingsUnwarped = false) noexcept
     {
         q = clampf(q, 0.35f, 9.0f);
@@ -183,7 +198,7 @@ public:
         const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
         const double theta = 3.14159265358979323846 * total / fs;
         // CPU pass: bounded-error tan (relative 1e-10 here, FastMath.h).
-        kHalf = 0.5 * (fastmath::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
+        kHalf = couplingsUnwarped ? 0.5 * (fastmath::tan(theta) / theta) / fs : 0.5 / fs;
         kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
         gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
         ffPart = kHalf * ffRate;
@@ -205,22 +220,42 @@ public:
         hpFromBp = 2.0 * (xFromBp + 1.0);
         otaJacobianBase = gmPart + ffPart;
         hpJacobianBase = hpFromBp + gmPart + ffPart;
+        if (!couplingsUnwarped) correction.set(gmCutoffHz, q, sampleRate);
         ++coefficientRevision;
     }
 
     struct Output { float lp = 0.0f, hp = 0.0f, bp = 0.0f; };
     unsigned getLastNewtonSteps() const noexcept { return lastNewtonSteps; }
     std::uint64_t getCoefficientRevision() const noexcept { return coefficientRevision; }
-    // Reconstruct the accepted scalar residual from the last capacitor nodes
-    // and companion histories. This read-only test tap adds no audio work.
+    // Accepted scalar residual of the selected audio/idle method.
     double getSolverResidual() const noexcept
     {
+        if (!lastUnwarped) return correction.solverResidual();
         const double hp = 2.0 * (vFb + vBp) - vLp;
         return zBp - vBp + gmPart * kIg00156OtaLevel * fastTanh(hp / kIg00156OtaLevel) + ffPart * hp;
     }
 
     Output process(float input) noexcept
     {
+        if (!lastUnwarped)
+        {
+            const auto out = correction.process(input);
+            const auto& nodes = correction.nodes();
+            vIn = nodes[0]; vFb = nodes[1]; vBp = nodes[2]; vLp = nodes[3];
+            slope1 = correction.firstSlope(); slope2 = correction.secondSlope();
+            lastNewtonSteps = correction.newtonSteps();
+            const double u = input * inputScale;
+            const double hp = 2.0 * (vFb + vBp) - vLp;
+            // Companion histories remain a physical-state interchange format
+            // for idle clock changes and the existing render-thread taps.
+            // The phase-corrected audio step itself advances the node voltages.
+            zIn = vIn + kHalfCoupling * gs / net.inputFarads * (u - vIn - vFb - vBp);
+            zFb = vFb + kHalfCoupling / net.feedbackFarads
+                * (gs * (u - vIn) - gTotal * vFb + (qSiemensValue - gs - gg) * vBp);
+            zBp = vBp - gmPart * kIg00156OtaLevel * correction.getHpTanh() - ffPart * hp;
+            zLp = vLp - gmPart * kIg00156OtaLevel * correction.getBpTanh() - ffPart * vBp;
+            return { out.lp, out.hp, out.bp };
+        }
         const double u = input * inputScale;
         const double level = kIg00156OtaLevel, inv = 1.0 / level;
         const double g1 = gmPart, f1 = ffPart, g2 = gmPart, f2 = ffPart;
@@ -256,6 +291,7 @@ public:
         zBp = 2.0 * bp - zBp;
         zLp = 2.0 * lp - zLp;
         vIn = vin; vFb = x; vBp = bp; vLp = lp;
+        correction.observeIdle({ vIn, vFb, vBp, vLp }, u, lastRate);
         // BP is reported in the normalized (non-inverted) SVF polarity.
         return { static_cast<float>(lp), static_cast<float>(hp), static_cast<float>(-bp) };
     }
@@ -268,6 +304,7 @@ public:
 
 private:
     Ig00156Network net;
+    detail::Ig00156PhaseCorrection<Ig00156Network> correction;
     double gs = 0.0, gg = 0.0, gf = 0.0, gTotal = 0.0, inputScale = 1.0, feedforwardHz = 0.0;
     double kHalf = 0.0, kHalfCoupling = 0.0, gmPart = 0.0, ffPart = 0.0, qSiemensValue = 0.0;
     double kiGs = 0.0, xFromFb = 1.0, xFromIn = 0.0, xFromU = 0.0, xFromBp = 0.0;

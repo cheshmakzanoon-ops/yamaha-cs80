@@ -7,6 +7,7 @@
 #include "core/Ig00156Filter.h"
 #include "core/SourceFactoryTones.h"
 #include "reference/IG00156Network.h"
+#include "reference/IG00156PhaseCorrection.h"
 #include "Ws1Tolerances.h"
 
 #include <algorithm>
@@ -108,7 +109,31 @@ struct Truth
     }
 };
 
-// 1. Realtime == exact trapezoid of the truth system with the same prewarp.
+// Independent per-stage four-state matrix discretization. The continuous
+// source network and normalized adapters above are unchanged; this oracle
+// does not call the production scalar elimination or its Jacobian caches.
+struct DiscreteTruth
+{
+    ref::PhaseCorrectedLinearStage hp, lp;
+    bool hpOn, lpOn;
+    DiscreteTruth(double hpHz, double lpHz, double q, double fs)
+        : hp(ref::stageSystem(hpNet, control(hpNet, std::max(hpHz, 1.0), q), 1.0/ref::passbandGain(hpNet)), fs),
+          lp(ref::stageSystem(lpNet, control(lpNet, std::max(lpHz, 1.0), q), 1.0/ref::passbandGain(lpNet)), fs),
+          hpOn(hpHz>0), lpOn(lpHz>0) {}
+    double step(double input)
+    {
+        if(hpOn) input=hp.step(input,true);
+        if(lpOn) input=lp.step(input,false);
+        return input;
+    }
+    std::complex<double> at(double frequency) const
+    {
+        return (hpOn?hp.discrete(frequency,true):std::complex<double>(1,0))
+             * (lpOn?lp.discrete(frequency,false):std::complex<double>(1,0));
+    }
+};
+
+// 1. Realtime == the independent full-matrix phase-corrected discrete oracle.
 void equivalence(const ws1::Tolerances& tol)
 {
     const double limit = tol["equivalence_max_rel"];
@@ -121,9 +146,8 @@ void equivalence(const ws1::Tolerances& tol)
                     const double hpHz = config == 1 ? 0.0 : (config == 2 ? std::max(60.0, fc / 4.0) : fc);
                     const double lpHz = config == 0 ? 0.0 : fc;
                     Realtime rt(hpHz, lpHz, q, fs);
-                    Truth truth(hpHz, lpHz, q, fs, true);
-                    ref::Vector<8> z8 {}; ref::Vector<4> z4 {};
-                    double prev = 0.0, worst = 0.0, peak = 0.0;
+                    DiscreteTruth truth(hpHz, lpHz, q, fs);
+                    double worst = 0.0, peak = 0.0;
                     const int n = 3000;
                     for (int i = 0; i < n; ++i)
                     {
@@ -131,14 +155,7 @@ void equivalence(const ws1::Tolerances& tol)
                         const double u = (i < 40 ? 1e-4 : 0.0)
                                        + 1e-4 * std::sin(2 * pi * 0.73 * fc * t) + 6e-5 * std::sin(2 * pi * 2.9 * fc * t + 0.4);
                         const float y = rt((float) u);
-                        double yt;
-                        if (truth.isPair) { z8 = truth.pair.step(z8, prev, u, 1.0 / fs).value; yt = z8[7]; }
-                        else
-                        {
-                            z4 = truth.single.step(z4, prev, u, 1.0 / fs).value;
-                            yt = lpHz > 0 ? z4[3] : 2.0 * (z4[1] + z4[2]) - z4[3];
-                        }
-                        prev = u;
+                        const double yt=truth.step(u);
                         worst = std::max(worst, std::abs((double) y - yt));
                         peak = std::max(peak, std::abs(yt));
                     }
@@ -146,20 +163,16 @@ void equivalence(const ws1::Tolerances& tol)
                     if (worst > limit * peak)
                     {
                         std::fprintf(stderr, "equivalence fs=%g fc=%g q=%g config=%d rel=%g\n", fs, fc, q, config, worst / peak);
-                        check(false, "realtime equals the truth trapezoid (pre-registered equivalence_max_rel)");
+                        check(false, "realtime equals the independent full-matrix discrete truth (pre-registered equivalence_max_rel)");
                     }
                 }
     std::printf("equivalence: worst %.3g of output peak (limit %.3g)\n", worstAll, limit);
     check(worstAll <= limit, "equivalence over the whole grid");
 }
 
-// 2. Discrete (realtime) small-signal response versus the continuous truth.
-// The pre-registered limits are evaluated over the WHOLE grid and the result
-// is printed. First evaluation (2026-10-31): the bilinear map warps the top
-// octave at the 2x and 4x rates, so the full-grid gate is NOT met there
-// (docs/IG00156_NODAL_MODEL.md). The assertions below apply the same
-// registered limits to the sub-grids where they hold, so neither the gate nor
-// its limits are relaxed and any regression inside those sub-grids fails.
+// 2. Discrete small-signal response versus the unchanged continuous truth.
+// All registered cutoffs, Q values, configurations and rates are asserted;
+// there are no passing-subgrid exemptions or widened tolerances.
 struct SmallSignalResult { double core = 0.0, band = 0.0; };
 SmallSignalResult smallSignalError(double fs, double fc)
 {
@@ -169,7 +182,8 @@ SmallSignalResult smallSignalError(double fs, double fc)
         {
             const double hpHz = config == 1 ? 0.0 : (config == 2 ? std::max(60.0, fc / 4.0) : fc);
             const double lpHz = config == 0 ? 0.0 : fc;
-            Truth cont(hpHz, lpHz, q, fs, false), disc(hpHz, lpHz, q, fs, true);
+            Truth cont(hpHz, lpHz, q, fs, false);
+            DiscreteTruth disc(hpHz, lpHz, q, fs);
             double peak = 0.0;
             for (double f = 5.0; f < std::min(24000.0, 0.45 * fs); f *= 1.01)
                 peak = std::max(peak, std::abs(cont.at({ 0.0, 2 * pi * f })));
@@ -177,8 +191,8 @@ SmallSignalResult smallSignalError(double fs, double fc)
             for (double f = 20.0; f <= hi; f *= 1.02)
             {
                 const auto hc = cont.at({ 0.0, 2 * pi * f });
-                // Trapezoid frequency map: s_T = j (2/T) tan(w T / 2).
-                const auto hd = disc.at({ 0.0, 2.0 * fs * std::tan(pi * f / fs) });
+                // Independent rational response including the causal input-history term.
+                const auto hd = disc.at(f);
                 const double e = std::abs(hd - hc) / peak;
                 if (f >= 0.5 * fc && f <= 2.0 * fc && f <= fs / 8.0) r.core = std::max(r.core, e);
                 r.band = std::max(r.band, e);
@@ -201,26 +215,23 @@ void smallSignal(const ws1::Tolerances& tol)
             const bool met = r.core <= core && r.band <= bandLimit;
             gateMet = gateMet && met;
             std::printf("  fc %g core %.4f band %.4f%s", fc, r.core, r.band, met ? "" : " (over)");
-            // Registered limits on the sub-grids where the gate holds.
-            if (fc <= 4000.0)
-                check(r.core <= core, "core-band error within small_signal_core_rel (cutoffs <= 4 kHz, all rates)");
-            if (fc <= 1000.0 || fs >= 384000.0)
-                check(r.band <= bandLimit, "full-band error within the registered band limit (cutoffs <= 1 kHz, or 384 kHz)");
-            if (fs >= 384000.0)
-                check(r.core <= core, "core-band error within small_signal_core_rel at 384 kHz (whole grid)");
+            check(r.core <= core, "whole-grid core error within small_signal_core_rel");
+            check(r.band <= bandLimit, "whole-grid full-band error within the registered limit");
         }
         std::printf("\n");
     }
     std::printf("pre-registered small-signal gate over the whole grid: %s\n",
-                gateMet ? "MET" : "NOT MET (top-octave bilinear warp at 88.2-192 kHz, see doc)");
+                gateMet ? "MET" : "NOT MET");
 
     // Direct lock-in measurement of the running realtime stage (not via the
     // discrete formula) at a few points, against the continuous truth.
     double worstDirect = 0.0;
-    for (double fc : { 250.0, 4000.0 })
+    for (double fs : { 88200.0, 96000.0, 192000.0, 384000.0 })
+      for (double fc : { 250.0, 4000.0, 12000.0 })
         for (double f : { 0.5 * fc, fc, 2.0 * fc })
         {
-            const double fs = 96000.0, q = 5.0;
+            if (f > std::min(20000.0, fs / 5.0)) continue;
+            const double q = 5.0;
             Realtime rt(0.0, fc, q, fs);
             Truth cont(0.0, fc, q, fs, false);
             const int settle = (int) (2.0 * fs), measure = (int) (std::round(0.2 * f) / f * fs);

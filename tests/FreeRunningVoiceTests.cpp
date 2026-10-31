@@ -98,7 +98,8 @@ GateResult runGate(double internalRate, const truth::RankControls& sounding, int
     rt.wsc.reset(0.25, sounding.frequency);
     for (int i = 0; i < activeSamples; ++i) activeTick(rt, sounding, sr);
     ref.reset(rt.wsc.getState(), asArray(rt.hpStage.getState()), asArray(rt.hpStage.getNodes()),
-              asArray(rt.lpStage.getState()), asArray(rt.lpStage.getNodes()));
+              asArray(rt.lpStage.getState()), asArray(rt.lpStage.getNodes()),
+              rt.hpStage.getInputHistory(), rt.lpStage.getInputHistory());
 
     int clock = 0, steps = 0;
     for (int i = 0; i < idleSamples; ++i)
@@ -119,8 +120,8 @@ GateResult runGate(double internalRate, const truth::RankControls& sounding, int
     // Production chain started from the truth's wake state.
     TestRank fromTruth(internalRate);
     fromTruth.wsc.restoreState(ref.oscillatorState());
-    fromTruth.hpStage.setState(asState(ref.hpStage().z), asState(ref.hpStage().v));
-    fromTruth.lpStage.setState(asState(ref.lpStage().z), asState(ref.lpStage().v));
+    fromTruth.hpStage.setState(asState(ref.hpStage().z), asState(ref.hpStage().v), ref.hpStage().inputs);
+    fromTruth.lpStage.setState(asState(ref.lpStage().z), asState(ref.lpStage().v), ref.lpStage().inputs);
     fromTruth.idleRefs = { sr, sr };
     const int window = static_cast<int>(std::lround(tol::kWakeResidualWindowSeconds * internalRate));
     double error = 0.0, power = 0.0;

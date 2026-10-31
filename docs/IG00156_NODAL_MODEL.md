@@ -1,5 +1,13 @@
 # IG00156 nodal stage (circuit engine)
 
+**Numerical update, 2026-10-31:** the audio solver now uses the
+[phase-corrected nodal method](IG00156_PHASE_CORRECTION.md). The complete
+registered small-signal grid passes at 2× and 4× without widened limits.
+The equations and electrical inferences below are unchanged; the original
+trapezoid qualification is retained below as historical evidence. The
+[native ADJ/M41 review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md)
+keeps the HP voltage miss and LP source-impedance interpretation open.
+
 Plan step 1.1b of [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md), 2026-10-31. It
 replaces the first-stage realtime filter ([IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md),
 `Svf::processCircuit`) in the circuit engine (Source Performance and Isolation).
@@ -106,7 +114,7 @@ measurement floor, independent of level. The OTA currents are integrated, so
 only very high harmonics can fold into the audio band. ADAA (a log-cosh per
 OTA per Newton step) cannot measurably improve the -70 dB target.
 
-## Results (all from `cs80_ig00156_nodal_tests`)
+## Initial trapezoid results (historical, before phase correction)
 
 | Gate (pre-registered) | Result |
 | --- | --- |

@@ -240,6 +240,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_ig00156_nodal_tests COMMAND cs80_ig00156_nodal_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
     set_tests_properties(cs80_ig00156_nodal_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_ig00156_phase_correction_tests tests/Ig00156PhaseCorrectionTests.cpp)
+    target_link_libraries(cs80_ig00156_phase_correction_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00156_phase_correction_tests COMMAND cs80_ig00156_phase_correction_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
+    set_tests_properties(cs80_ig00156_phase_correction_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_oscillator_promotion_tests tests/OscillatorPromotionTests.cpp)
     target_link_libraries(cs80_oscillator_promotion_tests PRIVATE cs80_core)
     add_test(NAME cs80_oscillator_promotion_tests COMMAND cs80_oscillator_promotion_tests
