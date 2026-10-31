@@ -119,6 +119,21 @@ public:
         zIn = histories.input; zFb = histories.feedback; zBp = histories.bp; zLp = histories.lp;
         vIn = nodes.input; vFb = nodes.feedback; vBp = nodes.bp; vLp = nodes.lp;
     }
+    // Compact memory for the idle snapshot ring (histories, node voltages,
+    // Newton slope caches and the half steps they were clocked with). Restoring
+    // it forces the next set() to recompute every coefficient.
+    struct Memory { State z; Nodes v; double slope1 = 1.0, slope2 = 1.0, halfIntegrators = 0.0, halfCouplings = 0.0; };
+    Memory getMemory() const noexcept
+    {
+        return { getState(), getNodes(), slope1, slope2, kHalf, kHalfCoupling };
+    }
+    void restoreMemory(const Memory& m) noexcept
+    {
+        setState(m.z, m.v);
+        slope1 = m.slope1; slope2 = m.slope2;
+        kHalf = m.halfIntegrators; kHalfCoupling = m.halfCouplings;
+        lastCutoff = lastQ = lastRate = -1.0f;
+    }
     // Half steps of the present coefficients: integrators (p * T / 2) and the
     // two coupling capacitors (equal unless couplingsUnwarped).
     struct HalfSteps { double integrators = 0.0, couplings = 0.0; };

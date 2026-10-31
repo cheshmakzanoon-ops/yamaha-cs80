@@ -345,10 +345,12 @@ inline int catchUpSamples(const std::array<IdleRankControls, 2>& ranks, float sa
 // Snapshot of one rank at an idle-step instant: a consistent (time,
 // oscillator, stages) triple a replay can start from. Kept every
 // kHistoryStride steps in a short ring (always ~1.3 ms apart, ~16 ms deep).
+// Compact (about 280 bytes): the oscillator's physical state without its
+// residual buffer, which is empty after an idle step, and the stages' memories.
 struct IdleSnapshot
 {
-    ReconstructedOscillator::State osc {};
-    Ig00156Stage hp { kIg00156HighPassNetwork }, lp { kIg00156LowPassNetwork };
+    ReconstructedOscillator::IdleState osc {};
+    Ig00156Stage::Memory hp {}, lp {};
     IdleStageReferences refs {};
 };
 inline constexpr int kHistoryStride = 4;
@@ -361,17 +363,20 @@ struct IdleHistory
 {
     std::array<IdleSnapshot, kHistoryLength> entries {};
     std::array<float, kFrequencyHistory> frequency {};
+    // Step 0 (the silence instant) keeps the complete oscillator state: its
+    // residual buffer still holds the last sounding samples' antialias tails.
+    ReconstructedOscillator::State silence {};
 };
 // Step counts wrap at a multiple of the ring period so slot indices stay valid.
 inline constexpr int kIdleStepWrap = (1 << 28) - ((1 << 28) % (kHistoryStride * kHistoryLength));
 
 template <class Rank>
-void storeSnapshot(Rank& r, int slot, const ReconstructedOscillator::State& osc) noexcept
+void storeSnapshot(Rank& r, int slot, const ReconstructedOscillator::IdleState& osc) noexcept
 {
     auto& e = r.idleHistory.entries[static_cast<std::size_t>(slot)];
     e.osc = osc;
-    e.hp = r.hpStage;
-    e.lp = r.lpStage;
+    e.hp = r.hpStage.getMemory();
+    e.lp = r.lpStage.getMemory();
     e.refs = r.idleRefs;
 }
 
@@ -412,7 +417,8 @@ void idleStepRank(Rank& r, const IdleRankControls& next, float sampleRate, int s
     {
         // Until the first step the silent circuit is untouched, so it still
         // holds the state it had when it went silent: that is step 0.
-        storeSnapshot(r, 0, r.wsc.getState());
+        r.idleHistory.silence = r.wsc.getState();
+        storeSnapshot(r, 0, r.wsc.getIdleState());
         r.idleHistory.frequency[0] = r.idle.frequency;
         r.idleFirstSamples = samples;
         r.idleLead = 0.0;
@@ -429,9 +435,9 @@ void idleStepRank(Rank& r, const IdleRankControls& next, float sampleRate, int s
     const double toInstant = gap > 0.0 ? half : std::max(1.0e-12, delta - r.idleLead);
     const double meanA = r.wsc.advanceIdle(toInstant, next.frequency, controls);
     const bool snapshot = stepIndex % kHistoryStride == 0;
-    ReconstructedOscillator::State atInstant {};
+    ReconstructedOscillator::IdleState atInstant {};
     if (snapshot)
-        atInstant = r.wsc.getState();
+        atInstant = r.wsc.getIdleState();
     const double meanB = r.wsc.advanceIdle(half, next.frequency, controls);
     r.idleLead = half;
     const double mean = (meanA * toInstant + meanB * half) / (toInstant + half);
@@ -473,9 +479,12 @@ void wakeCircuit(Rank* ranks, int count, float sampleRate, int stepSamples, int 
     {
         auto& r = ranks[i];
         const auto& snap = r.idleHistory.entries[static_cast<std::size_t>((start / kHistoryStride) % kHistoryLength)];
-        r.wsc.restoreState(snap.osc);
-        r.hpStage = snap.hp;
-        r.lpStage = snap.lp;
+        if (start == 0)
+            r.wsc.restoreState(r.idleHistory.silence);
+        else
+            r.wsc.restoreIdleState(snap.osc);
+        r.hpStage.restoreMemory(snap.hp);
+        r.lpStage.restoreMemory(snap.lp);
         r.idleRefs = snap.refs;
         // Step by step along the recorded idle frequency, then hold the last
         // step's controls up to the note-on. A stage switched on or off while

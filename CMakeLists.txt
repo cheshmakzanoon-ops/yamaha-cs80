@@ -540,3 +540,20 @@ if (CS80_BUILD_PLUGIN)
         endforeach()
     endif()
 endif()
+
+# Core test executables keep several Engine fixtures (about 270 KB each since
+# the free-running idle snapshots and the circuit-engine voice) on the stack in
+# one function. Give them the ordinary 8 MiB Unix test-process budget instead of
+# MSVC's 1 MiB executable default, as CS80Snapshots already has. Not applied to
+# the shipping plugin or Standalone targets.
+if (MSVC AND CS80_BUILD_TESTS)
+    get_property(cs80_all_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
+    foreach(cs80_target IN LISTS cs80_all_targets)
+        if (cs80_target MATCHES "^cs80_.*tests$")
+            get_target_property(cs80_target_type ${cs80_target} TYPE)
+            if (cs80_target_type STREQUAL "EXECUTABLE")
+                target_link_options(${cs80_target} PRIVATE /STACK:8388608)
+            endif()
+        endif()
+    endforeach()
+endif()

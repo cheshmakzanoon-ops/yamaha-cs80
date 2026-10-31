@@ -368,6 +368,27 @@ public:
     // Restore a state captured with getState() (same rate and profile): the
     // idle snapshot ring and the wake replay use it. Never allocates.
     void restoreState(const State& captured) noexcept { state=captured;endNodesValid=false;diagnostics.eventCount=0; }
+    // Compact physical state for the idle snapshot ring: after advanceIdle()
+    // nothing is pending in the residual buffer, so it is not stored.
+    struct IdleState {
+        double charge=0.,resetRemainingSeconds=0.,inputBaselineVolts=0.,triangleBaselineVolts=0.;
+        double heldFrequencyHz=261.6,heldThresholdVolts=0.,elapsedSeconds=0.;
+        std::uint64_t resetCount=0;
+        bool sawEnabled=true,pulseEnabled=true;
+    };
+    IdleState getIdleState() const noexcept {
+        return {state.charge,state.resetRemainingSeconds,state.inputBaselineVolts,state.triangleBaselineVolts,
+                state.heldFrequencyHz,state.heldThresholdVolts,state.elapsedSeconds,state.resetCount,
+                state.sawEnabled,state.pulseEnabled};
+    }
+    void restoreIdleState(const IdleState& s) noexcept {
+        state.charge=s.charge;state.resetRemainingSeconds=s.resetRemainingSeconds;
+        state.inputBaselineVolts=s.inputBaselineVolts;state.triangleBaselineVolts=s.triangleBaselineVolts;
+        state.heldFrequencyHz=s.heldFrequencyHz;state.heldThresholdVolts=s.heldThresholdVolts;
+        state.elapsedSeconds=s.elapsedSeconds;state.resetCount=s.resetCount;
+        state.sawEnabled=s.sawEnabled;state.pulseEnabled=s.pulseEnabled;
+        state.residual={};endNodesValid=false;diagnostics.eventCount=0;
+    }
     double maximumFrequencyHz() const noexcept { return std::min(.45*rate,.95/profile.resetSecondsNominal); }
     static constexpr double latencyInternalSamples() noexcept { return OscillatorResidualKernel::latencySamples; }
     double sampleRate() const noexcept { return rate; }
