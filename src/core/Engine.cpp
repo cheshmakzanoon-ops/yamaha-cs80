@@ -350,6 +350,7 @@ void Engine::setParams(const ParamValues& values)
     hardwareSources = {13, 13};
     sourceRoutes.fill(source_factory::Route::panel_or_memory);
     sourceActive.fill(false);
+    programmerActive.fill(false);
     sourceCutoff = {};
     sourceShared = {};
     controlFrameStatus = ControlFrameStatus::accepted;
@@ -376,6 +377,19 @@ bool Engine::setControlFrame(const ControlFrame& frame)
             return false;
         }
 
+    const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
+                                                            frame.effectiveValues[P_sourcePerformance]));
+    std::array<bool, kNumRanks> programmer {};
+    for (int rank = 0; rank < kNumRanks; ++rank)
+    {
+        programmer[rank] = sourceModels && frame.hardwareSources[rank] >= 11 && frame.hasProgrammerPositions[rank];
+        if (programmer[rank] && !memory_panels::valid(frame.programmerPositions[rank]))
+        {
+            controlFrameStatus = ControlFrameStatus::invalidProgrammerPosition;
+            return false;
+        }
+    }
+
     // Validate/compile both ranks before publishing any part of the transaction.
     // Originally incomplete columns use the separate, versioned inference
     // manifest. Their source_inferred identity and original unknown masks remain
@@ -386,11 +400,22 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     for (int rank = 0; rank < kNumRanks; ++rank)
     {
         const int selector = frame.hardwareSources[rank];
-        const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
-                                                                frame.effectiveValues[P_sourcePerformance]));
         if (selector != hardwareSources[rank] || sourceModels != usesSourceModels(global.renderPolicy))
             routes[rank] = source_factory::route(rank, selector, sourceModels);
-        if (source_factory::isSourceDriven(routes[rank])
+        if (programmer[rank])
+        {
+            if (!programmerActive[rank] || !tones[rank].compiled || tones[rank].source.selector != selector
+                || programmerPositions[rank] != frame.programmerPositions[rank])
+            {
+                if (!memory_panels::compileTone(rank, selector, frame.programmerPositions[rank], tones[rank]))
+                {
+                    controlFrameStatus = ControlFrameStatus::compileFailure;
+                    return false;
+                }
+                ++compilations;
+            }
+        }
+        else if (source_factory::isSourceDriven(routes[rank])
             && (!tones[rank].compiled || tones[rank].source.selector != selector))
         {
             if (!source_factory::compileTone(rank, selector, tones[rank]))
@@ -405,8 +430,10 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     sourceRoutes = routes;
     sourceTones = tones;
     sourceCompileCount += compilations;
+    programmerActive = programmer;
+    programmerPositions = frame.programmerPositions;
     for (int rank = 0; rank < kNumRanks; ++rank)
-        sourceActive[rank] = source_factory::isSourceDriven(routes[rank]);
+        sourceActive[rank] = programmer[rank] || source_factory::isSourceDriven(routes[rank]);
     sourceCutoff = {};
     sourceShared = {};
     applyParams(frame.effectiveValues);

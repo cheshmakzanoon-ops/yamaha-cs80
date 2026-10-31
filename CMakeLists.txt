@@ -366,6 +366,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_source_factory_boundary_tests
              COMMAND cs80_source_factory_boundary_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    add_executable(cs80_programmer_integration_tests tests/ProgrammerIntegrationTests.cpp)
+    target_link_libraries(cs80_programmer_integration_tests PRIVATE cs80_core)
+    add_test(NAME cs80_programmer_integration_tests COMMAND cs80_programmer_integration_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/programmer-integration.json)
+    set_tests_properties(cs80_programmer_integration_tests PROPERTIES TIMEOUT 180)
     add_executable(cs80_memory_panel_tests tests/MemoryPanelTests.cpp)
     target_include_directories(cs80_memory_panel_tests PRIVATE src)
     add_test(NAME cs80_memory_panel_tests

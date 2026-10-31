@@ -411,7 +411,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     highResolutionVelocity.reset();
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
-    engine.setControlFrame({ cached, cachedHardwareSources });
+    engine.setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
     if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
@@ -804,7 +804,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const int previousFactor = engine.getOversamplingFactor();
     // Hosts may switch to offline rendering without a new prepareToPlay.
     engine.setNonRealtime(isNonRealtime());
-    engine.setControlFrame({ cached, cachedHardwareSources });
+    engine.setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
     modernLayer.applyToEngine(engine, getPlayHead()); // MSEG shapes, routing, host tempo
     // A policy or oversampling-factor change resets the engine the same way.
     if (engine.getRenderPolicy() != previousPolicy || engine.getOversamplingFactor() != previousFactor)
@@ -819,7 +819,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     if (engine.getVoiceMode() == 1)
     {
         extensionEngine->setNonRealtime(isNonRealtime());
-        extensionEngine->setControlFrame({ cached, cachedHardwareSources });
+        extensionEngine->setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
         cs80::ModernLayerState::mirrorToEngine(engine, *extensionEngine);
         if (!extensionActive)
         {

@@ -57,7 +57,7 @@ ControlFrame setup(bool funky)
         if (!found) throw std::runtime_error("Bass Stack program missing");
     }
     frame.effectiveValues[P_parityMode] = 1.0f;
-    return frame;
+    return ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
 }
 }
 int main(int argc, char** argv)

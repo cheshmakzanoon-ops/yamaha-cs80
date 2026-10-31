@@ -71,6 +71,7 @@ Rendered render(const Setup& s, int rate, const std::vector<Event>& events, doub
     frame.effectiveValues = s.values;
     if (oversamplingOverride >= 0.0f) frame.effectiveValues[P_oversampling] = oversamplingOverride;
     frame.hardwareSources = s.sources;
+    frame = ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
     require(e.setControlFrame(frame), "frame rejected");
     e.reset();
     const long frames = (long) std::llround(seconds * rate);
@@ -674,7 +675,7 @@ void suiteLatency(const fs::path& dir, const std::vector<int>& rates)
             Engine e;
             e.prepare(rate);
             ControlFrame frame;
-            frame.effectiveValues = p;
+            frame = ControlFrame::programmer(p);
             require(e.setControlFrame(frame), "frame rejected");
             const int factor = e.getOversamplingFactor();
             for (double f : { 250.0, 1000.0, 5000.0, 10000.0, 15000.0, 18000.0, 20000.0 })
@@ -704,7 +705,7 @@ void suiteCpu(const fs::path& dir, const std::vector<int>& rates)
             Engine e;
             e.prepare(rate);
             ControlFrame frame;
-            frame.effectiveValues = p;
+            frame = ControlFrame::programmer(p);
             require(e.setControlFrame(frame), "frame rejected");
             for (int n : { 36, 43, 48, 55, 60, 64, 67, 72 }) e.noteOn(n, 0.8f, 1);
             std::vector<float> buf(2 * 128);

@@ -20,6 +20,7 @@
 #include "Oversampling.h"
 #include "Smoothing.h"
 #include "SourceFactoryTones.h"
+#include "MemoryPanels.h"
 #include "KasScanner.h"
 #include "KbcContour.h"
 #include "TouchCircuit.h"
@@ -63,6 +64,23 @@ struct ControlFrame
     ParamValues effectiveValues;
     std::array<int, 2> hardwareSources { 13, 13 };
     std::uint32_t modelVersion = source_factory::modelVersion;
+    std::array<memory_panels::Positions, 2> programmerPositions {};
+    std::array<bool, 2> hasProgrammerPositions {};
+
+    // Explicit production programmer coordinate. Existing aggregate frames
+    // without positions retain their historical physical-unit parameter API.
+    static ControlFrame programmer(const ParamValues& values, std::array<int, 2> selectors = {13, 13}) noexcept
+    {
+        ControlFrame frame { values, selectors };
+        const bool source = usesSourceModels(renderPolicy(values[P_parityMode], values[P_sourcePerformance]));
+        for (int rank = 0; rank < 2; ++rank)
+            if (source && selectors[rank] >= 11 && selectors[rank] <= 13)
+            {
+                frame.programmerPositions[rank] = memory_panels::positionsFromParameters(values, rank);
+                frame.hasProgrammerPositions[rank] = true;
+            }
+        return frame;
+    }
 };
 
 struct RankSettings
@@ -209,7 +227,7 @@ public:
     void reset();
     // Legacy entry point retains sanitization and denotes PANEL/no source model.
     void setParams(const ParamValues& values);
-    enum class ControlFrameStatus { accepted, invalidSelector, unsupportedModel, nonfiniteParameter, compileFailure };
+    enum class ControlFrameStatus { accepted, invalidSelector, unsupportedModel, nonfiniteParameter, compileFailure, invalidProgrammerPosition };
     // Invalid frames are rejected as a whole, preserving parameters, compiled
     // controls and audio state. Finite core values retain established clamping.
     bool setControlFrame(const ControlFrame& frame);
@@ -222,6 +240,11 @@ public:
     };
     SourceToneInfo getSourceToneInfo(int rank) const noexcept;
     std::uint64_t getSourceCompileCount() const noexcept { return sourceCompileCount; }
+    std::array<double, 26> getSourceBusReadout(int rank) const noexcept
+    {
+        return rank >= 0 && rank < kNumRanks && sourceActive[rank]
+            ? sourceTones[rank].busVolts : std::array<double, 26>{};
+    }
     // Last same-sample receiver traces, not physical measurements. Cleared on a
     // valid source transaction; render-thread diagnostics only, like RankInfo.
     source_factory::CutoffReadout getSourceCutoffReadout(int rank) const noexcept;
@@ -648,6 +671,8 @@ private:
     std::array<source_factory::Route, kNumRanks> sourceRoutes {
         source_factory::Route::panel_or_memory, source_factory::Route::panel_or_memory };
     std::array<bool, kNumRanks> sourceActive {};
+    std::array<bool, kNumRanks> programmerActive {};
+    std::array<memory_panels::Positions, kNumRanks> programmerPositions {};
     // Immutable per-selection maps; compiled only when an active address changes.
     std::array<source_factory::ToneControls, kNumRanks> sourceTones;
     std::array<source_factory::RankBoundary, kNumRanks> sourceBoundaries;
