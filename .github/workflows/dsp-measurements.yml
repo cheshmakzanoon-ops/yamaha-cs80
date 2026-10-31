@@ -121,9 +121,14 @@ jobs:
       SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
       # Immutable circuit-engine audio checkpoint. Re-pinned from 6e5892f (BBD
       # chorus and release-tail changes) to Phase 1.5 gain staging (228459c),
-      # then Phase 1.3 RC envelopes (131f72b), then the Phase 1.1 IG00156 filter;
-      # see docs/STATUS.md. V1's original circuit numerics remain a separate gate.
-      SOURCE_AUDIO_V2: f6b126d67f102de436e82b21116f14650d06594f
+      # then Phase 1.3 RC envelopes (131f72b), then the Phase 1.1 IG00156 filter
+      # (f6b126d), then once for the eight-workstream integration (00ceccf: ws1
+      # nodal filter, oscillator, VCA and plan 2.5 tolerances/drift; ws2
+      # smoothing, noise, optical expression, Standard 2x; ws3 free-running
+      # voices, KAS hold, KBC contour, touch; ws4 SUB/ring/OE1/OE2/PRA; the CPU
+      # pass's tan); see docs/STATUS.md. V1's original circuit numerics remain a
+      # separate gate.
+      SOURCE_AUDIO_V2: 00ceccfacb3cb9845436701da01c4387d53a361a
     steps:
       - uses: actions/checkout@v5
       - name: Build immutable circuit and audio checkpoints with one compiler
