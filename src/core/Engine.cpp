@@ -431,7 +431,7 @@ void Engine::buildSettings()
         modern::ModernControls controls;
         controls.enabled = ! isPureCs80(global.renderPolicy);
         for (int m = 0; m < modern::kMsegCount; ++m)
-            controls.msegRate[(std::size_t) m] = p(P_mseg1Rate + m);
+            controls.msegRate[(std::size_t) m] = std::exp2(p(P_mseg1Rate + m)); // octaves -> speed
         for (int s = 0; s < modern::kModSlots; ++s)
             controls.amount[(std::size_t) s] = p(P_mod1Amount + s);
         controls.velocityCurve = p(P_modVelocityCurve);

@@ -330,6 +330,7 @@ if (CS80_BUILD_PLUGIN)
         # [ws4-circuits] add this workstream's plugin sources below this line.
 
         # [ws5-modern] add this workstream's plugin sources below this line.
+        src/plugin/ModernLayerState.cpp
 
         # [ws6-library] add this workstream's plugin sources below this line.
 

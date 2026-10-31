@@ -323,9 +323,9 @@ void setModernParameters(ParamValues& p, float amount)
 {
     for (int s = 0; s < kModSlots; ++s)
         p[P_mod1Amount + s] = amount * (s % 2 ? -0.6f : 0.8f);
-    p[P_mseg1Rate] = 2.5f;
-    p[P_mseg2Rate] = 0.3f;
-    p[P_mseg3Rate] = 7.0f;
+    p[P_mseg1Rate] = 1.3f;   // octaves
+    p[P_mseg2Rate] = -1.7f;
+    p[P_mseg3Rate] = 2.8f;
     p[P_modVelocityCurve] = 0.7f;
     p[P_modPressureCurve] = -0.4f;
     p[P_modWheelCurve] = 0.2f;

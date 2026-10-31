@@ -6,6 +6,7 @@
 #include "KeyboardEventQueue.h"
 #include "KeyboardGestureCapture.h"
 #include "KeyboardPressureOwnership.h"
+#include "ModernLayerState.h"
 #include "OutputMeter.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -65,6 +66,8 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     juce::AudioProcessorValueTreeState& getAPVTS() noexcept { return apvts; }
+    // Modern modulation layer session data (MSEG shapes, matrix routing; ws5-modern).
+    cs80::ModernLayerState& getModernLayer() noexcept { return modernLayer; }
     const juce::AudioProcessorValueTreeState& getAPVTS() const noexcept { return apvts; }
     cs80::Engine& getEngine() noexcept { return engine; }
     // Non-audio producers only. Never feed host MIDI into this state.
@@ -199,6 +202,7 @@ private:
 
     cs80::Engine engine;
     juce::AudioProcessorValueTreeState apvts;
+    cs80::ModernLayerState modernLayer { apvts }; // child of the APVTS state; after apvts
     juce::MidiKeyboardState keyboardState;
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;

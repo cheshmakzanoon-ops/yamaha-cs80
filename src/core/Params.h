@@ -165,7 +165,8 @@ enum : int
     P_lfo1Wave,
     P_lfo2Wave,
     P_lfo3Wave,
-    // MSEG 1..3 speed multiplier (0.125x..8x); shapes and routing live in session state.
+    // MSEG 1..3 speed in octaves (-3..+3 = 0.125x..8x, linear so the default round-trips
+    // exactly through host state); shapes and routing live in session state.
     P_mseg1Rate,
     P_mseg2Rate,
     P_mseg3Rate,
@@ -382,10 +383,9 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "lfo1_wave", "LFO 1 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
     { "lfo2_wave", "LFO 2 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
     { "lfo3_wave", "LFO 3 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
-    // 1x sits at the middle of the host range: skew = ln(0.5) / ln(0.875 / 7.875).
-    { "mseg1_rate", "MSEG 1 RATE", 0.125f, 8.0f, 1.0f, 0.31546f, "x", "MODULATION" },
-    { "mseg2_rate", "MSEG 2 RATE", 0.125f, 8.0f, 1.0f, 0.31546f, "x", "MODULATION" },
-    { "mseg3_rate", "MSEG 3 RATE", 0.125f, 8.0f, 1.0f, 0.31546f, "x", "MODULATION" },
+    { "mseg1_rate", "MSEG 1 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mseg2_rate", "MSEG 2 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mseg3_rate", "MSEG 3 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
     { "mod1_amount", "MOD 1 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
     { "mod2_amount", "MOD 2 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
     { "mod3_amount", "MOD 3 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
