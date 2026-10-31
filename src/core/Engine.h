@@ -198,6 +198,12 @@ class Engine
 {
 public:
     Engine();
+    // Rank views refer into this instance's component arrays. Engine instances
+    // own their realtime state and must never alias another instance's lanes.
+    Engine(const Engine&) = delete;
+    Engine& operator=(const Engine&) = delete;
+    Engine(Engine&&) = delete;
+    Engine& operator=(Engine&&) = delete;
 
     void prepare(double hostSampleRate);
     void reset();
@@ -400,51 +406,114 @@ private:
     // constants: 4.5e-5 of the discharged DC step remains).
     static constexpr double kColdWarmUpSeconds = 1.0;
 
+    // Each circuit component has one contiguous 16-lane array. The lightweight
+    // Rank views below preserve voice/rank ownership while keeping envelopes,
+    // coefficients and diagnostics away from the large oscillator histories.
+    // Arithmetic and lane order remain unchanged, including Legacy RNG draws.
+    static constexpr std::size_t kRankLanes = kNumVoices * kNumRanks;
+    struct RankArrays
+    {
+        alignas(64) std::array<Oscillator, kRankLanes> osc {};
+        alignas(64) std::array<ReconstructedOscillator, kRankLanes> wsc {};
+        alignas(64) std::array<Svf, kRankLanes> hpf {};
+        alignas(64) std::array<Svf, kRankLanes> lpf {};
+        alignas(64) std::array<Ig00156Stage, kRankLanes> hpStage;
+        alignas(64) std::array<Ig00156Stage, kRankLanes> lpStage;
+        alignas(64) std::array<Ig00151Vca, kRankLanes> vca {};
+        alignas(64) std::array<bool, kRankLanes> vcaCold {};
+        alignas(64) std::array<FilterEnv, kRankLanes> fenv {};
+        alignas(64) std::array<Adsr, kRankLanes> aenv {};
+        alignas(64) std::array<float, kRankLanes> trimTune {};
+        alignas(64) std::array<float, kRankLanes> trimCutoff {};
+        alignas(64) std::array<float, kRankLanes> trimLevel {};
+        alignas(64) std::array<float, kRankLanes> trimEnv {};
+        alignas(64) std::array<float, kRankLanes> trimPan {};
+        alignas(64) std::array<RankInfo, kRankLanes> info {};
+        alignas(64) std::array<Exp2Memo, kRankLanes> hpCutoffExp {};
+        alignas(64) std::array<Exp2Memo, kRankLanes> lpCutoffExp {};
+        alignas(64) std::array<Exp2Memo, kRankLanes> keyVoltsExp {};
+        alignas(64) std::array<voice_continuity::IdleRankControls, kRankLanes> idle {};
+        alignas(64) std::array<voice_continuity::IdleStageReferences, kRankLanes> idleRefs {};
+        alignas(64) std::array<voice_continuity::IdleHistory, kRankLanes> idleHistory {};
+        alignas(64) std::array<double, kRankLanes> idleLead {};
+        alignas(64) std::array<int, kRankLanes> idleFirstSamples {};
+        alignas(64) std::array<tolerance::CardDraws, kRankLanes> tolDraws {};
+        alignas(64) std::array<tolerance::Ratios, kRankLanes> tol {};
+        alignas(64) std::array<tolerance::ThermalDrift, kRankLanes> thermal {};
+        alignas(64) std::array<float, kRankLanes> driftCents {};
+        RankArrays()
+        {
+            for (auto& stage : lpStage) stage = Ig00156Stage(kIg00156LowPassNetwork);
+            vcaCold.fill(true);
+        }
+    };
+
     struct Rank
     {
-        Oscillator osc;
-        // Circuit engine: event-driven IG00153/IG00158 reconstruction
-        // (docs/OSCILLATOR_PROMOTION.md). Legacy keeps the PolyBLEP osc.
-        ReconstructedOscillator wsc;
-        Svf hpf;
-        Svf lpf;
-        // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).
-        Ig00156Stage hpStage { kIg00156HighPassNetwork };
-        Ig00156Stage lpStage { kIg00156LowPassNetwork };
-        // Circuit-engine IG00151 voice VCA (docs/IG00151_VCA_MODEL.md); cold
-        // assignment recharges its LI node to the level network.
-        Ig00151Vca vca;
-        bool vcaCold = true;
-        FilterEnv fenv;
-        Adsr aenv;
-        float trimTune = 0.0f;
-        float trimCutoff = 0.0f;
-        float trimLevel = 0.0f;
-        float trimEnv = 0.0f;
-        float trimPan = 0.0f;
-        RankInfo info;
-        Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
-        // Circuit engine (Phase 2.1): controls of the last processed interval,
-        // which drive the idle path and the wake catch-up of a silent circuit.
-        voice_continuity::IdleRankControls idle;
-        voice_continuity::IdleStageReferences idleRefs;
-        voice_continuity::IdleHistory idleHistory;
-        // Seconds the idle oscillator runs ahead of the idle filter step, and
-        // the length of the first idle interval (samples) since silence.
-        double idleLead = 0.0;
-        int idleFirstSamples = 0;
-        // Plan 2.5 (circuit engine): this channel's component draws, the ratios
-        // they give at the present VOICE DISPERSION (identity in Legacy and PURE
-        // CS-80), its thermal drift process and the drift's present value (cents
-        // at the ANALOG DRIFT default).
-        tolerance::CardDraws tolDraws;
-        tolerance::Ratios tol;
-        tolerance::ThermalDrift thermal;
-        float driftCents = 0.0f;
+        Oscillator& osc;
+        ReconstructedOscillator& wsc;
+        Svf& hpf;
+        Svf& lpf;
+        Ig00156Stage& hpStage;
+        Ig00156Stage& lpStage;
+        Ig00151Vca& vca;
+        bool& vcaCold;
+        FilterEnv& fenv;
+        Adsr& aenv;
+        float& trimTune;
+        float& trimCutoff;
+        float& trimLevel;
+        float& trimEnv;
+        float& trimPan;
+        RankInfo& info;
+        Exp2Memo& hpCutoffExp;
+        Exp2Memo& lpCutoffExp;
+        Exp2Memo& keyVoltsExp;
+        voice_continuity::IdleRankControls& idle;
+        voice_continuity::IdleStageReferences& idleRefs;
+        voice_continuity::IdleHistory& idleHistory;
+        double& idleLead;
+        int& idleFirstSamples;
+        tolerance::CardDraws& tolDraws;
+        tolerance::Ratios& tol;
+        tolerance::ThermalDrift& thermal;
+        float& driftCents;
+        Rank(RankArrays& a, std::size_t lane) noexcept
+            : osc(a.osc[lane]),
+              wsc(a.wsc[lane]),
+              hpf(a.hpf[lane]),
+              lpf(a.lpf[lane]),
+              hpStage(a.hpStage[lane]),
+              lpStage(a.lpStage[lane]),
+              vca(a.vca[lane]),
+              vcaCold(a.vcaCold[lane]),
+              fenv(a.fenv[lane]),
+              aenv(a.aenv[lane]),
+              trimTune(a.trimTune[lane]),
+              trimCutoff(a.trimCutoff[lane]),
+              trimLevel(a.trimLevel[lane]),
+              trimEnv(a.trimEnv[lane]),
+              trimPan(a.trimPan[lane]),
+              info(a.info[lane]),
+              hpCutoffExp(a.hpCutoffExp[lane]),
+              lpCutoffExp(a.lpCutoffExp[lane]),
+              keyVoltsExp(a.keyVoltsExp[lane]),
+              idle(a.idle[lane]),
+              idleRefs(a.idleRefs[lane]),
+              idleHistory(a.idleHistory[lane]),
+              idleLead(a.idleLead[lane]),
+              idleFirstSamples(a.idleFirstSamples[lane]),
+              tolDraws(a.tolDraws[lane]),
+              tol(a.tol[lane]),
+              thermal(a.thermal[lane]),
+              driftCents(a.driftCents[lane]) {}
     };
 
     struct Voice
     {
+        Voice(RankArrays& a, std::size_t voice) noexcept
+            : ranks { Rank(a, voice * kNumRanks), Rank(a, voice * kNumRanks + 1) } {}
+
         bool active = false;
         bool held = false;
         bool sustained = false;
@@ -510,6 +579,19 @@ private:
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
+    struct SampleContext
+    {
+        float sr, invSr;
+        std::array<float, 2> pwmSine;
+        bool glideActive;
+        double glideCoef;
+        float panelNoise;
+        bool freeRunning, sharedNoise, smoothControls;
+    };
+    SampleContext tickGlobals(float externalModulation);
+    void tickRanks(const SampleContext&, float& mixL, float& mixR);
+    void mixBus(const SampleContext&, float& mixL, float& mixR);
+    void tickOutput(const SampleContext&, float mixL, float mixR, float& outL, float& outR);
     void processInternalSample(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     // Circuit engine: bring a silent free-running circuit exactly up to date
@@ -569,6 +651,7 @@ private:
     std::uint64_t sourceCompileCount = 0;
     ControlFrameStatus controlFrameStatus = ControlFrameStatus::accepted;
 
+    RankArrays rankChains;
     std::array<Voice, kNumVoices> voices;
     uint64_t voiceCounter = 0;
     int nextVoice = 0;

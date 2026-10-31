@@ -42,6 +42,7 @@ void visitSmoothedSettings(GlobalSettings& g, RankSettings* ranks, int rankCount
 } // namespace
 
 Engine::Engine()
+    : voices { Voice(rankChains, 0), Voice(rankChains, 1), Voice(rankChains, 2), Voice(rankChains, 3), Voice(rankChains, 4), Voice(rankChains, 5), Voice(rankChains, 6), Voice(rankChains, 7) }
 {
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
@@ -1804,7 +1805,7 @@ void Engine::endSmoothedControls() noexcept
     }
 }
 
-void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+Engine::SampleContext Engine::tickGlobals(float externalModulation)
 {
     const float sr = (float) internalRate;
     const float invSr = 1.0f / sr;
@@ -1866,7 +1867,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     pwmPhase[0] -= std::floor(pwmPhase[0]);
     pwmPhase[1] -= std::floor(pwmPhase[1]);
     // PWM is one shared sine per rank; evaluate it once, not once per voice.
-    const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
+    const std::array<float, 2> pwmSine = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
 
     // TRG5 positive diode-OR -> SP. Legacy: normalized ideal maximum of held
     // voices, not event memory (physical release removes it even if a pedal or
@@ -1946,9 +1947,6 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     driftPhase += 0.031f * invSr;
     driftPhase -= std::floor(driftPhase);
 
-    float mixL = 0.0f;
-    float mixR = 0.0f;
-    int stillHeld = 0;
 
     // Double accumulator avoids long-glide float rounding stalling before target.
     // An open assigned footswitch suppresses new glides and snaps running ones to target.
@@ -1966,6 +1964,15 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
     const bool freeRunning = freeRunningVoices();
+    return { sr, invSr, pwmSine, glideActive, glideCoef, panelNoise,
+             freeRunning, sharedNoise, smoothControls };
+}
+
+void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
+{
+    const auto& [sr, invSr, pwmSine, glideActive, glideCoef, panelNoise,
+                 freeRunning, sharedNoise, smoothControls] = context;
+    int stillHeld = 0;
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
@@ -2287,6 +2294,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     }
 
     heldCount = stillHeld;
+}
+
+void Engine::mixBus(const SampleContext& context, float& mixL, float& mixR)
+{
+    const float sr = context.sr, invSr = context.invSr;
+    const bool sharedNoise = context.sharedNoise;
+    const auto& modernGlobal = modern.getGlobalOffsets();
+
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
@@ -2397,6 +2412,12 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         mixR = out.r;
     }
 
+}
+
+void Engine::tickOutput(const SampleContext& context, float mixL, float mixR, float& outL, float& outR)
+{
+    const float invSr = context.invSr;
+    const bool smoothControls = context.smoothControls;
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
     // resets without eating the low end of the instrument.
     const float dcCoeff = std::exp(-kTwoPi * 10.0f * invSr);
@@ -2469,7 +2490,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float m = (outL + outR) * 0.5f;
         outL = outR = m;
     }
-    if (smoothControls)
+}
+
+void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+{
+    const auto context = tickGlobals(externalModulation);
+    float mixL = 0.0f, mixR = 0.0f;
+    tickRanks(context, mixL, mixR);
+    mixBus(context, mixL, mixR);
+    tickOutput(context, mixL, mixR, outL, outR);
+    if (context.smoothControls)
         endSmoothedControls();
 }
 
