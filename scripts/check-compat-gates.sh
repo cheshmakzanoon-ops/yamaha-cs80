@@ -50,6 +50,25 @@ build_core() {
     cmake --build "$out" --target cs80_core >/dev/null
 }
 
+# The immutable baseline and current render have independent files and RNGs.
+# Run both captures concurrently, wait for both, and propagate either failure
+# before comparing their bytes. This does not cache, omit or relax a capture.
+run_pair() {
+    local baseline_command="$1" current_command="$2" baseline_output="$3" current_output="$4"
+    shift 4
+    "$baseline_command" "$baseline_output" "$@" &
+    local baseline_pid=$!
+    "$current_command" "$current_output" "$@" &
+    local current_pid=$!
+    local baseline_status=0 current_status=0
+    wait "$baseline_pid" || baseline_status=$?
+    wait "$current_pid" || current_status=$?
+    if (( baseline_status != 0 || current_status != 0 )); then
+        echo "capture failed: baseline=$baseline_status current=$current_status" >&2
+        return 1
+    fi
+}
+
 work="$root/build-compat-gates"
 mkdir -p "$work"
 build_core "$root" "$work/current"
@@ -63,8 +82,8 @@ legacy_dir="$(checkout "$legacy")"
 for scenario in default tails; do
     args=()
     [ "$scenario" = tails ] && args=(--tails)
-    "$work/legacy-probe" "$work/legacy-$scenario.f32" "${args[@]}"
-    "$work/current-legacy-probe" "$work/current-$scenario.f32" "${args[@]}"
+    run_pair "$work/legacy-probe" "$work/current-legacy-probe" \
+        "$work/legacy-$scenario.f32" "$work/current-$scenario.f32" "${args[@]}"
     if cmp -s "$work/legacy-$scenario.f32" "$work/current-$scenario.f32"; then
         echo "legacy $scenario: byte-identical to ${legacy:0:7}"
     else
@@ -76,8 +95,8 @@ done
 v1_dir="$(checkout "$v1")"
 "$cxx" -O2 -std=c++20 -I"$v1_dir/src" "$root/src/tools/source_factory_circuit_compatibility_probe.cpp" -o "$work/v1-probe"
 "$cxx" -O2 -std=c++20 -I"$root/src" "$root/src/tools/source_factory_circuit_compatibility_probe.cpp" -o "$work/current-v1-probe"
-"$work/v1-probe" "$work/circuit-v1.bin"
-"$work/current-v1-probe" "$work/circuit-current.bin"
+run_pair "$work/v1-probe" "$work/current-v1-probe" \
+    "$work/circuit-v1.bin" "$work/circuit-current.bin"
 if cmp -s "$work/circuit-v1.bin" "$work/circuit-current.bin"; then
     echo "v1 circuit numerics: byte-identical to ${v1:0:7}"
 else
@@ -89,8 +108,8 @@ v2_dir="$(checkout "$v2")"
 [ -f "$cache/$v2-build/libcs80_core.a" ] || build_core "$v2_dir" "$cache/$v2-build"
 "$cxx" -O2 -std=c++20 -I"$v2_dir/src" "$root/src/tools/source_factory_compatibility_probe.cpp" "$cache/$v2-build/libcs80_core.a" -o "$work/v2-probe"
 "$cxx" -O2 -std=c++20 -I"$root/src" "$root/src/tools/source_factory_compatibility_probe.cpp" "$work/current/libcs80_core.a" -o "$work/current-v2-probe"
-"$work/v2-probe" "$work/audio-v2.bin"
-"$work/current-v2-probe" "$work/audio-current.bin"
+run_pair "$work/v2-probe" "$work/current-v2-probe" \
+    "$work/audio-v2.bin" "$work/audio-current.bin"
 if cmp -s "$work/audio-v2.bin" "$work/audio-current.bin"; then
     echo "v2 circuit-engine audio: byte-identical to ${v2:0:7}"
 else

@@ -32,8 +32,15 @@ separately.
 | --- | ---: | ---: | ---: | ---: |
 | Starting main, three rounds | 0.612398–0.720204 | 1.105197–1.638138 | 0.132888 | 0.732507 |
 | Reviewed completion tree, three rounds | 0.664192–0.952562 | 1.137207–1.767049 | 0.098337 | 0.956260 |
+| Exact lazy filter histories `476c2f1`, three rounds | 0.647884–0.926200 | 1.136551–1.751327 | 0.100304 | 0.927262 |
 
 The original targets remain 0.15–0.20 held realtime factor and at most 0.02
 quiet-idle realtime factor. Neither initial checkpoint meets them. Subsequent
 checkpoint directories and their summaries record each isolated optimization;
 an exact-output test is not a claim of a measured whole-engine speedup.
+
+The lazy-history candidate improves the held and moving medians modestly, while
+quiet idle is slightly higher in this shared-host sample. It does not meet either
+target. Its selected held rounds contain 1,133 deadline exceedances in total;
+the moving row contains 322 of 1,024 callbacks. All 51 fixtures in all three rounds
+have zero nonfinite outputs. The complete distributions are retained.

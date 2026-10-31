@@ -639,3 +639,43 @@ three-round CPU baselines are in
 [evidence/qualification-2026-10-31/cpu/](evidence/qualification-2026-10-31/cpu/).
 The after-change timing is recorded at the next CPU checkpoint; the overall
 performance targets remain open until measured.
+
+## Qualification: synchronized state and exact MSEG restore
+
+Audio commit `bbc57fe4aa912180cd672f6853cf146737a1a761`, followed by
+separate V2 pin `c487177cc1ff251f4cf0e3a0ec55094b7e152138`, makes
+host snapshots, modern-layer edits and undo history use the common APVTS
+state lock. Worker snapshots synchronize external edits and overlay current
+parameter atomics on a detached tree; an unfinished user gesture retains
+its message-thread undo ownership. The audio mailbox still uses a try-lock
+and never waits on these tree operations. Undo/redo preserves host gestures.
+
+MSEG coordinates now serialize with enough significant digits to recover
+every admitted Float32 value. The old six-decimal writer changed a tested
+time coordinate by nine ULPs and a level by one ULP after redo. The live
+edit, undo/redo and session restore now retain the same values. This is an
+intentional modern circuit-engine restore correction; Pure remains inert.
+No host parameter or state-schema field is added.
+
+The preregistered state fixtures pass, including 1,701 host-value cases
+(161 exposed the extra normalized round trip), 14 MSEG coordinate cases
+with nine admitted subnormal fields, and zero bit mismatches. All 14
+actual-source mutants are rejected. A fresh integration build against the
+repaired automation headers passes both state-tree and automation-boundary
+checks; the existing full UI suite also passes. See
+[STATE_TREE_SYNCHRONIZATION.md](STATE_TREE_SYNCHRONIZATION.md) for raw logs,
+source hashes and separately labelled environment setup failures.
+
+The strict compatibility checkpoint retains all four original captures:
+Legacy default/tails and V1 numerics remain byte-identical; V2 matches
+`bbc57fe`. The local script now runs each independent baseline/current
+capture pair concurrently, waits for both processes, and fails if either
+fails. It does not cache or omit a render, change a comparison or relax a
+threshold; injected failures on either side verify propagation.
+
+The completed lazy-filter timing checkpoint is also recorded here: held
+paired-tone medians `0.647884–0.926200` RTF, quiet idle `0.100304`, moving
+controls `0.927262`, minimum of three unchanged 48 kHz / 256-frame rounds.
+The target remains unmet. The new AU coherent-publication and dormant-noise
+small-mode fault-injection witnesses are registered before their additional
+evaluations; registration alone makes no passing claim.
