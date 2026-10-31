@@ -1,0 +1,23 @@
+diff --git a/src/plugin/PluginProcessorAutomation.cpp b/tmp/cs80-automation-boundary-qualification/mutations/refresh-after-attachment/PluginProcessorAutomation.cpp
+index bb5e999..75ef2f0 100644
+--- a/src/plugin/PluginProcessorAutomation.cpp
++++ b/tmp/cs80-automation-boundary-qualification/mutations/refresh-after-attachment/PluginProcessorAutomation.cpp
+@@ -49,9 +49,6 @@ double Cs80AudioProcessor::sampleAccurateParameterValue(size_t lane) const noexc
+ void Cs80AudioProcessor::beginHostAutomationBlock(int frameCount) noexcept
+ {
+     endHostAutomationBlock();
+-    // Resolve the implicit sample -1 value before any wrapper attaches a queue.
+-    for (size_t lane = 0; lane < automationParameters.size(); ++lane)
+-        refreshHostAutomationParameter(lane);
+     hostAutomationBlock = true;
+     hostAutomationFrames = std::max(0, frameCount);
+     hostAutomationPosition = 0;
+@@ -91,6 +88,8 @@ void Cs80AudioProcessor::endHostAutomationBlock() noexcept
+ void Cs80AudioProcessor::prepareHostAutomation() noexcept
+ {
+     if (!hostAutomationBlock) return;
++    for (size_t lane = 0; lane < automationParameters.size(); ++lane)
++        refreshHostAutomationParameter(lane);
+     // Modern host timing is inert in both protected audio paths. Committing
+     // before MIDI learn/readParameters restores JUCE's historical final-point
+     // at block start order, including host notifications and final APVTS state.

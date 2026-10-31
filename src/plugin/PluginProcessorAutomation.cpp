@@ -7,9 +7,23 @@ void Cs80AudioProcessor::resetHostAutomationState() noexcept
     for (size_t i = 0; i < automationParameters.size(); ++i)
     {
         automationParameters[i] = apvts.getParameter(parameterId(cs80::kSampleAccurateParameters[i]));
-        automationCurrent[i] = automationParameters[i] != nullptr ? automationParameters[i]->getValue() : 0.0;
+        automationParameterReadback[i] = automationParameters[i] != nullptr ? automationParameters[i]->getValue() : 0.0f;
+        automationCurrent[i] = automationParameterReadback[i];
         automationCurves[i] = {};
     }
+}
+
+void Cs80AudioProcessor::refreshHostAutomationParameter(size_t lane) noexcept
+{
+    if (automationParameters[lane] == nullptr) return;
+    const float current = automationParameters[lane]->getValue();
+    // A native zero-frame flush, UI edit or state restore can supersede the
+    // preceding curve between blocks. Compare with the readback associated
+    // with our own last publication, rather than with its double endpoint:
+    // JUCE's physical Float32 storage need not invert to that endpoint exactly.
+    if (current != automationParameterReadback[lane])
+        automationCurrent[lane] = current;
+    automationParameterReadback[lane] = current;
 }
 
 bool Cs80AudioProcessor::usesHostAutomationTiming() const noexcept
@@ -35,6 +49,9 @@ double Cs80AudioProcessor::sampleAccurateParameterValue(size_t lane) const noexc
 void Cs80AudioProcessor::beginHostAutomationBlock(int frameCount) noexcept
 {
     endHostAutomationBlock();
+    // Resolve the implicit sample -1 value before any wrapper attaches a queue.
+    for (size_t lane = 0; lane < automationParameters.size(); ++lane)
+        refreshHostAutomationParameter(lane);
     hostAutomationBlock = true;
     hostAutomationFrames = std::max(0, frameCount);
     hostAutomationPosition = 0;
@@ -63,6 +80,8 @@ void Cs80AudioProcessor::endHostAutomationBlock() noexcept
         {
             automationCurrent[i] = curve.finalValue();
             curve.commit();
+            if (automationParameters[i] != nullptr)
+                automationParameterReadback[i] = automationParameters[i]->getValue();
             curve = {};
         }
     }
@@ -82,7 +101,7 @@ void Cs80AudioProcessor::syncHostAutomationParameters() noexcept
 {
     for (size_t i = 0; i < automationParameters.size(); ++i)
         if (!automationCurves[i].active() && automationParameters[i] != nullptr)
-            automationCurrent[i] = automationParameters[i]->getValue();
+            refreshHostAutomationParameter(i);
     if (hostAutomationBlock) applyHostAutomationAt(hostAutomationPosition, false);
 }
 

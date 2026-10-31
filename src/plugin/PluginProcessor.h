@@ -346,9 +346,11 @@ private:
     std::array<juce::RangedAudioParameter*, cs80::kSampleAccurateParameters.size()> automationParameters {};
     std::array<cs80::HostAutomationCurve, cs80::kSampleAccurateParameters.size()> automationCurves {};
     std::array<double, cs80::kSampleAccurateParameters.size()> automationCurrent {};
+    std::array<float, cs80::kSampleAccurateParameters.size()> automationParameterReadback {};
     bool hostAutomationBlock = false;
     int hostAutomationFrames = 0, hostAutomationPosition = 0;
     void resetHostAutomationState() noexcept;
+    void refreshHostAutomationParameter(size_t lane) noexcept;
     void prepareHostAutomation() noexcept;
     void syncHostAutomationParameters() noexcept;
     void applyHostAutomationAt(int position, bool publish) noexcept;
