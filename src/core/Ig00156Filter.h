@@ -66,27 +66,24 @@ inline double ig00156TotalConductance(const Ig00156Network& n) noexcept
 // back into OP1 and lowers the natural frequency by about
 // 1 / sqrt(1 + 2 w Cfb / Gtotal) (-2.3 % at 1 kHz, -19 % at 10 kHz).
 // INFERRED calibration: the documented control law (service p42, guide p34)
-// describes the network's cutoff, so gm is raised to compensate. Exact for the
-// 3-state graph (coupling shorted): (s + r)(s^2 + 2 z W s + W^2) must equal
-// s^3 + (a + 2w) s^2 + (w^2 + 2 w (Gf + gq) / Cfb) s + a w^2, a = Gtotal / Cfb,
-// with W = 2 pi targetHz; Newton from the first-order closed form.
-inline double ig00156IntegratorRate(const Ig00156Network& n, double targetHz, double qSiemens) noexcept
+// describes the network's cutoff, so gm is raised to compensate. First-order
+// (algebraic AI node) model: W^2 = w^2 / (1 + 2 w / a), a = Gtotal / Cfb, solved
+// in closed form for w. Against the exact 3-state poles at Q 5 the network
+// lands +0.3 % high at 1 kHz, +0.6 % at 2 kHz, about +3 % at 10 kHz. An exact
+// cubic-factorization Newton was rejected: it has no stable root for
+// overdamped (low-Q) settings above about 5 kHz. The law only matters for
+// audible cutoffs and the first-order model fails near the 33-39 kHz AI-node
+// corner, so above 20 kHz the compensation ratio is held at its 20 kHz value.
+// Monotonic, always defined.
+inline constexpr double kIg00156CompensationTopHz = 20000.0;
+inline double ig00156IntegratorRate(const Ig00156Network& n, double targetHz, double /*qSiemens*/) noexcept
 {
     const double alpha = ig00156TotalConductance(n) / n.feedbackFarads;
-    const double damping = (1.0 / n.feedbackOhms + qSiemens) / n.feedbackFarads;
-    const double om = 2.0 * 3.14159265358979323846 * targetHz, om2 = om * om;
+    const double twoPi = 2.0 * 3.14159265358979323846;
+    const double om = twoPi * std::min(targetHz, kIg00156CompensationTopHz), om2 = om * om;
+    if (om <= 0.0) return 0.0;
     const double beta = om2 / alpha; // half of 2 W^2 / a
-    double w = beta + std::sqrt(beta * beta + om2);
-    for (int iteration = 0; iteration < 4; ++iteration)
-    {
-        const double r = alpha * w * w / om2, dr = 2.0 * alpha * w / om2;
-        const double c2r = alpha + 2.0 * w - r;
-        const double f = om2 + c2r * r - w * w - 2.0 * w * damping;
-        const double df = (2.0 - dr) * r + c2r * dr - 2.0 * w - 2.0 * damping;
-        if (df == 0.0) break;
-        w -= f / df;
-    }
-    return w;
+    return (beta + std::sqrt(beta * beta + om2)) / om * twoPi * targetHz;
 }
 
 class Ig00156Stage

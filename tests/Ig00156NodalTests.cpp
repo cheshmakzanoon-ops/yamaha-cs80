@@ -319,6 +319,20 @@ void anchors(const ws1::Tolerances& tol)
                         n == &hpNet ? "HP" : "LP", cp[0], cp[1], gmHz, p.hz, gmHz + ffHz, u.hz);
             check(std::abs(p.hz / (gmHz + ffHz) - 1.0) <= fTol, "cutoff anchor reproduced (cutoff_anchor_rel)");
         }
+        // The calibration is defined, finite and strictly increasing over every
+        // reachable target (0 .. 0.45 x 1.536 MHz) and Q.
+        bool monotonic = true;
+        for (double gq : { 0.0, ref::qSiemensForLowFrequencyQ(*n, 0.35), ref::qSiemensForLowFrequencyQ(*n, 9.0) })
+        {
+            double previous = 0.0;
+            for (double hz = 1.0; hz <= 0.45 * 1536000.0; hz *= 1.01)
+            {
+                const double w = ig00156IntegratorRate(rt, hz, gq);
+                monotonic = monotonic && std::isfinite(w) && w > previous && w >= 2.0 * pi * hz;
+                previous = w;
+            }
+        }
+        check(monotonic, "cutoff calibration finite, increasing and never below the target rate");
         // Model prediction of the 180 pF branch: less resonance at a high cutoff.
         double low = 0.0, high = 0.0;
         for (double hz : { 200.0, 1000.0, 4000.0, 12000.0 })
