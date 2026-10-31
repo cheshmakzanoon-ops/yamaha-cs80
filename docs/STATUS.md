@@ -676,6 +676,43 @@ threshold; injected failures on either side verify propagation.
 The completed lazy-filter timing checkpoint is also recorded here: held
 paired-tone medians `0.647884–0.926200` RTF, quiet idle `0.100304`, moving
 controls `0.927262`, minimum of three unchanged 48 kHz / 256-frame rounds.
-The target remains unmet. The new AU coherent-publication and dormant-noise
-small-mode fault-injection witnesses are registered before their additional
-evaluations; registration alone makes no passing claim.
+The target remains unmet. The dormant-noise small-mode fault-injection
+witness was registered before its additional evaluation. The intended AU
+coherent-publication extension was absent from this checkpoint: its first
+supplementary local evaluation is retrospective. The correction below
+records the actual publication order; no earlier result is relabelled.
+
+
+## Qualification: AU accepted endpoint ownership
+
+Audio commit `6300163e8272feb9973e99a87d3e47d09783cb50`, followed by
+separate V2 pin `7c9c116a0cbc05e62dc9f6767cee195189248c90`, preserves the
+accepted normalized Float32 AU endpoint alongside its physical parameter
+readback. A coherent atomic publication and revision ownership prevent an
+older setter from reclaiming a newer write. External edits and lifecycle
+changes invalidate publication; the native setter, scheduling queue, VST3
+path and Pure audio law are unchanged. This fixes the measured normalized
+round-trip error without relaxing the original `1e-7` endpoint tolerance.
+
+The integrated AU bridge and macro-environment tests pass, and the strict
+compatibility script reports Legacy default, Legacy tails and V1 circuit
+numerics byte-identical to their original pins. V2 is byte-identical to
+`6300163`. Native Intel and ARM host results are still pending at this
+checkpoint; local bridge results do not substitute for those native gates.
+See [AU endpoint evidence](evidence/continuation-2026-10-31/au-intel-endpoint/).
+
+Publication correction: the original limits were committed in `aa3cadb`
+before evaluation. The intended supplementary concurrency/identical-state
+contract extension was accidentally absent from `9dd7762`, so its first
+local evaluation is retrospective. The actual extension first appears in
+`bf817e51256037ef63c91efa46dafee853efce8a`, before the repaired native
+runs. The original failed integration log, original qualification record
+and explicit correction notice remain in the evidence. No tolerance was
+changed and no rerun is presented as repairing the earlier chronology.
+
+The separate exact BBD/PRA CPU checkpoint `f79b6f7` has now completed three
+unchanged factory-benchmark rounds: held medians `0.664905–0.973445` RTF,
+quiet idle `0.084363`, moving controls `1.011854`. Idle improves from the
+previous `0.100304`, while held and moving timings rise on this shared
+executor. Neither CPU target is closed. All raw rounds, source hashes and
+the current-pin strict capture are retained in the qualification evidence.

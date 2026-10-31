@@ -33,6 +33,7 @@ separately.
 | Starting main, three rounds | 0.612398–0.720204 | 1.105197–1.638138 | 0.132888 | 0.732507 |
 | Reviewed completion tree, three rounds | 0.664192–0.952562 | 1.137207–1.767049 | 0.098337 | 0.956260 |
 | Exact lazy filter histories `476c2f1`, three rounds | 0.647884–0.926200 | 1.136551–1.751327 | 0.100304 | 0.927262 |
+| Exact BBD/PRA omission `f79b6f7`, three rounds | 0.664905–0.973445 | 1.134303–1.936314 | 0.084363 | 1.011854 |
 
 The original targets remain 0.15–0.20 held realtime factor and at most 0.02
 quiet-idle realtime factor. Neither initial checkpoint meets them. Subsequent
@@ -44,3 +45,10 @@ quiet idle is slightly higher in this shared-host sample. It does not meet eithe
 target. Its selected held rounds contain 1,133 deadline exceedances in total;
 the moving row contains 322 of 1,024 callbacks. All 51 fixtures in all three rounds
 have zero nonfinite outputs. The complete distributions are retained.
+
+The BBD/PRA checkpoint reduces quiet-idle median from 0.100304 to 0.084363.
+Held and moving rows are higher in this sample, and the unchanged Legacy
+algorithm also takes more time. The evidence therefore supports the observed
+idle improvement, not a general held-voice speedup or either target. Selected
+held rounds contain 1,573 deadline exceedances; the moving row contains 541
+of 1,024 callbacks. All measured outputs remain finite.
