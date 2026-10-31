@@ -3,6 +3,8 @@
 #include "Dsp.h"
 
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <cmath>
 #include <complex>
 #include <vector>
@@ -22,6 +24,16 @@
 // src/reference/Mn3001Packet.h (NonidealChannel), Oe2Filters.h, Oe1Modulation.h.
 namespace cs80
 {
+namespace bbd_detail
+{
+// Count stored representations, not the caller's current floating-point mode.
+// Both signed zeros interpolate to zero; subnormals and nonfinite values must
+// keep the full path even if DAZ happens to make a floating comparison see zero.
+inline bool hasNonzeroMagnitude(float sample) noexcept
+{
+    return (std::bit_cast<std::uint32_t>(sample) & 0x7fffffffu) != 0u;
+}
+} // namespace bbd_detail
 
 class BbdChorus
 {
@@ -120,6 +132,9 @@ public:
     void prepare(float sampleRate)
     {
         sr = sampleRate;
+        // The unmodulated clock has the same noise normalization on every sample.
+        // Cache that exact expression; a moving CHORUS clock still evaluates it below.
+        nominalNoiseScale = kPacketNoiseRms * 1.7320508075688772 * std::sqrt((double) sr / kNominalClockHz);
         // Longest tap is 259 / (nominal clock * 2^-0.5) = 3.4 ms; keep ample headroom.
         std::size_t size = 64;
         while ((double) size < 0.01 * (double) sr + 8.0)
@@ -151,6 +166,7 @@ public:
         noise = { Rng(0x4F453241u), Rng(0x4F453242u) };
         do1Phase = do2Phase = 0.0;
         clockPeriods = 0.0;
+        nonzeroSamples = 0;
         if (samples.empty())
             return;
         // Empty chain: zeros, with history stamped at the nominal clock so each read
@@ -184,8 +200,10 @@ public:
         do1Phase -= std::floor(do1Phase);
         do2Phase += (double) speed * kDo2PerDo1 / (double) sr;
         do2Phase -= std::floor(do2Phase);
-        const double do1 = std::sin(2.0 * 3.14159265358979323846 * do1Phase);
-        const double do2 = std::sin(2.0 * 3.14159265358979323846 * do2Phase);
+        // Off tabs do not use the waveform values. Their exact phase recurrences
+        // above still run; enabling either tab sees the same phase on that sample.
+        const double do1 = on ? std::sin(2.0 * 3.14159265358979323846 * do1Phase) : 0.0;
+        const double do2 = on ? std::sin(2.0 * 3.14159265358979323846 * do2Phase) : 0.0;
         const double d = (double) clampf(depth, 0.0f, 1.0f);
 
         // CHORUS: DO1 and DO2 reach the BA617 clock node through its two equal 100 k feeds.
@@ -193,19 +211,30 @@ public:
         double octaves = 0.0;
         if (chorus)
             octaves = d * (double) kClockModulationOctaves * 0.5 * (do1 + do2);
-        const double clockHz = kNominalClockHz * std::exp2(octaves);
+        const double clockHz = chorus ? kNominalClockHz * std::exp2(octaves) : kNominalClockHz;
         clockPeriods += clockHz / (double) sr;
 
         // Both MN3001 chains share input and clock on OE57: one packet history serves both.
         ++newest;
-        samples[(std::size_t) newest & mask] = inputLp.process(0.5f * (inL + inR));
-        stamps[(std::size_t) newest & mask] = clockPeriods;
+        const auto write = (std::size_t) newest & mask;
+        nonzeroSamples -= bbd_detail::hasNonzeroMagnitude(samples[write]) ? 1u : 0u;
+        samples[write] = inputLp.process(0.5f * (inL + inR));
+        nonzeroSamples += bbd_detail::hasNonzeroMagnitude(samples[write]) ? 1u : 0u;
+        stamps[write] = clockPeriods;
 
         // A packet leaving the chain now entered 256 clock periods earlier; a moving clock is
-        // integrated, not treated as an instantaneous delay.
+        // integrated, not treated as an instantaneous delay. An exactly zero history has an
+        // exactly zero interpolated sum. Still advance every cursor, so wake-up work stays
+        // bounded and the same packet is read as soon as any nonzero sample enters.
         double packets = 0.0;
-        for (int tap = 0; tap < kTaps; ++tap)
-            packets += weights[(std::size_t) tap] * readAt(clockPeriods - tapOffset(tap), cursors[(std::size_t) tap]);
+        if (nonzeroSamples == 0)
+        {
+            for (int tap = 0; tap < kTaps; ++tap)
+                advanceCursor(clockPeriods - tapOffset(tap), cursors[(std::size_t) tap]);
+        }
+        else
+            for (int tap = 0; tap < kTaps; ++tap)
+                packets += weights[(std::size_t) tap] * readAt(clockPeriods - tapOffset(tap), cursors[(std::size_t) tap]);
 
         // Clock feedthrough residual: odd harmonics of a square at the clock, band-limited to
         // what the internal rate can carry (nothing at the usual 88.2-96 kHz internal rates).
@@ -221,7 +250,9 @@ public:
 
         // Each chain: its own noise, recombination, coupling and IC5/IC6 reconstruction.
         // Packet noise of variance s^2 at the clock rate has in-band density s^2 / clock.
-        const double noiseScale = kPacketNoiseRms * 1.7320508075688772 * std::sqrt((double) sr / clockHz);
+        const double noiseScale = chorus
+            ? kPacketNoiseRms * 1.7320508075688772 * std::sqrt((double) sr / clockHz)
+            : nominalNoiseScale;
         std::array<float, 2> wet {};
         for (std::size_t c = 0; c < 2; ++c)
         {
@@ -276,14 +307,19 @@ private:
         return std::sqrt(r1 * 1.0e4 * 1.8e-9 * 680.0e-12) / (680.0e-12 * (r1 + 1.0e4));
     }
 
-    // Catmull-Rom between the two stored samples whose clock stamps straddle the target.
-    float readAt(double target, long long& cursor) noexcept
+    void advanceCursor(double target, long long& cursor) noexcept
     {
         const long long oldest = newest - (long long) samples.size() + 2;
         if (cursor < oldest)
             cursor = oldest;
         while (cursor + 2 < newest && stamps[(std::size_t) (cursor + 1) & mask] <= target)
             ++cursor;
+    }
+
+    // Catmull-Rom between the two stored samples whose clock stamps straddle the target.
+    float readAt(double target, long long& cursor) noexcept
+    {
+        advanceCursor(target, cursor);
         const double s0 = stamps[(std::size_t) cursor & mask];
         const double s1 = stamps[(std::size_t) (cursor + 1) & mask];
         const float t = clampf((float) ((target - s0) / (s1 - s0)), 0.0f, 1.0f);
@@ -333,6 +369,8 @@ private:
     float trim = 1.0f;
     double do1Phase = 0.0, do2Phase = 0.0;
     double clockPeriods = 0.0;                 // BBD clock periods elapsed
+    double nominalNoiseScale = 0.0;
+    std::size_t nonzeroSamples = 0;            // exact history predicate, never a threshold
     std::vector<float> samples;                // input packets, newest at `newest`
     std::vector<double> stamps;                // clock count when each packet entered
     std::size_t mask = 0;

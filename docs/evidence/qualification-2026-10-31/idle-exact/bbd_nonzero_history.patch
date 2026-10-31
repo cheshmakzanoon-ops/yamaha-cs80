@@ -1,0 +1,11 @@
+--- a/src/core/BbdChorus.h
++++ b/src/core/BbdChorus.h
+@@ -227,7 +227,7 @@
+         // exactly zero interpolated sum. Still advance every cursor, so wake-up work stays
+         // bounded and the same packet is read as soon as any nonzero sample enters.
+         double packets = 0.0;
+-        if (nonzeroSamples == 0)
++        if (true)
+         {
+             for (int tap = 0; tap < kTaps; ++tap)
+                 advanceCursor(clockPeriods - tapOffset(tap), cursors[(std::size_t) tap]);

@@ -1,0 +1,307 @@
+{
+  "idle": [
+    {
+      "name": "bbd_off_phase",
+      "path": "src/core/BbdChorus.h",
+      "replacements": [
+        [
+          "do1Phase += (double) speed / (double) sr;",
+          "do1Phase += on ? (double) speed / (double) sr : 0.0;"
+        ],
+        [
+          "do2Phase += (double) speed * kDo2PerDo1 / (double) sr;",
+          "do2Phase += on ? (double) speed * kDo2PerDo1 / (double) sr : 0.0;"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "BBD off-to-on wake preserves phase and noise state bit-for-bit"
+      ]
+    },
+    {
+      "name": "bbd_off_noise",
+      "path": "src/core/BbdChorus.h",
+      "replacements": [
+        [
+          "noise[c].nextBipolar()",
+          "(on ? noise[c].nextBipolar() : 0.0f)"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "BBD off-to-on wake preserves phase and noise state bit-for-bit"
+      ]
+    },
+    {
+      "name": "bbd_nonzero_history",
+      "path": "src/core/BbdChorus.h",
+      "replacements": [
+        [
+          "if (nonzeroSamples == 0)",
+          "if (true)"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "BBD signal and all four tab states are bit-identical"
+      ]
+    },
+    {
+      "name": "pra_charged_tail",
+      "path": "src/core/PraWahCircuit.h",
+      "replacements": [
+        [
+          "&& capacitorsArePositiveZero())",
+          "&& true)"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "PRA charged-capacitor zero-input tails are bit-identical",
+        "PRA all four capacitor voltages and currents are bit-identical"
+      ]
+    },
+    {
+      "name": "pra_optical_clock",
+      "path": "src/core/PraWahCircuit.h",
+      "replacements": [
+        [
+          "opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);",
+          "if (u!=0.0 || !capacitorsArePositiveZero()) opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "PRA optical movement remains bit-identical through zero-state skipping"
+      ]
+    },
+    {
+      "name": "pra_signed_zero",
+      "path": "src/core/PraWahCircuit.h",
+      "replacements": [
+        [
+          "return {.a=-0.0, .y=-0.0};",
+          "return {};"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "PRA exact-zero nodes preserve signed-zero and bounded-input semantics"
+      ]
+    },
+    {
+      "name": "bbd_history_daz",
+      "path": "src/core/BbdChorus.h",
+      "replacements": [
+        [
+          "return (std::bit_cast<std::uint32_t>(sample) & 0x7fffffffu) != 0u;",
+          "return sample != 0.0f;"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "BBD history predicate classifies stored bits independently of denormal mode"
+      ]
+    },
+    {
+      "name": "pra_negative_zero_trim",
+      "path": "src/core/PraWahCircuit.h",
+      "replacements": [
+        [
+          "!std::signbit(profile.vr2Ohms)",
+          "true"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "PRA signed-zero profile nodes and capacitor states"
+      ]
+    },
+    {
+      "name": "pra_negative_zero_source",
+      "path": "src/core/PraWahCircuit.h",
+      "replacements": [
+        [
+          "!std::signbit(profile.sourceOhms)",
+          "true"
+        ]
+      ],
+      "target": "idle",
+      "expected": [
+        "PRA signed-zero profile nodes and capacitor states"
+      ]
+    }
+  ],
+  "stationary": [
+    {
+      "name": "controller_zero_sign",
+      "path": "src/core/Smoothing.h",
+      "replacements": [
+        [
+          "return current = target;",
+          "return current;"
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "controller signed-zero equality and subsequent movement"
+      ]
+    },
+    {
+      "name": "controller_premature_snap",
+      "path": "src/core/Smoothing.h",
+      "replacements": [
+        [
+          "if (current == target && std::isfinite(target) && std::isfinite(k))",
+          "if (std::isfinite(target) && std::isfinite(k))"
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "moving controller coefficients, targets and snaps"
+      ]
+    },
+    {
+      "name": "controller_nonfinite_guard",
+      "path": "src/core/Smoothing.h",
+      "replacements": [
+        [
+          "if (current == target && std::isfinite(target) && std::isfinite(k))",
+          "if (current == target)"
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "nonfinite controller arithmetic follows the original fallback"
+      ]
+    },
+    {
+      "name": "expression_premature_snap",
+      "path": "src/core/ExpressionOptics.h",
+      "replacements": [
+        [
+          "if (opticalLog == targetLog && std::isfinite(targetLog) && std::isfinite(decayStep))",
+          "if (std::isfinite(targetLog) && std::isfinite(decayStep))"
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "expression optical motion and original settling recurrence"
+      ]
+    },
+    {
+      "name": "expression_frozen_motion",
+      "path": "src/core/ExpressionOptics.h",
+      "replacements": [
+        [
+          "opticalLog += (targetLog < opticalLog ? attackStep : decayStep) * (targetLog - opticalLog);",
+          "// mutation: moving optical state is incorrectly frozen."
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "expression first move after stationary optical state"
+      ]
+    },
+    {
+      "name": "expression_zero_sign",
+      "path": "src/core/ExpressionOptics.h",
+      "replacements": [
+        [
+          "return pedalTarget;",
+          "return pedalTarget == 0.0 ? 0.0 : pedalTarget;"
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "expression exactly stationary spans and signed pedal zeros"
+      ]
+    },
+    {
+      "name": "expression_nonfinite_guard",
+      "path": "src/core/ExpressionOptics.h",
+      "replacements": [
+        [
+          "if (opticalLog == targetLog && std::isfinite(targetLog) && std::isfinite(decayStep))",
+          "if (opticalLog == targetLog)"
+        ]
+      ],
+      "target": "stationary",
+      "expected": [
+        "invalid expression profile preserves original arithmetic fallback"
+      ]
+    }
+  ],
+  "lfo": [
+    {
+      "name": "disabled_phase",
+      "path": "src/core/ModulationLfo.h",
+      "replacements": [
+        [
+          "    {\n        // Historical sine: exactly the Lfo::tick float phase law.",
+          "    {\n        if (! emitOutput) return 0.0f;\n        // Historical sine: exactly the Lfo::tick float phase law."
+        ]
+      ],
+      "target": "lfo",
+      "expected": [
+        "both LFO phases stay exact during disabled/readout/copy intervals"
+      ]
+    },
+    {
+      "name": "disabled_sample_hold_rng",
+      "path": "src/core/ModulationLfo.h",
+      "replacements": [
+        [
+          "if (! started || wrapped)",
+          "if (emitOutput && (! started || wrapped))"
+        ]
+      ],
+      "target": "lfo",
+      "expected": [
+        "enabled waveform and random continuation stays bit-identical"
+      ]
+    },
+    {
+      "name": "disabled_smooth_random_rng",
+      "path": "src/core/ModulationLfo.h",
+      "replacements": [
+        [
+          "                if (! started)\n                {",
+          "                if (! emitOutput) {}\n                else if (! started)\n                {"
+        ]
+      ],
+      "target": "lfo",
+      "expected": [
+        "random-shape transitions while disabled retain later enabled outputs"
+      ]
+    },
+    {
+      "name": "direct_depth_ownership",
+      "path": "src/core/Engine.cpp",
+      "replacements": [
+        [
+          "global.lfoDepth[i] != 0.0f || modern.isActive()",
+          "modern.isActive()"
+        ]
+      ],
+      "target": "lfo_engine",
+      "expected": [
+        "source Engine direct depth owns LFO readout"
+      ]
+    },
+    {
+      "name": "matrix_ownership",
+      "path": "src/core/Engine.cpp",
+      "replacements": [
+        [
+          "global.lfoDepth[i] != 0.0f || modern.isActive()",
+          "global.lfoDepth[i] != 0.0f"
+        ]
+      ],
+      "target": "lfo_engine",
+      "expected": [
+        "active matrix owns LFO readout even at zero direct depth"
+      ]
+    }
+  ]
+}

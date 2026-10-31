@@ -1,0 +1,14 @@
+--- a/src/core/BbdChorus.h
++++ b/src/core/BbdChorus.h
+@@ -196,9 +196,9 @@
+                               bool chorus, bool tremolo) noexcept
+     {
+         const bool on = chorus || tremolo;
+-        do1Phase += (double) speed / (double) sr;
++        do1Phase += on ? (double) speed / (double) sr : 0.0;
+         do1Phase -= std::floor(do1Phase);
+-        do2Phase += (double) speed * kDo2PerDo1 / (double) sr;
++        do2Phase += on ? (double) speed * kDo2PerDo1 / (double) sr : 0.0;
+         do2Phase -= std::floor(do2Phase);
+         // Off tabs do not use the waveform values. Their exact phase recurrences
+         // above still run; enabling either tab sees the same phase on that sample.
