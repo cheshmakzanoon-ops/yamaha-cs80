@@ -222,25 +222,62 @@ constexpr CellReview firstAlternative(CellAddress a, std::string_view schematic,
             i < cells.size() && cells[i].visibleAlternativeCount > 0 ? cells[i].visibleAlternatives[0] : VisibleAlternative{}, note};
 }
 inline constexpr std::array<CellReview, 25> review {{
-    firstAlternative({51,'A',20}, "S31", "S32"), firstAlternative({51,'A',25}, "S31", "S32"),
-    firstAlternative({51,'C',25}, "S31", "S32"), firstAlternative({51,'E',22}, "S31", "S32"),
-    firstAlternative({51,'E',26}, "S31", "S32"), firstAlternative({51,'F',22}, "S31", "S32"),
-    firstAlternative({51,'F',25}, "S31", "S32"), firstAlternative({51,'F',26}, "S31", "S32"),
-    firstAlternative({52,'A',26}, "S33", "S34"), firstAlternative({52,'B',9}, "S33", "S34"),
-    firstAlternative({52,'C',22}, "S33", "S34"), firstAlternative({52,'E',20}, "S33", "S34"),
-    firstAlternative({53,'A',20}, "S35", "S36"), firstAlternative({53,'A',25}, "S35", "S36"),
+    firstAlternative({51,'A',20}, "S31", "S32",
+        "S31: 1.2K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({51,'A',25}, "S31", "S32",
+        "S31: overdrawn direct-diode symbol and revision triangle; altered topology remains a hypothesis"),
+    firstAlternative({51,'C',25}, "S31", "S32",
+        "S31: 10K above a marked parallel/bypass drawing before the diode; resistor or bypass applicability unresolved"),
+    firstAlternative({51,'E',22}, "S31", "S32",
+        "S31: 12K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({51,'E',26}, "S31", "S32",
+        "S31: marked/overdrawn direct diode and revision triangle; altered branch remains a hypothesis"),
+    firstAlternative({51,'F',22}, "S31", "S32",
+        "S31: crossed 3.6K with 12K written below; both readings visible, applicable revision unresolved"),
+    firstAlternative({51,'F',25}, "S31", "S32",
+        "S31: crossed resistor mark consistent with the retained 5.6K candidate and an overdrawn diode; leading glyph obscured"),
+    firstAlternative({51,'F',26}, "S31", "S32",
+        "S31: marked direct diode and revision triangle; installed revision and topology unresolved"),
+    firstAlternative({52,'A',26}, "S33", "S34",
+        "S33: overdrawn direct diode and revision triangle; installed revision and topology unresolved"),
+    firstAlternative({52,'B',9}, "S33", "S34",
+        "S33: crossed 12K with 10K below; both readings legible, applicable revision unresolved"),
+    firstAlternative({52,'C',22}, "S33", "S34",
+        "S33: crossed former value is not reliably readable; clear 12K below, former value and revision remain hypotheses"),
+    firstAlternative({52,'E',20}, "S33", "S34",
+        "S33: 1.2K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({53,'A',20}, "S35", "S36",
+        "S35: 1.2K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({53,'A',25}, "S35", "S36",
+        "S35: overdrawn direct diode and revision triangle; installed revision and topology unresolved"),
     // S36 native r0c0 prints 75K(39K) at the footprint provisionally traced to
     // B/14. Paired board artwork is shared by T51 and T53; outside values match
     // T53 and parenthesised values T51 at C/12 20K(13K), A/9 750(1K) and B/14's
-    // own parenthesised 39K (= classified T51/B/14). An inference, not a legend:
-    // the cell stays unknown until a second reader traces the footprint.
+    // own parenthesised 39K (= classified T51/B/14). Both native reviews retain
+    // this pairing/trace as an inference, not a printed legend or installed-
+    // revision proof; the frozen 25K-looking alternative remains unchanged.
     {{53,'B',14}, "S35", "S36", ReviewOutcome::boardCandidate, resistorMark(75000, "board artwork 75K (paired with T51 39K)"),
-     "schematic glyph unresolved; board-artwork candidate 75K pending footprint trace"},
-    firstAlternative({53,'B',20}, "S35", "S36"), firstAlternative({53,'C',20}, "S35", "S36"),
-    firstAlternative({53,'E',23}, "S35", "S36"), firstAlternative({53,'E',26}, "S35", "S36"),
-    firstAlternative({53,'F',22}, "S35", "S36"), firstAlternative({53,'F',26}, "S35", "S36"),
-    firstAlternative({54,'A',26}, "S37", "S38"), firstAlternative({54,'C',22}, "S37", "S38"),
-    firstAlternative({54,'C',25}, "S37", "S38"), firstAlternative({54,'C',26}, "S37", "S38")
+     "S35: first glyph before 5K ambiguous; S36: 75K(39K) at candidate footprint; pairing/trace is inference, revision unresolved"},
+    firstAlternative({53,'B',20}, "S35", "S36",
+        "S35: 1.2K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({53,'C',20}, "S35", "S36",
+        "S35: 1.2K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({53,'E',23}, "S35", "S36",
+        "S35: crossed 16K with 22K below; both readings legible, applicable revision unresolved"),
+    firstAlternative({53,'E',26}, "S35", "S36",
+        "S35: crossed/overdrawn direct diode and revision triangle; installed revision and topology unresolved"),
+    firstAlternative({53,'F',22}, "S35", "S36",
+        "S35: 12K with revision triangle; value legible, installed revision unresolved"),
+    firstAlternative({53,'F',26}, "S35", "S36",
+        "S35: crossed/overdrawn direct diode and revision triangle; installed revision and topology unresolved"),
+    firstAlternative({54,'A',26}, "S37", "S38",
+        "S37: crossed/overdrawn direct diode and revision triangle; installed revision and topology unresolved"),
+    firstAlternative({54,'C',22}, "S37", "S38",
+        "S37: crossed 8.2K with 12K below; both readings visible, applicable revision unresolved"),
+    firstAlternative({54,'C',25}, "S37", "S38",
+        "S37: crossed 56K and altered diode symbol; resistor and direct-diode alternatives remain hypotheses"),
+    firstAlternative({54,'C',26}, "S37", "S38",
+        "S37: crossed/overdrawn direct diode and revision triangle; installed revision and topology unresolved")
 }};
 constexpr std::size_t findReviewIndex(CellAddress a) noexcept {
     for (std::size_t i = 0; i < review.size(); ++i) if (review[i].address == a) return i;
