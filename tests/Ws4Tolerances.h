@@ -72,4 +72,19 @@ inline constexpr double kFeedthroughAliasDb = 6.0;
 // input amplitude.
 inline constexpr double kTremoloTrajectory = 0.02;
 } // namespace oe2
+
+// Step 4: PRA wah optical cell with asymmetric attack and decay (declared LDR model).
+namespace pra
+{
+// Step responses of the log-R cell versus the closed-form exponentials (nepers, absolute).
+inline constexpr double kStepLogNepers = 1.0e-9;
+// Continuous full-travel pedal sweeps (0.5-8 Hz) versus the RK4 ODE truth, internal
+// 88.2-192 kHz (nepers). The realtime cell holds each sample's target; the error budget
+// is about half a sample of target slope.
+inline constexpr double kSweepLogNepers = 2.0e-3;
+// Cycle-mean log R over a sweep versus the truth (nepers).
+inline constexpr double kHysteresisNepers = 0.01;
+// Engine optical state versus the closed-form asymmetric trajectory (nepers).
+inline constexpr double kEngineLogNepers = 1.0e-9;
+} // namespace pra
 } // namespace cs80::ws4_tolerances
