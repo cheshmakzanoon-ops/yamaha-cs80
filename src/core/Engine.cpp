@@ -1184,7 +1184,17 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     for (const auto& voice : voices)
         if (voice.active && voice.held)
             sharedPressure = std::max(sharedPressure, voice.pressure);
-    if (global.subOriginalMode)
+    if (global.subOriginalMode && usesSourceModels(global.renderPolicy))
+    {
+        // Circuit engine: IG00150 exponential converter (touch adds octaves) smoothed on
+        // the control node, band-limited resets. ws4-circuits.md Step 1.
+        const double rate = originalSub.circuitRate(OriginalSubOscillator::circuitTargetRate(
+            global.subOriginalSpeed, global.subAtSpeed, sharedPressure), originalSubSmoothing);
+        originalSubSpeedSmoothed = (float) rate;
+        subValue = originalSub.tickCircuit(rate, sr, global.subOriginalFunction,
+                                           -global.subExtLevel * externalModulation);
+    }
+    else if (global.subOriginalMode)
     {
         const float speed = OriginalSubOscillator::targetRate(
             global.subOriginalSpeed, global.subAtSpeed, sharedPressure);

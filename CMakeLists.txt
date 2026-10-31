@@ -226,6 +226,10 @@ if (CS80_BUILD_TESTS)
     # [ws3-keyboard] register this workstream's core tests below this line.
 
     # [ws4-circuits] register this workstream's core tests below this line.
+    add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
+    target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00150_sub_tests COMMAND cs80_ig00150_sub_tests)
+    set_tests_properties(cs80_ig00150_sub_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
 
