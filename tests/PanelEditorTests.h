@@ -6,8 +6,11 @@
 #include "plugin/PluginProcessor.h"
 #include "plugin/PanelLayout.h"
 #include "plugin/UiComponents.h"
+#include "plugin/ArtCommon.h"
+#include "plugin/EditorPreferences.h"
 
 #include <chrono>
+#include <cmath>
 #include <cstdio>
 #include <vector>
 
@@ -241,11 +244,104 @@ void testTremoloChorusTabs(Check check, Flush flush)
           "host automation of chorus_mode moves the lit tab");
 }
 
+// The 10.5 px legend floor at the 1120 x 700 minimum, drawn in the embedded panel typeface.
+template <typename Check>
+void testLegendFloorAndTypeface(Check check)
+{
+    check(cs80::art::panelTypeface(false) != nullptr && cs80::art::panelTypeface(true) != nullptr,
+          "both embedded panel typeface weights load");
+    check(cs80::art::displayFont(12.0f, juce::Font::bold).getTypefaceName().contains("Barlow"),
+          "panel legends use the embedded typeface");
+    const float minimumScale = 1120.0f / 1600.0f;
+    cs80::art::FloorScope floor(minimumScale);
+    check(cs80::art::displayFont(6.0f).getHeight() * minimumScale >= cs80::art::kLegendFloorPx - 1.0e-3f,
+          "design-space legends never print below 10.5 screen px at the minimum size");
+}
+
+// Display-size presets: a user preference in a scratch store, never a host parameter or session state.
+template <typename Check, typename Flush>
+void testZoomPresets(Check check, Flush flush)
+{
+    using cs80::panel::EditorPreferences;
+    const auto previousStore = EditorPreferences::getStorageFileForTesting();
+    const juce::TemporaryFile store(".settings");
+    EditorPreferences::setStorageFileForTesting(store.getFile());
+    juce::TemporaryFile presetRoot("-cs80-panel-zoom");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    const auto stateBefore = host.getAPVTS().copyState();
+    {
+        Cs80AudioProcessorEditor editor(host);
+        editor.setZoomPercent(75);
+        check(editor.getWidth() == 1200 && editor.getHeight() == 750 && editor.getZoomPercent() == 75,
+              "the 75 % preset resizes the editor to 1200 x 750");
+        check(EditorPreferences::loadZoomPercent() == 75, "the chosen display size is remembered");
+        editor.setZoomPercent(110);
+        check(editor.getWidth() == 1200 && EditorPreferences::loadZoomPercent() == 75, "a size that is not a preset is ignored");
+        editor.setZoomPercent(200);
+        check(editor.getWidth() == 3200 && editor.getHeight() == 2000 && editor.getZoomPercent() == 200,
+              "the 200 % preset fits the resize limits");
+        editor.setSize(1300, 813);
+        check(editor.getZoomPercent() == 0, "a window dragged to its own size reports no preset");
+        editor.setZoomPercent(75);
+        flush(20);
+    }
+    const auto* display = juce::Desktop::getInstance().getDisplays().getPrimaryDisplay();
+    {
+        Cs80AudioProcessorEditor reopened(host);
+        if (display != nullptr && display->userArea.getWidth() >= 1232 && display->userArea.getHeight() >= 814)
+            check(reopened.getWidth() == 1200 && reopened.getHeight() == 750, "a new editor opens at the remembered preset");
+    }
+    EditorPreferences::saveZoomPercent(200);
+    {
+        Cs80AudioProcessorEditor tooLarge(host);
+        if (display != nullptr && (display->userArea.getWidth() < 3232 || display->userArea.getHeight() < 2064))
+            check(tooLarge.getWidth() < 3200 && tooLarge.getWidth() <= juce::jmax(1120, display->userArea.getWidth()),
+                  "a remembered preset larger than the screen falls back to the automatic size");
+    }
+    check(stateBefore.isEquivalentTo(host.getAPVTS().copyState()), "display size never changes host parameters or session state");
+    EditorPreferences::setStorageFileForTesting(previousStore);
+}
+
+// HiDPI: the crinkle finish is tiled at one texel per physical pixel, so a 2x render carries as much fine detail
+// per pixel as a 1x render instead of magnifying the 1x texture.
+template <typename Check, typename Flush>
+void testHiDpiTexture(Check check, Flush flush)
+{
+    juce::TemporaryFile presetRoot("-cs80-panel-hidpi");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    Cs80AudioProcessorEditor editor(host);
+    editor.setSize(1120, 700);
+    flush(30);
+    // Plain deck finish left of the POLYPHONIC legend, in design units.
+    const juce::Rectangle<float> patch(565.0f, 660.0f, 100.0f, 24.0f);
+    auto detail = [&](float scale)
+    {
+        const auto image = editor.createComponentSnapshot(editor.getLocalBounds(), true, scale);
+        const float s = scale * 1120.0f / 1600.0f;
+        const auto box = juce::Rectangle<float>(patch.getX() * s, patch.getY() * s, patch.getWidth() * s, patch.getHeight() * s).toNearestInt();
+        double sum = 0.0;
+        int count = 0;
+        for (int y = box.getY(); y < box.getBottom(); ++y)
+            for (int x = box.getX(); x + 1 < box.getRight(); ++x)
+            {
+                sum += std::abs(image.getPixelAt(x + 1, y).getPerceivedBrightness() - image.getPixelAt(x, y).getPerceivedBrightness());
+                ++count;
+            }
+        return count > 0 ? sum / count : 0.0;
+    };
+    const double oneX = detail(1.0f), twoX = detail(2.0f);
+    std::printf("crinkle neighbour difference: 1x %.5f, 2x %.5f\n", oneX, twoX);
+    check(oneX > 0.0 && twoX > 0.8 * oneX, "a 2x render keeps the crinkle at one texel per physical pixel");
+}
+
 template <typename Check, typename Flush>
 void runPanelEditorTests(Check check, Flush flush)
 {
     testUnsavedEditIndicator(check, flush);
     testMainViewLayout(check, flush);
     testTremoloChorusTabs(check, flush);
+    testLegendFloorAndTypeface(check);
+    testZoomPresets(check, flush);
+    testHiDpiTexture(check, flush);
 }
 } // namespace cs80::tests

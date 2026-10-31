@@ -38,12 +38,12 @@ void LidReadout::paint(juce::Graphics& g)
     g.setGradientFill(art::vgrad(art::white(0.06f), juce::Colours::transparentWhite, w.withHeight(22.0f)));
     g.fillRoundedRectangle(w.reduced(2.0f).withHeight(21.0f), 3.0f);
     auto font = spacedFont(14.5f, 0.06f);
-    font = ui::fitFontToWidth(font, mainLine, 702.0f, 0.8f, 9.0f);
+    font = ui::fitFontToWidth(font, mainLine, 702.0f, 0.8f, art::kLegendFloorPx / sx);
     g.setFont(font);
     g.setColour(juce::Colour(0xffffc060));
     g.drawText(mainLine, juce::Rectangle<float>(14.0f, 3.0f, 702.0f, 22.0f), juce::Justification::centredLeft, false);
     auto hint = spacedFont(11.0f, 0.04f);
-    hint = ui::fitFontToWidth(hint, hintLine, 702.0f, 0.8f, 9.0f);
+    hint = ui::fitFontToWidth(hint, hintLine, 702.0f, 0.8f, art::kLegendFloorPx / sx);
     g.setFont(hint);
     g.setColour(juce::Colour(0xffb6aa86));
     g.drawText(hintLine, juce::Rectangle<float>(14.0f, 26.0f, 702.0f, 15.0f), juce::Justification::centredLeft, false);
@@ -252,7 +252,7 @@ void MemoryLid::paintArt(juce::Graphics& g)
         juce::Path clip;
         clip.addRoundedRectangle(inner, 5.0f);
         g.reduceClipRegion(clip);
-        art::fillTile(g, art::panelTile(), inner, scale);
+        art::fillTile(g, art::panelTile(), inner, g.getInternalContext().getPhysicalPixelScaleFactor());
         g.setGradientFill(juce::ColourGradient(art::white(0.045f), inner.getX() + 160.0f, inner.getY(), juce::Colours::transparentWhite,
                                                inner.getX() + 900.0f, inner.getBottom(), true));
         g.fillRect(inner);
@@ -322,7 +322,7 @@ void MemoryLid::paintArt(juce::Graphics& g)
         art::legend(g, bank % 2 == 0 ? "CHANNEL I" : "CHANNEL II", { 33.0f, y + 10.0f, 100.0f, 16.0f },
                     spacedFont(11.0f, 0.12f), juce::Justification::centred, juce::Colour(active ? 0xfffff0cc : 0xffb8ae8e));
         art::legend(g, active ? "HEARD" : "NOT ACTIVE", { 33.0f, y + 72.0f, 100.0f, 14.0f },
-                    spacedFont(10.0f, 0.10f), juce::Justification::centred, juce::Colour(active ? 0xffffc060 : 0xff9a9174), 0.6f);
+                    spacedFont(10.0f, 0.10f), juce::Justification::centred, juce::Colour(active ? 0xffffc060 : 0xffb3aa8a), 0.6f);   // NOT ACTIVE: 5.4:1
     }
     g.restoreState();
 }

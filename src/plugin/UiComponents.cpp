@@ -74,6 +74,7 @@ juce::String enumName(const char* const* names, int count, float value)
 }
 
 using cs80::art::displayFont;   // the panel typeface (ArtCommon.h)
+using cs80::art::kLegendFloorPx;
 } // namespace
 
 juce::String formatParamValue(int parameterIndex, float value)
@@ -906,7 +907,7 @@ void drawEngravedText(juce::Graphics& g, const juce::String& text, juce::Rectang
 
 juce::Font controlCaptionFont(float areaHeight)
 {
-    auto f = displayFont(juce::jlimit(9.5f, 14.0f, areaHeight * 0.78f), juce::Font::bold);
+    auto f = displayFont(juce::jlimit(kLegendFloorPx, 14.0f, areaHeight * 0.78f), juce::Font::bold);
     f.setExtraKerningFactor(0.055f);
     return f;
 }
@@ -2170,10 +2171,10 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
     auto area = geo.face.reduced(bev);
     area.removeFromBottom(compact ? 1.8f : 4.4f);
     const auto ink = tabPlastic(base, lit || pressed).ink;
-    // The ink stays inside the plastic: a glyph never reaches the tab edge. 9 px is the floor and the
+    // The ink stays inside the plastic: a glyph never reaches the tab edge. 10.5 px is the floor and the
     // squeeze never goes past 0.70. A word that still does not fit loses its last letters.
     const float room = geo.face.getWidth() - (compact ? 1.4f : 2.0f);
-    const float fontPx = juce::jlimit(9.0f, 10.0f, bounds.getWidth() * 0.29f);
+    const float fontPx = juce::jlimit(kLegendFloorPx, 11.5f, bounds.getWidth() * 0.29f);
     constexpr float toneMinScale = 0.70f;
 
     juce::StringArray lines = toneLegend(title);
@@ -2195,13 +2196,13 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
         auto font = fontFor(numberOnly ? fontPx * 1.3f : fontPx);
         auto text = lines[i];
         if (! known)
-            text = fitLegendText(font, text, room, 0.85f, 9.0f);
+            text = fitLegendText(font, text, room, 0.85f, kLegendFloorPx);
         bool fitted = true;
-        font = fitFontToWidth(font, text, room, known ? toneMinScale : 0.85f, 9.0f, fitted);
+        font = fitFontToWidth(font, text, room, known ? toneMinScale : 0.85f, kLegendFloorPx, fitted);
         while (! fitted && text.length() > 2)
         {
             text = text.dropLastCharacters(1);
-            font = fitFontToWidth(fontFor(fontPx), text, room, toneMinScale, 9.0f, fitted);
+            font = fitFontToWidth(fontFor(fontPx), text, room, toneMinScale, kLegendFloorPx, fitted);
         }
         // Crisp printed ink: one pass, no drop shadow.
         g.setFont(font);
@@ -2343,23 +2344,23 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     if (clearLeft)
     {
         // End legends (for example I and II beside the MIX fader, EXT and SINE on FUNCTION) sit left of
-        // the slot, where the end ticks were, in 9 px type, right-aligned against the slot. A legend
-        // that does not fit at 85 percent (after its printed abbreviation) is left out, never cut.
+        // the slot, where the end ticks were, at the legend floor, right-aligned against the slot. A legend
+        // that does not fit at 80 percent (after its printed abbreviation) is left out, never cut.
         const float cx = (float) fullW * 0.5f;
         const float roomW = cx - 4.9f * f.s - 1.0f;
-        const auto font = displayFont(9.0f, juce::Font::bold);
+        const auto font = displayFont(kLegendFloorPx, juce::Font::bold);
         const float yTop = f.r - f.ey * 0.5f, yBottom = (float) fullH - f.r - f.ey * 0.5f;
         auto drawEnd = [&](const juce::String& text, float yy)
         {
             if (text.isEmpty() || roomW < 4.0f)
                 return;
             juce::String shown = text;
-            if (! legendFits(font, shown, roomW, 0.80f, 9.0f))
+            if (! legendFits(font, shown, roomW, 0.80f, kLegendFloorPx))
                 shown = legendAbbreviation(text);
-            if (! legendFits(font, shown, roomW, 0.80f, 9.0f))
+            if (! legendFits(font, shown, roomW, 0.80f, kLegendFloorPx))
                 return;
             bool fitted = true;
-            const auto fontFit = fitFontToWidth(font, shown, roomW, 0.80f, 9.0f, fitted);
+            const auto fontFit = fitFontToWidth(font, shown, roomW, 0.80f, kLegendFloorPx, fitted);
             drawEngravedText(g, shown, { 1.0f, yy - 6.0f, roomW, 12.0f }, fontFit, juce::Justification::centredRight,
                              juce::Colour(0xffe2d9ba));
         };
@@ -3195,8 +3196,8 @@ void ParamKnob::setCapFader(juce::Colour capColour, bool horizontal)
 namespace
 {
 // The smallest legible type, in screen pixels, at every editor size: names 9.5, readouts 9.
-constexpr float kNameFloor = 9.5f;
-constexpr float kValueFloor = 9.0f;
+constexpr float kNameFloor = kLegendFloorPx;
+constexpr float kValueFloor = 10.0f;
 float legendFloor(const juce::Component&) { return kNameFloor; }
 
 // Vertical band heights of the machined fader column: name above, readout below. A larger
@@ -3484,19 +3485,19 @@ void LedButton::paintRocker(juce::Graphics& g, bool hovered, bool down, float ps
     const juce::Rectangle<float> bounds(0.0f, oy, (float) w, (float) h);
     auto area = rockerLegendArea(juce::Rectangle<float>(0.0f, 0.0f, (float) w, (float) h), true).translated(0.0f, oy);
     juce::ignoreUnused(bounds);
-    auto font = displayFont(juce::jlimit(9.0f, 10.5f, area.getHeight() * 0.9f), juce::Font::bold);
+    auto font = displayFont(juce::jlimit(kLegendFloorPx, 11.5f, area.getHeight() * 0.9f), juce::Font::bold);
     font.setExtraKerningFactor(0.03f);
     // 9 px floor, never squeezed below 0.85: when the full word does not fit, print its short form
     // (SUSTAIN -> SUS). The button keeps its full name for accessibility and the tooltip.
     // Deck-size lenses keep a little ink-free margin so a long word does not touch the rim.
     const float room = area.getWidth() - (area.getHeight() > 12.0f ? 3.0f : 1.0f);
-    juce::String legend = fitLegendText(font, getButtonText(), room, 0.85f, 9.0f);
+    juce::String legend = fitLegendText(font, getButtonText(), room, 0.85f, kLegendFloorPx);
     // Roman numerals (the channel I and II switches) are printed in a serif so they read as numerals
     // and not as a bar above a lamp.
     if (legend.containsOnly("IV") && legend.isNotEmpty())
         font = juce::Font(juce::FontOptions(juce::Font::getDefaultSerifFontName(), font.getHeight() * 1.05f, juce::Font::bold));
     bool fitted = true;
-    font = fitFontToWidth(font, legend, room, 0.85f, 9.0f, fitted);
+    font = fitFontToWidth(font, legend, room, 0.85f, kLegendFloorPx, fitted);
     g.setFont(font);
     g.setColour(litLens ? juce::Colour(0xff1d1507) : juce::Colour(0xffe2d8b8).withAlpha(0.84f));
     g.drawText(legend, area.toNearestInt(), juce::Justification::centred, false);
@@ -3537,11 +3538,11 @@ void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
             const bool lit = on || down;
             g.setColour(lit ? juce::Colour(0xfff6e9b8) : juce::Colour(0xff9d967c));
             g.strokePath(glyph, juce::PathStrokeType(lit ? 1.7f : 1.4f));
-            auto font = displayFont(juce::jlimit(9.0f, 9.5f, r.getWidth() * 0.26f), juce::Font::bold);
+            auto font = displayFont(juce::jlimit(kLegendFloorPx, 11.0f, r.getWidth() * 0.26f), juce::Font::bold);
             const float labelW = r.getWidth() - 2.0f;
-            const auto label = fitLegendText(font, getButtonText(), labelW, 0.85f, 9.0f);
+            const auto label = fitLegendText(font, getButtonText(), labelW, 0.85f, kLegendFloorPx);
             bool fitted = true;
-            font = fitFontToWidth(font, label, labelW, 0.85f, 9.0f, fitted);
+            font = fitFontToWidth(font, label, labelW, 0.85f, kLegendFloorPx, fitted);
             drawEngravedText(g, label, r.withTrimmedTop(r.getHeight() * 0.54f).withTrimmedBottom(1.5f), font,
                              juce::Justification::centred, lit ? juce::Colour(0xffb0a88a) : juce::Colour(0xffeee5c4));
             return;
@@ -3569,7 +3570,7 @@ void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
     const float lr = juce::jlimit(1.8f, 3.4f, face.getHeight() * 0.15f);
     auto textArea = face.withTrimmedLeft(7.0f + lr * 2.6f + 4.0f).withTrimmedRight(3.0f)
                         .translated(0.0f, down ? 1.0f : 0.0f);
-    auto font = displayFont(juce::jlimit(7.5f, 11.5f, face.getHeight() * 0.38f), juce::Font::bold);
+    auto font = displayFont(juce::jlimit(kLegendFloorPx, 11.5f, face.getHeight() * 0.38f), juce::Font::bold);
     font.setExtraKerningFactor(0.03f);
     drawEngravedText(g, getButtonText(), textArea, font, juce::Justification::centredLeft,
                      on ? amberBright : ivory.withAlpha(0.9f));
@@ -3696,7 +3697,7 @@ void paintRibbonBase(juce::Graphics& g, int W, int H)
     // Printed captions at the ends: left lowers the pitch, right raises it.
     if (ribbonEndZone((float) W) > 20.0f)
     {
-        const auto font = displayFont(juce::jlimit(9.0f, 11.5f, (float) H * 0.30f), juce::Font::bold);
+        const auto font = displayFont(juce::jlimit(kLegendFloorPx, 12.0f, (float) H * 0.30f), juce::Font::bold);
         const float ez = band.getX() - channel.getX();
         drawEngravedText(g, juce::String(juce::CharPointer_UTF8("\xe2\x88\x92 PITCH")),
                          { channel.getX() + 2.0f, channel.getY(), ez - 5.0f, channel.getHeight() }, font,
@@ -3857,7 +3858,7 @@ void RibbonStrip::paint(juce::Graphics& g)
     {
         // Bend readout beside the thumb, on whichever side has room.
         const auto text = ribbonBendText(value);
-        const auto font = displayFont(juce::jlimit(9.0f, 11.0f, (float) H * 0.34f), juce::Font::bold);
+        const auto font = displayFont(juce::jlimit(kLegendFloorPx, 12.0f, (float) H * 0.34f), juce::Font::bold);
         const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, text) + 12.0f;
         const float ph = juce::jmin(band.getHeight() + 4.0f, (float) H - 8.0f);
         const bool right = posX < band.getCentreX();
@@ -3936,7 +3937,7 @@ void PerformanceWheel::setValue(float newValue)
 juce::Rectangle<float> PerformanceWheel::trackArea() const
 {
     auto r = getLocalBounds().toFloat();
-    r.removeFromTop(std::ceil(juce::jlimit(8.0f, 9.0f, (float) getHeight() * 0.07f) * 1.3f));
+    r.removeFromTop(std::ceil(juce::jlimit(kLegendFloorPx, 11.0f, (float) getHeight() * 0.07f) * 1.3f));
     r.removeFromBottom(juce::jlimit(6.0f, 9.0f, (float) getHeight() * 0.07f));
     return r.reduced(juce::jlimit(3.0f, 6.0f, (float) getWidth() * 0.18f), 2.0f);
 }
@@ -3982,7 +3983,7 @@ void paintWheelHousing(juce::Graphics& g, juce::Rectangle<float> track, bool spr
 void PerformanceWheel::paint(juce::Graphics& g)
 {
     auto full = getLocalBounds().toFloat();
-    const float legendPx = juce::jlimit(9.0f, 10.0f, (float) getHeight() * 0.08f);
+    const float legendPx = juce::jlimit(kLegendFloorPx, 11.0f, (float) getHeight() * 0.08f);
     const auto title = full.removeFromTop(std::ceil(legendPx * 1.3f));
     drawEngravedText(g, wheelLabel, title, displayFont(legendPx, juce::Font::bold),
                      juce::Justification::centred, juce::Colour(0xffe0d6b6));

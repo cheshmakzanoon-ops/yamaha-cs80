@@ -2,6 +2,8 @@
 
 #include "UiComponents.h"
 
+#include <PanelFontData.h>
+
 #include <cmath>
 #include <vector>
 
@@ -15,7 +17,7 @@ bool smallEditor = false;
 
 FloorScope::FloorScope(float screenScale) : previous(floorPx), previousSmall(smallEditor)
 {
-    floorPx = screenScale > 0.0f ? 9.0f / screenScale : 0.0f;
+    floorPx = screenScale > 0.0f ? kLegendFloorPx / screenScale : 0.0f;
     smallEditor = screenScale > 0.0f && screenScale < 0.85f;
 }
 
@@ -28,10 +30,28 @@ FloorScope::~FloorScope()
 float designFloor() noexcept { return floorPx; }
 bool isSmallEditor() noexcept { return smallEditor; }
 
+// The embedded panel typeface: Barlow Condensed Medium for plain text and SemiBold for bold, loaded once.
+// If a face cannot be loaded the system sans serif is used, so the panel still draws.
+const juce::Typeface::Ptr& panelTypeface(bool bold)
+{
+    static const juce::Typeface::Ptr medium = juce::Typeface::createSystemTypefaceFor(
+        cs80_panel_fonts::BarlowCondensedMedium_ttf, (size_t) cs80_panel_fonts::BarlowCondensedMedium_ttfSize);
+    static const juce::Typeface::Ptr semiBold = juce::Typeface::createSystemTypefaceFor(
+        cs80_panel_fonts::BarlowCondensedSemiBold_ttf, (size_t) cs80_panel_fonts::BarlowCondensedSemiBold_ttfSize);
+    return bold ? semiBold : medium;
+}
+
 juce::Font displayFont(float height, int style)
 {
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
-                                        juce::jmax(height, floorPx), style));
+    const float h = juce::jmax(height, floorPx);
+    const bool bold = (style & juce::Font::bold) != 0;
+    if (const auto& face = panelTypeface(bold); face != nullptr)
+    {
+        auto font = juce::Font(juce::FontOptions(face).withHeight(h));
+        if ((style & juce::Font::italic) != 0) font.setItalic(true);
+        return font;
+    }
+    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), h, style));
 }
 
 juce::Font spacedFont(float height, float kerning, float hscale, int style)

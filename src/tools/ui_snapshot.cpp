@@ -1,6 +1,7 @@
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
+#include "plugin/EditorPreferences.h"
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
 #include "../../tests/OutputMeterHostTests.h"
@@ -1924,6 +1925,9 @@ void testIsolatedFootControllerHost()
 
 int main(int argc, char** argv)
 {
+    // Never read or write the user's real editor preferences (display size) from the snapshot tool.
+    const juce::TemporaryFile preferences(".settings");
+    cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
     // CTest captures stdout through a pipe. Keep phase evidence if a native

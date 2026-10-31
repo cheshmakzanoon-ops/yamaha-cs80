@@ -52,7 +52,11 @@ Rules for UI changes:
 - The accessibility names, titles, parameter bindings, keyboard focus and tab order of every control must survive. Tests in `src/tools/ui_snapshot.cpp` check them.
 - No pixel-level assertions exist; the self-test checks bounds, accessibility, focus, at least 40 hardware sliders, snapshot sizes.
 - Everything static is drawn once into a buffered image (see `Backdrop`). Per-frame repaints must stay cheap: no blur filters, no per-frame gradients over large areas. The editor repaints at 8 Hz; animation needs its own small timer on its own small component.
-- JUCE 8.0.11, C++20, software renderer. Fonts in CI are DejaVu only: build the engraved look from bold weights, `withHorizontalScale`, `withExtraKerningFactor` and drop shadows rather than a custom typeface.
+- JUCE 8.0.11, C++20, software renderer. The panel draws in one embedded typeface, Barlow Condensed (SIL OFL 1.1; Medium for plain, SemiBold for bold), loaded from BinaryData by `cs80::art::displayFont` in `ArtCommon.h`, so it looks the same on every OS and in CI. Build the engraved look from that face with kerning, `withHorizontalScale` (never below 0.85, tone tabs 0.70) and drop shadows.
+- Legend floor: no printed legend below `cs80::art::kLegendFloorPx` (10.5 screen px) at any size, including 1120 x 700. Words that do not fit are abbreviated (`legendAbbreviation`, short captions), never shrunk below the floor.
+- Readouts meet WCAG AA (4.5:1) against their backgrounds; ratios are listed in docs/workstreams/ws7-panel.md.
+- Textures (crinkle, walnut) are tiled at one texel per physical pixel: pass the graphics context's physical pixel scale, not the editor scale.
+- Display size presets (75, 100, 125, 150, 200 percent of 1600 x 1000) are a user preference (`EditorPreferences`), never a host parameter.
 
 ## Checking a change
 

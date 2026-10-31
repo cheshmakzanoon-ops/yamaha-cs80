@@ -93,3 +93,63 @@ automation. Mutation checks: strip lever pitch below the lever width fails the o
 TREMOLO writing mode 0, the core "E. PIANO" name, and PLUG moved to x 600 each fail their check (3 failures in
 one run); all pass when restored. `src/tools/ui_snapshot.cpp` now looks the populated-capture tabs up by their
 new text ("BRASS 1").
+
+## Step 4: 5.5 readability and rendering (done)
+
+**Typeface.** Barlow Condensed 1.408 (Medium for plain, SemiBold for bold), SIL OFL 1.1, Copyright 2017 The
+Barlow Project Authors. Fetched 2026-10-31 from the google/fonts repository
+(`https://raw.githubusercontent.com/google/fonts/main/ofl/barlowcondensed/`), unmodified, committed with its
+`OFL.txt` and a `SOURCE.txt` (URLs, SHA-256) in `assets/fonts/barlow-condensed/`. Embedded with
+`juce_add_binary_data` (target `cs80_panel_fonts`, linked to `CS80Reference` and `CS80Snapshots`) and loaded
+once by `cs80::art::panelTypeface()`; `cs80::art::displayFont()` falls back to the system sans serif if a face
+cannot be loaded. Everything that draws through `ArtCommon` / `UiComponents` uses it. `AdvancedPanel.cpp` (ws8)
+and `PresetBrowser.cpp` (ws6) still have their own font helpers and keep the system face until they adopt
+`ArtCommon`.
+
+**Legend floor.** `cs80::art::kLegendFloorPx = 10.5` screen px at every size: the design-space floor
+(`FloorScope`, was 9 px), fader captions (was 9.5), tone tabs (was 9), fader end legends (was 9), LED, rocker and
+panel-key legends (were 7.5-9), ribbon and wheel legends (were 8-9), the status strip (was 9.5), the output-meter
+readout (was 9) and the lid readout. Fader value readouts have a 10 px floor (was 9). Words that do not fit are
+abbreviated rather than shrunk: at 1600 x 1000 every front-strip caption prints in full except FUNCTION (FUNC);
+at 1120 x 700 the strip prints short forms (DET, ATK, DEC, DPT, SPD, FNC, FT I, BRLL, BND, ...). Tone tabs keep
+the floor by squeezing to 0.70 at most, so ELECTRIC and HARPSI- still print whole at the minimum size. Not
+covered: the toolbar's program-display tag and index (12 design px boxes, 7.5 px floor), which ws8 is
+rebuilding; the shared LookAndFeel label/combo/button fonts used by the Advanced and library pages.
+
+**Contrast (WCAG 2.x, AA 4.5:1).** Computed with the WCAG relative-luminance formula against the nominal
+backgrounds; text printed on the panel is measured against the brightest of five empty crinkle patches in the
+1600 x 1000 capture (#343331), i.e. the worst case.
+
+| Readout | Ink | Background | Ratio |
+| --- | --- | --- | --- |
+| Fader value readout | #c4ba96 | panel #343331 | 6.5:1 |
+| Fader caption | #e6dcbc | panel #343331 | 9.2:1 |
+| Drag / hover value pill | #ffd47a at 95 % | pill glass #0b0a08 | 12.7:1 |
+| Status strip | #eee4c4 | strip #0b0b0a | 15.5:1 |
+| Output meter peak / OVER-RANGE / NaN | #c9bd98 / #ffd47a / #ff7166 | meter glass #0e0f0c | 10.3 / 13.7 / 7.1:1 |
+| Preset name / factory number | #ffcf70 / #ffb347 | lit well #3a2410 | 10.0 / 8.2:1 |
+| Preset number, user (USR) | **#c28c42** (was #9a6a2c, 3.1:1) | lit well #3a2410 | 4.9:1 |
+| Preset category tag / index | #d09a3c / #b88a3a | well #1a0f07 | 7.5 / 6.0:1 |
+| Memory-lid readout / hint | #ffc060 / #b6aa86 | readout #0e0d0b | 12.0 / 8.4:1 |
+| Memory-lid NOT ACTIVE | **#b3aa8a** (was #9a9174, 4.0:1) | panel #343331 | 5.4:1 |
+
+**Zoom presets.** 75, 100, 125, 150 and 200 % of 1600 x 1000 (1200 x 750 ... 3200 x 2000), chosen from a
+DISPLAY SIZE menu on the toolbar's CS-80 brand mark or through `Cs80AudioProcessorEditor::setZoomPercent()`.
+The choice is a user preference (`EditorPreferences`, a JUCE `PropertiesFile` in the user's application-data
+folder), not a host parameter or session state; new editor windows open at it when it fits the screen with the
+same host-chrome margins as the automatic size, else at the automatic size. A window dragged to its own size
+keeps that size. The maximum resize limit rises from 2400 x 1500 to 3200 x 2000 so 200 % fits
+(`tests/EditorInitialSizeTests.h` pinned the old maximum and is updated with a comment). The snapshot tool points
+the preference store at a scratch file, so tests never read or write the user's real preferences.
+
+**HiDPI.** The chassis, the closed lid and the opened lid tile the crinkle at the graphics context's physical
+pixel scale (device pixels per design unit) instead of the logical editor scale, and the walnut cheeks are built
+at it too, so a 2x display gets one texel per physical pixel. Measured on a plain deck patch, mean neighbouring
+brightness difference: 1x render 0.0201, 2x render 0.0217 with the fix, 0.0065 without it (texture magnified 2x).
+
+Tests added (`tests/PanelEditorTests.h`): both typeface weights load and legends use them; a design-space
+legend never prints below 10.5 px at 1120 x 700; zoom presets resize exactly, are remembered, ignore non-preset
+values, report 0 for a dragged size, reopen at the stored preset, fall back when it does not fit, and never touch
+the APVTS state; a 2x render keeps at least 80 % of the 1x crinkle detail. Mutation checks, one build: floor back
+to 9 px, typeface bypassed, texel scale back to the logical scale, preference not saved; 6 failures, all
+passing again after reverting.

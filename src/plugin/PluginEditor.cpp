@@ -12,6 +12,7 @@
 #include "PerformanceDeck.h"
 #include "MemoryLid.h"
 #include "ParameterWatch.h"
+#include "EditorPreferences.h"
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
 #include "UiComponents.h"
@@ -701,6 +702,34 @@ private:
     unsigned lastEventCount = 0;
 };
 
+// The CS-80 badge and wordmark double as the display-size menu (zoom presets). Only the hover glow and focus
+// ring are drawn here; the mark itself is part of the buffered chassis.
+class BrandButton final : public juce::Button
+{
+public:
+    BrandButton() : juce::Button("Display size")
+    {
+        setTitle("Display size");
+        setTooltip("Display size: 75, 100, 125, 150 or 200 percent of 1600 x 1000. New editor windows open at the chosen size when it fits the screen.");
+        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        setWantsKeyboardFocus(true);
+    }
+    void paintButton(juce::Graphics& g, bool hovered, bool down) override
+    {
+        const auto r = getLocalBounds().toFloat().reduced(1.0f);
+        if (hovered || down)
+        {
+            g.setColour(juce::Colour(0xffffcf70).withAlpha(down ? 0.18f : 0.09f));
+            g.fillRoundedRectangle(r, 4.0f);
+        }
+        if (hasKeyboardFocus(true))
+        {
+            g.setColour(juce::Colour(0xfff6df91));
+            g.drawRoundedRectangle(r.expanded(0.5f), 4.0f, 1.5f);
+        }
+    }
+};
+
 // The program display is also a button: hovering lights it, clicking opens the library. It draws only
 // the hover glow, chevron and the EDITED tag; the glass is part of the buffered chassis and the text is
 // carried by labels.
@@ -894,6 +923,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void buildTopBar()
     {
+        addAndMakeVisible(brandButton);
+        brandButton.onClick = [this] { showZoomMenu(); };
         // The program display is a button under its own labels; labels never take the click.
         addAndMakeVisible(presetWindow);
         presetWindow.onClick = [this] { showBrowser(true, true); };
@@ -1019,6 +1050,22 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advancedButton.onClick = [this] { showAdvanced(! advancedVisible, true); };
         syncLampStatus(false);
     }
+
+    // The display-size menu: the zoom presets, with the current one ticked.
+    void showZoomMenu()
+    {
+        juce::PopupMenu menu;
+        menu.addSectionHeader("DISPLAY SIZE");
+        const int current = currentZoom ? currentZoom() : 0;
+        for (int percent : panel::EditorPreferences::zoomPresets)
+            menu.addItem(percent, juce::String(percent) + " %   (" + juce::String(16 * percent) + " x " + juce::String(10 * percent) + ")",
+                         true, percent == current);
+        juce::Component::SafePointer<Impl> safe(this);
+        menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&brandButton),
+                           [safe](int chosen) { if (safe != nullptr && chosen > 0 && safe->onZoom) safe->onZoom(chosen); });
+    }
+    std::function<void(int)> onZoom;
+    std::function<int()> currentZoom;
 
     // Printed status text on the panel: cream, bright enough to read against the crinkle at a glance.
     static juce::Colour stripInk() { return juce::Colour(0xffeee4c4); }
@@ -1195,7 +1242,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (presetIndexLabel.getText() != index) presetIndexLabel.setText(index, juce::dontSendNotification);
         presetIndexLabel.setDisplayText(isFactory ? "OF " + juce::String((int) bank.size()) : juce::String());
         const auto number = isFactory ? juce::String(slot + 1).paddedLeft('0', 3) : juce::String("USR");
-        const auto numberInk = isFactory ? juce::Colour(0xffffb347) : juce::Colour(0xff9a6a2c);
+        const auto numberInk = isFactory ? juce::Colour(0xffffb347) : juce::Colour(0xffc28c42);   // USR: 4.9:1 on the lit well
         if (presetNumberLabel.findColour(juce::Label::textColourId) != numberInk)
             presetNumberLabel.setColour(juce::Label::textColourId, numberInk);
         if (presetNumberLabel.getText() != number) presetNumberLabel.setText(number, juce::dontSendNotification);
@@ -1535,10 +1582,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         for (auto* label : order)
         {
             label->setFont(displayFont(11.5f * sy, juce::Font::bold));
-            label->setMinimumPixels(9.5f);
+            label->setMinimumPixels(art::kLegendFloorPx);
             label->setLeftPad(0);
             auto font = label->getFont();
-            if (font.getHeight() < 9.5f) font = font.withHeight(9.5f);
+            if (font.getHeight() < art::kLegendFloorPx) font = font.withHeight(art::kLegendFloorPx);
             const float width = label->contentWidth(font);
             if (width <= 0.0f)
             {
@@ -1601,7 +1648,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // with a block diagram of the voice and carrying its two keys on its front rail. The print is a stylised
     // diagram of this instrument's signal path, not a copy of the original print, which could not be read
     // (docs/PANEL_CONFORMANCE.md). With VOICE SETTINGS on, a software tray covers the diagram.
-    void paintLid(juce::Graphics& g, float scale)
+    void paintLid(juce::Graphics& g, float texel)
     {
         const auto r = geo::lidFace;
         art::ambient(g, r, 5.0f, 12.0f, 0.55f);
@@ -1614,7 +1661,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             juce::Path clip;
             clip.addRoundedRectangle(plate, 3.0f);
             g.reduceClipRegion(clip);
-            art::fillTile(g, art::panelTile(), plate, scale, 7.0f, 3.0f);
+            art::fillTile(g, art::panelTile(), plate, texel, 7.0f, 3.0f);
             g.setGradientFill(art::vgrad(art::white(0.05f), juce::Colours::transparentWhite, plate.withHeight(80.0f)));
             g.fillRect(plate);
         }
@@ -1875,11 +1922,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         FloorScope floor(scale);
         g.saveState();
         g.addTransform(juce::AffineTransform::scale(sx, sy));
+        // Device pixels per design unit, including the display's own scale: textures are built and tiled at this
+        // resolution, so the crinkle and the grain stay one texel per physical pixel on HiDPI screens.
+        const float texel = g.getInternalContext().getPhysicalPixelScaleFactor();
         g.fillAll(juce::Colour(0xff070605));
 
         // ---- one fine crinkle finish for the toolbar, panel and deck ---------
         const juce::Rectangle<float> body(geo::bodyLeft, 0.0f, geo::bodyRight - geo::bodyLeft, geo::deckBottom);
-        art::fillTile(g, art::panelTile(), body, scale);
+        art::fillTile(g, art::panelTile(), body, texel);
         // One light over the whole panel: it comes from the upper left, so the left runs bright and the
         // lower right falls away. Nothing else lights the surface.
         g.setGradientFill(juce::ColourGradient(art::white(0.05f), 230.0f, 70.0f, juce::Colours::transparentWhite, 1050.0f, 520.0f, true));
@@ -1902,7 +1952,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         seamGroove(g, geo::frontStrip.getY() - 4.0f);
         for (auto& row : channelRows)
             row->paintArt(g);
-        paintLid(g, scale);
+        paintLid(g, texel);
 
         // ---- front strip: PITCH, ring, sub, feet | tone selector | global, keyboard, touch, VOLUME
         centreRow.paintArt(g);
@@ -1944,8 +1994,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.fillRect(geo::keybed);
 
         // ---- walnut cheeks run the full height of the case, over everything --
-        art::walnutCheek(g, { 0, 0, geo::bodyLeft, kDesignHeight }, true, geo::deckBottom, scale);
-        art::walnutCheek(g, { geo::bodyRight, 0, kDesignWidth - geo::bodyRight, kDesignHeight }, false, geo::deckBottom, scale);
+        art::walnutCheek(g, { 0, 0, geo::bodyLeft, kDesignHeight }, true, geo::deckBottom, texel);
+        art::walnutCheek(g, { geo::bodyRight, 0, kDesignWidth - geo::bodyRight, kDesignHeight }, false, geo::deckBottom, texel);
         g.restoreState();
     }
 
@@ -1975,6 +2025,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             row->layout(row->designArea(), sx, sy);
         deck.layout(deck.designArea(), sx, sy);
 
+        brandButton.setBounds(rr(geo::brandBadge.getUnion(geo::brandText)));
         prevButton.setBounds(rr(geo::prevBtn));
         nextButton.setBounds(rr(geo::nextBtn));
         presetWindow.setBounds(rr(geo::presetWell));
@@ -2000,7 +2051,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         panicButton.setBounds(rr(geo::panicBtn));
         outputMeterLabel.setBounds(rr(geo::meterText));
         outputMeterLabel.setFont(displayFont(11.5f * sy, juce::Font::bold));
-        outputMeterLabel.setMinimumPixels(9.0f);
+        outputMeterLabel.setMinimumPixels(art::kLegendFloorPx);
         outputMeterLabel.setJustificationType(juce::Justification::centredLeft);
         outputMeterLabel.setLines(1);
         outputMeterLabel.setLeftPad(juce::roundToInt(2.0f * sx));
@@ -2034,6 +2085,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     KeyButton advancedButton { "ADVANCED" };
     KeyButton panicButton { "PANIC", KeyButton::Style::alert };
     PresetWindow presetWindow;
+    BrandButton brandButton;
     ActivityLamps lamps { processor };
     PanelLabel presetNumberLabel;
     PanelLabel voiceStatusLabel;
@@ -2104,7 +2156,7 @@ Cs80AudioProcessorEditor::Cs80AudioProcessorEditor(Cs80AudioProcessor& p)
     addAndMakeVisible(*impl);
 
     setResizable(true, true);
-    setResizeLimits(1120, 700, 2400, 1500);
+    setResizeLimits(1120, 700, 3200, 2000);   // the 1120 x 700 minimum up to the 200 % display-size preset
     if (auto* constrainer = getConstrainer())
         constrainer->setFixedAspectRatio(kDesignWidth / kDesignHeight);
 
@@ -2116,10 +2168,16 @@ Cs80AudioProcessorEditor::Cs80AudioProcessorEditor(Cs80AudioProcessor& p)
     const auto* display = displays.getDisplayForPoint(juce::Desktop::getMousePosition());
     if (display == nullptr)
         display = displays.getPrimaryDisplay();
-    const auto initialSize = display != nullptr
+    auto initialSize = display != nullptr
         ? initialEditorSizeForArea(display->userArea.getWidth(), display->userArea.getHeight())
         : initialEditorSizeForArea(0, 0);
+    // A remembered display-size preset wins when it fits the same room the automatic size leaves for host chrome.
+    if (const int zoom = cs80::panel::EditorPreferences::loadZoomPercent(); zoom > 0 && display != nullptr
+        && 16 * zoom <= display->userArea.getWidth() - 32 && 10 * zoom <= display->userArea.getHeight() - 64)
+        initialSize = { 16 * zoom, 10 * zoom };
     setSize(initialSize.width, initialSize.height);
+    impl->onZoom = [this](int percent) { setZoomPercent(percent); };
+    impl->currentZoom = [this] { return getZoomPercent(); };
 
     startTimerHz(8);
 }
@@ -2164,6 +2222,22 @@ void Cs80AudioProcessorEditor::showPresetBrowser(bool shouldShow)
 {
     if (impl != nullptr)
         impl->showBrowser(shouldShow);
+}
+
+void Cs80AudioProcessorEditor::setZoomPercent(int percent)
+{
+    if (! cs80::panel::EditorPreferences::isZoomPreset(percent))
+        return;
+    setSize(16 * percent, 10 * percent);
+    cs80::panel::EditorPreferences::saveZoomPercent(percent);
+}
+
+int Cs80AudioProcessorEditor::getZoomPercent() const
+{
+    for (int percent : cs80::panel::EditorPreferences::zoomPresets)
+        if (getWidth() == 16 * percent && getHeight() == 10 * percent)
+            return percent;
+    return 0;
 }
 
 bool Cs80AudioProcessorEditor::isAdvancedVisible() const

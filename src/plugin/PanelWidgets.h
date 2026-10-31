@@ -112,7 +112,7 @@ public:
         }
         else
         {
-            const float size = juce::jlimit(8.0f, 15.0f, r.getHeight() * (style == Style::plate ? 0.40f : style == Style::quiet ? 0.44f : 0.37f));
+            const float size = juce::jlimit(art::kLegendFloorPx, 15.0f, r.getHeight() * (style == Style::plate ? 0.40f : style == Style::quiet ? 0.44f : 0.37f));
             auto font = displayFont(size, juce::Font::bold);
             font.setExtraKerningFactor(0.09f);
             auto area = r.reduced(4.0f, 1.0f).translated(0.0f, down ? 0.0f : -0.5f);
@@ -124,7 +124,7 @@ public:
                 area.removeFromLeft(11.0f);
             }
             // Never squeeze the legend below 85 percent: shrink the type toward its floor first.
-            font = ui::fitFontToWidth(font, shown, area.getWidth(), 0.85f, 8.0f);
+            font = ui::fitFontToWidth(font, shown, area.getWidth(), 0.85f, art::kLegendFloorPx);
             g.setFont(font);
             g.setColour(accent ? art::white(0.45f) : art::black(0.6f));
             g.drawFittedText(shown, area.translated(0.0f, 1.0f).toNearestInt(), juce::Justification::centred, 1, 0.85f);
@@ -183,9 +183,9 @@ private:
         }
         g.setColour(art::black(0.55f));
         g.drawRoundedRectangle(lens, rad - 2.0f, 1.0f);
-        auto font = displayFont(juce::jlimit(8.0f, 15.0f, lens.getHeight() * 0.42f), juce::Font::bold);
+        auto font = displayFont(juce::jlimit(art::kLegendFloorPx, 15.0f, lens.getHeight() * 0.42f), juce::Font::bold);
         font.setExtraKerningFactor(0.10f);
-        font = ui::fitFontToWidth(font, getButtonText(), lens.getWidth() - 8.0f, 0.85f, 8.0f);
+        font = ui::fitFontToWidth(font, getButtonText(), lens.getWidth() - 8.0f, 0.85f, art::kLegendFloorPx);
         g.setFont(font);
         g.setColour(art::black(0.6f));
         g.drawText(getButtonText(), lens.translated(0.0f, 1.0f), juce::Justification::centred, false);
@@ -203,9 +203,9 @@ private:
         const auto face = bounds.reduced(1.8f, 1.2f).withTrimmedBottom(1.8f);
         const float lr = juce::jlimit(1.8f, 3.4f, face.getHeight() * 0.15f);
         auto textArea = face.withTrimmedLeft(7.0f + lr * 2.6f + 4.0f).withTrimmedRight(3.0f).translated(0.0f, down ? 1.0f : 0.0f);
-        auto font = displayFont(juce::jlimit(8.0f, 11.5f, face.getHeight() * 0.46f), juce::Font::bold);
+        auto font = displayFont(juce::jlimit(art::kLegendFloorPx, 12.0f, face.getHeight() * 0.46f), juce::Font::bold);
         font.setExtraKerningFactor(0.03f);
-        font = ui::fitFontToWidth(font, getButtonText(), textArea.getWidth(), 0.85f, 8.0f);
+        font = ui::fitFontToWidth(font, getButtonText(), textArea.getWidth(), 0.85f, art::kLegendFloorPx);
         ui::drawEngravedText(g, getButtonText(), textArea, font, juce::Justification::centredLeft,
                              on ? ui::amberBright : ui::ivory.withAlpha(0.92f));
         paintFocus(g, 4.0f);

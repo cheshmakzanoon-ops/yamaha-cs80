@@ -12,9 +12,11 @@ using Rf = juce::Rectangle<float>;
 using juce::Colour;
 
 // ---- Type -----------------------------------------------------------------------------------
+// The smallest printed legend, in screen pixels, at every editor size including the 1120 x 700 minimum.
+inline constexpr float kLegendFloorPx = 10.5f;
 // Painters that draw in the 1600 x 1000 design space (chassis, plates, lid, meter, lamps) run under a
-// FloorScope, so printed type never falls under 9 screen pixels when the editor is scaled down. Code that
-// sizes fonts in screen pixels (labels, buttons) is not inside such a scope and is unaffected.
+// FloorScope, so printed type never falls under kLegendFloorPx screen pixels when the editor is scaled down.
+// Code that sizes fonts in screen pixels applies kLegendFloorPx itself.
 struct FloorScope
 {
     explicit FloorScope(float screenScale);
@@ -29,6 +31,8 @@ float designFloor() noexcept;
 // True while painting for an editor narrower than 85 percent of the design width.
 bool isSmallEditor() noexcept;
 
+// The embedded panel typeface (Barlow Condensed, OFL; bold = SemiBold), or null if it could not be loaded.
+const juce::Typeface::Ptr& panelTypeface(bool bold);
 // The panel typeface at `height`, never below the current design floor.
 juce::Font displayFont(float height, int style = juce::Font::plain);
 juce::Font spacedFont(float height, float kerning, float hscale = 1.0f, int style = juce::Font::bold);
