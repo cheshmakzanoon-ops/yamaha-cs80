@@ -222,7 +222,7 @@ The [parity roadmap](docs/PARITY_ROADMAP.md) remains the engineering plan. Curre
 | [Source Performance](docs/SOURCE_PERFORMANCE.md), [comparison isolation](docs/PARITY_ISOLATION.md) | Mode selection, preset/controller semantics and compatibility boundaries |
 | [UI specification](docs/UI_DESIGN_SPEC.md), [engine architecture](docs/ENGINE.md) | Current editor and audio/control signal paths |
 | [Engine audit](docs/ENGINE_AUDIT.md), [DSP measurements](docs/DSP_MEASUREMENTS.md) | Reproducible software measurements, fixes and remaining engineering issues |
-| [Fidelity requirement](docs/ANALOG_FIDELITY_REQUIREMENT.md), [roadmap](docs/PARITY_ROADMAP.md) | Target, milestones, assumptions and acceptance criteria |
+| [Improvement plan](docs/IMPROVEMENT_PLAN.md), [fidelity requirement](docs/ANALOG_FIDELITY_REQUIREMENT.md), [roadmap](docs/PARITY_ROADMAP.md) | Target, milestones, assumptions and acceptance criteria |
 | [Coverage ledger](docs/HARDWARE_COVERAGE.md), [fidelity audit](docs/FIDELITY_AUDIT.md), [hardware references](docs/HARDWARE_REFERENCES.md) | Row-by-row behavior, dated findings and primary sources |
 | [Source-tone runtime](docs/SOURCE_FACTORY_RUNTIME.md), [tone integration](docs/FACTORY_TONE_INTEGRATION_PROPOSAL.md) | Seven complete/fifteen inferred columns, network conversion, source ownership and headroom |
 | [Source compatibility checkpoint](docs/SOURCE_COMPATIBILITY_CHECKPOINT.md) | Why the V1 whole-audio assertion changed, causal proof, and separate immutable circuit/audio gates |
