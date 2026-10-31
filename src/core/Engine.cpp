@@ -83,6 +83,8 @@ void Engine::reset()
             r.osc.reset(0.0f);
             r.hpf.reset();
             r.lpf.reset();
+            r.hpStage.reset();
+            r.lpStage.reset();
             r.fenv.reset();
             r.aenv.reset();
         }
@@ -792,6 +794,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.osc.reset(legacyPhase);
             r.hpf.reset();
             r.lpf.reset();
+            r.hpStage.reset();
+            r.lpStage.reset();
         }
         // Filter envelope: a reused sounding tail restarts its attack from the
         // capacitor's present level (source policies, IMPROVEMENT_PLAN 1.3);
@@ -1318,19 +1322,34 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
             float filtered = x;
-            // Circuit engine: IG00156 stages with in-loop OTA saturation and the
-            // source-derived 4.7 MOhm feedforward floor. Legacy: unchanged Svf.
-            const bool circuitFilter = usesSourceModels(global.renderPolicy);
-            const float cutoffFloor = circuitFilter ? kIg00156FeedforwardHz : 0.0f;
-            if (rs.hpfOn)
+            // Circuit engine: IG00156 nodal stages (input networks, 180 pF
+            // branch, 1 uF couplings, in-loop OTA saturation; the 4.7 MOhm
+            // feedforward is internal). Legacy: unchanged Svf.
+            if (usesSourceModels(global.renderPolicy))
             {
-                r.hpf.set(cutoffHp + cutoffFloor, qHp, sr);
-                filtered = circuitFilter ? r.hpf.processCircuit(filtered).hp : r.hpf.process(filtered).hp;
+                if (rs.hpfOn)
+                {
+                    r.hpStage.set(cutoffHp, qHp, sr);
+                    filtered = r.hpStage.process(filtered).hp;
+                }
+                if (rs.lpfOn)
+                {
+                    r.lpStage.set(cutoffLp, qLp, sr);
+                    filtered = r.lpStage.process(filtered).lp;
+                }
             }
-            if (rs.lpfOn)
+            else
             {
-                r.lpf.set(cutoffLp + cutoffFloor, qLp, sr);
-                filtered = circuitFilter ? r.lpf.processCircuit(filtered).lp : r.lpf.process(filtered).lp;
+                if (rs.hpfOn)
+                {
+                    r.hpf.set(cutoffHp, qHp, sr);
+                    filtered = r.hpf.process(filtered).hp;
+                }
+                if (rs.lpfOn)
+                {
+                    r.lpf.set(cutoffLp, qLp, sr);
+                    filtered = r.lpf.process(filtered).lp;
+                }
             }
 
             const float sine = osc.sine * rs.sine;
@@ -1646,7 +1665,10 @@ Engine::RankAudioState Engine::getRankAudioState(int voice, int rank) const noex
     if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
         return {};
     const auto& r = voices[(size_t) voice].ranks[rank];
-    return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState() };
+    if (!usesSourceModels(global.renderPolicy))
+        return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState(), {}, {} };
+    const auto hp = r.hpStage.getState(), lp = r.lpStage.getState();
+    return { r.osc.getPhase(), { (float) hp.bp, (float) hp.lp }, { (float) lp.bp, (float) lp.lp }, hp, lp };
 }
 
 Engine::RankEnvelopeState Engine::getRankEnvelopeState(int voice, int rank) const noexcept

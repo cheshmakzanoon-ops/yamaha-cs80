@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dsp.h"
+#include "Ig00156Filter.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
@@ -244,7 +245,11 @@ public:
     struct RankAudioState
     {
         float phase = 0.0f;
+        // Legacy: the Svf memories. Circuit engine: the nodal stages' BP and LP
+        // integrator histories, so the same zero/equality probes apply.
         Svf::State hpf, lpf;
+        // Circuit engine: complete IG00156 nodal stage states (zero in legacy).
+        Ig00156Stage::State hpCircuit, lpCircuit;
     };
     // Exact current state (not last-render telemetry). Render thread only;
     // not safe for concurrent UI polling. No locks, allocations or mutations.
@@ -286,6 +291,9 @@ private:
         Oscillator osc;
         Svf hpf;
         Svf lpf;
+        // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).
+        Ig00156Stage hpStage { kIg00156HighPassNetwork };
+        Ig00156Stage lpStage { kIg00156LowPassNetwork };
         FilterEnv fenv;
         Adsr aenv;
         float trimTune = 0.0f;

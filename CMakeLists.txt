@@ -220,6 +220,11 @@ if (CS80_BUILD_TESTS)
     endif()
 
     # [ws1-voice] register this workstream's core tests below this line.
+    add_executable(cs80_ig00156_nodal_tests tests/Ig00156NodalTests.cpp)
+    target_link_libraries(cs80_ig00156_nodal_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00156_nodal_tests COMMAND cs80_ig00156_nodal_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
+    set_tests_properties(cs80_ig00156_nodal_tests PROPERTIES TIMEOUT 300)
 
     # [ws2-engine] register this workstream's core tests below this line.
 
