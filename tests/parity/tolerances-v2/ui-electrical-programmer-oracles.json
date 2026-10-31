@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "baseline_commit": "2acd64a",
+  "title": "Host gates for the electrical programmer and retained cold filter charge",
+  "scope": "Align host ownership oracles with already committed circuit contracts; retain every existing assertion family, sample count and numeric tolerance. Legacy physical-unit behavior is unchanged.",
+  "limits": {
+    "envelope_value_abs": 2e-05,
+    "envelope_elapsed_abs": 2e-06,
+    "zero_frame_state_difference": 0,
+    "meter_output_bit_differences": 0,
+    "selected_programmer_receiver_bit_differences": 0,
+    "parameter_roundtrip_abs": "Existing max(0.0001, parameter span * 0.00001); discrete choices use host legal-value snapping."
+  },
+  "truth_boundary": [
+    "Memory/PANEL electrical accuracy remains governed by the existing independent full MemoryPanelNetwork gates and their unchanged programmer-integration.json limits.",
+    "Host envelope timing uses independent primitive Adsr/FilterEnv histories driven by a fresh stateless programmer compilation from independently selected APVTS PANEL/memory values, never Engine cached tones or envelope targets. This is an ownership/integration gate, not another absolute circuit calibration.",
+    "Factory envelope target/time expectations remain the original independent raw-cell/declared-hypothesis oracle.",
+    "The committed cold IL law selects a released drive without replacing capacitor charge. A first strike preserves that cold or pre-ticked charge; Legacy retains its historical reset-to-IL rule.",
+    "PANEL/memory now own electrical receiver readouts after a factory-tab exit. Compare with a fresh selected-source receiver calculation using observed envelope/touch inputs; stale factory caches or zero readouts cannot pass.",
+    "Meter and unmetered core receive the same electrical ControlFrame contract before any samples; telemetry must remain byte-inert.",
+    "P_chorusTabs is a five-choice host parameter and must use legal discrete values in the physical-unit roundtrip oracle."
+  ],
+  "mutation_requirements": [
+    "Drop electrical programmer annotation from the processor: metered/core identity and live programmer timing/receiver ownership must reject.",
+    "Ignore selected-memory edits or route the wrong bank: live timing and selected-source ownership must reject.",
+    "Restore assignment-time filter reset to IL: the retained-charge first-tick oracle must reject.",
+    "Treat P_chorusTabs as continuous in the roundtrip oracle: the existing physical-unit tolerance must reject its fractional illegal values."
+  ],
+  "release_gates": [
+    "Run the same failing host tests focused, then full unchanged --self-test.",
+    "No tolerance, assertion family, scenario or existing test is removed to obtain green.",
+    "Record the original 385-failure log and every mutation/restoration result."
+  ]
+}
