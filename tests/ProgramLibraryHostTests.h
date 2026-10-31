@@ -7,6 +7,7 @@
 #include "core/FactoryPresets.h"
 #include "core/Randomise.h"
 #include "plugin/PluginProcessor.h"
+#include "plugin/PresetBrowser.h"
 
 #include <cmath>
 #include <string>
@@ -209,6 +210,41 @@ void testProgramLibraryHost(Check&& check)
         Cs80AudioProcessor().getStateInformation(fresh);
         copy.setStateInformation(fresh.getData(), (int) fresh.getSize());
         check(copy.getAbSlot() == 0 && ! copy.isAbSlotStored(1), "a session without A/B data clears both slots");
+    }
+
+    // --- Library browser: prev/next through the current filter, Legacy section, audition.
+    {
+        juce::TemporaryFile folder;
+        check(folder.getFile().createDirectory().wasOk(), "isolated preset folder");
+        Cs80AudioProcessor host(folder.getFile());
+        host.setCurrentProgram(L);
+        {
+            cs80::ui::PresetBrowser browser(host);
+            browser.loadAdjacent(1);
+            check(host.getCurrentProgram() == L + 1, "NEXT steps through the factory library");
+            browser.loadAdjacent(-1);
+            browser.loadAdjacent(-1);
+            check(host.getCurrentProgram() == L + C - 1, "PREV wraps within the current filter (legacy excluded)");
+            check(! browser.isAuditioning(), "audition starts off by default");
+        }
+        const auto saved = host.saveUserPreset("Browser Step");
+        check(saved.wasSaved(), "user patch saved into the isolated folder");
+        {
+            cs80::ui::PresetBrowser browser(host);
+            host.setCurrentProgram(L + C - 1);
+            browser.loadAdjacent(1);
+            check(host.getPresetName() == "Browser Step", "NEXT reaches user patches in the same filter");
+            browser.loadAdjacent(1);
+            check(host.getCurrentProgram() == L, "and wraps back to the first factory program");
+        }
+        host.setCurrentProgram(22);
+        {
+            cs80::ui::PresetBrowser browser(host);
+            browser.loadAdjacent(1);
+            check(host.getCurrentProgram() == 23 && host.getPresetName() == juce::String(legacy[23].name),
+                  "a legacy sound opens the Legacy Library section; NEXT stays in it");
+        }
+        folder.getFile().deleteRecursively();
     }
 
     // --- Randomise within original ranges.
