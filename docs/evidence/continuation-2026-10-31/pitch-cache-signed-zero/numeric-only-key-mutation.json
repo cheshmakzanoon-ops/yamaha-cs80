@@ -1,0 +1,4 @@
+{
+  "sha256": "041b4d0d17adf1d2e3cabcd88ceebaa8fd9ea24c2bedf30beefc5fdef27f86c9",
+  "unified_diff": "--- a/src/core/ExactControlTransforms.h\n+++ b/src/core/ExactControlTransforms.h\n@@ -14,8 +14,7 @@\n {\n     float operator()(float pitch, float reference) noexcept\n     {\n-        if (!(pitch == lastPitch && reference == lastReference\n-              && std::signbit(reference) == std::signbit(lastReference)))\n+        if (!(pitch == lastPitch && reference == lastReference))\n         {\n             value = midiToHz(pitch, reference);\n             lastPitch = pitch;\n"
+}

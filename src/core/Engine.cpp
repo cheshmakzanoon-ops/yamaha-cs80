@@ -1966,7 +1966,7 @@ Engine::SampleContext Engine::tickGlobals(float externalModulation)
     {
         // Circuit engine: IG00150 exponential converter (touch adds octaves) smoothed on
         // the control node, band-limited resets. ws4-circuits.md Step 1.
-        const double rate = originalSub.circuitRate(OriginalSubOscillator::circuitTargetRate(
+        const double rate = originalSub.circuitRate(subTargetRateMemo(
             global.subOriginalSpeed, global.subAtSpeed, sharedPressure) * (double) modernGlobal.subSpeedRatio,
             originalSubSmoothing);
         originalSubSpeedSmoothed = (float) rate;
@@ -2167,7 +2167,9 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
 
             // Transposition is a separate nominal harmonic ratio, not rounded
             // equal-tempered fifths and not part of the shared filter key CV.
-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
+            const float pitchHz = usesSourceModels(global.renderPolicy)
+                ? r.pitchHz(pitch, global.tuningRef) : midiToHz(pitch, global.tuningRef);
+            const float freq = pitchHz * v.ribbonRatio
                                * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
@@ -2375,7 +2377,7 @@ void Engine::mixBus(const SampleContext& context, float& mixL, float& mixR)
     // Circuit engine: ADJ p19-anchored exponential converter and offset multiplier
     // (RingModulatorCircuit.h, ws4-circuits.md Step 2). Legacy: provisional law, ideal multiply.
     ringFrequency = clampf(usesSourceModels(global.renderPolicy)
-                               ? RingModulatorCircuit::frequency(global.ringSpeed, global.ringDepth, ringEnv)
+                               ? ringFrequencyMemo(global.ringSpeed, global.ringDepth, ringEnv)
                                : ringModulationFrequency(global.ringSpeed, global.ringDepth, ringEnv),
                            0.0f, sr * 0.4f);
     ringPhase += ringFrequency * invSr;
@@ -2487,7 +2489,8 @@ void Engine::tickOutput(const SampleContext& context, float mixL, float mixR, fl
     const bool smoothControls = context.smoothControls;
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
     // resets without eating the low end of the instrument.
-    const float dcCoeff = std::exp(-kTwoPi * 10.0f * invSr);
+    const float dcCoeff = smoothControls ? dcCoefficientExp(-kTwoPi * 10.0f * invSr)
+                                         : std::exp(-kTwoPi * 10.0f * invSr);
     const float dcOutL = mixL - dcInL + dcCoeff * dcL;
     const float dcOutR = mixR - dcInR + dcCoeff * dcR;
     dcInL = mixL;

@@ -685,6 +685,13 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_au_wrapper_macro_environment_tests PROPERTIES TIMEOUT 30)
 endif()
 
+# Exact control-transform gate; registered before implementation in c881983.
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_exact_control_transform_tests tests/ExactControlTransformTests.cpp)
+    target_link_libraries(cs80_exact_control_transform_tests PRIVATE cs80_core)
+    add_test(NAME cs80_exact_control_transform_tests COMMAND cs80_exact_control_transform_tests)
+endif()
+
 # Core test executables keep several Engine fixtures (about 270 KB each since
 # the free-running idle snapshots and the circuit-engine voice) on the stack in
 # one function. Give them the ordinary 8 MiB Unix test-process budget instead of

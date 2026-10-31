@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ExactControlTransforms.h"
 #include "Dsp.h"
 #include "ModernLayer.h"
 #include "ModulationLfo.h"
@@ -464,6 +465,7 @@ private:
         alignas(64) std::array<Exp2Memo, kRankLanes> hpCutoffExp {};
         alignas(64) std::array<Exp2Memo, kRankLanes> lpCutoffExp {};
         alignas(64) std::array<Exp2Memo, kRankLanes> keyVoltsExp {};
+        alignas(64) std::array<MidiPitchMemo, kRankLanes> pitchHz {};
         alignas(64) std::array<voice_continuity::IdleRankControls, kRankLanes> idle {};
         alignas(64) std::array<voice_continuity::IdleStageReferences, kRankLanes> idleRefs {};
         alignas(64) std::array<voice_continuity::IdleHistory, kRankLanes> idleHistory {};
@@ -501,6 +503,7 @@ private:
         Exp2Memo& hpCutoffExp;
         Exp2Memo& lpCutoffExp;
         Exp2Memo& keyVoltsExp;
+        MidiPitchMemo& pitchHz;
         voice_continuity::IdleRankControls& idle;
         voice_continuity::IdleStageReferences& idleRefs;
         voice_continuity::IdleHistory& idleHistory;
@@ -530,6 +533,7 @@ private:
               hpCutoffExp(a.hpCutoffExp[lane]),
               lpCutoffExp(a.lpCutoffExp[lane]),
               keyVoltsExp(a.keyVoltsExp[lane]),
+              pitchHz(a.pitchHz[lane]),
               idle(a.idle[lane]),
               idleRefs(a.idleRefs[lane]),
               idleHistory(a.idleHistory[lane]),
@@ -667,6 +671,9 @@ private:
     void rememberHeldKey(int note, float velocity, int midiChannel);
     void forgetHeldKey(int note, int midiChannel);
 
+    RingFrequencyMemo ringFrequencyMemo;
+    SubTargetRateMemo subTargetRateMemo;
+    ExpMemo<float> dcCoefficientExp;
     ParamValues params;
     GlobalSettings global;
     RankSettings rankSettings[kNumRanks];

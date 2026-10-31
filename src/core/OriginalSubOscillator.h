@@ -79,14 +79,19 @@ public:
     // pin-1 control node, i.e. in log frequency. First call after reset starts at target.
     double circuitRate(double targetHz, double smoothing) noexcept
     {
-        const double target = std::log(targetHz);
+        if (!(targetHz == lastCircuitTargetHz))
+        {
+            lastCircuitTargetHz = targetHz;
+            cachedCircuitTargetLog = std::log(targetHz);
+        }
+        const double target = cachedCircuitTargetLog;
         if (! circuitPrimed)
         {
             circuitLogRate = target;
             circuitPrimed = true;
         }
         circuitLogRate += (target - circuitLogRate) * smoothing;
-        return std::exp(circuitLogRate);
+        return circuitRateExp(circuitLogRate);
     }
 
     // Same functions, amplitudes, phase and noise stream as tick(), but the saw resets and
@@ -145,6 +150,9 @@ public:
 private:
     double phase = 0.0;
     Rng noise { 0x53554231u };
+    double lastCircuitTargetHz = std::numeric_limits<double>::quiet_NaN();
+    double cachedCircuitTargetLog = 0.0;
+    ExpMemo<double> circuitRateExp;
     double circuitLogRate = 0.0;
     bool circuitPrimed = false;
 };
