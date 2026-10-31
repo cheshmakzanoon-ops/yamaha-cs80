@@ -103,7 +103,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
 | 6 Separate chorus/tremolo tab positions | done; historic default preserves original exclusive switch, circuit source can select both off/on | `6f1c4aa`, pin `adc8bbb` |
-| 6 Sample-accurate automation | VST3 native host bridge published and tested; AU native host gate/publication pending | `3a37594`, pin `aaf5855` |
+| 6 Sample-accurate automation | VST3 native host gate done; AU scheduled adapter implemented with Linux contract gates, native macOS host/mutations pending CI | `3a37594`, `780658d` |
 | 7 Release qualification | identified Linux validator-host lifetime mechanism removed by checked fixed-host pin; full continuation CI/release pending; signing remains owner-only | `f39af47`, `9af0b35` |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -415,15 +415,40 @@ against `d56911a`, circuit V1 exact against `22d6a32`, and V2 exact against
 the published audio commit `3a37594`. Full results are archived at
 `evidence/continuation-2026-10-31/compat-vst3-frozen.log`.
 
+## Continuation: Audio Unit scheduled control offsets
+
+`780658da1e83012ae4c7e39658d261d432b005e3` extends the verified VST3
+timeline to Apple's Audio Unit v2 scheduled immediate and ramp events. A
+separately reviewed JUCE 8.0.11 wrapper, generated only in the build tree,
+reports bounds, scope and capacity errors instead of dropping events.
+The 18 key controls advertise ramp capability; other parameters retain
+JUCE's earlier behavior. A 2,048-event preallocated queue resolves signed
+ramp starts, overlaps and buffer offsets without allocation in the audio
+callback. PURE and Legacy retain their block-start host semantics.
+
+The Linux AU curve oracle passes all registered block partitions at maximum
+normalized error **2.22045e-16**, and the production hook body passes its
+AU protocol contract fixture. Ten deliberate curve/hook mutations fail.
+The actual macOS `AudioUnitScheduleParameters` component-host test and its
+five serial component mutations are CI gates; **they must pass before AU is
+called fully qualified**. The native VST3 host gate remains green after the
+shared-interface extension. The separate circuit pin is
+`068456506d8bb9c8606059ae551045b4d7de4e08`. Its frozen strict
+capture passes all four gates: Legacy default/tails byte-identical to
+`d56911a`, circuit V1 exact against `22d6a32`, and V2 exact against
+the published AU audio commit `780658d`. The full capture is archived at
+`evidence/continuation-2026-10-31/compat-au-frozen.log`.
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`3a37594b11c8dd696e5e3e622d8dd60a3f36480e`** (host automation
-  queue timing). Pin commit `aaf58559b5e761c7abfa47e2d2b40ff038de34e2`.
-  Earlier V2 pins, for historical circuit-engine renders: `6f1c4aa` (independent
+  **`780658da1e83012ae4c7e39658d261d432b005e3`** (AU scheduled
+  host timing). Pin commit `068456506d8bb9c8606059ae551045b4d7de4e08`.
+  Earlier V2 pins, for historical circuit-engine renders: `3a37594`
+  (VST3 host timing), `6f1c4aa` (independent
   chorus/tremolo tabs), `3c08e8e`
   (complete live voice ownership), `c54c476` (filter
   charge continuity), `d66d298` (electrical
@@ -523,8 +548,9 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   chorus and tremolo states now have a neutral-default, append-only parameter;
   integrated host/UI validation is pending.
 - Sample-accurate VST3 key automation is published and qualified with a
-  native host SDK. The Audio Unit native macOS component host and serial
-  mutation gate remain for CI validation before declaring AU complete.
+  native host SDK. AU scheduled automation is implemented and Linux
+  curve/hook gates pass; native macOS component tests and serial mutation
+  gate must pass in CI before declaring AU complete.
 - Signing and notarization need the owner's certificates; real-DAW sessions,
   trademark review and AAX are owner actions
   ([release/RELEASE_QUALIFICATION.md](release/RELEASE_QUALIFICATION.md)).
