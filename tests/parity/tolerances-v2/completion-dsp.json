@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "evidence_kind": "numerical",
+  "rationale": "Continuation of handover section 3.2 and 3.4. These limits are registered before evaluating candidate fixes. The fixtures test software continuity and discretization against declared equations; no hardware measurements are claimed. Existing ws1-voice.json tolerances are unchanged.",
+  "click_continuity": {
+    "cold_filter_eg_state_max_abs": 1e-7,
+    "cold_filter_eg_fixture": "Circuit PANEL and MEMORY voices with released trigger, nonzero IL and no prior note, settled for at least 20 release times: the filter-envelope capacitor is at IL. Existing service topology selects IL while TR is released; the RC charging law remains a declared inference. Legacy retains its historical reset state.",
+    "assignment_filter_eg_jump_max_abs": 0.0,
+    "assignment_filter_eg_fixture": "After settling an unassigned free-running circuit, a strike cannot replace its filter-envelope capacitor voltage instantaneously. Compare the envelope value before and immediately after noteOn, before rendering elapsed time. Reused released circuits obey the same condition.",
+    "phrase_retrigger_max": 1.0,
+    "phrase_note_off_max": 1.0,
+    "phrase_fixture": "The unchanged cs80_engine_audit --suite phrase event sequence and score definition. Bass Stack retrigger at 44100, 48000 and 96000 Hz; paired Funky 1 + Funky 2 note-off at those rates; then the full source-policy phrase matrix. Exceeding a score is reported even if isolated sample traces establish a natural waveform edge rather than a discontinuity. Never add a fade or alter this metric to pass."
+  },
+  "filter_accuracy": {
+    "limits_source": "tests/parity/tolerances-v2/ws1-voice.json: ig00156_nodal",
+    "require_full_grid": true,
+    "fixture": "All four registered internal rates (88200, 96000, 192000, 384000), five cutoffs (60, 250, 1000, 4000, 12000), five Q settings (0.5, 1, 2, 5, 9), and isolated HP, isolated LP, HP-to-LP cascade. Apply the existing core and full-band tolerances at every point, with no passing-subgrid exemption. The continuous source-network oracle, low-frequency Q and cutoff calibration are unchanged. Any revised discrete solver needs an independently derived discrete response plus direct realtime lock-in checks and the existing nonlinear/stability gates.",
+    "service_setup": "Retain the registered ADJ p11 voltage bands and report observed predictions with the actual documented setup and labelled source-impedance alternatives; never fit component values to those voltages."
+  }
+}
