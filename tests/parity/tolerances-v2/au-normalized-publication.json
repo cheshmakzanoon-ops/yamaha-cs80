@@ -7,6 +7,7 @@
     "scheduled_value_error": 0,
     "external_readback_error": 0,
     "protected_readback_error": 0,
+    "incoherent_read_count": 0,
     "normalized_curve_error": 0.0000001,
     "audio_max_abs_error": 0.000002,
     "sample_offset_error": 0,
@@ -15,7 +16,8 @@
     "witnesses": [
       "For every named key, schedule explicit Float32 immediate values and ramps ending at a transmitted Float32 knot on the current render's final sample. Native AudioUnitGetParameter must return that accepted Float32 exactly. Include the native failing pulse-width value 0.62851631641387939, additional interior values, and endpoints zero and one. This exact knot check supplements, and does not replace, the original 1e-7 double-interpolated endpoint test.",
       "Compile the production AU hook body against a parameter fixture whose getter deliberately models a nonidentity physical Float32 round trip. Verify exact accepted scheduled readback, original storage values before any publication, changed-storage fallback, and invalidation even when the storage readback itself is unchanged.",
-      "A later native offset-zero setter and restored state supersede a previously scheduled endpoint. Use exact range endpoints where an independent native oracle is required, so the test does not assume arbitrary physical Float32 inversion is exact.",
+      "Invalidate ownership between the start of a scheduled commit and its final publication, without changing the physical getter. The older publication must not reclaim ownership. Concurrent reads while one render publisher alternates two known endpoint/readback pairs may return that pair's endpoint or the supplied current getter, but never an endpoint associated with the other getter. Require no incoherent observations.",
+      "A later native offset-zero setter and restored state supersede a previously scheduled endpoint. Use exact range endpoints where an independent native oracle is required, so the test does not assume arbitrary physical Float32 inversion is exact. Restoring a snapshot of the current physical state must also discard normalized publication ownership when equal-value APVTS notifications are suppressed; compare the immediate modern readback with the original protected-policy getter without inventing a physical inverse.",
       "Initialization, reset and cleanup discard publication ownership. UI/state notifications and direct setters invalidate only the affected key; unsupported parameters keep their original adapter behavior.",
       "Pure and Legacy always retain their original storage-based readback and existing audio/offset behavior, even when a prior modern scheduled endpoint remains in publication storage.",
       "Retain every existing native AU scheduling, audio partition, capacity, invalid-input, future-endpoint, Pure/Legacy, factory/memory and sixteen-voice assertion unchanged. Native Intel must pass; arm64 success alone does not qualify the defect."
@@ -23,6 +25,7 @@
     "mutations": [
       "Bypass normalized publication and return the physical-storage getter; the exact knot publication gate and native Intel original endpoint gate must reject it.",
       "Retain publication ownership after invalidation, or return a cached endpoint despite a changed underlying getter; the external-state ownership witness must reject it.",
+      "Replace the publication token captured before the setter with the newest revision at publication completion; the invalidation-during-commit witness must reject the stolen ownership. Removing the getter association must also fail the concurrent-pair witness.",
       "Use normalized publication under Pure/Legacy; the protected readback witness must reject it.",
       "Suppress lifecycle publication reset; the reset ownership witness must reject it."
     ],
