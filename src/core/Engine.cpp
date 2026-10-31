@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "RingModulatorCircuit.h"
 
 #include <algorithm>
 #include <cmath>
@@ -1385,8 +1386,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
     ringEnv = ringAdsr.tick(sr, false, usesSourceModels(global.renderPolicy));
-    ringFrequency = clampf(ringModulationFrequency(global.ringSpeed,
-                                                   global.ringDepth, ringEnv),
+    // Circuit engine: ADJ p19-anchored exponential converter and offset multiplier
+    // (RingModulatorCircuit.h, ws4-circuits.md Step 2). Legacy: provisional law, ideal multiply.
+    ringFrequency = clampf(usesSourceModels(global.renderPolicy)
+                               ? RingModulatorCircuit::frequency(global.ringSpeed, global.ringDepth, ringEnv)
+                               : ringModulationFrequency(global.ringSpeed, global.ringDepth, ringEnv),
                            0.0f, sr * 0.4f);
     ringPhase += ringFrequency * invSr;
     ringPhase -= std::floor(ringPhase);
@@ -1394,8 +1398,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     {
         const float carrier = std::sin(kTwoPi * ringPhase);
         const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
-        mixL = lerp(mixL, mixL * carrier, amount);
-        mixR = lerp(mixR, mixR * carrier, amount);
+        if (usesSourceModels(global.renderPolicy))
+        {
+            mixL = RingModulatorCircuit::blend(mixL, carrier, amount);
+            mixR = RingModulatorCircuit::blend(mixR, carrier, amount);
+        }
+        else
+        {
+            mixL = lerp(mixL, mixL * carrier, amount);
+            mixR = lerp(mixR, mixR * carrier, amount);
+        }
     }
 
     // PRA EXP-WAH: documented ring -> PRA -> OE1/OE2 -> expression order

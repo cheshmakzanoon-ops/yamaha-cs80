@@ -230,6 +230,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
     add_test(NAME cs80_ig00150_sub_tests COMMAND cs80_ig00150_sub_tests)
     set_tests_properties(cs80_ig00150_sub_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_ring_modulator_circuit_tests tests/RingModulatorCircuitTests.cpp)
+    target_link_libraries(cs80_ring_modulator_circuit_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ring_modulator_circuit_tests COMMAND cs80_ring_modulator_circuit_tests)
+    set_tests_properties(cs80_ring_modulator_circuit_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
 

@@ -121,3 +121,119 @@ None.
   200 Hz anchor interpretation should be revisited if either is found.
 - IG00150 sine-shaper distortion and the NJM4558 comparator swing (square amplitude) are
   not modelled; amplitudes keep their nominal normalized values.
+
+## Step 2: ring modulator
+
+**State: done.**
+
+### What was implemented, and where
+
+- `src/core/RingModulatorCircuit.h` (new): the speed/envelope -> frequency converter
+  fitted to the adjustment-procedure anchors, and the RMO offset multiplier.
+- `src/core/Engine.cpp`: in the circuit engine the ring carrier frequency comes from
+  `RingModulatorCircuit::frequency` (replacing `kProvisionalRingFrequencyExcursion`) and
+  the MODULATION blend uses `RingModulatorCircuit::blend`. The legacy policy keeps
+  `ringModulationFrequency()` and the ideal multiply. `kProvisionalRingFrequencyExcursion`
+  itself stays in `Dsp.h` because the legacy law still uses it.
+- `src/reference/RingModulator.h` (new truth model): converter solved from the two
+  anchors in double precision, and the analytic line spectrum of the offset multiplier.
+
+### Laws and evidence class
+
+| Law | Value | Evidence class |
+| --- | --- | --- |
+| Depth OFF, VC1 = +5.0 V: 150 ms; maximum SPEED: 5 ms (each +/-5 %) | 6.667 Hz and 200 Hz | Source: adjustment procedure printed p19 ([HARDWARE_REFERENCES.md](../HARDWARE_REFERENCES.md)) |
+| Maximum SPEED corresponds to VC1 = +10 V | 0-10 V panel span | **Declared inference** (the 0-10 V control convention of IG00152/IG00156, service p42) |
+| Exponential converter through both anchors | 0.981 octave/V | **Inference from the anchors**: a linear VCO through 0 V would need a 150 V maximum, and an affine linear law crosses 0 Hz at +4.83 V, leaving half the SPEED range dead |
+| AD envelope EO peak at +5 V, full DEPTH adds all of it at the converter node | +4.907 octaves at full depth | **Declared inference** (by analogy with the IG00152 attack-level span 0..+5 V, service p42) |
+| DEPTH wiper | linear | **Declared inference** |
+| RMO multiplier `y = (x + 5e-4)(c + 5e-3) + 1e-3` | carrier feedthrough -40 dB re the sidebands of a 0.1 voice, signal feedthrough -40 dB re its own sidebands, 1e-3 output DC | **Declared inference**: a trimmed four-quadrant multiplier; the PRA multiplier's trim residues are not recorded |
+| SPEED above 200 Hz (host range to 500 Hz) | extension | Masked in PURE CS-80 (isolation) at the 200 Hz maximum-SPEED anchor; kept in Source Performance |
+
+Alternatives considered: the old one-octave provisional excursion; an EO peak of +2.5 V
+(2.45 octaves) or +10 V (9.8 octaves, which runs into the VCO range); an affine linear
+VCO (rejected above); an ideal multiplier (no feedthrough); trims of -30 dB or -60 dB.
+The DC term is removed downstream by the PRA 10 uF input coupling, which every circuit
+engine sample already passes through; MODULATION moves therefore give a slow, small
+DC transient through that coupling, not a step at the output.
+
+The +5 V attack anchor (A = +5 V gives 31 ms) and the minimum attack/decay EO = 0 V
+target are not consumed: the host attack and decay parameters are already in seconds,
+and the panel attack-voltage taper is unknown.
+
+### Measured results (before -> after)
+
+Tool: `cs80_ring_modulator_circuit_tests`. Anchor periods are measured from the
+rendered output of an isolation engine with no notes, DEPTH 0 and MODULATION fully up,
+so the output is the multiplier's carrier feedthrough; interpolated zero crossings after
+1 s of settling.
+
+| Quantity | Before (circuit engine) | After |
+| --- | --- | --- |
+| VC1 = +5 V period | not modelled (SPEED in Hz only) | 150.012 ms (44.1 kHz), 149.946 ms (96 kHz); ADJ: 150 +/- 7.5 ms |
+| Maximum-SPEED period | 5 ms (clamp only) | 4.99998 ms (44.1 kHz), 5.00002 ms (96 kHz); ADJ: 5 +/- 0.25 ms |
+| Envelope excursion at full DEPTH | +1 octave | +4.907 octaves |
+| Signal feedthrough at MODULATION 1 (A4 sine voice) | none (ideal multiply) | -40.0 dB re upper sideband |
+| Carrier feedthrough at MODULATION 1 (same voice) | none | -38.6 dB re upper sideband |
+| Sideband balance | balanced | 0.00 dB |
+
+### Tests and mutation checks
+
+`cs80_ring_modulator_circuit_tests` (203 checks): anchors and the converter against the
+anchor-solved reference over -2..11 V; envelope law against the reference; DEPTH 0 and
+envelope 0 return SPEED exactly; rendered anchor periods at 44.1 and 96 kHz; PURE CS-80
+masks 500 Hz at 200 Hz and Source Performance keeps it; the engine carrier follows the
+law at every frame in both source policies; the legacy policy keeps the provisional law;
+multiplier DC, carrier, signal and both sideband lines within 0.01 dB of the analytic
+reference with no other lines; in the engine, balanced sidebands, signal feedthrough at
+2 x the carrier-port offset, and carrier feedthrough that scales with MODULATION and does
+not depend on the signal.
+
+| Mutant | Result |
+| --- | --- |
+| R1 provisional one-octave law restored | detected, 28 failures |
+| R2 linear VCO through both anchors | detected, 102 failures |
+| R2b envelope adds hertz instead of volts at the exponential node | detected, 27 failures |
+| R3 ideal multiplier | detected, 18 failures |
+| R3b signal and carrier offsets swapped | detected, 9 failures |
+| R4 engine multiplier hook removed | detected, 6 failures |
+| R5 PURE CS-80 500 Hz mask removed | detected, 1 failure |
+| R6 engine frequency hook removed | detected, 8 failures |
+| R7 EO peak drifts from the reference (10 V) | detected, 24 failures |
+
+Existing tests updated for this intentional change (circuit engine only):
+`OutputTapIntegrationTests` and `PraWahIntegrationTests` model the isolation ring stage
+with `RingModulatorCircuit::blend` (legacy oracles unchanged). Two silence fixtures in
+`OutputTapIntegrationTests` were adjusted without weakening them: the readout-time
+constant fixture now sets MODULATION to 0 (its premise is a silent input), and "reset
+clears output and decimator tails exactly" now compares bit for bit against a freshly
+prepared engine, because carrier feedthrough sounds whenever MODULATION is up.
+
+### Intentional circuit-engine sound changes
+
+- Ring DEPTH sweeps up to 4.9 octaves above SPEED at full depth (was 1 octave).
+- With MODULATION up, the carrier bleeds about 40 dB below a single voice's sidebands,
+  including with no notes held, and the dry signal leaks 40 dB below its sidebands.
+
+### HARDWARE_COVERAGE.md entries (dated 2026-10-31)
+
+- Row "16 Ring speed": circuit engine converter is exponential and reproduces the ADJ p19
+  150 ms (VC1 = +5 V) and 5 ms (maximum SPEED) anchors, rendered 150.01 ms / 5.000 ms.
+  The 500 Hz extension is masked at 200 Hz in PURE CS-80. Open: the VC1 = +10 V maximum
+  is inferred.
+- Row "16 Ring depth": circuit engine envelope -> frequency law adds DEPTH x EO (declared
+  +5 V peak) at the same converter node: up to 4.907 octaves. Open: EO peak and DEPTH taper.
+- Row "16 Ring modulation amount" and table row "Ring multiplier and carrier/envelope
+  circuit": offset multiplier with declared -40 dB carrier and signal feedthrough and a
+  DC offset removed by the PRA input coupling; sideband spectrum tested against the
+  analytic reference. Open: real multiplier trims, distortion and intermodulation.
+
+### New parameters
+
+None.
+
+### Open items
+
+- EO peak voltage, DEPTH taper and the VC1 maximum are inferences; the 31 ms attack anchor
+  is unused until a panel attack-voltage law exists.
+- Multiplier nonlinearity (distortion, intermodulation) is not modelled.

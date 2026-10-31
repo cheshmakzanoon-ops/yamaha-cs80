@@ -4,6 +4,7 @@
 // coupling are reconstructed separately. Envelope/chorus/decimator primitives
 // are shared intentionally: this verifies routing, not their physical accuracy.
 #include "core/Engine.h"
+#include "core/RingModulatorCircuit.h"
 
 #include <algorithm>
 #include <array>
@@ -281,8 +282,11 @@ struct PipelineOracle
             const float amp = envelope.tick(sr, true, isolated);
             float sample = sine * 1.0f * amp * 1.0f * 0.17f * 0.5f;
             ringPhase += 77.0f * (1.0f/sr); ringPhase -= std::floor(ringPhase);
+            // ws4 Step 2, intentional circuit-engine change: isolation uses the offset
+            // RMO multiplier (RingModulatorCircuit); the legacy policy keeps the ideal multiply.
             if (ringAmount > 0.001f)
-                sample = lerp(sample, sample*std::sin(kTwoPi*ringPhase), ringAmount);
+                sample = isolated ? RingModulatorCircuit::blend(sample, std::sin(kTwoPi*ringPhase), ringAmount)
+                                  : lerp(sample, sample*std::sin(kTwoPi*ringPhase), ringAmount);
             const float targetMix = wet ? 1.0f : 0.0f;
             if (mix != targetMix)
             {
