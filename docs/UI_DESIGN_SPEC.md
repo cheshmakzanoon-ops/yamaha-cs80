@@ -8,7 +8,7 @@ Never copy another product's artwork, icons, text or layout. Design from the har
 
 - Dark walnut/rosewood side cheeks with varnish sheen and visible grain, rounded top-front corners.
 - Charcoal-black control surface with a fine crinkle-finish grain, cream and gold silkscreen legends, gold etched line-art grouping the controls.
-- Two identical channel rows (I and II) of long vertical faders with cream, green, pink, yellow, black and grey rectangular caps; a left-hand voice-flow diagram plate; a centre block of backlit plastic tone-selector tabs; black rocker switches for the PULSE/SAW selectors.
+- Two identical channel rows (I and II) of long vertical faders with cream, green, pink, yellow, black and grey rectangular caps; at their left the hinged memory lid, printed with the voice block diagram; a centre block of backlit plastic tone-selector tabs with the full tone names; black tabs for the PULSE/SAW selectors.
 - A YAMAHA nameplate and "CS-80 Polyphonic Synthesizer" legend; a long ribbon controller strip just above the keys; a 61-key keyboard that spans the whole width.
 - Light comes from the upper left. Everything raised has a lit top-left edge and a dark bottom-right edge and a cast shadow; everything recessed has an inner shadow at the top-left.
 
@@ -18,11 +18,18 @@ Panel 0xff1b1a18 to 0xff2e2b27, cream 0xffe9dfc2, gold 0xffcdb878, amber 0xffd9a
 
 ## Target layout (design space stays 1600 x 1000; min window 1120 x 700, aspect locked as today)
 
+The arrangement follows the conformance audit, [PANEL_CONFORMANCE.md](PANEL_CONFORMANCE.md). Every rectangle comes
+from one table, `src/plugin/PanelLayout.h`, in final design coordinates (no shifted blocks).
+
 ```text
-y    0-64    Toolbar: brand, preset display (illuminated window), prev/next, LIBRARY, SAVE, INIT, ADVANCED, voice and MIDI lamps, meter, PANIC
-y   64-72    Ledge under the toolbar (status strip above it, vent grille detail)
-y   72-632   Control surface: voice-flow plate (left) | channel I row | channel II row, then the centre row (ring, sub, feet, tone selector, global)
-y  640-745   Performance deck: performance block | nameplate and 804 px ribbon | brilliance/level/foot block
+y    0-64    Toolbar (software): brand, preset display, prev/next, LIBRARY, SAVE, INIT, ADVANCED, lamps, meter, PANIC
+y   64-72    Ledge under the toolbar (status strip above it, vent slots)
+y   74-452   Memory lid (x 52-340, closed, printed block diagram, OPEN MEMORY LID and VOICE SETTINGS keys)
+             | channel I row (y 74-260) and channel II row (y 266-452), x 348-1552
+y  460-626   Front strip (PN2): PITCH, DETUNE, ring, sub, feet | tone selector | MIX/BRILL/RESO, keyboard
+             brilliance and level, touch response, VOLUME
+y  640-744   Deck: left-hand panel (sustain, portamento, foot assign, tremolo/chorus ON/OFF + TREMOLO + CHORUS,
+             foot controller) | nameplate and 860 px ribbon | rear jack panel (footswitch jack, contact, output)
 y  748-1000  Keybed: full-width 61-key keyboard in a walnut frame (keys 41.8 px wide, about 5:1 length to width)
 ```
 
@@ -34,7 +41,8 @@ Both side cheeks (x 0-48 and x 1552-1600) are one continuous walnut surface draw
 |---|---|---|
 | Keys | `src/plugin/HardwareKeyboard.h` | Key rendering, depression, glow, keybed frame, felt, rail, note labels |
 | Controls | `src/plugin/UiComponents.h`, `UiComponents.cpp` | LookAndFeel, faders, caps, knobs, tabs, rockers, LED buttons, ribbon, tooltips, shared drawing helpers |
-| Chassis | `src/plugin/PluginEditor.cpp`, `PluginEditor.h` | Layout, chassis art, toolbar and display, voice-flow plate, memory programmer, overlay transitions |
+| Chassis | `src/plugin/PluginEditor.cpp`, `PluginEditor.h` | Chassis art, closed lid, toolbar and display, overlay transitions |
+| Panel sections | `src/plugin/PanelLayout.h`, `PanelWidgets.*`, `ChannelRow.*`, `CentreRow.*`, `PerformanceDeck.*`, `MemoryLid.*`, `ArtCommon.*` | Layout table, panel keys, the section components, the memory programmer, shared art |
 | Library | `src/plugin/PresetBrowser.cpp`, `PresetBrowser.h` | Preset library UI |
 | Advanced | `src/plugin/AdvancedPanel.cpp`, `AdvancedPanel.h` | Advanced pages |
 
@@ -42,13 +50,18 @@ Rules for UI changes:
 
 - Do not remove or change the signature of an existing declaration in `UiComponents.h`; add new ones. Other files compile against them.
 - The accessibility names, titles, parameter bindings, keyboard focus and tab order of every control must survive. Tests in `src/tools/ui_snapshot.cpp` check them.
-- No pixel-level assertions exist; the self-test checks bounds, accessibility, focus, at least 40 hardware sliders, snapshot sizes.
+- The self-test checks bounds, accessibility, focus, at least 40 hardware sliders, snapshot sizes, non-overlapping main-view controls at both sizes, and tolerance-based golden images of the main view (see below).
 - Everything static is drawn once into a buffered image (see `Backdrop`). Per-frame repaints must stay cheap: no blur filters, no per-frame gradients over large areas. The editor repaints at 8 Hz; animation needs its own small timer on its own small component.
-- JUCE 8.0.11, C++20, software renderer. Fonts in CI are DejaVu only: build the engraved look from bold weights, `withHorizontalScale`, `withExtraKerningFactor` and drop shadows rather than a custom typeface.
+- JUCE 8.0.11, C++20, software renderer. The panel draws in one embedded typeface, Barlow Condensed (SIL OFL 1.1; Medium for plain, SemiBold for bold), loaded from BinaryData by `cs80::art::displayFont` in `ArtCommon.h`, so it looks the same on every OS and in CI. Build the engraved look from that face with kerning, `withHorizontalScale` (never below 0.85, tone tabs 0.70) and drop shadows.
+- Legend floor: no printed legend below `cs80::art::kLegendFloorPx` (10.5 screen px) at any size, including 1120 x 700. Words that do not fit are abbreviated (`legendAbbreviation`, short captions), never shrunk below the floor.
+- Readouts meet WCAG AA (4.5:1) against their backgrounds; ratios are listed in docs/workstreams/ws7-panel.md.
+- Textures (crinkle, walnut) are tiled at one texel per physical pixel: pass the graphics context's physical pixel scale, not the editor scale.
+- Display size presets (75, 100, 125, 150, 200 percent of 1600 x 1000) are a user preference (`EditorPreferences`), never a host parameter.
 
 ## Checking a change
 
 - Build and render with the `CS80Snapshots` target: `CS80Snapshots --out <dir> --self-test`. On Linux run it through `scripts/run-ui-smoke-linux.sh` (Xvfb plus Openbox); a bare X server aborts with `BadAtom` partway through and silently skips the later checks.
 - A passing run ends with `UI SMOKE TEST PASSED` and has no `FAIL` line in the log.
 - Look at the PNGs, and zoom into crops of the area you changed, at 1600x1000 and at the 1120x700 minimum.
+- Golden images: the self-test compares a fresh editor's main view at 1600x1000 and 1120x700 with `tests/golden/main-*.png` (`tests/PanelEditorTests.h`; strict on Linux, report-only on other platforms). It writes `golden-candidate-*.png` and `golden-diff-*.png` into a `golden/` subfolder of the capture directory. After an intended visual change, refresh on Linux with `CS80_REFRESH_GOLDENS=1 scripts/run-ui-smoke-linux.sh build/CS80Snapshots_artefacts/Release/CS80Snapshots --out <dir> --self-test`, inspect the new files and commit them with the change.
 - Never use Yamaha or Arturia bitmaps; everything is drawn with JUCE vector calls.

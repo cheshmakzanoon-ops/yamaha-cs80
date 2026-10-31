@@ -1,6 +1,7 @@
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
+#include "plugin/EditorPreferences.h"
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
 #include "../../tests/OutputMeterHostTests.h"
@@ -11,6 +12,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/PanelEditorTests.h"
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 
@@ -1925,6 +1927,9 @@ void testIsolatedFootControllerHost()
 
 int main(int argc, char** argv)
 {
+    // Never read or write the user's real editor preferences (display size) from the snapshot tool.
+    const juce::TemporaryFile preferences(".settings");
+    cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
     // CTest captures stdout through a pipe. Keep phase evidence if a native
@@ -3350,7 +3355,7 @@ int main(int argc, char** argv)
         processor.setParamValue(cs80::P_fx3Type, 4.0f);
         processor.setParamValue(cs80::P_fx3Mix, 0.25f);
         processor.setParamValue(cs80::P_arpOn, 1.0f);
-        for (const char* tone : { "BRASS\n1", "BRASS\n2" })      // one lit tab per channel row
+        for (const char* tone : { "BRASS 1", "BRASS 2" })        // one lit tab per channel row
             if (auto* tab = findButton(editor, tone)) tab->triggerClick();
         flushGui(150);
         save("main-populated-1600x1000");
@@ -3479,6 +3484,8 @@ int main(int argc, char** argv)
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
+    std::puts("UI SMOKE PHASE: original panel editor (ws7)");
+    cs80::tests::runPanelEditorTests(check, flushGui, dir);
 
     // [ws5-modern] modern modulation/FX layer: session state, host parameters, audio, pages.
     std::puts("UI SMOKE PHASE: modern modulation and FX layer");

@@ -1,5 +1,6 @@
 #include "ModernModulationUi.h"
 
+#include "ArtCommon.h"
 #include "PluginProcessor.h"
 #include "UiComponents.h"
 #include "core/FxModels.h"
@@ -24,12 +25,13 @@ juce::RangedAudioParameter* parameter(Cs80AudioProcessor& p, int index)
     return p.getAPVTS().getParameter(juce::String(cs80::paramId(index)));
 }
 
+// The embedded panel typeface (ws7 ArtCommon), never under the 10.5 px screen legend floor.
 juce::Font uiFont(float height, bool bold = false)
 {
-    return juce::Font(juce::FontOptions(height, bold ? juce::Font::bold : juce::Font::plain));
+    return cs80::art::displayFont(std::max(height, cs80::art::kLegendFloorPx), bold ? juce::Font::bold : juce::Font::plain);
 }
 
-void styleLabel(juce::Label& label, const juce::String& text, float height = 13.0f)
+void styleLabel(juce::Label& label, const juce::String& text, float height = 15.0f)
 {
     label.setText(text, juce::dontSendNotification);
     label.setFont(uiFont(height));
@@ -79,8 +81,8 @@ void fillPage(juce::Graphics& g, juce::Rectangle<float> area, const juce::String
     if (title.isNotEmpty())
     {
         g.setColour(amber);
-        g.setFont(uiFont(12.0f, true));
-        g.drawText(title, area.reduced(10.0f, 4.0f).removeFromTop(16.0f), juce::Justification::centredLeft);
+        g.setFont(uiFont(14.0f, true));
+        g.drawText(title, area.reduced(10.0f, 3.0f).removeFromTop(17.0f), juce::Justification::centredLeft);
     }
 }
 
@@ -616,7 +618,7 @@ LfoPanel::LfoPanel(Cs80AudioProcessor& p)
     for (int i = 0; i < 3; ++i)
     {
         auto& r = rows[(size_t) i];
-        styleLabel(r.title, "LFO " + juce::String(i + 1), 12.0f);
+        styleLabel(r.title, "LFO " + juce::String(i + 1), 14.0f);
         for (int w = 0; w < kLfoWaveCount; ++w)
             r.wave.addItem(lfoWaveName(w), w + 1);
         r.destination.addItemList({ "No direct route", "Pitch", "Filter", "Amp", "Pan", "PWM" }, 1);
@@ -666,7 +668,7 @@ ModMatrixPage::ModMatrixPage(Cs80AudioProcessor& p) : processor(p)
     for (int i = 0; i < kModSlots; ++i)
     {
         auto& r = rows[(size_t) i];
-        styleLabel(r.index, juce::String(i + 1), 12.0f);
+        styleLabel(r.index, juce::String(i + 1), 13.0f);
         r.index.setJustificationType(juce::Justification::centred);
         addSourceItems(r.source, false);
         addSourceItems(r.via, true);
@@ -740,7 +742,7 @@ void ModMatrixPage::paint(juce::Graphics& g)
     fillPage(g, getLocalBounds().toFloat(), "MODULATION MATRIX");
     auto header = getLocalBounds().reduced(8).withTrimmedTop(20).removeFromTop(16);
     g.setColour(ivoryDim);
-    g.setFont(uiFont(10.5f));
+    g.setFont(uiFont(11.5f));
     const int w = header.getWidth() - 28;
     header.removeFromLeft(28);
     const float columns[] = { 0.23f, 0.19f, 0.22f, 0.12f, 0.24f };
@@ -775,7 +777,7 @@ KeyboardModulationPage::KeyboardModulationPage(Cs80AudioProcessor& p)
     for (int i = 0; i < 4; ++i)
     {
         auto& c = curves[(size_t) i];
-        styleLabel(c.title, titles[i], 12.0f);
+        styleLabel(c.title, titles[i], 14.0f);
         styleSlider(c.slider, juce::String(titles[i]) + " curve");
         c.slider.setDoubleClickReturnValue(true, 0.0);
         c.slider.setTooltip("-1 hard (x^4), 0 linear, +1 soft (x^1/4)");
@@ -788,7 +790,7 @@ KeyboardModulationPage::KeyboardModulationPage(Cs80AudioProcessor& p)
         addAndMakeVisible(c.slider);
     }
     styleLabel(note, "These curves shape the matrix sources only. The original initial and after touch paths "
-                     "(TWS/TRG) are not altered.", 11.0f);
+                     "(TWS/TRG) are not altered.", 12.5f);
     note.setColour(juce::Label::textColourId, ivoryDim);
     addAndMakeVisible(note);
 }
@@ -847,7 +849,7 @@ ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
         const int typeId = i == 0 ? P_fx1Type : i == 1 ? P_fx2Type : P_fx3Type;
         const int mixId = i == 0 ? P_fx1Mix : i == 1 ? P_fx2Mix : P_fx3Mix;
         const auto n = juce::String(i + 1);
-        styleLabel(s.title, "FX " + n, 13.0f);
+        styleLabel(s.title, "FX " + n, 15.0f);
         for (int m = 0; m < fx::kModelCount; ++m)
             s.model.addItem(fx::modelName(m), m + 1);
         s.type.addItemList({ "Off", "Chorus", "Phaser", "Tape delay", "Plate reverb", "Drive" }, 1);

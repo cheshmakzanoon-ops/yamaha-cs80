@@ -226,6 +226,22 @@ if (CS80_BUILD_TESTS)
     # [ws3-keyboard] register this workstream's core tests below this line.
 
     # [ws4-circuits] register this workstream's core tests below this line.
+    add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
+    target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00150_sub_tests COMMAND cs80_ig00150_sub_tests)
+    set_tests_properties(cs80_ig00150_sub_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_ring_modulator_circuit_tests tests/RingModulatorCircuitTests.cpp)
+    target_link_libraries(cs80_ring_modulator_circuit_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ring_modulator_circuit_tests COMMAND cs80_ring_modulator_circuit_tests)
+    set_tests_properties(cs80_ring_modulator_circuit_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_oe2_stereo_chorus_tests tests/Oe2StereoChorusTests.cpp)
+    target_include_directories(cs80_oe2_stereo_chorus_tests PRIVATE src tests)
+    add_test(NAME cs80_oe2_stereo_chorus_tests COMMAND cs80_oe2_stereo_chorus_tests)
+    set_tests_properties(cs80_oe2_stereo_chorus_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_pra_optical_cell_tests tests/PraOpticalCellTests.cpp)
+    target_link_libraries(cs80_pra_optical_cell_tests PRIVATE cs80_core)
+    add_test(NAME cs80_pra_optical_cell_tests COMMAND cs80_pra_optical_cell_tests)
+    set_tests_properties(cs80_pra_optical_cell_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
     add_executable(cs80_modern_lfo_tests tests/ModernLfoTests.cpp)
@@ -336,6 +352,13 @@ if (CS80_BUILD_PLUGIN)
         # [ws6-library] add this workstream's plugin sources below this line.
 
         # [ws7-panel] add this workstream's plugin sources below this line.
+        src/plugin/ArtCommon.cpp
+        src/plugin/PanelWidgets.cpp
+        src/plugin/ChannelRow.cpp
+        src/plugin/CentreRow.cpp
+        src/plugin/PerformanceDeck.cpp
+        src/plugin/MemoryLid.cpp
+        src/plugin/EditorPreferences.cpp
 
         # [ws8-studio] add this workstream's plugin sources below this line.
 
@@ -375,6 +398,19 @@ if (CS80_BUILD_PLUGIN)
         JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
+
+    # [ws7-panel] The panel typeface (Barlow Condensed, SIL OFL 1.1), embedded so the panel draws the same on
+    # every OS. Provenance: assets/fonts/barlow-condensed/SOURCE.txt.
+    juce_add_binary_data(cs80_panel_fonts
+        HEADER_NAME PanelFontData.h
+        NAMESPACE cs80_panel_fonts
+        SOURCES
+            assets/fonts/barlow-condensed/BarlowCondensed-Medium.ttf
+            assets/fonts/barlow-condensed/BarlowCondensed-SemiBold.ttf)
+    target_link_libraries(CS80Reference PRIVATE cs80_panel_fonts)
+    target_link_libraries(CS80Snapshots PRIVATE cs80_panel_fonts)
+    # [ws7-panel] Golden images of the main view (tests/PanelEditorTests.h; refresh with CS80_REFRESH_GOLDENS=1).
+    target_compile_definitions(CS80Snapshots PRIVATE CS80_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix
