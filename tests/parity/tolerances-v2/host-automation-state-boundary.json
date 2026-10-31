@@ -8,6 +8,7 @@
     "audio_max_abs_error": 0.000002,
     "sample_offset_error": 0,
     "unchanged_endpoint_error": 0,
+    "native_reader_audio_error": 0,
     "key_parameter_count": 18,
     "truth": "For a queue whose first point occurs after sample zero, the implicit sample -1 value is the latest parameter value at the boundary. An intervening native zero-frame parameter flush, UI setter or restored state supersedes an older automation endpoint. In the absence of an intervening write, retain the previous queue's full-precision normalized endpoint; do not introduce an extra float physical-to-normalized round trip at each block boundary.",
     "witnesses": [
@@ -15,12 +16,14 @@
       "Repeat after a completed automation curve, so the flushed value must replace an existing cached endpoint rather than only the initial default.",
       "At processor-bridge level, repeat delayed-queue starts after setValueNotifyingHost and after the existing locked/synchronised APVTS state replacement path. The first sample and all subsequent samples must follow the latest stored parameter state.",
       "Without an intervening write, carry a non-Float32-representable normalized endpoint into a delayed queue and require exact continuity from that double endpoint. Check the starting state directly, not only an audio threshold.",
-      "Exercise every enum-named key parameter, delayed first points at sample 1 and the final sample, and block sizes 7, 64 and 256. Preserve existing no-queue, Pure/Legacy, selected factory/memory and 16-voice assertions unchanged."
+      "Exercise every enum-named key parameter, delayed first points at sample 1 and the final sample, and block sizes 7, 64 and 256. Preserve existing no-queue, Pure/Legacy, selected factory/memory and 16-voice assertions unchanged.",
+      "The native normalized-state reader must be observationally inert: identical zero-frame flush and delayed-queue renders, with and without connecting/synchronizing/disconnecting the native edit controller to read its current normalized state, must be byte-identical. Check both ordinary preceding blocks and completed preceding curves before using that reader as an oracle."
     ],
     "mutations": [
       "Restore stale cached automationCurrent as the implicit start even when the current parameter value changed between blocks; the state-boundary witness must fail.",
       "Refresh the implicit start unconditionally from float parameter readback even when the last host endpoint has not been superseded; the exact endpoint-continuity witness must fail.",
-      "Delay boundary refresh until after the queue is attached; the delayed-first-point witness must fail."
+      "Delay boundary refresh until after the queue is attached; the delayed-first-point witness must fail.",
+      "Make the native state reader set a different parameter value after reading it; the exact native reader-neutrality witness must fail."
     ],
     "registration_order": "Commit this acceptance file before running the new witnesses or evaluating implementation changes. Record the unmodified failure, repaired result and mutation results. Existing host-automation.json limits remain authoritative for all original tests."
   },
