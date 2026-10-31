@@ -112,3 +112,41 @@ reported by the integration run, not inferred from these six rows.
 All four focused CTest suites pass, including the complete source-factory
 integration suite at 44.1/48/96/192 kHz and its 222-program Legacy checks.
 The unabridged result is `cold-filter-qualification.txt`.
+
+## Original Bass fixture with the programmer coordinate held fixed
+
+The named regression additionally repeats the original 44.1 kHz phrase with
+**64-frame** event quantization, an unannotated physical-unit PANEL frame and
+the original Bass Stack parameter values. It cannot benefit from the newly
+connected electrical programmer. Both circuit policies are tested. The full
+cold suite now passes **13,966 checks**. Across 30 inactive and 8 warm voice
+assignments, the maximum filter charge jump is zero. All warm assignments also
+retain oscillator phase, both filter histories, both envelope levels and VCA
+LI/output-coupling states exactly.
+
+The 6.25-second retrigger specifically assigns voice 6, which was inactive
+before the event. Its rank-I filter state is `-1.43999993801` immediately before
+and after assignment under both policies. An inactive amplitude envelope does
+not mean its oscillator or filter capacitor has stopped. A mutation forcing
+assignment-time envelope reset fails ten assertions in the named fixture; its
+maximum warm-state jump is `0.00715017318726`. Full test and mutation logs are
+retained beside the causal CSVs.
+
+Holding the original physical-unit mapping fixed shows that the cold-charge
+correction alone **does not close the original phrase score**:
+
+| Host rate | Physical PANEL retrigger before charge fix | After charge fix | Limit |
+| ---: | ---: | ---: | ---: |
+| 44,100 | 1.518577638 | 1.519786127 | 1 |
+| 48,000 | 1.301954908 | 1.301823122 | 1 |
+| 96,000 | 1.246178428 | 1.246150373 | 1 |
+
+Both comparison kernels contain the same phase correction; the before build
+is `0e1d1ed` and the after audio is `1586c20` plus the separately verified exact
+coefficient cache in `44e321c`. The audit renderer deliberately leaves PANEL
+coordinates physical for this comparison. The earlier 1.510516 value precedes
+the phase correction, so it is not substituted as the control in this table.
+The unmodified note-off gate likewise remains above one. The exact zero-time
+state result closes the identified assignment mechanism, not the later
+derivative ratio; an omitted-retrigger control is required to classify that
+remaining ratio causally.

@@ -1,6 +1,7 @@
 // Initial/released IL selection and assignment continuity.
 // Existing limits registered in completion-dsp.json at 85ccd9a, before evaluation.
 #include "core/Engine.h"
+#include "core/FactoryPresets.h"
 #include "Ws1Tolerances.h"
 #include <array>
 #include <cmath>
@@ -76,6 +77,91 @@ double delta(const Snapshot& a,const Snapshot& b)
     for(int voice=0;voice<8;++voice) for(int rank : {0,1}) worst=std::max(worst,std::abs(double(a[voice][rank])-b[voice][rank]));
     return worst;
 }
+double filterMemoryDelta(Ig00156Stage::State a, Ig00156Stage::State b)
+{
+    return std::max({std::abs(a.input-b.input),std::abs(a.feedback-b.feedback),
+                     std::abs(a.bp-b.bp),std::abs(a.lp-b.lp)});
+}
+void originalBassPhrase(const ws1::Tolerances& tol)
+{
+    ParamValues program;
+    bool found=false;
+    for(const auto& preset:factoryPresets()) if(preset.name=="Bass Stack") {program=preset.values;found=true;}
+    check(found,"original Bass Stack fixture exists");
+    struct Event {int sample;bool on;int note;};
+    constexpr double rate=44100.;
+    constexpr int block=64; // engine_audit phrase event quantization
+    std::vector<Event> events;
+    const auto add=[&](double t,bool on,int note) {events.push_back({static_cast<int>(std::ceil(t*rate/block))*block,on,note});};
+    add(.2,true,60);add(1.4,false,60);
+    for(int note:{48,52,55,60}) add(3.,true,note);
+    for(int note:{48,52,55,60}) add(4.4,false,note);
+    add(6.,true,60);add(6.2,false,60);add(6.25,true,60);add(6.55,false,60);
+    for(int note:{36,43,48,52,55,60,64,67}) add(7.3,true,note);
+    for(int note:{36,43,48,52,55,60,64,67}) add(8.5,false,note);
+    for(int note:{48,52,55,60}) add(8.65,true,note);
+    int coldAssignments=0,warmAssignments=0;
+    double worstWarm=0;
+    for(bool pure:{false,true}) {
+        auto values=program;values[P_sourcePerformance]=1;values[P_parityMode]=pure?1.f:0.f;
+        // Deliberately retain the original physical-unit PANEL coordinate.
+        // This test cannot benefit from the new electrical programmer mapping.
+        const ControlFrame frame {values};
+        Engine engine;engine.prepare(rate);check(engine.setControlFrame(frame),"original Bass physical frame accepted");engine.reset();
+        size_t next=0;
+        for(int sample=0;sample<static_cast<int>(9*rate);sample+=block) {
+            while(next<events.size()&&events[next].sample<=sample) {
+                const auto event=events[next++];
+                if(!event.on) {engine.noteOff(event.note);continue;}
+                const auto before=snapshot(engine);
+                std::array<Engine::VoiceInfo,8> voices;
+                std::array<std::array<Engine::RankAudioState,2>,8> audio;
+                std::array<std::array<Engine::RankEnvelopeState,2>,8> envelopes;
+                std::array<std::array<Ig00151Vca::State,2>,8> vca;
+                for(int voice=0;voice<8;++voice) {
+                    voices[voice]=engine.getVoiceInfo(voice);
+                    for(int rank:{0,1}) {
+                        audio[voice][rank]=engine.getRankAudioState(voice,rank);
+                        envelopes[voice][rank]=engine.getRankEnvelopeState(voice,rank);
+                        vca[voice][rank]=engine.getRankVcaState(voice,rank);
+                    }
+                }
+                engine.noteOn(event.note,.8f);
+                check(delta(before,snapshot(engine))<=tol["assignment_filter_eg_jump_max_abs"],
+                      "original physical Bass phrase retains filter charge at every note-on");
+                for(int voice=0;voice<8;++voice) {
+                    const auto after=engine.getVoiceInfo(voice);
+                    if(voices[voice].held||!after.held||after.note!=event.note) continue;
+                    if(event.sample==static_cast<int>(std::ceil(6.25*rate/block))*block)
+                        std::printf("original physical Bass retrigger: policy=%s voice=%d active_before=%d filter_before=%.12g filter_after=%.12g\n",
+                            pure?"pure":"source",voice,voices[voice].active,
+                            envelopes[voice][0].filter.value,engine.getRankEnvelopeState(voice,0).filter.value);
+                    if(!voices[voice].active) {++coldAssignments;continue;}
+                    ++warmAssignments;
+                    for(int rank:{0,1}) {
+                        const auto a=engine.getRankAudioState(voice,rank);
+                        const auto e=engine.getRankEnvelopeState(voice,rank);
+                        const auto c=engine.getRankVcaState(voice,rank);
+                        const double jump=std::max({filterMemoryDelta(a.hpCircuit,audio[voice][rank].hpCircuit),
+                            filterMemoryDelta(a.lpCircuit,audio[voice][rank].lpCircuit),
+                            double(std::abs(a.phase-audio[voice][rank].phase)),
+                            double(std::abs(e.filter.value-envelopes[voice][rank].filter.value)),
+                            double(std::abs(e.amplitude.value-envelopes[voice][rank].amplitude.value)),
+                            double(std::abs(c.level-vca[voice][rank].level)),std::abs(c.coupling-vca[voice][rank].coupling)});
+                        worstWarm=std::max(worstWarm,jump);
+                    }
+                }
+            }
+            check(engine.setControlFrame(frame),"original phrase frame reapplied");
+            render(engine,std::min(block,static_cast<int>(9*rate)-sample));
+        }
+    }
+    check(coldAssignments>0&&warmAssignments>0,"original phrase exercises both cold and warm circuit assignments");
+    check(worstWarm<=tol["assignment_filter_eg_jump_max_abs"],
+          "original Bass warm assignments retain oscillator, both EGs, VCA and filter memories exactly");
+    std::printf("original physical Bass phrase: %d cold, %d warm assignments; maximum warm capacitor/phase jump %.12g\n",
+                coldAssignments,warmAssignments,worstWarm);
+}
 void run(const ws1::Tolerances& tol)
 {
     double worstSteady=0,worstAssignment=0;
@@ -126,6 +212,7 @@ void run(const ws1::Tolerances& tol)
     check(worstSteady<=tol["cold_filter_eg_state_max_abs"],"released untriggered filter EG settles to IL within original limit");
     check(worstAssignment<=tol["assignment_filter_eg_jump_max_abs"],"first/reused/Sustain-II assignments preserve every filter capacitor exactly");
     std::printf("cold IL worst settled error %.12g; assignment capacitor jump %.12g\n",worstSteady,worstAssignment);
+    originalBassPhrase(tol);
     auto legacy=fixture(false,-1,1); legacy.effectiveValues[P_sourcePerformance]=0;
     Engine engine;engine.prepare(48000);check(engine.setControlFrame(legacy),"Legacy frame accepted");engine.reset();
     render(engine,48000);
