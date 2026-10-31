@@ -31,6 +31,7 @@ Compression=lzma2
 SolidCompression=yes
 PrivilegesRequired=admin
 UninstallDisplayName=CS-80 Reference
+LicenseFile=..\..\LICENSE
 
 [Types]
 Name: "full"; Description: "VST3 plug-in and Standalone"
@@ -43,6 +44,7 @@ Name: "standalone"; Description: "Standalone application"; Types: full custom
 [Files]
 Source: "{#BuildDir}\VST3\CS-80 Reference.vst3\*"; DestDir: "{commoncf64}\VST3\CS-80 Reference.vst3"; Components: vst3; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#BuildDir}\Standalone\CS-80 Reference.exe"; DestDir: "{app}"; Components: standalone; Flags: ignoreversion
+Source: "..\..\LICENSE"; DestDir: "{app}\licenses"; DestName: "LICENSE.txt"; Flags: ignoreversion
 Source: "{#JuceLicense}"; DestDir: "{app}\licenses"; DestName: "JUCE-LICENSE.md"; Flags: ignoreversion
 
 [Icons]

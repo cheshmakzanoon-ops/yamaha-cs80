@@ -40,6 +40,7 @@ juce_license="$build/_deps/juce-src/LICENSE.md"
 [ -f "$juce_license" ] || juce_license="$root/deps/juce/LICENSE.md"
 cp "$juce_license" "$work/root-docs/JUCE-LICENSE.md"
 cp "$root/docs/INSTALL_AND_QUICKSTART.md" "$work/root-docs/"
+cp "$root/LICENSE" "$work/root-docs/LICENSE.txt"
 pkgbuild --root "$work/root-docs" --install-location "/Library/Application Support/Reference Instruments/$product" \
     --identifier "$bundle_id.docs" --version "$version" "$work/components/docs.pkg"
 

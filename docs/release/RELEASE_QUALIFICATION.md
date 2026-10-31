@@ -57,18 +57,14 @@ platform it supports, with the release candidate installed from its installer.
 | Cubase | VST3 | VST3 | — | not run |
 | FL Studio | VST3, AU | VST3 | — | not run |
 
-## 4. Licence — owner decision
+## 4. Licence — decided: AGPLv3
 
-The repository has no `LICENSE` file. JUCE 8 is dual-licensed (AGPLv3 or a
-commercial JUCE licence), so the choice decides how binaries may be distributed:
-
-- **AGPLv3 for this project.** Free JUCE use; anyone receiving a binary is entitled
-  to the complete corresponding source.
-- **Proprietary or another licence.** Needs a commercial JUCE licence (Personal,
-  Indie or Pro, depending on revenue).
-
-Adding the chosen `LICENSE` file and a matching line in the installers is a
-one-line change once the owner decides.
+The owner chose the **GNU Affero General Public License v3** (2026-10-31). The
+full text is in [`LICENSE`](../../LICENSE). This matches JUCE 8's free AGPLv3
+option, so no commercial JUCE licence is needed. Anyone who receives a binary is
+entitled to the complete corresponding source: every package names its exact
+source commit (`SOURCE.txt` / `manifest.json`), and every installer ships both
+`LICENSE` and the JUCE licence.
 
 ## 5. Product name and trademarks — legal review required
 

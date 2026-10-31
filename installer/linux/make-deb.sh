@@ -24,6 +24,7 @@ mkdir -p "$stage/DEBIAN" "$stage/usr/lib/vst3" "$stage/usr/bin" "$stage/usr/shar
 cp -a "$artefacts/VST3/$product.vst3" "$stage/usr/lib/vst3/"
 install -m 0755 "$artefacts/Standalone/$product" "$stage/usr/bin/cs80-reference"
 cp "$root/docs/INSTALL_AND_QUICKSTART.md" "$stage/usr/share/doc/cs80-reference/"
+cp "$root/LICENSE" "$stage/usr/share/doc/cs80-reference/copyright"
 for juce_license in "$build/_deps/juce-src/LICENSE.md" "$root/deps/juce/LICENSE.md"; do
     if [ -f "$juce_license" ]; then
         cp "$juce_license" "$stage/usr/share/doc/cs80-reference/JUCE-LICENSE.md"
