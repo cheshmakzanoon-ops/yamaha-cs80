@@ -48,7 +48,8 @@
     "equality": "Published values exactly equal the corresponding read-only engine taps at the end of the last processBlock; no UI read accesses mutable engine state.",
     "visibility": "The drawer identifies the monitored voice and rank and labels traces as engine control taps rather than a measured transfer response.",
     "neutrality": "Enabling monitor publication leaves rendered samples exactly unchanged.",
-    "keyboard_order": "Exactly four focus stops: channel I, channel II, CLOSE, then the new Monitored physical voice selector. All four retain the existing minimum target-size gate."
+    "keyboard_order": "Exactly four focus stops: channel I, channel II, CLOSE, then the new Monitored physical voice selector. All four retain the existing minimum target-size gate.",
+    "selection_update": "On opening or refreshing a published frame, the physical-voice selector has exactly the frame capacity (8 or 16) choices and shows the selected slot immediately, including when no further audio block arrives."
   },
   "sixteen_voice": {
     "meter": "Sixteen allocated voices publish count 16 and bits 0..15, with extension voices in bits 8..15. Leaving the mode clears extension bits.",
