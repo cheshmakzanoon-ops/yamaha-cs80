@@ -1,0 +1,108 @@
+{
+  "captured_utc": "2026-10-31",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_sha": "b270921737abf1beb10b24fcf4f4faa0c0e9ddc4",
+  "workflow": "build.yml",
+  "run_id": 41239527715,
+  "run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239527715",
+  "job_id": 124650309627,
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239527715/job/124650309627",
+  "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+  "job_status": "completed",
+  "job_conclusion": "success",
+  "runner_image": "macos-15-arm64",
+  "runner_image_version": "20261028.0489.1",
+  "operating_system_version": "15.8.2 (24H232)",
+  "ctest": {
+    "checks": 91,
+    "failed": 0,
+    "elapsed_seconds": 905.04
+  },
+  "selected_ctest": [
+    {
+      "name": "cs80_cold_idle_timing_tests",
+      "seconds": 8.84,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_cold_filter_envelope_tests",
+      "seconds": 32.52,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_smoothing_tests",
+      "seconds": 2.33,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_au_automation_host_tests",
+      "seconds": 3.95,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_au_automation_native_mutations",
+      "seconds": 46.78,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "seconds": 82.12,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_teardown_probe",
+      "seconds": 0.32,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_au_wrapper_macro_environment_tests",
+      "seconds": 0,
+      "result": "passed"
+    },
+    {
+      "name": "cs80_host_wrapper_platform_tests",
+      "seconds": 3.09,
+      "result": "passed"
+    }
+  ],
+  "pluginval": {
+    "fetched_version_step": "Fetch pluginval 1.0.4",
+    "strictness_level": 10,
+    "gates": [
+      {
+        "step": "Validate VST3 with pluginval",
+        "result": "success",
+        "terminal_line": "SUCCESS"
+      },
+      {
+        "step": "Validate AU with pluginval",
+        "result": "success",
+        "terminal_line": "SUCCESS"
+      },
+      {
+        "step": "Validate AU with pluginval GUI",
+        "result": "success",
+        "terminal_line": "SUCCESS"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "cs80-macos-15-install-bundle",
+      "id": 13057791283,
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239527715/artifacts/13057791283"
+    },
+    {
+      "name": "cs80-pluginval-macos-15",
+      "id": 13057935951,
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239527715/artifacts/13057935951"
+    },
+    {
+      "name": "cs80-macos-15-test-evidence",
+      "id": 13058075500,
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239527715/artifacts/13058075500"
+    }
+  ],
+  "scope": "Native macOS arm64 build, all CTests, and VST3/AU/AU GUI validator gates for this exact source. Does not claim final-branch, other-platform, CPU-target, hardware-measurement, or owner-only qualification.",
+  "raw_log": "full-job.log"
+}

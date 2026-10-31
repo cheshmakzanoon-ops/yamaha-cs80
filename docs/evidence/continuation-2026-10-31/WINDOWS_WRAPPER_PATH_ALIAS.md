@@ -67,11 +67,28 @@ mutations were applied only to temporary copies of `HostAutomation.cmake`:
 | Generate/select `.mm` for the native `.cpp` case | Existing generated file with the wrong basename/extension | Fails the same assertion at check 8; exit 1 |
 | Restored production generation and corrected fixture | Exact basename, canonical target and file identity | 92 checks, zero failures; exit 0 |
 
-The local runs exercise every registered C++/Objective-C++ source-list shape
-against the pinned upstream wrappers. **Native Windows qualification of the
-corrected predicate remains pending its published CI run.** A Linux pass alone
-does not establish the Windows result; the earlier native run establishes the
-alias mechanism, not a successful correction.
+The portable local runs exercise every registered C++/Objective-C++ source-list
+shape against the pinned upstream wrappers. They do not substitute for a native
+Windows result.
+
+The corrected predicate was then published as
+`601f3ec5242a98201f68582aba1b9546cea7b5dd`. Native `windows-2022`
+[run 41240425585, job 124652988704](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41240425585/job/124652988704)
+completed with terminal **success: 92 checks, zero failures**. Its six generated
+wrapper cases (C++ and Objective-C++ source shapes, VST3/AU, LF/CRLF) again
+reported raw `RUNNER~1` versus `runneradmin` parent spellings, identical resolved
+absolute paths and `samefile=true`. Exact basenames and extensions remained
+required in every case. The successful run used the same pinned JUCE source
+`c352e2489000ffeb9e397051377d75eef2efe641` and complete source-hash gate.
+
+The native evidence is preserved in
+[native-after-identity.json](windows-wrapper-path-alias/native-after-identity.json),
+[the complete job log](windows-wrapper-path-alias/native-after-full-job.log),
+and [CI artifact 13057098794](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41240425585/artifacts/13057098794).
+The earlier `b5901b2f` native failure proves the alias mechanism; this `601f3ec5`
+native success qualifies the corrected identity comparison. This is the
+`LANGUAGES NONE` source-contract fixture: full native plugin compilation,
+automation hosts and pluginval remain separate required CI gates.
 
 The raw diagnostic/full job log, identity JSON, local/restored logs, mutation
 patches and results, and source hashes are archived under

@@ -5,8 +5,23 @@
   "production_cmake_sha256": "a6658c085705dd7f0a46a02bdc1935c78312bcfa7c6b70043a9c81afea51af54",
   "local_result": "92 checks, 0 failures",
   "restored_result": "92 checks, 0 failures",
-  "native_windows_result": "pending candidate publication and actual runner qualification",
+  "native_windows_result": "92 checks, 0 failures; terminal job conclusion success",
   "production_changes": false,
   "check_count_changed": false,
-  "limits_changed": false
+  "limits_changed": false,
+  "native_windows": {
+    "commit": "601f3ec5242a98201f68582aba1b9546cea7b5dd",
+    "run_id": 41240425585,
+    "job_id": 124652988704,
+    "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41240425585/job/124652988704",
+    "runner": "windows-2022",
+    "conclusion": "success",
+    "checks": 92,
+    "failures": 0,
+    "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "artifact_urls": [
+      "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41240425585/artifacts/13057098794"
+    ],
+    "verified_alias_cases": 6
+  }
 }
