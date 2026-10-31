@@ -2372,7 +2372,11 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     const bool hover = enabled && slider.isMouseOver();
     const auto capState = dragging ? CapState::dragging : (hover ? CapState::hover : CapState::idle);
     const auto colour = slider.findColour(juce::Slider::thumbColourId);
-    const int capVariant = (int) ((reinterpret_cast<std::uintptr_t>(&slider) >> 5) & 3);
+    // Each cap gets one of four moulding variants so a row does not look stamped from one die. The variant is
+    // keyed by the control's identity (its parameter ID, else its title), never by its address, so every
+    // session, snapshot and machine draws the same cap on the same control.
+    const auto capIdentity = slider.getComponentID().isNotEmpty() ? slider.getComponentID() : slider.getTitle();
+    const int capVariant = (int) (((juce::uint32) capIdentity.hashCode() >> 7) & 3u);
     const int margin = (int) std::ceil(12.0f * f.s);
     const int imgW = (int) std::ceil(f.faceW + 4.0f * f.s) + margin * 2;
     const int imgH = (int) std::ceil(f.faceH + 5.5f * f.s) + margin * 2;
