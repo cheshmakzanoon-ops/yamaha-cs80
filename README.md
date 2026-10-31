@@ -6,19 +6,19 @@ An independent, playable software reconstruction of the Yamaha CS-80, written in
 
 ## Development builds and current source
 
-**Current engineering snapshot: October 30, 2026 (Atlantic time; October 31 UTC).** The current UI and engine are integrated, and all 42 JUCE-free local tests plus the package-integrity self-tests passed. Native rebuilds for the latest fix commit are running; no full-platform green result is claimed.
+**Current engineering snapshot: October 30, 2026 (Atlantic time; October 31 UTC).** The redesigned UI and engine are integrated; all 42 JUCE-free local tests and the package-integrity self-tests passed. Native Windows, Apple Silicon macOS and Linux build/test/package jobs passed for `a6c919b`. Intel macOS is still building, and the seeded Linux GUI-host validation has an unresolved exit-139 failure; this is not a full-platform qualification claim.
 
 The table identifies packages from the latest verified source and clearly marks any architecture still building. The native Windows, Apple Silicon, and Linux bundles below were built from `a6c919b`; the subsequent README-only commit does not change the shipping plugin/engine/editor source. Package manifests identify the actual build commit. The project currently declares version `1.0.0`, so that version number alone does not identify a build; use `manifest.json` and `SOURCE.txt`.
 
-**Latest source under native verification:** [`a6c919be93c16c7ffd195e7d8e70aec2ce5a81f0`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/a6c919be93c16c7ffd195e7d8e70aec2ce5a81f0)
+**Plugin source used in the current packages:** [`a6c919be93c16c7ffd195e7d8e70aec2ce5a81f0`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/a6c919be93c16c7ffd195e7d8e70aec2ce5a81f0)
 
-**Build and validation run:** [Build run 41148634708](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) — running as of October 30, 2026 (Atlantic time)
+**Native build and validation evidence:** [Source-commit run 41148634708](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708). The Linux seeded-GUI validator job failed after its pluginval tests reported success; [Intel replacement build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41149191535) is ongoing.
 
 | Platform | Architecture | Included formats | Current package |
 | --- | --- | --- | --- |
 | Windows | x64 | VST3, Standalone `.exe` | [Download current `a6c919b` installation bundle](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708/artifacts/13022157985) |
 | macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [Download current `a6c919b` installation bundle](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708/artifacts/13022930233) |
-| macOS Intel | x86-64 | VST3, AU, Standalone `.app` | **Building for `a6c919b`**; no updated Intel bundle confirmed. [Follow native build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) |
+| macOS Intel | x86-64 | VST3, AU, Standalone `.app` | **Pending:** no current Intel bundle uploaded. [Follow replacement native build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41149191535) (README-only successor to `a6c919b`) |
 | Linux | x86-64 | VST3, Standalone | [Download current `a6c919b` installation bundle](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708/artifacts/13021903559) |
 
 GitHub artifact downloads can require sign-in and expire under repository retention settings. The macOS packages are separate native builds, **not universal binaries**; match the architecture of the DAW process. Linux packages are built on Ubuntu 24.04 and are not a self-contained AppImage. Older operating systems and emulation layers are not qualified by these builds.
@@ -116,7 +116,7 @@ The rows below must be read against their exact source commit. A passing core te
 | Gate | Latest evidence | What it covers |
 | --- | --- | --- |
 | Native builds, tests and packaging | At [`a6c919b`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708), Windows, Linux and Apple Silicon native build/test/package jobs **passed**, including the previously crashing Windows UI smoke test. Intel macOS was cancelled by a newer queued run; its replacement is [building on the docs-only head](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41149191535). | Linux, Windows and separate native Intel/Apple Silicon macOS products |
-| Host validators | Current [`a6c919b` pluginval results](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) pending native dependencies. Earlier `dc05f7c` Linux pluginval passed; an earlier Windows validation was skipped after smoke failure. This is not an all-platform pass claim. | pluginval 1.0.4 at strictness 10, with platform-specific VST3/AU and GUI/headless checks |
+| Host validators | At [`a6c919b`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708), Windows VST3 strictness-10 **passed**, and Apple Silicon macOS VST3, AU and AU GUI pluginval **passed**. Linux headless and baseline GUI **passed**, but the seeded GUI-state regression **failed with exit 139** after pluginval printed `SUCCESS`. Intel macOS qualification is still pending. This is not an all-platform pass claim. | pluginval 1.0.4 at strictness 10, with platform-specific VST3/AU and GUI/headless checks |
 | DSP and compatibility | [`a6c919b` DSP run](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634692): legacy default-off byte comparison, V1 source-circuit + V2 whole-audio compatibility, numerical measurements and synthetic comparison **passed**; sanitizer job still running when documented. The old V1 whole-audio failure is preserved as historical evidence, with [causal proof and split contracts](docs/SOURCE_COMPATIBILITY_CHECKPOINT.md). | Numerical tests, pinned-baseline audio comparisons and sanitizer jobs; inspect every job conclusion |
 | Editor captures | [Source/run manifest](docs/screenshots/provenance.json) | Real editor renders plus plugin/UI self-tests before screenshot publication |
 
@@ -128,7 +128,7 @@ Remaining limits include:
 - **Audio quality:** the engine audit records high-note nonlinear-filter aliasing, source-tone headroom above full scale, substantial default drift and unresolved variation laws. These are known engineering/model issues, not measured deviations from hardware.
 - **Idle continuity:** active source-mode tails retain selected audio state, but the separate continuous-idle kernel and reconstructed oscillator remain unqualified for production activation.
 - **Realtime performance:** source-pinned cloud benchmarks include deadline exceedances, especially at high rates. They are not a glitch-free DAW guarantee; no whole-plugin hard-realtime or zero-CPU claim is made. The plugin reports 63 samples of latency and an unbounded tail to accommodate supported continuous noise.
-- **Validation history:** earlier Linux pluginval runs exited 139 after reporting SUCCESS. Later passing runs do not establish crash ownership or prove that intermittent failure repaired. [Validator diagnostics](docs/VALIDATOR_DIAGNOSTICS.md) preserves the failed evidence.
+- **Validation history and current blocker:** the Linux `a6c919b` seeded GUI-state pluginval process exited 139 after printing `SUCCESS`; standard headless and GUI cases passed. Earlier Linux validator runs also exhibited exit 139. No root cause is proven and a test passing before process teardown does not clear the failure. [Validator diagnostics](docs/VALIDATOR_DIAGNOSTICS.md) preserves previous failed evidence.
 - **Distribution:** no universal macOS binary, signed installer, Apple notarization, automatic updater or comprehensive real-DAW installation/session qualification is supplied. Project/dependency licensing also needs explicit resolution before a public binary release.
 
 [Playable release readiness](docs/PLAYABLE_RELEASE_READINESS.md) preserves older checkpoints and their limits. [Engine audit](docs/ENGINE_AUDIT.md) reports software measurements and reproducible tools; it does not calibrate the plugin against an original instrument.
