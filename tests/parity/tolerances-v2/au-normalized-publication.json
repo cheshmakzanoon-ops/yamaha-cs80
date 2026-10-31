@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "evidence_kind": "software_protocol",
+  "description": "Acceptance for the proven native Intel AU endpoint publication defect. A scheduled normalized Float32 endpoint must survive host readback without an additional physical Float32 round trip. The original host-automation.json predicates and limits are unchanged.",
+  "au_normalized_publication": {
+    "scheduled_value_error": 0,
+    "external_readback_error": 0,
+    "protected_readback_error": 0,
+    "normalized_curve_error": 0.0000001,
+    "audio_max_abs_error": 0.000002,
+    "sample_offset_error": 0,
+    "key_parameter_count": 18,
+    "truth": "An accepted scheduled value and its current physical-storage readback are distinct representations. In the modern circuit policy, GetParameter returns the accepted normalized Float32 endpoint while that publication still owns the parameter. A direct setter, UI/state notification, lifecycle reset or changed actual storage readback invalidates that ownership. Untouched parameters and Pure/Legacy return their original parameter getter value. No physical parameter mapping or audio trajectory changes.",
+    "witnesses": [
+      "For every named key, schedule explicit Float32 immediate values and ramps ending at a transmitted Float32 knot on the current render's final sample. Native AudioUnitGetParameter must return that accepted Float32 exactly. Include the native failing pulse-width value 0.62851631641387939, additional interior values, and endpoints zero and one. This exact knot check supplements, and does not replace, the original 1e-7 double-interpolated endpoint test.",
+      "Compile the production AU hook body against a parameter fixture whose getter deliberately models a nonidentity physical Float32 round trip. Verify exact accepted scheduled readback, original storage values before any publication, changed-storage fallback, and invalidation even when the storage readback itself is unchanged.",
+      "A later native offset-zero setter and restored state supersede a previously scheduled endpoint. Use exact range endpoints where an independent native oracle is required, so the test does not assume arbitrary physical Float32 inversion is exact.",
+      "Initialization, reset and cleanup discard publication ownership. UI/state notifications and direct setters invalidate only the affected key; unsupported parameters keep their original adapter behavior.",
+      "Pure and Legacy always retain their original storage-based readback and existing audio/offset behavior, even when a prior modern scheduled endpoint remains in publication storage.",
+      "Retain every existing native AU scheduling, audio partition, capacity, invalid-input, future-endpoint, Pure/Legacy, factory/memory and sixteen-voice assertion unchanged. Native Intel must pass; arm64 success alone does not qualify the defect."
+    ],
+    "mutations": [
+      "Bypass normalized publication and return the physical-storage getter; the exact knot publication gate and native Intel original endpoint gate must reject it.",
+      "Retain publication ownership after invalidation, or return a cached endpoint despite a changed underlying getter; the external-state ownership witness must reject it.",
+      "Use normalized publication under Pure/Legacy; the protected readback witness must reject it.",
+      "Suppress lifecycle publication reset; the reset ownership witness must reject it."
+    ],
+    "registration_order": "Publish this file before evaluating new witnesses or a production repair. First record the original-code failure, then the repaired result and isolated mutations. Preserve all original thresholds."
+  },
+  "native_before": {
+    "workflow_run_id": 41243861802,
+    "job_id": 124663145158,
+    "source_sha": "ce8b127f7ee9466ca6f2627131ff6311bd031b47",
+    "ch1_pw_failure_count": 60,
+    "ch2_pw_failure_count": 58,
+    "ch1_pw_worst_normalized_error": 1.4898250810801983e-7,
+    "ch2_pw_worst_normalized_error": 1.4709075912833214e-7,
+    "printed_original_records": 64,
+    "every_printed_actual_equals_physical_round_trip": true,
+    "diagnosis": "Only the affine pulse-width ranges fail. Every printed actual readback equals the independently calculated normalized-to-physical-Float32-to-normalized-Float32 projection exactly; all 64 expected/actual physical projections also agree. This proves publication loss, not incorrect ramp timing or a nonlinear libm hypothesis. The physical numbers are projections, not direct hardware or internal-storage measurements."
+  },
+  "sources": [
+    "https://developer.apple.com/documentation/audiotoolbox/audiounitgetparameter(_:_:_:_:_:)",
+    "https://developer.apple.com/documentation/audiotoolbox/audiounitscheduleparameters(_:_:_:)",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41243861802/job/124663145158",
+    "Pinned JUCE 8.0.11 c352e2489000ffeb9e397051377d75eef2efe641: juce_audio_plugin_client_AU_1.mm GetParameter; AudioParameterFloat::setValue/getValue; NormalisableRange<float>::convertFrom0to1/convertTo0to1.",
+    "Declared software inference: the normalized value already accepted by the scheduled host protocol remains authoritative until a later parameter edit or lifecycle boundary supersedes it. This is not a CS-80 circuit law."
+  ]
+}
