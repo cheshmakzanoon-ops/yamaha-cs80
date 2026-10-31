@@ -187,6 +187,7 @@ struct Pipeline
     Pipeline(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
           circuitSine(e.getInternalSampleRate(), e.getRankAudioState(0, 0).phase),
+          circuitVca(e.getInternalSampleRate()),
           volume(p[P_volume]), volumeTarget(p[P_volume]), wet(p[P_footMode] != 0.0f), wetMix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth]),
           taps{OutputOracle(rate, p[P_outputLevel] != 0.0f), OutputOracle(rate, p[P_outputLevel] != 0.0f),
@@ -209,7 +210,9 @@ struct Pipeline
             // WSC sine replaces sin + 3.5 % third harmonic in this isolation path.
             const float sine = circuitSine(440.0f);
             const float amp = envelope.tick(sr, true, true);
-            float source = sine*amp*0.17f*0.5f;
+            // Plan step 1.4, intentional circuit-engine change: the IG00151 VCA
+            // (offset/feedthrough pedestal, LI node) replaces sine*amp*0.17*0.5.
+            float source = circuitVca(sine, amp);
             ringPhase += 77.0f*(1.0f/sr); ringPhase -= std::floor(ringPhase);
             source = lerp(source, source*std::sin(kTwoPi*ringPhase), ringAmount);
             const auto nodes = wah.process(source);
@@ -238,6 +241,7 @@ struct Pipeline
     double rate;
     float phase;
     CircuitSineSource circuitSine;
+    CircuitVoiceVca circuitVca;
     float volume, volumeTarget, expression = 1.0f;
     bool wet;
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;

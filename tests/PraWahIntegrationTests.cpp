@@ -252,6 +252,7 @@ struct PipelineOracle
     explicit PipelineOracle(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
           circuitSine(e.getInternalSampleRate(), e.getRankAudioState(0, 0).phase),
+          circuitVca(e.getInternalSampleRate()),
           isolated(p[P_parityMode] != 0.0f), wet(p[P_footMode] != 0.0f), mix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusOn(p[P_chorusOn] != 0.0f),
           tremolo(p[P_chorusMode] != 0.0f), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth])
@@ -284,7 +285,9 @@ struct PipelineOracle
             const float sine = isolated ? circuitSine(440.0f)
                                         : std::sin(kTwoPi*phase) + 0.035f*std::sin(3.0f*kTwoPi*phase);
             const float amp = envelope.tick(sr, true, isolated);
-            float sample = sine * 1.0f * amp * 1.0f * 0.17f * 0.5f;
+            // Plan step 1.4, intentional circuit-engine change: isolation runs the
+            // IG00151 VCA (offset/feedthrough pedestal, LI node); legacy multiplies.
+            float sample = isolated ? circuitVca(sine, amp) : sine * 1.0f * amp * 1.0f * 0.17f * 0.5f;
             ringPhase += 77.0f * (1.0f/sr); ringPhase -= std::floor(ringPhase);
             if (ringAmount > 0.001f)
                 sample = lerp(sample, sample*std::sin(kTwoPi*ringPhase), ringAmount);
@@ -339,6 +342,7 @@ struct PipelineOracle
     int opticalSamples = 0;
     float phase;
     CircuitSineSource circuitSine;
+    CircuitVoiceVca circuitVca;
     float expression = 1.0f;
     bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;

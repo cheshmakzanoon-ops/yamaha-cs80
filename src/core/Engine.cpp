@@ -44,6 +44,7 @@ void Engine::prepare(double hostSampleRate)
         for (auto& r : v.ranks)
         {
             (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
+            r.vca.prepare(internalRate);
             r.trimTune = trimRng.nextBipolar();
             r.trimCutoff = trimRng.nextBipolar();
             r.trimLevel = trimRng.nextBipolar();
@@ -87,6 +88,7 @@ void Engine::reset()
             r.lpf.reset();
             r.hpStage.reset();
             r.lpStage.reset();
+            r.vcaCold = true;
             r.fenv.reset();
             r.aenv.reset();
         }
@@ -801,6 +803,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.lpf.reset();
             r.hpStage.reset();
             r.lpStage.reset();
+            r.vcaCold = true;
         }
         // Filter envelope: a reused sounding tail restarts its attack from the
         // capacitor's present level (source policies, IMPROVEMENT_PLAN 1.3);
@@ -1377,17 +1380,22 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             }
 
             const float sine = sineWave * rs.sine;
+            // Legacy: SUB VCA modulation adds to the level CV. Circuit engine:
+            // it drives the IG00151 exponential input (Vca.h) instead, so it is
+            // left out of the linear LC sum.
+            const bool circuitVca = usesSourceModels(global.renderPolicy);
+            const float subLevel = circuitVca ? 0.0f : subValue * global.subVca * 0.45f;
             // Source LC/LI is linear in its explicit unit scale. Retain global
             // effective transports once; floor negative total gain at zero,
             // but do NOT apply the legacy 2.6 cap or per-tone normalization.
             const float levelCv = sourceActive[ch]
                 ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
-                             + subValue * global.subVca * 0.45f + lfoAmp
+                             + subLevel + lfoAmp
                              + keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour))
                 : clampf(rs.vLevel
                                              + rs.initLevel * v.velocity
                                              + rs.afterLevel * v.pressure
-                                             + subValue * global.subVca * 0.45f
+                                             + subLevel
                                              + lfoAmp
                                              + keyboardLevelOffset(global.kbdLevelLow,
                                                                    global.kbdLevelHigh, v.contour),
@@ -1397,12 +1405,30 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             // Velocity acts through the selected initial-touch destinations.
             // An unconditional velocity gain made disabled touch controls audible.
-            float voiceOut = (filtered * rs.vcfLevel + sine)
-                             * levelCv * amp * chGain * 0.17f;
-
+            const float vcaInput = filtered * rs.vcfLevel + sine;
             float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan, -1.0f, 1.0f);
-            mixL += voiceOut * (0.5f - 0.5f * pan);
-            mixR += voiceOut * (0.5f + 0.5f * pan);
+            float voiceOut, panLeft, panRight;
+            if (circuitVca)
+            {
+                // IG00151: LC on the linear input through its 10 nF node, SUB on
+                // the exponential input; constant-power rank pan.
+                if (r.vcaCold)
+                {
+                    r.vca.reset(levelCv);
+                    r.vcaCold = false;
+                }
+                voiceOut = r.vca.process(vcaInput, levelCv, subValue * global.subVca * kIg00151SubOctaves, amp)
+                           * chGain * 0.17f;
+                constantPowerPan(pan, panLeft, panRight);
+            }
+            else
+            {
+                voiceOut = vcaInput * levelCv * amp * chGain * 0.17f;
+                panLeft = 0.5f - 0.5f * pan;
+                panRight = 0.5f + 0.5f * pan;
+            }
+            mixL += voiceOut * panLeft;
+            mixR += voiceOut * panRight;
         }
 
         if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())

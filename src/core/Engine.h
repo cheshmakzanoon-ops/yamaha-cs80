@@ -3,6 +3,7 @@
 #include "Dsp.h"
 #include "Ig00156Filter.h"
 #include "ReconstructedOscillator.h"
+#include "Vca.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
@@ -298,6 +299,10 @@ private:
         // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).
         Ig00156Stage hpStage { kIg00156HighPassNetwork };
         Ig00156Stage lpStage { kIg00156LowPassNetwork };
+        // Circuit-engine IG00151 voice VCA (docs/IG00151_VCA_MODEL.md); cold
+        // assignment recharges its LI node to the level network.
+        Ig00151Vca vca;
+        bool vcaCold = true;
         FilterEnv fenv;
         Adsr aenv;
         float trimTune = 0.0f;
