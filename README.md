@@ -8,7 +8,7 @@ An independent, playable software reconstruction of the Yamaha CS-80, written in
 
 **Current engineering snapshot: October 30, 2026 (Atlantic time; October 31 UTC).** The current UI and engine are integrated, and all 42 JUCE-free local tests plus the package-integrity self-tests passed. Native rebuilds for the latest fix commit are running; no full-platform green result is claimed.
 
-The table distinguishes **available binaries** from **a build still underway**. Its two existing redesigned-UI downloads come from `dc05f7c`; the subsequent `a6c919b` changes are restricted to CI/testing/documentation and leave shipping plugin/engine/editor source unchanged. Their plugin behavior is therefore the same, but package manifests must still identify the actual build commit. The project currently declares version `1.0.0`, so the version number alone does not identify a build; use `manifest.json` and `SOURCE.txt`.
+The table identifies packages from the latest verified source and clearly marks any architecture still building. The native Windows, Apple Silicon, and Linux bundles below were built from `a6c919b`; the subsequent README-only commit does not change the shipping plugin/engine/editor source. Package manifests identify the actual build commit. The project currently declares version `1.0.0`, so that version number alone does not identify a build; use `manifest.json` and `SOURCE.txt`.
 
 **Latest source under native verification:** [`a6c919be93c16c7ffd195e7d8e70aec2ce5a81f0`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/a6c919be93c16c7ffd195e7d8e70aec2ce5a81f0)
 
@@ -16,10 +16,10 @@ The table distinguishes **available binaries** from **a build still underway**. 
 
 | Platform | Architecture | Included formats | Current package |
 | --- | --- | --- | --- |
-| Windows | x64 | VST3, Standalone `.exe` | **Building for `a6c919b`**; no updated Windows bundle confirmed. [Follow native build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) |
-| macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [Download latest available redesigned-UI bundle (`dc05f7c`)](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41146838774/artifacts/13021930240); refreshed `a6c919b` bundle building |
+| Windows | x64 | VST3, Standalone `.exe` | [Download current `a6c919b` installation bundle](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708/artifacts/13022157985) |
+| macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [Download current `a6c919b` installation bundle](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708/artifacts/13022930233) |
 | macOS Intel | x86-64 | VST3, AU, Standalone `.app` | **Building for `a6c919b`**; no updated Intel bundle confirmed. [Follow native build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) |
-| Linux | x86-64 | VST3, Standalone | [Download latest available redesigned-UI bundle (`dc05f7c`)](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41146838774/artifacts/13021393791); refreshed `a6c919b` bundle building |
+| Linux | x86-64 | VST3, Standalone | [Download current `a6c919b` installation bundle](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708/artifacts/13021903559) |
 
 GitHub artifact downloads can require sign-in and expire under repository retention settings. The macOS packages are separate native builds, **not universal binaries**; match the architecture of the DAW process. Linux packages are built on Ubuntu 24.04 and are not a self-contained AppImage. Older operating systems and emulation layers are not qualified by these builds.
 
@@ -115,7 +115,7 @@ The rows below must be read against their exact source commit. A passing core te
 
 | Gate | Latest evidence | What it covers |
 | --- | --- | --- |
-| Native builds, tests and packaging | [`a6c919b` native run](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) was in progress when documented. Earlier `dc05f7c` [Linux and Apple Silicon passed; Windows UI smoke failed and Intel remained running](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41146838774). Windows smoke diagnostics and stack budget were corrected in `a6c919b`, pending native confirmation. | Linux, Windows and separate native Intel/Apple Silicon macOS products |
+| Native builds, tests and packaging | At [`a6c919b`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708), Windows, Linux and Apple Silicon native build/test/package jobs **passed**, including the previously crashing Windows UI smoke test. Intel macOS was cancelled by a newer queued run; its replacement is [building on the docs-only head](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41149191535). | Linux, Windows and separate native Intel/Apple Silicon macOS products |
 | Host validators | Current [`a6c919b` pluginval results](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634708) pending native dependencies. Earlier `dc05f7c` Linux pluginval passed; an earlier Windows validation was skipped after smoke failure. This is not an all-platform pass claim. | pluginval 1.0.4 at strictness 10, with platform-specific VST3/AU and GUI/headless checks |
 | DSP and compatibility | [`a6c919b` DSP run](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41148634692): legacy default-off byte comparison, V1 source-circuit + V2 whole-audio compatibility, numerical measurements and synthetic comparison **passed**; sanitizer job still running when documented. The old V1 whole-audio failure is preserved as historical evidence, with [causal proof and split contracts](docs/SOURCE_COMPATIBILITY_CHECKPOINT.md). | Numerical tests, pinned-baseline audio comparisons and sanitizer jobs; inspect every job conclusion |
 | Editor captures | [Source/run manifest](docs/screenshots/provenance.json) | Real editor renders plus plugin/UI self-tests before screenshot publication |
