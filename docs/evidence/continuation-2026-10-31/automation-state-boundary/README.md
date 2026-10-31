@@ -28,6 +28,12 @@ after an ordinary block and after an earlier completed curve. The previous
 native partition, source ownership, sixteen-voice and Pure/Legacy gates are
 retained unchanged.
 
+The flush oracle reads the actual stored physical Float32 values through
+`IComponent::getState`, which reaches the processor's locked, synchronised
+state-save API. It independently normalizes those values using the declared
+parameter ranges. The submitted normalized number is not assumed to survive
+JUCE's float range conversion without rounding.
+
 ## Qualification status
 
 The witnesses are written. Baseline execution, correction and registered

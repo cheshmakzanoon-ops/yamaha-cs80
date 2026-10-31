@@ -5,6 +5,7 @@
 #include "plugin/HostAutomationBridge.h"
 #include "Ws1Tolerances.h"
 #include <pluginterfaces/base/ipluginbase.h>
+#include <pluginterfaces/base/ibstream.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <pluginterfaces/vst/ivstcomponent.h>
 #include <pluginterfaces/vst/ivstevents.h>
@@ -118,6 +119,32 @@ struct Events final : IEventList
     tresult PLUGIN_API addEvent(Event& event) override { events.push_back(event); return kResultTrue; }
 };
 
+struct StateCapture final : IBStream
+{
+    std::string bytes;
+    tresult PLUGIN_API queryInterface(const TUID target, void** object) override
+    {
+        if (std::memcmp(target, IBStream::iid, sizeof(TUID)) == 0
+            || std::memcmp(target, FUnknown::iid, sizeof(TUID)) == 0)
+        { *object = this; return kResultOk; }
+        *object = nullptr; return kNoInterface;
+    }
+    uint32 PLUGIN_API addRef() override { return 1; }
+    uint32 PLUGIN_API release() override { return 1; }
+    tresult PLUGIN_API read(void*, int32, int32* readBytes) override
+    { if (readBytes != nullptr) *readBytes = 0; return kNotImplemented; }
+    tresult PLUGIN_API write(void* source, int32 count, int32* written) override
+    {
+        if (count < 0 || (source == nullptr && count != 0)) return kInvalidArgument;
+        if (count != 0) bytes.append(static_cast<const char*>(source), static_cast<size_t>(count));
+        if (written != nullptr) *written = count;
+        return kResultOk;
+    }
+    tresult PLUGIN_API seek(int64, int32, int64*) override { return kNotImplemented; }
+    tresult PLUGIN_API tell(int64* position) override
+    { if (position == nullptr) return kInvalidArgument; *position = static_cast<int64>(bytes.size()); return kResultOk; }
+};
+
 struct Module
 {
     void* handle = nullptr;
@@ -196,6 +223,37 @@ struct Instance
         data.processMode = kRealtime;
         data.inputParameterChanges = &changes;
         require(audio->process(data) == kResultOk, "active VST3 zero-frame parameter flush");
+    }
+    std::array<double, cs80::kSampleAccurateParameters.size()> normalizedState()
+    {
+        StateCapture state;
+        // IComponent::getState calls the actual processor's locked/synchronised
+        // APVTS snapshot. Read its stored Float32 physical values, not the ideal
+        // normalized values we submitted before JUCE's range conversion.
+        require(component->getState(&state) == kResultOk, "VST3 current processor state");
+        const auto rootEnd = state.bytes.find("</CS80_PARAMS>");
+        require(rootEnd != std::string::npos, "VST3 state contains the parameter root");
+        std::array<double, cs80::kSampleAccurateParameters.size()> values {};
+        for (size_t lane = 0; lane < values.size(); ++lane)
+        {
+            const int parameter = cs80::kSampleAccurateParameters[lane];
+            const auto id = std::string("id=\"") + cs80::paramId(parameter) + "\"";
+            const auto found = state.bytes.find(id);
+            const auto tagStart = found == std::string::npos ? std::string::npos : state.bytes.rfind("<PARAM ", found);
+            const auto tagEnd = tagStart == std::string::npos ? std::string::npos : state.bytes.find('>', tagStart);
+            require(found < rootEnd && tagStart != std::string::npos && found < tagEnd && tagEnd < rootEnd,
+                    "VST3 stored state contains the named key parameter");
+            const auto valueStart = state.bytes.find("value=\"", tagStart);
+            require(valueStart < tagEnd, "VST3 stored parameter has a physical value");
+            const auto valueEnd = state.bytes.find('"', valueStart + 7);
+            require(valueEnd < tagEnd, "VST3 stored physical value is complete");
+            const auto text = state.bytes.substr(valueStart + 7, valueEnd - valueStart - 7);
+            size_t consumed = 0;
+            const float physical = std::stof(text, &consumed);
+            require(consumed == text.size() && std::isfinite(physical), "VST3 stored physical value is finite");
+            values[lane] = normalized(parameter, physical);
+        }
+        return values;
     }
     void process(int start, int count, Changes* changes, std::vector<float>& output, bool sixteen = false)
     {
@@ -325,12 +383,13 @@ std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& par
         flush.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
                   {{0, double(0.69f - float(lane) * 0.009f)}});
     instance.flush(flush);
+    const auto flushed = instance.normalizedState();
     for (int sample = 0; sample < block; sample += scalar ? 1 : block)
     {
         Changes changes;
         for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
         {
-            const double initial = 0.69f - float(lane) * 0.009f;
+            const double initial = flushed[lane];
             const double target = 0.31 + double(lane) * 0.008;
             const double fraction = std::min(1.0, double(sample + 1) / double(firstPoint + 1));
             const double value = scalar ? initial * (1.0 - fraction) + target * fraction : target;
