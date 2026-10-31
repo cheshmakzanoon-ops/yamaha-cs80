@@ -9,6 +9,7 @@
 #include "BbdChorus.h"
 #include "OutputTapCircuit.h"
 #include "HeadphoneAmpCircuit.h"
+#include "ExpressionOptics.h"
 #include "NoiseSource.h"
 #include "Oversampling.h"
 #include "Smoothing.h"
@@ -415,12 +416,12 @@ private:
     SmootherBank settingsSmoothing;
     struct ControllerSmoothing
     {
-        ControlSmoother bend, modWheel, expression, ribbon;
+        ControlSmoother bend, modWheel, ribbon;
         std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
         std::array<uint64_t, kNumVoices> age {};
         float bendTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
-        // Expression is smoothed at its gain stage only: the PRA optical cell
-        // already lags the pedal (its inferred 12 ms law), so it reads the target.
+        // Expression acts at its gain stage through the PRA I2/I3 optical cell
+        // (ExpressionOptics.h); the wah cell reads the pedal target itself.
         float expressionGain = 1.0f;
         std::array<float, kNumVoices> pressureTarget {}, mpeBendTarget {}, timbreTarget {};
         bool snapPending = true;
@@ -431,6 +432,7 @@ private:
     // LEFT/RIGHT jacks, the GENERAL mono jack, or the headphone amplifier fed
     // from the preamp outputs (HeadphoneAmpCircuit.h). Legacy uses none of them.
     CircuitNoiseSources circuitNoise;
+    ExpressionOpticalCell expressionOptics;
     HeadphoneAmpCircuit phonesL, phonesR;
     int listeningOutput = 0;
     ListeningSample listeningSample;

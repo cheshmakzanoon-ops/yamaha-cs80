@@ -127,6 +127,7 @@ void Engine::configureInternalRate()
     settingsSmoothing.setCoefficient(controlSmoothing);
     subSpeedSmoothing = (float) smoothingCoefficient(legacyPerSampleSeconds(0.0015), internalRate);
     circuitNoise.prepare(internalRate);
+    expressionOptics.prepare(internalRate);
     phonesL.prepare(internalRate, HeadphoneAmpCircuit::Profile {});
     phonesR.prepare(internalRate, HeadphoneAmpCircuit::Profile {});
 }
@@ -1282,12 +1283,15 @@ void Engine::beginSmoothedControls() noexcept
     {
         c.bend.snap(globalBend);
         c.modWheel.snap(modWheel);
-        c.expression.snap(expression);
+        expressionOptics.reset(expression);
         c.ribbon.snap(ribbonTotal);
     }
     globalBend = (float) c.bend.advance(globalBend, k);
     modWheel = (float) c.modWheel.advance(modWheel, k);
-    c.expressionGain = (float) c.expression.advance(expression, k);
+    // The EXP volume path is an optical cell (ws4 hand-off, ExpressionOptics.h):
+    // its declared log-R law is this controller's smoothing.
+    expressionOptics.setPedal(expression);
+    c.expressionGain = (float) expressionOptics.tick();
     const double ribbonSmoothed = c.ribbon.advance(ribbonTotal, k);
     if (!c.ribbon.atTarget(ribbonTotal))
         ribbon = (float) (ribbonSmoothed - params[P_ribbon]);

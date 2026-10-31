@@ -4,6 +4,7 @@
 // is reused. Reviewed upstream DSP primitives are used only to supply stimuli.
 #include "core/Engine.h"
 #include "core/RingModulatorCircuit.h"
+#include "ExpressionOpticsOracle.h"
 
 #include <algorithm>
 #include <array>
@@ -200,7 +201,7 @@ struct Pipeline
         chorus.prepare(static_cast<float>(rate));
         for (auto& dec : decimator) dec.prepare(static_cast<float>(rate));
     }
-    void pedal(float x) { expression = x; wah.setPedal(x); }
+    void pedal(float x) { expression = x; wah.setPedal(x); gainOptics.setPedal(x); }
     void select(bool high) { for (auto& tap : taps) tap.select(high); }
     std::array<float, 2> frame()
     {
@@ -223,15 +224,15 @@ struct Pipeline
             }
             source = lerp(static_cast<float>(nodes.x), static_cast<float>(nodes.y), wetMix);
             const auto stereo = chorus.process(source, source, chorusSpeed, chorusDepth, true, false);
-            // ws2 parameter smoothing (intentional circuit-engine change): VOLUME
-            // and the expression gain follow the declared 5 ms one-pole (the
-            // former 0.003 per-sample volume constant was rate dependent),
-            // starting on their targets at the first sample; the PRA optical cell
-            // reads the pedal target.
+            // ws2 (intentional circuit-engine changes): VOLUME follows the declared
+            // 5 ms one-pole (the former 0.003 per-sample constant was rate
+            // dependent), and the expression gain is the PRA I2/I3 optical cell
+            // (closed-form oracle, ExpressionOpticsOracle.h), both starting on
+            // their targets at the first sample.
             const double k = smoothingCoefficient(kControlSmoothingSeconds, rate);
-            if (!gainSnapped) { gainExpression.snap(expression); volumeSmoother.snap(volume); gainSnapped = true; }
+            if (!gainSnapped) { volumeSmoother.snap(volume); gainOptics.rate = rate; gainSnapped = true; }
             volume = static_cast<float>(volumeSmoother.advance(volumeTarget, k));
-            const float smoothed = static_cast<float>(gainExpression.advance(expression, k));
+            const float smoothed = static_cast<float>(gainOptics.tick());
             const float gain = volume*4.0f*smoothed;
             // Phase 1.5 gain staging: fixed reference, then inferred driver headroom.
             const auto stage = [](float x) {
@@ -247,7 +248,8 @@ struct Pipeline
     }
     double rate;
     float phase, volume, volumeTarget, expression = 1.0f;
-    ControlSmoother gainExpression, volumeSmoother;
+    ControlSmoother volumeSmoother;
+    tests::ExpressionOpticsOracle gainOptics;
     bool gainSnapped = false;
     bool wet;
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;
@@ -359,10 +361,10 @@ void lifecycleAndAlwaysRunning()
     // The expression multiplier precedes coupling: muting the source cannot
     // silently erase or freeze the charged output-capacitor decay.
     e.setExpression(0.0f);
-    // ws2 parameter smoothing (intentional circuit-engine change): the
-    // expression gain lands exactly on zero through its 5 ms one-pole; the
-    // coupling capacitor (tau about 54 ms) still holds charge to drain.
-    render(e, 9600); // 0.2 s at 48 kHz: 40 tau
+    // ws2 (intentional circuit-engine change): the expression gain is the PRA
+    // I2/I3 optical cell, which lands exactly on zero after about 1.6 s of
+    // 60 ms log-R darkening; the coupling capacitor still holds decaying charge.
+    render(e, 120000); // 2.5 s at 48 kHz
     auto before = e.getOutputTapState(2);
     render(e, 1);
     auto after = e.getOutputTapState(2);

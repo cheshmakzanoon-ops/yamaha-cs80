@@ -5,6 +5,7 @@
 // are shared intentionally: this verifies routing, not their physical accuracy.
 #include "core/Engine.h"
 #include "core/RingModulatorCircuit.h"
+#include "ExpressionOpticsOracle.h"
 
 #include <algorithm>
 #include <array>
@@ -322,13 +323,13 @@ struct PipelineOracle
             const auto ch = isolated ? bbd.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo)
                                      : chorus.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo);
             const std::array<float, 2> stereo {ch.l, ch.r};
-            // ws2 parameter smoothing (intentional circuit-engine change): the
-            // circuit engine's expression gain follows the declared 5 ms
-            // one-pole from the first sample; legacy and the PRA keep the target.
-            if (!gainSnapped) { gainExpression.snap(expression); gainSnapped = true; }
-            const float gainExpressionNow = isolated
-                ? static_cast<float>(gainExpression.advance(expression, smoothingCoefficient(kControlSmoothingSeconds, rate)))
-                : expression;
+            // ws2 (intentional circuit-engine change, ws4 hand-off): the circuit
+            // engine's expression gain is the PRA I2/I3 optical cell
+            // (closed-form oracle, ExpressionOpticsOracle.h), starting on the pedal
+            // at the first sample; legacy keeps the immediate gain.
+            if (!gainSnapped) { gainOptics.rate = rate; gainSnapped = true; }
+            gainOptics.setPedal(expression);
+            const float gainExpressionNow = isolated ? static_cast<float>(gainOptics.tick()) : expression;
             for (int channel = 0; channel < 2; ++channel)
             {
                 const float dc = stereo[channel]-lastInput[channel]
@@ -351,7 +352,7 @@ struct PipelineOracle
     double rate, opticalLog = std::log(2000.0), startLog = std::log(2000.0), targetLog = std::log(2000.0);
     int opticalSamples = 0;
     float phase, expression = 1.0f;
-    ControlSmoother gainExpression;
+    tests::ExpressionOpticsOracle gainOptics;
     bool gainSnapped = false;
     bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;
