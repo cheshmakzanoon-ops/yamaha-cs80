@@ -4,6 +4,7 @@
 // coupling are reconstructed separately. Envelope/chorus/decimator primitives
 // are shared intentionally: this verifies routing, not their physical accuracy.
 #include "core/Engine.h"
+#include "CircuitSineSource.h"
 
 #include <algorithm>
 #include <array>
@@ -250,6 +251,7 @@ struct PipelineOracle
 {
     explicit PipelineOracle(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
+          circuitSine(e.getInternalSampleRate(), e.getRankAudioState(0, 0).phase),
           isolated(p[P_parityMode] != 0.0f), wet(p[P_footMode] != 0.0f), mix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusOn(p[P_chorusOn] != 0.0f),
           tremolo(p[P_chorusMode] != 0.0f), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth])
@@ -277,7 +279,10 @@ struct PipelineOracle
         {
             phase += 440.0f/sr;
             if (phase >= 1.0f) phase -= std::floor(phase);
-            const float sine = std::sin(kTwoPi*phase) + 0.035f*std::sin(3.0f*kTwoPi*phase);
+            // Plan step 1.2, intentional circuit-engine change: isolation runs the
+            // reconstructed WSC sine; legacy keeps sin + 3.5 % third harmonic.
+            const float sine = isolated ? circuitSine(440.0f)
+                                        : std::sin(kTwoPi*phase) + 0.035f*std::sin(3.0f*kTwoPi*phase);
             const float amp = envelope.tick(sr, true, isolated);
             float sample = sine * 1.0f * amp * 1.0f * 0.17f * 0.5f;
             ringPhase += 77.0f * (1.0f/sr); ringPhase -= std::floor(ringPhase);
@@ -332,7 +337,9 @@ struct PipelineOracle
     }
     double rate, opticalLog = std::log(2000.0), startLog = std::log(2000.0), targetLog = std::log(2000.0);
     int opticalSamples = 0;
-    float phase, expression = 1.0f;
+    float phase;
+    CircuitSineSource circuitSine;
+    float expression = 1.0f;
     bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;
     bool chorusOn, tremolo;

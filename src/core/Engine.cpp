@@ -43,6 +43,7 @@ void Engine::prepare(double hostSampleRate)
     {
         for (auto& r : v.ranks)
         {
+            (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
             r.trimTune = trimRng.nextBipolar();
             r.trimCutoff = trimRng.nextBipolar();
             r.trimLevel = trimRng.nextBipolar();
@@ -81,6 +82,7 @@ void Engine::reset()
         for (auto& r : v.ranks)
         {
             r.osc.reset(0.0f);
+            r.wsc.reset(0.0, OscillatorNominalProfile {}.referenceHzNominal);
             r.hpf.reset();
             r.lpf.reset();
             r.hpStage.reset();
@@ -792,6 +794,9 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
         if (!preserveAudioState)
         {
             r.osc.reset(legacyPhase);
+            // Same cold-start convention for the circuit engine's oscillator:
+            // the legacy draw as its phase, zero audio prehistory.
+            r.wsc.reset(legacyPhase, OscillatorNominalProfile {}.referenceHzNominal);
             r.hpf.reset();
             r.lpf.reset();
             r.hpStage.reset();
@@ -1282,9 +1287,28 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
 
-            const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
+            // Circuit engine: WSC pin volts from one charge/reset trajectory
+            // through the fixed inferred adapter; 8 internal samples of
+            // linear-phase antialias delay. Legacy: PolyBLEP, unchanged.
+            float sawPulse, sineWave;
+            if (usesSourceModels(global.renderPolicy))
+            {
+                WscControls wscControls;
+                wscControls.pulseThresholdVolts = ReconstructedOscillator::panelThresholdVoltsInferred(pw);
+                wscControls.sawEnabled = rs.saw;
+                wscControls.pulseEnabled = rs.pulse;
+                const auto pins = r.wsc.tick(freq, wscControls);
+                sawPulse = static_cast<float>((pins.sawPin5 + pins.pulsePin7) * kWscEngineUnitsPerVolt);
+                sineWave = static_cast<float>(pins.sinePin2 * kWscEngineUnitsPerVolt);
+            }
+            else
+            {
+                const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
+                sawPulse = osc.saw + osc.pulse;
+                sineWave = osc.sine;
+            }
 
-            float x = osc.saw + osc.pulse;
+            float x = sawPulse;
             x += audioRng.nextBipolar() * rs.noise * 0.8f;
             x *= 0.9f;
 
@@ -1352,7 +1376,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 }
             }
 
-            const float sine = osc.sine * rs.sine;
+            const float sine = sineWave * rs.sine;
             // Source LC/LI is linear in its explicit unit scale. Retain global
             // effective transports once; floor negative total gain at zero,
             // but do NOT apply the legacy 2.6 cap or per-tone normalization.
@@ -1668,7 +1692,8 @@ Engine::RankAudioState Engine::getRankAudioState(int voice, int rank) const noex
     if (!usesSourceModels(global.renderPolicy))
         return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState(), {}, {} };
     const auto hp = r.hpStage.getState(), lp = r.lpStage.getState();
-    return { r.osc.getPhase(), { (float) hp.bp, (float) hp.lp }, { (float) lp.bp, (float) lp.lp }, hp, lp };
+    return { static_cast<float>(r.wsc.getPhase()), { (float) hp.bp, (float) hp.lp },
+             { (float) lp.bp, (float) lp.lp }, hp, lp };
 }
 
 Engine::RankEnvelopeState Engine::getRankEnvelopeState(int voice, int rank) const noexcept

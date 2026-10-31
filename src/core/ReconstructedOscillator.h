@@ -2,16 +2,18 @@
 // Source-informed topology; all opaque-IC transfer choices are an INFERRED
 // nominal instrument, not recovered Yamaha die parameters or a specimen fit.
 // See docs/OSCILLATOR_REALTIME_PROPOSAL.md, profile w3-current-fold-v1.
-// EXPERIMENTAL: the current short kernel passes the linear 2x output path,
-// but is NOT qualified before the existing nonlinear Svf. Upper-internal-band
-// images can mix down there. Keep out of Engine selection until that quality
-// gate and the complete 16-oscillator real-time budget are satisfied.
+// Promoted from src/experimental (plan step 1.2): the circuit engine (Source
+// Performance and Isolation) uses it ahead of the IG00156 nodal filter; legacy
+// keeps the PolyBLEP Oscillator. Qualification against the nodal filter, the
+// alias/CPU results and the remaining limits are in docs/OSCILLATOR_PROMOTION.md.
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <limits>
+#include <mutex>
 
 namespace cs80 {
 struct OscillatorNominalProfile {
@@ -31,6 +33,10 @@ struct OscillatorNominalProfile {
         0., .3826834323650898, .7071067811865475, .9238795325112867, 1.
     };
 };
+// INFERRED engine adapter (plan step 1.2): one fixed scale for every WSC pin,
+// chosen so the 3 Vpp comparator plateau maps to the legacy +/-1 pulse. Pin
+// voltages are never normalized per waveform (OSCILLATOR_REALTIME_PROPOSAL 2.4).
+inline constexpr double kWscEngineUnitsPerVolt = 1.0 / 1.5;
 struct WscControls {
     double pulseThresholdVolts = 0.;
     bool sawEnabled = true, pulseEnabled = true;
@@ -82,9 +88,78 @@ private:
     double moment=0.,secondMoment=0.;
 };
 
+// Exact event basis for one (internal rate, coupling RC): every final branch
+// between events is C+(A+B*t)exp(-t/RC); the SAME kernel is integrated
+// against that basis, rather than truncating a BLAMP tail or approximating RC
+// curvature. Simpson integration on each linearly interpolated kernel cell has
+// error O((1/(phases*rate*RC))^4); lookup interpolation is tested separately.
+// Immutable once built and shared by every oscillator with the same pair
+// (about 16 KB, formerly one copy per oscillator).
+struct OscillatorExponentialBasis {
+    static constexpr std::size_t points=OscillatorResidualKernel::points;
+    double rate=0.,couplingSeconds=0.,inverseTauSamples=0.,weightedArea=0.,weightedMoment=0.;
+    std::array<double,points> exponential{},timeExponential{};
+    void build(double sampleRate,double rc) noexcept {
+        constexpr double dx=1./double(OscillatorResidualKernel::phases);
+        rate=sampleRate;couplingSeconds=rc;inverseTauSamples=1./(rate*rc);
+        const auto& h=OscillatorResidualKernel::shared().impulseTable();
+        weightedArea=weightedMoment=0.;exponential[0]=timeExponential[0]=0.;
+        for(std::size_t i=1;i<points;++i){const double a=double(i-1)*dx,b=double(i)*dx,m=(a+b)*.5;
+            const double fa=h[i-1]*std::exp(a*inverseTauSamples),fb=h[i]*std::exp(b*inverseTauSamples),fm=(h[i-1]+h[i])*.5*std::exp(m*inverseTauSamples);
+            weightedArea+=dx*(fa+4*fm+fb)/6.;weightedMoment+=dx*(a*fa+4*m*fm+b*fb)/6.;
+            exponential[i]=weightedArea;timeExponential[i]=weightedMoment;}
+        for(std::size_t i=0;i<points;++i){const double t=double(i)*dx,e=std::exp(-t*inverseTauSamples),a=exponential[i]-weightedArea,b=timeExponential[i]-weightedMoment;
+            exponential[i]=e*a;timeExponential[i]=e*(t*a-b);}
+        exponential.back()=timeExponential.back()=0.;
+    }
+};
+// Fixed static pool of shared bases: no heap allocation (setup or callback).
+// Slots are reference counted by the oscillators that use them and are rebuilt
+// for another (rate, RC) only when unused; acquire() runs at prepare time under
+// a mutex, retain/release are lock-free. Exhaustion (more live distinct pairs
+// than slots) makes prepare() fail transactionally.
+class OscillatorBasisRegistry {
+public:
+    static constexpr std::size_t capacity=16;
+    static const OscillatorExponentialBasis* acquire(double rate,double rc) noexcept {
+        std::lock_guard<std::mutex> guard(mutex());
+        auto& pool=slots();
+        for(auto& slot:pool)
+            if(slot.built&&slot.basis.rate==rate&&slot.basis.couplingSeconds==rc){slot.refs.fetch_add(1,std::memory_order_relaxed);return &slot.basis;}
+        // Prefer a never-built slot, so a released basis stays cached; else
+        // recycle an unreferenced one (a copy always holds a reference, so a
+        // zero count cannot be raised concurrently).
+        Slot* target=nullptr;
+        for(auto& slot:pool)if(!slot.built){target=&slot;break;}
+        if(!target)for(auto& slot:pool)if(slot.refs.load(std::memory_order_acquire)==0){target=&slot;break;}
+        if(!target)return nullptr;
+        target->basis.build(rate,rc);target->built=true;target->refs.store(1,std::memory_order_release);
+        return &target->basis;
+    }
+    static void retain(const OscillatorExponentialBasis* basis) noexcept { if(auto* slot=find(basis))slot->refs.fetch_add(1,std::memory_order_relaxed); }
+    static void release(const OscillatorExponentialBasis* basis) noexcept { if(auto* slot=find(basis))slot->refs.fetch_sub(1,std::memory_order_acq_rel); }
+    static int references(const OscillatorExponentialBasis* basis) noexcept { auto* slot=find(basis);return slot?slot->refs.load():0; }
+private:
+    struct Slot { OscillatorExponentialBasis basis{}; std::atomic<int> refs{0}; bool built=false; };
+    static std::array<Slot,capacity>& slots() noexcept { static std::array<Slot,capacity> pool;return pool; }
+    static std::mutex& mutex() noexcept { static std::mutex m;return m; }
+    static Slot* find(const OscillatorExponentialBasis* basis) noexcept {
+        if(!basis)return nullptr;
+        for(auto& slot:slots())if(&slot.basis==basis)return &slot;
+        return nullptr;
+    }
+};
+
 class ReconstructedOscillator {
 public:
-    static constexpr bool productionNonlinearPathQualified=false;
+    // Bound on the antialias residual omitted for a tiny frequency change (one
+    // float-ulp pitch steps, slow drift): below -123 dB re the 1.5 V pins.
+    static constexpr double kNegligibleCornerVolts=1e-6;
+    // Qualified ahead of the IG00156 nodal stage by the -70 dB alias gate
+    // (tests/OscillatorPromotionTests.cpp); the old clipping Svf failed it.
+    static constexpr bool productionNonlinearPathQualified=true;
+    // NOT qualified: 16 oscillators cost about 0.3 RTF at 96 kHz internal,
+    // above the circuit-engine budget until the planned SoA/CPU pass.
     static constexpr bool productionRealtimeQualified=false;
     static constexpr double minimumRate=8000.,maximumRate=1536000.;
     static constexpr std::size_t maximumEventsPerTick=64;
@@ -114,6 +189,14 @@ public:
         std::uint64_t resetCount=0;
     };
     ReconstructedOscillator() noexcept { (void)prepare(96000.,OscillatorNominalProfile{}); }
+    // Copies share (and reference) the same immutable basis.
+    ReconstructedOscillator(const ReconstructedOscillator& other) noexcept { copyFrom(other); }
+    ReconstructedOscillator& operator=(const ReconstructedOscillator& other) noexcept {
+        if(this!=&other){const auto* old=basis;copyFrom(other);OscillatorBasisRegistry::release(old);}
+        return *this;
+    }
+    ~ReconstructedOscillator() { OscillatorBasisRegistry::release(basis); }
+    const OscillatorExponentialBasis* sharedBasis() const noexcept { return basis; }
     static bool validProfile(const OscillatorNominalProfile& p) noexcept {
         const auto valid=[](double x,double low,double high){return std::isfinite(x)&&x>=low&&x<=high;};
         if(!valid(p.resetSecondsNominal,1e-6,100e-6)||!valid(p.referenceHzNominal,1.,10000.)
@@ -130,15 +213,24 @@ public:
     bool prepare(double sampleRate,const OscillatorNominalProfile& selected) noexcept {
         if(!validProfile(selected)||!std::isfinite(sampleRate)||sampleRate<minimumRate||sampleRate>maximumRate)return false;
         (void)OscillatorResidualKernel::shared();
+        const auto* next=OscillatorBasisRegistry::acquire(sampleRate,selected.couplingSecondsNominal);
+        if(!next)return false;
+        OscillatorBasisRegistry::release(basis);basis=next;
         profile=selected;rate=sampleRate;dt=1./rate;
         converterGain=(profile.resetVoltsNominal-profile.resetExcessVoltsNominal)/(1.-profile.referenceHzNominal*profile.resetSecondsNominal);
         rampHalf=(profile.resetVoltsNominal-profile.resetExcessVoltsNominal)*.5;
-        prepareExponentialResiduals();reset(0.,profile.referenceHzNominal);return true;
+        // Largest branch slope change per Hz of frequency change: the pin slope
+        // K * df reaches the sine through the triangle gain and the steepest
+        // shaper segment; its residual is bounded by slope * kernel length / rate.
+        negligibleCornerScale=converterGain*std::max(1.,profile.sineGainVoltsInferred*4.*profile.shaperOrdinateInferred[1]
+                                *(profile.triangleSpanVoltsNominal/rampHalf)/(.5*profile.triangleSpanVoltsNominal))
+                              *double(OscillatorResidualKernel::length)/rate;
+        reset(0.,profile.referenceHzNominal);return true;
     }
     // Cold-start convention only. No noteOn() method deliberately exists: the
     // inspected M41 graph has no note-trigger phase/coupling reset connection.
     void reset(double phase=0.,double initialHz=261.6) noexcept {
-        state={};diagnostics={};
+        state={};diagnostics={};endNodesValid=false;
         state.heldFrequencyHz=std::isfinite(initialHz)?std::clamp(initialHz,0.,maximumFrequencyHz()):std::clamp(profile.referenceHzNominal,0.,maximumFrequencyHz());
         phase=std::isfinite(phase)?phase-std::floor(phase):0.;
         const double f=state.heldFrequencyHz;
@@ -152,17 +244,37 @@ public:
     }
     WscOutputVolts tick(double requestedHz,const WscControls& controls={}) noexcept {
         diagnostics.eventCount=0;
+        if(!basis)return {}; // never prepared (basis pool exhausted at construction)
+        const double inverseTauSamples=basis->inverseTauSamples,weightedArea=basis->weightedArea,weightedMoment=basis->weightedMoment;
         Nodes before;
         double f=state.heldFrequencyHz,threshold=state.heldThresholdVolts;
         if(std::isfinite(requestedHz)){f=std::clamp(requestedHz,0.,maximumFrequencyHz());if(f!=requestedHz)diagnostics.frequencyLimited=true;}
         else diagnostics.invalidControl=true;
         if(std::isfinite(controls.pulseThresholdVolts))threshold=controls.pulseThresholdVolts;
         else diagnostics.invalidControl=true;
-        const bool changed=f!=state.heldFrequencyHz||threshold!=state.heldThresholdVolts||controls.sawEnabled!=state.sawEnabled||controls.pulseEnabled!=state.pulseEnabled;
-        if(changed)before=nodes(1);
+        // Control changes. A full event (branch residuals) is recorded unless the
+        // change provably or negligibly alters no branch:
+        // - exact: a threshold move that does not cross the comparator input
+        //   leaves every branch unchanged; a frequency change during the reset
+        //   plateau changes only the charge rate, which no branch reads;
+        // - bounded: a frequency change whose slope corner adds less than
+        //   kNegligibleCornerVolts (see below) keeps the new frequency but omits
+        //   that corner's antialias residual.
+        const bool gates=controls.sawEnabled!=state.sawEnabled||controls.pulseEnabled!=state.pulseEnabled;
+        bool event=gates,refresh=gates||!endNodesValid;
+        if(f!=state.heldFrequencyHz&&state.resetRemainingSeconds==0.){
+            if(negligibleCornerScale*std::abs(f-state.heldFrequencyHz)<kNegligibleCornerVolts)refresh=true;
+            else event=refresh=true;
+        }
+        if(threshold!=state.heldThresholdVolts&&!event){
+            const double u=(state.resetRemainingSeconds>0.?profile.resetVoltsNominal:converterGain*state.charge)-state.inputBaselineVolts;
+            const double a=u-state.heldThresholdVolts,b=u-threshold;
+            if((a>0.)!=(b>0.)||std::abs(a)<1e-9||std::abs(b)<1e-9)event=refresh=true;
+        }
+        if(event)before=endNodesValid?endNodes:nodes(1);
         state.heldFrequencyHz=f;state.heldThresholdVolts=threshold;state.sawEnabled=controls.sawEnabled;state.pulseEnabled=controls.pulseEnabled;
-        auto after=nodes(1);
-        if(changed)recordEvent(0.,controlChange,before,after);
+        auto after=refresh?nodes(1):endNodes;
+        if(event)recordEvent(0.,controlChange,before,after);
         double elapsed=0.;
         for(std::size_t iteration=0;iteration<maximumEventsPerTick&&elapsed<dt;++iteration){
             // A stopped q=0 capacitor does NOT retrigger the one-shot.
@@ -194,7 +306,8 @@ public:
             diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);
         }
         state.elapsedSeconds+=dt;
-        const auto raw=after;
+        endNodes=after;endNodesValid=true;
+        const auto& raw=endNodes;
         diagnostics.rawPin7Volts=raw.pin7;diagnostics.coupledInputVolts=raw.u;
         diagnostics.trianglePin3Volts=raw.triangle;diagnostics.shaperInputVolts=raw.w;diagnostics.raw=raw.ungatedValue;
         WscOutputVolts output;
@@ -255,8 +368,10 @@ private:
         double a=std::abs(x);const double aSlope=std::copysign(1.,x)*n.wSlope/half;
         for(int k=1;k<=4;++k){const double knot=.25*double(k);if(std::abs(a-knot)<2e-11)a=knot+std::copysign(2e-11,aSlope*double(side));}
         double shapeSlope=0.;if(a<1.){const auto i=std::min(std::size_t(3),static_cast<std::size_t>(std::max(0.,a)*4.));shapeSlope=4.*(profile.shaperOrdinateInferred[i+1]-profile.shaperOrdinateInferred[i]);}
-        n.ungatedValue={-n.u,sided(n.u-state.heldThresholdVolts,n.uSlope,side)>0.?profile.pulseHalfSpanVoltsInferred:-profile.pulseHalfSpanVoltsInferred,-profile.sineGainVoltsInferred*shape(x,profile)};
-        n.value={state.sawEnabled?-n.u:0.,state.pulseEnabled?(sided(n.u-state.heldThresholdVolts,n.uSlope,side)>0.?profile.pulseHalfSpanVoltsInferred:-profile.pulseHalfSpanVoltsInferred):0.,-profile.sineGainVoltsInferred*shape(x,profile)};
+        const double comparator=sided(n.u-state.heldThresholdVolts,n.uSlope,side)>0.?profile.pulseHalfSpanVoltsInferred:-profile.pulseHalfSpanVoltsInferred;
+        const double sine=-profile.sineGainVoltsInferred*shape(x,profile);
+        n.ungatedValue={-n.u,comparator,sine};
+        n.value={state.sawEnabled?-n.u:0.,state.pulseEnabled?comparator:0.,sine};
         n.slope={state.sawEnabled?-n.uSlope:0.,0.,-profile.sineGainVoltsInferred*shapeSlope*n.wSlope/half};
         n.constant={state.sawEnabled?-pinSlope*tau:0.,n.value.pulsePin7,n.value.sinePin2+profile.sineGainVoltsInferred*shapeSlope*x};
         return n;
@@ -321,12 +436,15 @@ private:
         return limit;
     }
     void recordEvent(double time,unsigned kind,const Nodes& before,const Nodes& after) noexcept {
+        if(!basis)return;
+        const double inverseTauSamples=basis->inverseTauSamples;
         const auto v0=asArray(before.value),v1=asArray(after.value),s0=asArray(before.slope),s1=asArray(after.slope),c0=asArray(before.constant),c1=asArray(after.constant);
         std::array<double,3> dc{},da{},db{};
         bool nonzero=false;
         for(std::size_t branch=0;branch<3;++branch){dc[branch]=c1[branch]-c0[branch];da[branch]=(v1[branch]-v0[branch])-dc[branch];db[branch]=(s1[branch]-s0[branch])/rate+inverseTauSamples*da[branch];nonzero|=dc[branch]!=0.||da[branch]!=0.||db[branch]!=0.;}
         if(nonzero||kind==resetStart||kind==resetEnd){if(diagnostics.eventCount<maximumEventsPerTick){auto& e=diagnostics.events[diagnostics.eventCount++];e={time,state.elapsedSeconds+time,state.charge,kind,state.resetRemainingSeconds>0.,before.ungatedValue,after.ungatedValue};}else diagnostics.eventCapacityExceeded=true;}
         if(!nonzero)return;
+        const auto& exponentialResidual=basis->exponential;const auto& timeExponentialResidual=basis->timeExponential;
         const double firstAge=std::clamp(1.-time*rate,0.,1.);
         const auto& step=OscillatorResidualKernel::shared().stepTable();
         const double position=firstAge*double(OscillatorResidualKernel::phases);
@@ -340,26 +458,18 @@ private:
             for(std::size_t branch=0;branch<3;++branch)if(dc[branch]!=0.||da[branch]!=0.||db[branch]!=0.)state.residual[branch][index]+=dc[branch]*st+da[branch]*e+db[branch]*te;
         }
     }
-    // Exact event basis for this nominal model: every final branch between
-    // events is C+(A+B*t)exp(-t/RC). Integrate the SAME kernel against that
-    // basis, rather than truncate a BLAMP tail or approximate RC curvature.
-    // Simpson integration on each linearly interpolated kernel cell has error
-    // O((1/(phases*rate*RC))^4); lookup interpolation is tested separately.
-    void prepareExponentialResiduals() noexcept {
-        constexpr double dx=1./double(OscillatorResidualKernel::phases);
-        inverseTauSamples=1./(rate*profile.couplingSecondsNominal);
-        const auto& h=OscillatorResidualKernel::shared().impulseTable();
-        weightedArea=weightedMoment=0.;exponentialResidual[0]=timeExponentialResidual[0]=0.;
-        for(std::size_t i=1;i<OscillatorResidualKernel::points;++i){const double a=double(i-1)*dx,b=double(i)*dx,m=(a+b)*.5;
-            const double fa=h[i-1]*std::exp(a*inverseTauSamples),fb=h[i]*std::exp(b*inverseTauSamples),fm=(h[i-1]+h[i])*.5*std::exp(m*inverseTauSamples);
-            weightedArea+=dx*(fa+4*fm+fb)/6.;weightedMoment+=dx*(a*fa+4*m*fm+b*fb)/6.;
-            exponentialResidual[i]=weightedArea;timeExponentialResidual[i]=weightedMoment;}
-        for(std::size_t i=0;i<OscillatorResidualKernel::points;++i){const double t=double(i)*dx,e=std::exp(-t*inverseTauSamples),a=exponentialResidual[i]-weightedArea,b=timeExponentialResidual[i]-weightedMoment;
-            exponentialResidual[i]=e*a;timeExponentialResidual[i]=e*(t*a-b);}
-        exponentialResidual.back()=timeExponentialResidual.back()=0.;
+    void copyFrom(const ReconstructedOscillator& other) noexcept {
+        OscillatorBasisRegistry::retain(other.basis);
+        basis=other.basis;profile=other.profile;state=other.state;diagnostics=other.diagnostics;
+        rate=other.rate;dt=other.dt;converterGain=other.converterGain;rampHalf=other.rampHalf;
+        negligibleCornerScale=other.negligibleCornerScale;endNodes=other.endNodes;endNodesValid=other.endNodesValid;
     }
-    std::array<double,OscillatorResidualKernel::points> exponentialResidual{},timeExponentialResidual{};
-    double inverseTauSamples=0.,weightedArea=0.,weightedMoment=0.;
+    // Node values at the end of the last tick: the next tick's start when
+    // nothing changed in between (recomputation would give the same bits).
+    Nodes endNodes{};
+    bool endNodesValid=false;
+    double negligibleCornerScale=0.;
+    const OscillatorExponentialBasis* basis=nullptr;
     OscillatorNominalProfile profile{};
     State state{};
     Diagnostics diagnostics{};

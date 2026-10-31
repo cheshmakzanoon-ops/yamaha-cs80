@@ -2,6 +2,7 @@
 
 #include "Dsp.h"
 #include "Ig00156Filter.h"
+#include "ReconstructedOscillator.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
@@ -289,6 +290,9 @@ private:
     struct Rank
     {
         Oscillator osc;
+        // Circuit engine: event-driven IG00153/IG00158 reconstruction
+        // (docs/OSCILLATOR_PROMOTION.md). Legacy keeps the PolyBLEP osc.
+        ReconstructedOscillator wsc;
         Svf hpf;
         Svf lpf;
         // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).

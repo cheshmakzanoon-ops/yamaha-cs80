@@ -3,6 +3,7 @@
 // physical resistor/capacitor nodes; no production reduction/coefficient helper
 // is reused. Reviewed upstream DSP primitives are used only to supply stimuli.
 #include "core/Engine.h"
+#include "CircuitSineSource.h"
 
 #include <algorithm>
 #include <array>
@@ -185,6 +186,7 @@ struct Pipeline
 {
     Pipeline(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
+          circuitSine(e.getInternalSampleRate(), e.getRankAudioState(0, 0).phase),
           volume(p[P_volume]), volumeTarget(p[P_volume]), wet(p[P_footMode] != 0.0f), wetMix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth]),
           taps{OutputOracle(rate, p[P_outputLevel] != 0.0f), OutputOracle(rate, p[P_outputLevel] != 0.0f),
@@ -203,7 +205,9 @@ struct Pipeline
         for (int os = 0; os < 2; ++os)
         {
             phase += 440.0f/sr; if (phase >= 1.0f) phase -= std::floor(phase);
-            const float sine = std::sin(kTwoPi*phase)+0.035f*std::sin(3.0f*kTwoPi*phase);
+            // Plan step 1.2, intentional circuit-engine change: the reconstructed
+            // WSC sine replaces sin + 3.5 % third harmonic in this isolation path.
+            const float sine = circuitSine(440.0f);
             const float amp = envelope.tick(sr, true, true);
             float source = sine*amp*0.17f*0.5f;
             ringPhase += 77.0f*(1.0f/sr); ringPhase -= std::floor(ringPhase);
@@ -232,7 +236,9 @@ struct Pipeline
         return {decimator[0].output(), decimator[1].output()};
     }
     double rate;
-    float phase, volume, volumeTarget, expression = 1.0f;
+    float phase;
+    CircuitSineSource circuitSine;
+    float volume, volumeTarget, expression = 1.0f;
     bool wet;
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;
     Adsr envelope;
