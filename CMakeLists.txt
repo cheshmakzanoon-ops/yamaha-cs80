@@ -334,6 +334,13 @@ if (CS80_BUILD_PLUGIN)
         # [ws6-library] add this workstream's plugin sources below this line.
 
         # [ws7-panel] add this workstream's plugin sources below this line.
+        src/plugin/ArtCommon.cpp
+        src/plugin/PanelWidgets.cpp
+        src/plugin/ChannelRow.cpp
+        src/plugin/CentreRow.cpp
+        src/plugin/PerformanceDeck.cpp
+        src/plugin/MemoryLid.cpp
+        src/plugin/EditorPreferences.cpp
 
         # [ws8-studio] add this workstream's plugin sources below this line.
 
@@ -373,6 +380,19 @@ if (CS80_BUILD_PLUGIN)
         JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
+
+    # [ws7-panel] The panel typeface (Barlow Condensed, SIL OFL 1.1), embedded so the panel draws the same on
+    # every OS. Provenance: assets/fonts/barlow-condensed/SOURCE.txt.
+    juce_add_binary_data(cs80_panel_fonts
+        HEADER_NAME PanelFontData.h
+        NAMESPACE cs80_panel_fonts
+        SOURCES
+            assets/fonts/barlow-condensed/BarlowCondensed-Medium.ttf
+            assets/fonts/barlow-condensed/BarlowCondensed-SemiBold.ttf)
+    target_link_libraries(CS80Reference PRIVATE cs80_panel_fonts)
+    target_link_libraries(CS80Snapshots PRIVATE cs80_panel_fonts)
+    # [ws7-panel] Golden images of the main view (tests/PanelEditorTests.h; refresh with CS80_REFRESH_GOLDENS=1).
+    target_compile_definitions(CS80Snapshots PRIVATE CS80_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix
