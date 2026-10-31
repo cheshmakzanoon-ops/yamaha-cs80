@@ -66,6 +66,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     // circuit engine (plan 1.7).
     applyFreshInstancePatch();
     cached = currentValues();
+    resetHostAutomationState();
     engine.setParams(cached);
     engine.prepare(48000.0);
     extensionEngine = std::make_unique<cs80::Engine>();
@@ -415,6 +416,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     extensionActive = false;
     highResolutionVelocity.reset();
     readParameters();
+    resetHostAutomationState();
     const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
     if (engine.getRenderPolicy() != previousPolicy)
@@ -434,6 +436,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 
 void Cs80AudioProcessor::releaseResources()
 {
+    resetHostAutomationState();
     outputMeter.reset();
     engine.reset();
     extensionEngine->reset();
@@ -464,6 +467,7 @@ void Cs80AudioProcessor::readParameters()
                 : getMemoryValue(channel + (source == 12 ? 2 : 0), local);
         }
     }
+    syncHostAutomationParameters();
 }
 
 cs80::ParamValues Cs80AudioProcessor::currentValues() const
@@ -803,6 +807,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     cs80::KeyboardEventQueue<>::Batch uiEvents;
     auto uiCount = keyboardEvents.take(uiEvents);
 
+    prepareHostAutomation();
     applyMidiLearn(midi);   // [ws8-studio] learned controllers move their parameters before this block reads them
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
@@ -886,7 +891,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         }
         for (int offset = 0; offset < length; )
         {
-            const int n = std::min(capacity, length - offset);
+            applyHostAutomationAt(start + offset, true);
+            const int n = hostAutomationSpan(start + offset, std::min(capacity, length - offset));
             if (input != nullptr)
                 std::copy_n(input + start + offset, n, externalScratch.data());
             engine.render(interleaved.data(), n, input != nullptr ? externalScratch.data() : nullptr);
@@ -919,6 +925,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             renderSegment(done, position - done);
             done = position;
         }
+        // The automated target reaches both engines before MIDI allocation at this position.
+        applyHostAutomationAt(position, true);
     };
     size_t uiIndex = 0;
     auto voiceSnapshot = [&]

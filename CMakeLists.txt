@@ -301,6 +301,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_mts_esp_fallback_tests PRIVATE src)
     target_compile_definitions(cs80_mts_esp_fallback_tests PRIVATE CS80_WITH_MTS_ESP=0)
     add_test(NAME cs80_mts_esp_fallback_tests COMMAND cs80_mts_esp_fallback_tests)
+    add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
+    target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
+    add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
     set_tests_properties(cs80_mts_esp_fallback_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
@@ -448,6 +452,8 @@ if (CS80_BUILD_PLUGIN)
         FetchContent_MakeAvailable(JUCE)
     endif()
 
+    include(cmake/HostAutomation.cmake)
+
     set(CS80_PLUGIN_FORMATS VST3 Standalone)
     if (APPLE)
         list(APPEND CS80_PLUGIN_FORMATS AU)
@@ -483,6 +489,7 @@ if (CS80_BUILD_PLUGIN)
 
         # [ws3-keyboard] add this workstream's plugin sources below this line.
         src/plugin/MtsEspClient.cpp
+        src/plugin/PluginProcessorAutomation.cpp
         src/plugin/KeyboardTuningPage.cpp
 
         # [ws4-circuits] add this workstream's plugin sources below this line.
@@ -525,6 +532,22 @@ if (CS80_BUILD_PLUGIN)
         JUCE_VST3_CAN_REPLACE_VST2=0
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
+
+    if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        get_target_property(CS80_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+        set(CS80_VST3_SDK "${CS80_JUCE_MODULES}/juce_audio_processors_headless/format_types/VST3_SDK")
+        add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_automation_tests CS80Reference_VST3)
+        add_test(NAME cs80_vst3_automation_tests COMMAND cs80_vst3_automation_tests
+            "$<TARGET_FILE:CS80Reference_VST3>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        set_tests_properties(cs80_vst3_automation_tests PROPERTIES TIMEOUT 180)
+    endif()
 
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
