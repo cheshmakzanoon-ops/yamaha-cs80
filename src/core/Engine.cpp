@@ -254,11 +254,11 @@ void Engine::reset()
             r.lpStage.reset();
             r.vcaCold = true;
             r.fenv.reset();
+            if (freeRunning) r.fenv.selectInitialWhileIdle();
             r.aenv.reset();
             r.idle = {};
             r.idleRefs = {};
         }
-        v.envelopeReset = true;
         v.idleSteps = 0;
         v.keyNode.track();
         v.touch.reset();
@@ -833,7 +833,7 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
             sourceFilterValues[rank][voice] = z;
             // Continuous control-state inference: a source-selected filter EG
             // continues to relax after VCA retirement, avoiding a permanently
-            // frozen common-bus bias. Cold never-triggered Idle remains at zero.
+            // frozen common-bus bias. Cold released Idle also follows IL.
             // Phase 2.4: the TRG banks see every channel's held TWS b and
             // smoothed a, silent channels included (b holds its last strike; a
             // relaxes once the key is up). Formerly inactive touch was zero.
@@ -1143,9 +1143,9 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     const bool preserveAudioState = freeRunningVoices() && !v.held && !v.pedalHeld;
     if (preserveAudioState && ! wasActive)
         wakeIdleVoice(v);
-    // A reset (cold or Sustain-II-cleared) filter EG restarts from IL as before.
-    const bool preserveEnvelope = preserveAudioState && ! v.envelopeReset;
-    v.envelopeReset = false;
+    // IL is a selected drive, not an assignment-time capacitor reset. Keep
+    // charge even for a first strike before the released circuit settles.
+    const bool preserveEnvelope = preserveAudioState;
     v.idleClock = 0;
     v.idleSteps = 0;
     v.keyNode.track(); // TR low: K acquires the new key
@@ -1299,10 +1299,11 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
                 for (auto& rank : v.ranks)
                 {
                     rank.aenv.reset();
-                    rank.fenv.reset();
+                    // TR was already released. Its separate filter capacitor
+                    // remains connected; do not replace charge or restart time.
+                    if (!freeRunningVoices()) rank.fenv.reset();
                 }
                 v.active = v.sustained = v.pedalHeld = false;
-                v.envelopeReset = true;
             }
     }
 
@@ -1530,7 +1531,7 @@ void Engine::allNotesOff(bool release, int midiChannel)
             // Explicit inferred MIDI-panic gate policy: hard-mute audio as
             // before, but source TP1 controls must be released from their
             // retained value rather than held forever in a pre-panic stage.
-            // Legacy/PANEL paths and Sustain-II reset semantics are unchanged.
+            // Legacy retains its historical hard-panic policy.
             for (int rank = 0; rank < kNumRanks; ++rank)
                 if (sourceActive[rank])
                 {

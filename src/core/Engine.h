@@ -567,7 +567,6 @@ private:
         int idleSteps = 0;
         // The filter EG holds a reset (not a completed-release) state: cold
         // after reset/prepare, or cleared by Sustain II termination.
-        bool envelopeReset = true;
         // SH7 per-voice K hold (Phase 2.2, circuit engine).
         kas::HeldKeyNode keyNode;
         // KBC contour of the key last assigned to this channel (Phase 2.3):

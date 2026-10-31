@@ -21,7 +21,6 @@ ControlFrame fixture(bool pure, int selector, float quality)
     ParamValues p;
     p[P_sourcePerformance]=1; p[P_parityMode]=pure?1.0f:0.0f;
     p[P_oversampling]=quality; p[P_chorusOn]=p[P_drift]=p[P_voiceDispersion]=0;
-    p[P_envTimeScale]=1;
     for(int rank : {0,1}) {
         p[chParam(rank,CP_fIl)]=rank==0?.2f:.6f;
         p[chParam(rank,CP_fAl)]=.5f;
@@ -54,6 +53,13 @@ double releaseTime(const ControlFrame& frame)
         }
         result=std::max(result,time);
     }
+    // The source-performance policy keeps the existing KEY RELEASE and
+    // MASTER SUSTAIN overlays; Pure masks these software timing additions.
+    // Twenty release times means the effective selected time, not only the
+    // rank's R control (KEY RELEASE defaults to 0.18 seconds).
+    if (frame.effectiveValues[P_parityMode] < .5f)
+        result=std::max({result,double(frame.effectiveValues[P_keyRelease]),
+                       10.0*double(frame.effectiveValues[P_masterSustain])});
     return result;
 }
 using Snapshot=std::array<std::array<float,2>,8>;
@@ -111,7 +117,9 @@ void run(const ws1::Tolerances& tol)
             render(engine,static_cast<int>(rate*.02));
             for(int note=48;note<56;++note) engine.noteOff(note);
             render(engine,std::max(1,static_cast<int>(rate*.001)));
-            check(engine.getVoiceInfo(0).sustained,"Sustain II fixture holds a released tail");
+            check(engine.getVoiceInfo(0).active && !engine.getVoiceInfo(0).held
+                      && engine.getRankEnvelopeState(0,0).filter.stage==FilterEnv::Stage::Release,
+                  "Sustain II fixture holds a released tail");
             before=snapshot(engine); engine.noteOn(75,.8f);
             worstAssignment=std::max(worstAssignment,delta(before,snapshot(engine)));
         }

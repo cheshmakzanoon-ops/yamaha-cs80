@@ -54,3 +54,61 @@ untriggered settling, zero-time IL retarget, first assignment, tail reuse,
 SUSTAIN-II retirement and Legacy behavior. Mutations must remove idle IL
 selection, restore assignment reset, or force assignment to the new IL.
 No result is accepted by changing the preregistered limits.
+
+
+## Qualification results
+
+The full 1,519-check cold-envelope grid passes: worst settled error **0**
+(limit `1e-7`), worst assignment jump **0** (limit **0**). Before the correction,
+the same state questions fail with worst cold error **1.80000007153** and
+assignment jump **2.25**. The fixture uses twenty *effective* release times,
+including source-performance KEY RELEASE and master sustain; Pure masks those
+software additions. This matters because KEY RELEASE defaults to 0.18 s.
+The limits and controls were not changed to shorten the required settling.
+
+Existing active-tail continuity passes **49,732 checks** and note-off continuity
+passes **540 checks**, both with zero failures. The source receiver integration
+oracle is updated for this intentional state law: the cold point is the exact
+float-rounded analytic RC solution, and all eight released receivers contribute
+their settled IL to the common bus. The primitive wiring test retains charge
+at its immediate first note. Its numerical tolerances are unchanged; the
+Legacy zero-state/reset expectations are explicitly retained in the new grid.
+
+Six mutations are checked on temporary copies at the 48 kHz, Standard-quality,
+electrical PANEL point, retaining every scenario and assertion of the test.
+The unmodified control passes all 28 checks; each mutant fails:
+
+| Deliberate defect | Failed checks |
+| --- | ---: |
+| Disconnect the released-Idle IL selection | 1 |
+| Restore assignment-time filter reset | 1 |
+| Force the new IL at assignment without first resetting | 1 |
+| Replace charge when the IL target changes | 2 |
+| Restore SUSTAIN-II filter reset | 1 |
+| Preserve charge in Legacy instead of its historical IL reset | 2 |
+
+The native M41 EG tile hash is
+`717ac5c00b36468880d9c938fb80d8ce35dd1bb16c5e994c6258c37d8705855a`;
+source-image identity is in the linked target-path evidence. Test and mutation
+logs are stored beside the causal traces under
+`docs/evidence/continuation-2026-10-31/`.
+
+### Phrase diagnostic remains separate
+
+| Rate | Bass Stack retrigger after electrical PANEL | After charge fix | Funky note-off after charge fix | Same window, note-off omitted |
+| ---: | ---: | ---: | ---: | ---: |
+| 44,100 Hz | 0.281583 | 0.281643 | 1.582095 | 1.581942 |
+| 48,000 Hz | 0.297915 | 0.297817 | 1.569018 | 1.601897 |
+| 96,000 Hz | 0.391481 | 0.390698 | 1.227796 | 1.258930 |
+
+The Bass Stack target is met after the separately justified programmer circuit
+integration; charge preservation makes only small further changes. Funky's
+large post-event edge survives the omitted-note-off control, with byte-identical
+pre-event audio, and its score remains above one. This correction closes the
+identified capacitor-assignment mechanism; it does not redefine or conceal
+the remaining note-off score. Full-bank phrase and compatibility evidence is
+reported by the integration run, not inferred from these six rows.
+
+All four focused CTest suites pass, including the complete source-factory
+integration suite at 44.1/48/96/192 kHz and its 222-program Legacy checks.
+The unabridged result is `cold-filter-qualification.txt`.

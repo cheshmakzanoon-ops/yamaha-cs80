@@ -676,8 +676,21 @@ public:
         liveAttack = liveRelease = releaseSelected = false;
     }
 
-    // fromCurrentLevel: circuit-engine reuse of a sounding voice restarts the
-    // attack from the capacitor's present level instead of jumping to IL.
+    // Circuit-engine released TR selects IL even before the first note.
+    // This changes a drive selector only: no capacitor value is assigned.
+    // Existing release timing supplies the bounded evolution in Idle.
+    // M41/IC12 and guide p33; docs/COLD_FILTER_ENVELOPE.md.
+    void selectInitialWhileIdle() noexcept
+    {
+        if (stage == Stage::Idle)
+        {
+            releaseSelected = liveRelease = true;
+            releaseState = value;
+        }
+    }
+
+    // fromCurrentLevel: circuit-engine assignment retains the capacitor's
+    // present level, including a first note before idle IL settling.
     void noteOn(float initialLevel, float attackLevel, float attack, float decay,
                 float release, float sustainLevel, bool fromCurrentLevel = false) noexcept
     {
@@ -722,7 +735,7 @@ public:
             case Stage::Idle:
                 // Completed release is still an IL selection while another
                 // envelope keeps the voice audible. Track without reactivating
-                // the stage; reset/untriggered Idle remains inert.
+                // the stage; an unselected reset Idle remains inert.
                 if (releaseSelected && liveRelease && value != il)
                 {
                     const double c = expD(-6.0 / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
