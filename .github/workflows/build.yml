@@ -107,7 +107,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      PLUGINVAL_VERSION: "1.0.4"
+      PLUGINVAL_VERSION: "2.0.0-beta3"
+      PLUGINVAL_SHA256: "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f"
+      CS80_PLUGINVAL_ATTEMPTS: "1"
     steps:
       # The validation wrapper lives in the repository, so this job needs a
       # checkout even though the plugin itself arrives as an artifact.
@@ -134,6 +136,7 @@ jobs:
           curl -L --fail --retry 3 --retry-delay 2 \
             -o pluginval.zip \
             "https://github.com/Tracktion/pluginval/releases/download/v${PLUGINVAL_VERSION}/pluginval_Linux.zip"
+          echo "${PLUGINVAL_SHA256}  pluginval.zip" | sha256sum --check --strict
           unzip -q pluginval.zip -d pluginval
           test -x pluginval/pluginval
           ./pluginval/pluginval --version | tee pluginval-version.txt
@@ -193,10 +196,9 @@ jobs:
             --args /bin/true > pluginval-gdb-normal-exit.log 2>&1
           echo "Diagnostic exit propagation and normal-inferior guard checked."
 
-      # The wrapper accepts only an explicit SUCCESS. At most three full
-      # attempts are allowed for exit139 after a completed test phase with
-      # neither FAILED nor SUCCESS. Eligibility does not prove the whole suite
-      # finished or identify which component caused the crash.
+      # The pinned Linux host contains JUCE04e167d (RunLoop lifetime fix).
+      # Its CLI always validates in-process. One invocation only: every crash
+      # fails, even after SUCCESS. See docs/evidence/VALIDATOR_HOST_LIFETIME.md.
       - name: Validate VST3 headless
         run: |
           set -euo pipefail
@@ -207,7 +209,6 @@ jobs:
             --executable "$PWD/pluginval/pluginval" -- \
             "$PWD/pluginval/pluginval" \
             --strictness-level 10 \
-            --validate-in-process \
             --skip-gui-tests \
             --timeout-ms 120000 \
             --output-dir "$PWD/pluginval-reports" \
@@ -225,7 +226,6 @@ jobs:
             --executable "$PWD/pluginval/pluginval" -- \
             "$PWD/pluginval/pluginval" \
             --strictness-level 10 \
-            --validate-in-process \
             --timeout-ms 120000 \
             --output-dir "$PWD/pluginval-reports" \
             --output-filename cs80-gui \
@@ -247,7 +247,6 @@ jobs:
             "$PWD/pluginval/pluginval" \
             --random-seed 0x2da72db \
             --strictness-level 10 \
-            --validate-in-process \
             --timeout-ms 120000 \
             --output-dir "$PWD/pluginval-reports" \
             --output-filename cs80-gui-seed-regression \
@@ -291,7 +290,6 @@ jobs:
             --args ./pluginval/pluginval \
             "${seed_args[@]}" \
             --strictness-level 10 \
-            --validate-in-process \
             --timeout-ms 120000 \
             --output-dir pluginval-diagnostic-reports \
             --output-filename cs80-gui-gdb \
@@ -341,7 +339,6 @@ jobs:
             env LD_PRELOAD="$PWD/pluginval-trace-tools/fault-trace.so" \
             ./pluginval/pluginval "${seed_args[@]}" \
             --strictness-level 10 \
-            --validate-in-process \
             --timeout-ms 120000 \
             --output-dir "$PWD/pluginval-trace-reports" \
             --output-filename cs80-gui-trace \
