@@ -455,7 +455,7 @@ void buildLibrary(std::vector<FactoryPreset>& out)
         strings().wave(Both, false, true).pw(I, 0.55f, 0.55f, 0.42f).pw(II, 0.58f, 0.5f, 0.31f));
     add("Thin Strings", "Strings", {},
         "Heavy high-pass for a thin, distant string line.",
-        strings().hpf(Both, 900.0f, 0.1f).lpf(Both, 5200.0f, 0.06f));
+        strings().hpf(Both, 900.0f, 0.1f).lpf(Both, 5200.0f, 0.06f).level(Both, 1.0f, 1.0f));
     add("Dark Strings", "Strings", {},
         "Low cutoff and negative brilliance for sombre strings.",
         strings().lpf(Both, 1500.0f, 0.1f).brill(-0.4f));
@@ -592,7 +592,7 @@ void buildLibrary(std::vector<FactoryPreset>& out)
         pad().feet(II, f2).hpf(II, 1200.0f).mix(0.35f).chorus(0.85f, 0.6f));
     add("Low Drone", "Pads", { "feet-layer" },
         "Both ranks at 16' with a low cutoff: a sustained drone.",
-        pad().feet(Both, f16).lpf(Both, 500.0f, 0.2f).eg(Both, 1.5f, 3.0f, 1.0f, 3.0f));
+        pad().feet(Both, f16).lpf(Both, 500.0f, 0.2f).eg(Both, 1.5f, 3.0f, 1.0f, 3.0f).level(Both, 0.85f, 0.8f));
     add("Ether Pad", "Pads", { "noise", "sine" },
         "Sine plus a little noise, very soft.",
         pad().wave(Both, false, false, 0.8f, 0.08f).feet(II, f4));
@@ -610,7 +610,7 @@ void buildLibrary(std::vector<FactoryPreset>& out)
         pad().lpf(Both, 900.0f, 0.2f).brill(-0.3f).detune(16.0f).eg(Both, 1.2f, 2.5f, 0.85f, 3.0f));
     add("Arctic Pad", "Pads", { "chorus" },
         "Bright, high-passed and icy.",
-        pad().hpf(Both, 500.0f, 0.1f).lpf(Both, 5000.0f, 0.1f).chorus(0.8f, 0.7f));
+        pad().hpf(Both, 500.0f, 0.1f).lpf(Both, 5000.0f, 0.1f).chorus(0.8f, 0.7f).level(Both, 0.9f, 0.85f));
 
     // ================================================================= Polysynth
     add("Poly Stab", "Polysynth", { "velocity" },
