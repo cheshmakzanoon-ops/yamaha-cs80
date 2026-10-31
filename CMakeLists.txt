@@ -225,6 +225,9 @@ if (CS80_BUILD_TESTS)
     add_executable(cs80_oversampling_tests tests/OversamplingTests.cpp)
     target_link_libraries(cs80_oversampling_tests PRIVATE cs80_core)
     add_test(NAME cs80_oversampling_tests COMMAND cs80_oversampling_tests)
+    add_executable(cs80_smoothing_tests tests/SmoothingTests.cpp)
+    target_link_libraries(cs80_smoothing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_smoothing_tests COMMAND cs80_smoothing_tests)
 
     # [ws3-keyboard] register this workstream's core tests below this line.
 

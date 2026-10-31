@@ -221,8 +221,16 @@ struct Pipeline
             }
             source = lerp(static_cast<float>(nodes.x), static_cast<float>(nodes.y), wetMix);
             const auto stereo = chorus.process(source, source, chorusSpeed, chorusDepth, true, false);
-            volume += (volumeTarget-volume)*0.003f;
-            const float gain = volume*4.0f*expression;
+            // ws2 parameter smoothing (intentional circuit-engine change): VOLUME
+            // and the expression gain follow the declared 5 ms one-pole (the
+            // former 0.003 per-sample volume constant was rate dependent),
+            // starting on their targets at the first sample; the PRA optical cell
+            // reads the pedal target.
+            const double k = smoothingCoefficient(kControlSmoothingSeconds, rate);
+            if (!gainSnapped) { gainExpression.snap(expression); volumeSmoother.snap(volume); gainSnapped = true; }
+            volume = static_cast<float>(volumeSmoother.advance(volumeTarget, k));
+            const float smoothed = static_cast<float>(gainExpression.advance(expression, k));
+            const float gain = volume*4.0f*smoothed;
             // Phase 1.5 gain staging: fixed reference, then inferred driver headroom.
             const auto stage = [](float x) {
                 return static_cast<float>(circuitOutputDriver(static_cast<double>(x) * kCircuitOutputReference));
@@ -237,6 +245,8 @@ struct Pipeline
     }
     double rate;
     float phase, volume, volumeTarget, expression = 1.0f;
+    ControlSmoother gainExpression, volumeSmoother;
+    bool gainSnapped = false;
     bool wet;
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;
     Adsr envelope;
@@ -347,6 +357,10 @@ void lifecycleAndAlwaysRunning()
     // The expression multiplier precedes coupling: muting the source cannot
     // silently erase or freeze the charged output-capacitor decay.
     e.setExpression(0.0f);
+    // ws2 parameter smoothing (intentional circuit-engine change): the
+    // expression gain lands exactly on zero through its 5 ms one-pole; the
+    // coupling capacitor (tau about 54 ms) still holds charge to drain.
+    render(e, 9600); // 0.2 s at 48 kHz: 40 tau
     auto before = e.getOutputTapState(2);
     render(e, 1);
     auto after = e.getOutputTapState(2);

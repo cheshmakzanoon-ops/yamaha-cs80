@@ -9,6 +9,7 @@
 #include "BbdChorus.h"
 #include "OutputTapCircuit.h"
 #include "Oversampling.h"
+#include "Smoothing.h"
 #include "SourceFactoryTones.h"
 
 #include <array>
@@ -343,6 +344,13 @@ private:
     // prepare() has reserved buffers for maximumOversamplingFactor(hostRate).
     void configureInternalRate();
     bool updateOversampling();
+    // Circuit-engine control smoothing (Smoothing.h). The settings fields are
+    // retargeted after each buildSettings and advanced once per internal
+    // sample; performance controllers are smoothed for the duration of one
+    // internal sample and their event-set targets restored afterwards.
+    void retargetSmoothedSettings() noexcept;
+    void beginSmoothedControls() noexcept;
+    void endSmoothedControls() noexcept;
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
@@ -397,6 +405,21 @@ private:
     int oversample = 2;
     bool prepared = false;
     bool nonRealtime = false;
+    SmootherBank settingsSmoothing;
+    struct ControllerSmoothing
+    {
+        ControlSmoother bend, modWheel, expression, ribbon;
+        std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
+        std::array<uint64_t, kNumVoices> age {};
+        float bendTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
+        // Expression is smoothed at its gain stage only: the PRA optical cell
+        // already lags the pedal (its inferred 12 ms law), so it reads the target.
+        float expressionGain = 1.0f;
+        std::array<float, kNumVoices> pressureTarget {}, mpeBendTarget {}, timbreTarget {};
+        bool snapPending = true;
+    } controllerSmoothing;
+    double controlSmoothing = 1.0;  // one-pole coefficient at the internal rate
+    float subSpeedSmoothing = 0.0015f; // legacy 0.0015 as a time constant
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;

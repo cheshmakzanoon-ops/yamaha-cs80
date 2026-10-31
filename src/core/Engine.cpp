@@ -6,6 +6,40 @@
 namespace cs80
 {
 
+namespace
+{
+// Every continuous control the circuit engine smooths, in ONE list (field order
+// is the SmootherBank slot order). Absent on purpose: switches and choices,
+// envelope times and levels (the RC envelopes already move continuously toward
+// a new level), time controls (portamento, release, envelope scale) and the
+// SUB speeds, which keep their own smoothing.
+template <class Visit>
+void visitSmoothedSettings(GlobalSettings& g, RankSettings* ranks, int rankCount, Visit&& visit)
+{
+    for (float* field : { &g.masterTune, &g.detuneCents, &g.mix, &g.brilliance, &g.resonance, &g.volume,
+                          &g.initBend, &g.subExtLevel, &g.subVco, &g.subVcf, &g.subVca, &g.subAtVco,
+                          &g.subAtVcf, &g.ringSpeed, &g.ringDepth, &g.ringAmount, &g.chorusSpeed,
+                          &g.chorusDepth, &g.voiceDispersion, &g.drift, &g.analogNoise, &g.tuningRef,
+                          &g.modWheelSub, &g.modWheelVcf, &g.kbdBrillianceLow, &g.kbdBrillianceHigh,
+                          &g.kbdLevelLow, &g.kbdLevelHigh })
+        visit(*field);
+    for (int i = 0; i < 3; ++i)
+    {
+        visit(g.lfoRate[i]);
+        visit(g.lfoDepth[i]);
+        visit(g.fxMix[i]);
+    }
+    for (int rank = 0; rank < rankCount; ++rank)
+    {
+        auto& r = ranks[rank];
+        for (float* field : { &r.sine, &r.noise, &r.pulseWidth, &r.pwmSpeed, &r.pwmDepth, &r.hpfEffectiveCv,
+                              &r.hpfRes, &r.lpfEffectiveCv, &r.lpfRes, &r.vcfLevel, &r.vLevel, &r.initBrill,
+                              &r.initLevel, &r.afterBrill, &r.afterLevel, &r.pan })
+            visit(*field);
+    }
+}
+} // namespace
+
 Engine::Engine()
 {
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
@@ -87,6 +121,10 @@ void Engine::configureInternalRate()
     // Explicitly provisional switch/pedal smoothing, sample-rate independent.
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
+    // Circuit-engine control smoothing (Smoothing.h), in time, not per sample.
+    controlSmoothing = smoothingCoefficient(kControlSmoothingSeconds, internalRate);
+    settingsSmoothing.setCoefficient(controlSmoothing);
+    subSpeedSmoothing = (float) smoothingCoefficient(legacyPerSampleSeconds(0.0015), internalRate);
 }
 
 // True when the effective factor changed and the rate-dependent state was
@@ -182,6 +220,9 @@ void Engine::reset()
     arpClock = 0.0f;
     arpGateTime = 0.0f;
     dcL = dcR = dcInL = dcInR = 0.0f;
+    // Smoothed controls start at their targets again (no glide after a reset).
+    settingsSmoothing.requestSnap();
+    controllerSmoothing.snapPending = true;
 }
 
 void Engine::setParams(const ParamValues& values)
@@ -285,6 +326,10 @@ void Engine::applyParams(const ParamValues& values)
         for (auto& slot : fxSlots)
             slot.resetDamping();
     }
+    // Circuit engine: the new settings become smoothing targets; the fields keep
+    // the running values (exactly the targets until audio has been rendered).
+    if (usesSourceModels(global.renderPolicy))
+        retargetSmoothedSettings();
 
     // Gate edges act when parameters are applied, not by per-sample polling, so
     // the outcome does not depend on how the host partitions a render.
@@ -1191,12 +1236,99 @@ void Engine::setRibbon(float value)
     ribbon = clampf(value, -1.0f, 1.0f);
 }
 
+void Engine::retargetSmoothedSettings() noexcept
+{
+    int slot = 0;
+    visitSmoothedSettings(global, rankSettings, kNumRanks,
+                          [&](float& field) { field = settingsSmoothing.retarget(slot++, field); });
+}
+
+void Engine::beginSmoothedControls() noexcept
+{
+    if (settingsSmoothing.snapIsPending())
+    {
+        int slot = 0;
+        visitSmoothedSettings(global, rankSettings, kNumRanks,
+                              [&](float& field) { field = settingsSmoothing.snapToTarget(slot++); });
+        settingsSmoothing.endSnap();
+    }
+    else if (!settingsSmoothing.settled())
+    {
+        int slot = 0;
+        settingsSmoothing.beginAdvance();
+        visitSmoothedSettings(global, rankSettings, kNumRanks,
+                              [&](float& field) { field = settingsSmoothing.advance(slot++); });
+        settingsSmoothing.endAdvance();
+    }
+
+    // Controllers: keep the event-set targets, use smoothed values for this
+    // sample only. A settled smoother returns its target bit for bit.
+    auto& c = controllerSmoothing;
+    const double k = controlSmoothing;
+    const float ribbonTotal = ribbon + params[P_ribbon];
+    c.bendTarget = globalBend;
+    c.modWheelTarget = modWheel;
+    c.ribbonTarget = ribbon;
+    if (c.snapPending)
+    {
+        c.bend.snap(globalBend);
+        c.modWheel.snap(modWheel);
+        c.expression.snap(expression);
+        c.ribbon.snap(ribbonTotal);
+    }
+    globalBend = (float) c.bend.advance(globalBend, k);
+    modWheel = (float) c.modWheel.advance(modWheel, k);
+    c.expressionGain = (float) c.expression.advance(expression, k);
+    const double ribbonSmoothed = c.ribbon.advance(ribbonTotal, k);
+    if (!c.ribbon.atTarget(ribbonTotal))
+        ribbon = (float) (ribbonSmoothed - params[P_ribbon]);
+    for (int vi = 0; vi < kNumVoices; ++vi)
+    {
+        auto& v = voices[(size_t) vi];
+        c.pressureTarget[(size_t) vi] = v.pressure;
+        c.mpeBendTarget[(size_t) vi] = v.mpeBend;
+        c.timbreTarget[(size_t) vi] = v.timbre;
+        // A new note starts from its own touch, bend and timbre, not a glide
+        // from the previous note on this circuit.
+        if (c.snapPending || c.age[(size_t) vi] != v.age)
+        {
+            c.age[(size_t) vi] = v.age;
+            c.pressure[(size_t) vi].snap(v.pressure);
+            c.mpeBend[(size_t) vi].snap(v.mpeBend);
+            c.timbre[(size_t) vi].snap(v.timbre);
+        }
+        v.pressure = (float) c.pressure[(size_t) vi].advance(v.pressure, k);
+        v.mpeBend = (float) c.mpeBend[(size_t) vi].advance(v.mpeBend, k);
+        v.timbre = (float) c.timbre[(size_t) vi].advance(v.timbre, k);
+    }
+    c.snapPending = false;
+}
+
+void Engine::endSmoothedControls() noexcept
+{
+    auto& c = controllerSmoothing;
+    globalBend = c.bendTarget;
+    modWheel = c.modWheelTarget;
+    ribbon = c.ribbonTarget;
+    for (int vi = 0; vi < kNumVoices; ++vi)
+    {
+        auto& v = voices[(size_t) vi];
+        v.pressure = c.pressureTarget[(size_t) vi];
+        v.mpeBend = c.mpeBendTarget[(size_t) vi];
+        v.timbre = c.timbreTarget[(size_t) vi];
+    }
+}
+
 void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
 {
     const float sr = (float) internalRate;
     const float invSr = 1.0f / sr;
 
     updateArpeggiator(invSr);
+    // Circuit engine: smoothed settings and controllers for this sample.
+    const bool smoothControls = usesSourceModels(global.renderPolicy);
+    if (smoothControls)
+        beginSmoothedControls();
 
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
@@ -1247,7 +1379,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // Preserve the shipped waveform mapping, smoothing and RNG stream.
         float speed = global.subSpeed;
         speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
-        subSpeedSmoothed += (speed - subSpeedSmoothed) * 0.0015f;
+        // Legacy keeps its per-sample constant; the circuit engine its time constant.
+        subSpeedSmoothed += (speed - subSpeedSmoothed)
+                            * (usesSourceModels(global.renderPolicy) ? subSpeedSmoothing : 0.0015f);
         subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
     }
     driftPhase += 0.031f * invSr;
@@ -1569,8 +1703,12 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     dcL = dcOutL;
     dcR = dcOutR;
 
-    smoothedVolume += (global.volume - smoothedVolume) * 0.003f;
-    const float gain = smoothedVolume * 4.0f * expression;
+    // Legacy keeps its historical per-sample constant. The circuit engine's
+    // volume is already smoothed with the other controls, in time.
+    smoothedVolume = usesSourceModels(global.renderPolicy)
+                         ? global.volume : smoothedVolume + (global.volume - smoothedVolume) * 0.003f;
+    const float gain = smoothedVolume * 4.0f
+                       * (smoothControls ? controllerSmoothing.expressionGain : expression);
     // Source policies remove the arbitrary output conditioner, not the
     // provisional filter saturation law. No calibrated output/headroom claim.
     outL = usesSourceModels(global.renderPolicy) ? mixL * gain : softClip(dcOutL * gain);
@@ -1609,6 +1747,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float m = (outL + outR) * 0.5f;
         outL = outR = m;
     }
+    if (smoothControls)
+        endSmoothedControls();
 }
 
 void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)

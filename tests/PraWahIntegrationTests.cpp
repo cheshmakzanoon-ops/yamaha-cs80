@@ -315,6 +315,13 @@ struct PipelineOracle
             const auto ch = isolated ? bbd.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo)
                                      : chorus.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo);
             const std::array<float, 2> stereo {ch.l, ch.r};
+            // ws2 parameter smoothing (intentional circuit-engine change): the
+            // circuit engine's expression gain follows the declared 5 ms
+            // one-pole from the first sample; legacy and the PRA keep the target.
+            if (!gainSnapped) { gainExpression.snap(expression); gainSnapped = true; }
+            const float gainExpressionNow = isolated
+                ? static_cast<float>(gainExpression.advance(expression, smoothingCoefficient(kControlSmoothingSeconds, rate)))
+                : expression;
             for (int channel = 0; channel < 2; ++channel)
             {
                 const float dc = stereo[channel]-lastInput[channel]
@@ -323,7 +330,7 @@ struct PipelineOracle
                 // PRA receives unscaled waveform; expression acts after chorus
                 // and before the loaded output coupling network. Retain float
                 // source scaling, with no additional absolute active-stage gain.
-                const float source = stereo[channel] * expression;
+                const float source = stereo[channel] * gainExpressionNow;
                 // Phase 1.5 gain staging precedes the loaded output network.
                 const float staged = static_cast<float>(
                     circuitOutputDriver(static_cast<double>(source) * kCircuitOutputReference));
@@ -337,6 +344,8 @@ struct PipelineOracle
     double rate, opticalLog = std::log(2000.0), startLog = std::log(2000.0), targetLog = std::log(2000.0);
     int opticalSamples = 0;
     float phase, expression = 1.0f;
+    ControlSmoother gainExpression;
+    bool gainSnapped = false;
     bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;
     bool chorusOn, tremolo;
