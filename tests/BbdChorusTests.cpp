@@ -26,28 +26,43 @@ void check(bool ok, const char* what)
 }
 
 constexpr double kPi = 3.14159265358979323846;
-// Manufacturer convention: 512 stages, two clock phases per period. Kept as a literal so a
+// Manufacturer convention: 512 stages, two clock phases per period. Kept as literals so a
 // changed library constant cannot also change the expectation.
-constexpr double kPeriodsPerDelay = 256.0;
+// ws4 Step 3 (intentional circuit-engine change): the MN3001 output pair holds each packet
+// for one full period from 256 periods after acquisition, so the delay centre is 256.5
+// periods; 512 transfers at the declared 5e-4 inefficiency; IC5/IC6 loaded by the 1.1 k
+// OUT1/OUT2 recombination; wet trimmed to unit magnitude at 1 kHz.
+constexpr double kPeriodsPerDelay = 256.5;
+constexpr double kLossDelayPeriods = 512 * 5.0e-4 / (1.0 - 5.0e-4); // mean of the loss smear
 constexpr double kWetScale = BbdChorus::kWetGain * BbdChorus::kWetPolarity;
 
-// Analytic OE2 delay path: input LP, BBD delay, output coupling, reconstruction LP,
-// interstage coupling. Both low-pass sections are the printed Sallen-Key transfer.
-Complex skLowPass(double hz)
+// Analytic OE2 delay path: input LP, BBD delay with transfer loss and output hold, output
+// coupling, loaded reconstruction LP, interstage coupling, 1 kHz trim. Both low-pass
+// sections are the printed Sallen-Key transfer with their own source resistance.
+Complex skLowPass(double hz, double r1)
 {
-    const double w = hz / BbdChorus::lowPassHz();
-    return 1.0 / Complex(1.0 - w * w, w / BbdChorus::lowPassQ());
+    const double rc = std::sqrt(r1 * 1.0e4 * 1.8e-9 * 680.0e-12);
+    const double f0 = 1.0 / (2.0 * kPi * rc), q = rc / (680.0e-12 * (r1 + 1.0e4));
+    const double w = hz / f0;
+    return 1.0 / Complex(1.0 - w * w, w / q);
 }
 Complex highPass(double hz, double cornerHz)
 {
     const Complex x(0.0, hz / cornerHz);
     return x / (1.0 + x);
 }
+Complex unnormalizedWet(double hz, double clockHz)
+{
+    const double t = 1.0 / clockHz, w = 2.0 * kPi * hz * t;
+    const Complex loss = std::pow((1.0 - 5.0e-4) / (1.0 - 5.0e-4 * std::polar(1.0, -w)), 512.0);
+    const double hold = hz == 0.0 ? 1.0 : std::sin(kPi * hz * t) / (kPi * hz * t);
+    const double r1 = 1.0e4 + 1100.0 * 1.0e5 / (1100.0 + 1.0e5);
+    return skLowPass(hz, 1.0e4) * skLowPass(hz, r1) * highPass(hz, 1.0 / (2.0 * kPi * 101100.0 * 1.0e-6))
+         * highPass(hz, 159.1549) * loss * hold * std::polar(1.0, -2.0 * kPi * hz * kPeriodsPerDelay * t);
+}
 Complex expectedWet(double hz, double clockHz)
 {
-    const double tau = kPeriodsPerDelay / clockHz;
-    return skLowPass(hz) * skLowPass(hz) * highPass(hz, BbdChorus::kOutputCouplingHz)
-         * highPass(hz, BbdChorus::kInterstageHighPassHz) * std::polar(1.0, -2.0 * kPi * hz * tau);
+    return unnormalizedWet(hz, clockHz) / std::abs(unnormalizedWet(1000.0, clockHz));
 }
 
 // Wet-only signal in chorus mode: out = in + kWet * kPolarity * wet.
@@ -102,13 +117,19 @@ struct ClockOracle
 {
     double rate, lfo = 0.0, periods = 0.0;
     std::vector<double> count;                        // count[n] = clock periods at sample n
+    // ws4 Step 3 (intentional change): OE1 DO1 at SPEED and DO2 at 0.056/0.55 of it reach the
+    // BA617 clock node through two equal 100 k feeds, so the clock follows their mean.
+    double slow = 0.0;
     ClockOracle(double sampleRate, float speed, float depth, int samples) : rate(sampleRate)
     {
         for (int n = 0; n < samples; ++n)
         {
             lfo += (double) speed / rate;
             lfo -= std::floor(lfo);
-            const double octaves = (double) depth * BbdChorus::kClockModulationOctaves * std::sin(2.0 * kPi * lfo);
+            slow += (double) speed * (0.056 / 0.55) / rate;
+            slow -= std::floor(slow);
+            const double octaves = (double) depth * BbdChorus::kClockModulationOctaves * 0.5
+                                 * (std::sin(2.0 * kPi * lfo) + std::sin(2.0 * kPi * slow));
             periods += BbdChorus::kNominalClockHz * std::exp2(octaves) / rate;
             count.push_back(periods);
         }
@@ -116,7 +137,7 @@ struct ClockOracle
     // Fractional sample index at which 256 more periods have elapsed since sample n0.
     double arrival(int n0) const
     {
-        const double target = count[(size_t) n0] + kPeriodsPerDelay;
+        const double target = count[(size_t) n0] + kPeriodsPerDelay + kLossDelayPeriods;
         size_t i = (size_t) n0;
         while (i + 1 < count.size() && count[i + 1] < target)
             ++i;
@@ -162,9 +183,10 @@ void delayFollowsIntegratedClock()
         }
     }
     // Full depth must move the delay roughly twice as far as half depth at a fixed phase.
-    const ClockOracle half(rate, speed, 0.5f, 21000), full(rate, speed, 1.0f, 21000), flat(rate, speed, 0.0f, 21000);
+    // The window spans a DO1 peak; the two oscillators share the excursion (ws4 Step 3).
+    const ClockOracle half(rate, speed, 0.5f, 45000), full(rate, speed, 1.0f, 45000), flat(rate, speed, 0.0f, 45000);
     double widest = 0.0;
-    for (int n = 10000; n < 20000; n += 97)
+    for (int n = 10000; n < 44000; n += 97)
         widest = std::max(widest, std::abs(full.arrival(n) - flat.arrival(n)));
     check(widest > 50.0, "depth 1 swings the delay by tens of samples at 96 kHz");
     check(std::abs(half.arrival(15000) - flat.arrival(15000)) < std::abs(full.arrival(15000) - flat.arrival(15000)) + 1e-9,
@@ -185,22 +207,24 @@ void policyCompatibility()
         }
         check(exact, "chorus off passes input bit-exactly");
     }
-    // Tremolo keeps the generic amplitude law of the legacy chorus, bit for bit.
+    // ws4 Step 3 (intentional change): TREMOLO is the OE1 four-VCA law, no longer the generic
+    // legacy amplitude law (its trajectory is checked against the OE1 truth model in
+    // cs80_oe2_stereo_chorus_tests).
     {
         BbdChorus bbd;
         Chorus legacy;
         bbd.prepare(96000.0f);
         legacy.prepare(96000.0f);
-        bool same = true;
-        for (int n = 0; n < 6000; ++n)
+        bool differs = false, finite = true;
+        for (int n = 0; n < 96000; ++n)
         {
             const float in = 0.4f * std::sin(0.031f * (float) n);
-            const bool on = n % 2500 < 2000;
-            const auto a = bbd.process(in, 0.5f * in, 1.7f, 0.8f, on, true);
-            const auto b = legacy.process(in, 0.5f * in, 1.7f, 0.8f, on, true);
-            same = same && a.l == b.l && a.r == b.r;
+            const auto a = bbd.process(in, 0.5f * in, 1.7f, 0.8f, true, true);
+            const auto b = legacy.process(in, 0.5f * in, 1.7f, 0.8f, true, true);
+            differs = differs || std::abs(a.l - b.l) > 1e-3f;
+            finite = finite && std::isfinite(a.l) && std::isfinite(a.r);
         }
-        check(same, "tremolo output is identical to the legacy law");
+        check(differs && finite, "tremolo uses the OE1 VCA law, not the legacy generic law");
     }
     // The delay path is state-continuous: enabling it after a tone is already filled
     // gives a wet signal at once, where a freshly reset chain is still empty.
@@ -217,16 +241,22 @@ void policyCompatibility()
         }
         check(warmPeak > 0.01f && coldPeak < 0.001f, "delay path keeps running while the effect is off");
     }
-    // Reset empties the chain.
+    // Reset empties the chain. ws4 Step 3: the chain now carries its own noise, so "empty"
+    // means identical, sample for sample, to a freshly prepared chorus.
     {
-        Rig rig(96000.0);
+        Rig rig(96000.0), fresh(96000.0);
         for (int n = 0; n < 5000; ++n)
             rig.wet(0.5f * std::sin(0.06f * (float) n), 0.55f, 0.55f);
         rig.chorus.reset();
+        bool same = true;
         float peak = 0.0f;
-        for (int n = 0; n < 100; ++n)
-            peak = std::max(peak, std::abs(rig.wet(0.0f, 0.55f, 0.55f)));
-        check(peak == 0.0f, "reset empties the delay chain");
+        for (int n = 0; n < 400; ++n)
+        {
+            const float a = rig.wet(0.0f, 0.55f, 0.55f), b = fresh.wet(0.0f, 0.55f, 0.55f);
+            same = same && a == b;
+            peak = std::max(peak, std::abs(a));
+        }
+        check(same && peak < 1e-3f, "reset empties the delay chain");
     }
 }
 

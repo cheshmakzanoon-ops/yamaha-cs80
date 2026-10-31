@@ -90,4 +90,38 @@ inline Response solve(const Boundary& boundary, double frequencyHz, Complex sour
         if (!finite(v)) throw std::overflow_error("PRA wah: nonfinite derived result");
     return r;
 }
+// ---- Optical cell dynamics truth (ws4-circuits Step 4) -------------------------------
+// DECLARED LDR model, as a continuous ODE in log resistance l = ln R:
+//   dl/dt = (lt(t) - l) / tau,   tau = attackSeconds if lt(t) < l (cell brightening,
+//                                 resistance falling), else decaySeconds (darkening).
+// Integrated with classical RK4 at a caller-chosen fine step. Not lamp/LDR physics data.
+struct OpticalCell
+{
+    double attackSeconds = unknown;
+    double decaySeconds = unknown;
+};
+inline double opticalSlope(const OpticalCell& cell, double l, double target)
+{
+    const double tau = target < l ? cell.attackSeconds : cell.decaySeconds;
+    return (target - l) / tau;
+}
+// Advance l from t0 to t1 with `steps` RK4 steps; target(t) returns ln R_target at t.
+template <class Target>
+double integrateOptical(const OpticalCell& cell, double l, Target target, double t0, double t1, int steps)
+{
+    if (!(cell.attackSeconds > 0) || !(cell.decaySeconds > 0) || !std::isfinite(cell.attackSeconds)
+        || !std::isfinite(cell.decaySeconds) || steps < 1 || !(t1 >= t0))
+        throw std::invalid_argument("PRA optical: explicit positive time constants required");
+    const double h = (t1 - t0) / steps;
+    for (int k = 0; k < steps; ++k)
+    {
+        const double t = t0 + k * h;
+        const double k1 = opticalSlope(cell, l, target(t));
+        const double k2 = opticalSlope(cell, l + 0.5 * h * k1, target(t + 0.5 * h));
+        const double k3 = opticalSlope(cell, l + 0.5 * h * k2, target(t + 0.5 * h));
+        const double k4 = opticalSlope(cell, l + h * k3, target(t + h));
+        l += h * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0;
+    }
+    return l;
+}
 } // namespace cs80::reference::pra_wah
