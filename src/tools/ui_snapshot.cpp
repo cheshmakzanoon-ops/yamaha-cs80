@@ -2025,7 +2025,7 @@ int main(int argc, char** argv)
             processor.setParamValue(index, cs80::paramDef(index).def);
 
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 245, "245 host parameters");
+          && Cs80AudioProcessor::hostParameterCount >= 245, "at least the 245 shipped host parameters");
     for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),

@@ -218,6 +218,22 @@ if (CS80_BUILD_TESTS)
                               ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-pluginval-linux.sh)
         set_tests_properties(cs80_validator_retry_tests PROPERTIES TIMEOUT 30)
     endif()
+
+    # [ws1-voice] register this workstream's core tests below this line.
+
+    # [ws2-engine] register this workstream's core tests below this line.
+
+    # [ws3-keyboard] register this workstream's core tests below this line.
+
+    # [ws4-circuits] register this workstream's core tests below this line.
+
+    # [ws5-modern] register this workstream's core tests below this line.
+
+    # [ws6-library] register this workstream's core tests below this line.
+
+    # [ws7-panel] register this workstream's core tests below this line.
+
+    # [ws8-studio] register this workstream's core tests below this line.
 endif()
 
 add_executable(cs80_render src/tools/render_cli.cpp)
@@ -281,13 +297,32 @@ if (CS80_BUILD_PLUGIN)
         PRODUCT_NAME "CS-80 Reference"
     )
 
-    target_sources(CS80Reference PRIVATE
+    # Editor and processor sources shared by the plugin and the snapshot tool.
+    set(CS80_PLUGIN_SOURCES
         src/plugin/PluginProcessor.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/UiComponents.cpp
         src/plugin/AdvancedPanel.cpp
         src/plugin/PresetBrowser.cpp
+
+        # [ws1-voice] add this workstream's plugin sources below this line.
+
+        # [ws2-engine] add this workstream's plugin sources below this line.
+
+        # [ws3-keyboard] add this workstream's plugin sources below this line.
+
+        # [ws4-circuits] add this workstream's plugin sources below this line.
+
+        # [ws5-modern] add this workstream's plugin sources below this line.
+
+        # [ws6-library] add this workstream's plugin sources below this line.
+
+        # [ws7-panel] add this workstream's plugin sources below this line.
+
+        # [ws8-studio] add this workstream's plugin sources below this line.
+
     )
+    target_sources(CS80Reference PRIVATE ${CS80_PLUGIN_SOURCES})
     target_include_directories(CS80Reference PRIVATE src)
     target_link_libraries(CS80Reference PRIVATE
         cs80_core
@@ -306,11 +341,7 @@ if (CS80_BUILD_PLUGIN)
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
     target_sources(CS80Snapshots PRIVATE
-        src/plugin/PluginProcessor.cpp
-        src/plugin/PluginEditor.cpp
-        src/plugin/UiComponents.cpp
-        src/plugin/AdvancedPanel.cpp
-        src/plugin/PresetBrowser.cpp
+        ${CS80_PLUGIN_SOURCES}
         src/tools/ui_snapshot.cpp
     )
     target_include_directories(CS80Snapshots PRIVATE src)

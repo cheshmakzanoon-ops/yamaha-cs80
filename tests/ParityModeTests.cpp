@@ -49,7 +49,7 @@ std::vector<float> phrase(const ParamValues& p, bool controllers = false)
 int main()
 {
     ParamValues p;
-    check(P_parityMode == 137 && P_numParams == 139, "core append-only index");
+    check(P_parityMode == 137 && P_numParams >= 139, "core append-only index");
     check(paramId(P_parityMode) == "parity_mode" && p[P_parityMode] == 0.0f,
           "stable ID and neutral default");
     auto explicitOff = p;

@@ -16,7 +16,7 @@ void testSourcePerformanceHost(Check&& check)
     Cs80AudioProcessor host;
     auto* source = host.getAPVTS().getParameter("source_performance");
     auto* isolation = host.getAPVTS().getParameter("parity_mode");
-    check(source != nullptr && host.getParameters().size() == 245
+    check(source != nullptr && host.getParameters().size() >= 245
               && host.getParameters()[244] == source && host.getParameters()[243] == isolation,
           "source performance appends host244 without moving parity243");
     check(source != nullptr && dynamic_cast<juce::AudioParameterBool*>(source) != nullptr

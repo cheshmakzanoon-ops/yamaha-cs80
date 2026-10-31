@@ -225,7 +225,7 @@ void routingAndExtensions(double rate)
 }
 int main()
 {
-    check(P_parityMode == 137 && P_sourcePerformance == 138 && P_numParams == 139,
+    check(P_parityMode == 137 && P_sourcePerformance == 138 && P_numParams >= 139,
           "core parameter indexes are append-only");
     check(paramId(P_sourcePerformance) == "source_performance" && ParamValues{}[P_sourcePerformance] == 0,
           "source-performance has stable ID and legacy default");

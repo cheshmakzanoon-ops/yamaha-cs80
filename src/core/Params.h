@@ -149,6 +149,23 @@ enum : int
     // Opt-in source-model audio with the existing modern performance overlays.
     // Append only: parity keeps its index and its independent isolation meaning.
     P_sourcePerformance,
+
+    // [ws1-voice] append this workstream's core parameters below this line.
+
+    // [ws2-engine] append this workstream's core parameters below this line.
+
+    // [ws3-keyboard] append this workstream's core parameters below this line.
+
+    // [ws4-circuits] append this workstream's core parameters below this line.
+
+    // [ws5-modern] append this workstream's core parameters below this line.
+
+    // [ws6-library] append this workstream's core parameters below this line.
+
+    // [ws7-panel] append this workstream's core parameters below this line.
+
+    // [ws8-studio] append this workstream's core parameters below this line.
+
     P_numParams
 };
 
@@ -303,7 +320,23 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "foot_mode", "PEDAL EXP / WAH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" },
     { "parity_mode", "PARITY MODE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" },
-    { "source_performance", "SOURCE PERFORMANCE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" }
+    { "source_performance", "SOURCE PERFORMANCE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" },
+    // [ws1-voice] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws2-engine] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws3-keyboard] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws4-circuits] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws5-modern] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws6-library] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws7-panel] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws8-studio] append this workstream's ParamDefs below this line (same order as the enum).
+
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

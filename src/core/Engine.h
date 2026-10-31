@@ -30,6 +30,12 @@ inline constexpr bool usesSourceModels(RenderPolicy policy) noexcept
 {
     return policy != RenderPolicy::legacy;
 }
+// PURE CS-80 is the isolation policy: every non-original (modern-layer)
+// feature must be inert under it, whatever its own parameters say.
+inline constexpr bool isPureCs80(RenderPolicy policy) noexcept
+{
+    return policy == RenderPolicy::isolation;
+}
 
 // One render-thread transaction: effective parameters (including render policy)
 // and existing rank-local selector identities, not a second saved bank/authority.

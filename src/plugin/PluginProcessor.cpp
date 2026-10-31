@@ -236,6 +236,23 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     layout.add(std::make_unique<CanonicalBoolParameter>(
         juce::ParameterID { parameterId(cs80::P_sourcePerformance), 7 },
         "Source performance (not calibrated)", false));
+
+    // [ws1-voice] append this workstream's host parameters below this line, AU version hint 8.
+
+    // [ws2-engine] append this workstream's host parameters below this line, AU version hint 9.
+
+    // [ws3-keyboard] append this workstream's host parameters below this line, AU version hint 10.
+
+    // [ws4-circuits] append this workstream's host parameters below this line, AU version hint 11.
+
+    // [ws5-modern] append this workstream's host parameters below this line, AU version hint 12.
+
+    // [ws6-library] append this workstream's host parameters below this line, AU version hint 13.
+
+    // [ws7-panel] append this workstream's host parameters below this line, AU version hint 14.
+
+    // [ws8-studio] append this workstream's host parameters below this line, AU version hint 15.
+
     return layout;
 }
 
