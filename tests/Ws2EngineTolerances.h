@@ -31,6 +31,17 @@ inline constexpr double kCrossFactorSineRelativeRms = 1.0e-2;
 // offset between rates that drifts ~0.01 cycle by 0.5 s. That is an oscillator
 // property (ws1), not a decimator mismatch; the tolerance value is unchanged.
 inline constexpr int kCrossFactorWindowSamples = 4096;
+// Re-registered metric (fourth commit, before re-evaluation): the onset window
+// also FAILED at HQ (1.08e-2). Root cause: Oscillator::tick advances its phase
+// before producing a sample, so a voice leads by one INTERNAL sample, 1/2 host
+// sample at 2x and 1/8 at 8x: a 0.375-sample offset, 2 pi 220 Hz * 0.375 /
+// 48 kHz = 1.08e-2 exactly. A waveform difference cannot separate that
+// convention from a decimator fault, so the gate now measures what it is for:
+// the cross-correlation lag between factors (any one-internal-sample convention
+// is below 0.5 host sample; a decimator delay mismatch is at least 1) and the
+// RMS level over the window (passband/gain agreement).
+inline constexpr double kCrossFactorLagSamples = 0.5;
+inline constexpr double kCrossFactorLevelRelative = 1.0e-2;
 
 // --- Parameter smoothing ---------------------------------------------------
 // Declared one-pole time constant for continuous controls (engineering choice).
