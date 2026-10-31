@@ -319,6 +319,11 @@ if (CS80_BUILD_PLUGIN)
 
         # [ws7-panel] add this workstream's plugin sources below this line.
         src/plugin/ArtCommon.cpp
+        src/plugin/PanelWidgets.cpp
+        src/plugin/ChannelRow.cpp
+        src/plugin/CentreRow.cpp
+        src/plugin/PerformanceDeck.cpp
+        src/plugin/MemoryLid.cpp
 
         # [ws8-studio] add this workstream's plugin sources below this line.
 
