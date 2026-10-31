@@ -6,6 +6,8 @@ An independent software reconstruction of the Yamaha CS-80, written in C++20 wit
 
 **State on 2026-10-31:** `main` integrates the eight workstreams of the [improvement plan](docs/IMPROVEMENT_PLAN.md) ([#2](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/2), merge [`ec72eed`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/ec72eedb297fce0e5b9803ec96809f0b072f6aa5)) and the CI fixes that followed ([#3](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/3), merge [`55bb043`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/55bb04314231a8da78554317095cbc6bbf4ff092)). Per-subsystem detail, the scorecard and the open issues are in [docs/STATUS.md](docs/STATUS.md).
 
+**Plan completion and handover (PDF):** [docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf](docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf) lists what the improvement plan delivered, what is still open (CPU targets, one retrigger-click outlier, the intermittent Linux pluginval exit 139, and a few partial features), and step by step how the next engineer should finish each item.
+
 ## Downloads
 
 Development builds from `main` at [`55bb043`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/55bb04314231a8da78554317095cbc6bbf4ff092); later commits on `main` change documentation only. **They are unsigned and not notarized**: the release run found no signing secrets, so the macOS package is labelled UNSIGNED and Gatekeeper will block it until you allow it, and Windows SmartScreen will warn. GitHub artifact downloads need a signed-in GitHub account and expire under the repository's retention settings (these on 29 January 2027).
