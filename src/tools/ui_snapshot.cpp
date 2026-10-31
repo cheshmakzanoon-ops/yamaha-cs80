@@ -11,6 +11,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/PanelEditorTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -3477,6 +3478,8 @@ int main(int argc, char** argv)
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
+    std::puts("UI SMOKE PHASE: original panel editor (ws7)");
+    cs80::tests::runPanelEditorTests(check, flushGui);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

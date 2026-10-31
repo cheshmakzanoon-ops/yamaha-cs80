@@ -12,6 +12,7 @@
 #include "PerformanceDeck.h"
 #include "MemoryLid.h"
 #include "VoicePlate.h"
+#include "ParameterWatch.h"
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
 #include "UiComponents.h"
@@ -832,8 +833,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         meterTicker.onTick = [this] { if (isShowing()) updateMeter(); };
 
         // Host state/program changes may arrive on non-message threads.
-        // The existing message-thread timer polls metadata and selectors;
-        // never install a processor callback that captures this editor.
+        // The message-thread timer polls metadata and selectors; parameter
+        // changes only raise an atomic flag (ParameterChangeWatch). Never
+        // install a processor callback that captures this editor.
         syncPresetDisplay();
         centreRow.syncToneMarks();
         syncSubMode();
@@ -1202,6 +1204,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void syncPresetDisplay()
     {
         const auto metadata = processor.getPresetMetadata();
+        // Nothing below can change unless the program metadata or a parameter changed: skip the bank lookup
+        // and the full-parameter comparison on the ordinary idle tick.
+        const auto displayKey = metadata.name + "|" + juce::String(metadata.factoryIndex);
+        if (! parameterWatch.consume() && displayKey == shownDisplayKey)
+            return;
+        shownDisplayKey = displayKey;
         if (presetLabel.getText() != metadata.name)
             presetLabel.setText(metadata.name, juce::dontSendNotification);
         const auto& bank = processor.getFactoryPresets();
@@ -1998,6 +2006,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     PanelLabel presetNumberLabel;
     PanelLabel voiceStatusLabel;
     PanelLabel midiStatusLabel;
+    panel::ParameterChangeWatch parameterWatch { processor };
+    juce::String shownDisplayKey;
     juce::String baselineKey;
     cs80::ParamValues baseline;
     bool presetDirty = false;
