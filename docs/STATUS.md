@@ -206,7 +206,7 @@ for both changes are archived with their actual source commits.
 
 Audio commit `4917708268d8eed177670f4d270dbc50fc08e831`, followed by pin
 `9246dbb2584eb2d87d744b7a52b43661bc7f15ce`, replaces the frequency-dependent
-trapezoidal phase error with a fourth-order matched-pole correction and its
+trapezoidal phase error with a fourth-order Padé phase correction and its
 causal input-history term. The continuous network, OTA law and all previously
 registered error limits remain unchanged. The full-grid assertions now cover
 every registered cutoff, Q, configuration and rate; the earlier passing-subgrid
