@@ -210,4 +210,63 @@ void testListeningOutputHost(Check&& check)
     host.setStateInformation(saved.getData(), (int) saved.getSize());
     check(host.getParamValue(P_outputJack) == 1.0f, "session state restores the listening output");
 }
+// Phase 6 host parameter groups: the tree never changes the flattened host order.
+template <typename Check>
+void testParameterGroupsHost(Check&& check)
+{
+    Cs80AudioProcessor host;
+    const auto& flat = host.getParameters();
+    const auto tree = host.getParameterTree().getParameters(true);
+    bool same = tree.size() == flat.size();
+    for (int i = 0; same && i < flat.size(); ++i)
+        same = tree[i] == flat[i];
+    check(same, "the grouped tree flattens to exactly the host parameter order");
+
+    // Independent expectation of the shipped 245, by stable ID.
+    juce::StringArray expected;
+    for (int i = 0; i < P_legacyNumParams; ++i) expected.add(Cs80AudioProcessor::parameterId(i));
+    for (int channel = 0; channel < 2; ++channel) expected.add(Cs80AudioProcessor::hardwareSourceParameterId(channel));
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < CP_count; ++local)
+            if (Cs80AudioProcessor::isMemoryControl(local)) expected.add(Cs80AudioProcessor::memoryParameterId(bank, local));
+    for (int i = P_legacyNumParams; i <= P_sourcePerformance; ++i) expected.add(Cs80AudioProcessor::parameterId(i));
+    bool order = expected.size() == 245 && flat.size() >= expected.size();
+    for (int i = 0; order && i < expected.size(); ++i)
+        if (auto* withId = dynamic_cast<juce::HostedAudioProcessorParameter*>(flat[i]))
+            order = withId->getParameterID() == expected[i];
+    check(order, "grouping keeps all 245 shipped host indexes and IDs");
+
+    juce::StringArray topLevel;
+    int grouped = 0;
+    for (const auto* node : host.getParameterTree())
+        if (const auto* group = node->getGroup())
+        {
+            topLevel.add(group->getName());
+            grouped += group->getParameters(true).size();
+        }
+    check(topLevel.joinIntoString("|").startsWith("Global|Channel I|Channel II|Programmer|SUB OSC|KEYBOARD|FOOT|MASTER|ENGINE"),
+          "top-level host groups follow the shipped blocks");
+    check(grouped >= 245, "every shipped parameter belongs to a group");
+
+    // Global subgroups carry their members' ParamDef.group.
+    bool named = true;
+    for (const auto* node : host.getParameterTree())
+        if (const auto* global = node->getGroup(); global != nullptr && global->getName() == "Global")
+            for (const auto* sub : global->getSubgroups(false))
+                for (const auto* parameter : sub->getParameters(false))
+                {
+                    const auto* withId = dynamic_cast<const juce::HostedAudioProcessorParameter*>(parameter);
+                    int index = -1;
+                    for (int i = 0; withId != nullptr && i < P_numGlobals; ++i)
+                        if (Cs80AudioProcessor::parameterId(i) == withId->getParameterID()) index = i;
+                    named = named && index >= 0 && sub->getName() == juce::String(paramDef(index).group);
+                }
+    check(named, "global subgroups are contiguous ParamDef.group runs");
+
+    const auto state = host.getAPVTS().copyState();
+    bool flatState = true;
+    for (const auto& child : state)
+        flatState = flatState && child.hasType("PARAM");
+    check(flatState && state.getNumChildren() == flat.size(), "saved state stays a flat PARAM list");
+}
 } // namespace cs80::tests

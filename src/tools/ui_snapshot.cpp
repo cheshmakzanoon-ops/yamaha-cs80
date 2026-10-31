@@ -1966,6 +1966,7 @@ int main(int argc, char** argv)
     cs80::tests::testOversamplingHost(check);
     cs80::tests::testEngineDefaultHost(check);
     cs80::tests::testListeningOutputHost(check);
+    cs80::tests::testParameterGroupsHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
