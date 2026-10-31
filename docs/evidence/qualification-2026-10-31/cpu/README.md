@@ -34,6 +34,7 @@ separately.
 | Reviewed completion tree, three rounds | 0.664192–0.952562 | 1.137207–1.767049 | 0.098337 | 0.956260 |
 | Exact lazy filter histories `476c2f1`, three rounds | 0.647884–0.926200 | 1.136551–1.751327 | 0.100304 | 0.927262 |
 | Exact BBD/PRA omission `f79b6f7`, three rounds | 0.664905–0.973445 | 1.134303–1.936314 | 0.084363 | 1.011854 |
+| Exact stationary controls `8dac795`, three rounds | 0.680555–1.015410 | 1.215958–2.009791 | 0.087349 | 0.967892 |
 
 The original targets remain 0.15–0.20 held realtime factor and at most 0.02
 quiet-idle realtime factor. Neither initial checkpoint meets them. Subsequent
@@ -52,3 +53,9 @@ algorithm also takes more time. The evidence therefore supports the observed
 idle improvement, not a general held-voice speedup or either target. Selected
 held rounds contain 1,573 deadline exceedances; the moving row contains 541
 of 1,024 callbacks. All measured outputs remain finite.
+
+The stationary-control checkpoint retains exact output and reduces the qualified
+recurrence work, but this shared-host sample does not demonstrate an overall
+speedup: held and idle medians rise, while the moving median falls. Selected
+held rounds contain 1,876 deadline exceedances and the moving row contains
+435 of 1,024 callbacks. All outputs remain finite; both targets remain open.

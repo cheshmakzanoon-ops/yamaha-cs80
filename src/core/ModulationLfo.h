@@ -81,7 +81,9 @@ public:
         held = from = to = 0.0f;
     }
 
-    float tick(float rate, float sampleRate, int waveform) noexcept
+    // Readouts may be unused by the engine, but both phase clocks and the
+    // selected random-shape state still advance exactly as on an audible tick.
+    float tick(float rate, float sampleRate, int waveform, bool emitOutput = true) noexcept
     {
         // Historical sine: exactly the Lfo::tick float phase law. Its rounding is biased at
         // low rates (a 1 Hz sine at 96 kHz runs measurably fast), but it is pinned for
@@ -95,7 +97,7 @@ public:
             shapePhase -= std::floor(shapePhase);
         switch ((LfoWave) waveform)
         {
-            case LfoWave::sine: return std::sin(kTwoPi * phase);
+            case LfoWave::sine: return emitOutput ? std::sin(kTwoPi * phase) : 0.0f;
             case LfoWave::sampleHold:
                 // A new level at every period start, and immediately on the first tick.
                 if (! started || wrapped)
@@ -118,8 +120,9 @@ public:
                     from = to;
                     to = rng.nextBipolar();
                 }
+                if (! emitOutput) return 0.0f;
                 return from + (to - from) * (0.5f - 0.5f * (float) std::cos(3.14159265358979323846 * shapePhase));
-            default: return lfoShape(waveform, (float) shapePhase);
+            default: return emitOutput ? lfoShape(waveform, (float) shapePhase) : 0.0f;
         }
     }
 

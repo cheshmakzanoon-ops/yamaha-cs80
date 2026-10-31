@@ -1895,7 +1895,10 @@ Engine::SampleContext Engine::tickGlobals(float externalModulation)
 
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
-        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
+        lfoValues[i] = usesSourceModels(global.renderPolicy)
+            ? modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i],
+                              global.lfoDepth[i] != 0.0f || modern.isActive())
+            : modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
 
     lfoPitch = lfoFilter = lfoAmp = 0.0f;
     lfoPwm = lfoPan = 0.0f;
