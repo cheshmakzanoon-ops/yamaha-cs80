@@ -10,6 +10,19 @@ realtime model and its offline truth model, not agreement with an original CS-80
 Pre-registered tolerances live in [`tests/Ws4Tolerances.h`](../../tests/Ws4Tolerances.h).
 Each block was committed before the model it judges was evaluated.
 
+## Summary
+
+| Step | State | Tolerances commit | Implementation commit | New test (checks) |
+| --- | --- | --- | --- | --- |
+| 1 SUB (IG00150) | done | `cfe7556` | `5150507` | `cs80_ig00150_sub_tests` (327) |
+| 2 Ring modulator | done | `79afc98` | `76bbd84` | `cs80_ring_modulator_circuit_tests` (203) |
+| 3 OE1/OE2 chorus and tremolo | done | `25e7491` | `6117234` | `cs80_oe2_stereo_chorus_tests` (97) |
+| 4 PRA wah optical cell | done for the wah; EXP volume optics left as an integration hook | `6c9adb7` | `bbd3c04` | `cs80_pra_optical_cell_tests` (35) |
+
+No new parameters. No change to the legacy policy, host layout, presets, UI or plugin
+sources. Every law is in the circuit engine only, behind `usesSourceModels(policy)` or in
+classes only the source policies use (`BbdChorus`, `PraWahCircuit`).
+
 ## Step 1: SUB (IG00150) speed converter and band-limited waveforms
 
 **State: done.**
@@ -465,3 +478,53 @@ None.
   ws2's CC11 smoother lands, then update the expression oracles in
   `OutputTapIntegrationTests` and `PraWahIntegrationTests`.
 - FET switch transients, optical noise and temperature effects are not modelled.
+
+## Compatibility gates
+
+`scripts/check-compat-gates.sh` after each step (baselines cached in ~/.cache/cs80-compat):
+
+| After | legacy default | legacy tails | v1 circuit numerics | v2 circuit-engine audio |
+| --- | --- | --- | --- | --- |
+| Step 1 (`5150507`) | byte-identical | byte-identical | byte-identical | byte-identical (the probe plays the SUB sine with no pressure) |
+| Step 2 (`76bbd84`) | byte-identical | byte-identical | byte-identical | differs: ring multiplier offsets (probe MODULATION 0.2) |
+| Step 3 (`6117234`) | byte-identical | byte-identical | byte-identical | differs: OE2/OE1 model (probe CHORUS on) |
+| Step 4 (`bbd3c04`) | byte-identical | byte-identical | byte-identical | differs: optical cell (probe toggles EXP-WAH) |
+
+The `SOURCE_AUDIO_V2` pin was not edited; the integrator re-pins it once for the merged
+circuit-engine changes listed under each step.
+
+Plugin and UI self-test at `bbd3c04` (`cmake --preset linux-release`, ccache): the plugin
+builds, and `cs80_ui_smoke` plus the four locale tests pass (5/5). The full core suite
+passes 48/48.
+
+## CPU
+
+The rewritten `BbdChorus` costs about 115-165 ns per internal sample against 40-100 ns
+before (scratch micro-benchmark, 20 s at 96 kHz internal, CHORUS and TREMOLO; the machine
+was shared, so the spread is noise): roughly +1 % of one core. The SUB, ring and optical
+changes add a few transcendental calls per internal sample (one `log`/`exp` pair for the
+SUB control node, one `exp2` for the ring converter). Most of the chorus cost is the seven
+interpolated taps; the post-integration CPU pass can trade loss terms for taps if needed.
+
+## Files touched outside the ownership list
+
+- `tests/OutputTapIntegrationTests.cpp`: its isolation oracle now uses
+  `RingModulatorCircuit::blend`; the silent readout fixture sets MODULATION 0 and CHORUS
+  off; "reset clears output and decimator tails" compares against a fresh engine.
+- `docs/FIDELITY_AUDIT.md`, `docs/ORIGINAL_SUB_OSCILLATOR.md`, `docs/BBD_CHORUS_MODEL.md`,
+  `docs/REALTIME_PRA_WAH_MODEL.md`: dated circuit-engine notes (BBD_CHORUS_MODEL.md rewritten).
+- New files: `src/core/RingModulatorCircuit.h`, `src/reference/Ig00150Sub.h`,
+  `src/reference/RingModulator.h`, `src/reference/Oe1Modulation.h`, `tests/Ws4Tolerances.h`
+  and the four new test sources.
+- `CMakeLists.txt`: four tests below the ws4 marker only. `Engine.cpp`: the SUB and ring
+  hook-ins plus one `#include`.
+
+## For the integrator
+
+- Re-pin `SOURCE_AUDIO_V2` for the Step 2-4 circuit-engine sound changes.
+- EXP volume optics (Step 4 open item): after ws2's CC11 smoother lands, the expression
+  gain in the source policies can run through the same declared log-R cell; then update the
+  expression oracles in `OutputTapIntegrationTests` and `PraWahIntegrationTests`.
+- `kProvisionalRingFrequencyExcursion` stays in `Dsp.h` for the legacy law; it is no longer
+  used by the circuit engine.
+- No UI mount points or callbacks are needed: every change sits behind existing controls.
