@@ -9,14 +9,14 @@ integrator folds those into [STATUS.md](../STATUS.md) and
 
 | Id | Workstream | Plan steps |
 | --- | --- | --- |
-| ws1-voice | Voice circuit | 1.1b IG00156 nodal model, 1.2 oscillator promotion, 1.4 VCA, 2.1 free-running voices, 2.5 tolerances and drift |
-| ws2-engine | Engine I/O and modes | smoothing, 1.6 oversampling quality, 1.7 engine default flip, Phase 3 output and noise, Phase 6 host parameter groups |
-| ws3-keyboard | Keyboard, touch and MIDI | 2.2 KAS scan and sample/hold, 2.3 keyboard contour, 2.4 touch, Phase 4 MIDI, Phase 6 tuning/MPE/voice modes |
+| ws1-voice | Voice circuit | 1.1b IG00156 nodal model, 1.2 oscillator promotion, 1.4 VCA, 2.5 tolerances and drift |
+| ws2-engine | Engine I/O and modes | parameter smoothing, 1.6 oversampling quality, 1.7 engine default flip, Phase 3 output and noise, Phase 6 host parameter groups |
+| ws3-keyboard | Voices, keyboard, touch and tuning | 2.1 free-running voices, 2.2 KAS scan and sample/hold, 2.3 keyboard contour, 2.4 touch, ribbon MIDI CC, Phase 6 tuning (MTS-ESP, Scala/KBM), MPE and voice modes |
 | ws4-circuits | Original modulation and effect circuits | Phase 3 SUB (IG00150), ring modulator, OE1/OE2 chorus and tremolo, PRA wah/EXP |
-| ws5-modern | Modern modulation and FX (engine) | Phase 6 MSEGs, LFO waveforms, mod matrix, keyboard modulation, FX |
-| ws6-library | Tones, memories, library and editing | Phase 4 tone tabs, memory panels, curated library, legacy library; Phase 6 editing (undo, A/B, copy, randomise) |
-| ws7-panel | Original panel UI | 5.1 conformance audit, 5.2 re-layout, 5.5 readability, 5.6 editor code health, 5.7 golden images |
-| ws8-studio | Modern UI layer | 5.3 toolbar and Studio view, 5.4 interaction polish, 5.7 UI tests, Phase 6 UI pages and learning tools |
+| ws5-modern | Modern modulation and FX | Phase 6 MSEGs, LFO waveforms, mod matrix, keyboard modulation, FX, and their UI pages |
+| ws6-library | Tones, memories and library | Phase 4 tone tabs, memory panels, curated library, Legacy Library, Program Change; library audition and prev/next; Phase 6 A/B compare and randomise |
+| ws7-panel | Original panel UI | 5.1 conformance audit, 5.2 re-layout, 5.5 readability, 5.6 editor code health, 5.7 golden images; memory-lid store/copy and rank copy |
+| ws8-studio | Modern UI layer | 5.3 toolbar and Studio view, 5.4 interaction polish, 5.7 UI tests, MIDI learn, undo/redo, learning tools and evidence view |
 
 Phase 7 (release qualification) and the final `processInternalSample` split,
 fast-math and structure-of-arrays CPU pass run after integration, when every
