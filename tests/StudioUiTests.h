@@ -10,6 +10,7 @@
 #include "plugin/HardwareKeyboard.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
+#include "plugin/StudioMount.h"
 #include "plugin/StudioToolbar.h"
 #include "plugin/UiComponents.h"
 
@@ -17,6 +18,7 @@
 
 #include <functional>
 #include <set>
+#include <thread>
 #include <vector>
 
 namespace cs80::tests::studio
@@ -590,6 +592,170 @@ inline void testMidiLearnRoundTrip(const Check& check, const Flush& flush, const
                   && ! processor.getEditorState().tourSeen.load(),
               "an old state restores with no mappings and the default editor state");
     }
+}
+
+// ---- Undo/redo: one transaction per gesture; automation, MIDI learn and loads never recorded --------------------
+inline void testUndoRedo(const Check& check, const Flush& flush)
+{
+    Cs80AudioProcessor processor;
+    processor.prepareToPlay(48000.0, 128);
+    auto& history = processor.getUndoManager();
+    check(processor.getAPVTS().undoManager == &history, "the APVTS is constructed with the processor's UndoManager");
+    check(! history.canUndo() && ! history.canRedo(), "a fresh instance has an empty history");
+    Cs80AudioProcessorEditor editor(processor);
+    editor.setSize(1600, 1000);
+    editor.setVisible(true);
+    flush(50);
+    const int lpf = cs80::chParam(0, cs80::CP_lpfCutoff);
+    const int vA = cs80::chParam(0, cs80::CP_vA);
+    auto* fader = knobFor(editor, lpf);
+    auto* attack = knobFor(editor, vA);
+    check(fader != nullptr && attack != nullptr, "faders for the undo test");
+    if (fader == nullptr || attack == nullptr)
+        return;
+    const float lpf0 = processor.getParamValue(lpf), attack0 = processor.getParamValue(vA);
+    auto steps = [&history] { return history.getUndoDescriptions().size(); };
+
+    // One typed value = one step, named after the control.
+    fader->applyTypedValue("1.2k");
+    flush(30);
+    check(steps() == 1 && history.getUndoDescription().containsIgnoreCase("LPF"), "a typed value is one named undo step");
+    // A drag with many moves is still one step, back to where the drag began.
+    {
+        auto& slider = attack->getSlider();
+        const float y = (float) slider.getPositionOfValue(slider.getValue());
+        const auto held = juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier);
+        slider.mouseDown(mouseAt(slider, { 5.0f, y }, held));
+        for (int i = 1; i <= 6; ++i)
+        {
+            slider.mouseDrag(mouseAt(slider, { 5.0f, y - 6.0f * (float) i }, held));
+            flush(20);   // the APVTS timer runs mid-drag
+        }
+        slider.mouseUp(mouseAt(slider, { 5.0f, y - 36.0f }, juce::ModifierKeys()));
+        flush(30);
+    }
+    const float attackDragged = processor.getParamValue(vA);
+    check(attackDragged > attack0 && steps() == 2, "a whole drag is one undo step");
+
+    // Host automation, from the message thread and from another thread, is never recorded.
+    auto* volume = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_volume));
+    volume->setValueNotifyingHost(0.25f);
+    std::thread automation([volume] { for (int i = 0; i < 50; ++i) volume->setValueNotifyingHost(0.3f + 0.001f * (float) i); });
+    automation.join();
+    flush(250);
+    check(steps() == 2, "host automation adds no undo step");
+    // MIDI learn moves from the audio thread are automation too.
+    processor.getMidiLearn().assign(21, processor.hostParameterIndex(cs80::P_detune));
+    sendController(processor, 21, 100);
+    flush(250);
+    check(steps() == 2, "MIDI-learned controller moves add no undo step");
+    const float automatedVolume = processor.getParamValue(cs80::P_volume);
+
+    check(processor.undo(), "undo the drag");
+    flush(30);
+    check(std::abs(processor.getParamValue(vA) - attack0) < 1.0e-5f, "undo returns the drag to where it began");
+    check(std::abs(processor.getParamValue(cs80::P_volume) - automatedVolume) < 1.0e-6f, "undo leaves automated parameters alone");
+    check(processor.undo(), "undo the typed value");
+    flush(30);
+    check(std::abs(processor.getParamValue(lpf) - lpf0) < 0.5f && ! history.canUndo(), "undo restores the typed control; nothing older");
+    check(processor.redo() && processor.redo(), "redo both steps");
+    flush(30);
+    check(std::abs(processor.getParamValue(lpf) - 1200.0f) < 1.0f && std::abs(processor.getParamValue(vA) - attackDragged) < 1.0e-5f,
+          "redo replays both edits");
+    check(steps() == 2, "undo and redo add no steps of their own");
+
+    // The toolbar keys and the shortcut follow the history.
+    auto* toolbar = findFirst<cs80::ui::StudioToolbar>(editor);
+    auto* undoKey = toolbar != nullptr ? dynamic_cast<juce::Button*>(findById(*toolbar, "toolbar_undo")) : nullptr;
+    auto* redoKey = toolbar != nullptr ? dynamic_cast<juce::Button*>(findById(*toolbar, "toolbar_redo")) : nullptr;
+    check(undoKey != nullptr && redoKey != nullptr, "toolbar undo and redo keys");
+    if (toolbar != nullptr && undoKey != nullptr && redoKey != nullptr)
+    {
+        toolbar->refresh();
+        check(undoKey->isEnabled() && ! redoKey->isEnabled() && undoKey->getTitle().containsIgnoreCase("Undo"),
+              "the undo key is live and names the step; redo is idle");
+        undoKey->triggerClick();
+        flush(40);
+        check(std::abs(processor.getParamValue(vA) - attack0) < 1.0e-5f, "the toolbar undo key undoes");
+        toolbar->refresh();
+        check(redoKey->isEnabled(), "after an undo the redo key is live");
+    }
+    {
+        // The editor's shortcut listener: Ctrl/Cmd+Z, Shift+Ctrl/Cmd+Z, Ctrl+Y, Ctrl/Cmd+S; plain keys pass through.
+        cs80::ui::StudioShortcuts shortcuts;
+        int undos = 0, redos = 0, saves = 0;
+        shortcuts.undo = [&] { ++undos; };
+        shortcuts.redo = [&] { ++redos; };
+        shortcuts.save = [&] { ++saves; };
+        const auto cmd = juce::ModifierKeys(juce::ModifierKeys::commandModifier);
+        const auto cmdShift = juce::ModifierKeys(juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier);
+        check(shortcuts.keyPressed(juce::KeyPress('Z', cmd, 0), &editor) && undos == 1, "Ctrl/Cmd+Z undoes");
+        check(shortcuts.keyPressed(juce::KeyPress('Z', cmdShift, 0), &editor) && redos == 1, "Shift+Ctrl/Cmd+Z redoes");
+        check(shortcuts.keyPressed(juce::KeyPress('Y', cmd, 0), &editor) && redos == 2, "Ctrl+Y redoes");
+        check(shortcuts.keyPressed(juce::KeyPress('S', cmd, 0), &editor) && saves == 1, "Ctrl/Cmd+S saves");
+        check(! shortcuts.keyPressed(juce::KeyPress('z', {}, 'z'), &editor) && undos == 1, "a plain Z is left to the computer keyboard");
+    }
+    processor.redo();
+    flush(30);
+
+    // A programmatic edit in a user scope is one step; the local A/B switch uses one.
+    if (toolbar != nullptr && toolbar->getActions().selectCompare)
+    {
+        const auto& actions = toolbar->getActions();
+        const float lpfA = processor.getParamValue(lpf);
+        actions.selectCompare(1);              // B starts as a copy of A
+        flush(40);
+        fader->applyTypedValue("400 Hz");
+        flush(40);
+        const int before = steps();
+        actions.selectCompare(0);              // back to A: one step that changes the sound
+        flush(40);
+        check(std::abs(processor.getParamValue(lpf) - lpfA) < 1.0f && steps() == before + 1
+                  && history.getUndoDescription() == "Compare A",
+              "switching the compared sound is one named undo step");
+        processor.undo();
+        flush(40);
+        check(std::abs(processor.getParamValue(lpf) - 400.0f) < 1.0f, "undoing the switch brings the other sound back");
+    }
+
+    // Loading a sound is not a step and starts a fresh history; so does a state restore.
+    processor.loadFactoryPreset(5);
+    flush(60);
+    check(! history.canUndo() && ! history.canRedo(), "a program load clears the history and is not itself undoable");
+    fader->applyTypedValue("900 Hz");
+    flush(30);
+    juce::MemoryBlock state;
+    processor.getStateInformation(state);
+    check(history.canUndo(), "saving the state keeps the history");
+    processor.setStateInformation(state.getData(), (int) state.getSize());
+    flush(60);
+    check(! history.canUndo(), "a state restore clears the history");
+    // A switch that sets two parameters in one action is one step (the LEGACY render-policy cell).
+    processor.setParamValue(cs80::P_sourcePerformance, 1.0f);
+    processor.setParamValue(cs80::P_parityMode, 1.0f);
+    flush(250);
+    editor.showAdvancedPanel(true);
+    editor.showAdvancedPage(3);
+    flush(60);
+    if (auto* legacyCell = dynamic_cast<juce::Button*>(findById(editor, "render_policy_legacy")))
+    {
+        const int before = steps();
+        legacyCell->triggerClick();
+        flush(60);
+        check(processor.getParamValue(cs80::P_sourcePerformance) == 0.0f && processor.getParamValue(cs80::P_parityMode) == 0.0f
+                  && steps() == before + 1,
+              "an action that sets two parameters is one undo step");
+        processor.undo();
+        flush(60);
+        check(processor.getParamValue(cs80::P_sourcePerformance) == 1.0f && processor.getParamValue(cs80::P_parityMode) == 1.0f,
+              "undoing it restores both");
+        processor.setParamValue(cs80::P_parityMode, 0.0f);
+        processor.setParamValue(cs80::P_sourcePerformance, 0.0f);
+    }
+    else
+        check(false, "the LEGACY render-policy cell exists");
+    editor.showAdvancedPanel(false);
+    flush(60);
 }
 
 } // namespace cs80::tests::studio

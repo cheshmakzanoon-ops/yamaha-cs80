@@ -540,7 +540,11 @@ void CompareSlots::select(int slot)
     if (! slots[(size_t) slot].has_value())
         slots[(size_t) slot] = slots[(size_t) activeSlot];
     else
+    {
+        // Switching the compared sound is one undo step.
+        const Cs80AudioProcessor::ScopedUserEdit edit(processor.getUndoableState(), slot == 0 ? "Compare A" : "Compare B");
         apply(*slots[(size_t) slot]);
+    }
     activeSlot = slot;
 }
 

@@ -2612,10 +2612,20 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             actions.circuitNotesShown = [] { return ui::circuitNotesInTooltips(); };
             actions.midiLearnCount = [this] { return processor.getMidiLearn().count(); };
             actions.clearMidiLearn = [this] { processor.getMidiLearn().clearAll(); };
+            actions.undo = [this] { processor.undo(); syncToneMarks(); };
+            actions.redo = [this] { processor.redo(); syncToneMarks(); };
+            actions.canUndo = [this] { return processor.getUndoManager().canUndo(); };
+            actions.canRedo = [this] { return processor.getUndoManager().canRedo(); };
+            actions.undoName = [this] { return processor.getUndoManager().getUndoDescription(); };
+            actions.redoName = [this] { return processor.getUndoManager().getRedoDescription(); };
+            studio->shortcuts.undo = actions.undo;
+            studio->shortcuts.redo = actions.redo;
+            studio->shortcuts.save = actions.savePreset;
             studio->toolbar.setActions(std::move(actions));
         }
         studio->scope.onClose = [this] { studio->scope.setVisible(false); };
         addKeyListener(&studio->qwerty);                // computer-keyboard notes through the on-screen keyboard's state
+        addKeyListener(&studio->shortcuts);             // undo, redo and save
         advanced.attachQwerty(&studio->qwerty);
         ribbon.fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
         // [ws8-studio] end
@@ -2623,7 +2633,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     ~Impl() override
     {
-        if (studio != nullptr) removeKeyListener(&studio->qwerty);   // [ws8-studio]
+        if (studio != nullptr) { removeKeyListener(&studio->qwerty); removeKeyListener(&studio->shortcuts); }   // [ws8-studio]
         meterTicker.onTick = nullptr;
         frames.stop();
         setLookAndFeel(nullptr);

@@ -8,6 +8,7 @@
 #include "KeyboardPressureOwnership.h"
 #include "OutputMeter.h"
 #include "MidiLearn.h"
+#include "UndoHistory.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -196,6 +197,17 @@ public:
     EditorState& getEditorState() noexcept { return editorState; }
     static constexpr int editorStateVersion = 1;
 
+    // ---- [ws8-studio] Undo history ------------------------------------------------------------
+    // The APVTS is built with this UndoManager and records one transaction per user gesture; host
+    // automation, MIDI learn, preset loads and state restores are never recorded, and loading a sound
+    // starts a fresh history (UndoHistory.h). Message thread.
+    juce::UndoManager& getUndoManager() noexcept { return undoManager; }
+    bool undo();
+    bool redo();
+    // Wrap a programmatic edit the player should undo in one step (A/B switch, randomise, copy rank).
+    using ScopedUserEdit = cs80::UndoableParameterState::ScopedUserEdit;
+    cs80::UndoableParameterState& getUndoableState() noexcept { return apvts; }
+
 private:
     friend struct cs80::tests::PresetSaveAccess;
     void setPresetMetadata(const juce::String& name, int index);
@@ -221,7 +233,8 @@ private:
     juce::File presetDirectoryOverride;
 
     cs80::Engine engine;
-    juce::AudioProcessorValueTreeState apvts;
+    juce::UndoManager undoManager;            // [ws8-studio] constructed before the APVTS that uses it
+    cs80::UndoableParameterState apvts;
     juce::MidiKeyboardState keyboardState;
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;

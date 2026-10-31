@@ -15,6 +15,38 @@ class Cs80AudioProcessor;
 namespace cs80::ui
 {
 
+// Editor-wide shortcuts of the modern layer: Ctrl/Cmd+Z undo, Shift+Ctrl/Cmd+Z (or Ctrl+Y) redo, Ctrl/Cmd+S save.
+// A text field keeps these keys for its own editing.
+class StudioShortcuts final : public juce::KeyListener
+{
+public:
+    std::function<void()> undo, redo, save;
+
+    bool keyPressed(const juce::KeyPress& key, juce::Component*) override
+    {
+        const auto mods = key.getModifiers();
+        if (! mods.isCommandDown() || QwertyKeyboard::focusIsTextEntry())
+            return false;
+        const auto code = juce::CharacterFunctions::toUpperCase((juce::juce_wchar) key.getKeyCode());
+        if (code == 'Z' && (mods.isShiftDown() ? (bool) redo : (bool) undo))
+        {
+            (mods.isShiftDown() ? redo : undo)();
+            return true;
+        }
+        if (code == 'Y' && ! mods.isShiftDown() && redo)
+        {
+            redo();
+            return true;
+        }
+        if (code == 'S' && save)
+        {
+            save();
+            return true;
+        }
+        return false;
+    }
+};
+
 class StudioMount final : private juce::Timer
 {
 public:
@@ -68,6 +100,7 @@ public:
     ControllersStrip controllers;
     CompareSlots compare;
     QwertyKeyboard qwerty;
+    StudioShortcuts shortcuts;
 
 private:
     void timerCallback() override { sync(); }

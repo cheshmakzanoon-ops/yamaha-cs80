@@ -40,7 +40,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
           .withInput("External Modulation", juce::AudioChannelSet::mono(), false)
           .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       presetDirectoryOverride(presetDirectory),
-      apvts(*this, nullptr, stateType, createParameterLayout())
+      apvts(*this, undoManager, stateType, createParameterLayout())   // [ws8-studio] undo history
 {
     keyboardState.addListener(this);
     for (int i = 0; i < cs80::P_numParams; ++i)
@@ -74,6 +74,8 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     presetName = (getFactoryPresets().empty() ? juce::String("Init Patch")
                  : juce::String(getFactoryPresets()[0].name)) + " / Original SUB";
     currentProgram = 0;
+    apvts.syncNow();                       // [ws8-studio] the initial sound is not an undo step
+    undoManager.clearUndoHistory();
 }
 
 Cs80AudioProcessor::~Cs80AudioProcessor()
@@ -411,6 +413,12 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
     index = juce::jlimit(0, (int) bank.size() - 1, index);
     applyValues(bank[(size_t) index].values);
     setPresetMetadata(juce::String(bank[(size_t) index].name), index);
+    // [ws8-studio] A program load is not an undo step and starts a fresh history (as replaceState does).
+    if (auto* mm = juce::MessageManager::getInstanceWithoutCreating(); mm != nullptr && mm->isThisTheMessageThread())
+    {
+        apvts.syncNow();
+        undoManager.clearUndoHistory();
+    }
     updateHostDisplay();
 }
 
@@ -825,6 +833,8 @@ void Cs80AudioProcessor::changeProgramName(int, const juce::String&)
 
 void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio] the undo flush and the host never touch the tree at once
+    apvts.syncNow();
     auto state = apvts.copyState();
     const auto metadata = getPresetMetadata();
     state.setProperty("presetName", metadata.name, nullptr);
@@ -850,6 +860,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         if (tree.isValid() && tree.hasType(stateType))
         {
             readStudioState(tree);   // [ws8-studio] also removes those children from the parameter tree
+            const juce::ScopedLock treeLock(apvts.treeLock());
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
@@ -899,7 +910,12 @@ Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
     if (created.failed())
         return failure("Could not create the preset folder: " + created.getErrorMessage());
 
-    auto state = apvts.copyState();
+    auto state = [this]
+    {
+        const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
+        apvts.syncNow();
+        return apvts.copyState();
+    }();
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
@@ -980,6 +996,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
             auto restored = normaliseRestoredState(tree);
             restored.getChildWithProperty("id", parameterId(cs80::P_parityMode))
                 .setProperty("value", getParamValue(cs80::P_parityMode), nullptr);
+            const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
             apvts.replaceState(restored);
             setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
                               (int) tree.getProperty("factoryIndex", 0));
@@ -1076,4 +1093,19 @@ void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
     editorState.controllersShown = ui.isValid() && (bool) ui.getProperty("controllers", false);
     state.removeChild(learn, nullptr);
     state.removeChild(ui, nullptr);
+}
+
+// ---------------------------------------------------------------------------
+// [ws8-studio] Undo history
+// ---------------------------------------------------------------------------
+bool Cs80AudioProcessor::undo()
+{
+    apvts.syncNow();
+    return undoManager.undo();
+}
+
+bool Cs80AudioProcessor::redo()
+{
+    apvts.syncNow();
+    return undoManager.redo();
 }

@@ -332,6 +332,7 @@ if (CS80_BUILD_PLUGIN)
         # [ws8-studio] add this workstream's plugin sources below this line.
         src/plugin/StudioToolbar.cpp
         src/plugin/StudioDrawers.cpp
+        src/plugin/UndoHistory.cpp
 
     )
     target_sources(CS80Reference PRIVATE ${CS80_PLUGIN_SOURCES})
