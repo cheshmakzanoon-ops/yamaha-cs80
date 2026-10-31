@@ -6,7 +6,8 @@ registered small-signal grid passes at 2× and 4× without widened limits.
 The equations and electrical inferences below are unchanged; the original
 trapezoid qualification is retained below as historical evidence. The
 [native ADJ/M41 review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md)
-keeps the HP voltage miss and LP source-impedance interpretation open.
+keeps the HP voltage miss open. Its corrected LP input reading is recorded
+in the dated erratum below.
 
 Plan step 1.1b of [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md), 2026-10-31. It
 replaces the first-stage realtime filter ([IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md),
@@ -36,15 +37,41 @@ Per stage, four capacitor states and ideal amplifiers:
 | 33 kOhm AI-node shunt (both stages) | source-derived | M41 |
 | HP input: passive mixing node of the 150 kOhm waveform branches, then 1 uF NP into AI1 | source-derived topology | M41, [oscillator evidence](OSCILLATOR_CIRCUIT_EVIDENCE.md) |
 | HP mixing-node Thevenin resistance 75 kOhm | **inferred** | two 150 kOhm branches in parallel; FET on-resistance, NI and the unvalued loading resistors neglected |
-| LP input: HP pin 15 -> 1 uF NP -> CP2 -> CP7 -> AI1 | source-derived | M41 + harness p44 |
-| LP series source 150 kOhm | **inferred** | see below |
+| LP input: HP pin 15 -> 1 uF NP -> CP2 -> CP7 -> 150 kOhm -> AI1 | source-derived | M41 + harness p44; native endpoint correction below |
+| LP series source 150 kOhm | source-derived connection | M41 native crop, 2026-10-31 erratum below |
 | Q block: unilateral current Iq = -gq * BP | conditional hypothesis | as in `IG00156Linear.h` |
 | Q-block law gq(VQ) | **inferred** | see below |
 | Integrator OTAs gm * L * tanh(v / L), L = 2.5 engine units | **inferred** | kept from the first stage; the Q block and the 4.7 MOhm paths are linear |
 | Cutoff calibration (180 pF compensation) | **inferred** | see below |
 | Stage drive normalized to unity passband gain | **inferred adapter** | no absolute port-voltage calibration exists |
 
-### LP series source (declared inference)
+### LP series source: original inference and 2026-10-31 erratum
+
+**2026-10-31 erratum:** independent reinspection of the native M41 crop
+resolves the previously conflicting resistor reading. IC11 AI1 has a
+**33 kOhm shunt to ground** and a **150 kOhm series connection to CP7,
+terminal 53**. The 150 kOhm lower lead ends at the labelled CP7 terminal
+circle, not at ground. In the 2070 × 770 `m-filter-detail` crop the endpoint
+is near `(645, 700)`, with the AI1 junction near `(640, 423)`.
+
+Source: printed p41, drawing KEC-4223-65; native box
+`[1180,1080,3250,1850]`; source SHA-256
+`1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`;
+crop SHA-256
+`5dfe074bc3868f22fe662cbe55d718dbb9479db0d05f36a4089a8aae445cbcc7`.
+The crop was obtained in
+[run 41224106605, job 124604536319](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41224106605/job/124604536319).
+See the [corrected native review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+
+The older ledger and the first native-review text mistakenly called the
+150 kOhm a second ground shunt. Their `33k || 150k = 27.049k` description is
+withdrawn for this node. The existing series-source numerical model already
+uses the visible connection, so this erratum changes evidence classification
+only: no source, V1 or circuit-engine numeric values, tolerance, or test is
+changed. The HP fixture's 1.69 Vpp discrepancy remains open; this resistor
+reading does not explain or fit it.
+
+**Historical reasoning, before that endpoint was verified:**
 
 The ledger reads a 150 kOhm resistor at the LP AI node as a shunt (parallel
 27.049 kOhm with the 33 kOhm). With an ideal op-amp at HP pin 15 and only the
@@ -174,7 +201,8 @@ HP passband roll-off near 20 kHz, the OTA limit now acting on the gm part only
 
 ## Still open
 
-- The LP series-resistance reading and the HP mixing-node loading resistors.
+- The HP mixing-node loading resistors and the complete interstage loading
+  model. The LP 150 kOhm series connection is resolved by the dated erratum.
 - A gm-versus-control-current law, finite amplifier effects, Q-block saturation.
 - Identification between the Q-block alternatives (needs pin-9 measurements).
 - Top-octave accuracy at 2x/4x (oversampling choice, ws2).

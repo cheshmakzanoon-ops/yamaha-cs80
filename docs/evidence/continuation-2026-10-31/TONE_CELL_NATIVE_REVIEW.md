@@ -83,4 +83,31 @@ coordinates, PNG SHA and base64 payload. No downloaded scans are committed.
 Tile boxes are `[0,0,2264,2264]`, `[2136,0,4464,2264]`,
 `[4336,0,5100,2264]`, `[0,2136,2264,3300]`,
 `[2136,2136,4464,3300]`, `[4336,2136,5100,3300]`.
-The 64-pixel overlaps preserve row tracing across tile boundaries.
+The 64-pixel padding on each side of a boundary gives adjacent tiles a
+128-pixel overlap, preserving row tracing across tile boundaries.
+
+## Independent verification — 2026-10-31
+
+A second inspection decoded the saved logs from the same ten jobs and
+checked all 70 emitted PNGs. For every crop it checked contiguous payload
+chunk indexes, the crop end marker, base64 decoding, the emitted PNG
+SHA-256, equality with the locally inspected PNG bytes, and the declared
+image dimensions. All 70 passed. Each saved job log identifies checkout
+`0281af873389a13452ac5dca2ef9b90dcec07c72`; the source URLs and hashes
+match the records above and the
+[M41/ADJ evidence record](NATIVE_FILTER_EVIDENCE.md).
+
+| Source group | Verified crops | Resolution provenance |
+| --- | ---: | --- |
+| Eight tone pages, S31–S38 | 48 | Six unresized native JPEG-source tiles per page |
+| M41 circuit diagram | 7 | Three native detail crops and four resized overview tiles |
+| ADJ PDF pages 12–14, printed pp10–12 | 15 | Three complete PDF-page renders and twelve quadrant crops; PDF rendering uses `pdftoppm -scale-to 1800` |
+
+The independent visual review covered all 25 marked schematic cells, their
+row labels, and the S36 `75K(39K)` board candidate. It confirms the
+transcriptions and their remaining qualifications; no cell is promoted to
+an established installed value. Static comparison against main
+`db24a47170610f81236e8829ef5536af69dfc94d` also confirms the frozen portion
+of `FactoryToneHypotheses.h` and the complete `HardwareControl.h` remain
+byte-identical. This is a source and evidence audit; it does not substitute
+for the separately required numerical compatibility gates.

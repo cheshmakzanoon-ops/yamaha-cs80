@@ -4,6 +4,63 @@
 
 Status: **circuit topology partly established; nonlinear device model and CS-80 calibration incomplete**. This document does not certify the current TPT state-variable implementation or its generic input soft clip as a transistor-level replica. It implements the evidence discipline required by [the analog fidelity requirement](ANALOG_FIDELITY_REQUIREMENT.md).
 
+## 2026-10-31 erratum: LP input resistor and interstage endpoints
+
+Independent visual reinspection of the original M Circuit Diagram, printed
+p41, drawing KEC-4223-65, corrects an earlier transcription in this ledger:
+**the 150 kΩ resistor is in series between CP7 terminal 53 and IC11 AI1;
+the separate 33 kΩ resistor shunts AI1 to ground**. The 150 kΩ lower lead
+ends at the open terminal circle labelled `(53) CP7`, not at a ground
+symbol. The former claim that these two resistors constitute a
+`33k || 150k = 27.049k` ground network is withdrawn.
+
+The decisive evidence is the native, unresized `m-filter-detail` crop from
+[run 41224106605, job 124604536319](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41224106605/job/124604536319):
+2070 × 770 pixels, source box `[1180,1080,3250,1850]`. The CP7 endpoint is
+near crop coordinate `(645,700)` and the AI1 junction near `(640,423)`.
+Source SHA-256:
+`1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`;
+crop SHA-256:
+`5dfe074bc3868f22fe662cbe55d718dbb9479db0d05f36a4089a8aae445cbcc7`.
+These match the earlier source and crop hashes; the correction is to the
+reading, not to the source image. See the
+[corrected native review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+
+Combining this M41 endpoint with the M11/M12 harness evidence from p44
+recorded below gives the corrected passive path:
+
+| Endpoint A | Component or connection | Endpoint B |
+| --- | --- | --- |
+| HP IC10 pin 15 | 1 µF nonpolar coupling capacitor | CP2 terminal 46 |
+| CP2 terminal 46 | Same-board harness wire, p44 | CP7 terminal 53 |
+| CP7 terminal 53 | 150 kΩ series resistor | LP IC11 AI pin 1 / FB pin 9 junction |
+| LP AI/FB junction | 33 kΩ shunt resistor | Ground |
+
+For an ideal harness wire, with no additional probe load at CP2/CP7, the
+current from HP toward LP therefore obeys these passive-element relations:
+
+```
+V_CP2 = V_CP7
+iCouple = 1e-6 * d(V_HP15 - V_CP2)/dt
+iSeries = (V_CP7 - V_LP_AI) / 150e3
+iCouple = iSeries
+```
+
+The earlier capacitor equation using `V_HP15 - V_LP_AI` directly omitted
+the voltage across the series resistor and is superseded. The complete
+model must still include KCL at AI, the feedback branch, chip port laws,
+and any finite source or probe impedances. These equations describe the
+visible passive path under the stated harness assumption; they are not a
+hardware measurement or a closed nonlinear chip model.
+
+The conflicting paragraphs and original incomplete path below are retained
+as labelled historical investigation. This erratum supersedes their LP
+ground-network and interstage-endpoint claims. The implemented
+`kIg00156LowPassNetwork` already uses a 150 kΩ series source and 33 kΩ shunt;
+this correction changes no source code, V1 or circuit-engine numerical
+values, tolerance, or test. The ADJ p11 HP result remains approximately
+1.69 Vpp against 4.3 ± 1 Vpp, without a fitted gain correction.
+
 ## Primary evidence recovered
 
 ### Yamaha CS-series servicing guide, printed pages 33–34
@@ -157,7 +214,9 @@ A subsequent [inspection run 40784517382, M-card job 123154243112](https://githu
 
 Consequently, the 4.7 MΩ resistors are **not parallel leakage resistors across the 1.5 nF capacitors**. The chip's internal terminal relationships must be included to interpret them.
 
-The AI/FB node also has a 33 kΩ shunt to ground in each filter; the LP node additionally has a 150 kΩ shunt. The latter two resistors have a passive parallel equivalent of approximately 27.049 kΩ. This is not the complete input impedance, because the connected IC and frequency-dependent feedback remain present.
+**Historical transcription, superseded by the 2026-10-31 erratum above:**
+
+> The AI/FB node also has a 33 kΩ shunt to ground in each filter; the LP node additionally has a 150 kΩ shunt. The latter two resistors have a passive parallel equivalent of approximately 27.049 kΩ. This is not the complete input impedance, because the connected IC and frequency-dependent feedback remain present.
 
 HP pin 15 is AC-coupled through a nonpolar capacitor marked 1/50 to CP2, connector terminal 46. LP audio input AI1 receives CP7, terminal 53; LP output pin 10 is taken to CP8, terminal 56. This sheet does **not** directly join CP2 to CP7 locally. Trace those connector nets and any intervening circuitry before asserting an unloaded HP-to-LP cascade or assigning interstage gain. The earlier normalized SVF equations remain a mathematical baseline, not yet the full M-card equation set.
 
@@ -235,7 +294,9 @@ Page 44 (drawing KEP-NA03574-6Y, CS-80 serial 1001 onward) explicitly lists:
 - M12 terminal 56 CP8 wired to **RA1-M12-CP3 (29)**, color code VI.
 - Reciprocal terminal 29 CP3 entries point to the same-board CP8 (56).
 
-Combined with page 41, the first two voice-board instances therefore have this evidenced interstage route:
+The first route recorded here omitted the 150 kΩ series resistor between
+CP7 and AI1. It is retained below as historical investigation, superseded
+by the complete endpoint table in the 2026-10-31 erratum above:
 
 ```
 HP IG00156 IC10 pin15
@@ -248,13 +309,20 @@ HP IG00156 IC10 pin15
 
 This supersedes the earlier unresolved CP2/CP7 warning **for M11 and M12**. Other voice-board wiring sheets have not yet been individually checked. The physical harness wire is not an inserted gain stage.
 
-The LP AI/FB node also has its feedback branch and internal IC port attached. Therefore do not compute the entire coupling response using only 1 uF times the parallel 33k/150k ground resistors. A suitable circuit solver must include the capacitor current:
+**Historical coupling interpretation, superseded by the same erratum:**
+
+> The LP AI/FB node also has its feedback branch and internal IC port attached. Therefore do not compute the entire coupling response using only 1 uF times the parallel 33k/150k ground resistors. A suitable circuit solver must include the capacitor current:
 
 ```
 iCouple = 1e-6 * d(V_HP15 - V_LP_AI)/dt
 ```
 
-and the complete KCL of both connected ports, including internal chip currents and external feedback. The passive capacitor relation itself is established; the resulting total transfer function is not yet closed.
+The capacitor equation above used the wrong LP-side endpoint: the capacitor
+ends at CP2, while the 150 kΩ resistor separates CP7 from AI1. Use the
+corrected capacitor and resistor relations in the dated erratum, together
+with the complete KCL of both connected ports, including internal chip
+currents and external feedback. The resulting total transfer function is
+not closed by the passive path alone.
 
 ### Implementable next DSP improvement and its acceptance gate
 
@@ -334,7 +402,13 @@ For a bench prototype driven through an explicitly chosen source resistance Rs, 
     + Cfb*d(a-b)/dt + Iq(a,b,VQ) = 0
 ```
 
-This assumes negligible OP1 input current. Rs is a fixture/model parameter here, **not** an invented CS-80 component. Rg must represent the actual node's ground network: the observed LP ground resistors alone yield 33k||150k, while HP has its own input-source network to trace.
+This assumes negligible OP1 input current. Rs is a fixture/model parameter
+in this generic bench equation. The earlier application of this equation
+to the LP stage incorrectly assigned `Rg = 33k || 150k`; that assignment
+is superseded by the 2026-10-31 erratum. For the documented LP passive
+path, `u = V_CP7`, `Rs = 150k` and `Rg = 33k`. Here `u` is the dynamic
+node on the LP side of the coupling capacitor, not an imposed copy of HP
+pin 15. The HP stage has its own input-source network to trace.
 
 An explicit three-state implementation can use x=a-b:
 
@@ -348,7 +422,11 @@ dx/dt = ((u-a)/Rs - a/Rg - x/Rfb - Iq(a,b,VQ))/Cfb
 
 This closes only after an Iq law is selected. For example, Iq=Gq*(a-b) describes a hypothetical voltage-controlled conductance; Iq=Jq(b,VQ) describes a different controlled-current-output hypothesis. The image's generic “Variable” box alone does not choose between them. Naming such a hypothesis in an offline experiment is acceptable; calling it verified Yamaha hardware is not.
 
-For the actual HP-to-LP connection, replace the fixture source term with the shared 1uF coupling-capacitor current and solve the two filters together. Do not independently process two ideal filters followed by a guessed interstage high-pass and claim the same loaded circuit.
+For the actual HP-to-LP connection, retain the 150 kΩ series resistor and
+the shared 1 µF coupling-capacitor current, using the distinct CP2/CP7 and
+AI1 endpoints in the dated erratum, and solve the two filters together.
+Do not independently process two ideal filters followed by a guessed
+interstage high-pass and claim the same loaded circuit.
 
 ### Practical next implementation gate
 
