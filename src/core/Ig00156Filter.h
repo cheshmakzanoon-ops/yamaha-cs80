@@ -198,9 +198,26 @@ public:
         xFromBp = (a11 * kf * (qSiemensValue - gs - gg) + a21 * kiGs) / det;
         inFromX = kiGs / a11;
         invA11 = 1.0 / a11;
+        // Input-independent entries of the scalar BP Jacobian. The OTA
+        // derivatives depend on signal level, so only these terms may be
+        // cached solely from cutoff/Q/rate; stale nonlinear derivatives are
+        // not reused (KERNEL_CACHE_QUALIFICATION.md).
+        hpFromBp = 2.0 * (xFromBp + 1.0);
+        otaJacobianBase = gmPart + ffPart;
+        hpJacobianBase = hpFromBp + gmPart + ffPart;
+        ++coefficientRevision;
     }
 
     struct Output { float lp = 0.0f, hp = 0.0f, bp = 0.0f; };
+    unsigned getLastNewtonSteps() const noexcept { return lastNewtonSteps; }
+    std::uint64_t getCoefficientRevision() const noexcept { return coefficientRevision; }
+    // Reconstruct the accepted scalar residual from the last capacitor nodes
+    // and companion histories. This read-only test tap adds no audio work.
+    double getSolverResidual() const noexcept
+    {
+        const double hp = 2.0 * (vFb + vBp) - vLp;
+        return zBp - vBp + gmPart * kIg00156OtaLevel * fastTanh(hp / kIg00156OtaLevel) + ffPart * hp;
+    }
 
     Output process(float input) noexcept
     {
@@ -209,7 +226,7 @@ public:
         const double g1 = gmPart, f1 = ffPart, g2 = gmPart, f2 = ffPart;
         // HP = c0 + c1 * BP + (BP-integrator current term), x = x0 + xFromBp * BP.
         const double x0 = xFromFb * zFb + xFromIn * zIn + xFromU * u;
-        const double c0 = 2.0 * x0 - zLp, c1 = 2.0 * (xFromBp + 1.0);
+        const double c0 = 2.0 * x0 - zLp, c1 = hpFromBp;
         // Linear start from each OTA's previous effective gain (cached slope).
         const double e1 = g1 * slope1 + f1, e2 = g2 * slope2 + f2;
         double bp = (zBp - e1 * c0) / (1.0 + e1 * (c1 + e2));
@@ -221,9 +238,13 @@ public:
             t1 = fastTanh(hp * inv);
             const double f = bp - zBp + g1 * level * t1 + f1 * hp;
             if (std::abs(f) < 1.0e-7 || iteration == 4)
+            {
+                lastNewtonSteps = static_cast<unsigned>(iteration);
                 break;
-            const double dh = c1 + g2 * (1.0 - t2 * t2) + f2;
-            bp -= f / (1.0 + (g1 * (1.0 - t1 * t1) + f1) * dh);
+            }
+            const double dh = hpJacobianBase - g2 * t2 * t2;
+            const double d1 = otaJacobianBase - g1 * t1 * t1;
+            bp -= f / (1.0 + d1 * dh);
         }
         const double lp = zLp - g2 * level * t2 - f2 * bp;
         const double x = x0 + xFromBp * bp;
@@ -251,6 +272,9 @@ private:
     double kHalf = 0.0, kHalfCoupling = 0.0, gmPart = 0.0, ffPart = 0.0, qSiemensValue = 0.0;
     double kiGs = 0.0, xFromFb = 1.0, xFromIn = 0.0, xFromU = 0.0, xFromBp = 0.0;
     double inFromX = 0.0, invA11 = 1.0;
+    double hpFromBp = 2.0, otaJacobianBase = 0.0, hpJacobianBase = 2.0;
+    std::uint64_t coefficientRevision = 0;
+    unsigned lastNewtonSteps = 0;
     double zIn = 0.0, zFb = 0.0, zBp = 0.0, zLp = 0.0;
     double vIn = 0.0, vFb = 0.0, vBp = 0.0, vLp = 0.0;
     double slope1 = 1.0, slope2 = 1.0;

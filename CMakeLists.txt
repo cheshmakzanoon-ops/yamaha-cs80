@@ -225,6 +225,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_oscillator_cache_tests COMMAND cs80_oscillator_cache_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/kernel-cache.json)
     set_tests_properties(cs80_oscillator_cache_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
+    target_link_libraries(cs80_ig00156_cache_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/kernel-cache.json)
+    set_tests_properties(cs80_ig00156_cache_tests PROPERTIES TIMEOUT 60)
     add_executable(cs80_ig00156_nodal_tests tests/Ig00156NodalTests.cpp)
     target_link_libraries(cs80_ig00156_nodal_tests PRIVATE cs80_core)
     add_test(NAME cs80_ig00156_nodal_tests COMMAND cs80_ig00156_nodal_tests

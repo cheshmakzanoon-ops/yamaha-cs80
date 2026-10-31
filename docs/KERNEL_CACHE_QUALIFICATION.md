@@ -53,3 +53,45 @@ Whole-engine minimum-of-three benchmarks and all three immutable compatibility
 checks are recorded by the integration in `STATUS.md`. Reduced search count is
 an operation-count result; it is not a claim that the whole-engine CPU target
 has been reached.
+
+## Nodal Jacobian cache
+
+Only the input-independent terms of the scalar BP Jacobian are cached when
+cutoff, Q or sample rate changes. With `g = gmPart`, `f = ffPart` and
+`c1 = 2 (xFromBp + 1)`, the derivative is
+
+```
+J = 1 + ((g + f) - g t1^2) ((c1 + g + f) - g t2^2)
+```
+
+The two parenthesized constant sums and `c1` are cached; the OTA-dependent
+terms remain current. The same four-step Newton cap and 1e-7 residual stopping
+rule are preserved. A converged initial guess still skips all Newton work.
+Reassociation of a few double operations can change circuit-engine bytes, so
+the integration treats this as a separate V2 numerical checkpoint.
+
+A more aggressive previous-sample inverse-Jacobian predictor was **rejected**.
+At the original residual stopping threshold, its accumulated continuation
+error reached 1.13e-4 against the registered 2e-6 limit. Tightening its internal
+solve to 1e-9 brought that check within the limit, but the independent nodal
+hard-noise cascade growth assertion failed. It also cost 1.08-2.05 times the
+original filter time on a small static sine probe. Neither a tolerance nor an
+existing assertion was changed to admit that variant.
+
+The accepted cached-term implementation passes the existing nodal gate and
+its new continuation gate. On the declared cache fixture the forced-rebuild
+reference is exactly equal, the largest independently reconstructed scalar
+residual is 9.99993e-8, and 865112 of 1966080 sample starts skip Newton.
+A separate filter-only probe (32 stages, 96 kHz, Q 5, 0.5-unit sine) gave
+minimum-of-three CPU times about 4-6% lower at 1/12/20 kHz; the 250 Hz case
+was within timing noise. The whole-engine benchmark, not this microprobe,
+determines whether the CPU target is met.
+
+Mutation checks for the new gate:
+
+| Mutation | Detection |
+| --- | --- |
+| Wrong cached HP/BP node derivative | reconstructed scalar residual 56.19 |
+| Rebuild coefficient/Jacobian terms every sample | revision-count assertion |
+| Continue Newton after convergence | converged-start and zero-equilibrium work assertions |
+| Reverse the nonlinear Jacobian correction sign | reconstructed scalar residual 0.01807 |
