@@ -6,6 +6,11 @@
 namespace cs80::ws3_tolerances
 {
 // 2.1 free-running voices (realtime idle path versus per-sample truth).
+// Procedure erratum 2026-10-31 (values unchanged; see the JSON): the truth is
+// synchronised to the realtime state when the voice goes silent, and the
+// residual window compares two production chains started from the realtime
+// and the truth wake states, isolating the idle-path error from the production
+// oscillator's float phase accumulation.
 inline constexpr double kIdlePhaseErrorCyclesMax = 1.0e-4;
 inline constexpr double kIdlePhaseErrorCyclesMaxWithVibrato = 2.0e-3;
 inline constexpr double kWakeResidualDbMax = -40.0;

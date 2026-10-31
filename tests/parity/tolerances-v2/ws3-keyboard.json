@@ -14,7 +14,8 @@
       "short_gap_residual_db_max": -90.0,
       "zero_waveform_decay_ratio_max": 1e-3,
       "idle_incremental_median_rtf_max": 0.02,
-      "idle_incremental_rtf_note": "48 kHz / 128-frame isolation idle_quiet row of cs80_source_factory_benchmark, compared with the 6719ce4 baseline on the same machine in the same session; the shared build machine makes this a diagnostic, not a qualification"
+      "idle_incremental_rtf_note": "48 kHz / 128-frame isolation idle_quiet row of cs80_source_factory_benchmark, compared with the 6719ce4 baseline on the same machine in the same session; the shared build machine makes this a diagnostic, not a qualification",
+      "procedure_erratum_2026_10_31": "Registered after the first evaluation and before any re-evaluation; tolerance values unchanged. First evaluation FAILED (worst wake residual -8.7 dB, worst idle phase 2.1e-4 cycles, short-gap -50 dB at 384 kHz). Two causes: (1) an implementation defect, idle filter states were not re-referenced between the internal rate and the idle step rate; (2) a procedure flaw, the window compared the float production chain with the double truth over the whole run, so the production oscillator's own float phase accumulation (present with no idle period at all) entered every number. Revised procedure: the truth is synchronised to the realtime circuit state at the instant the voice goes silent; phase is compared at wake; the residual window compares two production chains run with identical primitives, one started from the realtime wake state and one from the truth wake state, so only the idle-path state error is measured."
     },
     "2.2_kas_sample_hold": {
       "truth_model": "src/reference/SampleHoldTruth.h: analytic constant-current droop of the held K node and the TC4011/TC4016 NAND(TR,SUS) truth table",
