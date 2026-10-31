@@ -10,6 +10,7 @@
 #include "plugin/EvidenceRegister.h"
 #include "plugin/PanelLayout.h"
 #include "plugin/HardwareKeyboard.h"
+#include "plugin/MemoryEditing.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/StudioMount.h"
@@ -759,6 +760,22 @@ inline void testUndoRedo(const Check& check, const Flush& flush)
         check(false, "the LEGACY render-policy cell exists");
     editor.showAdvancedPanel(false);
     flush(60);
+
+    // The memory lid's STORE PANEL writes 26 parameters in one click: one undo step that restores the memory.
+    {
+        const int lpfLocal = cs80::CP_lpfCutoff;
+        processor.setMemoryValue(0, lpfLocal, 300.0f);
+        processor.setParamValue(cs80::chParam(0, lpfLocal), 4000.0f);
+        flush(250);
+        const int before = steps();
+        check(cs80::memory_editing::storePanelToMemory(processor, 0, 0), "store panel row I into memory 1");
+        flush(60);
+        check(steps() == before + 1 && std::abs(processor.getMemoryValue(0, lpfLocal) - 4000.0f) < 1.0f,
+              "storing the panel into a memory is one undo step");
+        processor.undo();
+        flush(60);
+        check(std::abs(processor.getMemoryValue(0, lpfLocal) - 300.0f) < 1.0f, "undo restores the memory that was overwritten");
+    }
 }
 
 // ---- Learning tools: the tour, per-control help and the evidence view -------------------------------------------

@@ -288,11 +288,21 @@ Findings and fixes:
 | Tab order | toolbar first, left to right; Studio: tabs, sub-page keys, CLOSE, then the open page only; drawer and tour as their own containers | tested |
 | Accessible names | every focus stop on the panel and on every Studio page has a name; tour steps and the value editor carry descriptions; MIDI learn rows have row names and named FORGET keys | tested |
 | Focus visibility | every new key draws the panel's gold focus ring | visual review |
-| Hit-target audit of the rest of the editor | not changed (panel re-layout workstream) | 5 undersized: the voice plate's I/II keys (18 x 15, 21 x 15 px) and the three stacked chorus keys (50 x 18 px), all elements that plan step 5.2 removes or replaces |
+| Hit targets of the whole editor after the ws7 merge | strict gate at 1120 x 700 with two documented exceptions (below) | 0 other undersized targets; 26 excepted, all at least 24 px at the 100 % display size |
 
 The disabled undo/redo keys fall below 4.5:1 by design (inactive controls are exempt from 1.4.3). The piano keys
-are exempt from 2.5.8 as essential. The audit list is printed by the test; set `kStrictForWholeEditor` in
-`tests/StudioUiTests.h` once the panel re-layout lands to make it a gate.
+are exempt from 2.5.8 as essential.
+
+**Documented target-size exceptions (original-panel conformance layout, ws7).** At 1120 x 700:
+- The 23 front-strip levers are 27.5 design px wide on a 29.25 design px pitch, which is 19.3 px wide and
+  20.5 px apart. Neither the 24 px size nor the spacing exception is geometrically possible without
+  abandoning the strip that reproduces the original lever row (WCAG 2.5.8 "essential"). A larger mouse area
+  cannot help, because the neighbours are closer than 24 px.
+- The three stacked tremolo/chorus keys are 25 design px tall (18 px) in the 104-unit deck block.
+
+Both groups are keyboard-operable, and the levers take typed values. At the 100 % display size (1600 x 1000,
+offered by the toolbar menu and the brand mark) every one of them is at least 24 px, and the test asserts it.
+The exception list is fixed: any other undersized target, or growth of the list, fails the test.
 
 ## Measured results (tool and settings)
 
@@ -347,7 +357,12 @@ None. MIDI learn and the editor state are plugin-state children (`MIDI_LEARN` ve
   compare replaces it through the toolbar actions.
 - The live displays on the Studio pages (scopes, curves, tuning readouts) are painted and have no accessible
   text; the evidence views now do.
-- The main-panel hit-target audit (5 targets) belongs to the panel re-layout.
+- The two documented target-size exceptions above (front-strip levers, tremolo/chorus keys) meet 24 px only
+  from the 100 % display size up.
+- `src/plugin/VoicePlate.h` (ws7) is not compiled anywhere and references `geo::plate`, which `PanelLayout.h`
+  no longer defines. The voice monitor drawer (`ScopeDrawer`) shows the same content (path, envelopes, filter
+  response) plus the voice cards, so VoicePlate.h can be deleted, or fixed and hosted in the drawer if the
+  integrator prefers its exact drawing.
 - The voice monitor's curves are illustrations of the panel settings, not taps of the engine.
 - QWERTY play needs the editor to have keyboard focus, which some hosts withhold.
 - The shared Xvfb display allocation (`xvfb-run -a`) occasionally collides when several engineers run the UI
@@ -364,11 +379,19 @@ None. MIDI learn and the editor state are plugin-state children (`MIDI_LEARN` ve
   `processBlock`. New files: `StudioView.h`, `StudioToolbar.*`, `StudioDrawers.*`, `StudioMount.h`,
   `StudioTour.*`, `UndoHistory.*`, `MidiLearn.h`, `EvidenceRegister.h`, `tests/StudioUiTests.h`,
   `tests/MidiLearnTests.cpp`, `tests/EvidenceRegisterTests.cpp`.
-- **ws7 (editor split)**: if ws7's Toolbar component takes over the top bar, mount `StudioToolbar` in place of
-  the program cluster (or adopt its actions) and drop the hide list in my mount block. My block also removes
-  the pitch/mod wheels from `optionComponents`. ws7's golden images of `main-*` and `advanced-page*` must be
-  regenerated after the merge (toolbar and Studio view change those captures). The memory lid's store/copy and
-  copy-rank actions should use `ScopedUserEdit`.
+- **ws7 (merged, `bd524f9`)**: the mount block follows ws7's split (tone keys via `CentreRow::getToneButton`,
+  the ribbon via `PerformanceDeck::getRibbon`, the channel I frame via `geo::rowFrame`). It still hides the
+  editor's program cluster (`prevButton` to `advancedButton` and the four preset labels) and moves the
+  pitch/mod wheels out of `optionComponents`.
+  - AdvancedPanel.cpp now uses ArtCommon.h's wrinkle tile, `fillRelief` and `displayFont` (the embedded Barlow
+    Condensed); its duplicate helpers are deleted. The toolbar, drawers and tour use the same typeface.
+  - The toolbar menu has a Display size submenu that calls `setZoomPercent` / `getZoomPercent`.
+  - The golden images `tests/golden/main-1600x1000.png` and `main-1120x700.png` were refreshed with
+    `CS80_REFRESH_GOLDENS=1`. ws7's goldens differed in 0.91 % and 0.95 % of pixels, all in the toolbar strip
+    where `StudioToolbar` covers the program cluster. The panel itself is unchanged. I inspected both images
+    before committing.
+  - The memory lid's STORE PANEL, COPY MEMORY and COPY RANK write each parameter in its own gesture within one
+    click. The undo grouping makes each action one undo step; the undo test checks STORE PANEL.
 - **ws6 (library)**: connect `Actions::stepPreset/stepArmed/openLibrary/libraryOpen` to the library's prev/next
   through the current filter, and `selectCompare/activeCompare/copyCompare` to the real A/B; then delete
   `CompareSlots`. Randomise should use `ScopedUserEdit`.
@@ -381,4 +404,6 @@ None. MIDI learn and the editor state are plugin-state children (`MIDI_LEARN` ve
 ## Verification
 
 See the final report for the exact commands and outputs: full core suite, `cs80_ui_smoke` and the four locale
-tests, `scripts/check-compat-gates.sh`.
+tests, `scripts/check-compat-gates.sh`. After the merge with the integration branch (`bd524f9`, which carries ws4's
+intentional circuit-engine changes), any `v2` difference in the compat gates comes from ws4, not from this
+workstream, which changes no audio.
