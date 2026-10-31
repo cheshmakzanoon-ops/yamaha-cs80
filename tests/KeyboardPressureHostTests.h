@@ -187,11 +187,14 @@ void testKeyboardPointerPressure(Check check)
     // JUCE keyboard hit testing calls reallyContains(), which recurses through
     // Component::contains to the top-level native peer. A detached component
     // cannot receive a real pointer note, even when its bounds look correct.
-    editor.addToDesktop(0);
-    editor.setVisible(true);
     // A command-line fixture is not the active application until it asks; on a
     // CI desktop another process's window can stay ordered above an inactive
-    // app's new window. Activate, then order the editor front.
+    // app's new window. The fixture tests pointer pressure through the real hit
+    // test, not ordering against other applications, so its window floats above
+    // normal windows; it also activates itself before ordering the editor front.
+    editor.setAlwaysOnTop(true);
+    editor.addToDesktop(0);
+    editor.setVisible(true);
     juce::Process::makeForegroundProcess();
     editor.toFront(true);
     auto* keyboard = pressure_detail::keyboard(editor);

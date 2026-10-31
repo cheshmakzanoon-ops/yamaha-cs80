@@ -872,13 +872,23 @@ inline void testLearningTools(const Check& check, const Flush& flush, const juce
     if (auto* fader = knobFor(editor, cs80::chParam(0, cs80::CP_hpfCutoff)))
     {
         check(fader->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::F1Key)), "F1 is handled by a control");
+        // The card is launched and dismissed through posted messages; a loaded CI
+        // runner (macos-15-intel at fd0e851) can need longer than one 80 ms flush,
+        // so wait for it up to 2 s. The assertions are unchanged.
         flush(80);
         auto* card = findFirst<juce::CallOutBox>(editor);
+        for (int waited = 80; card == nullptr && waited < 2000; waited += 40)
+        {
+            flush(40);
+            card = findFirst<juce::CallOutBox>(editor);
+        }
         check(card != nullptr && card->isVisible(), "F1 opens the help card");
         save(editor, dir, "studio-help-card-1600x1000", check);
         if (card != nullptr)
             card->dismiss();
         flush(250);
+        for (int waited = 250; findFirst<juce::CallOutBox>(editor) != nullptr && waited < 2000; waited += 50)
+            flush(50);
         check(findFirst<juce::CallOutBox>(editor) == nullptr, "the help card closes");
     }
     else
