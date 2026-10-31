@@ -266,6 +266,23 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_noise_tests COMMAND cs80_noise_tests)
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_mts_esp_native_tests tests/MtsEspNativeTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_native_tests PRIVATE src)
+    target_link_libraries(cs80_mts_esp_native_tests PRIVATE ${CMAKE_DL_LIBS})
+    add_test(NAME cs80_mts_esp_native_tests COMMAND cs80_mts_esp_native_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/mts-client.json)
+    set_tests_properties(cs80_mts_esp_native_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_mts_esp_shim_tests tests/MtsEspShimTests.cpp src/plugin/MtsEspClient.cpp)
+    target_compile_definitions(cs80_mts_esp_shim_tests PRIVATE CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    target_link_libraries(cs80_mts_esp_shim_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mts_esp_shim_tests COMMAND cs80_mts_esp_shim_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/mts-client.json)
+    set_tests_properties(cs80_mts_esp_shim_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_mts_esp_fallback_tests tests/MtsEspFallbackTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_fallback_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_fallback_tests PRIVATE CS80_WITH_MTS_ESP=0)
+    add_test(NAME cs80_mts_esp_fallback_tests COMMAND cs80_mts_esp_fallback_tests)
+    set_tests_properties(cs80_mts_esp_fallback_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
     add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)

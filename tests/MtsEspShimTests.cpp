@@ -1,0 +1,133 @@
+// Deterministic protocol fixture. Only this test target replaces the upstream
+// C API; it compiles the same adapter and the real upstream declarations.
+#include "core/Engine.h"
+#include "plugin/MtsEspClient.h"
+#include "../deps/mts-esp/Client/libMTSClient.h"
+#include "Ws1Tolerances.h"
+
+#include <cmath>
+#include <cstdint>
+#include <iostream>
+#include <vector>
+
+struct MTSClient {};
+namespace {
+bool master = false, failRegistration = false;
+int registered = 0, deregistered = 0, frequencyQueries = 0, mappingQueries = 0, midiCalls = 0;
+bool channelCorrect = true;
+const unsigned char* receivedMidi = nullptr;
+int receivedSize = 0;
+}
+extern "C" {
+MTSClient* MTS_RegisterClient()
+{
+    if (failRegistration) return nullptr;
+    ++registered;
+    return new MTSClient;
+}
+void MTS_DeregisterClient(MTSClient* client)
+{
+    ++deregistered;
+    delete client;
+}
+bool MTS_HasMaster(MTSClient* client) { return client != nullptr && master; }
+double MTS_NoteToFrequency(MTSClient*, char note, signed char channel)
+{
+    ++frequencyQueries;
+    channelCorrect = channelCorrect && channel == -1;
+    return 440.0 * std::exp2((static_cast<unsigned char>(note) + 0.25 - 69.0) / 12.0);
+}
+bool MTS_ShouldFilterNote(MTSClient*, char note, signed char channel)
+{
+    ++mappingQueries;
+    channelCorrect = channelCorrect && channel == -1;
+    return note == 60;
+}
+void MTS_ParseMIDIDataU(MTSClient*, const unsigned char* bytes, int size)
+{
+    ++midiCalls;
+    receivedMidi = bytes;
+    receivedSize = size;
+}
+}
+namespace {
+int failures = 0;
+void check(bool pass, const char* message)
+{
+    if (!pass) { ++failures; std::cerr << "FAIL: " << message << '\n'; }
+}
+std::vector<float> render(const cs80::tuning::TuningTable& table, bool supplied, bool pure, int tuningMode)
+{
+    auto parameters = cs80::defaultValues();
+    parameters[cs80::P_sourcePerformance] = 1.0f;
+    parameters[cs80::P_parityMode] = pure ? 1.0f : 0.0f;
+    parameters[cs80::P_tuningMode] = static_cast<float>(tuningMode);
+    parameters[cs80::P_drift] = parameters[cs80::P_voiceDispersion] = parameters[cs80::P_analogNoise] = 0.0f;
+    cs80::Engine engine;
+    engine.setParams(parameters);
+    engine.prepare(48000.0);
+    if (supplied) engine.setMtsTuning(table);
+    engine.noteOn(64, 0.8f);
+    std::vector<float> output(4096 * 2);
+    engine.render(output.data(), 4096);
+    return output;
+}
+}
+int main(int argc, char** argv)
+{
+    try
+    {
+        const ws1::Tolerances tolerance(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/mts-client.json", "mts_client");
+        cs80::tuning::TuningTable received;
+        {
+            cs80::MtsEspClient shim;
+            check(shim.available(), "adapter compiles the upstream API branch");
+            check(registered == 1 && deregistered == 0, "adapter registers exactly once");
+            const auto before = received;
+            check(!shim.hasMaster() && !shim.fillTable(received), "absent master supplies no table");
+            check(received.pitch == before.pitch && received.mapped == before.mapped,
+                  "absent master preserves caller table");
+            master = true;
+            check(shim.hasMaster() && shim.fillTable(received), "connected master supplies its table");
+            bool pitches = true, mapping = true;
+            for (int note = 0; note < 128; ++note)
+            {
+                pitches = pitches && std::abs(received.pitch[static_cast<std::size_t>(note)] - (note + 0.25f))
+                                      <= tolerance["pitch_error_semitones"];
+                mapping = mapping && received.mapped[static_cast<std::size_t>(note)] == (note != 60);
+            }
+            check(pitches, "all 128 frequencies reach the fractional-MIDI table");
+            check(mapping, "unmapped notes reach the table");
+            check(frequencyQueries == 128 && mappingQueries == 128 && channelCorrect,
+                  "one frequency and mapping query per note with channel -1");
+            const std::uint8_t midi[] { 0xF0, 0x7F, 0x7F, 0x08, 0x02, 0, 0, 0xF7 };
+            shim.parseMidi(midi, static_cast<int>(sizeof(midi)));
+            check(midiCalls == 1 && receivedMidi == midi && receivedSize == sizeof(midi),
+                  "adapter forwards valid MIDI bytes without copying");
+            shim.parseMidi(nullptr, 4);
+            shim.parseMidi(midi, 0);
+            check(midiCalls == 1, "invalid MIDI buffers do not reach the client");
+            master = false;
+            const auto tuned = received;
+            check(!shim.fillTable(received) && received.pitch == tuned.pitch && received.mapped == tuned.mapped,
+                  "master disconnect is reported without overwriting caller state");
+        }
+        check(registered == deregistered, "adapter deregisters exactly once");
+        failRegistration = true;
+        {
+            cs80::MtsEspClient shim;
+            check(!shim.hasMaster() && !shim.fillTable(received), "failed registration remains safe");
+            shim.parseMidi(reinterpret_cast<const std::uint8_t*>("x"), 1);
+            check(midiCalls == 1, "null client cannot parse MIDI");
+        }
+        check(registered == deregistered, "null registration is not deregistered");
+        check(render(received, true, false, 0) == render(received, false, false, 0),
+              "default tuning mode ignores the MTS table byte-for-byte");
+        check(render(received, true, true, 2) == render(received, false, true, 2),
+              "PURE CS-80 ignores the MTS table byte-for-byte");
+        check(render(received, true, false, 2) != render(received, false, false, 2),
+              "modern tuning mode actually consumes the fixture table");
+    }
+    catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
+    return failures == 0 ? 0 : 1;
+}

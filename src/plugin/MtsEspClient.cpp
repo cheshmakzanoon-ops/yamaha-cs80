@@ -1,15 +1,24 @@
 #include "MtsEspClient.h"
 
-// Compile-time switch: the client is built in only when its sources are present.
-#if defined(__has_include)
- #if __has_include("../../deps/mts-esp/Client/libMTSClient.h")
-  #define CS80_WITH_MTS_ESP 1
-  #include "../../deps/mts-esp/Client/libMTSClient.h"
-  #include "../../deps/mts-esp/Client/libMTSClient.cpp"
+// Default shipping branch: the pinned client is vendored with its licence.
+// An explicit 0 is retained for the no-client fallback compile test.
+#ifndef CS80_WITH_MTS_ESP
+ #if defined(__has_include)
+  #if __has_include("../../deps/mts-esp/Client/libMTSClient.h")
+   #define CS80_WITH_MTS_ESP 1
+  #endif
  #endif
 #endif
 #ifndef CS80_WITH_MTS_ESP
  #define CS80_WITH_MTS_ESP 0
+#endif
+#if CS80_WITH_MTS_ESP
+ #include "../../deps/mts-esp/Client/libMTSClient.h"
+ // The contract fixture supplies the same C API at link time. Only the test
+ // target defines this; normal plugin builds include the untouched client.
+ #ifndef CS80_MTS_ESP_TEST_BACKEND
+  #include "../../deps/mts-esp/Client/libMTSClient.cpp"
+ #endif
 #endif
 
 namespace cs80
@@ -38,7 +47,8 @@ bool MtsEspClient::fillTable(tuning::TuningTable& table) const noexcept
 }
 void MtsEspClient::parseMidi(const std::uint8_t* data, int size) noexcept
 {
-    if (client != nullptr) MTS_ParseMIDIDataU(static_cast<MTSClient*>(client), data, size);
+    if (client != nullptr && data != nullptr && size > 0)
+        MTS_ParseMIDIDataU(static_cast<MTSClient*>(client), data, size);
 }
 #else
 MtsEspClient::MtsEspClient() = default;

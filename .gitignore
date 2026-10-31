@@ -1,6 +1,11 @@
 build/
 build-*/
-deps/
+deps/*
+!deps/mts-esp/
+deps/mts-esp/*
+!deps/mts-esp/Client/
+!deps/mts-esp/LICENSE
+!deps/mts-esp/README.vendor.md
 apt/
 artifacts/
 *.deb

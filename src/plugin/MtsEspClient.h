@@ -2,13 +2,11 @@
 
 // MTS-ESP client shim (IMPROVEMENT_PLAN Phase 6, modern layer).
 //
-// ODDSound's MTS-ESP client (libMTSClient.h/.cpp, 0BSD licence per the
-// ODDSound/MTS-ESP repository page) is NOT vendored: its source could not be
-// fetched byte-exactly from this session. The shim compiles the client in
-// automatically when the two files are placed at deps/mts-esp/Client/ (deps/
-// is untracked; vendor them in-tree with their licence to ship). Without them
-// it reports "not available" and the processor falls back to MIDI Tuning
-// Standard SysEx, which needs no library (Engine::handleSysEx).
+// ODDSound's pinned 0BSD client is vendored unmodified in deps/mts-esp/Client/
+// with its licence and SHA-256 provenance (deps/mts-esp/README.vendor.md).
+// The adapter also has an explicit no-client build branch, compile-tested
+// alongside the shipping branch. Without a master, the processor's existing
+// MIDI Tuning Standard SysEx path remains available.
 //
 // Client API used (as documented in the MTS-ESP client header): RegisterClient,
 // DeregisterClient, HasMaster, NoteToFrequency(note, channel), ShouldFilterNote,
