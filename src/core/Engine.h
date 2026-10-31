@@ -9,6 +9,8 @@
 #include "BbdChorus.h"
 #include "OutputTapCircuit.h"
 #include "SourceFactoryTones.h"
+#include "KasScanner.h"
+#include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
 
 #include <array>
@@ -155,6 +157,15 @@ struct GlobalSettings
     int arpMode = 0;
     float arpRate = 4.0f;
     int arpOctaves = 1;
+
+    // ws3 keyboard/MIDI/tuning settings (all neutral at their defaults).
+    bool kasScanTiming = false;
+    float velocityCurve = 0.0f, pressureCurve = 0.0f, pressureThreshold = 0.0f;
+    bool ribbonCcEnabled = false;
+    int ribbonCc = 16;
+    int tuningMode = 0;
+    int voiceMode = 0;
+    float unisonDetune = 10.0f;
 };
 
 class Engine
@@ -337,6 +348,8 @@ private:
         // The filter EG holds a reset (not a completed-release) state: cold
         // after reset/prepare, or cleared by Sustain II termination.
         bool envelopeReset = true;
+        // SH7 per-voice K hold (Phase 2.2, circuit engine).
+        kas::HeldKeyNode keyNode;
     };
 
     struct HeldKey
@@ -366,6 +379,16 @@ private:
     bool isSustainPedalDown(int midiChannel) const noexcept;
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
+    // Note events after the optional KAS scan quantisation (Phase 2.2).
+    void applyNoteOn(int midiNote, float velocity, int midiChannel);
+    void applyNoteOff(int midiNote, int midiChannel);
+    bool scanTimingActive() const noexcept
+    { return global.kasScanTiming && usesSourceModels(global.renderPolicy) && ! global.arpOn; }
+    // Circuit engine: a still-held key that found no free circuit is assigned
+    // when one frees (declared KAS model, KasScanner.h).
+    void rememberUnassignedKey(int note, float velocity, int midiChannel);
+    bool forgetUnassignedKey(int note, int midiChannel);
+    void reconsiderUnassignedKeys();
 
     // Arpeggiator. It is clocked at the internal rate so a rate change is
     // heard immediately and the pattern does not drift with block size.
@@ -518,6 +541,10 @@ private:
     float voiceDrift[kNumVoices] {};
 
     std::array<HeldKey, kMaxHeldKeys> heldKeys {};
+    // KAS scan model and still-held keys without a circuit (Phase 2.2).
+    kas::Scanner scanner;
+    std::array<HeldKey, kMaxHeldKeys> unassignedKeys {};
+    int unassignedCount = 0;
     int heldKeyCount = 0;
     uint64_t keyOrder = 0;
     // Maximum ascending sequence is 32 keys x 4 octaves. Up/down adds the

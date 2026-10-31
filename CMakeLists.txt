@@ -228,6 +228,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
     add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)
     set_tests_properties(cs80_free_running_voice_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_kas_scanner_tests tests/KasScannerTests.cpp)
+    target_link_libraries(cs80_kas_scanner_tests PRIVATE cs80_core)
+    add_test(NAME cs80_kas_scanner_tests COMMAND cs80_kas_scanner_tests)
+    set_tests_properties(cs80_kas_scanner_tests PROPERTIES TIMEOUT 120)
 
     # [ws4-circuits] register this workstream's core tests below this line.
 

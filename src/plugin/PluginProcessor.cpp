@@ -242,6 +242,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     // [ws2-engine] append this workstream's host parameters below this line, AU version hint 9.
 
     // [ws3-keyboard] append this workstream's host parameters below this line, AU version hint 10.
+    // Plain floats (switches/choices read with >= 0.5 / rounding in the core),
+    // like the original channel switches; all defaults leave renders unchanged.
+    for (int index = cs80::P_kasScanTiming; index <= cs80::P_unisonDetune; ++index)
+        add(index, 10);
 
     // [ws4-circuits] append this workstream's host parameters below this line, AU version hint 11.
 

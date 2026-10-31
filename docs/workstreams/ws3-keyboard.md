@@ -163,3 +163,93 @@ therefore adds up to ≈ 1.5 ms of CPU within one block in the worst case
 | Row | New text |
 |---|---|
 | Oscillators/filter state between notes | A in the circuit engine; E free-runs all 16 chains: exact idle phase, decimated IG00156 memories with rate re-referencing, snapshot replay at wake (ContinuousVoiceCircuit.h). T FreeRunningVoiceTests (gate vs FreeRunningVoiceTruth.h). Legacy unchanged. Remaining: oscillator law itself (ws1), noise topology, hardware comparison |
+
+---
+
+## 2.2 KAS scan and sample/hold — **done** (scan period and hold leakage declared)
+
+### What changed (`src/core/KasScanner.h`, `Engine.cpp`; circuit engine only)
+
+- **SH hold.** Each voice has a held K node: it holds when NAND(TR, SUS) says
+  hold, i.e. the key is released (TR high; a CC64 pedal hold counts as keyed,
+  a MIDI extension) and SUSTAIN I is selected (SUS pulled high). While holding,
+  the glide is frozen (portamento acts upstream on KI) and K droops; in
+  SUSTAIN II the switch keeps conducting and the tail keeps tracking KI (glide
+  continues), as before. Master tune is applied downstream of the hold
+  (declared; alternative: upstream). The droop ratio scales the VCO frequency
+  and the filter key voltage, both linear in K. Legacy never holds.
+- **Droop.** `dK/dt = −I/C` toward 0 V, never below.
+- **Scan timing and priority** (opt-in parameter `kas_scan_timing`): note
+  events are queued and acted on at the next scan instant; one scan dispatches
+  lowest key first, a release before a strike of the same key. Panic discards a
+  channel's queued events; switching the option off flushes the queue.
+- **Ninth held key** (circuit engine): a held key that found no free circuit is
+  remembered and takes the first circuit that frees (note-off, CC64 release),
+  lowest waiting key first, with zero initial touch (it was not struck then).
+  Released before that, it is forgotten; panic forgets it.
+
+### Evidence class
+
+| Law | Class | Source / alternatives |
+|---|---|---|
+| NAND(TR,SUS) → TC4016 track/hold, TR active low, SUS high = SUSTAIN I | source-derived | SH7/SH8, KAS4/KAS6, Panel66 (CIRCUIT_REVIEW.md); servicing guide pp25–26 corroborates (CS-50 example) |
+| Glide frozen while holding | inference from topology | portamento upstream of KI; alternative: K downstream glide (would keep gliding) |
+| Hold capacitance 0.033 µF | **declared** | SH7 does not print it; value of the KBC per-voice held nodes (brief and KEYBOARD_CONTOUR_EVIDENCE.md); alternatives 0.02 µF (SH7 note), 0.22 µF (CS-50 guide) |
+| Leakage 1 pA toward 0 V | **declared** | CA3140T K buffer (SH8); data sheet: 10 pA typical magnitude, no sign; switch leakage taken as 0 (KI = K after release). Alternatives 0, 10–50 pA, either polarity |
+| Scan period 1 ms, lowest key first, release before strike | **declared** | not in the inspected sources; alternatives 0.25–4 ms, top-down or arrival order |
+| Ninth key reconsidered when a circuit frees | **declared** | YM26600 block diagram shows an 8-entry code memory and no 61-key store (KEYBOARD_MAPPING_CONSTRAINT_REVIEW.md, IC guide PDF15–16), so a held key without a channel is a new key on every scan. Alternative: edge-detecting scanner, never reconsidered (Legacy; owner manual p43 covers only the occupied case) |
+| Reconsidered key has zero initial touch | **declared** | TWS b samples a strike transient; a key held still has none. Alternative: original velocity |
+
+### Droop sensitivity (`cs80_kas_scanner_tests`, printed table)
+
+Cents flat after 1 s / 5 s of Sustain-I hold:
+
+| C | I | MIDI 24 (C1) | MIDI 36 | MIDI 60 |
+|---|---|---|---|---|
+| 0.033 µF | **1 pA (nominal)** | 0.84 / 4.2 | 0.42 / 2.1 | 0.10 / 0.52 |
+| 0.033 µF | 10 pA | 8.4 / 42 | 4.2 / 21 | 1.05 / 5.3 |
+| 0.02 µF | 10 pA | 13.9 / 71 | 6.9 / 35 | 1.7 / 8.7 |
+| 0.22 µF | 10 pA | 1.3 / 6.3 | 0.63 / 3.2 | 0.16 / 0.79 |
+
+A first implementation used 10 pA; the table showed 42 cents after 5 s at C1,
+a strong audible claim for a leakage of unknown sign and magnitude, so the
+nominal was lowered to the low end before committing. Both are listed.
+
+### Tests (`tests/KasScannerTests.cpp`, 126 checks) and mutation checks
+
+Gate: droop of the realtime node against `src/reference/SampleHoldTruth.h`
+over C ∈ {0.02, 0.033, 0.22} µF × I ∈ {1, 10, 50} pA × K0 ∈ {1/16…2} V ×
+t ∈ {0…1000} s advanced in uneven pieces: relative error ≤ 1e-6 (pass, exact
+to rounding). NAND truth table, all four combinations. Engine: Sustain I tail
+droops by the law at 44.1/48/96 kHz, Sustain II and Legacy do not, glide frozen
+in I and continuing in II. Scanner: 500 random events all within one scan
+period; scan-order dispatch; channel discard. Allocation regressions in all
+three policies: 24-strike rotation, held protection, ninth key (circuit engine
+reconsidered with zero touch, Legacy ignored), released ninth key forgotten,
+lowest waiting key first, pedal protection and release, panic. Scan timing:
+deferred to the next scan, acted on within one period, chord assigned in scan
+order, opt-in, ignored by Legacy, flushed when disabled.
+
+Mutations (restored afterwards): hold never engages → 7 failing checks; droop
+ratio forced to 1 → 5; scan sort removed → 3; reconsideration disabled → 5;
+glide not frozen while holding → 3.
+
+### Intentional circuit-engine sound/behaviour changes (re-pin V2)
+
+Sustain-I release tails hold their pitch at release (a glide in progress
+stops) and droop by the declared law; a ninth held key now sounds when a
+circuit frees.
+
+### New parameter
+
+| id | range | default | AU hint | notes |
+|---|---|---|---|---|
+| `kas_scan_timing` | 0..1 (switch, ≥ 0.5 on) | 0 | 10 | circuit engine only; adds ≤ 1 ms note latency |
+
+### HARDWARE_COVERAGE.md entries (2026-10-31)
+
+| Row | New text |
+|---|---|
+| Cyclic assignment and ninth held key | IB/A; circuit engine reconsiders a still-held ninth key when a circuit frees (declared YM26600 model, zero initial touch); Legacy ignores it. T KasScannerTests |
+| Keyboard scanner, debounce and allocation timing | A (declared); optional `kas_scan_timing`: events act at 1 ms scan instants, lowest key first. Scan period not sourced. Debounce not modelled |
+| Per-voice sample/hold, droop and retained key voltage | A; SH7 NAND(TR,SUS) hold in the circuit engine, glide frozen in Sustain I, constant-current droop (declared 0.033 µF / 1 pA). T KasScannerTests vs SampleHoldTruth.h |

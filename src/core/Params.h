@@ -155,6 +155,20 @@ enum : int
     // [ws2-engine] append this workstream's core parameters below this line.
 
     // [ws3-keyboard] append this workstream's core parameters below this line.
+    // KAS scan timing (2.2): opt-in, quantises key events to scan instants.
+    P_kasScanTiming,
+    // Controller response curves (2.4). INTERFACE LAYER, identity at default.
+    P_velocityCurve,
+    P_pressureCurve,
+    P_pressureThreshold,
+    // Ribbon from a MIDI CC (interface layer): off by default, CC 16 when on.
+    P_ribbonCcEnable,
+    P_ribbonCc,
+    // Tuning source (Phase 6, modern layer): 0 12-TET, 1 Scala/KBM, 2 MTS.
+    P_tuningMode,
+    // Voice mode (Phase 6): 0 eight voices (authentic), 1 sixteen, 2/3/4 unison x2/x4/x8.
+    P_voiceMode,
+    P_unisonDetune,
 
     // [ws4-circuits] append this workstream's core parameters below this line.
 
@@ -326,6 +340,15 @@ inline constexpr ParamDef kExtensionDefs[] = {
     // [ws2-engine] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws3-keyboard] append this workstream's ParamDefs below this line (same order as the enum).
+    { "kas_scan_timing", "KAS SCAN TIMING", 0.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD" },
+    { "velocity_curve", "VELOCITY CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "MIDI" },
+    { "pressure_curve", "PRESSURE CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "MIDI" },
+    { "pressure_threshold", "PRESSURE THRESHOLD", 0.0f, 0.5f, 0.0f, 1.0f, "", "MIDI" },
+    { "ribbon_cc_enable", "RIBBON MIDI CC", 0.0f, 1.0f, 0.0f, 1.0f, "", "MIDI" },
+    { "ribbon_cc", "RIBBON CC NUMBER", 1.0f, 119.0f, 16.0f, 1.0f, "", "MIDI" },
+    { "tuning_mode", "TUNING SOURCE", 0.0f, 2.0f, 0.0f, 1.0f, "", "TUNING" },
+    { "voice_mode", "VOICE MODE", 0.0f, 4.0f, 0.0f, 1.0f, "", "VOICE" },
+    { "unison_detune", "UNISON DETUNE", 0.0f, 50.0f, 10.0f, 1.0f, "ct", "VOICE" },
 
     // [ws4-circuits] append this workstream's ParamDefs below this line (same order as the enum).
 

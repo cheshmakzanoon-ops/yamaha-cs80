@@ -11,6 +11,11 @@ import tempfile
 import unittest
 
 CAPTURE = None
+# Exact core parameter count: the 139 shipped parameters plus every block
+# appended since. ws3-keyboard (2026-10-31) appended 9 (kas_scan_timing ..
+# unison_detune); a later appended block adds its own count here.
+EXPECTED_PARAMETER_COUNT = 139 + 9
+
 EXPECTED_EVENTS = [
     {'sample': 4800, 'type': 'note_on', 'note': 60, 'channel': 1, 'value': .75},
     {'sample': 19200, 'type': 'poly_pressure', 'note': 60, 'channel': 1, 'value': .5},
@@ -47,7 +52,7 @@ def validate_metadata(metadata):
     assert metadata['latency_samples'] == 63
     assert metadata['latency_compensated'] is False
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
-    assert metadata['parameter_count'] == len(metadata['settings']) == 139
+    assert metadata['parameter_count'] == len(metadata['settings']) == EXPECTED_PARAMETER_COUNT
     assert all(type(x) in (int, float) and math.isfinite(x) for x in metadata['settings'].values())
     assert metadata['settings']['parity_mode'] == 1
     assert metadata['settings']['source_performance'] == 0
@@ -178,7 +183,7 @@ def validate_live_metadata(metadata, default_settings):
     assert metadata['sample_count'] == 96000
     assert metadata['latency_samples'] == 63
     assert metadata['latency_compensated'] is False
-    assert metadata['parameter_count'] == 139
+    assert metadata['parameter_count'] == EXPECTED_PARAMETER_COUNT
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
     assert metadata['envelope_trace'] == 'envelope-events.csv'
     assert metadata['event_timing'] == 'zero-based host sample; sequence order; applied before rendering that sample'

@@ -35,6 +35,7 @@ void Engine::prepare(double hostSampleRate)
     decL.prepare((float) internalRate);
     decR.prepare((float) internalRate);
     externalInput.prepare((float) hostRate);
+    scanner.prepare(internalRate);
     // Engine rate guards imply a valid 16kHz..1.536MHz circuit rate. Profile
     // defaults are documented engineering inferences, not measured calibration.
     praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
@@ -98,6 +99,7 @@ void Engine::reset()
         }
         v.envelopeReset = true;
         v.idleSteps = 0;
+        v.keyNode.track();
         // Stagger the idle steps so the eight circuits do not all step at once.
         v.idleClock = vi * idleStepSamples / kNumVoices;
         idleNoise[(size_t) vi] = Rng(kIdleNoiseSeed + (std::uint32_t) vi);
@@ -114,6 +116,8 @@ void Engine::reset()
     }
     heldCount = 0;
     sustainPedals.fill(false);
+    scanner.reset();
+    unassignedCount = 0;
     ringKeyDown = false;
     ringAdsr.reset();
     ringPhase = 0.0f;
@@ -408,6 +412,15 @@ void Engine::buildSettings()
     global.arpMode = std::clamp((int) std::lround(p(P_arpMode)), 0, 4);
     global.arpRate = std::max(0.1f, p(P_arpRate));
     global.arpOctaves = std::clamp((int) std::lround(p(P_arpOctaves)), 1, 4);
+    global.kasScanTiming = p(P_kasScanTiming) >= 0.5f;
+    global.velocityCurve = p(P_velocityCurve);
+    global.pressureCurve = p(P_pressureCurve);
+    global.pressureThreshold = p(P_pressureThreshold);
+    global.ribbonCcEnabled = p(P_ribbonCcEnable) >= 0.5f;
+    global.ribbonCc = std::clamp((int) std::lround(p(P_ribbonCc)), 1, 119);
+    global.tuningMode = std::clamp((int) std::lround(p(P_tuningMode)), 0, 2);
+    global.voiceMode = std::clamp((int) std::lround(p(P_voiceMode)), 0, 4);
+    global.unisonDetune = p(P_unisonDetune);
 
     // Effective settings only: retain stored automation/patch values unchanged.
     // Zero variation is an uncalibrated nominal fixture, NOT measured tolerances.
@@ -431,6 +444,11 @@ void Engine::buildSettings()
         }
         for (float& macro : global.macro)
             macro = 0.5f;
+        // Modern-layer tuning and voice modes are inert in PURE CS-80. The KAS
+        // scan option, controller curves and the ribbon CC stay: they model an
+        // original circuit or adapt the controller, not add an instrument feature.
+        global.tuningMode = 0;
+        global.voiceMode = 0;
     }
 
     // Macro layer. 0.5 is neutral, so a patch sounds exactly like its panel
@@ -801,6 +819,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.envelopeReset = false;
     v.idleClock = 0;
     v.idleSteps = 0;
+    v.keyNode.track(); // TR low: K acquires the new key
     v.active = true;
     v.held = true;
     v.sustained = false;
@@ -915,7 +934,17 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
 {
     if (midiNote < 0 || midiNote > 127)
         return;
+    // Interface-layer controller curve (Phase 2.4); exact identity at 0.
+    if (global.velocityCurve != 0.0f)
+        velocity = applyVelocityCurve(velocity, global.velocityCurve);
+    // Opt-in KAS scan timing: act at the next scan instant, in scan order.
+    if (scanTimingActive() && scanner.push(midiNote, midiChannel, velocity, true))
+        return;
+    applyNoteOn(midiNote, velocity, midiChannel);
+}
 
+void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
+{
     if (global.sustainMode == 1)
     {
         for (auto& v : voices)
@@ -941,8 +970,61 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
 
     const int idx = chooseVoice();
     if (idx < 0)
-        return; // all circuits occupied; leave held/ring state untouched
+    {
+        // All circuits occupied; leave held/ring state untouched. Circuit
+        // engine: the KAS keeps seeing this held key (Phase 2.2).
+        if (usesSourceModels(global.renderPolicy))
+            rememberUnassignedKey(midiNote, velocity, midiChannel);
+        return;
+    }
     startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+}
+
+void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel)
+{
+    for (int i = 0; i < unassignedCount; ++i)
+        if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel)
+            return;
+    if (unassignedCount >= kMaxHeldKeys)
+        return;
+    auto& key = unassignedKeys[(size_t) unassignedCount++];
+    key.note = note;
+    key.midiChannel = midiChannel;
+    key.velocity = velocity;
+    key.order = ++keyOrder;
+}
+
+bool Engine::forgetUnassignedKey(int note, int midiChannel)
+{
+    for (int i = 0; i < unassignedCount; ++i)
+        if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel)
+        {
+            for (int j = i + 1; j < unassignedCount; ++j)
+                unassignedKeys[(size_t) (j - 1)] = unassignedKeys[(size_t) j];
+            --unassignedCount;
+            return true;
+        }
+    return false;
+}
+
+void Engine::reconsiderUnassignedKeys()
+{
+    // Declared KAS model (KasScanner.h): a held key without a circuit is seen
+    // again by the next scan and takes the first free circuit, lowest key
+    // first. It was not struck now, so its initial touch is zero.
+    while (unassignedCount > 0 && usesSourceModels(global.renderPolicy))
+    {
+        const int idx = chooseVoice();
+        if (idx < 0)
+            return;
+        int best = 0;
+        for (int i = 1; i < unassignedCount; ++i)
+            if (unassignedKeys[(size_t) i].note < unassignedKeys[(size_t) best].note)
+                best = i;
+        const auto key = unassignedKeys[(size_t) best];
+        forgetUnassignedKey(key.note, key.midiChannel);
+        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel);
+    }
 }
 
 bool Engine::isSustainPedalDown(int midiChannel) const noexcept
@@ -996,13 +1078,27 @@ void Engine::cancelSustainTails()
 
 void Engine::noteOff(int midiNote, int midiChannel)
 {
+    if (scanTimingActive() && scanner.push(midiNote, midiChannel, 0.0f, false))
+        return;
+    applyNoteOff(midiNote, midiChannel);
+}
+
+void Engine::applyNoteOff(int midiNote, int midiChannel)
+{
     if (global.arpOn)
     {
         forgetHeldKey(midiNote, midiChannel);
         return;
     }
+    // A released key that never found a circuit simply stops being seen.
+    if (unassignedCount > 0 && forgetUnassignedKey(midiNote, midiChannel))
+        return;
     if (auto* voice = findVoiceForNote(midiNote, midiChannel))
+    {
         releaseKey(*voice);
+        if (unassignedCount > 0)
+            reconsiderUnassignedKeys();
+    }
 }
 
 Engine::Voice* Engine::findVoiceForNote(int note, int midiChannel)
@@ -1026,6 +1122,14 @@ void Engine::allNotesOff(bool release, int midiChannel)
     // Channel-mode MIDI messages do not reset controller state.
     if (allChannels)
         sustainPedals.fill(false);
+    scanner.discard(midiChannel);
+    {
+        int kept = 0;
+        for (int i = 0; i < unassignedCount; ++i)
+            if (! allChannels && unassignedKeys[(size_t) i].midiChannel != midiChannel)
+                unassignedKeys[(size_t) kept++] = unassignedKeys[(size_t) i];
+        unassignedCount = kept;
+    }
 
     int kept = 0;
     for (int i = 0; i < heldKeyCount; ++i)
@@ -1167,6 +1271,8 @@ void Engine::controlChange(int controller, float value, int midiChannel)
                 ringKeyDown = false;
                 ringAdsr.noteOff();
             }
+            if (unassignedCount > 0)
+                reconsiderUnassignedKeys();
         }
     }
     else if (controller == 74)
@@ -1192,6 +1298,20 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 {
     const float sr = (float) internalRate;
     const float invSr = 1.0f / sr;
+
+    // KAS scan instants (Phase 2.2, opt-in). Switching the option off flushes
+    // anything still queued at once.
+    if (scanTimingActive() || scanner.pending() > 0)
+    {
+        auto dispatch = [this](const kas::Scanner::Event& e) {
+            if (e.on) applyNoteOn(e.note, e.velocity, e.channel);
+            else applyNoteOff(e.note, e.channel);
+        };
+        if (! scanTimingActive())
+            while (! scanner.tick(dispatch)) {}
+        else
+            scanner.tick(dispatch);
+    }
 
     updateArpeggiator(invSr);
 
@@ -1299,21 +1419,47 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         if (v.held || v.pedalHeld)
             ++stillHeld;
 
+        // SH7/SH8 K hold (Phase 2.2, circuit engine): NAND(TR, SUS). TR is high
+        // once the key (or, as a MIDI extension, the CC64 pedal) lets go; SUS is
+        // high in SUSTAIN I. Holding freezes the key voltage, glide included,
+        // and lets it droop (KasScanner.h). Legacy never holds: ratio 1.
+        float keyRatio = 1.0f;
+        if (freeRunning)
+        {
+            if (kas::shHolds(! (v.held || v.pedalHeld), global.sustainMode == 0))
+            {
+                if (! v.keyNode.holding)
+                    v.keyNode.hold(filterKeyVolts((float) v.glidePitch));
+                else
+                    v.keyNode.advance((double) (idle ? idleSamples : 1) / internalRate);
+                keyRatio = (float) v.keyNode.ratio();
+            }
+            else
+                v.keyNode.track();
+        }
+
+        // A held K node freezes the glide (portamento acts upstream on KI).
         if (idle)
         {
-            if (glideActive)
-                v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch)
-                               * std::exp(-(double) idleSamples / ((double) global.portamento * sr));
-            else
-                v.glidePitch = v.targetPitch;
+            if (! v.keyNode.holding)
+            {
+                if (glideActive)
+                    v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch)
+                                   * std::exp(-(double) idleSamples / ((double) global.portamento * sr));
+                else
+                    v.glidePitch = v.targetPitch;
+            }
             v.initialPitchTransient *= idleTransientDecay;
         }
         else
+        {
+        if (! v.keyNode.holding)
         {
         if (glideActive)
             v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch) * glideCoef;
         else
             v.glidePitch = v.targetPitch;
+        }
 
         // Conditional TWS C positive-step response: 1 uF * (100k || 100k).
         // Coefficient is computed at prepare, not in this sample loop. Do not
@@ -1357,7 +1503,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // Transposition is a separate nominal harmonic ratio, not rounded
             // equal-tempered fifths and not part of the shared filter key CV.
             const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
-                               * kFeetRatios[std::clamp(rs.feet, 0, 5)];
+                               * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
 
@@ -1376,7 +1522,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
             // Shared key-voltage domain precedes VCO footage/vibrato. Master
             // pitch and key portamento move it; ribbon routing is unverified.
-            const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune, r.keyVoltsExp);
+            const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune, r.keyVoltsExp) * keyRatio;
             const float brillOct = global.brilliance
                                    + (sourceActive[ch] ? 0.0f : rs.initBrill * v.velocity * 2.0f)
                                    + (sourceActive[ch] ? 0.0f : rs.afterBrill * v.pressure * 2.0f)
