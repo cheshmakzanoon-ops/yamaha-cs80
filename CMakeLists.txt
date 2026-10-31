@@ -232,6 +232,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_modern_lfo_tests PRIVATE cs80_core)
     add_test(NAME cs80_modern_lfo_tests COMMAND cs80_modern_lfo_tests)
     set_tests_properties(cs80_modern_lfo_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mseg_tests tests/MsegTests.cpp)
+    target_include_directories(cs80_mseg_tests PRIVATE src)
+    add_test(NAME cs80_mseg_tests COMMAND cs80_mseg_tests)
+    set_tests_properties(cs80_mseg_tests PROPERTIES TIMEOUT 120)
 
     # [ws6-library] register this workstream's core tests below this line.
 
