@@ -1,5 +1,13 @@
 # CS-80 Reference — improvement plan: original-CS-80 fidelity beyond Arturia CS-80 V4
 
+> **Status (2026-10-31):** Phases 0-6 are integrated on `claude/adoring-fermi-alhg4x`
+> from eight parallel workstreams; Phase 7's release workflow, installers and AGPLv3
+> licence are in place. What is done, measured and still open is recorded in
+> [STATUS.md](STATUS.md) (scorecard, pins, open issues) and
+> [workstreams/HANDOVER.md](workstreams/HANDOVER.md). Notable open items: the CPU target
+> (0.15-0.20 RTF; measured 0.51-0.61), idle CPU, one retrigger outlier, the
+> intermittent Linux validator exit 139, signing/notarization, real-DAW sessions.
+
 ## Context
 
 **Goal.** Make every sound, feature, function and the UI/UX of this plugin match the

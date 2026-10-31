@@ -11,14 +11,76 @@ Integration branch: `claude/adoring-fermi-alhg4x`. Every workstream branched fro
 
 | Workstream | State | Merged as |
 | --- | --- | --- |
-| ws1-voice | stopped at the wind-down: 1.1b and 1.2 done with recorded misses, 1.4 partial, 2.5 not started | pending (project manager) |
-| ws2-engine | running at hand-over time | — |
-| ws3-keyboard | all steps done except the vendored MTS-ESP client | pending (project manager) |
+| ws1-voice | 1.1b and 1.2 done with recorded misses; 1.4 and 2.5 finished by the integrator | `ea391d7` |
+| ws2-engine | all steps done except sample-accurate automation | `8da6c2c` |
+| ws3-keyboard | all steps done except the vendored MTS-ESP client | `342b9be` |
 | ws4-circuits | all four steps done; EXP volume optics handed off | `195e5e3` |
 | ws5-modern | all five steps done | `5263172` |
-| ws6-library | running at hand-over time | — |
+| ws6-library | all steps done; memory-panel model not wired into audio | `0cb1e3a` |
 | ws7-panel | all six steps done | `bd524f9` |
 | ws8-studio | all six steps done | `5af3b77` |
+
+## Integration (single project manager, 2026-10-31)
+
+After the eight merges the integrator closed the hand-offs below; commits and
+measurements are in [STATUS.md](../STATUS.md).
+
+| Hand-off | Result | Commit |
+| --- | --- | --- |
+| ws3 idle path on ws1's models | ported: closed-form idle WSC (`advanceIdle`), nodal-stage re-referencing with unwarped couplings at the idle step, midpoint-centred step input, snapshot replay; truth model v2; gate tolerances unchanged (one implementation revision: 1.5 ms minimum replay) | `342b9be` |
+| First chord after a load | cold oscillators start warm (declared power-on convention); the dense PANEL chord peaks at 0.980 | `3961c1c` |
+| Windows stack | compact idle snapshots (Engine 417 KB -> 273 KB), 8 MiB stack for MSVC test executables | `81de004` |
+| ws5 pages, ws3 tuning page | mounted in the Studio view (MODULATION, KEYBOARD, FX); new TUNING + VOICES page | `230f367` |
+| Toolbar | A/B -> ws6 slots, prev/next -> library filter, INIT -> `loadInitPatch`, ENGINE/PURE -> processor API, randomise menu item; `CompareSlots` deleted | `230f367` |
+| Undo scope | A/B, randomise and memory-lid commands are one undo step each | `230f367` |
+| `VoicePlate.h` | deleted | `230f367` |
+| Standard oversampling | 2x from the measured alias (-88 dB at 2x) | `ebbe75b` |
+| Latency | 63 + the oscillator's 8 internal samples in the circuit engine | `8da6c2c` |
+| KBC contour while levers glide | refreshed whenever a smoothed lever value changes | `8da6c2c` |
+| FX-mix smoothing | already on `global.fxMix` (ws2) before `+ modernGlobal.fxMix` | — |
+| EXP volume optics | done by ws2 | `3fcff91` |
+| 1.4 VCA doc and mutations | [IG00151_VCA_MODEL.md](../IG00151_VCA_MODEL.md); 3 mutations caught | `0dfe4ee` |
+| Retrigger click | Funky 3+4 outlier gone (quick audit worst 0.99); the full audit finds 1.51 on the legacy-bank "Bass Stack" rendered on the circuit engine (open) | audit at `00ceccf` |
+| 2.5 tolerances and drift | [TOLERANCE_DRIFT_MODEL.md](../TOLERANCE_DRIFT_MODEL.md) | `22b6854`, `a0f6dd5` |
+| CPU pass | bounded-error tan; target not met (STATUS.md) | `00ceccf` |
+| Library levels | recalibrated after the last gain change | `82b9e14` |
+| Goldens | re-recorded on the circuit-engine default | `41363ea` |
+| Validator exit 139 | code review and teardown probe; not resolved | `80cbe8c` |
+| V2 re-pin | once, to `00ceccf` | `ef9bc35` |
+| Parameter count | `test_parity_capture.py` pins 139 + 1 + 2 + 9 + 39 | `a0f6dd5` |
+| Factory recall and matrix routing | recall zeroes amounts, keeps routing (session state) | STATUS.md |
+
+## ws2-engine — engine I/O and modes
+
+**What it did** (branch tip `3f53f10`, report [ws2-engine.md](ws2-engine.md)):
+- 5 ms sample-rate-independent control smoothing in the circuit engine
+  (`Smoothing.h`); every continuous control and controller.
+- OVERSAMPLING Eco/Standard/HQ with a Kaiser decimator per factor, 63-sample
+  latency in every mode, offline HQ through `isNonRealtime()`; Legacy stays 2x.
+- Engine default flip at the plugin layer, state schema 3; ENGINE and PURE CS-80
+  concepts with `setEngineMode`/`setPure`/`loadInitPatch`; fixed the schema marker
+  being read as a string.
+- LISTENING OUTPUT (L/R, GENERAL mono, PHONES model), declared noise PSDs with a
+  shared SUB29 generator, EXP optics, host parameter groups (flat order unchanged).
+
+**How it reasoned.** Standard was one constant to change after ws1's oscillator;
+tests that tick at 2x pin Eco; goldens pinned Legacy until the integrator
+re-recorded them.
+
+**Open.** Sample-accurate automation; per-voice device noise; the I2/I3 networks'
+own law; the SUB NOISE function could read the shared generator.
+
+## ws6-library — tones, memories and library
+
+**What it did** (branch tip `6ad4dc9`, report [ws6-library.md](ws6-library.md)):
+301 curated circuit-engine programs at host indexes 222+, the 222-program Legacy
+Library at 0-221 (FNV digest), Program Change with bank select, library audition,
+filter-aware prev/next, LEGACY scope and technique tags, A/B with session
+persistence, randomise within original ranges, tone-tab review records and an
+opt-in refined BA/diode boundary, and a memory-panel electrical model.
+
+**Open.** Memory-panel loading and the refined boundary are not wired into audio;
+the 25 hypothesis cells need native crops.
 
 ## ws4-circuits — original modulation and effect circuits
 

@@ -104,7 +104,7 @@ wrapper does. Root cause: **not established**; no repair is claimed. The Linux
 validator jobs on the integration branch passed headless, GUI and the fixed seed
 on `3961c1c` ([build run 41190530504](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41190530504), job 124509162512); later runs are listed in
 [STATUS.md](STATUS.md). A passing run is not a fix. Next step for whoever can run
-pluginval locally: run the GUI validation with the module kept loaded
-(`--skip-gui-tests` off, no unload between instances) versus unloaded, and with
-JUCE's `JUCE_LINUX_VST3_RUNLOOP` debug logging, to see whether a wrapper
-`EventHandler` registration survives `IPlugView::removed()`.
+pluginval locally: compare GUI validation runs that keep the module loaded with
+runs that unload it, with debug logging added around the JUCE VST3 wrapper's
+run-loop registration, to see whether a wrapper `EventHandler` registration
+survives `IPlugView::removed()`.
