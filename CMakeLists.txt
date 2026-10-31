@@ -449,6 +449,7 @@ if (CS80_BUILD_PLUGIN)
         src/plugin/PluginProcessor.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/UiComponents.cpp
+        src/plugin/ParameterContext.cpp
         src/plugin/AdvancedPanel.cpp
         src/plugin/PresetBrowser.cpp
 

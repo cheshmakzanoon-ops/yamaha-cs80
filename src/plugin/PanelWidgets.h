@@ -22,7 +22,7 @@ using cs80::art::FloorScope;
 
 // Toolbar and plate keys. A TextButton keeps the label, title, focus and
 // accessibility semantics; only the drawing is replaced.
-class KeyButton final : public juce::TextButton
+class KeyButton final : public ui::ContextTextButton
 {
 public:
     // key: toolbar key; previous/next: transport arrows; alert: red lens-cap pushbutton; plate: dark plate key;
@@ -30,7 +30,7 @@ public:
     // keycap family with a lamp (memory lid, voice settings); selector: a gold-lit choice among several.
     enum class Style { key, previous, next, alert, plate, accent, quiet, satin, selector };
     enum class Glyph { none, gear };
-    explicit KeyButton(const juce::String& text, Style s = Style::key) : juce::TextButton(text), style(s) {}
+    explicit KeyButton(const juce::String& text, Style s = Style::key) : ui::ContextTextButton(text), style(s) {}
     void setGlyph(Glyph value) { glyph = value; repaint(); }
     // An accent key is bright only while it has something to do (SAVE: the program has unsaved edits).
     void setEmphasis(bool value) { if (value != emphasis) { emphasis = value; repaint(); } }

@@ -1,4 +1,5 @@
 #pragma once
+#include "ParameterContext.h"
 
 #include "core/ModernLayer.h"
 
@@ -113,7 +114,7 @@ private:
     struct Row
     {
         juce::Label title;
-        juce::ComboBox wave, destination;
+        ContextComboBox wave, destination;
         juce::Slider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         juce::Slider depth { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::ComboBoxParameterAttachment> waveAttachment, destinationAttachment;
@@ -192,7 +193,7 @@ private:
     struct Slot
     {
         juce::Label title, mixLabel, aLabel, bLabel;
-        juce::ComboBox model, type, oversampling;
+        ContextComboBox model, type, oversampling;
         juce::Slider mix { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         juce::Slider a { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         juce::Slider b { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
@@ -202,7 +203,7 @@ private:
     };
     Cs80AudioProcessor& processor;
     std::array<Slot, 3> slots;
-    juce::ToggleButton gainComp { "Loudness match (all slots)" };
+    ContextToggleButton gainComp { "Loudness match (all slots)" };
     std::unique_ptr<juce::ButtonParameterAttachment> gainCompAttachment;
 };
 

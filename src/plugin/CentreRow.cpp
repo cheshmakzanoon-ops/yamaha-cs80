@@ -108,7 +108,8 @@ void CentreRow::buildToneSection(float x0)
         for (int tone = 0; tone < 14; ++tone)
         {
             const auto fullName = toneTabName(channel, tone);
-            auto button = std::make_unique<juce::TextButton>(fullName);
+            auto button = std::make_unique<ui::ContextTextButton>(fullName);
+            button->bindParameterContext(processor, Cs80AudioProcessor::hardwareSourceParameterId(channel));
             button->setTitle(fullName);
             button->setDescription((channel == 0 ? juce::String("Channel I") : juce::String("Channel II"))
                 + ": select this voice source with Space or Return. PANEL preserves the main-panel settings.");

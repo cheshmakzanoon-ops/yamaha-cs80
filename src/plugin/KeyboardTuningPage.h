@@ -11,6 +11,7 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_basics/juce_gui_basics.h>
+#include "ParameterContext.h"
 
 #include <array>
 #include <memory>
@@ -50,11 +51,11 @@ private:
 
     Cs80AudioProcessor& processor;
     juce::Label tuningTitle, keyboardTitle, tuningModeLabel, voiceModeLabel, description, status, note;
-    juce::ComboBox tuningMode, voiceMode;
+    ContextComboBox tuningMode, voiceMode;
     std::unique_ptr<juce::ComboBoxParameterAttachment> tuningModeAttachment, voiceModeAttachment;
     juce::TextButton loadScl { "LOAD .SCL" }, loadKbm { "LOAD .KBM" }, clear { "CLEAR" };
-    juce::ToggleButton scanTiming { "KAS scan timing (1 ms scan instants)" };
-    juce::ToggleButton ribbonCcEnable { "Ribbon from MIDI CC" };
+    ContextToggleButton scanTiming { "KAS scan timing (1 ms scan instants)" };
+    ContextToggleButton ribbonCcEnable { "Ribbon from MIDI CC" };
     std::unique_ptr<juce::ButtonParameterAttachment> scanTimingAttachment, ribbonCcEnableAttachment;
     std::array<Row, 5> rows; // unison detune, velocity curve, pressure curve, pressure threshold, ribbon CC number
     std::unique_ptr<juce::FileChooser> chooser;

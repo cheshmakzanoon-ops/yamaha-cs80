@@ -2644,15 +2644,20 @@ private:
 // buttons; LEGACY clears both.
 // ---------------------------------------------------------------------------
 
-class AdvPolicyCell final : public juce::Button
+class AdvPolicyCell final : public ContextButton
 {
 public:
     AdvPolicyCell(Cs80AudioProcessor& p, int idx, const juce::String& name, const juce::String& caption)
-        : juce::Button(name), proc(p), index(idx), sub(caption)
+        : ContextButton(name), proc(p), index(idx), sub(caption)
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
         setClickingTogglesState(idx != 0);
+        if (idx != 0)
+        {
+            const int parameter = idx == 1 ? cs80::P_sourcePerformance : cs80::P_parityMode;
+            bindParameterContext(p, Cs80AudioProcessor::parameterId(parameter), parameter);
+        }
     }
 
     void refreshState()
@@ -2765,16 +2770,18 @@ public:
 // swing the engine applies; clicking it again switches the LFO off.
 // ---------------------------------------------------------------------------
 
-class AdvLfoChip final : public juce::Button
+class AdvLfoChip final : public ContextButton
 {
 public:
     AdvLfoChip(Cs80AudioProcessor& p, int lfo, int dest)
-        : juce::Button(kDestinations[dest]), proc(p), lfoIndex(lfo), destination(dest)
+        : ContextButton(kDestinations[dest]), proc(p), lfoIndex(lfo), destination(dest)
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
         const juce::String lfoName = "LFO " + juce::String(lfo + 1);
         setTitle(lfoName + " destination " + kDestinations[dest]);
+        const int parameter = cs80::P_lfo1Dest + lfo * 3;
+        bindParameterContext(p, Cs80AudioProcessor::parameterId(parameter), parameter);
         const juce::String tip = dest == 0 ? "Switch " + lfoName + " off: no destination."
                                            : "Send " + lfoName + " to " + kDestinations[dest] + ". Click the lit chip again to switch the LFO off.";
         setTooltip(tip);
@@ -2882,10 +2889,10 @@ private:
 // stored name that the automation and self-test layers look for.
 // ---------------------------------------------------------------------------
 
-class AdvSwitch final : public juce::Button
+class AdvSwitch final : public ContextButton
 {
 public:
-    AdvSwitch(const juce::String& storedName, const juce::String& legendText) : juce::Button(storedName), legend(legendText)
+    AdvSwitch(const juce::String& storedName, const juce::String& legendText) : ContextButton(storedName), legend(legendText)
     {
         setClickingTogglesState(true);
         setWantsKeyboardFocus(true);
@@ -2917,10 +2924,10 @@ private:
 // Two-way selector: STEREO and MONO side by side, the one in force lit. One boolean parameter (on = stereo).
 // ---------------------------------------------------------------------------
 
-class AdvOutputSwitch final : public juce::Button
+class AdvOutputSwitch final : public ContextButton
 {
 public:
-    AdvOutputSwitch() : juce::Button("Output mode")
+    AdvOutputSwitch() : ContextButton("Output mode")
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -2933,12 +2940,12 @@ public:
     void mouseDown(const juce::MouseEvent& e) override
     {
         pressed = e.x < getWidth() / 2 ? 0 : 1;
-        juce::Button::mouseDown(e);
+        ContextButton::mouseDown(e);
     }
 
     void mouseUp(const juce::MouseEvent& e) override
     {
-        juce::Button::mouseUp(e);
+        ContextButton::mouseUp(e);
         pressed = -1;
     }
 
@@ -2948,7 +2955,7 @@ public:
         const bool flip = key == juce::KeyPress::spaceKey || key == juce::KeyPress::returnKey;
         const bool left = key == juce::KeyPress::leftKey, right = key == juce::KeyPress::rightKey;
         if (! (flip || left || right))
-            return juce::Button::keyPressed(key);
+            return ContextButton::keyPressed(key);
         const bool toStereo = flip ? ! getToggleState() : left;
         if (toStereo != getToggleState())
             setToggleState(toStereo, juce::sendNotificationSync);
@@ -3501,6 +3508,7 @@ public:
     {
         auto control = std::make_unique<LedButton>(label);
         auto* raw = control.get();
+        raw->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         raw->setExplicitFocusOrder(++focusCounter);
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
@@ -3528,6 +3536,7 @@ public:
     {
         auto control = std::make_unique<AdvSwitch>(storedName, legend);
         auto* raw = control.get();
+        raw->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         raw->setExplicitFocusOrder(++focusCounter);
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
@@ -3542,6 +3551,7 @@ public:
     {
         auto control = std::make_unique<AdvOutputSwitch>();
         auto* raw = control.get();
+        raw->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         raw->setExplicitFocusOrder(++focusCounter);
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
@@ -3553,7 +3563,8 @@ public:
 
     juce::ComboBox* choice(Rect r, int parameter, const juce::StringArray& items)
     {
-        auto control = std::make_unique<juce::ComboBox>();
+        auto control = std::make_unique<ContextComboBox>();
+        control->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter), parameter, items);
         control->addItemList(items, 1);
         control->setJustificationType(juce::Justification::centredLeft);
         control->setWantsKeyboardFocus(false);

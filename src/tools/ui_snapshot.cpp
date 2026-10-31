@@ -16,6 +16,7 @@
 #include "../../tests/Ws3KeyboardHostTests.h"
 #include "../../tests/PanelEditorTests.h"
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
+#include "../../tests/ParameterContextTests.h"
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
@@ -3586,6 +3587,8 @@ int main(int argc, char** argv)
     cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio undo and redo");
     cs80::tests::studio::testUndoRedo(check, flushGui);
+    std::puts("UI SMOKE PHASE: parameter context completion");
+    cs80::tests::ui_completion::testParameterContexts(check, flushGui);
     std::puts("UI SMOKE PHASE: studio learning tools");
     cs80::tests::studio::testLearningTools(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio tab order, hit targets and contrast");

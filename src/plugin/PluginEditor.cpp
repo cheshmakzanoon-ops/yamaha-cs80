@@ -1063,6 +1063,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     {
         auto button = std::make_unique<ui::LedButton>(label);
         auto* raw = button.get();
+        raw->bindParameterContext(processor, Cs80AudioProcessor::parameterId(parameter), parameter);
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(
             std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(

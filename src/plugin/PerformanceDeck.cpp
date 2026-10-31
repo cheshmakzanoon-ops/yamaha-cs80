@@ -68,6 +68,8 @@ void PerformanceDeck::buildLeftPanel()
         key.setTooltip(tabs[i].tip);
         key.setClickingTogglesState(false);
         key.setWantsKeyboardFocus(true);
+        const int parameter = i == 0 ? cs80::P_chorusOn : cs80::P_chorusMode;
+        key.bindParameterContext(processor, Cs80AudioProcessor::parameterId(parameter), parameter);
         addAndMakeVisible(key);
         place(key, 366.0f, 657.0f + (float) i * 27.0f, 70.0f, 25.0f);
     }

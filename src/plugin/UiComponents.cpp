@@ -4033,7 +4033,7 @@ void ParamKnob::paintOverChildren(juce::Graphics& g)
 // LedButton
 // ---------------------------------------------------------------------------
 LedButton::LedButton(const juce::String& text, bool momentary)
-    : juce::Button(text)
+    : ContextButton(text)
 {
     setClickingTogglesState(! momentary);
     setMouseClickGrabsKeyboardFocus(true);
