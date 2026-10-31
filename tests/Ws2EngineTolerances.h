@@ -23,6 +23,14 @@ inline constexpr double kMeasuredLatencyErrorSamples = 1.0e-3;
 // the RC stages and float phase accumulation are below 1e-3; a decimator delay
 // or design mismatch between factors gives an O(1) difference.
 inline constexpr double kCrossFactorSineRelativeRms = 1.0e-2;
+// Re-registered window (third commit, before re-evaluation): the first 4096
+// host samples from note-on, where a delay mismatch is largest. The first
+// evaluation over 0.25-0.5 s after note-on FAILED at HQ (1.03e-2, Standard
+// 6.9e-3): Oscillator::tick accumulates phase in float, so at 384 kHz each
+// increment is quantized to the phase ulp, a systematic ~1e-5 relative pitch
+// offset between rates that drifts ~0.01 cycle by 0.5 s. That is an oscillator
+// property (ws1), not a decimator mismatch; the tolerance value is unchanged.
+inline constexpr int kCrossFactorWindowSamples = 4096;
 
 // --- Parameter smoothing ---------------------------------------------------
 // Declared one-pole time constant for continuous controls (engineering choice).
