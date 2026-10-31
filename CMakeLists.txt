@@ -530,6 +530,19 @@ if (CS80_BUILD_PLUGIN)
     endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
 
+    # Phase 7 validator diagnosis: one module life cycle (JUCE start, instance and editor paint,
+    # destruction, JUCE shutdown, then static destructors) must exit cleanly. CI runs it plainly;
+    # docs/VALIDATOR_DIAGNOSTICS.md records the memcheck run of the same probe.
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_teardown_probe
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --teardown-probe)
+    else()
+        add_test(NAME cs80_teardown_probe COMMAND CS80Snapshots --teardown-probe)
+    endif()
+    set_tests_properties(cs80_teardown_probe PROPERTIES TIMEOUT 120
+                         PASS_REGULAR_EXPRESSION "JUCE shut down; static destructors run")
+
     if (CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
         # Reuse the snapshot target, but dispatch before its ordinary GUI setup.
         # Each mode/fixture starts a fresh process: no preceding query or paint

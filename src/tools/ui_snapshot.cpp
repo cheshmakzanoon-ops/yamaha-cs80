@@ -1964,6 +1964,31 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--teardown-probe") == 0)
+    {
+        // Phase 7 validator diagnosis (docs/VALIDATOR_DIAGNOSTICS.md): the life cycle a host gives a
+        // plugin module, once. JUCE starts, an instance and its editor paint (warming every cache the
+        // panel art keeps), both are destroyed, JUCE shuts down, and only then does main return and
+        // the process run its static destructors, as a module unload does after the host's last
+        // instance. Run under a memory checker to see what outlives JUCE's shutdown.
+        {
+            juce::ScopedJuceInitialiser_GUI juceInit;
+            juce::TemporaryFile root("-cs80-teardown");
+            auto host = std::make_unique<Cs80AudioProcessor>(root.getFile().getChildFile("presets"));
+            host->prepareToPlay(48000.0, 256);
+            {
+                auto editor = std::unique_ptr<juce::AudioProcessorEditor>(host->createEditor());
+                editor->setSize(1600, 1000);
+                (void) editor->createComponentSnapshot(editor->getLocalBounds(), true, 1.0f);
+                editor->setSize(1120, 700);
+                (void) editor->createComponentSnapshot(editor->getLocalBounds(), true, 1.0f);
+            }
+            host.reset();
+            std::puts("teardown probe: instance and editor destroyed; JUCE shuts down next");
+        }
+        std::puts("teardown probe: JUCE shut down; static destructors run after main returns");
+        return 0;
+    }
     // CTest captures stdout through a pipe. Keep phase evidence if a native
     // crash occurs, without changing the isolated locale-smoke entry path.
     std::setvbuf(stdout, nullptr, _IONBF, 0);
