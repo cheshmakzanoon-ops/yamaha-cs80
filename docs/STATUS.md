@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-10-31, continuation branch `codex/cs80-completion` from
+Last updated: 2026-10-31, qualification branch `finish/cs80-qualification-20261031` from
 `main` `db24a47170610f81236e8829ef5536af69dfc94d`. Earlier eight-workstream
 history is in [workstreams/HANDOVER.md](workstreams/HANDOVER.md).
 
@@ -591,3 +591,51 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - Signing and notarization need the owner's certificates; real-DAW sessions,
   trademark review and AAX are owner actions
   ([release/RELEASE_QUALIFICATION.md](release/RELEASE_QUALIFICATION.md)).
+
+## Continuation: automation state-boundary repair
+
+Audio commit `647426521fefcc2d5e31f5d149d19e749205ee43` and separate V2
+pin `32260112971289761f9a6e8e7289916bfc7df95f` repair delayed host
+queues after an external parameter or state change. The processor refreshes
+an automation lane only when the parameter's actual readback differs from
+its last published readback. This preserves the accepted double-precision
+trajectory across empty blocks while recognizing a later UI, preset or host
+state edit. No parameter is added and Pure/Legacy policy is unchanged.
+
+The acceptance contracts were published in `ce8b127` and `23270c7` before
+repair evaluation. The processor witness changes from 336 failures to zero;
+maximum normalized error changes from `0.45365307582292042` to
+`2.2204460492503131e-16`. The native Linux VST3 boundary comparison changes
+from maximum audio error `0.000974897` to exactly zero. Partition, sixteen-
+voice and inert-reader comparisons also return zero. Actual-source mutations
+for stale refresh, repeated Float32 projection and a state-writing native
+reader are rejected. The original native oracle and tolerances remain intact.
+
+Evidence and full raw logs are in
+[evidence/continuation-2026-10-31/automation-state-boundary/](evidence/continuation-2026-10-31/automation-state-boundary/).
+The separate Intel AU endpoint-publication defect is still being qualified;
+it is not covered by the successful VST3 result. Its original normalized
+limit remains `1e-7`. The strict compatibility log attached to this checkpoint
+records both Legacy captures and V1 numerics unchanged and V2 matching the
+published audio commit. This host repair does not establish the CPU target.
+
+## Qualification: exact lazy filter histories
+
+Commit `476c2f1fed4dcec18c5a42bc8d29ae542dab02b9` defers the
+IG00156 interchange-history reconstruction until a state read, coefficient
+change or clock transition actually needs it. The corrected audio solver
+continues to use the same physical nodes, previous OTA currents and input
+history. The frozen comparator checks 52,408,128 values with zero bit
+mismatches; seven actual-source mutations are rejected. Steady 2,048-sample
+processing performs zero unused reconstructions and one subsequent state
+export performs exactly one. Moving coefficients retain the required work.
+
+At that exact source revision, all 90 core tests pass. The strict compatibility
+script reports both Legacy captures and V1 numerics byte-identical and V2
+byte-identical to `46a7a5a`, so this exact optimization needs no audio re-pin.
+[Qualification evidence](evidence/qualification-2026-10-31/lazy-filter-histories/)
+keeps the complete core/compatibility logs. Fresh starting-main and inherited
+three-round CPU baselines are in
+[evidence/qualification-2026-10-31/cpu/](evidence/qualification-2026-10-31/cpu/).
+The after-change timing is recorded at the next CPU checkpoint; the overall
+performance targets remain open until measured.
