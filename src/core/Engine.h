@@ -15,6 +15,13 @@
 #include "FxSlot.h"
 #include "OutputTapCircuit.h"
 #include "SourceFactoryTones.h"
+#include "KasScanner.h"
+#include "KbcContour.h"
+#include "TouchCircuit.h"
+#include "Tuning.h"
+#include "MpeZones.h"
+#include "ControllerCurves.h"
+#include "experimental/ContinuousVoiceCircuit.h"
 
 #include <array>
 #include <cstdint>
@@ -167,6 +174,15 @@ struct GlobalSettings
     int arpMode = 0;
     float arpRate = 4.0f;
     int arpOctaves = 1;
+
+    // ws3 keyboard/MIDI/tuning settings (all neutral at their defaults).
+    bool kasScanTiming = false;
+    float velocityCurve = 0.0f, pressureCurve = 0.0f, pressureThreshold = 0.0f;
+    bool ribbonCcEnabled = false;
+    int ribbonCc = 16;
+    int tuningMode = 0;
+    int voiceMode = 0;
+    float unisonDetune = 10.0f;
 };
 
 class Engine
@@ -207,6 +223,24 @@ public:
     void pitchBend(int midiChannel, float value); // -1..1
     void controlChange(int controller, float value, int midiChannel = 1);
     void setRibbon(float value);
+
+    // ---- Phase 6 modern layer (inert in PURE CS-80) ----------------------
+    // Render thread only. Scala/KBM table used when tuning_mode = 1.
+    void setScalaTuning(const tuning::TuningTable& table) noexcept;
+    // Table used when tuning_mode = 2, e.g. built from an MTS-ESP master.
+    void setMtsTuning(const tuning::TuningTable& table) noexcept;
+    // A complete MIDI Tuning Standard SysEx message (F0..F7) updates the
+    // tuning_mode 2 table. Allocation-free. Returns true when it applied.
+    bool handleSysEx(const std::uint8_t* data, int size) noexcept;
+    const tuning::TuningTable& getMtsTuning() const noexcept { return mtsTable; }
+    // Pitch (fractional MIDI semitones) a note plays at under the accepted mode.
+    float tunedPitch(int midiNote) const noexcept;
+    const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
+    // Voice mode accepted for this frame (0 in PURE CS-80): 0 eight voices,
+    // 1 sixteen (two engines, see PluginProcessor), 2/3/4 unison x2/x4/x8.
+    int getVoiceMode() const noexcept { return global.voiceMode; }
+    // True while some circuit is neither key-held nor pedal-held.
+    bool hasFreeCircuit() const noexcept;
     // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
     void setExpression(float value);
 
@@ -256,6 +290,9 @@ public:
         float bend = 0.0f;
         float ribbonRatio = 1.0f;
         bool held = false, pedalHeld = false;
+        // Circuit engine TWS nodes (Phase 2.4): smoothed aftertouch a, held
+        // initial touch b, pitch transient C. Zero in Legacy.
+        float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
     struct RankInfo
@@ -311,6 +348,13 @@ private:
     static constexpr int kMaxHeldKeys = 32;
     // Nominal ideal C-path pole only; not measured complete touch circuitry.
     static constexpr double kNominalInitialPitchDecaySeconds = 0.050;
+    // Circuit engine cold state (Phase 2.1, declared inference): KAS6 power-on
+    // clear memorizes key code C4#, read here through the engine's MIDI
+    // convention; cold oscillator phases come from their own fixed-seed stream
+    // so a first chord does not start with every oscillator in phase.
+    static constexpr int kColdKeyNote = 61;
+    static constexpr std::uint32_t kColdPhaseSeed = 0xC5800A11u;
+    static constexpr std::uint32_t kIdleNoiseSeed = 0xC58011D1u;
 
     struct Rank
     {
@@ -336,6 +380,15 @@ private:
         float trimPan = 0.0f;
         RankInfo info;
         Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
+        // Circuit engine (Phase 2.1): controls of the last processed interval,
+        // which drive the idle path and the wake catch-up of a silent circuit.
+        voice_continuity::IdleRankControls idle;
+        voice_continuity::IdleStageReferences idleRefs;
+        voice_continuity::IdleHistory idleHistory;
+        // Seconds the idle oscillator runs ahead of the idle filter step, and
+        // the length of the first idle interval (samples) since silence.
+        double idleLead = 0.0;
+        int idleFirstSamples = 0;
     };
 
     struct Voice
@@ -357,6 +410,27 @@ private:
         uint64_t age = 0;
         KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
+        // Circuit engine free-running state (Phase 2.1). idleClock counts the
+        // internal samples since the last idle step (or since retirement);
+        // idleSteps counts the idle steps since retirement.
+        int idleClock = 0;
+        int idleSteps = 0;
+        // The filter EG holds a reset (not a completed-release) state: cold
+        // after reset/prepare, or cleared by Sustain II termination.
+        bool envelopeReset = true;
+        // SH7 per-voice K hold (Phase 2.2, circuit engine).
+        kas::HeldKeyNode keyNode;
+        // KBC contour of the key last assigned to this channel (Phase 2.3):
+        // per rank effective cutoff CV (HP, LP) and level gain contributions.
+        int kbcKey = 36;
+        float kbcCv[kNumRanks][2] {};
+        float kbcLevelGain[kNumRanks] {};
+        // TWS a/b/C nodes (Phase 2.4, circuit engine) and their present values.
+        touch::TouchVoice touch;
+        float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
+        // Phase 6: MPE upper-zone membership and unison detune (semitones).
+        bool upperZone = false;
+        float unisonOffset = 0.0f;
     };
 
     struct HeldKey
@@ -374,6 +448,12 @@ private:
     void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
+    // Circuit engine: bring a silent free-running circuit exactly up to date
+    // before its note-on (ContinuousVoiceCircuit.h catch-up).
+    void wakeIdleVoice(Voice& voice) noexcept;
+    // Circuit engine: recompute every channel's KBC contour contributions.
+    void refreshKeyboardContour() noexcept;
+    bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }
     void releaseVoice(Voice& voice);
     void releaseKey(Voice& voice);
     // Footswitch gate fell: shorten already-released tails to their non-performance
@@ -382,6 +462,21 @@ private:
     bool isSustainPedalDown(int midiChannel) const noexcept;
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
+    // Note events after the optional KAS scan quantisation (Phase 2.2).
+    void applyNoteOn(int midiNote, float velocity, int midiChannel);
+    void applyNoteOff(int midiNote, int midiChannel);
+    bool scanTimingActive() const noexcept
+    { return global.kasScanTiming && usesSourceModels(global.renderPolicy) && ! global.arpOn; }
+    // Circuit engine: a still-held key that found no free circuit is assigned
+    // when one frees (declared KAS model, KasScanner.h).
+    void rememberUnassignedKey(int note, float velocity, int midiChannel);
+    bool forgetUnassignedKey(int note, int midiChannel);
+    void reconsiderUnassignedKeys();
+    bool noteMapped(int midiNote) const noexcept;
+    void retuneSoundingVoices() noexcept;
+    int unisonCount() const noexcept
+    { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
+    bool isZoneMaster(const Voice& voice, int midiChannel) const noexcept;
 
     // Arpeggiator. It is clocked at the internal rate so a rate change is
     // heard immediately and the pattern does not drift with block size.
@@ -422,6 +517,16 @@ private:
     double internalRate = 96000.0;
     double initialPitchDecay = 0.0; // initialized in constructor and prepare
     int oversample = 2;
+    // Circuit engine idle path: internal samples per idle step and the
+    // matching initial-pitch-transient decay over one step.
+    int idleStepSamples = 32;
+    double idleTransientDecay = 0.0;
+    // Per-voice idle-only noise for the wake replay; never the shared audioRng.
+    std::array<Rng, kNumVoices> idleNoise;
+    // TWS/TRG touch model (Phase 2.4): per-sample coefficients, the TRG5 bus
+    // voltage (Newton warm start) and its single-key full-scale normalisation.
+    touch::Coefficients touchCoefficients;
+    double trg5BusVolts = 0.0, trg5FullScaleVolts = 1.0;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;
@@ -481,6 +586,15 @@ private:
     float voiceDrift[kNumVoices] {};
 
     std::array<HeldKey, kMaxHeldKeys> heldKeys {};
+    // Phase 6 tuning tables, last played pitch (glide start), MPE zones.
+    tuning::TuningTable scalaTable, mtsTable;
+    float lastPitch = 60.0f;
+    MpeZoneLayout mpeZones;
+    float upperZoneBend = 0.0f;
+    // KAS scan model and still-held keys without a circuit (Phase 2.2).
+    kas::Scanner scanner;
+    std::array<HeldKey, kMaxHeldKeys> unassignedKeys {};
+    int unassignedCount = 0;
     int heldKeyCount = 0;
     uint64_t keyOrder = 0;
     // Maximum ascending sequence is 32 keys x 4 octaves. Up/down adds the

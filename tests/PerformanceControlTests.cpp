@@ -143,7 +143,7 @@ void testContourRouting()
     ParamValues p = neutral;
     p[P_kbdBrillianceLow] = 1.0f;
     const auto lowBright = settle(p, lowKey);
-    const float expectedLow = std::exp2(kProvisionalKeyboardBrillianceOctaves
+    const float expectedLow = std::exp2(kLegacyKeyboardBrillianceOctaves
                                         * keyboardContourWeights(lowKey).low);
     checkNear(lowBright.lpfHz / base(lowKey).lpfHz, expectedLow, expectedLow * 1e-3f,
               "LOW BRILLIANCE raises the low-pass cutoff at a low key");
@@ -157,7 +157,7 @@ void testContourRouting()
     p = neutral;
     p[P_kbdBrillianceHigh] = -1.0f;
     const auto highDark = settle(p, highKey);
-    checkNear(highDark.lpfHz / base(highKey).lpfHz, std::exp2(-kProvisionalKeyboardBrillianceOctaves), 1e-3f,
+    checkNear(highDark.lpfHz / base(highKey).lpfHz, std::exp2(-kLegacyKeyboardBrillianceOctaves), 1e-3f,
               "negative HIGH BRILLIANCE darkens the top of the keyboard");
     check(settle(p, lowKey).lpfHz == base(lowKey).lpfHz, "HIGH BRILLIANCE leaves the bottom alone");
 

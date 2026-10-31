@@ -239,6 +239,28 @@ if (CS80_BUILD_TESTS)
     # [ws2-engine] register this workstream's core tests below this line.
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
+    target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
+    add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)
+    set_tests_properties(cs80_free_running_voice_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_kas_scanner_tests tests/KasScannerTests.cpp)
+    target_link_libraries(cs80_kas_scanner_tests PRIVATE cs80_core)
+    add_test(NAME cs80_kas_scanner_tests COMMAND cs80_kas_scanner_tests)
+    set_tests_properties(cs80_kas_scanner_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_keyboard_contour_key_map_tests tests/KeyboardContourKeyMapTests.cpp)
+    target_link_libraries(cs80_keyboard_contour_key_map_tests PRIVATE cs80_core)
+    add_test(NAME cs80_keyboard_contour_key_map_tests COMMAND cs80_keyboard_contour_key_map_tests)
+    set_tests_properties(cs80_keyboard_contour_key_map_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_touch_circuit_tests tests/TouchCircuitTests.cpp)
+    target_link_libraries(cs80_touch_circuit_tests PRIVATE cs80_core)
+    add_test(NAME cs80_touch_circuit_tests COMMAND cs80_touch_circuit_tests)
+    set_tests_properties(cs80_touch_circuit_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_tuning_midi_tests tests/TuningMidiTests.cpp)
+    target_link_libraries(cs80_tuning_midi_tests PRIVATE cs80_core)
+    target_compile_definitions(cs80_tuning_midi_tests PRIVATE
+        CS80_TUNING_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/data/tuning")
+    add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
+    set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
 
     # [ws4-circuits] register this workstream's core tests below this line.
     add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
@@ -367,6 +389,7 @@ if (CS80_BUILD_PLUGIN)
         # [ws2-engine] add this workstream's plugin sources below this line.
 
         # [ws3-keyboard] add this workstream's plugin sources below this line.
+        src/plugin/MtsEspClient.cpp
 
         # [ws4-circuits] add this workstream's plugin sources below this line.
 

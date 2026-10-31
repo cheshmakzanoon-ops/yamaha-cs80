@@ -317,6 +317,57 @@ public:
         state.residualCursor=(state.residualCursor+1)%OscillatorResidualKernel::length;
         return output;
     }
+    // Idle evolution of a silent circuit (plan step 2.1, circuit engine; see
+    // src/experimental/ContinuousVoiceCircuit.h). Advances the physical state
+    // (charge, reset one-shot, both coupling baselines) by `seconds` at one
+    // held frequency and threshold with the SAME closed-form branch law as
+    // tick(), without the antialias residuals: nobody hears an idle circuit,
+    // so its residual buffer is cleared. Only the events that change the state
+    // law are located (reset start/end, the three fold levels, the comparator);
+    // the sine shaper's knots and the w turning point change no state and the
+    // sine is not averaged. Returns the exact mean of the gated saw (pin 5)
+    // plus pulse (pin 7) volts over the interval.
+    double advanceIdle(double seconds,double requestedHz,const WscControls& controls) noexcept {
+        diagnostics.eventCount=0;
+        state.residual={};
+        endNodesValid=false;
+        if(!(seconds>0.))return 0.;
+        double f=state.heldFrequencyHz;
+        if(std::isfinite(requestedHz))f=std::clamp(requestedHz,0.,maximumFrequencyHz());
+        if(std::isfinite(controls.pulseThresholdVolts))state.heldThresholdVolts=controls.pulseThresholdVolts;
+        state.heldFrequencyHz=f;state.sawEnabled=controls.sawEnabled;state.pulseEnabled=controls.pulseEnabled;
+        const double tau=profile.couplingSecondsNominal;
+        double elapsed=0.,integral=0.;
+        for(int iteration=0;iteration<kMaximumIdleEvents&&elapsed<seconds;++iteration){
+            if(state.resetRemainingSeconds==0.&&state.charge<=0.&&f>0.){
+                state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;
+            }
+            const bool inReset=state.resetRemainingSeconds>0.;
+            const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
+            const auto start=nodes(1);
+            double span=std::min(seconds-elapsed,physical);
+            span=nextStateEvent(start,span);
+            if(!(span>0.)){diagnostics.eventCapacityExceeded=true;break;}
+            integral+=segmentIntegral(start,span,tau);
+            advance(span,start);
+            elapsed+=span;
+            if(std::abs(span-physical)<=2e-15){
+                if(inReset)state.resetRemainingSeconds=0.;
+                else {state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;}
+            }
+            if(seconds-elapsed<=2e-15)elapsed=seconds;
+        }
+        if(elapsed<seconds){ // bounded failure policy, as in tick()
+            diagnostics.eventCapacityExceeded=true;const auto start=nodes(1);
+            integral+=segmentIntegral(start,seconds-elapsed,tau);advance(seconds-elapsed,start);
+        }
+        state.elapsedSeconds+=seconds;
+        return integral/seconds;
+    }
+    static constexpr int kMaximumIdleEvents=4096;
+    // Restore a state captured with getState() (same rate and profile): the
+    // idle snapshot ring and the wake replay use it. Never allocates.
+    void restoreState(const State& captured) noexcept { state=captured;endNodesValid=false;diagnostics.eventCount=0; }
     double maximumFrequencyHz() const noexcept { return std::min(.45*rate,.95/profile.resetSecondsNominal); }
     static constexpr double latencyInternalSamples() noexcept { return OscillatorResidualKernel::latencySamples; }
     double sampleRate() const noexcept { return rate; }
@@ -434,6 +485,28 @@ private:
             }
         }
         return limit;
+    }
+    // Idle path: the first of the u levels that change the state law (fold
+    // limits, fold sign) or the gated pulse value (comparator), as in the first
+    // loop of nextBranchEvent().
+    double nextStateEvent(const Nodes& n,double limit) const noexcept {
+        constexpr double epsilon=3e-14;
+        const double tau=profile.couplingSecondsNominal;
+        const double pinSlope=state.resetRemainingSeconds>0.?0.:-converterGain*state.heldFrequencyHz;
+        const double base=pinSlope*tau,b=n.u-base;
+        const double end=base+b*decay(limit/tau);
+        const std::array<double,4> levels {profile.sliceVoltsInferred-rampHalf,profile.sliceVoltsInferred,profile.sliceVoltsInferred+rampHalf,state.heldThresholdVolts};
+        for(double level:levels){if((level-n.u)*(level-end)<=0.&&level!=n.u&&b!=0.){const double root=-tau*std::log1p((level-n.u)/b);if(root>epsilon&&root<=limit)limit=root;}}
+        return limit;
+    }
+    // Exact integral of the gated saw + pulse over one analytic segment: the
+    // saw is -u with u = base + (u0 - base) e^(-t/RC); the pulse is constant
+    // between comparator events.
+    double segmentIntegral(const Nodes& n,double seconds,double tau) const noexcept {
+        const double pinSlope=state.resetRemainingSeconds>0.?0.:-converterGain*state.heldFrequencyHz;
+        const double base=pinSlope*tau;
+        const double uIntegral=base*seconds+(n.u-base)*tau*(1.-decay(seconds/tau));
+        return (state.sawEnabled?-uIntegral:0.)+n.value.pulsePin7*seconds;
     }
     void recordEvent(double time,unsigned kind,const Nodes& before,const Nodes& after) noexcept {
         if(!basis)return;

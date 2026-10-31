@@ -3,9 +3,11 @@
 // bounds in tests/Ws4Tolerances.h. Agreement with these equations is not agreement with
 // a measured CS-80; see docs/workstreams/ws4-circuits.md.
 #include "core/Engine.h"
+#include "core/TouchCircuit.h"
 #include "reference/Ig00150Sub.h"
 #include "Ws4Tolerances.h"
 
+#include <array>
 #include <cmath>
 #include <complex>
 #include <cstdio>
@@ -99,7 +101,9 @@ Measured renderRate(double hostRate, bool isolation, float base, float depth, fl
     e.noteOn(60, 0.8f);
     e.polyPressure(60, pressure);
     float frame[2];
-    for (int n = 0; n < (int) (hostRate * 0.3); ++n)
+    // ws3 Phase 2.4: in the circuit engine the key's pressure reaches SP through
+    // the TWS a path (100 ms follower), so settle 1.5 s (e^-15) before measuring.
+    for (int n = 0; n < (int) (hostRate * 1.5); ++n)
         e.render(frame, 1);
     double previous = e.getSubOscillatorValue(), first = -1.0, last = -1.0;
     int crossings = 0;
@@ -134,7 +138,12 @@ void engineAnchors()
             for (const Case c : { Case{ 60, 1, 1 }, Case{ 60, 0, 1 }, Case{ 6, 1, 0.5f }, Case{ 20, 0.5f, 1 } })
             {
                 const auto m = renderRate(hostRate, isolation, c.base, c.depth, c.pressure, 1.0);
-                const double want = ref::speedHz(c.base, c.depth, c.pressure);
+                // ws3 Phase 2.4: SP is the TRG5 diode-OR bus output, normalised to
+                // one full-pressure key, so the converter's touch input is the
+                // bus-shaped pressure (exactly 1 at full pressure: no double count).
+                const double sp = touch::busVolts(std::array<double, 1> { (double) c.pressure },
+                                                  0.0, 64) / touch::fullScaleBusVolts();
+                const double want = ref::speedHz(c.base, c.depth, sp);
                 check(relative(m.hz, want) <= tol::kMeasuredRateRelative,
                       "rendered SUB period follows IG00150 law: " + where + " " + std::to_string(want));
                 check(relative(m.telemetry, want) <= tol::kTelemetryRelative,

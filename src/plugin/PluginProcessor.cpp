@@ -1,6 +1,7 @@
 #include "PluginProcessor.h"
 
 #include "PluginEditor.h"
+#include "core/VoiceModes.h"
 
 #include <algorithm>
 #include <cmath>
@@ -67,6 +68,9 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
+    extensionEngine = std::make_unique<cs80::Engine>();
+    extensionEngine->setParams(cached);
+    extensionEngine->prepare(48000.0);
     // The decimator delay is fixed by the 2x architecture, so report it as
     // soon as the processor exists. prepareToPlay repeats this for hosts that
     // query latency only after a sample-rate change.
@@ -244,6 +248,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     // [ws2-engine] append this workstream's host parameters below this line, AU version hint 9.
 
     // [ws3-keyboard] append this workstream's host parameters below this line, AU version hint 10.
+    // Plain floats (switches/choices read with >= 0.5 / rounding in the core),
+    // like the original channel switches; all defaults leave renders unchanged.
+    for (int index = cs80::P_kasScanTiming; index <= cs80::P_unisonDetune; ++index)
+        add(index, 10);
 
     // [ws4-circuits] append this workstream's host parameters below this line, AU version hint 11.
 
@@ -306,6 +314,9 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
     engine.prepare(sampleRate);
+    extensionEngine->prepare(sampleRate);
+    extensionActive = false;
+    highResolutionVelocity.reset();
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
@@ -318,6 +329,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     pendingExpression.store(expressionValue.load(std::memory_order_relaxed), std::memory_order_relaxed);
     setLatencySamples(engine.getLatencySamples());
     interleaved.assign((size_t) juce::jmax(4096, samplesPerBlock) * 2, 0.0f);
+    extensionInterleaved.assign(interleaved.size(), 0.0f);
     externalScratch.assign(interleaved.size() / 2, 0.0f);
     externalInputEnabled.store(getTotalNumInputChannels() == 1, std::memory_order_relaxed);
     resetKeyboardHandoff();
@@ -327,6 +339,8 @@ void Cs80AudioProcessor::releaseResources()
 {
     outputMeter.reset();
     engine.reset();
+    extensionEngine->reset();
+    extensionActive = false;
     resetKeyboardHandoff();
 }
 
@@ -397,6 +411,12 @@ void Cs80AudioProcessor::applyParameterValues(const cs80::ParamValues& values)
 
 bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
 {
+    // ws3: controller curves, the ribbon CC, the KAS scan option and the tuning
+    // source describe the player's setup, not the sound, and survive recall.
+    if (index == cs80::P_kasScanTiming || index == cs80::P_velocityCurve || index == cs80::P_pressureCurve
+        || index == cs80::P_pressureThreshold || index == cs80::P_ribbonCcEnable || index == cs80::P_ribbonCc
+        || index == cs80::P_tuningMode)
+        return true;
     return index == cs80::P_footswitchPlugged || index == cs80::P_footswitchPressed
         || index == cs80::P_footMode || index == cs80::P_outputLevel;
 }
@@ -457,47 +477,109 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
     updateHostDisplay();
 }
 
+void Cs80AudioProcessor::routeNoteOn(int note, float velocity, int channel)
+{
+    if (extensionActive)
+        cs80::SixteenVoiceRouter::noteOnTarget(engine, *extensionEngine).noteOn(note, velocity, channel);
+    else
+        engine.noteOn(note, velocity, channel);
+}
+
+void Cs80AudioProcessor::routeNoteOff(int note, int channel)
+{
+    forEachEngine([&](cs80::Engine& e) { e.noteOff(note, channel); });
+}
+
 void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
 {
     if (message.isNoteOn())
     {
-        engine.noteOn(message.getNoteNumber(), message.getFloatVelocity(), message.getChannel());
+        // CC88 high-resolution velocity prefix (MMA CA-031); 7-bit otherwise.
+        routeNoteOn(message.getNoteNumber(),
+                    highResolutionVelocity.noteOnVelocity(message.getChannel(), message.getVelocity()),
+                    message.getChannel());
     }
     else if (message.isNoteOff())
     {
-        engine.noteOff(message.getNoteNumber(), message.getChannel());
+        routeNoteOff(message.getNoteNumber(), message.getChannel());
     }
     else if (message.isAftertouch())
     {
-        engine.polyPressure(message.getNoteNumber(),
-                            message.getAfterTouchValue() / 127.0f,
-                            message.getChannel());
+        forEachEngine([&](cs80::Engine& e) {
+            e.polyPressure(message.getNoteNumber(), message.getAfterTouchValue() / 127.0f, message.getChannel());
+        });
     }
     else if (message.isChannelPressure())
     {
-        engine.channelPressure(message.getChannel(), message.getChannelPressureValue() / 127.0f);
+        forEachEngine([&](cs80::Engine& e) {
+            e.channelPressure(message.getChannel(), message.getChannelPressureValue() / 127.0f);
+        });
     }
     else if (message.isPitchWheel())
     {
         const float bend = (message.getPitchWheelValue() - 8192) / 8192.0f;
-        engine.pitchBend(message.getChannel(), bend);
+        forEachEngine([&](cs80::Engine& e) { e.pitchBend(message.getChannel(), bend); });
     }
     else if (message.isAllSoundOff())
     {
         // CC120/123 are controllers too: dispatch before the generic branch.
-        engine.allNotesOff(false, message.getChannel());
+        forEachEngine([&](cs80::Engine& e) { e.allNotesOff(false, message.getChannel()); });
     }
     else if (message.isAllNotesOff())
     {
-        engine.allNotesOff(true, message.getChannel());
+        forEachEngine([&](cs80::Engine& e) { e.allNotesOff(true, message.getChannel()); });
     }
     else if (message.isController())
     {
         if (midiLearnConsumes(message.getControllerNumber())) return;   // [ws8-studio] a learned controller drives its parameter instead
         if (message.getControllerNumber() == 11 && !engine.isParityMode())
             expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
-        engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
+        if (message.getControllerNumber() == 88)
+            highResolutionVelocity.controlChange(message.getChannel(), message.getControllerValue());
+        forEachEngine([&](cs80::Engine& e) {
+            e.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
+        });
     }
+}
+
+juce::String Cs80AudioProcessor::publishScala(const juce::String& scl, const juce::String& kbm)
+{
+    cs80::tuning::Scale scale;
+    if (const auto error = cs80::tuning::parseScale(scl.toStdString(), scale); !error.empty())
+        return juce::String(error);
+    auto mapping = cs80::tuning::defaultMapping(scale);
+    if (kbm.trim().isNotEmpty())
+        if (const auto error = cs80::tuning::parseKeyboardMapping(kbm.toStdString(), mapping); !error.empty())
+            return juce::String(error);
+    cs80::tuning::TuningTable table;
+    if (const auto error = cs80::tuning::buildTable(scale, mapping, table); !error.empty())
+        return juce::String(error);
+    const juce::SpinLock::ScopedLockType lock(scalaLock);
+    scalaSlot = table;
+    scalaText = scl;
+    kbmText = kbm;
+    scalaDescription = juce::String(scale.description);
+    scalaVersion.fetch_add(1, std::memory_order_release);
+    return {};
+}
+
+juce::String Cs80AudioProcessor::loadScalaTuning(const juce::String& scl, const juce::String& kbm)
+{
+    return publishScala(scl, kbm);
+}
+
+void Cs80AudioProcessor::clearScalaTuning()
+{
+    const juce::SpinLock::ScopedLockType lock(scalaLock);
+    scalaSlot = {};
+    scalaText = kbmText = scalaDescription = {};
+    scalaVersion.fetch_add(1, std::memory_order_release);
+}
+
+juce::String Cs80AudioProcessor::getScalaDescription() const
+{
+    const juce::SpinLock::ScopedLockType lock(const_cast<juce::SpinLock&>(scalaLock));
+    return scalaDescription;
 }
 
 void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)
@@ -518,7 +600,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     {
         // Audio-owned global hard stop, not MIDI CC120/123's channel semantics.
         // Retain the patch, performance controls, noise and existing FX tails.
-        engine.allNotesOff(false, 0);
+        forEachEngine([](cs80::Engine& e) { e.allNotesOff(false, 0); });
         resetKeyboardHandoff();
         // The message thread clears the keyboard and acknowledges this epoch.
         // Old queued UI strikes/releases cannot resurrect or claim host notes.
@@ -533,7 +615,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         for (size_t note = 0; note < uiHeldMasks.size(); ++note)
             for (int channel = 1; channel <= 16; ++channel)
                 if ((uiHeldMasks[note] & (1u << (channel - 1))) != 0)
-                    engine.noteOff((int) note, channel);
+                    routeNoteOff((int) note, channel);
         keyboardEvents.requestReset();
         uiHeldMasks.fill(0);
         keyPressureOwnership.clear();
@@ -554,6 +636,38 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         resetKeyboardHandoff();
         uiCount = 0;
     }
+    // ws3 Phase 6: sixteen-voice mode drives a second, identical instrument.
+    if (engine.getVoiceMode() == 1)
+    {
+        extensionEngine->setControlFrame({ cached, cachedHardwareSources });
+        if (!extensionActive)
+        {
+            extensionEngine->reset();
+            extensionEngine->setExpression(expressionValue.load(std::memory_order_relaxed));
+            extensionActive = true;
+        }
+    }
+    else if (extensionActive)
+    {
+        extensionEngine->allNotesOff(false, 0);
+        extensionActive = false;
+    }
+    // Scala table from the message thread (never waits for the writer).
+    if (const auto version = scalaVersion.load(std::memory_order_acquire); version != scalaAppliedVersion)
+    {
+        const juce::SpinLock::ScopedTryLockType lock(scalaLock);
+        if (lock.isLocked())
+        {
+            forEachEngine([this](cs80::Engine& e) { e.setScalaTuning(scalaSlot); });
+            if (!extensionActive) extensionEngine->setScalaTuning(scalaSlot);
+            scalaAppliedVersion = version;
+        }
+    }
+    // MTS-ESP master (tuning_mode 2), when the client is compiled in.
+    const bool mtsMaster = cached[cs80::P_tuningMode] >= 1.5f && mtsEsp.fillTable(mtsEspTable);
+    mtsEspConnected.store(mtsMaster, std::memory_order_relaxed);
+    if (mtsMaster) forEachEngine([this](cs80::Engine& e) { e.setMtsTuning(mtsEspTable); });
+
     const bool pressureArpOn = !engine.isParityMode() && cached[cs80::P_arpOn] >= 0.5f;
     if (pressureArpOn || pressureArpOn != pressureArpWasOn) keyPressureOwnership.clear();
     pressureArpWasOn = pressureArpOn;
@@ -562,10 +676,12 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const float pitch = pendingPitch.exchange(noPendingControl, std::memory_order_relaxed);
     const float mod = pendingMod.exchange(noPendingControl, std::memory_order_relaxed);
     const float pedal = pendingExpression.exchange(noPendingControl, std::memory_order_relaxed);
-    if (std::isfinite(pedal)) engine.setExpression(juce::jlimit(0.0f, 1.0f, pedal));
-    if (std::isfinite(ribbon)) engine.setRibbon(juce::jlimit(-1.0f, 1.0f, ribbon));
-    if (std::isfinite(pitch)) engine.pitchBend(1, juce::jlimit(-1.0f, 1.0f, pitch));
-    if (std::isfinite(mod)) engine.controlChange(1, juce::jlimit(0.0f, 1.0f, mod), 1);
+    forEachEngine([&](cs80::Engine& e) {
+        if (std::isfinite(pedal)) e.setExpression(juce::jlimit(0.0f, 1.0f, pedal));
+        if (std::isfinite(ribbon)) e.setRibbon(juce::jlimit(-1.0f, 1.0f, ribbon));
+        if (std::isfinite(pitch)) e.pitchBend(1, juce::jlimit(-1.0f, 1.0f, pitch));
+        if (std::isfinite(mod)) e.controlChange(1, juce::jlimit(0.0f, 1.0f, mod), 1);
+    });
 
     // Hosts may supply a block larger than their advertised maximum. Render
     // bounded chunks rather than allocating on the real-time thread.
@@ -583,6 +699,11 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             if (input != nullptr)
                 std::copy_n(input + start + offset, n, externalScratch.data());
             engine.render(interleaved.data(), n, input != nullptr ? externalScratch.data() : nullptr);
+            if (extensionActive)
+            {
+                extensionEngine->render(extensionInterleaved.data(), n, input != nullptr ? externalScratch.data() : nullptr);
+                for (int i = 0; i < 2 * n; ++i) interleaved[(size_t) i] += extensionInterleaved[(size_t) i];
+            }
             for (int i = 0; i < n; ++i)
             {
                 const float left = interleaved[(size_t) i * 2];
@@ -628,25 +749,36 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         if (event.pressure)
         {
             if (!pressureArpOn && keyPressureOwnership.allows(event.token, voiceSnapshot()))
-                engine.polyPressure(event.note, event.velocity, event.channel);
+                forEachEngine([&](cs80::Engine& e) { e.polyPressure(event.note, event.velocity, event.channel); });
         }
         else if (event.on)
         {
             const auto before = voiceSnapshot();
-            engine.noteOn(event.note, event.velocity, event.channel);
+            routeNoteOn(event.note, event.velocity, event.channel);
             if (pressureArpOn || keyPressureOwnership.allocated(before, voiceSnapshot(), event.token,
                                                                 event.channel, event.note))
                 held |= bit;
         }
         else if ((held & bit) != 0)
         {
-            engine.noteOff(event.note, event.channel);
+            routeNoteOff(event.note, event.channel);
             held &= ~bit;
         }
         if (!event.on && !event.pressure) keyPressureOwnership.noteOff(event.channel, event.note);
     };
     for (const auto metadata : midi)
     {
+        // ws3 Phase 6: MIDI Tuning Standard SysEx, parsed from the raw bytes
+        // (no owning MidiMessage, no allocation) at its sample position.
+        if (metadata.numBytes > 5 && metadata.data[0] == 0xf0)
+        {
+            const int sysexPos = juce::jlimit(0, numSamples, metadata.samplePosition);
+            while (uiIndex < uiCount && uiPosition() < sysexPos) dispatchUI();
+            advanceTo(sysexPos);
+            mtsEsp.parseMidi(metadata.data, metadata.numBytes);
+            forEachEngine([&](cs80::Engine& e) { e.handleSysEx(metadata.data, metadata.numBytes); });
+            continue;
+        }
         // Filter BEFORE getMessage(): long/system messages otherwise own heap data.
         // Only channel messages handled below are supported; program changes remain ignored.
         if (metadata.numBytes < 2 || metadata.numBytes > 3) continue;
@@ -872,6 +1004,17 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio] the undo flush and the host never touch the tree at once
     apvts.syncNow();
     auto state = apvts.copyState();
+    {
+        // ws3 Phase 6: the session keeps its Scala/KBM texts (not presets).
+        const juce::SpinLock::ScopedLockType lock(scalaLock);
+        if (scalaText.isNotEmpty())
+        {
+            juce::ValueTree tuning("WS3_TUNING");
+            tuning.setProperty("scl", scalaText, nullptr);
+            tuning.setProperty("kbm", kbmText, nullptr);
+            state.appendChild(tuning, nullptr);
+        }
+    }
     const auto metadata = getPresetMetadata();
     state.setProperty("presetName", metadata.name, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
@@ -896,6 +1039,15 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         if (tree.isValid() && tree.hasType(stateType))
         {
             readStudioState(tree);   // [ws8-studio] also removes those children from the parameter tree
+            // [ws3-keyboard] session Scala/KBM texts; not part of the parameter tree either.
+            const auto tuning = tree.getChildWithName("WS3_TUNING");
+            if (tuning.isValid())
+            {
+                publishScala(tuning.getProperty("scl").toString(), tuning.getProperty("kbm").toString());
+                tree.removeChild(tuning, nullptr);
+            }
+            else
+                clearScalaTuning();
             const juce::ScopedLock treeLock(apvts.treeLock());
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),

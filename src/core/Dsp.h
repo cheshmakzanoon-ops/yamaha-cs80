@@ -262,6 +262,10 @@ public:
     // Numerical integrator memories, not calibrated capacitor voltages.
     struct State { float ic1 = 0.0f, ic2 = 0.0f; };
     State getState() const noexcept { return { ic1, ic2 }; }
+    // State transfer for the circuit-engine free-running idle path, which
+    // re-references these trapezoidal memories when its step rate changes
+    // (src/experimental/ContinuousVoiceCircuit.h). No effect on any filter law.
+    void setState(State s) noexcept { ic1 = s.ic1; ic2 = s.ic2; }
     void reset() noexcept
     {
         ic1 = ic2 = 0.0f;

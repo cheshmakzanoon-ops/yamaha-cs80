@@ -12,6 +12,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/Ws3KeyboardHostTests.h"
 #include "../../tests/PanelEditorTests.h"
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
 #include "../../tests/ModernLayerHostTests.h"
@@ -1946,6 +1947,8 @@ int main(int argc, char** argv)
     cs80::tests::testOutputMeterHost(check);
     std::puts("UI SMOKE PHASE: source performance host");
     cs80::tests::testSourcePerformanceHost(check);
+    std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
+    cs80::tests::testWs3KeyboardHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 

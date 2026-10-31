@@ -179,8 +179,9 @@ void receiverRouting(double rate)
             for (int voice = 0; voice < 8; ++voice)
             {
                 auto vi = e.getVoiceInfo(voice);
-                drives[ch][voice] = {e.getRankEnvelopeState(voice, ch).filter.value,
-                                    vi.active ? vi.velocity : 0, vi.active ? vi.pressure : 0};
+                // Phase 2.4 (intentional): the TRG banks receive each channel's
+                // TWS held initial touch b and smoothed aftertouch a.
+                drives[ch][voice] = {e.getRankEnvelopeState(voice, ch).filter.value, vi.touchB, vi.touchA};
             }
         }
         sf::CutoffReadout expectedCutoff;
@@ -219,13 +220,15 @@ void receiverRouting(double rate)
                   "source filter control state continues independently after VCA retirement");
             check(same(dormantAudio[voice], e.getRankAudioState(voice, rank)),
                   "inactive source control evolution does not clock oscillator or audio filters");
-            drives[rank][voice] = {e.getRankEnvelopeState(voice, rank).filter.value, 0, 0};
+            // Phase 2.4: a silent channel keeps its held b; its a relaxes.
+            drives[rank][voice] = {e.getRankEnvelopeState(voice, rank).filter.value,
+                                   e.getVoiceInfo(voice).touchB, e.getVoiceInfo(voice).touchA};
         }
         sf::evaluateCutoff(tone, drives[rank], expectedCutoff);
         const auto idleCutoff = e.getSourceCutoffReadout(rank);
         for (int voice = 0; voice < 8; ++voice) for (int side = 0; side < 2; ++side)
             near(idleCutoff.pinVolts[voice][side], expectedCutoff.pinVolts[voice][side], 1e-12,
-                 "dormant circuit keeps all eight passive loads with explicitly zero idle touch");
+                 "dormant circuit keeps all eight passive loads with its held TWS touch nodes");
     }
 }
 void ownershipAndClearing(double rate)
@@ -380,9 +383,14 @@ void inactiveControlRelaxation(double rate)
     const auto relaxed = e.getRankEnvelopeState(0, 0).filter;
     check(relaxed.stage == FilterEnv::Stage::Idle && relaxed.value == -3,
           "inactive source filter relaxes fully rather than permanently biasing common FH FL");
-    check(same(audio, e.getRankAudioState(0, 0)), "inactive relaxation does not evolve oscillator or audio filter memories");
+    // Phase 2.1 (intentional circuit-engine change): a silent circuit now
+    // free-runs, so its oscillator keeps advancing while its control relaxes.
+    check(e.getRankAudioState(0, 0).phase != audio.phase, "inactive relaxation keeps the free-running oscillator advancing");
     sf::ToneControls tone; sf::compileTone(0, 9, tone);
     sf::RankDrives drives {}; drives[0].filterEnvelopeZ = -3;
+    // Phase 2.4 (intentional): the silent channel still holds its TWS b.
+    drives[0].velocity = e.getVoiceInfo(0).touchB;
+    drives[0].pressure = e.getVoiceInfo(0).touchA;
     sf::CutoffReadout oracle; sf::evaluateCutoff(tone, drives, oracle);
     for (int side = 0; side < 2; ++side)
         near(e.getSourceCutoffReadout(0).loadedBusVolts[side], oracle.loadedBusVolts[side], 1e-12,
@@ -396,7 +404,9 @@ void inactiveControlRelaxation(double rate)
     const auto retargeted = e.getRankEnvelopeState(0, 0).filter;
     check(retargeted.stage == FilterEnv::Stage::Idle && retargeted.value == target,
           "completed inactive release follows new source IL using refreshed time without retrigger");
-    check(e.activeVoices() == 0 && same(audio, e.getRankAudioState(0, 0)),
+    // Phase 2.1: the circuit keeps running silently; retargeting must still
+    // never make it audible (no voice is resurrected).
+    check(e.activeVoices() == 0 && !e.getVoiceInfo(0).active && e.getRankEnvelopeState(0, 0).amplitude.value == 0.0f,
           "inactive source retargeting never resurrects audio circuits");
     // Also enter from a deliberately different PANEL release target AFTER its
     // VCA has retired. This checks the bridge-to-source handoff separately from
@@ -437,8 +447,11 @@ void panicControlGates(double rate)
     e.controlChange(120, 0, 2); e.setControlFrame(f); e.setControlFrame(f);
     check(same(progressing, e.getRankEnvelopeState(1, 0).filter), "repeated panic and source frames never restart control release");
     render(e, static_cast<int>(rate));
-    check(e.getRankEnvelopeState(1, 0).filter.value == -3 && same(audio, e.getRankAudioState(1, 0)),
-          "panicked source control relaxes to IL without clocking inactive audio");
+    // Phase 2.1: the panicked circuit free-runs silently (its oscillator moves)
+    // while its control relaxes; it is not reactivated.
+    check(e.getRankEnvelopeState(1, 0).filter.value == -3 && e.getRankAudioState(1, 0).phase != audio.phase
+              && !e.getVoiceInfo(1).active,
+          "panicked source control relaxes to IL while the silent circuit free-runs");
 
     auto panel = frame();
     for (int rank = 0; rank < 2; ++rank) panel.effectiveValues[chParam(rank, CP_fA)] = 1;
