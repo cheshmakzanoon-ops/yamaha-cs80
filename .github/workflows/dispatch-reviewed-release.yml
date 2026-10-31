@@ -1,0 +1,34 @@
+name: dispatch reviewed main release
+
+# A maintainer creates/updates this request branch only after the main merge.
+# The expected main SHA acts as a lease; no new credentials are required.
+on:
+  push:
+    branches: [codex/cs80-release-dispatch]
+    paths: ['.github/release-request.json']
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: dispatch-reviewed-main-release
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Check dispatch guard fixtures
+        run: node tests/release/dispatch-reviewed-release.test.cjs
+      - name: Require reviewed main and dispatch existing release workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const dispatch = require('./scripts/dispatch-reviewed-release.cjs');
+            const request = JSON.parse(fs.readFileSync('.github/release-request.json', 'utf8'));
+            await dispatch({ github, context, core, request });
