@@ -69,9 +69,42 @@ The acceptance contract is `tests/validator/pinned-linux.json`. All 14 wrapper
 fixtures pass, including the one-attempt case. A mutation hardcoding three
 attempts fails that new case, with two attempts instead of one. Actual plugin
 validation and final CI are recorded separately after a consistent full build.
-This record
-establishes source/binary provenance and the matching historical call chain.
-It does not claim a new sanitizer reproduction. The plugin's UI timers and
-static graphics resources are audited separately; defensive resource cleanup
-is not presented as the cause of these host traces. Final CI results belong
-in STATUS.md, with earlier failing runs retained as historical evidence.
+This record establishes source/binary provenance and the matching historical
+call chain. Final CI results belong in STATUS.md, with earlier failing runs
+retained as historical evidence.
+
+## Independent lifetime reproduction, 2026-10-31
+
+A second investigation retrieved nine historical failed-job logs and verified
+the two fault offsets above against the official executable. It then exercised
+the exact old and fixed upstream RunLoop classes through JUCE's real Linux
+descriptor dispatcher, using a deterministic earlier callback that removes
+the later callback's owner. This is a source-level reproduction of the
+identified lifetime mechanism, not a claim that the complete historical
+pluginval executable was rebuilt under a sanitizer.
+
+| RunLoop implementation | Dispatch condition | AddressSanitizer result |
+| --- | --- | --- |
+| Original | Owner alive | Pass; one expected handler call |
+| Original | Owner destroyed by preceding ready callback | Heap use after free in handler-map lookup |
+| Upstream fixed | Owner alive | Pass; one expected handler call |
+| Upstream fixed | Owner destroyed by preceding ready callback | Pass; no stale handler call |
+| Upstream fixed | Descriptor unregistered by preceding callback | Pass; no removed-handler call |
+| Fixed implementation with original raw-owner capture restored | Owner destroyed by preceding ready callback | Heap use after free detected again |
+
+All six reported runs retained AddressSanitizer and LeakSanitizer. Initial
+sandbox-only LeakSanitizer process-inspection failures were kept separate and
+were not counted as passes. The complete native rerun's machine-readable
+summary is [validator-lifetime-summary.json](validator-lifetime-summary.json).
+JUCE 8.0.3 and 8.0.11 use the same copied-callback dispatch semantics; the
+inspected difference in that dispatcher is the singleton declaration macro.
+
+The plugin-side audit found no matching descriptor callback registration.
+The editor and Studio mount stop their timers during destruction; undo's
+queued work checks a weak lifetime token, and APVTS stops its base timer.
+Typeface, image and PaintCache resources are passive references. Their
+instance-owned cleanup is defensive and is not presented as the cause of
+the historical host traces. All 24 non-scan test names in the inspected old
+validator logs remain in the fixed host's logs; six additional test areas
+are enabled. Strictness, GUI/headless coverage and the fixed seed remain
+unchanged.
