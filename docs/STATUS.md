@@ -137,6 +137,28 @@ structure-of-arrays, segment-cached fast path for the oscillator (compute the
 next branch event once per analytic segment rather than per sample); not done.
 
 
+## Continuation: cold physical-time conservation
+
+Audio `46a7a5a2ce077e95b9025de81da85b3480134176`, separate V2 pin
+`6ab46dc8e1f75f4b559b279c54a254ace0480fbd`: the first idle scheduling
+stagger no longer counts as elapsed physical time, and one real sample
+seeds cold oscillator/filter controls. No fade, envelope law, shared RNG
+sequence or 3 kHz idle cadence changes. The registered 2,121-check gate
+goes from 1,928 failures to zero; worst elapsed error is 8.000711e-12 s
+(limit 1e-8), cold phase error 6.82539e-7 cycles (limit 1e-4). The original
+wake, cold filter and note-off gates pass. Legacy default/tails, V1 and
+re-pinned V2 are byte-identical in `check-compat-gates.sh --strict-v2`.
+
+[Cold-clock evidence](COLD_IDLE_TIMING.md) preserves three mutation
+rejections and the original Bass full-rate comparison. The physical-PANEL
+Bass metric remains above one at 48/96 kHz; the identified time defect is
+fixed without claiming that every click score passes. The full integration
+run also identifies a pre-existing touch-smoothing reference mismatch
+(warm IL capacitor versus a fresh zero-charge capacitor); its numerical
+limits remain unchanged and its fixture repair is being qualified separately.
+New three-round CPU results and final full-suite qualification follow at
+the performance integration checkpoint.
+
 ## Continuation: oscillator segment cache
 
 Audio commit `6bf605592e162a1910c71f9cc5ebf7d014008527` caches the next

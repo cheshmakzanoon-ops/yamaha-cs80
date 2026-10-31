@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -234,7 +234,7 @@
+     {
+         auto& v = voices[(size_t) vi];
+         v.active = false;
+-        v.idleControlsPrimed = false;
++        // Deliberate mutation: retain stale cold priming across reset.
+         v.held = false;
+         v.sustained = false;
+         v.pedalHeld = false;

@@ -1,0 +1,37 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1070,6 +1070,7 @@
+ 
+ void Engine::wakeIdleVoice(Voice& v) noexcept
+ {
++    if (&v == &voices[6]) return; // diagnostic: voice 6 already runs at full rate
+     voice_continuity::wakeCircuit(v.ranks, kNumRanks, (float) internalRate, idleStepSamples,
+                                   v.idleClock, v.idleSteps,
+                                   idleNoise[(size_t) (&v - voices.data())]);
+@@ -2034,7 +2035,7 @@
+         // its first physical sample to seed them; never invent a zero-Hz past.
+         const bool coldBootstrap = freeRunning && !v.active && !v.idleControlsPrimed;
+         int idleSamples = 0;
+-        if (! v.active && !coldBootstrap)
++        if (! v.active && !coldBootstrap && !(freeRunning && vi == 6))
+         {
+             const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
+             const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
+@@ -2201,7 +2202,7 @@
+             x = sawPulse;
+             // The shared RNG draw is consumed in both engines so oscillator start
+             // phases keep their sequence; the circuit engine hears the SUB29 sample.
+-            const float rankNoise = coldBootstrap ? 0.0f : audioRng.nextBipolar();
++            const float rankNoise = coldBootstrap || (freeRunning && !v.active && vi == 6) ? 0.0f : audioRng.nextBipolar();
+             x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
+             x *= 0.9f;
+             }
+@@ -2285,7 +2286,7 @@
+                 }
+             }
+ 
+-            if (coldBootstrap)
++            if (coldBootstrap || (freeRunning && !v.active && vi == 6))
+             {
+                 // Seed oscillator/filter time and controls only. The VCA keeps
+                 // its existing closed idle treatment and cold LI convention.

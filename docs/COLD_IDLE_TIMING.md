@@ -68,3 +68,44 @@ assigning its eight voices. Assignment still advances no audio sample. The
 charge oracle and all previously registered limits are unchanged. The prior
 32-frame run also checks that an explicit reset re-establishes cold scheduling.
 This is a test-harness adaptation, not a new engine-copy or state-transfer API.
+
+## Published integration qualification
+
+Audio repair `46a7a5a2ce077e95b9025de81da85b3480134176` was pushed before
+the separate V2 pin `6ab46dc8e1f75f4b559b279c54a254ace0480fbd`. It retains
+the global/rank/mix/output split, 16-chain storage, existing caches and
+3,000 Hz idle cadence. The physical counter starts at zero; the separate
+first-step threshold staggers work. One real cold sample seeds the controls,
+without an extra shared RNG draw or a changed closed-idle VCA treatment.
+
+| Registered quantity | Before | After | Unchanged limit |
+| --- | ---: | ---: | ---: |
+| Elapsed-time error, seconds | 0.000291666673046 | 8.00071120466e-12 | 1e-8 |
+| Cold phase error, cycles | 0.0490844331589 | 6.82538964014e-7 | 1e-4 |
+| Original Bass phase versus full-rate voice 6, cycles | diagnosed cold phase defect | 0.00010704994201 | 0.002 |
+
+The fresh integration test goes from 1,928 failed checks to zero out of
+2,121. The original free-running wake, cold filter charge and note-off
+continuity gates also pass. The retained isolated qualification and all
+three mutation rejections use byte-identical core and focused test sources;
+[the evidence README](evidence/continuation-2026-10-31/cold-idle-soa/README.md)
+records that relationship rather than relabelling old runs as fresh ones.
+
+The compatibility script passes Legacy default, Legacy tails and V1 unchanged.
+After the separate pin, `scripts/check-compat-gates.sh --strict-v2` also reports
+V2 byte-identical to `46a7a5a`. Raw logs are in the evidence directory.
+
+The broader 86-test integration run exposed one pre-existing touch-smoothing
+fixture mismatch and two generated executable-permission failures. The
+permission issue is environmental; the unchanged filter-cache test passes
+after its execute bit is restored. The smoothing fixture compares a warm
+filter capacitor at IL with a freshly prepared capacitor at zero, despite
+the intentionally preserved charge law. The same failure is reproduced at
+pre-repair `780658d`. Its correction is qualified separately; this timing
+repair does not declare the whole suite green. Three-round CPU integration
+timings and the final full suite are recorded at subsequent checkpoints.
+
+The physical-PANEL Bass retrigger scores after this repair are 0.571043 at
+44.1 kHz and still above one at 48/96 kHz. The electrical-programmer and
+event-omission results remain separate. No click window, attack time, VCA
+pedestal, gain, coefficient, control coordinate or fade was changed here.

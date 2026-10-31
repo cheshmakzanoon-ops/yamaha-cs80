@@ -3,7 +3,7 @@
 2026-10-31. These are deterministic software-model diagnostics, not hardware
 measurements. The original physical-unit PANEL coordinate is retained in this
 investigation. The production electrical programmer changes attack timing and
-VCF drive, as quantified separately in `PROGRAMMER_CONTROL_COORDINATES.md`;
+VCF drive, as quantified separately in [PROGRAMMER_INTEGRATION.md](evidence/continuation-2026-10-31/PROGRAMMER_INTEGRATION.md);
 its lower click ratio cannot identify the cause of the old physical-PANEL edge.
 
 ## Omit only the6.25-second note-on
@@ -70,3 +70,17 @@ revision's `src/tools/engine_audit.cpp` into that export, apply
 `bass-causal-probe.cpp`, the exported `Engine.cpp` and `FactoryPresets.cpp` with
 C++20/O3 against the exported `src`; run with a new output directory. It emits
 full sample/tap traces and rejects any trace split that changes the audio.
+
+## Cold-clock repair checkpoint
+
+The published cold-time repair is `46a7a5a2ce077e95b9025de81da85b3480134176`,
+with separate pin `6ab46dc8e1f75f4b559b279c54a254ace0480fbd`. Its source is
+identical to the retained isolated `bc41f23` causal qualification, as recorded
+in [cold-idle-soa](evidence/continuation-2026-10-31/cold-idle-soa/README.md).
+The physical-PANEL Bass score becomes 0.571043 at 44.1 kHz, while the 48 kHz
+score is 1.440981 and the 96 kHz score also remains above one. The named
+Bass phase error versus a full-rate voice is now at most 0.00010705 cycles,
+within the unchanged 0.002 limit. Thus the identified cold scheduling error
+is removed, but that does not close the original all-rate click metric.
+The retained after CSV includes electrical-programmer rows and omitted-note
+controls without changing any scoring window or denominator.

@@ -1,0 +1,65 @@
+Internal ctest changing into directory: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core
+UpdateCTestConfiguration  from :/workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core/DartConfiguration.tcl
+Test project /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 20
+    Start 20: cs80_cold_idle_timing_tests
+
+20: Test command: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core/cs80_cold_idle_timing_tests "/workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/tests/parity/tolerances-v2/cold-idle-timing.json"
+20: Working Directory: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core
+20: Test timeout computed to be: 180
+20: cold idle rate=44100 policy=source worst_time=8.00071120466e-12 seconds worst_phase=6.82538964014e-07 cycles
+20: cold idle rate=44100 policy=pure worst_time=8.00071120466e-12 seconds worst_phase=6.82538964014e-07 cycles
+20: cold idle rate=48000 policy=source worst_time=6.37889741029e-12 seconds worst_phase=6.10182385397e-07 cycles
+20: cold idle rate=48000 policy=pure worst_time=6.37889741029e-12 seconds worst_phase=6.10182385397e-07 cycles
+20: cold idle rate=96000 policy=source worst_time=6.37889741029e-12 seconds worst_phase=3.58899708841e-07 cycles
+20: cold idle rate=96000 policy=pure worst_time=6.37889741029e-12 seconds worst_phase=3.58899708841e-07 cycles
+20: cold idle worst elapsed error 8.00071120466e-12 seconds; worst phase 6.82538964014e-07 cycles
+20: Cold idle timing: 2121 checks, 0 failures
+1/4 Test #20: cs80_cold_idle_timing_tests .......   Passed   13.00 sec
+test 21
+    Start 21: cs80_cold_filter_envelope_tests
+
+21: Test command: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core/cs80_cold_filter_envelope_tests "/workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/tests/parity/tolerances-v2/completion-dsp.json"
+21: Working Directory: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core
+21: Test timeout computed to be: 180
+21: cold IL worst settled error 0; assignment capacitor jump 0
+21: original physical Bass retrigger: policy=source voice=6 active_before=0 filter_before=-1.43999993801 filter_after=-1.43999993801
+21: original physical Bass retrigger: policy=pure voice=6 active_before=0 filter_before=-1.43999993801 filter_after=-1.43999993801
+21: original physical Bass phrase: 30 cold, 8 warm assignments; maximum warm capacitor/phase jump 0
+21: Cold filter envelope: 13966 checks, 0 failures
+2/4 Test #21: cs80_cold_filter_envelope_tests ...   Passed   43.44 sec
+test 22
+    Start 22: cs80_note_off_continuity_tests
+
+22: Test command: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core/cs80_note_off_continuity_tests "/workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/tests/parity/tolerances-v2/completion-dsp.json"
+22: Working Directory: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core
+22: Test timeout computed to be: 120
+22: note-off maximum instantaneous capacitor delta 0 (limit 0)
+22: Note-off continuity: 540 checks, 0 failures
+3/4 Test #22: cs80_note_off_continuity_tests ....   Passed   39.00 sec
+test 64
+    Start 64: cs80_free_running_voice_tests
+
+64: Test command: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core/cs80_free_running_voice_tests
+64: Working Directory: /workspace/scratch/b5d5f462f141/cs80-cold-timing-soa/build-core
+64: Test timeout computed to be: 300
+64: free-running gate: worst wake residual -43.08 dB, worst idle phase 4.36e-05 cycles
+64: Free-running voices: 73965 checks, 0 failures
+4/4 Test #64: cs80_free_running_voice_tests .....   Passed    9.40 sec
+
+The following tests passed:
+	cs80_cold_idle_timing_tests
+	cs80_cold_filter_envelope_tests
+	cs80_note_off_continuity_tests
+	cs80_free_running_voice_tests
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) = 104.85 sec
