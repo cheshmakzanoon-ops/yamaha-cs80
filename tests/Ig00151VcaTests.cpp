@@ -80,6 +80,11 @@ void pedestal(const ws1::Tolerances& tol)
     check(dc > 0.0, "the declared offset and feedthrough are present");
     Ig00151Vca closed; closed.prepare(96000.0); closed.reset(2.6f);
     check(closed.process(0.0f, 2.6f, 0.0f, 0.0f) == 0.0f, "no pedestal with the envelope closed (voices end without a DC step)");
+    // The AC-coupled next stage leaves only an envelope-shaped transient.
+    Ig00151Vca held; held.prepare(96000.0); held.reset(2.6f);
+    float last = 0.0f;
+    for (int n = 0; n < 96000 * 2; ++n) last = held.process(0.0f, 2.6f, 0.0f, 1.0f);
+    check(std::abs(last) < 1e-5f * std::abs((float) dc), "output coupling removes the static pedestal (tau 0.1 s)");
 }
 
 void pan(const ws1::Tolerances& tol)

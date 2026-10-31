@@ -20,6 +20,9 @@
 // - Input offset and CV feedthrough with typical OTA magnitudes (not IG00151
 //   data). Both scale with the control current, so together they add an
 //   envelope-shaped DC pedestal (the "thump"), -50 dB or less.
+// - The next stage is AC-coupled like IC5's documented input (1 uF NP into
+//   100 kOhm, tau 0.1 s): the pedestal survives only as a transient, so it
+//   does not reach the ring modulator as a static offset.
 #include <algorithm>
 #include <cmath>
 
@@ -30,6 +33,7 @@ inline constexpr double kIg00151LevelNodeFarads = 10.0e-9;
 inline constexpr float kIg00151SubOctaves = 1.0f;          // EI octaves at full SUB VCA depth
 inline constexpr float kIg00151OffsetUnits = 1.5e-3f;      // input-referred, engine units
 inline constexpr float kIg00151FeedthroughUnits = 1.0e-3f; // per unit control current
+inline constexpr double kIg00151CouplingSeconds = 1.0e-6 * 100.0e3;
 
 class Ig00151Vca
 {
@@ -37,9 +41,11 @@ public:
     void prepare(double sampleRate) noexcept
     {
         coefficient = static_cast<float>(-std::expm1(-1.0 / (kIg00151LevelNodeOhms * kIg00151LevelNodeFarads * sampleRate)));
+        couplingCoefficient = -std::expm1(-1.0 / (kIg00151CouplingSeconds * sampleRate));
     }
-    // Cold start: the LI node is already charged to the static level network.
-    void reset(float linearCv) noexcept { node = linearCv; }
+    // Cold start: the LI node is already charged to the static level network;
+    // the silent voice left no charge on the output coupling.
+    void reset(float linearCv) noexcept { node = linearCv; coupling = 0.0; }
     float levelNode() const noexcept { return node; }
 
     // linearCv: the LC drive (engine level units, >= 0); expOctaves: EI drive;
@@ -48,11 +54,15 @@ public:
     {
         node += (linearCv - node) * coefficient;
         const float control = std::max(0.0f, node) * envelope * std::exp2(expOctaves);
-        return control * (input + kIg00151OffsetUnits) + kIg00151FeedthroughUnits * control;
+        const float out = control * (input + kIg00151OffsetUnits) + kIg00151FeedthroughUnits * control;
+        // Double state: a float 0.1 s pole stalls about -64 dB short of settling.
+        coupling += (out - coupling) * couplingCoefficient;
+        return static_cast<float>(out - coupling);
     }
 
 private:
     float coefficient = 1.0f, node = 0.0f;
+    double couplingCoefficient = 0.0, coupling = 0.0;
 };
 
 // Constant-power rank pan normalized to the former centre gain of 0.5 per side:
