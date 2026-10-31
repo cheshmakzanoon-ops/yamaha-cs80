@@ -143,7 +143,18 @@ reported as results):
 | paired_tones pair 0 held | 0.2537 / 0.2714 | 0.2735 / 0.2653 |
 
 Idle increment +0.015 / +0.007 RTF (mean +0.011), inside the pre-registered
-0.02 budget. The engine's *total* idle cost (≈ 0.07 RTF at baseline) is
+0.02 budget. After every ws3 step (2.1–2.4 and Phase 6) and the ws4/ws7 merge, against
+the integration head `bd524f9` built the same way (two interleaved rounds):
+
+| Row | `bd524f9` median RTF | ws3 merged (`33e2c1d`) median RTF |
+|---|---:|---:|
+| isolation idle_quiet, round 1 / 2 | 0.0810 / 0.0800 | 0.0946 / 0.0950 |
+| isolation paired_tones pair 0 held | 0.2662 / 0.2801 | 0.2758 / 0.2737 |
+| legacy idle_quiet | 0.0168 / 0.0167 | 0.0185 / 0.0175 |
+
+Whole-workstream idle increment +0.014 / +0.015 RTF (free-running idle path
+plus the per-sample TWS nodes and TRG5 bus), inside the 0.02 budget; held
+eight-voice cost within noise; Legacy +0.001 (branch overhead, within noise). The engine's *total* idle cost (≈ 0.07 RTF at baseline) is
 dominated by always-on global circuits owned by other workstreams (PRA, BBD,
 output network, source readouts); the plan's "idle ≤ 2 % RTF" target for the
 whole engine is therefore not met by this workstream alone and remains open
@@ -643,6 +654,20 @@ bend and pressure isolation, member range, RPN ignored without MPE; CC88;
 unison ×2/×4/×8 allocation, symmetric detune, release of all circuits, PURE
 inert; sixteen-voice routing; ribbon CC default off, centre/ends, PURE, CC
 number assignable.
+
+Processor-side checks (`tests/Ws3KeyboardHostTests.h`, run by the UI smoke
+executable): the nine host parameters follow every shipped parameter in enum
+order with AU hint 10 and neutral defaults; Scala text loads, a malformed one
+is rejected keeping the previous tuning; the tuning reaches the audio thread,
+survives a session round trip and is played by the restored session; curve
+and tuning source survive factory-preset recall; MTS SysEx and CC88 in the
+host MIDI stream; no-prefix velocity bit-identical; sixteen held keys fill
+both instruments and leaving the mode stops the second; ribbon CC 16 from the
+host.
+
+Mutations (restored): unison offset dropped → 3 failing checks; upper-zone
+bend ignored → 2; Scala table ignored → 1; ribbon CC without a centre → 4;
+RPN data entry not applied → 8.
 
 ### New parameters (AU hint 10, all plain floats; switches ≥ 0.5, choices rounded)
 
