@@ -162,6 +162,9 @@ void testEngineContract()
     Engine live; live.prepare(48000.0); live.setParams(p); live.noteOn(84, 0.8f);
     const auto before = settle(live);
     p[P_kbdBrillianceHigh] = 1.0f; live.setParams(p);
+    // ws2 merge, intentional circuit-engine change: the levers are smoothed
+    // over 5 ms (Smoothing.h), so read the held key after 0.2 s.
+    { std::vector<float> glide(9600 * 2); live.render(glide.data(), 9600); }
     const auto after = settle(live);
     check(after.lp > before.lp * 3.0f, "HIGH BRILLIANCE reaches a held top key");
     // Source-selected ranks include the shared FH/FL bus loading of all channels.

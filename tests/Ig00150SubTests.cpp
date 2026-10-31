@@ -175,6 +175,9 @@ void engineUsesBandLimitedPath()
 {
     ParamValues p;
     p[P_parityMode] = 1.0f;
+    // ws2 merge: this replay ticks two 88.2 kHz internal samples per frame, so
+    // pin Eco (the circuit engine's Standard is 4x since ws2 Phase 1.6).
+    p[P_oversampling] = 0.0f;
     p[P_subOriginalFunction] = 1.0f;
     p[P_subOriginalSpeed] = 173.3f;
     Engine e;

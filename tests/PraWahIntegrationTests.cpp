@@ -6,6 +6,7 @@
 #include "core/Engine.h"
 #include "core/RingModulatorCircuit.h"
 #include "CircuitSineSource.h"
+#include "ExpressionOpticsOracle.h"
 
 #include <algorithm>
 #include <array>
@@ -218,6 +219,10 @@ ParamValues sinePatch(bool isolation = true, bool wet = false)
 {
     ParamValues p;
     p[P_parityMode] = isolation ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     p[P_footMode] = wet ? 1.0f : 0.0f;
     p[P_volume] = 0.25f; p[P_mix] = 0.0f; p[P_detune] = 0.0f;
     p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = 0.0f;
@@ -326,6 +331,13 @@ struct PipelineOracle
             const auto ch = isolated ? bbd.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo)
                                      : chorus.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo);
             const std::array<float, 2> stereo {ch.l, ch.r};
+            // ws2 (intentional circuit-engine change, ws4 hand-off): the circuit
+            // engine's expression gain is the PRA I2/I3 optical cell
+            // (closed-form oracle, ExpressionOpticsOracle.h), starting on the pedal
+            // at the first sample; legacy keeps the immediate gain.
+            if (!gainSnapped) { gainOptics.rate = rate; gainSnapped = true; }
+            gainOptics.setPedal(expression);
+            const float gainExpressionNow = isolated ? static_cast<float>(gainOptics.tick()) : expression;
             for (int channel = 0; channel < 2; ++channel)
             {
                 const float dc = stereo[channel]-lastInput[channel]
@@ -334,7 +346,7 @@ struct PipelineOracle
                 // PRA receives unscaled waveform; expression acts after chorus
                 // and before the loaded output coupling network. Retain float
                 // source scaling, with no additional absolute active-stage gain.
-                const float source = stereo[channel] * expression;
+                const float source = stereo[channel] * gainExpressionNow;
                 // Phase 1.5 gain staging precedes the loaded output network.
                 const float staged = static_cast<float>(
                     circuitOutputDriver(static_cast<double>(source) * kCircuitOutputReference));
@@ -351,6 +363,8 @@ struct PipelineOracle
     CircuitSineSource circuitSine;
     CircuitVoiceVca circuitVca;
     float expression = 1.0f;
+    tests::ExpressionOpticsOracle gainOptics;
+    bool gainSnapped = false;
     bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;
     bool chorusOn, tremolo;
@@ -615,6 +629,7 @@ void testFinitePolyphony()
     for (double rate : {8000.0, 44100.0, 192000.0, 768000.0})
     {
         ParamValues p; p[P_parityMode] = 1.0f; p[P_ringAmount] = 0.8f; p[P_chorusOn] = 1.0f;
+        p[P_oversampling] = 0.0f; // 2x oracle fixture; see sinePatch()
         Engine e; e.setParams(p); e.prepare(rate);
         for (int note : {24, 36, 48, 60, 72, 84, 96, 108}) e.noteOn(note, 1.0f);
         for (int step = 0; step < 80; ++step)

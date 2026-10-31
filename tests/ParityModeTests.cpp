@@ -49,6 +49,10 @@ std::vector<float> phrase(const ParamValues& p, bool controllers = false)
 int main()
 {
     ParamValues p;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     check(P_parityMode == 137 && P_numParams >= 139, "core append-only index");
     check(paramId(P_parityMode) == "parity_mode" && p[P_parityMode] == 0.0f,
           "stable ID and neutral default");
@@ -158,7 +162,8 @@ int main()
     prepare(e, busy);
     check(e.getParams().v == busy.v, "effective mask never rewrites stored parameters");
     check(e.isParityMode(), "mode diagnostic");
-    check(e.getLatencySamples() == 63 && e.getInternalSampleRate() == 96000.0,
+    // ws1 merge: plus the circuit oscillator's 8 internal samples (4 host at 2x).
+    check(e.getLatencySamples() == 63 + 4 && e.getInternalSampleRate() == 96000.0,
           "explicit retained numerical backend and latency");
     e.noteOn(60, 0.8f, 2);
     e.controlChange(64, 1.0f, 2);

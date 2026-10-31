@@ -14,6 +14,11 @@
 #include "BbdChorus.h"
 #include "FxSlot.h"
 #include "OutputTapCircuit.h"
+#include "HeadphoneAmpCircuit.h"
+#include "ExpressionOptics.h"
+#include "NoiseSource.h"
+#include "Oversampling.h"
+#include "Smoothing.h"
 #include "SourceFactoryTones.h"
 #include "KasScanner.h"
 #include "KbcContour.h"
@@ -250,6 +255,7 @@ public:
     void setModernConfig(const modern::ModernConfig& config) noexcept { modern.setConfig(config); }
     const modern::ModernConfig& getModernConfig() const noexcept { return modern.getConfig(); }
     void setTransport(const modern::Transport& transport) noexcept { modern.setTransport(transport); }
+    const modern::Transport& getModernTransport() const noexcept { return modern.getTransport(); }
     // Render-thread diagnostics: current offsets and MSEG state.
     const modern::RankOffsets& getModernRankOffsets(int voice, int rank) const noexcept
     { return modern.rankOffsets(voice, rank); }
@@ -274,10 +280,29 @@ public:
     float getSubOscillatorValue() const noexcept { return subValue; }
     float getSubOscillatorRate() const noexcept
     { return global.subOriginalMode ? originalSubSpeedSmoothed : subSpeedSmoothed; }
-    // Odd retained phase of a 255-tap FIR: (127-1)/2 =63 host samples.
-    int getLatencySamples() const noexcept { return Decimator::kHostLatency; }
+    // Retained last internal phase of the current factor's FIR: 63 host
+    // samples at every factor (2x: (127-1)/2). Query after each control frame.
+    // Reported latency: the decimator's 63 host samples at every factor, plus in
+    // the circuit engine the reconstructed oscillator's linear-phase antialias
+    // kernel, 8 INTERNAL samples (plan step 1.2) = 8/N host samples at factor N
+    // (4, 2, 1). Legacy's PolyBLEP oscillator adds none.
+    int getOscillatorLatencySamples() const noexcept
+    {
+        return usesSourceModels(global.renderPolicy)
+            ? static_cast<int>(ReconstructedOscillator::latencyInternalSamples()) / std::max(1, oversample) : 0;
+    }
+    int getLatencySamples() const noexcept
+    { return OversamplingDecimator::hostLatencyFor(oversample) + getOscillatorLatencySamples(); }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
+    // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
+    // render policy, the host rate and the offline flag (see Oversampling.h).
+    int getOversamplingFactor() const noexcept { return oversample; }
+    // Host offline-render flag (AudioProcessor::isNonRealtime). The circuit
+    // engine renders offline at HQ. A factor change re-prepares the
+    // rate-dependent state without allocating and stops sounding notes, like a
+    // render-policy change. Render thread or setup only.
+    void setNonRealtime(bool offline) noexcept;
 
     // The voice telemetry is used by tests and the UI voice meter.
     struct VoiceInfo
@@ -343,11 +368,16 @@ public:
         double sampleRate = 0.0;
         OutputTapCircuit::Mode mode = OutputTapCircuit::Mode::high;
     };
-    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. GENERAL is a separately
-    // clocked diagnostic, not a host listening mode. Model units, not measured volts.
+    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. All three are always
+    // clocked; LISTENING OUTPUT chooses which the host hears (circuit engine).
+    // Model units, not measured volts.
     // Nodes describe the last processed internal sample; mode already selects
     // the next interval after a parameter event (no instantaneous node re-solve).
     OutputTapState getOutputTapState(int tap) const noexcept;
+    // Last internal (pre-decimator) sample of the selected listening output,
+    // before the optional digital mono fold-down. Render thread only.
+    struct ListeningSample { float left = 0.0f, right = 0.0f; };
+    ListeningSample getListeningSample() const noexcept { return listeningSample; }
 
 private:
     static constexpr int kNumVoices = 8;
@@ -453,6 +483,18 @@ private:
 
     void applyParams(const ParamValues& values);
     void buildSettings();
+    int effectiveOversampling() const noexcept;
+    // Rate-dependent setup for the current factor; allocation-free once
+    // prepare() has reserved buffers for maximumOversamplingFactor(hostRate).
+    void configureInternalRate();
+    bool updateOversampling();
+    // Circuit-engine control smoothing (Smoothing.h). The settings fields are
+    // retargeted after each buildSettings and advanced once per internal
+    // sample; performance controllers are smoothed for the duration of one
+    // internal sample and their event-set targets restored afterwards.
+    void retargetSmoothedSettings() noexcept;
+    void beginSmoothedControls() noexcept;
+    void endSmoothedControls() noexcept;
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
@@ -540,6 +582,33 @@ private:
     // voltage (Newton warm start) and its single-key full-scale normalisation.
     touch::Coefficients touchCoefficients;
     double trg5BusVolts = 0.0, trg5FullScaleVolts = 1.0;
+    // Lever values the KBC contour contributions were last computed from.
+    std::array<float, 4> refreshedContourLevers {};
+    bool prepared = false;
+    bool nonRealtime = false;
+    SmootherBank settingsSmoothing;
+    struct ControllerSmoothing
+    {
+        ControlSmoother bend, modWheel, ribbon;
+        std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
+        std::array<uint64_t, kNumVoices> age {};
+        float bendTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
+        // Expression acts at its gain stage through the PRA I2/I3 optical cell
+        // (ExpressionOptics.h); the wah cell reads the pedal target itself.
+        float expressionGain = 1.0f;
+        std::array<float, kNumVoices> pressureTarget {}, mpeBendTarget {}, timbreTarget {};
+        bool snapPending = true;
+    } controllerSmoothing;
+    double controlSmoothing = 1.0;  // one-pole coefficient at the internal rate
+    float subSpeedSmoothing = 0.0015f; // legacy 0.0015 as a time constant
+    // Circuit-engine noise sources (NoiseSource.h) and listening output: the
+    // LEFT/RIGHT jacks, the GENERAL mono jack, or the headphone amplifier fed
+    // from the preamp outputs (HeadphoneAmpCircuit.h). Legacy uses none of them.
+    CircuitNoiseSources circuitNoise;
+    ExpressionOpticalCell expressionOptics;
+    HeadphoneAmpCircuit phonesL, phonesR;
+    int listeningOutput = 0;
+    ListeningSample listeningSample;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;
@@ -581,7 +650,7 @@ private:
 
     Chorus chorus;
     BbdChorus bbdChorus;
-    Decimator decL, decR;
+    OversamplingDecimator decL, decR;
     Rng audioRng { 0x51c80u };
     Rng modRng { 0x9e3779b9u };
 

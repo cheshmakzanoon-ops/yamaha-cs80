@@ -12,10 +12,11 @@ import unittest
 
 CAPTURE = None
 # Exact core parameter count: the 139 shipped parameters plus every block
-# appended since, in marker order (src/core/Params.h). ws3-keyboard appended 9
-# (kas_scan_timing .. unison_detune) and ws5-modern 39 (lfo1_wave ..
-# fx_gain_compensation); a later appended block adds its own count here.
-EXPECTED_PARAMETER_COUNT = 139 + 9 + 39
+# appended since, in marker order (src/core/Params.h): ws2-engine 2
+# (oversampling, output_jack), ws3-keyboard 9 (kas_scan_timing ..
+# unison_detune) and ws5-modern 39 (lfo1_wave .. fx_gain_compensation). A later
+# appended block adds its own count here.
+EXPECTED_PARAMETER_COUNT = 139 + 2 + 9 + 39
 
 EXPECTED_EVENTS = [
     {'sample': 4800, 'type': 'note_on', 'note': 60, 'channel': 1, 'value': .75},
@@ -50,7 +51,8 @@ def validate_metadata(metadata):
     assert metadata['sample_rate_hz'] == 48000
     assert metadata['internal_sample_rate_hz'] == 96000
     assert metadata['sample_count'] == 96000
-    assert metadata['latency_samples'] == 63
+    # 63 decimator samples plus the circuit oscillator's 8 internal samples (4 at Eco 2x).
+    assert metadata['latency_samples'] == 67
     assert metadata['latency_compensated'] is False
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
     assert metadata['parameter_count'] == len(metadata['settings']) == EXPECTED_PARAMETER_COUNT
@@ -182,7 +184,8 @@ def validate_live_metadata(metadata, default_settings):
     assert metadata['sample_rate_hz'] == 48000
     assert metadata['internal_sample_rate_hz'] == 96000
     assert metadata['sample_count'] == 96000
-    assert metadata['latency_samples'] == 63
+    # 63 decimator samples plus the circuit oscillator's 8 internal samples (4 at Eco 2x).
+    assert metadata['latency_samples'] == 67
     assert metadata['latency_compensated'] is False
     assert metadata['parameter_count'] == EXPECTED_PARAMETER_COUNT
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}

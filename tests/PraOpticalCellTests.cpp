@@ -156,6 +156,9 @@ void engineOpticalTrajectory()
     e.setParams(p);
     e.prepare(48000.0);
     const double rate = e.getInternalSampleRate();
+    // ws2 merge: internal samples per host frame follow the oversampling factor
+    // (the circuit engine's Standard is 4x since ws2 Phase 1.6).
+    const double ticks = (double) e.getOversamplingFactor();
     float frame[2];
     // Reset convention: toe (bright). Darken to heel, then brighten half way.
     double start = std::log(kToe);
@@ -165,7 +168,7 @@ void engineOpticalTrajectory()
     for (int frame0 = 1; frame0 <= 4800; ++frame0)
     {
         e.render(frame, 1);
-        const double want = heel + (start - heel) * std::exp(-2.0 * frame0 / (kDecay * rate));
+        const double want = heel + (start - heel) * std::exp(-ticks * frame0 / (kDecay * rate));
         follows = follows && std::abs(std::log(e.getPraWahState(0).opticalOhms) - want) <= tol::kEngineLogNepers;
     }
     check(follows, "engine optical cell darkens with the decay time constant");
@@ -174,7 +177,7 @@ void engineOpticalTrajectory()
     for (int frame0 = 1; frame0 <= 4800; ++frame0)
     {
         e.render(frame, 1);
-        const double want = half + (start - half) * std::exp(-2.0 * frame0 / (kAttack * rate));
+        const double want = half + (start - half) * std::exp(-ticks * frame0 / (kAttack * rate));
         follows = follows && std::abs(std::log(e.getPraWahState(0).opticalOhms) - want) <= tol::kEngineLogNepers;
     }
     check(follows, "engine optical cell brightens with the attack time constant");

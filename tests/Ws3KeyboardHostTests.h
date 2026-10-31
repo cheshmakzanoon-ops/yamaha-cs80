@@ -121,6 +121,13 @@ void testWs3KeyboardHost(Check&& check)
         midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 90), 0);
         midi.addEvent(juce::MidiMessage::controllerEvent(1, 16, 127), 1);
         process(host, midi);
+        // ws2 merge, intentional circuit-engine change: the ribbon is smoothed
+        // over 5 ms, so read it after another 0.2 s.
+        for (int block = 0; block < 20; ++block)
+        {
+            juce::MidiBuffer none;
+            process(host, none);
+        }
         check(host.getEngine().getVoiceInfo(0).ribbonRatio == ribbonFrequencyRatio(1.0f), "ribbon CC 16 from the host");
     }
 }

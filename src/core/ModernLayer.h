@@ -131,6 +131,7 @@ public:
         rebuild();
     }
 
+    const Transport& getTransport() const noexcept { return transport; }
     void setTransport(const Transport& t) noexcept
     {
         transport = t;

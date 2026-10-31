@@ -49,6 +49,9 @@ public:
     // Audio thread, once per block before rendering: newest published configuration and
     // the host transport (tempo for synced MSEGs; 120 BPM when the host reports none).
     void applyToEngine(Engine& engine, juce::AudioPlayHead* playHead) noexcept;
+    // Sixteen-voice mode (ws3): the second instrument gets the same session
+    // configuration and transport as the first; display telemetry stays the first's.
+    static void mirrorToEngine(const Engine& first, Engine& second) noexcept;
 
     // Editor telemetry published by the audio thread: MSEG position in shape units of the
     // envelope a player is most likely watching, or < 0 when it is not running.

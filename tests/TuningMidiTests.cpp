@@ -241,11 +241,13 @@ void testRibbonCc()
         p[P_parityMode] = parity;
         Engine e; e.prepare(48000.0); e.setParams(p);
         e.noteOn(60, 0.8f);
-        e.controlChange(16, 127.0f / 127.0f); render(e, 64);
+        // ws2 merge, intentional circuit-engine change: the ribbon is smoothed
+        // over 5 ms (Smoothing.h), so each position is read after 0.2 s.
+        e.controlChange(16, 127.0f / 127.0f); render(e, 9600);
         check(e.getVoiceInfo(0).ribbonRatio == ribbonFrequencyRatio(1.0f), "CC16 127 is full ribbon travel");
-        e.controlChange(16, 64.0f / 127.0f); render(e, 64);
+        e.controlChange(16, 64.0f / 127.0f); render(e, 9600);
         check(e.getVoiceInfo(0).ribbonRatio == 1.0f, "CC16 64 is the ribbon centre");
-        e.controlChange(16, 0.0f); render(e, 64);
+        e.controlChange(16, 0.0f); render(e, 9600);
         check(e.getVoiceInfo(0).ribbonRatio == ribbonFrequencyRatio(-1.0f), "CC16 0 is full downward travel");
     }
     p[P_parityMode] = 0.0f; p[P_ribbonCc] = 2.0f;

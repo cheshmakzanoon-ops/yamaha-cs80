@@ -251,6 +251,12 @@ void ModernLayerState::applyToEngine(Engine& engine, juce::AudioPlayHead* playHe
         displayPosition[(std::size_t) m].store(engine.getModernMsegDisplayPosition(m), std::memory_order_relaxed);
 }
 
+void ModernLayerState::mirrorToEngine(const Engine& first, Engine& second) noexcept
+{
+    second.setModernConfig(first.getModernConfig());
+    second.setTransport(first.getModernTransport());
+}
+
 double ModernLayerState::getDisplayPosition(int mseg) const noexcept
 {
     return mseg >= 0 && mseg < modern::kMsegCount ? displayPosition[(std::size_t) mseg].load(std::memory_order_relaxed) : -1.0;

@@ -7,6 +7,40 @@
 namespace cs80
 {
 
+namespace
+{
+// Every continuous control the circuit engine smooths, in ONE list (field order
+// is the SmootherBank slot order). Absent on purpose: switches and choices,
+// envelope times and levels (the RC envelopes already move continuously toward
+// a new level), time controls (portamento, release, envelope scale) and the
+// SUB speeds, which keep their own smoothing.
+template <class Visit>
+void visitSmoothedSettings(GlobalSettings& g, RankSettings* ranks, int rankCount, Visit&& visit)
+{
+    for (float* field : { &g.masterTune, &g.detuneCents, &g.mix, &g.brilliance, &g.resonance, &g.volume,
+                          &g.initBend, &g.subExtLevel, &g.subVco, &g.subVcf, &g.subVca, &g.subAtVco,
+                          &g.subAtVcf, &g.ringSpeed, &g.ringDepth, &g.ringAmount, &g.chorusSpeed,
+                          &g.chorusDepth, &g.voiceDispersion, &g.drift, &g.analogNoise, &g.tuningRef,
+                          &g.modWheelSub, &g.modWheelVcf, &g.kbdBrillianceLow, &g.kbdBrillianceHigh,
+                          &g.kbdLevelLow, &g.kbdLevelHigh })
+        visit(*field);
+    for (int i = 0; i < 3; ++i)
+    {
+        visit(g.lfoRate[i]);
+        visit(g.lfoDepth[i]);
+        visit(g.fxMix[i]);
+    }
+    for (int rank = 0; rank < rankCount; ++rank)
+    {
+        auto& r = ranks[rank];
+        for (float* field : { &r.sine, &r.noise, &r.pulseWidth, &r.pwmSpeed, &r.pwmDepth, &r.hpfEffectiveCv,
+                              &r.hpfRes, &r.lpfEffectiveCv, &r.lpfRes, &r.vcfLevel, &r.vLevel, &r.initBrill,
+                              &r.initLevel, &r.afterBrill, &r.afterLevel, &r.pan })
+            visit(*field);
+    }
+}
+} // namespace
+
 Engine::Engine()
 {
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
@@ -25,36 +59,25 @@ void Engine::prepare(double hostSampleRate)
     // Software resource/numeric guard, not an analog tuning assumption.
     hostRate = std::isfinite(hostSampleRate) && hostSampleRate >= 8000.0
                && hostSampleRate <= 768000.0 ? hostSampleRate : 48000.0;
-    oversample = 2;
-    internalRate = hostRate * (double) oversample;
-    initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
-    modern.prepare(internalRate);
-    idleStepSamples = voice_continuity::idleStepSamples(internalRate);
-    idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
-    touchCoefficients.prepare(internalRate);
-
-    chorus.prepare((float) internalRate);
-    bbdChorus.prepare((float) internalRate);
-    for (auto& slot : fxSlots)
-        slot.prepare((float) internalRate);
-    decL.prepare((float) internalRate);
-    decR.prepare((float) internalRate);
-    externalInput.prepare((float) hostRate);
-    scanner.prepare(internalRate);
-    // Engine rate guards imply a valid 16kHz..1.536MHz circuit rate. Profile
-    // defaults are documented engineering inferences, not measured calibration.
-    praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
-    praWahR.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
-    outputCircuit.prepare(internalRate, InferredSymmetricOutputProfile{},
-                          global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
+    // Reserve every rate-sized buffer once for the largest selectable factor,
+    // so a later quality or offline change re-prepares without allocating.
+    // The final prepare below fully reinitializes them at the actual rate.
+    {
+        const float reserveRate = (float) (hostRate * (double) maximumOversamplingFactor(hostRate));
+        chorus.prepare(reserveRate);
+        bbdChorus.prepare(reserveRate);
+        for (auto& slot : fxSlots)
+            slot.prepare(reserveRate);
+    }
+    oversample = effectiveOversampling();
+    configureInternalRate();
+    prepared = true;
 
     Rng trimRng(0xC5801234u);
     for (auto& v : voices)
     {
         for (auto& r : v.ranks)
         {
-            (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
-            r.vca.prepare(internalRate);
             r.trimTune = trimRng.nextBipolar();
             r.trimCutoff = trimRng.nextBipolar();
             r.trimLevel = trimRng.nextBipolar();
@@ -68,16 +91,89 @@ void Engine::prepare(double hostSampleRate)
     }
     for (int i = 0; i < kNumVoices; ++i)
         voiceDrift[i] = (float) i * 0.73f;
+    reset();
+    // Resource changes retain the accepted source identity; public setParams
+    // intentionally means PANEL and would discard it here.
+    applyParams(params);
+}
+
+int Engine::effectiveOversampling() const noexcept
+{
+    return oversamplingFactor(oversamplingMode(params[P_oversampling]),
+                              usesSourceModels(global.renderPolicy), nonRealtime, hostRate);
+}
+
+void Engine::configureInternalRate()
+{
+    internalRate = hostRate * (double) oversample;
+    initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+
+    chorus.prepare((float) internalRate);
+    bbdChorus.prepare((float) internalRate);
+    for (auto& slot : fxSlots)
+        slot.prepare((float) internalRate);
+    decL.prepare(oversample);
+    decR.prepare(oversample);
+    externalInput.prepare((float) hostRate, oversample);
+    // Engine rate guards imply a valid 16kHz..1.536MHz circuit rate. Profile
+    // defaults are documented engineering inferences, not measured calibration.
+    praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
+    praWahR.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
+    outputCircuit.prepare(internalRate, InferredSymmetricOutputProfile{},
+                          global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
     // Explicitly provisional10ms rate smoothing, sample-rate independent.
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     // Explicitly provisional switch/pedal smoothing, sample-rate independent.
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
+    // Circuit-engine control smoothing (Smoothing.h), in time, not per sample.
+    controlSmoothing = smoothingCoefficient(kControlSmoothingSeconds, internalRate);
+    settingsSmoothing.setCoefficient(controlSmoothing);
+    subSpeedSmoothing = (float) smoothingCoefficient(legacyPerSampleSeconds(0.0015), internalRate);
+    circuitNoise.prepare(internalRate);
+    expressionOptics.prepare(internalRate);
+    phonesL.prepare(internalRate, HeadphoneAmpCircuit::Profile {});
+    phonesR.prepare(internalRate, HeadphoneAmpCircuit::Profile {});
+    // Modern layer (ws5), free-running idle path and KAS scan (ws3), and the
+    // circuit-engine voice (ws1): every rate-dependent coefficient. The
+    // oscillator basis pool is fixed and static, so a render-thread factor
+    // change acquires a shared basis without allocating (bounded mutex, the
+    // pool is only contended by another instance preparing).
+    modern.prepare(internalRate);
+    idleStepSamples = voice_continuity::idleStepSamples(internalRate);
+    idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
+    touchCoefficients.prepare(internalRate);
+    scanner.prepare(internalRate);
+    for (auto& v : voices)
+        for (auto& r : v.ranks)
+        {
+            (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
+            r.vca.prepare(internalRate);
+        }
     prepareWarmColdOscillators();
-    reset();
-    // Resource changes retain the accepted source identity; public setParams
-    // intentionally means PANEL and would discard it here.
-    applyParams(params);
+}
+
+// True when the effective factor changed and the rate-dependent state was
+// re-prepared; the caller then resets like a render-policy change.
+bool Engine::updateOversampling()
+{
+    if (!prepared)
+        return false;
+    const int factor = effectiveOversampling();
+    if (factor == oversample)
+        return false;
+    oversample = factor;
+    configureInternalRate();
+    return true;
+}
+
+void Engine::setNonRealtime(bool offline) noexcept
+{
+    if (offline == nonRealtime)
+        return;
+    nonRealtime = offline;
+    if (updateOversampling())
+        reset();
 }
 
 void Engine::prepareWarmColdOscillators() noexcept
@@ -212,6 +308,13 @@ void Engine::reset()
     arpGateTime = 0.0f;
     dcL = dcR = dcInL = dcInR = 0.0f;
     refreshKeyboardContour();
+    // Smoothed controls start at their targets again (no glide after a reset).
+    settingsSmoothing.requestSnap();
+    controllerSmoothing.snapPending = true;
+    circuitNoise.reset();
+    phonesL.reset();
+    phonesR.reset();
+    listeningSample = {};
 }
 
 void Engine::setParams(const ParamValues& values)
@@ -301,11 +404,14 @@ void Engine::applyParams(const ParamValues& values)
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
     outputCircuit.setMode(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
+    // The quality mode, or a policy change that moves it, re-prepares the
+    // rate-dependent state into buffers reserved by prepare(): no allocation.
+    const bool rateChanged = updateOversampling();
     // Effective policy changes clear notes/controllers and effect histories: no
     // old numerical EG state, MIDI holds or FX may leak across model policies.
     // A retained source-performance switch change under isolation is inert.
-    // No allocation or sample-rate reconfiguration occurs on this RT boundary.
-    if (previousPolicy != global.renderPolicy)
+    // No allocation occurs on this RT boundary.
+    if (previousPolicy != global.renderPolicy || rateChanged)
     {
         reset();
         // Legacy reset left these OnePole histories intact. Clear only for
@@ -313,6 +419,11 @@ void Engine::applyParams(const ParamValues& values)
         for (auto& slot : fxSlots)
             slot.resetDamping();
     }
+    // Circuit engine: the new settings become smoothing targets; the fields keep
+    // the running values (exactly the targets until audio has been rendered).
+    if (usesSourceModels(global.renderPolicy))
+        retargetSmoothedSettings();
+    listeningOutput = std::clamp((int) std::lround(params[P_outputJack]), 0, 2);
 
     // Gate edges act when parameters are applied, not by per-sample polling, so
     // the outcome does not depend on how the host partitions a render.
@@ -889,6 +1000,8 @@ void Engine::wakeIdleVoice(Voice& v) noexcept
 
 void Engine::refreshKeyboardContour() noexcept
 {
+    refreshedContourLevers = { global.kbdBrillianceLow, global.kbdBrillianceHigh,
+                               global.kbdLevelLow, global.kbdLevelHigh };
     // KBC1/KBC2 hold one contour voltage per voice channel for the key last
     // assigned to it (0.033 uF held nodes, refreshed by the multiplexer, so a
     // lever move reaches held notes). All eight load the shared FH/FL/LC buses.
@@ -1571,6 +1684,98 @@ bool Engine::isZoneMaster(const Voice& v, int midiChannel) const noexcept
     return midiChannel == 16 && mpeZones.role(16) == MpeZoneLayout::Role::upperMaster;
 }
 
+void Engine::retargetSmoothedSettings() noexcept
+{
+    int slot = 0;
+    visitSmoothedSettings(global, rankSettings, kNumRanks,
+                          [&](float& field) { field = settingsSmoothing.retarget(slot++, field); });
+}
+
+void Engine::beginSmoothedControls() noexcept
+{
+    if (settingsSmoothing.snapIsPending())
+    {
+        int slot = 0;
+        visitSmoothedSettings(global, rankSettings, kNumRanks,
+                              [&](float& field) { field = settingsSmoothing.snapToTarget(slot++); });
+        settingsSmoothing.endSnap();
+    }
+    else if (!settingsSmoothing.settled())
+    {
+        int slot = 0;
+        settingsSmoothing.beginAdvance();
+        visitSmoothedSettings(global, rankSettings, kNumRanks,
+                              [&](float& field) { field = settingsSmoothing.advance(slot++); });
+        settingsSmoothing.endAdvance();
+    }
+
+    // The four contour levers are smoothed fields: a lever move reaches the
+    // KBC held nodes (refreshed by the multiplexer, Phase 2.3) as they glide.
+    if (global.kbdBrillianceLow != refreshedContourLevers[0] || global.kbdBrillianceHigh != refreshedContourLevers[1]
+        || global.kbdLevelLow != refreshedContourLevers[2] || global.kbdLevelHigh != refreshedContourLevers[3])
+        refreshKeyboardContour();
+
+    // Controllers: keep the event-set targets, use smoothed values for this
+    // sample only. A settled smoother returns its target bit for bit.
+    auto& c = controllerSmoothing;
+    const double k = controlSmoothing;
+    const float ribbonTotal = ribbon + params[P_ribbon];
+    c.bendTarget = globalBend;
+    c.modWheelTarget = modWheel;
+    c.ribbonTarget = ribbon;
+    if (c.snapPending)
+    {
+        c.bend.snap(globalBend);
+        c.modWheel.snap(modWheel);
+        expressionOptics.reset(expression);
+        c.ribbon.snap(ribbonTotal);
+    }
+    globalBend = (float) c.bend.advance(globalBend, k);
+    modWheel = (float) c.modWheel.advance(modWheel, k);
+    // The EXP volume path is an optical cell (ws4 hand-off, ExpressionOptics.h):
+    // its declared log-R law is this controller's smoothing.
+    expressionOptics.setPedal(expression);
+    c.expressionGain = (float) expressionOptics.tick();
+    const double ribbonSmoothed = c.ribbon.advance(ribbonTotal, k);
+    if (!c.ribbon.atTarget(ribbonTotal))
+        ribbon = (float) (ribbonSmoothed - params[P_ribbon]);
+    for (int vi = 0; vi < kNumVoices; ++vi)
+    {
+        auto& v = voices[(size_t) vi];
+        c.pressureTarget[(size_t) vi] = v.pressure;
+        c.mpeBendTarget[(size_t) vi] = v.mpeBend;
+        c.timbreTarget[(size_t) vi] = v.timbre;
+        // A new note starts from its own touch, bend and timbre, not a glide
+        // from the previous note on this circuit.
+        if (c.snapPending || c.age[(size_t) vi] != v.age)
+        {
+            c.age[(size_t) vi] = v.age;
+            c.pressure[(size_t) vi].snap(v.pressure);
+            c.mpeBend[(size_t) vi].snap(v.mpeBend);
+            c.timbre[(size_t) vi].snap(v.timbre);
+        }
+        v.pressure = (float) c.pressure[(size_t) vi].advance(v.pressure, k);
+        v.mpeBend = (float) c.mpeBend[(size_t) vi].advance(v.mpeBend, k);
+        v.timbre = (float) c.timbre[(size_t) vi].advance(v.timbre, k);
+    }
+    c.snapPending = false;
+}
+
+void Engine::endSmoothedControls() noexcept
+{
+    auto& c = controllerSmoothing;
+    globalBend = c.bendTarget;
+    modWheel = c.modWheelTarget;
+    ribbon = c.ribbonTarget;
+    for (int vi = 0; vi < kNumVoices; ++vi)
+    {
+        auto& v = voices[(size_t) vi];
+        v.pressure = c.pressureTarget[(size_t) vi];
+        v.mpeBend = c.mpeBendTarget[(size_t) vi];
+        v.timbre = c.timbreTarget[(size_t) vi];
+    }
+}
+
 void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
 {
     const float sr = (float) internalRate;
@@ -1591,6 +1796,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     }
 
     updateArpeggiator(invSr);
+    // Circuit engine: smoothed settings and controllers for this sample.
+    const bool smoothControls = usesSourceModels(global.renderPolicy);
+    if (smoothControls)
+        beginSmoothedControls();
 
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
@@ -1688,7 +1897,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         float speed = global.subSpeed;
         speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
         speed *= modernGlobal.subSpeedRatio;
-        subSpeedSmoothed += (speed - subSpeedSmoothed) * 0.0015f;
+        // Legacy keeps its per-sample constant; the circuit engine its time constant.
+        subSpeedSmoothed += (speed - subSpeedSmoothed)
+                            * (usesSourceModels(global.renderPolicy) ? subSpeedSmoothing : 0.0015f);
         subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
     }
     subValue *= modernGlobal.subDepthGain;
@@ -1708,6 +1919,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     if (sourceActive[0] || sourceActive[1])
         updateSourceReadouts(sr);
+
+    // Circuit engine: ONE shared panel-noise generator sample for every voice
+    // (SUB29 fan-out, NoiseSource.h). Legacy draws per rank below, as before.
+    const bool sharedNoise = usesSourceModels(global.renderPolicy);
+    const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
     const bool freeRunning = freeRunningVoices();
     for (int vi = 0; vi < kNumVoices; ++vi)
@@ -1871,7 +2087,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             }
 
             x = sawPulse;
-            x += audioRng.nextBipolar() * rs.noise * 0.8f;
+            // The shared RNG draw is consumed in both engines so oscillator start
+            // phases keep their sequence; the circuit engine hears the SUB29 sample.
+            const float rankNoise = audioRng.nextBipolar();
+            x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
             x *= 0.9f;
             }
 
@@ -2090,8 +2309,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         }
     }
 
-    mixL += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
-    mixR += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
+    // Shared RNG draws consumed in both engines (start-phase sequence kept).
+    float hissL = audioRng.nextBipolar();
+    float hissR = audioRng.nextBipolar();
+    // Circuit engine: declared mix-bus hiss PSD, one independent source per channel.
+    if (sharedNoise)
+        circuitNoise.hiss(hissL, hissR);
+    mixL += hissL * global.analogNoise * 0.0008f;
+    mixR += hissR * global.analogNoise * 0.0008f;
 
     // Legacy: provisional generic delay-line chorus/tremolo. Source policies: OE2 BBD
     // delay path (docs/BBD_CHORUS_MODEL.md); its inferred constants are not calibrated.
@@ -2132,8 +2357,12 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     dcL = dcOutL;
     dcR = dcOutR;
 
-    smoothedVolume += (global.volume - smoothedVolume) * 0.003f;
-    const float gain = smoothedVolume * 4.0f * expression;
+    // Legacy keeps its historical per-sample constant. The circuit engine's
+    // volume is already smoothed with the other controls, in time.
+    smoothedVolume = usesSourceModels(global.renderPolicy)
+                         ? global.volume : smoothedVolume + (global.volume - smoothedVolume) * 0.003f;
+    const float gain = smoothedVolume * 4.0f
+                       * (smoothControls ? controllerSmoothing.expressionGain : expression);
     // Source policies remove the arbitrary output conditioner, not the
     // provisional filter saturation law. No calibrated output/headroom claim.
     outL = usesSourceModels(global.renderPolicy) ? mixL * gain : softClip(dcOutL * gain);
@@ -2147,10 +2376,28 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // when no voice sounds. Only LEFT/RIGHT reach the host in source policies.
         // Phase 1.5 gain staging: fixed digital reference, then the inferred
         // driver headroom, then the passive tap/coupling network.
-        outputNodes = outputCircuit.process(circuitOutputDriver(outL * kCircuitOutputReference),
-                                            circuitOutputDriver(outR * kCircuitOutputReference));
-        outL = (float) outputNodes.left.audibleJackVolts;
-        outR = (float) outputNodes.right.audibleJackVolts;
+        const double driveL = circuitOutputDriver(outL * kCircuitOutputReference);
+        const double driveR = circuitOutputDriver(outR * kCircuitOutputReference);
+        outputNodes = outputCircuit.process(driveL, driveR);
+        // HL/HR leave the preamps before the coupling capacitors and HIGH/LOW
+        // switch. The headphone stage is always clocked, like the three jacks.
+        const double phonesLeft = phonesL.process(driveL), phonesRight = phonesR.process(driveR);
+        // LISTENING OUTPUT (Phase 3): which physical output the host hears.
+        switch (listeningOutput)
+        {
+            case 1:
+                outL = outR = (float) outputNodes.general.audibleJackVolts;
+                break;
+            case 2:
+                outL = (float) phonesLeft;
+                outR = (float) phonesRight;
+                break;
+            default:
+                outL = (float) outputNodes.left.audibleJackVolts;
+                outR = (float) outputNodes.right.audibleJackVolts;
+                break;
+        }
+        listeningSample = { outL, outR };
     }
     else
     {
@@ -2172,6 +2419,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float m = (outL + outR) * 0.5f;
         outL = outR = m;
     }
+    if (smoothControls)
+        endSmoothedControls();
 }
 
 void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)
@@ -2184,14 +2433,15 @@ void Engine::render(float* interleavedStereo, int numFrames, const float* extern
     {
         const auto external = externalInput.tick(externalMono != nullptr ? externalMono[i] : 0.0f);
         float lastL = 0.0f, lastR = 0.0f;
+        const int retainedPhase = decL.getRetainedPhase();
         for (int os = 0; os < oversample; ++os)
         {
             float l = 0.0f, r = 0.0f;
             processInternalSample(l, r, external[(size_t) os]);
             decL.push(l);
             decR.push(r);
-            // Evaluate only the retained odd phase, using symmetric tap pairs.
-            if (os == Decimator::kRetainedPhase)
+            // Evaluate only the retained last phase, using symmetric tap pairs.
+            if (os == retainedPhase)
             {
                 lastL = decL.output();
                 lastR = decR.output();

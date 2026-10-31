@@ -422,6 +422,16 @@ inline constexpr ControlHelp kControlHelp[] = {
       "ENGINE: CIRCUIT runs the circuit-informed models; LEGACY keeps the older voicing for old sessions.",
       "Source performance policy. Not calibrated; no hardware match established." },
 
+    // ---- ws2-engine (Phase 1.6 and 3) -----------------------------------------------------------
+    { "oversampling", 0, "-", "EXT", Basis::modernExtension,
+      "Numerical quality: Eco, Standard or HQ internal rate. Offline bounces always render at HQ.",
+      "Software numerics, not an instrument control; Standard is the lowest factor that meets the "
+      "alias target. Legacy keeps its historical 2x." },
+    { "output_jack", 0, "-", "A", Basis::sourceTopologyInferredLaw,
+      "Which original output you hear: the LEFT/RIGHT jacks, the GENERAL mono jack, or the headphone amplifier.",
+      "GENERAL and PHONES nodes follow the PRA/SUB29 drawings; the active-stage gains, headphone load and "
+      "jack wiring are declared inference. Circuit engine only." },
+
     // ---- ws3-keyboard (Phase 2.2, 2.4 and 6) ----------------------------------------------------
     { "kas_scan_timing", 0, "-", "A", Basis::engineeringInferred,
       "Lets key events act at the keyboard scanner's instants, lowest key first, as a scanned keyboard does.",

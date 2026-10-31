@@ -5,6 +5,7 @@
 #include "core/Engine.h"
 #include "core/RingModulatorCircuit.h"
 #include "CircuitSineSource.h"
+#include "ExpressionOpticsOracle.h"
 
 #include <algorithm>
 #include <array>
@@ -156,6 +157,10 @@ double generalSource(double leftPreamp, double rightPreamp)
 ParamValues fixture(bool high = true)
 {
     ParamValues p; p[P_parityMode] = 1.0f; p[P_outputLevel] = high ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     p[P_mix] = p[P_detune] = 0.0f; p[P_volume] = 0.61f;
     p[P_ringSpeed] = 77.0f; p[P_ringDepth] = 0.0f; p[P_ringAmount] = 0.6f;
     p[P_chorusOn] = 1.0f; p[P_chorusDepth] = 0.8f;
@@ -199,7 +204,7 @@ struct Pipeline
         chorus.prepare(static_cast<float>(rate));
         for (auto& dec : decimator) dec.prepare(static_cast<float>(rate));
     }
-    void pedal(float x) { expression = x; wah.setPedal(x); }
+    void pedal(float x) { expression = x; wah.setPedal(x); gainOptics.setPedal(x); }
     void select(bool high) { for (auto& tap : taps) tap.select(high); }
     std::array<float, 2> frame()
     {
@@ -226,8 +231,16 @@ struct Pipeline
             }
             source = lerp(static_cast<float>(nodes.x), static_cast<float>(nodes.y), wetMix);
             const auto stereo = chorus.process(source, source, chorusSpeed, chorusDepth, true, false);
-            volume += (volumeTarget-volume)*0.003f;
-            const float gain = volume*4.0f*expression;
+            // ws2 (intentional circuit-engine changes): VOLUME follows the declared
+            // 5 ms one-pole (the former 0.003 per-sample constant was rate
+            // dependent), and the expression gain is the PRA I2/I3 optical cell
+            // (closed-form oracle, ExpressionOpticsOracle.h), both starting on
+            // their targets at the first sample.
+            const double k = smoothingCoefficient(kControlSmoothingSeconds, rate);
+            if (!gainSnapped) { volumeSmoother.snap(volume); gainOptics.rate = rate; gainSnapped = true; }
+            volume = static_cast<float>(volumeSmoother.advance(volumeTarget, k));
+            const float smoothed = static_cast<float>(gainOptics.tick());
+            const float gain = volume*4.0f*smoothed;
             // Phase 1.5 gain staging: fixed reference, then inferred driver headroom.
             const auto stage = [](float x) {
                 return static_cast<float>(circuitOutputDriver(static_cast<double>(x) * kCircuitOutputReference));
@@ -245,6 +258,9 @@ struct Pipeline
     CircuitSineSource circuitSine;
     CircuitVoiceVca circuitVca;
     float volume, volumeTarget, expression = 1.0f;
+    ControlSmoother volumeSmoother;
+    tests::ExpressionOpticsOracle gainOptics;
+    bool gainSnapped = false;
     bool wet;
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;
     Adsr envelope;
@@ -355,6 +371,10 @@ void lifecycleAndAlwaysRunning()
     // The expression multiplier precedes coupling: muting the source cannot
     // silently erase or freeze the charged output-capacitor decay.
     e.setExpression(0.0f);
+    // ws2 (intentional circuit-engine change): the expression gain is the PRA
+    // I2/I3 optical cell, which lands exactly on zero after about 1.6 s of
+    // 60 ms log-R darkening; the coupling capacitor still holds decaying charge.
+    render(e, 120000); // 2.5 s at 48 kHz
     auto before = e.getOutputTapState(2);
     render(e, 1);
     auto after = e.getOutputTapState(2);
@@ -453,6 +473,7 @@ void boundedPolyphonicSweeps()
     for (double rate : {8000.0, 44100.0, 192000.0, 768000.0})
     {
         ParamValues p; p[P_parityMode] = 1.0f; p[P_volume] = 1.0f; p[P_chorusOn] = 1.0f;
+        p[P_oversampling] = 0.0f; // 2x oracle fixture; see fixture()
         Engine e; e.setParams(p); e.prepare(rate);
         for (int note : {24, 36, 48, 60, 72, 84, 96, 108}) e.noteOn(note, 1.0f);
         for (int step = 0; step < 70; ++step)

@@ -165,10 +165,14 @@ public:
     void setMemoryValue(int bank, int local, float value) noexcept;
 
     // Saved-state schema. A state without the attribute is schema 1, written
-    // before this marker existed; its missing parameters restore with the
-    // pre-schema semantics (for example SOURCE PERFORMANCE off), even if a
-    // later fresh-instance default differs. See docs/IMPROVEMENT_PLAN.md 0.3.
-    static constexpr int stateSchemaVersion = 2;
+    // before this marker existed. Missing (or malformed) values restore with the
+    // semantics of the schema that wrote the state, never a later default:
+    //   1  pre-plan: ENGINE Legacy (SOURCE PERFORMANCE off), original SUB off.
+    //   2  plan 0.3 marker; fresh instances still started on Legacy.
+    //   3  plan 1.7 engine default flip: fresh instances start on the circuit
+    //      engine, so a schema-3 state without ENGINE means Circuit.
+    // See docs/IMPROVEMENT_PLAN.md 0.3 and 1.7.
+    static constexpr int stateSchemaVersion = 3;
     static constexpr const char* stateSchemaKey = "stateSchemaVersion";
     static constexpr int memoryControlCount = 26;
     static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
@@ -182,6 +186,22 @@ public:
     void setParamValue(int index, float physicalValue);
     cs80::ParamValues currentValues() const;
     void applyParameterValues(const cs80::ParamValues& values);
+
+    // User-facing engine concepts (plan 1.7) over the unchanged host IDs.
+    // ENGINE is source_performance: on = Circuit, off = Legacy (compat), which
+    // stays only so old sessions and the legacy factory bank sound unchanged.
+    // PURE CS-80 is parity_mode, the isolation contract: original features
+    // only, rendered by the circuit engine whatever ENGINE says.
+    enum class EngineMode { circuit, legacy };
+    void setEngineMode(EngineMode mode);
+    EngineMode getEngineMode() const;          // the ENGINE switch as stored
+    EngineMode getEffectiveEngineMode() const; // what renders: PURE implies Circuit
+    void setPure(bool pure);
+    bool isPure() const;
+    // New-preset creation (the INIT action's hook): the factory "Init Patch"
+    // program with the original SUB panel on the circuit engine, like a fresh
+    // instance. The legacy bank program itself is unchanged.
+    void loadInitPatch();
 
     // ---- ws3-keyboard Phase 6 processor APIs (modern layer) ----------------
     // Non-audio threads. Parses a Scala scale and an optional keyboard mapping
@@ -233,6 +253,8 @@ public:
 private:
     friend struct cs80::tests::PresetSaveAccess;
     void setPresetMetadata(const juce::String& name, int index);
+    void applyFreshInstancePatch();
+    void setParameterGesture(int index, float physicalValue);
     void readParameters();
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
     void resetHardwareSources() noexcept;

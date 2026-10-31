@@ -578,6 +578,10 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
         {
             juce::TemporaryFile presetRoot("-cs80-golden");
             Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+            // ws2 plan 1.7: a fresh instance now starts on the circuit engine, whose status chip reads
+            // "MODE SOURCE PERFORMANCE". These goldens were recorded on the Legacy fresh instance, so pin Legacy
+            // (re-record them on the Circuit default to cover that chip instead).
+            host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
             Cs80AudioProcessorEditor editor(host);
             editor.setSize(size.x, size.y);
             flush(300);
