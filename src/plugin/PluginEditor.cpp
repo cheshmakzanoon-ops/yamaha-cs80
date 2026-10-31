@@ -35,6 +35,7 @@ namespace
 {
 constexpr float kDesignWidth = 1600.0f;
 constexpr float kDesignHeight = 1000.0f;
+std::atomic<int> liveEditors { 0 };
 
 struct InitialEditorSize
 {
@@ -235,9 +236,15 @@ juce::Image makeWalnutFace(Rf r, bool left, float scale)
 
 // The face is expensive to build and the chassis repaints whenever the status strip changes length, so keep the
 // last few sizes. Message thread only (it is only called from painting).
-juce::Image cachedWalnutFace(Rf r, bool left, float scale)
+auto& walnutFaceCache()
 {
     static std::map<std::tuple<int, int, int, bool>, juce::Image> cache;
+    return cache;
+}
+
+juce::Image cachedWalnutFace(Rf r, bool left, float scale)
+{
+    auto& cache = walnutFaceCache();
     const auto key = std::make_tuple(juce::roundToInt(r.getWidth() * 10.0f), juce::roundToInt(r.getHeight()), juce::roundToInt(scale * 1000.0f), left);
     if (const auto found = cache.find(key); found != cache.end()) return found->second;
     if (cache.size() > 8) cache.clear();
@@ -2340,6 +2347,7 @@ Cs80AudioProcessorEditor::Cs80AudioProcessorEditor(Cs80AudioProcessor& p)
     impl->currentZoom = [this] { return getZoomPercent(); };
 
     startTimerHz(8);
+    ++liveEditors;
 }
 
 Cs80AudioProcessorEditor::~Cs80AudioProcessorEditor()
@@ -2347,6 +2355,9 @@ Cs80AudioProcessorEditor::~Cs80AudioProcessorEditor()
     stopTimer();
     setLookAndFeel(nullptr);
     impl.reset();
+    // The cache is merely a shared paint acceleration. Copies in any other live editor
+    // retain their own image references; clearing here avoids post-JUCE static release.
+    if (--liveEditors == 0) art::walnutFaceCache().clear();
 }
 
 void Cs80AudioProcessorEditor::paint(juce::Graphics& g)

@@ -2257,6 +2257,7 @@ LookAndFeel::~LookAndFeel()
     {
         PaintCache::get().clear();
         EngravedCache::get().clear();
+        art::releasePanelResources();
     }
 }
 
