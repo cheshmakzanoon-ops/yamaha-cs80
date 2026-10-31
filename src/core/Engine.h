@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dsp.h"
+#include "ModernLayer.h"
 #include "ModulationLfo.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
@@ -199,6 +200,20 @@ public:
     // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
     void setExpression(float value);
 
+    // Modern modulation layer (IMPROVEMENT_PLAN Phase 6; inert under PURE CS-80). MSEG
+    // shapes and matrix routing are session data, not parameters; the host transport
+    // drives tempo sync. Render thread: copies only, no allocation or locking.
+    void setModernConfig(const modern::ModernConfig& config) noexcept { modern.setConfig(config); }
+    const modern::ModernConfig& getModernConfig() const noexcept { return modern.getConfig(); }
+    void setTransport(const modern::Transport& transport) noexcept { modern.setTransport(transport); }
+    // Render-thread diagnostics: current offsets and MSEG state.
+    const modern::RankOffsets& getModernRankOffsets(int voice, int rank) const noexcept
+    { return modern.rankOffsets(voice, rank); }
+    const modern::GlobalOffsets& getModernGlobalOffsets() const noexcept { return modern.getGlobalOffsets(); }
+    bool isModernLayerActive() const noexcept { return modern.isActive(); }
+    float getModernMsegValue(int voice, int index) const noexcept { return modern.msegValue(voice, index); }
+    double getModernMsegDisplayPosition(int index) const noexcept { return modern.displayPosition(index); }
+
     // Optional separate host-rate mono modulation; never mixed directly into output.
     // Input/output storage must not overlap (plugin captures aliased host input).
     // Null means disconnected: reconstruction history is cleared on transition.
@@ -375,6 +390,7 @@ private:
     int lastNote = 60;
     float globalBend = 0.0f;
     float modWheel = 0.0f;
+    float lastChannelPressure = 0.0f; // modern-layer matrix source only
     float expression = 1.0f;
     float ribbon = 0.0f;
 
@@ -396,6 +412,7 @@ private:
     float lfoPitch = 0.0f, lfoFilter = 0.0f, lfoAmp = 0.0f, lfoPwm = 0.0f, lfoPan = 0.0f;
     float subSpeedSmoothed = 4.2f;
     ExpMemo<double> glideExp;
+    modern::ModernLayer modern;
 
     // Isolation uses the reviewed capacitor graph with an explicitly inferred
     // optical/loading/trim profile. Both branches run even in EXP (dry X).

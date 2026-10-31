@@ -236,6 +236,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_mseg_tests PRIVATE src)
     add_test(NAME cs80_mseg_tests COMMAND cs80_mseg_tests)
     set_tests_properties(cs80_mseg_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mod_matrix_tests tests/ModMatrixTests.cpp)
+    target_link_libraries(cs80_mod_matrix_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mod_matrix_tests COMMAND cs80_mod_matrix_tests)
+    set_tests_properties(cs80_mod_matrix_tests PROPERTIES TIMEOUT 180)
 
     # [ws6-library] register this workstream's core tests below this line.
 

@@ -165,6 +165,32 @@ enum : int
     P_lfo1Wave,
     P_lfo2Wave,
     P_lfo3Wave,
+    // MSEG 1..3 speed multiplier (0.125x..8x); shapes and routing live in session state.
+    P_mseg1Rate,
+    P_mseg2Rate,
+    P_mseg3Rate,
+    // Modulation matrix slot 1..16 bipolar amount (src/core/ModMatrix.h).
+    P_mod1Amount,
+    P_mod2Amount,
+    P_mod3Amount,
+    P_mod4Amount,
+    P_mod5Amount,
+    P_mod6Amount,
+    P_mod7Amount,
+    P_mod8Amount,
+    P_mod9Amount,
+    P_mod10Amount,
+    P_mod11Amount,
+    P_mod12Amount,
+    P_mod13Amount,
+    P_mod14Amount,
+    P_mod15Amount,
+    P_mod16Amount,
+    // Keyboard modulation page response curves (-1 hard .. 0 linear .. +1 soft).
+    P_modVelocityCurve,
+    P_modPressureCurve,
+    P_modWheelCurve,
+    P_modKeyCurve,
 
     // [ws6-library] append this workstream's core parameters below this line.
 
@@ -339,6 +365,30 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "lfo1_wave", "LFO 1 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
     { "lfo2_wave", "LFO 2 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
     { "lfo3_wave", "LFO 3 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    // 1x sits at the middle of the host range: skew = ln(0.5) / ln(0.875 / 7.875).
+    { "mseg1_rate", "MSEG 1 RATE", 0.125f, 8.0f, 1.0f, 0.31546f, "x", "MODULATION" },
+    { "mseg2_rate", "MSEG 2 RATE", 0.125f, 8.0f, 1.0f, 0.31546f, "x", "MODULATION" },
+    { "mseg3_rate", "MSEG 3 RATE", 0.125f, 8.0f, 1.0f, 0.31546f, "x", "MODULATION" },
+    { "mod1_amount", "MOD 1 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod2_amount", "MOD 2 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod3_amount", "MOD 3 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod4_amount", "MOD 4 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod5_amount", "MOD 5 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod6_amount", "MOD 6 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod7_amount", "MOD 7 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod8_amount", "MOD 8 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod9_amount", "MOD 9 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod10_amount", "MOD 10 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod11_amount", "MOD 11 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod12_amount", "MOD 12 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod13_amount", "MOD 13 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod14_amount", "MOD 14 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod15_amount", "MOD 15 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod16_amount", "MOD 16 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod_velocity_curve", "VELOCITY CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_pressure_curve", "AFTERTOUCH CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_wheel_curve", "MOD WHEEL CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_key_curve", "KEY FOLLOW CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
 
     // [ws6-library] append this workstream's ParamDefs below this line (same order as the enum).
 

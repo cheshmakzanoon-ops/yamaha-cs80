@@ -241,6 +241,11 @@ public:
 private:
     void wrapAndLocate(const MsegShape& s) noexcept
     {
+        // A live shape edit may have removed or moved the current segment: search again.
+        if (segment < 0 || segment >= s.count || position < (double) s.points[(std::size_t) segment].time)
+            segment = 0;
+        if (overrideSegment >= s.count)
+            overrideSegment = -1;
         const double end = s.points[(std::size_t) (s.count - 1)].time;
         const bool looping = s.loop == MsegLoop::always || (s.loop == MsegLoop::sustain && ! released);
         if (looping)
