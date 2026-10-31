@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <cstdio>
+#include <typeinfo>
 
 namespace cs80::tests
 {
@@ -188,6 +189,10 @@ void testKeyboardPointerPressure(Check check)
     // cannot receive a real pointer note, even when its bounds look correct.
     editor.addToDesktop(0);
     editor.setVisible(true);
+    // A command-line fixture is not the active application until it asks; on a
+    // CI desktop another process's window can stay ordered above an inactive
+    // app's new window. Activate, then order the editor front.
+    juce::Process::makeForegroundProcess();
     editor.toFront(true);
     auto* keyboard = pressure_detail::keyboard(editor);
     check(keyboard != nullptr, "actual editor contains the pointer-pressure keyboard");
@@ -213,11 +218,47 @@ void testKeyboardPointerPressure(Check check)
     // macOS additionally checks the actual frontmost NSWindow at each screen
     // point. Let native realization/ordering settle through the normal loop;
     // do not bypass hit testing or inject a pretend note into the keyboard.
-    const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+    // Window-server activation and ordering are asynchronous: macOS CI runners
+    // intermittently needed longer than the former 2 s (frontmost check failed on
+    // macos-15 at ef9bc35 and macos-15-intel at 3961c1c, passed on the same source
+    // elsewhere). Wait up to 10 s, re-ordering the editor front each half second;
+    // the frontmost and hit-test assertions themselves are unchanged.
+    const auto settleStart = std::chrono::steady_clock::now();
+    const auto deadline = settleStart + std::chrono::seconds(10);
+    auto nextFront = settleStart + std::chrono::milliseconds(500);
     while (!nativePointsReady() && std::chrono::steady_clock::now() < deadline)
+    {
         juce::MessageManager::getInstance()->runDispatchLoopUntil(20);
+        if (std::chrono::steady_clock::now() >= nextFront)
+        {
+            editor.toFront(true);
+            nextFront += std::chrono::milliseconds(500);
+        }
+    }
+    const auto settleMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - settleStart).count();
     check(nativePointsReady(), "pointer-pressure native window is frontmost at all tested on-screen key points");
     const auto firstScreenPoint = keyboard->localPointToGlobal(positionFor(60, 0.65f).roundToInt());
+    // Diagnostic evidence for the hit test: every desktop window JUCE knows of, and
+    // which component the editor itself finds at the first key point.
+    {
+        auto& desktop = juce::Desktop::getInstance();
+        for (int i = 0; i < desktop.getNumComponents(); ++i)
+            if (auto* window = desktop.getComponent(i))
+                std::printf("Pointer fixture desktop window %d: %s '%s' %d,%d %dx%d visible=%d\n", i,
+                            typeid(*window).name(), window->getName().toRawUTF8(), window->getX(), window->getY(),
+                            window->getWidth(), window->getHeight(), (int) window->isVisible());
+        const auto local = editor.getLocalPoint(nullptr, firstScreenPoint);
+        auto* found = editor.getComponentAt(local);
+        std::printf("Pointer fixture component at key60: %s '%s' (keyboard=%d)\n",
+                    found != nullptr ? typeid(*found).name() : "none",
+                    found != nullptr ? found->getName().toRawUTF8() : "",
+                    (int) (found == keyboard || (found != nullptr && keyboard->isParentOf(found))));
+        auto* peer = editor.getPeer();
+        const auto peerPoint = peer != nullptr ? peer->globalToLocal(firstScreenPoint.toFloat()).roundToInt() : juce::Point<int>();
+        std::printf("Pointer fixture peer contains key60=%d foreground=%d settle=%lld ms\n",
+                    (int) (peer != nullptr && peer->contains(peerPoint, true)),
+                    (int) juce::Process::isForegroundProcess(), (long long) settleMs);
+    }
     std::printf("Pointer fixture: editor=%d,%d %dx%d; usable=%d,%d %dx%d; key60 screen=%d,%d hit=%d\n",
                 editor.getX(), editor.getY(), editor.getWidth(), editor.getHeight(),
                 usable.getX(), usable.getY(), usable.getWidth(), usable.getHeight(),
