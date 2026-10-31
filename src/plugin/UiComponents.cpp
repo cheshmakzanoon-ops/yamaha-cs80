@@ -3242,6 +3242,7 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
     // [ws8-studio] context menu, typed values and the tooltip with its Circuit notes section
     slider.onContextMenu = [this] { showContextMenu(); };
     slider.onTypeValue = [this] { showValueEntry(); };
+    slider.onHelp = [this] { showControlHelp(*this, parameterIndex); };
     slider.tooltipText = [this] { return buildTooltip(circuitNotesInTooltips() || juce::ModifierKeys::currentModifiers.isShiftDown()); };
     addAndMakeVisible(slider);
 

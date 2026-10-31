@@ -7,6 +7,7 @@
 #include "HardwareKeyboard.h"
 #include "StudioDrawers.h"
 #include "StudioToolbar.h"
+#include "StudioTour.h"
 
 #include <functional>
 
@@ -60,6 +61,13 @@ public:
         controllersWanted = state.controllersShown.load();
         qwerty.setEnabled(state.qwertyEnabled.load());
         setCircuitNotesInTooltips(state.circuitNotes.load());
+        tour.setComponentID("guided_tour");
+        tour.onDismissed = [this]
+        {
+            processor.getEditorState().tourSeen = true;
+            if (tour.getPeer() != nullptr)
+                TourMemory::markSeen();   // only a real window remembers it for new instances
+        };
         startTimerHz(8);
     }
     ~StudioMount() override { stopTimer(); }
@@ -101,10 +109,32 @@ public:
     CompareSlots compare;
     QwertyKeyboard qwerty;
     StudioShortcuts shortcuts;
+    TourOverlay tour;
 
 private:
-    void timerCallback() override { sync(); }
+    void timerCallback() override
+    {
+        sync();
+        // The tour opens by itself once: in a real window, for a player who has not dismissed it here or before.
+        if (! tourChecked && toolbar.getPeer() != nullptr && toolbar.isShowing())
+        {
+            tourChecked = true;
+            if (shouldOpenTourByItself(true, processor.getEditorState().tourSeen.load(), TourMemory::seen()))
+                tour.start();
+        }
+    }
+
+public:
+    // The tour opens by itself only in a real window (never in a headless or offscreen editor) and only for a player
+    // who has dismissed it neither in this session nor on this computer.
+    static constexpr bool shouldOpenTourByItself(bool realWindow, bool seenInSession, bool seenOnComputer) noexcept
+    {
+        return realWindow && ! seenInSession && ! seenOnComputer;
+    }
+
+private:
     bool controllersWanted = false;
+    bool tourChecked = false;
 };
 
 } // namespace cs80::ui

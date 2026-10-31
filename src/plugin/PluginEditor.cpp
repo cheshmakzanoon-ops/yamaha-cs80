@@ -2618,6 +2618,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             actions.canRedo = [this] { return processor.getUndoManager().canRedo(); };
             actions.undoName = [this] { return processor.getUndoManager().getUndoDescription(); };
             actions.redoName = [this] { return processor.getUndoManager().getRedoDescription(); };
+            actions.startTour = [this] { studio->tour.start(); };
             studio->shortcuts.undo = actions.undo;
             studio->shortcuts.redo = actions.redo;
             studio->shortcuts.save = actions.savePreset;
@@ -2626,6 +2627,64 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         studio->scope.onClose = [this] { studio->scope.setVisible(false); };
         addKeyListener(&studio->qwerty);                // computer-keyboard notes through the on-screen keyboard's state
         addKeyListener(&studio->shortcuts);             // undo, redo and save
+        addChildComponent(studio->tour);
+        {
+            // Tour steps: plain words over the area they describe (editor pixels at the current size).
+            auto design = [this](float x, float y, float w, float h)
+            {
+                const float sx = (float) getWidth() / kDesignWidth, sy = (float) getHeight() / kDesignHeight;
+                return juce::Rectangle<float>(x * sx, y * sy, w * sx, h * sy).toNearestInt();
+            };
+            auto keys = [this](std::initializer_list<const char*> ids)
+            {
+                juce::Rectangle<int> area;
+                for (const char* id : ids)
+                    for (auto* child : studio->toolbar.getChildren())
+                        if (child->getComponentID() == id)
+                            area = area.isEmpty() ? getLocalArea(child, child->getLocalBounds())
+                                                  : area.getUnion(getLocalArea(child, child->getLocalBounds()));
+                return area;
+            };
+            auto bounds = [this](juce::Component& c) { return getLocalArea(&c, c.getLocalBounds()); };
+            studio->tour.setSteps({
+                { "Welcome to the CS-80",
+                  "This is the instrument's own panel, laid out as on the original: two channels of faders, the tone selector, the sub "
+                  "oscillator and ring modulator, the ribbon and the keyboard. What the original does not have lives in the toolbar and "
+                  "the Studio view.", {} },
+                { "Programs",
+                  "The display names the program. The arrows step through the library and LIBRARY opens it to browse, search, load and "
+                  "save. EDITED means the sound has changed since it was loaded.",
+                  [keys] { return keys({ "toolbar_previous", "toolbar_program", "toolbar_next", "toolbar_library" }); } },
+                { "Faders work like the hardware",
+                  "Drag a fader by its cap: it never jumps. Hold Shift for fine moves, Ctrl-click (Cmd-click on a Mac) to type a value, "
+                  "double-click to reset. Right-click any control for MIDI learn, copy and paste, and a help card with its owner's-manual "
+                  "page.", [design] { return design(418.0f, 72.0f, 1134.0f, 196.0f); } },
+                { "Tone selector",
+                  "Each channel has its own row of the original preset tabs. PANEL plays the faders; a tab or a MEMORY plays its own "
+                  "settings for the 26 programmer controls.",
+                  [this, bounds] { return bounds(*toneButtons[0][0]).getUnion(bounds(*toneButtons[1][13])); } },
+                { "Ribbon and keys",
+                  "Touch the ribbon anywhere and slide to bend the pitch; lift off to return. Drag down on a held key for pressure. The "
+                  "computer keyboard plays too: A W S E D F T G Y H U J K, with Z and X for octaves.",
+                  [this, bounds] { return bounds(ribbon).getUnion(bounds(keybed)); } },
+                { "Engine and PURE CS-80",
+                  "ENGINE: CIRCUIT runs the circuit-informed models; LEGACY keeps old sessions sounding as they did. PURE CS-80 switches "
+                  "off every modern addition. Neither is a calibrated match to a particular instrument.",
+                  [keys] { return keys({ "toolbar_engine_circuit", "toolbar_engine_legacy", "toolbar_pure_cs80" }); } },
+                { "Compare and undo",
+                  "A and B hold two versions of a sound to compare. UNDO and REDO step through your edits (Ctrl/Cmd+Z); host automation "
+                  "is never recorded, and loading a program starts a fresh history.",
+                  [keys] { return keys({ "toolbar_compare_a", "toolbar_compare_b", "toolbar_undo", "toolbar_redo" }); } },
+                { "The Studio view",
+                  "STUDIO opens the modern layer: LFOs and wheels, MIDI learn and the computer keyboard, effects, the arpeggiator, and "
+                  "Settings with the evidence register, which says what each part of the sound rests on.",
+                  [keys] { return keys({ "toolbar_studio" }); } },
+                { "Menu and help",
+                  "The menu saves and initialises programs, opens the voice monitor and the controllers strip, and runs this tour again. "
+                  "Hover a control for its tooltip and hold Shift for its circuit notes; press F1 on a focused control for its help card.",
+                  [keys] { return keys({ "toolbar_menu" }); } },
+            });
+        }
         advanced.attachQwerty(&studio->qwerty);
         ribbon.fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
         // [ws8-studio] end
@@ -4301,6 +4360,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             studio->toolbar.setBounds(r(250.0f, 2.0f, ui::StudioToolbar::kDesignW, ui::StudioToolbar::kDesignH));
             studio->scope.setBounds(r(56.0f, 70.0f, ui::ScopeDrawer::kDesignW, ui::ScopeDrawer::kDesignH));
             studio->controllers.setBounds(r(52.0f, 758.0f, ui::ControllersStrip::kDesignW, ui::ControllersStrip::kDesignH));
+            studio->tour.setBounds(getLocalBounds());
         }
         // [ws8-studio] end
     }

@@ -758,4 +758,125 @@ inline void testUndoRedo(const Check& check, const Flush& flush)
     flush(60);
 }
 
+// ---- Learning tools: the tour, per-control help and the evidence view -------------------------------------------
+inline void testLearningTools(const Check& check, const Flush& flush, const juce::File& dir)
+{
+    using cs80::ui::StudioMount;
+    static_assert(StudioMount::shouldOpenTourByItself(true, false, false), "a first real window opens the tour");
+    static_assert(! StudioMount::shouldOpenTourByItself(false, false, false), "a headless editor never opens the tour");
+    static_assert(! StudioMount::shouldOpenTourByItself(true, true, false), "a session that dismissed it does not reopen it");
+    static_assert(! StudioMount::shouldOpenTourByItself(true, false, true), "a computer that dismissed it does not reopen it");
+
+    const auto memory = cs80::ui::TourMemory::file();
+    const auto memoryTime = memory.getLastModificationTime();
+    const bool memoryExisted = memory.existsAsFile();
+
+    Cs80AudioProcessor processor;
+    processor.prepareToPlay(48000.0, 128);
+    Cs80AudioProcessorEditor editor(processor);
+    editor.setSize(1600, 1000);
+    editor.setVisible(true);
+    flush(400);
+    auto* tour = dynamic_cast<cs80::ui::TourOverlay*>(findById(editor, "guided_tour"));
+    check(tour != nullptr, "the tour overlay is mounted");
+    if (tour == nullptr)
+        return;
+    check(! tour->isVisible(), "a headless editor never opens the tour by itself (snapshots stay clean)");
+    auto* toolbar = findFirst<cs80::ui::StudioToolbar>(editor);
+    check(toolbar != nullptr && (bool) toolbar->getActions().startTour, "the toolbar menu starts the tour");
+    if (toolbar == nullptr || ! toolbar->getActions().startTour)
+        return;
+    check(menuTexts(toolbar->buildMenu()).contains("Take the tour"), "the menu lists the tour");
+    toolbar->getActions().startTour();
+    flush(30);
+    check(tour->isVisible() && tour->getStep() == 0 && tour->getNumSteps() >= 8, "the tour starts at its first step");
+    for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
+    {
+        editor.setSize(size.x, size.y);
+        flush(40);
+        tour->start(0);
+        for (int step = 0; step < tour->getNumSteps(); ++step)
+        {
+            flush(20);
+            check(tour->getStep() == step, "the tour walks its steps in order");
+            check(tour->getDescription().contains("Tour step " + juce::String(step + 1)), "each step is described for screen readers");
+            if (size.x == 1120 || step < 3)
+                save(editor, dir, "studio-tour-" + juce::String(step + 1) + "-" + juce::String(size.x) + "x" + juce::String(size.y), check);
+            if (step + 1 < tour->getNumSteps())
+                tour->keyPressed(juce::KeyPress(juce::KeyPress::rightKey));
+        }
+    }
+    editor.setSize(1600, 1000);
+    flush(30);
+    tour->keyPressed(juce::KeyPress(juce::KeyPress::leftKey));
+    check(tour->getStep() == tour->getNumSteps() - 2, "Left goes back a step");
+    check(! processor.getEditorState().tourSeen.load(), "the tour is not marked seen before it is dismissed");
+    tour->keyPressed(juce::KeyPress(juce::KeyPress::escapeKey));
+    flush(20);
+    check(! tour->isVisible() && processor.getEditorState().tourSeen.load(), "Esc dismisses the tour and the session remembers it");
+    check(memory.existsAsFile() == memoryExisted && memory.getLastModificationTime() == memoryTime,
+          "a headless editor never writes the user's settings file");
+    juce::MemoryBlock state;
+    processor.getStateInformation(state);
+    {
+        Cs80AudioProcessor restored;
+        restored.setStateInformation(state.getData(), (int) state.getSize());
+        check(restored.getEditorState().tourSeen.load(), "a dismissed tour stays dismissed in the restored session");
+    }
+
+    // Per-control help for every control on the main panel: plain words, the manual reference, the evidence class.
+    int helped = 0, cited = 0;
+    std::function<void(juce::Component&)> walk = [&](juce::Component& parent)
+    {
+        for (auto* child : parent.getChildren())
+        {
+            if (auto* knob = dynamic_cast<cs80::ui::ParamKnob*>(child); knob != nullptr && knob->isVisible())
+            {
+                const auto help = cs80::ui::controlHelpText(knob->getParameterIndex());
+                const bool hasEvidence = help.contains("EVIDENCE") && help.contains("CIRCUIT NOTES") && help.contains("Coverage ledger:");
+                const bool hasReference = help.contains("Owner's manual") || help.contains("Service manual") || help.contains("Control ")
+                                       || help.contains("Not on the original") || help.contains("Not in the owner's manual");
+                helped += hasEvidence && hasReference ? 1 : 0;
+                cited += help.contains("Owner's manual") || help.contains("service manual") ? 1 : 0;
+                if (! (hasEvidence && hasReference))
+                    std::printf("  help missing for %s\n", Cs80AudioProcessor::parameterId(knob->getParameterIndex()).toRawUTF8());
+                continue;
+            }
+            walk(*child);
+        }
+    };
+    walk(editor);
+    check(helped >= 70 && cited >= 60, "every main-panel control has help with a manual reference and an evidence class");
+
+    // F1 on a focused control opens its help card.
+    if (auto* fader = knobFor(editor, cs80::chParam(0, cs80::CP_hpfCutoff)))
+    {
+        check(fader->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::F1Key)), "F1 is handled by a control");
+        flush(80);
+        auto* card = findFirst<juce::CallOutBox>(editor);
+        check(card != nullptr && card->isVisible(), "F1 opens the help card");
+        save(editor, dir, "studio-help-card-1600x1000", check);
+        if (card != nullptr)
+            card->dismiss();
+        flush(250);
+        check(findFirst<juce::CallOutBox>(editor) == nullptr, "the help card closes");
+    }
+    else
+        check(false, "HPF fader for the help card");
+
+    // The evidence view: the menu opens Studio > Settings, whose register is the compiled STATUS.md table.
+    if (toolbar->getActions().showEvidence)
+    {
+        toolbar->getActions().showEvidence();
+        flush(60);
+        auto* studio = studioOf(editor);
+        check(editor.isAdvancedVisible() && studio != nullptr && studio->getActiveTab() == cs80::ui::StudioTab::settings,
+              "the menu opens the evidence register in Studio > Settings");
+        editor.showAdvancedPanel(false);
+        flush(30);
+    }
+    else
+        check(false, "the toolbar can show the evidence register");
+}
+
 } // namespace cs80::tests::studio

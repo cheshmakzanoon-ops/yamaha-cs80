@@ -232,6 +232,7 @@ public:
     static constexpr float kFineFactor = 0.1f;
     std::function<void()> onTypeValue;
     std::function<void()> onContextMenu;
+    std::function<void()> onHelp;   // F1 on the focused control
     std::function<juce::String()> tooltipText;
     juce::String getTooltip() override { return tooltipText ? tooltipText() : juce::Slider::getTooltip(); }
     void mouseDown(const juce::MouseEvent&) override;
@@ -243,6 +244,11 @@ public:
     bool isGestureInProgress() const noexcept { return gestureActive; }
     bool keyPressed(const juce::KeyPress& key) override
     {
+        if (key.getKeyCode() == juce::KeyPress::F1Key && onHelp)
+        {
+            onHelp();
+            return true;
+        }
         const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
             || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
         if (isEnabled() && arrow && !key.getModifiers().isAnyModifierKeyDown() && !gestureActive)

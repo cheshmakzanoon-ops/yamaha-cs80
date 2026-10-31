@@ -3488,6 +3488,8 @@ int main(int argc, char** argv)
     cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio undo and redo");
     cs80::tests::studio::testUndoRedo(check, flushGui);
+    std::puts("UI SMOKE PHASE: studio learning tools");
+    cs80::tests::studio::testLearningTools(check, flushGui, dir);
     // [ws8-studio] end
 
     if (failures == 0)

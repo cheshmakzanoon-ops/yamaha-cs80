@@ -333,6 +333,7 @@ if (CS80_BUILD_PLUGIN)
         src/plugin/StudioToolbar.cpp
         src/plugin/StudioDrawers.cpp
         src/plugin/UndoHistory.cpp
+        src/plugin/StudioTour.cpp
 
     )
     target_sources(CS80Reference PRIVATE ${CS80_PLUGIN_SOURCES})
