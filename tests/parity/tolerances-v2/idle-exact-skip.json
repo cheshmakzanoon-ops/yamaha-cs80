@@ -41,8 +41,11 @@
       "first nonzero sample after long silence",
       "nonzero capacitor tail with zero input",
       "default and boundary profiles",
-      "reset and prepare at each rate"
-    ]
+      "reset and prepare at each rate",
+      "Accepted profiles with sourceOhms and vr2Ohms independently and jointly set to positive or negative zero, leaving the other profile fields at their valid defaults; test both signed-zero inputs at every registered rate.",
+      "For those signed-zero boundary profiles, compare every node, all four capacitor voltages/currents and optical readouts through cold processing, reset/prepare, copy/assignment, and a subsequent nonzero wake."
+    ],
+    "signed_zero_boundary_environment": "The added profile fixtures use fixed round-to-nearest/ties-to-even; on supported x86 they run separately with FTZ/DAZ both disabled and both enabled. Existing fixtures, limits and denormal-mode transition checks remain unchanged."
   },
   "mutations_required": [
     "freeze off-state BBD phases",
@@ -51,7 +54,9 @@
     "bypass PRA for zero input despite charged capacitors",
     "freeze PRA optical movement in the zero-state path",
     "lose PRA signed-zero node semantics",
-    "classify stored BBD history through the current DAZ floating comparison"
+    "classify stored BBD history through the current DAZ floating comparison",
+    "allow the PRA zero-state shortcut for an accepted negative-zero vr2Ohms profile",
+    "allow the PRA zero-state shortcut for an accepted negative-zero sourceOhms profile"
   ],
   "performance": "Root compares the unchanged source_factory_benchmark baseline and candidate with at least three rounds per snapshot. Timing is diagnostic and cannot substitute for the exact continuation gates."
 }

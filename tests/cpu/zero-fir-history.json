@@ -17,13 +17,17 @@
     "positive and negative subnormals",
     "reset and factor changes",
     "every output phase including first sample after silence",
-    "FTZ/DAZ transitions with retained subnormal history on supported x86"
+    "FTZ/DAZ transitions with retained subnormal history on supported x86",
+    "At each prepared factor and every ring position, fill a complete signed-zero history with each symmetric pair and the center opposite the sign of its coefficient, so every original summand and the full ordered sum are negative zero; require negative-zero output exactly.",
+    "Before first prepare, fill the default zero-coefficient filter with negative-zero history and compare its original ordered output; then exercise copies/assignment, reset, valid factor changes and invalid-factor fallback with signed-zero history retained before each reset.",
+    "Run the added signed-zero fixtures in fixed round-to-nearest/ties-to-even, separately with FTZ/DAZ both disabled and both enabled on supported x86; retain the original cross-mode subnormal fixtures unchanged."
   ],
   "mutations": [
     "treat nonzero input as silent",
     "forget nonzero history decrement",
     "forget nonzero history reset",
-    "mark silent before full history drains"
+    "mark silent before full history drains",
+    "return positive zero for every numeric-zero history without preserving the negative-zero ordered-sum case"
   ],
   "additional_gates": [
     "existing decimator passband stopband latency and allocations tests",
@@ -31,5 +35,6 @@
     "strict current V2 byte equality"
   ],
   "history_classification": "Raw IEEE float magnitude bits; signed zeros are zero, subnormals remain nonzero independent of FTZ/DAZ mode.",
-  "efficiency": "The published nonzero-history count exactly matches an independent full-history count and reaches zero after all nonzero samples drain."
+  "efficiency": "The published nonzero-history count exactly matches an independent full-history count and reaches zero after all nonzero samples drain.",
+  "signed_zero_shortcut_proof": "At the registered nearest-rounding environment, a positive-zero center history value times the nonnegative finite center coefficient starts the original sum at positive zero; adding only signed-zero summands cannot change that sign. Default construction has positive-zero coefficients and all prepared factors have a positive center coefficient. A negative-zero center must retain the original convolution unless another exact sign proof is supplied. This adds no claim for changing the floating-point rounding direction."
 }
