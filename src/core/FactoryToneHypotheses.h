@@ -194,11 +194,11 @@ static_assert(fingerprint == 0xe5f877a025fc52c6ull,
 // Re-examination of the 25 cells (ws6-library, 2026-10-31). This record does
 // NOT amend the frozen v1 manifest above, HardwareControl.h, or any audio: every
 // cell stays an unknown source cell with its labelled median hypothesis. New
-// native crops could not be fetched in this session (service-manual hosts and
-// the Actions log store refused the proxy tunnel; see
-// docs/workstreams/ws6-library.md), so the outcome rests on the recorded native
-// inspections: schematic pages S31/S33/S35/S37 (T51..T54 circuit diagrams,
-// Actions run 40790769942) and board pages S32/S34/S36/S38 (run 40801679102).
+// native crops were fetched and hash-checked in Actions run41224106605:
+// schematic pages S31/S33/S35/S37 and board pages S32/S34/S36/S38.
+// docs/evidence/continuation-2026-10-31/TONE_CELL_NATIVE_REVIEW.md transcribes
+// every cell. Legible revision markings do not resolve applicability; obscured
+// glyphs stay labelled hypotheses. The frozen manifest above is untouched.
 // candidate is the reading used by the "visible candidates" sensitivity
 // scenario: the first visible alternative listed for the cell (a convention,
 // not a preference), or for T53/B/14 the board-artwork reading.
@@ -214,7 +214,7 @@ struct CellReview {
     VisibleAlternative candidate;
     std::string_view note;
 };
-inline constexpr std::string_view reviewId = "ws6-cell-review-2026-10-31";
+inline constexpr std::string_view reviewId = "native-cell-review-2026-10-31-run41224106605";
 constexpr CellReview firstAlternative(CellAddress a, std::string_view schematic, std::string_view board,
                                       std::string_view note = "held: revision applicability unresolved") noexcept {
     const auto i = findIndex(a);
