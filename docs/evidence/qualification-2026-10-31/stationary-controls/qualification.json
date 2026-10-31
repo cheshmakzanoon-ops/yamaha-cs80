@@ -1,0 +1,111 @@
+{
+  "group": "stationary",
+  "registration_commit": "706c673c54772eb45cb9fe41bd7dbf342792c64a",
+  "contract_sha256": "a1b775968d31b9ecfd3c0a9312b9de6840c3caa87c2d935af8b018d9a16cb4c2",
+  "source_sha256": {
+    "src/core/ExpressionOptics.h": "264deba6b96a1eedd4eb5927d86a129a51e99f0b137c5c24a348a13693c27cfe",
+    "src/core/Smoothing.h": "de08b8427392b7fe3171d137e9b9cf8a94087601c716ce1c1090a355fb8ececf"
+  },
+  "driver_sha256": {
+    "stationary": "1a877d1aac897bd51e7e09973269c1f79ebfd247fa7db1f649f2e32c37ae3d2e"
+  },
+  "compiler": "/usr/bin/c++",
+  "results": [
+    {
+      "name": "candidate-stationary",
+      "target": "stationary",
+      "exit_code": 0,
+      "checks": 373,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "controller_zero_sign",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 26,
+      "expected_assertions": [
+        "controller signed-zero equality and subsequent movement"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "controller_premature_snap",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 48,
+      "expected_assertions": [
+        "moving controller coefficients, targets and snaps"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "controller_nonfinite_guard",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 21,
+      "expected_assertions": [
+        "nonfinite controller arithmetic follows the original fallback"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "expression_premature_snap",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 26,
+      "expected_assertions": [
+        "expression optical motion and original settling recurrence"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "expression_frozen_motion",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 39,
+      "expected_assertions": [
+        "expression first move after stationary optical state"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "expression_zero_sign",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 24,
+      "expected_assertions": [
+        "expression exactly stationary spans and signed pedal zeros"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "expression_nonfinite_guard",
+      "target": "stationary",
+      "exit_code": 1,
+      "checks": 373,
+      "failures": 2,
+      "expected_assertions": [
+        "invalid expression profile preserves original arithmetic fallback"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "restored-stationary",
+      "target": "stationary",
+      "exit_code": 0,
+      "checks": 373,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    }
+  ],
+  "scope": "Fresh independent software continuation and actual-source mutations; whole-engine compatibility and timings are separate."
+}
