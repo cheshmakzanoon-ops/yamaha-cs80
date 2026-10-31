@@ -117,9 +117,16 @@ inline constexpr std::array<InferredCell, 25> cells {{
     medianCell({54,'C',25}, "crossed56K/diode", resistorMark(56000,"crossed 56K candidate"), diodeMark("crossed diode/direct candidate")),
     medianCell({54,'C',26}, "crossed diode", diodeMark("crossed diode/direct candidate"))
 }};
+// Index lookups for constant evaluation: GCC 13 with -fsanitize=null (UBSan)
+// refuses `pointer-into-a-constexpr-array != nullptr` as a constant expression,
+// so the static_asserts below compare indices, not pointers.
+constexpr std::size_t findIndex(CellAddress address) noexcept {
+    for (std::size_t i = 0; i < cells.size(); ++i) if (cells[i].address == address) return i;
+    return cells.size();
+}
 constexpr const InferredCell* find(CellAddress address) noexcept {
-    for (const auto& cell : cells) if (cell.address == address) return &cell;
-    return nullptr;
+    const auto i = findIndex(address);
+    return i < cells.size() ? &cells[i] : nullptr;
 }
 constexpr const InferredCell* find(int board, char column, int output) noexcept {
     return find({board,column,output});
@@ -210,9 +217,9 @@ struct CellReview {
 inline constexpr std::string_view reviewId = "ws6-cell-review-2026-10-31";
 constexpr CellReview firstAlternative(CellAddress a, std::string_view schematic, std::string_view board,
                                       std::string_view note = "held: revision applicability unresolved") noexcept {
-    const auto* cell = find(a);
+    const auto i = findIndex(a);
     return {a, schematic, board, ReviewOutcome::heldRevisionMark,
-            cell != nullptr && cell->visibleAlternativeCount > 0 ? cell->visibleAlternatives[0] : VisibleAlternative{}, note};
+            i < cells.size() && cells[i].visibleAlternativeCount > 0 ? cells[i].visibleAlternatives[0] : VisibleAlternative{}, note};
 }
 inline constexpr std::array<CellReview, 25> review {{
     firstAlternative({51,'A',20}, "S31", "S32"), firstAlternative({51,'A',25}, "S31", "S32"),
@@ -235,15 +242,21 @@ inline constexpr std::array<CellReview, 25> review {{
     firstAlternative({54,'A',26}, "S37", "S38"), firstAlternative({54,'C',22}, "S37", "S38"),
     firstAlternative({54,'C',25}, "S37", "S38"), firstAlternative({54,'C',26}, "S37", "S38")
 }};
+constexpr std::size_t findReviewIndex(CellAddress a) noexcept {
+    for (std::size_t i = 0; i < review.size(); ++i) if (review[i].address == a) return i;
+    return review.size();
+}
 constexpr const CellReview* findReview(CellAddress a) noexcept {
-    for (const auto& r : review) if (r.address == a) return &r;
-    return nullptr;
+    const auto i = findReviewIndex(a);
+    return i < review.size() ? &review[i] : nullptr;
 }
 constexpr bool reviewValid() noexcept {
     for (const auto& cell : cells) {
-        const auto* r = findReview(cell.address);
-        if (r == nullptr || r->candidate.label.empty() || r->candidate.excitation < 0.0
-            || r->candidate.excitation > 1.0 || r->schematicPage.empty() || r->boardPage.empty()) return false;
+        const auto i = findReviewIndex(cell.address);
+        if (i == review.size()) return false;
+        const auto& r = review[i];
+        if (r.candidate.label.empty() || r.candidate.excitation < 0.0
+            || r.candidate.excitation > 1.0 || r.schematicPage.empty() || r.boardPage.empty()) return false;
     }
     for (std::size_t i = 0; i < review.size(); ++i)
         for (std::size_t j = i + 1; j < review.size(); ++j)
