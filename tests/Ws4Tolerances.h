@@ -44,4 +44,32 @@ inline constexpr double kLineDb = 0.01;
 // Engine output line ratios after the downstream linear stages.
 inline constexpr double kEngineLineRatioDb = 0.5;
 } // namespace ring
+
+// Step 3: OE1/OE2 chorus and tremolo, realtime BbdChorus versus the truth models
+// (NonidealChannel packet graph, Oe2Filters branch transfer, Oe1Modulation law).
+namespace oe2
+{
+// Left and right wet complex transfer, each against its own truth branch, normalized at the
+// 1 kHz trim. Low band 50 Hz - 2 kHz at internal 88.2/96/192 kHz:
+inline constexpr double kLowBandMaxHz = 2000.0;
+inline constexpr double kLowBandDb = 0.1;
+inline constexpr double kLowBandRadians = 0.05;
+// High band 2 - 10 kHz at internal 88.2/96 kHz (bilinear warping of two Sallen-Key
+// sections dominates), and at 192 kHz:
+inline constexpr double kHighBandDb = 0.5;
+inline constexpr double kHighBandRadians = 0.25;
+inline constexpr double kHighBandDbAt192k = 0.1;
+inline constexpr double kHighBandRadiansAt192k = 0.05;
+// Wet noise rms with no input versus the analytic truth (each channel).
+inline constexpr double kNoiseDb = 1.0;
+// |correlation| of left and right wet noise (independent chains).
+inline constexpr double kNoiseCorrelation = 0.05;
+// Clock-feedthrough line where the internal rate represents it (1.536 MHz) versus truth.
+inline constexpr double kFeedthroughDb = 1.0;
+// Where it is not representable (96 kHz): no alias line above the noise floor.
+inline constexpr double kFeedthroughAliasDb = 6.0;
+// TREMOLO sample trajectories versus the OE1 truth law, 500 Hz tone, as a fraction of the
+// input amplitude.
+inline constexpr double kTremoloTrajectory = 0.02;
+} // namespace oe2
 } // namespace cs80::ws4_tolerances
