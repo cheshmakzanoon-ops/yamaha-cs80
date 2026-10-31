@@ -340,6 +340,29 @@ after the separate V2 pin passes both Legacy captures, V1 numerics, and V2
 against the published ownership commit. See
 [workstreams/ui-completion.md](workstreams/ui-completion.md).
 
+## Continuation: exact nodal coefficient setup
+
+`44d11d50584c7c4800775e4234ff5dc2e1ab62ab` reduces the phase-corrected
+filter's coefficient work: sparse fixed-network products, one setup for
+the selected clock method, and a nonlinear Jacobian only after a failed
+`1e-10` residual check. The original Padé phase correction, OTA nonlinearity
+and all full-band limits remain unchanged. A frozen pre-refactor continuation
+compared **960,000 output floats bit for bit**, all equal. The four existing
+filter/cache/wake suites pass without adjusting any limit.
+
+Three complete 48 kHz / 256-frame rounds of 1,024 callbacks per row are
+archived. The held-pair minimum-of-three median range is
+**0.75730–1.00781 RTF**, with moving controls
+**1.04121** and idle **0.14414**. Against the preceding cold-filter
+DSP snapshot, the worst-pair median decreases from 1.10352 to
+1.00781; the easiest pair is effectively unchanged. This is a
+modest speedup, and the CPU target is still open. The strict frozen audio
+captures passed both Legacy traces, V1 numerics and V2 bytes against the
+unchanged ownership pin `3c08e8e`; no circuit sound or golden was re-pinned.
+
+See [IG00156_PHASE_CORRECTION.md](IG00156_PHASE_CORRECTION.md) and
+[evidence/continuation-2026-10-31/filter-coefficient-cache-qualification.txt](evidence/continuation-2026-10-31/filter-coefficient-cache-qualification.txt).
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
