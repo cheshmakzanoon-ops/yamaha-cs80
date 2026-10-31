@@ -1,9 +1,11 @@
 #include "UiComponents.h"
 
 #include "PluginProcessor.h"
+#include "ArtCommon.h"
 
 #include <atomic>
 #include <cmath>
+#include <list>
 #include <map>
 #include <tuple>
 
@@ -71,11 +73,7 @@ juce::String enumName(const char* const* names, int count, float value)
     return names[index];
 }
 
-juce::Font displayFont(float height, int style = juce::Font::plain)
-{
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
-                                        height, style));
-}
+using cs80::art::displayFont;   // the panel typeface (ArtCommon.h)
 } // namespace
 
 juce::String formatParamValue(int parameterIndex, float value)
@@ -278,6 +276,8 @@ void conicRing(juce::Graphics& g, float cx, float cy, float radius, float width,
 
 // Images of moulded caps, knob bodies and plates, keyed by size, colour and state, rendered at
 // the physical pixel scale of the target. Painting a control is then a blit plus its legend.
+// Least-recently-used eviction: a full cache drops only its stalest images, so a resize or a
+// new page never forces every control on screen to be re-rendered at once.
 class PaintCache
 {
 public:
@@ -300,9 +300,15 @@ public:
         const Key key { kind, w, h, colour, state, scale4 };
         const juce::ScopedLock sl(lock);
         if (auto it = images.find(key); it != images.end())
-            return it->second;
-        if (images.size() > 700)
-            images.clear();
+        {
+            recency.splice(recency.begin(), recency, it->second.position);
+            return it->second.entry;
+        }
+        while (! recency.empty() && images.size() >= capacity)
+        {
+            images.erase(recency.back());
+            recency.pop_back();
+        }
         const float scale = (float) scale4 * 0.25f;
         Entry entry;
         entry.width = w;
@@ -315,7 +321,8 @@ public:
                                                          (float) entry.image.getHeight() / (float) h));
             paint(ig);
         }
-        images.emplace(key, entry);
+        recency.push_front(key);
+        images.emplace(key, Slot { entry, recency.begin() });
         return entry;
     }
 
@@ -323,12 +330,21 @@ public:
     {
         const juce::ScopedLock sl(lock);
         images.clear();
+        recency.clear();
     }
+
+    static constexpr size_t capacity = 700;
 
 private:
     using Key = std::tuple<int, int, int, juce::uint32, int, int>;
+    struct Slot
+    {
+        Entry entry;
+        std::list<Key>::iterator position;   // where the key sits in `recency`
+    };
     juce::CriticalSection lock;
-    std::map<Key, Entry> images;
+    std::map<Key, Slot> images;
+    std::list<Key> recency;                  // most recently used first
 };
 
 float physicalScaleOf(const juce::Graphics& g)
@@ -4208,80 +4224,5 @@ void LightSpill::paint(juce::Graphics& g)
         drawLightBloom(g, src.bounds.toFloat(), src.reach, src.colour, src.gain * strength);
     }
 }
-
-// ---------------------------------------------------------------------------
-// RovingFocusGroup
-// ---------------------------------------------------------------------------
-RovingFocusGroup::~RovingFocusGroup()
-{
-    stopTimer();
-    clear();
-}
-
-void RovingFocusGroup::add(juce::Button& button)
-{
-    button.addKeyListener(this);
-    buttons.emplace_back(&button);
-    refreshStops();
-    if (! isTimerRunning())
-        startTimerHz(8);
-}
-
-void RovingFocusGroup::clear()
-{
-    stopTimer();
-    for (auto& b : buttons)
-        if (b != nullptr)
-        {
-            b->removeKeyListener(this);
-            b->setWantsKeyboardFocus(true);
-        }
-    buttons.clear();
-}
-
-void RovingFocusGroup::refreshStops()
-{
-    int stop = -1;
-    for (size_t i = 0; i < buttons.size() && stop < 0; ++i)
-        if (buttons[i] != nullptr && buttons[i]->hasKeyboardFocus(false))
-            stop = (int) i;
-    for (size_t i = 0; i < buttons.size() && stop < 0; ++i)
-        if (buttons[i] != nullptr && buttons[i]->getToggleState())
-            stop = (int) i;
-    if (stop < 0)
-        stop = 0;
-    for (size_t i = 0; i < buttons.size(); ++i)
-        if (buttons[i] != nullptr)
-            buttons[i]->setWantsKeyboardFocus((int) i == stop);
-}
-
-void RovingFocusGroup::timerCallback() { refreshStops(); }
-
-bool RovingFocusGroup::keyPressed(const juce::KeyPress& key, juce::Component* origin)
-{
-    int index = -1;
-    for (size_t i = 0; i < buttons.size(); ++i)
-        if (buttons[i] != nullptr && buttons[i].getComponent() == origin)
-            index = (int) i;
-    if (index < 0 || key.getModifiers().isAnyModifierKeyDown())
-        return false;
-    const int last = (int) buttons.size() - 1;
-    int target = index;
-    if (key == juce::KeyPress::leftKey) target = index - 1;
-    else if (key == juce::KeyPress::rightKey) target = index + 1;
-    else if (key == juce::KeyPress::upKey) target = index - cols;
-    else if (key == juce::KeyPress::downKey) target = index + cols;
-    else if (key == juce::KeyPress::homeKey) target = 0;
-    else if (key == juce::KeyPress::endKey) target = last;
-    else return false;
-    target = juce::jlimit(0, last, target);
-    if (target != index && buttons[(size_t) target] != nullptr)
-    {
-        buttons[(size_t) target]->setWantsKeyboardFocus(true);
-        buttons[(size_t) target]->grabKeyboardFocus();
-    }
-    return true;
-}
-
 
 } // namespace cs80::ui

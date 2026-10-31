@@ -318,6 +318,7 @@ if (CS80_BUILD_PLUGIN)
         # [ws6-library] add this workstream's plugin sources below this line.
 
         # [ws7-panel] add this workstream's plugin sources below this line.
+        src/plugin/ArtCommon.cpp
 
         # [ws8-studio] add this workstream's plugin sources below this line.
 
