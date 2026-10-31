@@ -235,6 +235,9 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_library_audit_tests PRIVATE cs80_core Threads::Threads)
     add_test(NAME cs80_library_audit_tests COMMAND cs80_library_audit_tests)
     set_tests_properties(cs80_library_audit_tests PROPERTIES TIMEOUT 600)
+    add_executable(cs80_randomise_tests tests/RandomiseTests.cpp)
+    target_link_libraries(cs80_randomise_tests PRIVATE cs80_core)
+    add_test(NAME cs80_randomise_tests COMMAND cs80_randomise_tests)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
