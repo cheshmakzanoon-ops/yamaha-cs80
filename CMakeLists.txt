@@ -692,6 +692,20 @@ if (MSVC AND CS80_BUILD_TESTS)
     endforeach()
 endif()
 
+# Host automation wrapper platform contract (registered 2026-10-31).
+# Mock interface source lists exercise C++ and Objective-C++ generation on
+# every build host; native AU/VST3 compilation and host gates remain separate.
+if (CS80_BUILD_PLUGIN AND CS80_BUILD_TESTS)
+    get_target_property(CS80_WRAPPER_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+    add_test(NAME cs80_host_wrapper_platform_tests COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/HostWrapperPlatformTests.py"
+        --source "${CMAKE_CURRENT_SOURCE_DIR}"
+        --juce-wrappers "${CS80_WRAPPER_JUCE_MODULES}/juce_audio_plugin_client"
+        --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-wrapper-platforms.json"
+        --cmake "${CMAKE_COMMAND}")
+    set_tests_properties(cs80_host_wrapper_platform_tests PROPERTIES TIMEOUT 90)
+endif()
+
 # Instrumented builds (ASan + UBSan) run several times slower than the Release
 # builds the per-test TIMEOUT values were chosen for: under the sanitizers the
 # merged suite's envelope-precision, source-factory-integration and library

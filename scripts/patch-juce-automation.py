@@ -101,19 +101,31 @@ def patch_au(source: str) -> str:
     return source
 
 
-def main() -> int:
-    if len(sys.argv) != 3:
-        raise RuntimeError("usage: patch-juce-automation.py INPUT OUTPUT")
-    original, output = map(Path, sys.argv[1:])
+def reviewed_source(original: Path) -> str:
     expected = {
         "juce_audio_plugin_client_VST3.cpp": "adf5c18774c42bfab7d50478525f84dcab43e12ff8d9879749137d80c61336f0",
+        "juce_audio_plugin_client_VST3.mm": "2f074fef9a5940c0f0e7aef15ca9ae024e44bf613ca1c6b828842b9282ebd532",
         "juce_audio_plugin_client_AU_1.mm": "a4a8f4efb3b20977a1dfa8865c02800834e8790043975428b28358417d1315f5",
     }
     source = original.read_text(encoding="utf-8")
     actual = hashlib.sha256(source.encode("utf-8")).hexdigest()
     if expected.get(original.name) != actual:
         raise RuntimeError(f"Unreviewed JUCE automation wrapper source {original}: {actual}; expected {expected.get(original.name)}")
-    patched = patch_vst3(source) if original.name.endswith("VST3.cpp") else patch_au(source)
+    return source
+
+
+def main() -> int:
+    if len(sys.argv) != 3:
+        raise RuntimeError("usage: patch-juce-automation.py INPUT OUTPUT")
+    original, output = map(Path, sys.argv[1:])
+    source = reviewed_source(original)
+    if original.name == "juce_audio_plugin_client_VST3.mm":
+        # The reviewed macOS translation unit only includes VST3.cpp. Expand
+        # the separately reviewed implementation into the generated .mm so
+        # Objective-C++ remains enabled and no pristine include bypasses the
+        # queue bridge. Neither original source file is modified.
+        source = reviewed_source(original.with_suffix(".cpp"))
+    patched = patch_au(source) if original.name == "juce_audio_plugin_client_AU_1.mm" else patch_vst3(source)
     output.parent.mkdir(parents=True, exist_ok=True)
     if not output.exists() or output.read_text(encoding="utf-8") != patched:
         output.write_text(patched, encoding="utf-8", newline="\n")

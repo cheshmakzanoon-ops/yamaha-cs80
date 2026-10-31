@@ -1,0 +1,11 @@
+--- a/cmake/HostAutomation.cmake
++++ b/cmake/HostAutomation.cmake
+@@ -39,7 +39,7 @@
+             list(APPEND _cs80_patched_sources "${_cs80_wrapper}")
+             math(EXPR _cs80_patched_count "${_cs80_patched_count} + 1")
+         else()
+-            list(APPEND _cs80_patched_sources "${_cs80_source}")
++            # intentional mutation: omit unrelated target source
+         endif()
+     endforeach()
+     if(_cs80_patched_count EQUAL 0)
