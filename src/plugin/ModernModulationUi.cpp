@@ -57,7 +57,9 @@ void styleSlider(juce::Slider& slider, const juce::String& title)
     slider.setColour(juce::Slider::textBoxTextColourId, ivory);
     slider.setColour(juce::Slider::textBoxBackgroundColourId, panelDark);
     slider.setColour(juce::Slider::textBoxOutlineColourId, lineColour);
-    slider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 58, 20);
+    // Read-only readout: an editable text box is an unnamed focus stop (the Studio view requires every focus
+    // stop to have an accessible name); values change by drag, arrow keys and double-click reset.
+    slider.setTextBoxStyle(juce::Slider::TextBoxRight, true, 58, 20);
     slider.setTitle(title);
 }
 
@@ -685,7 +687,7 @@ ModMatrixPage::ModMatrixPage(Cs80AudioProcessor& p) : processor(p)
         if (auto* q = parameter(p, P_mod1Amount + i))
             r.amountAttachment = std::make_unique<juce::SliderParameterAttachment>(*q, r.amount);
         compactText(r.amount, 2, {}, true);
-        r.amount.setTextBoxStyle(juce::Slider::TextBoxRight, false, 48, 20);
+        r.amount.setTextBoxStyle(juce::Slider::TextBoxRight, true, 48, 20);
         for (auto* c : { &r.source, &r.via, &r.destination, &r.target })
             c->onChange = [this, i] { write(i); };
         for (juce::Component* c : { (juce::Component*) &r.index, (juce::Component*) &r.source, (juce::Component*) &r.via,
@@ -754,7 +756,9 @@ void ModMatrixPage::paint(juce::Graphics& g)
 void ModMatrixPage::resized()
 {
     auto area = getLocalBounds().reduced(8).withTrimmedTop(38);
-    const int h = juce::jmax(22, area.getHeight() / kModSlots);
+    // [integration] at least 28 px per row so each control keeps the 24 px WCAG 2.5.8 target once the
+    // page is mounted in the Studio view at the 1120 x 700 size; the viewport scrolls the rest.
+    const int h = juce::jmax(28, area.getHeight() / kModSlots);
     for (auto& r : rows)
     {
         auto row = area.removeFromTop(h).reduced(0, 1);
@@ -959,6 +963,7 @@ ModernModulationPage::ModernModulationPage(Cs80AudioProcessor& p) : msegPage(p),
     addAndMakeVisible(lfoPanel);
     matrixViewport.setViewedComponent(&matrixPage, false);
     matrixViewport.setScrollBarsShown(true, false);
+    matrixViewport.setTitle("Modulation matrix slots");
     addAndMakeVisible(matrixViewport);
 }
 
@@ -976,7 +981,7 @@ void ModernModulationPage::resized()
     area.removeFromLeft(4);
     matrixViewport.setBounds(area);
     const int scrollbar = matrixViewport.getScrollBarThickness();
-    matrixPage.setSize(area.getWidth() - scrollbar, juce::jmax(area.getHeight(), 46 + kModSlots * 24));
+    matrixPage.setSize(area.getWidth() - scrollbar, juce::jmax(area.getHeight(), 46 + 8 + kModSlots * 28));
 }
 
 } // namespace cs80::ui::modern_layer

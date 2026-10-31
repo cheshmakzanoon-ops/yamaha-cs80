@@ -1,7 +1,7 @@
 #pragma once
 
-// What the editor mounts for the modern UI layer: the Studio toolbar, the voice-monitor drawer, the
-// controllers strip and the local A/B fallback. The editor owns one StudioMount and wires its callbacks
+// What the editor mounts for the modern UI layer: the Studio toolbar, the voice-monitor drawer and the
+// controllers strip (A/B compare is the processor's, ws6). The editor owns one StudioMount and wires its callbacks
 // in one delimited block of its constructor ([ws8-studio]), so the layout code stays untouched.
 
 #include "HardwareKeyboard.h"
@@ -52,7 +52,7 @@ class StudioMount final : private juce::Timer
 {
 public:
     explicit StudioMount(Cs80AudioProcessor& p)
-        : processor(p), toolbar(p), scope(p), controllers(p), compare(p), qwerty(p.getKeyboardState())
+        : processor(p), toolbar(p), scope(p), controllers(p), qwerty(p.getKeyboardState())
     {
         controllers.setComponentID("controllers_strip");
         scope.setComponentID("voice_monitor");
@@ -106,7 +106,6 @@ public:
     StudioToolbar toolbar;
     ScopeDrawer scope;
     ControllersStrip controllers;
-    CompareSlots compare;
     QwertyKeyboard qwerty;
     StudioShortcuts shortcuts;
     TourOverlay tour;

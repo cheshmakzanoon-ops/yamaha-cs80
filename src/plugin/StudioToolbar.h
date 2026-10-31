@@ -60,6 +60,7 @@ public:
         // Menu entries.
         std::function<void()> savePreset;
         std::function<void()> initPatch;
+        std::function<void()> randomise;   // within the original panel ranges (ws6), one undo step
         std::function<void()> toggleScope;
         std::function<bool()> scopeOpen;
         std::function<void()> toggleControllers;
@@ -110,31 +111,6 @@ private:
     float engineValue = 0.0f, pureValue = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StudioToolbar)
-};
-
-// A minimal local A/B compare for the toolbar until the library's compare is connected: two
-// sound snapshots (every core parameter except the physical setup and PURE CS-80, plus both
-// rank selectors). The first switch to an empty slot copies the open slot into it.
-class CompareSlots
-{
-public:
-    explicit CompareSlots(Cs80AudioProcessor& p) : processor(p) {}
-    int active() const noexcept { return activeSlot; }
-    void select(int slot);
-    void copyToOther();
-
-private:
-    struct Snapshot
-    {
-        cs80::ParamValues values;
-        std::array<int, 2> sources { 13, 13 };
-    };
-    Snapshot capture() const;
-    void apply(const Snapshot&);
-
-    Cs80AudioProcessor& processor;
-    std::array<std::optional<Snapshot>, 2> slots;
-    int activeSlot = 0;
 };
 
 } // namespace cs80::ui

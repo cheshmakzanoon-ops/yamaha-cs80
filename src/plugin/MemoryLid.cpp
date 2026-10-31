@@ -202,15 +202,27 @@ bool MemoryLid::runEditCommand(int command)
     juce::String report;
     switch (group)
     {
-        case 1: done = edit::storePanelToMemory(processor, a, b); report = "STORED " + rowName(a) + " IN " + memoryName(b); break;
-        case 2: done = edit::recallMemoryToPanel(processor, a, b); report = "LOADED " + memoryName(a) + " INTO " + rowName(b); break;
-        case 3: done = edit::copyMemory(processor, a, b); report = "COPIED " + memoryName(a) + " TO " + memoryName(b); break;
-        case 4: done = edit::copyRank(processor, a, b); report = "COPIED " + rowName(a) + " TO " + rowName(b); break;
-        default: break;
+        case 1: report = "STORED " + rowName(a) + " IN " + memoryName(b); break;
+        case 2: report = "LOADED " + memoryName(a) + " INTO " + rowName(b); break;
+        case 3: report = "COPIED " + memoryName(a) + " TO " + memoryName(b); break;
+        case 4: report = "COPIED " + rowName(a) + " TO " + rowName(b); break;
+        default: return false;
+    }
+    {
+        // [integration] one command is one undo step (ws8's UNDO), whatever number of controls it writes.
+        const Cs80AudioProcessor::ScopedUserEdit undoStep(processor.getUndoableState(), report.toLowerCase());
+        switch (group)
+        {
+            case 1: done = edit::storePanelToMemory(processor, a, b); break;
+            case 2: done = edit::recallMemoryToPanel(processor, a, b); break;
+            case 3: done = edit::copyMemory(processor, a, b); break;
+            case 4: done = edit::copyRank(processor, a, b); break;
+            default: break;
+        }
     }
     if (! done)
         return false;
-    readout.setLines(report, "26 CONTROLS WRITTEN AS HOST AUTOMATION  /  YOUR HOST'S UNDO REVERTS IT");
+    readout.setLines(report, "26 CONTROLS WRITTEN AS HOST AUTOMATION  /  ONE UNDO STEP");
     messageUntilMs = juce::Time::getMillisecondCounterHiRes() + 2500.0;
     return true;
 }

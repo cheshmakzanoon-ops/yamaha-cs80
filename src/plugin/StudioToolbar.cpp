@@ -333,17 +333,16 @@ void StudioToolbar::setActions(Actions newActions)
     refresh();
 }
 
+// [integration] ws2's processor API over the unchanged host IDs (one host gesture each).
 void StudioToolbar::setEngine(bool circuit)
 {
-    if (engineAttachment != nullptr)
-        engineAttachment->setValueAsCompleteGesture(circuit ? 1.0f : 0.0f);
+    processor.setEngineMode(circuit ? Cs80AudioProcessor::EngineMode::circuit : Cs80AudioProcessor::EngineMode::legacy);
     refresh();
 }
 
 void StudioToolbar::setPure(bool pure)
 {
-    if (pureAttachment != nullptr)
-        pureAttachment->setValueAsCompleteGesture(pure ? 1.0f : 0.0f);
+    processor.setPure(pure);
     refresh();
 }
 
@@ -417,6 +416,7 @@ juce::PopupMenu StudioToolbar::buildMenu()
     menu.addSectionHeader("PROGRAM");
     item(1, "Save preset...  (" + shortcut() + "+S)", true, false, actions.savePreset);
     item(2, "Init patch", true, false, actions.initPatch);
+    item(14, "Randomise within original ranges", true, false, actions.randomise);
     if (actions.copyCompare && actions.selectCompare)
     {
         const int slot = actions.activeCompare ? actions.activeCompare() : 0;
@@ -516,54 +516,6 @@ void StudioToolbar::resized()
     place(*pureKey, 684.0f, 64.0f);
     place(*studioKey, 752.0f, 68.0f);
     place(*menuKey, 824.0f, 35.0f);
-}
-
-// ---------------------------------------------------------------------------
-// Local A/B compare
-// ---------------------------------------------------------------------------
-CompareSlots::Snapshot CompareSlots::capture() const
-{
-    Snapshot s;
-    s.values = processor.currentValues();
-    for (int channel = 0; channel < 2; ++channel)
-        s.sources[(size_t) channel] = processor.getHardwareSource(channel);
-    return s;
-}
-
-void CompareSlots::apply(const Snapshot& s)
-{
-    // The preset path: physical setup and PURE CS-80 are kept, both selectors return to PANEL...
-    processor.applyParameterValues(s.values);
-    // ...then the compared selectors are restored without renaming the program.
-    for (int channel = 0; channel < 2; ++channel)
-        if (auto* p = processor.getAPVTS().getParameter(Cs80AudioProcessor::hardwareSourceParameterId(channel)))
-        {
-            p->beginChangeGesture();
-            p->setValueNotifyingHost(p->convertTo0to1((float) s.sources[(size_t) channel]));
-            p->endChangeGesture();
-        }
-}
-
-void CompareSlots::select(int slot)
-{
-    slot = juce::jlimit(0, 1, slot);
-    if (slot == activeSlot)
-        return;
-    slots[(size_t) activeSlot] = capture();
-    if (! slots[(size_t) slot].has_value())
-        slots[(size_t) slot] = slots[(size_t) activeSlot];
-    else
-    {
-        // Switching the compared sound is one undo step.
-        const Cs80AudioProcessor::ScopedUserEdit edit(processor.getUndoableState(), slot == 0 ? "Compare A" : "Compare B");
-        apply(*slots[(size_t) slot]);
-    }
-    activeSlot = slot;
-}
-
-void CompareSlots::copyToOther()
-{
-    slots[(size_t) (1 - activeSlot)] = capture();
 }
 
 } // namespace cs80::ui

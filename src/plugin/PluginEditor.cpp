@@ -14,6 +14,8 @@
 #include "ParameterWatch.h"
 #include "EditorPreferences.h"
 #include "StudioMount.h"   // [ws8-studio]
+#include "KeyboardTuningPage.h"   // [integration] ws3 tuning page
+#include "ModernModulationUi.h"   // [integration] ws5 pages
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
 #include "UiComponents.h"
@@ -888,22 +890,30 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             actions.stepArmed = [this](int direction) { return (direction < 0 ? prevButton : nextButton).isArmed(); };
             actions.openLibrary = [this] { showBrowser(! browserVisible, true); };
             actions.libraryOpen = [this] { return browserVisible; };
-            actions.selectCompare = [this](int slot) { studio->compare.select(slot); centreRow.syncToneMarks(); };
-            actions.activeCompare = [this] { return studio->compare.active(); };
-            actions.copyCompare = [this] { studio->compare.copyToOther(); };
+            // [integration] ws6's A/B compare: the inactive slot persists in the session state. Switching the
+            // compared sound is one undo step.
+            actions.selectCompare = [this](int slot)
+            {
+                if (juce::jlimit(0, 1, slot) != processor.getAbSlot())
+                {
+                    const Cs80AudioProcessor::ScopedUserEdit edit(processor.getUndoableState(), slot == 0 ? "Compare A" : "Compare B");
+                    processor.abToggle();
+                }
+                centreRow.syncToneMarks();
+            };
+            actions.activeCompare = [this] { return processor.getAbSlot(); };
+            actions.copyCompare = [this] { processor.abCopyCurrentTo(1 - processor.getAbSlot()); };
             actions.toggleStudio = [this] { showAdvanced(! advancedVisible, true); };
             actions.studioOpen = [this] { return advancedVisible; };
             actions.showEvidence = [this] { showAdvanced(true, true); advanced.showTab(ui::StudioTab::settings); };
             actions.savePreset = [this] { if (saveButton.onClick) saveButton.onClick(); };
-            actions.initPatch = [this]
+            // [integration] a new preset starts like a fresh instance (ws2, plan 1.7).
+            actions.initPatch = [this] { processor.loadInitPatch(); centreRow.syncToneMarks(); };
+            // [integration] ws6's randomise: original panel controls inside their hardware ranges, one undo step.
+            actions.randomise = [this]
             {
-                const auto& bank = processor.getFactoryPresets();
-                for (int i = 0; i < (int) bank.size(); ++i)
-                    if (juce::String(bank[(size_t) i].name).equalsIgnoreCase("Init Patch"))
-                    {
-                        processor.loadFactoryPreset(i);
-                        break;
-                    }
+                const Cs80AudioProcessor::ScopedUserEdit edit(processor.getUndoableState(), "Randomise");
+                processor.randomiseWithinOriginalRanges((juce::uint32) juce::Random::getSystemRandom().nextInt());
                 centreRow.syncToneMarks();
             };
             actions.toggleScope = [this]
@@ -997,6 +1007,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             });
         }
         advanced.attachQwerty(&studio->qwerty);
+        // [integration] ws5's modern pages and ws3's tuning page as further sub-pages of their tabs. The
+        // built-in pages stay: none of these replaces all of a tab's controls.
+        advanced.addPage(ui::StudioTab::modulation, std::make_unique<ui::modern_layer::ModernModulationPage>(processor), "MSEG + MATRIX");
+        advanced.addPage(ui::StudioTab::keyboard, std::make_unique<ui::modern_layer::KeyboardTuningPage>(processor), "TUNING + VOICES");
+        advanced.addPage(ui::StudioTab::keyboard, std::make_unique<ui::modern_layer::KeyboardModulationPage>(processor), "CURVES");
+        advanced.addPage(ui::StudioTab::fx, std::make_unique<ui::modern_layer::ModernFxPage>(processor), "MODERN FX");
         deck.getRibbon().fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
         // [ws8-studio] end
     }
@@ -1333,16 +1349,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // -----------------------------------------------------------------------
     void stepPreset(int delta)
     {
-        const auto& bank = processor.getFactoryPresets();
-        if (bank.empty())
-            return;
-        const int count = (int) bank.size();
-        int index = processor.getCurrentPresetIndex();
-        // If the current state came from a user preset or an edited patch,
-        // stepping starts from the closest factory program.
-        index = juce::jlimit(0, count - 1, index);
-        index = (index + delta + count) % count;
-        processor.loadFactoryPreset(index);
+        // [integration] ws6: step through the library's current filter (scope, category, search), user presets
+        // included, instead of the whole host list (Legacy Library first).
+        browser.loadAdjacent(delta < 0 ? -1 : 1);
         centreRow.syncToneMarks();
     }
 

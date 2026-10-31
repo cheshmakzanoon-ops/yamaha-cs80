@@ -989,12 +989,17 @@ inline void testTabOrder(const Check& check, const Flush& flush)
         for (int i = 0; tabsFirst && i < (int) cs80::ui::StudioTab::count; ++i)
             tabsFirst = accessibleName(*studioOrder[(size_t) i]) == cs80::ui::StudioView::tabName((cs80::ui::StudioTab) i) + " tab";
         check(tabsFirst, "Studio Tab order starts with its five tabs in order");
-        check(studioOrder.size() > 8 && accessibleName(*studioOrder[5]).startsWith("MODULATION sub-page")
-                  && accessibleName(*studioOrder[6]).startsWith("MODULATION sub-page")
-                  && accessibleName(*studioOrder[7]) == "Close the Studio view",
+        // [integration] the modulation tab now also holds ws5's MSEG + matrix page, so count its sub-page
+        // keys instead of assuming the two built-in pages.
+        const size_t subKeys = (size_t) studio->getNumSubPages(cs80::ui::StudioTab::modulation);
+        const size_t closeAt = 5 + subKeys, pageFrom = closeAt + 1;
+        bool subPageKeys = subKeys >= 2 && studioOrder.size() > pageFrom;
+        for (size_t i = 5; subPageKeys && i < closeAt; ++i)
+            subPageKeys = accessibleName(*studioOrder[i]).startsWith("MODULATION sub-page");
+        check(subPageKeys && accessibleName(*studioOrder[closeAt]) == "Close the Studio view",
               "then the sub-page keys and CLOSE");
-        bool pageAfter = studioOrder.size() > 8;
-        for (size_t i = 8; i < studioOrder.size(); ++i)
+        bool pageAfter = studioOrder.size() > pageFrom;
+        for (size_t i = pageFrom; i < studioOrder.size(); ++i)
             pageAfter = pageAfter && studio->getSubPage(cs80::ui::StudioTab::modulation, 0)->isParentOf(studioOrder[i]);
         check(pageAfter, "then only the controls of the open page");
         bool studioNamed = true;

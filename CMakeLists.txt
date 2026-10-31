@@ -420,6 +420,7 @@ if (CS80_BUILD_PLUGIN)
 
         # [ws3-keyboard] add this workstream's plugin sources below this line.
         src/plugin/MtsEspClient.cpp
+        src/plugin/KeyboardTuningPage.cpp
 
         # [ws4-circuits] add this workstream's plugin sources below this line.
 

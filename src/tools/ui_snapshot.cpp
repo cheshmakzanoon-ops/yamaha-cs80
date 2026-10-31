@@ -18,6 +18,7 @@
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
+#include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
 #include "../../tests/ProgramLibraryHostTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
@@ -3566,6 +3567,8 @@ int main(int argc, char** argv)
     std::puts("UI SMOKE PHASE: modern modulation and FX layer");
     cs80::tests::testModernLayerHost(check);
     cs80::tests::testModernLayerUi(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)");
+    cs80::tests::testIntegrationUi(check, flushGui);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");
