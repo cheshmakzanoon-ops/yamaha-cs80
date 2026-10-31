@@ -13,6 +13,7 @@ on:
       - 'src/tools/parity_capture.cpp'
       - 'src/tools/compatibility_probe.cpp'
       - 'src/tools/source_factory_compatibility_probe.cpp'
+      - 'src/tools/source_factory_circuit_compatibility_probe.cpp'
       - 'scripts/analyze_dsp.py'
       - 'scripts/parity_harness.py'
       - 'CMakeLists.txt'
@@ -113,35 +114,46 @@ jobs:
 
 
   source-factory-compatibility:
-    name: Seven complete source tones versus V1
+    name: Source circuit V1 and audio V2 compatibility
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
+      # Pre-existing, immutable checkpoint with the documented BBD chorus and
+      # release-tail changes. V1's original circuit numerics remain a separate gate.
+      SOURCE_AUDIO_V2: 6e5892f5ca6e8a5bfae7ceea3c67d03a74738773
     steps:
       - uses: actions/checkout@v5
-      - name: Build immutable V1 and current core with one compiler
+      - name: Build immutable circuit and audio checkpoints with one compiler
         run: |
-          git fetch --depth=1 origin "$SOURCE_V1"
+          git fetch --depth=1 origin "$SOURCE_V1" "$SOURCE_AUDIO_V2"
           git worktree add --detach source-v1 "$SOURCE_V1"
-          for source in source-v1 .; do
+          git worktree add --detach source-audio-v2 "$SOURCE_AUDIO_V2"
+          c++ -O2 -std=c++20 -Isource-v1/src src/tools/source_factory_circuit_compatibility_probe.cpp -o source-circuit-v1-probe
+          c++ -O2 -std=c++20 -Isrc src/tools/source_factory_circuit_compatibility_probe.cpp -o source-circuit-current-probe
+          for source in source-audio-v2 .; do
             cmake -S "$source" -B "$source/build-source-compat" -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF
             cmake --build "$source/build-source-compat" --target cs80_core --parallel 2
           done
-          c++ -O2 -std=c++20 -Isource-v1/src src/tools/source_factory_compatibility_probe.cpp source-v1/build-source-compat/libcs80_core.a -o source-v1-probe
+          c++ -O2 -std=c++20 -Isource-audio-v2/src src/tools/source_factory_compatibility_probe.cpp source-audio-v2/build-source-compat/libcs80_core.a -o source-audio-v2-probe
           c++ -O2 -std=c++20 -Isrc src/tools/source_factory_compatibility_probe.cpp build-source-compat/libcs80_core.a -o source-current-probe
-      - name: Require unchanged seven-tone audio and numerical history
+      - name: Require unchanged seven-tone V1 circuit numerics
         run: |
           mkdir -p artifacts/source-factory-compatibility
-          ./source-v1-probe artifacts/source-factory-compatibility/baseline.bin
-          ./source-current-probe artifacts/source-factory-compatibility/current.bin
-          cmp artifacts/source-factory-compatibility/baseline.bin artifacts/source-factory-compatibility/current.bin
+          ./source-circuit-v1-probe artifacts/source-factory-compatibility/circuit-v1.bin
+          ./source-circuit-current-probe artifacts/source-factory-compatibility/circuit-current.bin
+          cmp artifacts/source-factory-compatibility/circuit-v1.bin artifacts/source-factory-compatibility/circuit-current.bin
+      - name: Require unchanged source-audio V2 and numerical history
+        run: |
+          ./source-audio-v2-probe artifacts/source-factory-compatibility/audio-v2.bin
+          ./source-current-probe artifacts/source-factory-compatibility/audio-current.bin
+          cmp artifacts/source-factory-compatibility/audio-v2.bin artifacts/source-factory-compatibility/audio-current.bin
           sha256sum artifacts/source-factory-compatibility/*.bin > artifacts/source-factory-compatibility/SHA256SUMS
-          printf '{"baseline":"%s","candidate":"%s","source_tones":7,"sample_rates":[44100,48000,96000,192000],"audio_and_numeric_state_byte_identical":true,"model_metadata_excluded":true,"analog_evidence":false}\n' "$SOURCE_V1" "$GITHUB_SHA" > artifacts/source-factory-compatibility/report.json
+          printf '{"circuit_baseline":"%s","audio_baseline":"%s","candidate":"%s","source_tones":7,"circuit_values":16632,"sample_rates":[44100,48000,96000,192000],"v1_circuit_bytes_unchanged":true,"v2_audio_and_numeric_state_bytes_unchanged":true,"model_metadata_excluded":true,"analog_evidence":false}\n' "$SOURCE_V1" "$SOURCE_AUDIO_V2" "$GITHUB_SHA" > artifacts/source-factory-compatibility/report.json
           c++ --version > artifacts/source-factory-compatibility/compiler.txt
       - uses: actions/upload-artifact@v5
         with:
-          name: cs80-source-factory-v1-compatibility-${{ github.sha }}
+          name: cs80-source-factory-compatibility-${{ github.sha }}
           path: |
             artifacts/source-factory-compatibility/report.json
             artifacts/source-factory-compatibility/SHA256SUMS

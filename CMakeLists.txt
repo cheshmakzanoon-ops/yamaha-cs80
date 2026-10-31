@@ -319,6 +319,14 @@ if (CS80_BUILD_PLUGIN)
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
 
+    # This offline integration harness keeps many processor fixtures alive on
+    # the stack (including nested host tests). Match the ordinary 8 MiB Unix
+    # test-process budget instead of MSVC's 1 MiB executable default. This is
+    # deliberately NOT applied to the shipping plugin or Standalone targets.
+    if (MSVC)
+        target_link_options(CS80Snapshots PRIVATE /STACK:8388608)
+    endif()
+
     # The snapshot binary doubles as a headless plugin/UI smoke test. It
     # exercises the APVTS, preset and state round-trips, MIDI rendering, the
     # editor at two sizes, all advanced pages, and user preset storage. The

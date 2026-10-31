@@ -4,14 +4,18 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This revision describes opt-in **SOURCE PERFORMANCE** and the new **PANIC** and
-**SAMPLE PEAK** helpers. Older artifacts may not contain them; use the guide
-bundled with your artifact and check its manifest commit. The latest fully green
-all-platform checkpoint recorded here, `54a96f2`, predates these additions. The
-corrected source-mode Linux/Apple Silicon lanes at `ce65ea0` and source-mode
-screenshots at `91ef916` have passed, but all-platform qualification and the new
-helpers' native host/UI tests remain pending. This is
-not a new release qualification.
+This revision describes the redesigned vector editor, opt-in **SOURCE
+PERFORMANCE**, **PANIC**, and **SAMPLE PEAK** helpers. Older artifacts may not
+contain these changes. Use the guide bundled with your artifact and compare its
+full manifest commit with the current-build table in the repository README.
+The project version string alone is not a build identifier: development builds
+can share the same version while containing different source commits.
+
+Native build, host/UI test and validator results belong to the exact source
+commit linked in that table. A documentation-only update after a build does not
+change its plugin binary; a later change under `src/` does. Do not treat a
+historical green checkpoint, a screenshot, or an uploaded archive as evidence
+that every gate for a newer revision passed.
 
 ## Choose and verify a build
 
@@ -169,7 +173,9 @@ live MPE/controllers and two modest FX combinations at 44.1/48 kHz and
 callback budget**, but **127 of 256,402 callbacks** across all measured modes and
 phases exceeded budget; one held callback took 29.143 ms. This is core-only
 cloud-machine evidence, excluding the plugin wrapper, UI, driver and DAW, and
-predates the new PANIC/meter helpers. It is not a glitch-free guarantee or a
+predates the redesigned UI and later BBD/FX/envelope changes as well as the
+PANIC/meter helpers. It is not a current-plugin performance measurement or a
+glitch-free guarantee, nor a
 64-frame/high-rate qualification. Start host checks at 256 samples and test your
 intended patches; the older `932c6d4` dry-isolation audit remains separate.
 

@@ -1918,10 +1918,20 @@ int main(int argc, char** argv)
 {
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    // CTest captures stdout through a pipe. Keep phase evidence if a native
+    // crash occurs, without changing the isolated locale-smoke entry path.
+    std::setvbuf(stdout, nullptr, _IONBF, 0);
+    std::printf("UI SMOKE START: processor=%zu bytes engine=%zu bytes\n",
+                sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
+    std::puts("UI SMOKE PHASE: JUCE initialization");
     juce::ScopedJuceInitialiser_GUI juceInit;
+    std::puts("UI SMOKE PHASE: host metadata");
     cs80::tests::testPluginHostMetadata(check);
+    std::puts("UI SMOKE PHASE: output meter host");
     cs80::tests::testOutputMeterHost(check);
+    std::puts("UI SMOKE PHASE: source performance host");
     cs80::tests::testSourcePerformanceHost(check);
+    std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
     juce::String outDir = "artifacts/ui";
@@ -1937,18 +1947,23 @@ int main(int argc, char** argv)
     juce::File dir(juce::File::getCurrentWorkingDirectory().getChildFile(outDir));
     dir.createDirectory();
 
+    std::puts("UI SMOKE PHASE: external input host");
     testExternalInputHost();
+    std::puts("UI SMOKE PHASE: performance and isolation host");
     testPerformanceControlsHost();
     testIsolatedFootControllerHost();
     testParityIsolationHost();
+    std::puts("UI SMOKE PHASE: keyboard and expression host");
     testKeyPressureGesture();
     testKeyPressureGesture(true);
     testKeyboardHandoffHost(false);
     testKeyboardHandoffHost(true);
     testExpressionPersistence();
+    std::puts("UI SMOKE PHASE: live envelope and factory source host");
     testLiveEnvelopeTimingHost();
     testSourceFactoryHost();
 
+    std::puts("UI SMOKE PHASE: editor, state and automation");
     Cs80AudioProcessor processor;
     check(processor.getLatencySamples() == 63, "reported latency at construction");
     check(processor.getPresetName().contains("Original SUB"), "fresh startup identifies modified original SUB configuration");
@@ -3443,11 +3458,14 @@ int main(int argc, char** argv)
     }
     else check(false, "physical memory lid can be opened");
 
+    std::puts("UI SMOKE PHASE: source performance captures");
     captureSourcePerformanceViews(dir);
 
     // All preset-save I/O is confined to fresh temporary fixtures.
+    std::puts("UI SMOKE PHASE: preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::testPluginPanic(check, flushGui);
+    std::puts("UI SMOKE PHASE: pressure ownership and UI readiness");
     cs80::tests::testKeyboardPressureOwnershipHost(check);
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
