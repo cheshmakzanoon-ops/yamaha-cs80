@@ -252,7 +252,7 @@ struct PipelineOracle
 {
     explicit PipelineOracle(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
-          circuitSine(e.getInternalSampleRate(), e.getRankAudioState(0, 0).phase),
+          circuitSine(e.getInternalSampleRate(), e.getRankOscillatorState(0, 0)),
           circuitVca(e.getInternalSampleRate()),
           isolated(p[P_parityMode] != 0.0f), wet(p[P_footMode] != 0.0f), mix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusOn(p[P_chorusOn] != 0.0f),

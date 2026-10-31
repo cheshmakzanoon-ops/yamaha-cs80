@@ -15,6 +15,14 @@ struct CircuitSineSource
         osc.prepare(internalRate, cs80::OscillatorNominalProfile {});
         osc.reset(assignmentPhase, cs80::OscillatorNominalProfile {}.referenceHzNominal);
     }
+    // Phase 2.1 (free-running voices), intentional circuit-engine change: a
+    // circuit is never reset at assignment and starts warm, so the oracle
+    // continues an exact copy of the engine oscillator's state at the note-on.
+    CircuitSineSource(double internalRate, const cs80::ReconstructedOscillator::State& atAssignment)
+    {
+        osc.prepare(internalRate, cs80::OscillatorNominalProfile {});
+        osc.restoreState(atAssignment);
+    }
     // pulseWidth is the panel duty proxy the engine passes (default 0.5).
     float operator()(float hz, float pulseWidth = 0.5f)
     {

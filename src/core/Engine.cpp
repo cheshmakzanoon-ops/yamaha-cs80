@@ -73,10 +73,31 @@ void Engine::prepare(double hostSampleRate)
     // Explicitly provisional switch/pedal smoothing, sample-rate independent.
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
+    prepareWarmColdOscillators();
     reset();
     // Resource changes retain the accepted source identity; public setParams
     // intentionally means PANEL and would discard it here.
     applyParams(params);
+}
+
+void Engine::prepareWarmColdOscillators() noexcept
+{
+    // Circuit engine cold state (Phase 2.1, declared): the instrument has been
+    // running since power-on, so each cold oscillator's 0.1 s coupling memories
+    // are in their running state, not discharged. Zero prehistory instead gave
+    // the first chord after a load or policy change a decaying DC step of the
+    // saw pin (up to +1.4 dB at the jack on a dense PANEL chord). The same
+    // closed-form idle law runs the warm-up; its result is cached per rate.
+    Rng coldPhases(kColdPhaseSeed);
+    const double hz = OscillatorNominalProfile {}.referenceHzNominal;
+    for (int vi = 0; vi < kNumVoices; ++vi)
+        for (int ch = 0; ch < kNumRanks; ++ch)
+        {
+            auto& wsc = voices[(size_t) vi].ranks[ch].wsc;
+            wsc.reset(coldPhases.nextUnipolar(), hz);
+            (void) wsc.advanceIdle(kColdWarmUpSeconds, hz, WscControls {});
+            warmColdOscillators[(size_t) (vi * kNumRanks + ch)] = wsc.getState();
+        }
 }
 
 void Engine::reset()
@@ -101,6 +122,8 @@ void Engine::reset()
             const float coldPhase = freeRunning ? coldPhases.nextUnipolar() : 0.0f;
             r.osc.reset(coldPhase);
             r.wsc.reset(coldPhase, OscillatorNominalProfile {}.referenceHzNominal);
+            if (freeRunning)
+                r.wsc.restoreState(warmColdOscillators[(size_t) (vi * kNumRanks + (&r - v.ranks))]);
             r.hpf.reset();
             r.lpf.reset();
             r.hpStage.reset();

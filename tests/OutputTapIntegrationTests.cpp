@@ -187,7 +187,7 @@ struct Pipeline
 {
     Pipeline(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
-          circuitSine(e.getInternalSampleRate(), e.getRankAudioState(0, 0).phase),
+          circuitSine(e.getInternalSampleRate(), e.getRankOscillatorState(0, 0)),
           circuitVca(e.getInternalSampleRate()),
           volume(p[P_volume]), volumeTarget(p[P_volume]), wet(p[P_footMode] != 0.0f), wetMix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth]),

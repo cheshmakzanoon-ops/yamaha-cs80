@@ -317,6 +317,13 @@ public:
     // Exact current state (not last-render telemetry). Render thread only;
     // not safe for concurrent UI polling. No locks, allocations or mutations.
     RankAudioState getRankAudioState(int voice, int rank) const noexcept;
+    // Complete circuit-engine oscillator state (charge, reset, coupling
+    // memories, pending antialias residuals); same render-thread restriction.
+    // Pipeline oracles continue an exact copy of it (free-running voices).
+    const ReconstructedOscillator::State& getRankOscillatorState(int voice, int rank) const noexcept
+    {
+        return voices[(size_t) std::clamp(voice, 0, kNumVoices - 1)].ranks[std::clamp(rank, 0, kNumRanks - 1)].wsc.getState();
+    }
     struct RankEnvelopeState { Adsr::State amplitude; FilterEnv::State filter; };
     // Exact current envelope-state proxy; same render-thread-only restriction.
     RankEnvelopeState getRankEnvelopeState(int voice, int rank) const noexcept;
@@ -355,6 +362,9 @@ private:
     static constexpr int kColdKeyNote = 61;
     static constexpr std::uint32_t kColdPhaseSeed = 0xC5800A11u;
     static constexpr std::uint32_t kIdleNoiseSeed = 0xC58011D1u;
+    // Warm-up of the cold oscillators' coupling memories (10 coupling time
+    // constants: 4.5e-5 of the discharged DC step remains).
+    static constexpr double kColdWarmUpSeconds = 1.0;
 
     struct Rank
     {
@@ -451,6 +461,7 @@ private:
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
     void wakeIdleVoice(Voice& voice) noexcept;
+    void prepareWarmColdOscillators() noexcept;
     // Circuit engine: recompute every channel's KBC contour contributions.
     void refreshKeyboardContour() noexcept;
     bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }
@@ -523,6 +534,8 @@ private:
     double idleTransientDecay = 0.0;
     // Per-voice idle-only noise for the wake replay; never the shared audioRng.
     std::array<Rng, kNumVoices> idleNoise;
+    // Circuit engine cold oscillators after their warm-up (prepare time).
+    std::array<ReconstructedOscillator::State, kNumVoices * kNumRanks> warmColdOscillators {};
     // TWS/TRG touch model (Phase 2.4): per-sample coefficients, the TRG5 bus
     // voltage (Newton warm start) and its single-key full-scale normalisation.
     touch::Coefficients touchCoefficients;
