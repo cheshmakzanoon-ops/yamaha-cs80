@@ -230,6 +230,11 @@ if (CS80_BUILD_TESTS)
     # [ws5-modern] register this workstream's core tests below this line.
 
     # [ws6-library] register this workstream's core tests below this line.
+    find_package(Threads REQUIRED)
+    add_executable(cs80_library_audit_tests tests/LibraryAuditTests.cpp)
+    target_link_libraries(cs80_library_audit_tests PRIVATE cs80_core Threads::Threads)
+    add_test(NAME cs80_library_audit_tests COMMAND cs80_library_audit_tests)
+    set_tests_properties(cs80_library_audit_tests PROPERTIES TIMEOUT 600)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
