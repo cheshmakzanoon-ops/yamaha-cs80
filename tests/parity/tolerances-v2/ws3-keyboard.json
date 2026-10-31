@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "profile_id": "ws3-keyboard-v2",
+  "registered": "2026-10-31",
+  "evidence_kind": "numerical stage gates (realtime model versus offline truth model); not hardware tolerances",
+  "rationale": "Pre-registered before any of the ws3 realtime models were evaluated. Each gate compares the realtime implementation with an offline double-precision truth model built from the same declared circuit equations (src/reference/*). Passing a gate shows the realtime model reproduces its declared model; it does not show agreement with an original CS-80. The same values are compiled into tests/Ws3Tolerances.h.",
+  "gates": {
+    "2.1_free_running": {
+      "truth_model": "src/reference/FreeRunningVoiceTruth.h: double-precision per-sample evolution of oscillator phase and both IG00156 circuit stages at the full internal rate, every sample, while the VCA is closed",
+      "idle_phase_error_cycles_max": 1e-4,
+      "idle_phase_error_cycles_max_with_vibrato": 2e-3,
+      "wake_residual_db_max": -40.0,
+      "wake_residual_window_seconds": 0.020,
+      "short_gap_residual_db_max": -90.0,
+      "zero_waveform_decay_ratio_max": 1e-3,
+      "idle_incremental_median_rtf_max": 0.02,
+      "idle_incremental_rtf_note": "48 kHz / 128-frame isolation idle_quiet row of cs80_source_factory_benchmark, compared with the 6719ce4 baseline on the same machine in the same session; the shared build machine makes this a diagnostic, not a qualification"
+    },
+    "2.2_kas_sample_hold": {
+      "truth_model": "src/reference/SampleHoldTruth.h: analytic constant-current droop of the held K node and the TC4011/TC4016 NAND(TR,SUS) truth table",
+      "droop_relative_error_max": 1e-6,
+      "hold_track_truth_table": "exact (all four electrical TR/SUS combinations)",
+      "scan_latency_bound": "detection latency in [0, scan period] for every event; exact ordering by declared scan order within one scan"
+    },
+    "2.3_keyboard_contour": {
+      "truth_model": "src/reference/KeyboardContour.h evaluated in double for every key/lever/trim combination",
+      "contour_volts_abs_error_max": 1e-5,
+      "lever_grid": [-1.0, -0.5, 0.0, 0.5, 1.0],
+      "keys": "all 61 physical keys C1..C6",
+      "calibration_anchor_volts": 2.76,
+      "calibration_anchor_tolerance_volts": 0.14
+    },
+    "2.4_touch": {
+      "truth_model": "src/reference/TouchCircuitTruth.h: double-precision implicit (backward-Euler, 64x substepped) solution of the declared TWS b acquisition/hold, C high-pass with ideal clamp, TWS a smoothing and the TRG5 diode-OR bus solved by Newton iteration",
+      "b_hold_relative_error_max": 1e-4,
+      "c_transient_abs_error_max": 1e-3,
+      "c_pole_e1_tolerance": 1e-3,
+      "a_smoothing_relative_error_max": 1e-4,
+      "trg5_bus_volts_abs_error_max": 1e-3
+    }
+  }
+}
