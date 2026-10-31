@@ -50,7 +50,7 @@ Rules for UI changes:
 
 - Do not remove or change the signature of an existing declaration in `UiComponents.h`; add new ones. Other files compile against them.
 - The accessibility names, titles, parameter bindings, keyboard focus and tab order of every control must survive. Tests in `src/tools/ui_snapshot.cpp` check them.
-- No pixel-level assertions exist; the self-test checks bounds, accessibility, focus, at least 40 hardware sliders, snapshot sizes.
+- The self-test checks bounds, accessibility, focus, at least 40 hardware sliders, snapshot sizes, non-overlapping main-view controls at both sizes, and tolerance-based golden images of the main view (see below).
 - Everything static is drawn once into a buffered image (see `Backdrop`). Per-frame repaints must stay cheap: no blur filters, no per-frame gradients over large areas. The editor repaints at 8 Hz; animation needs its own small timer on its own small component.
 - JUCE 8.0.11, C++20, software renderer. The panel draws in one embedded typeface, Barlow Condensed (SIL OFL 1.1; Medium for plain, SemiBold for bold), loaded from BinaryData by `cs80::art::displayFont` in `ArtCommon.h`, so it looks the same on every OS and in CI. Build the engraved look from that face with kerning, `withHorizontalScale` (never below 0.85, tone tabs 0.70) and drop shadows.
 - Legend floor: no printed legend below `cs80::art::kLegendFloorPx` (10.5 screen px) at any size, including 1120 x 700. Words that do not fit are abbreviated (`legendAbbreviation`, short captions), never shrunk below the floor.
@@ -63,4 +63,5 @@ Rules for UI changes:
 - Build and render with the `CS80Snapshots` target: `CS80Snapshots --out <dir> --self-test`. On Linux run it through `scripts/run-ui-smoke-linux.sh` (Xvfb plus Openbox); a bare X server aborts with `BadAtom` partway through and silently skips the later checks.
 - A passing run ends with `UI SMOKE TEST PASSED` and has no `FAIL` line in the log.
 - Look at the PNGs, and zoom into crops of the area you changed, at 1600x1000 and at the 1120x700 minimum.
+- Golden images: the self-test compares a fresh editor's main view at 1600x1000 and 1120x700 with `tests/golden/main-*.png` (`tests/PanelEditorTests.h`; strict on Linux, report-only on other platforms). It writes `golden-candidate-*.png` and `golden-diff-*.png` next to the other captures. After an intended visual change, refresh on Linux with `CS80_REFRESH_GOLDENS=1 scripts/run-ui-smoke-linux.sh build/CS80Snapshots_artefacts/Release/CS80Snapshots --out <dir> --self-test`, inspect the new files and commit them with the change.
 - Never use Yamaha or Arturia bitmaps; everything is drawn with JUCE vector calls.

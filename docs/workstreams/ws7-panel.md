@@ -185,3 +185,30 @@ unbracketed change; six invalid requests are refused with the full state byte-id
 keys and its command entry point stores panel II into memory 4 and refuses unknown or invalid commands.
 Mutation checks, one build: store writing the next bank, and rank copy including FEET; 4 failures, passing
 again after reverting.
+
+## Step 6: 5.7 golden-image diffs (done; strict on Linux only)
+
+`testGoldenImages` in `tests/PanelEditorTests.h` (UI self-test, so it runs under `ctest -R ui_smoke`) captures
+the main view of a fresh processor and editor (Init Patch, no audio rendered, no pointer or focus) at
+1600 x 1000 and 1120 x 700 and compares it with `tests/golden/main-1600x1000.png` and `main-1120x700.png`. The
+output meter and voice/MIDI lamp well is masked. Tolerances, named constants fixed before the goldens were
+recorded: a pixel counts as changed above 40/255 in any channel; a view fails when more than 0.30 % of its pixels
+change or when any 8 x 8 block's mean absolute difference exceeds 8/255. Each run writes
+`golden-candidate-*.png` and `golden-diff-*.png` into the capture directory. The golden directory is passed to
+`CS80Snapshots` as `CS80_GOLDEN_DIR` (CMake, ws7 block).
+
+**Refresh:** after an intended visual change, run on Linux
+`CS80_REFRESH_GOLDENS=1 scripts/run-ui-smoke-linux.sh build/CS80Snapshots_artefacts/Release/CS80Snapshots --out <dir> --self-test`,
+inspect the files written to `tests/golden/`, and commit them with the change. The same instructions are in
+docs/UI_DESIGN_SPEC.md.
+
+**Cross-platform:** the comparison fails the self-test on Linux only. On macOS and Windows it prints its metrics
+and does not fail. Reason: the goldens are recorded on Linux and the other platforms' text rendering has not been
+characterised against them from this session. The gate is sensitive to text: rendering every legend 1 % larger
+moves 0.32 % (1600) and 0.43 % (1120) of the pixels, with worst block means of 173 and 92, partly because some
+captions cross an abbreviation threshold. A strict cross-platform assertion would therefore be guesswork until a
+CI run on each platform shows its actual difference.
+
+Measured: two consecutive Linux runs and the post-mutation rebuild match the goldens exactly (0.0000 % changed,
+worst block mean 0.00). Mutation check: legend height x1.01 fails both views as above; restored, both match
+exactly.

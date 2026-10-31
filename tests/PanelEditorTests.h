@@ -13,6 +13,7 @@
 
 #include <chrono>
 #include <cmath>
+#include <algorithm>
 #include <cstring>
 #include <cstdio>
 #include <vector>
@@ -490,9 +491,127 @@ void testMemoryEditing(Check check, Flush flush)
     }
 }
 
-template <typename Check, typename Flush>
-void runPanelEditorTests(Check check, Flush flush)
+// ---- Golden images (Phase 5.7) --------------------------------------------------------------------------------
+// Tolerances, fixed before the goldens were recorded. A pixel counts as changed when any channel moves by more than
+// kGoldenPixelTolerance; a view fails when more than kGoldenMaxChangedFraction of its unmasked pixels change, or when
+// the mean absolute difference of any kGoldenBlock x kGoldenBlock block exceeds kGoldenMaxBlockMean (a control that
+// moved, changed colour, appeared or vanished). Glyph anti-aliasing differences stay inside both limits.
+constexpr int kGoldenPixelTolerance = 40;
+constexpr double kGoldenMaxChangedFraction = 0.003;
+constexpr int kGoldenBlock = 8;
+constexpr double kGoldenMaxBlockMean = 8.0;
+#if JUCE_LINUX
+// The goldens are recorded on Linux with the embedded typeface and JUCE's software renderer.
+constexpr bool kGoldenStrict = true;
+#else
+// Other platforms' text rasterisation has not been characterised against these goldens: report, do not fail.
+constexpr bool kGoldenStrict = false;
+#endif
+
+struct GoldenResult
 {
+    bool sameSize = false;
+    double changedFraction = 1.0;
+    double worstBlockMean = 255.0;
+};
+
+// Compares two captures outside the live readouts (output meter and voice/MIDI lamps), writing a diff image.
+inline GoldenResult compareGolden(const juce::Image& golden, const juce::Image& candidate, const juce::File& diffFile)
+{
+    GoldenResult result;
+    if (golden.getWidth() != candidate.getWidth() || golden.getHeight() != candidate.getHeight())
+        return result;
+    result.sameSize = true;
+    const int w = golden.getWidth(), h = golden.getHeight();
+    const float s = (float) w / 1600.0f;
+    const auto live = juce::Rectangle<float>(1118.0f * s, 0.0f, 342.0f * s, 48.0f * s).toNearestInt();
+    juce::Image diff(juce::Image::RGB, w, h, true);
+    std::vector<int> delta((size_t) (w * h), 0);
+    long changed = 0, counted = 0;
+    for (int y = 0; y < h; ++y)
+        for (int x = 0; x < w; ++x)
+        {
+            if (live.contains(x, y))
+                continue;
+            const auto a = golden.getPixelAt(x, y), b = candidate.getPixelAt(x, y);
+            const int d = std::max({ std::abs((int) a.getRed() - (int) b.getRed()), std::abs((int) a.getGreen() - (int) b.getGreen()),
+                                     std::abs((int) a.getBlue() - (int) b.getBlue()) });
+            delta[(size_t) (y * w + x)] = d;
+            ++counted;
+            if (d > kGoldenPixelTolerance) ++changed;
+            if (d > 0) diff.setPixelAt(x, y, juce::Colour::fromRGB((juce::uint8) juce::jmin(255, d * 4), 0, 0));
+        }
+    result.changedFraction = counted > 0 ? (double) changed / (double) counted : 1.0;
+    result.worstBlockMean = 0.0;
+    for (int by = 0; by + kGoldenBlock <= h; by += kGoldenBlock)
+        for (int bx = 0; bx + kGoldenBlock <= w; bx += kGoldenBlock)
+        {
+            long sum = 0;
+            for (int y = by; y < by + kGoldenBlock; ++y)
+                for (int x = bx; x < bx + kGoldenBlock; ++x)
+                    sum += delta[(size_t) (y * w + x)];
+            result.worstBlockMean = std::max(result.worstBlockMean, (double) sum / (double) (kGoldenBlock * kGoldenBlock));
+        }
+    diffFile.deleteFile();
+    juce::FileOutputStream stream(diffFile);
+    juce::PNGImageFormat png;
+    if (stream.openedOk()) png.writeImageToStream(diff, stream);
+    return result;
+}
+
+// Golden-image comparison of the main view at both supported sizes. Each capture comes from a fresh processor and
+// editor (Init Patch, no audio rendered, no pointer), so it is deterministic. Set CS80_REFRESH_GOLDENS=1 to write
+// the captures into tests/golden instead (then inspect and commit them).
+template <typename Check, typename Flush>
+void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
+{
+    const juce::File goldenDir { juce::String(CS80_GOLDEN_DIR) };
+    const bool refresh = juce::SystemStats::getEnvironmentVariable("CS80_REFRESH_GOLDENS", {}) == "1";
+    for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
+    {
+        const auto name = "main-" + juce::String(size.x) + "x" + juce::String(size.y);
+        juce::Image candidate;
+        {
+            juce::TemporaryFile presetRoot("-cs80-golden");
+            Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+            Cs80AudioProcessorEditor editor(host);
+            editor.setSize(size.x, size.y);
+            flush(300);
+            candidate = editor.createComponentSnapshot(editor.getLocalBounds(), true, 1.0f);
+        }
+        juce::PNGImageFormat png;
+        auto save = [&png](const juce::Image& image, const juce::File& file)
+        {
+            file.deleteFile();
+            juce::FileOutputStream stream(file);
+            return stream.openedOk() && png.writeImageToStream(image, stream);
+        };
+        save(candidate, outDir.getChildFile("golden-candidate-" + name + ".png"));
+        const auto goldenFile = goldenDir.getChildFile(name + ".png");
+        if (refresh)
+        {
+            check(goldenDir.createDirectory().wasOk() && save(candidate, goldenFile), ("golden refreshed: " + name).toRawUTF8());
+            continue;
+        }
+        const auto golden = juce::ImageFileFormat::loadFrom(goldenFile);
+        check(golden.isValid(), ("golden image present: " + goldenFile.getFullPathName()).toRawUTF8());
+        if (! golden.isValid())
+            continue;
+        const auto result = compareGolden(golden, candidate, outDir.getChildFile("golden-diff-" + name + ".png"));
+        std::printf("golden %s: changed %.4f %% of pixels (limit %.2f %%), worst %dx%d block mean %.2f (limit %.1f)%s\n",
+                    name.toRawUTF8(), result.changedFraction * 100.0, kGoldenMaxChangedFraction * 100.0, kGoldenBlock, kGoldenBlock,
+                    result.worstBlockMean, kGoldenMaxBlockMean, kGoldenStrict ? "" : " [report only on this platform]");
+        const bool within = result.sameSize && result.changedFraction <= kGoldenMaxChangedFraction
+                            && result.worstBlockMean <= kGoldenMaxBlockMean;
+        if (kGoldenStrict)
+            check(within, ("main view matches its golden image within tolerance: " + name).toRawUTF8());
+    }
+}
+
+template <typename Check, typename Flush>
+void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
+{
+    testGoldenImages(check, flush, outDir);
     testUnsavedEditIndicator(check, flush);
     testMainViewLayout(check, flush);
     testTremoloChorusTabs(check, flush);

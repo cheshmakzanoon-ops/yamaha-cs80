@@ -3483,7 +3483,7 @@ int main(int argc, char** argv)
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
     std::puts("UI SMOKE PHASE: original panel editor (ws7)");
-    cs80::tests::runPanelEditorTests(check, flushGui);
+    cs80::tests::runPanelEditorTests(check, flushGui, dir);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

@@ -375,6 +375,8 @@ if (CS80_BUILD_PLUGIN)
             assets/fonts/barlow-condensed/BarlowCondensed-SemiBold.ttf)
     target_link_libraries(CS80Reference PRIVATE cs80_panel_fonts)
     target_link_libraries(CS80Snapshots PRIVATE cs80_panel_fonts)
+    # [ws7-panel] Golden images of the main view (tests/PanelEditorTests.h; refresh with CS80_REFRESH_GOLDENS=1).
+    target_compile_definitions(CS80Snapshots PRIVATE CS80_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix
