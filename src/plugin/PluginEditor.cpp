@@ -2606,14 +2606,23 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             actions.scopeOpen = [this] { return studio->scope.isVisible(); };
             actions.toggleControllers = [this] { studio->setControllersShown(! studio->areControllersShown()); };
             actions.controllersShown = [this] { return studio->areControllersShown(); };
+            actions.toggleQwerty = [this] { studio->setQwertyEnabled(! studio->qwerty.isEnabled()); };
+            actions.qwertyEnabled = [this] { return studio->qwerty.isEnabled(); };
+            actions.toggleCircuitNotes = [this] { studio->setCircuitNotesShown(! ui::circuitNotesInTooltips()); };
+            actions.circuitNotesShown = [] { return ui::circuitNotesInTooltips(); };
+            actions.midiLearnCount = [this] { return processor.getMidiLearn().count(); };
+            actions.clearMidiLearn = [this] { processor.getMidiLearn().clearAll(); };
             studio->toolbar.setActions(std::move(actions));
         }
         studio->scope.onClose = [this] { studio->scope.setVisible(false); };
+        addKeyListener(&studio->qwerty);                // computer-keyboard notes through the on-screen keyboard's state
+        ribbon.fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
         // [ws8-studio] end
     }
 
     ~Impl() override
     {
+        if (studio != nullptr) removeKeyListener(&studio->qwerty);   // [ws8-studio]
         meterTicker.onTick = nullptr;
         frames.stop();
         setLookAndFeel(nullptr);

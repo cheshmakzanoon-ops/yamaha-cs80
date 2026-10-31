@@ -4,6 +4,7 @@
 // controllers strip and the local A/B fallback. The editor owns one StudioMount and wires its callbacks
 // in one delimited block of its constructor ([ws8-studio]), so the layout code stays untouched.
 
+#include "HardwareKeyboard.h"
 #include "StudioDrawers.h"
 #include "StudioToolbar.h"
 
@@ -18,10 +19,15 @@ class StudioMount final : private juce::Timer
 {
 public:
     explicit StudioMount(Cs80AudioProcessor& p)
-        : processor(p), toolbar(p), scope(p), controllers(p), compare(p)
+        : processor(p), toolbar(p), scope(p), controllers(p), compare(p), qwerty(p.getKeyboardState())
     {
         controllers.setComponentID("controllers_strip");
         scope.setComponentID("voice_monitor");
+        // The editor state saved in the plugin state decides how the layer comes back.
+        auto& state = processor.getEditorState();
+        controllersWanted = state.controllersShown.load();
+        qwerty.setEnabled(state.qwertyEnabled.load());
+        setCircuitNotesInTooltips(state.circuitNotes.load());
         startTimerHz(8);
     }
     ~StudioMount() override { stopTimer(); }
@@ -30,7 +36,18 @@ public:
     void setControllersShown(bool shown)
     {
         controllersWanted = shown;
+        processor.getEditorState().controllersShown = shown;
         sync();
+    }
+    void setQwertyEnabled(bool shouldPlay)
+    {
+        qwerty.setEnabled(shouldPlay);
+        processor.getEditorState().qwertyEnabled = shouldPlay;
+    }
+    void setCircuitNotesShown(bool shown)
+    {
+        setCircuitNotesInTooltips(shown);
+        processor.getEditorState().circuitNotes = shown;
     }
     bool areControllersShown() const noexcept { return controllersWanted; }
     void sync()
@@ -50,6 +67,7 @@ public:
     ScopeDrawer scope;
     ControllersStrip controllers;
     CompareSlots compare;
+    QwertyKeyboard qwerty;
 
 private:
     void timerCallback() override { sync(); }

@@ -3482,6 +3482,8 @@ int main(int argc, char** argv)
     // [ws8-studio] begin: modern-layer UI tests (toolbar, Studio view, drawers, interaction, MIDI learn, undo).
     std::puts("UI SMOKE PHASE: studio views");
     cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio interaction");
+    cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
     // [ws8-studio] end
 
     if (failures == 0)
