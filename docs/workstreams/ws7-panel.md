@@ -5,7 +5,16 @@ re-layout, 5.5 readability and rendering, memory-lid editing (from Phase 6 "Edit
 Branch base: integration commit `6719ce4`.
 
 No DSP, engine or host-parameter change is made by this workstream: no new parameters, no circuit-engine sound
-change, and the compatibility gates are unaffected (see the final section).
+change, and the compatibility gates are unaffected (see the final sections).
+
+| Step | State | Where |
+| --- | --- | --- |
+| 1. 5.6 editor code health | done | ArtCommon, dead code, section split, lid art cache, cap variant, LRU PaintCache, parameter listeners |
+| 2. 5.1 panel conformance audit | done, from repository evidence; S2 and owner scans not reachable | docs/PANEL_CONFORMANCE.md |
+| 3. 5.2 main-view re-layout | done; spacing and proportions are declared inferences pending S2 | PanelLayout.h and the section components |
+| 4. 5.5 readability and rendering | done; toolbar tag/index floor left to ws8 | embedded Barlow Condensed, 10.5 px floor, WCAG pass, zoom presets, HiDPI |
+| 5. Memory-lid editing | done | MemoryEditing.h, MemoryLid |
+| 6. 5.7 golden images | done; strict on Linux only | tests/golden, tests/PanelEditorTests.h |
 
 ## Step 1: 5.6 editor code health (done)
 
@@ -213,3 +222,74 @@ CI run on each platform shows its actual difference.
 Measured: two consecutive Linux runs and the post-mutation rebuild match the goldens exactly (0.0000 % changed,
 worst block mean 0.00). Mutation check: legend height x1.01 fails both views as above; restored, both match
 exactly.
+
+## New parameters, sound changes, compatibility
+
+- **New host or core parameters:** none. The tremolo/chorus tabs map onto the existing `chorus_on` and
+  `chorus_mode`; the display size is a user preference file, not a parameter (no AU version hint 14 is used).
+- **Intentional circuit-engine sound changes:** none. No file under `src/core` is touched.
+- **Compatibility gates:** `legacy default`, `legacy tails`, `v1 circuit numerics` and `v2 circuit-engine audio`
+  are byte-identical (see the final message for the run).
+
+## Entries for HARDWARE_COVERAGE.md (2026-10-31)
+
+- **2026-10-31, panel geometry, colours, lever directions and labels (physical presentation row):** the main view
+  follows [PANEL_CONFORMANCE.md](../PANEL_CONFORMANCE.md): block-diagram memory lid at the upper left, rows to its
+  right, keyboard contour on the front strip, assigners and EXP/EXP-WAH with sustain/portamento/tremolo in the
+  left-hand block, jack and output switch in a block labelled REAR PANEL; one layout table
+  (`src/plugin/PanelLayout.h`). S2 and the owner's pages were not readable from the session: positions are
+  documented by board, spacing and proportions are declared inferences. Global lever direction (documented
+  "toward the player") is still drawn upward: open.
+- **2026-10-31, row 3 (tone selectors):** the tabs print the full hardware names (S1, O37), including ELECTRIC
+  PIANO for the core's "E. Piano".
+- **2026-10-31, rows 9-10 (keyboard contour):** UI moved to the front strip (Panel 2, VR19-22) after RESONANCE.
+  Engine unchanged.
+- **2026-10-31, rows 13-14 (footswitch assigners) and 17 (EXP / EXP-WAH):** UI moved to the left-hand block with
+  sustain and portamento (Panel 3). Engine unchanged.
+- **2026-10-31, row 15 (tremolo/chorus):** separate ON/OFF, TREMOLO and CHORUS tabs replace the 3-way selector,
+  over the unchanged `chorus_on`/`chorus_mode`. Source conflict recorded: the adjustment procedure's TREMOLO and
+  CHORUS tabs can both be off (and maybe both on); the parameters cannot represent that.
+- **2026-10-31, row 46 (four memory panels):** the closed lid sits at the upper left as on the original; the lid
+  adds STORE PANEL, COPY MEMORY and COPY RANK editing (`src/plugin/MemoryEditing.h`), a software convenience that
+  writes only the existing memory and panel parameters.
+- **2026-10-31, HIGH/LOW output switch row:** UI moved to the REAR PANEL block with the footswitch jack (Panel 5).
+
+## Open items
+
+- **S2 and owner's-manual verification.** Add S2 (02 - Panel Layout) to `scripts/inspect_circuit_sources.py`,
+  run `circuit-inspection.yml`, and replace the inferred spacing, group order along PN2, positions of VOLUME,
+  PITCH, touch response and ring modulator, unlisted cap colours and lid proportions with measured values.
+- **Global lever direction** ("increase toward the player"): needs the per-control owner pages and an inverted
+  drag mapping (ws8 interaction work).
+- **Tremolo/chorus "both off" / "both on":** needs a new engine parameter if the adjustment reading is adopted
+  (ws4 owns OE1/OE2).
+- **Hit targets at 1120 x 700.** The front-strip levers are 27.5 design px wide, 19.3 px at the minimum size
+  (they were 38 / 26.6 px before the keyboard-control levers and full tone names joined the strip). Deck levers
+  are 23.8 px and rocker switches 18.2 px tall there, as before. A >= 24 px hit-target test (ws8, Phase 5.7)
+  will need either an exemption for the strip or a taller-than-wide hit rule.
+- **Toolbar legends** below the 10.5 px floor (program-display tag and index): left to the ws8 toolbar.
+- **Cross-platform goldens:** strict on Linux only; characterise macOS and Windows from one CI run each and
+  decide whether to tighten them there.
+- `AdvancedPanel.cpp` (ws8) and `PresetBrowser.cpp` (ws6) still carry their own wrinkle tile, `fillRelief` and
+  font helpers; they should switch to `ArtCommon.h`.
+
+## Integrator notes
+
+- **Toolbar (ws8).** `KeyButton` now lives in `src/plugin/PanelWidgets.h` as `cs80::panel::KeyButton` (with
+  `ChannelTag`); `PanelLabel`, `MeterBar`, `ActivityLamps`, `PresetWindow` and the new `BrandButton` stay in
+  `PluginEditor.cpp`. The display-size menu currently opens from the brand mark; ws8's toolbar menu should call
+  `Cs80AudioProcessorEditor::setZoomPercent(int)` / `getZoomPercent()` instead (presets in
+  `EditorPreferences::zoomPresets`).
+- **Studio drawer (ws8).** `src/plugin/VoicePlate.h` keeps the live voice-flow display (`cs80::panel::VoicePlate`,
+  `paintBezel`) unmounted. The snapshot logic that fed it (tone and memory voicing for the viewed channel) was in
+  `syncVoicePlate` and can be recovered from commit `8521a29` (`PluginEditor.cpp`).
+- **Undo (ws8).** Memory-lid commands write ordinary APVTS gestures, so the APVTS `UndoManager` will record them.
+- **Self-test strings changed** for anyone adding UI tests: tone tabs are found by "BRASS 1" etc. (not
+  "BRASS\n1"); the tremolo/chorus keys are titled "Tremolo/chorus ON/OFF", "Tremolo/chorus: TREMOLO",
+  "Tremolo/chorus: CHORUS"; the plate's "Show channel I/II voice curves" keys and the channel-tag click are gone;
+  the memory lid component is `cs80::panel::MemoryLid` (title "Memory programmer").
+- **CMake.** Plugin sources are below the ws7 marker. The `cs80_panel_fonts` binary-data target, its two
+  `target_link_libraries` lines and the `CS80_GOLDEN_DIR` definition sit in one commented ws7 block right after
+  the `CS80Snapshots` compile definitions, because they must follow both targets.
+- **Resize limits.** The editor maximum is 3200 x 2000 (was 2400 x 1500); `tests/EditorInitialSizeTests.h` is
+  updated accordingly.
