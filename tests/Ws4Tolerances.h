@@ -28,4 +28,20 @@ inline constexpr double kAliasImprovementDb = 25.0;
 // In-band harmonic magnitudes (h * f0 <= 5 kHz) versus the additive band-limited reference.
 inline constexpr double kHarmonicDb = 0.25;
 } // namespace sub
+
+// Step 2: ring modulator converter (ADJ p19 anchors) and offset multiplier.
+namespace ring
+{
+// Converter law in double versus the anchor-solved reference (relative).
+inline constexpr double kLawRelative = 1.0e-9;
+// ADJ p19 anchors (150 ms, 5 ms) from the rendered carrier period (relative). The
+// procedure itself allows +/-5 %; this bounds the model, not the instrument.
+inline constexpr double kAnchorPeriodRelative = 2.0e-3;
+// Envelope -> frequency law: float realtime and engine telemetry versus reference.
+inline constexpr double kEnvelopeLawRelative = 2.0e-5;
+// Multiplier lines (DC, carrier, signal, both sidebands), coherent DFT versus analytic.
+inline constexpr double kLineDb = 0.01;
+// Engine output line ratios after the downstream linear stages.
+inline constexpr double kEngineLineRatioDb = 0.5;
+} // namespace ring
 } // namespace cs80::ws4_tolerances
