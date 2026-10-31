@@ -547,6 +547,7 @@ private:
             : ranks { Rank(a, voice * kNumRanks), Rank(a, voice * kNumRanks + 1) } {}
 
         bool active = false;
+        bool idleControlsPrimed = false; // one real cold sample precedes decimated scheduling
         bool held = false;
         bool sustained = false;
         bool pedalHeld = false;

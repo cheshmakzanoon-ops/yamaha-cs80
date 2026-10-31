@@ -95,6 +95,7 @@ void Engine::prepare(double hostSampleRate)
             r.trimPan = trimRng.nextBipolar();
         }
         v.active = false;
+        v.idleControlsPrimed = false;
         v.held = false;
         v.sustained = false;
         v.pedalHeld = false;
@@ -233,6 +234,7 @@ void Engine::reset()
     {
         auto& v = voices[(size_t) vi];
         v.active = false;
+        v.idleControlsPrimed = false;
         v.held = false;
         v.sustained = false;
         v.pedalHeld = false;
@@ -263,8 +265,9 @@ void Engine::reset()
         v.keyNode.track();
         v.touch.reset();
         v.touchA = v.touchB = v.touchC = 0.0f;
-        // Stagger the idle steps so the eight circuits do not all step at once.
-        v.idleClock = vi * idleStepSamples / kNumVoices;
+        // This counter is physical elapsed time, not a scheduling offset.
+        // The first-step threshold in tickRanks staggers work without inventing time.
+        v.idleClock = 0;
         idleNoise[(size_t) vi] = Rng(kIdleNoiseSeed + (std::uint32_t) vi);
         if (freeRunning)
         {
@@ -2027,10 +2030,15 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         // Circuit engine (Phase 2.1): a silent circuit keeps running. It is
         // clocked once per idle step rather than every sample, and caught up
         // exactly when it is next assigned (ContinuousVoiceCircuit.h).
+        // A cold circuit has no previous controls to interpolate. Run exactly
+        // its first physical sample to seed them; never invent a zero-Hz past.
+        const bool coldBootstrap = freeRunning && !v.active && !v.idleControlsPrimed;
         int idleSamples = 0;
-        if (! v.active)
+        if (! v.active && !coldBootstrap)
         {
-            if (! freeRunning || ++v.idleClock < idleStepSamples)
+            const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
+            const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
+            if (! freeRunning || ++v.idleClock < due)
                 continue;
             idleSamples = v.idleClock;
             v.idleClock = 0;
@@ -2193,7 +2201,7 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
             x = sawPulse;
             // The shared RNG draw is consumed in both engines so oscillator start
             // phases keep their sequence; the circuit engine hears the SUB29 sample.
-            const float rankNoise = audioRng.nextBipolar();
+            const float rankNoise = coldBootstrap ? 0.0f : audioRng.nextBipolar();
             x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
             x *= 0.9f;
             }
@@ -2277,6 +2285,15 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
                 }
             }
 
+            if (coldBootstrap)
+            {
+                // Seed oscillator/filter time and controls only. The VCA keeps
+                // its existing closed idle treatment and cold LI convention.
+                r.vca.relaxIdle(1.0 / sr);
+                r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
+                continue;
+            }
+
             const float sine = sineWave * rs.sine;
             // Legacy: SUB VCA modulation adds to the level CV. Circuit engine:
             // it drives the IG00151 exponential input (Vca.h) instead, so it is
@@ -2333,6 +2350,7 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
             mixR += voiceOut * panRight;
         }
 
+        v.idleControlsPrimed = true;
         if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
         {
             v.active = false;
