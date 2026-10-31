@@ -234,6 +234,11 @@ if (CS80_BUILD_TESTS)
     # [ws7-panel] register this workstream's core tests below this line.
 
     # [ws8-studio] register this workstream's core tests below this line.
+    add_executable(cs80_evidence_register_tests tests/EvidenceRegisterTests.cpp)
+    target_include_directories(cs80_evidence_register_tests PRIVATE src)
+    add_test(NAME cs80_evidence_register_tests
+             COMMAND cs80_evidence_register_tests ${CMAKE_CURRENT_SOURCE_DIR}/docs)
+    set_tests_properties(cs80_evidence_register_tests PROPERTIES TIMEOUT 30)
 endif()
 
 add_executable(cs80_render src/tools/render_cli.cpp)
