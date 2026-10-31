@@ -184,15 +184,69 @@ byte-identical, and V2 matches the published audio commit. See
 [KERNEL_CACHE_QUALIFICATION.md](KERNEL_CACHE_QUALIFICATION.md) for the exact
 oracle, residual guard and rejected alternative.
 
+## Continuation: pipeline layout and exact receiver reuse
+
+`12070683b1e77b98df28beec70488b84aef0b5b8` separates global, rank, mix and
+output work and stores all sixteen chains as aligned arrays by rank field.
+The sample arithmetic, voice order and RNG draw order are unchanged. Strict
+compatibility on that frozen commit passes all four captures, including the
+preceding V2 pin. The three-round held-pair range is `0.59516–0.82834` RTF,
+quiet idle `0.13589`; the layout refactor alone does not establish a speedup.
+
+`c3c0f5c250c83e74340c629d0f0e188631aee30e` reuses source receiver-network
+readouts only when every input and resonance value is exactly identical.
+All envelopes and TWS nodes continue to advance. Every parameter/selection
+transaction invalidates the cache. The three-round held-pair range becomes
+`0.55860–0.83918`, moving controls `0.80646`, quiet idle `0.09685` RTF. The
+idle improvement is useful but remains well above the 0.02 target. Strict
+compatibility on the frozen receiver-cache commit passes all four captures. Raw timings
+for both changes are archived with their actual source commits.
+
+## Continuation: full-band nodal accuracy
+
+Audio commit `4917708268d8eed177670f4d270dbc50fc08e831`, followed by pin
+`9246dbb2584eb2d87d744b7a52b43661bc7f15ce`, replaces the frequency-dependent
+trapezoidal phase error with a fourth-order matched-pole correction and its
+causal input-history term. The continuous network, OTA law and all previously
+registered error limits remain unchanged. The full-grid assertions now cover
+every registered cutoff, Q, configuration and rate; the earlier passing-subgrid
+restrictions are removed. This strengthens the gate.
+
+The 88.2 kHz full-band relative error improves from about `0.1403` to
+`0.04884` (limit `0.08`), and the 192 kHz result from about `0.03495` to
+`0.001954` (limit `0.02`). The worst core-band error is `0.008916` (limit
+`0.03`). Independent full-matrix/direct measurements, nonlinear trajectories,
+cache rebuilds and all 73,918 idle-wake checks pass; phase-removal and
+input-history-removal mutations fail. See
+[IG00156_PHASE_CORRECTION.md](IG00156_PHASE_CORRECTION.md).
+Strict V2 verification on the separate pin commit passes all four captures:
+legacy default, legacy tails and V1 are byte-identical to their frozen pins,
+and V2 is byte-identical to the published phase-correction audio commit.
+
+This accuracy correction has a measured CPU cost. Compared on snapshots with
+the two kernel caches but before the pipeline/receiver changes, held-pair
+minimum-of-three medians rise from `0.58495–0.81223` to `0.73705–1.09177`,
+moving controls from `0.77993` to `1.04817`, and quiet idle from `0.13394`
+to `0.14053`. These are software measurements on this shared cloud host;
+the CPU target is not met and further optimization remains necessary.
+
+The native ADJ review confirms the printed-p11 setup (PDF page13), including
+its CP3 probe and VR7/VR8 adjustment sequence. The HP amplitude discrepancy is
+retained. M41 also shows the LP AI 150 kΩ as a shunt to ground, conflicting
+with the current declared series-source interpretation. Neither observation
+is curve-fit into a gain correction. See
+[evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`031a3330ca86e4ee2251ffa39bb665ebb7032d3f`** (constant nodal Jacobian
-  cache). Pin commit `85e048eac316969764acfb5791716412638ad33b`.
-  Earlier V2 pins, for historical circuit-engine renders: `6bf6055` (oscillator
+  **`4917708268d8eed177670f4d270dbc50fc08e831`** (full-band nodal phase
+  correction). Pin commit `9246dbb2584eb2d87d744b7a52b43661bc7f15ce`.
+  Earlier V2 pins, for historical circuit-engine renders: `031a333` (Jacobian
+  cache), `6bf6055` (oscillator
   event cache), `00ceccf` (integrated
   model),
   `f6b126d` (Phase 1.1 filter), `131f72b` (Phase 1.3 envelopes), `228459c`
