@@ -187,3 +187,30 @@ is exactly identical, and its omitted-note-off control retains the same
 large edge (larger at 48/96 kHz). Thus the metric remains open; there is still
 no evidence that this edge comes from an instantaneous release reset.
 See `click-causality-programmer.csv` and `cold-programmer-before.csv`.
+
+
+### Concrete timing and level changes
+
+The following are compiled model predictions at each program's original
+parameter values, with no per-program correction. Both ranks have the same
+values in these two programs; the raw trace includes each rank separately.
+
+| Program / control | Physical-unit API value | Electrical programmer prediction |
+| --- | ---: | ---: |
+| Bass Stack filter attack | 6 ms | 82.568 ms |
+| Bass Stack VCA attack | 4 ms | 52.763 ms |
+| Bass Stack filter release | 0.180 s | 1.823875 s |
+| Bass Stack filter-path gain | 0.800000 | 0.426763 |
+| Replicant Brass filter attack | 380 ms | 654.030 ms |
+| Replicant Brass VCA attack | 260 ms | 552.017 ms |
+| Replicant Brass filter release | 1.000 s | 3.824099 s |
+| Replicant Brass filter-path gain | 0.800000 | 0.427319 |
+
+These differences are substantial. They follow the registered **unloaded**
+control coordinate and inferred 50 kΩ linear pots feeding loaded buses. They
+must not be presented as measured CS-80 timings, as preservation of physical
+seconds labels, or as proof that charge continuity caused the Bass score
+improvement. The new electrical programmer response slows that program's
+attack; the separate charge correction changes its retrigger score only about
+0.0001 at 44.1/48 kHz. The circuit-source boundary and interface coordinate
+remain independently reviewable assumptions. See `programmer-control-times.csv`.

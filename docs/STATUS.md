@@ -275,15 +275,52 @@ The CPU target remains open.
 The coordinate, electrical equations, mutation results and causal comparison
 are in [PROGRAMMER_INTEGRATION.md](evidence/continuation-2026-10-31/PROGRAMMER_INTEGRATION.md).
 
+## Continuation: filter-envelope charge continuity
+
+Audio commit `c54c476c2ee8a3d332846579ce9433f219fe996c` removes a genuine
+zero-time state discontinuity. The old first assignment replaced zero stored
+filter-envelope charge with IL: **1.440 V** on the original physical PANEL
+fixture, **0.590678 V** after the loaded programmer mapping. The corrected
+untriggered idle state approaches IL through the existing release RC law,
+and every circuit assignment preserves the current charge. Sustain II also
+retains released filter charge. Legacy reset behavior is unchanged.
+No new time constant, affine offset, warm-state shortcut or output fade is used.
+
+The registered gate passes **1,519 checks**, and all six deliberate continuity
+mutations fail. The existing active-tail gate passes **49,732 checks**, note-off
+continuity **540**, source integration **135,739**, and the unchanged wake
+accuracy bounds pass **73,965 checks**, worst residual **−43.08 dB** against
+−40 dB. The original Sustain II assertion has been made policy-explicit: all
+16 circuit capacitors retain charge in both circuit policies and all 16
+Legacy capacitors still reset. See [COLD_FILTER_ENVELOPE.md](COLD_FILTER_ENVELOPE.md).
+
+Bass Stack's new-programmer retrigger scores are
+**0.281643 / 0.297817 / 0.390698** at 44.1 / 48 / 96 kHz. The small change
+from the preceding programmer-only scores correctly separates charge
+continuity from the much larger programmer response change. Funky 1+2
+note-off scores remain **1.582095 / 1.569018 / 1.227796**, while the same
+render with note-off omitted gives **1.581942 / 1.601897 / 1.258930**.
+The original score gate remains open even though the event-time capacitor
+continuity regression is exactly zero.
+
+Three 1,024-callback rounds at 48 kHz / 256 frames are archived. The
+held-pair minimum-of-three median range is **0.76142–1.10352 RTF**,
+moving controls **1.05485**, quiet idle **0.14609**. These snapshots
+share the preceding DSP-only base; separately qualified CPU optimizations
+are integrated and measured independently. After the separate pin commit,
+strict compatibility passes all four complete captures: both Legacy traces,
+V1 numerics, and V2 audio against the published charge-preservation commit.
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`d66d2985c93e1ec0fa9788bebf667c2919d02b50`** (electrical memory/PANEL
-  programmer routing). Pin commit `c14db9c8ed1ea3d1a42e8f85ec7962f7bc8b2043`.
-  Earlier V2 pins, for historical circuit-engine renders: `4917708` (full-band
+  **`c54c476c2ee8a3d332846579ce9433f219fe996c`** (retained filter-envelope
+  charge from first assignment). Pin commit `70ec7fd068b265d3d6fcdd7a0ac319efc41da77d`.
+  Earlier V2 pins, for historical circuit-engine renders: `d66d298` (electrical
+  programmer), `4917708` (full-band
   nodal phase correction), `031a333` (Jacobian
   cache), `6bf6055` (oscillator
   event cache), `00ceccf` (integrated
