@@ -239,6 +239,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_evidence_register_tests
              COMMAND cs80_evidence_register_tests ${CMAKE_CURRENT_SOURCE_DIR}/docs)
     set_tests_properties(cs80_evidence_register_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_midi_learn_tests tests/MidiLearnTests.cpp)
+    target_include_directories(cs80_midi_learn_tests PRIVATE src)
+    target_link_libraries(cs80_midi_learn_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_midi_learn_tests COMMAND cs80_midi_learn_tests)
+    set_tests_properties(cs80_midi_learn_tests PROPERTIES TIMEOUT 60)
 endif()
 
 add_executable(cs80_render src/tools/render_cli.cpp)

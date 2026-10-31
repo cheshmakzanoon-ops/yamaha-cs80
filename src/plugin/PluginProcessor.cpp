@@ -450,6 +450,7 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isController())
     {
+        if (midiLearnConsumes(message.getControllerNumber())) return;   // [ws8-studio] a learned controller drives its parameter instead
         if (message.getControllerNumber() == 11 && !engine.isParityMode())
             expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
         engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
@@ -497,6 +498,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     cs80::KeyboardEventQueue<>::Batch uiEvents;
     auto uiCount = keyboardEvents.take(uiEvents);
 
+    applyMidiLearn(midi);   // [ws8-studio] learned controllers move their parameters before this block reads them
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
@@ -829,6 +831,7 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
     state.setProperty(stateSchemaKey, stateSchemaVersion, nullptr);
+    writeStudioState(state);   // [ws8-studio]
     if (auto xml = state.createXml())
     {
         auto text = xml->toString();
@@ -846,6 +849,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(stateType))
         {
+            readStudioState(tree);   // [ws8-studio] also removes those children from the parameter tree
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
@@ -971,6 +975,8 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(stateType))
         {
+            for (const char* child : { "MIDI_LEARN", "UI_STATE" })   // [ws8-studio] a preset never replaces session state
+                tree.removeChild(tree.getChildWithName(child), nullptr);
             auto restored = normaliseRestoredState(tree);
             restored.getChildWithProperty("id", parameterId(cs80::P_parityMode))
                 .setProperty("value", getParamValue(cs80::P_parityMode), nullptr);
@@ -980,4 +986,94 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
             // DSP state is updated by the next audio block, not the state-loading thread.
         }
     }
+}
+
+// ---------------------------------------------------------------------------
+// [ws8-studio] MIDI learn and editor state
+// ---------------------------------------------------------------------------
+int Cs80AudioProcessor::hostParameterIndex(int coreIndex) const
+{
+    if (coreIndex < 0 || coreIndex >= cs80::P_numParams)
+        return -1;
+    const auto* p = apvts.getParameter(parameterId(coreIndex));
+    return p != nullptr ? p->getParameterIndex() : -1;
+}
+
+void Cs80AudioProcessor::applyMidiLearn(const juce::MidiBuffer& midi) noexcept
+{
+    // Lock-free on this side: the map is atomics only. setValueNotifyingHost is the path JUCE's own
+    // wrappers use for host automation on the audio thread. PURE CS-80 has no MIDI learn.
+    const auto* parity = parameterValues[(size_t) cs80::P_parityMode];
+    midiLearnLive = parity == nullptr || parity->load(std::memory_order_relaxed) < 0.5f;
+    if (! midiLearnLive || midi.isEmpty())
+        return;
+    const auto& parameters = getParameters();
+    for (const auto metadata : midi)
+    {
+        if (metadata.numBytes != 3 || (metadata.data[0] & 0xf0) != 0xb0 || metadata.data[1] >= 0x80 || metadata.data[2] >= 0x80)
+            continue;
+        const int target = midiLearn.handleController(metadata.data[1]);
+        if (target >= 0 && target < parameters.size())
+            parameters.getUnchecked(target)->setValueNotifyingHost((float) metadata.data[2] / 127.0f);
+    }
+}
+
+void Cs80AudioProcessor::writeStudioState(juce::ValueTree& state) const
+{
+    juce::ValueTree learn("MIDI_LEARN");
+    learn.setProperty("version", cs80::MidiLearnMap::kStateVersion, nullptr);
+    const auto& parameters = getParameters();
+    for (int cc = 0; cc < cs80::MidiLearnMap::kNumControllers; ++cc)
+    {
+        const int index = midiLearn.parameterFor(cc);
+        if (index < 0 || index >= parameters.size())
+            continue;
+        if (auto* p = dynamic_cast<juce::AudioProcessorParameterWithID*>(parameters.getUnchecked(index)))
+        {
+            juce::ValueTree map("MAP");
+            map.setProperty("cc", cc, nullptr);
+            map.setProperty("param", p->paramID, nullptr);
+            learn.appendChild(map, nullptr);
+        }
+    }
+    state.appendChild(learn, nullptr);
+
+    juce::ValueTree ui("UI_STATE");
+    ui.setProperty("version", editorStateVersion, nullptr);
+    ui.setProperty("tourSeen", editorState.tourSeen.load() ? 1 : 0, nullptr);
+    ui.setProperty("qwerty", editorState.qwertyEnabled.load() ? 1 : 0, nullptr);
+    ui.setProperty("circuitNotes", editorState.circuitNotes.load() ? 1 : 0, nullptr);
+    ui.setProperty("controllers", editorState.controllersShown.load() ? 1 : 0, nullptr);
+    state.appendChild(ui, nullptr);
+}
+
+void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
+{
+    // A restored session owns its map: a state without one (or from before this feature) has no mappings.
+    midiLearn.clearAll();
+    const auto learn = state.getChildWithName("MIDI_LEARN");
+    if (learn.isValid())
+    {
+        const auto& parameters = getParameters();
+        for (const auto& map : learn)
+        {
+            if (! map.hasType("MAP"))
+                continue;
+            const int cc = (int) map.getProperty("cc", -1);
+            const auto id = map.getProperty("param").toString();
+            for (int index = 0; index < parameters.size(); ++index)
+                if (auto* p = dynamic_cast<juce::AudioProcessorParameterWithID*>(parameters.getUnchecked(index)); p != nullptr && p->paramID == id)
+                {
+                    midiLearn.assign(cc, index);   // refuses unlearnable controllers
+                    break;
+                }
+        }
+    }
+    const auto ui = state.getChildWithName("UI_STATE");
+    editorState.tourSeen = ui.isValid() && (bool) ui.getProperty("tourSeen", false);
+    editorState.qwertyEnabled = ! ui.isValid() || (bool) ui.getProperty("qwerty", true);
+    editorState.circuitNotes = ui.isValid() && (bool) ui.getProperty("circuitNotes", false);
+    editorState.controllersShown = ui.isValid() && (bool) ui.getProperty("controllers", false);
+    state.removeChild(learn, nullptr);
+    state.removeChild(ui, nullptr);
 }
