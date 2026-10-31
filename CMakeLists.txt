@@ -325,6 +325,8 @@ if (CS80_BUILD_PLUGIN)
         # [ws7-panel] add this workstream's plugin sources below this line.
 
         # [ws8-studio] add this workstream's plugin sources below this line.
+        src/plugin/StudioToolbar.cpp
+        src/plugin/StudioDrawers.cpp
 
     )
     target_sources(CS80Reference PRIVATE ${CS80_PLUGIN_SOURCES})

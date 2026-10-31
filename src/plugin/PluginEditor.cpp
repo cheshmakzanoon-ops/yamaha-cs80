@@ -4,6 +4,7 @@
 #include <tuple>
 
 #include "AdvancedPanel.h"
+#include "StudioMount.h"   // [ws8-studio]
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
 #include "UiComponents.h"
@@ -2553,6 +2554,62 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncSubMode();
         syncSourceStatus();
         syncVoicePlate();
+
+        // [ws8-studio] begin: Studio toolbar, voice monitor drawer and controllers strip.
+        studio = std::make_unique<ui::StudioMount>(processor);
+        for (auto* c : std::initializer_list<juce::Component*> { &prevButton, &nextButton, &presetWindow, &browseButton, &saveButton,
+                                                                 &initButton, &advancedButton, &presetLabel, &presetTagLabel,
+                                                                 &presetIndexLabel, &presetNumberLabel })
+            c->setVisible(false);                       // the Studio toolbar takes over this cluster
+        for (auto* wheel : std::initializer_list<juce::Component*> { &pitchWheel, &modWheel })
+        {
+            optionComponents.erase(std::remove(optionComponents.begin(), optionComponents.end(), wheel), optionComponents.end());
+            wheel->setVisible(false);                   // the wheels live in the controllers strip
+        }
+        addAndMakeVisible(studio->toolbar);
+        addChildComponent(studio->scope);
+        addChildComponent(studio->controllers);
+        {
+            ui::StudioToolbar::Actions actions;
+            actions.presetDisplay = [this]
+            {
+                return ui::StudioToolbar::PresetDisplay { presetNumberLabel.getText(), presetLabel.getText(),
+                                                          (presetTagLabel.shownText() + "   " + presetIndexLabel.shownText()).trim(), presetDirty };
+            };
+            actions.stepPreset = [this](int direction) { if (confirmDiscard(direction < 0 ? prevButton : nextButton)) stepPreset(direction); };
+            actions.stepArmed = [this](int direction) { return (direction < 0 ? prevButton : nextButton).isArmed(); };
+            actions.openLibrary = [this] { showBrowser(! browserVisible, true); };
+            actions.libraryOpen = [this] { return browserVisible; };
+            actions.selectCompare = [this](int slot) { studio->compare.select(slot); syncToneMarks(); };
+            actions.activeCompare = [this] { return studio->compare.active(); };
+            actions.copyCompare = [this] { studio->compare.copyToOther(); };
+            actions.toggleStudio = [this] { showAdvanced(! advancedVisible, true); };
+            actions.studioOpen = [this] { return advancedVisible; };
+            actions.showEvidence = [this] { showAdvanced(true, true); advanced.showTab(ui::StudioTab::settings); };
+            actions.savePreset = [this] { if (saveButton.onClick) saveButton.onClick(); };
+            actions.initPatch = [this]
+            {
+                const auto& bank = processor.getFactoryPresets();
+                for (int i = 0; i < (int) bank.size(); ++i)
+                    if (juce::String(bank[(size_t) i].name).equalsIgnoreCase("Init Patch"))
+                    {
+                        processor.loadFactoryPreset(i);
+                        break;
+                    }
+                syncToneMarks();
+            };
+            actions.toggleScope = [this]
+            {
+                studio->scope.setVisible(! studio->scope.isVisible());
+                if (studio->scope.isVisible()) studio->scope.toFront(true);
+            };
+            actions.scopeOpen = [this] { return studio->scope.isVisible(); };
+            actions.toggleControllers = [this] { studio->setControllersShown(! studio->areControllersShown()); };
+            actions.controllersShown = [this] { return studio->areControllersShown(); };
+            studio->toolbar.setActions(std::move(actions));
+        }
+        studio->scope.onClose = [this] { studio->scope.setVisible(false); };
+        // [ws8-studio] end
     }
 
     ~Impl() override
@@ -4218,6 +4275,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advanced.setBounds(rr(geo::overlay));
         browser.setBounds(rr(geo::overlay));
         memoryProgrammer.setBounds(rr(geo::memoryLid));
+        // [ws8-studio] begin: toolbar over the program cluster (x 250-1114), drawers over the panel and keybed.
+        if (studio != nullptr)
+        {
+            studio->toolbar.setBounds(r(250.0f, 2.0f, ui::StudioToolbar::kDesignW, ui::StudioToolbar::kDesignH));
+            studio->scope.setBounds(r(56.0f, 70.0f, ui::ScopeDrawer::kDesignW, ui::ScopeDrawer::kDesignH));
+            studio->controllers.setBounds(r(52.0f, 758.0f, ui::ControllersStrip::kDesignW, ui::ControllersStrip::kDesignH));
+        }
+        // [ws8-studio] end
     }
 
     Cs80AudioProcessor& processor;
@@ -4309,6 +4374,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     bool advancedVisible = false;
     bool browserVisible = false;
+
+    std::unique_ptr<ui::StudioMount> studio;   // [ws8-studio] declared last: destroyed first
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Impl)
 };

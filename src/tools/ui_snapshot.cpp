@@ -11,6 +11,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/StudioUiTests.h"   // [ws8-studio]
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -3477,6 +3478,11 @@ int main(int argc, char** argv)
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
+
+    // [ws8-studio] begin: modern-layer UI tests (toolbar, Studio view, drawers, interaction, MIDI learn, undo).
+    std::puts("UI SMOKE PHASE: studio views");
+    cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
+    // [ws8-studio] end
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

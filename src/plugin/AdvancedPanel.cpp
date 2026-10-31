@@ -1,5 +1,6 @@
 #include "AdvancedPanel.h"
 
+#include "EvidenceRegister.h"
 #include "PluginProcessor.h"
 #include "core/Dsp.h"
 
@@ -57,7 +58,7 @@ juce::String shortcutName()
 }
 juce::Colour pageColour(int i)
 {
-    return i == 0 ? capGreen : (i == 1 ? capPink : (i == 2 ? capYellow : capCream));
+    return i == 0 ? capGreen : (i == 1 ? capPink : (i == 2 ? capYellow : (i == 3 ? capCream : capGrey)));
 }
 // Whichever of dark or white ink reads better on the plate.
 juce::Colour inkFor(juce::Colour plate)
@@ -3198,6 +3199,75 @@ struct Placed
     juce::Component* component = nullptr;
     Rect bounds;
 };
+
+// Evidence chip colours: green for source-derived laws, amber for a source route with an inferred law,
+// warm grey for a declared inference, cool blue for the modern layer (never one of the cap colours alone).
+juce::Colour basisColour(evidence::Basis b)
+{
+    switch (b)
+    {
+        case evidence::Basis::sourceDerived: return juce::Colour(0xff4fbf6e);
+        case evidence::Basis::sourceTopologyInferredLaw: return juce::Colour(0xffe2b04a);
+        case evidence::Basis::engineeringInferred: return juce::Colour(0xffc9bfae);
+        case evidence::Basis::modernExtension: return juce::Colour(0xff6cc6e6);
+    }
+    return ivory;
+}
+
+juce::String basisShort(evidence::Basis b)
+{
+    switch (b)
+    {
+        case evidence::Basis::sourceDerived: return "SOURCE";
+        case evidence::Basis::sourceTopologyInferredLaw: return "SOURCE ROUTE / INFERRED LAW";
+        case evidence::Basis::engineeringInferred: return "INFERRED";
+        case evidence::Basis::modernExtension: return "MODERN";
+    }
+    return {};
+}
+
+void fitted(juce::Graphics& g, const juce::String& s, Rect r, float h, bool bold, juce::Colour c, Just j = Just::centredLeft)
+{
+    g.setFont(fnt(h, bold, 0.01f));
+    g.setColour(c);
+    g.drawFittedText(s, r.toNearestInt(), j, 1, 0.86f);
+}
+
+// A small evidence chip: the basis in words on a tint of its colour, the coverage codes after it. A chip too narrow
+// for the full words uses the compact form rather than squeezing the type.
+void basisChip(juce::Graphics& g, Rect r, evidence::Basis b, const juce::String& codes)
+{
+    const auto c = basisColour(b);
+    g.setColour(c.withAlpha(0.20f));
+    g.fillRoundedRectangle(r, 3.0f);
+    g.setColour(c.withAlpha(0.85f));
+    g.drawRoundedRectangle(r.reduced(0.5f), 3.0f, 1.0f);
+    auto label = basisShort(b) + (codes.isNotEmpty() ? "  " + codes : juce::String());
+    if (textWidth(label, 12.5f, true, 0.01f) > r.getWidth() - 16.0f && b == evidence::Basis::sourceTopologyInferredLaw)
+        label = "ROUTE + INFERRED" + (codes.isNotEmpty() ? "  " + codes : juce::String());
+    fitted(g, label, r.reduced(8.0f, 0.0f), 12.5f, true, c.brighter(0.25f), Just::centred);
+}
+
+// The circuit-engine column of the register: "same as legacy" rows say so instead of a bare "same".
+juce::String circuitText(const evidence::ModelEntry& row)
+{
+    const juce::String circuit(row.circuit);
+    if (circuit == "same")
+        return "same as legacy";
+    if (circuit.startsWith("same "))
+        return "same as legacy " + circuit.substring(5);
+    if (circuit.startsWith("same;"))
+        return "same as legacy;" + circuit.substring(5);
+    return circuit;
+}
+
+const evidence::ModelEntry* modelEntry(const char* subsystem)
+{
+    for (const auto& row : evidence::kModelRegister)
+        if (juce::String(row.subsystem) == subsystem)
+            return &row;
+    return nullptr;
+}
 } // namespace
 
 class AdvancedPage final : public juce::Component
@@ -3212,6 +3282,16 @@ public:
     }
 
     std::function<void(const juce::String&, const juce::String&, juce::Component*)> onInfo;
+
+    // Moves everything recorded inside its scope by (dx, dy) design units, so a module written for one
+    // place on the former Advanced pages can be placed elsewhere on a Studio tab unchanged.
+    struct Origin
+    {
+        Origin(AdvancedPage& p, float dx, float dy) : page(p), previous(p.off) { p.off = { previous.x + dx, previous.y + dy }; }
+        ~Origin() { page.off = previous; }
+        AdvancedPage& page;
+        Pt previous;
+    };
 
     void resized() override
     {
@@ -3246,8 +3326,8 @@ public:
     {
         const bool hasInfo = info.isNotEmpty();
         const bool lamped = lamp != nullptr && ! accent.isTransparent();
-        artOps.push_back([r, title, primary, accent, hasInfo, lamped](juce::Graphics& g)
-                         { drawModule(g, r, title, primary, accent, hasInfo, ! lamped); });
+        artOps.push_back([a = at(r), title, primary, accent, hasInfo, lamped](juce::Graphics& g)
+                         { drawModule(g, a, title, primary, accent, hasInfo, ! lamped); });
         if (hasInfo)
             infoButton({ r.getRight() - 76.0f, r.getY() + 4.0f, 36.0f, 36.0f }, title, info);
         if (lamped)
@@ -3266,20 +3346,20 @@ public:
         raw->onClick = [this, raw] { if (onInfo) onInfo(raw->heading, raw->body, raw); };
         addAndMakeVisible(*raw);
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         return raw;
     }
 
     void label(const juce::String& s, Rect r, float size = 12.5f, juce::Colour c = ivoryDim,
                Just j = Just::centredLeft, float kern = 0.09f)
     {
-        artOps.push_back([=](juce::Graphics& g) { engrave(g, s, r, size, true, c, j, kern); });
+        artOps.push_back([=, a = at(r)](juce::Graphics& g) { engrave(g, s, a, size, true, c, j, kern); });
     }
 
     // Quiet running text for a plot or a group: 11 px or more, never an engraved legend.
     void note(const juce::String& s, Rect r, float size = 12.5f, Just j = Just::centredLeft, bool bold = false)
     {
-        artOps.push_back([=](juce::Graphics& g) { text(g, s, r, size, bold, axisInk(), j, 0.02f); });
+        artOps.push_back([=, a = at(r)](juce::Graphics& g) { text(g, s, a, size, bold, axisInk(), j, 0.02f); });
     }
 
     // Dim controls that do nothing in the present state. They stay editable: a value set now is used later.
@@ -3301,7 +3381,7 @@ public:
     // The one caption style for control headings: same area height as a knob title keeps baselines level.
     void caption(const juce::String& s, Rect area, Just j = Just::centred, float size = 12.5f)
     {
-        artOps.push_back([=](juce::Graphics& g) { drawControlCaption(g, s, area, j, size); });
+        artOps.push_back([=, a = at(area)](juce::Graphics& g) { drawControlCaption(g, s, a, j, size); });
     }
 
     // The same caption as a live component, for a heading that must dim together with its control.
@@ -3312,12 +3392,103 @@ public:
 
     void bracket(float x0, float x1, float y, const juce::String& title, float size = 12.5f)
     {
-        artOps.push_back([=](juce::Graphics& g) { bracketTitle(g, x0, x1, y, title, size); });
+        artOps.push_back([=, o = off](juce::Graphics& g) { bracketTitle(g, x0 + o.x, x1 + o.x, y + o.y, title, size); });
     }
 
-    void custom(std::function<void(juce::Graphics&)> op) { artOps.push_back(std::move(op)); }
+    void custom(std::function<void(juce::Graphics&)> op)
+    {
+        if (off.x == 0.0f && off.y == 0.0f)
+        {
+            artOps.push_back(std::move(op));
+            return;
+        }
+        artOps.push_back([o = off, op = std::move(op)](juce::Graphics& g)
+        {
+            juce::Graphics::ScopedSaveState state(g);
+            g.addTransform(juce::AffineTransform::translation(o.x, o.y));
+            op(g);
+        });
+    }
 
     void tick(std::function<void()> fn) { tickers.push_back(std::move(fn)); }
+
+    // ---- evidence -------------------------------------------------------------------------------
+    // A module listing the model-register rows of the named subsystems: what the circuit engine runs and
+    // what that law rests on. The rows come from EvidenceRegister.h, the one compiled copy of the register.
+    void modelNotes(Rect r, const juce::String& title, std::vector<const char*> subsystems)
+    {
+        module(r, title, true, juce::Colours::transparentBlack,
+               "Which model makes each part of the sound, and what it rests on. SOURCE: the law is taken from the Yamaha "
+               "schematics or manuals. SOURCE ROUTE / INFERRED LAW: the circuit path is from the sources, how strongly it acts "
+               "is a declared estimate. INFERRED: a declared engineering model where the public sources are silent. MODERN: a "
+               "software addition, switched off by PURE CS-80. The letters are the coverage ledger's status codes (IB "
+               "implemented behaviour, A approximate law, M missing, MR measurement required, PC physical controller "
+               "required). Nothing here is a hardware measurement. Settings lists every subsystem.");
+        custom([r, subsystems = std::move(subsystems)](juce::Graphics& g)
+        {
+            const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
+            const float top = r.getY() + 46.0f;
+            const float chipW = juce::jmin(300.0f, w * 0.34f), nameW = juce::jmin(220.0f, w * 0.26f);
+            const float rowH = juce::jmin(54.0f, (r.getBottom() - 18.0f - top) / (float) juce::jmax(1, (int) subsystems.size()));
+            float y = top;
+            for (const char* name : subsystems)
+            {
+                const auto* row = modelEntry(name);
+                if (row == nullptr)
+                    continue;
+                if (y > top)
+                    etchLine(g, x, y, x + w, y, 0.35f);
+                const float textX = x + nameW, textW = w - nameW - chipW - 16.0f;
+                fitted(g, juce::String(row->subsystem).toUpperCase(), { x, y, nameW - 8.0f, rowH }, 13.0f, true, ivory);
+                fitted(g, "CIRCUIT  " + circuitText(*row), { textX, y + rowH * 0.06f, textW, rowH * 0.44f }, 12.5f, false, ivory.withAlpha(0.92f));
+                fitted(g, "LEGACY  " + juce::String(row->legacy) + "      SEE  " + juce::String(row->doc),
+                       { textX, y + rowH * 0.5f, textW, rowH * 0.44f }, 12.5f, false, panelInk());
+                basisChip(g, { x + w - chipW, y + (rowH - 26.0f) * 0.5f, chipW, 26.0f }, row->basis, row->coverage);
+                y += rowH;
+            }
+        });
+    }
+
+    // The whole model register: every subsystem, what each engine runs, the offline reference and the evidence.
+    void evidenceRegister(Rect r)
+    {
+        module(r, "Evidence register", true, pageColour(4),
+               "The model register of docs/STATUS.md, compiled into the instrument. LEGACY is the compatibility engine kept for "
+               "old sessions; CIRCUIT is the circuit engine (ENGINE: CIRCUIT and PURE CS-80). REFERENCE names the offline truth "
+               "or experimental model that holds the realtime model to account; it never makes sound. EVIDENCE says what the "
+               "circuit engine's law rests on and gives the coverage ledger's status codes (IB implemented behaviour, A "
+               "approximate law, M missing, MR measurement required, PC physical controller required). No row is a hardware "
+               "measurement or a claim of verified parity.");
+        custom([r](juce::Graphics& g)
+        {
+            const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
+            const float cols[] = { 0.0f, 0.15f, 0.36f, 0.66f, 0.83f, 1.0f };
+            const char* const heads[] = { "SUBSYSTEM", "LEGACY", "CIRCUIT ENGINE", "REFERENCE (NO SOUND)", "EVIDENCE" };
+            const float headY = r.getY() + 42.0f;
+            for (int c = 0; c < 5; ++c)
+                text(g, heads[c], { x + w * cols[c], headY, w * (cols[c + 1] - cols[c]) - 10.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.08f);
+            etchLine(g, x, headY + 22.0f, x + w, headY + 22.0f, 0.55f);
+            const int n = evidence::kModelRegisterSize;
+            const float top = headY + 26.0f;
+            const float rowH = (r.getBottom() - 14.0f - top) / (float) n;
+            for (int i = 0; i < n; ++i)
+            {
+                const auto& row = evidence::kModelRegister[i];
+                const float y = top + rowH * (float) i;
+                if ((i & 1) == 1)
+                {
+                    g.setColour(juce::Colours::white.withAlpha(0.025f));
+                    g.fillRect(x - 6.0f, y, w + 12.0f, rowH);
+                }
+                auto cell = [&](int c) { return Rect(x + w * cols[c], y, w * (cols[c + 1] - cols[c]) - 10.0f, rowH); };
+                fitted(g, row.subsystem, cell(0), 12.5f, true, ivory);
+                fitted(g, row.legacy, cell(1), 12.5f, false, panelInk());
+                fitted(g, circuitText(row), cell(2), 12.5f, false, ivory.withAlpha(0.92f));
+                fitted(g, row.reference, cell(3), 12.5f, false, panelInk());
+                basisChip(g, cell(4).withSizeKeepingCentre(cell(4).getWidth(), juce::jmin(rowH - 3.0f, 22.0f)), row.basis, row.coverage);
+            }
+        });
+    }
 
     // ---- live widgets ---------------------------------------------------------------------------
     template <class W, class... Args>
@@ -3328,12 +3499,13 @@ public:
         addAndMakeVisible(*raw);
         owned.push_back(std::move(w));
         widgets.push_back(raw);
-        placed.push_back({ raw, r });
-        artOps.push_back([raw, r](juce::Graphics& g)
+        const Rect a = at(r);
+        placed.push_back({ raw, a });
+        artOps.push_back([raw, a](juce::Graphics& g)
         {
             g.saveState();
-            g.addTransform(juce::AffineTransform::scale(r.getWidth() / raw->getDesignW(), r.getHeight() / raw->getDesignH())
-                               .translated(r.getX(), r.getY()));
+            g.addTransform(juce::AffineTransform::scale(a.getWidth() / raw->getDesignW(), a.getHeight() / raw->getDesignH())
+                               .translated(a.getX(), a.getY()));
             raw->paintStatic(g);
             g.restoreState();
         });
@@ -3349,7 +3521,7 @@ public:
         raw->setMinCaptionHeight(kMinFont);
         addAndMakeVisible(*raw);
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         knobs.push_back(raw);
         return raw;
     }
@@ -3379,7 +3551,7 @@ public:
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         return raw;
     }
 
@@ -3391,7 +3563,7 @@ public:
         raw->setExplicitFocusOrder(++focusCounter);
         addAndMakeVisible(*raw);
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         tickers.push_back([raw] { raw->refreshState(); });
         return raw;
     }
@@ -3406,7 +3578,7 @@ public:
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         return raw;
     }
 
@@ -3420,7 +3592,7 @@ public:
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         return raw;
     }
 
@@ -3437,8 +3609,9 @@ public:
         comboAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
-        artOps.push_back([r](juce::Graphics& g) { drawWell(g, r.expanded(2.5f), 4.0f); });
+        const Rect a = at(r);
+        placed.push_back({ raw, a });
+        artOps.push_back([a](juce::Graphics& g) { drawWell(g, a.expanded(2.5f), 4.0f); });
         return raw;
     }
 
@@ -3453,14 +3626,28 @@ public:
             buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                 proc.getAPVTS(), Cs80AudioProcessor::parameterId(index == 1 ? cs80::P_sourcePerformance : cs80::P_parityMode), *raw));
         owned.push_back(std::move(control));
-        placed.push_back({ raw, r });
+        placed.push_back({ raw, at(r) });
         tickers.push_back([raw] { raw->refreshState(); });
+        return raw;
+    }
+
+    // A component made elsewhere (for example a plain button), placed in design space and owned here.
+    template <class C>
+    C* adopt(std::unique_ptr<C> component, Rect r)
+    {
+        auto* raw = component.get();
+        raw->setExplicitFocusOrder(++focusCounter);
+        addAndMakeVisible(*raw);
+        owned.push_back(std::move(component));
+        placed.push_back({ raw, at(r) });
         return raw;
     }
 
     Cs80AudioProcessor& processor() noexcept { return proc; }
 
 private:
+    Rect at(Rect r) const noexcept { return r.translated(off.x, off.y); }
+
     Cs80AudioProcessor& proc;
     std::unique_ptr<ArtLayer> art;
     std::vector<std::function<void(juce::Graphics&)>> artOps;
@@ -3471,6 +3658,7 @@ private:
     std::vector<ParamKnob*> knobs;
     std::vector<LiveWidget*> widgets;
     std::vector<std::function<void()>> tickers;
+    Pt off { 0.0f, 0.0f };
     int focusCounter = 0;
     int infoCounter = 0;
 
@@ -3480,6 +3668,10 @@ private:
 // ---------------------------------------------------------------------------
 // Chassis: crinkle-finished charcoal body between the editor's cheeks, header and footer rails. Cached once.
 // ---------------------------------------------------------------------------
+
+// The tab strip: a recessed glass slot holding five back-lit plates.
+constexpr float kTabGlassX = 357.0f, kTabGlassW = 886.0f;
+constexpr float kTabPlateW = 166.0f, kTabPlateH = 48.0f, kTabPitch = 174.0f, kTabX0 = 367.0f, kTabY = 22.0f;
 
 class AdvChassis final : public juce::Component
 {
@@ -3518,7 +3710,7 @@ public:
         etchLine(g, body.getX() + 14.0f, 904.0f, body.getRight() - 14.0f, 904.0f, 0.6f);
 
         // Tab strip: a recessed black glass slot the illuminated tabs sit in, centred on the panel.
-        glassWell(g, { 357.0f, 14.0f, 886.0f, 68.0f }, 7.0f);
+        glassWell(g, { kTabGlassX, 14.0f, kTabGlassW, 68.0f }, 7.0f);
 
         // Corner screws holding the body to the cheeks.
         for (float x : { 54.0f, kW - 54.0f })
@@ -3538,8 +3730,8 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-// Page tabs: back-lit tone plates in the instrument's cap colours, numbered, with an underline on the
-// active page.
+// Tabs: back-lit tone plates in the instrument's cap colours, numbered, with an underline on the
+// active tab.
 // ---------------------------------------------------------------------------
 
 class AdvPageTab final : public juce::Button
@@ -3553,9 +3745,9 @@ public:
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
         setExplicitFocusOrder(index + 1);
-        setTitle(name);
-        setDescription("Advanced page " + juce::String(index + 1) + " of 4: " + caption + ". Shortcut " + shortcutName() + "+" + juce::String(index + 1)
-                       + ". Left and Right arrows move between pages.");
+        setTitle(name + " tab");
+        setDescription("Studio tab " + juce::String(index + 1) + " of 5: " + caption + ". Shortcut " + shortcutName() + "+" + juce::String(index + 1)
+                       + ". Left and Right arrows move between tabs.");
         setTooltip(name + "  (" + shortcutName() + "+" + juce::String(index + 1) + ")  -  " + caption);
     }
 
@@ -3568,23 +3760,24 @@ public:
         return juce::Button::keyPressed(key);
     }
 
-    // The plate is 212 x 48 design px; the component reaches kPad further on every side so the lit bloom can spill onto the glass slot.
-    static constexpr float kPlateW = 212.0f, kPlateH = 48.0f, kPad = 8.0f;
+    // The plate is kTabPlateW x kTabPlateH design px; the component reaches kPad further on every side so the lit
+    // bloom can spill onto the glass slot.
+    static constexpr float kPad = 8.0f;
 
     bool hitTest(int x, int y) override
     {
-        const float sx = (float) getWidth() / (kPlateW + 2.0f * kPad), sy = (float) getHeight() / (kPlateH + 2.0f * kPad);
+        const float sx = (float) getWidth() / (kTabPlateW + 2.0f * kPad), sy = (float) getHeight() / (kTabPlateH + 2.0f * kPad);
         const float px = (float) x / sx - kPad, py = (float) y / sy - kPad;
-        return px >= 0.0f && px < kPlateW && py >= 0.0f && py < kPlateH;
+        return px >= 0.0f && px < kTabPlateW && py >= 0.0f && py < kTabPlateH;
     }
 
     void paintButton(juce::Graphics& g, bool hovered, bool down) override
     {
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / (kPlateW + 2.0f * kPad), (float) getHeight() / (kPlateH + 2.0f * kPad)));
+        g.addTransform(juce::AffineTransform::scale((float) getWidth() / (kTabPlateW + 2.0f * kPad), (float) getHeight() / (kTabPlateH + 2.0f * kPad)));
         g.addTransform(juce::AffineTransform::translation(kPad, kPad));
         const bool on = getToggleState();
         const auto colour = pageColour(page);
-        const Rect plate(0.0f, 0.0f, kPlateW, kPlateH);
+        const Rect plate(0.0f, 0.0f, kTabPlateW, kTabPlateH);
 
         // The main panel's own tone-selector tab: an unlit page is a dim smoked lens (about 55 percent of its lit
         // brightness, less saturated, cream legend); the open page is lit from behind with an inner glow and a
@@ -3596,7 +3789,7 @@ public:
 
         // The plate travels down and right when lit or pressed; the legend moves with it.
         const float travel = down ? 2.56f : (on ? 1.44f : 0.0f);
-        const Rect face(3.2f + travel, 3.2f + travel, kPlateW - 9.6f, kPlateH - 9.6f);
+        const Rect face(3.2f + travel, 3.2f + travel, kTabPlateW - 9.6f, kTabPlateH - 9.6f);
         const juce::Colour ink = on ? juce::Colour(0xff15120c) : juce::Colour(0xfff6f0dc);
         drawIcon(g, page, { face.getX() + 7.0f, face.getY() + 7.0f, 22.0f, face.getHeight() - 14.0f }, ink, on);
         // Number badge: a dark disc with a cream numeral, readable on every plate.
@@ -3609,7 +3802,8 @@ public:
         // Name: 12.5 px bold on one line.
         g.setFont(fnt(12.5f, true, 0.0f));
         g.setColour(ink);
-        g.drawText(getButtonText(), Rect(face.getX() + 57.0f, face.getY(), face.getWidth() - 59.0f, face.getHeight() - 3.0f), Just::centredLeft, false);
+        g.drawFittedText(getButtonText(), Rect(face.getX() + 57.0f, face.getY(), face.getWidth() - 59.0f, face.getHeight() - 3.0f).toNearestInt(),
+                         Just::centredLeft, 1, 0.9f);
         if (hasKeyboardFocus(true))
             drawFocusRing(g, plate);
     }
@@ -3636,15 +3830,16 @@ private:
                 g.drawLine(b.getX(), b.getCentreY(), b.getRight(), b.getCentreY(), 1.0f);
                 break;
             }
-            case 1: // two interlocked rings: ring modulation
+            case 1: // three white keys and two black keys: the keyboard
             {
-                const float rr = b.getHeight() * 0.33f;
-                g.drawEllipse(b.getCentreX() - rr * 1.15f, b.getCentreY() - rr, rr * 2.0f, rr * 2.0f, 1.8f);
-                g.drawEllipse(b.getCentreX() - rr * 0.85f, b.getCentreY() - rr, rr * 2.0f, rr * 2.0f, 1.8f);
-                g.fillEllipse(b.getCentreX() - 1.5f, b.getCentreY() - 1.5f, 3.0f, 3.0f);
+                const float kw = b.getWidth() / 3.0f, top = b.getY() + 2.0f, h = b.getHeight() - 4.0f;
+                for (int i = 0; i < 3; ++i)
+                    g.drawRect(Rect(b.getX() + kw * (float) i, top, kw, h), 1.2f);
+                for (int i = 1; i < 3; ++i)
+                    g.fillRect(Rect(b.getX() + kw * (float) i - kw * 0.28f, top, kw * 0.56f, h * 0.58f));
                 break;
             }
-            case 2: // three faders: macros and mix
+            case 2: // three faders: effects and macros
             {
                 for (int i = 0; i < 3; ++i)
                 {
@@ -3657,7 +3852,7 @@ private:
                 }
                 break;
             }
-            default: // rising step bars: arpeggio
+            case 3: // rising step bars: arpeggio
             {
                 for (int i = 0; i < 4; ++i)
                 {
@@ -3667,10 +3862,59 @@ private:
                 }
                 break;
             }
+            default: // a toothed wheel: settings
+            {
+                const auto ctr = b.getCentre();
+                const float ro = juce::jmin(b.getWidth(), b.getHeight()) * 0.46f, ri = ro * 0.72f;
+                for (int i = 0; i < 16; ++i)
+                {
+                    const float a = juce::MathConstants<float>::twoPi * (float) i / 16.0f;
+                    const float r = (i / 2) % 2 == 0 ? ro : ri;
+                    const Pt pt(ctr.x + std::sin(a) * r, ctr.y - std::cos(a) * r);
+                    if (i == 0) p.startNewSubPath(pt); else p.lineTo(pt);
+                }
+                p.closeSubPath();
+                g.strokePath(p, juce::PathStrokeType(1.5f));
+                g.drawEllipse(ctr.x - ro * 0.3f, ctr.y - ro * 0.3f, ro * 0.6f, ro * 0.6f, 1.4f);
+                break;
+            }
         }
     }
 
     int page;
+};
+
+// A sub-page key in the header: a satin plate whose lamp is lit on the open sub-page.
+class StudioSubTab final : public juce::Button
+{
+public:
+    StudioSubTab() : juce::Button("SUB-PAGE")
+    {
+        setClickingTogglesState(false);
+        setWantsKeyboardFocus(true);
+        setMouseClickGrabsKeyboardFocus(false);
+    }
+
+    std::function<void(int)> onStep;
+
+    bool keyPressed(const juce::KeyPress& key) override
+    {
+        if (key == juce::KeyPress::leftKey) { if (onStep) onStep(-1); return true; }
+        if (key == juce::KeyPress::rightKey) { if (onStep) onStep(1); return true; }
+        return juce::Button::keyPressed(key);
+    }
+
+    void paintButton(juce::Graphics& g, bool hovered, bool down) override
+    {
+        const auto r = getLocalBounds().toFloat().reduced(1.0f);
+        drawSatinPlate(g, r, getToggleState(), down, hovered, true);
+        const float s = (float) getHeight() / 36.0f;
+        g.setFont(fnt(12.5f * s, true, 0.06f));
+        g.setColour(getToggleState() ? amberBright : ivory);
+        g.drawFittedText(getButtonText(), r.withTrimmedLeft(22.0f * s).reduced(4.0f * s, 0.0f).toNearestInt(), Just::centred, 1, 0.8f);
+        if (hasKeyboardFocus(true))
+            drawFocusRing(g, r);
+    }
 };
 
 // A raised close plate in the same plastic as the toolbar keys.
@@ -3681,8 +3925,8 @@ public:
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
-        setTitle("Close advanced controls");
-        setTooltip("Close advanced controls (Esc)");
+        setTitle("Close the Studio view");
+        setTooltip("Close the Studio view (Esc)");
     }
 
     void paintButton(juce::Graphics& g, bool hovered, bool down) override
@@ -3719,28 +3963,34 @@ class AdvTitleBlock final : public juce::Component
 public:
     AdvTitleBlock() { setInterceptsMouseClicks(false, false); setOpaque(false); }
 
-    void setPage(int index)
+    // `subtitle` false leaves the bottom line to the sub-page keys.
+    void setPage(int index, bool subtitle)
     {
         page = index;
+        showSubtitle = subtitle;
         repaint();
     }
 
     void paint(juce::Graphics& g) override
     {
-        g.addTransform(juce::AffineTransform::scale((float) getWidth() / 270.0f, (float) getHeight() / 78.0f));
-        static const char* const titles[] = { "MODULATION", "SUB OSC / RING", "FX / MACROS", "ARP / PERFORMANCE" };
+        g.addTransform(juce::AffineTransform::scale((float) getWidth() / 286.0f, (float) getHeight() / 78.0f));
+        static const char* const titles[] = { "MODULATION", "KEYBOARD / MPE", "FX / MACROS", "ARP / PERFORMANCE", "SETTINGS" };
         static const char* const sub[] = {
-            "Three LFOs, wheels, pitch range and tuning",
-            "Sub osc, ring, chorus and analog voice",
+            "LFOs, wheels, sub oscillator and ring",
+            "Computer keys, MIDI learn, bend, tuning",
             "Three insert effects, macros and output",
-            "Arpeggiator, glide and render policy" };
-        text(g, "ADVANCED CONTROL", { 0.0f, 2.0f, 270.0f, 13.0f }, 10.0f, true, gold, Just::centredLeft, 0.2f);
-        engrave(g, titles[page], { 0.0f, 16.0f, 270.0f, 34.0f }, 22.0f, true, ivory, Just::centredLeft, 0.06f);
-        text(g, sub[page], { 1.0f, 54.0f, 270.0f, 18.0f }, 11.0f, false, ivoryDim, Just::centredLeft, 0.01f);
+            "Arpeggiator, glide and key release",
+            "Engine mode and the evidence register" };
+        const int i = juce::jlimit(0, 4, page);
+        text(g, "STUDIO", { 0.0f, 2.0f, 286.0f, 13.0f }, 10.0f, true, gold, Just::centredLeft, 0.2f);
+        engrave(g, titles[i], { 0.0f, 16.0f, 286.0f, 34.0f }, 22.0f, true, ivory, Just::centredLeft, 0.06f);
+        if (showSubtitle)
+            text(g, sub[i], { 1.0f, 54.0f, 286.0f, 18.0f }, 11.0f, false, ivoryDim, Just::centredLeft, 0.01f);
     }
 
 private:
     int page = 0;
+    bool showSubtitle = true;
 };
 
 // The footer: the page's one footnote on the left (what lives on the main panel), the key hints on the right.
@@ -3753,32 +4003,30 @@ public:
         setOpaque(false);
     }
 
-    void setPage(int index)
+    void setNote(const juce::String& text)
     {
-        page = index;
+        if (note == text)
+            return;
+        note = text;
         repaint();
     }
 
     void paint(juce::Graphics& g) override
     {
         g.addTransform(juce::AffineTransform::scale((float) getWidth() / 1472.0f, (float) getHeight() / 26.0f));
-        static const char* const notes[] = {
-            "",
-            "SET ON THE MAIN PANEL:  SUB OSC AND RING MOD CONTROLS, CHORUS SPEED AND DEPTH",
-            "",
-            "SET ON THE MAIN PANEL:  PORTA (TIME), GLIDE (MODE), BEND AND SUS II" };
-        text(g, notes[juce::jlimit(0, 3, page)], { 0.0f, 0.0f, 900.0f, 26.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
+        text(g, note, { 0.0f, 0.0f, 860.0f, 26.0f }, 12.5f, true, gold, Just::centredLeft, 0.03f);
         // The key hints sit on the dark footer rail: bold cream at 13 px, well clear of the 12.5 floor.
-        text(g, shortcutName() + "+1 to 4 pages   -   Esc closes   -   double-click a knob to reset", { 760.0f, 0.0f, 696.0f, 26.0f }, 13.0f,
+        text(g, shortcutName() + "+1 to 5 tabs   -   Esc closes   -   right-click a control for more", { 760.0f, 0.0f, 696.0f, 26.0f }, 13.0f,
              true, ivory.withAlpha(0.88f), Just::centredRight, 0.02f);
     }
 
 private:
-    int page = 0;
+    juce::String note;
 };
 
 // ---------------------------------------------------------------------------
-// Page layouts (design space 1600 x 936; content x 64..1536, y 108..896)
+// Page layouts (design space 1600 x 936; content x 64..1536, y 108..896). Each module is written at the
+// place it had on the former Advanced pages; an AdvancedPage::Origin moves it on its Studio tab.
 // ---------------------------------------------------------------------------
 
 namespace
@@ -3789,7 +4037,7 @@ bool lfoRouted(Cs80AudioProcessor& p, int lfo)
         && p.getParamValue(cs80::P_lfo1Depth + lfo * 3) > 0.001f;
 }
 
-void buildModulation(AdvancedPage& page)
+void buildLfos(AdvancedPage& page)
 {
     const float xs[3] = { 64.0f, 560.0f, 1056.0f };
     const int rateParams[3] = { cs80::P_lfo1Rate, cs80::P_lfo2Rate, cs80::P_lfo3Rate };
@@ -3807,7 +4055,7 @@ void buildModulation(AdvancedPage& page)
                     juce::String("A free-running global sine LFO shared by all voices. ") + flavour[i]
                         + " Each LFO drives one destination: click a chip to route it there, or click the lit chip to switch the LFO off. "
                           "The vertical axis of the scope is the swing the engine applies at full depth: PITCH 2 st, VCF 1.6 oct, VCA 0.25 level, "
-                          "PAN 0.7, PWM 0.18 pulse width. In parity isolation the modern LFO routing is masked.",
+                          "PAN 0.7, PWM 0.18 pulse width. In PURE CS-80 the modern LFO routing is masked.",
                     [i](Cs80AudioProcessor& p) { return lfoRouted(p, i); });
         page.widget<LfoScope>({ x + 20.0f, y + 42.0f, 440.0f, 196.0f }, i);
         auto* rate = page.knob({ x + 14.0f, y + 250.0f, 130.0f, 134.0f }, rateParams[i], "RATE");
@@ -3818,19 +4066,25 @@ void buildModulation(AdvancedPage& page)
         page.dimWhen([&proc = page.processor(), i] { return juce::roundToInt(proc.getParamValue(cs80::P_lfo1Dest + i * 3)) == 0; },
                      { rate, depth });
     }
+}
 
+void buildWheels(AdvancedPage& page)
+{
     page.module({ 64.0f, 564.0f, 480.0f, 332.0f }, "Wheels", true, juce::Colours::transparentBlack,
                 "The CS-80's pressure and velocity are separate performance dimensions. Initial touch sets the attack brightness; aftertouch bends the "
                 "filter while held. The mod wheel adds sub-oscillator pitch and filter movement; the readouts below give each amount in the engine's "
-                "own units. Isolation masks the modern wheel routing.");
+                "own units. PURE CS-80 masks the modern wheel routing.");
     page.knob({ 139.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelSub, "WHEEL > SUB");
     page.knob({ 319.0f, 604.0f, 150.0f, 140.0f }, cs80::P_modWheelVcf, "WHEEL > VCF");
     page.widget<WheelRouting>({ 80.0f, 764.0f, 448.0f, 112.0f });
+}
 
+void buildPitchTuning(AdvancedPage& page)
+{
     page.module({ 560.0f, 564.0f, 976.0f, 332.0f }, "Pitch, bend and tuning", true, juce::Colours::transparentBlack,
                 "PLAY RANGE: 61-key panel, MIDI notes 0-127. WHEEL BEND is the range of the spring-loaded pitch lever and MIDI pitch bend. With MPE on, "
-                "each note's own channel bends by MPE BEND instead; isolation disables MPE. A4 sets the reference frequency for twelve-tone equal "
-                "temperament; MIDI Tuning Standard and tuning-table import are not implemented. The ribbon is a separate continuous controller and "
+                "each note's own channel bends by MPE BEND instead; PURE CS-80 disables MPE. A4 sets the reference frequency for twelve-tone equal "
+                "temperament; MIDI Tuning Standard and tuning-table import are not implemented here. The ribbon is a separate continuous controller and "
                 "returns to centre. The main-panel PITCH knob adds a fine offset, included in the readout.");
     page.knob({ 620.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND")->setBipolar(true);
     page.custom([](juce::Graphics& g) { etchRect(g, { 878.0f, 598.0f, 340.0f, 152.0f }, 6.0f, 0.5f); });
@@ -3844,13 +4098,12 @@ void buildModulation(AdvancedPage& page)
     page.widget<TuningDisplay>({ 576.0f, 764.0f, 944.0f, 112.0f });
 }
 
-void buildSubRing(AdvancedPage& page)
+void buildSubOsc(AdvancedPage& page)
 {
-    // --- Sub oscillator -------------------------------------------------------------------------
     page.module({ 64.0f, 108.0f, 760.0f, 440.0f }, "Sub oscillator", true, pageColour(1),
                 "FUNCTION, SPEED, DEPTH and PRESSURE are set on the main panel; the panel's function and speed follow whichever waveform set is in use. "
                 "This page holds what the main panel does not: the switch between the original and legacy waveform sets, and the external level. "
-                "PARITY ISOLATION forces ORIGINAL; the stored switch and the legacy settings are retained but inert. Noise and EXT ignore SPEED. "
+                "PURE CS-80 forces ORIGINAL; the stored switch and the legacy settings are retained but inert. Noise and EXT ignore SPEED. "
                 "EXT: optional mono input, disabled by default; host routing required. Six original functions; analog waveform, depth and touch laws "
                 "remain provisional. Full depth moves VCO 1.5 st, VCF 1.5 oct, VCA 0.45 level.",
                 [](Cs80AudioProcessor& p)
@@ -3869,7 +4122,7 @@ void buildSubRing(AdvancedPage& page)
                              "with the patch. PARITY ISOLATION forces original regardless of this stored setting; legacy controls are inert while isolated.");
     page.note("ON    THE SIX ORIGINAL FUNCTIONS, 0.7 - 60 Hz", { 344.0f, 182.0f, 300.0f, 18.0f });
     page.note("OFF   THE LEGACY FUNCTION SET", { 344.0f, 204.0f, 300.0f, 18.0f });
-    page.note("ISOLATION FORCES THE ORIGINAL SET", { 344.0f, 226.0f, 300.0f, 18.0f });
+    page.note("PURE CS-80 FORCES THE ORIGINAL SET", { 344.0f, 226.0f, 300.0f, 18.0f });
     auto* extLevel = page.knob({ 656.0f, 146.0f, 140.0f, 134.0f }, cs80::P_subExtLevel, "EXT LEVEL");
     extLevel->getSlider().setDescription("External modulation input LEVEL. The optional mono bus is disabled by default and requires host routing. "
                                          "At maximum LEVEL, a peak 1 passband sine gives nominal inverted modulation peak 1, with 63.5 host samples "
@@ -3882,8 +4135,10 @@ void buildSubRing(AdvancedPage& page)
                  { extLevel });
     page.widget<SubScope>({ 88.0f, 284.0f, 712.0f, 150.0f });
     page.widget<SubRouting>({ 88.0f, 440.0f, 712.0f, 100.0f });
+}
 
-    // --- Ring modulator ---------------------------------------------------------------------------------
+void buildRing(AdvancedPage& page)
+{
     page.module({ 840.0f, 108.0f, 696.0f, 440.0f }, "Ring modulator", true, pageColour(1),
                 "A global ring modulator feeds the output alongside the voices. SPEED, DEPTH, ATTACK, DECAY and MOD are on the main panel; this "
                 "plot is where their combined effect is read. The envelope is retriggered by the first key of a phrase. DEPTH sweeps oscillator "
@@ -3891,16 +4146,20 @@ void buildSubRing(AdvancedPage& page)
                 "D node to set DECAY. At zero depth a dashed preview shows the curve at full depth. The analog response remains provisional.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_ringAmount) > 0.001f; });
     page.widget<RingCurve>({ 854.0f, 148.0f, 668.0f, 376.0f });
+}
 
-    // --- Chorus / tremolo ---------------------------------------------------------------------------------
+void buildChorus(AdvancedPage& page)
+{
     page.module({ 64.0f, 564.0f, 760.0f, 332.0f }, "Chorus / tremolo", true, pageColour(1),
-                "SPEED, DEPTH and the CHORUS and TREMOLO switches are on the main panel. Legacy: provisional generic delay line. Source Performance "
-                "and Isolation: OE2 BBD delay path (256 clock periods, printed filters); clock range, wet level and polarity are inferred, not "
+                "SPEED, DEPTH and the CHORUS and TREMOLO switches are on the main panel. Legacy: provisional generic delay line. ENGINE CIRCUIT "
+                "and PURE CS-80: OE2 BBD delay path (256 clock periods, printed filters); clock range, wet level and polarity are inferred, not "
                 "validated against original hardware.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_chorusOn) >= 0.5f; });
     page.widget<ChorusSweep>({ 78.0f, 604.0f, 732.0f, 276.0f }, 732.0f);
+}
 
-    // --- Analog voice ----------------------------------------------------------------------------------------
+void buildAnalogVoice(AdvancedPage& page)
+{
     page.module({ 840.0f, 564.0f, 696.0f, 332.0f }, "Analog voice", true, pageColour(1),
                 "Dispersion spreads the eight voice cards in tuning and pan; drift slowly moves each card; noise adds a provisional background floor. "
                 "Set them to zero for a repeatable render; this is not hardware calibration. The scatter plots the sixteen ranks (eight cards, two "
@@ -3932,7 +4191,7 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
     page.module({ 64.0f, 190.0f, 596.0f, 370.0f }, "Insert effects", true, pageColour(2),
                 "Three insert slots, processed in series after the voice mixer and chorus. Tape Delay includes modulation and a filtered feedback "
                 "path. Plate Reverb is a dense, bright algorithmic plate. Effects are bypassed at 0% mix and an empty slot passes the signal through; "
-                "isolation masks them. Pick a slot here or in the signal-order strip to see its response at right.",
+                "PURE CS-80 masks them. Pick a slot here or in the signal-order strip to see its response at right.",
                 [](Cs80AudioProcessor& p)
                 {
                     if (p.getParamValue(cs80::P_parityMode) >= 0.5f)
@@ -3949,7 +4208,7 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
         sel->peers.push_back(row);
         page.choice({ 90.0f + 70.0f, y0 + 30.0f, 170.0f, 34.0f }, typeParams[i], kFxTypes);
         auto* mix = page.knob({ 90.0f + 258.0f, y0 + 8.0f, 100.0f, 87.0f }, mixParams[i], "MIX");
-        // The mix does nothing while the slot is empty or the isolation fixture masks the effects.
+        // The mix does nothing while the slot is empty or PURE CS-80 masks the effects.
         page.dimWhen([&proc, i]
                      { return juce::roundToInt(proc.getParamValue(cs80::P_fx1Type + i * 2)) == 0 || proc.getParamValue(cs80::P_parityMode) >= 0.5f; },
                      { mix });
@@ -4010,12 +4269,12 @@ void buildFxMacros(AdvancedPage& page, Cs80AudioProcessor& proc)
     page.widget<OutputPanel>({ 1264.0f, 678.0f, 256.0f, 200.0f });
 }
 
-void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
+void buildArp(AdvancedPage& page, Cs80AudioProcessor& proc)
 {
     page.module({ 64.0f, 108.0f, 760.0f, 448.0f }, "Arpeggiator", true, pageColour(3),
                 "The arpeggiator holds the chord and retriggers the CS-80 voice envelopes at the selected clock. Up/Down, random and played-order "
                 "modes cover the patterns used on the classic records. The pattern shows a demonstration chord, not a live readout of the notes "
-                "you hold; with the arpeggiator off it is drawn as a dashed preview. Isolation masks the arpeggiator.",
+                "you hold; with the arpeggiator off it is drawn as a dashed preview. PURE CS-80 masks the arpeggiator.",
                 [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_arpOn) >= 0.5f && p.getParamValue(cs80::P_parityMode) < 0.5f; });
     page.toggle({ 88.0f, 172.0f, 112.0f, 36.0f }, cs80::P_arpOn, "ARP");
     auto* modeCaption = page.captionLive("MODE", { 216.0f, 146.0f, 176.0f, 17.0f });
@@ -4025,12 +4284,15 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
     auto* clock = page.widget<ArpClock>({ 656.0f, 148.0f, 152.0f, 112.0f });
     page.widget<ArpPattern>({ 88.0f, 280.0f, 712.0f, 250.0f });
     page.dimWhen([&proc] { return proc.getParamValue(cs80::P_arpOn) < 0.5f; }, { modeCaption, mode, rate, oct, clock });
+}
 
+void buildPerformance(AdvancedPage& page)
+{
     page.module({ 840.0f, 108.0f, 696.0f, 448.0f }, "Performance", true, pageColour(3),
                 "KEY RELEASE is a floor under every rank's own release: the longer of the two wins, scaled by the MOTION macro. PORTA (the glide "
                 "time), GLIDE (the glide mode), BEND (the initial bend) and SUS II are on the main panel. Portamento glides; Glissando steps in "
                 "semitones. Both sustain modes release notes. Sustain II also cuts previous release tails at a new key press. MIDI CC64 hold is a "
-                "separate extension, disabled by parity isolation. The glide plot shows the pitch path the main-panel settings give, with a dashed "
+                "separate extension, disabled by PURE CS-80. The glide plot shows the pitch path the main-panel settings give, with a dashed "
                 "preview while glide is off.",
                 [](Cs80AudioProcessor& p)
                 {
@@ -4040,10 +4302,14 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
     page.knob({ 862.0f, 165.0f, 150.0f, 130.0f }, cs80::P_keyRelease, "KEY RELEASE");
     page.widget<ReleaseCurve>({ 1030.0f, 146.0f, 490.0f, 168.0f });
     page.widget<GlideCurve>({ 864.0f, 326.0f, 648.0f, 208.0f });
+}
 
-    // --- Render policy: one three-way switch, the table of what it changes, and About -------------------
-    page.module({ 64.0f, 572.0f, 1472.0f, 324.0f }, "Render policy", true, pageColour(3),
-                "NOT CALIBRATED - no hardware match established. SOURCE: current source models with MIDI, optional MPE and the modern overlays. "
+// --- Render policy: one three-way switch and the table of what it changes ------------------------------
+void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor& proc)
+{
+    page.module({ 64.0f, 572.0f, 1472.0f, 324.0f }, "Engine mode", true, pageColour(3),
+                "NOT CALIBRATED - no hardware match established. The toolbar's ENGINE switch selects CIRCUIT (SOURCE PERFORMANCE below) or LEGACY; "
+                "its PURE CS-80 switch is PARITY ISOLATION. SOURCE: current source models with MIDI, optional MPE and the modern overlays. "
                 "ISOLATION wins when both are on: bend, CC1/11/64/74 and MPE are off and the modern effects are masked; pressure, ribbon and the "
                 "on-screen pedal stay active. An effective mode change stops notes; keep headroom. The stored source request is retained but masked "
                 "while isolation is on. Library programs reset the source request off and return both rank selectors to PANEL."
@@ -4053,11 +4319,11 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
                 "printed OE2 circuit. DC BLOCK + SOFT LIMIT: the legacy output stage; RAW leaves the source output untouched."
                 "\n\nABOUT. A circuit-informed recreation of the Yamaha CS-80 (1977): eight voices, each with two independent ranks, for sixteen "
                 "oscillator/filter/VCA chains. The signal path follows the original's high-pass into low-pass topology, linear VCA and global "
-                "sub-oscillator. The primary panel exposes the controls a player touches; these pages expose the modern layer (LFOs, MPE, effects, "
+                "sub-oscillator. The primary panel exposes the controls a player touches; the Studio view exposes the modern layer (LFOs, MPE, effects, "
                 "dispersion). All controls are host-automatable and saved in plugin state, except transient performance gestures. The library has "
                 "22 legacy tone studies and 200 performance patches; loading one returns both ranks to PANEL and resets SOURCE PERFORMANCE off. "
-                "Touch the ribbon above the keyboard to bend pitch; drag the pitch lever (PITCH) or modulation wheel (MOD) at the left of the "
-                "keyboard; double-click any knob to reset it.",
+                "Touch the ribbon above the keyboard to bend pitch; double-click any control to reset it, right-click it for MIDI learn, typed "
+                "values and help.",
                 [](Cs80AudioProcessor& p)
                 { return p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_sourcePerformance) >= 0.5f; });
     // The three switches are the column heads of the table below them.
@@ -4107,41 +4373,125 @@ void buildArpPerformance(AdvancedPage& page, Cs80AudioProcessor& proc)
         text(g, "NOT CALIBRATED  -  NO HARDWARE MATCH ESTABLISHED", { 760.0f, 862.0f, 640.0f, 30.0f }, 12.5f, true, gold, Just::centredLeft, 0.04f);
     });
 }
+
+// ---- The Studio tabs -------------------------------------------------------------------------------------
+void buildModulationTab(AdvancedPage& page)
+{
+    buildLfos(page);
+    buildWheels(page);
+    page.modelNotes({ 560.0f, 564.0f, 976.0f, 332.0f }, "Modulation models", { "Sub oscillator", "Ring modulator", "Modern layer" });
+}
+
+void buildSubRingTab(AdvancedPage& page)
+{
+    buildSubOsc(page);
+    buildRing(page);
+    buildChorus(page);
+    buildAnalogVoice(page);
+}
+
+void buildKeyboardTab(AdvancedPage& page)
+{
+    page.modelNotes({ 64.0f, 108.0f, 1472.0f, 440.0f }, "Keyboard, touch and ribbon models",
+                    { "Keyboard scan and assignment", "Initial touch and aftertouch", "Ribbon", "Idle voice evolution" });
+    {
+        AdvancedPage::Origin moved(page, -496.0f, 0.0f);
+        buildPitchTuning(page);
+    }
+    page.modelNotes({ 1056.0f, 564.0f, 480.0f, 332.0f }, "Tuning", { "Oscillator", "Modern layer" });
+}
+
+void buildArpTab(AdvancedPage& page, Cs80AudioProcessor& proc)
+{
+    buildArp(page, proc);
+    buildPerformance(page);
+    page.modelNotes({ 64.0f, 572.0f, 1472.0f, 324.0f }, "Envelope and voice models", { "Envelopes", "VCA", "Modern layer" });
+}
+
+void buildSettingsTab(AdvancedPage& page, Cs80AudioProcessor& proc)
+{
+    {
+        AdvancedPage::Origin moved(page, 0.0f, -464.0f);
+        buildRenderPolicy(page, proc);
+    }
+    page.evidenceRegister({ 64.0f, 448.0f, 1472.0f, 448.0f });
+}
+
+// Footnotes per built-in page: what lives on the main panel.
+juce::String footNote(StudioTab tab, bool subRing)
+{
+    switch (tab)
+    {
+        case StudioTab::modulation:
+            return subRing ? "SET ON THE MAIN PANEL:  SUB OSC AND RING MOD CONTROLS, CHORUS SPEED AND DEPTH" : juce::String();
+        case StudioTab::keyboard: return "THE RIBBON AND KEYBOARD CONTOURS ARE ON THE MAIN PANEL";
+        case StudioTab::arp: return "SET ON THE MAIN PANEL:  PORTA (TIME), GLIDE (MODE), BEND AND SUS II";
+        case StudioTab::settings: return "NOT CALIBRATED  -  NO HARDWARE MATCH ESTABLISHED";
+        case StudioTab::fx:
+        case StudioTab::count: break;
+    }
+    return {};
+}
 } // namespace
 
 // ---------------------------------------------------------------------------
-// The panel
+// The Studio view
 // ---------------------------------------------------------------------------
 
-AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
+namespace
+{
+// Built-in pages of the former Advanced panel, by legacy index.
+constexpr int kLegacyPages = 4;
+} // namespace
+
+StudioView::StudioView(Cs80AudioProcessor& p)
     : processor(p)
 {
     setVisible(false);
+    setTitle("Studio view");
 
     chassis = std::make_unique<AdvChassis>();
     addAndMakeVisible(*chassis);
 
-    const char* const names[] = { "MODULATION", "SUB OSC / RING", "FX / MACROS", "ARP / PERFORMANCE" };
-    const char* const captions[] = { "LFOs, wheels, tuning", "sub oscillator, ring, chorus, voice",
-                                     "insert effects, macros, output", "arpeggiator, glide, render policy" };
-    for (int i = 0; i < 4; ++i)
+    const char* const captions[] = { "LFOs, wheels, sub oscillator, ring modulator, chorus and analog voice",
+                                     "computer keyboard, MIDI learn, pitch bend, MPE and tuning",
+                                     "insert effects, macros and output", "arpeggiator, glide and key release",
+                                     "engine mode and the evidence register" };
+    for (int i = 0; i < kTabs; ++i)
     {
-        auto tab = std::make_unique<AdvPageTab>(i, names[i], captions[i]);
-        tab->onClick = [this, i] { showPage(i); };
-        tab->onStep = [this](int direction) { stepPage(direction); };
+        auto tab = std::make_unique<AdvPageTab>(i, tabName((StudioTab) i), captions[i]);
+        tab->onClick = [this, i] { showTab((StudioTab) i, activeSub[(size_t) i]); };
+        tab->onStep = [this](int direction) { stepTab(direction); };
         addAndMakeVisible(*tab);
         tabs[(size_t) i] = std::move(tab);
     }
-
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < kMaxSubTabs; ++i)
     {
-        pages[(size_t) i] = std::make_unique<AdvancedPage>(processor);
-        addAndMakeVisible(*pages[(size_t) i]);
+        auto key = std::make_unique<StudioSubTab>();
+        key->setExplicitFocusOrder(kTabs + 1 + i);
+        key->onClick = [this, i] { showTab(activeTab, i); };
+        key->onStep = [this](int direction) { stepSubPage(direction); };
+        addChildComponent(*key);
+        subTabs[(size_t) i] = std::move(key);
     }
-    buildModulation(*pages[0]);
-    buildSubRing(*pages[1]);
-    buildFxMacros(*pages[2], processor);
-    buildArpPerformance(*pages[3], processor);
+
+    auto builtIn = [this](StudioTab tab, const juce::String& name, const std::function<void(AdvancedPage&)>& build)
+    {
+        auto page = std::make_unique<AdvancedPage>(processor);
+        build(*page);
+        auto* raw = page.get();
+        mount(tab, std::move(page), name, false);
+        pagesOf(tab).back().builtIn = raw;
+        return raw;
+    };
+    std::array<AdvancedPage*, kLegacyPages> legacy {};
+    legacy[0] = builtIn(StudioTab::modulation, "LFO / WHEELS", buildModulationTab);
+    legacy[1] = builtIn(StudioTab::modulation, "SUB / RING", buildSubRingTab);
+    builtIn(StudioTab::keyboard, "KEYBOARD", buildKeyboardTab);
+    legacy[2] = builtIn(StudioTab::fx, "EFFECTS", [this](AdvancedPage& page) { buildFxMacros(page, processor); });
+    builtIn(StudioTab::arp, "ARPEGGIO", [this](AdvancedPage& page) { buildArpTab(page, processor); });
+    legacy[3] = builtIn(StudioTab::settings, "SETTINGS", [this](AdvancedPage& page) { buildSettingsTab(page, processor); });
+    legacyPages = legacy;
 
     titleBlock = std::make_unique<AdvTitleBlock>();
     addAndMakeVisible(*titleBlock);
@@ -4149,6 +4499,7 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
     addAndMakeVisible(*footer);
 
     closeButton = std::make_unique<AdvCloseButton>("CLOSE");
+    closeButton->setExplicitFocusOrder(kTabs + kMaxSubTabs + 1);
     closeButton->onClick = [this]
     {
         if (onClose)
@@ -4158,44 +4509,209 @@ AdvancedPanel::AdvancedPanel(Cs80AudioProcessor& p)
 
     info = std::make_unique<AdvInfoLayer>();
     addChildComponent(*info);
-    for (auto& page : pages)
-        page->onInfo = [this](const juce::String& title, const juce::String& body, juce::Component* from)
-        {
-            info->open(title, body, from);
-        };
+    for (auto& list : tabPages)
+        for (auto& entry : list)
+            if (entry.builtIn != nullptr)
+                entry.builtIn->onInfo = [this](const juce::String& title, const juce::String& body, juce::Component* from)
+                {
+                    info->open(title, body, from);
+                };
 
-    showPage(0);
+    showTab(StudioTab::modulation, 0);
 }
 
-AdvancedPanel::~AdvancedPanel()
+StudioView::~StudioView()
 {
     stopTimer();
 }
 
-void AdvancedPanel::showPage(int index)
+juce::String StudioView::tabName(StudioTab tab)
 {
+    switch (tab)
+    {
+        case StudioTab::modulation: return "MODULATION";
+        case StudioTab::keyboard: return "KEYBOARD";
+        case StudioTab::fx: return "FX";
+        case StudioTab::arp: return "ARP";
+        case StudioTab::settings: return "SETTINGS";
+        case StudioTab::count: break;
+    }
+    return {};
+}
+
+juce::Rectangle<float> StudioView::contentDesignArea() noexcept
+{
+    // Below the header rail (y 96) and above the footer rail (y 904), inside the cheek columns.
+    return { 52.0f, 100.0f, kW - 104.0f, 800.0f };
+}
+
+juce::Rectangle<int> StudioView::getContentBounds() const
+{
+    const auto a = contentDesignArea();
+    const float sx = (float) getWidth() / kW, sy = (float) getHeight() / kH;
+    return { juce::roundToInt(a.getX() * sx), juce::roundToInt(a.getY() * sy),
+             juce::roundToInt(a.getWidth() * sx), juce::roundToInt(a.getHeight() * sy) };
+}
+
+void StudioView::mount(StudioTab tab, std::unique_ptr<juce::Component> page, const juce::String& name, bool first)
+{
+    if (page == nullptr || tab == StudioTab::count)
+        return;
+    auto& list = pagesOf(tab);
+    if (list.size() >= (size_t) kMaxSubTabs)
+    {
+        // Three sub-page keys fit the header. Remove a built-in page first (removeBuiltInPage) to make room.
+        jassertfalse;
+        return;
+    }
+    SubPage entry;
+    entry.component = page.get();
+    entry.name = name.isNotEmpty() ? name.toUpperCase()
+               : page->getTitle().isNotEmpty() ? page->getTitle().toUpperCase() : tabName(tab);
+    entry.owned = std::move(page);
+    addChildComponent(*entry.component);
+    list.insert(first ? list.begin() : list.end(), std::move(entry));
+    if (info != nullptr)
+        info->toFront(false);
+    layoutPages();
+    if (titleBlock != nullptr)
+        showTab(activeTab, first && tab == activeTab ? 0 : activeSub[(size_t) activeTab]);
+}
+
+void StudioView::setPage(StudioTab tab, std::unique_ptr<juce::Component> page, const juce::String& name)
+{
+    mount(tab, std::move(page), name, true);
+    if (tab != StudioTab::count)
+        activeSub[(size_t) tab] = 0;
+}
+
+void StudioView::addPage(StudioTab tab, std::unique_ptr<juce::Component> page, const juce::String& name)
+{
+    mount(tab, std::move(page), name, false);
+}
+
+void StudioView::removeBuiltInPage(StudioTab tab)
+{
+    if (tab == StudioTab::count)
+        return;
+    auto& list = pagesOf(tab);
+    const auto external = std::count_if(list.begin(), list.end(), [](const SubPage& e) { return e.builtIn == nullptr; });
+    if (external == 0)
+        return;
+    for (auto it = list.begin(); it != list.end();)
+    {
+        if (it->builtIn != nullptr)
+        {
+            for (auto& slot : legacyPages)
+                if (slot == it->builtIn)
+                    slot = nullptr;
+            removeChildComponent(it->component);
+            it = list.erase(it);
+        }
+        else
+            ++it;
+    }
+    activeSub[(size_t) tab] = 0;
+    showTab(activeTab, activeSub[(size_t) activeTab]);
+}
+
+juce::Component* StudioView::getSubPage(StudioTab tab, int index) const noexcept
+{
+    if (tab == StudioTab::count)
+        return nullptr;
+    const auto& list = pagesOf(tab);
+    return index >= 0 && index < (int) list.size() ? list[(size_t) index].component : nullptr;
+}
+
+void StudioView::showTab(StudioTab tab, int subPage)
+{
+    if (tab == StudioTab::count)
+        return;
     if (info != nullptr)
         info->close();
-    activePage = juce::jlimit(0, 3, index);
-    for (int i = 0; i < 4; ++i)
+    activeTab = tab;
+    auto& list = pagesOf(tab);
+    activeSub[(size_t) tab] = juce::jlimit(0, juce::jmax(0, (int) list.size() - 1), subPage);
+    for (int t = 0; t < kTabs; ++t)
     {
-        pages[(size_t) i]->setVisible(i == activePage);
-        tabs[(size_t) i]->setToggleState(i == activePage, juce::dontSendNotification);
+        tabs[(size_t) t]->setToggleState(t == (int) tab, juce::dontSendNotification);
+        auto& pages = tabPages[(size_t) t];
+        for (int s = 0; s < (int) pages.size(); ++s)
+            pages[(size_t) s].component->setVisible(t == (int) tab && s == activeSub[(size_t) t]);
     }
-    titleBlock->setPage(activePage);
-    footer->setPage(activePage);
-    pages[(size_t) activePage]->refresh();
+    refreshSubTabs();
+    const auto& current = list[(size_t) activeSub[(size_t) tab]];
+    titleBlock->setPage((int) tab, list.size() < 2);
+    footer->setNote(current.builtIn != nullptr ? footNote(tab, current.builtIn == legacyPages[1]) : juce::String());
+    if (current.builtIn != nullptr)
+        current.builtIn->refresh();
     repaint();
 }
 
-void AdvancedPanel::stepPage(int direction)
+void StudioView::refreshSubTabs()
 {
-    const int next = (activePage + direction + 4) % 4;
-    showPage(next);
+    const auto& list = pagesOf(activeTab);
+    const bool show = list.size() > 1;
+    for (int i = 0; i < kMaxSubTabs; ++i)
+    {
+        auto& key = *subTabs[(size_t) i];
+        const bool visible = show && i < (int) list.size();
+        key.setVisible(visible);
+        if (! visible)
+            continue;
+        key.setButtonText(list[(size_t) i].name);
+        key.setToggleState(i == activeSub[(size_t) activeTab], juce::dontSendNotification);
+        key.setTitle(tabName(activeTab) + " sub-page: " + list[(size_t) i].name);
+        key.setTooltip(list[(size_t) i].name + "  -  page " + juce::String(i + 1) + " of " + juce::String((int) list.size())
+                       + " in " + tabName(activeTab) + ". Left and Right arrows move between pages.");
+    }
+    resized();
+}
+
+void StudioView::showPage(int legacyIndex)
+{
+    auto* target = legacyIndex >= 0 && legacyIndex < kLegacyPages ? legacyPages[(size_t) legacyIndex] : nullptr;
+    for (int t = 0; t < kTabs; ++t)
+    {
+        const auto& list = tabPages[(size_t) t];
+        for (int s = 0; s < (int) list.size(); ++s)
+            if (target != nullptr && list[(size_t) s].builtIn == target)
+            {
+                showTab((StudioTab) t, s);
+                return;
+            }
+    }
+    showTab(StudioTab::modulation, 0);
+}
+
+int StudioView::getActivePage() const noexcept
+{
+    const auto& list = pagesOf(activeTab);
+    const auto* current = list.empty() ? nullptr : list[(size_t) activeSub[(size_t) activeTab]].builtIn;
+    for (int i = 0; i < kLegacyPages; ++i)
+        if (current != nullptr && legacyPages[(size_t) i] == current)
+            return i;
+    return -1;
+}
+
+void StudioView::stepTab(int direction)
+{
+    const int next = ((int) activeTab + direction + kTabs) % kTabs;
+    showTab((StudioTab) next, activeSub[(size_t) next]);
     tabs[(size_t) next]->grabKeyboardFocus();
 }
 
-bool AdvancedPanel::keyPressed(const juce::KeyPress& key)
+void StudioView::stepSubPage(int direction)
+{
+    const int count = (int) pagesOf(activeTab).size();
+    if (count < 2)
+        return;
+    const int next = (activeSub[(size_t) activeTab] + direction + count) % count;
+    showTab(activeTab, next);
+    subTabs[(size_t) next]->grabKeyboardFocus();
+}
+
+bool StudioView::keyPressed(const juce::KeyPress& key)
 {
     if (key == juce::KeyPress::escapeKey && info->isVisible())
     {
@@ -4203,19 +4719,21 @@ bool AdvancedPanel::keyPressed(const juce::KeyPress& key)
         return true;
     }
     const int code = key.getKeyCode();
-    if (key.getModifiers().isCommandDown() && code >= '1' && code <= '4')
+    if (key.getModifiers().isCommandDown() && code >= '1' && code < '1' + kTabs)
     {
-        showPage(code - '1');
+        showTab((StudioTab) (code - '1'), activeSub[(size_t) (code - '1')]);
         return true;
     }
     return false;
 }
 
-void AdvancedPanel::visibilityChanged()
+void StudioView::visibilityChanged()
 {
     if (isVisible())
     {
-        pages[(size_t) activePage]->refresh();
+        const auto& current = pagesOf(activeTab)[(size_t) activeSub[(size_t) activeTab]];
+        if (current.builtIn != nullptr)
+            current.builtIn->refresh();
         startTimerHz(15);
     }
     else
@@ -4226,17 +4744,27 @@ void AdvancedPanel::visibilityChanged()
     }
 }
 
-void AdvancedPanel::timerCallback()
+void StudioView::timerCallback()
 {
-    pages[(size_t) activePage]->refresh();
+    const auto& current = pagesOf(activeTab)[(size_t) activeSub[(size_t) activeTab]];
+    if (current.builtIn != nullptr)
+        current.builtIn->refresh();
 }
 
-void AdvancedPanel::paint(juce::Graphics&)
+void StudioView::paint(juce::Graphics&)
 {
     // Nothing: the chassis paints the body and the editor's backdrop shows through the cheek columns.
 }
 
-void AdvancedPanel::resized()
+void StudioView::layoutPages()
+{
+    const auto content = getContentBounds();
+    for (auto& list : tabPages)
+        for (auto& entry : list)
+            entry.component->setBounds(entry.builtIn != nullptr ? getLocalBounds() : content);
+}
+
+void StudioView::resized()
 {
     const float sx = (float) getWidth() / kW;
     const float sy = (float) getHeight() / kH;
@@ -4246,12 +4774,19 @@ void AdvancedPanel::resized()
                                     juce::roundToInt(w * sx), juce::roundToInt(h * sy));
     };
     chassis->setBounds(getLocalBounds());
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < kTabs; ++i)
+        tabs[(size_t) i]->setBounds(r(kTabX0 + (float) i * kTabPitch - AdvPageTab::kPad, kTabY - AdvPageTab::kPad,
+                                      kTabPlateW + 2.0f * AdvPageTab::kPad, kTabPlateH + 2.0f * AdvPageTab::kPad));
+    layoutPages();
+    // Sub-page keys share the title block's bottom line, x 64 to 350.
+    const int keys = juce::jmin(kMaxSubTabs, (int) pagesOf(activeTab).size());
+    if (keys > 1)
     {
-        tabs[(size_t) i]->setBounds(r(367.0f + (float) i * 218.0f - 8.0f, 22.0f - 8.0f, 212.0f + 16.0f, 48.0f + 16.0f));
-        pages[(size_t) i]->setBounds(getLocalBounds());
+        const float gap = 6.0f, w = (286.0f - gap * (float) (keys - 1)) / (float) keys;
+        for (int i = 0; i < keys; ++i)
+            subTabs[(size_t) i]->setBounds(r(64.0f + (float) i * (w + gap), 56.0f, w, 36.0f));
     }
-    titleBlock->setBounds(r(64.0f, 14.0f, 270.0f, 78.0f));
+    titleBlock->setBounds(r(64.0f, 14.0f, 286.0f, 78.0f));
     footer->setBounds(r(64.0f, 908.0f, 1472.0f, 26.0f));
     closeButton->setBounds(r(1420.0f, 26.0f, 116.0f, 38.0f));
     info->setBounds(getLocalBounds());
