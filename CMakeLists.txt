@@ -238,6 +238,11 @@ if (CS80_BUILD_TESTS)
     add_executable(cs80_randomise_tests tests/RandomiseTests.cpp)
     target_link_libraries(cs80_randomise_tests PRIVATE cs80_core)
     add_test(NAME cs80_randomise_tests COMMAND cs80_randomise_tests)
+    add_executable(cs80_source_factory_boundary_tests tests/SourceFactoryBoundaryTests.cpp)
+    target_include_directories(cs80_source_factory_boundary_tests PRIVATE src)
+    add_test(NAME cs80_source_factory_boundary_tests
+             COMMAND cs80_source_factory_boundary_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
