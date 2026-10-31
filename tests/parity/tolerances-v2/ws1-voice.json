@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "workstream": "ws1-voice",
+  "evidence_kind": "numerical",
+  "registered": "2026-10-31",
+  "rationale": "Pre-registered acceptance limits for the ws1-voice realtime models against their offline truth models. Committed before the realtime models are evaluated. They are numerical solver tolerances, not analog tolerances: the truth models implement the same declared (partly inferred) circuit equations, so agreement validates the solver, not the circuit. Each stage lists its grid so the limits cannot be re-scoped after evaluation.",
+  "stages": {
+    "ig00156_nodal": {
+      "description": "Plan step 1.1b. Realtime src/core/Ig00156Filter.h versus the offline nodal truth model src/reference/IG00156Network.h (4 states per stage: input coupling, 180 pF branch, two integrators).",
+      "grid_internal_rates_hz": [88200, 96000, 192000, 384000],
+      "grid_total_cutoff_hz": [60, 250, 1000, 4000, 12000],
+      "grid_low_frequency_q": [0.5, 1, 2, 5, 9],
+      "equivalence_max_rel": 2e-6,
+      "equivalence_note": "Time-domain realtime output (float) versus the truth model's exact trapezoidal step with the same prewarp, small-signal multi-sine, normalized by the output peak.",
+      "small_signal_core_rel": 0.03,
+      "small_signal_core_band": "0.5..2 x cutoff and at most fs/8; complex error normalized by the truth response peak",
+      "small_signal_band_rel": 0.08,
+      "small_signal_band_hi_rate_rel": 0.02,
+      "small_signal_band": "20 Hz .. min(20 kHz, fs/5); hi_rate applies at internal rates >= 192 kHz",
+      "nonlinear_rms_rel": 0.03,
+      "nonlinear_fixture": "96 kHz internal, cutoff 1 kHz, Q 5 and Q 1; sines of 0.5/1 kHz at 1.0 and 2.5 engine units; truth = implicit trapezoid with full Newton at 16x oversampling; RMS of difference over the last 0.1 s of 1.5 s, divided by truth RMS",
+      "q_anchor_rel": 0.01,
+      "q_anchor_fixture": "Pole-derived Q of the nodal truth stage at a 200 Hz total cutoff: Q(VQ = 0 V) = 5 and Q(VQ = 10 V) = 0.5 (CS-80 service p42), both stages",
+      "cutoff_anchor_rel": 0.01,
+      "cutoff_anchor_fixture": "Pole natural frequency of the truth stage at the documented control points 0.25 V/5 V, 0.5 V/5 V, 0.25 V/6 V (gm part 1 kHz, 2 kHz, 2 kHz) plus the 22.575 Hz feedforward contribution, Q = 5",
+      "service_setup_vpp": {"hp_fh_4v0": [3.3, 5.3], "lp_fl_3v3": [1.2, 3.2]},
+      "service_setup_fixture": "ADJ p11 bands copied from docs/PARITY_ROADMAP.md W1. Square (50 %) WSC pulse 3 Vpp, C1 at 2' (261.6 Hz), alignment of SourceFactoryTones.h, physical (un-normalized) stage gains, declared mix-node fixture: open-circuit (saw + pulse) / 2 behind 75 kOhm. A miss is reported, never fitted.",
+      "stability_bound": 200.0
+    },
+    "oscillator_promotion": {
+      "description": "Plan step 1.2. Circuit engine with the promoted reconstructed oscillator and the IG00156 nodal filter.",
+      "alias_worst_nonharmonic_db_48k": -70.0,
+      "alias_fixture": "cs80_engine_audit --suite alias, policy source, saw and pulse rows, ring off, 48 kHz host"
+    },
+    "ig00151_vca": {
+      "description": "Plan step 1.4. Circuit-engine IG00151 voice VCA (src/core/Vca.h): linear LI input with its 10 nF node, exponential EI input, declared offset and CV feedthrough, constant-power rank pan.",
+      "linear_law_rel": 1e-6,
+      "linear_fixture": "static gain proportional to the settled LI control at fixed EI and envelope; ratio error at 0.25/0.5/1/2 x",
+      "exponential_law_rel": 1e-6,
+      "exponential_fixture": "gain ratio 2^(delta EI) at fixed LI, EI steps -1..+1 octave",
+      "li_tau_rel": 0.02,
+      "li_tau_fixture": "LI step response reaches 1 - 1/e at the declared ideal-source Thevenin RC of the five documented level branches and the 10 nF pin capacitor, at 88.2/96/192 kHz",
+      "pedestal_db_max": -50.0,
+      "pedestal_fixture": "zero-signal output (offset plus CV feedthrough) at full LI 2.6 and envelope 1, relative to a unit signal at the same gain",
+      "pan_power_rel": 1e-6,
+      "pan_fixture": "L^2 + R^2 constant over pan -1..1; exactly 0.5 per side at centre",
+      "click_steal_max": 1.0,
+      "click_retrigger_max": 1.0,
+      "click_fixture": "cs80_engine_audit --suite phrase, policy source, every row at 44.1/48/96 kHz, columns click_steal and click_retrigger"
+    }
+  }
+}

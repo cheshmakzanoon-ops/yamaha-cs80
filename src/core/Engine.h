@@ -3,6 +3,9 @@
 #include "Dsp.h"
 #include "ModernLayer.h"
 #include "ModulationLfo.h"
+#include "Ig00156Filter.h"
+#include "ReconstructedOscillator.h"
+#include "Vca.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
@@ -268,7 +271,11 @@ public:
     struct RankAudioState
     {
         float phase = 0.0f;
+        // Legacy: the Svf memories. Circuit engine: the nodal stages' BP and LP
+        // integrator histories, so the same zero/equality probes apply.
         Svf::State hpf, lpf;
+        // Circuit engine: complete IG00156 nodal stage states (zero in legacy).
+        Ig00156Stage::State hpCircuit, lpCircuit;
     };
     // Exact current state (not last-render telemetry). Render thread only;
     // not safe for concurrent UI polling. No locks, allocations or mutations.
@@ -308,8 +315,18 @@ private:
     struct Rank
     {
         Oscillator osc;
+        // Circuit engine: event-driven IG00153/IG00158 reconstruction
+        // (docs/OSCILLATOR_PROMOTION.md). Legacy keeps the PolyBLEP osc.
+        ReconstructedOscillator wsc;
         Svf hpf;
         Svf lpf;
+        // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).
+        Ig00156Stage hpStage { kIg00156HighPassNetwork };
+        Ig00156Stage lpStage { kIg00156LowPassNetwork };
+        // Circuit-engine IG00151 voice VCA (docs/IG00151_VCA_MODEL.md); cold
+        // assignment recharges its LI node to the level network.
+        Ig00151Vca vca;
+        bool vcaCold = true;
         FilterEnv fenv;
         Adsr aenv;
         float trimTune = 0.0f;

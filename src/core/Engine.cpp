@@ -45,6 +45,8 @@ void Engine::prepare(double hostSampleRate)
     {
         for (auto& r : v.ranks)
         {
+            (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
+            r.vca.prepare(internalRate);
             r.trimTune = trimRng.nextBipolar();
             r.trimCutoff = trimRng.nextBipolar();
             r.trimLevel = trimRng.nextBipolar();
@@ -83,8 +85,12 @@ void Engine::reset()
         for (auto& r : v.ranks)
         {
             r.osc.reset(0.0f);
+            r.wsc.reset(0.0, OscillatorNominalProfile {}.referenceHzNominal);
             r.hpf.reset();
             r.lpf.reset();
+            r.hpStage.reset();
+            r.lpStage.reset();
+            r.vcaCold = true;
             r.fenv.reset();
             r.aenv.reset();
         }
@@ -825,8 +831,14 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
         if (!preserveAudioState)
         {
             r.osc.reset(legacyPhase);
+            // Same cold-start convention for the circuit engine's oscillator:
+            // the legacy draw as its phase, zero audio prehistory.
+            r.wsc.reset(legacyPhase, OscillatorNominalProfile {}.referenceHzNominal);
             r.hpf.reset();
             r.lpf.reset();
+            r.hpStage.reset();
+            r.lpStage.reset();
+            r.vcaCold = true;
         }
         // Filter envelope: a reused sounding tail restarts its attack from the
         // capacitor's present level (source policies, IMPROVEMENT_PLAN 1.3);
@@ -1341,9 +1353,28 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
 
-            const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
+            // Circuit engine: WSC pin volts from one charge/reset trajectory
+            // through the fixed inferred adapter; 8 internal samples of
+            // linear-phase antialias delay. Legacy: PolyBLEP, unchanged.
+            float sawPulse, sineWave;
+            if (usesSourceModels(global.renderPolicy))
+            {
+                WscControls wscControls;
+                wscControls.pulseThresholdVolts = ReconstructedOscillator::panelThresholdVoltsInferred(pw);
+                wscControls.sawEnabled = rs.saw;
+                wscControls.pulseEnabled = rs.pulse;
+                const auto pins = r.wsc.tick(freq, wscControls);
+                sawPulse = static_cast<float>((pins.sawPin5 + pins.pulsePin7) * kWscEngineUnitsPerVolt);
+                sineWave = static_cast<float>(pins.sinePin2 * kWscEngineUnitsPerVolt);
+            }
+            else
+            {
+                const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
+                sawPulse = osc.saw + osc.pulse;
+                sineWave = osc.sine;
+            }
 
-            float x = osc.saw + osc.pulse;
+            float x = sawPulse;
             x += audioRng.nextBipolar() * rs.noise * 0.8f;
             x *= 0.9f;
 
@@ -1381,33 +1412,53 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
             float filtered = x;
-            // Circuit engine: IG00156 stages with in-loop OTA saturation and the
-            // source-derived 4.7 MOhm feedforward floor. Legacy: unchanged Svf.
-            const bool circuitFilter = usesSourceModels(global.renderPolicy);
-            const float cutoffFloor = circuitFilter ? kIg00156FeedforwardHz : 0.0f;
-            if (rs.hpfOn)
+            // Circuit engine: IG00156 nodal stages (input networks, 180 pF
+            // branch, 1 uF couplings, in-loop OTA saturation; the 4.7 MOhm
+            // feedforward is internal). Legacy: unchanged Svf.
+            if (usesSourceModels(global.renderPolicy))
             {
-                r.hpf.set(cutoffHp + cutoffFloor, modern::modulatedQ(qHp, mod.hpQ), sr);
-                filtered = circuitFilter ? r.hpf.processCircuit(filtered).hp : r.hpf.process(filtered).hp;
+                if (rs.hpfOn)
+                {
+                    r.hpStage.set(cutoffHp, modern::modulatedQ(qHp, mod.hpQ), sr);
+                    filtered = r.hpStage.process(filtered).hp;
+                }
+                if (rs.lpfOn)
+                {
+                    r.lpStage.set(cutoffLp, modern::modulatedQ(qLp, mod.lpQ), sr);
+                    filtered = r.lpStage.process(filtered).lp;
+                }
             }
-            if (rs.lpfOn)
+            else
             {
-                r.lpf.set(cutoffLp + cutoffFloor, modern::modulatedQ(qLp, mod.lpQ), sr);
-                filtered = circuitFilter ? r.lpf.processCircuit(filtered).lp : r.lpf.process(filtered).lp;
+                if (rs.hpfOn)
+                {
+                    r.hpf.set(cutoffHp, modern::modulatedQ(qHp, mod.hpQ), sr);
+                    filtered = r.hpf.process(filtered).hp;
+                }
+                if (rs.lpfOn)
+                {
+                    r.lpf.set(cutoffLp, modern::modulatedQ(qLp, mod.lpQ), sr);
+                    filtered = r.lpf.process(filtered).lp;
+                }
             }
 
-            const float sine = osc.sine * rs.sine;
+            const float sine = sineWave * rs.sine;
+            // Legacy: SUB VCA modulation adds to the level CV. Circuit engine:
+            // it drives the IG00151 exponential input (Vca.h) instead, so it is
+            // left out of the linear LC sum.
+            const bool circuitVca = usesSourceModels(global.renderPolicy);
+            const float subLevel = circuitVca ? 0.0f : subValue * global.subVca * 0.45f;
             // Source LC/LI is linear in its explicit unit scale. Retain global
             // effective transports once; floor negative total gain at zero,
             // but do NOT apply the legacy 2.6 cap or per-tone normalization.
             const float levelCv = sourceActive[ch]
                 ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
-                             + subValue * global.subVca * 0.45f + lfoAmp
+                             + subLevel + lfoAmp
                              + keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour) + mod.level)
                 : clampf(rs.vLevel
                                              + rs.initLevel * v.velocity
                                              + rs.afterLevel * v.pressure
-                                             + subValue * global.subVca * 0.45f
+                                             + subLevel
                                              + lfoAmp
                                              + keyboardLevelOffset(global.kbdLevelLow,
                                                                    global.kbdLevelHigh, v.contour)
@@ -1418,12 +1469,30 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
             // Velocity acts through the selected initial-touch destinations.
             // An unconditional velocity gain made disabled touch controls audible.
-            float voiceOut = (filtered * rs.vcfLevel + sine)
-                             * levelCv * amp * chGain * 0.17f;
-
+            const float vcaInput = filtered * rs.vcfLevel + sine;
             float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
-            mixL += voiceOut * (0.5f - 0.5f * pan);
-            mixR += voiceOut * (0.5f + 0.5f * pan);
+            float voiceOut, panLeft, panRight;
+            if (circuitVca)
+            {
+                // IG00151: LC on the linear input through its 10 nF node, SUB on
+                // the exponential input; constant-power rank pan.
+                if (r.vcaCold)
+                {
+                    r.vca.reset(levelCv);
+                    r.vcaCold = false;
+                }
+                voiceOut = r.vca.process(vcaInput, levelCv, subValue * global.subVca * kIg00151SubOctaves, amp)
+                           * chGain * 0.17f;
+                constantPowerPan(pan, panLeft, panRight);
+            }
+            else
+            {
+                voiceOut = vcaInput * levelCv * amp * chGain * 0.17f;
+                panLeft = 0.5f - 0.5f * pan;
+                panRight = 0.5f + 0.5f * pan;
+            }
+            mixL += voiceOut * panLeft;
+            mixR += voiceOut * panRight;
         }
 
         if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
@@ -1674,7 +1743,11 @@ Engine::RankAudioState Engine::getRankAudioState(int voice, int rank) const noex
     if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
         return {};
     const auto& r = voices[(size_t) voice].ranks[rank];
-    return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState() };
+    if (!usesSourceModels(global.renderPolicy))
+        return { r.osc.getPhase(), r.hpf.getState(), r.lpf.getState(), {}, {} };
+    const auto hp = r.hpStage.getState(), lp = r.lpStage.getState();
+    return { static_cast<float>(r.wsc.getPhase()), { (float) hp.bp, (float) hp.lp },
+             { (float) lp.bp, (float) lp.lp }, hp, lp };
 }
 
 Engine::RankEnvelopeState Engine::getRankEnvelopeState(int voice, int rank) const noexcept

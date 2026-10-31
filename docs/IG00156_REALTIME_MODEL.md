@@ -1,5 +1,9 @@
 # IG00156 circuit-engine filter (first realtime stage)
 
+> **Superseded in the circuit engine (2026-10-31):** the circuit engine now uses
+> the nodal stage in [IG00156_NODAL_MODEL.md](IG00156_NODAL_MODEL.md). This page
+> records the first stage, which `Svf::processCircuit` and its tests still implement.
+
 Phase 1.1 of [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md). It applies to the circuit
 engine (Source Performance and Isolation policies) only, through
 `Svf::processCircuit` in `src/core/Dsp.h`. The legacy policy keeps `Svf::process` byte-for-byte.

@@ -1,6 +1,6 @@
 // Conditional numerical qualification of an INFERRED instrument, not measured
 // CS80 equivalence. Frozen proposal gates and exploratory history are documented.
-#include "experimental/ReconstructedOscillator.h"
+#include "core/ReconstructedOscillator.h"
 #include "core/Dsp.h"
 #include <array>
 #include <chrono>

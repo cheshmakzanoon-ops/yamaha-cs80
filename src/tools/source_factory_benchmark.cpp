@@ -341,7 +341,8 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
 
 void usage() {
     std::cout << "Usage: cs80_source_factory_benchmark --out NEW_DIRECTORY --source-commit HEX "
-                 "[--callbacks 1024] [--suite baseline|performance] [--include-64] [--quick]\n"
+                 "[--callbacks 1024] [--suite baseline|performance] [--include-64] [--quick] "
+                 "[--rate 44100|48000] [--block 64|128|256]\n"
                  "Full sweep: 44.1/48 kHz, 64/128/256 frames, all 22 tabs as 11 two-rank pairs, "
                  "8 notes, source/legacy held and release, moving controls, idle/noise.\n"
                  "Performance suite: 128/256 frames, Source Performance all22 dry/live MPE+FX profiles, "
@@ -356,6 +357,7 @@ int main(int argc, char** argv) {
         std::string commit;
         int callbacks = 1024;
         bool quick = false, include64 = false;
+        int onlyRate = 0, onlyBlock = 0; // optional sweep filters; 0 keeps every value
         std::string suite = "baseline";
         for (int i = 1; i < argc; ++i) {
             const std::string arg = argv[i];
@@ -366,6 +368,8 @@ int main(int argc, char** argv) {
             if (arg == "--out") directory = argv[++i];
             else if (arg == "--source-commit") commit = argv[++i];
             else if (arg == "--suite") suite = argv[++i];
+            else if (arg == "--rate") onlyRate = std::stoi(argv[++i]);
+            else if (arg == "--block") onlyBlock = std::stoi(argv[++i]);
             else if (arg == "--callbacks") {
                 const std::string value = argv[++i];
                 require(!value.empty() && value.find_first_not_of("0123456789") == std::string::npos,
@@ -421,6 +425,7 @@ int main(int argc, char** argv) {
         std::vector<Case> cases;
         for (int rate : {44100, 48000}) for (int block : {64, 128, 256}) {
             if (quick && (rate != 48000 || block != 128)) continue;
+            if ((onlyRate && rate != onlyRate) || (onlyBlock && block != onlyBlock)) continue;
             if (suite == "performance") {
                 if (block == 64 && !include64) continue;
                 for (int selector = 0; selector < 11; ++selector) {
