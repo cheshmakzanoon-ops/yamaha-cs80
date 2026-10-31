@@ -115,8 +115,9 @@ class Fixture:
                   "the following unrelated source retains its position")
             wrapper = Path(paths[1])
             expected_wrapper = self.build / "cs80-juce-wrappers" / original_name
-            # Diagnostics only: preserve the exact lexical assertion until a
-            # native Windows run establishes whether these spellings alias.
+            # Native Windows evidence proves RUNNER~1 and runneradmin can name
+            # the same generated file. Contract abcf9ea keeps the exact native
+            # basename, canonical target and filesystem identity mandatory.
             path_diagnostic = {"actual": str(wrapper), "expected": str(expected_wrapper)}
             for label, path in (("actual_resolved", wrapper), ("expected_resolved", expected_wrapper)):
                 try:
@@ -128,7 +129,9 @@ class Fixture:
             except OSError as error:
                 path_diagnostic["samefile"] = f"{type(error).__name__}: {error}"
             print("Host wrapper path diagnostic: " + json.dumps(path_diagnostic), flush=True)
-            check(wrapper == self.build / "cs80-juce-wrappers" / original_name,
+            check(wrapper.name == original_name
+                  and wrapper.resolve() == expected_wrapper.resolve()
+                  and wrapper.samefile(expected_wrapper),
                   "the generated wrapper retains the native source name and language extension")
             check(wrapper.is_file(), "the target points to an existing generated translation unit")
             contents = wrapper.read_text(encoding="utf-8")

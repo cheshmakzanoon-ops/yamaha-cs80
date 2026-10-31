@@ -1,0 +1,15 @@
+--- a/cmake/HostAutomation.cmake
++++ b/cmake/HostAutomation.cmake
+@@ -36,7 +36,11 @@
+                 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+                     "${_cs80_original_directory}/juce_audio_plugin_client_VST3.cpp")
+             endif()
+-            list(APPEND _cs80_patched_sources "${_cs80_wrapper}")
++            if(_cs80_format STREQUAL "VST3")
++                list(APPEND _cs80_patched_sources "${_cs80_source}")
++            else()
++                list(APPEND _cs80_patched_sources "${_cs80_wrapper}")
++            endif()
+             math(EXPR _cs80_patched_count "${_cs80_patched_count} + 1")
+         else()
+             list(APPEND _cs80_patched_sources "${_cs80_source}")
