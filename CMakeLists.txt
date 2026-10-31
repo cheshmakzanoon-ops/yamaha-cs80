@@ -675,6 +675,16 @@ if (CS80_BUILD_PLUGIN)
     endif()
 endif()
 
+# AU wrapper macro environment contract (registered 2026-10-31).
+# Keep the native JUCE macros active around the production queue on every host.
+# Native macOS AU compilation, scheduling and pluginval remain independent gates.
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_au_wrapper_macro_environment_tests tests/AuWrapperMacroEnvironmentTests.cpp)
+    target_include_directories(cs80_au_wrapper_macro_environment_tests PRIVATE src)
+    add_test(NAME cs80_au_wrapper_macro_environment_tests COMMAND cs80_au_wrapper_macro_environment_tests)
+    set_tests_properties(cs80_au_wrapper_macro_environment_tests PROPERTIES TIMEOUT 30)
+endif()
+
 # Core test executables keep several Engine fixtures (about 270 KB each since
 # the free-running idle snapshots and the circuit-engine voice) on the stack in
 # one function. Give them the ordinary 8 MiB Unix test-process budget instead of

@@ -93,3 +93,36 @@ The local fixture proves wrapper discovery, generated content, and rejection
 behavior without requiring an Apple SDK. Native macOS arm64/x86_64 compilation,
 AU and VST3 host automation tests, and pluginval remain required CI gates. A
 passing Linux source-list fixture does not establish those native results.
+
+## Native AU macro compatibility follow-up
+
+The repair published as `c8bf1b3dc6210a8cc76b901bced1f7ec35310995` passed native
+macOS arm64 configuration in
+[run 41237400418, job 124643945990](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41237400418/job/124643945990).
+The AU compile then exposed a separate failure: JUCE's
+`juce_IncludeModuleHeaders.h` defines `Point` as `juce::Point` on macOS. That macro
+rewrites the private `Point` declaration and uses in `AuAutomationQueue.h`,
+producing a qualified-name/template collision. The existing portable AU bridge
+fixture did not include this native preprocessor environment.
+
+The follow-up renames that private type to `AutomationPoint` at its three uses.
+Replacing the new spelling with the old spelling reproduces the original
+header byte for byte; fields, arithmetic, event ordering, and public interfaces
+are unchanged. JUCE's macros are preserved.
+
+The separate contract in
+[`au-wrapper-macro-environment.json`](../tests/parity/tolerances-v2/au-wrapper-macro-environment.json)
+was published as `111c3ed37491f818ccbf5f96534cf7c464de6051` before evaluation.
+`AuWrapperMacroEnvironmentTests.cpp` compiles the production queue with JUCE's
+exact `Component` and macOS `Point` macro definitions active, then checks that
+both aliases remain intact. The original header fails with the same `Point`
+collision. The repaired fixture compiles and exits successfully; the isolated
+mutation reverting the private name to `Point` fails compilation as required.
+
+The existing AU curve and bridge contract tests also compile and pass with
+their unchanged registered tolerances. The curve's reported maximum normalized
+error is `2.22045e-16`. Exact compiler logs, the mutation patch, candidate hashes,
+and the native diagnostic excerpt are recorded in
+[`au-wrapper-macro-environment/qualification.json`](evidence/continuation-2026-10-31/au-wrapper-macro-environment/qualification.json).
+Native macOS compilation and runtime qualification are still required after
+this follow-up; the portable macro fixture does not substitute for them.

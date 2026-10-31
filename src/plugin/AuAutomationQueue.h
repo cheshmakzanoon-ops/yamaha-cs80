@@ -67,7 +67,7 @@ public:
             lane.owner = this;
             lane.first = firstPoint;
             const auto valueAt = [&](int position) {
-                Point previous {-1, initial[laneIndex]};
+                AutomationPoint previous {-1, initial[laneIndex]};
                 for (size_t i = firstPoint; i < pointCount; ++i)
                 {
                     const auto point = points[i];
@@ -133,10 +133,10 @@ public:
             }, nullptr, nullptr};
     }
 private:
-    struct Point { int position = 0; double value = 0; };
+    struct AutomationPoint { int position = 0; double value = 0; };
     struct Lane { const AuAutomationQueue* owner = nullptr; size_t first = 0, count = 0; };
     std::array<Event, capacity> pending {};
-    std::array<Point, capacity * 3 + lanes> points {};
+    std::array<AutomationPoint, capacity * 3 + lanes> points {};
     std::array<Lane, lanes> ready {};
     size_t pendingCount = 0, pointCount = 0;
 };
