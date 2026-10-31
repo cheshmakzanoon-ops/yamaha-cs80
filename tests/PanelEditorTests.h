@@ -8,9 +8,12 @@
 #include "plugin/UiComponents.h"
 #include "plugin/ArtCommon.h"
 #include "plugin/EditorPreferences.h"
+#include "plugin/MemoryEditing.h"
+#include "plugin/MemoryLid.h"
 
 #include <chrono>
 #include <cmath>
+#include <cstring>
 #include <cstdio>
 #include <vector>
 
@@ -92,6 +95,15 @@ struct BalancedGesture final : juce::AudioProcessorParameter::Listener
     void parameterValueChanged(int, float) override { ++changes; if (depth != 1) ++unbracketed; }
     void parameterGestureChanged(int, bool starting) override { if (starting) { ++begins; ++depth; } else { ++ends; --depth; } }
     bool ok() const { return changes > 0 && begins == 1 && ends == 1 && depth == 0 && unbracketed == 0; }
+};
+
+// Counts gestures and value changes across many parameters written one after another.
+struct GestureTally final : juce::AudioProcessorParameter::Listener
+{
+    int begins = 0, ends = 0, changes = 0, depth = 0, unbracketed = 0;
+    void parameterValueChanged(int, float) override { ++changes; if (depth != 1) ++unbracketed; }
+    void parameterGestureChanged(int, bool starting) override { if (starting) { ++begins; ++depth; } else { ++ends; --depth; } }
+    bool balanced() const { return begins == ends && depth == 0 && unbracketed == 0 && changes == begins; }
 };
 } // namespace panel_editor_detail
 
@@ -334,6 +346,150 @@ void testHiDpiTexture(Check check, Flush flush)
     check(oneX > 0.0 && twoX > 0.8 * oneX, "a 2x render keeps the crinkle at one texel per physical pixel");
 }
 
+// Memory-lid editing (MemoryEditing.h and the lid keys): store panel -> memory, memory -> memory, rank I <-> II
+// and memory -> panel, each checked against independently set values.
+template <typename Check, typename Flush>
+void testMemoryEditing(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    namespace edit = cs80::memory_editing;
+    juce::TemporaryFile presetRoot("-cs80-memory-edit");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    std::vector<int> locals;
+    for (int local = 0; local < cs80::CP_count; ++local)
+        if (Cs80AudioProcessor::isMemoryControl(local))
+            locals.push_back(local);
+    check(locals.size() == 26, "memory editing covers the 26 programmer controls");
+    auto valueAt = [](int local, float fraction)
+    {
+        const auto& d = cs80::kChannelDefs[local];
+        if (local == cs80::CP_saw || local == cs80::CP_pulse) return fraction >= 0.5f ? 1.0f : 0.0f;
+        return d.min + fraction * (d.max - d.min);
+    };
+    auto same = [](int local, float a, float b)
+    {
+        const auto& d = cs80::kChannelDefs[local];
+        return std::abs(a - b) <= std::max(1.0e-4f, (d.max - d.min) * 1.0e-4f);
+    };
+    // Distinct, independently chosen values in both panel rows and all four memories.
+    for (size_t i = 0; i < locals.size(); ++i)
+    {
+        const int local = locals[i];
+        const float f = (float) i / 26.0f;
+        host.setParamValue(cs80::chParam(0, local), valueAt(local, 0.05f + 0.30f * f));
+        host.setParamValue(cs80::chParam(1, local), valueAt(local, 0.95f - 0.30f * f));
+        for (int bank = 0; bank < 4; ++bank)
+            host.setMemoryValue(bank, local, valueAt(local, 0.15f + 0.2f * (float) bank + 0.04f * f));
+    }
+    host.setParamValue(cs80::chParam(0, cs80::CP_feet), 1.0f);
+    host.setParamValue(cs80::chParam(1, cs80::CP_feet), 3.0f);
+    host.setParamValue(cs80::chParam(0, cs80::CP_pan), 0.2f);
+    auto panel = [&](int channel, int local) { return host.getParamValue(cs80::chParam(channel, local)); };
+    auto memory = [&](int bank, int local) { return host.getMemoryValue(bank, local); };
+    struct Snapshot { float values[2][cs80::CP_count]; float memories[4][cs80::CP_count]; };
+    auto snapshot = [&]
+    {
+        Snapshot s {};
+        for (int local = 0; local < cs80::CP_count; ++local)
+        {
+            for (int channel = 0; channel < 2; ++channel) s.values[channel][local] = panel(channel, local);
+            for (int bank = 0; bank < 4; ++bank) s.memories[bank][local] = memory(bank, local);
+        }
+        return s;
+    };
+    auto tallyOn = [&](GestureTally& tally, bool add, auto idFor)
+    {
+        for (int local : locals)
+            if (auto* parameter = host.getAPVTS().getParameter(idFor(local)))
+                add ? parameter->addListener(&tally) : parameter->removeListener(&tally);
+    };
+
+    // Panel I -> memory 3.
+    {
+        const auto before = snapshot();
+        GestureTally tally;
+        auto ids = [](int local) { return Cs80AudioProcessor::memoryParameterId(2, local); };
+        tallyOn(tally, true, ids);
+        check(edit::storePanelToMemory(host, 0, 2), "store panel I into memory 3 accepted");
+        tallyOn(tally, false, ids);
+        bool stored = true, others = true;
+        for (int local : locals)
+        {
+            stored = stored && same(local, memory(2, local), before.values[0][local]);
+            for (int bank : { 0, 1, 3 }) others = others && memory(bank, local) == before.memories[bank][local];
+            others = others && panel(0, local) == before.values[0][local] && panel(1, local) == before.values[1][local];
+        }
+        check(stored, "memory 3 holds panel I's 26 controls");
+        check(others, "storing touches no other memory and neither panel row");
+        check(tally.changes > 0 && tally.balanced(), "every stored control is one balanced host gesture");
+    }
+    // Memory 3 -> memory 2 (across ranks).
+    {
+        const auto before = snapshot();
+        check(edit::copyMemory(host, 2, 1), "copy memory 3 to memory 2 accepted");
+        bool copied = true, source = true;
+        for (int local : locals)
+        {
+            copied = copied && same(local, memory(1, local), before.memories[2][local]);
+            source = source && memory(2, local) == before.memories[2][local] && memory(0, local) == before.memories[0][local];
+        }
+        check(copied && source, "memory 2 receives memory 3; the source and other memories are unchanged");
+    }
+    // Panel II -> panel I.
+    {
+        const auto before = snapshot();
+        GestureTally tally;
+        auto ids = [](int local) { return Cs80AudioProcessor::parameterId(cs80::chParam(0, local)); };
+        tallyOn(tally, true, ids);
+        check(edit::copyRank(host, 1, 0), "copy rank II to rank I accepted");
+        tallyOn(tally, false, ids);
+        bool copied = true;
+        for (int local : locals)
+            copied = copied && same(local, panel(0, local), before.values[1][local]) && panel(1, local) == before.values[1][local];
+        check(copied, "rank I's row equals rank II's; rank II is unchanged");
+        check(panel(0, cs80::CP_feet) == 1.0f && std::abs(panel(0, cs80::CP_pan) - 0.2f) < 1.0e-4f,
+              "rank copy leaves FEET and pan, which are not part of the row");
+        check(tally.changes > 0 && tally.balanced(), "every copied rank control is one balanced host gesture");
+    }
+    // Memory 4 -> panel II.
+    {
+        const auto before = snapshot();
+        check(edit::recallMemoryToPanel(host, 3, 1), "load memory 4 into panel II accepted");
+        bool loaded = true;
+        for (int local : locals)
+            loaded = loaded && same(local, panel(1, local), before.memories[3][local]) && memory(3, local) == before.memories[3][local];
+        check(loaded, "panel II holds memory 4; memory 4 is unchanged");
+    }
+    // Invalid requests change nothing.
+    {
+        const auto before = snapshot();
+        const bool rejected = ! edit::storePanelToMemory(host, 2, 0) && ! edit::storePanelToMemory(host, 0, 4)
+            && ! edit::copyMemory(host, 1, 1) && ! edit::copyMemory(host, -1, 2) && ! edit::copyRank(host, 0, 0)
+            && ! edit::recallMemoryToPanel(host, 4, 0);
+        const auto after = snapshot();
+        check(rejected && std::memcmp(&before, &after, sizeof(Snapshot)) == 0, "invalid editing requests are refused and change nothing");
+    }
+    // The lid's editing keys and command entry point.
+    {
+        Cs80AudioProcessorEditor editor(host);
+        editor.setSize(1600, 1000);
+        auto* lid = dynamic_cast<cs80::panel::MemoryLid*>(findByTitle(editor, "Memory programmer"));
+        check(lid != nullptr, "memory lid component exists");
+        check(findButtonText(editor, "STORE PANEL") != nullptr && findButtonText(editor, "COPY MEMORY") != nullptr
+                  && findButtonText(editor, "COPY RANK") != nullptr, "the lid carries STORE PANEL, COPY MEMORY and COPY RANK keys");
+        if (lid != nullptr)
+        {
+            check(lid->runEditCommand(cs80::panel::MemoryLid::storeCommand(1, 3)), "lid command stores panel II into memory 4");
+            bool stored = true;
+            for (int local : locals) stored = stored && same(local, memory(3, local), panel(1, local));
+            check(stored, "the lid command wrote memory 4 from panel II");
+            check(! lid->runEditCommand(999) && ! lid->runEditCommand(cs80::panel::MemoryLid::copyMemoryCommand(2, 2)),
+                  "unknown or invalid lid commands are refused");
+        }
+        flush(20);
+    }
+}
+
 template <typename Check, typename Flush>
 void runPanelEditorTests(Check check, Flush flush)
 {
@@ -343,5 +499,6 @@ void runPanelEditorTests(Check check, Flush flush)
     testLegendFloorAndTypeface(check);
     testZoomPresets(check, flush);
     testHiDpiTexture(check, flush);
+    testMemoryEditing(check, flush);
 }
 } // namespace cs80::tests

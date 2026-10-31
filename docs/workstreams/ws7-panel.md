@@ -153,3 +153,35 @@ values, report 0 for a dragged size, reopen at the stored preset, fall back when
 the APVTS state; a 2x render keeps at least 80 % of the 1x crinkle detail. Mutation checks, one build: floor back
 to 9 px, typeface bypassed, texel scale back to the logical scale, preference not saved; 6 failures, all
 passing again after reverting.
+
+## Step 5: memory-lid editing (done)
+
+`src/plugin/MemoryEditing.h` (header-only, message thread) adds four processor-side helpers over the 26
+programmer controls (`Cs80AudioProcessor::isMemoryControl`), writing the existing APVTS memory and panel
+parameters with one balanced gesture per parameter that actually changes:
+
+- `storePanelToMemory(processor, channel, bank)`: a rank's main-panel row into a memory;
+- `copyMemory(processor, fromBank, toBank)`: one memory into another (any distinct pair);
+- `copyRank(processor, fromChannel, toChannel)`: one rank's row onto the other; FEET, pan and the filter on/off
+  extensions are not part of the row and are left alone;
+- `recallMemoryToPanel(processor, bank, channel)`: a memory into a rank's row (the reverse of store; the Phase 6
+  "copy memory and panel" item).
+
+Invalid arguments return false and change nothing. Evidence class: these are editing conveniences with no
+counterpart on the original, whose memories are miniature panels set by hand. They only produce settings an
+owner could reach by moving those sliders and write no non-original state, so they are available in every
+engine mode, PURE CS-80 included (declared choice; the alternative is to grey the keys out in isolation).
+
+Lid UI: STORE PANEL (store a row into either of its rank's memories, or load a memory into its rank's row),
+COPY MEMORY (from each memory to any other) and COPY RANK (I to II, II to I) keys in the lid header open menus
+of explicit commands; `MemoryLid::runEditCommand()` performs one and the readout reports it ("STORED PANEL I IN
+MEMORY 3 ... YOUR HOST'S UNDO REVERTS IT") for 2.5 s. The readout window narrows to make room and now scales
+uniformly. Host undo works through the gestures; the APVTS UndoManager (ws8) will see them as ordinary edits.
+
+Tests (`tests/PanelEditorTests.h`, UI self-test): with independently chosen values in both rows and all four
+memories, each helper makes its target equal to its source for all 26 controls and leaves the source, the other
+memories and the other row unchanged; rank copy leaves FEET and pan; every write is a balanced gesture with no
+unbracketed change; six invalid requests are refused with the full state byte-identical; the lid shows its three
+keys and its command entry point stores panel II into memory 4 and refuses unknown or invalid commands.
+Mutation checks, one build: store writing the next bank, and rank copy including FEET; 4 failures, passing
+again after reverting.

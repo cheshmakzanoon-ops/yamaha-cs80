@@ -1,5 +1,7 @@
 #include "MemoryLid.h"
 
+#include "MemoryEditing.h"
+
 #include "core/FactoryPresets.h"
 
 namespace cs80::panel
@@ -30,23 +32,25 @@ void LidReadout::setLines(const juce::String& main, const juce::String& hint)
 
 void LidReadout::paint(juce::Graphics& g)
 {
-    const float sx = (float) getWidth() / 730.0f, sy = (float) getHeight() / 44.0f;
+    // Uniform scale from the 44-unit height; the window is as wide as its bounds allow.
+    const float sx = (float) getHeight() / 44.0f;
     FloorScope floor(sx);
-    g.addTransform(juce::AffineTransform::scale(sx, sy));
-    const juce::Rectangle<float> w(0.0f, 0.0f, 730.0f, 44.0f);
+    g.addTransform(juce::AffineTransform::scale(sx));
+    const float width = (float) getWidth() / sx, textW = width - 28.0f;
+    const juce::Rectangle<float> w(0.0f, 0.0f, width, 44.0f);
     art::recessTray(g, w.reduced(1.0f), 4.0f, juce::Colour(0xff0e0d0b), juce::Colour(0xff050504), 7.0f, 0.9f);
     g.setGradientFill(art::vgrad(art::white(0.06f), juce::Colours::transparentWhite, w.withHeight(22.0f)));
     g.fillRoundedRectangle(w.reduced(2.0f).withHeight(21.0f), 3.0f);
     auto font = spacedFont(14.5f, 0.06f);
-    font = ui::fitFontToWidth(font, mainLine, 702.0f, 0.8f, art::kLegendFloorPx / sx);
+    font = ui::fitFontToWidth(font, mainLine, textW, 0.8f, art::kLegendFloorPx / sx);
     g.setFont(font);
     g.setColour(juce::Colour(0xffffc060));
-    g.drawText(mainLine, juce::Rectangle<float>(14.0f, 3.0f, 702.0f, 22.0f), juce::Justification::centredLeft, false);
+    g.drawText(mainLine, juce::Rectangle<float>(14.0f, 3.0f, textW, 22.0f), juce::Justification::centredLeft, false);
     auto hint = spacedFont(11.0f, 0.04f);
-    hint = ui::fitFontToWidth(hint, hintLine, 702.0f, 0.8f, art::kLegendFloorPx / sx);
+    hint = ui::fitFontToWidth(hint, hintLine, textW, 0.8f, art::kLegendFloorPx / sx);
     g.setFont(hint);
     g.setColour(juce::Colour(0xffb6aa86));
-    g.drawText(hintLine, juce::Rectangle<float>(14.0f, 26.0f, 702.0f, 15.0f), juce::Justification::centredLeft, false);
+    g.drawText(hintLine, juce::Rectangle<float>(14.0f, 26.0f, textW, 15.0f), juce::Justification::centredLeft, false);
 }
 
 // ---- MemoryLid ------------------------------------------------------------------------------
@@ -61,6 +65,23 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
     close.setTitle("Close memory programmer");
     close.setWantsKeyboardFocus(true);
     close.onClick = [this] { if (onClose) onClose(); };
+    struct EditKey { KeyButton* key; const char* title; const char* tip; };
+    const EditKey editKeys[] = {
+        { &storeKey, "Store a panel row into a memory",
+          "Store a rank's main-panel row into one of its memories, or load a memory into the panel row." },
+        { &copyKey, "Copy one memory to another", "Copy all 26 controls of one memory into another memory." },
+        { &rankKey, "Copy one rank's panel row to the other", "Copy the 26 main-panel controls of rank I to rank II, or of rank II to rank I. FEET stays as it is." },
+    };
+    for (const auto& edit : editKeys)
+    {
+        edit.key->setTitle(edit.title);
+        edit.key->setTooltip(edit.tip);
+        edit.key->setWantsKeyboardFocus(true);
+        addAndMakeVisible(*edit.key);
+    }
+    storeKey.onClick = [this] { showStoreMenu(); };
+    copyKey.onClick = [this] { showCopyMenu(); };
+    rankKey.onClick = [this] { showRankMenu(); };
     for (int bank = 0; bank < 4; ++bank)
     {
         auto button = std::make_unique<KeyButton>("MEMORY " + juce::String(bank + 1), KeyButton::Style::selector);
@@ -161,9 +182,80 @@ void MemoryLid::refresh()
         }
         repaint();
     }
+    if (juce::Time::getMillisecondCounterHiRes() < messageUntilMs) return;
     if (hovered != nullptr) describe(*hovered, false);
     else if (lastTouched != nullptr) describe(*lastTouched, true);
     else showIdle();
+}
+
+namespace
+{
+juce::String memoryName(int bank) { return "MEMORY " + juce::String(bank + 1); }
+juce::String rowName(int channel) { return channel == 0 ? "PANEL I" : "PANEL II"; }
+} // namespace
+
+bool MemoryLid::runEditCommand(int command)
+{
+    namespace edit = cs80::memory_editing;
+    const int group = command / 100, a = (command / 10) % 10, b = command % 10;
+    bool done = false;
+    juce::String report;
+    switch (group)
+    {
+        case 1: done = edit::storePanelToMemory(processor, a, b); report = "STORED " + rowName(a) + " IN " + memoryName(b); break;
+        case 2: done = edit::recallMemoryToPanel(processor, a, b); report = "LOADED " + memoryName(a) + " INTO " + rowName(b); break;
+        case 3: done = edit::copyMemory(processor, a, b); report = "COPIED " + memoryName(a) + " TO " + memoryName(b); break;
+        case 4: done = edit::copyRank(processor, a, b); report = "COPIED " + rowName(a) + " TO " + rowName(b); break;
+        default: break;
+    }
+    if (! done)
+        return false;
+    readout.setLines(report, "26 CONTROLS WRITTEN AS HOST AUTOMATION  /  YOUR HOST'S UNDO REVERTS IT");
+    messageUntilMs = juce::Time::getMillisecondCounterHiRes() + 2500.0;
+    return true;
+}
+
+void MemoryLid::showMenu(juce::PopupMenu menu, juce::Component& target)
+{
+    juce::Component::SafePointer<MemoryLid> safe(this);
+    menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&target),
+                       [safe](int chosen) { if (safe != nullptr && chosen > 0) safe->runEditCommand(chosen); });
+}
+
+void MemoryLid::showStoreMenu()
+{
+    juce::PopupMenu menu;
+    menu.addSectionHeader("STORE PANEL ROW INTO MEMORY");
+    for (int bank = 0; bank < 4; ++bank)
+        menu.addItem(storeCommand(cs80::memory_editing::rankOfBank(bank), bank), rowName(cs80::memory_editing::rankOfBank(bank)) + "  >  " + memoryName(bank));
+    menu.addSectionHeader("LOAD MEMORY INTO PANEL ROW");
+    for (int bank = 0; bank < 4; ++bank)
+        menu.addItem(recallCommand(bank, cs80::memory_editing::rankOfBank(bank)), memoryName(bank) + "  >  " + rowName(cs80::memory_editing::rankOfBank(bank)));
+    showMenu(menu, storeKey);
+}
+
+void MemoryLid::showCopyMenu()
+{
+    juce::PopupMenu menu;
+    menu.addSectionHeader("COPY MEMORY");
+    for (int from = 0; from < 4; ++from)
+    {
+        juce::PopupMenu targets;
+        for (int to = 0; to < 4; ++to)
+            if (to != from)
+                targets.addItem(copyMemoryCommand(from, to), "TO " + memoryName(to));
+        menu.addSubMenu("FROM " + memoryName(from), targets);
+    }
+    showMenu(menu, copyKey);
+}
+
+void MemoryLid::showRankMenu()
+{
+    juce::PopupMenu menu;
+    menu.addSectionHeader("COPY PANEL ROW");
+    menu.addItem(copyRankCommand(0, 1), "PANEL I  >  PANEL II");
+    menu.addItem(copyRankCommand(1, 0), "PANEL II  >  PANEL I");
+    showMenu(menu, rankKey);
 }
 
 // ---- live readout ---------------------------------------------------------------------------
@@ -335,7 +427,10 @@ void MemoryLid::resized()
                                     juce::roundToInt(w * sx), juce::roundToInt(h * sy));
     };
     close.setBounds(r(1318, 20, 126, 30));
-    readout.setBounds(r(570, 12, 730, 44));
+    rankKey.setBounds(r(1228, 20, 84, 30));
+    copyKey.setBounds(r(1130, 20, 92, 30));
+    storeKey.setBounds(r(1032, 20, 92, 30));
+    readout.setBounds(r(560, 12, 464, 44));
     for (int bank = 0; bank < 4; ++bank)
     {
         const float y = rowY(bank);

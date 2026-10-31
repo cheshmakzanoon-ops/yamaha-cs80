@@ -44,6 +44,14 @@ public:
 
     std::function<void()> onClose;
 
+    // Lid editing (MemoryEditing.h). The STORE PANEL, COPY MEMORY and COPY RANK keys open menus of these
+    // commands; runEditCommand performs one and reports it in the readout. Banks 0..3 are MEMORY 1..4.
+    static int storeCommand(int channel, int bank) noexcept { return 100 + 10 * channel + bank; }
+    static int recallCommand(int bank, int channel) noexcept { return 200 + 10 * bank + channel; }
+    static int copyMemoryCommand(int fromBank, int toBank) noexcept { return 300 + 10 * fromBank + toBank; }
+    static int copyRankCommand(int fromChannel, int toChannel) noexcept { return 400 + 10 * fromChannel + toChannel; }
+    bool runEditCommand(int command);
+
 private:
     static constexpr float kW = 1504.0f, kH = 590.0f, kOffsetX = 16.0f;
 
@@ -57,6 +65,10 @@ private:
         std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> buttonAttachment;
     };
 
+    void showStoreMenu();
+    void showCopyMenu();
+    void showRankMenu();
+    void showMenu(juce::PopupMenu menu, juce::Component& target);
     // The lid's own art (hinge, rim, crinkle plate, captions, row frames) for the current rows.
     void paintArt(juce::Graphics& g);
     unsigned activeRowMask() const noexcept;
@@ -82,6 +94,10 @@ private:
     float artPixelScale = 0.0f;
     unsigned artRows = ~0u;
     KeyButton close { "CLOSE LID", KeyButton::Style::plate };
+    KeyButton storeKey { "STORE PANEL", KeyButton::Style::plate };
+    KeyButton copyKey { "COPY MEMORY", KeyButton::Style::plate };
+    KeyButton rankKey { "COPY RANK", KeyButton::Style::plate };
+    double messageUntilMs = 0.0;          // the readout keeps an editing report this long
     std::array<std::unique_ptr<KeyButton>, 4> bankButtons;
     std::vector<Item> items;
     const std::array<int, 26> order {{
