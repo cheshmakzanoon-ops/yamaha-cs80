@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <cstring>
 #include <dlfcn.h>
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -188,6 +189,14 @@ struct Instance
         if (audio != nullptr) audio->release();
         if (component != nullptr) component->release();
     }
+    void flush(Changes& changes)
+    {
+        ProcessData data {};
+        data.symbolicSampleSize = kSample32;
+        data.processMode = kRealtime;
+        data.inputParameterChanges = &changes;
+        require(audio->process(data) == kResultOk, "active VST3 zero-frame parameter flush");
+    }
     void process(int start, int count, Changes* changes, std::vector<float>& output, bool sixteen = false)
     {
         std::vector<float> left(static_cast<size_t>(count)), right(static_cast<size_t>(count));
@@ -293,6 +302,46 @@ double difference(const std::vector<float>& a, const std::vector<float>& b)
     { require(std::isfinite(a[i]) && std::isfinite(b[i]), "finite host render"); result = std::max(result, std::abs(double(a[i]) - b[i])); }
     return result;
 }
+
+// The existing partition fixture starts at an explicit point zero. A host may
+// instead change parameters in a zero-frame process call between real blocks,
+// then supply a queue whose first point is later. That new state owns sample -1.
+std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& parameters,
+                                    int block, int firstPoint, bool priorCurve, bool scalar)
+{
+    Instance instance(module, parameters);
+    std::vector<float> output;
+    Changes prior;
+    if (priorCurve)
+        for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+        {
+            const int parameter = cs80::kSampleAccurateParameters[lane];
+            prior.add(parameterId(cs80::paramId(parameter)),
+                {{0, normalized(parameter, parameters[parameter])}, {255, 0.23 + double(lane) * 0.007}});
+        }
+    instance.process(0, 256, priorCurve ? &prior : nullptr, output);
+    Changes flush;
+    for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+        flush.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
+                  {{0, double(0.69f - float(lane) * 0.009f)}});
+    instance.flush(flush);
+    for (int sample = 0; sample < block; sample += scalar ? 1 : block)
+    {
+        Changes changes;
+        for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+        {
+            const double initial = 0.69f - float(lane) * 0.009f;
+            const double target = 0.31 + double(lane) * 0.008;
+            const double fraction = std::min(1.0, double(sample + 1) / double(firstPoint + 1));
+            const double value = scalar ? initial * (1.0 - fraction) + target * fraction : target;
+            changes.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
+                        {{scalar ? 0 : firstPoint, value}});
+        }
+        instance.process(256 + sample, scalar ? 1 : block, &changes, output);
+    }
+    instance.process(256 + block, 1024, nullptr, output);
+    return output;
+}
 } // namespace
 
 int main(int argc, char** argv)
@@ -301,6 +350,8 @@ int main(int argc, char** argv)
     {
         require(argc == 3, "usage: cs80_vst3_automation_tests MODULE TOLERANCES");
         const ws1::Tolerances limits(argv[2], "host_automation");
+        const ws1::Tolerances boundaryLimits((std::filesystem::path(argv[2]).parent_path()
+            / "host-automation-state-boundary.json").string(), "host_automation_state_boundary");
         Module module(argv[1]);
         auto parameters = cs80::defaultValues();
         parameters[cs80::P_sourcePerformance] = 1.0f;
@@ -333,6 +384,18 @@ int main(int argc, char** argv)
         const auto sixteenError = difference(render(module, sixteen, curves, 1), render(module, sixteen, curves, 256));
         check(sixteenError <= limits["audio_max_abs_error"], "automation reaches both engines in sixteen-voice mode");
         std::cout << "real VST3 maximum partition error=" << maxError << " sixteen-voice error=" << sixteenError << '\n';
+        double boundaryError = 0.0;
+        for (int block : {7, 64, 256})
+            for (int firstPoint : {1, block - 1})
+                for (bool priorCurve : {false, true})
+                {
+                    const auto error = difference(renderAfterFlush(module, parameters, block, firstPoint, priorCurve, false),
+                                                  renderAfterFlush(module, parameters, block, firstPoint, priorCurve, true));
+                    boundaryError = std::max(boundaryError, error);
+                    check(error <= boundaryLimits["audio_max_abs_error"],
+                          "native zero-frame flush supersedes the old start of a delayed VST3 curve");
+                }
+        std::cout << "real VST3 zero-frame state-boundary maximum audio error=" << boundaryError << '\n';
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
     return failures == 0 ? 0 : 1;

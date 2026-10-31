@@ -23,6 +23,7 @@
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
 #include "../../tests/ProgramLibraryHostTests.h"
+#include "../../tests/HostAutomationStateBoundaryTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -2094,6 +2095,12 @@ int main(int argc, char** argv)
     juce::ScopedJuceInitialiser_GUI juceInit;
     // Focused developer entry point for the registered completion mutations. The default
     // --self-test below still runs every existing check and these same completion checks.
+    if (argc > 1 && std::strcmp(argv[1], "--host-automation-boundary-test") == 0)
+    {
+        cs80::tests::testHostAutomationStateBoundary(check);
+        std::printf("Host automation state boundary: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--host-circuit-contract-test") == 0)
     {
         cs80::tests::testOutputMeterHost(check);
@@ -2123,6 +2130,8 @@ int main(int argc, char** argv)
     }
     std::puts("UI SMOKE PHASE: host metadata");
     cs80::tests::testPluginHostMetadata(check);
+    std::puts("UI SMOKE PHASE: host automation state boundary");
+    cs80::tests::testHostAutomationStateBoundary(check);
     std::puts("UI SMOKE PHASE: output meter host");
     cs80::tests::testOutputMeterHost(check);
     std::puts("UI SMOKE PHASE: source performance host");
