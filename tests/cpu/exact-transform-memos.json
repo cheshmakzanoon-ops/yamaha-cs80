@@ -45,6 +45,10 @@
       1
     ]
   },
+  "signed_zero_reference_cases": [
+    "At unchanged finite pitches spanning the existing pitch domain, call the MIDI memo with +0,+0,-0,-0,+0,-0,+0,+0 references, covering both sign transitions and repeated hits.",
+    "Compare every returned float bit pattern with the original tuningRef * pow expression under the existing absolute_error=0 limit; +0 and -0 are distinct expected outputs."
+  ],
   "requirements": [
     "cache only exactly identical inputs",
     "retune and note changes cannot reuse stale factors",
@@ -56,7 +60,8 @@
     "stale ring envelope or depth",
     "stale DC rate argument",
     "stale SUB target pressure",
-    "stale SUB smoothed log frequency"
+    "stale SUB smoothed log frequency",
+    "restore numeric-only MIDI reference equality, collapsing +0 and -0 cache keys"
   ],
   "benchmark": "minimum three rounds at48k256 before and after"
 }
