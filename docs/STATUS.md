@@ -102,7 +102,8 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | not done | — |
+| 6 Separate chorus/tremolo tab positions | done; historic default preserves original exclusive switch, circuit source can select both off/on | `6f1c4aa`, pin `adc8bbb` |
+| 6 Sample-accurate automation | native VST3/AU continuation implementation qualified locally; publication and macOS native gate pending | — |
 | 7 Release qualification | identified Linux validator-host lifetime mechanism removed by checked fixed-host pin; full continuation CI/release pending; signing remains owner-only | `f39af47`, `9af0b35` |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -363,15 +364,38 @@ unchanged ownership pin `3c08e8e`; no circuit sound or golden was re-pinned.
 See [IG00156_PHASE_CORRECTION.md](IG00156_PHASE_CORRECTION.md) and
 [evidence/continuation-2026-10-31/filter-coefficient-cache-qualification.txt](evidence/continuation-2026-10-31/filter-coefficient-cache-qualification.txt).
 
+## Continuation: independent physical chorus and tremolo tabs
+
+`6f1c4aad967e58fcd013747ceaa6bf00b6dcc7d9` adds an append-only
+`chorus_tabs` engine parameter (AU version hint 16, choice number 191) with
+Historical, Both Off, Chorus, Tremolo and Both On positions. Historical is the
+neutral default and keeps the older `chorus_on` choice and the original Legacy
+toggle behavior. The explicit tab states drive the separate OE1 and OE2
+circuits in Source and PURE CS-80; the UI exposes both independent tabs and
+keeps the earlier legacy gestures. The prior circuit audio is retained at the
+default. Host parameter parity counts have been updated, without renumbering
+any earlier parameter.
+
+The pre-registered source matrix covers both ranks, all explicit combinations,
+Legacy and PURE policy behavior, and the 144,037-sample continuity oracle.
+Five deliberate source mutations fail this gate. The corresponding focused
+real-window UI regression passes with zero failures; the full integrated
+real-window smoke currently reports unrelated host/core mismatches, which
+are being investigated without loosening existing assertions. The separate
+audio pin is `adc8bbb8de4cd8631423e1edcfb513be841fac1c`. See the
+frozen capture under
+`evidence/continuation-2026-10-31/compat-chorus-frozen.log`.
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`3c08e8e8d25f0ee1427f2467a199f37940a2ea3d`** (complete voice ownership
-  and live engine taps). Pin commit `8f93feb5767f4fcd9f28256b8c9e53130a22a332`.
-  Earlier V2 pins, for historical circuit-engine renders: `c54c476` (filter
+  **`6f1c4aad967e58fcd013747ceaa6bf00b6dcc7d9`** (independent chorus and
+  tremolo tabs). Pin commit `adc8bbb8de4cd8631423e1edcfb513be841fac1c`.
+  Earlier V2 pins, for historical circuit-engine renders: `3c08e8e`
+  (complete live voice ownership), `c54c476` (filter
   charge continuity), `d66d298` (electrical
   programmer), `4917708` (full-band
   nodal phase correction), `031a333` (Jacobian
@@ -465,8 +489,9 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - MTS-ESP is now vendored and compile-tested (`fa2016c2`, upstream 0BSD
   licence); final integrated plugin qualification remains in progress.
 - All 25 tone-tab cells have native-crop review records; unresolved markings
-  and board revision choices remain labelled hypotheses. Tremolo/chorus
-  independent both-off/both-on parameter integration is pending.
+  and board revision choices remain labelled hypotheses. Independent physical
+  chorus and tremolo states now have a neutral-default, append-only parameter;
+  integrated host/UI validation is pending.
 - Sample-accurate automation not done.
 - Signing and notarization need the owner's certificates; real-DAW sessions,
   trademark review and AAX are owner actions

@@ -97,7 +97,9 @@ row (compatibility gates byte-identical).
   500 Hz extension masked at 200 Hz in PURE CS-80.
 - *Row 15 Tremolo/chorus, LEFT and RIGHT outputs:* OE1 four-VCA tremolo; OE2 true L/R
   wet paths with per-transfer loss, output-pair hold, independent noise and band-limited
-  clock feedthrough.
+  clock feedthrough. Added 2026-10-31: the append-only `chorus_tabs` parameter
+  makes both-off, individual on, and both-on engine states representable;
+  Historical remains the neutral default and preserves the previous toggle.
 - *Row 17 EXP / EXP-WAH:* PRA optical cell, declared asymmetric LDR law.
 
 **Modern layer (ws5-modern, Phase 6; all EXT, inert in PURE CS-80)**
@@ -109,7 +111,11 @@ row (compatibility gates byte-identical).
 **Tones, memories and library (ws6-library, Phase 4)**
 - *Row 3 tone selectors:* 25 unknown cells re-examined; all stay labelled hypotheses;
   opt-in refined BA/diode boundary (V1 numerics unchanged).
-- *Row 46 four memory panels:* electrical model with a truth model; not driving audio.
+- *Row 46 four memory panels:* electrical model with a truth model; as of
+  2026-10-31 the selected memory/PANEL receiver drives circuit-engine control
+  values while preserving the legacy APVTS path and the unchanged V1 gate.
+  Voltage and taper curves remain declared schematic inferences, not hardware
+  measurements (`d66d298`).
 - *Factory programs:* 301-program curated circuit-engine library; the 222 shipped
   programs are the read-only Legacy Library at their old host indexes.
 - *MIDI / editing:* Program Change with bank select (inert in PURE CS-80); A/B compare
@@ -122,7 +128,8 @@ row (compatibility gates byte-identical).
   open.
 - *Rows 3, 9-10, 13-15, 17, 46, HIGH/LOW:* full tab names; levers and switches moved to
   the documented blocks; separate tremolo/chorus keys (both-off/both-on states need an
-  engine parameter: open); memory-lid STORE PANEL / COPY MEMORY / COPY RANK.
+  engine parameter: completed 2026-10-31, `6f1c4aa`); memory-lid STORE PANEL /
+  COPY MEMORY / COPY RANK.
 
 **Modern UI (ws8-studio, Phase 5/6; EXT)**
 - *Row 19 Ribbon (UI):* full bend from any first-contact point (declared UI
