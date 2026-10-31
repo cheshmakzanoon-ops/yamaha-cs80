@@ -63,6 +63,8 @@ struct PresetSaveAccess
         const auto writtenState = juce::ValueTree::fromXml(*xml);
         check(writtenState.hasType("CS80_PARAMS") && xml->getIntAttribute("subOscStateVersion") == 1,
               "save preserves preset schema and original SUB migration version");
+        check(xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey) == Cs80AudioProcessor::stateSchemaVersion,
+              "save writes the current state schema version");
         for (const auto& child : expectedState)
         {
             if (! child.hasProperty("id"))

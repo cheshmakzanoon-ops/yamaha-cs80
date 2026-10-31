@@ -29,6 +29,15 @@ void testSourcePerformanceHost(Check&& check)
         host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
     };
     const auto original = host.getAPVTS().copyState();
+    {
+        juce::MemoryBlock saved;
+        host.getStateInformation(saved);
+        const auto xml = juce::parseXML(saved.toString());
+        check(xml != nullptr && xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey)
+                                    == Cs80AudioProcessor::stateSchemaVersion
+                  && ! original.hasProperty(Cs80AudioProcessor::stateSchemaKey),
+              "host state writes the schema marker; the live state does not keep one");
+    }
     for (float enabled : {0.0f, 1.0f})
     {
         host.setParamValue(P_sourcePerformance, enabled);

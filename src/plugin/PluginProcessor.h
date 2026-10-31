@@ -156,6 +156,12 @@ public:
     float getMemoryValue(int bank, int local) const noexcept;
     void setMemoryValue(int bank, int local, float value) noexcept;
 
+    // Saved-state schema. A state without the attribute is schema 1, written
+    // before this marker existed; its missing parameters restore with the
+    // pre-schema semantics (for example SOURCE PERFORMANCE off), even if a
+    // later fresh-instance default differs. See docs/IMPROVEMENT_PLAN.md 0.3.
+    static constexpr int stateSchemaVersion = 2;
+    static constexpr const char* stateSchemaKey = "stateSchemaVersion";
     static constexpr int memoryControlCount = 26;
     static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
     static bool isMemoryControl(int local) noexcept;

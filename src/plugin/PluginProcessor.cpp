@@ -702,6 +702,11 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     // it: JUCE otherwise retains live parameter values for missing children.
     auto result = state.createCopy();
     auto hardware = state.getChildWithName("HARDWARE");
+    // Malformed or missing schema markers are treated as the oldest schema.
+    const auto schemaValue = state.getProperty(stateSchemaKey, 1);
+    const int schema = schemaValue.isInt() || schemaValue.isInt64() || schemaValue.isDouble()
+                           ? juce::jlimit(1, stateSchemaVersion, (int) schemaValue)
+                           : 1;
     const bool legacy = hardware.isValid() && (int) hardware.getProperty("version", 1) == 1;
     auto ensure = [&](const juce::String& id, float fallback)
     {
@@ -737,8 +742,15 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         child.setProperty("value", value, nullptr);
     };
     for (int i = 0; i < cs80::P_numParams; ++i)
+    {
         // Missing/invalid mode means old session, NOT the fresh-instance default.
-        ensure(parameterId(i), i == cs80::P_subOriginalMode ? 0.0f : cs80::paramDef(i).def);
+        // Schema-1 states always predate any change of the render-policy default.
+        const bool oldSessionOff = i == cs80::P_subOriginalMode
+                                   || (schema < 2 && i == cs80::P_sourcePerformance);
+        ensure(parameterId(i), oldSessionOff ? 0.0f : cs80::paramDef(i).def);
+    }
+    // The marker describes serialized data only; savers write the current one.
+    result.removeProperty(stateSchemaKey, nullptr);
     for (int channel = 0; channel < 2; ++channel)
     {
         float value = legacy ? (float) hardware.getProperty(channel == 0 ? "sourceI" : "sourceII", 13) : 13.0f;
@@ -799,6 +811,7 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
     state.setProperty("presetName", metadata.name, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
+    state.setProperty(stateSchemaKey, stateSchemaVersion, nullptr);
     if (auto xml = state.createXml())
     {
         auto text = xml->toString();
@@ -869,6 +882,7 @@ Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
+    state.setProperty(stateSchemaKey, stateSchemaVersion, nullptr);
     const auto xml = state.createXml();
     if (xml == nullptr)
         return failure("Could not serialize the current patch.");
