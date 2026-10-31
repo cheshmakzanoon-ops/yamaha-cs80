@@ -37,6 +37,7 @@
 // states are eliminated per sample; one scalar Newton solve on BP remains, with
 // the same cached-slope start and 1e-7 tolerance as the first-stage model.
 #include "Dsp.h"
+#include "FastMath.h"
 
 #include <algorithm>
 #include <cmath>
@@ -181,7 +182,8 @@ public:
         const double rate = ig00156IntegratorRate(net, total, qSiemensValue);
         const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
         const double theta = 3.14159265358979323846 * total / fs;
-        kHalf = 0.5 * (std::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
+        // CPU pass: bounded-error tan (relative 1e-10 here, FastMath.h).
+        kHalf = 0.5 * (fastmath::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
         kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
         gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
         ffPart = kHalf * ffRate;

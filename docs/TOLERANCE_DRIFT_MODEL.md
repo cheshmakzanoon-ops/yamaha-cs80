@@ -50,8 +50,10 @@ sections with time constants 0.5, 2, 8, 32, 128 and 512 s and equal variance,
 warm-up offset (sigma 3 cents at the default) that decays with 120 s from
 `prepare()`. The process starts stationary, as for a unit that has been on; the
 warm-up models the remaining settling after power-on. It is advanced at
-100 Hz from a sample counter and interpolated, so the render does not depend on
-the host's block partition. DRIFT MODEL = 1 ("worn unit") restores the
+100 Hz from a sample counter, so the render does not depend on the host's block
+partition, and held between steps (phase-continuous steps of a few tenths of a
+cent at most; per-sample interpolation made the oscillator recompute its branch
+nodes on every sample). DRIFT MODEL = 1 ("worn unit") restores the
 historical +/- 22 cent 0.031 Hz sine, rendered exactly as Legacy renders it.
 Filter drift is not modelled (open).
 

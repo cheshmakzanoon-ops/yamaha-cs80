@@ -337,6 +337,12 @@ if (CS80_BUILD_TESTS)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
+    # [integration] CPU pass: bounded-error approximations against std::.
+    add_executable(cs80_fast_math_tests tests/FastMathTests.cpp)
+    target_link_libraries(cs80_fast_math_tests PRIVATE cs80_core)
+    add_test(NAME cs80_fast_math_tests COMMAND cs80_fast_math_tests)
+    set_tests_properties(cs80_fast_math_tests PROPERTIES TIMEOUT 60)
+
     # [ws8-studio] register this workstream's core tests below this line.
     add_executable(cs80_evidence_register_tests tests/EvidenceRegisterTests.cpp)
     target_include_directories(cs80_evidence_register_tests PRIVATE src)

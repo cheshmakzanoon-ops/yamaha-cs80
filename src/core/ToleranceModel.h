@@ -167,8 +167,11 @@ inline Ratios ratios(const CardDraws& d, double scale) noexcept
 
 // Thermal drift of one channel, in cents at the ANALOG DRIFT default: a warm
 // 1/f process (stationary from the start) plus the decaying warm-up offset.
-// Advanced at kDriftControlHz by a sample counter, linearly interpolated, so
-// the result does not depend on the host's block partition.
+// Advanced at kDriftControlHz by a sample counter, so the result does not
+// depend on the host's block partition, and held between steps: a pitch that
+// changes on every sample would make the reconstructed oscillator recompute its
+// branch nodes on every sample (CPU pass). The steps are phase-continuous and
+// at most a few tenths of a cent (the 0.5 s section's innovation, 0.16 cents RMS).
 class ThermalDrift
 {
 public:
@@ -197,7 +200,7 @@ public:
             counter = 0;
             advance();
         }
-        return (float) (previous + (current - previous) * ((double) counter / (double) stepSamples));
+        return (float) current;
     }
     // Control-rate access for the gate: one control step, returns the new value.
     double advance() noexcept
