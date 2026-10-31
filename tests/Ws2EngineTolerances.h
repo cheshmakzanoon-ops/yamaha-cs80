@@ -17,6 +17,12 @@ inline constexpr double kDecimatorFactor2CoefficientError = 0.0;
 // may differ from it only by numerical phase-estimation error.
 inline constexpr int kReportedLatencySamples = 63;
 inline constexpr double kMeasuredLatencyErrorSamples = 1.0e-3;
+// Added before evaluation (second commit): a band-limited sine voice through
+// the linear SINE/VCA/output path must render the same host-rate waveform at
+// every factor (relative RMS difference after the attack). Discretization of
+// the RC stages and float phase accumulation are below 1e-3; a decimator delay
+// or design mismatch between factors gives an O(1) difference.
+inline constexpr double kCrossFactorSineRelativeRms = 1.0e-2;
 
 // --- Parameter smoothing ---------------------------------------------------
 // Declared one-pole time constant for continuous controls (engineering choice).
