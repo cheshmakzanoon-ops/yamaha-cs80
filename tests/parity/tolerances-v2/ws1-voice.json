@@ -31,6 +31,22 @@
       "description": "Plan step 1.2. Circuit engine with the promoted reconstructed oscillator and the IG00156 nodal filter.",
       "alias_worst_nonharmonic_db_48k": -70.0,
       "alias_fixture": "cs80_engine_audit --suite alias, policy source, saw and pulse rows, ring off, 48 kHz host"
+    },
+    "ig00151_vca": {
+      "description": "Plan step 1.4. Circuit-engine IG00151 voice VCA (src/core/Vca.h): linear LI input with its 10 nF node, exponential EI input, declared offset and CV feedthrough, constant-power rank pan.",
+      "linear_law_rel": 1e-6,
+      "linear_fixture": "static gain proportional to the settled LI control at fixed EI and envelope; ratio error at 0.25/0.5/1/2 x",
+      "exponential_law_rel": 1e-6,
+      "exponential_fixture": "gain ratio 2^(delta EI) at fixed LI, EI steps -1..+1 octave",
+      "li_tau_rel": 0.02,
+      "li_tau_fixture": "LI step response reaches 1 - 1/e at the declared ideal-source Thevenin RC of the five documented level branches and the 10 nF pin capacitor, at 88.2/96/192 kHz",
+      "pedestal_db_max": -50.0,
+      "pedestal_fixture": "zero-signal output (offset plus CV feedthrough) at full LI 2.6 and envelope 1, relative to a unit signal at the same gain",
+      "pan_power_rel": 1e-6,
+      "pan_fixture": "L^2 + R^2 constant over pan -1..1; exactly 0.5 per side at centre",
+      "click_steal_max": 1.0,
+      "click_retrigger_max": 1.0,
+      "click_fixture": "cs80_engine_audit --suite phrase, policy source, every row at 44.1/48/96 kHz, columns click_steal and click_retrigger"
     }
   }
 }
