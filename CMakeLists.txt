@@ -112,6 +112,11 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_active_tail_continuity_tests PRIVATE cs80_core)
     add_test(NAME cs80_active_tail_continuity_tests COMMAND cs80_active_tail_continuity_tests)
     set_tests_properties(cs80_active_tail_continuity_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_cold_idle_timing_tests tests/ColdIdleTimingTests.cpp)
+    target_link_libraries(cs80_cold_idle_timing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_cold_idle_timing_tests COMMAND cs80_cold_idle_timing_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/cold-idle-timing.json)
+    set_tests_properties(cs80_cold_idle_timing_tests PROPERTIES TIMEOUT 180)
     add_executable(cs80_cold_filter_envelope_tests tests/ColdFilterEnvelopeTests.cpp)
     target_link_libraries(cs80_cold_filter_envelope_tests PRIVATE cs80_core)
     add_test(NAME cs80_cold_filter_envelope_tests COMMAND cs80_cold_filter_envelope_tests

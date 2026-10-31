@@ -43,3 +43,28 @@ may stagger work, while the elapsed counter starts at zero. A single actual
 internal sample initializes the previously unclocked cold oscillator/filter
 controls before decimated operation; it adds no elapsed time beyond that sample.
 No fade or alternative envelope law is part of the proposed correction.
+
+### Oracle implementation correction before candidate evaluation
+
+The first test implementation incorrectly held charge at zero throughout the
+one-shot. The registered model instead raises charge at
+`1 / resetSeconds - frequency` during reset, then discharges at `frequency`.
+The incorrect phase results from that initial test are discarded; its elapsed
+time comparison was independent and already showed up to291.667microseconds
+of fictitious time. The charge-ramp term is corrected before any production
+candidate is evaluated. An added independent constant-frequency self-check
+requires the oracle to match `phase = 0.25 + f*t (mod 1)` after two seconds
+within1e-9cycles at250,277and2,048Hz. Engine phase/time limits are unchanged.
+
+
+## Split-engine harness adaptation before integration evaluation
+
+The qualification branch starts at `068456506d8bb9c8606059ae551045b4d7de4e08`.
+Its structure-of-arrays engine owns contiguous rank state and exposes references
+into that storage, so copying or moving an Engine is deliberately disabled.
+The checkpoint test therefore reconstructs an independent engine and replays
+exactly the same reset, 32-frame prehistory, reset, and render boundaries before
+assigning its eight voices. Assignment still advances no audio sample. The
+charge oracle and all previously registered limits are unchanged. The prior
+32-frame run also checks that an explicit reset re-establishes cold scheduling.
+This is a test-harness adaptation, not a new engine-copy or state-transfer API.

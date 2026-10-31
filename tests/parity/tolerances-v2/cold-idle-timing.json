@@ -3,7 +3,7 @@
   "registered": "2026-10-31",
   "evidence_kind": "numerical time conservation and phase continuity, not hardware measurements",
   "source_law": "M41: oscillator and filter state continue while the trigger/VCA is released; SH7/SH8 held-K droop remains the declared1pA/0.033uF law. Cold key61 and seed/warm-up are existing declared model initial conditions.",
-  "fixture": "From Engine reset, all16 cold rank oscillators at44.1/48/96k Standard, both circuit policies. Static VCO controls and the existing SH7 droop; no added drift/dispersion. Observe first1/2/5/17/32/100/256 host frames and10ms,200ms,1s,6.25s by cloning the state and assigning all8 voices without advancing time. Compare elapsed timestamps to exact elapsed samples and phase to the original production WSC clocked at every internal sample with the same stated frequency law.",
+  "fixture": "From Engine reset, all16 cold rank oscillators at44.1/48/96k Standard, both circuit policies. Static VCO controls and the existing SH7 droop; no added drift/dispersion. Observe first1/2/5/17/32/100/256 host frames and10ms,200ms,1s,6.25s by deterministic replay of identical reset/render boundaries and assigning all8 voices without advancing time. Compare elapsed timestamps to exact elapsed samples and phase to the original production WSC clocked at every internal sample with the same stated frequency law.",
   "elapsed_seconds_error_max": 1e-08,
   "elapsed_rationale": "Physical elapsed time must equal rendered internal samples divided by rate.1e-8seconds permits double accumulation rounding across6.25s but is over1000times smaller than one88.2k internal sample. Scheduler offsets are not elapsed physical time.",
   "phase_error_cycles_max": 0.0001,
@@ -16,5 +16,7 @@
     "leave the first cold frequency/history unseeded"
   ],
   "phrase_score_limit": 1.0,
-  "phrase_note": "Do not change any click window/score, attack time, seed, gain, coefficient, cutoff or VCA law to pass. Report any remaining scores over1 after removing the cold timing defect."
+  "phrase_note": "Do not change any click window/score, attack time, seed, gain, coefficient, cutoff or VCA law to pass. Report any remaining scores over1 after removing the cold timing defect.",
+  "oracle_constant_phase_error_cycles_max": 1e-09,
+  "oracle_self_check": "Before Engine comparison, the independent current-fold state update must match phase0.25+f*t modulo1 after2seconds for250,277,2048Hz at96k. This guards the reset-charge ramp in the oracle."
 }
