@@ -155,6 +155,8 @@ enum : int
     // [ws2-engine] append this workstream's core parameters below this line.
     // Numerical quality 0 Eco (2x), 1 Standard, 2 HQ (8x); see Oversampling.h.
     P_oversampling,
+    // Listening output 0 LEFT/RIGHT jacks, 1 GENERAL mono jack, 2 PHONES.
+    P_outputJack,
 
     // [ws3-keyboard] append this workstream's core parameters below this line.
 
@@ -329,6 +331,7 @@ inline constexpr ParamDef kExtensionDefs[] = {
 
     // [ws2-engine] append this workstream's ParamDefs below this line (same order as the enum).
     { "oversampling", "OVERSAMPLING", 0.0f, 2.0f, 1.0f, 1.0f, "", "ENGINE" },
+    { "output_jack", "LISTENING OUTPUT", 0.0f, 2.0f, 0.0f, 1.0f, "", "OUTPUT" },
 
     // [ws3-keyboard] append this workstream's ParamDefs below this line (same order as the enum).
 

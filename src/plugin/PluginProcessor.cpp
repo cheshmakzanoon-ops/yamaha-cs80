@@ -252,6 +252,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
         juce::ParameterID { parameterId(cs80::P_oversampling), 9 }, "Oversampling quality",
         juce::StringArray { "Eco (2x)", "Standard", "HQ (8x)" },
         (int) cs80::paramDef(cs80::P_oversampling).def));
+    // Which physical output is heard (Phase 3); physical setup, like HIGH/LOW.
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_outputJack), 9 }, "Listening output",
+        juce::StringArray { "Left/Right jacks", "General (mono) jack", "Headphones" }, 0));
 
     // [ws3-keyboard] append this workstream's host parameters below this line, AU version hint 10.
 
@@ -374,10 +378,11 @@ void Cs80AudioProcessor::applyParameterValues(const cs80::ParamValues& values)
 
 bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
 {
-    // The oversampling quality is a session setting, not part of a sound.
+    // The oversampling quality and listening output are session settings, not
+    // part of a sound.
     return index == cs80::P_footswitchPlugged || index == cs80::P_footswitchPressed
         || index == cs80::P_footMode || index == cs80::P_outputLevel
-        || index == cs80::P_oversampling;
+        || index == cs80::P_oversampling || index == cs80::P_outputJack;
 }
 
 void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
@@ -1081,7 +1086,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         {
             auto restored = normaliseRestoredState(tree);
             // Session settings, not sounds: a user preset keeps the live values.
-            for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling })
+            for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling, (int) cs80::P_outputJack })
                 restored.getChildWithProperty("id", parameterId(index))
                     .setProperty("value", getParamValue(index), nullptr);
             apvts.replaceState(restored);

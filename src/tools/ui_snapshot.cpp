@@ -1965,6 +1965,7 @@ int main(int argc, char** argv)
     std::puts("UI SMOKE PHASE: engine I/O host");
     cs80::tests::testOversamplingHost(check);
     cs80::tests::testEngineDefaultHost(check);
+    cs80::tests::testListeningOutputHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
@@ -2044,7 +2045,7 @@ int main(int argc, char** argv)
             const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
                 || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
                 || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
-                || index == cs80::P_oversampling;
+                || index == cs80::P_oversampling || index == cs80::P_outputJack;
             const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
             check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),

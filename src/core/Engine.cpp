@@ -125,6 +125,9 @@ void Engine::configureInternalRate()
     controlSmoothing = smoothingCoefficient(kControlSmoothingSeconds, internalRate);
     settingsSmoothing.setCoefficient(controlSmoothing);
     subSpeedSmoothing = (float) smoothingCoefficient(legacyPerSampleSeconds(0.0015), internalRate);
+    circuitNoise.prepare(internalRate);
+    phonesL.prepare(internalRate, HeadphoneAmpCircuit::Profile {});
+    phonesR.prepare(internalRate, HeadphoneAmpCircuit::Profile {});
 }
 
 // True when the effective factor changed and the rate-dependent state was
@@ -223,6 +226,10 @@ void Engine::reset()
     // Smoothed controls start at their targets again (no glide after a reset).
     settingsSmoothing.requestSnap();
     controllerSmoothing.snapPending = true;
+    circuitNoise.reset();
+    phonesL.reset();
+    phonesR.reset();
+    listeningSample = {};
 }
 
 void Engine::setParams(const ParamValues& values)
@@ -330,6 +337,7 @@ void Engine::applyParams(const ParamValues& values)
     // the running values (exactly the targets until audio has been rendered).
     if (usesSourceModels(global.renderPolicy))
         retargetSmoothedSettings();
+    listeningOutput = std::clamp((int) std::lround(params[P_outputJack]), 0, 2);
 
     // Gate edges act when parameters are applied, not by per-sample polling, so
     // the outcome does not depend on how the host partitions a render.
@@ -1401,6 +1409,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     if (sourceActive[0] || sourceActive[1])
         updateSourceReadouts(sr);
 
+    // Circuit engine: ONE shared panel-noise generator sample for every voice
+    // (SUB29 fan-out, NoiseSource.h). Legacy draws per rank below, as before.
+    const bool sharedNoise = usesSourceModels(global.renderPolicy);
+    const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
+
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
@@ -1463,7 +1476,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
 
             float x = osc.saw + osc.pulse;
-            x += audioRng.nextBipolar() * rs.noise * 0.8f;
+            // The shared RNG draw is consumed in both engines so oscillator start
+            // phases keep their sequence; the circuit engine hears the SUB29 sample.
+            const float rankNoise = audioRng.nextBipolar();
+            x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
             x *= 0.9f;
 
             // Shared key-voltage domain precedes VCO footage/vibrato. Master
@@ -1614,8 +1630,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         }
     }
 
-    mixL += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
-    mixR += audioRng.nextBipolar() * global.analogNoise * 0.0008f;
+    // Shared RNG draws consumed in both engines (start-phase sequence kept).
+    float hissL = audioRng.nextBipolar();
+    float hissR = audioRng.nextBipolar();
+    // Circuit engine: declared mix-bus hiss PSD, one independent source per channel.
+    if (sharedNoise)
+        circuitNoise.hiss(hissL, hissR);
+    mixL += hissL * global.analogNoise * 0.0008f;
+    mixR += hissR * global.analogNoise * 0.0008f;
 
     // Legacy: provisional generic delay-line chorus/tremolo. Source policies: OE2 BBD
     // delay path (docs/BBD_CHORUS_MODEL.md); its inferred constants are not calibrated.
@@ -1722,10 +1744,28 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // when no voice sounds. Only LEFT/RIGHT reach the host in source policies.
         // Phase 1.5 gain staging: fixed digital reference, then the inferred
         // driver headroom, then the passive tap/coupling network.
-        outputNodes = outputCircuit.process(circuitOutputDriver(outL * kCircuitOutputReference),
-                                            circuitOutputDriver(outR * kCircuitOutputReference));
-        outL = (float) outputNodes.left.audibleJackVolts;
-        outR = (float) outputNodes.right.audibleJackVolts;
+        const double driveL = circuitOutputDriver(outL * kCircuitOutputReference);
+        const double driveR = circuitOutputDriver(outR * kCircuitOutputReference);
+        outputNodes = outputCircuit.process(driveL, driveR);
+        // HL/HR leave the preamps before the coupling capacitors and HIGH/LOW
+        // switch. The headphone stage is always clocked, like the three jacks.
+        const double phonesLeft = phonesL.process(driveL), phonesRight = phonesR.process(driveR);
+        // LISTENING OUTPUT (Phase 3): which physical output the host hears.
+        switch (listeningOutput)
+        {
+            case 1:
+                outL = outR = (float) outputNodes.general.audibleJackVolts;
+                break;
+            case 2:
+                outL = (float) phonesLeft;
+                outR = (float) phonesRight;
+                break;
+            default:
+                outL = (float) outputNodes.left.audibleJackVolts;
+                outR = (float) outputNodes.right.audibleJackVolts;
+                break;
+        }
+        listeningSample = { outL, outR };
     }
     else
     {

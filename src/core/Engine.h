@@ -8,6 +8,8 @@
 #include "PraWahCircuit.h"
 #include "BbdChorus.h"
 #include "OutputTapCircuit.h"
+#include "HeadphoneAmpCircuit.h"
+#include "NoiseSource.h"
 #include "Oversampling.h"
 #include "Smoothing.h"
 #include "SourceFactoryTones.h"
@@ -279,11 +281,16 @@ public:
         double sampleRate = 0.0;
         OutputTapCircuit::Mode mode = OutputTapCircuit::Mode::high;
     };
-    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. GENERAL is a separately
-    // clocked diagnostic, not a host listening mode. Model units, not measured volts.
+    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. All three are always
+    // clocked; LISTENING OUTPUT chooses which the host hears (circuit engine).
+    // Model units, not measured volts.
     // Nodes describe the last processed internal sample; mode already selects
     // the next interval after a parameter event (no instantaneous node re-solve).
     OutputTapState getOutputTapState(int tap) const noexcept;
+    // Last internal (pre-decimator) sample of the selected listening output,
+    // before the optional digital mono fold-down. Render thread only.
+    struct ListeningSample { float left = 0.0f, right = 0.0f; };
+    ListeningSample getListeningSample() const noexcept { return listeningSample; }
 
 private:
     static constexpr int kNumVoices = 8;
@@ -420,6 +427,13 @@ private:
     } controllerSmoothing;
     double controlSmoothing = 1.0;  // one-pole coefficient at the internal rate
     float subSpeedSmoothing = 0.0015f; // legacy 0.0015 as a time constant
+    // Circuit-engine noise sources (NoiseSource.h) and listening output: the
+    // LEFT/RIGHT jacks, the GENERAL mono jack, or the headphone amplifier fed
+    // from the preamp outputs (HeadphoneAmpCircuit.h). Legacy uses none of them.
+    CircuitNoiseSources circuitNoise;
+    HeadphoneAmpCircuit phonesL, phonesR;
+    int listeningOutput = 0;
+    ListeningSample listeningSample;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;

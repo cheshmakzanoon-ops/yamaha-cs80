@@ -175,4 +175,39 @@ void testEngineDefaultHost(Check&& check)
         check(other.getEngineMode() == Mode::legacy, "a saved Legacy (compat) choice survives the flip");
     }
 }
+// Phase 3 listening output: an appended physical-setup choice the circuit
+// engine honors; presets neither set nor clear it.
+template <typename Check>
+void testListeningOutputHost(Check&& check)
+{
+    Cs80AudioProcessor host;
+    auto* quality = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(P_oversampling));
+    auto* listening = dynamic_cast<juce::AudioParameterChoice*>(
+        host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(P_outputJack)));
+    check(listening != nullptr && listening->getVersionHint() == 9 && listening->choices.size() == 3
+              && listening->getIndex() == 0
+              && host.getParameters().indexOf(listening) == host.getParameters().indexOf(quality) + 1,
+          "listening output is the choice after OVERSAMPLING, AU hint 9, default Left/Right");
+    check(Cs80AudioProcessor::isPhysicalSetupParameter(P_outputJack), "listening output is physical setup");
+    host.setParamValue(P_outputJack, 1.0f);
+    host.prepareToPlay(48000.0, 64);
+    juce::AudioBuffer<float> block(2, 64);
+    juce::MidiBuffer midi;
+    midi.addEvent(juce::MidiMessage::noteOn(1, 57, (juce::uint8) 100), 0);
+    bool mono = true;
+    for (int b = 0; b < 40; ++b)
+    {
+        host.processBlock(block, midi);
+        midi.clear();
+        for (int i = 0; i < 64; ++i) mono = mono && block.getSample(0, i) == block.getSample(1, i);
+    }
+    check(mono && block.getMagnitude(0, 0, 64) > 0.0f, "host GENERAL listening is mono and audible");
+    host.loadFactoryPreset(5);
+    check(host.getParamValue(P_outputJack) == 1.0f, "factory preset recall keeps the listening output");
+    juce::MemoryBlock saved;
+    host.getStateInformation(saved);
+    host.setParamValue(P_outputJack, 2.0f);
+    host.setStateInformation(saved.getData(), (int) saved.getSize());
+    check(host.getParamValue(P_outputJack) == 1.0f, "session state restores the listening output");
+}
 } // namespace cs80::tests
