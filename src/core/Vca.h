@@ -47,6 +47,10 @@ public:
     // the silent voice left no charge on the output coupling.
     void reset(float linearCv) noexcept { node = linearCv; coupling = 0.0; }
     float levelNode() const noexcept { return node; }
+    // Exact render-thread capacitor diagnostics. This accessor does not clock
+    // or alter either node; release-continuity tests compare event boundaries.
+    struct State { float level = 0.0f; double coupling = 0.0; };
+    State getState() const noexcept { return { node, coupling }; }
     // Free-running idle path (plan step 2.1): a silent circuit's VCA output is
     // exactly zero (the envelope is closed), so the next-stage coupling simply
     // discharges. The LI node is left to re-acquire LC through its 0.54 ms RC

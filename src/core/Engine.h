@@ -362,6 +362,12 @@ public:
     struct RankEnvelopeState { Adsr::State amplitude; FilterEnv::State filter; };
     // Exact current envelope-state proxy; same render-thread-only restriction.
     RankEnvelopeState getRankEnvelopeState(int voice, int rank) const noexcept;
+    Ig00151Vca::State getRankVcaState(int voice, int rank) const noexcept
+    {
+        if (voice < 0 || voice >= kNumVoices || rank < 0 || rank >= kNumRanks)
+            return {};
+        return voices[(size_t) voice].ranks[rank].vca.getState();
+    }
     struct PraWahState
     {
         PraWahCircuit::Capacitors capacitors;
