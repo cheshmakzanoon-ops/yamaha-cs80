@@ -52,15 +52,16 @@ kept byte-identical for old sessions.
 | 0.4 Shared test helpers | deferred until the first Phase 1 stage gate needs them | — |
 | 0.5 This status page | done | `eb486cb` |
 | 1.5 Circuit-engine gain staging: -6 dB output reference + inferred driver headroom ceiling | done; intentional circuit-engine change, legacy byte-identical; tab peaks +3.2 -> -2.9 dBFS | `228459c` |
-| 1.3 Circuit-engine envelopes as RC circuits; filter EG continuity on reuse | done; intentional circuit-engine change, legacy byte-identical; worst steal click 1.17 -> 0.90 | this change |
+| 1.3 Circuit-engine envelopes as RC circuits; filter EG continuity on reuse | done; intentional circuit-engine change, legacy byte-identical; worst steal click 1.17 -> 0.90 | `131f72b` |
 
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
-  (`22d6a32`) and circuit-engine audio V2 (`228459c`, re-pinned from `6e5892f`
-  for Phase 1.5 gain staging; use `6e5892f` for earlier circuit-engine renders). Any intended circuit-engine
+  (`22d6a32`) and circuit-engine audio V2 (`131f72b`, Phase 1.3 envelopes; previously `228459c`
+  for Phase 1.5 gain staging and `6e5892f` before that — use those for earlier
+  circuit-engine renders). Any intended circuit-engine
   sound change must re-pin V2 to the commit that introduces it and document the
   change here.
 
