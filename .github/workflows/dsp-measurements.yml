@@ -119,9 +119,10 @@ jobs:
     timeout-minutes: 15
     env:
       SOURCE_V1: 22d6a32c48c85f9b813506edcd856f73f4293c2d
-      # Pre-existing, immutable checkpoint with the documented BBD chorus and
-      # release-tail changes. V1's original circuit numerics remain a separate gate.
-      SOURCE_AUDIO_V2: 6e5892f5ca6e8a5bfae7ceea3c67d03a74738773
+      # Immutable circuit-engine audio checkpoint. Re-pinned from 6e5892f (BBD
+      # chorus and release-tail changes) to the Phase 1.5 gain-staging commit;
+      # see docs/STATUS.md. V1's original circuit numerics remain a separate gate.
+      SOURCE_AUDIO_V2: 228459c1bd632e42d231a75df98e061a503e431c
     steps:
       - uses: actions/checkout@v5
       - name: Build immutable circuit and audio checkpoints with one compiler
