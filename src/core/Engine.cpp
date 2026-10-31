@@ -20,23 +20,19 @@ void Engine::prepare(double hostSampleRate)
     // Software resource/numeric guard, not an analog tuning assumption.
     hostRate = std::isfinite(hostSampleRate) && hostSampleRate >= 8000.0
                && hostSampleRate <= 768000.0 ? hostSampleRate : 48000.0;
-    oversample = 2;
-    internalRate = hostRate * (double) oversample;
-    initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
-
-    chorus.prepare((float) internalRate);
-    bbdChorus.prepare((float) internalRate);
-    for (auto& slot : fxSlots)
-        slot.prepare((float) internalRate);
-    decL.prepare((float) internalRate);
-    decR.prepare((float) internalRate);
-    externalInput.prepare((float) hostRate);
-    // Engine rate guards imply a valid 16kHz..1.536MHz circuit rate. Profile
-    // defaults are documented engineering inferences, not measured calibration.
-    praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
-    praWahR.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
-    outputCircuit.prepare(internalRate, InferredSymmetricOutputProfile{},
-                          global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
+    // Reserve every rate-sized buffer once for the largest selectable factor,
+    // so a later quality or offline change re-prepares without allocating.
+    // The final prepare below fully reinitializes them at the actual rate.
+    {
+        const float reserveRate = (float) (hostRate * (double) maximumOversamplingFactor(hostRate));
+        chorus.prepare(reserveRate);
+        bbdChorus.prepare(reserveRate);
+        for (auto& slot : fxSlots)
+            slot.prepare(reserveRate);
+    }
+    oversample = effectiveOversampling();
+    configureInternalRate();
+    prepared = true;
 
     Rng trimRng(0xC5801234u);
     for (auto& v : voices)
@@ -56,15 +52,64 @@ void Engine::prepare(double hostSampleRate)
     }
     for (int i = 0; i < kNumVoices; ++i)
         voiceDrift[i] = (float) i * 0.73f;
+    reset();
+    // Resource changes retain the accepted source identity; public setParams
+    // intentionally means PANEL and would discard it here.
+    applyParams(params);
+}
+
+int Engine::effectiveOversampling() const noexcept
+{
+    return oversamplingFactor(oversamplingMode(params[P_oversampling]),
+                              usesSourceModels(global.renderPolicy), nonRealtime, hostRate);
+}
+
+void Engine::configureInternalRate()
+{
+    internalRate = hostRate * (double) oversample;
+    initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+
+    chorus.prepare((float) internalRate);
+    bbdChorus.prepare((float) internalRate);
+    for (auto& slot : fxSlots)
+        slot.prepare((float) internalRate);
+    decL.prepare(oversample);
+    decR.prepare(oversample);
+    externalInput.prepare((float) hostRate, oversample);
+    // Engine rate guards imply a valid 16kHz..1.536MHz circuit rate. Profile
+    // defaults are documented engineering inferences, not measured calibration.
+    praWahL.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
+    praWahR.prepare(internalRate, PraWahCircuit::Profile{}, 1.0);
+    outputCircuit.prepare(internalRate, InferredSymmetricOutputProfile{},
+                          global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
     // Explicitly provisional10ms rate smoothing, sample-rate independent.
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     // Explicitly provisional switch/pedal smoothing, sample-rate independent.
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
-    reset();
-    // Resource changes retain the accepted source identity; public setParams
-    // intentionally means PANEL and would discard it here.
-    applyParams(params);
+}
+
+// True when the effective factor changed and the rate-dependent state was
+// re-prepared; the caller then resets like a render-policy change.
+bool Engine::updateOversampling()
+{
+    if (!prepared)
+        return false;
+    const int factor = effectiveOversampling();
+    if (factor == oversample)
+        return false;
+    oversample = factor;
+    configureInternalRate();
+    return true;
+}
+
+void Engine::setNonRealtime(bool offline) noexcept
+{
+    if (offline == nonRealtime)
+        return;
+    nonRealtime = offline;
+    if (updateOversampling())
+        reset();
 }
 
 void Engine::reset()
@@ -225,11 +270,14 @@ void Engine::applyParams(const ParamValues& values)
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
     outputCircuit.setMode(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
+    // The quality mode, or a policy change that moves it, re-prepares the
+    // rate-dependent state into buffers reserved by prepare(): no allocation.
+    const bool rateChanged = updateOversampling();
     // Effective policy changes clear notes/controllers and effect histories: no
     // old numerical EG state, MIDI holds or FX may leak across model policies.
     // A retained source-performance switch change under isolation is inert.
-    // No allocation or sample-rate reconfiguration occurs on this RT boundary.
-    if (previousPolicy != global.renderPolicy)
+    // No allocation occurs on this RT boundary.
+    if (previousPolicy != global.renderPolicy || rateChanged)
     {
         reset();
         // Legacy reset left these OnePole histories intact. Clear only for
@@ -1573,14 +1621,15 @@ void Engine::render(float* interleavedStereo, int numFrames, const float* extern
     {
         const auto external = externalInput.tick(externalMono != nullptr ? externalMono[i] : 0.0f);
         float lastL = 0.0f, lastR = 0.0f;
+        const int retainedPhase = decL.getRetainedPhase();
         for (int os = 0; os < oversample; ++os)
         {
             float l = 0.0f, r = 0.0f;
             processInternalSample(l, r, external[(size_t) os]);
             decL.push(l);
             decR.push(r);
-            // Evaluate only the retained odd phase, using symmetric tap pairs.
-            if (os == Decimator::kRetainedPhase)
+            // Evaluate only the retained last phase, using symmetric tap pairs.
+            if (os == retainedPhase)
             {
                 lastL = decL.output();
                 lastR = decR.output();

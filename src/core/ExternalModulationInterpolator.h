@@ -5,18 +5,21 @@
 namespace cs80
 {
 // Software anti-imaging reconstruction, not an analog input bandwidth model.
-// Reuse the established255-tap Kaiser coefficient design, with independent
-// fixed-size history. Zero insertion and gain2 retain unity passband gain.
-// Group delay127 internal samples =63.5 host samples, EXTERNAL CONTROL ONLY.
-// The synth's declared audio output latency remains63 host samples.
+// Reuse the established Kaiser coefficient design of the current oversampling
+// factor, with independent fixed-size history. Zero insertion and gain N retain
+// unity passband gain. Group delay (64N - 1) internal samples: 63.5 host samples
+// at 2x, 63.75 at 4x, 63.875 at 8x, EXTERNAL CONTROL ONLY. The synth's declared
+// audio output latency remains 63 host samples at every factor.
 class ExternalModulationInterpolator
 {
 public:
-    static constexpr double kHostDelay = (double) Decimator::kCenter / 2.0;
+    static constexpr double kHostDelay = (double) Decimator::kCenter / 2.0; // 2x
+    using Frame = std::array<float, OversamplingDecimator::kMaxFactor>;
 
-    void prepare(float hostRate)
+    void prepare(float hostRate, int oversampling = 2)
     {
-        filter.prepare(hostRate * 2.0f);
+        (void) hostRate; // normalized design, like the output decimator
+        filter.prepare(oversampling);
         reset();
     }
 
@@ -41,16 +44,26 @@ public:
         return std::isfinite(input) ? clampf(input, -1.0f, 1.0f) : 0.0f;
     }
 
-    std::array<float, 2> tick(float input) noexcept
+    int getFactor() const noexcept { return filter.getFactor(); }
+    double getHostDelay() const noexcept
+    { return (double) filter.getCenter() / (double) filter.getFactor(); }
+
+    // The first getFactor() entries are this host frame's internal samples.
+    Frame tick(float input) noexcept
     {
-        if (!connected) return {0.0f, 0.0f};
-        const float x = 2.0f * sanitise(input);
+        Frame out {};
+        if (!connected) return out;
+        const int factor = filter.getFactor();
+        const float x = static_cast<float>(factor) * sanitise(input);
         // Finite FIR ringing can exceed1; do not silently add a second clipper.
-        return {filter.process(x), filter.process(0.0f)};
+        out[0] = filter.process(x);
+        for (int i = 1; i < factor; ++i)
+            out[(size_t) i] = filter.process(0.0f);
+        return out;
     }
 
 private:
-    Decimator filter;
+    OversamplingDecimator filter;
     bool connected = false;
 };
 } // namespace cs80

@@ -47,7 +47,8 @@ def validate_metadata(metadata):
     assert metadata['latency_samples'] == 63
     assert metadata['latency_compensated'] is False
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
-    assert metadata['parameter_count'] == len(metadata['settings']) == 139
+    # Append-only core parameters: the 139 shipped ones plus later appends.
+    assert metadata['parameter_count'] == len(metadata['settings']) >= 139
     assert all(type(x) in (int, float) and math.isfinite(x) for x in metadata['settings'].values())
     assert metadata['settings']['parity_mode'] == 1
     assert metadata['settings']['source_performance'] == 0
@@ -178,7 +179,7 @@ def validate_live_metadata(metadata, default_settings):
     assert metadata['sample_count'] == 96000
     assert metadata['latency_samples'] == 63
     assert metadata['latency_compensated'] is False
-    assert metadata['parameter_count'] == 139
+    assert metadata['parameter_count'] >= 139  # append-only core parameters
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
     assert metadata['envelope_trace'] == 'envelope-events.csv'
     assert metadata['event_timing'] == 'zero-based host sample; sequence order; applied before rendering that sample'

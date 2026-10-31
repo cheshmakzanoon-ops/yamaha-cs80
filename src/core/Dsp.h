@@ -1181,6 +1181,109 @@ private:
     int idx = 0;
 };
 
+// Per-factor reconstruction filter for the oversampling quality modes
+// (IMPROVEMENT_PLAN 1.6); numerical, not an original circuit. Factor 2 is
+// Decimator exactly (same taps, coefficients and summation order). Factors 4
+// and 8 sample the same Kaiser beta 8.6 prototype more finely: taps
+// 128 * factor - 1 and cutoff scaled by 2 / factor, so the host-relative
+// response is unchanged: <=0.1 dB through 20 kHz at a 44.1 kHz host and
+// >=80 dB rejection above host Nyquist. The transition band is fixed in Hz by
+// the host rate, so the filter's duration, and with the last internal sample of
+// each frame retained its delay, is 63 host samples at every factor.
+class OversamplingDecimator
+{
+public:
+    static constexpr int kMaxFactor = 8;
+    static constexpr int tapsFor(int factor) noexcept { return 128 * factor - 1; }
+    static constexpr int centerFor(int factor) noexcept { return (tapsFor(factor) - 1) / 2; }
+    static constexpr int retainedPhaseFor(int factor) noexcept { return factor - 1; }
+    static constexpr int hostLatencyFor(int factor) noexcept
+    { return (centerFor(factor) - retainedPhaseFor(factor)) / factor; }
+    static constexpr bool validFactor(int factor) noexcept
+    { return factor == 2 || factor == 4 || factor == 8; }
+    static constexpr int kMaxTaps = 128 * kMaxFactor - 1;
+
+    // Bounded work and no allocation: safe to repeat on the render thread.
+    void prepare(int newFactor) noexcept
+    {
+        factor = validFactor(newFactor) ? newFactor : 2;
+        taps = tapsFor(factor);
+        center = centerFor(factor);
+        constexpr double pi = 3.14159265358979323846;
+        // Same expression as Decimator for factor 2 (the scale is then exactly 1).
+        const double fc = (20000.0 / 88200.0 + 0.25) * 0.5 * (2.0 / (double) factor);
+        constexpr double beta = 8.6;
+        const double denominator = besselI0(beta);
+        std::array<double, kMaxTaps> design {};
+        double sum = 0.0;
+        for (int i = 0; i <= center; ++i)
+        {
+            const double m = (double) i - center;
+            const double sinc = i == center ? 2.0 * fc : std::sin(2.0 * pi * fc * m) / (pi * m);
+            const double r = m / center;
+            const double window = besselI0(beta * std::sqrt(std::max(0.0, 1.0 - r*r))) / denominator;
+            design[(size_t) i] = design[(size_t) (taps - 1 - i)] = sinc * window;
+            sum += sinc * window * (i == center ? 1.0 : 2.0);
+        }
+        for (int i = 0; i <= center; ++i)
+            coeffs[(size_t) i] = coeffs[(size_t) (taps - 1 - i)] = (float) (design[(size_t) i] / sum);
+        reset();
+    }
+
+    void reset() noexcept { hist.fill(0.0f); idx = 0; }
+
+    void push(float x) noexcept
+    {
+        hist[(size_t) idx] = x;
+        hist[(size_t) (idx + taps)] = x;
+        if (++idx >= taps) idx = 0;
+    }
+
+    float output() const noexcept
+    {
+        const float* newest = hist.data() + idx - 1 + taps;
+        double y = (double) coeffs[(size_t) center] * newest[-center];
+        for (int i = 0; i < center; ++i)
+            y += (double) coeffs[(size_t) i]
+                 * ((double) newest[-i] + (double) newest[-(taps - 1 - i)]);
+        return (float) y;
+    }
+
+    float process(float x) noexcept { push(x); return output(); }
+
+    int getFactor() const noexcept { return factor; }
+    int getTaps() const noexcept { return taps; }
+    int getCenter() const noexcept { return center; }
+    int getRetainedPhase() const noexcept { return retainedPhaseFor(factor); }
+    int getHostLatency() const noexcept { return hostLatencyFor(factor); }
+    float getCoefficient(int tap) const noexcept
+    { return tap >= 0 && tap < taps ? coeffs[(size_t) tap] : 0.0f; }
+
+private:
+    static double besselI0(double x) noexcept
+    {
+        double sum = 1.0, term = 1.0;
+        for (int k = 1; k < 100; ++k)
+        {
+            term *= (x*x) / (4.0*k*k);
+            sum += term;
+            if (term < 1.e-17 * sum) break;
+        }
+        return sum;
+    }
+    std::array<float, kMaxTaps> coeffs {};
+    std::array<float, 2 * kMaxTaps> hist {};
+    int factor = 2, taps = 255, center = 127, idx = 0;
+};
+static_assert(OversamplingDecimator::hostLatencyFor(2) == Decimator::kHostLatency
+              && OversamplingDecimator::tapsFor(2) == Decimator::kTaps
+              && OversamplingDecimator::retainedPhaseFor(2) == Decimator::kRetainedPhase,
+              "factor 2 is the established decimator");
+static_assert(OversamplingDecimator::hostLatencyFor(4) == 63 && OversamplingDecimator::hostLatencyFor(8) == 63);
+static_assert((OversamplingDecimator::centerFor(4) - OversamplingDecimator::retainedPhaseFor(4)) % 4 == 0
+              && (OversamplingDecimator::centerFor(8) - OversamplingDecimator::retainedPhaseFor(8)) % 8 == 0,
+              "integer host latency at every factor");
+
 // Schroeder/plate hybrid for the modern FX section. Left and right have
 // independent delay networks, so the tail is genuinely stereo and the plate
 // does not collapse when the effect is panned.

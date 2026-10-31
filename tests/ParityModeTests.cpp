@@ -49,6 +49,10 @@ std::vector<float> phrase(const ParamValues& p, bool controllers = false)
 int main()
 {
     ParamValues p;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     check(P_parityMode == 137 && P_numParams >= 139, "core append-only index");
     check(paramId(P_parityMode) == "parity_mode" && p[P_parityMode] == 0.0f,
           "stable ID and neutral default");

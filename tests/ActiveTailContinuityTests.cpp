@@ -13,6 +13,10 @@ bool zero(Svf::State a) { return a.ic1 == 0 && a.ic2 == 0; }
 bool equal(Engine::RankAudioState a, Engine::RankAudioState b) { return a.phase == b.phase && equal(a.hpf,b.hpf) && equal(a.lpf,b.lpf); }
 ParamValues settings(bool isolation = true) {
     ParamValues p; p[P_parityMode] = isolation ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f; // legacy RNG-consumption comparison per internal sample
     p[P_sustainMode] = 0; p[P_keyRelease] = 0;
     for (int r=0;r<2;++r) { p[chParam(r,CP_vR)] = 0.8f; p[chParam(r,CP_fR)] = 0.8f; p[chParam(r,CP_saw)] = 1; }
     return p;

@@ -154,6 +154,10 @@ double generalSource(double leftPreamp, double rightPreamp)
 ParamValues fixture(bool high = true)
 {
     ParamValues p; p[P_parityMode] = 1.0f; p[P_outputLevel] = high ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     p[P_mix] = p[P_detune] = 0.0f; p[P_volume] = 0.61f;
     p[P_ringSpeed] = 77.0f; p[P_ringDepth] = 0.0f; p[P_ringAmount] = 0.6f;
     p[P_chorusOn] = 1.0f; p[P_chorusDepth] = 0.8f;
@@ -436,6 +440,7 @@ void boundedPolyphonicSweeps()
     for (double rate : {8000.0, 44100.0, 192000.0, 768000.0})
     {
         ParamValues p; p[P_parityMode] = 1.0f; p[P_volume] = 1.0f; p[P_chorusOn] = 1.0f;
+        p[P_oversampling] = 0.0f; // 2x oracle fixture; see fixture()
         Engine e; e.setParams(p); e.prepare(rate);
         for (int note : {24, 36, 48, 60, 72, 84, 96, 108}) e.noteOn(note, 1.0f);
         for (int step = 0; step < 70; ++step)

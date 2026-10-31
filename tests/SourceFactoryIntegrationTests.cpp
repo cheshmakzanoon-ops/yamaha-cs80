@@ -37,6 +37,10 @@ ControlFrame frame(bool isolated = true)
     ControlFrame f;
     auto& p = f.effectiveValues;
     p[P_parityMode] = isolated ? 1.f : 0.f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.f;
     p[P_masterSustain] = p[P_keyRelease] = p[P_brilliance] = p[P_subVcf] = p[P_subVca] = 0;
     p[P_subAtVcf] = p[P_subAtVco] = p[P_subAtSpeed] = p[P_ringAmount] = p[P_chorusOn] = 0;
     p[P_detune] = 0;

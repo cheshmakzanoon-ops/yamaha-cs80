@@ -23,6 +23,10 @@ ControlFrame fixture()
 {
     ControlFrame f;
     f.effectiveValues[P_sourcePerformance] = 1.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    f.effectiveValues[P_oversampling] = 0.0f;
     f.hardwareSources = {1, 3};
     auto& p = f.effectiveValues;
     p[P_analogNoise] = p[P_drift] = p[P_voiceDispersion] = p[P_chorusOn] = 0.0f;

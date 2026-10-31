@@ -153,6 +153,8 @@ enum : int
     // [ws1-voice] append this workstream's core parameters below this line.
 
     // [ws2-engine] append this workstream's core parameters below this line.
+    // Numerical quality 0 Eco (2x), 1 Standard, 2 HQ (8x); see Oversampling.h.
+    P_oversampling,
 
     // [ws3-keyboard] append this workstream's core parameters below this line.
 
@@ -324,6 +326,7 @@ inline constexpr ParamDef kExtensionDefs[] = {
     // [ws1-voice] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws2-engine] append this workstream's ParamDefs below this line (same order as the enum).
+    { "oversampling", "OVERSAMPLING", 0.0f, 2.0f, 1.0f, 1.0f, "", "ENGINE" },
 
     // [ws3-keyboard] append this workstream's ParamDefs below this line (same order as the enum).
 

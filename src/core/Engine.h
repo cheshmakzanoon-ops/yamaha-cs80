@@ -8,6 +8,7 @@
 #include "PraWahCircuit.h"
 #include "BbdChorus.h"
 #include "OutputTapCircuit.h"
+#include "Oversampling.h"
 #include "SourceFactoryTones.h"
 
 #include <array>
@@ -213,10 +214,19 @@ public:
     float getSubOscillatorValue() const noexcept { return subValue; }
     float getSubOscillatorRate() const noexcept
     { return global.subOriginalMode ? originalSubSpeedSmoothed : subSpeedSmoothed; }
-    // Odd retained phase of a 255-tap FIR: (127-1)/2 =63 host samples.
-    int getLatencySamples() const noexcept { return Decimator::kHostLatency; }
+    // Retained last internal phase of the current factor's FIR: 63 host
+    // samples at every factor (2x: (127-1)/2). Query after each control frame.
+    int getLatencySamples() const noexcept { return OversamplingDecimator::hostLatencyFor(oversample); }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
+    // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
+    // render policy, the host rate and the offline flag (see Oversampling.h).
+    int getOversamplingFactor() const noexcept { return oversample; }
+    // Host offline-render flag (AudioProcessor::isNonRealtime). The circuit
+    // engine renders offline at HQ. A factor change re-prepares the
+    // rate-dependent state without allocating and stops sounding notes, like a
+    // render-policy change. Render thread or setup only.
+    void setNonRealtime(bool offline) noexcept;
 
     // The voice telemetry is used by tests and the UI voice meter.
     struct VoiceInfo
@@ -328,6 +338,11 @@ private:
 
     void applyParams(const ParamValues& values);
     void buildSettings();
+    int effectiveOversampling() const noexcept;
+    // Rate-dependent setup for the current factor; allocation-free once
+    // prepare() has reserved buffers for maximumOversamplingFactor(hostRate).
+    void configureInternalRate();
+    bool updateOversampling();
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
@@ -380,6 +395,8 @@ private:
     double internalRate = 96000.0;
     double initialPitchDecay = 0.0; // initialized in constructor and prepare
     int oversample = 2;
+    bool prepared = false;
+    bool nonRealtime = false;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;
@@ -419,7 +436,7 @@ private:
 
     Chorus chorus;
     BbdChorus bbdChorus;
-    Decimator decL, decR;
+    OversamplingDecimator decL, decR;
     Rng audioRng { 0x51c80u };
     Rng modRng { 0x9e3779b9u };
 

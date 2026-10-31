@@ -5,8 +5,9 @@
 // It exists to find engineering defects (NaN, DC, clicks, aliasing, level and
 // sample-rate dependence), not to score fidelity.
 //
-//   cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|all]
+//   cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all]
 //                     [--rates 44100,48000,96000] [--quick]
+//                     [--oversampling eco|standard|hq]
 //
 // Metric definitions are in docs/ENGINE_AUDIT.md. Output is one CSV per suite.
 #include "core/Engine.h"
@@ -14,6 +15,7 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <complex>
 #include <cstdint>
@@ -34,6 +36,10 @@ namespace fs = std::filesystem;
 constexpr int kBlock = 64; // small blocks so event times are within ~1.5 ms
 
 void require(bool ok, const char* msg) { if (!ok) throw std::runtime_error(msg); }
+
+// --oversampling: forces P_oversampling in every rendered frame (negative = the
+// scenario's own value, the parameter default).
+float oversamplingOverride = -1.0f;
 
 // ---------------------------------------------------------------------------
 // Scenario: either a full control frame (hardware tabs) or PANEL parameters.
@@ -63,6 +69,7 @@ Rendered render(const Setup& s, int rate, const std::vector<Event>& events, doub
     e.prepare(rate);
     ControlFrame frame;
     frame.effectiveValues = s.values;
+    if (oversamplingOverride >= 0.0f) frame.effectiveValues[P_oversampling] = oversamplingOverride;
     frame.hardwareSources = s.sources;
     require(e.setControlFrame(frame), "frame rejected");
     e.reset();
@@ -460,23 +467,23 @@ AliasResult aliasTest(int rate, int note, bool pulse, bool ring, bool source, in
 }
 
 // ---------------------------------------------------------------------------
-// Latency: group delay of the 2x -> 1x output path, measured the way Engine::render uses it.
+// Latency: group delay of the Nx -> 1x output path, measured the way Engine::render uses it.
 // ---------------------------------------------------------------------------
 struct LatencyResult { double delay = 0, gainDb = 0; };
-LatencyResult measureLatency(int rate, double freq)
+LatencyResult measureLatency(int rate, double freq, int factor = 2)
 {
-    Decimator dec;
-    dec.prepare((float) (2 * rate));
+    OversamplingDecimator dec;
+    dec.prepare(factor);
     const int total = 60000, skip = 8000;
     double cs = 0, sn = 0, ci = 0, si = 0;
     for (int i = 0; i < total; ++i)
     {
         float y = 0;
-        for (int os = 0; os < 2; ++os)
+        for (int os = 0; os < factor; ++os)
         {
-            const double n = 2.0 * i + os;
-            dec.push((float) std::sin(2 * std::numbers::pi * freq * n / (2.0 * rate)));
-            if (os == Decimator::kRetainedPhase) y = dec.output();
+            const double n = (double) factor * i + os;
+            dec.push((float) std::sin(2 * std::numbers::pi * freq * n / ((double) factor * rate)));
+            if (os == dec.getRetainedPhase()) y = dec.output();
         }
         if (i >= skip)
         {
@@ -608,15 +615,69 @@ void suiteAlias(const fs::path& dir, const std::vector<int>& rates)
 void suiteLatency(const fs::path& dir, const std::vector<int>& rates)
 {
     std::ofstream out(dir / "latency.csv");
-    out << "rate,freq_hz,delay_host_samples,reported_latency,gain_db\n";
-    Engine e;
+    out << "rate,policy,oversampling_factor,freq_hz,delay_host_samples,reported_latency,gain_db\n";
     for (int rate : rates)
-        for (double f : { 250.0, 1000.0, 5000.0, 10000.0, 15000.0, 18000.0, 20000.0 })
+        for (bool source : { false, true })
         {
-            if (f > 0.45 * rate) continue;
-            const auto r = measureLatency(rate, f);
-            out << rate << ',' << f << ',' << std::fixed << std::setprecision(4) << r.delay << ',' << e.getLatencySamples()
-                << ',' << r.gainDb << '\n';
+            // The factor and the reported latency come from a prepared engine, the
+            // delay from the same decimator design measured in isolation.
+            ParamValues p;
+            setPolicy(p, source);
+            if (oversamplingOverride >= 0.0f) p[P_oversampling] = oversamplingOverride;
+            Engine e;
+            e.prepare(rate);
+            ControlFrame frame;
+            frame.effectiveValues = p;
+            require(e.setControlFrame(frame), "frame rejected");
+            const int factor = e.getOversamplingFactor();
+            for (double f : { 250.0, 1000.0, 5000.0, 10000.0, 15000.0, 18000.0, 20000.0 })
+            {
+                if (f > 0.45 * rate) continue;
+                const auto r = measureLatency(rate, f, factor);
+                out << rate << ',' << (source ? "source" : "legacy") << ',' << factor << ',' << f << ','
+                    << std::fixed << std::setprecision(4) << r.delay << ',' << e.getLatencySamples()
+                    << ',' << r.gainDb << '\n';
+            }
+        }
+}
+
+// Single-thread CPU cost of eight held voices (PANEL defaults, chorus on), as the
+// real-time factor: CPU seconds per second of audio. A property of this machine.
+void suiteCpu(const fs::path& dir, const std::vector<int>& rates)
+{
+    std::ofstream out(dir / "cpu.csv");
+    out << "rate,policy,oversampling_factor,voices,rtf\n";
+    for (int rate : rates)
+        for (bool source : { false, true })
+        {
+            ParamValues p;
+            setPolicy(p, source);
+            p[P_chorusOn] = 1.0f;
+            if (oversamplingOverride >= 0.0f) p[P_oversampling] = oversamplingOverride;
+            Engine e;
+            e.prepare(rate);
+            ControlFrame frame;
+            frame.effectiveValues = p;
+            require(e.setControlFrame(frame), "frame rejected");
+            for (int n : { 36, 43, 48, 55, 60, 64, 67, 72 }) e.noteOn(n, 0.8f, 1);
+            std::vector<float> buf(2 * 128);
+            for (int b = 0; b < rate / 128; ++b) e.render(buf.data(), 128); // 1 s warm-up
+            const int blocks = 4 * rate / 128;
+            double best = 1.0e30;
+            for (int pass = 0; pass < 3; ++pass)
+            {
+                const auto start = std::chrono::steady_clock::now();
+                for (int b = 0; b < blocks; ++b)
+                {
+                    require(e.setControlFrame(frame), "frame rejected");
+                    e.render(buf.data(), 128);
+                }
+                const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+                best = std::min(best, seconds / (blocks * 128.0 / rate));
+            }
+            out << rate << ',' << (source ? "source" : "legacy") << ',' << e.getOversamplingFactor() << ','
+                << e.activeVoices() << ',' << std::fixed << std::setprecision(4) << best << '\n';
+            out.flush();
         }
 }
 } // namespace
@@ -637,11 +698,18 @@ int main(int argc, char** argv)
             if (arg == "--out") dir = argv[++i];
             else if (arg == "--suite") suite = argv[++i];
             else if (arg == "--rates") rates = parseRates(argv[++i]);
+            else if (arg == "--oversampling")
+            {
+                const std::string mode = argv[++i];
+                oversamplingOverride = mode == "eco" ? 0.0f : mode == "standard" ? 1.0f : mode == "hq" ? 2.0f : -2.0f;
+                require(oversamplingOverride >= 0.0f, "--oversampling takes eco, standard or hq");
+            }
             else throw std::runtime_error("unknown option " + arg);
         }
-        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|all] [--rates a,b,c] [--quick]");
+        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq]");
         require(!fs::exists(dir), "output exists; refusing to overwrite");
         fs::create_directories(dir);
+        if (suite == "cpu") suiteCpu(dir, rates);
         if (suite == "all" || suite == "latency") suiteLatency(dir, rates);
         if (suite == "all" || suite == "alias") suiteAlias(dir, rates);
         if (suite == "all" || suite == "fx") suiteFx(dir, rates);

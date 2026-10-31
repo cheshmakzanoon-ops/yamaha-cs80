@@ -8,6 +8,7 @@
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
+#include "../../tests/EngineHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
@@ -1055,6 +1056,9 @@ void testLiveEnvelopeTimingHost()
         }
         host.applyParameterValues(panel);
         host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        // ws2 1.6: the circuit engine defaults to Standard; this fixture's
+        // primitive history ticks at the 2x rate, so pin Eco (a session setting).
+        host.setParamValue(cs80::P_oversampling, 0.0f);
         host.selectHardwareSource(0, 13);
         host.selectHardwareSource(1, 13);
         for (int bank = 0; bank < 4; ++bank)
@@ -1445,6 +1449,7 @@ void testSourceFactoryHost()
     {
         Cs80AudioProcessor host;
         host.setParamValue(cs80::P_parityMode, 1.0f);
+        host.setParamValue(cs80::P_oversampling, 0.0f); // 2x primitive ticks below (ws2 1.6)
         host.setParamValue(cs80::P_masterSustain, 0.0f);
         host.setParamValue(cs80::P_keyRelease, 0.0f);
         for (int rank = 0; rank < 2; ++rank) automate(host, rank, selector);
@@ -1938,6 +1943,8 @@ int main(int argc, char** argv)
     cs80::tests::testOutputMeterHost(check);
     std::puts("UI SMOKE PHASE: source performance host");
     cs80::tests::testSourcePerformanceHost(check);
+    std::puts("UI SMOKE PHASE: engine I/O host");
+    cs80::tests::testOversamplingHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
@@ -2010,7 +2017,8 @@ int main(int argc, char** argv)
             const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
             const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
                 || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
-                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel);
+                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
+                || index == cs80::P_oversampling;
             const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
             check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),

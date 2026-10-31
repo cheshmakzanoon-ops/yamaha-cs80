@@ -67,9 +67,9 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
-    // The decimator delay is fixed by the 2x architecture, so report it as
-    // soon as the processor exists. prepareToPlay repeats this for hosts that
-    // query latency only after a sample-rate change.
+    // Every oversampling factor's decimator delays 63 host samples, so report it
+    // as soon as the processor exists. prepareToPlay and any later quality or
+    // offline change re-report it for hosts that query only after a change.
     setLatencySamples(engine.getLatencySamples());
     presetName = (getFactoryPresets().empty() ? juce::String("Init Patch")
                  : juce::String(getFactoryPresets()[0].name)) + " / Original SUB";
@@ -240,6 +240,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     // [ws1-voice] append this workstream's host parameters below this line, AU version hint 8.
 
     // [ws2-engine] append this workstream's host parameters below this line, AU version hint 9.
+    // Numerical quality, a session setting rather than part of a sound.
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_oversampling), 9 }, "Oversampling quality",
+        juce::StringArray { "Eco (2x)", "Standard", "HQ (8x)" },
+        (int) cs80::paramDef(cs80::P_oversampling).def));
 
     // [ws3-keyboard] append this workstream's host parameters below this line, AU version hint 10.
 
@@ -268,6 +273,8 @@ bool Cs80AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
+    // Offline bounces render the circuit engine at HQ (Oversampling.h).
+    engine.setNonRealtime(isNonRealtime());
     engine.prepare(sampleRate);
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
@@ -360,8 +367,10 @@ void Cs80AudioProcessor::applyParameterValues(const cs80::ParamValues& values)
 
 bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
 {
+    // The oversampling quality is a session setting, not part of a sound.
     return index == cs80::P_footswitchPlugged || index == cs80::P_footswitchPressed
-        || index == cs80::P_footMode || index == cs80::P_outputLevel;
+        || index == cs80::P_footMode || index == cs80::P_outputLevel
+        || index == cs80::P_oversampling;
 }
 
 void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
@@ -499,8 +508,12 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
+    const int previousFactor = engine.getOversamplingFactor();
+    // Hosts may switch to offline rendering without a new prepareToPlay.
+    engine.setNonRealtime(isNonRealtime());
     engine.setControlFrame({ cached, cachedHardwareSources });
-    if (engine.getRenderPolicy() != previousPolicy)
+    // A policy or oversampling-factor change resets the engine the same way.
+    if (engine.getRenderPolicy() != previousPolicy || engine.getOversamplingFactor() != previousFactor)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
         // Discard the already-captured pre-transition batch too: otherwise its
@@ -508,6 +521,9 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         resetKeyboardHandoff();
         uiCount = 0;
     }
+    // 63 at every factor today; report any change rather than assume it.
+    if (engine.getLatencySamples() != getLatencySamples())
+        setLatencySamples(engine.getLatencySamples());
     const bool pressureArpOn = !engine.isParityMode() && cached[cs80::P_arpOn] >= 0.5f;
     if (pressureArpOn || pressureArpOn != pressureArpWasOn) keyPressureOwnership.clear();
     pressureArpWasOn = pressureArpOn;
@@ -972,8 +988,10 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         if (tree.isValid() && tree.hasType(stateType))
         {
             auto restored = normaliseRestoredState(tree);
-            restored.getChildWithProperty("id", parameterId(cs80::P_parityMode))
-                .setProperty("value", getParamValue(cs80::P_parityMode), nullptr);
+            // Session settings, not sounds: a user preset keeps the live values.
+            for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling })
+                restored.getChildWithProperty("id", parameterId(index))
+                    .setProperty("value", getParamValue(index), nullptr);
             apvts.replaceState(restored);
             setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
                               (int) tree.getProperty("factoryIndex", 0));
