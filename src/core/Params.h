@@ -191,6 +191,23 @@ enum : int
     P_modPressureCurve,
     P_modWheelCurve,
     P_modKeyCurve,
+    // Modern FX per slot: model (0 classic = use fxN_type, 1 BBD ensemble, 2 spring,
+    // 3 plate, 4 tape echo, 5 drive), two model controls and the drive oversampling
+    // (0 = 1x .. 3 = 8x of the internal rate). Then one switch for in/out loudness
+    // matching of every slot (src/core/FxModels.h, FxLoudness.h).
+    P_fx1Model,
+    P_fx1ParamA,
+    P_fx1ParamB,
+    P_fx1Oversampling,
+    P_fx2Model,
+    P_fx2ParamA,
+    P_fx2ParamB,
+    P_fx2Oversampling,
+    P_fx3Model,
+    P_fx3ParamA,
+    P_fx3ParamB,
+    P_fx3Oversampling,
+    P_fxGainCompensation,
 
     // [ws6-library] append this workstream's core parameters below this line.
 
@@ -389,6 +406,19 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "mod_pressure_curve", "AFTERTOUCH CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
     { "mod_wheel_curve", "MOD WHEEL CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
     { "mod_key_curve", "KEY FOLLOW CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "fx1_model", "FX 1 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx1_param_a", "FX 1 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_param_b", "FX 1 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_oversampling", "FX 1 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx2_model", "FX 2 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx2_param_a", "FX 2 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_param_b", "FX 2 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_oversampling", "FX 2 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx3_model", "FX 3 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx3_param_a", "FX 3 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_param_b", "FX 3 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_oversampling", "FX 3 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx_gain_comp", "FX LOUDNESS MATCH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
 
     // [ws6-library] append this workstream's ParamDefs below this line (same order as the enum).
 

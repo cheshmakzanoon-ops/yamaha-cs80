@@ -240,6 +240,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_mod_matrix_tests PRIVATE cs80_core)
     add_test(NAME cs80_mod_matrix_tests COMMAND cs80_mod_matrix_tests)
     set_tests_properties(cs80_mod_matrix_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_modern_fx_tests tests/ModernFxTests.cpp)
+    target_link_libraries(cs80_modern_fx_tests PRIVATE cs80_core)
+    add_test(NAME cs80_modern_fx_tests COMMAND cs80_modern_fx_tests)
+    set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
 
     # [ws6-library] register this workstream's core tests below this line.
 

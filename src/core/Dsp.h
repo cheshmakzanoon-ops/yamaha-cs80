@@ -972,6 +972,39 @@ public:
 
     bool isPrepared() const noexcept { return ! buffer.empty(); }
 
+    // Modern FX: 4-point third-order Hermite read for modulated taps. The position is
+    // computed in double so a long delay (a tape echo at 384 kHz holds ~5e5 samples)
+    // keeps sub-sample precision. Existing read() above is unchanged.
+    float readHermite(double delaySamples) const noexcept
+    {
+        delaySamples = std::clamp(delaySamples, 2.0, (double) (size - 3));
+        double pos = (double) writePos - delaySamples;
+        if (pos < 0.0)
+            pos += (double) size;
+        const int i0 = std::min((int) pos, size - 1);
+        const float t = (float) (pos - (double) i0);
+        const int im1 = i0 == 0 ? size - 1 : i0 - 1;
+        const int i1 = i0 + 1 >= size ? 0 : i0 + 1;
+        const int i2 = i1 + 1 >= size ? 0 : i1 + 1;
+        const float xm1 = buffer[(size_t) im1], x0 = buffer[(size_t) i0];
+        const float x1 = buffer[(size_t) i1], x2 = buffer[(size_t) i2];
+        const float c1 = 0.5f * (x1 - xm1);
+        const float c2 = xm1 - 2.5f * x0 + 2.0f * x1 - 0.5f * x2;
+        const float c3 = 0.5f * (x2 - xm1) + 1.5f * (x0 - x1);
+        return ((c3 * t + c2) * t + c1) * t + x0;
+    }
+
+    // Exact integer tap (no interpolation), 1 = the most recent sample.
+    float tap(int delaySamples) const noexcept
+    {
+        int i = writePos - std::clamp(delaySamples, 1, size - 1);
+        if (i < 0)
+            i += size;
+        return buffer[(size_t) i];
+    }
+
+    int capacity() const noexcept { return size; }
+
 private:
     std::vector<float> buffer;
     int size = 0;

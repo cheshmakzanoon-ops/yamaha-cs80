@@ -380,6 +380,15 @@ void Engine::buildSettings()
     global.fxMix[0] = p(P_fx1Mix);
     global.fxMix[1] = p(P_fx2Mix);
     global.fxMix[2] = p(P_fx3Mix);
+    for (int i = 0; i < 3; ++i)
+    {
+        const int base = P_fx1Model + i * (P_fx2Model - P_fx1Model);
+        global.fxModel[i] = std::clamp((int) std::lround(p(base)), 0, fx::kModelCount - 1);
+        global.fxParamA[i] = p(base + 1);
+        global.fxParamB[i] = p(base + 2);
+        global.fxOversampling[i] = std::clamp((int) std::lround(p(base + 3)), 0, fx::Oversampler::kMaxStages);
+    }
+    global.fxGainComp = p(P_fxGainCompensation) >= 0.5f;
     global.macro[0] = p(P_macro1);
     global.macro[1] = p(P_macro2);
     global.macro[2] = p(P_macro3);
@@ -409,7 +418,9 @@ void Engine::buildSettings()
             global.lfoWave[i] = 0;
             global.fxType[i] = 0;
             global.fxMix[i] = 0.0f;
+            global.fxModel[i] = 0;
         }
+        global.fxGainComp = false;
         for (float& macro : global.macro)
             macro = 0.5f;
     }
@@ -1491,65 +1502,18 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // 3 tape delay, 4 plate reverb, 5 drive.
     for (int slot = 0; slot < 3; ++slot)
     {
-        auto& fx = fxSlots[(std::size_t) slot];
-        const int type = global.fxType[slot];
-        const float amount = clampf(global.fxMix[slot] + modernGlobal.fxMix[(std::size_t) slot], 0.0f, 1.0f);
-        const int live = (amount <= 0.001f || type <= 0) ? 0 : type;
-        if (live != fx.liveType)
-        {
-            // A slot that goes quiet, or changes effect, must not keep the old effect's audio:
-            // it would replay it, late, the next time the slot is switched on.
-            fx.clear(fx.liveType);
-            fx.liveType = live;
-        }
-        if (live == 0)
-            continue;
-
-        switch (live)
-        {
-            case 1: // modern stereo chorus
-            {
-                const auto m = fx.chorus.process(mixL, mixR, 0.62f, 0.62f, true, false);
-                mixL = lerp(mixL, m.l, amount * 0.62f);
-                mixR = lerp(mixR, m.r, amount * 0.62f);
-                break;
-            }
-            case 2: // six-stage phaser
-            {
-                const auto p = fx.phaser.process(mixL, mixR, 0.32f, 0.72f);
-                mixL = lerp(mixL, p.l, amount * 0.72f);
-                mixR = lerp(mixR, p.r, amount * 0.72f);
-                break;
-            }
-            case 3: // tape delay with cross-feedback and wow
-            {
-                const float wow = std::sin(kTwoPi * driftPhase) * 0.0007f;
-                const float d = (0.34f + wow) * sr;
-                const float wl = fx.dampL.process(fx.delayL.read(d));
-                const float wr = fx.dampR.process(fx.delayR.read(d));
-                fx.delayL.write(mixL + wr * 0.36f);
-                fx.delayR.write(mixR + wl * 0.36f);
-                mixL = lerp(mixL, wl, amount * 0.58f);
-                mixR = lerp(mixR, wr, amount * 0.58f);
-                break;
-            }
-            case 4: // stereo plate reverb
-            {
-                const float wl = fx.reverb.process(mixL, 0);
-                const float wr = fx.reverb.process(mixR, 1);
-                mixL = lerp(mixL, wl, amount * 0.62f);
-                mixR = lerp(mixR, wr, amount * 0.62f);
-                break;
-            }
-            case 5: // OTA-style drive
-            {
-                mixL = lerp(mixL, softClip(mixL * 3.2f) * 0.68f, amount);
-                mixR = lerp(mixR, softClip(mixR * 3.2f) * 0.68f, amount);
-                break;
-            }
-            default:
-                break;
-        }
+        // A modern model (ws5) replaces the classic type of its slot; model 0 is classic.
+        fx::SlotControls controls;
+        controls.type = global.fxType[slot];
+        controls.model = global.fxModel[slot];
+        controls.mix = clampf(global.fxMix[slot] + modernGlobal.fxMix[(std::size_t) slot], 0.0f, 1.0f);
+        controls.a = global.fxParamA[slot];
+        controls.b = global.fxParamB[slot];
+        controls.oversampling = global.fxOversampling[slot];
+        controls.gainComp = global.fxGainComp;
+        const auto out = fxSlots[(std::size_t) slot].process(controls, mixL, mixR, driftPhase, sr);
+        mixL = out.l;
+        mixR = out.r;
     }
 
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
