@@ -13,6 +13,7 @@
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
 #include "../../tests/PanelEditorTests.h"
+#include "../../tests/StudioUiTests.h"   // [ws8-studio]
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -3484,6 +3485,23 @@ int main(int argc, char** argv)
     cs80::tests::testOutputMeterUi(check, flushGui);
     std::puts("UI SMOKE PHASE: original panel editor (ws7)");
     cs80::tests::runPanelEditorTests(check, flushGui, dir);
+
+    // [ws8-studio] begin: modern-layer UI tests (toolbar, Studio view, drawers, interaction, MIDI learn, undo).
+    std::puts("UI SMOKE PHASE: studio views");
+    cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio interaction");
+    cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio MIDI learn");
+    cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio undo and redo");
+    cs80::tests::studio::testUndoRedo(check, flushGui);
+    std::puts("UI SMOKE PHASE: studio learning tools");
+    cs80::tests::studio::testLearningTools(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio tab order, hit targets and contrast");
+    cs80::tests::studio::testTabOrder(check, flushGui);
+    cs80::tests::studio::testHitTargets(check, flushGui);
+    cs80::tests::studio::testContrast(check);
+    // [ws8-studio] end
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

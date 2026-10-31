@@ -13,6 +13,7 @@
 #include "MemoryLid.h"
 #include "ParameterWatch.h"
 #include "EditorPreferences.h"
+#include "StudioMount.h"   // [ws8-studio]
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
 #include "UiComponents.h"
@@ -861,10 +862,148 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncSubMode();
         syncSourceStatus();
         refreshRows();
+
+        // [ws8-studio] begin: Studio toolbar, voice monitor drawer and controllers strip.
+        studio = std::make_unique<ui::StudioMount>(processor);
+        for (auto* c : std::initializer_list<juce::Component*> { &prevButton, &nextButton, &presetWindow, &browseButton, &saveButton,
+                                                                 &initButton, &advancedButton, &presetLabel, &presetTagLabel,
+                                                                 &presetIndexLabel, &presetNumberLabel })
+            c->setVisible(false);                       // the Studio toolbar takes over this cluster
+        for (auto* wheel : std::initializer_list<juce::Component*> { &pitchWheel, &modWheel })
+        {
+            optionComponents.erase(std::remove(optionComponents.begin(), optionComponents.end(), wheel), optionComponents.end());
+            wheel->setVisible(false);                   // the wheels live in the controllers strip
+        }
+        addAndMakeVisible(studio->toolbar);
+        addChildComponent(studio->scope);
+        addChildComponent(studio->controllers);
+        {
+            ui::StudioToolbar::Actions actions;
+            actions.presetDisplay = [this]
+            {
+                return ui::StudioToolbar::PresetDisplay { presetNumberLabel.getText(), presetLabel.getText(),
+                                                          (presetTagLabel.shownText() + "   " + presetIndexLabel.shownText()).trim(), presetDirty };
+            };
+            actions.stepPreset = [this](int direction) { if (confirmDiscard(direction < 0 ? prevButton : nextButton)) stepPreset(direction); };
+            actions.stepArmed = [this](int direction) { return (direction < 0 ? prevButton : nextButton).isArmed(); };
+            actions.openLibrary = [this] { showBrowser(! browserVisible, true); };
+            actions.libraryOpen = [this] { return browserVisible; };
+            actions.selectCompare = [this](int slot) { studio->compare.select(slot); centreRow.syncToneMarks(); };
+            actions.activeCompare = [this] { return studio->compare.active(); };
+            actions.copyCompare = [this] { studio->compare.copyToOther(); };
+            actions.toggleStudio = [this] { showAdvanced(! advancedVisible, true); };
+            actions.studioOpen = [this] { return advancedVisible; };
+            actions.showEvidence = [this] { showAdvanced(true, true); advanced.showTab(ui::StudioTab::settings); };
+            actions.savePreset = [this] { if (saveButton.onClick) saveButton.onClick(); };
+            actions.initPatch = [this]
+            {
+                const auto& bank = processor.getFactoryPresets();
+                for (int i = 0; i < (int) bank.size(); ++i)
+                    if (juce::String(bank[(size_t) i].name).equalsIgnoreCase("Init Patch"))
+                    {
+                        processor.loadFactoryPreset(i);
+                        break;
+                    }
+                centreRow.syncToneMarks();
+            };
+            actions.toggleScope = [this]
+            {
+                studio->scope.setVisible(! studio->scope.isVisible());
+                if (studio->scope.isVisible()) studio->scope.toFront(true);
+            };
+            actions.scopeOpen = [this] { return studio->scope.isVisible(); };
+            actions.toggleControllers = [this] { studio->setControllersShown(! studio->areControllersShown()); };
+            actions.controllersShown = [this] { return studio->areControllersShown(); };
+            actions.toggleQwerty = [this] { studio->setQwertyEnabled(! studio->qwerty.isEnabled()); };
+            actions.qwertyEnabled = [this] { return studio->qwerty.isEnabled(); };
+            actions.toggleCircuitNotes = [this] { studio->setCircuitNotesShown(! ui::circuitNotesInTooltips()); };
+            actions.circuitNotesShown = [] { return ui::circuitNotesInTooltips(); };
+            actions.midiLearnCount = [this] { return processor.getMidiLearn().count(); };
+            actions.clearMidiLearn = [this] { processor.getMidiLearn().clearAll(); };
+            actions.undo = [this] { processor.undo(); centreRow.syncToneMarks(); };
+            actions.redo = [this] { processor.redo(); centreRow.syncToneMarks(); };
+            actions.canUndo = [this] { return processor.getUndoManager().canUndo(); };
+            actions.canRedo = [this] { return processor.getUndoManager().canRedo(); };
+            actions.undoName = [this] { return processor.getUndoManager().getUndoDescription(); };
+            actions.redoName = [this] { return processor.getUndoManager().getRedoDescription(); };
+            actions.startTour = [this] { studio->tour.start(); };
+            actions.zoomPresets.assign(panel::EditorPreferences::zoomPresets.begin(), panel::EditorPreferences::zoomPresets.end());
+            actions.setZoom = [this](int percent) { if (onZoom) onZoom(percent); };
+            actions.zoom = [this] { return currentZoom ? currentZoom() : 0; };
+            studio->shortcuts.undo = actions.undo;
+            studio->shortcuts.redo = actions.redo;
+            studio->shortcuts.save = actions.savePreset;
+            studio->toolbar.setActions(std::move(actions));
+        }
+        studio->scope.onClose = [this] { studio->scope.setVisible(false); };
+        addKeyListener(&studio->qwerty);                // computer-keyboard notes through the on-screen keyboard's state
+        addKeyListener(&studio->shortcuts);             // undo, redo and save
+        addChildComponent(studio->tour);
+        {
+            // Tour steps: plain words over the area they describe (editor pixels at the current size).
+            auto design = [this](float x, float y, float w, float h)
+            {
+                const float sx = (float) getWidth() / kDesignWidth, sy = (float) getHeight() / kDesignHeight;
+                return juce::Rectangle<float>(x * sx, y * sy, w * sx, h * sy).toNearestInt();
+            };
+            auto keys = [this](std::initializer_list<const char*> ids)
+            {
+                juce::Rectangle<int> area;
+                for (const char* id : ids)
+                    for (auto* child : studio->toolbar.getChildren())
+                        if (child->getComponentID() == id)
+                            area = area.isEmpty() ? getLocalArea(child, child->getLocalBounds())
+                                                  : area.getUnion(getLocalArea(child, child->getLocalBounds()));
+                return area;
+            };
+            auto bounds = [this](juce::Component& c) { return getLocalArea(&c, c.getLocalBounds()); };
+            studio->tour.setSteps({
+                { "Welcome to the CS-80",
+                  "This is the instrument's own panel, laid out as on the original: two channels of faders, the tone selector, the sub "
+                  "oscillator and ring modulator, the ribbon and the keyboard. What the original does not have lives in the toolbar and "
+                  "the Studio view.", {} },
+                { "Programs",
+                  "The display names the program. The arrows step through the library and LIBRARY opens it to browse, search, load and "
+                  "save. EDITED means the sound has changed since it was loaded.",
+                  [keys] { return keys({ "toolbar_previous", "toolbar_program", "toolbar_next", "toolbar_library" }); } },
+                { "Faders work like the hardware",
+                  "Drag a fader by its cap: it never jumps. Hold Shift for fine moves, Ctrl-click (Cmd-click on a Mac) to type a value, "
+                  "double-click to reset. Right-click any control for MIDI learn, copy and paste, and a help card with its owner's-manual "
+                  "page.", [design] { const auto f = geo::rowFrame(0); return design(f.getX(), f.getY(), f.getWidth(), f.getHeight()); } },
+                { "Tone selector",
+                  "Each channel has its own row of the original preset tabs. PANEL plays the faders; a tab or a MEMORY plays its own "
+                  "settings for the 26 programmer controls.",
+                  [this, bounds] { return bounds(centreRow.getToneButton(0, 0)).getUnion(bounds(centreRow.getToneButton(1, 13))); } },
+                { "Ribbon and keys",
+                  "Touch the ribbon anywhere and slide to bend the pitch; lift off to return. Drag down on a held key for pressure. The "
+                  "computer keyboard plays too: A W S E D F T G Y H U J K, with Z and X for octaves.",
+                  [this, bounds] { return bounds(deck.getRibbon()).getUnion(bounds(keybed)); } },
+                { "Engine and PURE CS-80",
+                  "ENGINE: CIRCUIT runs the circuit-informed models; LEGACY keeps old sessions sounding as they did. PURE CS-80 switches "
+                  "off every modern addition. Neither is a calibrated match to a particular instrument.",
+                  [keys] { return keys({ "toolbar_engine_circuit", "toolbar_engine_legacy", "toolbar_pure_cs80" }); } },
+                { "Compare and undo",
+                  "A and B hold two versions of a sound to compare. UNDO and REDO step through your edits (Ctrl/Cmd+Z); host automation "
+                  "is never recorded, and loading a program starts a fresh history.",
+                  [keys] { return keys({ "toolbar_compare_a", "toolbar_compare_b", "toolbar_undo", "toolbar_redo" }); } },
+                { "The Studio view",
+                  "STUDIO opens the modern layer: LFOs and wheels, MIDI learn and the computer keyboard, effects, the arpeggiator, and "
+                  "Settings with the evidence register, which says what each part of the sound rests on.",
+                  [keys] { return keys({ "toolbar_studio" }); } },
+                { "Menu and help",
+                  "The menu saves and initialises programs, opens the voice monitor and the controllers strip, and runs this tour again. "
+                  "Hover a control for its tooltip and hold Shift for its circuit notes; press F1 on a focused control for its help card.",
+                  [keys] { return keys({ "toolbar_menu" }); } },
+            });
+        }
+        advanced.attachQwerty(&studio->qwerty);
+        deck.getRibbon().fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
+        // [ws8-studio] end
     }
 
     ~Impl() override
     {
+        if (studio != nullptr) { removeKeyListener(&studio->qwerty); removeKeyListener(&studio->shortcuts); }   // [ws8-studio]
         meterTicker.onTick = nullptr;
         frames.stop();
         setLookAndFeel(nullptr);
@@ -2069,6 +2208,15 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         advanced.setBounds(rr(geo::overlay));
         browser.setBounds(rr(geo::overlay));
         memoryLid.setBounds(rr(geo::memoryLid));
+        // [ws8-studio] begin: toolbar over the program cluster (x 250-1114), drawers over the panel and keybed.
+        if (studio != nullptr)
+        {
+            studio->toolbar.setBounds(r(250.0f, 2.0f, ui::StudioToolbar::kDesignW, ui::StudioToolbar::kDesignH));
+            studio->scope.setBounds(r(56.0f, 70.0f, ui::ScopeDrawer::kDesignW, ui::ScopeDrawer::kDesignH));
+            studio->controllers.setBounds(r(52.0f, 758.0f, ui::ControllersStrip::kDesignW, ui::ControllersStrip::kDesignH));
+            studio->tour.setBounds(getLocalBounds());
+        }
+        // [ws8-studio] end
     }
 
     Cs80AudioProcessor& processor;
@@ -2143,6 +2291,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     bool advancedVisible = false;
     bool browserVisible = false;
+
+    std::unique_ptr<ui::StudioMount> studio;   // [ws8-studio] declared last: destroyed first
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Impl)
 };

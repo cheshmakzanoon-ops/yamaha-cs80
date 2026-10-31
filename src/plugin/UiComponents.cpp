@@ -1,5 +1,6 @@
 #include "UiComponents.h"
 
+#include "EvidenceRegister.h"
 #include "PluginProcessor.h"
 #include "ArtCommon.h"
 
@@ -2625,8 +2626,76 @@ juce::String capTooltipText(const juce::String& text)
     return head.substring(0, word > 80 ? word : maxChars).trimEnd() + juce::String(juce::CharPointer_UTF8("\xe2\x80\xa6"));
 }
 
+// [ws8-studio] A control tooltip whose lines carry roles (ParamKnob::buildTooltip marks it with a leading zero-width
+// space): the name and value, the plain owner's-manual sentence, the manual page, a MIDI CC line, the key hints, and
+// an optional CIRCUIT NOTES section whose heading is tinted by its evidence class.
+juce::TextLayout structuredTooltipLayout(const juce::String& rawText)
+{
+    const auto lines = juce::StringArray::fromLines(rawText.substring(1));
+    juce::AttributedString s;
+    s.setJustification(juce::Justification::centredLeft);
+    s.setWordWrap(juce::AttributedString::byWord);
+    s.setLineSpacing(1.5f);
+    const auto body = displayFont(12.0f, juce::Font::plain);
+    const auto bold = displayFont(12.0f, juce::Font::bold);
+    const auto small = displayFont(11.0f, juce::Font::plain);
+    const auto smallBold = displayFont(11.0f, juce::Font::bold);
+    bool notes = false;
+    int notesChars = 0;
+    for (int i = 0; i < lines.size(); ++i)
+    {
+        const auto& line = lines[i];
+        const auto lead = i == 0 ? juce::String() : juce::String("\n");
+        if (i == 0)
+        {
+            const int colon = line.indexOf(": ");
+            if (colon > 0)
+            {
+                s.append(line.substring(0, colon), bold, gold);
+                s.append("  " + line.substring(colon + 2), bold, ivory);
+            }
+            else
+                s.append(line, bold, ivory);
+        }
+        else if (line.startsWith("CIRCUIT NOTES"))
+        {
+            notes = true;
+            const auto upper = line.toUpperCase();
+            const auto tint = upper.contains("MODERN") ? juce::Colour(0xff6cc6e6)
+                            : upper.contains("INFERRED LAW") ? juce::Colour(0xffe2b04a)
+                            : upper.contains("INFERENCE") ? juce::Colour(0xffc9bfae)
+                                                          : juce::Colour(0xff4fbf6e);
+            s.append(lead + line, smallBold, tint);
+        }
+        else if (notes)
+        {
+            if (notesChars >= 420)
+                continue;
+            auto text = line;
+            if (notesChars + text.length() > 420)
+                text = text.substring(0, 420 - notesChars).trimEnd() + juce::String(juce::CharPointer_UTF8("\xe2\x80\xa6"));
+            notesChars += text.length();
+            s.append(lead + text, small, ivory.withAlpha(0.86f));
+        }
+        else if (line.startsWith("Owner's") || line.startsWith("Service") || line.startsWith("Control ") || line.startsWith("Not on")
+                 || line.startsWith("Not in"))
+            s.append(lead + line, small, gold);
+        else if (line.startsWith("MIDI CC"))
+            s.append(lead + line, smallBold, amberBright);
+        else if (line.startsWith("Double-click"))
+            s.append(lead + line, small, ivoryDim);
+        else
+            s.append(lead + capTooltipText(line), body, ivory);
+    }
+    juce::TextLayout layout;
+    layout.createLayout(s, 380.0f);
+    return layout;
+}
+
 juce::TextLayout tooltipLayout(const juce::String& rawText)
 {
+    if (rawText.startsWithChar((juce::juce_wchar) 0x200b))
+        return structuredTooltipLayout(rawText);
     // A trailing "NAME: ON|OFF" line is the control's state; it is kept whole however long the tip is.
     juce::String stateLine, bodyText = rawText;
     {
@@ -3060,6 +3129,58 @@ void FocusSlider::updateDragBubble()
     bubble->pointAt(target);
 }
 
+// [ws8-studio] Pointer handling: a right-click opens the context menu and a Ctrl/Cmd-click opens the value editor,
+// neither of them a drag (so neither sends a host gesture). A drag is relative to its start; holding Shift scales
+// the pointer's movement by kFineFactor. The scaled position is accumulated from each move, so pressing or
+// releasing Shift mid-drag continues from where the value is instead of jumping.
+void FocusSlider::mouseDown(const juce::MouseEvent& e)
+{
+    swallowPointer = false;
+    if (isEnabled() && e.mods.isPopupMenu() && onContextMenu)
+    {
+        swallowPointer = true;
+        onContextMenu();
+        return;
+    }
+    if (isEnabled() && e.mods.isCommandDown() && e.mods.isLeftButtonDown() && onTypeValue)
+    {
+        swallowPointer = true;
+        onTypeValue();
+        return;
+    }
+    lastPointer = virtualPointer = e.position;
+    juce::Slider::mouseDown(e);
+}
+
+void FocusSlider::mouseDrag(const juce::MouseEvent& e)
+{
+    if (swallowPointer)
+        return;
+    const auto delta = e.position - lastPointer;
+    lastPointer = e.position;
+    virtualPointer += delta * (e.mods.isShiftDown() ? kFineFactor : 1.0f);
+    juce::Slider::mouseDrag(e.withNewPosition(virtualPointer));
+}
+
+void FocusSlider::mouseUp(const juce::MouseEvent& e)
+{
+    if (swallowPointer)
+    {
+        swallowPointer = false;
+        return;
+    }
+    juce::Slider::mouseUp(e.withNewPosition(virtualPointer));
+}
+
+void FocusSlider::matchDragToTrack()
+{
+    const auto style = getSliderStyle();
+    if (style != juce::Slider::LinearVertical && style != juce::Slider::LinearHorizontal)
+        return;
+    const double low = getPositionOfValue(getMinimum()), high = getPositionOfValue(getMaximum());
+    setMouseDragSensitivity(juce::jmax(8, juce::roundToInt(std::abs(high - low))));
+}
+
 // ---------------------------------------------------------------------------
 // ParamKnob
 // ---------------------------------------------------------------------------
@@ -3123,6 +3244,11 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
     slider.addMouseListener(this, false); // hover and drag state redraws the readout
     slider.bubbleTitleText = [this] { return bubbleNameFor(parameterIndex, name); };
     slider.bubbleValueText = [this](double v) { return formatParamValue(parameterIndex, (float) v); };
+    // [ws8-studio] context menu, typed values and the tooltip with its Circuit notes section
+    slider.onContextMenu = [this] { showContextMenu(); };
+    slider.onTypeValue = [this] { showValueEntry(); };
+    slider.onHelp = [this] { showControlHelp(*this, parameterIndex); };
+    slider.tooltipText = [this] { return buildTooltip(circuitNotesInTooltips() || juce::ModifierKeys::currentModifiers.isShiftDown()); };
     addAndMakeVisible(slider);
 
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -3385,6 +3511,7 @@ void ParamKnob::resized()
     {
         const int titleH = (int) horizontalTitleHeight((float) getHeight(), minCaption);
         slider.setBounds(2, titleH + 1, getWidth() - 4, juce::jmax(8, getHeight() - titleH - 2));
+        slider.matchDragToTrack();
         return;
     }
     if (hardwareSlider)
@@ -3395,6 +3522,7 @@ void ParamKnob::resized()
         const int top = juce::roundToInt(nameBox + 2.0f * scale);
         const int bottom = juce::roundToInt(valueBox + 2.0f * scale);
         slider.setBounds(1, top, getWidth() - 2, juce::jmax(8, getHeight() - top - bottom));
+        slider.matchDragToTrack();   // [ws8-studio] the cap follows the pointer one to one
         return;
     }
 
@@ -3419,7 +3547,13 @@ void ParamKnob::resized()
 
 void ParamKnob::mouseEnter(const juce::MouseEvent&) { repaint(); }
 void ParamKnob::mouseExit(const juce::MouseEvent&) { repaint(); }
-void ParamKnob::mouseDown(const juce::MouseEvent&) { repaint(); }
+void ParamKnob::mouseDown(const juce::MouseEvent& e)
+{
+    // [ws8-studio] The caption and readout around the slider open the same menu (the slider handles its own clicks).
+    if (e.eventComponent == this && e.mods.isPopupMenu())
+        showContextMenu();
+    repaint();
+}
 void ParamKnob::mouseUp(const juce::MouseEvent&) { repaint(); }
 
 void ParamKnob::mouseDoubleClick(const juce::MouseEvent& e)
@@ -3427,6 +3561,472 @@ void ParamKnob::mouseDoubleClick(const juce::MouseEvent& e)
     if (e.originalComponent == &slider || e.eventComponent == &slider)
         return; // the slider resets itself; this handler is only for the margin around it
     slider.setValue(cs80::paramDef(parameterIndex).def, juce::sendNotificationSync);
+}
+
+// ---------------------------------------------------------------------------
+// [ws8-studio] Typed values, the context menu, help and tooltips
+// ---------------------------------------------------------------------------
+namespace
+{
+std::atomic<bool> gCircuitNotesInTooltips { false };
+
+// A number as a control prints it, in base units: "3.60 kHz" -> 3600 hz, "80 ms" -> 0.08 s, "52%" -> 52 %.
+struct ReadNumber
+{
+    bool ok = false;
+    double value = 0.0;    // in base units (Hz, s, st, ct, oct, %, /, or none)
+    juce::String unit;     // normalised: "hz", "s", "st", "ct", "oct", "%", "/", ""
+    double scale = 1.0;    // what the printed unit multiplied by (1000 for kHz and k, 0.001 for ms)
+    bool explicitScale = false;
+};
+
+ReadNumber readNumber(const juce::String& raw)
+{
+    ReadNumber r;
+    auto t = raw.trim().toLowerCase().replace(juce::String::charToString((juce::juce_wchar) 0x2212), "-").replace(",", ".");
+    t = t.replace(juce::String::charToString((juce::juce_wchar) 0xb1), "");   // a printed plus-minus sign
+    int i = 0;
+    const int n = t.length();
+    bool negative = false;
+    if (i < n && (t[i] == '+' || t[i] == '-'))
+        negative = t[i++] == '-';
+    const int start = i;
+    bool digits = false, dot = false;
+    while (i < n && (juce::CharacterFunctions::isDigit(t[i]) || (t[i] == '.' && ! dot)))
+    {
+        digits = digits || juce::CharacterFunctions::isDigit(t[i]);
+        dot = dot || t[i] == '.';
+        ++i;
+    }
+    if (! digits)
+        return r;
+    double number = t.substring(start, i).getDoubleValue();
+    if (negative)
+        number = -number;
+    const auto rest = t.substring(i).trim();
+    if (rest.startsWith("khz")) { r.unit = "hz"; r.scale = 1000.0; }
+    else if (rest.startsWith("hz")) r.unit = "hz";
+    else if (rest.startsWith("ms")) { r.unit = "s"; r.scale = 0.001; }
+    else if (rest.startsWith("st")) r.unit = "st";
+    else if (rest.startsWith("semi")) r.unit = "st";
+    else if (rest.startsWith("sec") || rest == "s") r.unit = "s";
+    else if (rest.startsWith("ct") || rest.startsWith("cent")) r.unit = "ct";
+    else if (rest.startsWith("oct") || rest == "o") r.unit = "oct";
+    else if (rest.startsWith("%")) r.unit = "%";
+    else if (rest.startsWith("/")) r.unit = "/";
+    else if (rest.startsWith("k")) { r.scale = 1000.0; r.explicitScale = true; }
+    else if (rest.isNotEmpty()) return r;   // text after the number that is not a unit: not a value
+    r.explicitScale = r.explicitScale || r.unit.isNotEmpty();
+    r.value = number * r.scale;
+    r.ok = true;
+    return r;
+}
+
+juce::String channelPrefix(int index, bool longForm)
+{
+    if (index < cs80::P_numGlobals || index >= cs80::P_legacyNumParams)
+        return {};
+    return longForm ? juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String(index < cs80::P_ch2Start ? "I " : "II ");
+}
+
+std::string helpId(int index)
+{
+    if (index >= cs80::P_numGlobals && index < cs80::P_legacyNumParams)
+        return cs80::kChannelDefs[(index - cs80::P_ch1Start) % cs80::CP_count].id;
+    return cs80::paramId(index);
+}
+
+// "O18, O32" -> "Owner's manual p18, p32"; "S17, S19" -> "Service manual sheets 17, 19".
+juce::String pagesText(const cs80::evidence::ControlHelp& help)
+{
+    const juce::String pages(help.pages);
+    if (pages == "-" || pages.isEmpty())
+        return help.basis == cs80::evidence::Basis::modernExtension ? juce::String("Not on the original instrument")
+                                                                    : juce::String("Not in the owner's manual index");
+    juce::StringArray owner, service;
+    for (auto part : juce::StringArray::fromTokens(pages, ",", ""))
+    {
+        part = part.trim();
+        if (part.startsWithChar('O')) owner.add("p" + part.substring(1));
+        else if (part.startsWithChar('S')) service.add(part.substring(1));
+    }
+    juce::StringArray out;
+    if (! owner.isEmpty())
+        out.add("Owner's manual " + owner.joinIntoString(", ") + (help.ownerIndex > 0 ? " (control " + juce::String(help.ownerIndex) + ")" : juce::String()));
+    if (! service.isEmpty())
+        out.add(juce::String(owner.isEmpty() && help.ownerIndex > 0 ? "Control " + juce::String(help.ownerIndex) + ", service manual sheet"
+                                                                    : "Service manual sheet")
+                + (service.size() > 1 ? "s " : " ") + service.joinIntoString(", "));
+    return out.joinIntoString("; ");
+}
+
+juce::String coverageText(const char* codes)
+{
+    juce::StringArray parts;
+    for (auto code : juce::StringArray::fromTokens(codes, "/", ""))
+        parts.add(code + " " + cs80::evidence::coverageCodeName(code.toStdString()));
+    return parts.joinIntoString(", ");
+}
+
+// Marks a tooltip whose lines carry roles (see tooltipLayout): a zero-width space, invisible if shown raw.
+const juce::String kStructuredTip = juce::String::charToString((juce::juce_wchar) 0x200b);
+const juce::String kNotesHeading = "CIRCUIT NOTES";
+
+class ValueEditor final : public juce::TextEditor
+{
+public:
+    ValueEditor() : juce::TextEditor("Value")
+    {
+        setTitle("Type a value");
+        setJustification(juce::Justification::centred);
+        setSelectAllWhenFocused(true);
+        setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xff0d0b08));
+        setColour(juce::TextEditor::textColourId, amberBright);
+        setColour(juce::TextEditor::highlightColourId, amber.withAlpha(0.35f));
+        setColour(juce::TextEditor::outlineColourId, gold);
+        setColour(juce::TextEditor::focusedOutlineColourId, amberBright);
+    }
+};
+
+// The help card's content: plain words first, the evidence after.
+class HelpCard final : public juce::Component
+{
+public:
+    explicit HelpCard(const juce::String& text) : body(text)
+    {
+        setTitle("Control help");
+        setDescription(text);
+        setWantsKeyboardFocus(true);
+        layoutText(400.0f);
+        setSize(424, (int) std::ceil(layout.getHeight()) + 28);
+    }
+
+    void paint(juce::Graphics& g) override { layout.draw(g, getLocalBounds().toFloat().reduced(12.0f, 14.0f)); }
+    bool keyPressed(const juce::KeyPress& key) override
+    {
+        if (key == juce::KeyPress::escapeKey || key == juce::KeyPress::returnKey)
+        {
+            if (auto* box = findParentComponentOfClass<juce::CallOutBox>())
+                box->dismiss();
+            return true;
+        }
+        return false;
+    }
+
+private:
+    void layoutText(float width)
+    {
+        juce::AttributedString s;
+        s.setWordWrap(juce::AttributedString::byWord);
+        s.setLineSpacing(2.0f);
+        const auto lines = juce::StringArray::fromLines(body);
+        for (int i = 0; i < lines.size(); ++i)
+        {
+            const auto& line = lines[i];
+            const bool first = i == 0;
+            const bool heading = line.startsWith(kNotesHeading) || line.startsWith("EVIDENCE");
+            const auto font = displayFont(first ? 15.0f : (heading ? 12.0f : 13.0f), first || heading ? juce::Font::bold : juce::Font::plain);
+            const auto colour = first ? ivory : heading ? gold : line.startsWith("Owner") || line.startsWith("Service") || line.startsWith("Control ")
+                                                                      || line.startsWith("Not on") || line.startsWith("MIDI CC")
+                                                                  ? amberBright : ivory.withAlpha(0.9f);
+            s.append((i > 0 ? "\n" : "") + line, font, colour);
+        }
+        layout.createLayout(s, width);
+    }
+
+    juce::String body;
+    juce::TextLayout layout;
+};
+} // namespace
+
+void setCircuitNotesInTooltips(bool shown) noexcept { gCircuitNotesInTooltips.store(shown, std::memory_order_relaxed); }
+bool circuitNotesInTooltips() noexcept { return gCircuitNotesInTooltips.load(std::memory_order_relaxed); }
+
+bool parseParamValue(int parameterIndex, const juce::String& text, float currentValue, float& physical)
+{
+    if (parameterIndex < 0 || parameterIndex >= cs80::P_numParams)
+        return false;
+    const auto& d = cs80::paramDef(parameterIndex);
+    const auto typedText = text.trim();
+    if (typedText.isEmpty())
+        return false;
+
+    // Choice and switch names as the control prints them ("GLISS", "SUS II" -> "II", "8'"), exact or a unique prefix.
+    const bool integralRange = d.min == std::round(d.min) && d.max == std::round(d.max) && d.max - d.min <= 16.0f;
+    if (integralRange)
+    {
+        int prefixHits = 0;
+        float prefixValue = 0.0f;
+        for (int k = (int) d.min; k <= (int) d.max; ++k)
+        {
+            const auto shown = formatParamValue(parameterIndex, (float) k);
+            if (shown.equalsIgnoreCase(typedText))
+            {
+                physical = (float) k;
+                return true;
+            }
+            if (typedText.length() >= 2 && ! readNumber(shown).ok && shown.startsWithIgnoreCase(typedText))
+            {
+                ++prefixHits;
+                prefixValue = (float) k;
+            }
+        }
+        if (prefixHits == 1)
+        {
+            physical = prefixValue;
+            return true;
+        }
+    }
+
+    const auto typed = readNumber(typedText);
+    if (! typed.ok)
+        return false;
+    // Two sample points where the control prints a number give its linear display law (display = a * value + b):
+    // physical values for Hz and seconds, x100 for percentages, x10 for resonance and so on.
+    std::array<std::pair<double, ReadNumber>, 2> samples;
+    int found = 0;
+    for (float t : { 0.0f, 1.0f, 0.25f, 0.75f, 0.5f })
+    {
+        if (found == 2)
+            break;
+        const float value = d.min + t * (d.max - d.min);
+        const auto shown = readNumber(formatParamValue(parameterIndex, value));
+        if (! shown.ok)
+            continue;
+        if (found == 1 && (std::abs(shown.value - samples[0].second.value) < 1.0e-9 || shown.unit != samples[0].second.unit))
+            continue;
+        samples[(size_t) found++] = { value, shown };
+    }
+    if (found < 2)
+        return false;   // a choice: only its names are values
+    const auto& unit = samples[0].second.unit;
+    if (typed.unit.isNotEmpty() && typed.unit != unit)
+        return false;   // for example "Hz" typed into a time control
+    double base = typed.value;
+    if (! typed.explicitScale)
+    {
+        // A bare number is in the unit the control shows now ("80" on a control showing ms means 80 ms).
+        const auto now = readNumber(formatParamValue(parameterIndex, currentValue));
+        base *= now.ok && now.unit == unit ? now.scale : 1.0;
+    }
+    const double a = (samples[1].second.value - samples[0].second.value) / (samples[1].first - samples[0].first);
+    if (std::abs(a) < 1.0e-12)
+        return false;
+    const double value = samples[0].first + (base - samples[0].second.value) / a;
+    if (! std::isfinite(value))
+        return false;
+    physical = juce::jlimit(d.min, d.max, (float) value);
+    return true;
+}
+
+juce::String controlHelpText(int parameterIndex)
+{
+    if (parameterIndex < 0 || parameterIndex >= cs80::P_numParams)
+        return {};
+    const auto id = helpId(parameterIndex);
+    const auto* help = cs80::evidence::findHelpForId(id.c_str());
+    juce::String text = (channelPrefix(parameterIndex, true) + parameterLongName(parameterIndex)).toUpperCase();
+    if (help == nullptr)
+        return text;
+    text << "\n" << help->plain
+         << "\n" << pagesText(*help)
+         << "\nEVIDENCE  " << juce::String(cs80::evidence::basisName(help->basis)).toUpperCase()
+         << "\n" << cs80::evidence::basisExplanation(help->basis)
+         << "\nCoverage ledger: " << coverageText(help->coverage)
+         << "\n" << kNotesHeading << "\n" << help->circuit;
+    return text;
+}
+
+void showControlHelp(juce::Component& anchor, int parameterIndex)
+{
+    auto* top = anchor.getTopLevelComponent();
+    if (top == nullptr)
+        return;
+    auto card = std::make_unique<HelpCard>(controlHelpText(parameterIndex));
+    auto& box = juce::CallOutBox::launchAsynchronously(std::move(card), top->getLocalArea(&anchor, anchor.getLocalBounds()), top);
+    box.setComponentID("control_help");
+}
+
+int ParamKnob::getHostParameterIndex() const
+{
+    return processor.hostParameterIndex(parameterIndex);
+}
+
+juce::String ParamKnob::buildTooltip(bool withCircuitNotes) const
+{
+    const float value = (float) slider.getValue();
+    auto text = kStructuredTip + tooltipNameFor(parameterIndex) + ": " + formatParamValue(parameterIndex, value);
+    if (parameterIndex == cs80::P_mix)
+        text += "  (channel I : channel II)";
+    const auto id = helpId(parameterIndex);
+    const auto* help = cs80::evidence::findHelpForId(id.c_str());
+    if (help != nullptr)
+        text << "\n" << help->plain << "\n" << pagesText(*help);
+    const int cc = processor.getMidiLearn().controllerFor(getHostParameterIndex());
+    if (cc >= 0)
+        text << "\nMIDI CC " << cc << (processor.getParamValue(cs80::P_parityMode) >= 0.5f ? " (inactive in PURE CS-80)" : "");
+    text << "\nDouble-click resets.  Right-click: MIDI learn, type, copy, help."
+         << (withCircuitNotes || help == nullptr ? juce::String() : juce::String("  Shift: circuit notes."));
+    if (withCircuitNotes && help != nullptr)
+        text << "\n" << kNotesHeading << "  -  " << juce::String(cs80::evidence::basisName(help->basis)).toUpperCase() << "  -  " << help->coverage
+             << "\n" << help->circuit;
+    return text;
+}
+
+juce::PopupMenu ParamKnob::buildContextMenu()
+{
+    juce::PopupMenu menu;
+    const float value = (float) slider.getValue();
+    menu.addSectionHeader((channelPrefix(parameterIndex, false) + parameterLongName(parameterIndex)).toUpperCase() + "   "
+                          + formatParamValue(parameterIndex, value));
+    auto& learn = processor.getMidiLearn();
+    const int host = getHostParameterIndex();
+    const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
+    const int cc = learn.controllerFor(host);
+    juce::Component::SafePointer<ParamKnob> safe(this);
+    auto add = [&menu](const juce::String& text, bool enabled, std::function<void()> action)
+    {
+        juce::PopupMenu::Item item(text);
+        item.isEnabled = enabled;
+        item.action = std::move(action);
+        menu.addItem(item);
+    };
+    if (pure)
+        add("MIDI learn (off in PURE CS-80)", false, nullptr);
+    else if (learn.learningParameter() == host && host >= 0)
+        add("Cancel MIDI learn (waiting for a controller)", true, [safe] { if (safe != nullptr) { safe->processor.getMidiLearn().cancelLearn(); safe->repaint(); } });
+    else
+        add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", host >= 0,
+            [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
+    if (cc >= 0)
+        add("Forget MIDI CC " + juce::String(cc), true, [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().clearParameter(host); safe->repaint(); } });
+    menu.addSeparator();
+    add("Reset to default  (" + formatParamValue(parameterIndex, cs80::paramDef(parameterIndex).def) + ")", true,
+        [safe] { if (safe != nullptr) safe->resetToDefault(); });
+#if JUCE_MAC
+    add("Type a value...   Cmd-click", true, [safe] { if (safe != nullptr) safe->showValueEntry(); });
+#else
+    add("Type a value...   Ctrl-click", true, [safe] { if (safe != nullptr) safe->showValueEntry(); });
+#endif
+    add("Copy value  (" + formatParamValue(parameterIndex, value) + ")", true, [safe] { if (safe != nullptr) safe->copyValue(); });
+    const auto clip = juce::SystemClipboard::getTextFromClipboard().trim().upToFirstOccurrenceOf("\n", false, false);
+    float pasted = 0.0f;
+    const bool pastable = clip.length() < 40 && parseParamValue(parameterIndex, clip, value, pasted);
+    add(pastable ? "Paste value  (" + formatParamValue(parameterIndex, pasted) + ")" : juce::String("Paste value"), pastable,
+        [safe] { if (safe != nullptr) safe->pasteValue(); });
+    menu.addSeparator();
+    add("What is this control?", true, [safe] { if (safe != nullptr) showControlHelp(*safe, safe->parameterIndex); });
+    return menu;
+}
+
+void ParamKnob::showContextMenu()
+{
+    auto menu = buildContextMenu();
+    menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(this).withMinimumWidth(240));
+}
+
+bool ParamKnob::applyTypedValue(const juce::String& text)
+{
+    float physical = 0.0f;
+    if (! parseParamValue(parameterIndex, text, (float) slider.getValue(), physical))
+        return false;
+    // One host gesture through the attachment: one undo step.
+    juce::Slider::ScopedDragNotification gesture(slider);
+    slider.setValue(physical, juce::sendNotificationSync);
+    return true;
+}
+
+void ParamKnob::resetToDefault()
+{
+    juce::Slider::ScopedDragNotification gesture(slider);
+    slider.setValue(cs80::paramDef(parameterIndex).def, juce::sendNotificationSync);
+}
+
+void ParamKnob::copyValue()
+{
+    juce::SystemClipboard::copyTextToClipboard(formatParamValue(parameterIndex, (float) slider.getValue()));
+}
+
+bool ParamKnob::pasteValue()
+{
+    return applyTypedValue(juce::SystemClipboard::getTextFromClipboard().trim().upToFirstOccurrenceOf("\n", false, false));
+}
+
+void ParamKnob::showValueEntry()
+{
+    auto* top = getTopLevelComponent();
+    if (top == nullptr || top == this)
+        return;
+    auto editor = std::make_unique<ValueEditor>();
+    auto* raw = editor.get();
+    const float s = juce::jlimit(0.7f, 1.4f, uiDesignScale(*this));
+    raw->setFont(displayFont(juce::jmax(12.0f, 14.0f * s), juce::Font::bold));
+    raw->setText(formatParamValue(parameterIndex, (float) slider.getValue()), juce::dontSendNotification);
+    const auto area = top->getLocalArea(this, getLocalBounds());
+    const int w = juce::jmax(96, area.getWidth() + 24), h = juce::jmax(26, juce::roundToInt(30.0f * s));
+    raw->setBounds(juce::Rectangle<int>(w, h).withCentre(area.getCentre()).constrainedWithin(top->getLocalBounds()));
+    raw->setDescription("Type a value for " + tooltipNameFor(parameterIndex) + " and press Return; Esc cancels. Units as shown: "
+                        + formatParamValue(parameterIndex, (float) slider.getValue()));
+    juce::Component::SafePointer<ParamKnob> safe(this);
+    auto close = [safe]
+    {
+        juce::MessageManager::callAsync([safe] { if (safe != nullptr) safe->valueEditor.reset(); });
+    };
+    raw->onReturnKey = [safe, raw, close]
+    {
+        if (safe == nullptr) return;
+        if (safe->applyTypedValue(raw->getText()))
+        {
+            close();
+            safe->slider.grabKeyboardFocus();
+        }
+        else
+            raw->setColour(juce::TextEditor::outlineColourId, juce::Colour(0xffe0604a));   // not a value of this control
+    };
+    raw->onEscapeKey = [safe, close] { close(); if (safe != nullptr) safe->slider.grabKeyboardFocus(); };
+    raw->onFocusLost = close;
+    valueEditor = std::move(editor);
+    top->addAndMakeVisible(*raw);
+    raw->toFront(true);
+    raw->grabKeyboardFocus();
+    raw->selectAll();
+}
+
+void ParamKnob::watchLearning()
+{
+    struct Watch final : juce::Timer
+    {
+        explicit Watch(ParamKnob& k) : knob(k) { startTimerHz(10); }
+        void timerCallback() override
+        {
+            knob.repaint();
+            if (knob.processor.getMidiLearn().learningParameter() != knob.getHostParameterIndex())
+            {
+                stopTimer();
+                juce::MessageManager::callAsync([safe = juce::Component::SafePointer<ParamKnob>(&knob)]
+                                                { if (safe != nullptr) safe->learnWatch.reset(); });
+            }
+        }
+        ParamKnob& knob;
+    };
+    learnWatch = std::make_unique<Watch>(*this);
+    repaint();
+}
+
+void ParamKnob::paintOverChildren(juce::Graphics& g)
+{
+    // While MIDI learn waits for a controller for this control: a dashed amber outline. (The host index lookup
+    // runs only while learning is armed, not on every repaint of every knob.)
+    const int armed = processor.getMidiLearn().learningParameter();
+    if (armed < 0 || armed != getHostParameterIndex())
+        return;
+    juce::Path outline;
+    outline.addRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 4.0f);
+    juce::Path dashed;
+    const float dashes[] = { 4.0f, 3.0f };
+    juce::PathStrokeType(1.6f).createDashedStroke(dashed, outline, dashes, 2);
+    g.setColour(amberBright);
+    g.fillPath(dashed);
 }
 
 // ---------------------------------------------------------------------------
@@ -3840,7 +4440,7 @@ void RibbonStrip::paint(juce::Graphics& g)
         return;
     }
 
-    const float posX = touching ? juce::jlimit(band.getX(), band.getRight(), anchorX + value * (float) getWidth())
+    const float posX = touching ? juce::jlimit(band.getX(), band.getRight(), anchorX + value * travelSpan(value >= 0.0f))
                                 : juce::jlimit(band.getX(), band.getRight(), hoverX);
     if (touching)
     {
@@ -3885,9 +4485,26 @@ void RibbonStrip::paint(juce::Graphics& g)
     }
 }
 
+float RibbonStrip::travelSpan(bool upwards) const
+{
+    if (fullRangeFromTouch != nullptr && ! fullRangeFromTouch())
+        return juce::jmax(1.0f, (float) getWidth());
+    // A contact right at an end still leaves a short travel that way rather than an infinitely steep one.
+    const auto band = ribbonBand(ribbonChannel((float) getWidth(), (float) getHeight()));
+    const float minimum = juce::jmax(8.0f, band.getWidth() * 0.12f);
+    return juce::jmax(minimum, upwards ? band.getRight() - anchorX : anchorX - band.getX());
+}
+
+float RibbonStrip::valueForGesture(float fromX, float toX)
+{
+    anchorX = fromX;
+    return juce::jlimit(-1.0f, 1.0f, (toX - anchorX) / travelSpan(toX >= anchorX));
+}
+
 void RibbonStrip::setFromX(float x)
 {
-    value = juce::jlimit(-1.0f, 1.0f, (x - anchorX) / juce::jmax(1.0f, (float) getWidth()));
+    // [ws8-studio] Displacement from the first contact over the travel available in that direction (see fullRangeFromTouch).
+    value = juce::jlimit(-1.0f, 1.0f, (x - anchorX) / travelSpan(x >= anchorX));
     if (onValueChange) onValueChange(value);
     repaint();
 }

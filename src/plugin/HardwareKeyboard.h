@@ -1193,4 +1193,137 @@ private:
     juce::Rectangle<int> frameKeys;
 };
 
+// [ws8-studio] Computer-keyboard note play. Attach it as a KeyListener to the editor: letter keys play notes through
+// the same MidiKeyboardState the on-screen keys use (so they reach the processor's keyboard event queue and light the
+// keys), on MIDI channel 1.
+//
+//   A W S E D F T G Y H U J K O L P ;   C C# D D# E F F# G G# A A# B C C# D D# E
+//   Z / X                               octave down / up (the A key spans C1 to C7)
+//   C / V                               velocity down / up
+//
+// It never takes keys while a text field has focus, nor keys pressed with Ctrl, Cmd or Alt (menu shortcuts). A held
+// note is released when its key comes up, when the editor stops seeing the key (for example after losing focus; a
+// 10 Hz check), on disable and on destruction, so no note can hang.
+class QwertyKeyboard final : public juce::KeyListener, private juce::Timer
+{
+public:
+    static constexpr int kChannel = 1;
+    static constexpr const char* kNoteKeys = "awsedftgyhujkolp;";
+
+    explicit QwertyKeyboard(juce::MidiKeyboardState& s) : state(s) {}
+    ~QwertyKeyboard() override { releaseAll(); }
+
+    void setEnabled(bool shouldPlay)
+    {
+        enabled = shouldPlay;
+        if (! enabled)
+            releaseAll();
+    }
+    bool isEnabled() const noexcept { return enabled; }
+    // MIDI note of the A key: 60 (C4) by default, moved in octaves by Z and X.
+    int getBaseNote() const noexcept { return baseNote; }
+    void setBaseNote(int note) { baseNote = juce::jlimit(12, 108, note - note % 12); }
+    float getVelocity() const noexcept { return velocity; }
+    int heldCount() const noexcept { return (int) held.size(); }
+    // Overrides the physical key test (tests drive key-up without a real keyboard).
+    std::function<bool(int keyCode)> isKeyDown = [](int keyCode) { return juce::KeyPress::isKeyCurrentlyDown(keyCode); };
+    // Whether a text field has the keyboard (tests override it: a headless editor cannot take focus).
+    std::function<bool()> textEntryFocused = [] { return focusIsTextEntry(); };
+    std::function<void()> onChange;
+
+    static bool focusIsTextEntry()
+    {
+        auto* focused = juce::Component::getCurrentlyFocusedComponent();
+        return focused != nullptr && (dynamic_cast<juce::TextEditor*>(focused) != nullptr
+                                      || dynamic_cast<juce::TextEditor*>(focused->getParentComponent()) != nullptr);
+    }
+
+    bool keyPressed(const juce::KeyPress& key, juce::Component*) override
+    {
+        if (! enabled || (textEntryFocused && textEntryFocused()))
+            return false;
+        const auto mods = key.getModifiers();
+        if (mods.isCommandDown() || mods.isCtrlDown() || mods.isAltDown())
+            return false;
+        const auto c = juce::CharacterFunctions::toLowerCase(key.getTextCharacter());
+        if (c == 'z' || c == 'x')
+        {
+            setBaseNote(baseNote + (c == 'z' ? -12 : 12));
+            if (onChange) onChange();
+            return true;
+        }
+        if (c == 'c' || c == 'v')
+        {
+            velocity = juce::jlimit(0.1f, 1.0f, velocity + (c == 'c' ? -0.1f : 0.1f));
+            if (onChange) onChange();
+            return true;
+        }
+        const int offset = noteOffset(c);
+        if (offset < 0)
+            return false;
+        const int keyCode = key.getKeyCode();
+        for (const auto& h : held)
+            if (h.keyCode == keyCode)
+                return true;   // auto-repeat of a held key
+        const int note = baseNote + offset;
+        if (note < 0 || note > 127)
+            return true;
+        state.noteOn(kChannel, note, velocity);
+        held.push_back({ keyCode, note });
+        if (! isTimerRunning())
+            startTimerHz(10);
+        return true;
+    }
+
+    bool keyStateChanged(bool, juce::Component*) override
+    {
+        const bool any = ! held.empty();
+        releaseLifted();
+        return any;
+    }
+
+    void releaseAll()
+    {
+        for (const auto& h : held)
+            state.noteOff(kChannel, h.note, 0.0f);
+        held.clear();
+        stopTimer();
+    }
+
+    static int noteOffset(juce::juce_wchar c)
+    {
+        for (int i = 0; kNoteKeys[i] != 0; ++i)
+            if ((juce::juce_wchar) kNoteKeys[i] == c)
+                return i;
+        return -1;
+    }
+
+private:
+    struct Held { int keyCode; int note; };
+
+    void releaseLifted()
+    {
+        for (auto it = held.begin(); it != held.end();)
+        {
+            if (! isKeyDown(it->keyCode))
+            {
+                state.noteOff(kChannel, it->note, 0.0f);
+                it = held.erase(it);
+            }
+            else
+                ++it;
+        }
+        if (held.empty())
+            stopTimer();
+    }
+
+    void timerCallback() override { releaseLifted(); }
+
+    juce::MidiKeyboardState& state;
+    std::vector<Held> held;
+    bool enabled = true;
+    int baseNote = 60;
+    float velocity = 0.8f;
+};
+
 } // namespace cs80::ui

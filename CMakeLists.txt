@@ -250,6 +250,16 @@ if (CS80_BUILD_TESTS)
     # [ws7-panel] register this workstream's core tests below this line.
 
     # [ws8-studio] register this workstream's core tests below this line.
+    add_executable(cs80_evidence_register_tests tests/EvidenceRegisterTests.cpp)
+    target_include_directories(cs80_evidence_register_tests PRIVATE src)
+    add_test(NAME cs80_evidence_register_tests
+             COMMAND cs80_evidence_register_tests ${CMAKE_CURRENT_SOURCE_DIR}/docs)
+    set_tests_properties(cs80_evidence_register_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_midi_learn_tests tests/MidiLearnTests.cpp)
+    target_include_directories(cs80_midi_learn_tests PRIVATE src)
+    target_link_libraries(cs80_midi_learn_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_midi_learn_tests COMMAND cs80_midi_learn_tests)
+    set_tests_properties(cs80_midi_learn_tests PROPERTIES TIMEOUT 60)
 endif()
 
 add_executable(cs80_render src/tools/render_cli.cpp)
@@ -343,6 +353,10 @@ if (CS80_BUILD_PLUGIN)
         src/plugin/EditorPreferences.cpp
 
         # [ws8-studio] add this workstream's plugin sources below this line.
+        src/plugin/StudioToolbar.cpp
+        src/plugin/StudioDrawers.cpp
+        src/plugin/UndoHistory.cpp
+        src/plugin/StudioTour.cpp
 
     )
     target_sources(CS80Reference PRIVATE ${CS80_PLUGIN_SOURCES})

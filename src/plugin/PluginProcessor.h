@@ -7,6 +7,8 @@
 #include "KeyboardGestureCapture.h"
 #include "KeyboardPressureOwnership.h"
 #include "OutputMeter.h"
+#include "MidiLearn.h"
+#include "UndoHistory.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -178,6 +180,34 @@ public:
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     static juce::String parameterId(int index) { return juce::String(cs80::paramId(index)); }
 
+    // ---- [ws8-studio] MIDI learn and editor state -------------------------------------------
+    // Both live in the plugin state (MIDI_LEARN and UI_STATE children, each with a version), never
+    // in host parameters or presets. The map is per session: restoring a state replaces it, and
+    // loading a preset leaves it alone. Mappings are neither learned nor applied in PURE CS-80.
+    cs80::MidiLearnMap& getMidiLearn() noexcept { return midiLearn; }
+    // Host parameter index of a core parameter (extensions are appended after the 228 shipped ones).
+    int hostParameterIndex(int coreIndex) const;
+    struct EditorState
+    {
+        std::atomic<bool> tourSeen { false };
+        std::atomic<bool> qwertyEnabled { true };
+        std::atomic<bool> circuitNotes { false };
+        std::atomic<bool> controllersShown { false };
+    };
+    EditorState& getEditorState() noexcept { return editorState; }
+    static constexpr int editorStateVersion = 1;
+
+    // ---- [ws8-studio] Undo history ------------------------------------------------------------
+    // The APVTS is built with this UndoManager and records one transaction per user gesture; host
+    // automation, MIDI learn, preset loads and state restores are never recorded, and loading a sound
+    // starts a fresh history (UndoHistory.h). Message thread.
+    juce::UndoManager& getUndoManager() noexcept { return undoManager; }
+    bool undo();
+    bool redo();
+    // Wrap a programmatic edit the player should undo in one step (A/B switch, randomise, copy rank).
+    using ScopedUserEdit = cs80::UndoableParameterState::ScopedUserEdit;
+    cs80::UndoableParameterState& getUndoableState() noexcept { return apvts; }
+
 private:
     friend struct cs80::tests::PresetSaveAccess;
     void setPresetMetadata(const juce::String& name, int index);
@@ -190,6 +220,11 @@ private:
     void resetKeyboardHandoff() noexcept;
     void observeHostMidi(const juce::MidiMessage& message) noexcept;
     void applyValues(const cs80::ParamValues& values);
+    // [ws8-studio] MIDI learn on the audio thread; studio state in and out of the saved tree.
+    void applyMidiLearn(const juce::MidiBuffer& midi) noexcept;
+    bool midiLearnConsumes(int cc) const noexcept { return midiLearnLive && midiLearn.parameterFor(cc) >= 0; }
+    void writeStudioState(juce::ValueTree& state) const;
+    void readStudioState(juce::ValueTree& state);
     juce::File userPresetDirectory() const;
     using PresetWriter = std::function<juce::Result(const juce::XmlElement&, const juce::File&)>;
     PresetSaveResult writeUserPreset(const juce::String&, PresetOverwrite, const PresetWriter&);
@@ -198,7 +233,8 @@ private:
     juce::File presetDirectoryOverride;
 
     cs80::Engine engine;
-    juce::AudioProcessorValueTreeState apvts;
+    juce::UndoManager undoManager;            // [ws8-studio] constructed before the APVTS that uses it
+    cs80::UndoableParameterState apvts;
     juce::MidiKeyboardState keyboardState;
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;
@@ -232,6 +268,11 @@ private:
     mutable juce::CriticalSection presetMetadataLock;
     juce::String presetName { "Init Patch" };
     std::atomic<int> currentProgram { 0 };
+
+    // [ws8-studio]
+    cs80::MidiLearnMap midiLearn;
+    bool midiLearnLive = false;   // audio thread: mappings apply in this block (not PURE CS-80)
+    EditorState editorState;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Cs80AudioProcessor)
 };

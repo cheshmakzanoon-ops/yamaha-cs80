@@ -215,16 +215,40 @@ public:
     {
         setWantsKeyboardFocus(true);
         setRepaintsOnMouseActivity(true);
+        // [ws8-studio] A drag moves the value relative to where it started: clicking a fader never makes the cap jump.
+        // No modifier switches JUCE's velocity mode, so Ctrl/Cmd stays free for typing a value.
+        setSliderSnapsToMousePosition(false);
+        setVelocityModeParameters(1.0, 1, 0.0, false);
     }
     ~FocusSlider() override;
     // Optional drag-bubble text. Without them the bubble shows the title and the slider's own
     // value text. Only shown while the pointer drags; never changes bounds or accessibility.
     std::function<juce::String()> bubbleTitleText;
     std::function<juce::String(double)> bubbleValueText;
+
+    // [ws8-studio] Interaction polish. Shift while dragging moves the value at kFineFactor of the normal rate (it can
+    // be pressed or released mid-drag without a jump). Ctrl/Cmd-click calls onTypeValue; a right-click (Ctrl-click on
+    // macOS) calls onContextMenu. tooltipText, when set, builds the tooltip at the moment it is shown.
+    static constexpr float kFineFactor = 0.1f;
+    std::function<void()> onTypeValue;
+    std::function<void()> onContextMenu;
+    std::function<void()> onHelp;   // F1 on the focused control
+    std::function<juce::String()> tooltipText;
+    juce::String getTooltip() override { return tooltipText ? tooltipText() : juce::Slider::getTooltip(); }
+    void mouseDown(const juce::MouseEvent&) override;
+    void mouseDrag(const juce::MouseEvent&) override;
+    void mouseUp(const juce::MouseEvent&) override;
+    // Pixels for a full-range drag: a linear fader uses its own track length, so the cap follows the pointer.
+    void matchDragToTrack();
     void valueChanged() override { juce::Slider::valueChanged(); updateDragBubble(); }
     bool isGestureInProgress() const noexcept { return gestureActive; }
     bool keyPressed(const juce::KeyPress& key) override
     {
+        if (key.getKeyCode() == juce::KeyPress::F1Key && onHelp)
+        {
+            onHelp();
+            return true;
+        }
         const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
             || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
         if (isEnabled() && arrow && !key.getModifiers().isAnyModifierKeyDown() && !gestureActive)
@@ -270,6 +294,8 @@ private:
     void updateDragBubble();
     bool gestureActive = false;
     std::unique_ptr<juce::Component> dragBubble;
+    juce::Point<float> lastPointer, virtualPointer;   // [ws8-studio] Shift-fine drag
+    bool swallowPointer = false;                      // a click that opened a menu or an editor is not a drag
 };
 
 // Parameter-bound rotary or hardware linear slider with a unit-aware readout.
@@ -316,7 +342,26 @@ public:
     void setBipolar(bool isBipolar);
     bool isBipolar() const noexcept { return bipolar; }
 
+    // [ws8-studio] The right-click menu: MIDI learn (arm, cancel, forget), reset, type a value, copy and paste the
+    // value, and the control's help card. Each edit is one host gesture (and so one undo step).
+    juce::PopupMenu buildContextMenu();
+    void showContextMenu();
+    // Opens the inline value editor (also Ctrl/Cmd-click). Typing uses the units the control displays.
+    void showValueEntry();
+    // Parses `text` and sets the parameter in one gesture; false (and no change) when the text is not a value.
+    bool applyTypedValue(const juce::String& text);
+    void resetToDefault();
+    void copyValue();
+    bool pasteValue();
+    // The host parameter index MIDI learn uses for this control, or -1.
+    int getHostParameterIndex() const;
+    // Tooltip text as currently shown (plain words; the Circuit notes section when enabled or Shift is held).
+    juce::String buildTooltip(bool withCircuitNotes) const;
+    void paintOverChildren(juce::Graphics&) override;
+
 private:
+    void watchLearning();
+
     Cs80AudioProcessor& processor;
     int parameterIndex;
     juce::String name;
@@ -328,9 +373,26 @@ private:
     bool horizontalFader = false;
     FocusSlider slider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
+    std::unique_ptr<juce::Component> valueEditor;   // [ws8-studio] parented to the editor while open
+    std::unique_ptr<juce::Timer> learnWatch;        // repaints the armed outline until a controller arrives
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParamKnob)
 };
+
+// ---- [ws8-studio] typed values, help and tooltips ---------------------------------------------------------
+// Parses text typed for a control in the units it displays ("850 Hz", "1.2k", "380 ms", "52 %", "+0.5 oct", a
+// choice name such as "GLISS") into its physical value, clamped to the control's range. A bare number uses the
+// unit the control is showing right now. False when the text is not a value of this control.
+bool parseParamValue(int parameterIndex, const juce::String& text, float currentValue, float& physical);
+// Whether ParamKnob tooltips include the Circuit notes section without Shift being held (a menu choice, saved in
+// the plugin state by the editor).
+void setCircuitNotesInTooltips(bool shown) noexcept;
+bool circuitNotesInTooltips() noexcept;
+// The persistent help card for a control: plain words, the owner's-manual page and control number, the
+// evidence class, the coverage codes and the Circuit notes, from EvidenceRegister.h.
+void showControlHelp(juce::Component& anchor, int parameterIndex);
+// The same help as plain text (the card's content, and what tests read).
+juce::String controlHelpText(int parameterIndex);
 
 // A parameter-backed illuminated switch. Used for waveforms, filters,
 // effects, and performance modes.
@@ -444,6 +506,14 @@ public:
     void paintOverChildren(juce::Graphics&) override;
 
     std::function<void(float)> onValueChange;
+    // [ws8-studio] Full range from any touch point: sliding from the first contact to either end of the touch
+    // surface gives the whole bend that way. When this returns false (the editor returns false in PURE CS-80) the
+    // bend is proportional to distance, the whole strip being the whole range, as on the hardware ribbon.
+    std::function<bool()> fullRangeFromTouch;
+    // Pixels from the anchor for a full bend upwards (true) or downwards (false).
+    float travelSpan(bool upwards) const;
+    // Test hooks: the value a gesture from `fromX` to `toX` produces (no callback, no repaint).
+    float valueForGesture(float fromX, float toX);
 
 private:
     void setFromX(float x);

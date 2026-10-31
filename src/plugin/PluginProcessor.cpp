@@ -40,7 +40,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
           .withInput("External Modulation", juce::AudioChannelSet::mono(), false)
           .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       presetDirectoryOverride(presetDirectory),
-      apvts(*this, nullptr, stateType, createParameterLayout())
+      apvts(*this, undoManager, stateType, createParameterLayout())   // [ws8-studio] undo history
 {
     keyboardState.addListener(this);
     for (int i = 0; i < cs80::P_numParams; ++i)
@@ -74,6 +74,8 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     presetName = (getFactoryPresets().empty() ? juce::String("Init Patch")
                  : juce::String(getFactoryPresets()[0].name)) + " / Original SUB";
     currentProgram = 0;
+    apvts.syncNow();                       // [ws8-studio] the initial sound is not an undo step
+    undoManager.clearUndoHistory();
 }
 
 Cs80AudioProcessor::~Cs80AudioProcessor()
@@ -411,6 +413,12 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
     index = juce::jlimit(0, (int) bank.size() - 1, index);
     applyValues(bank[(size_t) index].values);
     setPresetMetadata(juce::String(bank[(size_t) index].name), index);
+    // [ws8-studio] A program load is not an undo step and starts a fresh history (as replaceState does).
+    if (auto* mm = juce::MessageManager::getInstanceWithoutCreating(); mm != nullptr && mm->isThisTheMessageThread())
+    {
+        apvts.syncNow();
+        undoManager.clearUndoHistory();
+    }
     updateHostDisplay();
 }
 
@@ -450,6 +458,7 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isController())
     {
+        if (midiLearnConsumes(message.getControllerNumber())) return;   // [ws8-studio] a learned controller drives its parameter instead
         if (message.getControllerNumber() == 11 && !engine.isParityMode())
             expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
         engine.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
@@ -497,6 +506,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     cs80::KeyboardEventQueue<>::Batch uiEvents;
     auto uiCount = keyboardEvents.take(uiEvents);
 
+    applyMidiLearn(midi);   // [ws8-studio] learned controllers move their parameters before this block reads them
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
@@ -823,12 +833,15 @@ void Cs80AudioProcessor::changeProgramName(int, const juce::String&)
 
 void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio] the undo flush and the host never touch the tree at once
+    apvts.syncNow();
     auto state = apvts.copyState();
     const auto metadata = getPresetMetadata();
     state.setProperty("presetName", metadata.name, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
     state.setProperty(stateSchemaKey, stateSchemaVersion, nullptr);
+    writeStudioState(state);   // [ws8-studio]
     if (auto xml = state.createXml())
     {
         auto text = xml->toString();
@@ -846,6 +859,8 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(stateType))
         {
+            readStudioState(tree);   // [ws8-studio] also removes those children from the parameter tree
+            const juce::ScopedLock treeLock(apvts.treeLock());
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
@@ -895,7 +910,12 @@ Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
     if (created.failed())
         return failure("Could not create the preset folder: " + created.getErrorMessage());
 
-    auto state = apvts.copyState();
+    auto state = [this]
+    {
+        const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
+        apvts.syncNow();
+        return apvts.copyState();
+    }();
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);
     state.setProperty("subOscStateVersion", 1, nullptr);
@@ -971,13 +991,121 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(stateType))
         {
+            for (const char* child : { "MIDI_LEARN", "UI_STATE" })   // [ws8-studio] a preset never replaces session state
+                tree.removeChild(tree.getChildWithName(child), nullptr);
             auto restored = normaliseRestoredState(tree);
             restored.getChildWithProperty("id", parameterId(cs80::P_parityMode))
                 .setProperty("value", getParamValue(cs80::P_parityMode), nullptr);
+            const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
             apvts.replaceState(restored);
             setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
                               (int) tree.getProperty("factoryIndex", 0));
             // DSP state is updated by the next audio block, not the state-loading thread.
         }
     }
+}
+
+// ---------------------------------------------------------------------------
+// [ws8-studio] MIDI learn and editor state
+// ---------------------------------------------------------------------------
+int Cs80AudioProcessor::hostParameterIndex(int coreIndex) const
+{
+    if (coreIndex < 0 || coreIndex >= cs80::P_numParams)
+        return -1;
+    const auto* p = apvts.getParameter(parameterId(coreIndex));
+    return p != nullptr ? p->getParameterIndex() : -1;
+}
+
+void Cs80AudioProcessor::applyMidiLearn(const juce::MidiBuffer& midi) noexcept
+{
+    // Lock-free on this side: the map is atomics only. setValueNotifyingHost is the path JUCE's own
+    // wrappers use for host automation on the audio thread. PURE CS-80 has no MIDI learn.
+    const auto* parity = parameterValues[(size_t) cs80::P_parityMode];
+    midiLearnLive = parity == nullptr || parity->load(std::memory_order_relaxed) < 0.5f;
+    if (! midiLearnLive || midi.isEmpty())
+        return;
+    const auto& parameters = getParameters();
+    for (const auto metadata : midi)
+    {
+        if (metadata.numBytes != 3 || (metadata.data[0] & 0xf0) != 0xb0 || metadata.data[1] >= 0x80 || metadata.data[2] >= 0x80)
+            continue;
+        const int target = midiLearn.handleController(metadata.data[1]);
+        if (target >= 0 && target < parameters.size())
+            parameters.getUnchecked(target)->setValueNotifyingHost((float) metadata.data[2] / 127.0f);
+    }
+}
+
+void Cs80AudioProcessor::writeStudioState(juce::ValueTree& state) const
+{
+    juce::ValueTree learn("MIDI_LEARN");
+    learn.setProperty("version", cs80::MidiLearnMap::kStateVersion, nullptr);
+    const auto& parameters = getParameters();
+    for (int cc = 0; cc < cs80::MidiLearnMap::kNumControllers; ++cc)
+    {
+        const int index = midiLearn.parameterFor(cc);
+        if (index < 0 || index >= parameters.size())
+            continue;
+        if (auto* p = dynamic_cast<juce::AudioProcessorParameterWithID*>(parameters.getUnchecked(index)))
+        {
+            juce::ValueTree map("MAP");
+            map.setProperty("cc", cc, nullptr);
+            map.setProperty("param", p->paramID, nullptr);
+            learn.appendChild(map, nullptr);
+        }
+    }
+    state.appendChild(learn, nullptr);
+
+    juce::ValueTree ui("UI_STATE");
+    ui.setProperty("version", editorStateVersion, nullptr);
+    ui.setProperty("tourSeen", editorState.tourSeen.load() ? 1 : 0, nullptr);
+    ui.setProperty("qwerty", editorState.qwertyEnabled.load() ? 1 : 0, nullptr);
+    ui.setProperty("circuitNotes", editorState.circuitNotes.load() ? 1 : 0, nullptr);
+    ui.setProperty("controllers", editorState.controllersShown.load() ? 1 : 0, nullptr);
+    state.appendChild(ui, nullptr);
+}
+
+void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
+{
+    // A restored session owns its map: a state without one (or from before this feature) has no mappings.
+    midiLearn.clearAll();
+    const auto learn = state.getChildWithName("MIDI_LEARN");
+    if (learn.isValid())
+    {
+        const auto& parameters = getParameters();
+        for (const auto& map : learn)
+        {
+            if (! map.hasType("MAP"))
+                continue;
+            const int cc = (int) map.getProperty("cc", -1);
+            const auto id = map.getProperty("param").toString();
+            for (int index = 0; index < parameters.size(); ++index)
+                if (auto* p = dynamic_cast<juce::AudioProcessorParameterWithID*>(parameters.getUnchecked(index)); p != nullptr && p->paramID == id)
+                {
+                    midiLearn.assign(cc, index);   // refuses unlearnable controllers
+                    break;
+                }
+        }
+    }
+    const auto ui = state.getChildWithName("UI_STATE");
+    editorState.tourSeen = ui.isValid() && (bool) ui.getProperty("tourSeen", false);
+    editorState.qwertyEnabled = ! ui.isValid() || (bool) ui.getProperty("qwerty", true);
+    editorState.circuitNotes = ui.isValid() && (bool) ui.getProperty("circuitNotes", false);
+    editorState.controllersShown = ui.isValid() && (bool) ui.getProperty("controllers", false);
+    state.removeChild(learn, nullptr);
+    state.removeChild(ui, nullptr);
+}
+
+// ---------------------------------------------------------------------------
+// [ws8-studio] Undo history
+// ---------------------------------------------------------------------------
+bool Cs80AudioProcessor::undo()
+{
+    apvts.syncNow();
+    return undoManager.undo();
+}
+
+bool Cs80AudioProcessor::redo()
+{
+    apvts.syncNow();
+    return undoManager.redo();
 }
