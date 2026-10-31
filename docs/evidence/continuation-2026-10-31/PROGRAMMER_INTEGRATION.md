@@ -160,3 +160,30 @@ adapter; the physical-capacitor continuity limit remains exactly zero.
 Full phrase, causal-click, benchmark and compatibility results are supplied
 by the integration run. A passed electrical routing gate is not a claim that
 the remaining phrase click target or HP service-voltage discrepancy is closed.
+
+
+### Causal phrase diagnostic after programmer integration
+
+Using the unchanged phrase metric and 256-frame event schedule:
+
+| Rate | Bass Stack first strike | Bass Stack retrigger | Funky note-off | Same window with note-off omitted |
+| ---: | ---: | ---: | ---: | ---: |
+| 44,100 Hz | 0.117441 | 0.281583 | 1.495963 | 1.495821 |
+| 48,000 Hz | 0.136597 | 0.297915 | 1.584353 | 1.615021 |
+| 96,000 Hz | 0.324982 | 0.391481 | 1.246159 | 1.275743 |
+
+Bass Stack now meets the existing retrigger score limit of 1. The electrical
+PANEL model changes loaded envelopes and receiver levels as declared above;
+this is not an added click fade, waveform phase reset or preset retuning.
+The cold filter-EG assignment discontinuity remains separately observable:
+Bass Stack's filter state is 0 before its first assignment and becomes
+−0.5906781554 immediately afterward under electrical PANEL, in both source
+policies and at all three rates. The older physical-unit PANEL path gives
+0 → −1.439999938. Those state observations do not identify the cause of a
+particular phrase edge or prove a recovered hardware initialization law.
+
+Funky 1/2 remains over 1 in the note-off window. The entire pre-event prefix
+is exactly identical, and its omitted-note-off control retains the same
+large edge (larger at 48/96 kHz). Thus the metric remains open; there is still
+no evidence that this edge comes from an instantaneous release reset.
+See `click-causality-programmer.csv` and `cold-programmer-before.csv`.

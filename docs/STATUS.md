@@ -95,7 +95,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 3 Output modes and noise | done | `62e18c1` |
 | 3 EXP volume optics | done | `3fcff91` |
 | 4.1 Tone tabs | done as review records; cells stay hypotheses | `31e3bab` |
-| 4.2 Memory panels | modelled with a truth model; not driving audio | `617259d` |
+| 4.2 Memory panels | electrical model drives selected memory/PANEL banks in the circuit engine; interface/taper are declared inferences | `d66d298` |
 | 4.3 Curated library | done: 301 circuit-engine programs + 222-program Legacy Library; recalibrated for the final audio | `9beed5e`, `82b9e14` |
 | 4.4 Program Change, ribbon CC | done | `ec4d853`, `7c65aaf` |
 | 5.1-5.2 Conformance audit, re-layout | done | ws7 merge `bd524f9` |
@@ -237,15 +237,54 @@ with the current declared series-source interpretation. Neither observation
 is curve-fit into a gain correction. See
 [evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
 
+## Continuation: electrical memory and PANEL routing
+
+Audio commit `d66d2985c93e1ec0fa9788bebf667c2919d02b50` connects the
+existing memory-panel electrical model to both circuit-engine ranks. The
+explicit 26-row programmer adapter covers the four memories and PANEL;
+legacy and unannotated physical-unit core frames retain their previous path.
+No parameter or stored-memory schema is changed. The pot coordinate, taper,
+50 kΩ resistance and loading are declared model inferences with alternatives,
+not hardware measurements or a fitted correction.
+
+The independent electrical gate passes **840 checks**, with bus error
+**0.184 mV** (limit 2 mV), diagonal impedance error **0.00623%** (limit 1%),
+and equivalent-source error **4.44e-16 V** (limit 1e-9 V). All seven
+preregistered mutations fail. The exact note-off capacitor-continuity gate
+still passes all 540 checks. After the separate V2 pin commit, the complete
+strict compatibility run passes legacy default, legacy tails, V1 numerics and
+V2 audio. See the archived `compat-programmer-frozen.log`.
+
+The phrase diagnostic's Bass Stack retrigger score becomes
+**0.281583 / 0.297915 / 0.391481** at 44.1 / 48 / 96 kHz. This improvement
+is a consequence of the loaded programmer's changed envelope response; it is
+**not** evidence that the separately identified cold-envelope charge defect
+has been fixed. That defect and its correction are qualified independently.
+Funky 1+2 note-off scores remain **1.495963 / 1.584353 / 1.246159**;
+omitting note-off produces **1.495821 / 1.615021 / 1.275743**, with exactly
+matching pre-event samples and no event-time physical-capacitor jump. The
+original note-off score criterion remains open. No output fade was added.
+
+Three 1,024-callback benchmark rounds at 48 kHz / 256 frames are archived
+with the preceding phase-correction rounds. The held-pair minimum-of-three
+median range is **0.74404–1.05964 RTF**, moving controls
+**1.03699**, quiet idle **0.13826**. These isolated DSP snapshots do
+not include the separately qualified pipeline/receiver optimizations.
+The CPU target remains open.
+
+The coordinate, electrical equations, mutation results and causal comparison
+are in [PROGRAMMER_INTEGRATION.md](evidence/continuation-2026-10-31/PROGRAMMER_INTEGRATION.md).
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`4917708268d8eed177670f4d270dbc50fc08e831`** (full-band nodal phase
-  correction). Pin commit `9246dbb2584eb2d87d744b7a52b43661bc7f15ce`.
-  Earlier V2 pins, for historical circuit-engine renders: `031a333` (Jacobian
+  **`d66d2985c93e1ec0fa9788bebf667c2919d02b50`** (electrical memory/PANEL
+  programmer routing). Pin commit `c14db9c8ed1ea3d1a42e8f85ec7962f7bc8b2043`.
+  Earlier V2 pins, for historical circuit-engine renders: `4917708` (full-band
+  nodal phase correction), `031a333` (Jacobian
   cache), `6bf6055` (oscillator
   event cache), `00ceccf` (integrated
   model),
