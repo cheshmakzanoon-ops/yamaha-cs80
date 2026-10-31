@@ -171,6 +171,13 @@ way, without changing an assertion:
   message is dispatched (`df4ba22`, after macos-15-intel failed it on `main`
   at `ec72eed`).
 
+On `main` after [#3](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/3) (`55bb043`):
+[build 41218764120](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218764120),
+[release 41218772353](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353)
+(unsigned: no signing secrets) and
+[DSP measurements 41218763836](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218763836)
+passed every job; the README links their artifacts.
+
 A passing Linux pluginval run is not a fix for the intermittent exit 139.
 
 ### Intentional circuit-engine sound changes in the `00ceccf` pin
