@@ -93,6 +93,50 @@ No approximation of the host curve was introduced to reduce it.
   0.0559275 (ordinary voices) and 0.112002 (sixteen voices). Restoring the bridge
   returns the CTest gate to zero failures and zero audio difference.
 
-AU immediate/ramp scheduling has separately preregistered acceptance in the
-same JSON file. The AU wrapper remains open until its scheduling bridge and
-native AudioUnitScheduleParameters gate are committed and pass on macOS.
+## AU implementation and remaining native gate
+
+The AU v2 bridge uses Apple's
+[AudioUnitScheduleParameters contract](https://developer.apple.com/documentation/audiotoolbox/audiounitscheduleparameters(_:_:_:)).
+Immediate events take effect at their buffer offset. Ramps interpolate from
+the signed start offset through the specified duration; a negative start
+represents a ramp already in progress. Events apply to the current render.
+Only the 18 supported controls advertise `kAudioUnitParameterFlag_CanRamp`.
+JUCE's former AU adapter applied immediate events at block start and ignored
+ramps; those exact semantics remain in Legacy and PURE CS-80.
+
+A second checked build-tree patch adds the AU scheduling override. Its
+preallocated queue accepts at most 2,048 events per render and reports a
+capacity error before accepting a batch that would overflow. Invalid scope,
+parameter, non-finite values, time overflow, and offsets outside the render
+report errors. Scheduled conversion and sorting allocate no memory. The
+processor consumes the same borrowed curve interface as VST3. Each lane
+publishes its value at the current render's final sample; a future ramp
+endpoint is not prematurely published. Offset-zero immediate setters and
+UI/state changes become the initial value before later events. Overlapping
+events replace the later interval, with the last scheduled event winning a
+tie at the same offset.
+
+Local qualification is complete for the platform-neutral curve and exact
+AU hook body. `cs80_au_automation_curve_tests` compares the full registered
+partition grid against an independent scalar event timeline, with maximum
+normalized error **2.22045e-16**. `cs80_au_automation_bridge_contract_tests`
+compiles the production hook body against a narrow AU/parameter contract
+fixture and checks scheduling, notifications, protected policies, capacity,
+and invalid-input handling. This fixture does not claim to prove Apple's ABI.
+Ten mutations were detected: flattened immediate offsets, lost negative
+starts, held ramps, premature future endpoint publication, missing overlap
+truncation, delayed current-state updates, hidden capacity errors, removed
+protected-policy behavior, dropped final notifications, and hidden scope
+errors. The native VST3 host gate still passes after the shared interface
+extension.
+
+On macOS, `cs80_au_automation_host_tests` loads the exact built `.component`
+factory and calls real `AudioUnitScheduleParameters`, `AudioUnitSetParameter`,
+`MusicDeviceMIDIEvent`, and `AudioUnitRender` APIs. It compares independently
+sampled controls with ramps and immediate events across host partitions,
+checks final value readback and advertised capabilities, preserves factory
+and memory ownership, and exercises both engines. The accompanying serial
+`cs80_au_automation_native_mutations` CTest rebuilds and tests five temporary
+faults in that actual component, then restores and requalifies the source
+and module. Both native macOS tests must pass before AU completion is claimed;
+the Linux contract tests are not a substitute for that pending CI result.

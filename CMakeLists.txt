@@ -305,6 +305,14 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
     add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    add_executable(cs80_au_automation_curve_tests tests/AuAutomationCurveTests.cpp)
+    target_include_directories(cs80_au_automation_curve_tests PRIVATE src)
+    add_test(NAME cs80_au_automation_curve_tests COMMAND cs80_au_automation_curve_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    add_executable(cs80_au_automation_bridge_contract_tests tests/AuAutomationBridgeContractTests.cpp)
+    target_include_directories(cs80_au_automation_bridge_contract_tests PRIVATE src)
+    add_test(NAME cs80_au_automation_bridge_contract_tests COMMAND cs80_au_automation_bridge_contract_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
     set_tests_properties(cs80_mts_esp_fallback_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
@@ -547,6 +555,27 @@ if (CS80_BUILD_PLUGIN)
             "$<TARGET_FILE:CS80Reference_VST3>"
             "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
         set_tests_properties(cs80_vst3_automation_tests PROPERTIES TIMEOUT 180)
+    endif()
+
+    if(CS80_BUILD_TESTS AND APPLE)
+        add_executable(cs80_au_automation_host_tests tests/AuAutomationHostTests.cpp)
+        target_include_directories(cs80_au_automation_host_tests PRIVATE src)
+        target_link_libraries(cs80_au_automation_host_tests PRIVATE
+            "-framework AudioToolbox" "-framework AudioUnit" "-framework CoreFoundation")
+        add_dependencies(cs80_au_automation_host_tests CS80Reference_AU)
+        add_test(NAME cs80_au_automation_host_tests COMMAND cs80_au_automation_host_tests
+            "$<TARGET_BUNDLE_DIR:CS80Reference_AU>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        set_tests_properties(cs80_au_automation_host_tests PROPERTIES TIMEOUT 180)
+        add_test(NAME cs80_au_automation_native_mutations COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/AuAutomationNativeMutations.py"
+            --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
+            --host "$<TARGET_FILE:cs80_au_automation_host_tests>"
+            --component "$<TARGET_BUNDLE_DIR:CS80Reference_AU>"
+            --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+            --config "$<CONFIG>")
+        set_tests_properties(cs80_au_automation_native_mutations PROPERTIES TIMEOUT 1200 RUN_SERIAL TRUE
+            DEPENDS cs80_au_automation_host_tests)
     endif()
 
     # Headless UI snapshot tool, built from the same editor/processor sources.

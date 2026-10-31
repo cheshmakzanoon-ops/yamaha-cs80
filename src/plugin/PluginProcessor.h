@@ -40,6 +40,9 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    bool usesHostAutomationTiming() const noexcept override;
+    int sampleAccurateParameterIndex(const juce::AudioProcessorParameter&) const noexcept override;
+    double sampleAccurateParameterValue(size_t lane) const noexcept override;
     void beginHostAutomationBlock(int frameCount) noexcept override;
     bool attachHostAutomationQueue(juce::AudioProcessorParameter&, cs80::HostAutomationQueue) noexcept override;
     void endHostAutomationBlock() noexcept override;

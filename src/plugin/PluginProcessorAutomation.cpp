@@ -12,6 +12,26 @@ void Cs80AudioProcessor::resetHostAutomationState() noexcept
     }
 }
 
+bool Cs80AudioProcessor::usesHostAutomationTiming() const noexcept
+{
+    const auto policy = cs80::renderPolicy(
+        parameterValues[cs80::P_parityMode]->load(std::memory_order_relaxed),
+        parameterValues[cs80::P_sourcePerformance]->load(std::memory_order_relaxed));
+    return !cs80::isPureCs80(policy) && cs80::usesSourceModels(policy);
+}
+
+int Cs80AudioProcessor::sampleAccurateParameterIndex(const juce::AudioProcessorParameter& parameter) const noexcept
+{
+    for (size_t i = 0; i < automationParameters.size(); ++i)
+        if (automationParameters[i] == &parameter) return static_cast<int>(i);
+    return -1;
+}
+
+double Cs80AudioProcessor::sampleAccurateParameterValue(size_t lane) const noexcept
+{
+    return lane < automationCurrent.size() ? automationCurrent[lane] : 0.0;
+}
+
 void Cs80AudioProcessor::beginHostAutomationBlock(int frameCount) noexcept
 {
     endHostAutomationBlock();
@@ -52,13 +72,10 @@ void Cs80AudioProcessor::endHostAutomationBlock() noexcept
 void Cs80AudioProcessor::prepareHostAutomation() noexcept
 {
     if (!hostAutomationBlock) return;
-    const auto policy = cs80::renderPolicy(
-        parameterValues[cs80::P_parityMode]->load(std::memory_order_relaxed),
-        parameterValues[cs80::P_sourcePerformance]->load(std::memory_order_relaxed));
     // Modern host timing is inert in both protected audio paths. Committing
     // before MIDI learn/readParameters restores JUCE's historical final-point
     // at block start order, including host notifications and final APVTS state.
-    if (cs80::isPureCs80(policy) || !cs80::usesSourceModels(policy)) endHostAutomationBlock();
+    if (!usesHostAutomationTiming()) endHostAutomationBlock();
 }
 
 void Cs80AudioProcessor::syncHostAutomationParameters() noexcept

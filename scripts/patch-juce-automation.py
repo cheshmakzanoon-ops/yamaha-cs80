@@ -60,18 +60,60 @@ def patch_vst3(source: str) -> str:
     return source
 
 
+def patch_au(source: str) -> str:
+    source = replace_once(source,
+        "#include <juce_audio_plugin_client/detail/juce_PluginUtilities.h>",
+        '#include <juce_audio_plugin_client/detail/juce_PluginUtilities.h>\n#include "plugin/AuAutomationQueue.h"')
+    source = replace_once(source,
+        """    // No idea what this method actually does or what it should return. Current Apple docs say nothing about it.
+    // (Note that this isn't marked 'override' in case older versions of the SDK don't include it)
+    bool CanScheduleParameters() const override          { return false; }""",
+        """    #include "plugin/AuAutomationHooks.inc"
+
+    // Scheduled key controls use the CS-80 queue; other controls retain their
+    // former immediate/block-rate behavior. Events use preallocated CS-80 storage.
+    bool CanScheduleParameters() const override          { return true; }""")
+    source = replace_once(source,
+        """                if (! isParameterDiscrete)
+                    outParameterInfo.flags |= kAudioUnitParameterFlag_CanRamp;""",
+        """                if (! isParameterDiscrete && cs80AutomationIndex (*param) >= 0)
+                    outParameterInfo.flags |= kAudioUnitParameterFlag_CanRamp;""")
+    source = replace_once(source,
+        """                auto value = inValue / getMaximumParameterValue (param);""",
+        """                if (inBufferOffsetInFrames != 0 && cs80AutomationIndex (*param) >= 0)
+                    if (auto* client = cs80AutomationClient(); client != nullptr && client->usesHostAutomationTiming())
+                        return cs80ScheduleAuImmediate (*param, inValue, inBufferOffsetInFrames);
+
+                auto value = inValue / getMaximumParameterValue (param);""")
+    source = replace_once(source,
+        """        lastTimeStamp = inTimeStamp;
+
+        // prepare buffers""",
+        """        lastTimeStamp = inTimeStamp;
+        cs80::HostAutomationBlock cs80Automation { cs80AutomationClient(), static_cast<int> (nFrames) };
+        if (! cs80PrepareAuAutomation (cs80Automation.get(), static_cast<int> (nFrames)))
+            return kAudioUnitErr_InvalidParameter;
+
+        // prepare buffers""")
+    for signature in ["ComponentResult Initialize() override", "void Cleanup() override",
+                      "ComponentResult Reset (AudioUnitScope inScope, AudioUnitElement inElement) override"]:
+        source = replace_once(source, signature + "\n    {", signature + "\n    {\n        cs80AuAutomation.clearPending();")
+    return source
+
+
 def main() -> int:
     if len(sys.argv) != 3:
         raise RuntimeError("usage: patch-juce-automation.py INPUT OUTPUT")
     original, output = map(Path, sys.argv[1:])
     expected = {
         "juce_audio_plugin_client_VST3.cpp": "adf5c18774c42bfab7d50478525f84dcab43e12ff8d9879749137d80c61336f0",
+        "juce_audio_plugin_client_AU_1.mm": "a4a8f4efb3b20977a1dfa8865c02800834e8790043975428b28358417d1315f5",
     }
     source = original.read_text(encoding="utf-8")
     actual = hashlib.sha256(source.encode("utf-8")).hexdigest()
     if expected.get(original.name) != actual:
         raise RuntimeError(f"Unreviewed JUCE automation wrapper source {original}: {actual}; expected {expected.get(original.name)}")
-    patched = patch_vst3(source)
+    patched = patch_vst3(source) if original.name.endswith("VST3.cpp") else patch_au(source)
     output.parent.mkdir(parents=True, exist_ok=True)
     if not output.exists() or output.read_text(encoding="utf-8") != patched:
         output.write_text(patched, encoding="utf-8", newline="\n")

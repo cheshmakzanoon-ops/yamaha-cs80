@@ -116,6 +116,9 @@ class HostAutomationClient
 {
 public:
     virtual ~HostAutomationClient() = default;
+    virtual bool usesHostAutomationTiming() const noexcept = 0;
+    virtual int sampleAccurateParameterIndex(const juce::AudioProcessorParameter&) const noexcept = 0;
+    virtual double sampleAccurateParameterValue(size_t lane) const noexcept = 0;
     virtual void beginHostAutomationBlock(int frameCount) noexcept = 0;
     virtual bool attachHostAutomationQueue(juce::AudioProcessorParameter&, HostAutomationQueue) noexcept = 0;
     virtual void endHostAutomationBlock() noexcept = 0;
