@@ -194,7 +194,8 @@ the main view of a fresh processor and editor (Init Patch, no audio rendered, no
 output meter and voice/MIDI lamp well is masked. Tolerances, named constants fixed before the goldens were
 recorded: a pixel counts as changed above 40/255 in any channel; a view fails when more than 0.30 % of its pixels
 change or when any 8 x 8 block's mean absolute difference exceeds 8/255. Each run writes
-`golden-candidate-*.png` and `golden-diff-*.png` into the capture directory. The golden directory is passed to
+`golden-candidate-*.png` and `golden-diff-*.png` into a `golden/` subfolder of the capture directory (the screenshot
+workflow publishes only the top-level PNGs). The golden directory is passed to
 `CS80Snapshots` as `CS80_GOLDEN_DIR` (CMake, ws7 block).
 
 **Refresh:** after an intended visual change, run on Linux

@@ -566,6 +566,9 @@ template <typename Check, typename Flush>
 void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
 {
     const juce::File goldenDir { juce::String(CS80_GOLDEN_DIR) };
+    // Candidates and diffs go to a subfolder: the screenshot workflow publishes every PNG at the top level.
+    const auto workDir = outDir.getChildFile("golden");
+    workDir.createDirectory();
     const bool refresh = juce::SystemStats::getEnvironmentVariable("CS80_REFRESH_GOLDENS", {}) == "1";
     for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
     {
@@ -586,7 +589,7 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
             juce::FileOutputStream stream(file);
             return stream.openedOk() && png.writeImageToStream(image, stream);
         };
-        save(candidate, outDir.getChildFile("golden-candidate-" + name + ".png"));
+        save(candidate, workDir.getChildFile("golden-candidate-" + name + ".png"));
         const auto goldenFile = goldenDir.getChildFile(name + ".png");
         if (refresh)
         {
@@ -597,7 +600,7 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
         check(golden.isValid(), ("golden image present: " + goldenFile.getFullPathName()).toRawUTF8());
         if (! golden.isValid())
             continue;
-        const auto result = compareGolden(golden, candidate, outDir.getChildFile("golden-diff-" + name + ".png"));
+        const auto result = compareGolden(golden, candidate, workDir.getChildFile("golden-diff-" + name + ".png"));
         std::printf("golden %s: changed %.4f %% of pixels (limit %.2f %%), worst %dx%d block mean %.2f (limit %.1f)%s\n",
                     name.toRawUTF8(), result.changedFraction * 100.0, kGoldenMaxChangedFraction * 100.0, kGoldenBlock, kGoldenBlock,
                     result.worstBlockMean, kGoldenMaxBlockMean, kGoldenStrict ? "" : " [report only on this platform]");
