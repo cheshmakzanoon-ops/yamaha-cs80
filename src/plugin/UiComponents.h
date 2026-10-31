@@ -452,28 +452,6 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LightSpill)
 };
 
-// Roving focus for a row of radio-style buttons (the tone selector): the row is one Tab stop,
-// Left/Right/Up/Down (and Home/End) move focus along it without changing the selection, and
-// Space or Return selects as usual. Call add() for each button in order; keep the group alive as long
-// as the buttons. The tab that takes Tab focus is the selected one, or the first.
-class RovingFocusGroup final : private juce::KeyListener, private juce::Timer
-{
-public:
-    RovingFocusGroup() = default;
-    ~RovingFocusGroup() override;
-    void add(juce::Button&);
-    void clear();
-    // Optionally split a long list into rows: Up/Down move by `columns` buttons.
-    void setColumns(int columns) noexcept { cols = juce::jmax(1, columns); }
-
-private:
-    bool keyPressed(const juce::KeyPress&, juce::Component*) override;
-    void timerCallback() override;
-    void refreshStops();
-    std::vector<juce::Component::SafePointer<juce::Button>> buttons;
-    int cols = 1;
-};
-
 // Pointer-to-pressure mapping for the on-screen keys. After the strike, pushing
 // the pointer further down the key presses harder (full pressure after 40% of the
 // key height); drawing back up eases off. This stands in for the original per-key

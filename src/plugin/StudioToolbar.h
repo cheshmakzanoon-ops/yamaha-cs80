@@ -6,6 +6,7 @@
 #include <functional>
 #include <memory>
 #include <optional>
+#include <vector>
 
 class Cs80AudioProcessor;
 
@@ -70,6 +71,10 @@ public:
         std::function<int()> midiLearnCount;
         std::function<void()> clearMidiLearn;
         std::function<void()> startTour;
+        // Display size: the editor's zoom presets (percent), and the one in force (0 when the size is not a preset).
+        std::vector<int> zoomPresets;
+        std::function<void(int)> setZoom;
+        std::function<int()> zoom;
     };
 
     explicit StudioToolbar(Cs80AudioProcessor&);

@@ -1,5 +1,7 @@
 #include "StudioTour.h"
 
+#include "ArtCommon.h"
+
 namespace cs80::ui
 {
 
@@ -7,7 +9,7 @@ namespace
 {
 juce::Font tourFont(float height, bool bold)
 {
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), height, bold ? juce::Font::bold : juce::Font::plain));
+    return art::displayFont(height, bold ? juce::Font::bold : juce::Font::plain);
 }
 
 class TourKey final : public juce::Button

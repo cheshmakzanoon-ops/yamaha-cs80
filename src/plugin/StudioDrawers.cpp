@@ -1,5 +1,6 @@
 #include "StudioDrawers.h"
 
+#include "ArtCommon.h"
 #include "PluginProcessor.h"
 
 #include <cmath>
@@ -18,8 +19,7 @@ juce::Colour field() { return juce::Colour(0xff131210); }
 
 juce::Font font(float height, bool bold = true, float kern = 0.06f)
 {
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), juce::jmax(9.0f, height),
-                                        bold ? juce::Font::bold : juce::Font::plain)).withExtraKerningFactor(kern);
+    return art::displayFont(juce::jmax(9.0f, height), bold ? juce::Font::bold : juce::Font::plain).withExtraKerningFactor(kern);
 }
 
 void say(juce::Graphics& g, const juce::String& s, Rf r, float h, juce::Colour c, juce::Justification j = juce::Justification::centredLeft,

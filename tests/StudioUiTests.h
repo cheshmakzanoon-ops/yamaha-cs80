@@ -8,6 +8,7 @@
 
 #include "plugin/AdvancedPanel.h"
 #include "plugin/EvidenceRegister.h"
+#include "plugin/PanelLayout.h"
 #include "plugin/HardwareKeyboard.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
@@ -1106,9 +1107,22 @@ inline juce::String describe(const HitTarget& t)
     return name + " (" + juce::String(t.bounds.getWidth(), 1) + " x " + juce::String(t.bounds.getHeight(), 1) + " px)";
 }
 
-// The modern layer must pass outright. The rest of the editor is being re-laid out by the panel workstream: its
-// results are printed as an audit (set kStrictForWholeEditor once that re-layout lands).
-constexpr bool kStrictForWholeEditor = false;
+// Every editor control must pass at 1120 x 700, with two documented exceptions in the original-panel layout
+// (docs/workstreams/ws8-studio.md, accessibility review). At that size neither the 24 px size nor the spacing
+// exception is geometrically possible for them without abandoning the panel-conformance layout, so each must
+// instead pass at the 100 % display size (1600 x 1000), which the toolbar menu and the brand mark offer:
+//   * the 23 front-strip levers (owner indexes 4-12 and 16): 27.5 design px wide on a 29.25 design px pitch, so
+//     20.5 px apart at 1120 x 700 (WCAG 2.5.8 "essential": the strip reproduces the original's lever row). Each is
+//     keyboard-operable and takes typed values.
+//   * the three stacked tremolo/chorus keys: 25 design px tall in the 104-unit deck block.
+inline bool isPanelSizeException(const HitTarget& t, float scale)
+{
+    if (accessibleName(*t.component).startsWith("Tremolo/chorus"))
+        return true;
+    const auto strip = cs80::panel::geo::frontStrip;
+    const float y = t.bounds.getCentreY() / scale;
+    return dynamic_cast<juce::Slider*>(t.component) != nullptr && y > strip.getY() && y < strip.getBottom();
+}
 
 inline void testHitTargets(const Check& check, const Flush& flush)
 {
@@ -1119,11 +1133,12 @@ inline void testHitTargets(const Check& check, const Flush& flush)
     editor.setSize(1120, 700);
     editor.setVisible(true);
     flush(80);
-    int ownedChecked = 0, ownedFailing = 0, panelFailing = 0;
+    int ownedChecked = 0, ownedFailing = 0, panelFailing = 0, excepted = 0;
     auto audit = [&](juce::Component& root, const char* where)
     {
         std::vector<HitTarget> targets;
         collectTargets(root, root, targets);
+        const float scale = (float) editor.getWidth() / 1600.0f;
         for (const auto* t : undersizedTargets(targets))
         {
             if (t->owned)
@@ -1131,10 +1146,12 @@ inline void testHitTargets(const Check& check, const Flush& flush)
                 ++ownedFailing;
                 std::printf("  undersized modern-layer target in %s: %s\n", where, describe(*t).toRawUTF8());
             }
+            else if (isPanelSizeException(*t, scale))
+                ++excepted;
             else
             {
                 ++panelFailing;
-                std::printf("  hit-target audit (%s): %s\n", where, describe(*t).toRawUTF8());
+                std::printf("  undersized panel target in %s: %s\n", where, describe(*t).toRawUTF8());
             }
         }
         for (const auto& t : targets)
@@ -1169,12 +1186,24 @@ inline void testHitTargets(const Check& check, const Flush& flush)
             if (auto* t = dynamic_cast<cs80::ui::TourOverlay*>(tour)) t->dismiss();
         }
     }
-    std::printf("hit targets at 1120 x 700: %d modern-layer targets checked, %d undersized; %d panel targets in the audit list\n",
-                ownedChecked, ownedFailing, panelFailing);
+    std::printf("hit targets at 1120 x 700: %d modern-layer targets checked, %d undersized; %d other panel targets undersized; "
+                "%d documented exceptions\n", ownedChecked, ownedFailing, panelFailing, excepted);
     check(ownedChecked > 120, "the hit-target scan reaches the toolbar, every Studio page, the drawers and the tour");
     check(ownedFailing == 0, "every modern-layer control is at least 24 x 24 px (or spaced per WCAG 2.5.8) at 1120 x 700");
-    if (kStrictForWholeEditor)
-        check(panelFailing == 0, "every editor control meets the 24 px target size at 1120 x 700");
+    check(panelFailing == 0, "every other editor control meets the 24 px target size at 1120 x 700");
+    check(excepted <= 26, "the documented exceptions do not grow");
+    // The exceptions must meet the criterion at the 100 % display size.
+    editor.setSize(1600, 1000);
+    flush(60);
+    std::vector<HitTarget> full;
+    collectTargets(editor, editor, full);
+    int stillSmall = 0;
+    for (const auto* t : undersizedTargets(full))
+    {
+        ++stillSmall;
+        std::printf("  undersized at 1600 x 1000: %s\n", describe(*t).toRawUTF8());
+    }
+    check(stillSmall == 0, "every editor control is at least 24 x 24 px (or spaced) at the 100 % display size");
 }
 
 // ---- Contrast of the modern layer's text (WCAG 2.2 1.4.3, 4.5:1 for text under 18.66 px bold) ---------------

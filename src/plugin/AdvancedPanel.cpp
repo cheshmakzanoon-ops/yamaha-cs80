@@ -1,5 +1,6 @@
 #include "AdvancedPanel.h"
 
+#include "ArtCommon.h"
 #include "EvidenceRegister.h"
 #include "HardwareKeyboard.h"
 #include "PluginProcessor.h"
@@ -79,11 +80,10 @@ juce::Colour inkFor(juce::Colour plate)
 // No readable text is set below 12.5 design px (about 8.75 px on screen in the smallest window).
 constexpr float kMinFont = 12.5f;
 
+// The panel typeface (ArtCommon.h), so the Studio view prints like the instrument on every OS.
 juce::Font fnt(float height, bool bold = false, float kern = 0.0f)
 {
-    height = juce::jmax(height, kMinFont);
-    auto f = juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), height,
-                                          bold ? juce::Font::bold : juce::Font::plain));
+    auto f = art::displayFont(juce::jmax(height, kMinFont), bold ? juce::Font::bold : juce::Font::plain);
     if (kern != 0.0f)
         f.setExtraKerningFactor(kern);
     return f;
@@ -121,102 +121,9 @@ float textWidth(const juce::String& s, float h, bool bold, float kern)
     return ga.getBoundingBox(0, -1, true).getWidth();
 }
 
-// ---- Wrinkle finish: the same fine enamel as the main control surface ------------------------
-// The main panel is near-black enamel broken into crisp cells of 2 to 3 px, each a tiny facet with its own
-// tilt, a groove between neighbours, and rare pin-point speculars from a tight light at the upper left. This
-// is the same cell structure (a toroidal jittered grid, Worley F1/F2) as an overlay of light and shade, at
-// one texel per device pixel, kept well below the main panel's contrast so ink on the satin face stays calm.
-
-juce::Image makeWrinkleOverlay(int n, int seed, float contrast)
-{
-    constexpr int cells = 96;
-    const float cs = (float) n / (float) cells;
-    juce::Random rng(seed);
-    struct Cell { float px, py, tx, ty, tone; };
-    std::vector<Cell> grid((size_t) (cells * cells));
-    auto gauss = [&] { return (rng.nextFloat() + rng.nextFloat() + rng.nextFloat() + rng.nextFloat() - 2.0f) * 0.52f; };
-    for (int cy = 0; cy < cells; ++cy)
-        for (int cx = 0; cx < cells; ++cx)
-        {
-            auto& c = grid[(size_t) (cy * cells + cx)];
-            c.px = ((float) cx + 0.12f + 0.76f * rng.nextFloat()) * cs;
-            c.py = ((float) cy + 0.12f + 0.76f * rng.nextFloat()) * cs;
-            c.tx = gauss();
-            c.ty = gauss();
-            c.tone = 1.0f + 0.035f * (rng.nextFloat() - 0.5f) * 2.0f;
-        }
-    const float lx = -0.45f, ly = -0.55f, lz = 0.70f;
-    const float ll = std::sqrt(lx * lx + ly * ly + lz * lz);
-    const float Lx = lx / ll, Ly = ly / ll, Lz = lz / ll;
-    float hx = Lx, hy = Ly, hz = Lz + 1.0f;
-    const float hl = std::sqrt(hx * hx + hy * hy + hz * hz);
-    hx /= hl; hy /= hl; hz /= hl;
-
-    std::vector<float> lum((size_t) (n * n)), spec((size_t) (n * n));
-    for (int y = 0; y < n; ++y)
-        for (int x = 0; x < n; ++x)
-        {
-            const float fx = (float) x + 0.5f, fy = (float) y + 0.5f;
-            const int cx0 = (int) (fx / cs), cy0 = (int) (fy / cs);
-            float d1 = 1.0e9f, d2 = 1.0e9f, nearDx = 0.0f, nearDy = 0.0f;
-            const Cell* nearest = nullptr;
-            for (int oy = -1; oy <= 1; ++oy)
-                for (int ox = -1; ox <= 1; ++ox)
-                {
-                    int cx = cx0 + ox, cy = cy0 + oy;
-                    float wrapX = 0.0f, wrapY = 0.0f;
-                    if (cx < 0) { cx += cells; wrapX = -(float) n; } else if (cx >= cells) { cx -= cells; wrapX = (float) n; }
-                    if (cy < 0) { cy += cells; wrapY = -(float) n; } else if (cy >= cells) { cy -= cells; wrapY = (float) n; }
-                    const auto& c = grid[(size_t) (cy * cells + cx)];
-                    const float dx = fx - (c.px + wrapX), dy = fy - (c.py + wrapY);
-                    const float d = std::sqrt(dx * dx + dy * dy);
-                    if (d < d1) { d2 = d1; d1 = d; nearest = &c; nearDx = dx; nearDy = dy; }
-                    else if (d < d2) d2 = d;
-                }
-            const float sx = contrast * nearest->tx + 0.30f * nearDx / cs;
-            const float sy = contrast * nearest->ty + 0.30f * nearDy / cs;
-            const float inv = 1.0f / std::sqrt(sx * sx + sy * sy + 1.0f);
-            const float nx = -sx * inv, ny = -sy * inv, nz = inv;
-            const float diffuse = juce::jmax(0.0f, nx * Lx + ny * Ly + nz * Lz) / Lz;
-            const float edge = juce::jlimit(0.0f, 1.0f, (d2 - d1) / (cs * 0.34f));
-            const float groove = 0.50f + 0.50f * std::pow(edge, 0.8f);
-            lum[(size_t) (y * n + x)] = (0.50f + 0.50f * juce::jlimit(0.0f, 1.4f, diffuse)) * groove * nearest->tone;
-            spec[(size_t) (y * n + x)] = std::pow(juce::jmax(0.0f, nx * hx + ny * hy + nz * hz), 420.0f) * edge;
-        }
-    double mean = 0.0;
-    for (float v : lum) mean += (double) v;
-    mean /= (double) lum.size();
-
-    juce::Image image(juce::Image::ARGB, n, n, true);
-    juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
-    for (int y = 0; y < n; ++y)
-        for (int x = 0; x < n; ++x)
-        {
-            const float m = lum[(size_t) (y * n + x)] - (float) mean;
-            // Shade is stronger than light: the face is mid-dark, so a black overlay moves it far less than a white one.
-            float white = juce::jmax(0.0f, m) * 0.26f, black = juce::jmax(0.0f, -m) * 0.72f;
-            white += juce::jlimit(0.0f, 0.13f, spec[(size_t) (y * n + x)] * 1.2f - 0.03f);   // rare, pale, never glittery
-            data.setPixelColour(x, y, white > black ? juce::Colours::white.withAlpha(juce::jlimit(0.0f, 1.0f, white - black))
-                                                    : juce::Colours::black.withAlpha(juce::jlimit(0.0f, 1.0f, black - white)));
-        }
-    return image;
-}
-
-const juce::Image& wrinkleTile() { static const juce::Image tile = makeWrinkleOverlay(256, 5, 0.46f); return tile; }
-
+// The wrinkle-paint finish and fillRelief are the shared ones in ArtCommon.h (one copy for every panel).
 // Device pixels per design unit of the layer being painted; set by the cached layers.
 float gArtScale = 1.0f;
-
-void fillRelief(juce::Graphics& g, const juce::Image& tile, Rect area, float opacity,
-                float shiftX = 0.0f, float shiftY = 0.0f)
-{
-    juce::Graphics::ScopedSaveState state(g);
-    g.reduceClipRegion(area.toNearestIntEdges());
-    juce::FillType fill(tile, juce::AffineTransform::scale(1.0f / juce::jmax(0.25f, gArtScale)).translated(shiftX, shiftY));
-    fill.setOpacity(opacity);
-    g.setFillType(fill);
-    g.fillRect(area);
-}
 
 // A small cap-coloured chiclet: the instrument's own colour coding, used as a page and card marker.
 void capChip(juce::Graphics& g, Rect r, juce::Colour c)
@@ -284,7 +191,7 @@ void drawModule(juce::Graphics& g, Rect r, const juce::String& title, bool prima
     g.saveState();
     g.reduceClipRegion(p);
     fillPanelFace(g, r);
-    fillRelief(g, wrinkleTile(), r, 0.80f, 11.0f, 7.0f);
+    art::fillRelief(g, art::panelTile(), r, gArtScale, 0.80f, 11.0f, 7.0f);
     g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(0.07f), r.getX(), r.getY(),
                                            juce::Colours::transparentWhite, r.getX(), r.getY() + 46.0f, false));
     g.fillRect(r.withHeight(46.0f));
@@ -3750,7 +3657,7 @@ public:
 
         const Rect body(44.0f, 0.0f, kW - 88.0f, kH);
         fillPanelFace(g, body);
-        fillRelief(g, wrinkleTile(), body, 1.0f);
+        art::fillRelief(g, art::panelTile(), body, gArtScale, 0.90f);
 
         // Header rail: a darker band that carries the title and the page tabs.
         g.setGradientFill(juce::ColourGradient(juce::Colours::black.withAlpha(0.66f), 0.0f, 0.0f,

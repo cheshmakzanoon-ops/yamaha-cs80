@@ -1,5 +1,6 @@
 #include "StudioToolbar.h"
 
+#include "ArtCommon.h"
 #include "PluginProcessor.h"
 
 #include <cmath>
@@ -13,8 +14,7 @@ using Rf = juce::Rectangle<float>;
 
 juce::Font toolFont(float height)
 {
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), juce::jmax(8.0f, height), juce::Font::bold))
-        .withExtraKerningFactor(0.08f);
+    return art::displayFont(juce::jmax(8.0f, height), juce::Font::bold).withExtraKerningFactor(0.08f);
 }
 
 juce::String shortcut()
@@ -434,6 +434,20 @@ juce::PopupMenu StudioToolbar::buildMenu()
     }
     menu.addSeparator();
     menu.addSectionHeader("VIEW");
+    if (actions.setZoom && ! actions.zoomPresets.empty())
+    {
+        juce::PopupMenu sizes;
+        const int current = actions.zoom ? actions.zoom() : 0;
+        for (int percent : actions.zoomPresets)
+        {
+            juce::PopupMenu::Item size(juce::String(percent) + " %   (" + juce::String(16 * percent) + " x " + juce::String(10 * percent) + ")");
+            size.itemID = 100 + percent;
+            size.isTicked = percent == current;
+            size.action = [setZoom = actions.setZoom, percent] { setZoom(percent); };
+            sizes.addItem(size);
+        }
+        menu.addSubMenu("Display size", sizes);
+    }
     item(10, "Voice monitor (scope drawer)", true, actions.scopeOpen && actions.scopeOpen(), actions.toggleScope);
     item(11, pure ? "Controllers strip (hidden in PURE CS-80)" : "Controllers strip: pitch and mod wheels", ! pure,
          actions.controllersShown && actions.controllersShown(), actions.toggleControllers);
