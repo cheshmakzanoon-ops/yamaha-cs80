@@ -1,0 +1,35 @@
+{
+  "registered": "2026-10-31",
+  "operation": "Skip retained-phase FIR convolution only when every sample in its complete history is numeric zero",
+  "oracle": "Independent chronological history with the original symmetric coefficient summation and explicit signed-zero cases",
+  "factors": [
+    2,
+    4,
+    8
+  ],
+  "absolute_error": 0,
+  "comparison": "bitwise float equality",
+  "cases": [
+    "initial zero history",
+    "positive and negative zero",
+    "isolated impulse then complete tail",
+    "random bursts separated by more than all taps",
+    "positive and negative subnormals",
+    "reset and factor changes",
+    "every output phase including first sample after silence",
+    "FTZ/DAZ transitions with retained subnormal history on supported x86"
+  ],
+  "mutations": [
+    "treat nonzero input as silent",
+    "forget nonzero history decrement",
+    "forget nonzero history reset",
+    "mark silent before full history drains"
+  ],
+  "additional_gates": [
+    "existing decimator passband stopband latency and allocations tests",
+    "legacy and V1 byte equality",
+    "strict current V2 byte equality"
+  ],
+  "history_classification": "Raw IEEE float magnitude bits; signed zeros are zero, subnormals remain nonzero independent of FTZ/DAZ mode.",
+  "efficiency": "The published nonzero-history count exactly matches an independent full-history count and reaches zero after all nonzero samples drain."
+}

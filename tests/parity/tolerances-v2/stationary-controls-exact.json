@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "title": "Exact stationary control recurrence skipping",
+  "baseline_commit": "4ee391588436180de25ee8a764a1e98bcce2be9a",
+  "purpose": "Qualify skipping only the exactly stationary finite recurrence of ControlSmoother and ExpressionOpticalCell; retain every moving recurrence, the original snap laws, and the first subsequent control move.",
+  "evidence_class": "Software continuation contract against frozen pre-optimization recurrence, not a recovered hardware law or measurement.",
+  "gate": {
+    "maximum_bit_differences": 0,
+    "value_comparison": "std::bit_cast<uint64_t> of every exposed double output/state; signed zeros count as different",
+    "sample_rates_hz": [
+      88200,
+      96000,
+      176400,
+      192000,
+      352800,
+      384000
+    ],
+    "reference_policy": "Freeze independently named baseline classes with an immutable source/fixture SHA256 manifest; production changes may not change these references."
+  },
+  "control_cases": [
+    "Every +/- zero current and target pairing, followed by finite coefficients of either sign and subsequent nonzero control movement.",
+    "Exactly equal finite targets spanning signed subnormal, small, ordinary, and large finite values; finite coefficients include zero, negative, positive, and smoothing coefficients.",
+    "Repeated moving, stationary, retarget, snap, and coefficient-change sequences; compare both return value and stored value on every step.",
+    "Nonfinite target/coefficient fallback at stationary and moving states retains the frozen recurrence output bits; no equality shortcut may replace NaN-producing original arithmetic."
+  ],
+  "expression_cases": [
+    "All six rates and default, immediate, long, and equal-resistance optical profiles; compare tick, position, and resistance output bits after every step.",
+    "Pedal endpoints, signed zero, intermediate positions, out-of-range finite inputs, ignored nonfinite pedal writes, reset, prepare, long stationary intervals, and first/multiple moves after stationarity.",
+    "Nonfinite prepared coefficients/endpoints retain the frozen recurrence output bits; no finite shortcut may alter an invalid-profile fallback."
+  ],
+  "mutation_requirements": [
+    "Returning the old equal ControlSmoother state without assigning target must fail signed-zero coverage.",
+    "Prematurely snapping a moving ControlSmoother must fail its continuation gate.",
+    "Removing the finite ControlSmoother shortcut guard must fail nonfinite fallback coverage.",
+    "Prematurely returning the requested expression pedal during optical movement must fail expression continuation.",
+    "Freezing the optical recurrence on a moving cell must fail the first and subsequent move checks.",
+    "Losing a signed-zero expression pedal must fail output-bit coverage.",
+    "Removing the finite expression shortcut guard must fail invalid-profile fallback coverage."
+  ],
+  "release_requirements": [
+    "Existing core CTest remains unmodified and passes.",
+    "Root runs legacy default, legacy tails, v1 numerics, and exact v2 compatibility gates.",
+    "Preserve distinct pre/post source_factory_benchmark binaries for root to run at least three rounds per snapshot."
+  ]
+}
