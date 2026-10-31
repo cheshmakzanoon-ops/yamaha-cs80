@@ -1,14 +1,33 @@
 #pragma once
 
 #include "Dsp.h"
+#include "ModernLayer.h"
+#include "ModulationLfo.h"
+#include "Ig00156Filter.h"
+#include "ReconstructedOscillator.h"
+#include "Vca.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
 #include "PerformanceControls.h"
 #include "PraWahCircuit.h"
 #include "BbdChorus.h"
+#include "FxSlot.h"
 #include "OutputTapCircuit.h"
+#include "HeadphoneAmpCircuit.h"
+#include "ExpressionOptics.h"
+#include "NoiseSource.h"
+#include "Oversampling.h"
+#include "Smoothing.h"
 #include "SourceFactoryTones.h"
+#include "KasScanner.h"
+#include "KbcContour.h"
+#include "TouchCircuit.h"
+#include "Tuning.h"
+#include "MpeZones.h"
+#include "ControllerCurves.h"
+#include "experimental/ContinuousVoiceCircuit.h"
+#include "ToleranceModel.h"
 
 #include <array>
 #include <cstdint>
@@ -29,6 +48,12 @@ inline constexpr RenderPolicy renderPolicy(float parity, float sourcePerformance
 inline constexpr bool usesSourceModels(RenderPolicy policy) noexcept
 {
     return policy != RenderPolicy::legacy;
+}
+// PURE CS-80 is the isolation policy: every non-original (modern-layer)
+// feature must be inert under it, whatever its own parameters say.
+inline constexpr bool isPureCs80(RenderPolicy policy) noexcept
+{
+    return policy == RenderPolicy::isolation;
 }
 
 // One render-thread transaction: effective parameters (including render policy)
@@ -136,8 +161,15 @@ struct GlobalSettings
     float lfoRate[3] { 0.28f, 0.55f, 1.1f };
     float lfoDepth[3] { 0.0f, 0.0f, 0.0f };
     int lfoDest[3] { 0, 0, 0 };
+    int lfoWave[3] { 0, 0, 0 }; // modern layer; 0 = historical sine
     int fxType[3] { 0, 0, 0 };
     float fxMix[3] { 0.0f, 0.0f, 0.0f };
+    // Modern FX (ws5): model 0 keeps the classic type above.
+    int fxModel[3] { 0, 0, 0 };
+    float fxParamA[3] { 0.5f, 0.5f, 0.5f };
+    float fxParamB[3] { 0.5f, 0.5f, 0.5f };
+    int fxOversampling[3] { 2, 2, 2 };
+    bool fxGainComp = false;
 
     // Performance macros are neutral at 0.5. They are applied after the panel
     // values so a macro never overwrites what the player sees on the panel.
@@ -148,6 +180,18 @@ struct GlobalSettings
     int arpMode = 0;
     float arpRate = 4.0f;
     int arpOctaves = 1;
+
+    // Plan 2.5: 0 thermal drift (circuit engine), 1 the historical sine ("worn unit").
+    int driftModel = 0;
+
+    // ws3 keyboard/MIDI/tuning settings (all neutral at their defaults).
+    bool kasScanTiming = false;
+    float velocityCurve = 0.0f, pressureCurve = 0.0f, pressureThreshold = 0.0f;
+    bool ribbonCcEnabled = false;
+    int ribbonCc = 16;
+    int tuningMode = 0;
+    int voiceMode = 0;
+    float unisonDetune = 10.0f;
 };
 
 class Engine
@@ -188,8 +232,41 @@ public:
     void pitchBend(int midiChannel, float value); // -1..1
     void controlChange(int controller, float value, int midiChannel = 1);
     void setRibbon(float value);
+
+    // ---- Phase 6 modern layer (inert in PURE CS-80) ----------------------
+    // Render thread only. Scala/KBM table used when tuning_mode = 1.
+    void setScalaTuning(const tuning::TuningTable& table) noexcept;
+    // Table used when tuning_mode = 2, e.g. built from an MTS-ESP master.
+    void setMtsTuning(const tuning::TuningTable& table) noexcept;
+    // A complete MIDI Tuning Standard SysEx message (F0..F7) updates the
+    // tuning_mode 2 table. Allocation-free. Returns true when it applied.
+    bool handleSysEx(const std::uint8_t* data, int size) noexcept;
+    const tuning::TuningTable& getMtsTuning() const noexcept { return mtsTable; }
+    // Pitch (fractional MIDI semitones) a note plays at under the accepted mode.
+    float tunedPitch(int midiNote) const noexcept;
+    const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
+    // Voice mode accepted for this frame (0 in PURE CS-80): 0 eight voices,
+    // 1 sixteen (two engines, see PluginProcessor), 2/3/4 unison x2/x4/x8.
+    int getVoiceMode() const noexcept { return global.voiceMode; }
+    // True while some circuit is neither key-held nor pedal-held.
+    bool hasFreeCircuit() const noexcept;
     // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
     void setExpression(float value);
+
+    // Modern modulation layer (IMPROVEMENT_PLAN Phase 6; inert under PURE CS-80). MSEG
+    // shapes and matrix routing are session data, not parameters; the host transport
+    // drives tempo sync. Render thread: copies only, no allocation or locking.
+    void setModernConfig(const modern::ModernConfig& config) noexcept { modern.setConfig(config); }
+    const modern::ModernConfig& getModernConfig() const noexcept { return modern.getConfig(); }
+    void setTransport(const modern::Transport& transport) noexcept { modern.setTransport(transport); }
+    const modern::Transport& getModernTransport() const noexcept { return modern.getTransport(); }
+    // Render-thread diagnostics: current offsets and MSEG state.
+    const modern::RankOffsets& getModernRankOffsets(int voice, int rank) const noexcept
+    { return modern.rankOffsets(voice, rank); }
+    const modern::GlobalOffsets& getModernGlobalOffsets() const noexcept { return modern.getGlobalOffsets(); }
+    bool isModernLayerActive() const noexcept { return modern.isActive(); }
+    float getModernMsegValue(int voice, int index) const noexcept { return modern.msegValue(voice, index); }
+    double getModernMsegDisplayPosition(int index) const noexcept { return modern.displayPosition(index); }
 
     // Optional separate host-rate mono modulation; never mixed directly into output.
     // Input/output storage must not overlap (plugin captures aliased host input).
@@ -207,10 +284,29 @@ public:
     float getSubOscillatorValue() const noexcept { return subValue; }
     float getSubOscillatorRate() const noexcept
     { return global.subOriginalMode ? originalSubSpeedSmoothed : subSpeedSmoothed; }
-    // Odd retained phase of a 255-tap FIR: (127-1)/2 =63 host samples.
-    int getLatencySamples() const noexcept { return Decimator::kHostLatency; }
+    // Retained last internal phase of the current factor's FIR: 63 host
+    // samples at every factor (2x: (127-1)/2). Query after each control frame.
+    // Reported latency: the decimator's 63 host samples at every factor, plus in
+    // the circuit engine the reconstructed oscillator's linear-phase antialias
+    // kernel, 8 INTERNAL samples (plan step 1.2) = 8/N host samples at factor N
+    // (4, 2, 1). Legacy's PolyBLEP oscillator adds none.
+    int getOscillatorLatencySamples() const noexcept
+    {
+        return usesSourceModels(global.renderPolicy)
+            ? static_cast<int>(ReconstructedOscillator::latencyInternalSamples()) / std::max(1, oversample) : 0;
+    }
+    int getLatencySamples() const noexcept
+    { return OversamplingDecimator::hostLatencyFor(oversample) + getOscillatorLatencySamples(); }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
+    // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
+    // render policy, the host rate and the offline flag (see Oversampling.h).
+    int getOversamplingFactor() const noexcept { return oversample; }
+    // Host offline-render flag (AudioProcessor::isNonRealtime). The circuit
+    // engine renders offline at HQ. A factor change re-prepares the
+    // rate-dependent state without allocating and stops sounding notes, like a
+    // render-policy change. Render thread or setup only.
+    void setNonRealtime(bool offline) noexcept;
 
     // The voice telemetry is used by tests and the UI voice meter.
     struct VoiceInfo
@@ -223,6 +319,9 @@ public:
         float bend = 0.0f;
         float ribbonRatio = 1.0f;
         bool held = false, pedalHeld = false;
+        // Circuit engine TWS nodes (Phase 2.4): smoothed aftertouch a, held
+        // initial touch b, pitch transient C. Zero in Legacy.
+        float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
     struct RankInfo
@@ -238,11 +337,22 @@ public:
     struct RankAudioState
     {
         float phase = 0.0f;
+        // Legacy: the Svf memories. Circuit engine: the nodal stages' BP and LP
+        // integrator histories, so the same zero/equality probes apply.
         Svf::State hpf, lpf;
+        // Circuit engine: complete IG00156 nodal stage states (zero in legacy).
+        Ig00156Stage::State hpCircuit, lpCircuit;
     };
     // Exact current state (not last-render telemetry). Render thread only;
     // not safe for concurrent UI polling. No locks, allocations or mutations.
     RankAudioState getRankAudioState(int voice, int rank) const noexcept;
+    // Complete circuit-engine oscillator state (charge, reset, coupling
+    // memories, pending antialias residuals); same render-thread restriction.
+    // Pipeline oracles continue an exact copy of it (free-running voices).
+    const ReconstructedOscillator::State& getRankOscillatorState(int voice, int rank) const noexcept
+    {
+        return voices[(size_t) std::clamp(voice, 0, kNumVoices - 1)].ranks[std::clamp(rank, 0, kNumRanks - 1)].wsc.getState();
+    }
     struct RankEnvelopeState { Adsr::State amplitude; FilterEnv::State filter; };
     // Exact current envelope-state proxy; same render-thread-only restriction.
     RankEnvelopeState getRankEnvelopeState(int voice, int rank) const noexcept;
@@ -262,11 +372,16 @@ public:
         double sampleRate = 0.0;
         OutputTapCircuit::Mode mode = OutputTapCircuit::Mode::high;
     };
-    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. GENERAL is a separately
-    // clocked diagnostic, not a host listening mode. Model units, not measured volts.
+    // Render thread only: tap 0 LEFT, 1 RIGHT, 2 GENERAL. All three are always
+    // clocked; LISTENING OUTPUT chooses which the host hears (circuit engine).
+    // Model units, not measured volts.
     // Nodes describe the last processed internal sample; mode already selects
     // the next interval after a parameter event (no instantaneous node re-solve).
     OutputTapState getOutputTapState(int tap) const noexcept;
+    // Last internal (pre-decimator) sample of the selected listening output,
+    // before the optional digital mono fold-down. Render thread only.
+    struct ListeningSample { float left = 0.0f, right = 0.0f; };
+    ListeningSample getListeningSample() const noexcept { return listeningSample; }
 
 private:
     static constexpr int kNumVoices = 8;
@@ -274,12 +389,32 @@ private:
     static constexpr int kMaxHeldKeys = 32;
     // Nominal ideal C-path pole only; not measured complete touch circuitry.
     static constexpr double kNominalInitialPitchDecaySeconds = 0.050;
+    // Circuit engine cold state (Phase 2.1, declared inference): KAS6 power-on
+    // clear memorizes key code C4#, read here through the engine's MIDI
+    // convention; cold oscillator phases come from their own fixed-seed stream
+    // so a first chord does not start with every oscillator in phase.
+    static constexpr int kColdKeyNote = 61;
+    static constexpr std::uint32_t kColdPhaseSeed = 0xC5800A11u;
+    static constexpr std::uint32_t kIdleNoiseSeed = 0xC58011D1u;
+    // Warm-up of the cold oscillators' coupling memories (10 coupling time
+    // constants: 4.5e-5 of the discharged DC step remains).
+    static constexpr double kColdWarmUpSeconds = 1.0;
 
     struct Rank
     {
         Oscillator osc;
+        // Circuit engine: event-driven IG00153/IG00158 reconstruction
+        // (docs/OSCILLATOR_PROMOTION.md). Legacy keeps the PolyBLEP osc.
+        ReconstructedOscillator wsc;
         Svf hpf;
         Svf lpf;
+        // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).
+        Ig00156Stage hpStage { kIg00156HighPassNetwork };
+        Ig00156Stage lpStage { kIg00156LowPassNetwork };
+        // Circuit-engine IG00151 voice VCA (docs/IG00151_VCA_MODEL.md); cold
+        // assignment recharges its LI node to the level network.
+        Ig00151Vca vca;
+        bool vcaCold = true;
         FilterEnv fenv;
         Adsr aenv;
         float trimTune = 0.0f;
@@ -288,6 +423,24 @@ private:
         float trimEnv = 0.0f;
         float trimPan = 0.0f;
         RankInfo info;
+        Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
+        // Circuit engine (Phase 2.1): controls of the last processed interval,
+        // which drive the idle path and the wake catch-up of a silent circuit.
+        voice_continuity::IdleRankControls idle;
+        voice_continuity::IdleStageReferences idleRefs;
+        voice_continuity::IdleHistory idleHistory;
+        // Seconds the idle oscillator runs ahead of the idle filter step, and
+        // the length of the first idle interval (samples) since silence.
+        double idleLead = 0.0;
+        int idleFirstSamples = 0;
+        // Plan 2.5 (circuit engine): this channel's component draws, the ratios
+        // they give at the present VOICE DISPERSION (identity in Legacy and PURE
+        // CS-80), its thermal drift process and the drift's present value (cents
+        // at the ANALOG DRIFT default).
+        tolerance::CardDraws tolDraws;
+        tolerance::Ratios tol;
+        tolerance::ThermalDrift thermal;
+        float driftCents = 0.0f;
     };
 
     struct Voice
@@ -309,6 +462,27 @@ private:
         uint64_t age = 0;
         KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
+        // Circuit engine free-running state (Phase 2.1). idleClock counts the
+        // internal samples since the last idle step (or since retirement);
+        // idleSteps counts the idle steps since retirement.
+        int idleClock = 0;
+        int idleSteps = 0;
+        // The filter EG holds a reset (not a completed-release) state: cold
+        // after reset/prepare, or cleared by Sustain II termination.
+        bool envelopeReset = true;
+        // SH7 per-voice K hold (Phase 2.2, circuit engine).
+        kas::HeldKeyNode keyNode;
+        // KBC contour of the key last assigned to this channel (Phase 2.3):
+        // per rank effective cutoff CV (HP, LP) and level gain contributions.
+        int kbcKey = 36;
+        float kbcCv[kNumRanks][2] {};
+        float kbcLevelGain[kNumRanks] {};
+        // TWS a/b/C nodes (Phase 2.4, circuit engine) and their present values.
+        touch::TouchVoice touch;
+        float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
+        // Phase 6: MPE upper-zone membership and unison detune (semitones).
+        bool upperZone = false;
+        float unisonOffset = 0.0f;
     };
 
     struct HeldKey
@@ -321,11 +495,31 @@ private:
 
     void applyParams(const ParamValues& values);
     void buildSettings();
+    int effectiveOversampling() const noexcept;
+    // Rate-dependent setup for the current factor; allocation-free once
+    // prepare() has reserved buffers for maximumOversamplingFactor(hostRate).
+    void configureInternalRate();
+    bool updateOversampling();
+    // Circuit-engine control smoothing (Smoothing.h). The settings fields are
+    // retargeted after each buildSettings and advanced once per internal
+    // sample; performance controllers are smoothed for the duration of one
+    // internal sample and their event-set targets restored afterwards.
+    void retargetSmoothedSettings() noexcept;
+    void beginSmoothedControls() noexcept;
+    void endSmoothedControls() noexcept;
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
+    // Circuit engine: bring a silent free-running circuit exactly up to date
+    // before its note-on (ContinuousVoiceCircuit.h catch-up).
+    void wakeIdleVoice(Voice& voice) noexcept;
+    void prepareWarmColdOscillators() noexcept;
+    void refreshToleranceRatios() noexcept;
+    // Circuit engine: recompute every channel's KBC contour contributions.
+    void refreshKeyboardContour() noexcept;
+    bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }
     void releaseVoice(Voice& voice);
     void releaseKey(Voice& voice);
     // Footswitch gate fell: shorten already-released tails to their non-performance
@@ -334,6 +528,21 @@ private:
     bool isSustainPedalDown(int midiChannel) const noexcept;
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
+    // Note events after the optional KAS scan quantisation (Phase 2.2).
+    void applyNoteOn(int midiNote, float velocity, int midiChannel);
+    void applyNoteOff(int midiNote, int midiChannel);
+    bool scanTimingActive() const noexcept
+    { return global.kasScanTiming && usesSourceModels(global.renderPolicy) && ! global.arpOn; }
+    // Circuit engine: a still-held key that found no free circuit is assigned
+    // when one frees (declared KAS model, KasScanner.h).
+    void rememberUnassignedKey(int note, float velocity, int midiChannel);
+    bool forgetUnassignedKey(int note, int midiChannel);
+    void reconsiderUnassignedKeys();
+    bool noteMapped(int midiNote) const noexcept;
+    void retuneSoundingVoices() noexcept;
+    int unisonCount() const noexcept
+    { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
+    bool isZoneMaster(const Voice& voice, int midiChannel) const noexcept;
 
     // Arpeggiator. It is clocked at the internal rate so a rate change is
     // heard immediately and the pattern does not drift with block size.
@@ -366,6 +575,7 @@ private:
     int lastNote = 60;
     float globalBend = 0.0f;
     float modWheel = 0.0f;
+    float lastChannelPressure = 0.0f; // modern-layer matrix source only
     float expression = 1.0f;
     float ribbon = 0.0f;
 
@@ -373,6 +583,47 @@ private:
     double internalRate = 96000.0;
     double initialPitchDecay = 0.0; // initialized in constructor and prepare
     int oversample = 2;
+    // Circuit engine idle path: internal samples per idle step and the
+    // matching initial-pitch-transient decay over one step.
+    int idleStepSamples = 32;
+    double idleTransientDecay = 0.0;
+    // Per-voice idle-only noise for the wake replay; never the shared audioRng.
+    std::array<Rng, kNumVoices> idleNoise;
+    // Circuit engine cold oscillators after their warm-up (prepare time).
+    std::array<ReconstructedOscillator::State, kNumVoices * kNumRanks> warmColdOscillators {};
+    // TWS/TRG touch model (Phase 2.4): per-sample coefficients, the TRG5 bus
+    // voltage (Newton warm start) and its single-key full-scale normalisation.
+    touch::Coefficients touchCoefficients;
+    double trg5BusVolts = 0.0, trg5FullScaleVolts = 1.0;
+    // VOICE DISPERSION scale the tolerance ratios were last computed for.
+    float toleranceScaleApplied = 0.0f;
+    // Lever values the KBC contour contributions were last computed from.
+    std::array<float, 4> refreshedContourLevers {};
+    bool prepared = false;
+    bool nonRealtime = false;
+    SmootherBank settingsSmoothing;
+    struct ControllerSmoothing
+    {
+        ControlSmoother bend, modWheel, ribbon;
+        std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
+        std::array<uint64_t, kNumVoices> age {};
+        float bendTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
+        // Expression acts at its gain stage through the PRA I2/I3 optical cell
+        // (ExpressionOptics.h); the wah cell reads the pedal target itself.
+        float expressionGain = 1.0f;
+        std::array<float, kNumVoices> pressureTarget {}, mpeBendTarget {}, timbreTarget {};
+        bool snapPending = true;
+    } controllerSmoothing;
+    double controlSmoothing = 1.0;  // one-pole coefficient at the internal rate
+    float subSpeedSmoothing = 0.0015f; // legacy 0.0015 as a time constant
+    // Circuit-engine noise sources (NoiseSource.h) and listening output: the
+    // LEFT/RIGHT jacks, the GENERAL mono jack, or the headphone amplifier fed
+    // from the preamp outputs (HeadphoneAmpCircuit.h). Legacy uses none of them.
+    CircuitNoiseSources circuitNoise;
+    ExpressionOpticalCell expressionOptics;
+    HeadphoneAmpCircuit phonesL, phonesR;
+    int listeningOutput = 0;
+    ListeningSample listeningSample;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;
@@ -380,11 +631,14 @@ private:
     ExternalModulationInterpolator externalInput;
     float originalSubSpeedSmoothed = 4.2f;
     float originalSubSmoothing = 0.0f;
-    Lfo modLfos[3];
+    // Modern-layer LFOs: sine is the historical Lfo law; each has its own random stream.
+    ModulationLfo modLfos[3] { ModulationLfo(0x6c8e9cf5u), ModulationLfo(0x3b9e5d21u), ModulationLfo(0xa1c4f00du) };
     float subValue = 0.0f;
     float lfoValues[3] {};
     float lfoPitch = 0.0f, lfoFilter = 0.0f, lfoAmp = 0.0f, lfoPwm = 0.0f, lfoPan = 0.0f;
     float subSpeedSmoothed = 4.2f;
+    ExpMemo<double> glideExp;
+    modern::ModernLayer modern;
 
     // Isolation uses the reviewed capacitor graph with an explicitly inferred
     // optical/loading/trim profile. Both branches run even in EXP (dry X).
@@ -411,7 +665,7 @@ private:
 
     Chorus chorus;
     BbdChorus bbdChorus;
-    Decimator decL, decR;
+    OversamplingDecimator decL, decR;
     Rng audioRng { 0x51c80u };
     Rng modRng { 0x9e3779b9u };
 
@@ -423,62 +677,21 @@ private:
     int heldCount = 0;
     std::array<bool, 17> sustainPedals {}; // MIDI channels1..16; index0 unused
 
-    // Modern FX slots. Each slot owns one instance of every effect, so two slots set to the
-    // same type run two independent effects instead of sharing (and double-advancing) one set
-    // of delay lines, and a slot that is switched off or changes type can drop the stale audio
-    // of its previous effect instead of replaying it when it is next switched on.
-    struct FxSlot
-    {
-        Chorus chorus;
-        Phaser phaser;
-        Reverb reverb;
-        DelayLine delayL, delayR;
-        OnePole dampL, dampR;
-        int liveType = 0; // effect whose state may hold audio; 0 = none
-
-        void prepare(float rate)
-        {
-            chorus.prepare(rate);
-            phaser.prepare(rate);
-            reverb.prepare(rate);
-            delayL.prepare(0.8f, rate);
-            delayR.prepare(0.8f, rate);
-            dampL.set(9000.0f, rate);
-            dampR.set(9000.0f, rate);
-            dampL.reset();
-            dampR.reset();
-            liveType = 0;
-        }
-        // Delay-line and filter history only; the tape-delay damping OnePoles are left alone so
-        // that Engine::reset keeps its historical arithmetic (see applyParams).
-        void resetAudio() noexcept
-        {
-            chorus.reset();
-            phaser.reset();
-            reverb.reset();
-            delayL.reset();
-            delayR.reset();
-            liveType = 0;
-        }
-        void resetDamping() noexcept { dampL.reset(); dampR.reset(); }
-        // Drop the audio held by one effect type (1 chorus, 2 phaser, 3 tape, 4 plate, 5 drive).
-        void clear(int type) noexcept
-        {
-            switch (type)
-            {
-                case 1: chorus.reset(); break;
-                case 2: phaser.reset(); break;
-                case 3: delayL.reset(); delayR.reset(); resetDamping(); break;
-                case 4: reverb.reset(); break;
-                default: break;
-            }
-        }
-    };
-    std::array<FxSlot, 3> fxSlots;
+    // Three serial modern FX slots (src/core/FxSlot.h).
+    std::array<fx::FxSlot, 3> fxSlots;
     float driftPhase = 0.0f;
     float voiceDrift[kNumVoices] {};
 
     std::array<HeldKey, kMaxHeldKeys> heldKeys {};
+    // Phase 6 tuning tables, last played pitch (glide start), MPE zones.
+    tuning::TuningTable scalaTable, mtsTable;
+    float lastPitch = 60.0f;
+    MpeZoneLayout mpeZones;
+    float upperZoneBend = 0.0f;
+    // KAS scan model and still-held keys without a circuit (Phase 2.2).
+    kas::Scanner scanner;
+    std::array<HeldKey, kMaxHeldKeys> unassignedKeys {};
+    int unassignedCount = 0;
     int heldKeyCount = 0;
     uint64_t keyOrder = 0;
     // Maximum ascending sequence is 32 keys x 4 octaves. Up/down adds the

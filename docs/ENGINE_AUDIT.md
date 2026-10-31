@@ -121,13 +121,37 @@ before and after the changes. Where a change is audible (same-type slots, toggle
 | Finding | Numbers | Why not fixed |
 | --- | --- | --- |
 | **Aliasing on high notes.** Non-harmonic energy from a sustained saw or pulse | Saw, 48 kHz host: non-harmonic energy -41.7 to -33.8 dB below the partials, worst single line -53 to -35 dBc (the worst is a 4' note at 8.4 kHz). Pulse: -49 to -39 dB, worst line -58 to -41 dBc. 44.1 kHz is 1 to 1.5 dB worse, 96 kHz 5 to 11 dB better. Legacy and source policy agree within 0.2 dB. A ring-modulator carrier at 150 Hz adds nothing | The oscillator alone (PolyBLEP saw plus reset pulse) is -50 to -60 dB at 48 kHz; the 16 to 18 dB excess at full level comes from the filter's provisional `softClip(1.1x)` pre-saturation running at only 2x oversampling, and shrinks to about 4 dB at 0.3 amplitude. Removing it needs a higher oversampling ratio or an anti-aliased saturator in `Svf`: a change to the sound of every program, not bit-identical, outside a small fix |
-| **Source-policy hardware tabs exceed full scale** and are louder than the legacy tabs | 18 of 33 source tab rows have samples above 1: peak up to +3.9 dBFS (688 samples above 1 in one phrase at 96 kHz); chord loudness -29.3 to -9.8 dB against -33.8 to -18.1 dB for the legacy tabs (Funky 3 + 4 is 17 dB louder). Source factory-program rows never exceed 1 | Documented behaviour: the source policies drop the output soft clip and keep values above 1 ([SOURCE_FACTORY_RUNTIME](SOURCE_FACTORY_RUNTIME.md), [PARITY_ISOLATION](PARITY_ISOLATION.md)); adding a limiter or level trim would assert a headroom the sources do not give. Float hosts pass the excess; a 16-bit export clips it |
+| **Source-policy hardware tabs exceed full scale** and are louder than the legacy tabs (**resolved in Phase 1.5**, see below) | 18 of 33 source tab rows have samples above 1: peak up to +3.9 dBFS (688 samples above 1 in one phrase at 96 kHz); chord loudness -29.3 to -9.8 dB against -33.8 to -18.1 dB for the legacy tabs (Funky 3 + 4 is 17 dB louder). Source factory-program rows never exceed 1 | Documented behaviour: the source policies drop the output soft clip and keep values above 1 ([SOURCE_FACTORY_RUNTIME](SOURCE_FACTORY_RUNTIME.md), [PARITY_ISOLATION](PARITY_ISOLATION.md)); adding a limiter or level trim would assert a headroom the sources do not give. Float hosts pass the excess; a 16-bit export clips it |
 | **Default ANALOG DRIFT and dispersion are large** | Drift 0.25 is +/-22.5 cents per voice at 0.031 Hz with spread phases (`Engine.cpp`), written into every factory program; dispersion 0.35 adds about 2.5 cents and a pan scatter | A product default, already listed as an open decision in [PARITY_ROADMAP](PARITY_ROADMAP.md); changing it changes every program |
 | **Three of five voice trims are generated and unused** (cutoff, level, envelope) | n/a | Wiring them would change the default sound of every program (dispersion is 0.35 by default), and there is no source for the distributions; the roadmap asks for source-informed ranges first. Reported, not wired |
 | **Loudness differs across the bank** | Factory programs (legacy, 48 kHz): 300 ms weighted level -32.4 / -23.5 / -20.2 dB at the 10th, 50th, 90th percentile, extremes -38.0 and -18.8; sustained families (Strings, Bass, Leads, Keys, Pads) sit within 3 dB of each other, Brass 2 to 4 dB lower, FX and Sequences 8 to 10 dB lower, plucked hardware studies lowest. Peak -24 to -2.7 dBFS, no sample above 1, the output soft clip never reached 0.6 amplitude | Part of the spread is the measure (plucks are short); the bank tables are not to change. A per-program output trim would be a data change |
 | **Legacy voice steal and retrigger reset the envelope, phase and filters** | `click_steal` up to 1.01, `click_retrigger` up to 1.35 (a harpsichord, whose own attack is that step) | Legacy compatibility is the documented contract ([ACTIVE_TAIL_CONTINUITY](ACTIVE_TAIL_CONTINUITY.md)); legacy rows are unchanged |
 | **Drive FX level** | Single slot at mix 1: +6.6 dB; three drives in series: +18 dB and a +0.7 dBFS peak (legacy); chorus -1.6 dB, phaser -3.5 dB, tape -3.2 dB, plate -7.7 dB | Modern, optional FX; a level choice, not a defect. Worth a gain compensation later |
 | **Sub-sonic content** | 10 Hz low-passed peak is 1.6% of the phrase peak at the median, up to 8.8% (FX programs with slow modulation); DC after release at most 4e-6; noise floor about -81 dBFS | Legitimate slow modulation, blocked by the 10 Hz blocker or the coupling network; not audible on typical systems |
+
+### Phase 1.5 gain staging (2026-10-31)
+
+The source policies now scale the post-volume LEFT/RIGHT source by a fixed
+`kCircuitOutputReference` (-6 dB) and pass it through `circuitOutputDriver`, an
+inferred smooth driver-headroom ceiling at full scale (unity below -1 dBFS), before
+the loaded output network (`src/core/OutputTapCircuit.h`). Both are declared software
+choices, not measured hardware levels. Re-running `cs80_engine_audit --suite phrase
+--quick` at 48 and 96 kHz: source tab peaks -2.9 / -3.0 dBFS (were up to +3.2 dBFS),
+no samples above 1, loudest tab chord -19.6 / -19.3 dB against -18.6 / -18.8 dB for
+the legacy tabs. A dense eight-note velocity-127 PANEL chord peaks at 0.996 in the UI
+self-test, held by the driver. Legacy audio is unchanged.
+
+### Phase 1.1 IG00156 circuit filter (2026-10-31)
+
+The source policies now run each filter stage with the transconductor saturation
+inside the loop instead of `softClip(1.1x)` on the input (`Svf::processCircuit`,
+[IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md)). Alias suite, 48 kHz, source
+policy: worst saw non-harmonic energy -33.8 -> -51.1 dB, pulse -39.3 -> -53.5 dB; this
+is now near the PolyBLEP oscillator's own floor, so the -70 dB target needs the Phase
+1.2 oscillator. Legacy rows are unchanged. Phrase suite: several string/brass tabs are
+up to 5-6 dB louder because the 22.6 Hz feedforward contribution raises very low LP
+cutoffs; the worst tab peak is -0.8 dBFS. CPU (scratch benchmark, 8 voices, 48 kHz):
+circuit engine 0.23 -> 0.37 RTF.
 
 ### Checked and fine
 

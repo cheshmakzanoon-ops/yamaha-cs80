@@ -89,7 +89,7 @@ void testParameterTable()
     check(P_subExtLevel == 126 && P_kbdBrillianceLow == 127 && P_kbdBrillianceHigh == 128
               && P_kbdLevelLow == 129 && P_kbdLevelHigh == 130 && P_footswitchPlugged == 131
               && P_footswitchPressed == 132 && P_sustainAssign == 133 && P_glideAssign == 134
-              && P_footMode == 135 && P_outputLevel == 136 && P_numParams == 139,
+              && P_footMode == 135 && P_outputLevel == 136 && P_numParams >= 139,
           "performance controls are appended after the shipped extension block");
     const char* ids[] = { "kbd_brilliance_low", "kbd_brilliance_high", "kbd_level_low", "kbd_level_high",
                           "footswitch_plugged", "footswitch_pressed", "sustain_assign", "glide_assign",
@@ -143,7 +143,7 @@ void testContourRouting()
     ParamValues p = neutral;
     p[P_kbdBrillianceLow] = 1.0f;
     const auto lowBright = settle(p, lowKey);
-    const float expectedLow = std::exp2(kProvisionalKeyboardBrillianceOctaves
+    const float expectedLow = std::exp2(kLegacyKeyboardBrillianceOctaves
                                         * keyboardContourWeights(lowKey).low);
     checkNear(lowBright.lpfHz / base(lowKey).lpfHz, expectedLow, expectedLow * 1e-3f,
               "LOW BRILLIANCE raises the low-pass cutoff at a low key");
@@ -157,7 +157,7 @@ void testContourRouting()
     p = neutral;
     p[P_kbdBrillianceHigh] = -1.0f;
     const auto highDark = settle(p, highKey);
-    checkNear(highDark.lpfHz / base(highKey).lpfHz, std::exp2(-kProvisionalKeyboardBrillianceOctaves), 1e-3f,
+    checkNear(highDark.lpfHz / base(highKey).lpfHz, std::exp2(-kLegacyKeyboardBrillianceOctaves), 1e-3f,
               "negative HIGH BRILLIANCE darkens the top of the keyboard");
     check(settle(p, lowKey).lpfHz == base(lowKey).lpfHz, "HIGH BRILLIANCE leaves the bottom alone");
 

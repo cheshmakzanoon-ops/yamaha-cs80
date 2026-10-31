@@ -1,6 +1,7 @@
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
+#include "plugin/EditorPreferences.h"
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
 #include "../../tests/OutputMeterHostTests.h"
@@ -8,9 +9,17 @@
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
+#include "../../tests/EngineHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/Ws3KeyboardHostTests.h"
+#include "../../tests/PanelEditorTests.h"
+#include "../../tests/StudioUiTests.h"   // [ws8-studio]
+#include "../../tests/ModernLayerHostTests.h"
+#include "../../tests/ModernLayerUiTests.h"
+#include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
+#include "../../tests/ProgramLibraryHostTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -282,20 +291,27 @@ void captureSourcePerformanceViews(const juce::File& dir)
                     actualPeak = std::max(actualPeak, std::abs(value));
                 }
         }
-        check(finite && actualPeak > (headroom ? 1.0f : 0.000001f),
-              "source screenshot renders real finite audible or above-full-scale host output");
+        // Phase 1.5 gain staging: a dense velocity-127 PANEL chord is loud but the
+        // circuit engine's output reference and driver headroom keep the DRIVER
+        // within full scale. The passive 10 uF coupling network after it can add
+        // a small transient overshoot when low-frequency content steps (jack =
+        // driver - capacitor charge): 1.017 measured with the Phase 1.1 filter.
+        // Allow at most +0.26 dB; before Phase 1.5 this chord reached +3.9 dBFS.
+        // The OVER-RANGE display itself stays covered by the synthetic meter UI tests.
+        check(finite && (headroom ? actualPeak > 0.25f && actualPeak <= 1.03f : actualPeak > 0.000001f),
+              "source screenshot renders real finite audible host output within driver headroom");
         check(waitFor([&]
         {
             return meter->getText().contains("SAMPLE PEAK")
                 && !meter->getText().contains("<= -120")
                 && !meter->getText().contains("NON-FINITE")
-                && (!headroom || meter->getText().contains("OVER-RANGE"));
+                && (headroom || !meter->getText().contains("OVER-RANGE"));
         }), "source screenshot meter reflects real rendered audio through its normal GUI timer");
         std::printf("source screenshot fixture: %s, finite=%d, actual host sample peak=%.9g, meter=%s\n",
                     headroom ? "PANEL headroom" : "STRING 3 complete / STRING 2 inferred",
                     finite ? 1 : 0, actualPeak, meter->getText().replaceCharacter('\n', ' ').toRawUTF8());
         if (headroom)
-            saveSnapshot(editor, dir, "main-source-performance-over-range-1600x1000");
+            saveSnapshot(editor, dir, "main-source-performance-headroom-1600x1000");
         else
         {
             saveSnapshot(editor, dir, "main-source-performance-1600x1000");
@@ -523,6 +539,9 @@ void testExpressionPersistence()
     auto fresh = [](float pedal)
     {
         auto target = std::make_unique<Cs80AudioProcessor>();
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         target->setParamValue(cs80::P_voiceDispersion, 0.0f);
         target->setParamValue(cs80::P_drift, 0.0f);
         target->setParamValue(cs80::P_analogNoise, 0.0f);
@@ -687,6 +706,9 @@ void testKeyPressureGesture(bool isolated = false)
 void testKeyboardHandoffHost(bool isolated)
 {
     Cs80AudioProcessor host;
+    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
     host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
     juce::AudioBuffer<float> audio(2, 32);
     auto process = [&](juce::MidiBuffer& midi) { host.processBlock(audio, midi); };
@@ -1048,6 +1070,9 @@ void testLiveEnvelopeTimingHost()
         }
         host.applyParameterValues(panel);
         host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        // ws2 1.6: the circuit engine defaults to Standard; this fixture's
+        // primitive history ticks at the 2x rate, so pin Eco (a session setting).
+        host.setParamValue(cs80::P_oversampling, 0.0f);
         host.selectHardwareSource(0, 13);
         host.selectHardwareSource(1, 13);
         for (int bank = 0; bank < 4; ++bank)
@@ -1370,6 +1395,9 @@ void testSourceFactoryHost()
         if (p) p->setValueNotifyingHost(p->convertTo0to1((float) selector));
     };
     Cs80AudioProcessor routing;
+    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    routing.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
     routing.prepareToPlay(48000.0, 64);
     for (bool isolated : { false, true })
     {
@@ -1438,6 +1466,7 @@ void testSourceFactoryHost()
     {
         Cs80AudioProcessor host;
         host.setParamValue(cs80::P_parityMode, 1.0f);
+        host.setParamValue(cs80::P_oversampling, 0.0f); // 2x primitive ticks below (ws2 1.6)
         host.setParamValue(cs80::P_masterSustain, 0.0f);
         host.setParamValue(cs80::P_keyRelease, 0.0f);
         for (int rank = 0; rank < 2; ++rank) automate(host, rank, selector);
@@ -1577,6 +1606,9 @@ void testSourceFactoryHost()
     for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{0, 1}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
     {
         Cs80AudioProcessor saved, restored;
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        saved.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         saved.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
         for (int rank = 0; rank < 2; ++rank) automate(saved, rank, selectors[(size_t) rank]);
         saved.setParamValue(cs80::chParam(0, cs80::CP_fIl), 0.17f);
@@ -1618,6 +1650,7 @@ void testSourceFactoryHost()
     for (int selector = 0; selector < 11; ++selector)
     {
         Cs80AudioProcessor legacy;
+        legacy.setEngineMode(Cs80AudioProcessor::EngineMode::legacy); // plan 1.7: the fresh default is Circuit
         legacy.selectHardwareSource(0, selector);
         legacy.selectHardwareSource(1, selector);
         legacy.prepareToPlay(48000.0, 64);
@@ -1711,7 +1744,11 @@ void testPerformanceControlsHost()
     restored.setStateInformation(oldText.toRawUTF8(), oldText.getNumBytesAsUTF8());
     bool neutral = true;
     for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
-        neutral = neutral && restored.getParamValue(i) == cs80::paramDef(i).def;
+        // Plan 1.7 (ws2): ENGINE is saved (Circuit for a fresh instance), not one
+        // of the removed controls, so it restores its saved value.
+        neutral = neutral && (i == cs80::P_sourcePerformance
+                                  ? restored.getParamValue(i) == host.getParamValue(i)
+                                  : restored.getParamValue(i) == cs80::paramDef(i).def);
     check(neutral && restored.getParamValue(cs80::P_outputLevel) == 1.0f,
           "a session saved before these controls restores neutral values, not live ones");
 
@@ -1804,6 +1841,8 @@ void testPerformanceControlsHost()
         Cs80AudioProcessor reference, trimmed, wah, pedalDown, pedalUp;
         for (auto* target : { &reference, &trimmed, &wah, &pedalDown, &pedalUp })
         {
+            // Plan 1.7 (ws2): the scalar -20 dB LOW trim is the legacy output law.
+            target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
             target->setParamValue(cs80::P_voiceDispersion, 0.0f);
             target->setParamValue(cs80::P_drift, 0.0f);
             target->setParamValue(cs80::P_analogNoise, 0.0f);
@@ -1842,7 +1881,11 @@ void testIsolatedFootControllerHost()
             target.setParamValue(cs80::P_parityMode, 1.0f);
             target.setParamValue(cs80::P_chorusOn, 0.0f);
             target.prepareToPlay(rate, 512);
-            check(target.getLatencySamples() == 63, "PRA host integration preserves reported latency");
+            // ws1 merge: the circuit engine also reports its oscillator's 8
+            // internal samples (8/N host samples at factor N).
+            check(target.getLatencySamples() == 63 + 8 / target.getEngine().getOversamplingFactor()
+                      && target.getLatencySamples() == target.getEngine().getLatencySamples(),
+                  "PRA host integration preserves reported latency");
             constexpr float pedals[] = { 0.15f, 0.95f, 0.25f, 0.8f, 0.0f, 0.6f, 1.0f, 0.35f };
             constexpr float modes[] = { 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f };
             constexpr int segmentFrames = 2048;
@@ -1916,8 +1959,36 @@ void testIsolatedFootControllerHost()
 
 int main(int argc, char** argv)
 {
+    // Never read or write the user's real editor preferences (display size) from the snapshot tool.
+    const juce::TemporaryFile preferences(".settings");
+    cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--teardown-probe") == 0)
+    {
+        // Phase 7 validator diagnosis (docs/VALIDATOR_DIAGNOSTICS.md): the life cycle a host gives a
+        // plugin module, once. JUCE starts, an instance and its editor paint (warming every cache the
+        // panel art keeps), both are destroyed, JUCE shuts down, and only then does main return and
+        // the process run its static destructors, as a module unload does after the host's last
+        // instance. Run under a memory checker to see what outlives JUCE's shutdown.
+        {
+            juce::ScopedJuceInitialiser_GUI juceInit;
+            juce::TemporaryFile root("-cs80-teardown");
+            auto host = std::make_unique<Cs80AudioProcessor>(root.getFile().getChildFile("presets"));
+            host->prepareToPlay(48000.0, 256);
+            {
+                auto editor = std::unique_ptr<juce::AudioProcessorEditor>(host->createEditor());
+                editor->setSize(1600, 1000);
+                (void) editor->createComponentSnapshot(editor->getLocalBounds(), true, 1.0f);
+                editor->setSize(1120, 700);
+                (void) editor->createComponentSnapshot(editor->getLocalBounds(), true, 1.0f);
+            }
+            host.reset();
+            std::puts("teardown probe: instance and editor destroyed; JUCE shuts down next");
+        }
+        std::puts("teardown probe: JUCE shut down; static destructors run after main returns");
+        return 0;
+    }
     // CTest captures stdout through a pipe. Keep phase evidence if a native
     // crash occurs, without changing the isolated locale-smoke entry path.
     std::setvbuf(stdout, nullptr, _IONBF, 0);
@@ -1931,6 +2002,13 @@ int main(int argc, char** argv)
     cs80::tests::testOutputMeterHost(check);
     std::puts("UI SMOKE PHASE: source performance host");
     cs80::tests::testSourcePerformanceHost(check);
+    std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
+    cs80::tests::testWs3KeyboardHost(check);
+    std::puts("UI SMOKE PHASE: engine I/O host");
+    cs80::tests::testOversamplingHost(check);
+    cs80::tests::testEngineDefaultHost(check);
+    cs80::tests::testListeningOutputHost(check);
+    cs80::tests::testParameterGroupsHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
@@ -1965,10 +2043,14 @@ int main(int argc, char** argv)
 
     std::puts("UI SMOKE PHASE: editor, state and automation");
     Cs80AudioProcessor processor;
-    check(processor.getLatencySamples() == 63, "reported latency at construction");
+    // Fresh instances run the circuit engine (plan 1.7): 63 decimator samples
+    // plus its oscillator's 8 internal samples (ws1 merge).
+    check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
+          "reported latency at construction");
     check(processor.getPresetName().contains("Original SUB"), "fresh startup identifies modified original SUB configuration");
     processor.prepareToPlay(48000.0, 512);
-    check(processor.getLatencySamples() == 63, "reported latency after prepare");
+    check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
+          "reported latency after prepare");
 
     // Parameter and preset integrity. These are the checks a host would rely
     // on before the instrument is even asked to make a sound.
@@ -1979,6 +2061,12 @@ int main(int argc, char** argv)
         if (index == cs80::P_subOriginalMode)
         {
             check(processor.getParamValue(index) == 1.0f, "fresh instance selects original SUB functions");
+            continue;
+        }
+        // Plan 1.7 (intentional): a fresh instance is program 0 on the circuit engine.
+        if (index == cs80::P_sourcePerformance)
+        {
+            check(processor.getParamValue(index) == 1.0f, "fresh instance selects the circuit engine");
             continue;
         }
         check(std::abs(processor.getParamValue(index) - processor.getFactoryPresets()[0].values[index])
@@ -2003,7 +2091,9 @@ int main(int argc, char** argv)
             const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
             const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
                 || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
-                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel);
+                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
+                || index == cs80::P_oversampling || index == cs80::P_outputJack
+                || index == cs80::P_driftModel;   // plan 2.5: a two-choice host parameter
             const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
             check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
@@ -2018,7 +2108,7 @@ int main(int argc, char** argv)
             processor.setParamValue(index, cs80::paramDef(index).def);
 
     check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
-          && Cs80AudioProcessor::hostParameterCount == 245, "245 host parameters");
+          && Cs80AudioProcessor::hostParameterCount >= 245, "at least the 245 shipped host parameters");
     for (int i = 0; i < cs80::P_legacyNumParams; ++i)
     {
         check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
@@ -2457,11 +2547,19 @@ int main(int argc, char** argv)
         Cs80AudioProcessor migration;
         check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "new processor starts in original SUB mode");
+        // ws6-library: the 222 shipped programs (Legacy Library, host 0..221)
+        // keep legacy SUB; the curated circuit-engine library appended at 222+
+        // intentionally uses the original six-function SUB.
         for (int program = 0; program < migration.getNumPrograms(); ++program)
         {
             migration.setCurrentProgram(program);
-            check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
-                  "every shipped factory program explicitly retains legacy SUB behavior");
+            if (program < cs80::legacyProgramCount)
+                check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
+                      "every shipped factory program explicitly retains legacy SUB behavior");
+            else
+                check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                          && migration.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+                      "curated library programs select the original SUB on the circuit engine");
         }
         migration.prepareToPlay(48000.0, 64);
         migration.setParamValue(cs80::P_subOriginalMode, 1.0f);
@@ -3341,7 +3439,7 @@ int main(int argc, char** argv)
         processor.setParamValue(cs80::P_fx3Type, 4.0f);
         processor.setParamValue(cs80::P_fx3Mix, 0.25f);
         processor.setParamValue(cs80::P_arpOn, 1.0f);
-        for (const char* tone : { "BRASS\n1", "BRASS\n2" })      // one lit tab per channel row
+        for (const char* tone : { "BRASS 1", "BRASS 2" })        // one lit tab per channel row
             if (auto* tab = findButton(editor, tone)) tab->triggerClick();
         flushGui(150);
         save("main-populated-1600x1000");
@@ -3465,11 +3563,38 @@ int main(int argc, char** argv)
     std::puts("UI SMOKE PHASE: preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::testPluginPanic(check, flushGui);
+    std::puts("UI SMOKE PHASE: program library, Program Change, A/B and randomise");
+    cs80::tests::testProgramLibraryHost(check);
     std::puts("UI SMOKE PHASE: pressure ownership and UI readiness");
     cs80::tests::testKeyboardPressureOwnershipHost(check);
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
+    std::puts("UI SMOKE PHASE: original panel editor (ws7)");
+    cs80::tests::runPanelEditorTests(check, flushGui, dir);
+
+    // [ws8-studio] begin: modern-layer UI tests (toolbar, Studio view, drawers, interaction, MIDI learn, undo).
+    std::puts("UI SMOKE PHASE: studio views");
+    cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio interaction");
+    cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio MIDI learn");
+    cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio undo and redo");
+    cs80::tests::studio::testUndoRedo(check, flushGui);
+    std::puts("UI SMOKE PHASE: studio learning tools");
+    cs80::tests::studio::testLearningTools(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio tab order, hit targets and contrast");
+    cs80::tests::studio::testTabOrder(check, flushGui);
+    cs80::tests::studio::testHitTargets(check, flushGui);
+    cs80::tests::studio::testContrast(check);
+    // [ws8-studio] end
+    // [ws5-modern] modern modulation/FX layer: session state, host parameters, audio, pages.
+    std::puts("UI SMOKE PHASE: modern modulation and FX layer");
+    cs80::tests::testModernLayerHost(check);
+    cs80::tests::testModernLayerUi(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)");
+    cs80::tests::testIntegrationUi(check, flushGui);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

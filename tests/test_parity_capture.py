@@ -11,6 +11,13 @@ import tempfile
 import unittest
 
 CAPTURE = None
+# Exact core parameter count: the 139 shipped parameters plus every block
+# appended since, in marker order (src/core/Params.h): ws1-voice 1
+# (drift_model), ws2-engine 2 (oversampling, output_jack), ws3-keyboard 9
+# (kas_scan_timing .. unison_detune) and ws5-modern 39 (lfo1_wave ..
+# fx_gain_compensation). A later appended block adds its own count here.
+EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39
+
 EXPECTED_EVENTS = [
     {'sample': 4800, 'type': 'note_on', 'note': 60, 'channel': 1, 'value': .75},
     {'sample': 19200, 'type': 'poly_pressure', 'note': 60, 'channel': 1, 'value': .5},
@@ -44,10 +51,11 @@ def validate_metadata(metadata):
     assert metadata['sample_rate_hz'] == 48000
     assert metadata['internal_sample_rate_hz'] == 96000
     assert metadata['sample_count'] == 96000
-    assert metadata['latency_samples'] == 63
+    # 63 decimator samples plus the circuit oscillator's 8 internal samples (4 at Eco 2x).
+    assert metadata['latency_samples'] == 67
     assert metadata['latency_compensated'] is False
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
-    assert metadata['parameter_count'] == len(metadata['settings']) == 139
+    assert metadata['parameter_count'] == len(metadata['settings']) == EXPECTED_PARAMETER_COUNT
     assert all(type(x) in (int, float) and math.isfinite(x) for x in metadata['settings'].values())
     assert metadata['settings']['parity_mode'] == 1
     assert metadata['settings']['source_performance'] == 0
@@ -176,9 +184,10 @@ def validate_live_metadata(metadata, default_settings):
     assert metadata['sample_rate_hz'] == 48000
     assert metadata['internal_sample_rate_hz'] == 96000
     assert metadata['sample_count'] == 96000
-    assert metadata['latency_samples'] == 63
+    # 63 decimator samples plus the circuit oscillator's 8 internal samples (4 at Eco 2x).
+    assert metadata['latency_samples'] == 67
     assert metadata['latency_compensated'] is False
-    assert metadata['parameter_count'] == 139
+    assert metadata['parameter_count'] == EXPECTED_PARAMETER_COUNT
     assert metadata['channels'] == {'left': 'left.csv', 'right': 'right.csv'}
     assert metadata['envelope_trace'] == 'envelope-events.csv'
     assert metadata['event_timing'] == 'zero-based host sample; sequence order; applied before rendering that sample'
@@ -285,7 +294,15 @@ def validate_live_probes(rows):
                         # round-trippable binary32 snapshots, not that hidden state.
                         # Propagate the prior half-ULP uncertainty through the
                         # contractive two-tick law, then allow final snapshot rounding.
-                        coefficient = math.exp(-6 / (f32(times[rank]) * 96000))
+                        # Circuit-engine RC law (docs/ENVELOPE_RC_MODEL.md): decay and
+                        # release settle to -60 dB at T; attack charges from its start
+                        # level (0 here, both IL and the amplitude onset) toward
+                        # 1.5 x the peak and reaches the peak at T.
+                        if phase == 'a':
+                            coefficient = math.exp(-math.log(3) / (f32(times[rank]) * 96000))
+                            target = 1.5 * target
+                        else:
+                            coefficient = math.exp(-math.log(1000) / (f32(times[rank]) * 96000))
                         expected = f32(expected)
                         initial_error = half_ulp32(expected)
                         for _ in range(2):

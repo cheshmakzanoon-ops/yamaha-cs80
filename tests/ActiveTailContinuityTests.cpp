@@ -13,6 +13,10 @@ bool zero(Svf::State a) { return a.ic1 == 0 && a.ic2 == 0; }
 bool equal(Engine::RankAudioState a, Engine::RankAudioState b) { return a.phase == b.phase && equal(a.hpf,b.hpf) && equal(a.lpf,b.lpf); }
 ParamValues settings(bool isolation = true) {
     ParamValues p; p[P_parityMode] = isolation ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f; // legacy RNG-consumption comparison per internal sample
     p[P_sustainMode] = 0; p[P_keyRelease] = 0;
     for (int r=0;r<2;++r) { p[chParam(r,CP_vR)] = 0.8f; p[chParam(r,CP_fR)] = 0.8f; p[chParam(r,CP_saw)] = 1; }
     return p;
@@ -56,10 +60,13 @@ int main() {
             }
             for(float x:render(e,1024)) check(std::isfinite(x),"reuse render finite");
         }
-        // Cold, fully inactive, sustain-II-cleared, and panic-cleared circuits
-        // must retain legacy assignment behavior rather than preserve frozen state.
-        for(int scenario=0;scenario<4;++scenario) {
-            Engine e; auto p=settings();
+        // Cold, fully inactive, sustain-II-cleared, and panic-cleared circuits.
+        // Legacy keeps its assignment reset. Phase 2.1 (intentional circuit-engine
+        // change): isolation circuits free-run while silent, so assignment keeps
+        // their evolved memories instead of resetting them; a cold, never-clocked
+        // circuit still has zero memories.
+        for(bool isolationScenario : {false,true}) for(int scenario=0;scenario<4;++scenario) {
+            Engine e; auto p=settings(isolationScenario);
             if(scenario==1) for(int r=0;r<2;++r) p[chParam(r,CP_vR)]=0;
             if(scenario==2) p[P_sustainMode]=1;
             init(e,rate,p);
@@ -68,7 +75,9 @@ int main() {
                 if(scenario==1) { render(e,static_cast<int>(rate*2)); check(!e.getVoiceInfo(0).active,"fully inactive fixture"); }
                 if(scenario==3) e.controlChange(120,0,1);
             }
-            e.noteOn(100,0.7f); resetState(e,0);
+            e.noteOn(100,0.7f);
+            if(!isolationScenario || scenario==0) resetState(e,0);
+            else for(int r=0;r<2;++r) { auto s=e.getRankAudioState(0,r); check(!zero(s.hpf)&&!zero(s.lpf),"free-running circuit keeps its memories at assignment"); }
         }
         // A ninth held note must not mutate any circuit at event time.
         Engine held; init(held,rate,settings()); fill(held); render(held,997);
@@ -77,7 +86,10 @@ int main() {
         held.noteOn(100,1);
         for(int v=0;v<8;++v) { check(held.getVoiceInfo(v).note==48+v,"ninth held note ignored"); for(int r=0;r<2;++r) check(equal(snap[v][r],held.getRankAudioState(v,r)),"held state protected"); }
         held.reset();
-        for(int v=0;v<8;++v) for(int r=0;r<2;++r) { auto s=held.getRankAudioState(v,r); check(s.phase==0&&zero(s.hpf)&&zero(s.lpf),"explicit reset clears all audio state"); }
+        // Phase 2.1: an explicit reset returns every circuit to its cold state;
+        // in the circuit engine that state has declared fixed-seed phases.
+        Engine fresh; init(fresh,rate,settings());
+        for(int v=0;v<8;++v) for(int r=0;r<2;++r) { auto s=held.getRankAudioState(v,r); check(s.phase==fresh.getRankAudioState(v,r).phase&&zero(s.hpf)&&zero(s.lpf),"explicit reset clears all audio state"); }
         // MIDI pedal hold is a legacy extension; isolation ignores CC64.
         Engine pedal; init(pedal,rate,settings(false)); fill(pedal); render(pedal,997); pedal.controlChange(64,1,1); pedal.noteOff(48);
         check(pedal.getVoiceInfo(0).pedalHeld,"pedal hold fixture"); auto ps=pedal.getRankAudioState(0,0); pedal.noteOn(100,1);
@@ -96,14 +108,24 @@ int main() {
         for(int v=0;v<8;++v) for(int r=0;r<2;++r) { auto s=a.getRankAudioState(v,r); check(s.phase==0&&zero(s.hpf)&&zero(s.lpf),"mode transition resets state"); }
     }
     // Same number/order of draws even when isolation skips the assignment reset.
-    Engine legacy, isolated; init(legacy,48000,settings(false)); init(isolated,48000,settings());
-    fill(legacy); fill(isolated); render(legacy,997); render(isolated,997);
-    legacy.noteOff(48); isolated.noteOff(48); legacy.noteOn(100,1); isolated.noteOn(100,1);
-    // Panic makes the next cyclic circuit inactive, so its random phase exposes
-    // the stream after the retained/discarded legacy draw (both ranks).
-    legacy.controlChange(120,0,1); isolated.controlChange(120,0,1);
-    legacy.noteOn(101,1); isolated.noteOn(101,1);
-    for(int r=0;r<2;++r) check(legacy.getRankAudioState(1,r).phase==isolated.getRankAudioState(1,r).phase,"preservation retains legacy RNG consumption");
+    // Phase 2.1 (intentional): no isolation assignment exposes a draw through its
+    // phase any more. The shared stream position is read instead by a cold legacy
+    // assignment after a policy reset (reset never touches the stream). Equal
+    // phases show that preserved assignments consume the two legacy draws and
+    // that the idle path draws nothing from the shared stream.
+    {
+        Engine legacy, isolated; init(legacy,48000,settings(false)); init(isolated,48000,settings());
+        for (Engine* x : {&legacy, &isolated}) {
+            fill(*x); render(*x,997); x->noteOff(48); x->noteOn(100,1);   // reuses a sounding tail
+            x->controlChange(120,0,1);                                     // every circuit silent
+            render(*x,4800);                                               // idle path only
+            x->noteOn(101,1);                                              // wakes a silent circuit
+        }
+        auto p=settings(false); isolated.setParams(p);                     // isolation -> legacy reset
+        p[P_parityMode]=1; legacy.setParams(p); p[P_parityMode]=0; legacy.setParams(p);
+        legacy.noteOn(102,1); isolated.noteOn(102,1);
+        for(int r=0;r<2;++r) check(legacy.getRankAudioState(0,r).phase==isolated.getRankAudioState(0,r).phase,"preservation retains legacy RNG consumption");
+    }
     Engine e; check(equal(e.getRankAudioState(-1,0),{}),"invalid diagnostic index"); check(equal(e.getRankAudioState(0,2),{}),"invalid diagnostic rank");
     std::printf("Active-tail continuity: %d checks, %d failures\n",checks,failures); return failures ? 1 : 0;
 }

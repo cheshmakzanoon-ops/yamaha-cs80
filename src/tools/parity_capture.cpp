@@ -32,6 +32,9 @@ ParamValues patch()
 {
     ParamValues p;
     p[P_parityMode] = 1.0f;
+    // The capture contract (and tests/test_parity_capture.py's envelope oracle) is
+    // the 2x internal rate; pin Eco rather than the circuit engine's Standard default.
+    p[P_oversampling] = 0.0f;
     p[P_volume] = 0.5f;
     p[P_mix] = 0.5f;
     p[P_detune] = 0.0f;

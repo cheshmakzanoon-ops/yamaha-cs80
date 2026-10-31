@@ -3,6 +3,9 @@
 // physical resistor/capacitor nodes; no production reduction/coefficient helper
 // is reused. Reviewed upstream DSP primitives are used only to supply stimuli.
 #include "core/Engine.h"
+#include "core/RingModulatorCircuit.h"
+#include "CircuitSineSource.h"
+#include "ExpressionOpticsOracle.h"
 
 #include <algorithm>
 #include <array>
@@ -154,6 +157,10 @@ double generalSource(double leftPreamp, double rightPreamp)
 ParamValues fixture(bool high = true)
 {
     ParamValues p; p[P_parityMode] = 1.0f; p[P_outputLevel] = high ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     p[P_mix] = p[P_detune] = 0.0f; p[P_volume] = 0.61f;
     p[P_ringSpeed] = 77.0f; p[P_ringDepth] = 0.0f; p[P_ringAmount] = 0.6f;
     p[P_chorusOn] = 1.0f; p[P_chorusDepth] = 0.8f;
@@ -185,6 +192,8 @@ struct Pipeline
 {
     Pipeline(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
+          circuitSine(e.getInternalSampleRate(), e.getRankOscillatorState(0, 0)),
+          circuitVca(e.getInternalSampleRate()),
           volume(p[P_volume]), volumeTarget(p[P_volume]), wet(p[P_footMode] != 0.0f), wetMix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth]),
           taps{OutputOracle(rate, p[P_outputLevel] != 0.0f), OutputOracle(rate, p[P_outputLevel] != 0.0f),
@@ -195,7 +204,7 @@ struct Pipeline
         chorus.prepare(static_cast<float>(rate));
         for (auto& dec : decimator) dec.prepare(static_cast<float>(rate));
     }
-    void pedal(float x) { expression = x; wah.setPedal(x); }
+    void pedal(float x) { expression = x; wah.setPedal(x); gainOptics.setPedal(x); }
     void select(bool high) { for (auto& tap : taps) tap.select(high); }
     std::array<float, 2> frame()
     {
@@ -203,11 +212,16 @@ struct Pipeline
         for (int os = 0; os < 2; ++os)
         {
             phase += 440.0f/sr; if (phase >= 1.0f) phase -= std::floor(phase);
-            const float sine = std::sin(kTwoPi*phase)+0.035f*std::sin(3.0f*kTwoPi*phase);
+            // Plan step 1.2, intentional circuit-engine change: the reconstructed
+            // WSC sine replaces sin + 3.5 % third harmonic in this isolation path.
+            const float sine = circuitSine(440.0f);
             const float amp = envelope.tick(sr, true, true);
-            float source = sine*amp*0.17f*0.5f;
+            // Plan step 1.4, intentional circuit-engine change: the IG00151 VCA
+            // (offset/feedthrough pedestal, LI node) replaces sine*amp*0.17*0.5.
+            float source = circuitVca(sine, amp);
             ringPhase += 77.0f*(1.0f/sr); ringPhase -= std::floor(ringPhase);
-            source = lerp(source, source*std::sin(kTwoPi*ringPhase), ringAmount);
+            // ws4 Step 2, intentional circuit-engine change: offset RMO multiplier.
+            source = RingModulatorCircuit::blend(source, std::sin(kTwoPi*ringPhase), ringAmount);
             const auto nodes = wah.process(source);
             const float targetMix = wet ? 1.0f : 0.0f;
             if (wetMix != targetMix)
@@ -217,9 +231,21 @@ struct Pipeline
             }
             source = lerp(static_cast<float>(nodes.x), static_cast<float>(nodes.y), wetMix);
             const auto stereo = chorus.process(source, source, chorusSpeed, chorusDepth, true, false);
-            volume += (volumeTarget-volume)*0.003f;
-            const float gain = volume*4.0f*expression;
-            const float left = stereo.l*gain, right = stereo.r*gain;
+            // ws2 (intentional circuit-engine changes): VOLUME follows the declared
+            // 5 ms one-pole (the former 0.003 per-sample constant was rate
+            // dependent), and the expression gain is the PRA I2/I3 optical cell
+            // (closed-form oracle, ExpressionOpticsOracle.h), both starting on
+            // their targets at the first sample.
+            const double k = smoothingCoefficient(kControlSmoothingSeconds, rate);
+            if (!gainSnapped) { volumeSmoother.snap(volume); gainOptics.rate = rate; gainSnapped = true; }
+            volume = static_cast<float>(volumeSmoother.advance(volumeTarget, k));
+            const float smoothed = static_cast<float>(gainOptics.tick());
+            const float gain = volume*4.0f*smoothed;
+            // Phase 1.5 gain staging: fixed reference, then inferred driver headroom.
+            const auto stage = [](float x) {
+                return static_cast<float>(circuitOutputDriver(static_cast<double>(x) * kCircuitOutputReference));
+            };
+            const float left = stage(stereo.l*gain), right = stage(stereo.r*gain);
             const auto l = taps[0].tick(left), r = taps[1].tick(right);
             taps[2].tick(generalSource(left, right));
             decimator[0].push(static_cast<float>(l.audibleJackVolts));
@@ -228,7 +254,13 @@ struct Pipeline
         return {decimator[0].output(), decimator[1].output()};
     }
     double rate;
-    float phase, volume, volumeTarget, expression = 1.0f;
+    float phase;
+    CircuitSineSource circuitSine;
+    CircuitVoiceVca circuitVca;
+    float volume, volumeTarget, expression = 1.0f;
+    ControlSmoother volumeSmoother;
+    tests::ExpressionOpticsOracle gainOptics;
+    bool gainSnapped = false;
     bool wet;
     float wetMix, ringAmount, ringPhase = 0.0f, chorusSpeed, chorusDepth;
     Adsr envelope;
@@ -339,6 +371,10 @@ void lifecycleAndAlwaysRunning()
     // The expression multiplier precedes coupling: muting the source cannot
     // silently erase or freeze the charged output-capacitor decay.
     e.setExpression(0.0f);
+    // ws2 (intentional circuit-engine change): the expression gain is the PRA
+    // I2/I3 optical cell, which lands exactly on zero after about 1.6 s of
+    // 60 ms log-R darkening; the coupling capacitor still holds decaying charge.
+    render(e, 120000); // 2.5 s at 48 kHz
     auto before = e.getOutputTapState(2);
     render(e, 1);
     auto after = e.getOutputTapState(2);
@@ -348,8 +384,11 @@ void lifecycleAndAlwaysRunning()
     e.allNotesOff(false); before = e.getOutputTapState(2); render(e, 1200); after = e.getOutputTapState(2);
     check(std::abs(after.state.capacitorVolts) < std::abs(before.state.capacitorVolts), "voice-idle periods continue output decay");
     e.reset(); checkReset(e, false, 96000.0);
+    // ws4 Step 2, intentional circuit-engine change: with MODULATION up the RMO carrier
+    // feedthrough sounds even with no notes, so "cleared" means identical to a fresh engine.
     const auto silent = render(e, 2000);
-    check(std::all_of(silent.begin(), silent.end(), [](float x) { return x == 0.0f; }), "reset clears output and decimator tails exactly");
+    Engine fresh; fresh.setParams(p); fresh.prepare(48000.0);
+    check(silent == render(fresh, 2000), "reset clears output and decimator tails exactly");
     p[P_outputLevel] = 1.0f; e.setParams(p); e.reset(); checkReset(e, true, 96000.0);
     e.noteOn(69, 0.8f); render(e, 500); e.prepare(192000.0); checkReset(e, true, 384000.0);
     e.noteOn(69, 0.8f); render(e, 500);
@@ -402,7 +441,9 @@ void readoutTimeConstantAndPartition()
 {
     for (double rate : {8000.0, 44100.0, 48000.0, 192000.0, 768000.0})
     {
-        auto p = fixture(); Engine e; e.setParams(p); e.prepare(rate);
+        // Silent fixture: ws4 Step 2 carrier feedthrough sounds whenever MODULATION is up,
+        // and ws4 Step 3 BBD noise whenever the chorus is on.
+        auto p = fixture(); p[P_ringAmount] = 0.0f; p[P_chorusOn] = 0.0f; Engine e; e.setParams(p); e.prepare(rate);
         const OutputOracle oracle(rate*2.0, true);
         p[P_outputLevel] = 0.0f; e.setParams(p);
         const int frames = static_cast<int>(std::round(rate*0.005)); render(e, frames);
@@ -432,6 +473,7 @@ void boundedPolyphonicSweeps()
     for (double rate : {8000.0, 44100.0, 192000.0, 768000.0})
     {
         ParamValues p; p[P_parityMode] = 1.0f; p[P_volume] = 1.0f; p[P_chorusOn] = 1.0f;
+        p[P_oversampling] = 0.0f; // 2x oracle fixture; see fixture()
         Engine e; e.setParams(p); e.prepare(rate);
         for (int note : {24, 36, 48, 60, 72, 84, 96, 108}) e.noteOn(note, 1.0f);
         for (int step = 0; step < 70; ++step)

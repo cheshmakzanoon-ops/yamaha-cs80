@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <cstdio>
+#include <typeinfo>
 
 namespace cs80::tests
 {
@@ -35,6 +36,9 @@ void testKeyboardPressureOwnershipHost(Check check)
     for (int frames : { 0, 32 })
     {
         Cs80AudioProcessor host(fixture.getFile());
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         host.setParamValue(P_analogNoise, 0.0f);
         host.setParamValue(P_mpeOn, 0.0f);
         host.setParamValue(P_masterSustain, 0.0f);
@@ -170,6 +174,11 @@ void testKeyboardPointerPressure(Check check)
     juce::TemporaryFile fixture("-cs80-pressure-pointer");
     Cs80AudioProcessor host(fixture.getFile());
     host.prepareToPlay(48000.0, 32);
+    // ws8's first-run tour opens by itself once the editor is in a real window and
+    // covers the keybed (macOS CI found cs80::ui::TourOverlay at the key point
+    // whenever window activation took longer than the tour's first timer tick).
+    // This fixture is about pointer pressure, so the player has seen the tour.
+    host.getEditorState().tourSeen = true;
     Cs80AudioProcessorEditor editor(host);
     // Keep the supported minimum layout, not the screenshot's 1600x1000.
     // On smaller desktops the upper panel may extend off-screen deliberately:
@@ -183,8 +192,15 @@ void testKeyboardPointerPressure(Check check)
     // JUCE keyboard hit testing calls reallyContains(), which recurses through
     // Component::contains to the top-level native peer. A detached component
     // cannot receive a real pointer note, even when its bounds look correct.
+    // A command-line fixture is not the active application (macOS CI reports
+    // foreground=0 even after asking), so another process's window could stay
+    // ordered above it. The fixture tests pointer pressure through the real hit
+    // test, not ordering against other applications, so its window floats above
+    // normal windows; it also asks to be activated before ordering the editor front.
+    editor.setAlwaysOnTop(true);
     editor.addToDesktop(0);
     editor.setVisible(true);
+    juce::Process::makeForegroundProcess();
     editor.toFront(true);
     auto* keyboard = pressure_detail::keyboard(editor);
     check(keyboard != nullptr, "actual editor contains the pointer-pressure keyboard");
@@ -210,11 +226,45 @@ void testKeyboardPointerPressure(Check check)
     // macOS additionally checks the actual frontmost NSWindow at each screen
     // point. Let native realization/ordering settle through the normal loop;
     // do not bypass hit testing or inject a pretend note into the keyboard.
-    const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+    // Window-server activation and ordering are asynchronous on macOS: wait up to
+    // 10 s (formerly 2 s), re-ordering the editor front each half second; the
+    // frontmost and hit-test assertions themselves are unchanged.
+    const auto settleStart = std::chrono::steady_clock::now();
+    const auto deadline = settleStart + std::chrono::seconds(10);
+    auto nextFront = settleStart + std::chrono::milliseconds(500);
     while (!nativePointsReady() && std::chrono::steady_clock::now() < deadline)
+    {
         juce::MessageManager::getInstance()->runDispatchLoopUntil(20);
+        if (std::chrono::steady_clock::now() >= nextFront)
+        {
+            editor.toFront(true);
+            nextFront += std::chrono::milliseconds(500);
+        }
+    }
+    const auto settleMs = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - settleStart).count();
     check(nativePointsReady(), "pointer-pressure native window is frontmost at all tested on-screen key points");
     const auto firstScreenPoint = keyboard->localPointToGlobal(positionFor(60, 0.65f).roundToInt());
+    // Diagnostic evidence for the hit test: every desktop window JUCE knows of, and
+    // which component the editor itself finds at the first key point.
+    {
+        auto& desktop = juce::Desktop::getInstance();
+        for (int i = 0; i < desktop.getNumComponents(); ++i)
+            if (auto* window = desktop.getComponent(i))
+                std::printf("Pointer fixture desktop window %d: %s '%s' %d,%d %dx%d visible=%d\n", i,
+                            typeid(*window).name(), window->getName().toRawUTF8(), window->getX(), window->getY(),
+                            window->getWidth(), window->getHeight(), (int) window->isVisible());
+        const auto local = editor.getLocalPoint(nullptr, firstScreenPoint);
+        auto* found = editor.getComponentAt(local);
+        std::printf("Pointer fixture component at key60: %s '%s' (keyboard=%d)\n",
+                    found != nullptr ? typeid(*found).name() : "none",
+                    found != nullptr ? found->getName().toRawUTF8() : "",
+                    (int) (found == keyboard || (found != nullptr && keyboard->isParentOf(found))));
+        auto* peer = editor.getPeer();
+        const auto peerPoint = peer != nullptr ? peer->globalToLocal(firstScreenPoint.toFloat()).roundToInt() : juce::Point<int>();
+        std::printf("Pointer fixture peer contains key60=%d foreground=%d settle=%lld ms\n",
+                    (int) (peer != nullptr && peer->contains(peerPoint, true)),
+                    (int) juce::Process::isForegroundProcess(), (long long) settleMs);
+    }
     std::printf("Pointer fixture: editor=%d,%d %dx%d; usable=%d,%d %dx%d; key60 screen=%d,%d hit=%d\n",
                 editor.getX(), editor.getY(), editor.getWidth(), editor.getHeight(),
                 usable.getX(), usable.getY(), usable.getWidth(), usable.getHeight(),

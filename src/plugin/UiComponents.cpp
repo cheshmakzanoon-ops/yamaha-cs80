@@ -1,9 +1,12 @@
 #include "UiComponents.h"
 
+#include "EvidenceRegister.h"
 #include "PluginProcessor.h"
+#include "ArtCommon.h"
 
 #include <atomic>
 #include <cmath>
+#include <list>
 #include <map>
 #include <tuple>
 
@@ -71,11 +74,8 @@ juce::String enumName(const char* const* names, int count, float value)
     return names[index];
 }
 
-juce::Font displayFont(float height, int style = juce::Font::plain)
-{
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(),
-                                        height, style));
-}
+using cs80::art::displayFont;   // the panel typeface (ArtCommon.h)
+using cs80::art::kLegendFloorPx;
 } // namespace
 
 juce::String formatParamValue(int parameterIndex, float value)
@@ -278,6 +278,8 @@ void conicRing(juce::Graphics& g, float cx, float cy, float radius, float width,
 
 // Images of moulded caps, knob bodies and plates, keyed by size, colour and state, rendered at
 // the physical pixel scale of the target. Painting a control is then a blit plus its legend.
+// Least-recently-used eviction: a full cache drops only its stalest images, so a resize or a
+// new page never forces every control on screen to be re-rendered at once.
 class PaintCache
 {
 public:
@@ -300,9 +302,15 @@ public:
         const Key key { kind, w, h, colour, state, scale4 };
         const juce::ScopedLock sl(lock);
         if (auto it = images.find(key); it != images.end())
-            return it->second;
-        if (images.size() > 700)
-            images.clear();
+        {
+            recency.splice(recency.begin(), recency, it->second.position);
+            return it->second.entry;
+        }
+        while (! recency.empty() && images.size() >= capacity)
+        {
+            images.erase(recency.back());
+            recency.pop_back();
+        }
         const float scale = (float) scale4 * 0.25f;
         Entry entry;
         entry.width = w;
@@ -315,7 +323,8 @@ public:
                                                          (float) entry.image.getHeight() / (float) h));
             paint(ig);
         }
-        images.emplace(key, entry);
+        recency.push_front(key);
+        images.emplace(key, Slot { entry, recency.begin() });
         return entry;
     }
 
@@ -323,12 +332,21 @@ public:
     {
         const juce::ScopedLock sl(lock);
         images.clear();
+        recency.clear();
     }
+
+    static constexpr size_t capacity = 700;
 
 private:
     using Key = std::tuple<int, int, int, juce::uint32, int, int>;
+    struct Slot
+    {
+        Entry entry;
+        std::list<Key>::iterator position;   // where the key sits in `recency`
+    };
     juce::CriticalSection lock;
-    std::map<Key, Entry> images;
+    std::map<Key, Slot> images;
+    std::list<Key> recency;                  // most recently used first
 };
 
 float physicalScaleOf(const juce::Graphics& g)
@@ -890,7 +908,7 @@ void drawEngravedText(juce::Graphics& g, const juce::String& text, juce::Rectang
 
 juce::Font controlCaptionFont(float areaHeight)
 {
-    auto f = displayFont(juce::jlimit(9.5f, 14.0f, areaHeight * 0.78f), juce::Font::bold);
+    auto f = displayFont(juce::jlimit(kLegendFloorPx, 14.0f, areaHeight * 0.78f), juce::Font::bold);
     f.setExtraKerningFactor(0.055f);
     return f;
 }
@@ -2125,30 +2143,23 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float 
     drawFaderSlot(g, cx, 0.6f * f.s, (float) H - 0.6f * f.s, f.s);
 }
 
-// Printed legend lines for a tone tab from its accessibility title: three letters over the number
-// ("STRING 1" -> STR / 1), or one line for the unnumbered tones (FLT, EP, BASS, PNL). Empty when the
-// title is not a known tone, in which case the button text is used.
+// Printed legend lines for a tone tab from its accessibility title, in the hardware wording (service p1, owner
+// p37): the tone word over its number ("STRING" / "1"), the two long words broken where the panel would break
+// them ("HARPSI-" / "CHORD 1", "ELECTRIC" / "PIANO"), or one line (FLUTE, BASS, PANEL). Empty when the title is
+// not a known tone, in which case the button text is used.
 juce::StringArray toneLegend(const juce::String& title)
 {
-    static const struct { const char* word; const char* code; bool numbered; } table[] = {
-        { "STRING", "STR", true }, { "BRASS", "BRS", true }, { "FLUTE", "FLT", false }, { "E. PIANO", "EP", false },
-        { "E.PIANO", "EP", false }, { "CLAVICHORD", "CLV", true }, { "HARPSICHORD", "HRP", true },
-        { "ORGAN", "ORG", true }, { "GUITAR", "GTR", true }, { "FUNKY", "FNK", true }, { "MEMORY", "MEM", true },
-        { "BASS", "BASS", false }, { "PANEL", "PNL", false } };
     const auto t = title.trim().toUpperCase();
-    for (const auto& e : table)
-        if (t.startsWith(e.word))
-        {
-            juce::StringArray lines;
-            lines.add(e.code);
-            if (e.numbered)
-            {
-                const auto digits = t.fromLastOccurrenceOf(" ", false, false).retainCharacters("0123456789");
-                if (digits.isNotEmpty())
-                    lines.add(digits);
-            }
-            return lines;
-        }
+    const auto number = t.fromLastOccurrenceOf(" ", false, false).retainCharacters("0123456789");
+    auto two = [](const juce::String& a, const juce::String& b) { juce::StringArray lines; lines.add(a); lines.add(b); return lines; };
+    if (t == "ELECTRIC PIANO" || t == "E. PIANO" || t == "E.PIANO") return two("ELECTRIC", "PIANO");
+    if (t.startsWith("HARPSICHORD")) return two("HARPSI-", ("CHORD " + number).trim());
+    if (t.startsWith("CLAVICHORD")) return two("CLAVI-", ("CHORD " + number).trim());
+    for (const char* word : { "STRING", "BRASS", "ORGAN", "GUITAR", "FUNKY", "MEMORY" })
+        if (t.startsWith(word))
+            return number.isNotEmpty() ? two(word, number) : juce::StringArray(word);
+    for (const char* word : { "FLUTE", "BASS", "PANEL" })
+        if (t == word) return juce::StringArray(word);
     return {};
 }
 
@@ -2161,11 +2172,10 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
     auto area = geo.face.reduced(bev);
     area.removeFromBottom(compact ? 1.8f : 4.4f);
     const auto ink = tabPlastic(base, lit || pressed).ink;
-    // The ink stays inside the plastic: a glyph never reaches the tab edge. 9 px is the floor and the
-    // squeeze never goes past 0.70 (tone codes are three capitals). If a code still does not fit,
-    // a numbered tab prints just its number, large, and a bare word loses its last letters.
+    // The ink stays inside the plastic: a glyph never reaches the tab edge. 10.5 px is the floor and the
+    // squeeze never goes past 0.70. A word that still does not fit loses its last letters.
     const float room = geo.face.getWidth() - (compact ? 1.4f : 2.0f);
-    const float fontPx = juce::jlimit(9.0f, 10.0f, bounds.getWidth() * 0.29f);
+    const float fontPx = juce::jlimit(kLegendFloorPx, 11.5f, bounds.getWidth() * 0.29f);
     constexpr float toneMinScale = 0.70f;
 
     juce::StringArray lines = toneLegend(title);
@@ -2178,15 +2188,7 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
         f.setExtraKerningFactor(0.01f);
         return f;
     };
-    if (known && lines.size() > 1)
-    {
-        auto probe = fontFor(fontPx);
-        bool fits = true;
-        fitFontToWidth(probe, lines[0], room, toneMinScale, 9.0f, fits);
-        if (! fits)
-            lines.remove(0); // number only
-    }
-    const bool numberOnly = known && lines.size() == 1 && lines[0].containsOnly("0123456789");
+    const bool numberOnly = false;
     const int count = juce::jmax(1, lines.size());
     const float pitch = juce::jlimit(fontPx * 0.9f, fontPx * 1.22f, area.getHeight() / (float) count);
     const float blockTop = area.getCentreY() - pitch * (float) count * 0.5f;
@@ -2195,13 +2197,13 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
         auto font = fontFor(numberOnly ? fontPx * 1.3f : fontPx);
         auto text = lines[i];
         if (! known)
-            text = fitLegendText(font, text, room, 0.85f, 9.0f);
+            text = fitLegendText(font, text, room, 0.85f, kLegendFloorPx);
         bool fitted = true;
-        font = fitFontToWidth(font, text, room, known ? toneMinScale : 0.85f, 9.0f, fitted);
+        font = fitFontToWidth(font, text, room, known ? toneMinScale : 0.85f, kLegendFloorPx, fitted);
         while (! fitted && text.length() > 2)
         {
             text = text.dropLastCharacters(1);
-            font = fitFontToWidth(fontFor(fontPx), text, room, toneMinScale, 9.0f, fitted);
+            font = fitFontToWidth(fontFor(fontPx), text, room, toneMinScale, kLegendFloorPx, fitted);
         }
         // Crisp printed ink: one pass, no drop shadow.
         g.setFont(font);
@@ -2343,23 +2345,23 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     if (clearLeft)
     {
         // End legends (for example I and II beside the MIX fader, EXT and SINE on FUNCTION) sit left of
-        // the slot, where the end ticks were, in 9 px type, right-aligned against the slot. A legend
-        // that does not fit at 85 percent (after its printed abbreviation) is left out, never cut.
+        // the slot, where the end ticks were, at the legend floor, right-aligned against the slot. A legend
+        // that does not fit at 80 percent (after its printed abbreviation) is left out, never cut.
         const float cx = (float) fullW * 0.5f;
         const float roomW = cx - 4.9f * f.s - 1.0f;
-        const auto font = displayFont(9.0f, juce::Font::bold);
+        const auto font = displayFont(kLegendFloorPx, juce::Font::bold);
         const float yTop = f.r - f.ey * 0.5f, yBottom = (float) fullH - f.r - f.ey * 0.5f;
         auto drawEnd = [&](const juce::String& text, float yy)
         {
             if (text.isEmpty() || roomW < 4.0f)
                 return;
             juce::String shown = text;
-            if (! legendFits(font, shown, roomW, 0.80f, 9.0f))
+            if (! legendFits(font, shown, roomW, 0.80f, kLegendFloorPx))
                 shown = legendAbbreviation(text);
-            if (! legendFits(font, shown, roomW, 0.80f, 9.0f))
+            if (! legendFits(font, shown, roomW, 0.80f, kLegendFloorPx))
                 return;
             bool fitted = true;
-            const auto fontFit = fitFontToWidth(font, shown, roomW, 0.80f, 9.0f, fitted);
+            const auto fontFit = fitFontToWidth(font, shown, roomW, 0.80f, kLegendFloorPx, fitted);
             drawEngravedText(g, shown, { 1.0f, yy - 6.0f, roomW, 12.0f }, fontFit, juce::Justification::centredRight,
                              juce::Colour(0xffe2d9ba));
         };
@@ -2372,7 +2374,11 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     const bool hover = enabled && slider.isMouseOver();
     const auto capState = dragging ? CapState::dragging : (hover ? CapState::hover : CapState::idle);
     const auto colour = slider.findColour(juce::Slider::thumbColourId);
-    const int capVariant = (int) ((reinterpret_cast<std::uintptr_t>(&slider) >> 5) & 3);
+    // Each cap gets one of four moulding variants so a row does not look stamped from one die. The variant is
+    // keyed by the control's identity (its parameter ID, else its title), never by its address, so every
+    // session, snapshot and machine draws the same cap on the same control.
+    const auto capIdentity = slider.getComponentID().isNotEmpty() ? slider.getComponentID() : slider.getTitle();
+    const int capVariant = (int) (((juce::uint32) capIdentity.hashCode() >> 7) & 3u);
     const int margin = (int) std::ceil(12.0f * f.s);
     const int imgW = (int) std::ceil(f.faceW + 4.0f * f.s) + margin * 2;
     const int imgH = (int) std::ceil(f.faceH + 5.5f * f.s) + margin * 2;
@@ -2620,8 +2626,76 @@ juce::String capTooltipText(const juce::String& text)
     return head.substring(0, word > 80 ? word : maxChars).trimEnd() + juce::String(juce::CharPointer_UTF8("\xe2\x80\xa6"));
 }
 
+// [ws8-studio] A control tooltip whose lines carry roles (ParamKnob::buildTooltip marks it with a leading zero-width
+// space): the name and value, the plain owner's-manual sentence, the manual page, a MIDI CC line, the key hints, and
+// an optional CIRCUIT NOTES section whose heading is tinted by its evidence class.
+juce::TextLayout structuredTooltipLayout(const juce::String& rawText)
+{
+    const auto lines = juce::StringArray::fromLines(rawText.substring(1));
+    juce::AttributedString s;
+    s.setJustification(juce::Justification::centredLeft);
+    s.setWordWrap(juce::AttributedString::byWord);
+    s.setLineSpacing(1.5f);
+    const auto body = displayFont(12.0f, juce::Font::plain);
+    const auto bold = displayFont(12.0f, juce::Font::bold);
+    const auto small = displayFont(11.0f, juce::Font::plain);
+    const auto smallBold = displayFont(11.0f, juce::Font::bold);
+    bool notes = false;
+    int notesChars = 0;
+    for (int i = 0; i < lines.size(); ++i)
+    {
+        const auto& line = lines[i];
+        const auto lead = i == 0 ? juce::String() : juce::String("\n");
+        if (i == 0)
+        {
+            const int colon = line.indexOf(": ");
+            if (colon > 0)
+            {
+                s.append(line.substring(0, colon), bold, gold);
+                s.append("  " + line.substring(colon + 2), bold, ivory);
+            }
+            else
+                s.append(line, bold, ivory);
+        }
+        else if (line.startsWith("CIRCUIT NOTES"))
+        {
+            notes = true;
+            const auto upper = line.toUpperCase();
+            const auto tint = upper.contains("MODERN") ? juce::Colour(0xff6cc6e6)
+                            : upper.contains("INFERRED LAW") ? juce::Colour(0xffe2b04a)
+                            : upper.contains("INFERENCE") ? juce::Colour(0xffc9bfae)
+                                                          : juce::Colour(0xff4fbf6e);
+            s.append(lead + line, smallBold, tint);
+        }
+        else if (notes)
+        {
+            if (notesChars >= 420)
+                continue;
+            auto text = line;
+            if (notesChars + text.length() > 420)
+                text = text.substring(0, 420 - notesChars).trimEnd() + juce::String(juce::CharPointer_UTF8("\xe2\x80\xa6"));
+            notesChars += text.length();
+            s.append(lead + text, small, ivory.withAlpha(0.86f));
+        }
+        else if (line.startsWith("Owner's") || line.startsWith("Service") || line.startsWith("Control ") || line.startsWith("Not on")
+                 || line.startsWith("Not in"))
+            s.append(lead + line, small, gold);
+        else if (line.startsWith("MIDI CC"))
+            s.append(lead + line, smallBold, amberBright);
+        else if (line.startsWith("Double-click"))
+            s.append(lead + line, small, ivoryDim);
+        else
+            s.append(lead + capTooltipText(line), body, ivory);
+    }
+    juce::TextLayout layout;
+    layout.createLayout(s, 380.0f);
+    return layout;
+}
+
 juce::TextLayout tooltipLayout(const juce::String& rawText)
 {
+    if (rawText.startsWithChar((juce::juce_wchar) 0x200b))
+        return structuredTooltipLayout(rawText);
     // A trailing "NAME: ON|OFF" line is the control's state; it is kept whole however long the tip is.
     juce::String stateLine, bodyText = rawText;
     {
@@ -3055,6 +3129,58 @@ void FocusSlider::updateDragBubble()
     bubble->pointAt(target);
 }
 
+// [ws8-studio] Pointer handling: a right-click opens the context menu and a Ctrl/Cmd-click opens the value editor,
+// neither of them a drag (so neither sends a host gesture). A drag is relative to its start; holding Shift scales
+// the pointer's movement by kFineFactor. The scaled position is accumulated from each move, so pressing or
+// releasing Shift mid-drag continues from where the value is instead of jumping.
+void FocusSlider::mouseDown(const juce::MouseEvent& e)
+{
+    swallowPointer = false;
+    if (isEnabled() && e.mods.isPopupMenu() && onContextMenu)
+    {
+        swallowPointer = true;
+        onContextMenu();
+        return;
+    }
+    if (isEnabled() && e.mods.isCommandDown() && e.mods.isLeftButtonDown() && onTypeValue)
+    {
+        swallowPointer = true;
+        onTypeValue();
+        return;
+    }
+    lastPointer = virtualPointer = e.position;
+    juce::Slider::mouseDown(e);
+}
+
+void FocusSlider::mouseDrag(const juce::MouseEvent& e)
+{
+    if (swallowPointer)
+        return;
+    const auto delta = e.position - lastPointer;
+    lastPointer = e.position;
+    virtualPointer += delta * (e.mods.isShiftDown() ? kFineFactor : 1.0f);
+    juce::Slider::mouseDrag(e.withNewPosition(virtualPointer));
+}
+
+void FocusSlider::mouseUp(const juce::MouseEvent& e)
+{
+    if (swallowPointer)
+    {
+        swallowPointer = false;
+        return;
+    }
+    juce::Slider::mouseUp(e.withNewPosition(virtualPointer));
+}
+
+void FocusSlider::matchDragToTrack()
+{
+    const auto style = getSliderStyle();
+    if (style != juce::Slider::LinearVertical && style != juce::Slider::LinearHorizontal)
+        return;
+    const double low = getPositionOfValue(getMinimum()), high = getPositionOfValue(getMaximum());
+    setMouseDragSensitivity(juce::jmax(8, juce::roundToInt(std::abs(high - low))));
+}
+
 // ---------------------------------------------------------------------------
 // ParamKnob
 // ---------------------------------------------------------------------------
@@ -3118,6 +3244,11 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
     slider.addMouseListener(this, false); // hover and drag state redraws the readout
     slider.bubbleTitleText = [this] { return bubbleNameFor(parameterIndex, name); };
     slider.bubbleValueText = [this](double v) { return formatParamValue(parameterIndex, (float) v); };
+    // [ws8-studio] context menu, typed values and the tooltip with its Circuit notes section
+    slider.onContextMenu = [this] { showContextMenu(); };
+    slider.onTypeValue = [this] { showValueEntry(); };
+    slider.onHelp = [this] { showControlHelp(*this, parameterIndex); };
+    slider.tooltipText = [this] { return buildTooltip(circuitNotesInTooltips() || juce::ModifierKeys::currentModifiers.isShiftDown()); };
     addAndMakeVisible(slider);
 
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
@@ -3191,8 +3322,8 @@ void ParamKnob::setCapFader(juce::Colour capColour, bool horizontal)
 namespace
 {
 // The smallest legible type, in screen pixels, at every editor size: names 9.5, readouts 9.
-constexpr float kNameFloor = 9.5f;
-constexpr float kValueFloor = 9.0f;
+constexpr float kNameFloor = kLegendFloorPx;
+constexpr float kValueFloor = 10.0f;
 float legendFloor(const juce::Component&) { return kNameFloor; }
 
 // Vertical band heights of the machined fader column: name above, readout below. A larger
@@ -3380,6 +3511,7 @@ void ParamKnob::resized()
     {
         const int titleH = (int) horizontalTitleHeight((float) getHeight(), minCaption);
         slider.setBounds(2, titleH + 1, getWidth() - 4, juce::jmax(8, getHeight() - titleH - 2));
+        slider.matchDragToTrack();
         return;
     }
     if (hardwareSlider)
@@ -3390,6 +3522,7 @@ void ParamKnob::resized()
         const int top = juce::roundToInt(nameBox + 2.0f * scale);
         const int bottom = juce::roundToInt(valueBox + 2.0f * scale);
         slider.setBounds(1, top, getWidth() - 2, juce::jmax(8, getHeight() - top - bottom));
+        slider.matchDragToTrack();   // [ws8-studio] the cap follows the pointer one to one
         return;
     }
 
@@ -3414,7 +3547,13 @@ void ParamKnob::resized()
 
 void ParamKnob::mouseEnter(const juce::MouseEvent&) { repaint(); }
 void ParamKnob::mouseExit(const juce::MouseEvent&) { repaint(); }
-void ParamKnob::mouseDown(const juce::MouseEvent&) { repaint(); }
+void ParamKnob::mouseDown(const juce::MouseEvent& e)
+{
+    // [ws8-studio] The caption and readout around the slider open the same menu (the slider handles its own clicks).
+    if (e.eventComponent == this && e.mods.isPopupMenu())
+        showContextMenu();
+    repaint();
+}
 void ParamKnob::mouseUp(const juce::MouseEvent&) { repaint(); }
 
 void ParamKnob::mouseDoubleClick(const juce::MouseEvent& e)
@@ -3422,6 +3561,472 @@ void ParamKnob::mouseDoubleClick(const juce::MouseEvent& e)
     if (e.originalComponent == &slider || e.eventComponent == &slider)
         return; // the slider resets itself; this handler is only for the margin around it
     slider.setValue(cs80::paramDef(parameterIndex).def, juce::sendNotificationSync);
+}
+
+// ---------------------------------------------------------------------------
+// [ws8-studio] Typed values, the context menu, help and tooltips
+// ---------------------------------------------------------------------------
+namespace
+{
+std::atomic<bool> gCircuitNotesInTooltips { false };
+
+// A number as a control prints it, in base units: "3.60 kHz" -> 3600 hz, "80 ms" -> 0.08 s, "52%" -> 52 %.
+struct ReadNumber
+{
+    bool ok = false;
+    double value = 0.0;    // in base units (Hz, s, st, ct, oct, %, /, or none)
+    juce::String unit;     // normalised: "hz", "s", "st", "ct", "oct", "%", "/", ""
+    double scale = 1.0;    // what the printed unit multiplied by (1000 for kHz and k, 0.001 for ms)
+    bool explicitScale = false;
+};
+
+ReadNumber readNumber(const juce::String& raw)
+{
+    ReadNumber r;
+    auto t = raw.trim().toLowerCase().replace(juce::String::charToString((juce::juce_wchar) 0x2212), "-").replace(",", ".");
+    t = t.replace(juce::String::charToString((juce::juce_wchar) 0xb1), "");   // a printed plus-minus sign
+    int i = 0;
+    const int n = t.length();
+    bool negative = false;
+    if (i < n && (t[i] == '+' || t[i] == '-'))
+        negative = t[i++] == '-';
+    const int start = i;
+    bool digits = false, dot = false;
+    while (i < n && (juce::CharacterFunctions::isDigit(t[i]) || (t[i] == '.' && ! dot)))
+    {
+        digits = digits || juce::CharacterFunctions::isDigit(t[i]);
+        dot = dot || t[i] == '.';
+        ++i;
+    }
+    if (! digits)
+        return r;
+    double number = t.substring(start, i).getDoubleValue();
+    if (negative)
+        number = -number;
+    const auto rest = t.substring(i).trim();
+    if (rest.startsWith("khz")) { r.unit = "hz"; r.scale = 1000.0; }
+    else if (rest.startsWith("hz")) r.unit = "hz";
+    else if (rest.startsWith("ms")) { r.unit = "s"; r.scale = 0.001; }
+    else if (rest.startsWith("st")) r.unit = "st";
+    else if (rest.startsWith("semi")) r.unit = "st";
+    else if (rest.startsWith("sec") || rest == "s") r.unit = "s";
+    else if (rest.startsWith("ct") || rest.startsWith("cent")) r.unit = "ct";
+    else if (rest.startsWith("oct") || rest == "o") r.unit = "oct";
+    else if (rest.startsWith("%")) r.unit = "%";
+    else if (rest.startsWith("/")) r.unit = "/";
+    else if (rest.startsWith("k")) { r.scale = 1000.0; r.explicitScale = true; }
+    else if (rest.isNotEmpty()) return r;   // text after the number that is not a unit: not a value
+    r.explicitScale = r.explicitScale || r.unit.isNotEmpty();
+    r.value = number * r.scale;
+    r.ok = true;
+    return r;
+}
+
+juce::String channelPrefix(int index, bool longForm)
+{
+    if (index < cs80::P_numGlobals || index >= cs80::P_legacyNumParams)
+        return {};
+    return longForm ? juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String(index < cs80::P_ch2Start ? "I " : "II ");
+}
+
+std::string helpId(int index)
+{
+    if (index >= cs80::P_numGlobals && index < cs80::P_legacyNumParams)
+        return cs80::kChannelDefs[(index - cs80::P_ch1Start) % cs80::CP_count].id;
+    return cs80::paramId(index);
+}
+
+// "O18, O32" -> "Owner's manual p18, p32"; "S17, S19" -> "Service manual sheets 17, 19".
+juce::String pagesText(const cs80::evidence::ControlHelp& help)
+{
+    const juce::String pages(help.pages);
+    if (pages == "-" || pages.isEmpty())
+        return help.basis == cs80::evidence::Basis::modernExtension ? juce::String("Not on the original instrument")
+                                                                    : juce::String("Not in the owner's manual index");
+    juce::StringArray owner, service;
+    for (auto part : juce::StringArray::fromTokens(pages, ",", ""))
+    {
+        part = part.trim();
+        if (part.startsWithChar('O')) owner.add("p" + part.substring(1));
+        else if (part.startsWithChar('S')) service.add(part.substring(1));
+    }
+    juce::StringArray out;
+    if (! owner.isEmpty())
+        out.add("Owner's manual " + owner.joinIntoString(", ") + (help.ownerIndex > 0 ? " (control " + juce::String(help.ownerIndex) + ")" : juce::String()));
+    if (! service.isEmpty())
+        out.add(juce::String(owner.isEmpty() && help.ownerIndex > 0 ? "Control " + juce::String(help.ownerIndex) + ", service manual sheet"
+                                                                    : "Service manual sheet")
+                + (service.size() > 1 ? "s " : " ") + service.joinIntoString(", "));
+    return out.joinIntoString("; ");
+}
+
+juce::String coverageText(const char* codes)
+{
+    juce::StringArray parts;
+    for (auto code : juce::StringArray::fromTokens(codes, "/", ""))
+        parts.add(code + " " + cs80::evidence::coverageCodeName(code.toStdString()));
+    return parts.joinIntoString(", ");
+}
+
+// Marks a tooltip whose lines carry roles (see tooltipLayout): a zero-width space, invisible if shown raw.
+const juce::String kStructuredTip = juce::String::charToString((juce::juce_wchar) 0x200b);
+const juce::String kNotesHeading = "CIRCUIT NOTES";
+
+class ValueEditor final : public juce::TextEditor
+{
+public:
+    ValueEditor() : juce::TextEditor("Value")
+    {
+        setTitle("Type a value");
+        setJustification(juce::Justification::centred);
+        setSelectAllWhenFocused(true);
+        setColour(juce::TextEditor::backgroundColourId, juce::Colour(0xff0d0b08));
+        setColour(juce::TextEditor::textColourId, amberBright);
+        setColour(juce::TextEditor::highlightColourId, amber.withAlpha(0.35f));
+        setColour(juce::TextEditor::outlineColourId, gold);
+        setColour(juce::TextEditor::focusedOutlineColourId, amberBright);
+    }
+};
+
+// The help card's content: plain words first, the evidence after.
+class HelpCard final : public juce::Component
+{
+public:
+    explicit HelpCard(const juce::String& text) : body(text)
+    {
+        setTitle("Control help");
+        setDescription(text);
+        setWantsKeyboardFocus(true);
+        layoutText(400.0f);
+        setSize(424, (int) std::ceil(layout.getHeight()) + 28);
+    }
+
+    void paint(juce::Graphics& g) override { layout.draw(g, getLocalBounds().toFloat().reduced(12.0f, 14.0f)); }
+    bool keyPressed(const juce::KeyPress& key) override
+    {
+        if (key == juce::KeyPress::escapeKey || key == juce::KeyPress::returnKey)
+        {
+            if (auto* box = findParentComponentOfClass<juce::CallOutBox>())
+                box->dismiss();
+            return true;
+        }
+        return false;
+    }
+
+private:
+    void layoutText(float width)
+    {
+        juce::AttributedString s;
+        s.setWordWrap(juce::AttributedString::byWord);
+        s.setLineSpacing(2.0f);
+        const auto lines = juce::StringArray::fromLines(body);
+        for (int i = 0; i < lines.size(); ++i)
+        {
+            const auto& line = lines[i];
+            const bool first = i == 0;
+            const bool heading = line.startsWith(kNotesHeading) || line.startsWith("EVIDENCE");
+            const auto font = displayFont(first ? 15.0f : (heading ? 12.0f : 13.0f), first || heading ? juce::Font::bold : juce::Font::plain);
+            const auto colour = first ? ivory : heading ? gold : line.startsWith("Owner") || line.startsWith("Service") || line.startsWith("Control ")
+                                                                      || line.startsWith("Not on") || line.startsWith("MIDI CC")
+                                                                  ? amberBright : ivory.withAlpha(0.9f);
+            s.append((i > 0 ? "\n" : "") + line, font, colour);
+        }
+        layout.createLayout(s, width);
+    }
+
+    juce::String body;
+    juce::TextLayout layout;
+};
+} // namespace
+
+void setCircuitNotesInTooltips(bool shown) noexcept { gCircuitNotesInTooltips.store(shown, std::memory_order_relaxed); }
+bool circuitNotesInTooltips() noexcept { return gCircuitNotesInTooltips.load(std::memory_order_relaxed); }
+
+bool parseParamValue(int parameterIndex, const juce::String& text, float currentValue, float& physical)
+{
+    if (parameterIndex < 0 || parameterIndex >= cs80::P_numParams)
+        return false;
+    const auto& d = cs80::paramDef(parameterIndex);
+    const auto typedText = text.trim();
+    if (typedText.isEmpty())
+        return false;
+
+    // Choice and switch names as the control prints them ("GLISS", "SUS II" -> "II", "8'"), exact or a unique prefix.
+    const bool integralRange = d.min == std::round(d.min) && d.max == std::round(d.max) && d.max - d.min <= 16.0f;
+    if (integralRange)
+    {
+        int prefixHits = 0;
+        float prefixValue = 0.0f;
+        for (int k = (int) d.min; k <= (int) d.max; ++k)
+        {
+            const auto shown = formatParamValue(parameterIndex, (float) k);
+            if (shown.equalsIgnoreCase(typedText))
+            {
+                physical = (float) k;
+                return true;
+            }
+            if (typedText.length() >= 2 && ! readNumber(shown).ok && shown.startsWithIgnoreCase(typedText))
+            {
+                ++prefixHits;
+                prefixValue = (float) k;
+            }
+        }
+        if (prefixHits == 1)
+        {
+            physical = prefixValue;
+            return true;
+        }
+    }
+
+    const auto typed = readNumber(typedText);
+    if (! typed.ok)
+        return false;
+    // Two sample points where the control prints a number give its linear display law (display = a * value + b):
+    // physical values for Hz and seconds, x100 for percentages, x10 for resonance and so on.
+    std::array<std::pair<double, ReadNumber>, 2> samples;
+    int found = 0;
+    for (float t : { 0.0f, 1.0f, 0.25f, 0.75f, 0.5f })
+    {
+        if (found == 2)
+            break;
+        const float value = d.min + t * (d.max - d.min);
+        const auto shown = readNumber(formatParamValue(parameterIndex, value));
+        if (! shown.ok)
+            continue;
+        if (found == 1 && (std::abs(shown.value - samples[0].second.value) < 1.0e-9 || shown.unit != samples[0].second.unit))
+            continue;
+        samples[(size_t) found++] = { value, shown };
+    }
+    if (found < 2)
+        return false;   // a choice: only its names are values
+    const auto& unit = samples[0].second.unit;
+    if (typed.unit.isNotEmpty() && typed.unit != unit)
+        return false;   // for example "Hz" typed into a time control
+    double base = typed.value;
+    if (! typed.explicitScale)
+    {
+        // A bare number is in the unit the control shows now ("80" on a control showing ms means 80 ms).
+        const auto now = readNumber(formatParamValue(parameterIndex, currentValue));
+        base *= now.ok && now.unit == unit ? now.scale : 1.0;
+    }
+    const double a = (samples[1].second.value - samples[0].second.value) / (samples[1].first - samples[0].first);
+    if (std::abs(a) < 1.0e-12)
+        return false;
+    const double value = samples[0].first + (base - samples[0].second.value) / a;
+    if (! std::isfinite(value))
+        return false;
+    physical = juce::jlimit(d.min, d.max, (float) value);
+    return true;
+}
+
+juce::String controlHelpText(int parameterIndex)
+{
+    if (parameterIndex < 0 || parameterIndex >= cs80::P_numParams)
+        return {};
+    const auto id = helpId(parameterIndex);
+    const auto* help = cs80::evidence::findHelpForId(id.c_str());
+    juce::String text = (channelPrefix(parameterIndex, true) + parameterLongName(parameterIndex)).toUpperCase();
+    if (help == nullptr)
+        return text;
+    text << "\n" << help->plain
+         << "\n" << pagesText(*help)
+         << "\nEVIDENCE  " << juce::String(cs80::evidence::basisName(help->basis)).toUpperCase()
+         << "\n" << cs80::evidence::basisExplanation(help->basis)
+         << "\nCoverage ledger: " << coverageText(help->coverage)
+         << "\n" << kNotesHeading << "\n" << help->circuit;
+    return text;
+}
+
+void showControlHelp(juce::Component& anchor, int parameterIndex)
+{
+    auto* top = anchor.getTopLevelComponent();
+    if (top == nullptr)
+        return;
+    auto card = std::make_unique<HelpCard>(controlHelpText(parameterIndex));
+    auto& box = juce::CallOutBox::launchAsynchronously(std::move(card), top->getLocalArea(&anchor, anchor.getLocalBounds()), top);
+    box.setComponentID("control_help");
+}
+
+int ParamKnob::getHostParameterIndex() const
+{
+    return processor.hostParameterIndex(parameterIndex);
+}
+
+juce::String ParamKnob::buildTooltip(bool withCircuitNotes) const
+{
+    const float value = (float) slider.getValue();
+    auto text = kStructuredTip + tooltipNameFor(parameterIndex) + ": " + formatParamValue(parameterIndex, value);
+    if (parameterIndex == cs80::P_mix)
+        text += "  (channel I : channel II)";
+    const auto id = helpId(parameterIndex);
+    const auto* help = cs80::evidence::findHelpForId(id.c_str());
+    if (help != nullptr)
+        text << "\n" << help->plain << "\n" << pagesText(*help);
+    const int cc = processor.getMidiLearn().controllerFor(getHostParameterIndex());
+    if (cc >= 0)
+        text << "\nMIDI CC " << cc << (processor.getParamValue(cs80::P_parityMode) >= 0.5f ? " (inactive in PURE CS-80)" : "");
+    text << "\nDouble-click resets.  Right-click: MIDI learn, type, copy, help."
+         << (withCircuitNotes || help == nullptr ? juce::String() : juce::String("  Shift: circuit notes."));
+    if (withCircuitNotes && help != nullptr)
+        text << "\n" << kNotesHeading << "  -  " << juce::String(cs80::evidence::basisName(help->basis)).toUpperCase() << "  -  " << help->coverage
+             << "\n" << help->circuit;
+    return text;
+}
+
+juce::PopupMenu ParamKnob::buildContextMenu()
+{
+    juce::PopupMenu menu;
+    const float value = (float) slider.getValue();
+    menu.addSectionHeader((channelPrefix(parameterIndex, false) + parameterLongName(parameterIndex)).toUpperCase() + "   "
+                          + formatParamValue(parameterIndex, value));
+    auto& learn = processor.getMidiLearn();
+    const int host = getHostParameterIndex();
+    const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
+    const int cc = learn.controllerFor(host);
+    juce::Component::SafePointer<ParamKnob> safe(this);
+    auto add = [&menu](const juce::String& text, bool enabled, std::function<void()> action)
+    {
+        juce::PopupMenu::Item item(text);
+        item.isEnabled = enabled;
+        item.action = std::move(action);
+        menu.addItem(item);
+    };
+    if (pure)
+        add("MIDI learn (off in PURE CS-80)", false, nullptr);
+    else if (learn.learningParameter() == host && host >= 0)
+        add("Cancel MIDI learn (waiting for a controller)", true, [safe] { if (safe != nullptr) { safe->processor.getMidiLearn().cancelLearn(); safe->repaint(); } });
+    else
+        add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", host >= 0,
+            [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
+    if (cc >= 0)
+        add("Forget MIDI CC " + juce::String(cc), true, [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().clearParameter(host); safe->repaint(); } });
+    menu.addSeparator();
+    add("Reset to default  (" + formatParamValue(parameterIndex, cs80::paramDef(parameterIndex).def) + ")", true,
+        [safe] { if (safe != nullptr) safe->resetToDefault(); });
+#if JUCE_MAC
+    add("Type a value...   Cmd-click", true, [safe] { if (safe != nullptr) safe->showValueEntry(); });
+#else
+    add("Type a value...   Ctrl-click", true, [safe] { if (safe != nullptr) safe->showValueEntry(); });
+#endif
+    add("Copy value  (" + formatParamValue(parameterIndex, value) + ")", true, [safe] { if (safe != nullptr) safe->copyValue(); });
+    const auto clip = juce::SystemClipboard::getTextFromClipboard().trim().upToFirstOccurrenceOf("\n", false, false);
+    float pasted = 0.0f;
+    const bool pastable = clip.length() < 40 && parseParamValue(parameterIndex, clip, value, pasted);
+    add(pastable ? "Paste value  (" + formatParamValue(parameterIndex, pasted) + ")" : juce::String("Paste value"), pastable,
+        [safe] { if (safe != nullptr) safe->pasteValue(); });
+    menu.addSeparator();
+    add("What is this control?", true, [safe] { if (safe != nullptr) showControlHelp(*safe, safe->parameterIndex); });
+    return menu;
+}
+
+void ParamKnob::showContextMenu()
+{
+    auto menu = buildContextMenu();
+    menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(this).withMinimumWidth(240));
+}
+
+bool ParamKnob::applyTypedValue(const juce::String& text)
+{
+    float physical = 0.0f;
+    if (! parseParamValue(parameterIndex, text, (float) slider.getValue(), physical))
+        return false;
+    // One host gesture through the attachment: one undo step.
+    juce::Slider::ScopedDragNotification gesture(slider);
+    slider.setValue(physical, juce::sendNotificationSync);
+    return true;
+}
+
+void ParamKnob::resetToDefault()
+{
+    juce::Slider::ScopedDragNotification gesture(slider);
+    slider.setValue(cs80::paramDef(parameterIndex).def, juce::sendNotificationSync);
+}
+
+void ParamKnob::copyValue()
+{
+    juce::SystemClipboard::copyTextToClipboard(formatParamValue(parameterIndex, (float) slider.getValue()));
+}
+
+bool ParamKnob::pasteValue()
+{
+    return applyTypedValue(juce::SystemClipboard::getTextFromClipboard().trim().upToFirstOccurrenceOf("\n", false, false));
+}
+
+void ParamKnob::showValueEntry()
+{
+    auto* top = getTopLevelComponent();
+    if (top == nullptr || top == this)
+        return;
+    auto editor = std::make_unique<ValueEditor>();
+    auto* raw = editor.get();
+    const float s = juce::jlimit(0.7f, 1.4f, uiDesignScale(*this));
+    raw->setFont(displayFont(juce::jmax(12.0f, 14.0f * s), juce::Font::bold));
+    raw->setText(formatParamValue(parameterIndex, (float) slider.getValue()), juce::dontSendNotification);
+    const auto area = top->getLocalArea(this, getLocalBounds());
+    const int w = juce::jmax(96, area.getWidth() + 24), h = juce::jmax(26, juce::roundToInt(30.0f * s));
+    raw->setBounds(juce::Rectangle<int>(w, h).withCentre(area.getCentre()).constrainedWithin(top->getLocalBounds()));
+    raw->setDescription("Type a value for " + tooltipNameFor(parameterIndex) + " and press Return; Esc cancels. Units as shown: "
+                        + formatParamValue(parameterIndex, (float) slider.getValue()));
+    juce::Component::SafePointer<ParamKnob> safe(this);
+    auto close = [safe]
+    {
+        juce::MessageManager::callAsync([safe] { if (safe != nullptr) safe->valueEditor.reset(); });
+    };
+    raw->onReturnKey = [safe, raw, close]
+    {
+        if (safe == nullptr) return;
+        if (safe->applyTypedValue(raw->getText()))
+        {
+            close();
+            safe->slider.grabKeyboardFocus();
+        }
+        else
+            raw->setColour(juce::TextEditor::outlineColourId, juce::Colour(0xffe0604a));   // not a value of this control
+    };
+    raw->onEscapeKey = [safe, close] { close(); if (safe != nullptr) safe->slider.grabKeyboardFocus(); };
+    raw->onFocusLost = close;
+    valueEditor = std::move(editor);
+    top->addAndMakeVisible(*raw);
+    raw->toFront(true);
+    raw->grabKeyboardFocus();
+    raw->selectAll();
+}
+
+void ParamKnob::watchLearning()
+{
+    struct Watch final : juce::Timer
+    {
+        explicit Watch(ParamKnob& k) : knob(k) { startTimerHz(10); }
+        void timerCallback() override
+        {
+            knob.repaint();
+            if (knob.processor.getMidiLearn().learningParameter() != knob.getHostParameterIndex())
+            {
+                stopTimer();
+                juce::MessageManager::callAsync([safe = juce::Component::SafePointer<ParamKnob>(&knob)]
+                                                { if (safe != nullptr) safe->learnWatch.reset(); });
+            }
+        }
+        ParamKnob& knob;
+    };
+    learnWatch = std::make_unique<Watch>(*this);
+    repaint();
+}
+
+void ParamKnob::paintOverChildren(juce::Graphics& g)
+{
+    // While MIDI learn waits for a controller for this control: a dashed amber outline. (The host index lookup
+    // runs only while learning is armed, not on every repaint of every knob.)
+    const int armed = processor.getMidiLearn().learningParameter();
+    if (armed < 0 || armed != getHostParameterIndex())
+        return;
+    juce::Path outline;
+    outline.addRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 4.0f);
+    juce::Path dashed;
+    const float dashes[] = { 4.0f, 3.0f };
+    juce::PathStrokeType(1.6f).createDashedStroke(dashed, outline, dashes, 2);
+    g.setColour(amberBright);
+    g.fillPath(dashed);
 }
 
 // ---------------------------------------------------------------------------
@@ -3480,19 +4085,19 @@ void LedButton::paintRocker(juce::Graphics& g, bool hovered, bool down, float ps
     const juce::Rectangle<float> bounds(0.0f, oy, (float) w, (float) h);
     auto area = rockerLegendArea(juce::Rectangle<float>(0.0f, 0.0f, (float) w, (float) h), true).translated(0.0f, oy);
     juce::ignoreUnused(bounds);
-    auto font = displayFont(juce::jlimit(9.0f, 10.5f, area.getHeight() * 0.9f), juce::Font::bold);
+    auto font = displayFont(juce::jlimit(kLegendFloorPx, 11.5f, area.getHeight() * 0.9f), juce::Font::bold);
     font.setExtraKerningFactor(0.03f);
     // 9 px floor, never squeezed below 0.85: when the full word does not fit, print its short form
     // (SUSTAIN -> SUS). The button keeps its full name for accessibility and the tooltip.
     // Deck-size lenses keep a little ink-free margin so a long word does not touch the rim.
     const float room = area.getWidth() - (area.getHeight() > 12.0f ? 3.0f : 1.0f);
-    juce::String legend = fitLegendText(font, getButtonText(), room, 0.85f, 9.0f);
+    juce::String legend = fitLegendText(font, getButtonText(), room, 0.85f, kLegendFloorPx);
     // Roman numerals (the channel I and II switches) are printed in a serif so they read as numerals
     // and not as a bar above a lamp.
     if (legend.containsOnly("IV") && legend.isNotEmpty())
         font = juce::Font(juce::FontOptions(juce::Font::getDefaultSerifFontName(), font.getHeight() * 1.05f, juce::Font::bold));
     bool fitted = true;
-    font = fitFontToWidth(font, legend, room, 0.85f, 9.0f, fitted);
+    font = fitFontToWidth(font, legend, room, 0.85f, kLegendFloorPx, fitted);
     g.setFont(font);
     g.setColour(litLens ? juce::Colour(0xff1d1507) : juce::Colour(0xffe2d8b8).withAlpha(0.84f));
     g.drawText(legend, area.toNearestInt(), juce::Justification::centred, false);
@@ -3533,11 +4138,11 @@ void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
             const bool lit = on || down;
             g.setColour(lit ? juce::Colour(0xfff6e9b8) : juce::Colour(0xff9d967c));
             g.strokePath(glyph, juce::PathStrokeType(lit ? 1.7f : 1.4f));
-            auto font = displayFont(juce::jlimit(9.0f, 9.5f, r.getWidth() * 0.26f), juce::Font::bold);
+            auto font = displayFont(juce::jlimit(kLegendFloorPx, 11.0f, r.getWidth() * 0.26f), juce::Font::bold);
             const float labelW = r.getWidth() - 2.0f;
-            const auto label = fitLegendText(font, getButtonText(), labelW, 0.85f, 9.0f);
+            const auto label = fitLegendText(font, getButtonText(), labelW, 0.85f, kLegendFloorPx);
             bool fitted = true;
-            font = fitFontToWidth(font, label, labelW, 0.85f, 9.0f, fitted);
+            font = fitFontToWidth(font, label, labelW, 0.85f, kLegendFloorPx, fitted);
             drawEngravedText(g, label, r.withTrimmedTop(r.getHeight() * 0.54f).withTrimmedBottom(1.5f), font,
                              juce::Justification::centred, lit ? juce::Colour(0xffb0a88a) : juce::Colour(0xffeee5c4));
             return;
@@ -3565,7 +4170,7 @@ void LedButton::paintButton(juce::Graphics& g, bool hovered, bool down)
     const float lr = juce::jlimit(1.8f, 3.4f, face.getHeight() * 0.15f);
     auto textArea = face.withTrimmedLeft(7.0f + lr * 2.6f + 4.0f).withTrimmedRight(3.0f)
                         .translated(0.0f, down ? 1.0f : 0.0f);
-    auto font = displayFont(juce::jlimit(7.5f, 11.5f, face.getHeight() * 0.38f), juce::Font::bold);
+    auto font = displayFont(juce::jlimit(kLegendFloorPx, 11.5f, face.getHeight() * 0.38f), juce::Font::bold);
     font.setExtraKerningFactor(0.03f);
     drawEngravedText(g, getButtonText(), textArea, font, juce::Justification::centredLeft,
                      on ? amberBright : ivory.withAlpha(0.9f));
@@ -3692,7 +4297,7 @@ void paintRibbonBase(juce::Graphics& g, int W, int H)
     // Printed captions at the ends: left lowers the pitch, right raises it.
     if (ribbonEndZone((float) W) > 20.0f)
     {
-        const auto font = displayFont(juce::jlimit(9.0f, 11.5f, (float) H * 0.30f), juce::Font::bold);
+        const auto font = displayFont(juce::jlimit(kLegendFloorPx, 12.0f, (float) H * 0.30f), juce::Font::bold);
         const float ez = band.getX() - channel.getX();
         drawEngravedText(g, juce::String(juce::CharPointer_UTF8("\xe2\x88\x92 PITCH")),
                          { channel.getX() + 2.0f, channel.getY(), ez - 5.0f, channel.getHeight() }, font,
@@ -3835,7 +4440,7 @@ void RibbonStrip::paint(juce::Graphics& g)
         return;
     }
 
-    const float posX = touching ? juce::jlimit(band.getX(), band.getRight(), anchorX + value * (float) getWidth())
+    const float posX = touching ? juce::jlimit(band.getX(), band.getRight(), anchorX + value * travelSpan(value >= 0.0f))
                                 : juce::jlimit(band.getX(), band.getRight(), hoverX);
     if (touching)
     {
@@ -3853,7 +4458,7 @@ void RibbonStrip::paint(juce::Graphics& g)
     {
         // Bend readout beside the thumb, on whichever side has room.
         const auto text = ribbonBendText(value);
-        const auto font = displayFont(juce::jlimit(9.0f, 11.0f, (float) H * 0.34f), juce::Font::bold);
+        const auto font = displayFont(juce::jlimit(kLegendFloorPx, 12.0f, (float) H * 0.34f), juce::Font::bold);
         const float tw = (float) juce::GlyphArrangement::getStringWidthInt(font, text) + 12.0f;
         const float ph = juce::jmin(band.getHeight() + 4.0f, (float) H - 8.0f);
         const bool right = posX < band.getCentreX();
@@ -3880,9 +4485,26 @@ void RibbonStrip::paint(juce::Graphics& g)
     }
 }
 
+float RibbonStrip::travelSpan(bool upwards) const
+{
+    if (fullRangeFromTouch != nullptr && ! fullRangeFromTouch())
+        return juce::jmax(1.0f, (float) getWidth());
+    // A contact right at an end still leaves a short travel that way rather than an infinitely steep one.
+    const auto band = ribbonBand(ribbonChannel((float) getWidth(), (float) getHeight()));
+    const float minimum = juce::jmax(8.0f, band.getWidth() * 0.12f);
+    return juce::jmax(minimum, upwards ? band.getRight() - anchorX : anchorX - band.getX());
+}
+
+float RibbonStrip::valueForGesture(float fromX, float toX)
+{
+    anchorX = fromX;
+    return juce::jlimit(-1.0f, 1.0f, (toX - anchorX) / travelSpan(toX >= anchorX));
+}
+
 void RibbonStrip::setFromX(float x)
 {
-    value = juce::jlimit(-1.0f, 1.0f, (x - anchorX) / juce::jmax(1.0f, (float) getWidth()));
+    // [ws8-studio] Displacement from the first contact over the travel available in that direction (see fullRangeFromTouch).
+    value = juce::jlimit(-1.0f, 1.0f, (x - anchorX) / travelSpan(x >= anchorX));
     if (onValueChange) onValueChange(value);
     repaint();
 }
@@ -3932,7 +4554,7 @@ void PerformanceWheel::setValue(float newValue)
 juce::Rectangle<float> PerformanceWheel::trackArea() const
 {
     auto r = getLocalBounds().toFloat();
-    r.removeFromTop(std::ceil(juce::jlimit(8.0f, 9.0f, (float) getHeight() * 0.07f) * 1.3f));
+    r.removeFromTop(std::ceil(juce::jlimit(kLegendFloorPx, 11.0f, (float) getHeight() * 0.07f) * 1.3f));
     r.removeFromBottom(juce::jlimit(6.0f, 9.0f, (float) getHeight() * 0.07f));
     return r.reduced(juce::jlimit(3.0f, 6.0f, (float) getWidth() * 0.18f), 2.0f);
 }
@@ -3978,7 +4600,7 @@ void paintWheelHousing(juce::Graphics& g, juce::Rectangle<float> track, bool spr
 void PerformanceWheel::paint(juce::Graphics& g)
 {
     auto full = getLocalBounds().toFloat();
-    const float legendPx = juce::jlimit(9.0f, 10.0f, (float) getHeight() * 0.08f);
+    const float legendPx = juce::jlimit(kLegendFloorPx, 11.0f, (float) getHeight() * 0.08f);
     const auto title = full.removeFromTop(std::ceil(legendPx * 1.3f));
     drawEngravedText(g, wheelLabel, title, displayFont(legendPx, juce::Font::bold),
                      juce::Justification::centred, juce::Colour(0xffe0d6b6));
@@ -4204,80 +4826,5 @@ void LightSpill::paint(juce::Graphics& g)
         drawLightBloom(g, src.bounds.toFloat(), src.reach, src.colour, src.gain * strength);
     }
 }
-
-// ---------------------------------------------------------------------------
-// RovingFocusGroup
-// ---------------------------------------------------------------------------
-RovingFocusGroup::~RovingFocusGroup()
-{
-    stopTimer();
-    clear();
-}
-
-void RovingFocusGroup::add(juce::Button& button)
-{
-    button.addKeyListener(this);
-    buttons.emplace_back(&button);
-    refreshStops();
-    if (! isTimerRunning())
-        startTimerHz(8);
-}
-
-void RovingFocusGroup::clear()
-{
-    stopTimer();
-    for (auto& b : buttons)
-        if (b != nullptr)
-        {
-            b->removeKeyListener(this);
-            b->setWantsKeyboardFocus(true);
-        }
-    buttons.clear();
-}
-
-void RovingFocusGroup::refreshStops()
-{
-    int stop = -1;
-    for (size_t i = 0; i < buttons.size() && stop < 0; ++i)
-        if (buttons[i] != nullptr && buttons[i]->hasKeyboardFocus(false))
-            stop = (int) i;
-    for (size_t i = 0; i < buttons.size() && stop < 0; ++i)
-        if (buttons[i] != nullptr && buttons[i]->getToggleState())
-            stop = (int) i;
-    if (stop < 0)
-        stop = 0;
-    for (size_t i = 0; i < buttons.size(); ++i)
-        if (buttons[i] != nullptr)
-            buttons[i]->setWantsKeyboardFocus((int) i == stop);
-}
-
-void RovingFocusGroup::timerCallback() { refreshStops(); }
-
-bool RovingFocusGroup::keyPressed(const juce::KeyPress& key, juce::Component* origin)
-{
-    int index = -1;
-    for (size_t i = 0; i < buttons.size(); ++i)
-        if (buttons[i] != nullptr && buttons[i].getComponent() == origin)
-            index = (int) i;
-    if (index < 0 || key.getModifiers().isAnyModifierKeyDown())
-        return false;
-    const int last = (int) buttons.size() - 1;
-    int target = index;
-    if (key == juce::KeyPress::leftKey) target = index - 1;
-    else if (key == juce::KeyPress::rightKey) target = index + 1;
-    else if (key == juce::KeyPress::upKey) target = index - cols;
-    else if (key == juce::KeyPress::downKey) target = index + cols;
-    else if (key == juce::KeyPress::homeKey) target = 0;
-    else if (key == juce::KeyPress::endKey) target = last;
-    else return false;
-    target = juce::jlimit(0, last, target);
-    if (target != index && buttons[(size_t) target] != nullptr)
-    {
-        buttons[(size_t) target]->setWantsKeyboardFocus(true);
-        buttons[(size_t) target]->grabKeyboardFocus();
-    }
-    return true;
-}
-
 
 } // namespace cs80::ui

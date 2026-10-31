@@ -63,6 +63,8 @@ struct PresetSaveAccess
         const auto writtenState = juce::ValueTree::fromXml(*xml);
         check(writtenState.hasType("CS80_PARAMS") && xml->getIntAttribute("subOscStateVersion") == 1,
               "save preserves preset schema and original SUB migration version");
+        check(xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey) == Cs80AudioProcessor::stateSchemaVersion,
+              "save writes the current state schema version");
         for (const auto& child : expectedState)
         {
             if (! child.hasProperty("id"))
@@ -75,10 +77,19 @@ struct PresetSaveAccess
             parameter->setValueNotifyingHost(0.0f);
         host.setParamValue(cs80::P_parityMode, 1.0f);
         host.loadUserPreset(saved.file);
+        // Session settings keep their live values (ws2: oversampling quality and
+        // listening output join the isolation policy); all else is restored.
+        const auto* oversampling = host.getAPVTS().getParameter("oversampling");
+        const auto* listening = host.getAPVTS().getParameter("output_jack");
         for (int i = 0; i < parameters.size(); ++i)
         {
             if (parameters[i] == host.getAPVTS().getParameter("parity_mode"))
                 continue;
+            if (parameters[i] == oversampling || parameters[i] == listening)
+            {
+                check(parameters[i]->getValue() == 0.0f, "user preset keeps the live session settings");
+                continue;
+            }
             check(std::abs(parameters[i]->getValue() - expected[(size_t) i]) < 1.0e-5f,
                   "saved user preset restores every sound and performance control");
         }

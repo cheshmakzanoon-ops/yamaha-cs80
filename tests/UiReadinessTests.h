@@ -102,6 +102,9 @@ void runUiReadinessTests(Check check, Flush flush)
     // alter a real user's library. This fresh, uncreated root is fixture-only.
     juce::TemporaryFile presetRoot("-cs80-ui-readiness");
     Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
     RefreshProbe construction(host);
     Cs80AudioProcessorEditor editor(host);
     // isShowing() requires a real native peer even if every ancestor's visible

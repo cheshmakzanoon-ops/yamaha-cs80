@@ -8,7 +8,130 @@ Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e
 
 ## Verified increment and source correction
 
+**2026-10-31, circuit engine filters (rows 26–29):** Source Performance/Isolation
+now run each HP/LP stage as the IG00156 model in
+[IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md): in-loop OTA saturation
+(inferred level), the source-derived 4.7 MΩ feedforward contribution (22.6 Hz added to
+each integrator), no input clip. Q law, gm law and the 1.2 MΩ/180 pF, Q-block and
+1 µF interstage elements remain open; status stays A.
+
+**2026-10-31, circuit engine envelopes (rows 32–34, 37–40):** the Source
+Performance/Isolation envelopes now use the inferred single-RC law in
+[ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md): time-to-−60 dB decay/release, an
+overshoot-target attack that peaks at exactly T, no ×5 time-window bends, and filter
+envelope continuity on voice reuse. Status stays A (approximate): it is a declared
+engineering model, not a recovered IG00152/IG00159 law. Legacy rows are unchanged.
+
 At `71f0483d32657fc48bac1a0693e9c725e71e74dd`, the AT VCF route and zero-touch velocity invariance pass the full Linux/macOS/Windows build/host matrix, numerical/sanitizer tests and UI screenshots. These are software checks, not calibrated analog equivalence. TWS17 plus TRG19/23 now show that initial brilliance/level use a held b signal while pitchbend uses a separate AC-coupled C signal. The earlier inference that all initial-touch destinations should decay together was incorrect and is withdrawn. Affected rows below are updated; other baseline gaps remain open.
+
+## 2026-10-31 integration of the eight workstreams
+
+The entries below were written by the eight parallel workstreams
+([docs/workstreams/](workstreams/README.md)) and folded in by the integrator on
+the integration branch (`claude/adoring-fermi-alhg4x`, merged SHAs in
+[STATUS.md](STATUS.md)). They update the rows named; rows not named keep their
+text above. Every law is source-derived or a labelled declared inference; nothing
+below is a hardware measurement. Legacy (compat) behaviour is unchanged in every
+row (compatibility gates byte-identical).
+
+**Voice circuit (ws1-voice, plan 1.1b, 1.2, 1.4, 2.5)**
+- *Rows 26-29 VCF (IG00156):* circuit engine runs the nodal stage (input networks,
+  1.2 MOhm || 180 pF branch, both 1 uF couplings, in-loop OTA saturation, declared
+  Q-block and cutoff calibration; [IG00156_NODAL_MODEL.md](IG00156_NODAL_MODEL.md)).
+  Status stays A (inferred). Open: top-octave small-signal accuracy at 2x/4x, the
+  ADJ p11 HP setup point (1.69 Vpp against 4.3 +/- 1).
+- *VCO / WSC (IG00153/IG00158):* circuit engine uses the reconstructed event-driven
+  oscillator with the PWL sine ([OSCILLATOR_PROMOTION.md](OSCILLATOR_PROMOTION.md));
+  worst saw/pulse non-harmonic -88.3/-88.8 dB at 48 kHz.
+- *Row 41 VCA level / IG00151:* linear LI and exponential EI inputs separated, LI node
+  RC, declared offset and feedthrough, AC coupling ([IG00151_VCA_MODEL.md](IG00151_VCA_MODEL.md)).
+- *Row 11 Sub -> VCA:* circuit engine exponential (EI) law, +/- 1 octave at full depth.
+- *Voice dispersion and drift (software rows):* circuit engine declared 5 % R / 10 % C
+  component draws mapped into tune, cutoff, Q, level and envelope times, 1/f thermal
+  drift with warm-up, and the historical sine as a "worn unit" option
+  ([TOLERANCE_DRIFT_MODEL.md](TOLERANCE_DRIFT_MODEL.md)). Status A (declared).
+
+**Engine I/O (ws2-engine, plan 0.2, 1.6, 1.7, Phase 3, Phase 6 host groups)**
+- *Row 2 Main volume:* circuit engine smooths VOLUME with a declared 5 ms one-pole.
+- *Row 19 Ribbon / performance controllers:* circuit engine smooths ribbon, bend,
+  CC1/CC74 and poly/channel pressure over 5 ms; a new note starts from its own touch.
+- *Rows 17/18 Foot controller EXP (volume):* the expression gain runs through the PRA
+  I2/I3 optical cell (ws4's declared LDR law). Open: the networks' own steady-state law,
+  polarity, VR11/12 trims.
+- *Row 25 White noise level:* one SUB29 generator for every voice (source-derived
+  fan-out), declared Gaussian PSD from the SUB29 component values, rate independent.
+- *GENERAL mono output and headphone amplifier:* LISTENING OUTPUT selects the GENERAL
+  node or a declared PHONES model (SUB29 -1.5 stage into an inferred 32 Ohm load).
+- *Output amplifiers:* ANALOG NOISE hiss is a declared mix-bus op-amp PSD per channel.
+- *Engine / numerical backend (software row):* OVERSAMPLING Eco 2x / Standard 2x (set
+  from the measured alias after ws1's oscillator) / HQ 8x, offline HQ, reported latency
+  63 host samples plus the oscillator's 8 internal samples; fresh instances default to
+  the circuit engine (state schema 3).
+
+**Keyboard, touch and tuning (ws3-keyboard, plan 2.1-2.4, Phase 6)**
+- *Oscillators/filter state between notes:* all 16 chains free-run in the circuit
+  engine (closed-form idle oscillator, decimated nodal stages, snapshot replay at
+  wake; FreeRunningVoiceTests against FreeRunningVoiceTruth.h). Cold circuits start
+  warm (declared power-on convention).
+- *Cyclic assignment and ninth held key:* IB/A; the circuit engine reconsiders a
+  still-held ninth key when a circuit frees (declared YM26600 model, zero touch).
+- *Keyboard scanner and allocation timing:* A (declared); optional `kas_scan_timing`.
+- *Per-voice sample/hold, droop:* A; SH7 NAND(TR,SUS) hold, glide frozen in Sustain I,
+  declared 0.033 uF / 1 pA droop.
+- *Rows 9-10 Keyboard brilliance and level:* A; KBC1/KBC2 networks with a declared
+  61-key code map meeting both adjustment anchors (C2/KAS6 conflict reported). A lever
+  move reaches held notes while it is smoothed.
+- *Rows 42-45 touch:* TWS b sample/hold (declared acquisition), TWS a 100 ms follower,
+  TRG5 diode-OR bus for the shared SUB speed, C = -HPF(b) with ideal clamp for the
+  initial pitch bend. Sensor force law and calibration open.
+- *Tuning and MIDI (EXT):* Scala/KBM and MTS SysEx; MTS-ESP client not vendored (shim);
+  MPE zones with an upper zone and CC88; voice modes 8/16/unison; ribbon from MIDI CC.
+
+**Original modulation and effect circuits (ws4-circuits, Phase 3)**
+- *Row 11 Sub oscillator speed and function:* IG00150 exponential converter anchored at
+  0.7/60 Hz and 200 Hz full SPEED plus full touch (declared); band-limited saw/square.
+- *Row 12 Aftertouch -> sub speed:* touch added in octaves; composes in series with the
+  TRG5 bus.
+- *Row 16 Ring speed/depth/amount:* exponential converter through the ADJ p19 anchors
+  (150.01 ms / 5.000 ms); declared -40 dB carrier and signal feedthrough and DC offset;
+  500 Hz extension masked at 200 Hz in PURE CS-80.
+- *Row 15 Tremolo/chorus, LEFT and RIGHT outputs:* OE1 four-VCA tremolo; OE2 true L/R
+  wet paths with per-transfer loss, output-pair hold, independent noise and band-limited
+  clock feedthrough.
+- *Row 17 EXP / EXP-WAH:* PRA optical cell, declared asymmetric LDR law.
+
+**Modern layer (ws5-modern, Phase 6; all EXT, inert in PURE CS-80)**
+- LFO waveforms (sine bit-identical), MSEG 1-3, 16-slot modulation matrix tapping the
+  original controllers without changing their circuits, keyboard modulation curves for
+  matrix sources only, modern FX (BBD ensemble, plate, spring, tape echo, oversampled
+  drive, loudness matching; classic slot FX bit-identical). Mounted in the Studio view.
+
+**Tones, memories and library (ws6-library, Phase 4)**
+- *Row 3 tone selectors:* 25 unknown cells re-examined; all stay labelled hypotheses;
+  opt-in refined BA/diode boundary (V1 numerics unchanged).
+- *Row 46 four memory panels:* electrical model with a truth model; not driving audio.
+- *Factory programs:* 301-program curated circuit-engine library; the 222 shipped
+  programs are the read-only Legacy Library at their old host indexes.
+- *MIDI / editing:* Program Change with bank select (inert in PURE CS-80); A/B compare
+  and randomise within original ranges (one undo step each).
+
+**Original panel UI (ws7-panel, Phase 5)**
+- *Physical presentation:* main view follows [PANEL_CONFORMANCE.md](PANEL_CONFORMANCE.md)
+  (memory lid upper left, rows to its right, contour levers on the front strip, foot
+  assigners and EXP left, REAR PANEL block). Global lever direction still drawn upward:
+  open.
+- *Rows 3, 9-10, 13-15, 17, 46, HIGH/LOW:* full tab names; levers and switches moved to
+  the documented blocks; separate tremolo/chorus keys (both-off/both-on states need an
+  engine parameter: open); memory-lid STORE PANEL / COPY MEMORY / COPY RANK.
+
+**Modern UI (ws8-studio, Phase 5/6; EXT)**
+- *Row 19 Ribbon (UI):* full bend from any first-contact point (declared UI
+  inference); PURE CS-80 keeps the proportional law.
+- *61-key playing surface:* computer-keyboard note input.
+- *Presentation:* toolbar, five-tab Studio view, voice-monitor drawer, controllers
+  strip hidden in PURE CS-80.
+- *Modern layer:* MIDI learn, undo/redo, typed values and context menus, guided tour,
+  per-control help and the in-app evidence register.
 
 ## Status and evidence rules
 

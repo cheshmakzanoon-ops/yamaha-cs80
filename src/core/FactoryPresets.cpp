@@ -1,7 +1,9 @@
 #include "FactoryPresets.h"
 
 #include <algorithm>
+#include <initializer_list>
 #include <random>
+#include <utility>
 
 namespace cs80
 {
@@ -336,7 +338,13 @@ void hardwareTonePatch(ParamValues& p, int ch, int tone)
 FactoryPreset make(const std::string& name, const std::string& category,
                    const std::string& description, const ParamValues& p)
 {
-    return { name, category, description, p };
+    FactoryPreset preset;
+    preset.name = name;
+    preset.category = category;
+    preset.description = description;
+    preset.values = p;
+    preset.library = ProgramLibrary::legacy;
+    return preset;
 }
 
 } // namespace
@@ -616,6 +624,76 @@ const std::vector<FactoryPreset>& factoryPresets()
         return b;
     }();
     return bank;
+}
+
+// ---------------------------------------------------------------------------
+// Curated circuit-engine library and the host program list
+// ---------------------------------------------------------------------------
+#include "CuratedLibrary.inc"
+
+namespace
+{
+struct CalibratedLevel { const char* name; float volume; };
+constexpr CalibratedLevel kCalibratedLevels[] = {
+#include "CuratedLibraryLevels.inc"
+    { nullptr, 0.0f }
+};
+} // namespace
+
+const std::vector<FactoryPreset>& curatedLibrary()
+{
+    static const std::vector<FactoryPreset> library = [] {
+        std::vector<FactoryPreset> l;
+        l.reserve(320);
+        curated::buildLibrary(l);
+        for (auto& preset : l)
+            for (const auto& level : kCalibratedLevels)
+                if (level.name != nullptr && preset.name == level.name)
+                    preset.values[P_volume] = level.volume;
+        return l;
+    }();
+    return library;
+}
+
+const std::vector<FactoryPreset>& programLibrary()
+{
+    static const std::vector<FactoryPreset> programs = [] {
+        std::vector<FactoryPreset> all = legacyLibrary();
+        const auto& curated = curatedLibrary();
+        all.insert(all.end(), curated.begin(), curated.end());
+        return all;
+    }();
+    return programs;
+}
+
+int curatedProgramCount()
+{
+    return (int) curatedLibrary().size();
+}
+
+int programIndexForCurated(int curatedIndex)
+{
+    if (curatedIndex < 0 || curatedIndex >= curatedProgramCount())
+        return -1;
+    return legacyProgramCount + curatedIndex;
+}
+
+int curatedIndexForProgram(int programIndex)
+{
+    const int curated = programIndex - legacyProgramCount;
+    return curated >= 0 && curated < curatedProgramCount() ? curated : -1;
+}
+
+int programIndexForMidi(int bankMsb, int bankLsb, int program)
+{
+    if (bankLsb < 0 || bankLsb > 127 || program < 0 || program > 127)
+        return -1;
+    const int inLibrary = bankLsb * 128 + program;
+    if (bankMsb == 0)
+        return programIndexForCurated(inLibrary);
+    if (bankMsb == 1)
+        return inLibrary < (int) legacyLibrary().size() ? inLibrary : -1;
+    return -1;
 }
 
 } // namespace cs80

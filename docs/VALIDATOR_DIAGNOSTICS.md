@@ -74,3 +74,37 @@ No validator or production DSP repair is included in the fixture correction. The
 ## 2026-10-30 standalone source-tone checkpoint
 
 Commit `feff6b9606a150b5627187554c39b8ddd47e6bc9`, [build run40977141585, Linux validator job123809934341](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40977141585/job/123809934341): headless seed `0x4f31605` exited139 after the logged completion of `Fuzz parameters`, **without an overall SUCCESS line**. This is not labeled a post-SUCCESS pass. No local ELF core or new crash stack was obtained. GUI and fixed-seed stages were not reached. All four platform builds/tests, both native macOS validation jobs and Windows validation passed; DSP/sanitizer/compatibility and screenshots also passed. The Linux validator failure remains a failed overall gate with unestablished ownership. This commit added a standalone converter, not an audible source route or validator repair.
+
+## 2026-10-31 integration review: code paths that outlive an instance
+
+Phase 7 asks for a root cause by code review rather than reruns. Review of the
+merged tree (all eight workstreams) for anything that could still run, or still
+be referenced, after the host destroys the last instance and unloads the module:
+
+| Candidate | Finding |
+| --- | --- |
+| Function-local statics holding JUCE objects | `ArtCommon.cpp` keeps the two embedded Barlow `Typeface::Ptr`s and the wrinkle tile `Image`; `UiComponents.cpp` keeps the LRU `PaintCache` of `Image`s; `PluginEditor.cpp` a crinkle-tile `Image` map; `PresetBrowser.cpp` a relief `Image`. All are plain heap or reference-counted objects destroyed by the module's static destructors. |
+| Timers | `UndoableParameterState` (owned by the processor) and the editor-owned toolbar, tour, help, drawer and page timers; every one is a member of an instance or its editor and stops in its destructor. None is static. |
+| Threads | none started by project code (the library audition and MIDI paths use the host's threads). |
+| File-descriptor callbacks | none registered by project code. On Linux only JUCE's VST3 wrapper (`EventHandler`) registers descriptors with the host's `IRunLoop`. |
+
+Evidence added: `CS80Snapshots --teardown-probe` (registered as
+`cs80_teardown_probe`) runs one module life cycle - JUCE start, an instance and
+its editor painted at both sizes (warming every cache above), destruction, JUCE
+shutdown, then the static destructors after `main` returns. Under valgrind
+memcheck on this container (Xvfb, 2026-10-31, tree `00ceccf` plus the probe):
+**0 errors**, exit 0. So the static resources above are destroyed cleanly after
+JUCE's shutdown; they are not shown to be the fault.
+
+The only captured fault trace (2026-10-29, fault-thread replay above) shows the
+host's `RunLoop::Impl` invoking a registered descriptor callback whose frame 0 is
+an unsymbolized address, consistent with a callback into code that is no longer
+mapped. Project code registers no descriptors; within the plugin, only JUCE's VST3
+wrapper does. Root cause: **not established**; no repair is claimed. The Linux
+validator jobs on the integration branch passed headless, GUI and the fixed seed
+on `3961c1c` ([build run 41190530504](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41190530504), job 124509162512); later runs are listed in
+[STATUS.md](STATUS.md). A passing run is not a fix. Next step for whoever can run
+pluginval locally: compare GUI validation runs that keep the module loaded with
+runs that unload it, with debug logging added around the JUCE VST3 wrapper's
+run-loop registration, to see whether a wrapper `EventHandler` registration
+survives `IPlugView::removed()`.

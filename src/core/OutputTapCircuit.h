@@ -7,6 +7,31 @@
 #include <cmath>
 
 namespace cs80 {
+// Circuit-engine gain staging (docs/IMPROVEMENT_PLAN.md Phase 1.5).
+//
+// kCircuitOutputReference is a SOFTWARE CALIBRATION, not a recovered gain: the
+// engine's normalized preamp-source units are not volts, so a fixed mapping to
+// digital full scale must be chosen. -6 dB was chosen from cs80_engine_audit
+// (phrase suite, 48 kHz, 2026-10-31): source tone tabs peaked at up to
+// +3.2 dBFS and their loudest chord was 5 dB above the legacy tabs. After the
+// trim the worst peak is about -2.8 dBFS and loudness sits with legacy.
+//
+// circuitOutputDriver is an INFERRED headroom model for the preamp/driver that
+// feeds the passive output network: unity below the knee, then a smooth
+// (C1-continuous) approach to a ceiling at digital full scale, as a real driver
+// approaching its supply rails would. Its knee and ceiling are not measured;
+// it only engages on peaks the trim leaves above -1 dBFS.
+inline constexpr double kCircuitOutputReference = 0.5;
+inline constexpr double kCircuitDriverKnee = 0.891250938; // -1 dBFS
+inline constexpr double kCircuitDriverCeiling = 1.0;
+inline double circuitOutputDriver(double x) noexcept {
+    const double magnitude = std::abs(x);
+    if (!(magnitude > kCircuitDriverKnee)) return x;
+    const double span = kCircuitDriverCeiling - kCircuitDriverKnee;
+    const double shaped = kCircuitDriverKnee + span * std::tanh((magnitude - kCircuitDriverKnee) / span);
+    return std::copysign(shaped, x);
+}
+
 class OutputTapCircuit {
 public:
     enum class Mode { high, low };

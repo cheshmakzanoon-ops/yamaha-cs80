@@ -23,6 +23,10 @@ ControlFrame fixture()
 {
     ControlFrame f;
     f.effectiveValues[P_sourcePerformance] = 1.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    f.effectiveValues[P_oversampling] = 0.0f;
     f.hardwareSources = {1, 3};
     auto& p = f.effectiveValues;
     p[P_analogNoise] = p[P_drift] = p[P_voiceDispersion] = p[P_chorusOn] = 0.0f;
@@ -38,7 +42,8 @@ void init(Engine& e, double rate, const ControlFrame& f)
     check(e.setControlFrame(f), "valid source-performance frame accepted");
     check(e.getRenderPolicy() == RenderPolicy::sourcePerformance && !e.isParityMode(),
           "source-performance is not isolation");
-    check(e.getLatencySamples() == 63 && e.getInternalSampleRate() == rate * 2.0,
+    // ws1 merge: plus the circuit oscillator's 8 internal samples (4 host at 2x).
+    check(e.getLatencySamples() == 63 + 4 && e.getInternalSampleRate() == rate * 2.0,
           "source-performance retains numerical backend and host latency");
 }
 std::vector<float> render(Engine& e, int frames = 256)
@@ -58,15 +63,19 @@ bool same(Engine::RankEnvelopeState a, Engine::RankEnvelopeState b)
 void controllerTransports(double rate)
 {
     auto f = fixture(); f.effectiveValues[P_mpeOn] = 1.0f;
+    // ws2 parameter smoothing (intentional circuit-engine change): controllers
+    // reach their target through the 5 ms one-pole and land on it exactly well
+    // within 0.2 s, so each transport is read after that settling time.
+    const int settle = (int) std::ceil(0.2 * rate);
     Engine e; init(e, rate, f);
     e.noteOn(60, .7f, 2); e.noteOn(60, .7f, 3); render(e);
     const auto frequency = e.getRankInfo(0, 0).oscillatorHz;
-    e.pitchBend(2, .5f); render(e, 1);
+    e.pitchBend(2, .5f); render(e, settle);
     near(e.getRankInfo(0, 0).oscillatorHz / frequency, 4.0, 1e-5,
          "MPE member bend uses configured48-semitone range");
     near(e.getRankInfo(1, 0).oscillatorHz, frequency, 1e-5,
          "MPE member bend does not bend another member");
-    e.pitchBend(1, .5f); render(e, 1);
+    e.pitchBend(1, .5f); render(e, settle);
     near(e.getRankInfo(1, 0).oscillatorHz / frequency, std::exp2(1.0 / 12.0), 1e-6,
          "master bend is the existing global transport");
     e.polyPressure(60, .8f, 2); e.channelPressure(3, .3f); render(e, 1);
@@ -99,7 +108,7 @@ void controllerTransports(double rate)
     for (auto* engine : {&baseline, &changed})
     { engine->noteOn(60, .7f, 2); engine->noteOn(64, .5f, 3); render(*engine); }
     changed.controlChange(74, .5f, 2);
-    render(baseline, 1); render(changed, 1);
+    render(baseline, settle); render(changed, settle);
     near(changed.getRankInfo(0, 0).lpfHz / baseline.getRankInfo(0, 0).lpfHz,
          std::exp2(.4), 2e-6, "CC74 adds exactly its per-member0.4-octave transport");
     near(changed.getRankInfo(1, 0).lpfHz, baseline.getRankInfo(1, 0).lpfHz, 1e-4,
@@ -108,7 +117,7 @@ void controllerTransports(double rate)
          baseline.getSourceCutoffReadout(0).effectiveCv[0][1], 1e-12,
          "CC74 does not double-modulate the source target network");
     changed.controlChange(74, 0, 2); changed.controlChange(1, .5f, 3);
-    render(baseline, 1); render(changed, 1);
+    render(baseline, settle); render(changed, settle);
     near(changed.getRankInfo(0, 0).lpfHz / baseline.getRankInfo(0, 0).lpfHz,
          std::exp2(.75), 2e-6, "CC1 adds existing global filter transport exactly once");
     near(changed.getRankInfo(0, 0).oscillatorHz / baseline.getRankInfo(0, 0).oscillatorHz,
@@ -225,7 +234,7 @@ void routingAndExtensions(double rate)
 }
 int main()
 {
-    check(P_parityMode == 137 && P_sourcePerformance == 138 && P_numParams == 139,
+    check(P_parityMode == 137 && P_sourcePerformance == 138 && P_numParams >= 139,
           "core parameter indexes are append-only");
     check(paramId(P_sourcePerformance) == "source_performance" && ParamValues{}[P_sourcePerformance] == 0,
           "source-performance has stable ID and legacy default");

@@ -1,5 +1,10 @@
 # Experimental IG00153 / IG00158 checkpoint
 
+> **Promoted (2026-10-31):** the oscillator now lives in
+> `src/core/ReconstructedOscillator.h` and drives the circuit engine; see
+> [OSCILLATOR_PROMOTION.md](OSCILLATOR_PROMOTION.md). The statements below about
+> Engine selection and the nonlinear-path failure describe the 2026-10-30 checkpoint.
+
 2026-10-30. **Implemented standalone model; not an Engine candidate, measured CS-80 match, or completed W3 milestone.**
 
 ## Useful result and release boundary

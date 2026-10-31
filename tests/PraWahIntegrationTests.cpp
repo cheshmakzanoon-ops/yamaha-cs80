@@ -4,6 +4,9 @@
 // coupling are reconstructed separately. Envelope/chorus/decimator primitives
 // are shared intentionally: this verifies routing, not their physical accuracy.
 #include "core/Engine.h"
+#include "core/RingModulatorCircuit.h"
+#include "CircuitSineSource.h"
+#include "ExpressionOpticsOracle.h"
 
 #include <algorithm>
 #include <array>
@@ -216,6 +219,10 @@ ParamValues sinePatch(bool isolation = true, bool wet = false)
 {
     ParamValues p;
     p[P_parityMode] = isolation ? 1.0f : 0.0f;
+    // Oversampling quality (ws2-engine, plan 1.6): the circuit engine now defaults to
+    // Standard (4x at 44.1/48 kHz). This fixture's independent oracle runs at the historical 2x
+    // internal rate, so pin Eco; per-factor behavior is covered by OversamplingTests.
+    p[P_oversampling] = 0.0f;
     p[P_footMode] = wet ? 1.0f : 0.0f;
     p[P_volume] = 0.25f; p[P_mix] = 0.0f; p[P_detune] = 0.0f;
     p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = 0.0f;
@@ -250,6 +257,8 @@ struct PipelineOracle
 {
     explicit PipelineOracle(const Engine& e, const ParamValues& p)
         : rate(e.getInternalSampleRate()), phase(e.getRankAudioState(0, 0).phase),
+          circuitSine(e.getInternalSampleRate(), e.getRankOscillatorState(0, 0)),
+          circuitVca(e.getInternalSampleRate()),
           isolated(p[P_parityMode] != 0.0f), wet(p[P_footMode] != 0.0f), mix(wet ? 1.0f : 0.0f),
           ringAmount(p[P_ringAmount]), chorusOn(p[P_chorusOn] != 0.0f),
           tremolo(p[P_chorusMode] != 0.0f), chorusSpeed(p[P_chorusSpeed]), chorusDepth(p[P_chorusDepth])
@@ -277,12 +286,20 @@ struct PipelineOracle
         {
             phase += 440.0f/sr;
             if (phase >= 1.0f) phase -= std::floor(phase);
-            const float sine = std::sin(kTwoPi*phase) + 0.035f*std::sin(3.0f*kTwoPi*phase);
+            // Plan step 1.2, intentional circuit-engine change: isolation runs the
+            // reconstructed WSC sine; legacy keeps sin + 3.5 % third harmonic.
+            const float sine = isolated ? circuitSine(440.0f)
+                                        : std::sin(kTwoPi*phase) + 0.035f*std::sin(3.0f*kTwoPi*phase);
             const float amp = envelope.tick(sr, true, isolated);
-            float sample = sine * 1.0f * amp * 1.0f * 0.17f * 0.5f;
+            // Plan step 1.4, intentional circuit-engine change: isolation runs the
+            // IG00151 VCA (offset/feedthrough pedestal, LI node); legacy multiplies.
+            float sample = isolated ? circuitVca(sine, amp) : sine * 1.0f * amp * 1.0f * 0.17f * 0.5f;
             ringPhase += 77.0f * (1.0f/sr); ringPhase -= std::floor(ringPhase);
+            // ws4 Step 2, intentional circuit-engine change: isolation uses the offset
+            // RMO multiplier (RingModulatorCircuit); the legacy policy keeps the ideal multiply.
             if (ringAmount > 0.001f)
-                sample = lerp(sample, sample*std::sin(kTwoPi*ringPhase), ringAmount);
+                sample = isolated ? RingModulatorCircuit::blend(sample, std::sin(kTwoPi*ringPhase), ringAmount)
+                                  : lerp(sample, sample*std::sin(kTwoPi*ringPhase), ringAmount);
             const float targetMix = wet ? 1.0f : 0.0f;
             if (mix != targetMix)
             {
@@ -292,8 +309,11 @@ struct PipelineOracle
             if (isolated)
             {
                 // Closed-form response since the last target change, not the
-                // production recurrence. Exactly 12ms is one log-R time constant.
-                opticalLog = targetLog + (startLog-targetLog)*std::exp(-++opticalSamples/(0.012*rate));
+                // production recurrence. ws4 Step 4 (intentional circuit-engine change):
+                // declared asymmetric LDR, 12 ms while resistance falls (brightening) and
+                // 60 ms while it rises (darkening), each one log-R time constant.
+                const double tau = targetLog < startLog ? 0.012 : 0.060;
+                opticalLog = targetLog + (startLog-targetLog)*std::exp(-++opticalSamples/(tau*rate));
                 const auto nodes = circuit.tick(sample, rate, std::exp(opticalLog));
                 sample = lerp(static_cast<float>(nodes[0]), static_cast<float>(nodes[1]), mix);
             }
@@ -311,6 +331,13 @@ struct PipelineOracle
             const auto ch = isolated ? bbd.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo)
                                      : chorus.process(sample, sample, chorusSpeed, chorusDepth, chorusOn, tremolo);
             const std::array<float, 2> stereo {ch.l, ch.r};
+            // ws2 (intentional circuit-engine change, ws4 hand-off): the circuit
+            // engine's expression gain is the PRA I2/I3 optical cell
+            // (closed-form oracle, ExpressionOpticsOracle.h), starting on the pedal
+            // at the first sample; legacy keeps the immediate gain.
+            if (!gainSnapped) { gainOptics.rate = rate; gainSnapped = true; }
+            gainOptics.setPedal(expression);
+            const float gainExpressionNow = isolated ? static_cast<float>(gainOptics.tick()) : expression;
             for (int channel = 0; channel < 2; ++channel)
             {
                 const float dc = stereo[channel]-lastInput[channel]
@@ -319,8 +346,11 @@ struct PipelineOracle
                 // PRA receives unscaled waveform; expression acts after chorus
                 // and before the loaded output coupling network. Retain float
                 // source scaling, with no additional absolute active-stage gain.
-                const float source = stereo[channel] * expression;
-                const float out = isolated ? outputs[channel].tick(source, rate, outputHigh)
+                const float source = stereo[channel] * gainExpressionNow;
+                // Phase 1.5 gain staging precedes the loaded output network.
+                const float staged = static_cast<float>(
+                    circuitOutputDriver(static_cast<double>(source) * kCircuitOutputReference));
+                const float out = isolated ? outputs[channel].tick(staged, rate, outputHigh)
                                            : softClip(dc*expression);
                 decimator[channel].push(out);
             }
@@ -329,7 +359,12 @@ struct PipelineOracle
     }
     double rate, opticalLog = std::log(2000.0), startLog = std::log(2000.0), targetLog = std::log(2000.0);
     int opticalSamples = 0;
-    float phase, expression = 1.0f;
+    float phase;
+    CircuitSineSource circuitSine;
+    CircuitVoiceVca circuitVca;
+    float expression = 1.0f;
+    tests::ExpressionOpticsOracle gainOptics;
+    bool gainSnapped = false;
     bool isolated, wet, outputHigh = true;
     float mix, ringAmount, ringPhase = 0.0f;
     bool chorusOn, tremolo;
@@ -558,12 +593,14 @@ void testPedalTimeConstantAndPartition()
     {
         Engine e; auto p = sinePatch(); e.setParams(p); e.prepare(rate);
         e.setExpression(-1.0f); // finite physical travel clamps to heel
-        const int frames = static_cast<int>(std::round(rate*0.012));
+        // ws4 Step 4 (intentional change): toe -> heel darkens the cell, so the declared
+        // 60 ms decay time constant applies (12 ms is the brightening constant).
+        const int frames = static_cast<int>(std::round(rate*0.060));
         render(e, frames);
         const double time = frames/rate;
-        const double expectedLog = std::log(1e6)+(std::log(2000.0)-std::log(1e6))*std::exp(-time/0.012);
+        const double expectedLog = std::log(1e6)+(std::log(2000.0)-std::log(1e6))*std::exp(-time/0.060);
         near(std::log(e.getPraWahState(0).opticalOhms), expectedLog, 2e-11,
-             "12ms optical time constant is physical-time invariant even while dry and silent");
+             "60ms darkening time constant is physical-time invariant even while dry and silent");
         near(e.getPraWahState(0).targetOhms, 1e6, 1e-8, "negative expression clamps to heel optical target");
         check(zeroCaps(e.getPraWahState(0)), "zero audio remains exactly zero while optical state moves");
         e.setExpression(2.0f); render(e, 1);
@@ -592,6 +629,7 @@ void testFinitePolyphony()
     for (double rate : {8000.0, 44100.0, 192000.0, 768000.0})
     {
         ParamValues p; p[P_parityMode] = 1.0f; p[P_ringAmount] = 0.8f; p[P_chorusOn] = 1.0f;
+        p[P_oversampling] = 0.0f; // 2x oracle fixture; see sinePatch()
         Engine e; e.setParams(p); e.prepare(rate);
         for (int note : {24, 36, 48, 60, 72, 84, 96, 108}) e.noteOn(note, 1.0f);
         for (int step = 0; step < 80; ++step)

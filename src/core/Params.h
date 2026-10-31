@@ -149,6 +149,94 @@ enum : int
     // Opt-in source-model audio with the existing modern performance overlays.
     // Append only: parity keeps its index and its independent isolation meaning.
     P_sourcePerformance,
+
+    // [ws1-voice] append this workstream's core parameters below this line.
+    // Circuit-engine drift model (plan 2.5): 0 thermal 1/f drift (declared), 1 the
+    // historical +/-22 cent 0.031 Hz sine ("worn unit"). Legacy always uses the sine.
+    P_driftModel,
+
+    // [ws2-engine] append this workstream's core parameters below this line.
+    // Numerical quality 0 Eco (2x), 1 Standard, 2 HQ (8x); see Oversampling.h.
+    P_oversampling,
+    // Listening output 0 LEFT/RIGHT jacks, 1 GENERAL mono jack, 2 PHONES.
+    P_outputJack,
+
+    // [ws3-keyboard] append this workstream's core parameters below this line.
+    // KAS scan timing (2.2): opt-in, quantises key events to scan instants.
+    P_kasScanTiming,
+    // Controller response curves (2.4). INTERFACE LAYER, identity at default.
+    P_velocityCurve,
+    P_pressureCurve,
+    P_pressureThreshold,
+    // Ribbon from a MIDI CC (interface layer): off by default, CC 16 when on.
+    P_ribbonCcEnable,
+    P_ribbonCc,
+    // Tuning source (Phase 6, modern layer): 0 12-TET, 1 Scala/KBM, 2 MTS.
+    P_tuningMode,
+    // Voice mode (Phase 6): 0 eight voices (authentic), 1 sixteen, 2/3/4 unison x2/x4/x8.
+    P_voiceMode,
+    P_unisonDetune,
+
+    // [ws4-circuits] append this workstream's core parameters below this line.
+
+    // [ws5-modern] append this workstream's core parameters below this line.
+    // Modern modulation layer (IMPROVEMENT_PLAN Phase 6); inert under PURE CS-80.
+    // LFO 1..3 waveform: 0 sine (historical), 1 triangle, 2 saw up, 3 saw down,
+    // 4 square, 5 sample & hold, 6 smooth random (src/core/ModulationLfo.h).
+    P_lfo1Wave,
+    P_lfo2Wave,
+    P_lfo3Wave,
+    // MSEG 1..3 speed in octaves (-3..+3 = 0.125x..8x, linear so the default round-trips
+    // exactly through host state); shapes and routing live in session state.
+    P_mseg1Rate,
+    P_mseg2Rate,
+    P_mseg3Rate,
+    // Modulation matrix slot 1..16 bipolar amount (src/core/ModMatrix.h).
+    P_mod1Amount,
+    P_mod2Amount,
+    P_mod3Amount,
+    P_mod4Amount,
+    P_mod5Amount,
+    P_mod6Amount,
+    P_mod7Amount,
+    P_mod8Amount,
+    P_mod9Amount,
+    P_mod10Amount,
+    P_mod11Amount,
+    P_mod12Amount,
+    P_mod13Amount,
+    P_mod14Amount,
+    P_mod15Amount,
+    P_mod16Amount,
+    // Keyboard modulation page response curves (-1 hard .. 0 linear .. +1 soft).
+    P_modVelocityCurve,
+    P_modPressureCurve,
+    P_modWheelCurve,
+    P_modKeyCurve,
+    // Modern FX per slot: model (0 classic = use fxN_type, 1 BBD ensemble, 2 spring,
+    // 3 plate, 4 tape echo, 5 drive), two model controls and the drive oversampling
+    // (0 = 1x .. 3 = 8x of the internal rate). Then one switch for in/out loudness
+    // matching of every slot (src/core/FxModels.h, FxLoudness.h).
+    P_fx1Model,
+    P_fx1ParamA,
+    P_fx1ParamB,
+    P_fx1Oversampling,
+    P_fx2Model,
+    P_fx2ParamA,
+    P_fx2ParamB,
+    P_fx2Oversampling,
+    P_fx3Model,
+    P_fx3ParamA,
+    P_fx3ParamB,
+    P_fx3Oversampling,
+    P_fxGainCompensation,
+
+    // [ws6-library] append this workstream's core parameters below this line.
+
+    // [ws7-panel] append this workstream's core parameters below this line.
+
+    // [ws8-studio] append this workstream's core parameters below this line.
+
     P_numParams
 };
 
@@ -302,8 +390,77 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "glide_assign", "PORTA / GLISS ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "foot_mode", "PEDAL EXP / WAH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" },
-    { "parity_mode", "PARITY MODE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" },
-    { "source_performance", "SOURCE PERFORMANCE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" }
+    // Presented as PURE CS-80 and ENGINE (Circuit on / Legacy off), plan 1.7.
+    // The core default stays Legacy; fresh plugin instances select Circuit.
+    { "parity_mode", "PURE CS-80", 0.0f, 1.0f, 0.0f, 1.0f, "", "ENGINE" },
+    { "source_performance", "ENGINE: CIRCUIT", 0.0f, 1.0f, 0.0f, 1.0f, "", "ENGINE" },
+    // [ws1-voice] append this workstream's ParamDefs below this line (same order as the enum).
+    { "drift_model", "DRIFT MODEL", 0.0f, 1.0f, 0.0f, 1.0f, "", "VOICE" },
+
+    // [ws2-engine] append this workstream's ParamDefs below this line (same order as the enum).
+    { "oversampling", "OVERSAMPLING", 0.0f, 2.0f, 1.0f, 1.0f, "", "ENGINE" },
+    { "output_jack", "LISTENING OUTPUT", 0.0f, 2.0f, 0.0f, 1.0f, "", "OUTPUT" },
+
+    // [ws3-keyboard] append this workstream's ParamDefs below this line (same order as the enum).
+    { "kas_scan_timing", "KAS SCAN TIMING", 0.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD" },
+    { "velocity_curve", "VELOCITY CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "MIDI" },
+    { "pressure_curve", "PRESSURE CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "MIDI" },
+    { "pressure_threshold", "PRESSURE THRESHOLD", 0.0f, 0.5f, 0.0f, 1.0f, "", "MIDI" },
+    { "ribbon_cc_enable", "RIBBON MIDI CC", 0.0f, 1.0f, 0.0f, 1.0f, "", "MIDI" },
+    { "ribbon_cc", "RIBBON CC NUMBER", 1.0f, 119.0f, 16.0f, 1.0f, "", "MIDI" },
+    { "tuning_mode", "TUNING SOURCE", 0.0f, 2.0f, 0.0f, 1.0f, "", "TUNING" },
+    { "voice_mode", "VOICE MODE", 0.0f, 4.0f, 0.0f, 1.0f, "", "VOICE" },
+    { "unison_detune", "UNISON DETUNE", 0.0f, 50.0f, 10.0f, 1.0f, "ct", "VOICE" },
+
+    // [ws4-circuits] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws5-modern] append this workstream's ParamDefs below this line (same order as the enum).
+    { "lfo1_wave", "LFO 1 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "lfo2_wave", "LFO 2 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "lfo3_wave", "LFO 3 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "mseg1_rate", "MSEG 1 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mseg2_rate", "MSEG 2 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mseg3_rate", "MSEG 3 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mod1_amount", "MOD 1 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod2_amount", "MOD 2 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod3_amount", "MOD 3 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod4_amount", "MOD 4 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod5_amount", "MOD 5 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod6_amount", "MOD 6 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod7_amount", "MOD 7 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod8_amount", "MOD 8 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod9_amount", "MOD 9 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod10_amount", "MOD 10 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod11_amount", "MOD 11 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod12_amount", "MOD 12 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod13_amount", "MOD 13 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod14_amount", "MOD 14 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod15_amount", "MOD 15 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod16_amount", "MOD 16 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod_velocity_curve", "VELOCITY CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_pressure_curve", "AFTERTOUCH CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_wheel_curve", "MOD WHEEL CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_key_curve", "KEY FOLLOW CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "fx1_model", "FX 1 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx1_param_a", "FX 1 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_param_b", "FX 1 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_oversampling", "FX 1 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx2_model", "FX 2 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx2_param_a", "FX 2 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_param_b", "FX 2 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_oversampling", "FX 2 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx3_model", "FX 3 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx3_param_a", "FX 3 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_param_b", "FX 3 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_oversampling", "FX 3 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx_gain_comp", "FX LOUDNESS MATCH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
+
+    // [ws6-library] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws7-panel] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [ws8-studio] append this workstream's ParamDefs below this line (same order as the enum).
+
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);

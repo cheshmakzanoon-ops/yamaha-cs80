@@ -45,7 +45,9 @@ void testEditorInitialSize(Check check)
     const auto* constrainer = editor.getConstrainer();
     check(editor.isResizable() && constrainer != nullptr
               && constrainer->getMinimumWidth() == 1120 && constrainer->getMinimumHeight() == 700
-              && constrainer->getMaximumWidth() == 2400 && constrainer->getMaximumHeight() == 1500
+              // Intentional change (ws7, Phase 5.5): the maximum was 2400 x 1500; it is raised to 3200 x 2000 so
+              // the 200 % display-size preset fits. Minimum and aspect ratio are unchanged.
+              && constrainer->getMaximumWidth() == 3200 && constrainer->getMaximumHeight() == 2000
               && std::abs(constrainer->getFixedAspectRatio() - 1.6) < 1.0e-6,
           "initial display fitting preserves the existing manual resize constraints");
     for (const auto size : { juce::Point<int>(1120, 700), juce::Point<int>(1200, 760),

@@ -16,19 +16,31 @@ void testSourcePerformanceHost(Check&& check)
     Cs80AudioProcessor host;
     auto* source = host.getAPVTS().getParameter("source_performance");
     auto* isolation = host.getAPVTS().getParameter("parity_mode");
-    check(source != nullptr && host.getParameters().size() == 245
+    check(source != nullptr && host.getParameters().size() >= 245
               && host.getParameters()[244] == source && host.getParameters()[243] == isolation,
           "source performance appends host244 without moving parity243");
+    // Plan 1.7 engine default flip (intentional): fresh instances and the host
+    // default select the circuit engine (ENGINE on). The core ParamDef default and
+    // every old-state rule below are unchanged.
     check(source != nullptr && dynamic_cast<juce::AudioParameterBool*>(source) != nullptr
-              && source->getVersionHint() == 7 && source->getDefaultValue() == 0.0f
-              && host.getParamValue(P_sourcePerformance) == 0.0f,
-          "source performance is canonical default-off Bool with AU hint7");
+              && source->getVersionHint() == 7 && source->getDefaultValue() == 1.0f
+              && host.getParamValue(P_sourcePerformance) == 1.0f,
+          "ENGINE (source performance) is a canonical Bool with AU hint7, Circuit by default");
     auto restore = [&](const juce::ValueTree& tree)
     {
         const auto text = tree.createXml()->toString();
         host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
     };
     const auto original = host.getAPVTS().copyState();
+    {
+        juce::MemoryBlock saved;
+        host.getStateInformation(saved);
+        const auto xml = juce::parseXML(saved.toString());
+        check(xml != nullptr && xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey)
+                                    == Cs80AudioProcessor::stateSchemaVersion
+                  && ! original.hasProperty(Cs80AudioProcessor::stateSchemaKey),
+              "host state writes the schema marker; the live state does not keep one");
+    }
     for (float enabled : {0.0f, 1.0f})
     {
         host.setParamValue(P_sourcePerformance, enabled);

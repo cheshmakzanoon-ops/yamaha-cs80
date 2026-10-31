@@ -6,7 +6,13 @@
 #include "KeyboardEventQueue.h"
 #include "KeyboardGestureCapture.h"
 #include "KeyboardPressureOwnership.h"
+#include "ModernLayerState.h"
+#include "MtsEspClient.h"
+#include "core/MpeZones.h"
+#include "core/Tuning.h"
 #include "OutputMeter.h"
+#include "MidiLearn.h"
+#include "UndoHistory.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -65,6 +71,8 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     juce::AudioProcessorValueTreeState& getAPVTS() noexcept { return apvts; }
+    // Modern modulation layer session data (MSEG shapes, matrix routing; ws5-modern).
+    cs80::ModernLayerState& getModernLayer() noexcept { return modernLayer; }
     const juce::AudioProcessorValueTreeState& getAPVTS() const noexcept { return apvts; }
     cs80::Engine& getEngine() noexcept { return engine; }
     // Non-audio producers only. Never feed host MIDI into this state.
@@ -81,7 +89,9 @@ public:
             && hostKeyMasks[(size_t) note].load(std::memory_order_relaxed) != 0;
     }
 
-    const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::factoryPresets(); }
+    // Host program list: Legacy Library 0..221 (shipped indexes unchanged), then
+    // the curated circuit-engine library (cs80::programLibrary()).
+    const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
@@ -156,6 +166,16 @@ public:
     float getMemoryValue(int bank, int local) const noexcept;
     void setMemoryValue(int bank, int local, float value) noexcept;
 
+    // Saved-state schema. A state without the attribute is schema 1, written
+    // before this marker existed. Missing (or malformed) values restore with the
+    // semantics of the schema that wrote the state, never a later default:
+    //   1  pre-plan: ENGINE Legacy (SOURCE PERFORMANCE off), original SUB off.
+    //   2  plan 0.3 marker; fresh instances still started on Legacy.
+    //   3  plan 1.7 engine default flip: fresh instances start on the circuit
+    //      engine, so a schema-3 state without ENGINE means Circuit.
+    // See docs/IMPROVEMENT_PLAN.md 0.3 and 1.7.
+    static constexpr int stateSchemaVersion = 3;
+    static constexpr const char* stateSchemaKey = "stateSchemaVersion";
     static constexpr int memoryControlCount = 26;
     static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
     static bool isMemoryControl(int local) noexcept;
@@ -169,12 +189,101 @@ public:
     cs80::ParamValues currentValues() const;
     void applyParameterValues(const cs80::ParamValues& values);
 
+    // User-facing engine concepts (plan 1.7) over the unchanged host IDs.
+    // ENGINE is source_performance: on = Circuit, off = Legacy (compat), which
+    // stays only so old sessions and the legacy factory bank sound unchanged.
+    // PURE CS-80 is parity_mode, the isolation contract: original features
+    // only, rendered by the circuit engine whatever ENGINE says.
+    enum class EngineMode { circuit, legacy };
+    void setEngineMode(EngineMode mode);
+    EngineMode getEngineMode() const;          // the ENGINE switch as stored
+    EngineMode getEffectiveEngineMode() const; // what renders: PURE implies Circuit
+    void setPure(bool pure);
+    bool isPure() const;
+    // New-preset creation (the INIT action's hook): the factory "Init Patch"
+    // program with the original SUB panel on the circuit engine, like a fresh
+    // instance. The legacy bank program itself is unchanged.
+    void loadInitPatch();
+
+    // ---- ws3-keyboard Phase 6 processor APIs (modern layer) ----------------
+    // Non-audio threads. Parses a Scala scale and an optional keyboard mapping
+    // (empty = linear, middle C 60, A4 440 Hz) and publishes the table to the
+    // audio thread, where tuning_mode 1 uses it. Returns an empty string on
+    // success, otherwise the reason (the previous tuning is kept). The texts
+    // are saved with the session, not with presets.
+    juce::String loadScalaTuning(const juce::String& scl, const juce::String& kbm = {});
+    void clearScalaTuning();
+    juce::String getScalaDescription() const;
+    // MTS-ESP (tuning_mode 2): client compiled in, and a master connected.
+    static bool isMtsEspAvailable() noexcept { return cs80::MtsEspClient::available(); }
+    bool isMtsEspConnected() const noexcept { return mtsEspConnected.load(std::memory_order_relaxed); }
+    // Sixteen-voice mode runs a second, identical eight-voice instrument.
+    // Render thread diagnostics only, like getEngine().
+    const cs80::Engine& getExtensionEngine() const noexcept { return *extensionEngine; }
+
+    // [ws6-library] A/B compare and randomise (PluginProcessorLibrary.cpp).
+    // Message thread. A snapshot is the whole sound: panel values, both tone
+    // selectors, the four memory banks and the preset name/index. Physical
+    // setup (jack, pedal, selector, output switch) and isolation stay live.
+    // abToggle() stores the sounding patch in the active slot and recalls the
+    // other one; an empty slot starts as a copy, so the first toggle is silent.
+    void abToggle();
+    // Copy the sounding patch into slot 0 (A) or 1 (B). From A, slot 1 is "A->B".
+    void abCopyCurrentTo(int slot);
+    int getAbSlot() const noexcept;
+    bool isAbSlotStored(int slot) const;
+    // Original CS-80 panel controls only, inside safe sub-ranges of their
+    // hardware ranges (src/core/Randomise.h); seedable and deterministic.
+    void randomiseWithinOriginalRanges(juce::uint32 seed);
+
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     static juce::String parameterId(int index) { return juce::String(cs80::paramId(index)); }
 
+    // ---- [ws8-studio] MIDI learn and editor state -------------------------------------------
+    // Both live in the plugin state (MIDI_LEARN and UI_STATE children, each with a version), never
+    // in host parameters or presets. The map is per session: restoring a state replaces it, and
+    // loading a preset leaves it alone. Mappings are neither learned nor applied in PURE CS-80.
+    cs80::MidiLearnMap& getMidiLearn() noexcept { return midiLearn; }
+    // Host parameter index of a core parameter (extensions are appended after the 228 shipped ones).
+    int hostParameterIndex(int coreIndex) const;
+    struct EditorState
+    {
+        std::atomic<bool> tourSeen { false };
+        std::atomic<bool> qwertyEnabled { true };
+        std::atomic<bool> circuitNotes { false };
+        std::atomic<bool> controllersShown { false };
+    };
+    EditorState& getEditorState() noexcept { return editorState; }
+    static constexpr int editorStateVersion = 1;
+
+    // ---- [ws8-studio] Undo history ------------------------------------------------------------
+    // The APVTS is built with this UndoManager and records one transaction per user gesture; host
+    // automation, MIDI learn, preset loads and state restores are never recorded, and loading a sound
+    // starts a fresh history (UndoHistory.h). Message thread.
+    juce::UndoManager& getUndoManager() noexcept { return undoManager; }
+    bool undo();
+    bool redo();
+    // Wrap a programmatic edit the player should undo in one step (A/B switch, randomise, copy rank).
+    using ScopedUserEdit = cs80::UndoableParameterState::ScopedUserEdit;
+    cs80::UndoableParameterState& getUndoableState() noexcept { return apvts; }
+
 private:
     friend struct cs80::tests::PresetSaveAccess;
+    // [ws6-library] program change, bank select, A/B state (PluginProcessorLibrary.cpp).
+    struct LibraryState;
+    std::unique_ptr<LibraryState> library;
+    void initialiseLibrary();
+    // Audio thread. Returns true when the recalled program changed the render
+    // policy (the caller then discards the pre-transition UI batch).
+    bool handleProgramChange(int midiChannel, int program);
+    void handleBankSelect(int controller, int value, int midiChannel) noexcept;
+    void writeLibraryState(juce::ValueTree& state) const;
+    void readLibraryState(const juce::ValueTree& state);
+    void captureAbSnapshot(int slot);
+    void recallAbSnapshot(int slot);
     void setPresetMetadata(const juce::String& name, int index);
+    void applyFreshInstancePatch();
+    void setParameterGesture(int index, float physicalValue);
     void readParameters();
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
     void resetHardwareSources() noexcept;
@@ -183,7 +292,18 @@ private:
     void handleNoteOff(juce::MidiKeyboardState*, int channel, int note, float velocity) override;
     void resetKeyboardHandoff() noexcept;
     void observeHostMidi(const juce::MidiMessage& message) noexcept;
+    // Key events go to the first instrument until it is full, then (sixteen-
+    // voice mode only) to the second; everything else reaches both.
+    void routeNoteOn(int note, float velocity, int channel);
+    void routeNoteOff(int note, int channel);
+    template <class F> void forEachEngine(F&& f) { f(engine); if (extensionActive) f(*extensionEngine); }
+    juce::String publishScala(const juce::String& scl, const juce::String& kbm);
     void applyValues(const cs80::ParamValues& values);
+    // [ws8-studio] MIDI learn on the audio thread; studio state in and out of the saved tree.
+    void applyMidiLearn(const juce::MidiBuffer& midi) noexcept;
+    bool midiLearnConsumes(int cc) const noexcept { return midiLearnLive && midiLearn.parameterFor(cc) >= 0; }
+    void writeStudioState(juce::ValueTree& state) const;
+    void readStudioState(juce::ValueTree& state);
     juce::File userPresetDirectory() const;
     using PresetWriter = std::function<juce::Result(const juce::XmlElement&, const juce::File&)>;
     PresetSaveResult writeUserPreset(const juce::String&, PresetOverwrite, const PresetWriter&);
@@ -192,7 +312,9 @@ private:
     juce::File presetDirectoryOverride;
 
     cs80::Engine engine;
-    juce::AudioProcessorValueTreeState apvts;
+    juce::UndoManager undoManager;            // [ws8-studio] constructed before the APVTS that uses it
+    cs80::UndoableParameterState apvts;
+    cs80::ModernLayerState modernLayer { apvts }; // [ws5-modern] child of the APVTS state; after apvts
     juce::MidiKeyboardState keyboardState;
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;
@@ -218,6 +340,19 @@ private:
     std::atomic<unsigned> hostMidiEvents { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
+    // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
+    cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
+    std::unique_ptr<cs80::Engine> extensionEngine;
+    std::vector<float> extensionInterleaved;
+    bool extensionActive = false; // audio thread
+    juce::SpinLock scalaLock;      // writers; the audio thread only try-locks
+    cs80::tuning::TuningTable scalaSlot;
+    std::atomic<unsigned> scalaVersion { 0 };
+    unsigned scalaAppliedVersion = 0; // audio thread
+    juce::String scalaText, kbmText, scalaDescription; // guarded by scalaLock
+    cs80::MtsEspClient mtsEsp;
+    cs80::tuning::TuningTable mtsEspTable; // audio thread
+    std::atomic<bool> mtsEspConnected { false };
     std::vector<float> interleaved;
     std::vector<float> externalScratch;
     std::atomic<bool> externalInputEnabled { false };
@@ -226,6 +361,11 @@ private:
     mutable juce::CriticalSection presetMetadataLock;
     juce::String presetName { "Init Patch" };
     std::atomic<int> currentProgram { 0 };
+
+    // [ws8-studio]
+    cs80::MidiLearnMap midiLearn;
+    bool midiLearnLive = false;   // audio thread: mappings apply in this block (not PURE CS-80)
+    EditorState editorState;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Cs80AudioProcessor)
 };

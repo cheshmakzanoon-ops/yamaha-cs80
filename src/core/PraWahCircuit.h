@@ -17,7 +17,10 @@ public:
         double dryLoadSiemens = 0.0;
         double heelOhms = 1000000.0;
         double toeOhms = 2000.0;
-        double opticalTauSeconds = 0.012; // Symmetric log-R time constant; inferred.
+        // Declared LDR model (ws4-circuits Step 4): a log-resistance one-pole that is faster
+        // while the cell brightens (resistance falling) than while it darkens. Both INFERRED.
+        double opticalTauSeconds = 0.012;   // brightening (attack) time constant
+        double opticalDecaySeconds = 0.060; // darkening (decay) time constant
     };
     struct Capacitor { double voltage = 0.0, current = 0.0; };
     using Capacitors = std::array<Capacitor, 4>; // Input, P, Q, output (D to C).
@@ -38,7 +41,8 @@ public:
             && within(p.sourceOhms,0.0,100000.0) && within(p.dryLoadSiemens,0.0,0.001)
             && within(p.heelOhms,minimumOpticalOhms,maximumOpticalOhms)
             && within(p.toeOhms,minimumOpticalOhms,maximumOpticalOhms)
-            && within(p.opticalTauSeconds,0.0,1.0);
+            && within(p.opticalTauSeconds,0.0,1.0)
+            && within(p.opticalDecaySeconds,0.0,5.0);
     }
     // Setup only. Invalid configuration leaves the entire prior model untouched.
     bool prepare(double sampleRate,const Profile& p,double pedal) noexcept {
@@ -49,6 +53,7 @@ public:
         rate=sampleRate;
         for (std::size_t k=0;k<g.size();++k) g[k]=2.0*capacitance[k]*rate;
         opticalStep=p.opticalTauSeconds==0.0 ? 1.0 : -std::expm1(-1.0/(p.opticalTauSeconds*rate));
+        decayStep=p.opticalDecaySeconds==0.0 ? 1.0 : -std::expm1(-1.0/(p.opticalDecaySeconds*rate));
         heelLog=std::log(p.heelOhms);
         toeLog=std::log(p.toeOhms);
         setPedal(pedal);
@@ -73,7 +78,8 @@ public:
         // This is a numerical interface guard, not a model of amplifier clipping.
         const double u=std::isfinite(input)
             ? std::clamp(input,-maximumInputMagnitude,maximumInputMagnitude) : 0.0;
-        opticalLog += opticalStep*(targetLog-opticalLog);
+        // Falling resistance = brightening = attack; rising = darkening = decay.
+        opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);
         const double optical=std::exp(opticalLog);
         const double rt=profile.vr1Ohms+optical/(1.0+optical/profile.parallelOhms);
         std::array<double,4> j;
@@ -119,7 +125,7 @@ private:
     Profile profile;
     Capacitors caps{};
     std::array<double,4> g{};
-    double rate=96000.0, opticalStep=1.0, heelLog=0.0, toeLog=0.0;
+    double rate=96000.0, opticalStep=1.0, decayStep=1.0, heelLog=0.0, toeLog=0.0;
     double opticalLog=0.0, targetLog=0.0;
 };
 } // namespace cs80

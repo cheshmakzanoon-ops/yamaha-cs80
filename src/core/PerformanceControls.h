@@ -27,11 +27,13 @@ namespace cs80
 inline constexpr int kKeyboardLowestNote = 24;
 inline constexpr int kKeyboardKeyCount = 61;
 
-// Full-scale effect of a fully deflected LOW or HIGH lever at its own end of
-// the keyboard. Brilliance is added to both filters' effective control voltage;
-// level is added to the VCA control sum, like the original separate KB branch.
-inline constexpr float kProvisionalKeyboardBrillianceOctaves = 2.0f;
-inline constexpr float kProvisionalKeyboardLevelRange = 0.4f;
+// LEGACY COMPATIBILITY ONLY (IMPROVEMENT_PLAN 2.3). The circuit engine drives
+// the contour from the KBC network (KbcContour.h); these provisional weights
+// no longer reach it. They stay, frozen and renamed, because the Legacy policy
+// must render old sessions byte-for-byte: full-scale effect of a fully
+// deflected LOW or HIGH lever at its own end of the keyboard.
+inline constexpr float kLegacyKeyboardBrillianceOctaves = 2.0f;
+inline constexpr float kLegacyKeyboardLevelRange = 0.4f;
 
 struct KeyboardContourWeights
 {
@@ -72,14 +74,14 @@ inline KeyboardContourWeights keyboardContourWeights(int midiNote) noexcept
 inline float keyboardBrillianceOctaves(float leverLow, float leverHigh,
                                        const KeyboardContourWeights& w) noexcept
 {
-    return (leverLow * w.low + leverHigh * w.high) * kProvisionalKeyboardBrillianceOctaves;
+    return (leverLow * w.low + leverHigh * w.high) * kLegacyKeyboardBrillianceOctaves;
 }
 
 // Additive VCA control offset at this key (positive = louder).
 inline float keyboardLevelOffset(float leverLow, float leverHigh,
                                  const KeyboardContourWeights& w) noexcept
 {
-    return (leverLow * w.low + leverHigh * w.high) * kProvisionalKeyboardLevelRange;
+    return (leverLow * w.low + leverHigh * w.high) * kLegacyKeyboardLevelRange;
 }
 
 // ---- Footswitch assigners --------------------------------------------------

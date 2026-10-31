@@ -341,11 +341,31 @@ void realtimeAllocation(){
  for(int n=0;n<5000;++n){if(n%31==0)a.setMode(n%62?Mode::low:Mode::high);const auto out=a.process(std::sin(n*.13),std::cos(n*.03));witness+=out.left.audibleJackVolts+out.general.audibleJackVolts;}
  countAllocations=false;check(allocations==before,"three-channel processing/selector controls allocate no C++ heap");check(std::isfinite(witness)&&witness!=0,"allocation probe observes output");
 }
+// Phase 1.5 gain staging: inferred driver headroom law, not a measured device.
+void circuitDriverHeadroom(){
+ using cs80::kCircuitOutputReference; using cs80::kCircuitDriverKnee; using cs80::kCircuitDriverCeiling;
+ check(kCircuitOutputReference==0.5,"circuit output reference is the documented -6 dB calibration");
+ bool unity=true,bounded=true,monotonic=true,odd=true;double previous=-1e9;
+ for(int n=-40000;n<=40000;++n){
+  const double x=n*1e-4,y=cs80::circuitOutputDriver(x);
+  if(std::abs(x)<=kCircuitDriverKnee&&y!=x)unity=false;
+  if(std::abs(y)>kCircuitDriverCeiling)bounded=false;
+  if(y<previous)monotonic=false;previous=y;
+  if(cs80::circuitOutputDriver(-x)!=-y)odd=false;
+ }
+ check(unity,"driver is exactly unity at and below the -1 dBFS knee");
+ check(bounded,"driver output never exceeds the ceiling");
+ check(monotonic,"driver transfer is monotonic");
+ check(odd,"driver transfer is odd-symmetric");
+ const double k=kCircuitDriverKnee,h=1e-7;
+ near((cs80::circuitOutputDriver(k+h)-k)/h,1.0,"driver slope is continuous at the knee",0,1e-6);
+ check(cs80::circuitOutputDriver(1e9)<=kCircuitDriverCeiling&&cs80::circuitOutputDriver(3.0)>.99,"driver approaches the ceiling for large inputs");
+}
 } // namespace
 int main(int argc,char** argv){
  try{
   const bool quick=argc>1&&std::string_view(argv[1])=="--mutation-probe";
-  boundariesRollbackAndGuards();endpointAndMutationWitnesses();independentTransient();activeMatrixAndTripleLifecycle();realtimeAllocation();
+  boundariesRollbackAndGuards();circuitDriverHeadroom();endpointAndMutationWitnesses();independentTransient();activeMatrixAndTripleLifecycle();realtimeAllocation();
   if(!quick){softwareReadoutAndBounds();acAgainstReference();analogConvergenceAndTails();}
   std::cout<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;
  }catch(const std::exception& e){std::cerr<<"Unexpected oracle rejection: "<<e.what()<<'\n';return 1;}
