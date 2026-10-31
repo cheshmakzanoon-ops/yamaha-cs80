@@ -31,7 +31,7 @@ kept byte-identical for old sessions.
 | --- | --- | --- | --- |
 | Oscillator | PolyBLEP `Oscillator` (`Dsp.h`) | same | `experimental/ReconstructedOscillator.h` |
 | HP/LP filters | TPT `Svf` with input `softClip` | same | `reference/IG00156Linear.h` |
-| Envelopes | `Adsr`/`FilterEnv` float path | double-precision live path | — |
+| Envelopes | `Adsr`/`FilterEnv` float path | double-precision inferred single-RC law ([ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md)) | — |
 | VCA | linear multiply | loaded LC network gain | `reference/LevelControl.h` |
 | Tone tabs | legacy bridge voicings | `SourceFactoryTones.h` (7 complete, 15 inferred) | `HardwareControl.h` matrix |
 | SUB | legacy `Lfo` or `OriginalSubOscillator` | same | — |
@@ -52,6 +52,7 @@ kept byte-identical for old sessions.
 | 0.4 Shared test helpers | deferred until the first Phase 1 stage gate needs them | — |
 | 0.5 This status page | done | `eb486cb` |
 | 1.5 Circuit-engine gain staging: -6 dB output reference + inferred driver headroom ceiling | done; intentional circuit-engine change, legacy byte-identical; tab peaks +3.2 -> -2.9 dBFS | `228459c` |
+| 1.3 Circuit-engine envelopes as RC circuits; filter EG continuity on reuse | done; intentional circuit-engine change, legacy byte-identical; worst steal click 1.17 -> 0.90 | this change |
 
 ## Pinned compatibility gates
 

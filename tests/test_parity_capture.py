@@ -285,7 +285,15 @@ def validate_live_probes(rows):
                         # round-trippable binary32 snapshots, not that hidden state.
                         # Propagate the prior half-ULP uncertainty through the
                         # contractive two-tick law, then allow final snapshot rounding.
-                        coefficient = math.exp(-6 / (f32(times[rank]) * 96000))
+                        # Circuit-engine RC law (docs/ENVELOPE_RC_MODEL.md): decay and
+                        # release settle to -60 dB at T; attack charges from its start
+                        # level (0 here, both IL and the amplitude onset) toward
+                        # 1.5 x the peak and reaches the peak at T.
+                        if phase == 'a':
+                            coefficient = math.exp(-math.log(3) / (f32(times[rank]) * 96000))
+                            target = 1.5 * target
+                        else:
+                            coefficient = math.exp(-math.log(1000) / (f32(times[rank]) * 96000))
                         expected = f32(expected)
                         initial_error = half_ulp32(expected)
                         for _ in range(2):

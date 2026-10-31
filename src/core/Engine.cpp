@@ -793,7 +793,11 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.hpf.reset();
             r.lpf.reset();
         }
-        r.fenv.reset();
+        // Filter envelope: a reused sounding tail restarts its attack from the
+        // capacitor's present level (source policies, IMPROVEMENT_PLAN 1.3);
+        // legacy keeps the historical reset to IL.
+        if (!preserveAudioState)
+            r.fenv.reset();
         // Amplitude envelope: a reused sounding tail restarts its attack from the level it has
         // reached instead of from zero (source policies only). Zeroing it removed the whole tail in
         // one sample, a step of up to 0.022 full scale across eight sampled factory programs (0.007
@@ -807,7 +811,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
                       std::max(0.001f, rs.fA * global.envTimeScale),
                       std::max(0.001f, rs.fD * global.envTimeScale),
                       std::max(0.001f, rs.fR * global.envTimeScale),
-                      0.0f);
+                      0.0f,
+                      preserveAudioState);
         r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale),
                       std::max(0.001f, rs.vD * global.envTimeScale),
                       rs.vS,

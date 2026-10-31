@@ -190,7 +190,7 @@ Every numerical law needs a source or an explicit engineering-assumption row. Th
 | Q law and rank/global mix | `provisionalFilterQ`, `Engine.cpp` | `1/Q = 2 - 1.8r`; `r = 0.8 rank + 0.6 global` | W1/W4 |
 | Filter envelope scale | `kProvisionalFilterEnvelopeOctaves` | 3 octaves | W1/W5 |
 | HP envelope gain | `kProvisionalHpfEnvelopeGain` | 0.5 | W1 (100 kOhm vs 47 kOhm branches) |
-| Envelope shape | `coefficientForTime`, `Adsr`, `FilterEnv` | -60 dB time-to-rest, x5 early "bend" | W5 |
+| Envelope shape | `coefficientForTime`, `Adsr`, `FilterEnv` | legacy: -6 exponent (-52 dB), x5 early "bend"; circuit engine since Phase 1.3: inferred single-RC law, see [ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md) | W5 |
 | Global SUSTAIN law | `Engine::releaseVoice` | linear, 10 s maximum | W5 |
 | Brilliance paths | `Engine.cpp` (`brillOct`) | initial/after-touch 2 oct, timbre 0.8, wheel 1.5, SUB 1.5 oct | W1/W6 |
 | Level path | `Engine.cpp` (`levelCv`) | SUB 0.45, clamp 2.6, overall `* 0.17` | W1/W5 |

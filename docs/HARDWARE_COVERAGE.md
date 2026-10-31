@@ -8,6 +8,13 @@ Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e
 
 ## Verified increment and source correction
 
+**2026-10-31, circuit engine envelopes (rows 32–34, 37–40):** the Source
+Performance/Isolation envelopes now use the inferred single-RC law in
+[ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md): time-to-−60 dB decay/release, an
+overshoot-target attack that peaks at exactly T, no ×5 time-window bends, and filter
+envelope continuity on voice reuse. Status stays A (approximate): it is a declared
+engineering model, not a recovered IG00152/IG00159 law. Legacy rows are unchanged.
+
 At `71f0483d32657fc48bac1a0693e9c725e71e74dd`, the AT VCF route and zero-touch velocity invariance pass the full Linux/macOS/Windows build/host matrix, numerical/sanitizer tests and UI screenshots. These are software checks, not calibrated analog equivalence. TWS17 plus TRG19/23 now show that initial brilliance/level use a held b signal while pitchbend uses a separate AC-coupled C signal. The earlier inference that all initial-touch destinations should decay together was incorrect and is withdrawn. Affected rows below are updated; other baseline gaps remain open.
 
 ## Status and evidence rules

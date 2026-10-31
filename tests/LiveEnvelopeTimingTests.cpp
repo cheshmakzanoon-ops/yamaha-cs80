@@ -87,13 +87,14 @@ void gateTests(double rate){
         p[P_footswitchPressed]=open?1.f:0.f;auto previous=e.getRankEnvelopeState(0,0);e.setParams(p);
         check(equal(previous,e.getRankEnvelopeState(0,0)),"gate edge preserves envelope state and elapsed window");
         const float oldValue=previous.amplitude.value;render(e,1);auto after=e.getRankEnvelopeState(0,0);
-        const float seconds=open?8.f:1.f;const float coefficient=static_cast<float>(std::exp(-6.0/(seconds*rate*2)));
+        const float seconds=open?8.f:1.f;// Circuit-engine RC law: time-to--60 dB, tau = T / ln(1000).
+        const float coefficient=static_cast<float>(std::exp(-kRcSettleLog/(seconds*rate*2)));
         near(after.amplitude.value,oldValue*coefficient*coefficient,"current gate selects floor without resurrecting cancelled floor",3e-6f);
         check(!e.getVoiceInfo(0).held&&!e.getVoiceInfo(0).pedalHeld,"gate edits never restore held flags");
     }
     // The SUSTAIN lever itself continuously changes the existing release floor.
     p[P_footswitchPressed]=1;p[P_masterSustain]=.4f;e.setParams(p);auto before=e.getRankEnvelopeState(0,0);render(e,1);
-    const float c=static_cast<float>(std::exp(-6.0/(4.*rate*2)));near(e.getRankEnvelopeState(0,0).amplitude.value,before.amplitude.value*c*c,"live master sustain floor");
+    const float c=static_cast<float>(std::exp(-kRcSettleLog/(4.*rate*2)));near(e.getRankEnvelopeState(0,0).amplitude.value,before.amplitude.value*c*c,"live master sustain floor");
     e.allNotesOff(false);p[P_footswitchPressed]=0;e.setParams(p);p[P_footswitchPressed]=1;e.setParams(p);render(e,10);check(e.activeVoices()==0,"gate reopening cannot resurrect inactive notes");
 }
 void partitionTests(double rate){

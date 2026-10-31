@@ -338,6 +338,18 @@ inline float coefficientForTime(float seconds, float sampleRate, float multiplie
     return std::exp(coefficientExponent(seconds, sampleRate, multiplier));
 }
 
+// Circuit-engine envelope law (docs/ENVELOPE_RC_MODEL.md, IMPROVEMENT_PLAN 1.3).
+// INFERRED single-RC capacitor model, not a measured IG00152/IG00159 law:
+// - decay/release: one exponential whose panel time T is time-to--60 dB of the
+//   remaining span, tau = T / ln(1000);
+// - attack: charge toward an overshoot target start + k*(peak - start); a
+//   comparator ends the stage at the peak. With k = 1.5 the peak is reached at
+//   exactly T from any start level (tau = T / ln(k / (k - 1))).
+// The legacy float paths keep their historical -6 exponent and x5 bends.
+inline constexpr double kRcSettleLog = 6.907755278982137; // ln(1000)
+inline constexpr double kRcAttackOvershoot = 1.5;
+inline constexpr double kRcAttackLog = 1.0986122886681098; // ln(1.5 / 0.5)
+
 // Provisional bent-envelope approximation. The fast bend and slower tail
 // remain uncalibrated; this shape is not proof of original envelope circuitry.
 class Adsr
@@ -365,6 +377,7 @@ public:
         if (a <= 0.0002f)
             value = 1.0f;
         preciseValue = value;
+        attackFrom = preciseValue;
     }
 
     void noteOff() noexcept
@@ -492,24 +505,30 @@ private:
     // Never round this state through the public float diagnostic/output. The
     // legacy path remains separate to preserve existing patches byte-for-byte.
     double preciseValue = 0.0, preciseTime = 0.0;
-    float tickReconstruction(float sampleRate, bool bent) noexcept
+    float tickReconstruction(float sampleRate, bool) noexcept
     {
         preciseTime += 1.0 / static_cast<double>(sampleRate);
-        const auto coefficient = [this, sampleRate](float time, double fast = 1.0) {
-            return expD(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+        // Single-RC law; `log` selects the settle (decay/release) or attack constant.
+        const auto coefficient = [this, sampleRate](float time, double log = kRcSettleLog) {
+            return expD(-log / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
         };
         switch (stage)
         {
             case Stage::Idle: preciseValue = 0.0; break;
             case Stage::Attack:
-                preciseValue = 1.0 + (preciseValue - 1.0) * coefficient(a);
-                if (preciseValue >= 0.999f || preciseTime > a * 1.2f + 0.001f)
+            {
+                // Charge toward the overshoot target; the comparator ends at 1.
+                const double target = 1.0 + (kRcAttackOvershoot - 1.0) * (1.0 - attackFrom);
+                if (attackFrom < 1.0)
+                    preciseValue = target + (preciseValue - target) * coefficient(a, kRcAttackLog);
+                if (preciseValue >= 1.0 || attackFrom >= 1.0)
                 {
                     preciseValue = 1.0; stage = Stage::Decay; preciseTime = 0.0;
                 }
                 break;
+            }
             case Stage::Decay:
-                preciseValue = s + (preciseValue - s) * coefficient(d, bent && preciseTime < 0.035f ? 5.0 : 1.0);
+                preciseValue = s + (preciseValue - s) * coefficient(d);
                 if (std::abs(preciseValue - s) < 0.0005f)
                 {
                     preciseValue = s; stage = Stage::Sustain;
@@ -527,7 +546,7 @@ private:
                 else preciseValue = s;
                 break;
             case Stage::Release:
-                preciseValue *= coefficient(r, bent && preciseTime < 0.045f ? 5.0 : 1.0);
+                preciseValue *= coefficient(r);
                 if (preciseValue < 0.0002f) { preciseValue = 0.0; stage = Stage::Idle; }
                 break;
         }
@@ -539,6 +558,7 @@ private:
     float stageTime = 0.0f;
     bool liveSustain = false, liveDecay = false;
     double sustainState = 0.0, decayState = 0.0;
+    double attackFrom = 0.0; // circuit-engine attack start level
     float a = 0.0f, d = 0.0f, s = 0.0f, r = 0.0f;
     ExpMemo<float> expF;
     ExpMemo<double> expD;
@@ -583,8 +603,10 @@ public:
         liveAttack = liveRelease = releaseSelected = false;
     }
 
+    // fromCurrentLevel: circuit-engine reuse of a sounding voice restarts the
+    // attack from the capacitor's present level instead of jumping to IL.
     void noteOn(float initialLevel, float attackLevel, float attack, float decay,
-                float release, float sustainLevel) noexcept
+                float release, float sustainLevel, bool fromCurrentLevel = false) noexcept
     {
         liveAttack = liveRelease = releaseSelected = false;
         il = initialLevel;
@@ -593,13 +615,16 @@ public:
         d = decay;
         r = release;
         sustain = sustainLevel;
-        value = il;
+        if (!fromCurrentLevel)
+            value = il;
         stage = Stage::Attack;
         stageTime = 0.0f;
         preciseTime = 0.0;
         if (a <= 0.0002f)
             value = al;
-        preciseValue = value;
+        if (!fromCurrentLevel || a <= 0.0002f)
+            preciseValue = value;
+        attackFrom = preciseValue;
     }
 
     void noteOff() noexcept
@@ -716,6 +741,9 @@ public:
         {
             if (!liveAttack) attackState = value;
             liveAttack = true;
+            // Circuit engine: a moved AL restarts the charge from the present level.
+            attackFrom = preciseValue;
+            preciseTime = 0.0;
         }
         if (initialLevel != il)
         {
@@ -736,11 +764,12 @@ private:
     // Never round this state through the public float diagnostic/output. The
     // legacy path remains separate to preserve existing patches byte-for-byte.
     double preciseValue = 0.0, preciseTime = 0.0;
-    float tickReconstruction(float sampleRate, bool bent) noexcept
+    float tickReconstruction(float sampleRate, bool) noexcept
     {
         preciseTime += 1.0 / static_cast<double>(sampleRate);
-        const auto coefficient = [this, sampleRate](float time, double fast = 1.0) {
-            return expD(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+        // Single-RC law; `log` selects the settle (decay/release) or attack constant.
+        const auto coefficient = [this, sampleRate](float time, double log = kRcSettleLog) {
+            return expD(-log / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
         };
         switch (stage)
         {
@@ -752,14 +781,22 @@ private:
                 }
                 break;
             case Stage::Attack:
-                preciseValue = al + (preciseValue - al) * coefficient(a);
-                if (std::abs(preciseValue - al) < 0.001f || (!liveAttack && preciseTime > a * 1.2f + 0.001f))
+            {
+                // Charge IL -> AL toward an overshoot target; comparator at AL.
+                const double span = static_cast<double>(al) - attackFrom;
+                const double target = attackFrom + kRcAttackOvershoot * span;
+                if (span != 0.0)
+                    preciseValue = target + (preciseValue - target) * coefficient(a, kRcAttackLog);
+                const bool reached = span > 0.0 ? preciseValue >= al
+                                   : span < 0.0 ? preciseValue <= al : true;
+                if (reached)
                 {
                     preciseValue = al; stage = Stage::Decay; preciseTime = 0.0;
                 }
                 break;
+            }
             case Stage::Decay:
-                preciseValue = sustain + (preciseValue - sustain) * coefficient(d, bent && preciseTime < 0.035f ? 5.0 : 1.0);
+                preciseValue = sustain + (preciseValue - sustain) * coefficient(d);
                 if (std::abs(preciseValue - sustain) < 0.0008f)
                 {
                     preciseValue = sustain; stage = Stage::Sustain;
@@ -767,7 +804,7 @@ private:
                 break;
             case Stage::Sustain: preciseValue = sustain; break;
             case Stage::Release:
-                preciseValue += (il - preciseValue) * (1.0 - coefficient(r, bent && preciseTime < 0.04f ? 5.0 : 1.0));
+                preciseValue += (il - preciseValue) * (1.0 - coefficient(r));
                 if (std::abs(preciseValue - il) < 0.0008f)
                 {
                     preciseValue = il; stage = Stage::Idle;
@@ -781,6 +818,7 @@ private:
     float value = 0.0f, stageTime = 0.0f;
     bool liveAttack = false, liveRelease = false, releaseSelected = false;
     double attackState = 0.0, releaseState = 0.0;
+    double attackFrom = 0.0; // circuit-engine attack start level
     float il = 0.0f, al = 0.0f, a = 0.0f, d = 0.0f, r = 0.0f, sustain = 0.0f;
     ExpMemo<float> expF;
     ExpMemo<double> expD;

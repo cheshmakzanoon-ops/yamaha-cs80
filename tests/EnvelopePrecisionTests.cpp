@@ -9,7 +9,7 @@ int checks=0,failures=0;
 void check(bool ok,const char* text){++checks;if(!ok){++failures;std::cerr<<text<<'\n';}}
 void primitives(float rate){
     Adsr attack,decay,release; FilterEnv filterAttack,filterRelease;
-    attack.noteOn(20,20,.5,20);filterAttack.noteOn(-3,3,20,20,20,0);
+    attack.noteOn(30,20,.5,20);filterAttack.noteOn(-3,3,30,20,20,0);
     decay.noteOn(.001,20,.5,20);release.noteOn(.001,.001,1,20);
     filterRelease.noteOn(-3,3,.001,.001,20,0);
     for(int i=0;i<int(rate*.02f);++i){decay.tick(rate,false,true);release.tick(rate,false,true);filterRelease.tick(rate,false,true);}
@@ -23,9 +23,11 @@ void primitives(float rate){
         repeated.tick(rate,false,true);
         if(i%4096==0)check(repeated.getValue()==decay.getValue(),"repeated setters preserve sub-float trajectory");
         if(i==static_cast<int>(rate*10)){
-            const double c=std::exp(-3.0);
-            check(std::abs(attack.getValue()-(1-c))<1e-7,"long Attack analytic law");
-            check(std::abs(filterAttack.getValue()-(3-6*c))<3e-7,"filter Attack analytic law");
+            // Circuit-engine RC law (docs/ENVELOPE_RC_MODEL.md): settle to -60 dB at T;
+            // attack charges toward start + 1.5*span and reaches its peak at T.
+            const double c=std::pow(1000.0,-10.0/20.0), ca=std::pow(3.0,-10.0/30.0);
+            check(std::abs(attack.getValue()-(1.5-1.5*ca))<1e-7,"long Attack analytic law");
+            check(std::abs(filterAttack.getValue()-(6-9*ca))<3e-7,"filter Attack analytic law");
             check(std::abs(decay.getValue()-(.5+(decayStart-.5)*c))<1e-7,"nonzero Decay analytic law");
             check(std::abs(release.getValue()-c)<1e-7,"Release analytic law");
             check(std::abs(filterRelease.getValue()-(-3+3*c))<3e-7,"nonzero filter Release analytic law");
@@ -52,7 +54,7 @@ void integration(){
     for(int ch=0;ch<2;++ch){p[chParam(ch,CP_vA)]=p[chParam(ch,CP_fA)]=20;p[chParam(ch,CP_vD)]=p[chParam(ch,CP_fD)]=20;p[chParam(ch,CP_vS)]=.5;p[chParam(ch,CP_fIl)]=p[chParam(ch,CP_fAl)]=1;}
     Engine e;e.setParams(p);e.prepare(768000);e.noteOn(60,.8);
     std::array<float,1536> out{};
-    for(int i=0;i<25000;++i){e.render(out.data(),768);if(i==19999)for(int ch=0;ch<2;++ch){auto s=e.getRankEnvelopeState(0,ch);check(std::abs(s.amplitude.elapsed-20)<2e-6&&std::abs(s.filter.elapsed-20)<2e-6,"both Engine rank clocks pass16s");}}
+    for(int i=0;i<25000;++i){e.render(out.data(),768);if(i==17999)for(int ch=0;ch<2;++ch){auto s=e.getRankEnvelopeState(0,ch);check(std::abs(s.amplitude.elapsed-18)<2e-6&&std::abs(s.filter.elapsed-18)<2e-6,"both Engine rank clocks pass16s");}}
     for(int ch=0;ch<2;++ch){auto s=e.getRankEnvelopeState(0,ch);check(s.amplitude.stage==Adsr::Stage::Decay&&s.filter.stage==FilterEnv::Stage::Decay,"both Engine ranks complete long Attack");}
     e.reset();check(e.activeVoices()==0,"Engine reset clears precise voices");
     p[P_parityMode]=0;e.setParams(p);e.noteOn(60,.8);e.render(out.data(),1);p[P_parityMode]=1;e.setParams(p);check(e.activeVoices()==0,"mode switch resets numerical path lifetime");
