@@ -248,6 +248,41 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     // [ws4-circuits] append this workstream's host parameters below this line, AU version hint 11.
 
     // [ws5-modern] append this workstream's host parameters below this line, AU version hint 12.
+    // Modern modulation layer and FX (src/core/ModernLayer.h, FxModels.h). Float parameters
+    // throughout (as the existing LFO/FX selectors are), with named values for the
+    // discrete ones; MSEG shapes and matrix routing are session state, not parameters.
+    {
+        auto modern = [&layout](int index, std::function<juce::String(float, int)> text = {})
+        {
+            const auto& d = cs80::paramDef(index);
+            auto attributes = juce::AudioParameterFloatAttributes();
+            if (d.unit != nullptr && *d.unit != 0)
+                attributes = attributes.withLabel(d.unit);
+            if (text)
+                attributes = attributes.withStringFromValueFunction(std::move(text));
+            layout.add(std::make_unique<juce::AudioParameterFloat>(
+                juce::ParameterID { parameterId(index), 12 }, juce::String(d.name),
+                juce::NormalisableRange<float>(d.min, d.max, 0.0f, d.skew), d.def, attributes));
+        };
+        auto named = [](const char* (*nameOf)(int)) {
+            return [nameOf](float value, int) { return juce::String(nameOf((int) std::lround(value))); };
+        };
+        for (int index = cs80::P_lfo1Wave; index <= cs80::P_lfo3Wave; ++index)
+            modern(index, named(cs80::lfoWaveName));
+        for (int index = cs80::P_mseg1Rate; index <= cs80::P_mseg3Rate; ++index)
+            modern(index, [](float octaves, int) { return juce::String(std::exp2(octaves), 3) + "x"; });
+        for (int index = cs80::P_mod1Amount; index <= cs80::P_modKeyCurve; ++index)
+            modern(index);
+        for (int slot = 0; slot < 3; ++slot)
+        {
+            const int base = cs80::P_fx1Model + slot * (cs80::P_fx2Model - cs80::P_fx1Model);
+            modern(base, named(cs80::fx::modelName));
+            modern(base + 1);
+            modern(base + 2);
+            modern(base + 3, [](float value, int) { return juce::String(1 << juce::jlimit(0, 3, (int) std::lround(value))) + "x"; });
+        }
+        modern(cs80::P_fxGainCompensation, [](float value, int) { return juce::String(value >= 0.5f ? "On" : "Off"); });
+    }
 
     // [ws6-library] append this workstream's host parameters below this line, AU version hint 13.
 
@@ -510,6 +545,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
+    modernLayer.applyToEngine(engine, getPlayHead()); // MSEG shapes, routing, host tempo
     if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));

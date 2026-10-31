@@ -14,6 +14,8 @@
 #include "../../tests/UiReadinessTests.h"
 #include "../../tests/PanelEditorTests.h"
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
+#include "../../tests/ModernLayerHostTests.h"
+#include "../../tests/ModernLayerUiTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -3502,6 +3504,10 @@ int main(int argc, char** argv)
     cs80::tests::studio::testHitTargets(check, flushGui);
     cs80::tests::studio::testContrast(check);
     // [ws8-studio] end
+    // [ws5-modern] modern modulation/FX layer: session state, host parameters, audio, pages.
+    std::puts("UI SMOKE PHASE: modern modulation and FX layer");
+    cs80::tests::testModernLayerHost(check);
+    cs80::tests::testModernLayerUi(check, flushGui, dir);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");

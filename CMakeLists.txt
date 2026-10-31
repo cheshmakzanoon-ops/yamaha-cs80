@@ -244,6 +244,22 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_pra_optical_cell_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
+    add_executable(cs80_modern_lfo_tests tests/ModernLfoTests.cpp)
+    target_link_libraries(cs80_modern_lfo_tests PRIVATE cs80_core)
+    add_test(NAME cs80_modern_lfo_tests COMMAND cs80_modern_lfo_tests)
+    set_tests_properties(cs80_modern_lfo_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mseg_tests tests/MsegTests.cpp)
+    target_include_directories(cs80_mseg_tests PRIVATE src)
+    add_test(NAME cs80_mseg_tests COMMAND cs80_mseg_tests)
+    set_tests_properties(cs80_mseg_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mod_matrix_tests tests/ModMatrixTests.cpp)
+    target_link_libraries(cs80_mod_matrix_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mod_matrix_tests COMMAND cs80_mod_matrix_tests)
+    set_tests_properties(cs80_mod_matrix_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_modern_fx_tests tests/ModernFxTests.cpp)
+    target_link_libraries(cs80_modern_fx_tests PRIVATE cs80_core)
+    add_test(NAME cs80_modern_fx_tests COMMAND cs80_modern_fx_tests)
+    set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
 
     # [ws6-library] register this workstream's core tests below this line.
 
@@ -340,6 +356,8 @@ if (CS80_BUILD_PLUGIN)
         # [ws4-circuits] add this workstream's plugin sources below this line.
 
         # [ws5-modern] add this workstream's plugin sources below this line.
+        src/plugin/ModernLayerState.cpp
+        src/plugin/ModernModulationUi.cpp
 
         # [ws6-library] add this workstream's plugin sources below this line.
 

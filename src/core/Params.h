@@ -159,6 +159,56 @@ enum : int
     // [ws4-circuits] append this workstream's core parameters below this line.
 
     // [ws5-modern] append this workstream's core parameters below this line.
+    // Modern modulation layer (IMPROVEMENT_PLAN Phase 6); inert under PURE CS-80.
+    // LFO 1..3 waveform: 0 sine (historical), 1 triangle, 2 saw up, 3 saw down,
+    // 4 square, 5 sample & hold, 6 smooth random (src/core/ModulationLfo.h).
+    P_lfo1Wave,
+    P_lfo2Wave,
+    P_lfo3Wave,
+    // MSEG 1..3 speed in octaves (-3..+3 = 0.125x..8x, linear so the default round-trips
+    // exactly through host state); shapes and routing live in session state.
+    P_mseg1Rate,
+    P_mseg2Rate,
+    P_mseg3Rate,
+    // Modulation matrix slot 1..16 bipolar amount (src/core/ModMatrix.h).
+    P_mod1Amount,
+    P_mod2Amount,
+    P_mod3Amount,
+    P_mod4Amount,
+    P_mod5Amount,
+    P_mod6Amount,
+    P_mod7Amount,
+    P_mod8Amount,
+    P_mod9Amount,
+    P_mod10Amount,
+    P_mod11Amount,
+    P_mod12Amount,
+    P_mod13Amount,
+    P_mod14Amount,
+    P_mod15Amount,
+    P_mod16Amount,
+    // Keyboard modulation page response curves (-1 hard .. 0 linear .. +1 soft).
+    P_modVelocityCurve,
+    P_modPressureCurve,
+    P_modWheelCurve,
+    P_modKeyCurve,
+    // Modern FX per slot: model (0 classic = use fxN_type, 1 BBD ensemble, 2 spring,
+    // 3 plate, 4 tape echo, 5 drive), two model controls and the drive oversampling
+    // (0 = 1x .. 3 = 8x of the internal rate). Then one switch for in/out loudness
+    // matching of every slot (src/core/FxModels.h, FxLoudness.h).
+    P_fx1Model,
+    P_fx1ParamA,
+    P_fx1ParamB,
+    P_fx1Oversampling,
+    P_fx2Model,
+    P_fx2ParamA,
+    P_fx2ParamB,
+    P_fx2Oversampling,
+    P_fx3Model,
+    P_fx3ParamA,
+    P_fx3ParamB,
+    P_fx3Oversampling,
+    P_fxGainCompensation,
 
     // [ws6-library] append this workstream's core parameters below this line.
 
@@ -330,6 +380,45 @@ inline constexpr ParamDef kExtensionDefs[] = {
     // [ws4-circuits] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws5-modern] append this workstream's ParamDefs below this line (same order as the enum).
+    { "lfo1_wave", "LFO 1 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "lfo2_wave", "LFO 2 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "lfo3_wave", "LFO 3 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "mseg1_rate", "MSEG 1 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mseg2_rate", "MSEG 2 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mseg3_rate", "MSEG 3 RATE", -3.0f, 3.0f, 0.0f, 1.0f, "oct", "MODULATION" },
+    { "mod1_amount", "MOD 1 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod2_amount", "MOD 2 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod3_amount", "MOD 3 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod4_amount", "MOD 4 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod5_amount", "MOD 5 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod6_amount", "MOD 6 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod7_amount", "MOD 7 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod8_amount", "MOD 8 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod9_amount", "MOD 9 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod10_amount", "MOD 10 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod11_amount", "MOD 11 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod12_amount", "MOD 12 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod13_amount", "MOD 13 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod14_amount", "MOD 14 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod15_amount", "MOD 15 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod16_amount", "MOD 16 AMOUNT", -1.0f, 1.0f, 0.0f, 1.0f, "", "MOD MATRIX" },
+    { "mod_velocity_curve", "VELOCITY CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_pressure_curve", "AFTERTOUCH CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_wheel_curve", "MOD WHEEL CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "mod_key_curve", "KEY FOLLOW CURVE", -1.0f, 1.0f, 0.0f, 1.0f, "", "KEYBOARD MOD" },
+    { "fx1_model", "FX 1 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx1_param_a", "FX 1 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_param_b", "FX 1 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx1_oversampling", "FX 1 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx2_model", "FX 2 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx2_param_a", "FX 2 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_param_b", "FX 2 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx2_oversampling", "FX 2 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx3_model", "FX 3 MODEL", 0.0f, 5.0f, 0.0f, 1.0f, "", "FX" },
+    { "fx3_param_a", "FX 3 PARAM A", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_param_b", "FX 3 PARAM B", 0.0f, 1.0f, 0.5f, 1.0f, "", "FX" },
+    { "fx3_oversampling", "FX 3 OVERSAMPLING", 0.0f, 3.0f, 2.0f, 1.0f, "", "FX" },
+    { "fx_gain_comp", "FX LOUDNESS MATCH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FX" },
 
     // [ws6-library] append this workstream's ParamDefs below this line (same order as the enum).
 

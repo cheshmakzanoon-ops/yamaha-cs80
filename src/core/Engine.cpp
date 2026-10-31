@@ -24,6 +24,7 @@ void Engine::prepare(double hostSampleRate)
     oversample = 2;
     internalRate = hostRate * (double) oversample;
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+    modern.prepare(internalRate);
 
     chorus.prepare((float) internalRate);
     bbdChorus.prepare((float) internalRate);
@@ -123,9 +124,11 @@ void Engine::reset()
     nextVoice = 0;
     globalBend = 0.0f;
     modWheel = 0.0f;
+    lastChannelPressure = 0.0f;
     expression = 1.0f;
     ribbon = 0.0f;
     smoothedVolume = global.volume;
+    modern.reset();
     heldKeyCount = 0;
     arpSequenceLength = 0;
     arpIndex = 0;
@@ -369,12 +372,24 @@ void Engine::buildSettings()
     global.lfoDest[0] = (int) std::lround(p(P_lfo1Dest));
     global.lfoDest[1] = (int) std::lround(p(P_lfo2Dest));
     global.lfoDest[2] = (int) std::lround(p(P_lfo3Dest));
+    global.lfoWave[0] = std::clamp((int) std::lround(p(P_lfo1Wave)), 0, kLfoWaveCount - 1);
+    global.lfoWave[1] = std::clamp((int) std::lround(p(P_lfo2Wave)), 0, kLfoWaveCount - 1);
+    global.lfoWave[2] = std::clamp((int) std::lround(p(P_lfo3Wave)), 0, kLfoWaveCount - 1);
     global.fxType[0] = (int) std::lround(p(P_fx1Type));
     global.fxType[1] = (int) std::lround(p(P_fx2Type));
     global.fxType[2] = (int) std::lround(p(P_fx3Type));
     global.fxMix[0] = p(P_fx1Mix);
     global.fxMix[1] = p(P_fx2Mix);
     global.fxMix[2] = p(P_fx3Mix);
+    for (int i = 0; i < 3; ++i)
+    {
+        const int base = P_fx1Model + i * (P_fx2Model - P_fx1Model);
+        global.fxModel[i] = std::clamp((int) std::lround(p(base)), 0, fx::kModelCount - 1);
+        global.fxParamA[i] = p(base + 1);
+        global.fxParamB[i] = p(base + 2);
+        global.fxOversampling[i] = std::clamp((int) std::lround(p(base + 3)), 0, fx::Oversampler::kMaxStages);
+    }
+    global.fxGainComp = p(P_fxGainCompensation) >= 0.5f;
     global.macro[0] = p(P_macro1);
     global.macro[1] = p(P_macro2);
     global.macro[2] = p(P_macro3);
@@ -401,11 +416,30 @@ void Engine::buildSettings()
         {
             global.lfoDepth[i] = 0.0f;
             global.lfoDest[i] = 0;
+            global.lfoWave[i] = 0;
             global.fxType[i] = 0;
             global.fxMix[i] = 0.0f;
+            global.fxModel[i] = 0;
         }
+        global.fxGainComp = false;
         for (float& macro : global.macro)
             macro = 0.5f;
+    }
+
+    // Modern modulation layer: rates, matrix amounts and response curves. PURE CS-80
+    // disables it whatever the parameters say.
+    {
+        modern::ModernControls controls;
+        controls.enabled = ! isPureCs80(global.renderPolicy);
+        for (int m = 0; m < modern::kMsegCount; ++m)
+            controls.msegRate[(std::size_t) m] = std::exp2(p(P_mseg1Rate + m)); // octaves -> speed
+        for (int s = 0; s < modern::kModSlots; ++s)
+            controls.amount[(std::size_t) s] = p(P_mod1Amount + s);
+        controls.velocityCurve = p(P_modVelocityCurve);
+        controls.pressureCurve = p(P_modPressureCurve);
+        controls.wheelCurve = p(P_modWheelCurve);
+        controls.keyCurve = p(P_modKeyCurve);
+        modern.setControls(controls);
     }
 
     // Macro layer. 0.5 is neutral, so a patch sounds exactly like its panel
@@ -1057,6 +1091,7 @@ void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 void Engine::channelPressure(int midiChannel, float pressure)
 {
     pressure = clampf(pressure, 0.0f, 1.0f);
+    lastChannelPressure = pressure;
     for (auto& v : voices)
         if (v.active && (midiChannel == 1 || v.midiChannel == midiChannel))
             v.pressure = pressure;
@@ -1153,7 +1188,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
-        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, 0, modRng);
+        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
 
     lfoPitch = lfoFilter = lfoAmp = 0.0f;
     lfoPwm = lfoPan = 0.0f;
@@ -1185,12 +1220,21 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     for (const auto& voice : voices)
         if (voice.active && voice.held)
             sharedPressure = std::max(sharedPressure, voice.pressure);
+
+    // Modern layer (Phase 6): MSEGs and matrix evaluated once per sample. Identity offsets
+    // (0, or ratios of exactly 1) when nothing is routed or under PURE CS-80.
+    modern.beginSample({ modWheel, ribbon + params[P_ribbon], lastChannelPressure, sharedPressure, expression,
+                         global.pitchBendRange > 0.0f ? globalBend / global.pitchBendRange : 0.0f,
+                         subValue, ringEnv, { lfoValues[0], lfoValues[1], lfoValues[2] } });
+    const auto& modernGlobal = modern.getGlobalOffsets();
+
     if (global.subOriginalMode && usesSourceModels(global.renderPolicy))
     {
         // Circuit engine: IG00150 exponential converter (touch adds octaves) smoothed on
         // the control node, band-limited resets. ws4-circuits.md Step 1.
         const double rate = originalSub.circuitRate(OriginalSubOscillator::circuitTargetRate(
-            global.subOriginalSpeed, global.subAtSpeed, sharedPressure), originalSubSmoothing);
+            global.subOriginalSpeed, global.subAtSpeed, sharedPressure) * (double) modernGlobal.subSpeedRatio,
+            originalSubSmoothing);
         originalSubSpeedSmoothed = (float) rate;
         subValue = originalSub.tickCircuit(rate, sr, global.subOriginalFunction,
                                            -global.subExtLevel * externalModulation);
@@ -1198,7 +1242,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     else if (global.subOriginalMode)
     {
         const float speed = OriginalSubOscillator::targetRate(
-            global.subOriginalSpeed, global.subAtSpeed, sharedPressure);
+            global.subOriginalSpeed, global.subAtSpeed, sharedPressure) * modernGlobal.subSpeedRatio;
         originalSubSpeedSmoothed += (speed - originalSubSpeedSmoothed) * originalSubSmoothing;
         // EJ/SUB input chain inverts. Peak1 digital input at fullLEVEL maps
         // to nominal peak1 modulation, NOT a claim of volts-per-full-scale.
@@ -1210,9 +1254,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // Preserve the shipped waveform mapping, smoothing and RNG stream.
         float speed = global.subSpeed;
         speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
+        speed *= modernGlobal.subSpeedRatio;
         subSpeedSmoothed += (speed - subSpeedSmoothed) * 0.0015f;
         subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
     }
+    subValue *= modernGlobal.subDepthGain;
     driftPhase += 0.031f * invSr;
     driftPhase -= std::floor(driftPhase);
 
@@ -1260,11 +1306,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float glideOffset = v.glidePitch - (float) v.note;
         const float dispersion = global.voiceDispersion;
         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
+        // Envelope sources are the previous sample's values of each rank.
+        modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
+                                  { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
 
         for (int ch = 0; ch < 2; ++ch)
         {
             auto& r = v.ranks[ch];
             auto& rs = rankSettings[ch];
+            const auto& mod = modern.rankOffsets(vi, ch);
 
             float pitch = (float) v.note
                           + global.masterTune
@@ -1277,7 +1328,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                           + subValue * (global.subVco + global.subAtVco * v.pressure) * 1.5f
                           + subValue * modWheel * global.modWheelSub * 2.0f
                           + r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f)
-                          + driftVoice;
+                          + driftVoice
+                          + mod.pitch;
 
             if (global.glideMode == 2 && global.glideGate)
                 pitch = std::round(pitch);
@@ -1287,7 +1339,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
                                * kFeetRatios[std::clamp(rs.feet, 0, 5)];
             const float pwm = pwmSine[ch];
-            const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
+            const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
 
             const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
 
@@ -1318,11 +1370,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
             const float cutoffLp = sourceActive[ch]
-                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct, r.lpCutoffExp)
-                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp, r.lpCutoffExp);
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct + mod.lpCutoff, r.lpCutoffExp)
+                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp + mod.lpCutoff, r.lpCutoffExp);
             const float cutoffHp = sourceActive[ch]
-                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct, r.hpCutoffExp)
-                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp, r.hpCutoffExp);
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct + mod.hpCutoff, r.hpCutoffExp)
+                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp + mod.hpCutoff, r.hpCutoffExp);
             const float qLp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
                 : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
             const float qHp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
@@ -1335,12 +1387,12 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float cutoffFloor = circuitFilter ? kIg00156FeedforwardHz : 0.0f;
             if (rs.hpfOn)
             {
-                r.hpf.set(cutoffHp + cutoffFloor, qHp, sr);
+                r.hpf.set(cutoffHp + cutoffFloor, modern::modulatedQ(qHp, mod.hpQ), sr);
                 filtered = circuitFilter ? r.hpf.processCircuit(filtered).hp : r.hpf.process(filtered).hp;
             }
             if (rs.lpfOn)
             {
-                r.lpf.set(cutoffLp + cutoffFloor, qLp, sr);
+                r.lpf.set(cutoffLp + cutoffFloor, modern::modulatedQ(qLp, mod.lpQ), sr);
                 filtered = circuitFilter ? r.lpf.processCircuit(filtered).lp : r.lpf.process(filtered).lp;
             }
 
@@ -1351,14 +1403,15 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float levelCv = sourceActive[ch]
                 ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
                              + subValue * global.subVca * 0.45f + lfoAmp
-                             + keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour))
+                             + keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour) + mod.level)
                 : clampf(rs.vLevel
                                              + rs.initLevel * v.velocity
                                              + rs.afterLevel * v.pressure
                                              + subValue * global.subVca * 0.45f
                                              + lfoAmp
                                              + keyboardLevelOffset(global.kbdLevelLow,
-                                                                   global.kbdLevelHigh, v.contour),
+                                                                   global.kbdLevelHigh, v.contour)
+                                             + mod.level,
                                          0.0f, 2.6f);
             const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
@@ -1368,7 +1421,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             float voiceOut = (filtered * rs.vcfLevel + sine)
                              * levelCv * amp * chGain * 0.17f;
 
-            float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan, -1.0f, 1.0f);
+            float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
             mixL += voiceOut * (0.5f - 0.5f * pan);
             mixR += voiceOut * (0.5f + 0.5f * pan);
         }
@@ -1472,65 +1525,18 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // 3 tape delay, 4 plate reverb, 5 drive.
     for (int slot = 0; slot < 3; ++slot)
     {
-        auto& fx = fxSlots[(std::size_t) slot];
-        const int type = global.fxType[slot];
-        const float amount = global.fxMix[slot];
-        const int live = (amount <= 0.001f || type <= 0) ? 0 : type;
-        if (live != fx.liveType)
-        {
-            // A slot that goes quiet, or changes effect, must not keep the old effect's audio:
-            // it would replay it, late, the next time the slot is switched on.
-            fx.clear(fx.liveType);
-            fx.liveType = live;
-        }
-        if (live == 0)
-            continue;
-
-        switch (live)
-        {
-            case 1: // modern stereo chorus
-            {
-                const auto m = fx.chorus.process(mixL, mixR, 0.62f, 0.62f, true, false);
-                mixL = lerp(mixL, m.l, amount * 0.62f);
-                mixR = lerp(mixR, m.r, amount * 0.62f);
-                break;
-            }
-            case 2: // six-stage phaser
-            {
-                const auto p = fx.phaser.process(mixL, mixR, 0.32f, 0.72f);
-                mixL = lerp(mixL, p.l, amount * 0.72f);
-                mixR = lerp(mixR, p.r, amount * 0.72f);
-                break;
-            }
-            case 3: // tape delay with cross-feedback and wow
-            {
-                const float wow = std::sin(kTwoPi * driftPhase) * 0.0007f;
-                const float d = (0.34f + wow) * sr;
-                const float wl = fx.dampL.process(fx.delayL.read(d));
-                const float wr = fx.dampR.process(fx.delayR.read(d));
-                fx.delayL.write(mixL + wr * 0.36f);
-                fx.delayR.write(mixR + wl * 0.36f);
-                mixL = lerp(mixL, wl, amount * 0.58f);
-                mixR = lerp(mixR, wr, amount * 0.58f);
-                break;
-            }
-            case 4: // stereo plate reverb
-            {
-                const float wl = fx.reverb.process(mixL, 0);
-                const float wr = fx.reverb.process(mixR, 1);
-                mixL = lerp(mixL, wl, amount * 0.62f);
-                mixR = lerp(mixR, wr, amount * 0.62f);
-                break;
-            }
-            case 5: // OTA-style drive
-            {
-                mixL = lerp(mixL, softClip(mixL * 3.2f) * 0.68f, amount);
-                mixR = lerp(mixR, softClip(mixR * 3.2f) * 0.68f, amount);
-                break;
-            }
-            default:
-                break;
-        }
+        // A modern model (ws5) replaces the classic type of its slot; model 0 is classic.
+        fx::SlotControls controls;
+        controls.type = global.fxType[slot];
+        controls.model = global.fxModel[slot];
+        controls.mix = clampf(global.fxMix[slot] + modernGlobal.fxMix[(std::size_t) slot], 0.0f, 1.0f);
+        controls.a = global.fxParamA[slot];
+        controls.b = global.fxParamB[slot];
+        controls.oversampling = global.fxOversampling[slot];
+        controls.gainComp = global.fxGainComp;
+        const auto out = fxSlots[(std::size_t) slot].process(controls, mixL, mixR, driftPhase, sr);
+        mixL = out.l;
+        mixR = out.r;
     }
 
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
