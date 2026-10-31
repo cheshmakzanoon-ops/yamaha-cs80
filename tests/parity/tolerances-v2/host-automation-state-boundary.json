@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "evidence_kind": "software_protocol",
+  "description": "Preregistered witness for the starting value of a delayed host automation queue after a parameter write between render blocks. This extends host-automation.json without changing its limits or predicates. It is a software state-ownership contract, not a CS-80 circuit law.",
+  "host_automation_state_boundary": {
+    "normalized_curve_error": 0.0000001,
+    "audio_max_abs_error": 0.000002,
+    "sample_offset_error": 0,
+    "unchanged_endpoint_error": 0,
+    "key_parameter_count": 18,
+    "truth": "For a queue whose first point occurs after sample zero, the implicit sample -1 value is the latest parameter value at the boundary. An intervening native zero-frame parameter flush, UI setter or restored state supersedes an older automation endpoint. In the absence of an intervening write, retain the previous queue's full-precision normalized endpoint; do not introduce an extra float physical-to-normalized round trip at each block boundary.",
+    "witnesses": [
+      "After prepare and one rendered block, issue a native VST3 zero-frame parameter flush with a new value, then render a queue whose first point is delayed. Compare every sample against an independent scalar schedule beginning at the flushed value, including samples before that first point.",
+      "Repeat after a completed automation curve, so the flushed value must replace an existing cached endpoint rather than only the initial default.",
+      "At processor-bridge level, repeat delayed-queue starts after setValueNotifyingHost and after the existing locked/synchronised APVTS state replacement path. The first sample and all subsequent samples must follow the latest stored parameter state.",
+      "Without an intervening write, carry a non-Float32-representable normalized endpoint into a delayed queue and require exact continuity from that double endpoint. Check the starting state directly, not only an audio threshold.",
+      "Exercise every enum-named key parameter, delayed first points at sample 1 and the final sample, and block sizes 7, 64 and 256. Preserve existing no-queue, Pure/Legacy, selected factory/memory and 16-voice assertions unchanged."
+    ],
+    "mutations": [
+      "Restore stale cached automationCurrent as the implicit start even when the current parameter value changed between blocks; the state-boundary witness must fail.",
+      "Refresh the implicit start unconditionally from float parameter readback even when the last host endpoint has not been superseded; the exact endpoint-continuity witness must fail.",
+      "Delay boundary refresh until after the queue is attached; the delayed-first-point witness must fail."
+    ],
+    "registration_order": "Commit this acceptance file before running the new witnesses or evaluating implementation changes. Record the unmodified failure, repaired result and mutation results. Existing host-automation.json limits remain authoritative for all original tests."
+  },
+  "sources": [
+    "https://steinbergmedia.github.io/vst3_doc/vstinterfaces/classSteinberg_1_1Vst_1_1IParamValueQueue.html",
+    "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Parameters%2BAutomation/Index.html",
+    "Declared software inference: a successful parameter setter or state restore is authoritative at the next render boundary, while unchanged host-curve endpoints retain their already accepted full precision."
+  ]
+}
