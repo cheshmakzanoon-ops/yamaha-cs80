@@ -49,6 +49,9 @@ measurements are in [STATUS.md](../STATUS.md).
 | V2 re-pin | once, to `00ceccf` | `ef9bc35` |
 | Parameter count | `test_parity_capture.py` pins 139 + 1 + 2 + 9 + 39 | `a0f6dd5` |
 | Factory recall and matrix routing | recall zeroes amounts, keeps routing (session state) | STATUS.md |
+| Sanitizer CI | GCC 13 UBSan constant-evaluation fix; test timeouts x4 under the sanitizers | `fd0e851`, `a2b2452` |
+| macOS UI smoke | first-run tour covered the real-pointer fixture's keybed; fixture and screenshot capture mark it seen; the F1 help-card check raced JUCE's background dismissal of call-outs | `b2c2302`, `a721935`, `e048dca`, `a26f583`, `df4ba22` |
+| Merge to `main` | [PR #2](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/2), merge commit, after green build and DSP runs at `e048dca` | `ec72eed` |
 
 ## ws2-engine — engine I/O and modes
 

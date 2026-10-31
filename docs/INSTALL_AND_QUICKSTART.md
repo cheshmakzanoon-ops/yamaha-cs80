@@ -4,8 +4,9 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This revision describes the redesigned vector editor, opt-in **SOURCE
-PERFORMANCE**, **PANIC**, and **SAMPLE PEAK** helpers. Older artifacts may not
+This revision describes the integrated tree of 2026-10-31: the circuit engine
+as the fresh default, the toolbar (ENGINE, PURE CS-80, STUDIO), the 523-program
+library, **PANIC** and the **SAMPLE PEAK** readout. Older artifacts may not
 contain these changes. Use the guide bundled with your artifact and compare its
 full manifest commit with the current-build table in the repository README.
 The project version string alone is not a build identifier: development builds
@@ -90,31 +91,29 @@ distributions. No additional audio driver is bundled on any platform.
    measured performance guarantee for your computer. In a DAW, create an
    instrument track, load **CS-80 Reference**, enable monitoring and choose the
    MIDI input. Start with low monitoring volume.
-2. Leave both **SOURCE PERFORMANCE** and **PARITY ISOLATION off** for the
-   unchanged default legacy sound: velocity, pressure,
-   pitch bend, CC1 modulation, CC11 expression and CC64 pedal hold work here.
-   Select a library brass/string/keys patch or edit PANEL. Eight simultaneously
-   held voices are available; a ninth held note is intentionally ignored.
+2. A fresh instance plays the circuit engine (toolbar **ENGINE CIRCUIT** lit)
+   with the first library program: velocity, pressure, pitch bend, CC1
+   modulation, CC11 expression and CC64 pedal hold work here. Step through
+   programs with **PREV / NEXT** or open the **LIBRARY**, or play the hardware
+   tone tabs. Eight simultaneously held voices are available; a ninth held note
+   is intentionally ignored. **ENGINE LEGACY (compat)** gives the older voicing;
+   Legacy Library programs select it themselves.
 3. For MPE, enable it in both host and instrument, use channel 1 as master and
    member channels 2–16, and match pitch-bend ranges manually. Automatic RPN
    zone/range negotiation is not implemented. Polyphonic pressure also works
    without MPE; on screen, strike a key and drag farther down it for pressure.
-4. To play the new nominal source tabs with your controller, turn **Advanced →
-   About → SOURCE PERFORMANCE on**, leave **PARITY ISOLATION off**, then select
-   the hardware tone tabs. MIDI bend, CC1/11/64/74, optional MPE and modern
-   FX/macros remain usable. This is an explicitly hybrid software performance
-   mode, not a calibrated hardware comparison. The toolbar identifies the
-   requested policy and both source routes. Source-model output uses a fixed
-   -6 dB reference and an inferred driver ceiling at full scale, so very dense
-   loud chords can still reach or slightly exceed 0 dBFS; keep normal
-   monitoring headroom.
-5. Use **SAVE** to name a user patch; an existing filename requires confirmation.
-   Check the saved/error status. Save the DAW session for the full session mode
-   and automation. A new user patch saves/restores SOURCE PERFORMANCE; factory
-   library recall resets it OFF and returns both selectors to PANEL. Old patches
-   without the flag restore it OFF. User/factory patch recall preserves the
-   independent isolation policy; full session restore recalls both flags.
-   Transient pedal gestures are not saved.
+4. **PURE CS-80** in the toolbar plays the circuit models with every software
+   addition masked (modern FX, LFOs, macros, MSEG, matrix, arpeggiator, MPE,
+   microtuning, voice modes; MIDI bend and CC1/11/64/74 ignored; voice
+   dispersion and drift zeroed). Ribbon, pressure, the pedals and the on-screen
+   controls stay. Source-model output uses a fixed -6 dB reference and an
+   inferred driver ceiling at full scale, so very dense loud chords can still
+   reach or slightly exceed 0 dBFS; keep normal monitoring headroom.
+5. Use **SAVE** (toolbar menu or Ctrl/Cmd+S) to name a user patch; an existing
+   filename requires confirmation. A user patch stores its ENGINE choice; library
+   programs carry their own (curated programs the circuit engine, Legacy Library
+   programs Legacy). PURE CS-80 is a session policy: program recall keeps it,
+   and a full DAW session restores it. Transient pedal gestures are not saved.
 
 ### Stuck notes and output headroom
 
@@ -140,25 +139,23 @@ the indicator as protection. See [output-meter details](OUTPUT_METER.md).
 
 ### Choose the mode before playing
 
-| SOURCE PERFORMANCE | PARITY ISOLATION | Effective behavior |
+| ENGINE | PURE CS-80 | Effective behavior |
 |---|---|---|
-| OFF | OFF | Legacy performance (unchanged fresh default) |
-| ON | OFF | Source models plus normal MIDI, optional MPE and modern overlays |
-| Either | ON | Strict comparison: bend, CC1/11/64/74, MPE and modern overlays masked |
+| CIRCUIT | OFF | Circuit models plus normal MIDI, optional MPE and the modern layer (fresh default) |
+| LEGACY (compat) | OFF | The older voicing, byte-identical to earlier sessions |
+| Either | ON | Circuit models, strict: bend, CC1/11/64/74, MPE and the modern layer masked |
 
-Isolation retains the source request but takes precedence over it. Pressure,
-ribbon and the on-screen PEDAL remain active in all three policies. An effective
-mode change **stops sounding notes and clears controller/FX history**; the shared
-pedal position is reapplied. Toggling only SOURCE PERFORMANCE while isolation
-remains ON is masked and does not stop notes. Turning isolation OFF applies the
-stored source request. Library recall never disables isolation; it selects
-PANEL and clears the source-performance request, not a source-model tone tab.
+The host parameters keep their IDs: ENGINE is `source_performance`, PURE CS-80
+is `parity_mode` ([Isolation contract](PARITY_ISOLATION.md)). PURE CS-80 takes
+precedence over ENGINE; switching it off applies the stored ENGINE choice.
+Pressure, ribbon and the on-screen PEDAL remain active in all three policies. An
+effective mode change **stops sounding notes and clears controller/FX history**;
+the shared pedal position is reapplied.
 
-The 7 `SOURCE-COMPLETE` and 15 `SOURCE-INFERRED` factory tabs share the current
-nominal models in source performance and isolation. “Complete” describes the
+The 7 `SOURCE-COMPLETE` and 15 `SOURCE-INFERRED` factory tabs share the
+circuit models on the circuit engine and in PURE CS-80. “Complete” describes the
 classified source column, not measured hardware equivalence. PANEL and memories
 retain their programmer identity; they do not become factory source columns.
-The separate experimental oscillator is not enabled by these switches.
 
 ### Screen size and performance limits
 

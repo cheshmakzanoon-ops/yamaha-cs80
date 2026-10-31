@@ -241,6 +241,10 @@ void captureSourcePerformanceViews(const juce::File& dir)
         host.prepareToPlay(48000.0, 256);
 
         cs80::tests::ui_readiness_detail::RefreshProbe unchanged(host);
+        // This capture uses a real window, where ws8's first-run tour opens by itself on
+        // the Studio mount's first timer tick; it covered the 1120x700 capture. The
+        // screenshots document the panel, so this player has seen the tour.
+        host.getEditorState().tourSeen = true;
         Cs80AudioProcessorEditor editor(host);
         editor.setSize(1600, 1000);
         editor.addToDesktop(0);

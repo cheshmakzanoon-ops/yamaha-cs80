@@ -70,6 +70,8 @@ XML
 pkg="$out/CS-80-Reference-$version-macOS-universal.pkg"
 sign=()
 [ -n "$identity" ] && sign=(--sign "$identity")
-productbuild --distribution "$work/distribution.xml" --package-path "$work/components" "${sign[@]}" "$pkg"
+# macOS /bin/bash 3.2 treats an empty array as unbound under `set -u`, so expand
+# the signing arguments only when there are any (an unsigned package otherwise).
+productbuild --distribution "$work/distribution.xml" --package-path "$work/components" ${sign[@]+"${sign[@]}"} "$pkg"
 pkgutil --check-signature "$pkg" || true
 echo "$pkg"

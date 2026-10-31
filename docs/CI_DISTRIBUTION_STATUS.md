@@ -22,20 +22,18 @@ code. Existing validator input artifacts remain separate and unchanged.
   or automatic updater is supplied. See the install guide for architecture and
   system-library limitations.
 
-## Licensing is not silently decided by packaging
+## Licensing
 
-The repository did not specify a project LICENSE/COPYING/NOTICE file at this
-checkpoint. `licenses/JUCE-LICENSE.md` is copied from the verified JUCE checkout
-for transparency; it is not an election of a license for the author's project,
-proof of a commercial entitlement, or a complete dependency-notice audit.
-`SOURCE.txt` points to the corresponding source commit, but these archives are
-not complete source distributions.
-
-Treat these as development/qualification artifacts, not an authorization to
-redistribute a public binary release. Before that release, the owner must
-establish the intended project/dependency licensing basis and supply the required
-source/notices under that basis, along with any desired signing/notarization.
-No legal-compliance determination or license choice is made by this helper.
+The owner released the project under the GNU Affero General Public License v3
+(`LICENSE`, commit `06eb8f3`), matching JUCE 8's AGPLv3 option. Every archive
+carries the project `LICENSE` and `licenses/JUCE-LICENSE.md`, copied from the
+verified JUCE checkout; the release installers ship both as well
+([release/RELEASE_QUALIFICATION.md](release/RELEASE_QUALIFICATION.md)).
+`SOURCE.txt` points to the corresponding source commit; the archives are not
+complete source distributions, so the AGPL source offer is met by that public
+commit. This helper makes no further legal-compliance determination (for
+example a trademark review or a complete third-party notice audit), and the
+artifacts stay unsigned development builds unless signing secrets exist.
 
 ## Reproduce packaging
 

@@ -145,6 +145,34 @@ next branch event once per analytic segment rather than per sample); not done.
   (Phase 1.5 gain staging), `6e5892f` before that.
 - `scripts/check-compat-gates.sh --strict-v2` passes at the re-pin commit `ef9bc35`.
 
+### CI on the integrated tree
+
+At `e048dca` (the head merged into `main` as `ec72eed`):
+[build 41208373099](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41208373099)
+passed all six jobs (Linux, Windows, macOS arm64 and Intel builds and tests;
+pluginval strictness 10 on Linux VST3 headless, GUI and seeded, Windows VST3,
+both macOS VST3, AU and AU GUI) and
+[DSP measurements 41208373089](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41208373089)
+passed all five jobs, including the ASan + UBSan suite (72 tests). Fixed on the
+way, without changing an assertion:
+
+- The sanitizer build had stopped at a GCC 13 UBSan constant-evaluation rule in
+  `FactoryToneHypotheses.h` since the ws6 merge (`fd0e851`); three tests then
+  outlived Release-build timeouts under the sanitizers, scaled x4 there by
+  `CS80_TEST_TIMEOUT_SCALE` (`a2b2452`).
+- macOS-only UI-smoke failures: ws8's first-run tour opens by itself in a real
+  window and covered the keybed of the real-pointer fixture whenever macOS
+  window activation outlasted the tour's first timer tick (diagnosed in
+  `b2c2302`, fixed in `e048dca`; the window also floats above other
+  applications, `a721935`). The same tour covered the 1120x700
+  source-performance screenshot (`a26f583`). The F1 help-card check raced
+  JUCE's dismissal of call-outs in a background process (the CI harness is
+  never the foreground application on macOS); it now checks before any
+  message is dispatched (`df4ba22`, after macos-15-intel failed it on `main`
+  at `ec72eed`).
+
+A passing Linux pluginval run is not a fix for the intermittent exit 139.
+
 ### Intentional circuit-engine sound changes in the `00ceccf` pin
 
 - ws1: nodal IG00156 stage (frequency-dependent resonance, 1 uF coupling corners,
