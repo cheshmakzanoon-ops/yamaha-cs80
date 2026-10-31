@@ -1,0 +1,13 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "evidence_kind": "software_protocol",
+  "description": "Acceptance registered before vendored MTS-ESP shim evaluation. No physical CS-80 law is inferred by this modern software-protocol adapter.",
+  "mts_client": {
+    "pitch_error_semitones": 0.00001,
+    "fixture": "A deterministic fake of the upstream C API returns twelve-tone notes shifted by one quarter semitone and marks note 60 unmapped; the real shim must query all 128 notes with channel -1, produce the corresponding pitch/mapping table, forward nonempty MIDI buffers, preserve the table when no master is present, and balance registration/deregistration.",
+    "native_fixture": "Compile and run the actual unmodified upstream client plus the shipping shim in a standalone test process; available must be true, no master must leave the supplied table unchanged, repeated instance lifetime must complete, and the upstream client must parse a standard one-note MTS SysEx retuning without a master.",
+    "policy_invariance": "Engine renders supplied with the shim-produced tuning table must be byte-identical to the same untuned renders both at the default tuning mode 0 and in PURE CS-80 with tuning mode 2. A modern tuning-mode-2 render must differ, proving the fixture exercises tuning.",
+    "mutations": "Unavailable stub in shipping branch; dropped mapped-key flag; dropped registration/deregistration; wrong pitch conversion; disabled Pure/default tuning policy guard. Every implemented acceptance gate receives a deliberately broken negative control."
+  }
+}
