@@ -204,13 +204,15 @@ void testMainViewLayout(Check check, Flush flush)
           "tone tabs carry the full hardware names");
 }
 
-// Separate ON/OFF, TREMOLO and CHORUS tabs over the unchanged chorus_on / chorus_mode parameters.
+// Retain every shipped exclusive-tab assertion under the immutable Legacy policy.
 template <typename Check, typename Flush>
 void testTremoloChorusTabs(Check check, Flush flush)
 {
     using namespace panel_editor_detail;
     juce::TemporaryFile presetRoot("-cs80-panel-chorus");
     Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    host.setParamValue(cs80::P_sourcePerformance, 0.0f);
+    host.setParamValue(cs80::P_parityMode, 0.0f);
     Cs80AudioProcessorEditor editor(host);
     editor.setSize(1600, 1000);
     auto* onOff = dynamic_cast<juce::Button*>(findByTitle(editor, "Tremolo/chorus ON/OFF"));
@@ -256,6 +258,71 @@ void testTremoloChorusTabs(Check check, Flush flush)
     mode->setValueNotifyingHost(1.0f);
     check(waitFor(flush, [&] { return tremolo->getToggleState() && ! chorus->getToggleState() && ! onOff->getToggleState(); }),
           "host automation of chorus_mode moves the lit tab");
+}
+
+// Registered independently in chorus-tab-ui.json; every Legacy assertion above
+// remains, and both circuit policies now exercise the physical tab combinations.
+template <typename Check, typename Flush>
+void testIndependentChorusTabs(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    for (const bool pure : {false, true})
+    {
+        juce::TemporaryFile presetRoot("-cs80-independent-chorus");
+        Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+        host.setParamValue(cs80::P_sourcePerformance, 1.0f);
+        host.setParamValue(cs80::P_parityMode, pure ? 1.0f : 0.0f);
+        host.setParamValue(cs80::P_chorusOn, 1.0f);
+        host.setParamValue(cs80::P_chorusMode, 0.0f);
+        Cs80AudioProcessorEditor editor(host);
+        editor.setSize(1600, 1000);
+        auto* on = dynamic_cast<juce::Button*>(findByTitle(editor, "Tremolo/chorus ON/OFF"));
+        auto* trem = dynamic_cast<juce::Button*>(findByTitle(editor, "Tremolo/chorus: TREMOLO"));
+        auto* chorus = dynamic_cast<juce::Button*>(findByTitle(editor, "Tremolo/chorus: CHORUS"));
+        auto* tabs = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_chorusTabs));
+        check(on != nullptr && trem != nullptr && chorus != nullptr && tabs != nullptr,
+              "independent physical tabs and appended host parameter exist in both circuit policies");
+        if (on == nullptr || trem == nullptr || chorus == nullptr || tabs == nullptr) continue;
+        check(tabs->getVersionHint() >= 16 && tabs->getDefaultValue() == 0.0f
+                  && host.getParamValue(cs80::P_chorusTabs) == 0.0f,
+              "independent tabs append with AU hint16 and neutral historical default");
+        check(waitFor(flush, [&] { return chorus->getToggleState() && !trem->getToggleState(); }),
+              "neutral historical state preserves chorus-only lights");
+        const auto expect = [&](float mode, bool c, bool t) {
+            check(host.getParamValue(cs80::P_chorusTabs) == mode
+                      && waitFor(flush, [&] { return chorus->getToggleState() == c && trem->getToggleState() == t; }),
+                  "tab click publishes the exact independent state and both lights");
+        };
+        const auto click = [&](juce::Button& button, float mode, bool c, bool t) {
+            BalancedGesture probe;
+            tabs->addListener(&probe);
+            button.triggerClick();
+            flush(20);
+            tabs->removeListener(&probe);
+            check(probe.ok(), "independent tab click has one balanced host gesture");
+            expect(mode, c, t);
+        };
+        click(*trem, 4.0f, true, true);
+        click(*chorus, 3.0f, false, true);
+        click(*trem, 1.0f, false, false);
+        click(*chorus, 2.0f, true, false);
+        on->triggerClick(); flush(20);
+        check(host.getParamValue(cs80::P_chorusOn) == 0.0f
+                  && host.getParamValue(cs80::P_chorusTabs) == 2.0f,
+              "section master preserves the independent physical selection");
+        host.setParamValue(cs80::P_chorusTabs, 4.0f);
+        expect(4.0f, true, true);
+        host.setParamValue(cs80::P_parityMode, 0.0f);
+        host.setParamValue(cs80::P_sourcePerformance, 0.0f);
+        host.setParamValue(cs80::P_chorusMode, 1.0f);
+        check(waitFor(flush, [&] { return !chorus->getToggleState() && trem->getToggleState(); }),
+              "returning to Legacy restores the exclusive chorus_mode lights");
+        auto* contextButton = dynamic_cast<cs80::ui::ContextTextButton*>(chorus);
+        check(contextButton != nullptr && contextButton->getParameterContext() != nullptr
+                  && contextButton->getParameterContext()->getParameterId()
+                       == Cs80AudioProcessor::parameterId(cs80::P_chorusMode),
+              "Legacy tab context rebinds to its original host parameter");
+    }
 }
 
 // The 10.5 px legend floor at the 1120 x 700 minimum, drawn in the embedded panel typeface.
@@ -622,6 +689,7 @@ void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
     testUnsavedEditIndicator(check, flush);
     testMainViewLayout(check, flush);
     testTremoloChorusTabs(check, flush);
+    testIndependentChorusTabs(check, flush);
     testLegendFloorAndTypeface(check);
     testZoomPresets(check, flush);
     testHiDpiTexture(check, flush);

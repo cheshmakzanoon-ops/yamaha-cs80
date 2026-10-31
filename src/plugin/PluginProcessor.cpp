@@ -388,6 +388,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
 
     // [ws8-studio] append this workstream's host parameters below this line, AU version hint 15.
 
+    // [completion-tabs] append-only physical tab state; retain every prior host index.
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_chorusTabs), 16 }, "Chorus / tremolo tabs",
+        juce::StringArray { "Historical mode", "Both off", "Chorus", "Tremolo", "Both on" }, 0));
+
     return layout;
 }
 

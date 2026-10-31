@@ -12,6 +12,7 @@
 #include "PerformanceControls.h"
 #include "PraWahCircuit.h"
 #include "BbdChorus.h"
+#include "ChorusTabs.h"
 #include "FxSlot.h"
 #include "OutputTapCircuit.h"
 #include "HeadphoneAmpCircuit.h"
@@ -154,6 +155,7 @@ struct GlobalSettings
     float ringAmount = 0.0f;
     bool chorusOn = false;
     bool chorusTremolo = false;
+    ChorusTabMode chorusTabs = ChorusTabMode::historical;
     float chorusSpeed = 0.55f;
     float chorusDepth = 0.55f;
     bool stereo = true;

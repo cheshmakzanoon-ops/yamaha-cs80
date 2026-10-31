@@ -584,6 +584,7 @@ void Engine::buildSettings()
     global.ringAmount = p(P_ringAmount);
     global.chorusOn = p(P_chorusOn) >= 0.5f;
     global.chorusTremolo = p(P_chorusMode) >= 0.5f;
+    global.chorusTabs = static_cast<ChorusTabMode>((int) std::lround(p(P_chorusTabs)));
     global.chorusSpeed = p(P_chorusSpeed);
     global.chorusDepth = p(P_chorusDepth);
     global.stereo = p(P_outputMode) >= 0.5f;
@@ -2432,9 +2433,10 @@ void Engine::mixBus(const SampleContext& context, float& mixL, float& mixR)
 
     // Legacy: provisional generic delay-line chorus/tremolo. Source policies: OE2 BBD
     // delay path (docs/BBD_CHORUS_MODEL.md); its inferred constants are not calibrated.
+    const auto tabs = chorusSwitches(global.chorusOn, global.chorusTremolo, global.chorusTabs);
     const auto ch = usesSourceModels(global.renderPolicy)
-        ? bbdChorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
-                            global.chorusOn, global.chorusTremolo)
+        ? bbdChorus.processIndependent(mixL, mixR, global.chorusSpeed, global.chorusDepth,
+                                       tabs.chorus, tabs.tremolo)
         : chorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
                          global.chorusOn, global.chorusTremolo);
     mixL = ch.l;

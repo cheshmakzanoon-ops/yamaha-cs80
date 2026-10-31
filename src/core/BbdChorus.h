@@ -173,6 +173,13 @@ public:
     // running while the effect is off, as the OE1/OE2 circuits do.
     Stereo process(float inL, float inR, float speed, float depth, bool on, bool tremolo) noexcept
     {
+        return processIndependent(inL, inR, speed, depth, on && !tremolo, on && tremolo);
+    }
+
+    Stereo processIndependent(float inL, float inR, float speed, float depth,
+                              bool chorus, bool tremolo) noexcept
+    {
+        const bool on = chorus || tremolo;
         do1Phase += (double) speed / (double) sr;
         do1Phase -= std::floor(do1Phase);
         do2Phase += (double) speed * kDo2PerDo1 / (double) sr;
@@ -184,7 +191,7 @@ public:
         // CHORUS: DO1 and DO2 reach the BA617 clock node through its two equal 100 k feeds.
         // With the tabs off or in TREMOLO the clock stays at its nominal rate.
         double octaves = 0.0;
-        if (on && ! tremolo)
+        if (chorus)
             octaves = d * (double) kClockModulationOctaves * 0.5 * (do1 + do2);
         const double clockHz = kNominalClockHz * std::exp2(octaves);
         clockPeriods += clockHz / (double) sr;

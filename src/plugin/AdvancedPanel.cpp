@@ -1109,15 +1109,19 @@ private:
     void sample(Sig& s) const override
     {
         s[0] = v(cs80::P_chorusOn); s[1] = v(cs80::P_chorusMode); s[2] = v(cs80::P_chorusSpeed);
-        s[3] = v(cs80::P_chorusDepth); s[4] = (float) policy();
+        s[3] = v(cs80::P_chorusDepth); s[4] = (float) policy(); s[5] = v(cs80::P_chorusTabs);
     }
 
     void draw(juce::Graphics& g) override
     {
-        const bool on = v(cs80::P_chorusOn) >= 0.5f, trem = v(cs80::P_chorusMode) >= 0.5f;
-        const float speed = v(cs80::P_chorusSpeed), depth = v(cs80::P_chorusDepth);
         const int pol = policy();
-        const bool bbd = pol >= 1 && ! trem;
+        const auto tabs = cs80::chorusSwitches(true, v(cs80::P_chorusMode) >= 0.5f,
+            pol == 0 ? cs80::ChorusTabMode::historical
+                     : static_cast<cs80::ChorusTabMode>((int) std::lround(v(cs80::P_chorusTabs))));
+        const bool on = v(cs80::P_chorusOn) >= 0.5f && (tabs.chorus || tabs.tremolo);
+        const bool trem = tabs.tremolo && !tabs.chorus;
+        const float speed = v(cs80::P_chorusSpeed), depth = v(cs80::P_chorusDepth);
+        const bool bbd = pol >= 1 && !trem;
         const auto plot = plotRect();
         constexpr float two = juce::MathConstants<float>::twoPi;
 
@@ -1125,15 +1129,15 @@ private:
         const float bbdBase = 1000.0f * 256.0f / 106904.5f;
         float vmin, vmax, step, minSpan;
         juce::String unit = " ms", title = "LEGACY  -  GENERIC DELAY LINE";
-        if (trem) { vmin = 1.0f - depth * 0.45f; vmax = 1.0f; step = 0.05f; minSpan = 0.1f; unit = ""; title = "TREMOLO  -  GENERIC AMPLITUDE LAW  -  GAIN"; }
+        if (trem) { vmin = 1.0f - depth * (pol ? 1.0f : 0.45f); vmax = pol ? 1.0f + depth : 1.0f; step = 0.25f; minSpan = 0.1f; unit = ""; title = pol ? "OE1 TREMOLO  -  WET VCA GAIN (INFERRED)" : "TREMOLO  -  GENERIC AMPLITUDE LAW  -  GAIN"; }
         else if (bbd) { vmin = bbdBase / std::exp2(depth * 0.5f); vmax = bbdBase * std::exp2(depth * 0.5f); step = 0.5f; minSpan = 1.0f;
-                        title = "OE2 BBD DELAY  -  CLOCK RANGE INFERRED"; }
+                        title = tabs.tremolo ? "BOTH ON  -  BBD CLOCK + WET VCA MODULATION" : "OE2 BBD DELAY  -  CLOCK RANGE INFERRED"; }
         else { vmin = 13.5f; vmax = 13.5f + 4.5f * depth; step = 1.0f; minSpan = 4.0f; }
         const float centre = std::round(0.5f * (vmin + vmax) / step) * step;
         const float half = std::ceil((juce::jmax((vmax - vmin) * 1.5f, minSpan) + step) * 0.5f / step) * step;
         float lo = centre - half, hi = centre + half;
         if (lo < 0.0f) { hi -= lo; lo = 0.0f; }
-        if (trem && hi > 1.0f) { lo -= hi - 1.0f; hi = 1.0f; lo = juce::jmax(0.0f, lo); }
+        if (trem && pol == 0 && hi > 1.0f) { lo -= hi - 1.0f; hi = 1.0f; lo = juce::jmax(0.0f, lo); }
 
         for (int i = 0; i <= 2; ++i)
         {
@@ -1158,10 +1162,18 @@ private:
                 const float t = (float) i / (float) count;
                 const float mod = std::sin(two * 2.0f * t + phaseOffset);
                 float value;
-                if (trem)
+                if (trem && pol >= 1)
+                {
+                    const float do1 = std::sin(two * 2.0f * t);
+                    const float do2 = std::sin(two * 2.0f * t * (0.056f / 0.55f));
+                    const float sign = phaseOffset == 0 ? 1.0f : -1.0f;
+                    value = 1.0f + sign * depth * (0.65f * do1 + 0.58f * do2) / 1.23f;
+                }
+                else if (trem)
                     value = 1.0f - depth * 0.45f * (0.5f + 0.5f * mod);
                 else if (bbd)
-                    value = bbdBase / std::exp2(depth * 0.5f * mod);
+                    value = bbdBase / std::exp2(depth * 0.25f *
+                        (mod + std::sin(two * 2.0f * t * (0.056f / 0.55f))));
                 else
                     value = 13.5f + 4.5f * depth * (0.5f + 0.5f * mod);
                 const float x = plot.getX() + plot.getWidth() * t;
@@ -1189,7 +1201,8 @@ private:
         // Readouts. SPEED and DEPTH are main-panel settings shown here for reference, so they are flat
         // figures between hairlines in ivory; the delay or gain range is derived from them and lit.
         juce::String range;
-        if (trem) range = "1.00 - " + juce::String(1.0f - depth * 0.45f, 2);
+        if (trem) range = pol ? juce::String(1.0f - depth, 2) + " - " + juce::String(1.0f + depth, 2)
+                             : "1.00 - " + juce::String(1.0f - depth * 0.45f, 2);
         else if (bbd) range = juce::String(bbdBase / std::exp2(depth * 0.5f), 2) + " - " + juce::String(bbdBase * std::exp2(depth * 0.5f), 2) + " ms";
         else range = "13.5 - " + juce::String(13.5f + 4.5f * depth, 1) + " ms";
         struct Cell { const char* k; juce::String val; bool derived; };
@@ -1474,7 +1487,7 @@ private:
             s[(size_t) i] = v(cs80::P_fx1Type + i * 2);
             s[(size_t) (3 + i)] = v(cs80::P_fx1Mix + i * 2);
         }
-        s[6] = v(cs80::P_chorusOn) + 2.0f * v(cs80::P_chorusMode); s[8] = (float) policy() + 4.0f * v(cs80::P_outputMode); s[9] = (float) sel->slot;
+        s[6] = v(cs80::P_chorusOn) + 2.0f * v(cs80::P_chorusMode) + 4.0f * v(cs80::P_chorusTabs); s[8] = (float) policy() + 4.0f * v(cs80::P_outputMode); s[9] = (float) sel->slot;
         s[10] = (float) hover;
     }
 
@@ -1525,9 +1538,12 @@ private:
         struct Node { juce::String name, detail; bool lit; bool masked; bool empty = false; };
         std::vector<Node> nodes;
         nodes.push_back({ "VOICE MIXER", "8 VOICES x 2 RANKS", true, false });
-        const bool chorusOn = v(cs80::P_chorusOn) >= 0.5f, trem = v(cs80::P_chorusMode) >= 0.5f;
-        nodes.push_back({ "CS-80 CHORUS", ! chorusOn ? "OFF" : (trem ? "TREMOLO" : (pol >= 1 ? "OE2 BBD" : "GENERIC DELAY")),
-                          chorusOn, false });
+        const auto tabs = cs80::chorusSwitches(v(cs80::P_chorusOn) >= 0.5f, v(cs80::P_chorusMode) >= 0.5f,
+            pol == 0 ? cs80::ChorusTabMode::historical
+                     : static_cast<cs80::ChorusTabMode>((int) std::lround(v(cs80::P_chorusTabs))));
+        const bool active = tabs.chorus || tabs.tremolo;
+        nodes.push_back({ "CS-80 CHORUS", !active ? "OFF" : tabs.chorus && tabs.tremolo ? "CHORUS + TREMOLO"
+                          : tabs.tremolo ? "TREMOLO" : (pol >= 1 ? "OE2 BBD" : "GENERIC DELAY"), active, false });
         for (int i = 0; i < 3; ++i)
         {
             const int type = juce::jlimit(0, 5, juce::roundToInt(v(cs80::P_fx1Type + i * 2)));

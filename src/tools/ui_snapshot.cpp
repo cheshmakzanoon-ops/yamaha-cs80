@@ -2004,6 +2004,13 @@ int main(int argc, char** argv)
     juce::ScopedJuceInitialiser_GUI juceInit;
     // Focused developer entry point for the registered completion mutations. The default
     // --self-test below still runs every existing check and these same completion checks.
+    if (argc > 1 && std::strcmp(argv[1], "--chorus-tabs-test") == 0)
+    {
+        cs80::tests::testTremoloChorusTabs(check, flushGui);
+        cs80::tests::testIndependentChorusTabs(check, flushGui);
+        std::printf("Chorus tab UI: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--ui-completion-test") == 0)
     {
         cs80::tests::studio::testUndoRedo(check, flushGui);
