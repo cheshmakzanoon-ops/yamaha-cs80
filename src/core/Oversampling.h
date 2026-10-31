@@ -20,7 +20,20 @@ inline constexpr int kEcoOversampling = 2;
 // largest factor inside that budget. Chosen by cs80_engine_audit
 // --suite alias,cpu on the current oscillator/filter (docs/workstreams/ws2-engine.md);
 // re-measure and change this one value when the rank chain changes.
-inline constexpr int kStandardOversampling = 4;
+//
+// 2026-10-31, after the ws1 merge (reconstructed oscillator, nodal IG00156
+// stages), cs80_engine_audit --suite alias --rates 44100,48000,96000, circuit
+// engine, ring modulator off, worst row:
+//   Eco 2x  -88.5 / -88.3 / -89.5 dB    Standard 4x -88.9 / -89.1 / -89.5 dB
+//   HQ 8x   -88.9 / -89.2 / -89.5 dB    (44.1 / 48 / 96 kHz hosts)
+// 2x already meets -70 dB with 18 dB to spare, so Standard = 2x by the rule
+// (4x cost about 1.6x the 2x CPU). The ring-on rows read -43 dB at EVERY factor:
+// that is ws4's declared RMO carrier feedthrough (a spectral line the alias
+// metric counts as non-harmonic), not fold-over, so it does not choose a
+// factor. What 4x/8x still buy is the nodal filter's top-octave small-signal
+// accuracy (ws1 step 1.1b); offline bounces always render at HQ.
+// Previously 4 (ws2, PolyBLEP oscillator: no factor reached -70 dB).
+inline constexpr int kStandardOversampling = 2;
 inline constexpr int kHqOversampling = 8;
 inline constexpr int kMaxOversampling = kHqOversampling;
 

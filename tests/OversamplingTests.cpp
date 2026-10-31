@@ -208,6 +208,16 @@ void testEngine()
             (void) phrase(*e, 4);
             e->setParams(circuit(to));
         }
+        // Integration (kStandardOversampling = 2 after ws1's oscillator): Eco and
+        // Standard can share a factor; a quality change that keeps the factor is
+        // not a re-prepare and leaves notes sounding.
+        const bool factorChanges = oversamplingFactor(oversamplingMode(from), true, false, 48000.0)
+                                   != oversamplingFactor(oversamplingMode(to), true, false, 48000.0);
+        if (! factorChanges)
+        {
+            check(switched.activeVoices() > 0, "a quality change that keeps the factor leaves notes sounding");
+            continue;
+        }
         check(switched.activeVoices() == 0, "factor change stops sounding notes like a policy change");
         reprepared.prepare(48000.0);
         check(switched.getOversamplingFactor() == reprepared.getOversamplingFactor()
