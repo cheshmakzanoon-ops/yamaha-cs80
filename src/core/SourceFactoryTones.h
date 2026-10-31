@@ -146,6 +146,9 @@ struct Provenance {
     std::uint32_t hypothesisVersion = 0, hypothesisOverrideMask = 0;
     std::uint64_t hypothesisHash = 0;
     std::uint32_t bridgeMask = retainedBridges;
+    // 0 = the ideal 10 V / 0 ohm source and ideal diode of compileTone() (V1/V2).
+    // >0 = BoundaryModel::version of compileToneRefined(); see below.
+    std::uint32_t boundaryVersion = 0;
     // Complete source cells still use inferred device laws. Never conflate the
     // classified-cell mask with a measured/recovered control-voltage mask.
     bool hardwareMeasured = false;
@@ -189,6 +192,208 @@ inline bool switchEnabled(hardware::Branch b, bool& result) noexcept {
     if (b.kind == hardware::BranchKind::open) { result = false; return true; }
     return false;
 }
+// ---------------------------------------------------------------------------
+// Versioned refinement of Bridge::idealSourceAndDiode (ws6-library, 2026-10-31).
+// compileTone() and the engine keep the ideal V1/V2 boundary, so the seven
+// complete tones' V1 numerics are unchanged; compileToneRefined() below is an
+// explicit, versioned opt-in path. Evidence (docs/PRESET_BA_CUTOFF_BRANCHES.md,
+// service pages BA27/BA28, T51/T53 notes): each selected column is a 2SC458 NPN
+// emitter follower whose collector sits on the printed +10.6 V rail, base fed
+// through 10 k from the tone-selector line with 100 k to reference; every
+// non-open matrix branch has a 1S1555 isolation diode. DECLARED INFERENCE:
+// the selector-line voltage is not traced, so the nominal driver is the
+// follower saturated against its rail (alternative: forward-active below it),
+// and the 1S1555 is a Shockley diode with 1N4148-class surrogate parameters
+// (no 1S1555 curve was obtained). Alternatives are listed with the models.
+struct DriverModel {
+    double openCircuitVolts = 10.0; // selected-column emitter, unloaded
+    double outputOhms = 0.0;        // small-signal emitter output resistance
+};
+struct DiodeModel {
+    double saturationAmps = 0.0, emission = 1.0, thermalVolts = 0.025852, seriesOhms = 0.0;
+};
+struct BoundaryModel {
+    std::uint32_t version = 1;
+    DriverModel driver;
+    DiodeModel diode;
+    std::string_view id;
+};
+// Nominal: 10.6 V rail minus a 0.15 V saturation drop, 20 ohm; 1N4148-class
+// Shockley parameters Is 2.52 nA, n 1.752, Rs 0.568 ohm at 300 K.
+inline constexpr BoundaryModel nominalBoundaryV1 {
+    1, {10.45, 20.0}, {2.52e-9, 1.752, 0.025852, 0.568}, "ba-2sc458-saturated-1s1555-shockley-v1"};
+// Alternative driver: selector line at the +10.6 V rail, follower forward-active
+// (9.64 V base Thevenin minus Vbe and base-resistor drop; 9.09 k/(beta+1)+re).
+inline constexpr BoundaryModel forwardActiveBoundaryV1 {
+    1, {8.95, 50.0}, {2.52e-9, 1.752, 0.025852, 0.568}, "ba-2sc458-forward-active-1s1555-shockley-v1"};
+// Alternative diode corners (forward drop about 60 mV lower / higher at 1 mA).
+inline constexpr BoundaryModel lowDropDiodeBoundaryV1 {
+    1, {10.45, 20.0}, {1.0e-8, 1.6, 0.025852, 0.5}, "ba-2sc458-saturated-diode-low-drop-v1"};
+inline constexpr BoundaryModel highDropDiodeBoundaryV1 {
+    1, {10.45, 20.0}, {1.0e-9, 2.0, 0.025852, 0.7}, "ba-2sc458-saturated-diode-high-drop-v1"};
+inline bool valid(const BoundaryModel& m) noexcept {
+    return m.version > 0 && std::isfinite(m.driver.openCircuitVolts) && m.driver.openCircuitVolts > 0.0
+        && std::isfinite(m.driver.outputOhms) && m.driver.outputOhms >= 0.0
+        && std::isfinite(m.diode.saturationAmps) && m.diode.saturationAmps > 0.0
+        && std::isfinite(m.diode.emission) && m.diode.emission > 0.0
+        && std::isfinite(m.diode.thermalVolts) && m.diode.thermalVolts > 0.0
+        && std::isfinite(m.diode.seriesOhms) && m.diode.seriesOhms >= 0.0;
+}
+inline constexpr double assembledShuntOhms = 10000.0;
+struct BranchSolution {
+    double busVolts = 0.0, amps = 0.0, diodeVolts = 0.0, dynamicOhms = 0.0, residualAmps = 0.0;
+    int iterations = 0;
+    bool converged = false;
+};
+// Offline-grade solve of one selected branch: driver (E, Rout) -> 1S1555 ->
+// matrix resistor -> bus, the bus loaded by the one assembled 10 k shunt and a
+// linear receiver conductance to reference, with `injectedAmps` flowing into
+// the bus from the receivers. Bracketed Newton on the diode current (the KVL
+// residual is strictly decreasing), bisection when a step leaves the bracket.
+inline bool solveBranch(double seriesOhms, const BoundaryModel& m, double loadSiemens,
+                        double injectedAmps, BranchSolution& out) noexcept {
+    if (!valid(m) || !std::isfinite(seriesOhms) || seriesOhms < 0.0 || !std::isfinite(loadSiemens)
+        || loadSiemens < 0.0 || !std::isfinite(injectedAmps)) return false;
+    const double is = m.diode.saturationAmps, nvt = m.diode.emission * m.diode.thermalVolts;
+    const double rt = m.driver.outputOhms + seriesOhms + m.diode.seriesOhms;
+    const double g = 1.0 / assembledShuntOhms + loadSiemens;
+    // f(I) = E - I*Rt - Vd(I) - (I + Iinj)/G, strictly decreasing for I > -Is.
+    const auto f = [&](double i) { return m.driver.openCircuitVolts - i * rt - nvt * std::log1p(i / is) - (i + injectedAmps) / g; };
+    double lo = -is * (1.0 - 1e-12), hi = (m.driver.openCircuitVolts + std::abs(injectedAmps) / g) / (rt + 1.0 / g) + 1e-3;
+    if (!(f(hi) < 0.0)) return false;
+    double i = std::clamp((m.driver.openCircuitVolts - 0.6 - injectedAmps / g) / (rt + 1.0 / g), 0.0, hi);
+    BranchSolution next;
+    for (int k = 0; k < 200; ++k) {
+        const double v = f(i);
+        if (v > 0.0) lo = i; else hi = i;
+        const double slope = -rt - nvt / (i + is) - 1.0 / g;
+        double step = i - v / slope;
+        if (!(step > lo && step < hi)) step = 0.5 * (lo + hi);
+        next.iterations = k + 1;
+        if (std::abs(step - i) <= 1e-18 + 1e-15 * std::abs(i)) { i = step; break; }
+        i = step;
+    }
+    next.amps = i;
+    next.diodeVolts = nvt * std::log1p(i / is);
+    next.busVolts = (i + injectedAmps) / g;
+    next.dynamicOhms = nvt / (i + is);
+    // KVL mismatch expressed as a branch current.
+    next.residualAmps = (m.driver.openCircuitVolts - next.diodeVolts - next.busVolts) / std::max(rt, 1e-12) - i;
+    if (rt <= 1e-12) next.residualAmps = f(i) * g;
+    next.converged = std::isfinite(next.busVolts) && std::abs(next.residualAmps) <= 1e-12;
+    if (!next.converged) return false;
+    out = next;
+    return true;
+}
+// Thevenin equivalent of the refined source branch, linearised at the bus's
+// reference operating point under `loadSiemens` (zero envelope/touch drive), in
+// the same open-circuit SourceEquivalent convention as analogEquivalent().
+inline bool refinedEquivalent(hardware::Branch b, const BoundaryModel& m, double loadSiemens,
+                              SourceEquivalent& result) noexcept {
+    if (!std::isfinite(b.sourceValue) || b.sourceValue < 0.0
+        || (b.sourceUnit != hardware::ResistanceUnit::ohms
+            && b.sourceUnit != hardware::ResistanceUnit::kiloOhms)) return false;
+    double series = 0.0;
+    switch (b.kind) {
+        case hardware::BranchKind::open:
+            if (b.sourceValue != 0.0) return false;
+            result = {0.0, assembledShuntOhms}; // no branch: only the shunt
+            return true;
+        case hardware::BranchKind::direct:
+            if (b.sourceValue != 0.0) return false;
+            break;
+        case hardware::BranchKind::resistor:
+            series = b.resistanceOhms();
+            if (!std::isfinite(series) || series <= 0.0) return false;
+            break;
+        default: return false;
+    }
+    BranchSolution s;
+    if (!solveBranch(series, m, loadSiemens, 0.0, s)) return false;
+    const double source = m.driver.outputOhms + series + m.diode.seriesOhms + s.dynamicOhms;
+    const double rth = source * assembledShuntOhms / (source + assembledShuntOhms);
+    result = {s.busVolts + rth * loadSiemens * s.busVolts, rth};
+    return true;
+}
+// An inferred cell's excitation x as the equivalent branch: open, direct, or
+// the resistor that gives x = 10k/(10k+R) (the manifest's own coordinate).
+inline hardware::Branch hypothesisBranch(double x) noexcept {
+    if (x <= 0.0) return hardware::openBranch;
+    if (x >= 1.0) return hardware::directBranch;
+    return hardware::ohms(assembledShuntOhms * (1.0 - x) / x);
+}
+// One selected column: every conducting row draws from the SAME emitter (BA27),
+// so the emitter node sags with the column's total current. solveColumn finds
+// that node exactly (the KCL residual is strictly decreasing in its voltage) and
+// each row's branch at it. Rows: open/switch rows have conducts = false.
+struct ColumnRow { bool conducts = false; double seriesOhms = 0.0, loadSiemens = 0.0, injectedAmps = 0.0; };
+struct ColumnSolution {
+    double emitterVolts = 0.0, residualAmps = 0.0;
+    std::array<BranchSolution, 26> rows {};
+    bool converged = false;
+};
+inline bool solveColumn(const std::array<ColumnRow, 26>& rows, const BoundaryModel& m,
+                        ColumnSolution& out) noexcept {
+    if (!valid(m)) return false;
+    ColumnSolution next;
+    const double e0 = m.driver.openCircuitVolts, rout = m.driver.outputOhms;
+    const auto at = [&](double emitter, double& total, double& slope) {
+        BoundaryModel row = m;
+        row.driver = {emitter, 0.0};
+        total = 0.0;
+        slope = 0.0;
+        for (std::size_t i = 0; i < rows.size(); ++i) {
+            if (!rows[i].conducts) continue;
+            if (!solveBranch(rows[i].seriesOhms, row, rows[i].loadSiemens, rows[i].injectedAmps, next.rows[i])) return false;
+            total += next.rows[i].amps;
+            slope += 1.0 / (rows[i].seriesOhms + m.diode.seriesOhms + next.rows[i].dynamicOhms
+                            + 1.0 / (1.0 / assembledShuntOhms + rows[i].loadSiemens));
+        }
+        return true;
+    };
+    double total = 0.0, slope = 0.0;
+    double emitter = e0;
+    if (rout > 0.0) {
+        double lo = 0.0, hi = e0;
+        for (int k = 0; k < 200; ++k) {
+            if (!at(emitter, total, slope)) return false;
+            const double f = (e0 - emitter) / rout - total;
+            if (f > 0.0) lo = emitter; else hi = emitter;
+            double step = emitter + f / (1.0 / rout + slope);
+            if (!(step > lo && step < hi)) step = 0.5 * (lo + hi);
+            if (std::abs(step - emitter) <= 1e-15 * std::max(1.0, e0)) { emitter = step; break; }
+            emitter = step;
+        }
+    }
+    if (!at(emitter, total, slope)) return false;
+    next.emitterVolts = emitter;
+    next.residualAmps = rout > 0.0 ? (e0 - emitter) / rout - total : 0.0;
+    next.converged = std::abs(next.residualAmps) <= 1e-12;
+    if (!next.converged) return false;
+    out = next;
+    return true;
+}
+// Thevenin of row r of a solved column, linearised at its operating point: the
+// emitter node's small-signal impedance is Rout in parallel with every OTHER
+// conducting row's path to reference, then the row's own series path.
+inline SourceEquivalent columnEquivalent(const std::array<ColumnRow, 26>& rows, const BoundaryModel& m,
+                                         const ColumnSolution& column, std::size_t r) noexcept {
+    if (!rows[r].conducts) return {0.0, assembledShuntOhms};
+    double node = 0.0;
+    if (m.driver.outputOhms > 0.0) {
+        double g = 1.0 / m.driver.outputOhms;
+        for (std::size_t k = 0; k < rows.size(); ++k)
+            if (k != r && rows[k].conducts)
+                g += 1.0 / (rows[k].seriesOhms + m.diode.seriesOhms + column.rows[k].dynamicOhms
+                            + 1.0 / (1.0 / assembledShuntOhms + rows[k].loadSiemens));
+        node = 1.0 / g;
+    }
+    const double source = node + rows[r].seriesOhms + m.diode.seriesOhms + column.rows[r].dynamicOhms;
+    const double rth = source * assembledShuntOhms / (source + assembledShuntOhms);
+    const double v = column.rows[r].busVolts;
+    return {v + rth * (rows[r].loadSiemens * v - rows[r].injectedAmps), rth};
+}
+
 inline double unit(double volts) noexcept { return std::clamp(volts * 0.1, 0.0, 1.0); }
 // Input must be finite; compile/evaluate validate before these scalar laws.
 inline double attackSeconds(double volts) noexcept { return std::pow(10.0, -3.0 * unit(volts)); }
@@ -312,12 +517,27 @@ inline double loadedLevelBus(SourceEquivalent source, double touchSumVolts) noex
 // transaction. It never invokes a throwing solver. Failed compile preserves the
 // caller's previous valid result. Unknown source cells can ONLY enter through
 // the separately frozen, address-matched inference manifest (never analogEquivalent).
+// Receiver conductance each compiled graph attaches to a source bus at its
+// reference operating point (zero envelope/touch, master RES source at 0 V):
+// eight cutoff receivers for rows 7/9, eight Q ports for 8/10, eight LC ports
+// for 22. Rows without a compiled downstream graph see none (gL = 0).
+inline double compiledReceiverSiemens(int output, Grade hpGrade, Grade lpGrade) noexcept {
+    if (output == 7 || output == 9) {
+        const auto m = compileCutoffSide({0.0, 0.0}, output == 7 ? hpGrade : lpGrade, output == 7);
+        return voiceCount * (1.0 / 39000.0) * (1.0 - m.pinPerLoadedBus);
+    }
+    if (output == 8 || output == 10) return voiceCount / 440000.0;
+    if (output == 22) return voiceCount * (1.0 / 560000.0) * (1.0 - levelPinPerLoadedBus);
+    return 0.0;
+}
 namespace detail {
 inline bool compileToneWithScenario(int rank, int selector, ToneControls& result,
                                    const InferenceScenario& scenario,
-                                   Grade hpGrade, Grade lpGrade) noexcept {
+                                   Grade hpGrade, Grade lpGrade,
+                                   const BoundaryModel* boundary = nullptr) noexcept {
     const auto* a = address(rank, selector);
     if (!a || !valid(hpGrade) || !valid(lpGrade) || scenario.count > scenario.overrides.size()) return false;
+    if (boundary != nullptr && !valid(*boundary)) return false;
     const std::uint32_t unknown = unknownMask(*a);
     std::uint32_t overrideMask = 0;
     for (std::size_t i=0;i<scenario.count;++i) {
@@ -339,6 +559,17 @@ inline bool compileToneWithScenario(int rank, int selector, ToneControls& result
         next.provenance.hypothesisHash = factory_hypotheses::fingerprint;
     }
     next.hpGrade = hpGrade; next.lpGrade = lpGrade;
+    std::array<ColumnRow, 26> columnRows {};
+    // Refined path only: record the branch; sources follow the joint column solve.
+    const auto refinedRow = [&](hardware::Branch branch, int output, std::size_t i) {
+        if (!std::isfinite(branch.sourceValue) || branch.sourceValue < 0.0) return false;
+        if (branch.kind == hardware::BranchKind::open) { columnRows[i] = {}; return true; }
+        if (branch.kind != hardware::BranchKind::direct && branch.kind != hardware::BranchKind::resistor) return false;
+        const double series = branch.kind == hardware::BranchKind::resistor ? branch.resistanceOhms() : 0.0;
+        if (!std::isfinite(series) || (branch.kind == hardware::BranchKind::resistor && series <= 0.0)) return false;
+        columnRows[i] = {true, series, compiledReceiverSiemens(output, hpGrade, lpGrade), 0.0};
+        return true;
+    };
     for (int output = 1; output <= 26; ++output) {
         const auto b = hardware::findBranch(a->board, a->column, output);
         const auto i = static_cast<std::size_t>(output - 1);
@@ -350,15 +581,30 @@ inline bool compileToneWithScenario(int rank, int selector, ToneControls& result
                 if (scenario.overrides[j].output == output) x = scenario.overrides[j].excitation;
             next.hypotheses[i] = hypothesis;
             next.hypothesisExcitations[i] = x;
-            next.sources[i] = {10.0*x, 10000.0*(1.0-x)};
+            if (boundary == nullptr)
+                next.sources[i] = {10.0*x, 10000.0*(1.0-x)};
+            else if (!refinedRow(hypothesisBranch(x), output, i)) return false;
         } else if (output == 4 || output == 5) {
             bool enabled = false;
             if (!switchEnabled(b, enabled)) return false;
             next.sources[i] = {enabled ? 10.0 : 0.0, 0.0}; // logical, no 10k shunt
             if (output == 4) next.wsc.pulseEnabled = enabled;
             else next.wsc.sawEnabled = enabled;
-        } else if (!analogEquivalent(b, next.sources[i])) return false;
+        } else if (boundary == nullptr ? !analogEquivalent(b, next.sources[i])
+                   : !refinedRow(b, output, i)) return false;
         next.busVolts[i] = next.sources[i].volts;
+    }
+    if (boundary != nullptr) {
+        // All rows of the selected column share its emitter: solve it jointly.
+        ColumnSolution column;
+        if (!solveColumn(columnRows, *boundary, column)) return false;
+        for (std::size_t i = 0; i < columnRows.size(); ++i) {
+            if (i == 3 || i == 4) continue;
+            next.sources[i] = columnEquivalent(columnRows, *boundary, column, i);
+            next.busVolts[i] = next.sources[i].volts;
+        }
+        next.provenance.bridgeMask &= ~static_cast<std::uint32_t>(idealSourceAndDiode);
+        next.provenance.boundaryVersion = boundary->version;
     }
     const auto v = [&next](int output) { return next.sources[static_cast<std::size_t>(output - 1)].volts; };
     next.dutyProxy = 0.5 + 0.4 * unit(v(3));
@@ -392,6 +638,27 @@ inline bool compileToneForSensitivity(int rank, int selector, const InferenceSce
                                       ToneControls& result, Grade hpGrade = Grade::B,
                                       Grade lpGrade = Grade::B) noexcept {
     return detail::compileToneWithScenario(rank,selector,result,scenario,hpGrade,lpGrade);
+}
+// Versioned opt-in path: every analog source (classified or inferred cell) uses
+// the refined BA driver + 1S1555 boundary, linearised at the compiled graph's
+// reference operating point. Provenance drops idealSourceAndDiode and records
+// boundaryVersion. NOT used by the engine; compileTone() is unchanged.
+inline bool compileToneRefined(int rank, int selector, ToneControls& result,
+                               const BoundaryModel& boundary = nominalBoundaryV1,
+                               Grade hpGrade = Grade::B, Grade lpGrade = Grade::B) noexcept {
+    return detail::compileToneWithScenario(rank,selector,result,{},hpGrade,lpGrade,&boundary);
+}
+// "Visible candidates" sensitivity scenario (factory_hypotheses::review): every
+// inferred cell of the tone at its re-examined candidate reading instead of the
+// same-output median. For compileToneForSensitivity; never a production path.
+inline InferenceScenario visibleCandidateScenario(int rank, int selector) noexcept {
+    InferenceScenario scenario;
+    const auto* a = address(rank, selector);
+    if (a == nullptr) return scenario;
+    for (int output = 1; output <= 26; ++output)
+        if (const auto* r = factory_hypotheses::findReview({a->board, a->column, output}))
+            scenario.overrides[scenario.count++] = {output, r->candidate.excitation};
+    return scenario;
 }
 
 // PANEL/memory remain on their legacy audio adapter. These proxies merely retain

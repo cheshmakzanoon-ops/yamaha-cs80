@@ -1,5 +1,6 @@
 #include "PresetBrowser.h"
 
+#include "ArtCommon.h"
 #include "PluginProcessor.h"
 #include "core/FactoryPresets.h"
 
@@ -305,15 +306,15 @@ std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& fi
 // order decides ties). A name with no keyword is OTHER; the Init patch is INIT.
 // ---------------------------------------------------------------------------
 enum TypeId : int { tBrass, tStrings, tKeys, tOrgan, tWinds, tPluck, tBass, tPads,
-                    tLeads, tFx, tSequence, tInit, tOther, typeCount };
+                    tPoly, tLeads, tBells, tFx, tSequence, tInit, tOther, typeCount };
 
 struct TypeInfo { const char* label; std::uint32_t colour; };
 const TypeInfo kTypes[typeCount] = {
     { "BRASS", 0xffe6b43a },    { "STRINGS", 0xff44c474 },  { "KEYS", 0xffe6dcbc },
     { "ORGAN", 0xffd9593f },    { "WINDS", 0xff3fb8b0 },    { "PLUCK", 0xfff08f3a },
-    { "BASS", 0xff5c8fe0 },     { "PADS", 0xff9a7ae6 },     { "LEADS", 0xffee4f86 },
-    { "FX", 0xffbdb7ae },       { "SEQUENCE", 0xffa6d84a }, { "INIT", 0xff9a9588 },
-    { "OTHER", 0xff8a8578 } };
+    { "BASS", 0xff5c8fe0 },     { "PADS", 0xff9a7ae6 },     { "POLY", 0xffd28fd0 },
+    { "LEADS", 0xffee4f86 },    { "BELLS", 0xff8fd0e6 },    { "FX", 0xffbdb7ae },
+    { "SEQUENCE", 0xffa6d84a }, { "INIT", 0xff9a9588 },     { "OTHER", 0xff8a8578 } };
 
 struct Keyword { const char* word; TypeId type; };
 const Keyword kKeywords[] = {
@@ -335,6 +336,12 @@ int classifyType(const juce::String& category, const juce::String& name)
     if (category == "FX") return tFx;
     if (category == "Sequences") return tSequence;
     if (category == "Init") return tInit;
+    // [ws6-library] curated library categories.
+    if (category == "Polysynth") return tPoly;
+    if (category == "Organ") return tOrgan;
+    if (category == "Winds") return tWinds;
+    if (category == "Plucked") return tPluck;
+    if (category == "Bells") return tBells;
     const auto lower = name.toLowerCase();
     for (const auto& k : kKeywords)
         if (lower.contains(k.word))
@@ -344,8 +351,32 @@ int classifyType(const juce::String& category, const juce::String& name)
 
 Colour typeColour(int type) { return Colour(kTypes[juce::jlimit(0, (int) typeCount - 1, type)].colour); }
 
-constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY PROGRAMS",
-                                        "HARDWARE TONES", "USER" };
+// [ws6-library] Technique tags of the curated library (FactoryPreset::tags):
+// how a program is played or built. One chip may stand for related tags.
+constexpr int techniqueCount = 8;
+struct TechniqueInfo { const char* label; const char* tags[3]; const char* tip; };
+const TechniqueInfo kTechniques[techniqueCount] = {
+    { "AFTERTOUCH", { "aftertouch", nullptr, nullptr }, "Pressure (after touch) shapes brilliance, level or vibrato" },
+    { "VELOCITY", { "velocity", nullptr, nullptr }, "Initial touch (velocity) sets brilliance or level" },
+    { "SWELL", { "brilliance-swell", nullptr, nullptr }, "The VCF EG or touch swells the brilliance" },
+    { "GLIDE & BEND", { "glide", "init-bend", "ribbon" }, "Portamento, glissando, initial pitch bend or ribbon playing" },
+    { "RING MOD", { "ring-mod", nullptr, nullptr }, "The ring modulator is part of the sound" },
+    { "SUB MOD", { "sub-mod", nullptr, nullptr }, "The SUB oscillator modulates pitch, filter or level" },
+    { "FOOTAGE", { "feet-layer", "dual-rank", nullptr }, "The two ranks are layered at different feet or waves" },
+    { "MODERN", { "modern", nullptr, nullptr }, "Uses the software FX, LFO or arpeggiator (off in PURE CS-80)" } };
+
+std::uint32_t techniqueBits(const std::vector<std::string>& tags)
+{
+    std::uint32_t bits = 0;
+    for (int t = 0; t < techniqueCount; ++t)
+        for (const char* name : kTechniques[t].tags)
+            if (name != nullptr && std::find(tags.begin(), tags.end(), std::string(name)) != tags.end())
+                bits |= 1u << (unsigned) t;
+    return bits;
+}
+
+constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY LIBRARY",
+                                        "LEGACY LIBRARY", "USER" };
 constexpr const char* kSortNames[] = { "BANK", "A-Z", "Z-A", "TYPE", "NEW" };
 constexpr const char* kSortTitles[] = { "Sort in bank order", "Sort A to Z", "Sort Z to A",
                                         "Sort by instrument type", "Sort newest user patches first" };
@@ -367,6 +398,20 @@ bool& compactPreference()
 {
     static bool compact = false;
     return compact;
+}
+
+// [ws6-library] AUDITION and the TECHNIQUE facet are remembered the same way
+// ("#audition=on|off", "#facet=technique|style").
+bool& auditionPreference()
+{
+    static bool audition = false;
+    return audition;
+}
+
+bool& techniqueFacetPreference()
+{
+    static bool technique = false;
+    return technique;
 }
 
 juce::StringArray& favouriteKeys()
@@ -419,6 +464,10 @@ void loadFavourites()
         {
             if (trimmed == "#view=compact") compactPreference() = true;
             else if (trimmed == "#view=cards") compactPreference() = false;
+            else if (trimmed == "#audition=on") auditionPreference() = true;
+            else if (trimmed == "#audition=off") auditionPreference() = false;
+            else if (trimmed == "#facet=technique") techniqueFacetPreference() = true;
+            else if (trimmed == "#facet=style") techniqueFacetPreference() = false;
         }
         else if (trimmed.isNotEmpty())
             favouriteKeys().addIfNotAlreadyThere(trimmed);
@@ -432,7 +481,9 @@ void saveFavourites()
     if (! folder.exists() && folder.createDirectory().failed())
         return;
     const auto text = favouriteKeys().joinIntoString("\n") + (favouriteKeys().isEmpty() ? "" : "\n")
-                      + (compactPreference() ? "#view=compact\n" : "#view=cards\n");
+                      + (compactPreference() ? "#view=compact\n" : "#view=cards\n")
+                      + (auditionPreference() ? "#audition=on\n" : "#audition=off\n")
+                      + (techniqueFacetPreference() ? "#facet=technique\n" : "#facet=style\n");
     if (file.replaceWithText(text))
     {
         auto& stamp = favouritesStamp();
@@ -444,10 +495,10 @@ void saveFavourites()
 // ---------------------------------------------------------------------------
 // Text and drawing helpers
 // ---------------------------------------------------------------------------
-juce::Font uiFont(float height, int style = juce::Font::plain)
-{
-    return juce::Font(juce::FontOptions(juce::Font::getDefaultSansSerifFontName(), height, style));
-}
+// Panel typeface, wrinkle finish and relief come from ArtCommon (one copy for the editor).
+using cs80::art::displayFont;
+using cs80::art::fillRelief;
+using cs80::art::textWidth;
 
 juce::Font monoFont(float height, int style = juce::Font::bold)
 {
@@ -458,13 +509,6 @@ juce::Font tracked(juce::Font font, float kerning)
 {
     font.setExtraKerningFactor(kerning);
     return font;
-}
-
-float textWidth(const juce::Font& font, const juce::String& text)
-{
-    juce::GlyphArrangement glyphs;
-    glyphs.addLineOfText(font, text, 0.0f, 0.0f);
-    return glyphs.getBoundingBox(0, -1, true).getWidth();
 }
 
 // Squeezes a label sideways to fit, never smaller and never by more than
@@ -500,7 +544,7 @@ void legend(Graphics& g, const juce::String& text, Rectangle<float> area, const 
 void caption(Graphics& g, const juce::String& text, Rectangle<float> area,
              juce::Justification justification = juce::Justification::centredLeft, float alpha = 0.95f)
 {
-    legend(g, text, area, tracked(uiFont(kMinText, juce::Font::bold), 0.14f), gold.withAlpha(alpha),
+    legend(g, text, area, tracked(displayFont(kMinText, juce::Font::bold), 0.14f), gold.withAlpha(alpha),
            justification);
 }
 
@@ -574,7 +618,7 @@ juce::String formatHertz(float hz)
 void etchFrame(Graphics& g, Rectangle<float> r, float radius, const juce::String& title)
 {
     const float x0 = r.getX(), y0 = r.getY(), x1 = r.getRight(), y1 = r.getBottom();
-    const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.18f);
+    const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.18f);
     const float gapStart = x0 + radius + 14.0f;
     const float gapEnd = gapStart + textWidth(font, title) + 16.0f;
     etchLine(g, x0 + radius, y0, gapStart, y0);
@@ -605,7 +649,7 @@ void etchFrame(Graphics& g, Rectangle<float> r, float radius, const juce::String
 float drawTypePill(Graphics& g, float x, float y, float height, const juce::String& text, Colour colour,
                    bool lit, float minWidth = 0.0f)
 {
-    const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+    const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.1f);
     const float tw = textWidth(font, text);
     const float w = std::max(minWidth, tw + 30.0f);
     const Rectangle<float> r(x, y, w, height);
@@ -627,7 +671,7 @@ float drawTypePill(Graphics& g, float x, float y, float height, const juce::Stri
     return w;
 }
 
-juce::Font styleTagFont() { return tracked(uiFont(kMinText, juce::Font::bold), 0.06f); }
+juce::Font styleTagFont() { return tracked(displayFont(kMinText, juce::Font::bold), 0.06f); }
 float styleTagWidth(const juce::String& text) { return textWidth(styleTagFont(), text) + 14.0f; }
 
 // Style tag: a square-cornered neutral outline, never coloured.
@@ -680,95 +724,10 @@ void fillStar(Graphics& g, juce::Point<float> c, float radius, Colour fill, bool
 const Colour kChannelOne(0xffffc24d);
 const Colour kChannelTwo(0xffe9dfc2);
 
-// The instrument's own wrinkle-paint finish (the recipe of the main panel's tile, same seed and
-// scale): near-black enamel broken into crisp cells of 2 to 3 px, each a small facet with its own
-// tilt, a groove between neighbours and the odd pin-point pale fleck where a facet catches the
-// light from the upper left. Cells come from a toroidal jittered grid, so the tile wraps.
-juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
-{
-    const int cells = 96;                                   // 256 px / 96 = cells of about 2.7 px
-    const float cs = (float) n / (float) cells;
-    juce::Random rng(seed);
-    struct Cell { float px, py, tx, ty, tone; };
-    std::vector<Cell> grid((size_t) (cells * cells));
-    auto gauss = [&] { return (rng.nextFloat() + rng.nextFloat() + rng.nextFloat() + rng.nextFloat() - 2.0f) * 0.52f; };
-    for (int cy = 0; cy < cells; ++cy)
-        for (int cx = 0; cx < cells; ++cx)
-        {
-            auto& c = grid[(size_t) (cy * cells + cx)];
-            c.px = ((float) cx + 0.12f + 0.76f * rng.nextFloat()) * cs;
-            c.py = ((float) cy + 0.12f + 0.76f * rng.nextFloat()) * cs;
-            c.tx = gauss(); c.ty = gauss();
-            c.tone = 1.0f + 0.035f * (rng.nextFloat() - 0.5f) * 2.0f;
-        }
-    const float lx = -0.45f, ly = -0.55f, lz = 0.70f;
-    const float ll = std::sqrt(lx * lx + ly * ly + lz * lz);
-    const float Lx = lx / ll, Ly = ly / ll, Lz = lz / ll;
-    float hx = Lx, hy = Ly, hz = Lz + 1.0f;
-    const float hl = std::sqrt(hx * hx + hy * hy + hz * hz);
-    hx /= hl; hy /= hl; hz /= hl;
-
-    std::vector<float> rowGain((size_t) n), rowAmp((size_t) n), rowPhase((size_t) n);
-    std::vector<int> rowCycles((size_t) n);
-    for (int y = 0; y < n; ++y)
-    {
-        rowGain[(size_t) y] = (rng.nextFloat() - 0.5f) * 2.0f;
-        rowAmp[(size_t) y] = rng.nextFloat();
-        rowPhase[(size_t) y] = rng.nextFloat() * juce::MathConstants<float>::twoPi;
-        rowCycles[(size_t) y] = 3 + rng.nextInt(6);
-    }
-
-    juce::Image image(juce::Image::RGB, n, n, false);
-    juce::Image::BitmapData data(image, juce::Image::BitmapData::writeOnly);
-    for (int y = 0; y < n; ++y)
-        for (int x = 0; x < n; ++x)
-        {
-            const float fx = (float) x + 0.5f, fy = (float) y + 0.5f;
-            const int cx0 = (int) (fx / cs), cy0 = (int) (fy / cs);
-            float d1 = 1.0e9f, d2 = 1.0e9f;
-            const Cell* nearest = nullptr;
-            float nearDx = 0.0f, nearDy = 0.0f;
-            for (int oy = -1; oy <= 1; ++oy)
-                for (int ox = -1; ox <= 1; ++ox)
-                {
-                    int cx = cx0 + ox, cy = cy0 + oy;
-                    float wrapX = 0.0f, wrapY = 0.0f;
-                    if (cx < 0) { cx += cells; wrapX = -(float) n; } else if (cx >= cells) { cx -= cells; wrapX = (float) n; }
-                    if (cy < 0) { cy += cells; wrapY = -(float) n; } else if (cy >= cells) { cy -= cells; wrapY = (float) n; }
-                    const auto& c = grid[(size_t) (cy * cells + cx)];
-                    const float dx = fx - (c.px + wrapX), dy = fy - (c.py + wrapY);
-                    const float d = std::sqrt(dx * dx + dy * dy);
-                    if (d < d1) { d2 = d1; d1 = d; nearest = &c; nearDx = dx; nearDy = dy; }
-                    else if (d < d2) d2 = d;
-                }
-            const float sx = contrast * nearest->tx + 0.30f * nearDx / cs;
-            const float sy = contrast * nearest->ty + 0.30f * nearDy / cs;
-            const float inv = 1.0f / std::sqrt(sx * sx + sy * sy + 1.0f);
-            const float nx = -sx * inv, ny = -sy * inv, nz = inv;
-            const float diffuse = juce::jmax(0.0f, nx * Lx + ny * Ly + nz * Lz) / Lz;
-            const float edge = juce::jlimit(0.0f, 1.0f, (d2 - d1) / (cs * 0.34f));
-            const float groove = 0.50f + 0.50f * std::pow(edge, 0.8f);
-            const float brushed = 1.0f + 0.016f * (0.55f * rowGain[(size_t) y]
-                                                   + 0.45f * rowAmp[(size_t) y] * std::sin(juce::MathConstants<float>::twoPi * (float) rowCycles[(size_t) y] * (float) x / (float) n + rowPhase[(size_t) y]));
-            const float lum = (0.50f + 0.50f * juce::jlimit(0.0f, 1.4f, diffuse)) * groove * nearest->tone * brushed;
-            const float ndh = juce::jmax(0.0f, nx * hx + ny * hy + nz * hz);
-            const float spec = std::pow(ndh, 420.0f) * edge;               // very tight: only the odd facet ever flashes
-            auto channel = [&](float albedoChannel, float specTint)
-            {
-                const float v = albedoChannel * lum * 255.0f + spec * specTint * 0.17f;
-                return (juce::uint8) juce::jlimit(0, 255, juce::roundToInt(v));
-            };
-            data.setPixelColour(x, y, Colour(channel(albedo.getFloatRed(), 255.0f), channel(albedo.getFloatGreen(), 248.0f),
-                                             channel(albedo.getFloatBlue(), 232.0f)));
-        }
-    return image;
-}
-
-// The panel finish itself, as the toolbar and the main panel carry it.
+// The panel's wrinkle-paint finish: the single shared copy in ArtCommon (same recipe and seed).
 const juce::Image& wrinkleTile()
 {
-    static const juce::Image tile = makeWrinkleTile(256, 5, Colour(0xff1d1c19), 0.46f);
-    return tile;
+    return cs80::art::panelTile();
 }
 
 float tileLuma(Colour c) { return 0.299f * c.getFloatRed() + 0.587f * c.getFloatGreen() + 0.114f * c.getFloatBlue(); }
@@ -814,19 +773,6 @@ const juce::Image& wrinkleRelief()
         return image;
     }();
     return relief;
-}
-
-// Tile the relief over an area of a design-space context (`deviceScale` device
-// pixels per design unit), so the grain stays one pixel fine at every size.
-void fillRelief(Graphics& g, const juce::Image& tile, Rectangle<float> area, float deviceScale, float opacity,
-                float shiftX = 0.0f, float shiftY = 0.0f)
-{
-    juce::Graphics::ScopedSaveState state(g);
-    g.reduceClipRegion(area.toNearestIntEdges());
-    juce::FillType fill(tile, juce::AffineTransform::scale(1.0f / std::max(0.25f, deviceScale)).translated(shiftX, shiftY));
-    fill.setOpacity(opacity);
-    g.setFillType(fill);
-    g.fillRect(area);
 }
 
 // Result-row thumbnail: a tiny backlit window with the patch's spectrum, one
@@ -989,7 +935,7 @@ void PlateButton::paintButton(Graphics& g, bool hover, bool down)
             g.setColour(ivory.withAlpha(0.10f));
             g.fillRoundedRectangle(area, radius);
         }
-        const auto font = tracked(uiFont(kMinText * u, juce::Font::bold), 0.1f);
+        const auto font = tracked(displayFont(kMinText * u, juce::Font::bold), 0.1f);
         g.setFont(font);
         g.setColour(! enabled ? ivory.withAlpha(0.46f) : (on ? Colour(0xff2b1b05) : ivory.withAlpha(hover ? 1.0f : 0.82f)));
         if (on && arrow != 0)
@@ -1049,7 +995,7 @@ void PlateButton::paintButton(Graphics& g, bool hover, bool down)
     // The keys are the toolbar's own plates (satin black, or gold for the
     // primary action), so the library reads as part of the same instrument.
     const auto face = bounds.reduced(1.8f, 1.2f).withTrimmedBottom(1.8f).translated(0.0f, down && enabled ? 1.0f : 0.0f);
-    const auto font = tracked(uiFont(kMinText * u, juce::Font::bold), 0.14f);
+    const auto font = tracked(displayFont(kMinText * u, juce::Font::bold), 0.14f);
     Colour ink = ivory;
     if (kind == Kind::primary) ink = Colour(0xff2b1b05);
     else if (kind == Kind::danger) ink = Colour(0xffff9d89);
@@ -1245,7 +1191,7 @@ void ChipButton::paintButton(Graphics& g, bool hover, bool down)
     g.drawText(countText, text.removeFromRight(countWidth + 2.0f * u), juce::Justification::centredRight, false);
     text.removeFromRight(3.0f * u);
     const auto label = getButtonText();
-    const auto font = fitFont(tracked(uiFont(kMinText * u, juce::Font::bold), 0.05f), label, text.getWidth(), 0.9f);
+    const auto font = fitFont(tracked(displayFont(kMinText * u, juce::Font::bold), 0.05f), label, text.getWidth(), 0.9f);
     g.setFont(font);
     if (! on)
     {
@@ -1455,7 +1401,7 @@ public:
         etchLine(g, L.face.getX() + 22.0f, L.header.getBottom() + 4.0f, L.face.getRight() - 22.0f,
                  L.header.getBottom() + 4.0f, 0.3f);
 
-        auto title = tracked(uiFont(24.0f, juce::Font::bold), 0.14f);
+        auto title = tracked(displayFont(24.0f, juce::Font::bold), 0.14f);
         legend(g, "PRESET LIBRARY", { 78.0f, 38.0f, 300.0f, 40.0f }, title, ivory);
         caption(g, "SORT BY", { L.sortStrip.getX() + 4.0f, 21.0f, 120.0f, 16.0f });
         caption(g, "ROWS", { L.viewStrip.getX() + 4.0f, 21.0f, 120.0f, 16.0f });
@@ -1538,7 +1484,7 @@ InspectorPlan planInspector(float detailHeight, bool hasDescription)
 // A small engraved keycap for the key hints above the list.
 float drawKeycap(Graphics& g, float x, float y, float height, const juce::String& text)
 {
-    const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
+    const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.06f);
     const bool arrows = text == "^v";
     const float w = arrows ? 34.0f : textWidth(font, text) + 14.0f;
     const Rectangle<float> cap(x, y, w, height - 2.0f);
@@ -1654,8 +1600,8 @@ private:
         struct Hint { juce::String key, action; };
         const Hint hints[] = { { "^v", "BROWSE" },
                                { "ENTER", "LOAD" }, { "SPACE", "STAR" }, { "DEL", "DELETE" } };
-        const auto keyFont = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
-        const auto actionFont = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+        const auto keyFont = tracked(displayFont(kMinText, juce::Font::bold), 0.06f);
+        const auto actionFont = tracked(displayFont(kMinText, juce::Font::bold), 0.1f);
         const float minX = window.getRight() + 24.0f;
         int count = 4;
         const auto widthOf = [&](int n)
@@ -1685,10 +1631,11 @@ private:
         const float x = L.leftPlate.getX() + 20.0f, w = L.leftPlate.getWidth() - 40.0f;
         const auto head = [&](const juce::String& text, const juce::String& hint, float y)
         {
-            caption(g, text, { x, y, 160.0f, 16.0f });
+            if (text.isNotEmpty())
+                caption(g, text, { x, y, 160.0f, 16.0f });
             if (hint.isNotEmpty())
                 legend(g, hint, { x + w - 96.0f, y, 96.0f, 16.0f },
-                       tracked(uiFont(kMinText, juce::Font::bold), 0.1f), ivoryDim.withAlpha(0.95f),
+                       tracked(displayFont(kMinText, juce::Font::bold), 0.1f), ivoryDim.withAlpha(0.95f),
                        juce::Justification::centredRight);
             etchLine(g, x, y + 19.0f, x + w, y + 19.0f, 0.35f);
         };
@@ -1696,7 +1643,7 @@ private:
         if (L.typeCaptionY > 0.0f)
             head("INSTRUMENT", "ANY OF", L.typeCaptionY);
         if (L.styleCaptionY > 0.0f)
-            head("STYLE", "ALL OF", L.styleCaptionY);
+            head(owner.techniquePresent != 0 ? juce::String() : juce::String("STYLE"), "ALL OF", L.styleCaptionY);
         paintFilterRow(g);
     }
 
@@ -1711,7 +1658,7 @@ private:
         const int n = owner.activeFilterCount();
         const auto row = L.filterRow;
         etchLine(g, row.getX(), row.getY() - 8.0f, row.getRight(), row.getY() - 8.0f, 0.4f);
-        const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+        const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.1f);
         const auto text = row.withTrimmedRight(124.0f);
         const int shown = (int) owner.filtered.size(), total = (int) owner.entries.size();
         legend(g, n == 0 ? juce::String("NO FILTERS") : juce::String(n) + (n == 1 ? " FILTER ACTIVE" : " FILTERS ACTIVE"),
@@ -1725,11 +1672,11 @@ private:
     {
         const auto& L = owner.layout;
         const auto c = L.well.getCentre();
-        const auto font = tracked(uiFont(22.0f, juce::Font::bold), 0.16f);
+        const auto font = tracked(displayFont(22.0f, juce::Font::bold), 0.16f);
         legend(g, "NO PATCHES MATCH", { L.well.getX(), c.y - 56.0f, L.well.getWidth(), 34.0f }, font, ivory.withAlpha(0.9f),
                juce::Justification::centred);
         legend(g, "Loosen the search words or switch off a filter.",
-               { L.well.getX(), c.y - 20.0f, L.well.getWidth(), 20.0f }, uiFont(13.0f), ivoryDim,
+               { L.well.getX(), c.y - 20.0f, L.well.getWidth(), 20.0f }, displayFont(13.0f), ivoryDim,
                juce::Justification::centred);
     }
 
@@ -1747,9 +1694,9 @@ private:
             const auto plan = planInspector(D.getHeight(), false);
             const auto c = D.getCentre();
             legend(g, "SELECT A PATCH", { D.getX(), c.y - 40.0f, D.getWidth(), 30.0f },
-                   tracked(uiFont(20.0f, juce::Font::bold), 0.16f), ivory.withAlpha(0.85f), juce::Justification::centred);
+                   tracked(displayFont(20.0f, juce::Font::bold), 0.16f), ivory.withAlpha(0.85f), juce::Justification::centred);
             paragraph(g, "Click a row or use the arrow keys to inspect its envelope, filter and character.",
-                      { D.getX() + 50.0f, c.y - 2.0f, D.getWidth() - 100.0f, 44.0f }, uiFont(13.0f), ivoryDim,
+                      { D.getX() + 50.0f, c.y - 2.0f, D.getWidth() - 100.0f, 44.0f }, displayFont(13.0f), ivoryDim,
                       juce::Justification::centredTop, 3);
             caption(g, "SAVE CURRENT SOUND AS", { x, D.getY() + plan.saveCaption, w, 16.0f });
             return;
@@ -1762,7 +1709,7 @@ private:
         {
             const bool edited = owner.loadedEdited;
             const juce::String label = edited ? "LOADED / EDITED" : "LOADED";
-            const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.12f);
+            const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.12f);
             const float bw = textWidth(font, label) + 2.0f;
             const float bx = x + w - 52.0f - bw;
             drawJewelLamp(g, { bx - 11.0f, D.getY() + 28.0f }, 4.0f, edited ? amber : Colour(0xff58d27c), true);
@@ -1771,7 +1718,7 @@ private:
         }
 
         // Name
-        const auto nameFont = fitFont(tracked(uiFont(30.0f, juce::Font::bold), 0.02f), e->name, w - 46.0f);
+        const auto nameFont = fitFont(tracked(displayFont(30.0f, juce::Font::bold), 0.02f), e->name, w - 46.0f);
         legend(g, e->name, { x, D.getY() + 38.0f, w - 46.0f, 44.0f }, nameFont, ivory, juce::Justification::centredLeft, true);
 
         // Type pill, then one pill per style tag. A patch with no tags simply has none.
@@ -1792,12 +1739,12 @@ private:
             cursor += drawStyleTag(g, cursor, pillY, 22.0f, kStyleNames[t], true) + 8.0f;
         }
         if (hidden > 0)
-            legend(g, "+" + juce::String(hidden), { cursor, pillY, 34.0f, 22.0f }, uiFont(kMinText, juce::Font::bold), ivoryDim);
+            legend(g, "+" + juce::String(hidden), { cursor, pillY, 34.0f, 22.0f }, displayFont(kMinText, juce::Font::bold), ivoryDim);
 
         paintOrigin(g, { x, D.getY() + plan.origin, w, 36.0f }, *e);
 
         // Signature
-        const auto sigFont = tracked(uiFont(kMinText, juce::Font::bold), 0.14f);
+        const auto sigFont = tracked(displayFont(kMinText, juce::Font::bold), 0.14f);
         const float sigW = textWidth(sigFont, "SIGNATURE");
         caption(g, "SIGNATURE", { x, D.getY() + plan.rule - 8.0f, sigW + 6.0f, 16.0f });
         etchLine(g, x + sigW + 14.0f, D.getY() + plan.rule, x + w, D.getY() + plan.rule, 0.5f);
@@ -1817,7 +1764,8 @@ private:
     // Three label/value cells: slot, origin, and either the save date or the layer balance.
     static void paintOrigin(Graphics& g, Rectangle<float> r, const Entry& e)
     {
-        const juce::String origin = e.isUser ? "USER FILE" : (e.category == "Hardware Studies" ? "HARDWARE STUDY" : "FACTORY PROGRAM");
+        const juce::String origin = e.isUser ? "USER FILE"
+            : (e.isLegacy ? (e.category == "Hardware Studies" ? "LEGACY STUDY" : "LEGACY PROGRAM") : "LIBRARY PROGRAM");
         juce::String thirdName = "LAYERS", thirdValue = "--";
         if (e.isUser && e.modified > 0)
         {
@@ -1848,7 +1796,7 @@ private:
         drawWell(g, r, 5.0f);
         caption(g, title, { r.getX() + 11.0f, r.getY() + 5.0f, 150.0f, 16.0f }, juce::Justification::centredLeft, 0.9f);
         float lx = r.getRight() - 12.0f;
-        const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+        const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.1f);
         const auto key = [&](const juce::String& text, Colour c)
         {
             const float tw = textWidth(font, text);
@@ -1918,7 +1866,7 @@ private:
         const juce::String names[4] = { "A " + formatTime(ch.attack), "D " + formatTime(ch.decay),
                                         "S " + juce::String(juce::roundToInt(ch.sustain * 100.0f)) + " %",
                                         "R " + formatTime(ch.release) };
-        const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.02f);
+        const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.02f);
         const float axisY = p.getBottom() + 3.0f;
         for (int i = 0; i < 5; ++i)
         {
@@ -1960,7 +1908,7 @@ private:
         {
             return p.getY() + p.getHeight() * (dbTop - juce::jlimit(dbBottom, dbTop, db)) / (dbTop - dbBottom);
         };
-        const auto labelFont = tracked(uiFont(kMinText, juce::Font::bold), 0.06f);
+        const auto labelFont = tracked(displayFont(kMinText, juce::Font::bold), 0.06f);
         const float markHz[3] = { 100.0f, 1000.0f, 10000.0f };
         const char* const markText[3] = { "100 Hz", "1 kHz", "10 kHz" };
         for (int m = 0; m < 3; ++m)
@@ -2051,7 +1999,7 @@ private:
             g.setColour(amberBright.brighter(0.4f));
             g.fillEllipse(pt.x - 3.0f, pt.y - 3.4f, 6.0f, 6.0f);
         }
-        const auto font = tracked(uiFont(kMinText, juce::Font::plain), 0.06f);
+        const auto font = tracked(displayFont(kMinText, juce::Font::plain), 0.06f);
         for (int a = 0; a < axes; ++a)
         {
             const auto pt = pointAt(a, 1.0f);
@@ -2091,7 +2039,7 @@ private:
             caption(g, rows[i].name, row.withTrimmedRight(row.getWidth() * 0.5f), juce::Justification::centredLeft, 0.9f);
             const auto valueArea = row.withTrimmedLeft(row.getWidth() * 0.40f);
             legend(g, rows[i].value, valueArea,
-                   fitFont(uiFont(kMinText, juce::Font::bold), rows[i].value, valueArea.getWidth(), 0.92f),
+                   fitFont(displayFont(kMinText, juce::Font::bold), rows[i].value, valueArea.getWidth(), 0.92f),
                    ivory, juce::Justification::centredRight, true);
         }
     }
@@ -2493,6 +2441,10 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     nextButton.setTooltip("Select the next patch in the list");
     nextButton.onClick = [this] { stepSelection(1); };
     addAndMakeVisible(nextButton);
+    auditionButton.setTitle("Audition");
+    auditionButton.setClickingTogglesState(true);
+    auditionButton.onClick = [this] { setAudition(auditionButton.getToggleState()); };
+    addAndMakeVisible(auditionButton);
 
     description.setJustificationType(juce::Justification::topLeft);
     description.setColour(juce::Label::textColourId, ivory.withAlpha(0.82f));
@@ -2557,11 +2509,14 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     for (auto& b : viewButtons) b->setExplicitFocusOrder(order++);
     for (auto& b : scopeChips) b->setExplicitFocusOrder(order++);
     for (auto& b : typeChips) b->setExplicitFocusOrder(order++);
+    for (auto& b : facetButtons) b->setExplicitFocusOrder(order++);
     for (auto& b : styleChips) b->setExplicitFocusOrder(order++);
+    for (auto& b : techniqueChips) b->setExplicitFocusOrder(order++);
     resetButton.setExplicitFocusOrder(order++);
     list->setExplicitFocusOrder(order++);
     favouriteButton.setExplicitFocusOrder(order++);
     previousButton.setExplicitFocusOrder(order++);
+    auditionButton.setExplicitFocusOrder(order++);
     nextButton.setExplicitFocusOrder(order++);
     loadButton.setExplicitFocusOrder(order++);
     revertButton.setExplicitFocusOrder(order++);
@@ -2601,8 +2556,13 @@ void PresetBrowser::buildFilterChips()
         chip->setRadioGroupId(7001);
         chip->setStarGlyph(i == 1);
         chip->setTitle(juce::String("Show ") + kScopeNames[i]);
-        if (i == 3)
-            chip->setTooltip("Original hardware tab identities. Provisional voicings, not measured factory presets.");
+        if (i == 0)
+            chip->setTooltip("The factory library and your saved patches. The Legacy Library is listed on its own.");
+        else if (i == 2)
+            chip->setTooltip("The curated factory library, voiced for the circuit engine.");
+        else if (i == 3)
+            chip->setTooltip("Read-only: the 222 programs of earlier versions, including the provisional hardware-tab studies. "
+                             "Kept so old sessions recall them by name and number; they play on the legacy engine.");
         chip->setToggleState(i == scopeFilter, juce::dontSendNotification);
         chip->onClick = [this, i] { scopeFilter = i; rebuildFilter(); };
         addAndMakeVisible(*chip);
@@ -2636,6 +2596,48 @@ void PresetBrowser::buildFilterChips()
         addChildComponent(*chip);
         styleChips.push_back(std::move(chip));
     }
+    // [ws6-library] TECHNIQUE chips share the third facet's place with STYLE.
+    for (int t = 0; t < techniqueCount; ++t)
+    {
+        auto chip = std::make_unique<ChipButton>(kTechniques[t].label, ivory);
+        chip->setLamp(ChipButton::Lamp::hollow);
+        chip->setTitle(juce::String("Technique ") + kTechniques[t].label);
+        chip->setTooltip(kTechniques[t].tip);
+        chip->onClick = [this, t, raw = chip.get()]
+        {
+            if (raw->getToggleState()) techniqueFilter |= 1u << (unsigned) t;
+            else techniqueFilter &= ~(1u << (unsigned) t);
+            rebuildFilter();
+        };
+        addChildComponent(*chip);
+        techniqueChips.push_back(std::move(chip));
+    }
+    const char* const facetNames[] = { "STYLE", "TECHNIQUE" };
+    const char* const facetTips[] = { "Filter by sound character (derived from the patch values)",
+                                      "Filter by playing or programming technique (factory library tags)" };
+    for (int f = 0; f < 2; ++f)
+    {
+        auto button = std::make_unique<PlateButton>(facetNames[f], PlateButton::Kind::segment);
+        button->setRadioGroupId(7004);
+        button->setTitle(juce::String("Show ") + facetNames[f] + " filters");
+        button->setTooltip(facetTips[f]);
+        button->onClick = [this, f] { setShowTechniques(f == 1); };
+        addChildComponent(*button);
+        facetButtons.push_back(std::move(button));
+    }
+}
+
+void PresetBrowser::setShowTechniques(bool techniques)
+{
+    techniqueFacetPreference() = techniques;
+    if (techniques != showTechniques)
+    {
+        showTechniques = techniques;
+        layoutAll();
+        legends->repaintFilters();
+    }
+    for (size_t f = 0; f < facetButtons.size(); ++f)
+        facetButtons[f]->setToggleState((f == 1) == showTechniques, juce::dontSendNotification);
 }
 
 // ---------------------------------------------------------------------------
@@ -2698,8 +2700,8 @@ void PresetBrowser::layoutAll()
     }
     search.setUiScale(s);
     search.setBounds(pxr(L.searchRect));
-    search.setFont(uiFont(16.0f * s));
-    search.applyFontToAllText(uiFont(16.0f * s));
+    search.setFont(displayFont(16.0f * s));
+    search.applyFontToAllText(displayFont(16.0f * s));
     search.setIndents(juce::roundToInt(44.0f * s), 0);
     search.setBorder(juce::BorderSize<int>(0, 0, 0, juce::roundToInt(44.0f * s)));
     clearSearch.setUiScale(s);
@@ -2708,7 +2710,15 @@ void PresetBrowser::layoutAll()
     // Filter column. Chips are packed top to bottom; absent types and styles
     // collapse so the column never shows dead tabs.
     const float cx = L.leftPlate.getX() + 20.0f, cw = L.leftPlate.getWidth() - 40.0f;
-    constexpr float chipH = 34.0f, chipPitch = 39.0f;
+    // [ws6-library] More instrument types and the TECHNIQUE facet: when the column
+    // would overflow, the chip pitch tightens (never below 33 units).
+    const std::uint32_t facetPresent = showTechniques ? techniquePresent : stylePresent;
+    const auto countBits = [](std::uint32_t bits) { int n = 0; for (; bits != 0; bits &= bits - 1) ++n; return n; };
+    const int chipRows = kScopeCount + (countBits(typePresent) + 1) / 2 + (countBits(facetPresent) + 1) / 2;
+    const float fixed = 26.0f + 28.0f + 10.0f + 28.0f + 10.0f + 28.0f;
+    const float room = L.leftPlate.getHeight() - 20.0f - 34.0f - 10.0f - fixed;
+    const float chipPitch = juce::jlimit(33.0f, 39.0f, room / (float) juce::jmax(1, chipRows));
+    const float chipH = chipPitch - 5.0f;
     float y = L.leftPlate.getY() + 26.0f;
     L.scopeCaptionY = y;
     y += 28.0f;
@@ -2746,30 +2756,35 @@ void PresetBrowser::layoutAll()
     else
         for (auto& chip : typeChips) chip->setVisible(false);
 
-    shown = 0;
-    L.styleCaptionY = 0.0f;
-    for (int t = 0; t < styleCount; ++t)
-        if (stylePresent & (1u << (unsigned) t))
-            ++shown;
-    if (shown > 0)
+    // Third facet: STYLE (derived character) or TECHNIQUE (library tags). The
+    // STYLE | TECHNIQUE switch replaces the caption; hidden chips keep their filter.
+    shown = countBits(facetPresent);
+    L.styleCaptionY = y;
+    for (size_t f = 0; f < facetButtons.size(); ++f)
     {
-        L.styleCaptionY = y;
-        y += 28.0f;
+        facetButtons[f]->setUiScale(s);
+        facetButtons[f]->setBounds(px(cx + (float) f * 98.0f, y - 3.0f, f == 0 ? 92.0f : 112.0f, 24.0f));
+        facetButtons[f]->setVisible(techniquePresent != 0);
+        facetButtons[f]->setToggleState((f == 1) == showTechniques, juce::dontSendNotification);
+    }
+    y += 28.0f;
+    const auto placeFacet = [&](std::vector<std::unique_ptr<ChipButton>>& chips, std::uint32_t present, bool active)
+    {
         int slot = 0;
-        for (int t = 0; t < styleCount; ++t)
+        for (size_t t = 0; t < chips.size(); ++t)
         {
-            auto& chip = *styleChips[(size_t) t];
-            const bool present = (stylePresent & (1u << (unsigned) t)) != 0;
-            chip.setVisible(present);
-            if (! present)
+            auto& chip = *chips[t];
+            const bool show = active && (present & (1u << (unsigned) t)) != 0;
+            chip.setVisible(show);
+            if (! show)
                 continue;
             chip.setUiScale(s);
             chip.setBounds(px(cx + (float) (slot % 2) * (colW + 6.0f), y + (float) (slot / 2) * chipPitch, colW, chipH));
             ++slot;
         }
-    }
-    else
-        for (auto& chip : styleChips) chip->setVisible(false);
+    };
+    placeFacet(styleChips, stylePresent, ! showTechniques);
+    placeFacet(techniqueChips, techniquePresent, showTechniques);
     L.chipsBottom = y + (float) ((shown + 1) / 2) * chipPitch;
 
     // The filter status line at the foot of the column; its CLEAR ALL key is a ghost while no filter is on.
@@ -2816,12 +2831,15 @@ void PresetBrowser::layoutAll()
     favouriteButton.setUiScale(s);
     favouriteButton.setBounds(px(dx + dw - 38.0f, dy + 8.0f, 38.0f, 36.0f));
     layoutDescription();
-    description.setFont(uiFont(13.0f * s));
-    const float halfW = (dw - 8.0f) * 0.5f;
+    description.setFont(displayFont(13.0f * s));
+    // PREV | AUDITION | NEXT
+    const float thirdW = (dw - 16.0f) / 3.0f;
     previousButton.setUiScale(s);
-    previousButton.setBounds(px(dx, dy + plan.prevNext, halfW, 34.0f));
+    previousButton.setBounds(px(dx, dy + plan.prevNext, thirdW, 34.0f));
+    auditionButton.setUiScale(s);
+    auditionButton.setBounds(px(dx + thirdW + 8.0f, dy + plan.prevNext, thirdW, 34.0f));
     nextButton.setUiScale(s);
-    nextButton.setBounds(px(dx + dw - halfW, dy + plan.prevNext, halfW, 34.0f));
+    nextButton.setBounds(px(dx + dw - thirdW, dy + plan.prevNext, thirdW, 34.0f));
     const float smallW = 96.0f;
     loadButton.setUiScale(s);
     loadButton.setBounds(px(dx, dy + plan.load, dw - 2.0f * smallW - 16.0f, 44.0f));
@@ -2831,14 +2849,14 @@ void PresetBrowser::layoutAll()
     deleteButton.setBounds(px(dx + dw - smallW, dy + plan.load, smallW, 44.0f));
     saveName.setUiScale(s);
     saveName.setBounds(px(dx, dy + plan.saveField, dw - 124.0f, 34.0f));
-    saveName.setFont(uiFont(14.0f * s));
-    saveName.applyFontToAllText(uiFont(14.0f * s));
+    saveName.setFont(displayFont(14.0f * s));
+    saveName.applyFontToAllText(displayFont(14.0f * s));
     saveName.setIndents(juce::roundToInt(11.0f * s), 0);
     saveName.setBorder(juce::BorderSize<int>(0, 0, 0, 4));
     saveButton.setUiScale(s);
     saveButton.setBounds(px(dx + dw - 112.0f, dy + plan.saveButton, 112.0f, 40.0f));
     saveStatus.setBounds(px(dx, dy + plan.status, dw, 30.0f));
-    saveStatus.setFont(uiFont(kMinText * s));
+    saveStatus.setFont(displayFont(kMinText * s));
 
     surface->setBounds(getLocalBounds());
     legends->setBounds(getLocalBounds());
@@ -2867,6 +2885,9 @@ void PresetBrowser::refresh()
 {
     loadFavourites();
     compactRows = compactPreference();
+    auditionOn = auditionPreference();
+    auditionButton.setToggleState(auditionOn, juce::dontSendNotification);
+    showTechniques = techniqueFacetPreference();
     for (size_t i = 0; i < viewButtons.size(); ++i)
         viewButtons[i]->setToggleState((i == 1) == compactRows, juce::dontSendNotification);
     entries.clear();
@@ -2891,8 +2912,11 @@ void PresetBrowser::refresh()
         for (int t = 0; t < styleCount; ++t)
             if (e.styles & (1u << (unsigned) t))
                 styleText << " " << kStyleNames[t];
+        for (int t = 0; t < techniqueCount; ++t)
+            if (e.techniques & (1u << (unsigned) t))
+                styleText << " " << kTechniques[t].label;
         e.haystack = (e.name + " " + e.category + " " + kTypes[e.type].label + styleText + " " + e.description
-                      + (e.isUser ? " user" : " factory")).toLowerCase();
+                      + (e.isUser ? " user" : (e.isLegacy ? " legacy" : " factory library"))).toLowerCase();
     };
 
     for (int i = 0; i < (int) bank.size(); ++i)
@@ -2904,7 +2928,12 @@ void PresetBrowser::refresh()
         e.description = juce::String(preset.description);
         e.factoryIndex = i;
         e.key = "F:" + e.name;
-        e.slot = juce::String(i + 1).paddedLeft('0', 3);
+        // [ws6-library] Legacy Library slots keep their shipped numbers (L001..L222);
+        // the curated library is numbered on its own (001..).
+        e.isLegacy = preset.library == cs80::ProgramLibrary::legacy;
+        e.techniques = techniqueBits(preset.tags);
+        e.slot = e.isLegacy ? "L" + juce::String(i + 1).paddedLeft('0', 3)
+                            : juce::String(cs80::curatedIndexForProgram(i) + 1).paddedLeft('0', 3);
         if ((size_t) i < factorySignatures.size())
             e.signature = factorySignatures[(size_t) i];
         finish(e);
@@ -2943,13 +2972,18 @@ void PresetBrowser::refresh()
 
     typePresent = 0;
     stylePresent = 0;
+    techniquePresent = 0;
     for (const auto& e : entries)
     {
         typePresent |= 1u << (unsigned) e.type;
         stylePresent |= e.styles;
+        techniquePresent |= e.techniques;
     }
     typeFilter &= typePresent;
     styleFilter &= stylePresent;
+    techniqueFilter &= techniquePresent;
+    for (int t = 0; t < techniqueCount; ++t)
+        techniqueChips[(size_t) t]->setToggleState((techniqueFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     for (int t = 0; t < typeCount; ++t)
         typeChips[(size_t) t]->setToggleState((typeFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     for (int t = 0; t < styleCount; ++t)
@@ -2992,7 +3026,8 @@ int PresetBrowser::sortArrow(int mode) const
 
 bool PresetBrowser::anyFilterActive() const
 {
-    return scopeFilter != 0 || typeFilter != 0 || styleFilter != 0 || search.getText().trim().isNotEmpty();
+    return scopeFilter != 0 || typeFilter != 0 || styleFilter != 0 || techniqueFilter != 0
+        || search.getText().trim().isNotEmpty();
 }
 
 int PresetBrowser::activeFilterCount() const
@@ -3002,6 +3037,8 @@ int PresetBrowser::activeFilterCount() const
         n += (typeFilter & (1u << (unsigned) t)) != 0 ? 1 : 0;
     for (int t = 0; t < styleCount; ++t)
         n += (styleFilter & (1u << (unsigned) t)) != 0 ? 1 : 0;
+    for (int t = 0; t < techniqueCount; ++t)
+        n += (techniqueFilter & (1u << (unsigned) t)) != 0 ? 1 : 0;
     return n;
 }
 
@@ -3010,21 +3047,24 @@ void PresetBrowser::clearFilters()
     scopeFilter = 0;
     typeFilter = 0;
     styleFilter = 0;
+    techniqueFilter = 0;
     search.setText({}, false);
     rebuildFilter();
 }
 
 namespace
 {
-bool scopeAccepts(int scope, bool favourite, bool isUser, bool hardware)
+// [ws6-library] ALL PATCHES = factory library + user patches; the read-only
+// Legacy Library is its own section (and appears in FAVOURITES when starred).
+bool scopeAccepts(int scope, bool favourite, bool isUser, bool legacy)
 {
     switch (scope)
     {
         case 1: return favourite;
-        case 2: return ! isUser && ! hardware;
-        case 3: return hardware;
+        case 2: return ! isUser && ! legacy;
+        case 3: return legacy;
         case 4: return isUser;
-        default: return true;
+        default: return ! legacy;
     }
 }
 } // namespace
@@ -3039,13 +3079,16 @@ void PresetBrowser::rebuildFilter()
 
     // One predicate with overrides so the facet counts on the chips can ask
     // "what would I get if this chip were on" without a second code path.
-    const auto accepts = [&](const Entry& e, int scope, std::uint32_t types, std::uint32_t styles)
+    const auto accepts = [&](const Entry& e, int scope, std::uint32_t types, std::uint32_t styles,
+                             std::uint32_t techniques)
     {
-        if (! scopeAccepts(scope, isFavourite(e), e.isUser, ! e.isUser && e.category == "Hardware Studies"))
+        if (! scopeAccepts(scope, isFavourite(e), e.isUser, e.isLegacy))
             return false;
         if (types != 0 && (types & (1u << (unsigned) e.type)) == 0)
             return false;
         if ((e.styles & styles) != styles)
+            return false;
+        if ((e.techniques & techniques) != techniques)
             return false;
         for (const auto& token : tokens)
             if (! e.haystack.contains(token))
@@ -3055,7 +3098,7 @@ void PresetBrowser::rebuildFilter()
 
     filtered.clear();
     for (int i = 0; i < (int) entries.size(); ++i)
-        if (accepts(entries[(size_t) i], scopeFilter, typeFilter, styleFilter))
+        if (accepts(entries[(size_t) i], scopeFilter, typeFilter, styleFilter, techniqueFilter))
             filtered.push_back(i);
 
     const auto byName = [this](int a, int b)
@@ -3095,7 +3138,7 @@ void PresetBrowser::rebuildFilter()
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, i, typeFilter, styleFilter))
+            if (accepts(e, i, typeFilter, styleFilter, techniqueFilter))
                 ++n;
         scopeChips[(size_t) i]->setCount(n);
         scopeChips[(size_t) i]->setToggleState(i == scopeFilter, juce::dontSendNotification);
@@ -3104,7 +3147,7 @@ void PresetBrowser::rebuildFilter()
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, scopeFilter, 1u << (unsigned) t, styleFilter))
+            if (accepts(e, scopeFilter, 1u << (unsigned) t, styleFilter, techniqueFilter))
                 ++n;
         typeChips[(size_t) t]->setCount(n);
         typeChips[(size_t) t]->setToggleState((typeFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
@@ -3113,10 +3156,19 @@ void PresetBrowser::rebuildFilter()
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, scopeFilter, typeFilter, styleFilter | (1u << (unsigned) t)))
+            if (accepts(e, scopeFilter, typeFilter, styleFilter | (1u << (unsigned) t), techniqueFilter))
                 ++n;
         styleChips[(size_t) t]->setCount(n);
         styleChips[(size_t) t]->setToggleState((styleFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
+    }
+    for (int t = 0; t < techniqueCount; ++t)
+    {
+        int n = 0;
+        for (const auto& e : entries)
+            if (accepts(e, scopeFilter, typeFilter, styleFilter, techniqueFilter | (1u << (unsigned) t)))
+                ++n;
+        techniqueChips[(size_t) t]->setCount(n);
+        techniqueChips[(size_t) t]->setToggleState((techniqueFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     }
     const bool anyUser = userCount() > 0;
     for (int i = 0; i < kSortCount; ++i)
@@ -3206,7 +3258,8 @@ juce::String PresetBrowser::getNameForRow(int rowNumber)
         return {};
     const auto& e = entries[(size_t) index];
     return e.name + ", " + juce::String(kTypes[e.type].label).toLowerCase() + ", "
-           + (e.isUser ? "user" : "factory") + (isFavourite(e) ? ", favourite" : "") + (isLoaded(e) ? ", loaded" : "");
+           + (e.isUser ? "user" : (e.isLegacy ? "legacy library" : "factory library"))
+           + (isFavourite(e) ? ", favourite" : "") + (isLoaded(e) ? ", loaded" : "");
 }
 
 juce::Component* PresetBrowser::refreshComponentForRow(int rowNumber, bool, juce::Component* existing)
@@ -3254,7 +3307,7 @@ Rectangle<float> thumbnailRect(bool compact, float H)
 
 float typePillWidth(int type)
 {
-    const auto font = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+    const auto font = tracked(displayFont(kMinText, juce::Font::bold), 0.1f);
     return std::max(84.0f, textWidth(font, kTypes[type].label) + 30.0f);
 }
 
@@ -3270,7 +3323,7 @@ SlimCluster slimCluster(bool isUser, int type, std::uint32_t styles, float W, fl
     const float lineY = card.getY() + (card.getHeight() - blockH) * 0.5f + 0.5f;
     if (isUser)
     {
-        const float uw = textWidth(tracked(uiFont(kMinText, juce::Font::bold), 0.14f), "USER") + 2.0f;
+        const float uw = textWidth(tracked(displayFont(kMinText, juce::Font::bold), 0.14f), "USER") + 2.0f;
         c.user = { right - uw, lineY - 0.5f, uw, 19.0f };
         right -= uw + 10.0f;
     }
@@ -3333,7 +3386,7 @@ juce::String PresetBrowser::getTooltipForRow(int row)
         const float nameH = compact ? 19.0f : 24.0f, statH = compact ? 16.0f : 17.0f;
         const bool hasTags = ! compact && e.signature != nullptr && e.styles != 0;
         const float y0 = cardY + (cardH - (nameH + 3.0f + statH + (hasTags ? 22.0f : 0.0f))) * 0.5f;
-        const auto font = uiFont(compact ? 15.5f : 17.0f, juce::Font::bold);
+        const auto font = displayFont(compact ? 15.5f : 17.0f, juce::Font::bold);
         if (mouse.x >= textX && mouse.x <= textX + std::max(budget, 0.0f) && mouse.y >= y0 && mouse.y <= y0 + nameH
             && textWidth(font, e.name) * 0.78f > budget)
             return e.name;
@@ -3431,7 +3484,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
     float rightEdge = compact ? cluster.rightEdge : pillX - 10.0f;
     if (e.isUser)
     {
-        const auto userFont = tracked(uiFont(kMinText, juce::Font::bold), 0.14f);
+        const auto userFont = tracked(displayFont(kMinText, juce::Font::bold), 0.14f);
         if (compact)
             legend(g, "USER", cluster.user, userFont, teal.brighter(0.6f), juce::Justification::centredRight);
         else
@@ -3465,7 +3518,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
         const juce::String stateText = edited ? "EDITED" : (loaded ? "LOADED" : "");
         const float tagW = stateText.isEmpty() ? 0.0f : textWidth(styleTagFont(), stateText) + 14.0f;
         const float nameMax = textW - (tagW > 0.0f ? tagW + 8.0f : 0.0f);
-        const auto nameFont = fitFont(uiFont(compact ? 15.5f : 17.0f, juce::Font::bold), e.name, nameMax);
+        const auto nameFont = fitFont(displayFont(compact ? 15.5f : 17.0f, juce::Font::bold), e.name, nameMax);
         legend(g, e.name, { textX, y0, nameMax, nameH }, nameFont,
                selected ? Colour(0xfffff1cc) : ivory, juce::Justification::centredLeft, true);
         if (tagW > 0.0f)
@@ -3477,7 +3530,7 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
         return;
     const auto& sig = *e.signature;
     const auto& lead = sig.ch[(size_t) sig.dominant];
-    const auto capFont = tracked(uiFont(kMinText, juce::Font::bold), 0.1f);
+    const auto capFont = tracked(displayFont(kMinText, juce::Font::bold), 0.1f);
     const auto valFont = monoFont(kMinText);
     const float statGap = compact ? 14.0f : 14.0f;
     const juce::String cut = shortHertz(sig.cutoff);   // always with its unit: 850Hz, 2.6kHz
@@ -3541,6 +3594,13 @@ void PresetBrowser::selectedRowsChanged(int lastRowSelected)
         {
             saveName.setText(entry->name, false);
             saveName.setCaretPosition(0);
+            // [ws6-library] Audition: a chosen row sounds at once. Filtering,
+            // searching and reopening only restore a selection and never load.
+            if (auditionOn && ! isLoaded(*entry))
+            {
+                loadSelected();
+                return;
+            }
         }
     }
     updateSelectionWidgets();
@@ -3589,9 +3649,14 @@ void PresetBrowser::toggleFavourite(int entryIndex)
 // ---------------------------------------------------------------------------
 void PresetBrowser::loadSelected()
 {
-    const auto* entry = selectedEntry();
-    if (entry == nullptr)
+    loadEntry(entryIndexForRow(selectedFilteredRow));
+}
+
+void PresetBrowser::loadEntry(int entryIndex)
+{
+    if (entryIndex < 0 || entryIndex >= (int) entries.size())
         return;
+    const auto* entry = &entries[(size_t) entryIndex];
 
     if (entry->isUser)
         processor.loadUserPreset(entry->userFile);
@@ -3785,10 +3850,13 @@ void PresetBrowser::updateActionTips()
     deleteButton.setTooltip(deleteTip);
     resetButton.setTooltip(resetButton.isEnabled() ? "Clear every filter and the search box"
                                                    : "No filters or search text are active");
-    previousButton.setTooltip(previousButton.isEnabled() ? "Select the previous patch in the list"
+    const juce::String stepVerb = auditionOn ? "Select and hear" : "Select";
+    previousButton.setTooltip(previousButton.isEnabled() ? stepVerb + " the previous patch in the list"
                                                           : (e == nullptr ? "Select a patch in the list first" : "This is the first patch in the list"));
-    nextButton.setTooltip(nextButton.isEnabled() ? "Select the next patch in the list"
+    nextButton.setTooltip(nextButton.isEnabled() ? stepVerb + " the next patch in the list"
                                                   : (e == nullptr ? "Select a patch in the list first" : "This is the last patch in the list"));
+    auditionButton.setTooltip(auditionOn ? "Audition is on: choosing a patch loads it at once. REVERT returns to the sound you opened the library with"
+                                         : "Turn on to hear each patch as soon as you choose it (click, arrow keys, PREV/NEXT)");
 }
 
 void PresetBrowser::pollLoaded()
@@ -3979,7 +4047,19 @@ void PresetBrowser::selectCurrentPreset()
             target = row;
     }
     if (target < 0)
+    {
+        // [ws6-library] A legacy sound (an old session) opens the Legacy Library
+        // section once, so the loaded patch is always findable.
+        for (const auto& e : entries)
+            if (e.isLegacy && e.key == loadedKey && scopeFilter != 3 && scopeFilter != 1)
+            {
+                scopeFilter = 3;
+                rebuildFilter();
+                selectCurrentPreset();
+                break;
+            }
         return;
+    }
 
     selectedFilteredRow = target;
     list->selectRow(target, true, true);
@@ -3990,6 +4070,43 @@ void PresetBrowser::selectCurrentPreset()
     if (target < first || target >= first + visibleRows)
         viewport->setViewPosition(0, std::max(0, target - visibleRows / 2) * rowH);
     updateSelectionWidgets();
+}
+
+// [ws6-library] Toolbar-style PREV/NEXT: steps from the sounding patch through
+// the current filter (scope, types, facets and search; user patches included)
+// and loads, wrapping around. If the sound is not in the filter, it starts at
+// the first (NEXT) or last (PREV) listed patch.
+void PresetBrowser::loadAdjacent(int delta)
+{
+    if (entries.empty())
+        refresh();
+    syncLoaded();
+    if (filtered.empty() || delta == 0)
+        return;
+    const int count = (int) filtered.size();
+    int row = -1;
+    for (int r = 0; r < count && loadedKey.isNotEmpty(); ++r)
+        if (entries[(size_t) filtered[(size_t) r]].key == loadedKey)
+            row = r;
+    const int step = delta > 0 ? 1 : -1;
+    const int next = row < 0 ? (step > 0 ? 0 : count - 1) : ((row + step) % count + count) % count;
+    restoringSelection = true;
+    list->selectRow(next, false, true);
+    restoringSelection = false;
+    selectedFilteredRow = next;
+    loadEntry(filtered[(size_t) next]);
+}
+
+void PresetBrowser::setAudition(bool shouldAudition)
+{
+    auditionOn = shouldAudition;
+    auditionPreference() = shouldAudition;
+    auditionButton.setToggleState(shouldAudition, juce::dontSendNotification);
+    updateActionTips();
+    // Turning it on auditions the row that is already selected.
+    if (shouldAudition)
+        if (const auto* entry = selectedEntry(); entry != nullptr && ! isLoaded(*entry))
+            loadSelected();
 }
 
 void PresetBrowser::focusSaveField()

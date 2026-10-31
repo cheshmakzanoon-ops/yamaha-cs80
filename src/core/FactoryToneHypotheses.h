@@ -183,4 +183,73 @@ inline constexpr std::uint64_t fingerprint=manifestFingerprint();
 static_assert(fingerprint == 0xe5f877a025fc52c6ull,
               "Hypothesis manifest/basis changed: review and version the overlay");
 
+// ---------------------------------------------------------------------------
+// Re-examination of the 25 cells (ws6-library, 2026-10-31). This record does
+// NOT amend the frozen v1 manifest above, HardwareControl.h, or any audio: every
+// cell stays an unknown source cell with its labelled median hypothesis. New
+// native crops could not be fetched in this session (service-manual hosts and
+// the Actions log store refused the proxy tunnel; see
+// docs/workstreams/ws6-library.md), so the outcome rests on the recorded native
+// inspections: schematic pages S31/S33/S35/S37 (T51..T54 circuit diagrams,
+// Actions run 40790769942) and board pages S32/S34/S36/S38 (run 40801679102).
+// candidate is the reading used by the "visible candidates" sensitivity
+// scenario: the first visible alternative listed for the cell (a convention,
+// not a preference), or for T53/B/14 the board-artwork reading.
+enum class ReviewOutcome : std::uint32_t {
+    heldRevisionMark = 1,   // legible value beside a revision mark / crossed or overdrawn part
+    heldReadability = 2,    // glyph not resolvable on the schematic
+    boardCandidate = 3      // schematic unresolved, board artwork supplies a candidate
+};
+struct CellReview {
+    CellAddress address;
+    std::string_view schematicPage, boardPage;
+    ReviewOutcome outcome = ReviewOutcome::heldRevisionMark;
+    VisibleAlternative candidate;
+    std::string_view note;
+};
+inline constexpr std::string_view reviewId = "ws6-cell-review-2026-10-31";
+constexpr CellReview firstAlternative(CellAddress a, std::string_view schematic, std::string_view board,
+                                      std::string_view note = "held: revision applicability unresolved") noexcept {
+    const auto* cell = find(a);
+    return {a, schematic, board, ReviewOutcome::heldRevisionMark,
+            cell != nullptr && cell->visibleAlternativeCount > 0 ? cell->visibleAlternatives[0] : VisibleAlternative{}, note};
+}
+inline constexpr std::array<CellReview, 25> review {{
+    firstAlternative({51,'A',20}, "S31", "S32"), firstAlternative({51,'A',25}, "S31", "S32"),
+    firstAlternative({51,'C',25}, "S31", "S32"), firstAlternative({51,'E',22}, "S31", "S32"),
+    firstAlternative({51,'E',26}, "S31", "S32"), firstAlternative({51,'F',22}, "S31", "S32"),
+    firstAlternative({51,'F',25}, "S31", "S32"), firstAlternative({51,'F',26}, "S31", "S32"),
+    firstAlternative({52,'A',26}, "S33", "S34"), firstAlternative({52,'B',9}, "S33", "S34"),
+    firstAlternative({52,'C',22}, "S33", "S34"), firstAlternative({52,'E',20}, "S33", "S34"),
+    firstAlternative({53,'A',20}, "S35", "S36"), firstAlternative({53,'A',25}, "S35", "S36"),
+    // S36 native r0c0 prints 75K(39K) at the footprint provisionally traced to
+    // B/14. Paired board artwork is shared by T51 and T53; outside values match
+    // T53 and parenthesised values T51 at C/12 20K(13K), A/9 750(1K) and B/14's
+    // own parenthesised 39K (= classified T51/B/14). An inference, not a legend:
+    // the cell stays unknown until a second reader traces the footprint.
+    {{53,'B',14}, "S35", "S36", ReviewOutcome::boardCandidate, resistorMark(75000, "board artwork 75K (paired with T51 39K)"),
+     "schematic glyph unresolved; board-artwork candidate 75K pending footprint trace"},
+    firstAlternative({53,'B',20}, "S35", "S36"), firstAlternative({53,'C',20}, "S35", "S36"),
+    firstAlternative({53,'E',23}, "S35", "S36"), firstAlternative({53,'E',26}, "S35", "S36"),
+    firstAlternative({53,'F',22}, "S35", "S36"), firstAlternative({53,'F',26}, "S35", "S36"),
+    firstAlternative({54,'A',26}, "S37", "S38"), firstAlternative({54,'C',22}, "S37", "S38"),
+    firstAlternative({54,'C',25}, "S37", "S38"), firstAlternative({54,'C',26}, "S37", "S38")
+}};
+constexpr const CellReview* findReview(CellAddress a) noexcept {
+    for (const auto& r : review) if (r.address == a) return &r;
+    return nullptr;
+}
+constexpr bool reviewValid() noexcept {
+    for (const auto& cell : cells) {
+        const auto* r = findReview(cell.address);
+        if (r == nullptr || r->candidate.label.empty() || r->candidate.excitation < 0.0
+            || r->candidate.excitation > 1.0 || r->schematicPage.empty() || r->boardPage.empty()) return false;
+    }
+    for (std::size_t i = 0; i < review.size(); ++i)
+        for (std::size_t j = i + 1; j < review.size(); ++j)
+            if (review[i].address == review[j].address) return false;
+    return true;
+}
+static_assert(reviewValid(), "The re-examination record must cover exactly the 25 manifest cells");
+
 } // namespace cs80::factory_hypotheses

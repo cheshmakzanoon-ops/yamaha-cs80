@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profile_id": "ws6-library-v1",
+  "evidence_kind": "model-consistency",
+  "committed": "2026-10-31, before the realtime/compiled models below were evaluated against their truth models",
+  "rationale": "Truth model vs compiled model residuals for two declared-inference networks. They bound the linearisation and closed-form errors of the realtime path against an offline double-precision Newton solve of the same schematic equations; they are not analog tolerances and no hardware was measured.",
+  "stages": {
+    "ba_diode_boundary_v1": {
+      "description": "Selected BA column driver (2SC458 follower, +10.6 V rail) through a 1S1555 isolation diode and the matrix resistor into the assembled bus (one 10 k shunt) and the compiled receiver load. Compiled path: Thevenin equivalent linearised at the reference operating point (zero envelope and touch). Truth: Newton solve of the same nonlinear node at each drive.",
+      "reference_point_bus_volts": 1e-9,
+      "drive_range_bus_volts": 1e-3,
+      "newton_residual_amps": 1e-12,
+      "drive_range": "every voice filter-EG state z in [-3, 3] (the sanitizeDrive bounds) and velocity/pressure in [0, 1]"
+    },
+    "memory_panel_v1": {
+      "description": "Memory/PANEL pot banks on the selected endpoint rail, memory diode or follower+diode paths and the assembled bus, for all four memories and PANEL in every selector state. Compiled path: closed-form loaded wiper Thevenin plus one linearised diode. Truth: Newton solve of the full multi-source node with every inactive source present.",
+      "bus_volts": 2e-3,
+      "inactive_source_current_amps": 1e-8,
+      "newton_residual_amps": 1e-12
+    }
+  }
+}

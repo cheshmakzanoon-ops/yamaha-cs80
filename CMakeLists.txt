@@ -311,6 +311,24 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
 
     # [ws6-library] register this workstream's core tests below this line.
+    find_package(Threads REQUIRED)
+    add_executable(cs80_library_audit_tests tests/LibraryAuditTests.cpp)
+    target_link_libraries(cs80_library_audit_tests PRIVATE cs80_core Threads::Threads)
+    add_test(NAME cs80_library_audit_tests COMMAND cs80_library_audit_tests)
+    set_tests_properties(cs80_library_audit_tests PROPERTIES TIMEOUT 600)
+    add_executable(cs80_randomise_tests tests/RandomiseTests.cpp)
+    target_link_libraries(cs80_randomise_tests PRIVATE cs80_core)
+    add_test(NAME cs80_randomise_tests COMMAND cs80_randomise_tests)
+    add_executable(cs80_source_factory_boundary_tests tests/SourceFactoryBoundaryTests.cpp)
+    target_include_directories(cs80_source_factory_boundary_tests PRIVATE src)
+    add_test(NAME cs80_source_factory_boundary_tests
+             COMMAND cs80_source_factory_boundary_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    add_executable(cs80_memory_panel_tests tests/MemoryPanelTests.cpp)
+    target_include_directories(cs80_memory_panel_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_tests
+             COMMAND cs80_memory_panel_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
@@ -410,6 +428,7 @@ if (CS80_BUILD_PLUGIN)
         src/plugin/ModernModulationUi.cpp
 
         # [ws6-library] add this workstream's plugin sources below this line.
+        src/plugin/PluginProcessorLibrary.cpp
 
         # [ws7-panel] add this workstream's plugin sources below this line.
         src/plugin/ArtCommon.cpp
