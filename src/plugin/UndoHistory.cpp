@@ -12,6 +12,47 @@ bool onMessageThread()
 }
 } // namespace
 
+// A ValueTree property action alone cannot tell the host that replay is an edit. Retaining the
+// affected parameter here lets the gesture begin before the APVTS's synchronous value callback,
+// and avoids broadcasting gestures for every parameter in the instrument on every undo.
+class UndoableParameterState::ParameterChangeAction final : public juce::UndoableAction
+{
+public:
+    ParameterChangeAction(UndoableParameterState& s, int i, juce::ValueTree t,
+                          juce::var before, juce::var after)
+        : state(s), index(i), tree(std::move(t)), oldValue(std::move(before)), newValue(std::move(after)) {}
+
+    bool perform() override { return apply(newValue); }
+    bool undo() override { return apply(oldValue); }
+    int getSizeInUnits() override { return 64; }
+    juce::UndoableAction* createCoalescedAction(juce::UndoableAction* next) override
+    {
+        auto* other = dynamic_cast<ParameterChangeAction*>(next);
+        if (other != nullptr && &state == &other->state && index == other->index && tree == other->tree)
+            return new ParameterChangeAction(state, index, tree, oldValue, other->newValue);
+        return nullptr;
+    }
+
+private:
+    bool apply(const juce::var& value)
+    {
+        const juce::ScopedLock scoped(state.lock);
+        auto* parameter = state.parameters[(size_t) index];
+        const bool gesture = state.history.isPerformingUndoRedo() && parameter != nullptr
+            && parameter->getValue() != parameter->convertTo0to1((float) value);
+        const juce::ScopedValueSetter<bool> guard(state.writing, true);
+        if (gesture) parameter->beginChangeGesture();
+        tree.setProperty("value", value, nullptr);
+        if (gesture) parameter->endChangeGesture();
+        return true;
+    }
+
+    UndoableParameterState& state;
+    int index;
+    juce::ValueTree tree;
+    juce::var oldValue, newValue;
+};
+
 UndoableParameterState::UndoableParameterState(juce::AudioProcessor& processor, juce::UndoManager& undoManager,
                                                const juce::Identifier& valueTreeType, ParameterLayout layout)
     : juce::AudioProcessorValueTreeState(processor, &undoManager, valueTreeType, std::move(layout)),
@@ -59,7 +100,7 @@ void UndoableParameterState::parameterValueChanged(int index, float)
 
 void UndoableParameterState::parameterGestureChanged(int index, bool starting)
 {
-    if (! onMessageThread())
+    if (! onMessageThread() || writing || history.isPerformingUndoRedo())
         return;
     if (starting)
     {
@@ -119,7 +160,10 @@ void UndoableParameterState::write(int index, juce::UndoManager* undoManager)
     if (const auto* current = child.getPropertyPointer("value"); current != nullptr && (float) *current == value)
         return;
     const juce::ScopedValueSetter<bool> guard(writing, true);
-    child.setProperty("value", value, undoManager);
+    if (undoManager != nullptr)
+        undoManager->perform(new ParameterChangeAction(*this, index, child, child.getProperty("value"), value));
+    else
+        child.setProperty("value", value, nullptr);
 }
 
 void UndoableParameterState::syncExternal()

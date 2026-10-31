@@ -20,7 +20,8 @@
 //     UndoManager, so the history never sees it. Loading a sound clears the history, as
 //     AudioProcessorValueTreeState::replaceState already does for state restores.
 //
-// Undo and redo write the tree; the APVTS turns that into parameter changes as usual.
+// Undo and redo use parameter-aware actions: only the affected parameter is bracketed in a
+// host gesture before the APVTS turns the tree write into its value notification.
 //
 // Thread safety: the tree is touched on the message thread (timer, gestures) and by the host's
 // state calls; treeLock() serialises them (the processor takes it around copyState/replaceState).
@@ -65,6 +66,7 @@ public:
     juce::UndoManager& getHistory() noexcept { return history; }
 
 private:
+    class ParameterChangeAction;
     void beginUserEdit(const juce::String& name);
     void endUserEdit();
     void timerCallback() override;   // replaces the base class's flush (see the file comment)

@@ -655,14 +655,30 @@ inline void testUndoRedo(const Check& check, const Flush& flush)
     check(steps() == 2, "MIDI-learned controller moves add no undo step");
     const float automatedVolume = processor.getParamValue(cs80::P_volume);
 
+    StudioGestureProbe replayAttack, replayCutoff, replayVolume;
+    auto* attackParameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(vA));
+    auto* cutoffParameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(lpf));
+    attackParameter->addListener(&replayAttack);
+    cutoffParameter->addListener(&replayCutoff);
+    volume->addListener(&replayVolume);
     check(processor.undo(), "undo the drag");
+    check(replayAttack.oneGesture(), "undo brackets its changed parameter in one host gesture");
+    check(replayCutoff.begins == 0 && replayCutoff.ends == 0 && replayVolume.begins == 0 && replayVolume.ends == 0,
+          "undo sends no host gestures to unrelated parameters");
     flush(30);
     check(std::abs(processor.getParamValue(vA) - attack0) < 1.0e-5f, "undo returns the drag to where it began");
     check(std::abs(processor.getParamValue(cs80::P_volume) - automatedVolume) < 1.0e-6f, "undo leaves automated parameters alone");
     check(processor.undo(), "undo the typed value");
+    check(replayCutoff.oneGesture(), "a second undo brackets only its own changed parameter");
     flush(30);
     check(std::abs(processor.getParamValue(lpf) - lpf0) < 0.5f && ! history.canUndo(), "undo restores the typed control; nothing older");
+    replayAttack = {}; replayCutoff = {};
     check(processor.redo() && processor.redo(), "redo both steps");
+    check(replayAttack.oneGesture() && replayCutoff.oneGesture() && replayVolume.begins == 0,
+          "redo brackets each changed parameter once and leaves automation alone");
+    attackParameter->removeListener(&replayAttack);
+    cutoffParameter->removeListener(&replayCutoff);
+    volume->removeListener(&replayVolume);
     flush(30);
     check(std::abs(processor.getParamValue(lpf) - 1200.0f) < 1.0f && std::abs(processor.getParamValue(vA) - attackDragged) < 1.0e-5f,
           "redo replays both edits");
