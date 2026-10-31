@@ -582,3 +582,21 @@ if (MSVC AND CS80_BUILD_TESTS)
         endif()
     endforeach()
 endif()
+
+# Instrumented builds (ASan + UBSan) run several times slower than the Release
+# builds the per-test TIMEOUT values were chosen for: under the sanitizers the
+# merged suite's envelope-precision, source-factory-integration and library
+# audit executables outlive their limits without any sanitizer finding.
+# CS80_TEST_TIMEOUT_SCALE multiplies every test's TIMEOUT; it changes no
+# assertion. dsp-measurements.yml's sanitizer job sets it to 4.
+set(CS80_TEST_TIMEOUT_SCALE 1 CACHE STRING "Multiplier for every test TIMEOUT (instrumented builds)")
+if (CS80_BUILD_TESTS AND NOT CS80_TEST_TIMEOUT_SCALE EQUAL 1)
+    get_property(cs80_all_tests DIRECTORY PROPERTY TESTS)
+    foreach(cs80_test IN LISTS cs80_all_tests)
+        get_test_property(${cs80_test} TIMEOUT cs80_timeout)
+        if (cs80_timeout)
+            math(EXPR cs80_timeout "${cs80_timeout} * ${CS80_TEST_TIMEOUT_SCALE}")
+            set_tests_properties(${cs80_test} PROPERTIES TIMEOUT ${cs80_timeout})
+        endif()
+    endforeach()
+endif()
