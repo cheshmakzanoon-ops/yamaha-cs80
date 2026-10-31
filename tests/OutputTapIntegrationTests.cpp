@@ -411,8 +411,9 @@ void readoutTimeConstantAndPartition()
 {
     for (double rate : {8000.0, 44100.0, 48000.0, 192000.0, 768000.0})
     {
-        // Silent fixture: ws4 Step 2 carrier feedthrough sounds whenever MODULATION is up.
-        auto p = fixture(); p[P_ringAmount] = 0.0f; Engine e; e.setParams(p); e.prepare(rate);
+        // Silent fixture: ws4 Step 2 carrier feedthrough sounds whenever MODULATION is up,
+        // and ws4 Step 3 BBD noise whenever the chorus is on.
+        auto p = fixture(); p[P_ringAmount] = 0.0f; p[P_chorusOn] = 0.0f; Engine e; e.setParams(p); e.prepare(rate);
         const OutputOracle oracle(rate*2.0, true);
         p[P_outputLevel] = 0.0f; e.setParams(p);
         const int frames = static_cast<int>(std::round(rate*0.005)); render(e, frames);

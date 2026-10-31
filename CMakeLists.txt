@@ -234,6 +234,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_ring_modulator_circuit_tests PRIVATE cs80_core)
     add_test(NAME cs80_ring_modulator_circuit_tests COMMAND cs80_ring_modulator_circuit_tests)
     set_tests_properties(cs80_ring_modulator_circuit_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_oe2_stereo_chorus_tests tests/Oe2StereoChorusTests.cpp)
+    target_include_directories(cs80_oe2_stereo_chorus_tests PRIVATE src tests)
+    add_test(NAME cs80_oe2_stereo_chorus_tests COMMAND cs80_oe2_stereo_chorus_tests)
+    set_tests_properties(cs80_oe2_stereo_chorus_tests PROPERTIES TIMEOUT 300)
 
     # [ws5-modern] register this workstream's core tests below this line.
 

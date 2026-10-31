@@ -237,3 +237,134 @@ None.
 - EO peak voltage, DEPTH taper and the VC1 maximum are inferences; the 31 ms attack anchor
   is unused until a panel attack-voltage law exists.
 - Multiplier nonlinearity (distortion, intermodulation) is not modelled.
+
+## Step 3: OE1/OE2 chorus and tremolo
+
+**State: done.**
+
+### What was implemented, and where
+
+- `src/core/BbdChorus.h` (rewritten, same API): OE1 DO1/DO2 oscillators; clock moved by
+  their mean in CHORUS; seven clock-count taps implementing the per-transfer loss smear
+  and the MN3001 output-pair hold; independent noise and separate recombination,
+  coupling and IC5/IC6 reconstruction per chain (upper chain = left, lower = right);
+  band-limited clock feedthrough; 1 kHz VCA trims in the O1..O4 proportions; the OE1
+  four-VCA TREMOLO law. No Engine.cpp change was needed (same call).
+- `src/reference/Mn3001Packet.h`: new `NonidealChannel` (same graph and events as
+  `Channel`, with per-transfer inefficiency, residue on every stage and output-pin clock
+  pedestals). With zero options it reproduces `Channel` bit for bit (tested).
+- `src/reference/Oe2Filters.h`: new `branchTransfer` composing `solveInput`, a supplied
+  MN3001 baseband transfer and `solveReconstruction` for the upper (39 k) or lower (100 k)
+  branch with the 1.1 k recombination Thevenin.
+- `src/reference/Oe1Modulation.h` (new): DO1/DO2 law, the CHORUS clock modulation and the
+  O1..O4 VCA gains.
+- Docs: [BBD_CHORUS_MODEL.md](../BBD_CHORUS_MODEL.md) rewritten for the new model.
+
+### Laws and evidence class
+
+| Law | Value | Evidence class |
+| --- | --- | --- |
+| Upper chain (pins 13/14) -> IC5 (39 k) -> IC7 (O1), IC9 (O2) -> OE1 I2/I3; lower chain (pins 9/8) -> IC6 (100 k) -> IC8 (O3), IC10 (O4) -> OE1 I4/I5; I2/I3 and I4/I5 to separate summing amplifiers -> O2(55)/O3(60) -> left/right | true left/right wet paths | Source: OE57/58, OE55/56 ([OE2_CIRCUIT_EVIDENCE.md](../OE2_CIRCUIT_EVIDENCE.md), [OE1_SIGNAL_ROUTING_EVIDENCE.md](../OE1_SIGNAL_ROUTING_EVIDENCE.md)); left = I2/I3 is the routing ledger's reading |
+| OUT1 on CP2 slots, OUT2 on the following CP1 slots | one-period hold, delay centre 256.5 periods | Derived from the reviewed MN3001 graph ([MN3001_CLOCK_EVENT_DESIGN.md](../MN3001_CLOCK_EVENT_DESIGN.md)) |
+| OUT1/OUT2 through 2 x 2.2 k into 1 uF / 100 k | 1.1 k Thevenin loads coupling and IC5/IC6 (13.67 kHz, Q 0.812) | Printed values; stiff pins are a **declared** boundary |
+| Transfer inefficiency | 5e-4 per transfer, 512 transfers (-0.37 dB at 10 kHz at the nominal clock) | **Declared inference** (typical PMOS BBD; alternatives 1e-4, 2e-3) |
+| Packet noise | 1.5e-4 rms per packet, independent per chain | **Declared inference** (alternatives -70 dB and -90 dB wet-path floors) |
+| Clock feedthrough residual | 0.01 square at the recombined node, odd harmonics below 0.45 fs only | **Declared inference** (amplitude); band-limiting is an engineering requirement |
+| DO1 56 ms, DO2 0.55 s at maximum SPEED | DO2 = 0.1018 x DO1; DO1 = SPEED value in Hz | Ratio source-derived (adjustment procedure printed 21); one shared SPEED control, sine shapes and phase 0 at reset are **declared** |
+| Clock modulation in CHORUS | mean of DO1 and DO2, +/-0.5 octave at full DEPTH | **Declared inference** from the two equal 100 k feeds at the BA617 clock node (OE57); the excursion is the existing inference |
+| O1..O4 0.65/0.58/0.58/0.65 Vpp | branch weights; trims referenced to 1 kHz | Proportions source-derived (printed 21); the 1 kHz reference is **declared** (the B4 key label is not mapped to a pitch) |
+| TREMOLO | linear IG00151 control, index 1 at full DEPTH; LO1 = +DO1, LO2 = +DO2, LO3 = -DO2, LO4 = -DO1; dry path kept; clock nominal | **Declared inference** |
+
+Alternatives considered for the tremolo:
+1. Dry branch switched out in TREMOLO (pure amplitude modulation of the wet). Not adopted:
+   the 159 Hz interstage high-pass (and the 0.015 uF VCA output capacitors) would make a
+   wet-only tremolo bass-less.
+2. Quadrature LO phases (0/90/180/270 degrees of one oscillator). Not adopted: the
+   adjustment procedure lists two oscillators.
+3. Exponential VCA control (+/-6 dB at full DEPTH). Possible; the linear input was chosen
+   because IG00151 documents a separate linear input (service p52).
+4. DO1 for TREMOLO only and DO2 for the CHORUS clock only. Not adopted: the clock node has
+   two equal feeds.
+5. The previous generic amplitude law. Replaced as the brief requires.
+
+### Measured results (before -> after)
+
+Tool: `cs80_oe2_stereo_chorus_tests` and a scratch harness that runs the 6719ce4
+`BbdChorus` against the same truth. Steady tones, 1 s after 1 s settling, internal 96 kHz,
+CHORUS on, DEPTH 0; wet = output minus dry; truth = `NonidealChannel` staircase x
+`branchTransfer`, trimmed at 1 kHz.
+
+| Wet transfer versus truth | Before (6719ce4) | After |
+| --- | --- | --- |
+| 50 Hz | -0.138 dB, +0.004 rad | -0.046 dB, +0.001 rad |
+| 2 kHz | -0.132 dB, +0.124 rad | -0.056 dB, +0.026 rad |
+| 5 kHz | -0.059 dB, +0.314 rad | -0.075 dB, +0.066 rad |
+| 10 kHz | +0.635 dB, +0.602 rad | +0.113 dB, +0.098 rad |
+| Wet noise with no input (L / R rms) | 0 / 0 | 4.13e-5 / 4.13e-5 (truth 4.2e-5), L/R correlation -0.001 |
+| Left and right wet | identical | separate chains; identical transfer, independent noise |
+| Clock line at 1.536 MHz internal | none | 1.02e-4 (truth 1.05e-4); none representable at 88.2/96 kHz |
+| TREMOLO | generic whole-signal law | OE1 law; worst sample error versus truth 0.0040 (L), 0.0042 (R) at 0.5 input amplitude |
+
+### Tests and mutation checks
+
+`cs80_oe2_stereo_chorus_tests` (97 checks): zero-option `NonidealChannel` equals `Channel`;
+lossy chain DC (packet plus sensed residue); left and right wet transfer against their own
+truth branch at 50 Hz-10 kHz and 88.2/96/192 kHz; noise level, determinism, L/R
+independence and reset; feedthrough line where representable and no alias at 96 kHz;
+tremolo trajectories against the OE1 truth; DO2/DO1 ratio.
+
+`cs80_bbd_chorus_tests` was updated for the intentional changes (literal 256.5-period hold,
+512 x 5e-4 loss, 1.1 k loading and 1 kHz trim in its analytic chain; the clock oracle now
+uses DO1 + DO2 and a window spanning a DO1 peak; "tremolo equals the legacy law" became
+"tremolo is not the legacy law"; "reset empties the chain" now requires equality with a
+fresh instance). Its tolerances are unchanged. In `OutputTapIntegrationTests` the silent
+readout fixture also turns the chorus off (its premise is a silent input).
+
+| Mutant | Result |
+| --- | --- |
+| C1 charge-transfer loss removed | detected, 12 failures |
+| C2 output-pair hold centre ignored (256 periods) | detected, 16 failures |
+| C3 BBD noise removed | detected, 4 failures |
+| C4 both chains draw from one noise stream | survived: consecutive draws are still independent, so this was not a behaviour change |
+| C4b both chains receive the same noise sample | detected, 1 failure |
+| C5 clock feedthrough removed | detected, 1 failure |
+| C6 clock feedthrough not band-limited | detected, 6 failures |
+| C7 tremolo VCAs static | detected, 2 failures |
+| C8 right VCAs in phase with left | detected, 1 failure |
+| C9 CHORUS clock from DO1 only (`cs80_bbd_chorus_tests`) | detected, 6 failures |
+| C10 recombination loading of IC5/IC6 removed | detected, 4 failures |
+| C11 VCA trim normalization removed | detected, 32 failures |
+| C12 DO2 removed | detected, 3 failures |
+
+### Intentional circuit-engine sound changes
+
+- CHORUS sweep gains a slow DO2 component at 0.1 x SPEED; delay centre moves by half a
+  clock period (4.7 us); wet path slightly darker above 10 kHz (loss and 1.1 k loading)
+  and trimmed to unit gain at 1 kHz (+0.1 dB).
+- TREMOLO is no longer the generic whole-signal law: the wet returns are modulated in
+  left/right antiphase at two rates over the kept dry path.
+- With the effect on, each side carries independent BBD hiss (about -79 dB below a
+  0.5-peak sine).
+
+### HARDWARE_COVERAGE.md entries (dated 2026-10-31)
+
+- Row "15 Tremolo versus chorus": circuit engine TREMOLO is the OE1 four-VCA law (declared
+  phases and linear index, documented DO1/DO2 ratio and O1..O4 proportions); CHORUS clock
+  follows DO1 + DO2. Open: OE1 oscillator waveforms, LO phase network, IG00151 control law.
+- Row "LEFT and RIGHT outputs" / table row "Chorus/tremolo circuitry": circuit engine OE2
+  has true left (upper chain, IC5, O1/O2) and right (lower chain, IC6, O3/O4) wet paths
+  with independent noise, per-transfer loss, output-pair hold and band-limited clock
+  feedthrough, tested against the NonidealChannel/Oe2Filters truth. Open: MN3001 loss,
+  noise and pedestal data; OE1 summing gains and polarity.
+
+### New parameters
+
+None.
+
+### Open items
+
+- The host SPEED range (0.05-8 Hz) cannot reach the documented 17.9 Hz DO1 maximum;
+  extending it would need a new parameter and a PURE CS-80 decision.
+- Not modelled: MN3001 bias/aperture/leakage and distortion, IG00151 exponential input and
+  CV feedthrough, OE1 FET switching transients, VCA output capacitors and OE1 input
+  coupling, the 0.1 uF at the BA617 node, chain-to-chain tolerances.
