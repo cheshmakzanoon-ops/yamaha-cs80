@@ -4150,9 +4150,9 @@ public:
         row(256.0f, "C  /  V", "VELOCITY DOWN / UP", juce::String(juce::roundToInt(velocity * 100.0f)) + " %");
         row(284.0f, "CHANNEL", "MIDI CHANNEL OF THE NOTES", "1");
         text(g, "Text fields keep their keys; Ctrl and Cmd chords stay shortcuts.", { 0.0f, 318.0f, kDesignW, 20.0f }, 12.5f, false,
-             axisInk(), Just::centredLeft);
+             panelInk(), Just::centredLeft);
         text(g, "Notes go through the on-screen keyboard, so they light its keys.", { 0.0f, 340.0f, kDesignW, 20.0f }, 12.5f, false,
-             axisInk(), Just::centredLeft);
+             panelInk(), Just::centredLeft);
     }
 
 private:
@@ -4313,7 +4313,7 @@ public:
                  { 8.0f, 90.0f, kDesignW - 16.0f, 24.0f }, 12.5f, false, panelInk(), Just::centredLeft);
         etchLine(g, 0.0f, 346.0f, kDesignW, 346.0f, 0.4f);
         text(g, "Saved with the session, not with presets. Bank select, data entry, RPN/NRPN and channel-mode controllers are never learned.",
-             { 0.0f, 352.0f, kDesignW, 22.0f }, 12.5f, false, axisInk(), Just::centredLeft);
+             { 0.0f, 352.0f, kDesignW, 22.0f }, 12.5f, false, panelInk(), Just::centredLeft);
     }
 
 private:

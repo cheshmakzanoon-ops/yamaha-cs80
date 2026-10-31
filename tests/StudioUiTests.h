@@ -7,6 +7,7 @@
 // next to the other snapshots for visual review.
 
 #include "plugin/AdvancedPanel.h"
+#include "plugin/EvidenceRegister.h"
 #include "plugin/HardwareKeyboard.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
@@ -19,6 +20,7 @@
 #include <functional>
 #include <set>
 #include <thread>
+#include <typeinfo>
 #include <vector>
 
 namespace cs80::tests::studio
@@ -877,6 +879,340 @@ inline void testLearningTools(const Check& check, const Flush& flush, const juce
     }
     else
         check(false, "the toolbar can show the evidence register");
+}
+
+// ---- Keyboard tab order ------------------------------------------------------------------------------------
+inline std::vector<juce::Component*> tabOrder(juce::Component& container)
+{
+    juce::KeyboardFocusTraverser traverser;
+    return traverser.getAllComponents(&container);
+}
+
+inline juce::String accessibleName(juce::Component& c)
+{
+    if (c.getTitle().isNotEmpty())
+        return c.getTitle();
+    if (auto* b = dynamic_cast<juce::Button*>(&c))
+        return b->getButtonText();
+    return {};
+}
+
+inline void testTabOrder(const Check& check, const Flush& flush)
+{
+    Cs80AudioProcessor processor;
+    processor.prepareToPlay(48000.0, 128);
+    Cs80AudioProcessorEditor editor(processor);
+    editor.setSize(1120, 700);
+    editor.setVisible(true);
+    flush(80);
+    auto* panel = editor.getChildComponent(0);
+    check(panel != nullptr && panel->isKeyboardFocusContainer(), "the instrument panel is a keyboard focus container");
+    if (panel == nullptr)
+        return;
+    const auto order = tabOrder(*panel);
+    const char* const toolbarIds[] = { "toolbar_previous", "toolbar_program", "toolbar_next", "toolbar_library", "toolbar_compare_a",
+                                       "toolbar_compare_b", "toolbar_undo", "toolbar_redo", "toolbar_engine_circuit", "toolbar_engine_legacy",
+                                       "toolbar_pure_cs80", "toolbar_studio", "toolbar_menu" };
+    // Disabled keys (undo/redo with an empty history) are skipped by the traverser, so compare the enabled ones.
+    std::vector<juce::String> expected, actual;
+    for (const char* id : toolbarIds)
+        if (auto* key = findById(*panel, id); key != nullptr && key->isEnabled())
+            expected.push_back(id);
+    for (size_t i = 0; i < order.size() && actual.size() < expected.size(); ++i)
+        actual.push_back(order[i]->getComponentID());
+    check(! expected.empty() && actual == expected, "Tab starts in the toolbar and walks its keys left to right");
+    bool named = true, unique = true, noHiddenCluster = true;
+    std::set<juce::Component*> seen;
+    const juce::StringArray replaced { "Previous preset", "Next preset", "Open preset library", "Save a user preset",
+                                       "Load the initial patch", "Show advanced controls", "Program display" };
+    for (auto* c : order)
+    {
+        if (accessibleName(*c).isEmpty() && dynamic_cast<juce::Slider*>(c) == nullptr)
+        {
+            named = false;
+            std::printf("  unnamed focus stop: %s\n", typeid(*c).name());
+        }
+        if (auto* slider = dynamic_cast<juce::Slider*>(c); slider != nullptr && slider->getTitle().isEmpty())
+            named = false;
+        unique = unique && seen.insert(c).second;
+        // The replaced cluster is hidden; only the toolbar's own program display may carry that name.
+        noHiddenCluster = noHiddenCluster && (! replaced.contains(c->getTitle()) || c->getComponentID() == "toolbar_program");
+    }
+    check(named, "every focus stop on the panel has an accessible name");
+    check(unique && noHiddenCluster, "no focus stop repeats and the replaced toolbar cluster is out of the order");
+
+    // The Studio view: its five tabs first, in order, then the sub-page keys, CLOSE, then the open page.
+    editor.showAdvancedPanel(true);
+    auto* studio = studioOf(editor);
+    if (studio != nullptr)
+    {
+        studio->showTab(cs80::ui::StudioTab::modulation, 0);
+        flush(40);
+        const auto studioOrder = tabOrder(*studio);
+        bool tabsFirst = studioOrder.size() > 8;
+        for (int i = 0; tabsFirst && i < (int) cs80::ui::StudioTab::count; ++i)
+            tabsFirst = accessibleName(*studioOrder[(size_t) i]) == cs80::ui::StudioView::tabName((cs80::ui::StudioTab) i) + " tab";
+        check(tabsFirst, "Studio Tab order starts with its five tabs in order");
+        check(studioOrder.size() > 8 && accessibleName(*studioOrder[5]).startsWith("MODULATION sub-page")
+                  && accessibleName(*studioOrder[6]).startsWith("MODULATION sub-page")
+                  && accessibleName(*studioOrder[7]) == "Close the Studio view",
+              "then the sub-page keys and CLOSE");
+        bool pageAfter = studioOrder.size() > 8;
+        for (size_t i = 8; i < studioOrder.size(); ++i)
+            pageAfter = pageAfter && studio->getSubPage(cs80::ui::StudioTab::modulation, 0)->isParentOf(studioOrder[i]);
+        check(pageAfter, "then only the controls of the open page");
+        bool studioNamed = true;
+        for (int t = 0; t < (int) cs80::ui::StudioTab::count; ++t)
+            for (int s = 0; s < studio->getNumSubPages((cs80::ui::StudioTab) t); ++s)
+            {
+                studio->showTab((cs80::ui::StudioTab) t, s);
+                flush(20);
+                for (auto* c : tabOrder(*studio))
+                    if (accessibleName(*c).isEmpty())
+                    {
+                        studioNamed = false;
+                        std::printf("  unnamed Studio focus stop on tab %d: %s\n", t, typeid(*c).name());
+                    }
+            }
+        check(studioNamed, "every Studio focus stop has an accessible name");
+    }
+    else
+        check(false, "Studio view for the tab-order test");
+    editor.showAdvancedPanel(false);
+    flush(30);
+
+    // The voice monitor and the tour are their own focus containers.
+    if (auto* toolbar = findFirst<cs80::ui::StudioToolbar>(editor))
+    {
+        toolbar->getActions().toggleScope();
+        flush(30);
+        if (auto* scope = findById(editor, "voice_monitor"))
+        {
+            const auto scopeOrder = tabOrder(*scope);
+            check(scopeOrder.size() == 3 && accessibleName(*scopeOrder[0]) == "Monitor channel I"
+                      && accessibleName(*scopeOrder[2]) == "Close the voice monitor",
+                  "voice monitor order: channel I, channel II, CLOSE");
+        }
+        toolbar->getActions().toggleScope();
+        toolbar->getActions().startTour();
+        flush(30);
+        if (auto* tour = findById(editor, "guided_tour"))
+        {
+            const auto tourOrder = tabOrder(*tour);
+            check(tourOrder.size() >= 2 && tourOrder[0]->getComponentID() == "tour_next", "the tour focuses NEXT first");
+            if (auto* t = dynamic_cast<cs80::ui::TourOverlay*>(tour))
+                t->dismiss();
+        }
+        flush(30);
+    }
+}
+
+// ---- Minimum target size: WCAG 2.2 success criterion 2.5.8 at the 1120 x 700 minimum -------------------------
+struct HitTarget
+{
+    juce::Component* component;
+    juce::Rectangle<float> bounds;
+    bool owned;   // part of the modern layer this workstream owns
+};
+
+inline bool isModernLayer(juce::Component* c)
+{
+    for (auto* p = c; p != nullptr; p = p->getParentComponent())
+        if (dynamic_cast<cs80::ui::StudioToolbar*>(p) != nullptr || dynamic_cast<cs80::ui::StudioView*>(p) != nullptr
+            || dynamic_cast<cs80::ui::ScopeDrawer*>(p) != nullptr || dynamic_cast<cs80::ui::ControllersStrip*>(p) != nullptr
+            || dynamic_cast<cs80::ui::TourOverlay*>(p) != nullptr)
+            return true;
+    return false;
+}
+
+inline void collectTargets(juce::Component& root, juce::Component& parent, std::vector<HitTarget>& out)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (! child->isVisible())
+            continue;
+        // The piano keys are exempt: their size and spacing are the instrument (WCAG 2.5.8 "essential").
+        if (dynamic_cast<juce::MidiKeyboardComponent*>(child) != nullptr)
+            continue;
+        const bool interactive = (dynamic_cast<juce::Button*>(child) != nullptr && child->isEnabled())
+                              || dynamic_cast<juce::Slider*>(child) != nullptr || dynamic_cast<juce::ComboBox*>(child) != nullptr
+                              || dynamic_cast<juce::TextEditor*>(child) != nullptr || dynamic_cast<cs80::ui::RibbonStrip*>(child) != nullptr
+                              || dynamic_cast<cs80::ui::PerformanceWheel*>(child) != nullptr;
+        if (interactive)
+        {
+            out.push_back({ child, root.getLocalArea(child, child->getLocalBounds()).toFloat(), isModernLayer(child) });
+            continue;
+        }
+        collectTargets(root, *child, out);
+    }
+}
+
+inline bool circleHitsRect(juce::Point<float> c, float radius, juce::Rectangle<float> r)
+{
+    const float x = juce::jlimit(r.getX(), r.getRight(), c.x), y = juce::jlimit(r.getY(), r.getBottom(), c.y);
+    return c.getDistanceFrom({ x, y }) < radius;
+}
+
+// Returns the failing targets: smaller than 24 x 24 px and not rescued by the spacing exception (a 24 px circle on
+// the target's centre must hit no other target and no other undersized target's circle).
+inline std::vector<const HitTarget*> undersizedTargets(const std::vector<HitTarget>& targets)
+{
+    constexpr float minimum = 24.0f, radius = 12.0f;
+    auto small = [](const HitTarget& t) { return t.bounds.getWidth() < minimum - 0.01f || t.bounds.getHeight() < minimum - 0.01f; };
+    std::vector<const HitTarget*> failing;
+    for (const auto& a : targets)
+    {
+        if (! small(a))
+            continue;
+        bool spaced = true;
+        for (const auto& b : targets)
+        {
+            if (&a == &b || b.component->isParentOf(a.component) || a.component->isParentOf(b.component))
+                continue;
+            if (circleHitsRect(a.bounds.getCentre(), radius, b.bounds)
+                || (small(b) && a.bounds.getCentre().getDistanceFrom(b.bounds.getCentre()) < 2.0f * radius))
+            {
+                spaced = false;
+                break;
+            }
+        }
+        if (! spaced)
+            failing.push_back(&a);
+    }
+    return failing;
+}
+
+inline juce::String describe(const HitTarget& t)
+{
+    const auto name = accessibleName(*t.component).isNotEmpty() ? accessibleName(*t.component) : t.component->getComponentID();
+    return name + " (" + juce::String(t.bounds.getWidth(), 1) + " x " + juce::String(t.bounds.getHeight(), 1) + " px)";
+}
+
+// The modern layer must pass outright. The rest of the editor is being re-laid out by the panel workstream: its
+// results are printed as an audit (set kStrictForWholeEditor once that re-layout lands).
+constexpr bool kStrictForWholeEditor = false;
+
+inline void testHitTargets(const Check& check, const Flush& flush)
+{
+    Cs80AudioProcessor processor;
+    processor.prepareToPlay(48000.0, 128);
+    processor.getMidiLearn().assign(74, processor.hostParameterIndex(cs80::chParam(0, cs80::CP_lpfCutoff)));
+    Cs80AudioProcessorEditor editor(processor);
+    editor.setSize(1120, 700);
+    editor.setVisible(true);
+    flush(80);
+    int ownedChecked = 0, ownedFailing = 0, panelFailing = 0;
+    auto audit = [&](juce::Component& root, const char* where)
+    {
+        std::vector<HitTarget> targets;
+        collectTargets(root, root, targets);
+        for (const auto* t : undersizedTargets(targets))
+        {
+            if (t->owned)
+            {
+                ++ownedFailing;
+                std::printf("  undersized modern-layer target in %s: %s\n", where, describe(*t).toRawUTF8());
+            }
+            else
+            {
+                ++panelFailing;
+                std::printf("  hit-target audit (%s): %s\n", where, describe(*t).toRawUTF8());
+            }
+        }
+        for (const auto& t : targets)
+            ownedChecked += t.owned ? 1 : 0;
+    };
+    audit(editor, "main view");
+    editor.showAdvancedPanel(true);
+    if (auto* studio = studioOf(editor))
+        for (int t = 0; t < (int) cs80::ui::StudioTab::count; ++t)
+            for (int s = 0; s < studio->getNumSubPages((cs80::ui::StudioTab) t); ++s)
+            {
+                studio->showTab((cs80::ui::StudioTab) t, s);
+                flush(40);
+                audit(*studio, ("Studio " + cs80::ui::StudioView::tabName((cs80::ui::StudioTab) t)).toRawUTF8());
+            }
+    editor.showAdvancedPanel(false);
+    flush(30);
+    if (auto* toolbar = findFirst<cs80::ui::StudioToolbar>(editor))
+    {
+        toolbar->getActions().toggleScope();
+        toolbar->getActions().toggleControllers();
+        flush(150);
+        if (auto* scope = findById(editor, "voice_monitor")) audit(*scope, "voice monitor");
+        if (auto* strip = findById(editor, "controllers_strip")) audit(*strip, "controllers strip");
+        toolbar->getActions().toggleScope();
+        toolbar->getActions().toggleControllers();
+        toolbar->getActions().startTour();
+        flush(40);
+        if (auto* tour = findById(editor, "guided_tour"))
+        {
+            audit(*tour, "tour");
+            if (auto* t = dynamic_cast<cs80::ui::TourOverlay*>(tour)) t->dismiss();
+        }
+    }
+    std::printf("hit targets at 1120 x 700: %d modern-layer targets checked, %d undersized; %d panel targets in the audit list\n",
+                ownedChecked, ownedFailing, panelFailing);
+    check(ownedChecked > 120, "the hit-target scan reaches the toolbar, every Studio page, the drawers and the tour");
+    check(ownedFailing == 0, "every modern-layer control is at least 24 x 24 px (or spaced per WCAG 2.5.8) at 1120 x 700");
+    if (kStrictForWholeEditor)
+        check(panelFailing == 0, "every editor control meets the 24 px target size at 1120 x 700");
+}
+
+// ---- Contrast of the modern layer's text (WCAG 2.2 1.4.3, 4.5:1 for text under 18.66 px bold) ---------------
+inline float luminance(juce::Colour c)
+{
+    auto lin = [](float v) { return v <= 0.03928f ? v / 12.92f : std::pow((v + 0.055f) / 1.055f, 2.4f); };
+    return 0.2126f * lin(c.getFloatRed()) + 0.7152f * lin(c.getFloatGreen()) + 0.0722f * lin(c.getFloatBlue());
+}
+
+inline float contrast(juce::Colour a, juce::Colour b)
+{
+    const float la = luminance(a), lb = luminance(b);
+    return (juce::jmax(la, lb) + 0.05f) / (juce::jmin(la, lb) + 0.05f);
+}
+
+inline void testContrast(const Check& check)
+{
+    using namespace cs80::ui;
+    const auto keyFace = juce::Colour(0xff5d5850).interpolatedWith(juce::Colour(0xff2a2824), 0.5f);
+    const auto litFace = juce::Colour(0xffe2b25a).interpolatedWith(juce::Colour(0xff9c6c22), 0.5f);
+    const auto tipPlate = juce::Colour(0xff35312a).interpolatedWith(juce::Colour(0xff15130f), 0.5f);
+    const auto cardPlate = juce::Colour(0xff2d2a25).interpolatedWith(juce::Colour(0xff161411), 0.5f);
+    const auto panel = panelFaceAt(0.5f, 0.0f, 1.0f);
+    struct Pair { const char* what; juce::Colour ink, ground; };
+    const Pair pairs[] = {
+        { "toolbar key legend", juce::Colour(0xffeee6cc), keyFace },
+        { "lit toolbar key legend", juce::Colour(0xff241703), litFace },
+        { "masked ENGINE legend", keyFace.interpolatedWith(juce::Colour(0xffeee6cc), 0.74f), keyFace },
+        { "program name", juce::Colour(0xffffcf70), juce::Colour(0xff160c05) },
+        { "tooltip body", ivory, tipPlate },
+        { "tooltip heading", gold, tipPlate },
+        { "tooltip hint", ivoryDim, tipPlate },
+        { "tooltip manual page", gold, tipPlate },
+        { "tooltip circuit notes", tipPlate.interpolatedWith(ivory, 0.86f), tipPlate },
+        { "tour card text", cardPlate.interpolatedWith(ivory, 0.9f), cardPlate },
+        { "value editor", amberBright, juce::Colour(0xff0d0b08) },
+        { "Studio running text", ivoryDim.interpolatedWith(ivory, 0.5f), panel },
+        { "Studio legend", ivory, panel },
+    };
+    for (const auto& p : pairs)
+    {
+        const float ratio = contrast(p.ink, p.ground);
+        if (ratio < 4.5f)
+            std::printf("  contrast %.2f:1 for %s\n", (double) ratio, p.what);
+        check(ratio >= 4.5f, "modern-layer text meets 4.5:1");
+    }
+    // Evidence chips: the brightened basis colour on its 20 % tint over the panel.
+    for (auto basis : { cs80::evidence::Basis::sourceDerived, cs80::evidence::Basis::sourceTopologyInferredLaw,
+                        cs80::evidence::Basis::engineeringInferred, cs80::evidence::Basis::modernExtension })
+    {
+        const juce::Colour colour = basis == cs80::evidence::Basis::sourceDerived ? juce::Colour(0xff4fbf6e)
+                                  : basis == cs80::evidence::Basis::sourceTopologyInferredLaw ? juce::Colour(0xffe2b04a)
+                                  : basis == cs80::evidence::Basis::engineeringInferred ? juce::Colour(0xffc9bfae) : juce::Colour(0xff6cc6e6);
+        const float ratio = contrast(colour.brighter(0.25f), panel.interpolatedWith(colour, 0.2f));
+        check(ratio >= 4.5f, "evidence chip text meets 4.5:1");
+    }
 }
 
 } // namespace cs80::tests::studio

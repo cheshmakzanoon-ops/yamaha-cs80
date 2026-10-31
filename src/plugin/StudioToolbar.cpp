@@ -61,7 +61,7 @@ public:
         const bool on = getToggleState();
         const bool enabled = isEnabled();
         juce::Colour top(0xff5d5850), bottom(0xff2a2824);
-        if (on) { top = juce::Colour(0xffb88a3a); bottom = juce::Colour(0xff5c3c10); }
+        if (on) { top = juce::Colour(0xffe2b25a); bottom = juce::Colour(0xff9c6c22); }
         if (armed) { top = juce::Colour(0xffb0452f); bottom = juce::Colour(0xff5e1e12); }
         if (hovered && enabled) { top = top.brighter(0.14f); bottom = bottom.brighter(0.10f); }
         if (down) { std::swap(top, bottom); r = r.translated(0.0f, 1.0f); }
@@ -81,7 +81,7 @@ public:
                        : armed ? juce::Colour(0xffffe6d6)
                        : on ? juce::Colour(0xff241703)
                        : juce::Colour(0xffeee6cc);
-        const float alpha = masked ? 0.55f : 1.0f;
+        const float alpha = masked ? 0.74f : 1.0f;
         auto area = r.reduced(4.0f, 1.0f);
         if (glyph == Glyph::none || armed)
         {
@@ -478,7 +478,7 @@ void StudioToolbar::paint(juce::Graphics& g)
     // Etched dividers between the groups.
     const float sx = r.getWidth() / kDesignW;
     g.setColour(juce::Colour(0xffcdb878).withAlpha(0.28f));
-    for (float x : { 410.0f, 552.0f, 678.0f })
+    for (float x : { 395.0f, 553.0f, 679.0f })
         g.fillRect(x * sx, r.getHeight() * 0.22f, 1.0f, r.getHeight() * 0.56f);
 }
 
@@ -489,20 +489,21 @@ void StudioToolbar::resized()
     {
         c.setBounds(juce::roundToInt(x * sx), juce::roundToInt(4.0f * sy), juce::roundToInt(w * sx), juce::roundToInt(36.0f * sy));
     };
-    // Design layout, 864 x 44: program group | compare and history | engine | studio and menu.
-    place(*prev, 6.0f, 34.0f);
-    place(*display, 44.0f, 248.0f);
-    place(*next, 296.0f, 34.0f);
-    place(*library, 334.0f, 72.0f);
-    place(*compareA, 416.0f, 32.0f);
-    place(*compareB, 448.0f, 32.0f);
-    place(*undoKey, 484.0f, 32.0f);
-    place(*redoKey, 518.0f, 32.0f);
+    // Design layout, 864 x 44: program group | compare and history | engine | studio and menu. No key is narrower
+    // than 35 design px, so every key is at least 24 x 24 px at the 1120 x 700 minimum.
+    place(*prev, 6.0f, 35.0f);
+    place(*display, 45.0f, 232.0f);
+    place(*next, 281.0f, 35.0f);
+    place(*library, 320.0f, 68.0f);
+    place(*compareA, 402.0f, 35.0f);
+    place(*compareB, 437.0f, 35.0f);
+    place(*undoKey, 476.0f, 35.0f);
+    place(*redoKey, 513.0f, 35.0f);
     place(*circuitKey, 558.0f, 60.0f);
     place(*legacyKey, 618.0f, 56.0f);
     place(*pureKey, 684.0f, 64.0f);
     place(*studioKey, 752.0f, 68.0f);
-    place(*menuKey, 824.0f, 34.0f);
+    place(*menuKey, 824.0f, 35.0f);
 }
 
 // ---------------------------------------------------------------------------

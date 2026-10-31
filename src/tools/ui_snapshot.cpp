@@ -3490,6 +3490,10 @@ int main(int argc, char** argv)
     cs80::tests::studio::testUndoRedo(check, flushGui);
     std::puts("UI SMOKE PHASE: studio learning tools");
     cs80::tests::studio::testLearningTools(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio tab order, hit targets and contrast");
+    cs80::tests::studio::testTabOrder(check, flushGui);
+    cs80::tests::studio::testHitTargets(check, flushGui);
+    cs80::tests::studio::testContrast(check);
     // [ws8-studio] end
 
     if (failures == 0)
