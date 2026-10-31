@@ -296,8 +296,11 @@ struct PipelineOracle
             if (isolated)
             {
                 // Closed-form response since the last target change, not the
-                // production recurrence. Exactly 12ms is one log-R time constant.
-                opticalLog = targetLog + (startLog-targetLog)*std::exp(-++opticalSamples/(0.012*rate));
+                // production recurrence. ws4 Step 4 (intentional circuit-engine change):
+                // declared asymmetric LDR, 12 ms while resistance falls (brightening) and
+                // 60 ms while it rises (darkening), each one log-R time constant.
+                const double tau = targetLog < startLog ? 0.012 : 0.060;
+                opticalLog = targetLog + (startLog-targetLog)*std::exp(-++opticalSamples/(tau*rate));
                 const auto nodes = circuit.tick(sample, rate, std::exp(opticalLog));
                 sample = lerp(static_cast<float>(nodes[0]), static_cast<float>(nodes[1]), mix);
             }
@@ -565,12 +568,14 @@ void testPedalTimeConstantAndPartition()
     {
         Engine e; auto p = sinePatch(); e.setParams(p); e.prepare(rate);
         e.setExpression(-1.0f); // finite physical travel clamps to heel
-        const int frames = static_cast<int>(std::round(rate*0.012));
+        // ws4 Step 4 (intentional change): toe -> heel darkens the cell, so the declared
+        // 60 ms decay time constant applies (12 ms is the brightening constant).
+        const int frames = static_cast<int>(std::round(rate*0.060));
         render(e, frames);
         const double time = frames/rate;
-        const double expectedLog = std::log(1e6)+(std::log(2000.0)-std::log(1e6))*std::exp(-time/0.012);
+        const double expectedLog = std::log(1e6)+(std::log(2000.0)-std::log(1e6))*std::exp(-time/0.060);
         near(std::log(e.getPraWahState(0).opticalOhms), expectedLog, 2e-11,
-             "12ms optical time constant is physical-time invariant even while dry and silent");
+             "60ms darkening time constant is physical-time invariant even while dry and silent");
         near(e.getPraWahState(0).targetOhms, 1e6, 1e-8, "negative expression clamps to heel optical target");
         check(zeroCaps(e.getPraWahState(0)), "zero audio remains exactly zero while optical state moves");
         e.setExpression(2.0f); render(e, 1);

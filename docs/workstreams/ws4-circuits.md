@@ -368,3 +368,100 @@ None.
 - Not modelled: MN3001 bias/aperture/leakage and distortion, IG00151 exponential input and
   CV feedthrough, OE1 FET switching transients, VCA output capacitors and OE1 input
   coupling, the 0.1 uF at the BA617 node, chain-to-chain tolerances.
+
+## Step 4: PRA wah and EXP pedal (optical cell)
+
+**State: done for the PRA wah photoresistor; the EXP volume optical network is an open
+integration hook (see Open items).**
+
+### What was implemented, and where
+
+- `src/core/PraWahCircuit.h`: `Profile::opticalDecaySeconds` (new, 60 ms) beside the
+  existing `opticalTauSeconds` (12 ms, now the brightening constant). Each sample the
+  log-resistance one-pole uses the attack coefficient when its target resistance is below
+  the current one (cell brightening) and the decay coefficient otherwise. Both
+  coefficients are exact per-sample exponentials, computed after validation, so the
+  atomic-rejection contract holds. No Engine.cpp change: the engine already feeds the
+  pedal to both PRA channels every internal sample.
+- `src/reference/PraWah.h`: new `OpticalCell` ODE truth, dl/dt = (lt - l)/tau(direction)
+  in l = ln R, integrated with RK4 (`integrateOptical`).
+- Docs: [REALTIME_PRA_WAH_MODEL.md](../REALTIME_PRA_WAH_MODEL.md) optical row updated.
+
+### Law and evidence class
+
+| Law | Value | Evidence class |
+| --- | --- | --- |
+| PRA53 photoresistor in the wah network, EI-driven LED/optical path | resistance-controlled all-pass network | Source ([FOOT_CONTROL_EVIDENCE.md](../FOOT_CONTROL_EVIDENCE.md), [PRA_WAH_REFERENCE_DESIGN.md](../PRA_WAH_REFERENCE_DESIGN.md)) |
+| Heel/toe resistance and log taper | 1 MOhm / 2 kOhm, log interpolation | Existing declared profile, unchanged |
+| Optical dynamics in log R | 12 ms while R falls (brightening), 60 ms while R rises (darkening) | **Declared LDR model**: CdS cells respond faster to rising illumination than to its removal; the 12 ms keeps the prior timescale for the fast direction |
+
+Alternatives considered: the previous symmetric 12 ms one-pole; vactrol-class figures
+(turn-on of a few ms, turn-off of tens to hundreds of ms; from general device literature,
+not verified in this session and not CS-80 data), e.g. 3 ms / 35 ms or 12 ms / 250 ms; a
+level-dependent decay (slower towards dark); a two-stage (fast then slow) release as in
+optical compressor cells; an additional lamp thermal lag in the pedal. The 60 ms value and
+the 1:5 ratio are engineering choices for a playable sweep, not measurements.
+
+### Measured results (before -> after)
+
+Tool: `cs80_pra_optical_cell_tests`, internal 96 kHz, nominal profile, full-travel sine
+pedal sweep; resonance is the nominal middle-network value 1/(2 pi sqrt(t1 t2)).
+
+| Quantity | Before (symmetric 12 ms) | After (12 ms / 60 ms) |
+| --- | --- | --- |
+| 90 % traverse heel -> toe / toe -> heel | 27.6 ms / 27.6 ms | 27.6 ms / 138.2 ms |
+| 3 Hz sweep: cycle-mean log R bias versus the pedal | -0.000 Np | -0.726 Np (lags towards bright) |
+| 3 Hz sweep: resonance range | 334-3328 Hz | 422-3328 Hz |
+| Realtime versus ODE truth (3 Hz sweep) | not tested | 2.95e-4 Np worst (bound 2e-3) |
+
+At 8 Hz the asymmetric cell no longer reaches the dark end: the resonance stays within
+750-2948 Hz.
+
+### Tests and mutation checks
+
+`cs80_pra_optical_cell_tests` (35 checks): attack and decay step responses against the
+closed forms at 88.2/96/192 kHz; the traverse-time ratio; 0.5/3/8 Hz sweeps against the
+RK4 ODE truth (worst error and cycle mean); the asymmetric bias signature, with the
+symmetric cell as a control; Engine EXP-WAH optical trajectory (darken, then brighten
+half way) against the closed form, both channels identical.
+
+Existing tests updated for the intentional change: `PraWahCircuitTests` covers the ninth
+profile field in its nonfinite, boundary, rollback and sensitivity fixtures and checks the
+60 ms darkening constant (more checks, nothing removed); `PraWahIntegrationTests` uses the
+direction-dependent time constant in its closed-form optical oracle, and its toe -> heel
+time-constant check now expects the 60 ms decay.
+
+| Mutant | Result |
+| --- | --- |
+| P1 symmetric 12 ms cell restored | detected, 30 failures (and 61,490 in the Engine integration suite) |
+| P2 attack and decay directions swapped | detected, 33 failures |
+| P3 decay default drifts (30 ms) | detected, 24 failures |
+| P4 forward-Euler decay coefficient | detected, 5 failures |
+| P5 decay coefficient written before validation | detected by the rollback suite, 10,759 failures |
+
+### Intentional circuit-engine sound changes
+
+- EXP-WAH sweeps close (towards heel, darker) five times more slowly than they open, so
+  fast pedal work sits nearer the bright end and the wah "hangs" on heel-ward moves.
+
+### HARDWARE_COVERAGE.md entries (dated 2026-10-31)
+
+- Row "17 Foot pedal selector EXP / EXP-WAH": circuit engine PRA optical cell has a declared
+  asymmetric LDR law (12 ms brightening, 60 ms darkening in log R), tested against an ODE
+  truth. Open: measured optical resistance versus travel/EI, lamp and LDR dynamics.
+
+### New parameters
+
+None.
+
+### Open items
+
+- **EXP volume optical networks (I2 -> VL1, I3 -> VL2)** keep the immediate linear
+  expression gain. They are the same kind of LDR stage, but their steady-state law and
+  polarity are not recovered, and the gain is applied on the output line that ws2 is
+  reworking (controller smoothing for CC11). Integrator hook: run the expression value
+  through the same declared log-R cell (`PraWahCircuit`'s law, heel/toe endpoints mapped
+  back to 0..1) in the source policies before `smoothedVolume * 4 * expression`, after
+  ws2's CC11 smoother lands, then update the expression oracles in
+  `OutputTapIntegrationTests` and `PraWahIntegrationTests`.
+- FET switch transients, optical noise and temperature effects are not modelled.

@@ -238,6 +238,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_oe2_stereo_chorus_tests PRIVATE src tests)
     add_test(NAME cs80_oe2_stereo_chorus_tests COMMAND cs80_oe2_stereo_chorus_tests)
     set_tests_properties(cs80_oe2_stereo_chorus_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_pra_optical_cell_tests tests/PraOpticalCellTests.cpp)
+    target_link_libraries(cs80_pra_optical_cell_tests PRIVATE cs80_core)
+    add_test(NAME cs80_pra_optical_cell_tests COMMAND cs80_pra_optical_cell_tests)
+    set_tests_properties(cs80_pra_optical_cell_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
 
