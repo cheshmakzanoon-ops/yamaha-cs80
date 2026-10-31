@@ -449,6 +449,17 @@ inline constexpr ControlHelp kModernFamilyHelp[] = {
     { "macro", 0, "-", "EXT", Basis::modernExtension,
       "A performance macro: a patch-level offset that is neutral at centre.",
       "Software macro; masked in PURE CS-80." },
+    // Phase 6 (ws5-modern): mseg1_rate..mseg3_rate.
+    { "mseg", 0, "-", "EXT", Basis::modernExtension,
+      "A drawable multi-segment envelope; this sets how fast it runs or its tempo division.",
+      "Software modulation source routed through the matrix; masked in PURE CS-80." },
+    // Phase 6 (ws5-modern): mod1_amount..mod16_amount and the keyboard curves
+    // (mod_velocity_curve, mod_pressure_curve, mod_wheel_curve, mod_key_curve).
+    { "mod", 0, "-", "EXT", Basis::modernExtension,
+      "The modulation matrix: how strongly a slot's source moves its destination, or the "
+      "response curve a keyboard source passes through before it reaches the matrix.",
+      "Software routing; matrix curves shape matrix sources only, never the original "
+      "touch circuits. Masked in PURE CS-80." },
 };
 
 // Help for a core parameter id, falling back to its modern family ("lfo2_depth" -> lfo).
