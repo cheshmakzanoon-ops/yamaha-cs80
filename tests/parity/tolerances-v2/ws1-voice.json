@@ -52,6 +52,7 @@
       "description": "Plan step 2.5 (registered 2026-10-31 by the integrator before implementation). Circuit-engine per-card component tolerances and thermal drift (src/core/ToleranceModel.h). Declared distributions, not measured units: resistors 5 %, capacitors 10 %, truncated normal with sigma = tol / 2 and truncation at +/- tol.",
       "draw_sigma_rel": 0.1,
       "draw_fixture": "4096 cards from consecutive seeds: sample standard deviation of every resistor and capacitor draw within 10 % of its declared sigma (2.5 % R, 5 % C); sample mean within 3 standard errors of zero",
+      "draw_erratum": "Corrected before evaluation, limit unchanged: a normal truncated at +/- 2 sigma has a standard deviation of 0.8796 sigma, so the sample standard deviation is compared with 0.8796 x the declared sigma (the first text compared it with sigma itself, which the declared truncation can never meet).",
       "truncation_rel": 1e-12,
       "truncation_fixture": "no draw outside +/- its tolerance",
       "mapping_law_rel": 1e-6,
@@ -67,7 +68,8 @@
       "warmup_tau_rel": 0.05,
       "warmup_fixture": "the warm-up offset falls to 1/e of its start at the declared 120 s time constant",
       "worn_unit_max_cents": 1e-4,
-      "worn_unit_fixture": "the worn-unit drift model reproduces the historical 0.031 Hz sine law (drift x 0.9 semitones, phase offsets 0.73 per voice) sample for sample"
+      "worn_unit_fixture": "the worn-unit drift model reproduces the historical 0.031 Hz sine law (drift x 0.9 semitones, phase offsets 0.73 per voice) sample for sample",
+      "worn_unit_erratum": "Clarified before evaluation, limit unchanged: 'sample for sample' is checked against the Legacy policy's rendered oscillator frequency at the same settings (the historical law in the same float pipeline), because an analytic recomputation outside the engine cannot match float readouts to 1e-4 cents."
     }
   }
 }
