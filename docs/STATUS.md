@@ -7,8 +7,9 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-10-31, branch `claude/adoring-fermi-alhg4x` (the eight-workstream
-integration; see [workstreams/HANDOVER.md](workstreams/HANDOVER.md)).
+Last updated: 2026-10-31, continuation branch `codex/cs80-completion` from
+`main` `db24a47170610f81236e8829ef5536af69dfc94d`. Earlier eight-workstream
+history is in [workstreams/HANDOVER.md](workstreams/HANDOVER.md).
 
 ## Where to read what
 
@@ -134,16 +135,52 @@ was the one libm call worth replacing. The realistic route to the target is a
 structure-of-arrays, segment-cached fast path for the oscillator (compute the
 next branch event once per analytic segment rather than per sample); not done.
 
+
+## Continuation: oscillator segment cache
+
+Audio commit `6bf605592e162a1910c71f9cc5ebf7d014008527` caches the next
+physical branch event for an analytic oscillator segment. The state, frequency,
+threshold and idle-wake invalidations are explicit. Changing the search bracket
+introduces only bounded numerical roundoff; this is still an intentional V2
+change and has its own pin commit. The frozen legacy and V1 paths are unchanged.
+See [KERNEL_CACHE_QUALIFICATION.md](KERNEL_CACHE_QUALIFICATION.md).
+
+The independent continuation comparator measures maximum pin error
+`3.3957e-10 V`, event-time error `2.39e-15 s`, and 307 root searches over 8,192
+samples (`0.03748` per sample). All four cache-invalidity mutations are detected.
+The limits were committed in `3bef95d10646c3317e8126d2db938bb8cdaa4b32` before
+candidate evaluation.
+
+Three 1,024-callback benchmark rounds before and after, at 48 kHz / 256 frames,
+are archived under `docs/evidence/continuation-2026-10-31/cpu/`. They are fresh
+same-session measurements on this shared cloud host, not replacements for the
+older four-core scorecard above. Held-pair minimum-of-three median range is
+`0.61189–0.71425` before and `0.58808–0.82658` after; moving-controls
+`0.73268 → 0.78753`; quiet idle `0.13711 → 0.13328`. Some pairs improve by
+4–7 percent, while other rows regress under shared-host contention. These
+measurements do **not** establish the overall 0.15–0.20 target or idle ≤2%.
+The compiler, source hashes, complete row distributions, CPU time and deadline
+misses remain in the raw evidence. Subsequent kernel and engine-layout changes
+are qualified separately.
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
-  (`22d6a32`) and circuit-engine audio V2, now **`00ceccf`** (the eight-workstream
-  integration). Earlier V2 pins, for historical circuit-engine renders:
+  (`22d6a32`) and circuit-engine audio V2, now
+  **`6bf605592e162a1910c71f9cc5ebf7d014008527`** (oscillator analytic-segment
+  event cache). Pin commit `19555add94fec3ba5d70acefab45975a8ac4cc6d`.
+  Earlier V2 pins, for historical circuit-engine renders: `00ceccf` (integrated
+  model),
   `f6b126d` (Phase 1.1 filter), `131f72b` (Phase 1.3 envelopes), `228459c`
   (Phase 1.5 gain staging), `6e5892f` before that.
-- `scripts/check-compat-gates.sh --strict-v2` passes at the re-pin commit `ef9bc35`.
+- The original integrated strict V2 check passed at `ef9bc35`. The oscillator
+  continuation passed `scripts/check-compat-gates.sh --strict-v2`: legacy default,
+  legacy tails and V1 numerics remain byte-identical; V2 is byte-identical to
+  the published oscillator audio commit `6bf6055`. Complete repeated captures
+  were used after two interrupted output files; shared portions of those
+  interrupted files were also byte-identical, but were not counted as passes.
 
 ### CI on the integrated tree
 
