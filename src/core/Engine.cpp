@@ -368,6 +368,9 @@ void Engine::buildSettings()
     global.lfoDest[0] = (int) std::lround(p(P_lfo1Dest));
     global.lfoDest[1] = (int) std::lround(p(P_lfo2Dest));
     global.lfoDest[2] = (int) std::lround(p(P_lfo3Dest));
+    global.lfoWave[0] = std::clamp((int) std::lround(p(P_lfo1Wave)), 0, kLfoWaveCount - 1);
+    global.lfoWave[1] = std::clamp((int) std::lround(p(P_lfo2Wave)), 0, kLfoWaveCount - 1);
+    global.lfoWave[2] = std::clamp((int) std::lround(p(P_lfo3Wave)), 0, kLfoWaveCount - 1);
     global.fxType[0] = (int) std::lround(p(P_fx1Type));
     global.fxType[1] = (int) std::lround(p(P_fx2Type));
     global.fxType[2] = (int) std::lround(p(P_fx3Type));
@@ -400,6 +403,7 @@ void Engine::buildSettings()
         {
             global.lfoDepth[i] = 0.0f;
             global.lfoDest[i] = 0;
+            global.lfoWave[i] = 0;
             global.fxType[i] = 0;
             global.fxMix[i] = 0.0f;
         }
@@ -1152,7 +1156,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
-        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, 0, modRng);
+        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
 
     lfoPitch = lfoFilter = lfoAmp = 0.0f;
     lfoPwm = lfoPan = 0.0f;

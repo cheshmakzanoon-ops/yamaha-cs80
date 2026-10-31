@@ -159,6 +159,12 @@ enum : int
     // [ws4-circuits] append this workstream's core parameters below this line.
 
     // [ws5-modern] append this workstream's core parameters below this line.
+    // Modern modulation layer (IMPROVEMENT_PLAN Phase 6); inert under PURE CS-80.
+    // LFO 1..3 waveform: 0 sine (historical), 1 triangle, 2 saw up, 3 saw down,
+    // 4 square, 5 sample & hold, 6 smooth random (src/core/ModulationLfo.h).
+    P_lfo1Wave,
+    P_lfo2Wave,
+    P_lfo3Wave,
 
     // [ws6-library] append this workstream's core parameters below this line.
 
@@ -330,6 +336,9 @@ inline constexpr ParamDef kExtensionDefs[] = {
     // [ws4-circuits] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws5-modern] append this workstream's ParamDefs below this line (same order as the enum).
+    { "lfo1_wave", "LFO 1 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "lfo2_wave", "LFO 2 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
+    { "lfo3_wave", "LFO 3 WAVE", 0.0f, 6.0f, 0.0f, 1.0f, "", "MODULATION" },
 
     // [ws6-library] append this workstream's ParamDefs below this line (same order as the enum).
 

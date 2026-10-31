@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dsp.h"
+#include "ModulationLfo.h"
 #include "OriginalSubOscillator.h"
 #include "ExternalModulationInterpolator.h"
 #include "Params.h"
@@ -142,6 +143,7 @@ struct GlobalSettings
     float lfoRate[3] { 0.28f, 0.55f, 1.1f };
     float lfoDepth[3] { 0.0f, 0.0f, 0.0f };
     int lfoDest[3] { 0, 0, 0 };
+    int lfoWave[3] { 0, 0, 0 }; // modern layer; 0 = historical sine
     int fxType[3] { 0, 0, 0 };
     float fxMix[3] { 0.0f, 0.0f, 0.0f };
 
@@ -387,7 +389,8 @@ private:
     ExternalModulationInterpolator externalInput;
     float originalSubSpeedSmoothed = 4.2f;
     float originalSubSmoothing = 0.0f;
-    Lfo modLfos[3];
+    // Modern-layer LFOs: sine is the historical Lfo law; each has its own random stream.
+    ModulationLfo modLfos[3] { ModulationLfo(0x6c8e9cf5u), ModulationLfo(0x3b9e5d21u), ModulationLfo(0xa1c4f00du) };
     float subValue = 0.0f;
     float lfoValues[3] {};
     float lfoPitch = 0.0f, lfoFilter = 0.0f, lfoAmp = 0.0f, lfoPwm = 0.0f, lfoPan = 0.0f;
