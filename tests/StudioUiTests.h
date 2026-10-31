@@ -872,20 +872,18 @@ inline void testLearningTools(const Check& check, const Flush& flush, const juce
     if (auto* fader = knobFor(editor, cs80::chParam(0, cs80::CP_hpfCutoff)))
     {
         check(fader->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::F1Key)), "F1 is handled by a control");
-        // The card is launched and dismissed through posted messages; a loaded CI
-        // runner (macos-15-intel at fd0e851) can need longer than one 80 ms flush,
-        // so wait for it up to 2 s. The assertions are unchanged.
-        flush(80);
+        // CallOutBox::launchAsynchronously creates the card synchronously, then dismisses it
+        // on a 200 ms timer whenever the process is not in the foreground (JUCE's
+        // CallOutBoxCallback). On macOS CI the harness is never the active application
+        // (foreground=0), so a check after a flush raced that timer and failed on slow
+        // runners (macos-15-intel at fd0e851 and at ec72eed). Look for the card before any
+        // message is dispatched, and never hold its pointer across a flush.
         auto* card = findFirst<juce::CallOutBox>(editor);
-        for (int waited = 80; card == nullptr && waited < 2000; waited += 40)
-        {
-            flush(40);
-            card = findFirst<juce::CallOutBox>(editor);
-        }
         check(card != nullptr && card->isVisible(), "F1 opens the help card");
+        flush(80);
         save(editor, dir, "studio-help-card-1600x1000", check);
-        if (card != nullptr)
-            card->dismiss();
+        if (auto* open = findFirst<juce::CallOutBox>(editor))
+            open->dismiss();
         flush(250);
         for (int waited = 250; findFirst<juce::CallOutBox>(editor) != nullptr && waited < 2000; waited += 50)
             flush(50);
