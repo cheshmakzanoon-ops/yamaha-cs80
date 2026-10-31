@@ -3484,6 +3484,8 @@ int main(int argc, char** argv)
     cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio interaction");
     cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: studio MIDI learn");
+    cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
     // [ws8-studio] end
 
     if (failures == 0)

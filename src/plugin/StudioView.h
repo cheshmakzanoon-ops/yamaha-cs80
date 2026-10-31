@@ -20,6 +20,7 @@ class AdvTitleBlock;
 class AdvFooterStatus;
 class AdvInfoLayer;
 class StudioSubTab;
+class QwertyKeyboard;
 
 // The tabs of the Studio view, in display order.
 enum class StudioTab : int
@@ -72,6 +73,9 @@ public:
     juce::Component* getSubPage(StudioTab tab, int index) const noexcept;
     static juce::String tabName(StudioTab tab);
 
+    // The computer-keyboard player the KEYBOARD tab shows and switches (owned by the editor's mount).
+    void attachQwerty(QwertyKeyboard* keyboard) noexcept { qwerty = keyboard; }
+
     // Former Advanced page numbers, kept for hosts of the old API and its tests:
     // 0 LFOs and wheels, 1 sub oscillator / ring / chorus / analog voice, 2 FX and macros,
     // 3 the render policy (now in SETTINGS).
@@ -117,6 +121,7 @@ private:
     std::unique_ptr<AdvCloseButton> closeButton;
     std::unique_ptr<AdvInfoLayer> info;
     std::array<AdvancedPage*, 4> legacyPages {};   // former Advanced pages 1-4, for showPage()
+    QwertyKeyboard* qwerty = nullptr;
     StudioTab activeTab = StudioTab::modulation;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StudioView)

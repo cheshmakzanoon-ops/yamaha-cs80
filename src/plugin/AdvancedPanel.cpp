@@ -1,6 +1,7 @@
 #include "AdvancedPanel.h"
 
 #include "EvidenceRegister.h"
+#include "HardwareKeyboard.h"
 #include "PluginProcessor.h"
 #include "core/Dsp.h"
 
@@ -9,6 +10,7 @@
 #include <cmath>
 #include <complex>
 #include <functional>
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -3428,8 +3430,10 @@ public:
         {
             const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
             const float top = r.getY() + 46.0f;
-            const float chipW = juce::jmin(300.0f, w * 0.34f), nameW = juce::jmin(220.0f, w * 0.26f);
-            const float rowH = juce::jmin(54.0f, (r.getBottom() - 18.0f - top) / (float) juce::jmax(1, (int) subsystems.size()));
+            // A narrow card stacks each row: the name and its chip, then the circuit and legacy lines at full width.
+            const bool stacked = w < 640.0f;
+            const float chipW = stacked ? juce::jmin(190.0f, w * 0.44f) : juce::jmin(300.0f, w * 0.34f), nameW = juce::jmin(220.0f, w * 0.26f);
+            const float rowH = juce::jmin(stacked ? 92.0f : 54.0f, (r.getBottom() - 18.0f - top) / (float) juce::jmax(1, (int) subsystems.size()));
             float y = top;
             for (const char* name : subsystems)
             {
@@ -3438,6 +3442,16 @@ public:
                     continue;
                 if (y > top)
                     etchLine(g, x, y, x + w, y, 0.35f);
+                if (stacked)
+                {
+                    const float line = rowH / 3.2f;
+                    fitted(g, juce::String(row->subsystem).toUpperCase(), { x, y + 4.0f, w - chipW - 10.0f, line }, 13.0f, true, ivory);
+                    basisChip(g, { x + w - chipW, y + 4.0f + (line - 24.0f) * 0.5f, chipW, 24.0f }, row->basis, row->coverage);
+                    fitted(g, "CIRCUIT  " + circuitText(*row), { x, y + 4.0f + line, w, line }, 12.5f, false, ivory.withAlpha(0.92f));
+                    fitted(g, "LEGACY  " + juce::String(row->legacy), { x, y + 4.0f + line * 2.0f, w, line }, 12.5f, false, panelInk());
+                    y += rowH;
+                    continue;
+                }
                 const float textX = x + nameW, textW = w - nameW - chipW - 16.0f;
                 fitted(g, juce::String(row->subsystem).toUpperCase(), { x, y, nameW - 8.0f, rowH }, 13.0f, true, ivory);
                 fitted(g, "CIRCUIT  " + circuitText(*row), { textX, y + rowH * 0.06f, textW, rowH * 0.44f }, 12.5f, false, ivory.withAlpha(0.92f));
@@ -4025,6 +4039,348 @@ private:
 };
 
 // ---------------------------------------------------------------------------
+// Keyboard tab: the computer keyboard and the MIDI learn map
+// ---------------------------------------------------------------------------
+namespace
+{
+// A satin key with a jewel lamp that is not bound to a parameter (editor state, actions).
+class StudioKey final : public juce::Button
+{
+public:
+    StudioKey(const juce::String& text, const juce::String& title) : juce::Button(text)
+    {
+        setTitle(title);
+        setWantsKeyboardFocus(true);
+        setMouseClickGrabsKeyboardFocus(false);
+    }
+    void paintButton(juce::Graphics& g, bool hovered, bool down) override
+    {
+        const auto r = getLocalBounds().toFloat().reduced(1.0f);
+        drawSatinPlate(g, r, getToggleState(), down, hovered, true);
+        const float s = (float) getHeight() / 36.0f;
+        g.setFont(fnt(12.5f * s, true, 0.06f));
+        g.setColour(! isEnabled() ? ivoryDim : getToggleState() ? amberBright : ivory);
+        g.drawFittedText(getButtonText(), r.withTrimmedLeft(24.0f * s).reduced(6.0f * s, 0.0f).toNearestInt(), Just::centredLeft, 1, 0.85f);
+        if (hasKeyboardFocus(true))
+            drawFocusRing(g, r);
+    }
+};
+
+juce::String midiNoteName(int note)
+{
+    static const char* const names[] = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+    return juce::String(names[note % 12]) + juce::String(note / 12 - 1);
+}
+
+// The computer-keyboard panel: the switch, the key map with the notes it plays now, octave and velocity.
+class QwertyPanel final : public juce::Component, private juce::Timer
+{
+public:
+    static constexpr float kDesignW = 512.0f, kDesignH = 384.0f;
+
+    QwertyPanel(Cs80AudioProcessor& p, std::function<QwertyKeyboard*()> source) : proc(p), keyboard(std::move(source))
+    {
+        setTitle("Computer keyboard");
+        toggle.setComponentID("qwerty_enable");
+        toggle.setTooltip("Play notes from the computer keyboard: A W S E D F T G Y H U J K O L P ; are the keys from C to E; Z and X move "
+                          "an octave, C and V change the velocity. Text fields keep their keys, and Ctrl/Cmd chords stay shortcuts.");
+        toggle.onClick = [this]
+        {
+            const bool on = ! proc.getEditorState().qwertyEnabled.load();
+            proc.getEditorState().qwertyEnabled = on;
+            if (auto* q = keyboard ? keyboard() : nullptr)
+                q->setEnabled(on);
+            refresh();
+        };
+        addAndMakeVisible(toggle);
+        startTimerHz(15);
+        refresh();
+    }
+
+    void resized() override
+    {
+        const float s = (float) getWidth() / kDesignW;
+        toggle.setBounds(juce::Rectangle<float>(0.0f, 0.0f, 372.0f, 38.0f).transformedBy(juce::AffineTransform::scale(s)).toNearestInt());
+    }
+
+    void paint(juce::Graphics& g) override
+    {
+        const float s = (float) getWidth() / kDesignW;
+        g.addTransform(juce::AffineTransform::scale(s));
+        auto* q = keyboard ? keyboard() : nullptr;
+        const bool on = proc.getEditorState().qwertyEnabled.load();
+        const int base = q != nullptr ? q->getBaseNote() : 60;
+        const float velocity = q != nullptr ? q->getVelocity() : 0.8f;
+        // Two rows of keycaps: the black-key row above (W E T Y U O P), the white-key row below (A S D F G H J K L ;).
+        const float cap = 44.0f, gap = 6.0f, x0 = 4.0f, yWhite = 140.0f, yBlack = 82.0f;
+        const char* const white = "asdfghjkl;";
+        const int whiteOffsets[] = { 0, 2, 4, 5, 7, 9, 11, 12, 14, 16 };
+        const char* const black = "we tyu op";
+        const int blackOffsets[] = { 1, 3, -1, 6, 8, 10, -1, 13, 15 };
+        auto keycap = [&](Rect r, juce::juce_wchar letter, int offset, bool sharp)
+        {
+            const int note = base + offset;
+            const bool lit = on && note >= 0 && note <= 127 && proc.getKeyboardState().isNoteOn(1, note);
+            glassWell(g, r, 4.0f);
+            if (lit)
+            {
+                g.setColour(amber.withAlpha(0.35f));
+                g.fillRoundedRectangle(r.reduced(2.0f), 3.0f);
+            }
+            g.setColour(sharp ? juce::Colour(0xff0a0a0c).withAlpha(0.6f) : juce::Colours::white.withAlpha(0.04f));
+            g.fillRoundedRectangle(r.reduced(3.0f), 3.0f);
+            text(g, juce::String::charToString(letter).toUpperCase(), r.withTrimmedBottom(r.getHeight() * 0.45f), 15.0f, true,
+                 on ? ivory : ivoryDim, Just::centred);
+            text(g, midiNoteName(juce::jlimit(0, 127, note)), r.withTrimmedTop(r.getHeight() * 0.52f), 12.5f, false,
+                 lit ? amberBright : panelInk(), Just::centred);
+        };
+        for (int i = 0; i < 10; ++i)
+            keycap({ x0 + (float) i * (cap + gap), yWhite, cap, cap + 8.0f }, (juce::juce_wchar) white[i], whiteOffsets[i], false);
+        for (int i = 0; i < 9; ++i)
+            if (blackOffsets[i] >= 0)
+                keycap({ x0 + (cap + gap) * 0.5f + (float) i * (cap + gap), yBlack, cap, cap + 8.0f }, (juce::juce_wchar) black[i], blackOffsets[i], true);
+        etchLine(g, 0.0f, 216.0f, kDesignW, 216.0f, 0.4f);
+        auto row = [&](float y, const juce::String& keys, const juce::String& what, const juce::String& value)
+        {
+            text(g, keys, { 0.0f, y, 90.0f, 22.0f }, 13.0f, true, ivory, Just::centredLeft, 0.06f);
+            text(g, what, { 96.0f, y, 230.0f, 22.0f }, 12.5f, false, panelInk(), Just::centredLeft);
+            text(g, value, { 300.0f, y, 212.0f, 22.0f }, 13.0f, true, amberBright, Just::centredRight);
+        };
+        row(228.0f, "Z  /  X", "OCTAVE DOWN / UP", "A KEY = " + midiNoteName(base));
+        row(256.0f, "C  /  V", "VELOCITY DOWN / UP", juce::String(juce::roundToInt(velocity * 100.0f)) + " %");
+        row(284.0f, "CHANNEL", "MIDI CHANNEL OF THE NOTES", "1");
+        text(g, "Text fields keep their keys; Ctrl and Cmd chords stay shortcuts.", { 0.0f, 318.0f, kDesignW, 20.0f }, 12.5f, false,
+             axisInk(), Just::centredLeft);
+        text(g, "Notes go through the on-screen keyboard, so they light its keys.", { 0.0f, 340.0f, kDesignW, 20.0f }, 12.5f, false,
+             axisInk(), Just::centredLeft);
+    }
+
+private:
+    void timerCallback() override { refresh(); }
+    void refresh()
+    {
+        auto* q = keyboard ? keyboard() : nullptr;
+        const bool on = proc.getEditorState().qwertyEnabled.load();
+        toggle.setToggleState(on, juce::dontSendNotification);
+        toggle.setButtonText(on ? "COMPUTER KEYBOARD PLAYS NOTES" : "COMPUTER KEYBOARD OFF");
+        std::uint64_t sig = (std::uint64_t) (on ? 1 : 0) | ((std::uint64_t) (q != nullptr ? q->getBaseNote() : 60) << 1)
+                          | ((std::uint64_t) juce::roundToInt((q != nullptr ? q->getVelocity() : 0.8f) * 100.0f) << 8);
+        const int base = q != nullptr ? q->getBaseNote() : 60;
+        for (int i = 0; i < 17; ++i)
+            if (base + i <= 127 && proc.getKeyboardState().isNoteOn(1, base + i))
+                sig ^= (std::uint64_t) 1 << (20 + i);
+        if (sig != lastSig)
+        {
+            lastSig = sig;
+            repaint();
+        }
+    }
+
+    Cs80AudioProcessor& proc;
+    std::function<QwertyKeyboard*()> keyboard;
+    StudioKey toggle { "COMPUTER KEYBOARD PLAYS NOTES", "Computer keyboard plays notes" };
+    std::uint64_t lastSig = ~std::uint64_t(0);
+};
+
+// The MIDI learn map of this session: one row per learned controller, with FORGET; the learning status.
+class MidiLearnPanel final : public juce::Component, private juce::Timer, private juce::ListBoxModel
+{
+public:
+    static constexpr float kDesignW = 848.0f, kDesignH = 384.0f;
+
+    explicit MidiLearnPanel(Cs80AudioProcessor& p) : proc(p)
+    {
+        setTitle("MIDI learn map");
+        list.setModel(this);
+        list.setComponentID("midi_learn_list");
+        list.setTitle("Learned MIDI controllers");
+        list.setColour(juce::ListBox::backgroundColourId, juce::Colours::transparentBlack);
+        list.setColour(juce::ListBox::outlineColourId, juce::Colours::transparentBlack);
+        list.setRowSelectedOnMouseDown(false);
+        addAndMakeVisible(list);
+        cancel.setComponentID("midi_learn_cancel");
+        cancel.setTooltip("Stop waiting for a controller.");
+        cancel.onClick = [this] { proc.getMidiLearn().cancelLearn(); refresh(); };
+        clearAll.setComponentID("midi_learn_clear_all");
+        clearAll.setTooltip("Forget every learned controller of this session.");
+        clearAll.onClick = [this] { proc.getMidiLearn().clearAll(); refresh(); };
+        addAndMakeVisible(cancel);
+        addAndMakeVisible(clearAll);
+        // Host index -> the panel's own parameter names.
+        const auto& parameters = proc.getParameters();
+        for (int i = 0; i < cs80::P_numParams; ++i)
+        {
+            const int host = proc.hostParameterIndex(i);
+            if (host >= 0 && host < parameters.size())
+                coreOf[host] = i;
+        }
+        startTimerHz(10);
+        refresh();
+    }
+
+    ~MidiLearnPanel() override { list.setModel(nullptr); }
+
+    juce::String nameOf(int host) const
+    {
+        if (auto it = coreOf.find(host); it != coreOf.end())
+        {
+            const int core = it->second;
+            const auto channel = core >= cs80::P_numGlobals && core < cs80::P_legacyNumParams
+                                     ? juce::String(core < cs80::P_ch2Start ? "I " : "II ") : juce::String();
+            return (channel + parameterLongName(core)).toUpperCase();
+        }
+        const auto& parameters = proc.getParameters();
+        return host >= 0 && host < parameters.size() ? parameters.getUnchecked(host)->getName(48).toUpperCase() : juce::String("?");
+    }
+
+    int getNumRows() override { return (int) rows.size(); }
+    juce::String getNameForRow(int row) override
+    {
+        return row >= 0 && row < (int) rows.size() ? "MIDI CC " + juce::String(rows[(size_t) row].first) + " drives " + nameOf(rows[(size_t) row].second)
+                                                   : juce::String();
+    }
+    void paintListBoxItem(int row, juce::Graphics& g, int width, int height, bool) override
+    {
+        if (row < 0 || row >= (int) rows.size())
+            return;
+        const float s = (float) getWidth() / kDesignW;
+        if ((row & 1) == 1)
+        {
+            g.setColour(juce::Colours::white.withAlpha(0.03f));
+            g.fillRect(0, 0, width, height);
+        }
+        const auto [cc, host] = rows[(size_t) row];
+        g.setFont(fnt(13.0f * s, true, 0.04f));
+        g.setColour(amberBright);
+        g.drawText("CC " + juce::String(cc), juce::Rectangle<float>(8.0f * s, 0.0f, 90.0f * s, (float) height), Just::centredLeft, false);
+        g.setColour(ivory);
+        g.drawFittedText(nameOf(host), juce::Rectangle<float>(104.0f * s, 0.0f, (float) width - 240.0f * s, (float) height).toNearestInt(),
+                         Just::centredLeft, 1, 0.85f);
+        const auto* parameter = host < proc.getParameters().size() ? proc.getParameters()[host] : nullptr;
+        if (parameter != nullptr)
+        {
+            const auto core = coreOf.find(host);
+            g.setFont(fnt(12.5f * s, false));
+            g.setColour(panelInk());
+            g.drawText(core != coreOf.end() ? formatParamValue(core->second, proc.getParamValue(core->second)) : parameter->getCurrentValueAsText(),
+                       juce::Rectangle<float>((float) width - 230.0f * s, 0.0f, 110.0f * s, (float) height), Just::centredRight, false);
+        }
+    }
+    juce::Component* refreshComponentForRow(int row, bool, juce::Component* existing) override
+    {
+        if (row < 0 || row >= (int) rows.size())
+        {
+            delete existing;
+            return nullptr;
+        }
+        auto* holder = dynamic_cast<RowForget*>(existing);
+        if (holder == nullptr)
+        {
+            delete existing;
+            holder = new RowForget(*this);
+        }
+        holder->set(rows[(size_t) row].first);
+        return holder;
+    }
+
+    void resized() override
+    {
+        const float s = (float) getWidth() / kDesignW;
+        auto r = [s](float x, float y, float w, float h) { return juce::Rectangle<float>(x, y, w, h).transformedBy(juce::AffineTransform::scale(s)).toNearestInt(); };
+        list.setRowHeight(juce::jmax(24, juce::roundToInt(34.0f * s)));
+        list.setBounds(r(0.0f, 70.0f, kDesignW, 270.0f));
+        cancel.setBounds(r(kDesignW - 330.0f, 4.0f, 160.0f, 36.0f));
+        clearAll.setBounds(r(kDesignW - 160.0f, 4.0f, 160.0f, 36.0f));
+    }
+
+    void paint(juce::Graphics& g) override
+    {
+        const float s = (float) getWidth() / kDesignW;
+        g.addTransform(juce::AffineTransform::scale(s));
+        auto& learn = proc.getMidiLearn();
+        const bool pure = proc.getParamValue(cs80::P_parityMode) >= 0.5f;
+        const int armed = learn.learningParameter();
+        juce::String status = pure ? "PURE CS-80: MIDI LEARN IS OFF  -  MAPPINGS ARE KEPT"
+                            : armed >= 0 ? "LEARNING  " + nameOf(armed) + "  -  MOVE A CONTROLLER"
+                                         : juce::String(rows.size()) + (rows.size() == 1 ? " CONTROLLER LEARNED" : " CONTROLLERS LEARNED");
+        text(g, status, { 0.0f, 4.0f, kDesignW - 340.0f, 36.0f }, 13.5f, true, armed >= 0 && ! pure ? amberBright : ivory, Just::centredLeft, 0.05f);
+        text(g, "CC", { 8.0f, 46.0f, 90.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.08f);
+        text(g, "CONTROL", { 104.0f, 46.0f, 300.0f, 20.0f }, 12.5f, true, gold, Just::centredLeft, 0.08f);
+        text(g, "VALUE", { kDesignW - 230.0f, 46.0f, 110.0f, 20.0f }, 12.5f, true, gold, Just::centredRight, 0.08f);
+        etchLine(g, 0.0f, 68.0f, kDesignW, 68.0f, 0.5f);
+        if (rows.empty())
+            text(g, "Right-click a control and choose MIDI learn, then move a knob or slider on your controller.",
+                 { 8.0f, 90.0f, kDesignW - 16.0f, 24.0f }, 12.5f, false, panelInk(), Just::centredLeft);
+        etchLine(g, 0.0f, 346.0f, kDesignW, 346.0f, 0.4f);
+        text(g, "Saved with the session, not with presets. Bank select, data entry, RPN/NRPN and channel-mode controllers are never learned.",
+             { 0.0f, 352.0f, kDesignW, 22.0f }, 12.5f, false, axisInk(), Just::centredLeft);
+    }
+
+private:
+    // The FORGET key of a row; the row text is painted by the list.
+    class RowForget final : public juce::Component
+    {
+    public:
+        explicit RowForget(MidiLearnPanel& o) : owner(o)
+        {
+            setInterceptsMouseClicks(false, true);
+            forget.setTooltip("Forget this controller.");
+            forget.onClick = [this] { owner.proc.getMidiLearn().clearController(cc); owner.refresh(); };
+            addAndMakeVisible(forget);
+        }
+        void set(int controller)
+        {
+            cc = controller;
+            forget.setTitle("Forget MIDI CC " + juce::String(cc));
+            forget.setComponentID("midi_learn_forget_" + juce::String(cc));
+        }
+        void resized() override
+        {
+            const float s = (float) owner.getWidth() / kDesignW;
+            forget.setBounds(juce::Rectangle<int>(juce::roundToInt(104.0f * s), juce::jmax(24, getHeight() - 4))
+                                 .withCentre({ getWidth() - juce::roundToInt(60.0f * s), getHeight() / 2 }));
+        }
+    private:
+        MidiLearnPanel& owner;
+        StudioKey forget { "FORGET", "Forget" };
+        int cc = -1;
+    };
+
+    void timerCallback() override { refresh(); }
+    void refresh()
+    {
+        auto& learn = proc.getMidiLearn();
+        const auto generation = learn.generation();
+        const bool pure = proc.getParamValue(cs80::P_parityMode) >= 0.5f;
+        if (generation == lastGeneration && pure == lastPure)
+        {
+            list.repaint();   // the VALUE column follows the controllers
+            return;
+        }
+        lastGeneration = generation;
+        lastPure = pure;
+        rows.clear();
+        for (int cc = 0; cc < cs80::MidiLearnMap::kNumControllers; ++cc)
+            if (const int host = learn.parameterFor(cc); host >= 0)
+                rows.emplace_back(cc, host);
+        cancel.setVisible(learn.learningParameter() >= 0);
+        clearAll.setEnabled(! rows.empty());
+        list.updateContent();
+        repaint();
+    }
+
+    Cs80AudioProcessor& proc;
+    juce::ListBox list;
+    StudioKey cancel { "CANCEL LEARN", "Cancel MIDI learn" };
+    StudioKey clearAll { "CLEAR ALL", "Forget every learned controller" };
+    std::vector<std::pair<int, int>> rows;
+    std::map<int, int> coreOf;
+    std::uint32_t lastGeneration = ~0u;
+    bool lastPure = false;
+};
+} // namespace
+
+// ---------------------------------------------------------------------------
 // Page layouts (design space 1600 x 936; content x 64..1536, y 108..896). Each module is written at the
 // place it had on the former Advanced pages; an AdvancedPage::Origin moves it on its Studio tab.
 // ---------------------------------------------------------------------------
@@ -4390,15 +4746,31 @@ void buildSubRingTab(AdvancedPage& page)
     buildAnalogVoice(page);
 }
 
-void buildKeyboardTab(AdvancedPage& page)
+void buildKeyboardTab(AdvancedPage& page, Cs80AudioProcessor& proc, std::function<QwertyKeyboard*()> qwerty)
 {
-    page.modelNotes({ 64.0f, 108.0f, 1472.0f, 440.0f }, "Keyboard, touch and ribbon models",
-                    { "Keyboard scan and assignment", "Initial touch and aftertouch", "Ribbon", "Idle voice evolution" });
+    page.module({ 64.0f, 108.0f, 560.0f, 440.0f }, "Computer keyboard", true, pageColour(1),
+                "Play the instrument from the computer keyboard. The middle row A S D F G H J K L ; plays the white keys from C, the row above "
+                "W E T Y U O P the black keys. Z and X move the whole map an octave down or up; C and V lower or raise the velocity in steps of "
+                "10 %. The notes go through the on-screen keyboard (MIDI channel 1), so they light its keys and play exactly as clicks do. "
+                "While a text field has the keyboard (preset search, a typed value) the keys type text instead; chords with Ctrl or Cmd stay "
+                "menu shortcuts. A note is released when its key comes up or the window loses the keyboard.",
+                [](Cs80AudioProcessor& p) { return p.getEditorState().qwertyEnabled.load(); });
+    page.adopt(std::make_unique<QwertyPanel>(proc, std::move(qwerty)), { 88.0f, 150.0f, QwertyPanel::kDesignW, QwertyPanel::kDesignH });
+    page.module({ 640.0f, 108.0f, 896.0f, 440.0f }, "MIDI learn", true, pageColour(1),
+                "Right-click any control and choose MIDI learn, then move a knob, slider or pedal on your MIDI controller: from then on that "
+                "controller drives the control, and the host sees the moves as ordinary parameter changes. A controller drives one control and "
+                "a control follows one controller; learning again moves it. A learned controller no longer has its usual MIDI meaning (for "
+                "example CC 1 stops being the mod wheel). The map belongs to this session: it is saved with the host project, not with presets. "
+                "Bank select, data entry, RPN/NRPN and channel-mode controllers are never learned. PURE CS-80 switches MIDI learn off and keeps "
+                "the map for later.",
+                [](Cs80AudioProcessor& p) { return p.getParamValue(cs80::P_parityMode) < 0.5f && p.getMidiLearn().count() > 0; });
+    page.adopt(std::make_unique<MidiLearnPanel>(proc), { 664.0f, 150.0f, MidiLearnPanel::kDesignW, MidiLearnPanel::kDesignH });
     {
         AdvancedPage::Origin moved(page, -496.0f, 0.0f);
         buildPitchTuning(page);
     }
-    page.modelNotes({ 1056.0f, 564.0f, 480.0f, 332.0f }, "Tuning", { "Oscillator", "Modern layer" });
+    page.modelNotes({ 1056.0f, 564.0f, 480.0f, 332.0f }, "Keyboard and touch models",
+                    { "Keyboard scan and assignment", "Initial touch and aftertouch", "Ribbon" });
 }
 
 void buildArpTab(AdvancedPage& page, Cs80AudioProcessor& proc)
@@ -4487,7 +4859,7 @@ StudioView::StudioView(Cs80AudioProcessor& p)
     std::array<AdvancedPage*, kLegacyPages> legacy {};
     legacy[0] = builtIn(StudioTab::modulation, "LFO / WHEELS", buildModulationTab);
     legacy[1] = builtIn(StudioTab::modulation, "SUB / RING", buildSubRingTab);
-    builtIn(StudioTab::keyboard, "KEYBOARD", buildKeyboardTab);
+    builtIn(StudioTab::keyboard, "KEYBOARD", [this](AdvancedPage& page) { buildKeyboardTab(page, processor, [this] { return qwerty; }); });
     legacy[2] = builtIn(StudioTab::fx, "EFFECTS", [this](AdvancedPage& page) { buildFxMacros(page, processor); });
     builtIn(StudioTab::arp, "ARPEGGIO", [this](AdvancedPage& page) { buildArpTab(page, processor); });
     legacy[3] = builtIn(StudioTab::settings, "SETTINGS", [this](AdvancedPage& page) { buildSettingsTab(page, processor); });

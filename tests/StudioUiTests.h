@@ -469,4 +469,127 @@ inline void testInteractionPolish(const Check& check, const Flush& flush, const 
     }
 }
 
+// ---- MIDI learn round trip: context menu -> audio thread -> plugin state -> new instance -----------------------
+inline void sendController(Cs80AudioProcessor& processor, int cc, int value)
+{
+    juce::AudioBuffer<float> audio(2, 128);
+    juce::MidiBuffer midi;
+    midi.addEvent(juce::MidiMessage::controllerEvent(1, cc, value), 7);
+    processor.processBlock(audio, midi);
+}
+
+inline void testMidiLearnRoundTrip(const Check& check, const Flush& flush, const juce::File& dir)
+{
+    Cs80AudioProcessor processor;
+    processor.prepareToPlay(48000.0, 128);
+    const int lpf = cs80::chParam(0, cs80::CP_lpfCutoff);
+    const int host = processor.hostParameterIndex(lpf);
+    auto* parameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(lpf));
+    check(host >= 0 && parameter != nullptr && processor.getParameters()[host] == parameter, "host index of a core parameter");
+    {
+        Cs80AudioProcessorEditor editor(processor);
+        editor.setSize(1600, 1000);
+        editor.setVisible(true);
+        flush(50);
+        auto* fader = knobFor(editor, lpf);
+        check(fader != nullptr && fader->getHostParameterIndex() == host, "the fader knows its host parameter");
+        if (fader == nullptr)
+            return;
+        auto menu = fader->buildContextMenu();
+        const auto* learn = menuItem(menu, "MIDI learn");
+        check(learn != nullptr && learn->isEnabled && learn->action, "the menu arms MIDI learn");
+        if (learn != nullptr && learn->action)
+            learn->action();
+        check(processor.getMidiLearn().learningParameter() == host, "MIDI learn waits for a controller for this fader");
+        auto armedMenu = fader->buildContextMenu();
+        check(menuItem(armedMenu, "Cancel MIDI learn") != nullptr, "while armed the menu offers to cancel");
+        sendController(processor, 0, 64);     // bank select is never learned
+        check(processor.getMidiLearn().learningParameter() == host, "a protocol controller does not satisfy MIDI learn");
+        sendController(processor, 74, 127);
+        check(processor.getMidiLearn().parameterFor(74) == host && processor.getMidiLearn().learningParameter() < 0,
+              "the next controller is learned on the audio thread");
+        check(std::abs(parameter->getValue() - 1.0f) < 1.0e-4f, "the learning move already drives the parameter");
+        sendController(processor, 74, 0);
+        check(parameter->getValue() < 1.0e-4f, "the learned controller moves the parameter");
+        sendController(processor, 74, 64);
+        check(std::abs(parameter->getValue() - 64.0f / 127.0f) < 1.0e-4f, "controller values map onto the parameter's normalised range");
+        flush(120);
+        check(fader->buildTooltip(false).contains("MIDI CC 74"), "the tooltip names the learned controller");
+        auto mappedMenu = fader->buildContextMenu();
+        check(menuItem(mappedMenu, "Forget MIDI CC 74") != nullptr, "the menu offers to forget the controller");
+
+        // The Keyboard tab lists the map with a FORGET key per controller.
+        editor.showAdvancedPanel(true);
+        if (auto* studio = studioOf(editor))
+            studio->showTab(cs80::ui::StudioTab::keyboard);
+        flush(200);
+        check(findById(editor, "midi_learn_forget_74") != nullptr, "the MIDI learn panel lists the learned controller");
+        save(editor, dir, "studio-keyboard-midi-learn-1600x1000", check);
+        editor.showAdvancedPanel(false);
+    }
+
+    // Plugin state round trip: a new instance gets the same map; a preset load keeps it; old states clear it.
+    juce::MemoryBlock state;
+    processor.getEditorState().tourSeen = true;
+    processor.getEditorState().qwertyEnabled = false;
+    processor.getEditorState().circuitNotes = true;
+    processor.getStateInformation(state);
+    const auto xml = juce::XmlDocument::parse(state.toString());
+    check(xml != nullptr && xml->getChildByName("MIDI_LEARN") != nullptr && xml->getChildByName("MIDI_LEARN")->getIntAttribute("version") == 1,
+          "the map is saved with a version in the plugin state");
+    check(xml != nullptr && xml->getChildByName("UI_STATE") != nullptr && xml->getChildByName("UI_STATE")->getIntAttribute("version") == 1,
+          "the editor state is saved with a version in the plugin state");
+    check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount, "MIDI learn adds no host parameter");
+    {
+        Cs80AudioProcessor restored;
+        restored.prepareToPlay(48000.0, 128);
+        restored.setStateInformation(state.getData(), (int) state.getSize());
+        check(restored.getMidiLearn().parameterFor(74) == host && restored.getMidiLearn().count() == 1, "a restored session has the same map");
+        check(restored.getEditorState().tourSeen.load() && ! restored.getEditorState().qwertyEnabled.load()
+                  && restored.getEditorState().circuitNotes.load(),
+              "a restored session has the same editor state");
+        auto* restoredParameter = restored.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(lpf));
+        sendController(restored, 74, 127);
+        check(std::abs(restoredParameter->getValue() - 1.0f) < 1.0e-4f, "the restored map drives the restored instance");
+        check(restored.getAPVTS().copyState().getChildWithName("MIDI_LEARN").isValid() == false,
+              "the map never lives in the parameter tree (so presets cannot carry it)");
+        restored.loadFactoryPreset(3);
+        check(restored.getMidiLearn().count() == 1, "loading a preset keeps the session's map");
+        // PURE CS-80: no MIDI learn at all, the map is kept.
+        restored.setParamValue(cs80::P_parityMode, 1.0f);
+        const float held = restoredParameter->getValue();
+        sendController(restored, 74, 0);
+        check(std::abs(restoredParameter->getValue() - held) < 1.0e-6f, "PURE CS-80 does not apply learned controllers");
+        restored.getMidiLearn().armLearn(restored.hostParameterIndex(cs80::P_volume));
+        sendController(restored, 20, 50);
+        check(restored.getMidiLearn().parameterFor(20) < 0, "PURE CS-80 does not learn");
+        restored.getMidiLearn().cancelLearn();
+        restored.setParamValue(cs80::P_parityMode, 0.0f);
+        sendController(restored, 74, 0);
+        check(restoredParameter->getValue() < 1.0e-4f, "leaving PURE CS-80 brings the map back");
+        // A learned controller gives up its usual MIDI meaning: CC 11 normally moves the foot controller.
+        sendController(restored, 11, 127);
+        check(std::abs(restored.getExpressionValue() - 1.0f) < 1.0e-4f, "CC 11 drives the foot controller while unlearned");
+        restored.getMidiLearn().assign(11, restored.hostParameterIndex(cs80::P_volume));
+        sendController(restored, 11, 0);
+        check(std::abs(restored.getExpressionValue() - 1.0f) < 1.0e-4f
+                  && restored.getParamValue(cs80::P_volume) < 1.0e-4f,
+              "a learned CC 11 drives its parameter, not the foot controller");
+        restored.getMidiLearn().clearController(11);
+        sendController(restored, 11, 0);
+        check(restored.getExpressionValue() < 1.0e-4f, "forgetting the controller restores its MIDI meaning");
+    }
+    {
+        // A state from before this feature carries no MIDI_LEARN element: restoring it leaves no mappings.
+        auto old = juce::XmlDocument::parse(state.toString());
+        old->removeChildElement(old->getChildByName("MIDI_LEARN"), true);
+        old->removeChildElement(old->getChildByName("UI_STATE"), true);
+        const auto text = old->toString();
+        processor.setStateInformation(text.toRawUTF8(), (int) text.getNumBytesAsUTF8());
+        check(processor.getMidiLearn().count() == 0 && processor.getEditorState().qwertyEnabled.load()
+                  && ! processor.getEditorState().tourSeen.load(),
+              "an old state restores with no mappings and the default editor state");
+    }
+}
+
 } // namespace cs80::tests::studio

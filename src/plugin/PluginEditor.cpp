@@ -2616,6 +2616,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
         studio->scope.onClose = [this] { studio->scope.setVisible(false); };
         addKeyListener(&studio->qwerty);                // computer-keyboard notes through the on-screen keyboard's state
+        advanced.attachQwerty(&studio->qwerty);
         ribbon.fullRangeFromTouch = [this] { return processor.getParamValue(cs80::P_parityMode) < 0.5f; };
         // [ws8-studio] end
     }
