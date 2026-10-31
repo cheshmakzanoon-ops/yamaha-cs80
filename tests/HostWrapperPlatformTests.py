@@ -114,6 +114,20 @@ class Fixture:
             check(Path(paths[2]) == self.originals / "after.cpp",
                   "the following unrelated source retains its position")
             wrapper = Path(paths[1])
+            expected_wrapper = self.build / "cs80-juce-wrappers" / original_name
+            # Diagnostics only: preserve the exact lexical assertion until a
+            # native Windows run establishes whether these spellings alias.
+            path_diagnostic = {"actual": str(wrapper), "expected": str(expected_wrapper)}
+            for label, path in (("actual_resolved", wrapper), ("expected_resolved", expected_wrapper)):
+                try:
+                    path_diagnostic[label] = str(path.resolve())
+                except (OSError, RuntimeError) as error:
+                    path_diagnostic[label] = f"{type(error).__name__}: {error}"
+            try:
+                path_diagnostic["samefile"] = wrapper.samefile(expected_wrapper)
+            except OSError as error:
+                path_diagnostic["samefile"] = f"{type(error).__name__}: {error}"
+            print("Host wrapper path diagnostic: " + json.dumps(path_diagnostic), flush=True)
             check(wrapper == self.build / "cs80-juce-wrappers" / original_name,
                   "the generated wrapper retains the native source name and language extension")
             check(wrapper.is_file(), "the target points to an existing generated translation unit")

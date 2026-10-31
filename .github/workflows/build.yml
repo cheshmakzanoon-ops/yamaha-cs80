@@ -548,6 +548,45 @@ jobs:
             build/ci-juce-provenance.txt
           if-no-files-found: warn
 
+  windows-wrapper-contract:
+    concurrency:
+      group: ${{ github.workflow }}-windows-wrapper-contract-${{ github.ref }}
+      cancel-in-progress: false
+    name: Windows / host wrapper source contract
+    runs-on: windows-2022
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Checkout pinned JUCE wrappers for early platform gate
+        uses: actions/checkout@v5
+        with:
+          repository: juce-framework/JUCE
+          ref: c352e2489000ffeb9e397051377d75eef2efe641
+          path: .ci-wrapper-juce
+          sparse-checkout: modules/juce_audio_plugin_client
+          persist-credentials: false
+
+      # LANGUAGES NONE: this independent job avoids the native build queue.
+      # The ordinary Windows CTest job still runs the same complete contract.
+      - name: Verify host wrapper platforms
+        shell: pwsh
+        run: |
+          python tests/HostWrapperPlatformTests.py `
+            --source "$env:GITHUB_WORKSPACE" `
+            --juce-wrappers "$env:GITHUB_WORKSPACE/.ci-wrapper-juce/modules/juce_audio_plugin_client" `
+            --tolerances "$env:GITHUB_WORKSPACE/tests/parity/tolerances-v2/host-wrapper-platforms.json" `
+            2>&1 | Tee-Object -FilePath host-wrapper-platforms.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Upload host wrapper source-contract evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-wrapper-platforms
+          path: host-wrapper-platforms.log
+          if-no-files-found: warn
+
   windows:
     concurrency:
       group: ${{ github.workflow }}-windows-${{ github.ref }}
