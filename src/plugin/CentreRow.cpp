@@ -6,52 +6,98 @@ namespace cs80::panel
 {
 CentreRow::CentreRow(Cs80AudioProcessor& p) : PanelSection(p)
 {
-    buildMasterSection();
-    buildToneSection();
+    build();
 }
 
 juce::Rectangle<float> CentreRow::designArea() const
 {
-    return geo::lowerPlate.expanded(2.0f);
+    return geo::frontStrip.expanded(2.0f);
 }
 
-void CentreRow::buildMasterSection()
+juce::String CentreRow::toneTabName(int channel, int source)
 {
-    // The lower strip follows Yamaha's PN2 panel: ring, sub oscillator,
-    // feet, tone selectors, mix, brilliance and performance response.
-    const float y = 510.0f, h = 126.0f;
+    if (source == 13) return "PANEL";
+    if (source >= 11) return "MEMORY " + juce::String(channel + (source == 11 ? 1 : 3));
+    const auto name = juce::String(cs80::hardwareToneName(source, channel)).toUpperCase();
+    // The core abbreviates; the panel prints the hardware wording (S1, owner p37).
+    return name == "E. PIANO" ? juce::String("ELECTRIC PIANO") : name;
+}
+
+// The front strip, left to right (docs/PANEL_CONFORMANCE.md): the order is the pre-ws7 reading of PN2 with the
+// keyboard-control levers, which sit on the same board (VR19-22), placed after RESONANCE.
+void CentreRow::build()
+{
+    const float y = geo::stripLeverY, h = geo::stripLeverH, rule = geo::stripRuleY;
+    float x = geo::stripFirstX;
+    float groupStart = x;
+    auto lever = [&](int parameter, const char* name, juce::Colour colour) -> ui::ParamKnob&
+    {
+        auto& control = addFader(parameter, x, y, geo::stripLeverW, h, name, colour);
+        x += geo::stripLeverPitch;
+        return control;
+    };
+    // Brackets the levers placed since the last group, then leaves the group gap.
+    auto group = [&](const char* title, const char* shortTitle)
+    {
+        const float right = x - geo::stripLeverPitch + geo::stripLeverW;
+        if (title != nullptr)
+            addBracket(title, groupStart + 1.0f, rule, right - groupStart - 2.0f, 6.0f, shortTitle);
+        x += geo::stripGroupGap;
+        groupStart = x;
+    };
+
     // The knobs share the faders' top and height; setLegendColumnWidth (applied after layout) sets their caption
     // and value on the faders' name and value lines.
-    pitchKnob = &addKnob(cs80::P_masterTune, 49, y, 62, h, "PITCH");
-    shortCaption(addFader(cs80::P_detune, 114, y, 39, h, "DETUNE", whiteCap()), "DETUNE", "DET");
-    shortCaption(addFader(cs80::P_ringAttack, 161, y, 38, h, "ATTACK", blackCap()), "ATTACK", "ATK");
-    legendReference = &addFader(cs80::P_ringDecay, 201, y, 38, h, "DECAY", blackCap());
-    addFader(cs80::P_ringDepth, 241, y, 38, h, "DEPTH", greyCap());
-    addFader(cs80::P_ringSpeed, 281, y, 38, h, "SPEED", whiteCap());
-    addFader(cs80::P_ringAmount, 321, y, 38, h, "MOD", greyCap());
-    // FUNCTION is a little wider than its neighbours, so its engraved legend would sit lower
-    // than theirs. Lift the component by the difference to keep one baseline across the row.
-    subFunction = &addFader(cs80::P_subWave, 373, y - 1.2f, 42, h - 0.5f, "FUNCTION", blackCap());
+    pitchKnob = &addKnob(cs80::P_masterTune, x, y, geo::stripKnobW, h, "PITCH");
+    x += geo::stripKnobW + geo::stripGroupGap;
+    groupStart = x;
+    shortCaption(lever(cs80::P_detune, "DETUNE", whiteCap()), "DETUNE", "DET");
+    group(nullptr, nullptr);
+    shortCaption(lever(cs80::P_ringAttack, "ATTACK", blackCap()), "ATTACK", "ATK");
+    legendReference = &lever(cs80::P_ringDecay, "DECAY", blackCap());
+    lever(cs80::P_ringDepth, "DEPTH", greyCap());
+    lever(cs80::P_ringSpeed, "SPEED", whiteCap());
+    lever(cs80::P_ringAmount, "MOD", greyCap());
+    group("RING MODULATOR", "RING");
+    subFunction = &lever(cs80::P_subWave, "FUNCTION", blackCap());
     shortCaption(*subFunction, "FUNCTION", "FUNC");
-    subSpeed = &addFader(cs80::P_subSpeed, 417, y, 38, h, "SPEED", whiteCap());
-    addFader(cs80::P_subVco, 457, y, 38, h, "VCO", whiteCap());
-    addFader(cs80::P_subVcf, 497, y, 38, h, "VCF", greenCap());
-    addFader(cs80::P_subVca, 537, y, 38, h, "VCA", greyCap());
-    shortCaption(addFader(cs80::chParam(0, cs80::CP_feet), 582, y, 36, h, "FEET I", greyCap()), "FEET I", "FT I");
-    shortCaption(addFader(cs80::chParam(1, cs80::CP_feet), 620, y, 36, h, "FEET II", greyCap()), "FEET II", "FT II");
-    // Pitch follows the width of each engraved name so the legends never touch.
-    addFader(cs80::P_mix, 1203, y, 38, h, "MIX", redCap());
-    addFader(cs80::P_brilliance, 1241, y, 38, h, "BRILL", greenCap());
-    addFader(cs80::P_resonance, 1285, y, 38, h, "RESO", redCap());
-    addFader(cs80::P_initBend, 1330, y, 38, h, "BEND", whiteCap());
-    addFader(cs80::P_subAtSpeed, 1374, y, 38, h, "AT SPD", whiteCap());
-    addFader(cs80::P_subAtVco, 1417, y, 38, h, "AT VCO", whiteCap());
-    addFader(cs80::P_subAtVcf, 1456, y, 38, h, "AT VCF", greenCap());
-    volumeKnob = &addKnob(cs80::P_volume, 1497, y, 50, h, "VOLUME");
+    subSpeed = &lever(cs80::P_subSpeed, "SPEED", whiteCap());
+    lever(cs80::P_subVco, "VCO", whiteCap());
+    lever(cs80::P_subVcf, "VCF", greenCap());
+    lever(cs80::P_subVca, "VCA", greyCap());
+    group("SUB OSCILLATOR", "SUB OSC");
+    shortCaption(lever(cs80::chParam(0, cs80::CP_feet), "FEET I", greyCap()), "FEET I", "FT I");
+    shortCaption(lever(cs80::chParam(1, cs80::CP_feet), "FEET II", greyCap()), "FEET II", "FT II");
+    group("FEET", nullptr);
+
+    buildToneSection(x);
+    x += geo::toneBezelW + geo::stripGroupGap;
+    groupStart = x;
+
+    lever(cs80::P_mix, "MIX", redCap());
+    lever(cs80::P_brilliance, "BRILL", greenCap());
+    lever(cs80::P_resonance, "RESO", redCap());
+    group("GLOBAL", nullptr);
+    lever(cs80::P_kbdBrillianceLow, "LOW", greenCap());
+    lever(cs80::P_kbdBrillianceHigh, "HIGH", greenCap());
+    group("KBD BRILL", "BRILL");
+    lever(cs80::P_kbdLevelLow, "LOW", greyCap());
+    lever(cs80::P_kbdLevelHigh, "HIGH", greyCap());
+    group("KBD LEVEL", "LEVEL");
+    // Initial pitch bend, then the after-touch amounts; the bracket names the group, so the levers print the
+    // destination alone (titles and tooltips keep "AT SPD" and so on).
+    lever(cs80::P_initBend, "BEND", whiteCap());
+    shortCaption(lever(cs80::P_subAtSpeed, "AT SPD", whiteCap()), "SPEED", "SPD");
+    shortCaption(lever(cs80::P_subAtVco, "AT VCO", whiteCap()), "VCO", "VCO");
+    shortCaption(lever(cs80::P_subAtVcf, "AT VCF", greenCap()), "VCF", "VCF");
+    group("TOUCH RESPONSE", "TOUCH");
+    volumeKnob = &addKnob(cs80::P_volume, x, y, geo::stripKnobW, h, "VOLUME");
 }
 
-void CentreRow::buildToneSection()
+void CentreRow::buildToneSection(float x0)
 {
+    toneBezel = { x0, geo::toneTop - 7.0f, geo::toneBezelW, 2.0f * geo::toneTabH + geo::toneRowGap + 14.0f };
+    addBracket("TONE SELECTOR", x0 + 15.0f, geo::stripRuleY + 6.0f, geo::toneBezelW - 30.0f);
     const std::array<juce::Colour, 14> colours = {
         yellowCap(), yellowCap(), redCap(), whiteCap(), yellowCap(),
         yellowCap(), yellowCap(), whiteCap(), greenCap(), greenCap(), greenCap(),
@@ -61,23 +107,12 @@ void CentreRow::buildToneSection()
     {
         for (int tone = 0; tone < 14; ++tone)
         {
-            auto button = std::make_unique<juce::TextButton>(
-                (tone < 11 ? juce::String(cs80::hardwareToneName(tone, channel)).toUpperCase()
-                 : tone == 13 ? juce::String("PANEL")
-                 : juce::String("MEMORY ") + juce::String(channel + (tone == 11 ? 1 : 3))));
-            const auto fullName = button->getButtonText();
+            const auto fullName = toneTabName(channel, tone);
+            auto button = std::make_unique<juce::TextButton>(fullName);
             button->setTitle(fullName);
             button->setDescription((channel == 0 ? juce::String("Channel I") : juce::String("Channel II"))
                 + ": select this voice source with Space or Return. PANEL preserves the main-panel settings.");
             button->setTooltip(fullName + (channel == 0 ? " / CHANNEL I" : " / CHANNEL II"));
-            button->setButtonText(fullName.replace("HARPSICHORD ", "HARPSI\nCHORD ")
-                                          .replace("CLAVICHORD ", "CLAVI\nCHORD ")
-                                          .replace("STRING ", "STRING\n")
-                                          .replace("BRASS ", "BRASS\n")
-                                          .replace("GUITAR ", "GUITAR\n")
-                                          .replace("FUNKY ", "FUNKY\n")
-                                          .replace("ORGAN ", "ORGAN\n")
-                                          .replace("MEMORY ", "MEMORY\n"));
             button->setClickingTogglesState(true);
             button->setRadioGroupId(0x100 + channel);
             button->setWantsKeyboardFocus(true);
@@ -90,8 +125,8 @@ void CentreRow::buildToneSection()
                 if (onToneSelected) onToneSelected();
             };
             addAndMakeVisible(*button);
-            place(*button, geo::toneX0 + (float) tone * geo::tonePitch,
-                  527.0f + (float) channel * 45.0f, geo::toneW, 41.0f);
+            place(*button, x0 + geo::toneMarkerW + (float) tone * geo::tonePitch,
+                  geo::toneTop + (float) channel * (geo::toneTabH + geo::toneRowGap), geo::toneW, geo::toneTabH);
             toneButtons[(size_t) channel][(size_t) tone] = std::move(button);
         }
     }
@@ -107,28 +142,23 @@ void CentreRow::syncToneMarks()
 
 void CentreRow::afterLayout()
 {
-    // PITCH / VOLUME captions and values use the legend column of one 38 px fader.
+    // PITCH / VOLUME captions and values use the legend column of one strip lever.
     if (legendReference != nullptr)
         for (auto* knob : { pitchKnob, volumeKnob })
             if (knob != nullptr)
                 knob->setLegendColumnWidth((float) legendReference->getWidth());
 }
 
-void CentreRow::paintArt(juce::Graphics& g)
+void CentreRow::paintArt(juce::Graphics& g) const
 {
-    const auto lp = geo::lowerPlate;
-    art::etchRect(g, lp, 5.0f, 0.55f);
-    art::bracket(g, "RING MODULATOR", 158, 499, 200);
-    art::bracket(g, "SUB OSCILLATOR", 370, 499, 205, 6.0f, 9.5f, "SUB OSC");
-    art::bracket(g, "FEET", 580, 499, 80);
-    art::bracket(g, "TONE SELECTOR", 675, 505, 514);
-    art::bracket(g, "GLOBAL / TOUCH RESPONSE", 1208, 499, 340, 6.0f, 9.5f, "GLOBAL");
+    art::etchRect(g, geo::frontStrip, 5.0f, 0.55f);
+    PanelSection::paintArt(g);
     paintToneBezel(g);
 }
 
-void CentreRow::paintToneBezel(juce::Graphics& g)
+void CentreRow::paintToneBezel(juce::Graphics& g) const
 {
-    const auto r = geo::toneBezel;
+    const auto r = toneBezel;
     art::ambient(g, r, 6.0f, 14.0f, 0.55f);
     ui::softShadow(g, r, 5.0f, 0.0f, 3.0f, 8.0f, 0.85f);
     g.setGradientFill(art::vgrad(juce::Colour(0xff6a655d), juce::Colour(0xff211f1b), r));
@@ -142,8 +172,8 @@ void CentreRow::paintToneBezel(juce::Graphics& g)
     // Row markers: large enough to read at a glance and clear of the first tab.
     for (int row = 0; row < 2; ++row)
     {
-        const float cy = 527.0f + (float) row * 45.0f + 20.5f;
-        art::legend(g, row == 0 ? "I" : "II", { 662.0f, cy - 9.0f, 19.0f, 18.0f }, spacedFont(11.5f, 0.04f),
+        const float cy = geo::toneTop + (float) row * (geo::toneTabH + geo::toneRowGap) + geo::toneTabH * 0.5f;
+        art::legend(g, row == 0 ? "I" : "II", { r.getX() + 2.0f, cy - 9.0f, 19.0f, 18.0f }, spacedFont(11.5f, 0.04f),
                     juce::Justification::centred, juce::Colour(0xfff0e6c4), 0.8f);
     }
 }

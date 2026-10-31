@@ -56,3 +56,40 @@ Main findings that drive the re-layout: the upper-left element is the hinged blo
 memories; keyboard contour VR19-22 is on Panel 2 (the front strip); the assigners and EXP / EXP-WAH are on Panel
 3 with sustain and portamento (left of the keyboard); the footswitch jack and output switch are on Panel 5 (jack
 panel); the adjustment procedure names separate TREMOLO, CHORUS and ON/OFF tabs.
+
+## Step 3: 5.2 main-view re-layout (done)
+
+The main view now follows the audit. One table, `src/plugin/PanelLayout.h`, holds every block in final design
+coordinates; the `midShift`/`shifted()` 24 px hack is gone (the old shifted numbers became the real ones).
+Sections compute their columns and group brackets from that table, so a bracket always spans the columns it
+names.
+
+| Change | Evidence class |
+| --- | --- |
+| Live signal-flow plate removed from the main view; the upper-left element is now the closed memory lid (hinge, printed block diagram, OPEN MEMORY LID and VOICE SETTINGS keys). Software voice settings open as a tray over the diagram | D placement (HR: S2 summary, Yamaha museum); I proportions (288 x 378); the printed diagram is a stylised drawing of this instrument's path, not the original print |
+| Channel rows span from the lid to the panel edge (x 348-1552; 43 px column pitch, was 40) | D order; I spacing |
+| Keyboard contour (BRILL LOW/HIGH, LEVEL LOW/HIGH) moved from the deck to the front strip, after RESONANCE | D board (KCE: Panel2 p64 VR19-22); I position (owner index 7-10 consecutive) |
+| Footswitch assigners and EXP / EXP-WAH (with the on-screen pedal) moved to the deck's left block with sustain, portamento and tremolo/chorus | D (FCE: Panel3 p66; HR: left of keyboard) |
+| Footswitch jack (PLUG), contact (HOLD) and output HIGH/LOW moved to the deck's right block, labelled REAR PANEL | D board (FCE J5, OLR PN5 p67 SW1); I rear location |
+| OFF/CHORUS/TREMOLO 3-way selector replaced by separate ON/OFF, TREMOLO and CHORUS tabs over the unchanged `chorus_on` / `chorus_mode` (no ID or semantics change) | D tab names (BA617: adjustment p21); C with the owner reading, recorded |
+| Tone tabs print the full hardware names (STRING 1 ... ELECTRIC PIANO ... HARPSI-/CHORD 1 ... PANEL) instead of STR/BRS codes | D (S1, O37) |
+| The engraved I/II numerals are labels now; their pilot lights while the row is heard (selector on PANEL) | software indication |
+| Ribbon lengthened to 860 px between the two deck blocks; nameplate centred over it | D (long ribbon above the keys) |
+
+Front-strip width is the binding constraint: 24 levers, two rotaries and a 14-column selector with full names
+share 1,496 px, so the strip levers are 27.5 px wide on a 29.25 px pitch (row levers 40 px). Small editors
+abbreviate their captions (DET, ATK, FUNC, SPD ...); the full words remain in titles, tooltips and accessibility
+names.
+
+`VoicePlate.h` keeps the live voice-flow display class unmounted, as the mount point for the Studio drawer
+(Phase 5.3, ws8). The voice-plate touch tracking, view keys and channel selection were removed with it.
+
+Tests added (`tests/PanelEditorTests.h`, UI self-test), at 1600 x 1000 and 1120 x 700:
+no two visible main-view controls overlap; every control lies inside the editor; contour levers inside the front
+strip; assigners, EXP/WAH, pedal and the three tremolo/chorus tabs inside the left block; PLUG, HOLD and OUTPUT
+inside the rear block; the lid key on the lid; rows right of the lid; full tone names present; the three tabs
+drive `chorus_on`/`chorus_mode` with one balanced gesture each, keep the choice when switched off, and follow host
+automation. Mutation checks: strip lever pitch below the lever width fails the overlap check at both sizes;
+TREMOLO writing mode 0, the core "E. PIANO" name, and PLUG moved to x 600 each fail their check (3 failures in
+one run); all pass when restored. `src/tools/ui_snapshot.cpp` now looks the populated-capture tabs up by their
+new text ("BRASS 1").

@@ -16,11 +16,11 @@ void PanelSection::layout(juce::Rectangle<float> designArea, float sx, float sy)
         return juce::Rectangle<int>(juce::roundToInt(x * sx), juce::roundToInt(y * sy),
                                     juce::roundToInt(w * sx), juce::roundToInt(h * sy));
     };
-    const auto area = r(designArea.getX(), geo::shifted(designArea.getY()), designArea.getWidth(), designArea.getHeight());
+    const auto area = r(designArea.getX(), designArea.getY(), designArea.getWidth(), designArea.getHeight());
     setBounds(area);
     // Round each control in editor space first, then make it local: identical pixels to an editor child.
     for (const auto& item : placements)
-        item.component->setBounds(r(item.bounds.getX(), geo::shifted(item.bounds.getY()),
+        item.component->setBounds(r(item.bounds.getX(), item.bounds.getY(),
                                     item.bounds.getWidth(), item.bounds.getHeight()) - area.getPosition());
     afterLayout();
 }
@@ -29,6 +29,18 @@ void PanelSection::applyCaptions(bool small)
 {
     for (auto& pair : captionPairs)
         pair.knob->setCaption(small ? pair.shortForm : pair.full);
+}
+
+void PanelSection::paintArt(juce::Graphics& g) const
+{
+    for (const auto& b : brackets)
+        art::bracket(g, b.title, b.x, b.ruleY, b.w, b.tick, 9.5f, b.shortTitle);
+}
+
+void PanelSection::addBracket(const juce::String& title, float x, float ruleY, float w, float tick,
+                              const juce::String& shortTitle)
+{
+    brackets.push_back({ title, shortTitle, x, ruleY, w, tick });
 }
 
 void PanelSection::place(juce::Component& component, float x, float y, float w, float h)

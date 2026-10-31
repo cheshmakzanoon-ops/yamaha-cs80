@@ -148,12 +148,12 @@ blocks follow the areas above:
 | Block | Design rectangle (x, y, w, h) | Contents | Basis |
 | --- | --- | --- | --- |
 | Toolbar | 48, 0, 1504, 64 | software toolbar (ws8 replaces it) | software |
-| Memory lid (closed) | see `geo::lidKey` | index 46, block-diagram lid | D placement; I proportions |
-| Channel rows I, II | see `geo::rowFrame(channel)` | index 20-45 | D order; I spacing |
-| Front strip (PN2) | see `geo::frontStrip` | index 2-12, 16, 18 | D board membership; U group order (pre-ws7 order kept) |
-| Deck left (left-hand panel) | see `geo::deckLeft` | index 13-15, 17 and the on-screen pedal | D |
-| Deck centre | see `geo::ribbonRect`, `geo::nameplate` | index 19 | D |
-| Deck right (rear jack panel) | see `geo::deckRight` | footswitch jack, pedal contact, output HIGH/LOW | D board; I rear |
+| Memory lid (closed) | `geo::lidFace` = 52, 74, 288, 378 | index 46, block-diagram lid | D placement; I proportions |
+| Channel rows I, II | `geo::rowFrame(channel)` = 348, 74 / 266, 1204, 186 | index 20-45 | D order; I spacing |
+| Front strip (PN2) | `geo::frontStrip` = 48, 460, 1504, 166 | index 2-12, 16, 18 | D board membership; U group order (pre-ws7 order kept) |
+| Deck left (left-hand panel) | `geo::deckLeft` = 48, 640, 492, 104 | index 13-15, 17 and the on-screen pedal | D |
+| Deck centre | `geo::ribbonRect` = 556, 700, 860, 36; `geo::nameplate` = 826, 643, 320, 38 | index 19 | D |
+| Deck right (rear jack panel) | `geo::deckRight` = 1428, 640, 124, 104 | footswitch jack, pedal contact, output HIGH/LOW | D board; I rear |
 | Keybed | 48, 748, 1504, 252 | 61 keys | software proportions |
 
 Exact positions, spacing and proportions are declared inferences sized to fit 1600 x 1000 and 1120 x 700 with

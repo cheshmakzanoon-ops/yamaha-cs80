@@ -290,7 +290,7 @@ private:
     bool isSecond, viewed = false;
 };
 
-// A component placed in absolute design coordinates (1600 x 1000 space, before the block shift).
+// A component placed in absolute design coordinates (1600 x 1000 space).
 struct Placement
 {
     juce::Component* component = nullptr;
@@ -301,7 +301,8 @@ struct Placement
 // rectangles, and maps them to pixels with the editor's scale. Controls are placed in absolute design
 // coordinates and rounded exactly as if they were children of the editor, so moving a control into a
 // section never moves it by a pixel. A section paints nothing and passes clicks through to its controls;
-// its static art is drawn by the editor's buffered chassis.
+// its static art (paintArt) is drawn by the editor's buffered chassis in design space. Group brackets are
+// recorded while the controls are placed, so a title always spans exactly the columns it names.
 class PanelSection : public juce::Component
 {
 public:
@@ -315,6 +316,8 @@ public:
     const std::vector<std::pair<juce::Component*, int>>& getBoundControls() const noexcept { return boundControls; }
     // Painted captions with a short form for small editors (titles and tooltips are untouched).
     virtual void applyCaptions(bool small);
+    // Static art in design space (the chassis calls it): the recorded group brackets, plus any section art.
+    virtual void paintArt(juce::Graphics& g) const;
 
 protected:
     void place(juce::Component& component, float x, float y, float w, float h);
@@ -325,11 +328,16 @@ protected:
     void shortCaption(ui::ParamKnob& knob, const juce::String& full, const juce::String& shortForm);
     // Called at the end of layout(), when every control has its final pixel bounds.
     virtual void afterLayout() {}
+    // An etched group bracket over [x, x + w] with its rule at ruleY (see art::bracket).
+    void addBracket(const juce::String& title, float x, float ruleY, float w, float tick = 4.0f,
+                    const juce::String& shortTitle = {});
 
     Cs80AudioProcessor& processor;
 
 private:
     struct CaptionPair { ui::ParamKnob* knob; juce::String full, shortForm; };
+    struct Bracket { juce::String title, shortTitle; float x, ruleY, w, tick; };
+    std::vector<Bracket> brackets;
     std::vector<Placement> placements;
     std::vector<std::pair<juce::Component*, int>> boundControls;
     std::vector<CaptionPair> captionPairs;

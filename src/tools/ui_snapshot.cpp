@@ -3349,7 +3349,7 @@ int main(int argc, char** argv)
         processor.setParamValue(cs80::P_fx3Type, 4.0f);
         processor.setParamValue(cs80::P_fx3Mix, 0.25f);
         processor.setParamValue(cs80::P_arpOn, 1.0f);
-        for (const char* tone : { "BRASS\n1", "BRASS\n2" })      // one lit tab per channel row
+        for (const char* tone : { "BRASS 1", "BRASS 2" })        // one lit tab per channel row
             if (auto* tab = findButton(editor, tone)) tab->triggerClick();
         flushGui(150);
         save("main-populated-1600x1000");

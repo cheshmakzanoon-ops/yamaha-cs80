@@ -11,7 +11,6 @@
 #include "CentreRow.h"
 #include "PerformanceDeck.h"
 #include "MemoryLid.h"
-#include "VoicePlate.h"
 #include "ParameterWatch.h"
 #include "PresetBrowser.h"
 #include "OutputMeterDisplay.h"
@@ -71,7 +70,6 @@ using cs80::art::FloorScope;
 namespace panel = cs80::panel;
 using cs80::panel::KeyButton;
 using cs80::panel::Placement;
-using cs80::panel::VoicePlate;
 
 // UI-only classification of the requested APVTS selection. This immutable
 // lookup must not read Engine diagnostics, which belong to the render thread.
@@ -789,18 +787,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         addAndMakeVisible(backdrop);
         backdrop.draw = [this](juce::Graphics& g) { paintChassis(g); };
         addAndMakeVisible(spill);
-        addAndMakeVisible(voicePlate);
 
         buildTopBar();
         addAndMakeVisible(centreRow);
-        centreRow.onToneSelected = [this] { syncVoicePlate(); };
+        centreRow.onToneSelected = [this] { refreshRows(); };
         buildChannels();
         addAndMakeVisible(deck);
         buildKeyboard();
-        // Touching any control of a channel's row brings that channel up in the signal-flow window.
-        for (auto* section : sections())
-            for (const auto& [component, parameter] : section->getBoundControls())
-                listenForChannel(*component, parameter);
 
         addChildComponent(scrim);
         scrim.onClick = [this] { if (browserVisible) showBrowser(false, true); else if (advancedVisible) showAdvanced(false, true); };
@@ -828,8 +821,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             repaint();
         };
         frames.onFrame = [this] { stepOverlayAnimation(); };
-        for (int channel = 0; channel < 2; ++channel)
-            touchViews[(size_t) channel].onTouch = [this, channel] { showChannel(channel); };
         meterTicker.onTick = [this] { if (isShowing()) updateMeter(); };
 
         // Host state/program changes may arrive on non-message threads.
@@ -840,7 +831,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         centreRow.syncToneMarks();
         syncSubMode();
         syncSourceStatus();
-        syncVoicePlate();
+        refreshRows();
     }
 
     ~Impl() override
@@ -871,19 +862,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         placements.push_back({ &component, { x, y, w, h } });
     }
 
-    // Touching any control of a channel's row brings that channel up in the signal-flow window.
-    struct TouchView final : juce::MouseListener
-    {
-        std::function<void()> onTouch;
-        void mouseDown(const juce::MouseEvent&) override { if (onTouch) onTouch(); }
-    };
-
-    void listenForChannel(juce::Component& component, int parameter)
-    {
-        if (parameter >= cs80::P_numGlobals && parameter < cs80::P_legacyNumParams)
-            component.addMouseListener(&touchViews[parameter < cs80::P_ch2Start ? 0u : 1u], true);
-    }
-
     ui::ParamKnob& addKnob(int parameter, float x, float y, float w, float h,
                            const juce::String& name = {})
     {
@@ -891,7 +869,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         auto* raw = knob.get();
         raw->getSlider().getProperties().set("hardwareRotary", true);
         addAndMakeVisible(*raw);
-        listenForChannel(*raw, parameter);
         place(*raw, x, y, w, h);
         knobs.push_back(std::move(knob));
         return *raw;
@@ -910,7 +887,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             ? juce::String(parameter < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
         raw->setTitle(channelName + juce::String(cs80::paramDef(parameter).name));
         raw->setTooltip(raw->getTitle() + (raw->getToggleState() ? ": ON" : ": OFF"));
-        listenForChannel(*raw, parameter);
         place(*raw, x, y, w, h);
         leds.push_back(std::move(button));
         return *raw;
@@ -1062,9 +1038,9 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         {
             channelRows[(size_t) channel] = std::make_unique<panel::ChannelRow>(processor, channel);
             addAndMakeVisible(*channelRows[(size_t) channel]);
-            channelRows[(size_t) channel]->getTag().onClick = [this, channel] { showChannel(channel); };
         }
-        // Explicit software-only voice settings stay under a separate lid.
+        // Software-only voice settings (pan, a second LEVEL, filter switches, wheels): none is on the original
+        // panel, so they open over the lid's printed diagram on request.
         addAndMakeVisible(voiceOptions);
         voiceOptions.setButtonText("VOICE SETTINGS");
         voiceOptions.setTitle("Show software voice settings");
@@ -1073,7 +1049,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             optionsVisible = ! optionsVisible;
             voiceOptions.setToggleState(optionsVisible, juce::dontSendNotification);
             for (auto* component : optionComponents) component->setVisible(optionsVisible);
-            voicePlate.setScopesVisible(! optionsVisible);
             backdrop.repaint();
             repaint();
         };
@@ -1091,30 +1066,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             memoryLidKey.setToggleState(true, juce::dontSendNotification);
         };
         place(memoryLidKey, geo::memoryLidKey.getX(), geo::memoryLidKey.getY(), geo::memoryLidKey.getWidth(), geo::memoryLidKey.getHeight());
-        // Which channel the live curves describe.
         for (int channel = 0; channel < 2; ++channel)
         {
-            auto& button = viewButtons[(size_t) channel];
-            button.setClickingTogglesState(true);
-            button.setRadioGroupId(0x300);
-            button.setWantsKeyboardFocus(true);
-            button.setTitle(channel == 0 ? "Show channel I voice curves" : "Show channel II voice curves");
-            button.setTooltip(button.getTitle());
-            button.setToggleState(channel == 0, juce::dontSendNotification);
-            button.onClick = [this, channel] { showChannel(channel); };
-            addAndMakeVisible(button);
-            const auto key = channel == 0 ? geo::viewKeyI : geo::viewKeyII;
-            place(button, key.getX(), key.getY(), key.getWidth(), key.getHeight());
-        }
-
-        for (int channel = 0; channel < 2; ++channel)
-        {
-            const float y = 232.0f + (float) channel * 82.0f;
+            const float y = 176.0f + (float) channel * 82.0f;
             auto p = [channel](int local) { return cs80::chParam(channel, local); };
-            auto& pan = addKnob(p(cs80::CP_pan), 94, y, 66, 72, "PAN");
-            auto& level = addKnob(p(cs80::CP_vLevel), 166, y, 66, 72, "LEVEL");
-            auto& hp = addLed(p(cs80::CP_hpfOn), "HPF", 240, y + 10, 60, 24);
-            auto& lp = addLed(p(cs80::CP_lpfOn), "LPF", 240, y + 40, 60, 24);
+            auto& pan = addKnob(p(cs80::CP_pan), 80, y, 56, 72, "PAN");
+            auto& level = addKnob(p(cs80::CP_vLevel), 138, y, 56, 72, "LEVEL");
+            auto& hp = addLed(p(cs80::CP_hpfOn), "HPF", 198, y + 10, 52, 24);
+            auto& lp = addLed(p(cs80::CP_lpfOn), "LPF", 198, y + 40, 52, 24);
             optionComponents.insert(optionComponents.end(), { &pan, &level, &hp, &lp });
         }
         for (auto* component : optionComponents) component->setVisible(false);
@@ -1549,52 +1508,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                           outputMeterDisplay.overRange(), outputMeterDisplay.nonFinite());
     }
 
-    // Curves describe what is sounding: the panel for PANEL, otherwise the
-    // selected tone's voicing or the memory bank that owns the 26 controls.
-    // Which channel the signal-flow window describes: from the tags, the I/II keys, or touching one of its faders.
-    void showChannel(int channel)
+    // Each row's numeral lights while that row is heard (its selector on PANEL).
+    void refreshRows()
     {
-        if (channel == viewChannel) return;
-        viewChannel = channel;
-        syncVoicePlate();
-    }
-
-    void syncVoicePlate()
-    {
-        for (int channel = 0; channel < 2; ++channel)
-        {
-            channelRows[(size_t) channel]->getTag().setViewed(channel == viewChannel);
-            viewButtons[(size_t) channel].setToggleState(channel == viewChannel, juce::dontSendNotification);
-        }
-        VoicePlate::Snapshot snap;
-        snap.channel = viewChannel;
-        snap.source = processor.getHardwareSource(viewChannel);
-        for (int local = 0; local < cs80::CP_count; ++local)
-            snap.v[(size_t) local] = processor.getParamValue(cs80::chParam(viewChannel, local));
-        juce::String name = "PANEL";
-        if (snap.source < 11)
-        {
-            if (toneChannel != viewChannel || toneSource != snap.source)
-            {
-                toneChannel = viewChannel;
-                toneSource = snap.source;
-                toneCache = cs80::ParamValues();
-                cs80::applyHardwareTone(toneCache, viewChannel, snap.source);
-            }
-            for (int local = 0; local < cs80::CP_count; ++local)
-                if (local != cs80::CP_feet && local != cs80::CP_pan && local != cs80::CP_hpfOn && local != cs80::CP_lpfOn)
-                    snap.v[(size_t) local] = toneCache[cs80::chParam(viewChannel, local)];
-            name = juce::String(cs80::hardwareToneName(snap.source, viewChannel)).toUpperCase() + " TONE";
-        }
-        else if (snap.source < 13)
-        {
-            const int bank = viewChannel + (snap.source == 12 ? 2 : 0);
-            for (int local = 0; local < cs80::CP_count; ++local)
-                if (Cs80AudioProcessor::isMemoryControl(local))
-                    snap.v[(size_t) local] = processor.getMemoryValue(bank, local);
-            name = "MEMORY " + juce::String(bank + 1);
-        }
-        voicePlate.setSnapshot(snap, name);
+        for (auto& row : channelRows)
+            row->refresh();
     }
 
     // The status strip prints up to four short readouts (rank I, rank II, SUB, MODE). It is one recessed window
@@ -1666,7 +1584,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         syncSourceStatus();
         layoutStrip(false);
         updateMeter();
-        syncVoicePlate();
+        refreshRows();
         deck.refresh();
         if (armedKey != nullptr && juce::Time::getMillisecondCounterHiRes() >= armDeadlineMs) disarmKey();
         if (memoryLid.isVisible()) memoryLid.refresh();
@@ -1679,6 +1597,126 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     // -----------------------------------------------------------------------
     // Painting
     // -----------------------------------------------------------------------
+    // The closed memory lid at the upper left (owner index 46): a hinged plate in the panel's own finish, printed
+    // with a block diagram of the voice and carrying its two keys on its front rail. The print is a stylised
+    // diagram of this instrument's signal path, not a copy of the original print, which could not be read
+    // (docs/PANEL_CONFORMANCE.md). With VOICE SETTINGS on, a software tray covers the diagram.
+    void paintLid(juce::Graphics& g, float scale)
+    {
+        const auto r = geo::lidFace;
+        art::ambient(g, r, 5.0f, 12.0f, 0.55f);
+        ui::softShadow(g, r, 5.0f, 0.0f, 4.0f, 10.0f, 0.75f);
+        g.setGradientFill(art::vgrad(juce::Colour(0xff4c4943), juce::Colour(0xff1a1916), r));
+        g.fillRoundedRectangle(r, 5.0f);
+        const auto plate = r.reduced(4.0f);
+        {
+            juce::Graphics::ScopedSaveState state(g);
+            juce::Path clip;
+            clip.addRoundedRectangle(plate, 3.0f);
+            g.reduceClipRegion(clip);
+            art::fillTile(g, art::panelTile(), plate, scale, 7.0f, 3.0f);
+            g.setGradientFill(art::vgrad(art::white(0.05f), juce::Colours::transparentWhite, plate.withHeight(80.0f)));
+            g.fillRect(plate);
+        }
+        g.setColour(art::white(0.22f));
+        g.drawLine(r.getX() + 5.0f, r.getY() + 1.0f, r.getRight() - 5.0f, r.getY() + 1.0f, 1.0f);
+        g.setColour(art::black(0.85f));
+        g.drawRoundedRectangle(r, 5.0f, 1.0f);
+        // Hinge barrel along the back edge, with two knuckles.
+        const juce::Rectangle<float> hinge(r.getX() + 12.0f, r.getY() - 2.0f, r.getWidth() - 24.0f, 7.0f);
+        art::brushedMetal(g, hinge, 2.0f, 0.0f, 43);
+        g.setColour(art::black(0.8f));
+        g.drawRoundedRectangle(hinge, 2.0f, 1.0f);
+        for (float kx : { hinge.getX() + 40.0f, hinge.getRight() - 40.0f })
+        {
+            const juce::Rectangle<float> knuckle(kx - 18.0f, hinge.getY() - 1.0f, 36.0f, hinge.getHeight() + 2.0f);
+            art::brushedMetal(g, knuckle, 2.5f, 0.3f, (int) kx);
+            g.setColour(art::black(0.85f));
+            g.drawRoundedRectangle(knuckle, 2.5f, 1.0f);
+        }
+        art::legend(g, "MEMORY", { plate.getX() + 10.0f, plate.getY() + 8.0f, 120.0f, 14.0f }, spacedFont(12.0f, 0.18f),
+                    juce::Justification::centredLeft, juce::Colour(0xffe9d695));
+        art::legend(g, "LIFT TO OPEN", { plate.getRight() - 130.0f, plate.getY() + 8.0f, 120.0f, 14.0f }, spacedFont(9.0f, 0.12f),
+                    juce::Justification::centredRight, juce::Colour(0xffb5a878), 0.5f);
+        art::etchRect(g, plate.reduced(4.0f), 3.0f, 0.45f);
+        art::etchLine(g, plate.getX() + 8.0f, geo::memoryLidKey.getY() - 8.0f, plate.getRight() - 8.0f, geo::memoryLidKey.getY() - 8.0f, 0.35f);
+        if (optionsVisible)
+            paintVoiceSettingsTray(g);
+        else
+            paintBlockDiagram(g, geo::lidDiagram);
+    }
+
+    // The printed diagram: per channel VCO -> HPF -> LPF -> VCA with the sine path around the filters; the sub
+    // oscillator and ring modulator feeding the voices; both channels mixed into tremolo/chorus and the output.
+    static void paintBlockDiagram(juce::Graphics& g, juce::Rectangle<float> area)
+    {
+        const auto ink = juce::Colour(0xffe6dcbc);
+        const auto font = spacedFont(9.0f, 0.06f);
+        auto box = [&](juce::Rectangle<float> b, const juce::String& text)
+        {
+            g.setColour(art::black(0.35f));
+            g.fillRoundedRectangle(b, 2.0f);
+            art::etchRect(g, b, 2.0f, 0.75f);
+            art::legend(g, text, b, font, juce::Justification::centred, ink, 0.5f);
+        };
+        auto arrow = [&](float x0, float y, float x1)
+        {
+            art::etchLine(g, x0, y, x1 - 3.0f, y, 0.75f);
+            juce::Path head;
+            head.addTriangle(x1, y, x1 - 5.0f, y - 2.8f, x1 - 5.0f, y + 2.8f);
+            g.setColour(juce::Colour(0xffd6bb68).withAlpha(0.68f));
+            g.fillPath(head);
+        };
+        const float bw = 44.0f, bh = 19.0f, step = 60.0f;
+        const float x0 = area.getX() + 26.0f;
+        const char* stages[] = { "VCO", "HPF", "LPF", "VCA" };
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            const float y = area.getY() + 10.0f + (float) channel * 72.0f;
+            art::legend(g, channel == 0 ? "I" : "II", { area.getX(), y, 22.0f, bh }, spacedFont(11.0f, 0.04f),
+                        juce::Justification::centred, ink, 0.6f);
+            for (int i = 0; i < 4; ++i)
+            {
+                const juce::Rectangle<float> b(x0 + (float) i * step, y, bw, bh);
+                box(b, stages[i]);
+                arrow(b.getRight() + 1.0f, b.getCentreY(), b.getRight() + step - bw - 1.0f);
+            }
+            // sine path from the oscillator around both filters into the amplifier
+            const float sy = y + bh + 9.0f, sx0 = x0 + bw * 0.5f, sx1 = x0 + 3.0f * step + bw * 0.5f;
+            art::etchLine(g, sx0, y + bh, sx0, sy, 0.6f);
+            art::etchLine(g, sx0, sy, sx1, sy, 0.6f);
+            art::etchLine(g, sx1, sy, sx1, y + bh + 1.0f, 0.6f);
+            art::legend(g, "SINE", { sx0 + 40.0f, sy - 1.0f, 60.0f, 11.0f }, spacedFont(8.0f, 0.10f),
+                        juce::Justification::centred, juce::Colour(0xffcfc4a2), 0.0f);
+        }
+        // modulation sources under the voices, and the common output chain
+        const float my = area.getY() + 166.0f;
+        box({ x0, my, 70.0f, bh }, "SUB OSC");
+        box({ x0 + 82.0f, my, 70.0f, bh }, "RING MOD");
+        const float busX = x0 + 3.0f * step + bw + 10.0f;
+        art::etchLine(g, busX, area.getY() + 19.5f, busX, my + bh + 36.0f, 0.6f);
+        const juce::Rectangle<float> out(x0 + 82.0f, my + 46.0f, busX - x0 - 82.0f - 6.0f, bh);
+        box(out, "TREMOLO / CHORUS");
+        arrow(busX, out.getCentreY(), out.getRight() + 1.0f);
+        art::legend(g, "OUT", { out.getX() - 42.0f, out.getY(), 36.0f, bh }, font, juce::Justification::centredRight, ink, 0.5f);
+        juce::Path tip;
+        tip.addTriangle(out.getX() - 1.0f, out.getCentreY(), out.getX() + 4.0f, out.getCentreY() - 2.8f, out.getX() + 4.0f, out.getCentreY() + 2.8f);
+        g.setColour(juce::Colour(0xffd6bb68).withAlpha(0.68f));
+        g.fillPath(tip);
+    }
+
+    void paintVoiceSettingsTray(juce::Graphics& g)
+    {
+        const auto well = geo::lidOptions;
+        art::recessTray(g, well, 3.0f, juce::Colour(0xff15140f), juce::Colour(0xff0b0a09), 8.0f, 0.8f);
+        art::haloText(g, "VOICE SETTINGS  /  SOFTWARE", { well.getX() + 8, well.getY() + 4, 240, 12 }, spacedFont(8.5f, 0.14f),
+                      juce::Justification::centredLeft, juce::Colour(0xffcdb878), juce::Colour(0xff13120e));
+        for (int channel = 0; channel < 2; ++channel)
+            art::legend(g, channel == 0 ? "I" : "II", { well.getX() + 2.0f, 176.0f + (float) channel * 82.0f + 22.0f, 16.0f, 28.0f },
+                        spacedFont(12.0f, 0.04f), juce::Justification::centred, juce::Colour(0xffe6dcbc), 0.55f);
+        art::etchLine(g, well.getX() + 8.0f, 254.0f, well.getRight() - 72.0f, 254.0f, 0.35f);
+    }
+
     // The raised back edge of the panel: an 8 px ledge in the panel's own finish with two narrow vent slots in it.
     // No printed legend: it is architecture, not information.
     void paintTopLip(juce::Graphics& g)
@@ -1840,7 +1878,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.fillAll(juce::Colour(0xff070605));
 
         // ---- one fine crinkle finish for the toolbar, panel and deck ---------
-        const juce::Rectangle<float> body(geo::bodyLeft, 0.0f, geo::bodyRight - geo::bodyLeft, geo::deckBottomFinal);
+        const juce::Rectangle<float> body(geo::bodyLeft, 0.0f, geo::bodyRight - geo::bodyLeft, geo::deckBottom);
         art::fillTile(g, art::panelTile(), body, scale);
         // One light over the whole panel: it comes from the upper left, so the left runs bright and the
         // lower right falls away. Nothing else lights the surface.
@@ -1860,16 +1898,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
 
         paintTopLip(g);
-        g.saveState();                                                  // the control surface and deck, moved up by midShift
-        g.addTransform(juce::AffineTransform::translation(0.0f, -geo::midShift));
-        seamGroove(g, 287.0f);
-        seamGroove(g, 480.0f);
-        panel::ChannelRow::paintArt(g, 0);
-        panel::ChannelRow::paintArt(g, 1);
-        VoicePlate::paintBezel(g, optionsVisible);
+        seamGroove(g, geo::rowY0[1] + geo::rowTop - 3.0f);
+        seamGroove(g, geo::frontStrip.getY() - 4.0f);
+        for (auto& row : channelRows)
+            row->paintArt(g);
+        paintLid(g, scale);
 
-        // ---- lower row: ring / sub / feet | tone selector | global ------------
-        panel::CentreRow::paintArt(g);
+        // ---- front strip: PITCH, ring, sub, feet | tone selector | global, keyboard, touch, VOLUME
+        centreRow.paintArt(g);
         // knobs stand on the panel: a soft contact shadow all around the cap
         auto knobShadows = [&g](const std::vector<Placement>& items)
         {
@@ -1888,19 +1924,19 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         knobShadows(placements);
 
         // front edge of the control surface over the deck
+        const float edge = geo::faceBottom - 8.0f;
         g.setColour(art::white(0.05f));
-        g.fillRect(geo::bodyLeft, 652.0f, geo::bodyRight - geo::bodyLeft, 8.0f);
+        g.fillRect(geo::bodyLeft, edge, geo::bodyRight - geo::bodyLeft, 8.0f);
         g.setColour(art::white(0.20f));
-        g.fillRect(geo::bodyLeft, 652.0f, geo::bodyRight - geo::bodyLeft, 1.0f);
+        g.fillRect(geo::bodyLeft, edge, geo::bodyRight - geo::bodyLeft, 1.0f);
         g.setColour(art::black(0.9f));
-        g.fillRect(geo::bodyLeft, 659.0f, geo::bodyRight - geo::bodyLeft, 1.5f);
+        g.fillRect(geo::bodyLeft, geo::faceBottom - 1.0f, geo::bodyRight - geo::bodyLeft, 1.5f);
 
-        panel::PerformanceDeck::paintArt(g);
+        deck.paintArt(g);
 
         // ---- screws on the control face -----------------------------------
         for (float x : { 61.0f, 1539.0f })
-            art::slotScrew(g, { x, 645.0f }, 4.4f, (x + 645.0f) * 0.7f);
-        g.restoreState();
+            art::slotScrew(g, { x, edge - 7.0f }, 4.4f, (x + edge - 7.0f) * 0.7f);
         paintToolbar(g);
 
         // ---- keybed base (the Keybed component paints over this) -----------
@@ -1908,8 +1944,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         g.fillRect(geo::keybed);
 
         // ---- walnut cheeks run the full height of the case, over everything --
-        art::walnutCheek(g, { 0, 0, geo::bodyLeft, kDesignHeight }, true, geo::deckBottomFinal, scale);
-        art::walnutCheek(g, { geo::bodyRight, 0, kDesignWidth - geo::bodyRight, kDesignHeight }, false, geo::deckBottomFinal, scale);
+        art::walnutCheek(g, { 0, 0, geo::bodyLeft, kDesignHeight }, true, geo::deckBottom, scale);
+        art::walnutCheek(g, { geo::bodyRight, 0, kDesignWidth - geo::bodyRight, kDesignHeight }, false, geo::deckBottom, scale);
         g.restoreState();
     }
 
@@ -1927,15 +1963,12 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                                         juce::roundToInt(w * sx), juce::roundToInt(h * sy));
         };
         auto rr = [&r](const juce::Rectangle<float>& b) { return r(b.getX(), b.getY(), b.getWidth(), b.getHeight()); };
-        // Rectangles of the control surface and deck are in the shifted block's design coordinates.
-        auto rs = [&r](const juce::Rectangle<float>& b) { return r(b.getX(), geo::shifted(b.getY()), b.getWidth(), b.getHeight()); };
 
         backdrop.setBounds(getLocalBounds());
         spill.setBounds(getLocalBounds());
         applyCaptions();
-        voicePlate.setBounds(rs(geo::plate));
         for (const auto& item : placements)
-            item.component->setBounds(r(item.bounds.getX(), geo::shifted(item.bounds.getY()),
+            item.component->setBounds(r(item.bounds.getX(), item.bounds.getY(),
                                         item.bounds.getWidth(), item.bounds.getHeight()));
         centreRow.layout(centreRow.designArea(), sx, sy);
         for (auto& row : channelRows)
@@ -1976,8 +2009,8 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         midiStatusLabel.setBounds(rr(geo::midiStatus));
         layoutStrip(true);
 
-        pitchWheel.setBounds(r(312.0f, geo::shifted(230.0f), 30.0f, 150.0f));
-        modWheel.setBounds(r(350.0f, geo::shifted(230.0f), 30.0f, 150.0f));
+        pitchWheel.setBounds(r(258.0f, 176.0f, 30.0f, 150.0f));
+        modWheel.setBounds(r(296.0f, 176.0f, 30.0f, 150.0f));
         keybed.setBounds(rr(geo::keybed));
 
         scrim.setBounds(rr(geo::overlayBody));
@@ -1990,7 +2023,6 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     Cs80AudioProcessor& processor;
     Backdrop backdrop;
     ui::LightSpill spill;
-    VoicePlate voicePlate;
     ui::LookAndFeel lookAndFeel;
     PanelTooltipWindow tooltips { this, 600 };
 
@@ -2028,22 +2060,16 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     std::vector<std::unique_ptr<ui::LedButton>> leds;
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> buttonAttachments;
     std::vector<Placement> placements;
-    // Touch tracking listens to the section controls, so it outlives them.
-    std::array<TouchView, 2> touchViews;
     panel::CentreRow centreRow;
     std::array<std::unique_ptr<panel::ChannelRow>, 2> channelRows;
     panel::PerformanceDeck deck;
     KeyButton voiceOptions { "VOICE SETTINGS", KeyButton::Style::satin };
     KeyButton memoryLidKey { "OPEN MEMORY LID", KeyButton::Style::satin };
-    std::array<KeyButton, 2> viewButtons { KeyButton("I", KeyButton::Style::plate), KeyButton("II", KeyButton::Style::plate) };
     juce::String stripKey;
     float stripEnd = 400.0f;
     std::vector<float> stripDividers;
     std::vector<juce::Component*> optionComponents;
     bool optionsVisible = false;
-    int viewChannel = 0;
-    int toneChannel = -1, toneSource = -1;
-    cs80::ParamValues toneCache;
 
     cs80::ui::Keybed keybed;
     ui::HardwareKeyboard& keyboard = keybed.keys;

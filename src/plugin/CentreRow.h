@@ -6,8 +6,8 @@
 
 namespace cs80::panel
 {
-// The lower strip of the control surface, after Yamaha's PN2 panel: PITCH, ring modulator, sub oscillator,
-// feet, the two tone-selector rows, MIX, brilliance, resonance, touch response and VOLUME.
+// The front strip of the control surface (PN2): PITCH, DETUNE, ring modulator, sub oscillator, feet, the two
+// tone-selector rows, MIX, brilliance, resonance, keyboard control, touch response and VOLUME.
 class CentreRow final : public PanelSection
 {
 public:
@@ -21,16 +21,19 @@ public:
     void syncToneMarks();
     // Called after a tab press has selected a new source.
     std::function<void()> onToneSelected;
+    // The printed hardware name of a selector tab ("ELECTRIC PIANO", "MEMORY 3", "PANEL").
+    static juce::String toneTabName(int channel, int source);
 
     // Static art drawn by the buffered chassis in design space: the strip outline, brackets and tone bezel.
-    static void paintArt(juce::Graphics& g);
+    void paintArt(juce::Graphics& g) const override;
 
 private:
-    void buildMasterSection();
-    void buildToneSection();
+    void build();
+    void buildToneSection(float x0);
     void afterLayout() override;
-    static void paintToneBezel(juce::Graphics& g);
+    void paintToneBezel(juce::Graphics& g) const;
 
+    juce::Rectangle<float> toneBezel;
     ui::ParamKnob* subFunction = nullptr;
     ui::ParamKnob* subSpeed = nullptr;
     ui::ParamKnob* pitchKnob = nullptr;

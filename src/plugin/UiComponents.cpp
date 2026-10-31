@@ -2141,30 +2141,23 @@ void paintFaderTrack(juce::Graphics& g, int W, int H, const FaderGeom& f, float 
     drawFaderSlot(g, cx, 0.6f * f.s, (float) H - 0.6f * f.s, f.s);
 }
 
-// Printed legend lines for a tone tab from its accessibility title: three letters over the number
-// ("STRING 1" -> STR / 1), or one line for the unnumbered tones (FLT, EP, BASS, PNL). Empty when the
-// title is not a known tone, in which case the button text is used.
+// Printed legend lines for a tone tab from its accessibility title, in the hardware wording (service p1, owner
+// p37): the tone word over its number ("STRING" / "1"), the two long words broken where the panel would break
+// them ("HARPSI-" / "CHORD 1", "ELECTRIC" / "PIANO"), or one line (FLUTE, BASS, PANEL). Empty when the title is
+// not a known tone, in which case the button text is used.
 juce::StringArray toneLegend(const juce::String& title)
 {
-    static const struct { const char* word; const char* code; bool numbered; } table[] = {
-        { "STRING", "STR", true }, { "BRASS", "BRS", true }, { "FLUTE", "FLT", false }, { "E. PIANO", "EP", false },
-        { "E.PIANO", "EP", false }, { "CLAVICHORD", "CLV", true }, { "HARPSICHORD", "HRP", true },
-        { "ORGAN", "ORG", true }, { "GUITAR", "GTR", true }, { "FUNKY", "FNK", true }, { "MEMORY", "MEM", true },
-        { "BASS", "BASS", false }, { "PANEL", "PNL", false } };
     const auto t = title.trim().toUpperCase();
-    for (const auto& e : table)
-        if (t.startsWith(e.word))
-        {
-            juce::StringArray lines;
-            lines.add(e.code);
-            if (e.numbered)
-            {
-                const auto digits = t.fromLastOccurrenceOf(" ", false, false).retainCharacters("0123456789");
-                if (digits.isNotEmpty())
-                    lines.add(digits);
-            }
-            return lines;
-        }
+    const auto number = t.fromLastOccurrenceOf(" ", false, false).retainCharacters("0123456789");
+    auto two = [](const juce::String& a, const juce::String& b) { juce::StringArray lines; lines.add(a); lines.add(b); return lines; };
+    if (t == "ELECTRIC PIANO" || t == "E. PIANO" || t == "E.PIANO") return two("ELECTRIC", "PIANO");
+    if (t.startsWith("HARPSICHORD")) return two("HARPSI-", ("CHORD " + number).trim());
+    if (t.startsWith("CLAVICHORD")) return two("CLAVI-", ("CHORD " + number).trim());
+    for (const char* word : { "STRING", "BRASS", "ORGAN", "GUITAR", "FUNKY", "MEMORY" })
+        if (t.startsWith(word))
+            return number.isNotEmpty() ? two(word, number) : juce::StringArray(word);
+    for (const char* word : { "FLUTE", "BASS", "PANEL" })
+        if (t == word) return juce::StringArray(word);
     return {};
 }
 
@@ -2178,8 +2171,7 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
     area.removeFromBottom(compact ? 1.8f : 4.4f);
     const auto ink = tabPlastic(base, lit || pressed).ink;
     // The ink stays inside the plastic: a glyph never reaches the tab edge. 9 px is the floor and the
-    // squeeze never goes past 0.70 (tone codes are three capitals). If a code still does not fit,
-    // a numbered tab prints just its number, large, and a bare word loses its last letters.
+    // squeeze never goes past 0.70. A word that still does not fit loses its last letters.
     const float room = geo.face.getWidth() - (compact ? 1.4f : 2.0f);
     const float fontPx = juce::jlimit(9.0f, 10.0f, bounds.getWidth() * 0.29f);
     constexpr float toneMinScale = 0.70f;
@@ -2194,15 +2186,7 @@ void drawTabLegend(juce::Graphics& g, juce::Rectangle<float> bounds, bool lit, b
         f.setExtraKerningFactor(0.01f);
         return f;
     };
-    if (known && lines.size() > 1)
-    {
-        auto probe = fontFor(fontPx);
-        bool fits = true;
-        fitFontToWidth(probe, lines[0], room, toneMinScale, 9.0f, fits);
-        if (! fits)
-            lines.remove(0); // number only
-    }
-    const bool numberOnly = known && lines.size() == 1 && lines[0].containsOnly("0123456789");
+    const bool numberOnly = false;
     const int count = juce::jmax(1, lines.size());
     const float pitch = juce::jlimit(fontPx * 0.9f, fontPx * 1.22f, area.getHeight() / (float) count);
     const float blockTop = area.getCentreY() - pitch * (float) count * 0.5f;
