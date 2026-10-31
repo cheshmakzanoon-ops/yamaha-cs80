@@ -112,6 +112,7 @@ void Engine::reset()
             v.velocity = v.pressure = v.timbre = v.mpeBend = 0.0f;
             v.ribbonRatio = 1.0f;
             v.contour = keyboardContourWeights(kColdKeyNote);
+            v.kbcKey = kbc::physicalKey(kColdKeyNote);
         }
     }
     heldCount = 0;
@@ -166,6 +167,7 @@ void Engine::reset()
     arpClock = 0.0f;
     arpGateTime = 0.0f;
     dcL = dcR = dcInL = dcInR = 0.0f;
+    refreshKeyboardContour();
 }
 
 void Engine::setParams(const ParamValues& values)
@@ -305,6 +307,8 @@ void Engine::applyParams(const ParamValues& values)
             }
         }
     }
+
+    refreshKeyboardContour();
 
     // Toggling the arpeggiator is a performance action, not a parameter that
     // should leave old voices hanging. Enabling it clears the directly played
@@ -804,6 +808,64 @@ void Engine::wakeIdleVoice(Voice& v) noexcept
     v.idleSteps = 0;
 }
 
+void Engine::refreshKeyboardContour() noexcept
+{
+    // KBC1/KBC2 hold one contour voltage per voice channel for the key last
+    // assigned to it (0.033 uF held nodes, refreshed by the multiplexer, so a
+    // lever move reaches held notes). All eight load the shared FH/FL/LC buses.
+    const bool circuit = usesSourceModels(global.renderPolicy);
+    std::array<double, kNumVoices> kc {}, kb {};
+    double kcSum = 0.0, kbSum = 0.0;
+    for (int vi = 0; vi < kNumVoices; ++vi)
+    {
+        auto& v = voices[(size_t) vi];
+        if (circuit)
+        {
+            kc[(size_t) vi] = kbc::outputVolts(v.kbcKey, global.kbdBrillianceLow, global.kbdBrillianceHigh);
+            kb[(size_t) vi] = kbc::outputVolts(v.kbcKey, global.kbdLevelLow, global.kbdLevelHigh);
+        }
+        kcSum += kc[(size_t) vi];
+        kbSum += kb[(size_t) vi];
+    }
+    for (int vi = 0; vi < kNumVoices; ++vi)
+    {
+        auto& v = voices[(size_t) vi];
+        for (int ch = 0; ch < kNumRanks; ++ch)
+        {
+            if (! circuit)
+            {
+                v.kbcCv[ch][0] = v.kbcCv[ch][1] = 0.0f;
+                v.kbcLevelGain[ch] = 0.0f;
+                continue;
+            }
+            const double own = kc[(size_t) vi], level = kb[(size_t) vi];
+            if (sourceActive[ch])
+            {
+                // Source-compiled receiver map, including the shared-bus loading
+                // that every channel's KC branch adds (SourceFactoryTones.h).
+                for (int side = 0; side < 2; ++side)
+                {
+                    const auto& m = sourceTones[ch].cutoff[(size_t) side];
+                    v.kbcCv[ch][side] = static_cast<float>(m.effectiveCvPerPinVolt
+                        * (m.pinPerTouch * own + m.pinPerLoadedBus * m.busPerTouchSum * kcSum));
+                }
+                const auto& src = sourceBoundaries[ch].level;
+                constexpr double g = 1.0 / 560000.0;
+                const double bus = src.ohms * g * source_factory::levelPinPerTouch * kbSum
+                    / (1.0 + source_factory::voiceCount * src.ohms * g * (1.0 - source_factory::levelPinPerLoadedBus));
+                v.kbcLevelGain[ch] = static_cast<float>((source_factory::levelPinPerLoadedBus * bus
+                    + source_factory::levelPinPerTouch * level) / source_factory::levelUnitVolts);
+            }
+            else
+            {
+                v.kbcCv[ch][0] = static_cast<float>(own * kbc::kKcHpCvPerVolt);
+                v.kbcCv[ch][1] = static_cast<float>(own * kbc::kKcLpCvPerVolt);
+                v.kbcLevelGain[ch] = static_cast<float>(level * kbc::kKbLevelPerVolt);
+            }
+        }
+    }
+}
+
 void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
     // Circuit engine (Phase 2.1): every circuit free-runs, so assignment never
@@ -832,6 +894,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.mpeBend = 0.0f;
     v.targetPitch = (float) note;
     v.contour = keyboardContourWeights(note);
+    v.kbcKey = kbc::physicalKey(note);
     v.glidePitch = global.glideGate && global.portamento > 0.0001f ? (float) lastNote : (float) note;
     // TWS C precedes the TRG4 PB control. Keep its nominal onset state alive
     // even when PB depth is zero. Reset-to-velocity is still a MIDI/retrigger
@@ -841,6 +904,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.age = ++voiceCounter;
     lastNote = note;
     ++heldCount;
+    if (usesSourceModels(global.renderPolicy))
+        refreshKeyboardContour();
 
     for (int ch = 0; ch < 2; ++ch)
     {
@@ -1534,8 +1599,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                    + subValue * (global.subVcf + global.subAtVcf * v.pressure) * 1.5f
                                    + lfoFilter
                                    // Keyboard contour: zero (exactly) when both levers are centred.
-                                   + keyboardBrillianceOctaves(global.kbdBrillianceLow,
-                                                               global.kbdBrillianceHigh, v.contour);
+                                   // Legacy: frozen per-key weights. Circuit engine: the KBC
+                                   // network, added per filter side below (Phase 2.3).
+                                   + (freeRunning ? 0.0f : keyboardBrillianceOctaves(global.kbdBrillianceLow,
+                                                               global.kbdBrillianceHigh, v.contour));
+            const float contourHp = v.kbcCv[ch][0], contourLp = v.kbcCv[ch][1];
 
             const float fenv = sourceActive[ch] ? sourceFilterValues[ch][vi]
                 : r.fenv.tick(rate, true, usesSourceModels(global.renderPolicy));
@@ -1543,11 +1611,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
             const float cutoffLp = sourceActive[ch]
-                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct, r.lpCutoffExp)
-                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp, r.lpCutoffExp);
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct + contourLp, r.lpCutoffExp)
+                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp + contourLp, r.lpCutoffExp);
             const float cutoffHp = sourceActive[ch]
-                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct, r.hpCutoffExp)
-                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp, r.hpCutoffExp);
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct + contourHp, r.hpCutoffExp)
+                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp + contourHp, r.hpCutoffExp);
             const float qLp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
                 : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
             const float qHp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
@@ -1597,17 +1665,20 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // Source LC/LI is linear in its explicit unit scale. Retain global
             // effective transports once; floor negative total gain at zero,
             // but do NOT apply the legacy 2.6 cap or per-tone normalization.
+            // Keyboard level contour: Legacy frozen weights; circuit engine the
+            // KBC2 -> KB -> 270k -> LC branch (Phase 2.3).
+            const float contourLevel = freeRunning ? v.kbcLevelGain[ch]
+                : keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour);
             const float levelCv = sourceActive[ch]
                 ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
                              + subValue * global.subVca * 0.45f + lfoAmp
-                             + keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour))
+                             + contourLevel)
                 : clampf(rs.vLevel
                                              + rs.initLevel * v.velocity
                                              + rs.afterLevel * v.pressure
                                              + subValue * global.subVca * 0.45f
                                              + lfoAmp
-                                             + keyboardLevelOffset(global.kbdLevelLow,
-                                                                   global.kbdLevelHigh, v.contour),
+                                             + contourLevel,
                                          0.0f, 2.6f);
             const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };

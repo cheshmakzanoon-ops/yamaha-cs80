@@ -253,3 +253,105 @@ circuit frees.
 | Cyclic assignment and ninth held key | IB/A; circuit engine reconsiders a still-held ninth key when a circuit frees (declared YM26600 model, zero initial touch); Legacy ignores it. T KasScannerTests |
 | Keyboard scanner, debounce and allocation timing | A (declared); optional `kas_scan_timing`: events act at 1 ms scan instants, lowest key first. Scan period not sourced. Debounce not modelled |
 | Per-voice sample/hold, droop and retained key voltage | A; SH7 NAND(TR,SUS) hold in the circuit engine, glide frozen in Sustain I, constant-current droop (declared 0.033 µF / 1 pA). T KasScannerTests vs SampleHoldTruth.h |
+
+---
+
+## 2.3 Keyboard contour key map — **done** (key map declared; C2 conflict reported)
+
+### What changed
+
+- `src/core/KbcContour.h`: the declared physical-key → (Q1Q2Q3, octave tap,
+  note tap) map and the KBC O1 voltage, evaluated by the existing
+  `src/reference/KeyboardContour.h` network (all inputs clamped so it never
+  throws).
+- `Engine.cpp` (circuit engine): `refreshKeyboardContour()` computes, for each
+  of the eight channels and the key last assigned to it, the KBC1 (brilliance)
+  and KBC2 (level) voltages, then their receiving-network contributions: KC
+  into FH through 120k and FL through 39k (effective cutoff CV per volt
+  39/120 on HP, 1 on LP, the `SourceFactoryTones.h` map), KB into LC through
+  270k (level gain per volt `levelPinPerTouch/levelUnitVolts` = 0.207/V). For
+  source-selected ranks the shared FH/FL/LC bus loading by all eight channels'
+  KC/KB branches is included from the compiled map. Refreshed at every
+  assignment and every parameter frame (the KBC multiplexer refreshes the
+  0.033 µF held nodes, so a lever move reaches held notes).
+- `src/core/PerformanceControls.h`: the provisional weights
+  (`kProvisionalKeyboardBrillianceOctaves/LevelRange`) **no longer reach the
+  circuit engine**. They are not deleted: renamed `kLegacyKeyboard...` and
+  documented as the Legacy compatibility law, because Legacy must stay
+  byte-identical for old sessions that use the levers.
+
+### The declared key map and its alternatives
+
+| Group (OC tap) | Keys | Q1Q2Q3 | Source |
+|---|---|---|---|
+| G0 (OC0 = L) | C1 | 100 | KAS6 lowest-single-key code (flat at O) |
+| G1 (OC1 = L) | C#1–C2 | **110** | forced by the CS-80 adjustment procedure: VR1 at C2 must act (PDF29/printed 27) |
+| G2 (OC2 = (2L+R)/3) | C#2–C3 | 010 | KAS6 printed, same label |
+| G3 (OC3 = R) | C#3–C4 | 110 | KAS6 printed |
+| G4 (OC4 = (R+2H)/3) | C#4–C5 | 001 | KAS6 printed |
+| G5 (OC5 = H) | C#5–C6 | 101 | KAS6 printed; VR2 at C5# acts (PDF30/printed 28) |
+
+Note tap: C# = 0 … C = 11 within a group (KBC15 note ladder); C1 is a C.
+Physical key = MIDI note − 24 (the engine's 61-key span, MIDI 24..84).
+Trims: VR1 = 2136.29 Ω, VR2 = 4136.29 Ω, where the nominal network meets both
+printed targets exactly (a declared aligned unit).
+
+**The C2/C5# anchor conflict, openly:** read literally, KAS6 prints C2 → B
+011 → electrical Q **100**, which puts C2 flat at OC1 = L where VR1 cannot act;
+O1 would read **−4.018 V** at LOW minimum, outside the printed −2.76 ± 0.14 V
+(`cs80_keyboard_contour_key_map_tests` prints both). C5# → Q 101 agrees with
+VR2. The constraint review (KEYBOARD_MAPPING_CONSTRAINT_REVIEW.md) already
+proved that no bit permutation, polarity or uniform label shift satisfies both
+anchors. The declared map resolves it by reading KAS6's five columns as the
+49-key (C2..C6) layout of the shared IC application — where C2 *is* the lowest
+single key with code 100 — and keeping the printed codes by physical label for
+C#2..C6, with the CS-80's added low octave taking the anchor-required 110.
+With it the contour is continuous and monotone: LOW full at C1–C#1 (−4.02 V),
+−2.76 V at C2, ramping to 0 V at C3; zero across C#3–C4; HIGH rising from C#4
+to +2.76 V at C5# and +4.02 V at C6. Smoothness was not used to choose it; it
+is reported as a consequence.
+
+Alternatives listed (none implemented): (A1) literal KAS6 code at C2 (fails
+the VR1 anchor); (A2) the 49-key servicing-guide OC association shifted onto
+61 keys (discontinuous, per KEYBOARD_CONTOUR_EVIDENCE.md); (A3) C1 selecting
+OC0 or OC1 — provably indistinguishable at every lever setting (tested);
+(A4) the previous smooth provisional weights (kept for Legacy only).
+
+### Evidence class
+
+| Law | Class |
+|---|---|
+| KBC decoder, switch network, ladders, IC14 summers, O1 = 225/56 − V | source-derived (KBC1-2 p15, Panel2 p64), already in `KeyboardContour.h` |
+| Key map | **declared** (table above) |
+| Trim positions | **declared** aligned unit (meets the PDF29/30 targets exactly) |
+| KC 120k/39k and KB 270k receiving branches | source-derived (R51–52 p39) |
+| Effective CV / level gain per receiving volt | reuse of the source-factory receiver map (declared inference already used for TF/AB/IB) |
+| Lever travel −1 = MINIMUM | consistent with the printed target signs; physical lever direction unverified |
+
+### Gate and tests (`tests/KeyboardContourKeyMapTests.cpp`, 77 checks)
+
+All 61 keys × the pre-registered 5 × 5 LOW/HIGH grid, read back from the
+engine's HP and LP cutoffs (PANEL ranks, isolation) and converted to volts:
+worst error **8.4e-7 V** against the reference (tolerance 1e-5 V). Anchors:
+C2 −2.7600 V, C5# +2.7600 V (target ±2.76 ± 0.14). Declared code re-derived
+independently for every key. Neutral levers give exactly 0 V; level levers
+leave the filters alone and LOW LEVEL minimum silences the lowest key; a HIGH
+lever move reaches a held top key; source-selected ranks stay finite with bus
+loading; Legacy keeps its historical per-key weights.
+
+Mutations: literal KAS6 code for G1 → 14 failing checks; HP using the LP
+receiver ratio → 1; no refresh on a lever change → 1.
+
+### Intentional circuit-engine sound change (re-pin V2)
+
+The four contour levers now act through the KBC network: stronger at the
+keyboard ends than before (up to ±4 octaves on LP and ±1.3 on HP at C1/C6 at
+full lever, versus the provisional ±2 on both), zero across C#3–C4, and
+different on HP and LP. At centre (the default) nothing changes.
+
+### HARDWARE_COVERAGE.md entries (2026-10-31)
+
+| Row | New text |
+|---|---|
+| 9 Keyboard brilliance LOW/HIGH | A in the circuit engine: KBC1 network (KeyboardContour.h) with a declared 61-key code map meeting both adjustment anchors; KC → FH 120k / FL 39k; Legacy keeps provisional weights. C2 KAS6-code conflict reported (ws3-keyboard.md). T KeyboardContourKeyMapTests |
+| 10 Keyboard level LOW/HIGH | A in the circuit engine: KBC2 network, KB → LC 270k; same map |

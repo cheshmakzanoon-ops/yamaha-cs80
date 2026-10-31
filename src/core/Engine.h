@@ -10,6 +10,7 @@
 #include "OutputTapCircuit.h"
 #include "SourceFactoryTones.h"
 #include "KasScanner.h"
+#include "KbcContour.h"
 #include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
 
@@ -350,6 +351,11 @@ private:
         bool envelopeReset = true;
         // SH7 per-voice K hold (Phase 2.2, circuit engine).
         kas::HeldKeyNode keyNode;
+        // KBC contour of the key last assigned to this channel (Phase 2.3):
+        // per rank effective cutoff CV (HP, LP) and level gain contributions.
+        int kbcKey = 36;
+        float kbcCv[kNumRanks][2] {};
+        float kbcLevelGain[kNumRanks] {};
     };
 
     struct HeldKey
@@ -370,6 +376,8 @@ private:
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
     void wakeIdleVoice(Voice& voice) noexcept;
+    // Circuit engine: recompute every channel's KBC contour contributions.
+    void refreshKeyboardContour() noexcept;
     bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }
     void releaseVoice(Voice& voice);
     void releaseKey(Voice& voice);

@@ -232,6 +232,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_kas_scanner_tests PRIVATE cs80_core)
     add_test(NAME cs80_kas_scanner_tests COMMAND cs80_kas_scanner_tests)
     set_tests_properties(cs80_kas_scanner_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_keyboard_contour_key_map_tests tests/KeyboardContourKeyMapTests.cpp)
+    target_link_libraries(cs80_keyboard_contour_key_map_tests PRIVATE cs80_core)
+    add_test(NAME cs80_keyboard_contour_key_map_tests COMMAND cs80_keyboard_contour_key_map_tests)
+    set_tests_properties(cs80_keyboard_contour_key_map_tests PROPERTIES TIMEOUT 300)
 
     # [ws4-circuits] register this workstream's core tests below this line.
 

@@ -151,10 +151,18 @@ void overlayOnceAndOwnership() {
         const auto trace=a.getSourceCutoffReadout(rank);const auto info=a.getRankInfo(0,rank);
         const float macro=(p[P_macro1]-.5f)*2.f;
         const float brilliance=clampf(p[P_brilliance]+macro*.75f,-3.f,3.f)
-            +timbre*.8f+wheel*p[P_modWheelVcf]*1.5f
-            +keyboardBrillianceOctaves(p[P_kbdBrillianceLow],p[P_kbdBrillianceHigh],keyboardContourWeights(48));
-        check(info.hpfHz==nominalFilterCutoff(info.keyVolts,static_cast<float>(trace.effectiveCv[0][0])+brilliance),"HP adds modern brilliance/timbre/wheel/keyboard exactly once after source CV");
-        check(info.lpfHz==nominalFilterCutoff(info.keyVolts,static_cast<float>(trace.effectiveCv[0][1])+brilliance),"LP adds modern brilliance/timbre/wheel/keyboard exactly once after source CV");
+            +timbre*.8f+wheel*p[P_modWheelVcf]*1.5f;
+        // Phase 2.3 (intentional circuit-engine change): the keyboard term is the
+        // KBC network through each side's source receiver map, including the
+        // shared bus loaded by all eight channels (seven cold circuits at C#4).
+        source_factory::ToneControls tone; source_factory::compileTone(rank,f.hardwareSources[rank],tone);
+        const double own=kbc::outputVolts(kbc::physicalKey(48),p[P_kbdBrillianceLow],p[P_kbdBrillianceHigh]);
+        const double sum=own+7.0*kbc::outputVolts(kbc::physicalKey(61),p[P_kbdBrillianceLow],p[P_kbdBrillianceHigh]);
+        float keyboard[2];
+        for(int side=0;side<2;++side){const auto&m=tone.cutoff[(size_t)side];
+            keyboard[side]=static_cast<float>(m.effectiveCvPerPinVolt*(m.pinPerTouch*own+m.pinPerLoadedBus*m.busPerTouchSum*sum));}
+        check(info.hpfHz==nominalFilterCutoff(info.keyVolts,static_cast<float>(trace.effectiveCv[0][0])+brilliance+keyboard[0]),"HP adds modern brilliance/timbre/wheel/keyboard exactly once after source CV");
+        check(info.lpfHz==nominalFilterCutoff(info.keyVolts,static_cast<float>(trace.effectiveCv[0][1])+brilliance+keyboard[1]),"LP adds modern brilliance/timbre/wheel/keyboard exactly once after source CV");
     }
     auto bypass=f;bypass.effectiveValues[chParam(0,CP_hpfOn)]=bypass.effectiveValues[chParam(0,CP_lpfOn)]=0;
     bypass.effectiveValues[chParam(0,CP_pan)]=1;
