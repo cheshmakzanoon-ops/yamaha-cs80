@@ -174,6 +174,11 @@ void testKeyboardPointerPressure(Check check)
     juce::TemporaryFile fixture("-cs80-pressure-pointer");
     Cs80AudioProcessor host(fixture.getFile());
     host.prepareToPlay(48000.0, 32);
+    // ws8's first-run tour opens by itself once the editor is in a real window and
+    // covers the keybed (macOS CI found cs80::ui::TourOverlay at the key point
+    // whenever window activation took longer than the tour's first timer tick).
+    // This fixture is about pointer pressure, so the player has seen the tour.
+    host.getEditorState().tourSeen = true;
     Cs80AudioProcessorEditor editor(host);
     // Keep the supported minimum layout, not the screenshot's 1600x1000.
     // On smaller desktops the upper panel may extend off-screen deliberately:
@@ -187,11 +192,11 @@ void testKeyboardPointerPressure(Check check)
     // JUCE keyboard hit testing calls reallyContains(), which recurses through
     // Component::contains to the top-level native peer. A detached component
     // cannot receive a real pointer note, even when its bounds look correct.
-    // A command-line fixture is not the active application until it asks; on a
-    // CI desktop another process's window can stay ordered above an inactive
-    // app's new window. The fixture tests pointer pressure through the real hit
+    // A command-line fixture is not the active application (macOS CI reports
+    // foreground=0 even after asking), so another process's window could stay
+    // ordered above it. The fixture tests pointer pressure through the real hit
     // test, not ordering against other applications, so its window floats above
-    // normal windows; it also activates itself before ordering the editor front.
+    // normal windows; it also asks to be activated before ordering the editor front.
     editor.setAlwaysOnTop(true);
     editor.addToDesktop(0);
     editor.setVisible(true);
@@ -221,11 +226,9 @@ void testKeyboardPointerPressure(Check check)
     // macOS additionally checks the actual frontmost NSWindow at each screen
     // point. Let native realization/ordering settle through the normal loop;
     // do not bypass hit testing or inject a pretend note into the keyboard.
-    // Window-server activation and ordering are asynchronous: macOS CI runners
-    // intermittently needed longer than the former 2 s (frontmost check failed on
-    // macos-15 at ef9bc35 and macos-15-intel at 3961c1c, passed on the same source
-    // elsewhere). Wait up to 10 s, re-ordering the editor front each half second;
-    // the frontmost and hit-test assertions themselves are unchanged.
+    // Window-server activation and ordering are asynchronous on macOS: wait up to
+    // 10 s (formerly 2 s), re-ordering the editor front each half second; the
+    // frontmost and hit-test assertions themselves are unchanged.
     const auto settleStart = std::chrono::steady_clock::now();
     const auto deadline = settleStart + std::chrono::seconds(10);
     auto nextFront = settleStart + std::chrono::milliseconds(500);
