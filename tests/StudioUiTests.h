@@ -6,6 +6,7 @@
 // learning tools, keyboard tab order and minimum hit targets. Every capture is written as a PNG
 // next to the other snapshots for visual review.
 
+#include "HostParameterState.h"
 #include "plugin/AdvancedPanel.h"
 #include "plugin/EvidenceRegister.h"
 #include "plugin/PanelLayout.h"
@@ -557,7 +558,7 @@ inline void testMidiLearnRoundTrip(const Check& check, const Flush& flush, const
         auto* restoredParameter = restored.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(lpf));
         sendController(restored, 74, 127);
         check(std::abs(restoredParameter->getValue() - 1.0f) < 1.0e-4f, "the restored map drives the restored instance");
-        check(restored.getAPVTS().copyState().getChildWithName("MIDI_LEARN").isValid() == false,
+        check(cs80::tests::copyHostParameterState(restored).getChildWithName("MIDI_LEARN").isValid() == false,
               "the map never lives in the parameter tree (so presets cannot carry it)");
         restored.loadFactoryPreset(3);
         check(restored.getMidiLearn().count() == 1, "loading a preset keeps the session's map");

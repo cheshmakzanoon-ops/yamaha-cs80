@@ -2,6 +2,7 @@
 
 // Original-panel editor checks (ws7-panel), run by the UI self-test on its JUCE message thread.
 
+#include "HostParameterState.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/PanelLayout.h"
@@ -349,7 +350,7 @@ void testZoomPresets(Check check, Flush flush)
     EditorPreferences::setStorageFileForTesting(store.getFile());
     juce::TemporaryFile presetRoot("-cs80-panel-zoom");
     Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
-    const auto stateBefore = host.getAPVTS().copyState();
+    const auto stateBefore = cs80::tests::copyHostParameterState(host);
     {
         Cs80AudioProcessorEditor editor(host);
         editor.setZoomPercent(75);
@@ -379,7 +380,7 @@ void testZoomPresets(Check check, Flush flush)
             check(tooLarge.getWidth() < 3200 && tooLarge.getWidth() <= juce::jmax(1120, display->userArea.getWidth()),
                   "a remembered preset larger than the screen falls back to the automatic size");
     }
-    check(stateBefore.isEquivalentTo(host.getAPVTS().copyState()), "display size never changes host parameters or session state");
+    check(stateBefore.isEquivalentTo(cs80::tests::copyHostParameterState(host)), "display size never changes host parameters or session state");
     EditorPreferences::setStorageFileForTesting(previousStore);
 }
 

@@ -1,3 +1,4 @@
+#include "../../tests/HostParameterState.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
@@ -28,6 +29,8 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 #include <cmath>
+#include <bit>
+#include <cstdint>
 #include <cstdio>
 #include <memory>
 #include <array>
@@ -945,7 +948,7 @@ void testParityIsolationHost()
         check(std::abs(host.getParamValue(cs80::P_macro1)
                        - host.getFactoryPresets()[22].values[cs80::P_macro1]) < 1e-6f,
               "isolation does not destructively rewrite recalled modern APVTS values");
-        auto userState = host.getAPVTS().copyState();
+        auto userState = cs80::tests::copyHostParameterState(host);
         userState.getChildWithProperty("id", "parity_mode").setProperty("value", 1.0f - enabled, nullptr);
         userState.getChildWithProperty("id", "macro1").setProperty("value", 0.23f, nullptr);
         juce::TemporaryFile preset(".cs80xml");
@@ -955,7 +958,7 @@ void testParityIsolationHost()
                   && std::abs(host.getParamValue(cs80::P_macro1) - 0.23f) < 1e-6f,
               "user preset recalls stored sound without changing current isolation policy");
     }
-    const auto valid = host.getAPVTS().copyState();
+    const auto valid = cs80::tests::copyHostParameterState(host);
     auto missing = valid.createCopy();
     missing.removeChild(missing.getChildWithProperty("id", "parity_mode"), nullptr);
     host.setParamValue(cs80::P_parityMode, 1.0f);
@@ -1040,6 +1043,41 @@ SourceEnvelopeExpectation completePairEnvelopeExpectation(int rank)
     return sourceEnvelopeExpectation(rank, 3);
 }
 
+// Host routing oracle: independently select the stored APVTS bank, then compile
+// a fresh electrical source. This does not read Engine's cached tone or targets.
+// Absolute circuit accuracy remains the separate full MemoryPanelNetwork gate;
+// here the independent envelope primitives test that the host delivers this
+// already-qualified source contract without stale routing or state resets.
+cs80::source_factory::ToneControls selectedProgrammerFixture(Cs80AudioProcessor& host, int rank)
+{
+    const int selector = host.getHardwareSource(rank);
+    check(selector >= 11 && selector <= 13, "host programmer oracle selects PANEL or a memory");
+    auto values = host.currentValues();
+    if (selector != 13)
+    {
+        const int bank = rank + (selector == 12 ? 2 : 0);
+        for (int control = 0; control < cs80::CP_count; ++control)
+            if (Cs80AudioProcessor::isMemoryControl(control))
+                values[cs80::chParam(rank, control)] = host.getMemoryValue(bank, control);
+    }
+    cs80::source_factory::ToneControls tone;
+    check(cs80::memory_panels::compileTone(rank, selector,
+              cs80::memory_panels::positionsFromParameters(values, rank), tone),
+          "independently selected host programmer source compiles");
+    return tone;
+}
+
+SourceEnvelopeExpectation programmerEnvelopeExpectation(Cs80AudioProcessor& host, int rank)
+{
+    const auto tone = selectedProgrammerFixture(host, rank);
+    return { (float) tone.amplitudeEnvelope.attackSeconds, (float) tone.amplitudeEnvelope.decaySeconds,
+             (float) tone.amplitudeEnvelope.releaseSeconds, (float) tone.amplitudeEnvelope.sustainRatio,
+             (float) tone.filterEnvelope.attackSeconds, (float) tone.filterEnvelope.decaySeconds,
+             (float) tone.filterEnvelope.releaseSeconds,
+             (float) ((3.0 / 5.0) * tone.filterEnvelope.initialVolts),
+             (float) ((3.0 / 5.0) * tone.filterEnvelope.attackVolts) };
+}
+
 // Host routing test only: the primitive envelopes retain their provisional law.
 // Separate primitive instances are the oracle so a missing Engine timing refresh
 // cannot be hidden by comparing two processors with the same routing bug.
@@ -1103,15 +1141,21 @@ void testLiveEnvelopeTimingHost()
         const auto onset = host.getEngine().getParams();
         cs80::Adsr expectedAmplitude[2];
         cs80::FilterEnv expectedFilter[2];
+        SourceEnvelopeExpectation onsetTargets[2];
         for (int rank = 0; rank < 2; ++rank)
         {
             auto value = [&](int control) { return onset[cs80::chParam(rank, control)]; };
-            expectedAmplitude[rank].noteOn(value(cs80::CP_vA), value(cs80::CP_vD),
-                                           value(cs80::CP_vS), value(cs80::CP_vR));
-            expectedFilter[rank].noteOn(cs80::filterInitialOffset(value(cs80::CP_fIl)),
-                                        cs80::filterAttackOffset(value(cs80::CP_fAl)),
-                                        value(cs80::CP_fA), value(cs80::CP_fD),
-                                        value(cs80::CP_fR), 0.0f);
+            onsetTargets[rank] = isolated ? programmerEnvelopeExpectation(host, rank)
+                : SourceEnvelopeExpectation { value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR), value(cs80::CP_vS),
+                    value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR),
+                    cs80::filterInitialOffset(value(cs80::CP_fIl)), cs80::filterAttackOffset(value(cs80::CP_fAl)) };
+            const auto& target = onsetTargets[rank];
+            expectedAmplitude[rank].noteOn(target.amplitudeAttack, target.amplitudeDecay,
+                                           target.amplitudeSustain, target.amplitudeRelease);
+            // No samples have elapsed since prepare. Circuit assignment retains
+            // the discharged capacitor (COLD_FILTER_ENVELOPE.md); Legacy resets to IL.
+            expectedFilter[rank].noteOn(target.filterInitial, target.filterTarget,
+                                        target.filterAttack, target.filterDecay, target.filterRelease, 0.0f, isolated);
         }
         midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
         host.processBlock(empty, midi);
@@ -1152,8 +1196,8 @@ void testLiveEnvelopeTimingHost()
         {
             for (int rank = 0; rank < 2; ++rank)
             {
-                expectedAmplitude[rank].setRelease(onset[cs80::chParam(rank, cs80::CP_vR)]);
-                expectedFilter[rank].setRelease(onset[cs80::chParam(rank, cs80::CP_fR)]);
+                expectedAmplitude[rank].setRelease(onsetTargets[rank].amplitudeRelease);
+                expectedFilter[rank].setRelease(onsetTargets[rank].filterRelease);
                 expectedAmplitude[rank].noteOff();
                 expectedFilter[rank].noteOff();
             }
@@ -1222,13 +1266,11 @@ void testLiveEnvelopeTimingHost()
                     }
                     else
                     {
-                        const auto effective = host.getEngine().getParams();
-                        auto value = [&](int control) { return effective[cs80::chParam(rank, control)]; };
-                        expectedAmplitude[rank].setTimes(value(cs80::CP_vA), value(cs80::CP_vD), value(cs80::CP_vR));
-                        expectedFilter[rank].setTimes(value(cs80::CP_fA), value(cs80::CP_fD), value(cs80::CP_fR));
-                        expectedAmplitude[rank].setSustain(value(cs80::CP_vS));
-                        expectedFilter[rank].setLevels(cs80::filterInitialOffset(value(cs80::CP_fIl)),
-                                                       cs80::filterAttackOffset(value(cs80::CP_fAl)));
+                        const auto source = programmerEnvelopeExpectation(host, rank);
+                        expectedAmplitude[rank].setTimes(source.amplitudeAttack, source.amplitudeDecay, source.amplitudeRelease);
+                        expectedFilter[rank].setTimes(source.filterAttack, source.filterDecay, source.filterRelease);
+                        expectedAmplitude[rank].setSustain(source.amplitudeSustain);
+                        expectedFilter[rank].setLevels(source.filterInitial, source.filterTarget);
                     }
                 }
             }
@@ -1282,7 +1324,8 @@ void testLiveEnvelopeTimingHost()
                 const auto amplitude = host.getEngine().getRankEnvelopeState(0, rank).amplitude;
                 check(amplitude.stage == cs80::Adsr::Stage::Sustain,
                       "held sustain target change does not restart attack or decay");
-                check(isolated ? amplitude.value > 0.25f && amplitude.value < 0.65f
+                const float selectedSustain = isolated ? programmerEnvelopeExpectation(host, rank).amplitudeSustain : 0.65f;
+                check(isolated ? amplitude.value > onsetTargets[rank].amplitudeSustain && amplitude.value < selectedSustain
                                : std::abs(amplitude.value - 0.25f) < 2e-5f,
                       "isolated held sustain follows selected memory while legacy remains latched");
             }
@@ -1485,8 +1528,10 @@ void testSourceFactoryHost()
                                                  : sourceEnvelopeExpectation(rank, selector);
             amplitude[rank].noteOn(expected.amplitudeAttack, expected.amplitudeDecay,
                                    expected.amplitudeSustain, expected.amplitudeRelease);
+            // The prepared circuit has not rendered an idle interval: keep
+            // its discharged filter capacitor at the first assignment.
             filter[rank].noteOn(expected.filterInitial, expected.filterTarget,
-                                expected.filterAttack, expected.filterDecay, expected.filterRelease, 0.0f);
+                                expected.filterAttack, expected.filterDecay, expected.filterRelease, 0.0f, true);
         }
         juce::AudioBuffer<float> empty(2, 0);
         juce::MidiBuffer midi;
@@ -1600,9 +1645,28 @@ void testSourceFactoryHost()
             juce::MidiBuffer midi;
             edited.processBlock(audio, midi);
             const auto cutoff = edited.getEngine().getSourceCutoffReadout(rank);
-            check(cutoff.pinVolts == sf::CutoffReadout{}.pinVolts
-                      && cutoff.effectiveCv == sf::CutoffReadout{}.effectiveCv,
-                  "non-source callback does not render stale source cutoff receiver data");
+            const auto selected = selectedProgrammerFixture(edited, rank);
+            sf::RankDrives drives {};
+            for (int voice = 0; voice < sf::voiceCount; ++voice)
+            {
+                const auto touch = edited.getEngine().getVoiceInfo(voice);
+                drives[(size_t) voice] = { edited.getEngine().getRankEnvelopeState(voice, rank).filter.value,
+                                           touch.touchB, touch.touchA };
+            }
+            sf::CutoffReadout expectedCutoff;
+            check(sf::evaluateCutoff(selected, drives, expectedCutoff), "fresh programmer receiver oracle evaluates");
+            const auto bits = [](double value) { return std::bit_cast<std::uint64_t>(value); };
+            bool exactReceiver = cutoff.saturatedVoices == expectedCutoff.saturatedVoices;
+            for (size_t output = 0; output < cutoff.loadedBusVolts.size(); ++output)
+            {
+                exactReceiver = exactReceiver && bits(cutoff.loadedBusVolts[output]) == bits(expectedCutoff.loadedBusVolts[output]);
+                for (size_t voice = 0; voice < cutoff.pinVolts.size(); ++voice)
+                    exactReceiver = exactReceiver
+                        && bits(cutoff.pinVolts[voice][output]) == bits(expectedCutoff.pinVolts[voice][output])
+                        && bits(cutoff.effectiveCv[voice][output]) == bits(expectedCutoff.effectiveCv[voice][output]);
+            }
+            check(exactReceiver,
+                  "selected electrical programmer replaces stale factory cutoff receiver data exactly");
         }
     }
 
@@ -1743,7 +1807,7 @@ void testPerformanceControlsHost()
     for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
         roundTrip = roundTrip && std::abs(restored.getParamValue(i) - host.getParamValue(i)) < 1e-5f;
     check(roundTrip, "performance controls survive a state round trip");
-    auto oldState = host.getAPVTS().copyState();
+    auto oldState = cs80::tests::copyHostParameterState(host);
     for (auto* id : ids)
         oldState.removeChild(oldState.getChildWithProperty("id", id), nullptr);
     const auto oldText = oldState.createXml()->toString();
@@ -1961,6 +2025,32 @@ void testIsolatedFootControllerHost()
     }
 }
 
+void testPhysicalParameterRoundTrips(Cs80AudioProcessor& processor)
+{
+    // Parameter physical values must use the host's skewed mapping. Linear
+    // normalization here formerly turned e.g. an 850Hz preset into ~20Hz.
+    for (int index = 0; index < cs80::P_numParams; ++index)
+    {
+        const auto& def = cs80::paramDef(index);
+        for (float fraction : { 0.0f, 0.2f, 0.5f, 0.8f, 1.0f })
+        {
+            const float physical = def.min + fraction * (def.max - def.min);
+            processor.setParamValue(index, physical);
+            const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
+            const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
+                || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
+                || index == cs80::P_oversampling || index == cs80::P_outputJack
+                || index == cs80::P_driftModel || index == cs80::P_chorusTabs;
+            const float expected = discrete
+                ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
+            check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
+                  "physical parameter round trips host skew");
+        }
+    }
+
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -2004,6 +2094,16 @@ int main(int argc, char** argv)
     juce::ScopedJuceInitialiser_GUI juceInit;
     // Focused developer entry point for the registered completion mutations. The default
     // --self-test below still runs every existing check and these same completion checks.
+    if (argc > 1 && std::strcmp(argv[1], "--host-circuit-contract-test") == 0)
+    {
+        cs80::tests::testOutputMeterHost(check);
+        testLiveEnvelopeTimingHost();
+        testSourceFactoryHost();
+        Cs80AudioProcessor processor;
+        testPhysicalParameterRoundTrips(processor);
+        std::printf("Host electrical circuit contract: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--chorus-tabs-test") == 0)
     {
         cs80::tests::testTremoloChorusTabs(check, flushGui);
@@ -2104,27 +2204,7 @@ int main(int argc, char** argv)
         check(processor.getAPVTS().getParameter(id) != nullptr, "parameter exposed");
     }
 
-    // Parameter physical values must use the host's skewed mapping. Linear
-    // normalization here formerly turned e.g. an 850Hz preset into ~20Hz.
-    for (int index = 0; index < cs80::P_numParams; ++index)
-    {
-        const auto& def = cs80::paramDef(index);
-        for (float fraction : { 0.0f, 0.2f, 0.5f, 0.8f, 1.0f })
-        {
-            const float physical = def.min + fraction * (def.max - def.min);
-            processor.setParamValue(index, physical);
-            const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
-            const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
-                || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
-                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
-                || index == cs80::P_oversampling || index == cs80::P_outputJack
-                || index == cs80::P_driftModel;   // plan 2.5: a two-choice host parameter
-            const float expected = discrete
-                ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
-            check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
-                  "physical parameter round trips host skew");
-        }
-    }
+    testPhysicalParameterRoundTrips(processor);
 
     // Preset recall deliberately leaves the jack/pedal/selector/output wiring alone, so
     // the sweep above must not leave it at its maximum for the screenshots below.
@@ -2439,7 +2519,7 @@ int main(int argc, char** argv)
         restoredAt.setStateInformation(savedAt.getData(), (int)savedAt.getSize());
         check(std::abs(restoredAt.getParamValue(cs80::P_subAtVcf)-.65f)<.00001f,
               "AT VCF state round trip");
-        auto oldState=processor.getAPVTS().copyState();
+        auto oldState=cs80::tests::copyHostParameterState(processor);
         oldState.removeChild(oldState.getChildWithProperty("id","sub_at_vcf"),nullptr);
         auto xml=oldState.createXml();
         const auto text=xml->toString();
@@ -2618,7 +2698,7 @@ int main(int argc, char** argv)
             const auto text = xml->toString();
             restoredOriginal.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
         };
-        const auto current = migration.getAPVTS().copyState();
+        const auto current = cs80::tests::copyHostParameterState(migration);
         auto noVersion = current.createCopy();
         noVersion.removeProperty("subOscStateVersion", nullptr);
         restoreTree(noVersion);
@@ -2840,7 +2920,7 @@ int main(int argc, char** argv)
               && automated.getMemoryValue(2, cs80::CP_lpfCutoff) == retained,
               "digital preset selects PANEL without erasing miniature controls");
 
-        auto legacy = copy.getAPVTS().copyState();
+        auto legacy = cs80::tests::copyHostParameterState(copy);
         for (int i = legacy.getNumChildren(); --i >= 0;)
         {
             const auto id = legacy.getChild(i).getProperty("id").toString();
@@ -2870,7 +2950,7 @@ int main(int argc, char** argv)
         for (int bank = 0; bank < 4; ++bank)
             check(std::abs(copy.getMemoryValue(bank, cs80::CP_lpfCutoff) - (800.0f + 100.0f * (float)bank)) < 0.02f,
                   "version 1 four memories migrate");
-        check(!copy.getAPVTS().copyState().getChildWithName("HARDWARE").isValid(), "legacy duplicate authority removed");
+        check(!cs80::tests::copyHostParameterState(copy).getChildWithName("HARDWARE").isValid(), "legacy duplicate authority removed");
         legacy.removeChild(hardware, nullptr);
         restoreTree(legacy);
         check(copy.getHardwareSource(0) == 13 && copy.getHardwareSource(1) == 13, "pre-programmer state defaults PANEL");
@@ -2880,7 +2960,7 @@ int main(int argc, char** argv)
                     check(std::abs(copy.getMemoryValue(bank, local) - cs80::kChannelDefs[local].def)
                           <= std::max(0.0001f, cs80::kChannelDefs[local].max * 0.00001f),
                           "pre-programmer state resets every missing mini control");
-        auto partial = copy.getAPVTS().copyState();
+        auto partial = cs80::tests::copyHostParameterState(copy);
         const auto missingId = Cs80AudioProcessor::memoryParameterId(0, cs80::CP_lpfCutoff);
         partial.removeChild(partial.getChildWithProperty("id", missingId), nullptr);
         copy.setMemoryValue(0, cs80::CP_lpfCutoff, 111.0f);
@@ -2967,7 +3047,7 @@ int main(int argc, char** argv)
         concurrent.prepareToPlay(48000.0, 64);
         auto makeState = [&](const juce::String& name, int index)
         {
-            auto tree = concurrent.getAPVTS().copyState();
+            auto tree = cs80::tests::copyHostParameterState(concurrent);
             tree.setProperty("presetName", name, nullptr);
             tree.setProperty("factoryIndex", index, nullptr);
             return tree.createXml()->toString();
@@ -3336,7 +3416,7 @@ int main(int argc, char** argv)
         check(waitForGui([&] { return subStatusIs("SUB: EXT BUS DISABLED / SILENT"); }),
               "editor reports disabled external bus after audio-thread telemetry update");
     }
-    auto editorLegacyState = processor.getAPVTS().copyState();
+    auto editorLegacyState = cs80::tests::copyHostParameterState(processor);
     editorLegacyState.removeChild(editorLegacyState.getChildWithProperty("id", "sub_original_mode"), nullptr);
     auto editorLegacyXml = editorLegacyState.createXml();
     const auto editorLegacyText = editorLegacyXml->toString();
