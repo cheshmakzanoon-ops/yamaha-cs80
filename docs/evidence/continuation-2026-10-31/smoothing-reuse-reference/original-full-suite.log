@@ -1,0 +1,37 @@
+      Start 55: cs80_smoothing_tests
+53/86 Test #55: cs80_smoothing_tests ........................***Failed    4.35 sec
+tau  44100 Hz q0: cutoff 5.0113 ms, bend 5.0113 ms
+tau  48000 Hz q1: cutoff 5.0000 ms, bend 5.0000 ms
+tau  48000 Hz q2: cutoff 5.0000 ms, bend 5.0000 ms
+tau  96000 Hz q1: cutoff 5.0000 ms, bend 5.0000 ms
+FAIL: reused circuit starts at its own zero touch
+legacy LEVEL step (unsmoothed by design): HF fraction -39.3 dB
+zipper LEVEL               48000 Hz q0: HF fraction   -68.3 dB
+zipper VOLUME              48000 Hz q0: HF fraction   -67.6 dB
+zipper SINE                48000 Hz q0: HF fraction   -67.6 dB
+zipper PAN                 48000 Hz q0: HF fraction   -67.5 dB
+zipper MIX                 48000 Hz q0: HF fraction   -67.9 dB
+zipper CC11 expression     48000 Hz q0: HF fraction   -67.7 dB
+zipper after-touch LEVEL   48000 Hz q0: HF fraction   -67.6 dB
+zipper LEVEL               48000 Hz q1: HF fraction   -68.3 dB
+zipper VOLUME              48000 Hz q1: HF fraction   -67.6 dB
+zipper SINE                48000 Hz q1: HF fraction   -67.6 dB
+zipper PAN                 48000 Hz q1: HF fraction   -67.5 dB
+zipper MIX                 48000 Hz q1: HF fraction   -67.9 dB
+zipper CC11 expression     48000 Hz q1: HF fraction   -67.7 dB
+zipper after-touch LEVEL   48000 Hz q1: HF fraction   -67.6 dB
+zipper LEVEL               96000 Hz q0: HF fraction   -68.6 dB
+zipper VOLUME              96000 Hz q0: HF fraction   -66.4 dB
+zipper SINE                96000 Hz q0: HF fraction   -66.2 dB
+zipper PAN                 96000 Hz q0: HF fraction   -65.8 dB
+zipper MIX                 96000 Hz q0: HF fraction   -67.0 dB
+zipper CC11 expression     96000 Hz q0: HF fraction   -68.1 dB
+zipper after-touch LEVEL   96000 Hz q0: HF fraction   -68.9 dB
+zipper LEVEL               96000 Hz q1: HF fraction   -68.6 dB
+zipper VOLUME              96000 Hz q1: HF fraction   -66.4 dB
+zipper SINE                96000 Hz q1: HF fraction   -66.2 dB
+zipper PAN                 96000 Hz q1: HF fraction   -65.8 dB
+zipper MIX                 96000 Hz q1: HF fraction   -67.0 dB
+zipper CC11 expression     96000 Hz q1: HF fraction   -68.1 dB
+zipper after-touch LEVEL   96000 Hz q1: HF fraction   -68.9 dB
+84 checks, 1 failures

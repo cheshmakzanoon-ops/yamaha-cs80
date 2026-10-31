@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1830,7 +1830,7 @@
+         if (c.snapPending || c.age[(size_t) vi] != v.age)
+         {
+             c.age[(size_t) vi] = v.age;
+-            c.pressure[(size_t) vi].snap(v.pressure);
++            if (c.snapPending) c.pressure[(size_t) vi].snap(v.pressure);
+             c.mpeBend[(size_t) vi].snap(v.mpeBend);
+             c.timbre[(size_t) vi].snap(v.timbre);
+         }
