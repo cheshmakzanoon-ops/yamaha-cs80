@@ -155,6 +155,8 @@ void Engine::reset()
     outputNodes = {};
     outputGain = outputLevelGain(global.outputHigh);
     lastNote = 60;
+    lastPitch = 60.0f;
+    upperZoneBend = 0.0f;
     nextVoice = 0;
     globalBend = 0.0f;
     modWheel = 0.0f;
@@ -256,6 +258,7 @@ void Engine::applyParams(const ParamValues& values)
         params[i] = std::isfinite(value) ? clampf(value, def.min, def.max) : def.def;
     }
     const auto previousPolicy = global.renderPolicy;
+    const int previousTuning = global.tuningMode;
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
@@ -315,6 +318,8 @@ void Engine::applyParams(const ParamValues& values)
     }
 
     refreshKeyboardContour();
+    if (global.tuningMode != previousTuning)
+        retuneSoundingVoices();
 
     // Toggling the arpeggiator is a performance action, not a parameter that
     // should leave old voices hanging. Enabling it clears the directly played
@@ -899,10 +904,13 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.pressure = 0.0f;
     v.timbre = 0.0f;
     v.mpeBend = 0.0f;
-    v.targetPitch = (float) note;
+    // Phase 6 tuning: exactly (float) note in 12-TET (tuning_mode 0).
+    v.targetPitch = tunedPitch(note);
+    v.upperZone = global.mpe && mpeZones.inUpperZone(midiChannel);
+    v.unisonOffset = 0.0f;
     v.contour = keyboardContourWeights(note);
     v.kbcKey = kbc::physicalKey(note);
-    v.glidePitch = global.glideGate && global.portamento > 0.0001f ? (float) lastNote : (float) note;
+    v.glidePitch = global.glideGate && global.portamento > 0.0001f ? lastPitch : v.targetPitch;
     // TWS C precedes the TRG4 PB control. Keep its nominal onset state alive
     // even when PB depth is zero. Reset-to-velocity is still a MIDI/retrigger
     // approximation, not a complete model of the b sample/hold and clamp.
@@ -912,6 +920,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
     lastNote = note;
+    lastPitch = v.targetPitch;
     ++heldCount;
     if (usesSourceModels(global.renderPolicy))
         refreshKeyboardContour();
@@ -1042,6 +1051,24 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
         return;
     }
 
+    // Phase 6: a note a microtuning leaves unmapped does not sound.
+    if (global.tuningMode != 0 && ! noteMapped(midiNote))
+        return;
+    // Phase 6 unison extension: N circuits per key, detuned symmetrically.
+    if (const int unison = unisonCount(); unison > 1)
+    {
+        for (int k = 0; k < unison; ++k)
+        {
+            const int idx = chooseVoice();
+            if (idx < 0)
+                break;
+            startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+            voices[(size_t) idx].unisonOffset = global.unisonDetune / 100.0f
+                * ((float) k / (float) (unison - 1) - 0.5f);
+        }
+        return;
+    }
+
     const int idx = chooseVoice();
     if (idx < 0)
     {
@@ -1105,7 +1132,11 @@ bool Engine::isSustainPedalDown(int midiChannel) const noexcept
 {
     if (midiChannel < 1 || midiChannel > 16)
         return false;
-    return sustainPedals[(size_t) midiChannel] || (global.mpe && sustainPedals[1]);
+    if (! global.mpe)
+        return sustainPedals[(size_t) midiChannel];
+    // MPE: a zone's master pedal holds its members (upper zone: channel 16).
+    return sustainPedals[(size_t) midiChannel]
+        || (mpeZones.inUpperZone(midiChannel) ? sustainPedals[16] : sustainPedals[1]);
 }
 
 void Engine::releaseKey(Voice& v)
@@ -1170,6 +1201,10 @@ void Engine::applyNoteOff(int midiNote, int midiChannel)
     if (auto* voice = findVoiceForNote(midiNote, midiChannel))
     {
         releaseKey(*voice);
+        // Unison: the key's other circuits release with it.
+        if (unisonCount() > 1)
+            while (auto* other = findVoiceForNote(midiNote, midiChannel))
+                releaseKey(*other);
         if (unassignedCount > 0)
             reconsiderUnassignedKeys();
     }
@@ -1285,7 +1320,7 @@ void Engine::channelPressure(int midiChannel, float pressure)
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     for (auto& v : voices)
-        if (v.active && (midiChannel == 1 || v.midiChannel == midiChannel))
+        if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
             v.pressure = pressure;
 }
 
@@ -1294,11 +1329,28 @@ void Engine::pitchBend(int midiChannel, float value)
     if (global.parityMode)
         return;
     value = clampf(value, -1.0f, 1.0f);
-    if (global.mpe && midiChannel != 1)
+    if (global.mpe)
     {
+        // MPE zones (Phase 6): a master bends its zone, a member its notes.
+        // Ranges negotiated by RPN 0 replace the parameters.
+        const auto role = mpeZones.role(midiChannel);
+        if (role == MpeZoneLayout::Role::lowerMaster || (role == MpeZoneLayout::Role::none && midiChannel == 1))
+        {
+            const float range = mpeZones.masterRange(false);
+            globalBend = value * (range >= 0.0f ? range : global.pitchBendRange);
+            return;
+        }
+        if (role == MpeZoneLayout::Role::upperMaster)
+        {
+            const float range = mpeZones.masterRange(true);
+            upperZoneBend = value * (range >= 0.0f ? range : global.pitchBendRange);
+            return;
+        }
+        const float negotiated = mpeZones.memberRange(role == MpeZoneLayout::Role::upperMember);
+        const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
         for (auto& v : voices)
             if (v.active && v.midiChannel == midiChannel)
-                v.mpeBend = value * global.mpeBendRange;
+                v.mpeBend = value * range;
     }
     else
     {
@@ -1311,6 +1363,18 @@ void Engine::controlChange(int controller, float value, int midiChannel)
     if (controller == 120 || controller == 123)
     {
         allNotesOff(controller == 123, midiChannel);
+        return;
+    }
+    // Ribbon from a MIDI CC (interface layer, off by default): 64 is centre.
+    if (global.ribbonCcEnabled && controller == global.ribbonCc && std::isfinite(value))
+    {
+        const int cc = (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f);
+        setRibbon(cc >= 64 ? (float) (cc - 64) / 63.0f : (float) (cc - 64) / 64.0f);
+    }
+    // MPE zone negotiation (Phase 6): RPN 0 / RPN 6 while MPE is on.
+    if (global.mpe && std::isfinite(value) && (controller == 101 || controller == 100 || controller == 6 || controller == 38))
+    {
+        mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
         return;
     }
     if (global.parityMode && (controller == 1 || controller == 11
@@ -1357,7 +1421,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
     else if (controller == 74)
     {
         for (auto& v : voices)
-            if (v.active && (midiChannel == 1 || v.midiChannel == midiChannel))
+            if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
                 v.timbre = value;
     }
 }
@@ -1371,6 +1435,66 @@ void Engine::setExpression(float value)
 void Engine::setRibbon(float value)
 {
     ribbon = clampf(value, -1.0f, 1.0f);
+}
+
+float Engine::tunedPitch(int midiNote) const noexcept
+{
+    const int n = std::clamp(midiNote, 0, 127);
+    if (global.tuningMode == 1) return scalaTable.pitch[(size_t) n];
+    if (global.tuningMode == 2) return mtsTable.pitch[(size_t) n];
+    return (float) midiNote;
+}
+
+bool Engine::noteMapped(int midiNote) const noexcept
+{
+    const int n = std::clamp(midiNote, 0, 127);
+    if (global.tuningMode == 1) return scalaTable.mapped[(size_t) n];
+    if (global.tuningMode == 2) return mtsTable.mapped[(size_t) n];
+    return true;
+}
+
+void Engine::retuneSoundingVoices() noexcept
+{
+    // A retuning reaches sounding notes (as MTS-ESP asks); the glide law
+    // carries them to the new target.
+    for (auto& v : voices)
+        if (v.active)
+            v.targetPitch = tunedPitch(v.note);
+}
+
+void Engine::setScalaTuning(const tuning::TuningTable& table) noexcept
+{
+    scalaTable = table;
+    if (global.tuningMode == 1) retuneSoundingVoices();
+}
+
+void Engine::setMtsTuning(const tuning::TuningTable& table) noexcept
+{
+    mtsTable = table;
+    if (global.tuningMode == 2) retuneSoundingVoices();
+}
+
+bool Engine::handleSysEx(const std::uint8_t* data, int size) noexcept
+{
+    if (! tuning::applyMtsSysEx(data, size, mtsTable))
+        return false;
+    if (global.tuningMode == 2) retuneSoundingVoices();
+    return true;
+}
+
+bool Engine::hasFreeCircuit() const noexcept
+{
+    for (const auto& v : voices)
+        if (! v.held && ! v.pedalHeld)
+            return true;
+    return false;
+}
+
+bool Engine::isZoneMaster(const Voice& v, int midiChannel) const noexcept
+{
+    // Non-MPE and the lower zone: channel 1 is the master (historical rule).
+    if (! v.upperZone) return midiChannel == 1;
+    return midiChannel == 16 && mpeZones.role(16) == MpeZoneLayout::Role::upperMaster;
 }
 
 void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
@@ -1595,7 +1719,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             float pitch = (float) v.note
                           + global.masterTune
                           + (ch == 1 ? global.detuneCents / 100.0f : 0.0f)
-                          + globalBend
+                          + (v.upperZone ? upperZoneBend : globalBend)
                           + v.mpeBend
                           + glideOffset
                           + (float) (global.initBend * v.initialPitchTransient)
@@ -1603,7 +1727,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                           + subValue * (global.subVco + global.subAtVco * touchPressure) * 1.5f
                           + subValue * modWheel * global.modWheelSub * 2.0f
                           + r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f)
-                          + driftVoice;
+                          + driftVoice
+                          + v.unisonOffset;
 
             if (global.glideMode == 2 && global.glideGate)
                 pitch = std::round(pitch);

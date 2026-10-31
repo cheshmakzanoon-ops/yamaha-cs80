@@ -240,6 +240,12 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_touch_circuit_tests PRIVATE cs80_core)
     add_test(NAME cs80_touch_circuit_tests COMMAND cs80_touch_circuit_tests)
     set_tests_properties(cs80_touch_circuit_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_tuning_midi_tests tests/TuningMidiTests.cpp)
+    target_link_libraries(cs80_tuning_midi_tests PRIVATE cs80_core)
+    target_compile_definitions(cs80_tuning_midi_tests PRIVATE
+        CS80_TUNING_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/data/tuning")
+    add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
+    set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
 
     # [ws4-circuits] register this workstream's core tests below this line.
 
@@ -326,6 +332,7 @@ if (CS80_BUILD_PLUGIN)
         # [ws2-engine] add this workstream's plugin sources below this line.
 
         # [ws3-keyboard] add this workstream's plugin sources below this line.
+        src/plugin/MtsEspClient.cpp
 
         # [ws4-circuits] add this workstream's plugin sources below this line.
 

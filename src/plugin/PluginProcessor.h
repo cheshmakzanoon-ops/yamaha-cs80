@@ -6,6 +6,9 @@
 #include "KeyboardEventQueue.h"
 #include "KeyboardGestureCapture.h"
 #include "KeyboardPressureOwnership.h"
+#include "MtsEspClient.h"
+#include "core/MpeZones.h"
+#include "core/Tuning.h"
 #include "OutputMeter.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -175,6 +178,22 @@ public:
     cs80::ParamValues currentValues() const;
     void applyParameterValues(const cs80::ParamValues& values);
 
+    // ---- ws3-keyboard Phase 6 processor APIs (modern layer) ----------------
+    // Non-audio threads. Parses a Scala scale and an optional keyboard mapping
+    // (empty = linear, middle C 60, A4 440 Hz) and publishes the table to the
+    // audio thread, where tuning_mode 1 uses it. Returns an empty string on
+    // success, otherwise the reason (the previous tuning is kept). The texts
+    // are saved with the session, not with presets.
+    juce::String loadScalaTuning(const juce::String& scl, const juce::String& kbm = {});
+    void clearScalaTuning();
+    juce::String getScalaDescription() const;
+    // MTS-ESP (tuning_mode 2): client compiled in, and a master connected.
+    static bool isMtsEspAvailable() noexcept { return cs80::MtsEspClient::available(); }
+    bool isMtsEspConnected() const noexcept { return mtsEspConnected.load(std::memory_order_relaxed); }
+    // Sixteen-voice mode runs a second, identical eight-voice instrument.
+    // Render thread diagnostics only, like getEngine().
+    const cs80::Engine& getExtensionEngine() const noexcept { return *extensionEngine; }
+
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     static juce::String parameterId(int index) { return juce::String(cs80::paramId(index)); }
 
@@ -189,6 +208,12 @@ private:
     void handleNoteOff(juce::MidiKeyboardState*, int channel, int note, float velocity) override;
     void resetKeyboardHandoff() noexcept;
     void observeHostMidi(const juce::MidiMessage& message) noexcept;
+    // Key events go to the first instrument until it is full, then (sixteen-
+    // voice mode only) to the second; everything else reaches both.
+    void routeNoteOn(int note, float velocity, int channel);
+    void routeNoteOff(int note, int channel);
+    template <class F> void forEachEngine(F&& f) { f(engine); if (extensionActive) f(*extensionEngine); }
+    juce::String publishScala(const juce::String& scl, const juce::String& kbm);
     void applyValues(const cs80::ParamValues& values);
     juce::File userPresetDirectory() const;
     using PresetWriter = std::function<juce::Result(const juce::XmlElement&, const juce::File&)>;
@@ -224,6 +249,19 @@ private:
     std::atomic<unsigned> hostMidiEvents { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
+    // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
+    cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
+    std::unique_ptr<cs80::Engine> extensionEngine;
+    std::vector<float> extensionInterleaved;
+    bool extensionActive = false; // audio thread
+    juce::SpinLock scalaLock;      // writers; the audio thread only try-locks
+    cs80::tuning::TuningTable scalaSlot;
+    std::atomic<unsigned> scalaVersion { 0 };
+    unsigned scalaAppliedVersion = 0; // audio thread
+    juce::String scalaText, kbmText, scalaDescription; // guarded by scalaLock
+    cs80::MtsEspClient mtsEsp;
+    cs80::tuning::TuningTable mtsEspTable; // audio thread
+    std::atomic<bool> mtsEspConnected { false };
     std::vector<float> interleaved;
     std::vector<float> externalScratch;
     std::atomic<bool> externalInputEnabled { false };

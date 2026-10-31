@@ -12,6 +12,8 @@
 #include "KasScanner.h"
 #include "KbcContour.h"
 #include "TouchCircuit.h"
+#include "Tuning.h"
+#include "MpeZones.h"
 #include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
 
@@ -208,6 +210,24 @@ public:
     void pitchBend(int midiChannel, float value); // -1..1
     void controlChange(int controller, float value, int midiChannel = 1);
     void setRibbon(float value);
+
+    // ---- Phase 6 modern layer (inert in PURE CS-80) ----------------------
+    // Render thread only. Scala/KBM table used when tuning_mode = 1.
+    void setScalaTuning(const tuning::TuningTable& table) noexcept;
+    // Table used when tuning_mode = 2, e.g. built from an MTS-ESP master.
+    void setMtsTuning(const tuning::TuningTable& table) noexcept;
+    // A complete MIDI Tuning Standard SysEx message (F0..F7) updates the
+    // tuning_mode 2 table. Allocation-free. Returns true when it applied.
+    bool handleSysEx(const std::uint8_t* data, int size) noexcept;
+    const tuning::TuningTable& getMtsTuning() const noexcept { return mtsTable; }
+    // Pitch (fractional MIDI semitones) a note plays at under the accepted mode.
+    float tunedPitch(int midiNote) const noexcept;
+    const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
+    // Voice mode accepted for this frame (0 in PURE CS-80): 0 eight voices,
+    // 1 sixteen (two engines, see PluginProcessor), 2/3/4 unison x2/x4/x8.
+    int getVoiceMode() const noexcept { return global.voiceMode; }
+    // True while some circuit is neither key-held nor pedal-held.
+    bool hasFreeCircuit() const noexcept;
     // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
     void setExpression(float value);
 
@@ -363,6 +383,9 @@ private:
         // TWS a/b/C nodes (Phase 2.4, circuit engine) and their present values.
         touch::TouchVoice touch;
         float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
+        // Phase 6: MPE upper-zone membership and unison detune (semitones).
+        bool upperZone = false;
+        float unisonOffset = 0.0f;
     };
 
     struct HeldKey
@@ -404,6 +427,11 @@ private:
     void rememberUnassignedKey(int note, float velocity, int midiChannel);
     bool forgetUnassignedKey(int note, int midiChannel);
     void reconsiderUnassignedKeys();
+    bool noteMapped(int midiNote) const noexcept;
+    void retuneSoundingVoices() noexcept;
+    int unisonCount() const noexcept
+    { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
+    bool isZoneMaster(const Voice& voice, int midiChannel) const noexcept;
 
     // Arpeggiator. It is clocked at the internal rate so a rate change is
     // heard immediately and the pattern does not drift with block size.
@@ -560,6 +588,11 @@ private:
     float voiceDrift[kNumVoices] {};
 
     std::array<HeldKey, kMaxHeldKeys> heldKeys {};
+    // Phase 6 tuning tables, last played pitch (glide start), MPE zones.
+    tuning::TuningTable scalaTable, mtsTable;
+    float lastPitch = 60.0f;
+    MpeZoneLayout mpeZones;
+    float upperZoneBend = 0.0f;
     // KAS scan model and still-held keys without a circuit (Phase 2.2).
     kas::Scanner scanner;
     std::array<HeldKey, kMaxHeldKeys> unassignedKeys {};

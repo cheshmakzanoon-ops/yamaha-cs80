@@ -492,3 +492,142 @@ load the source TRG buses.
 | 44/45 Aftertouch brilliance/level | A; circuit engine: TWS a 100 ms follower smoothing |
 | TKC/TSB initial/aftertouch circuitry | A (declared); separate a, b, C paths now modelled in the circuit engine; sensor force law and calibration still open |
 | Initial pitch bend | A; C = −HPF₅₀ms(b) with ideal clamp, onset after the contact lead |
+
+---
+
+## Ribbon from a MIDI CC — **done** (interface layer)
+
+`Engine::controlChange`: when `ribbon_cc_enable` is on, the CC numbered
+`ribbon_cc` positions the ribbon: 64 = centre (no bend), 127 = full travel up
+(ribbonFrequencyRatio(+1)), 0 = full travel down; values between scale
+linearly on each side. **Default CC 16** (General Purpose Controller 1): it has
+no other meaning in this instrument and is commonly free on controllers with a
+ribbon or touch strip. The mapping is **off by default**, because a session
+that happens to send CC 16 would otherwise change behaviour. It is an input
+adapter for an original control, like velocity, so it works in PURE CS-80 too
+(it is checked before PURE's CC 1/11/64/74 filter). The ribbon's Sustain I/II
+coupling and the on-screen ribbon are unchanged; both write the same ribbon
+position (last writer wins). Tested in `cs80_tuning_midi_tests`.
+
+| id | range | default | AU hint |
+|---|---|---|---|
+| `ribbon_cc_enable` | 0..1 (switch) | 0 (off) | 10 |
+| `ribbon_cc` | 1..119 | 16 | 10 |
+
+---
+
+## Phase 6 tuning, MPE and voice modes — **done** except the MTS-ESP library (see below)
+
+All of this is modern layer: PURE CS-80 forces 12-TET (`tuning_mode` 0) and
+eight single voices (`voice_mode` 0), and MPE is already forced off there.
+Defaults leave every render unchanged (`tuning_mode` 0 plays exactly
+`(float) note`; the glide start uses the last tuned pitch, identical in 12-TET).
+
+### Scala microtuning (`src/core/Tuning.h`)
+
+- `.scl` parser: comments, description, note count, cents (with a dot) or
+  ratios (`a/b`, `a`), trailing text ignored, locale-independent; the period is
+  the last degree.
+- `.kbm` parser: map size, first/last note, middle note, reference note and
+  frequency, formal-octave degree, map entries with `x` for unmapped keys.
+  Without a `.kbm`, the default mapping is linear with middle C (60) at
+  261.6256 Hz so a 12-note equal scale reproduces 12-TET.
+- `buildTable` gives each MIDI note a fractional-semitone pitch and a mapped
+  flag. The engine plays a key at its table pitch (glide, filter key voltage
+  and every modulation follow it), ignores an unmapped key, and retunes
+  sounding notes when the table or mode changes. The KBC contour and KAS key
+  map keep using the physical key, not the tuned pitch. TUNING REF still
+  scales the whole table.
+- Bundled test files `tests/data/tuning/`: 12-TET, 5-limit just, quarter-comma
+  meantone, 19-EDO, a just diatonic scale, an A=432 Hz mapping, and a
+  white-keys-only mapping with unmapped black keys (written for this project).
+- Processor API (`PluginProcessor.h`): `loadScalaTuning(scl, kbm)` returns an
+  error string or empty; `clearScalaTuning()`, `getScalaDescription()`. The
+  table reaches the audio thread through a spin lock the audio thread only
+  try-locks (never waits). The texts are saved in the session (`WS3_TUNING`
+  child of the state tree), not in presets.
+
+### MTS-ESP and MIDI Tuning Standard
+
+- **MTS SysEx** (no library needed): bulk dump (08 01), real-time single note
+  (08 02), non-real-time single note with bank (08 07), scale/octave 1- and
+  2-byte (08 08 / 08 09, channel mask not applied). Parsed allocation-free
+  from the raw MIDI bytes at their sample position in `processBlock`
+  (`Engine::handleSysEx`); `tuning_mode` 2 plays the result.
+- **MTS-ESP client: not vendored.** ODDSound's repository page states the 0BSD
+  licence and that a client needs `Client/libMTSClient.h/.cpp`, but the source
+  files could not be fetched byte-exactly in this session (direct download of
+  the raw files was not permitted; the web reader returns summaries). The
+  shim `src/plugin/MtsEspClient.{h,cpp}` compiles the client in automatically
+  when those two files exist at `deps/mts-esp/Client/` (compile-time switch
+  via `__has_include`); then, in `tuning_mode` 2, every block fills the table
+  from `MTS_NoteToFrequency`/`MTS_ShouldFilterNote` and forwards SysEx to
+  `MTS_ParseMIDIDataU`. **Missing:** the library itself (vendor it with its
+  licence in-tree to ship), a compile test of that branch, per-channel
+  retuning queries (the shim asks with channel −1), the master's scale name,
+  and a UI connection indicator (`isMtsEspConnected()` is ready for one).
+
+### MPE (`src/core/MpeZones.h`, Engine)
+
+- Zone negotiation while MPE is on: MCM (RPN 6) on channel 1 sets the lower
+  zone's member count, on channel 16 the upper zone's; a growing zone shrinks
+  the other; an MCM resets that zone's negotiated bend ranges. RPN 0 on a
+  master sets the zone's master bend range, on a member the members' range;
+  null RPN deselects. Without any MCM the layout is one lower zone with 15
+  members, exactly the engine's previous behaviour.
+- Upper zone: notes on upper members take the channel-16 master's bend,
+  pressure, CC74 and sustain pedal; lower-zone notes keep channel 1's.
+  RPN is ignored when MPE is off (no change for non-MPE sessions).
+- **High-resolution velocity**: CC88 supplies the low 7 bits of the next
+  note-on velocity on its channel (MMA CA-031); without a prefix the velocity
+  is bit-identical to JUCE's `getFloatVelocity`. MIDI 2.0 velocity is not
+  available: JUCE 8.0.11 delivers MIDI 1.0 `MidiBuffer`s to VST3/AU/standalone
+  processors, so there is no 16-bit velocity to read.
+
+### Voice modes (`voice_mode`, `unison_detune`)
+
+| Mode | Behaviour | Label |
+|---|---|---|
+| 0 | eight voices, the original allocator | **authentic default** |
+| 1 | sixteen voices: a second, complete eight-voice instrument in the processor; a key goes to the first until it has no free circuit (`SixteenVoiceRouter`), everything else reaches both, outputs summed | **extension** (two CS-80s side by side; each keeps its own source networks, chorus and output stage) |
+| 2 / 3 / 4 | unison ×2 / ×4 / ×8: each key takes N circuits, detuned symmetrically over `unison_detune` cents; a key's release releases all N | **extension**; circuits are allocated like ordinary keys (no stealing), so ×8 is first-come monophonic |
+
+The second instrument starts when mode 1 is selected and is hard-stopped when
+it is left. In mode 1 the editor's voice meter and on-screen pressure
+ownership cover the first instrument only (pressure on keys that landed in the
+second is not attributed — conservative).
+
+### Tests (`tests/TuningMidiTests.cpp`, 81 checks)
+
+Scala/KBM against hand-computed pitches for every bundled file, malformed
+input rejection; MTS single-note, octave and bulk-dump messages, the no-change
+marker, other-device and truncated messages; engine Scala and MTS modes,
+retuning of a sounding note, unmapped key, PURE inert; MPE default layout, MCM
+negotiation and shrinking, RPN 0 member range, null RPN, upper-zone master
+bend and pressure isolation, member range, RPN ignored without MPE; CC88;
+unison ×2/×4/×8 allocation, symmetric detune, release of all circuits, PURE
+inert; sixteen-voice routing; ribbon CC default off, centre/ends, PURE, CC
+number assignable.
+
+### New parameters (AU hint 10, all plain floats; switches ≥ 0.5, choices rounded)
+
+| id | range | default | notes |
+|---|---|---|---|
+| `tuning_mode` | 0..2 | 0 | 0 12-TET, 1 Scala/KBM, 2 MTS (SysEx or MTS-ESP); survives preset recall |
+| `voice_mode` | 0..4 | 0 | see table above; a patch setting |
+| `unison_detune` | 0..50 ct | 10 | spread across the unison circuits |
+
+`kas_scan_timing`, `velocity_curve`, `pressure_curve`, `pressure_threshold`,
+`ribbon_cc_enable`, `ribbon_cc` and `tuning_mode` are setup parameters: they
+survive factory-preset recall (`isPhysicalSetupParameter`), like the
+footswitch jack. Host IDs are appended after `source_performance` in enum
+order; core indices follow the ws1/ws2 blocks and will shift at integration
+(refer to them by name).
+
+### UI mount points for the integrator (ws8 Studio view)
+
+No editor code was added. A Keyboard/Tuning page needs: a file chooser calling
+`loadScalaTuning(scl, kbm)` (show the returned error), `getScalaDescription()`,
+`isMtsEspAvailable()` / `isMtsEspConnected()`, and the parameters above
+(curves, threshold, ribbon CC enable/number, KAS scan timing, tuning source,
+voice mode, unison detune).

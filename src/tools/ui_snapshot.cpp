@@ -11,6 +11,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/UiReadinessTests.h"
+#include "../../tests/Ws3KeyboardHostTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -1938,6 +1939,8 @@ int main(int argc, char** argv)
     cs80::tests::testOutputMeterHost(check);
     std::puts("UI SMOKE PHASE: source performance host");
     cs80::tests::testSourcePerformanceHost(check);
+    std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
+    cs80::tests::testWs3KeyboardHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
