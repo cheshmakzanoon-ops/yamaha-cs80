@@ -116,7 +116,11 @@ void priorityAndTransitions() {
         auto next=f;next.effectiveValues[P_parityMode]=to==2?1.f:0.f;next.effectiveValues[P_sourcePerformance]=to==1?1.f:0.f;
         check(e.setControlFrame(next),"policy transition accepted");
         if(from==to)check(e.activeVoices()==1&&same(audio,e.getRankAudioState(0,0))&&same(env,e.getRankEnvelopeState(0,0)),"unchanged policy retains voice and exact state");
-        else {check(e.activeVoices()==0,"effective policy transition retires old voices");for(int v=0;v<8;++v)for(int r=0;r<2;++r)check(same(e.getRankAudioState(v,r),{}),"effective policy transition clears oscillator/filter state");}
+        else {check(e.activeVoices()==0,"effective policy transition retires old voices");
+            // Phase 2.1 (intentional): entering a circuit policy yields its declared
+            // cold free-running state (fixed-seed phases, zero memories), not phase 0.
+            Engine cold;init(cold,48000,next);
+            for(int v=0;v<8;++v)for(int r=0;r<2;++r)check(same(e.getRankAudioState(v,r),cold.getRankAudioState(v,r)),"effective policy transition clears oscillator/filter state to the cold state");}
     }
     auto isolated=neutral(true);isolated.hardwareSources={1,3};
     auto retained=isolated;retained.effectiveValues[P_sourcePerformance]=1;

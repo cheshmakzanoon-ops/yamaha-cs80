@@ -9,6 +9,7 @@
 #include "BbdChorus.h"
 #include "OutputTapCircuit.h"
 #include "SourceFactoryTones.h"
+#include "experimental/ContinuousVoiceCircuit.h"
 
 #include <array>
 #include <cstdint>
@@ -280,6 +281,13 @@ private:
     static constexpr int kMaxHeldKeys = 32;
     // Nominal ideal C-path pole only; not measured complete touch circuitry.
     static constexpr double kNominalInitialPitchDecaySeconds = 0.050;
+    // Circuit engine cold state (Phase 2.1, declared inference): KAS6 power-on
+    // clear memorizes key code C4#, read here through the engine's MIDI
+    // convention; cold oscillator phases come from their own fixed-seed stream
+    // so a first chord does not start with every oscillator in phase.
+    static constexpr int kColdKeyNote = 61;
+    static constexpr std::uint32_t kColdPhaseSeed = 0xC5800A11u;
+    static constexpr std::uint32_t kIdleNoiseSeed = 0xC58011D1u;
 
     struct Rank
     {
@@ -295,6 +303,11 @@ private:
         float trimPan = 0.0f;
         RankInfo info;
         Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
+        // Circuit engine (Phase 2.1): controls of the last processed interval,
+        // which drive the idle path and the wake catch-up of a silent circuit.
+        voice_continuity::IdleRankControls idle;
+        voice_continuity::IdleStageReferences idleRefs;
+        voice_continuity::IdleHistory idleHistory;
     };
 
     struct Voice
@@ -316,6 +329,14 @@ private:
         uint64_t age = 0;
         KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
+        // Circuit engine free-running state (Phase 2.1). idleClock counts the
+        // internal samples since the last idle step (or since retirement);
+        // idleSteps counts the idle steps since retirement.
+        int idleClock = 0;
+        int idleSteps = 0;
+        // The filter EG holds a reset (not a completed-release) state: cold
+        // after reset/prepare, or cleared by Sustain II termination.
+        bool envelopeReset = true;
     };
 
     struct HeldKey
@@ -333,6 +354,10 @@ private:
     void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
+    // Circuit engine: bring a silent free-running circuit exactly up to date
+    // before its note-on (ContinuousVoiceCircuit.h catch-up).
+    void wakeIdleVoice(Voice& voice) noexcept;
+    bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }
     void releaseVoice(Voice& voice);
     void releaseKey(Voice& voice);
     // Footswitch gate fell: shorten already-released tails to their non-performance
@@ -380,6 +405,12 @@ private:
     double internalRate = 96000.0;
     double initialPitchDecay = 0.0; // initialized in constructor and prepare
     int oversample = 2;
+    // Circuit engine idle path: internal samples per idle step and the
+    // matching initial-pitch-transient decay over one step.
+    int idleStepSamples = 32;
+    double idleTransientDecay = 0.0;
+    // Per-voice idle-only noise for the wake replay; never the shared audioRng.
+    std::array<Rng, kNumVoices> idleNoise;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;

@@ -224,6 +224,10 @@ if (CS80_BUILD_TESTS)
     # [ws2-engine] register this workstream's core tests below this line.
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
+    target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
+    add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)
+    set_tests_properties(cs80_free_running_voice_tests PROPERTIES TIMEOUT 300)
 
     # [ws4-circuits] register this workstream's core tests below this line.
 

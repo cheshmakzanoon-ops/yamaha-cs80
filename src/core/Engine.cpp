@@ -12,6 +12,8 @@ Engine::Engine()
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+    idleStepSamples = voice_continuity::idleStepSamples(internalRate);
+    idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
     setParams(params);
 }
 
@@ -23,6 +25,8 @@ void Engine::prepare(double hostSampleRate)
     oversample = 2;
     internalRate = hostRate * (double) oversample;
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+    idleStepSamples = voice_continuity::idleStepSamples(internalRate);
+    idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
 
     chorus.prepare((float) internalRate);
     bbdChorus.prepare((float) internalRate);
@@ -69,8 +73,12 @@ void Engine::prepare(double hostSampleRate)
 
 void Engine::reset()
 {
-    for (auto& v : voices)
+    // Circuit engine: every circuit starts cold but free-running (Phase 2.1).
+    const bool freeRunning = freeRunningVoices();
+    Rng coldPhases(kColdPhaseSeed);
+    for (int vi = 0; vi < kNumVoices; ++vi)
     {
+        auto& v = voices[(size_t) vi];
         v.active = false;
         v.held = false;
         v.sustained = false;
@@ -80,11 +88,28 @@ void Engine::reset()
         v.initialPitchTransient = 0.0;
         for (auto& r : v.ranks)
         {
-            r.osc.reset(0.0f);
+            r.osc.reset(freeRunning ? coldPhases.nextUnipolar() : 0.0f);
             r.hpf.reset();
             r.lpf.reset();
             r.fenv.reset();
             r.aenv.reset();
+            r.idle = {};
+            r.idleRefs = {};
+        }
+        v.envelopeReset = true;
+        v.idleSteps = 0;
+        // Stagger the idle steps so the eight circuits do not all step at once.
+        v.idleClock = vi * idleStepSamples / kNumVoices;
+        idleNoise[(size_t) vi] = Rng(kIdleNoiseSeed + (std::uint32_t) vi);
+        if (freeRunning)
+        {
+            // Every field the idle path reads is defined for a cold circuit.
+            v.note = kColdKeyNote;
+            v.midiChannel = 1;
+            v.glidePitch = v.targetPitch = (float) kColdKeyNote;
+            v.velocity = v.pressure = v.timbre = v.mpeBend = 0.0f;
+            v.ribbonRatio = 1.0f;
+            v.contour = keyboardContourWeights(kColdKeyNote);
         }
     }
     heldCount = 0;
@@ -257,8 +282,9 @@ void Engine::applyParams(const ParamValues& values)
             {
                 // Source TP1 remains electrically connected after its VCA has
                 // become idle. Its target/timing ports therefore stay live for
-                // all eight circuits, not only currently audible voices.
-                if (!voice.active && !sourceActive[ch]) continue;
+                // all eight circuits, not only currently audible voices. With
+                // free-running circuits (Phase 2.1) a silent PANEL/MEMORY filter
+                // EG is clocked too, so its ports are live as well.
                 auto& rank = voice.ranks[ch];
                 const auto& settings = rankSettings[ch];
                 if (voice.active) rank.aenv.setSustain(settings.vS);
@@ -751,13 +777,30 @@ void Engine::updateArpeggiator(float invSampleRate)
     }
 }
 
+void Engine::wakeIdleVoice(Voice& v) noexcept
+{
+    voice_continuity::wakeCircuit(v.ranks, kNumRanks, (float) internalRate, idleStepSamples,
+                                  v.idleClock, v.idleSteps,
+                                  idleNoise[(size_t) (&v - voices.data())]);
+    v.idleClock = 0;
+    v.idleSteps = 0;
+}
+
 void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
-    // Bounded continuity only: inactive circuits still use the legacy reset.
-    // This does not clock idle circuits or model their unknown held key voltage.
-    const bool preserveAudioState = usesSourceModels(global.renderPolicy) && v.active
-                                    && !v.held && !v.pedalHeld;
+    // Circuit engine (Phase 2.1): every circuit free-runs, so assignment never
+    // resets oscillator phase or filter memories; a silent circuit is first
+    // caught up to the present. Legacy keeps the historical reset.
     // chooseVoice only returns an unheld circuit.
+    const bool wasActive = v.active;
+    const bool preserveAudioState = freeRunningVoices() && !v.held && !v.pedalHeld;
+    if (preserveAudioState && ! wasActive)
+        wakeIdleVoice(v);
+    // A reset (cold or Sustain-II-cleared) filter EG restarts from IL as before.
+    const bool preserveEnvelope = preserveAudioState && ! v.envelopeReset;
+    v.envelopeReset = false;
+    v.idleClock = 0;
+    v.idleSteps = 0;
     v.active = true;
     v.held = true;
     v.sustained = false;
@@ -793,18 +836,19 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.hpf.reset();
             r.lpf.reset();
         }
-        // Filter envelope: a reused sounding tail restarts its attack from the
-        // capacitor's present level (source policies, IMPROVEMENT_PLAN 1.3);
-        // legacy keeps the historical reset to IL.
-        if (!preserveAudioState)
+        // Filter envelope: a reused circuit restarts its attack from the
+        // capacitor's present level (source policies, IMPROVEMENT_PLAN 1.3;
+        // silent circuits too since Phase 2.1); legacy keeps the reset to IL.
+        if (!preserveEnvelope)
             r.fenv.reset();
         // Amplitude envelope: a reused sounding tail restarts its attack from the level it has
         // reached instead of from zero (source policies only). Zeroing it removed the whole tail in
         // one sample, a step of up to 0.022 full scale across eight sampled factory programs (0.007
         // now), a tick under a passage. Inferred from the same reasoning as the oscillator and filter
         // memories above (no traced reset path); the real envelope capacitor behaviour is not
-        // measured. Legacy keeps the reset.
-        if (!preserveAudioState)
+        // measured. Legacy keeps the reset. A silent circuit's VCA is closed:
+        // reset it (this also clears a stage left behind by a hard panic).
+        if (!preserveAudioState || !wasActive)
             r.aenv.reset();
         r.fenv.noteOn(filterInitialTarget(ch),
                       filterAttackTarget(ch),
@@ -812,7 +856,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
                       std::max(0.001f, rs.fD * global.envTimeScale),
                       std::max(0.001f, rs.fR * global.envTimeScale),
                       0.0f,
-                      preserveAudioState);
+                      preserveEnvelope);
         r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale),
                       std::max(0.001f, rs.vD * global.envTimeScale),
                       rs.vS,
@@ -885,6 +929,7 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
                     rank.fenv.reset();
                 }
                 v.active = v.sustained = v.pedalHeld = false;
+                v.envelopeReset = true;
             }
     }
 
@@ -1219,15 +1264,52 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     if (sourceActive[0] || sourceActive[1])
         updateSourceReadouts(sr);
 
+    const bool freeRunning = freeRunningVoices();
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
+        // Circuit engine (Phase 2.1): a silent circuit keeps running. It is
+        // clocked once per idle step rather than every sample, and caught up
+        // exactly when it is next assigned (ContinuousVoiceCircuit.h).
+        int idleSamples = 0;
         if (! v.active)
-            continue;
+        {
+            if (! freeRunning || ++v.idleClock < idleStepSamples)
+                continue;
+            idleSamples = v.idleClock;
+            v.idleClock = 0;
+            if (++v.idleSteps >= voice_continuity::kIdleStepWrap)
+                v.idleSteps -= voice_continuity::kIdleStepWrap
+                               - voice_continuity::kHistoryStride * voice_continuity::kHistoryLength;
+            // Released key: no pressure, MIDI member expression or held EG
+            // gate (also after a hard panic). The TWS b hold (velocity) stays.
+            v.pressure = v.timbre = v.mpeBend = 0.0f;
+            for (int ch = 0; ch < kNumRanks; ++ch)
+            {
+                auto& fenv = v.ranks[ch].fenv;
+                const auto stage = fenv.getState().stage;
+                if (! sourceActive[ch] && (stage == FilterEnv::Stage::Attack
+                    || stage == FilterEnv::Stage::Decay || stage == FilterEnv::Stage::Sustain))
+                    fenv.noteOff();
+            }
+        }
+        const bool idle = idleSamples > 0;
+        const float rate = idle ? sr / (float) idleSamples : sr;
 
         if (v.held || v.pedalHeld)
             ++stillHeld;
 
+        if (idle)
+        {
+            if (glideActive)
+                v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch)
+                               * std::exp(-(double) idleSamples / ((double) global.portamento * sr));
+            else
+                v.glidePitch = v.targetPitch;
+            v.initialPitchTransient *= idleTransientDecay;
+        }
+        else
+        {
         if (glideActive)
             v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch) * glideCoef;
         else
@@ -1238,6 +1320,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // freeze a permanent detuning residual; snap only a negligible state
         // to zero well before double-precision denormals are approached.
         v.initialPitchTransient *= initialPitchDecay;
+        }
         if (std::abs(v.initialPitchTransient) < 1.0e-15)
             v.initialPitchTransient = 0.0;
 
@@ -1278,11 +1361,18 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
 
-            const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
+            // An idle step advances the oscillator below, without a per-sample
+            // tick and without drawing from the shared noise stream.
+            Oscillator::Output osc {};
+            float x = 0.0f;
+            if (! idle)
+            {
+            osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
 
-            float x = osc.saw + osc.pulse;
+            x = osc.saw + osc.pulse;
             x += audioRng.nextBipolar() * rs.noise * 0.8f;
             x *= 0.9f;
+            }
 
             // Shared key-voltage domain precedes VCO footage/vibrato. Master
             // pitch and key portamento move it; ribbon routing is unverified.
@@ -1302,7 +1392,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                                                global.kbdBrillianceHigh, v.contour);
 
             const float fenv = sourceActive[ch] ? sourceFilterValues[ch][vi]
-                : r.fenv.tick(sr, true, usesSourceModels(global.renderPolicy));
+                : r.fenv.tick(rate, true, usesSourceModels(global.renderPolicy));
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
@@ -1317,11 +1407,34 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float qHp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
                 : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
-            float filtered = x;
             // Circuit engine: IG00156 stages with in-loop OTA saturation and the
             // source-derived 4.7 MOhm feedforward floor. Legacy: unchanged Svf.
             const bool circuitFilter = usesSourceModels(global.renderPolicy);
             const float cutoffFloor = circuitFilter ? kIg00156FeedforwardHz : 0.0f;
+            if (freeRunning)
+            {
+                const voice_continuity::IdleRankControls controls { freq, pw, rs.noise, rs.saw, rs.pulse,
+                    cutoffHp + cutoffFloor, qHp, cutoffLp + cutoffFloor, qLp, rs.hpfOn, rs.lpfOn };
+                if (idle)
+                {
+                    // Silent circuit: exact phase advance, one decimated step of
+                    // both stages, no VCA and no contribution to the mix.
+                    voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
+                    r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
+                    continue;
+                }
+                r.idle = controls;
+            }
+            float filtered = x;
+            if (freeRunning)
+            {
+                // Same stage clocking as the idle path (re-referencing a stage
+                // whose memories were last clocked at the idle step rate).
+                voice_continuity::clockStages(r.hpf, r.lpf, r.idleRefs, filtered, r.idle, sr);
+                filtered = rs.lpfOn ? r.idleRefs.lp.nodes.lp : rs.hpfOn ? r.idleRefs.hp.nodes.hp : filtered;
+            }
+            else
+            {
             if (rs.hpfOn)
             {
                 r.hpf.set(cutoffHp + cutoffFloor, qHp, sr);
@@ -1331,6 +1444,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             {
                 r.lpf.set(cutoffLp + cutoffFloor, qLp, sr);
                 filtered = circuitFilter ? r.lpf.processCircuit(filtered).lp : r.lpf.process(filtered).lp;
+            }
             }
 
             const float sine = osc.sine * rs.sine;
