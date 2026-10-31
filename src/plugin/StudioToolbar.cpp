@@ -281,8 +281,6 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
                         "circuit models only (the parity_mode parameter). Not calibrated. Switching stops sounding notes.");
     studioKey->setTooltip("Studio view: modulation, keyboard and tuning, effects, arpeggiator and settings.");
     menuKey->setTooltip("Menu: save, init, voice monitor, controllers strip, computer keyboard, help and tour.");
-    for (auto* k : { compareA.get(), compareB.get(), circuitKey.get(), legacyKey.get() })
-        k->setRadioGroupId(0);
 
     int order = 0;
     for (juce::Component* c : { (juce::Component*) prev.get(), (juce::Component*) display.get(), (juce::Component*) next.get(),

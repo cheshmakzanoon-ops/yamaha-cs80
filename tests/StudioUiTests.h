@@ -414,7 +414,7 @@ inline void testInteractionPolish(const Check& check, const Flush& flush, const 
     check(help.contains("EVIDENCE") && help.contains("Owner's manual p18, p32") && help.contains("Coverage ledger: IB implemented behaviour"),
           "the help card cites the manual page, the evidence class and the coverage codes");
     // A modern control has no owner page.
-        check(cs80::ui::controlHelpText(cs80::P_lfo1Rate).contains("Not on the original instrument"), "a modern control says it is not on the original");
+    check(cs80::ui::controlHelpText(cs80::P_lfo1Rate).contains("Not on the original instrument"), "a modern control says it is not on the original");
 
     // The ribbon: full range from any touch point; PURE CS-80 keeps the hardware's distance law.
     {

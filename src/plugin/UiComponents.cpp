@@ -4010,9 +4010,10 @@ void ParamKnob::watchLearning()
 
 void ParamKnob::paintOverChildren(juce::Graphics& g)
 {
-    // While MIDI learn waits for a controller for this control: a dashed amber outline.
-    const int host = getHostParameterIndex();
-    if (host < 0 || processor.getMidiLearn().learningParameter() != host)
+    // While MIDI learn waits for a controller for this control: a dashed amber outline. (The host index lookup
+    // runs only while learning is armed, not on every repaint of every knob.)
+    const int armed = processor.getMidiLearn().learningParameter();
+    if (armed < 0 || armed != getHostParameterIndex())
         return;
     juce::Path outline;
     outline.addRoundedRectangle(getLocalBounds().toFloat().reduced(1.0f), 4.0f);
