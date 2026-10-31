@@ -107,6 +107,11 @@ row (compatibility gates byte-identical).
   original controllers without changing their circuits, keyboard modulation curves for
   matrix sources only, modern FX (BBD ensemble, plate, spring, tape echo, oversampled
   drive, loudness matching; classic slot FX bit-identical). Mounted in the Studio view.
+- *Host automation (2026-10-31):* 18 named key parameter lanes preserve VST3
+  sample offsets in the Source circuit policy; timed controls reach both
+  rank engines before the corresponding sample. A checked wrapper patch is
+  generated in the build tree. Legacy and PURE keep their block-rate host
+  semantics; see [HOST_AUTOMATION.md](HOST_AUTOMATION.md).
 
 **Tones, memories and library (ws6-library, Phase 4)**
 - *Row 3 tone selectors:* 25 unknown cells re-examined; all stay labelled hypotheses;

@@ -103,7 +103,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
 | 6 Separate chorus/tremolo tab positions | done; historic default preserves original exclusive switch, circuit source can select both off/on | `6f1c4aa`, pin `adc8bbb` |
-| 6 Sample-accurate automation | native VST3/AU continuation implementation qualified locally; publication and macOS native gate pending | — |
+| 6 Sample-accurate automation | VST3 native host bridge published and tested; AU native host gate/publication pending | `3a37594`, pin `aaf5855` |
 | 7 Release qualification | identified Linux validator-host lifetime mechanism removed by checked fixed-host pin; full continuation CI/release pending; signing remains owner-only | `f39af47`, `9af0b35` |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -386,15 +386,45 @@ audio pin is `adc8bbb8de4cd8631423e1edcfb513be841fac1c`. See the
 frozen capture under
 `evidence/continuation-2026-10-31/compat-chorus-frozen.log`.
 
+## Continuation: VST3 sample-accurate host automation
+
+`3a37594b11c8dd696e5e3e622d8dd60a3f36480e` bridges every point of
+Steinberg's native `IParamValueQueue` into Source engine control targets at
+the intended sample. The 18 enum-named keys cover cutoff, resonance, VCA
+level, pulse width, global volume/mix and tuning on both ranks. Every timed
+change reaches both engines in sixteen-voice mode. The original JUCE 8.0.11
+wrapper remains pristine; an exact source-hash gate precedes generation of
+the reviewed build-tree wrapper. Moving ramps set control targets per sample,
+while constant spans remain batched. No parameter or state IDs change.
+
+The preregistered `host-automation.json` tolerance commit `6807df1`
+precedes evaluation. The independent curve gate reports normalized error
+**2.22045e-16** against `1e-7`. A native Linux VST3 SDK host loads the
+built module, feeds native automation queues and MIDI, and compares
+1/7/64/256/1024/4096-frame partitions with a per-sample oracle at **zero
+audio difference**, including sixteen voices. The bridge preserves every
+zero-queue rendering byte; Legacy and PURE retain their previous JUCE
+last-point behavior. Deliberate queue/bridge/source-ownership mutations
+are detected. The local rebuilt native CTest pair passed **2/2**. See
+[HOST_AUTOMATION.md](HOST_AUTOMATION.md) for protocol references,
+fixtures, and the pending native macOS Audio Unit gate.
+
+The separate pin is `aaf58559b5e761c7abfa47e2d2b40ff038de34e2`.
+The frozen strict capture passes all four gates: Legacy default/tails exact
+against `d56911a`, circuit V1 exact against `22d6a32`, and V2 exact against
+the published audio commit `3a37594`. Full results are archived at
+`evidence/continuation-2026-10-31/compat-vst3-frozen.log`.
+
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now
-  **`6f1c4aad967e58fcd013747ceaa6bf00b6dcc7d9`** (independent chorus and
-  tremolo tabs). Pin commit `adc8bbb8de4cd8631423e1edcfb513be841fac1c`.
-  Earlier V2 pins, for historical circuit-engine renders: `3c08e8e`
+  **`3a37594b11c8dd696e5e3e622d8dd60a3f36480e`** (host automation
+  queue timing). Pin commit `aaf58559b5e761c7abfa47e2d2b40ff038de34e2`.
+  Earlier V2 pins, for historical circuit-engine renders: `6f1c4aa` (independent
+  chorus/tremolo tabs), `3c08e8e`
   (complete live voice ownership), `c54c476` (filter
   charge continuity), `d66d298` (electrical
   programmer), `4917708` (full-band
@@ -492,7 +522,9 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   and board revision choices remain labelled hypotheses. Independent physical
   chorus and tremolo states now have a neutral-default, append-only parameter;
   integrated host/UI validation is pending.
-- Sample-accurate automation not done.
+- Sample-accurate VST3 key automation is published and qualified with a
+  native host SDK. The Audio Unit native macOS component host and serial
+  mutation gate remain for CI validation before declaring AU complete.
 - Signing and notarization need the owner's certificates; real-DAW sessions,
   trademark review and AAX are owner actions
   ([release/RELEASE_QUALIFICATION.md](release/RELEASE_QUALIFICATION.md)).
