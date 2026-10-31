@@ -28,11 +28,14 @@ after an ordinary block and after an earlier completed curve. The previous
 native partition, source ownership, sixteen-voice and Pure/Legacy gates are
 retained unchanged.
 
-The flush oracle reads the actual stored physical Float32 values through
-`IComponent::getState`, which reaches the processor's locked, synchronised
-state-save API. It independently normalizes those values using the declared
-parameter ranges. The submitted normalized number is not assumed to survive
-JUCE's float range conversion without rounding.
+The flush oracle connects the actual native `IEditController`, transfers
+`IComponent::getState` through `setComponentState`, and reads
+`getParamNormalized`. The pinned JUCE controller synchronises from each
+processor parameter's current `getValue()`. State capture reaches the
+processor's locked, synchronised save API. This avoids both assuming the
+submitted normalized number survives Float32 conversion exactly and using
+the APVTS snapshot's additional physical projection as though it were the
+parameter getter.
 
 ## Qualification status
 
