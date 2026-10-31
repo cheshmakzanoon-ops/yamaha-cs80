@@ -51,6 +51,7 @@ struct Setup
     ParamValues values;
     std::array<int, 2> sources { 13, 13 };
     const char* policy = "legacy";
+    bool useProgrammer = true; // false only for the original physical-PANEL causal control
 };
 
 struct Event { double t; bool on; int note; float vel; };
@@ -71,7 +72,7 @@ Rendered render(const Setup& s, int rate, const std::vector<Event>& events, doub
     frame.effectiveValues = s.values;
     if (oversamplingOverride >= 0.0f) frame.effectiveValues[P_oversampling] = oversamplingOverride;
     frame.hardwareSources = s.sources;
-    frame = ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
+    if (s.useProgrammer) frame = ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
     require(e.setControlFrame(frame), "frame rejected");
     e.reset();
     const long frames = (long) std::llround(seconds * rate);
@@ -539,49 +540,77 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
             }
 }
 
-// Keep the phrase score and all its windows unchanged, but supply the missing
-// causal control: render the same initial state and phrase with only the first
-// note-off omitted. A large step that is already present in this control is not
-// evidence of an instantaneous release reset. No waveform is modified here.
+// Keep every phrase score/window unchanged. Omitted-event controls preserve
+// the same complete initial state and all earlier events, including RNG draws.
+// Physical-PANEL Bass is separate from the production electrical programmer:
+// changing the control coordinate is not evidence that an event defect is fixed.
 void suiteClickCausality(const fs::path& dir, const std::vector<int>& rates)
 {
+    struct Peak { double jump=0; long sample=0; char channel='L'; };
+    const auto peak=[](const Rendered& audio,long start,long end) {
+        Peak result;
+        for(long sample=std::max(1L,start);sample<end;++sample)
+            for(int channel:{0,1}) {
+                const auto& data=channel?audio.r:audio.l;
+                const double jump=std::abs(data[size_t(sample)]-data[size_t(sample-1)]);
+                if(jump>result.jump)result={jump,sample,channel?'R':'L'};
+            }
+        return result;
+    };
     std::ofstream out(dir / "click-causality.csv");
-    out << "name,rate,event,baseline_score,omitted_event_score,prefix_max_abs,first_strike_score,retrigger_score\n";
+    out << "name,rate,event,baseline_score,omitted_event_score,prefix_max_abs,first_strike_score,retrigger_score,"
+           "coordinate,event_sample,baseline_peak_sample,omitted_peak_sample,baseline_peak_jump,omitted_peak_jump,"
+           "baseline_peak_channel,omitted_peak_channel,added_peak_sample,added_peak_jump\n";
     out << std::setprecision(12);
-    const auto events = phrase();
-    auto omittedOff = events;
-    omittedOff.erase(std::remove_if(omittedOff.begin(), omittedOff.end(), [](const Event& e) {
-        return !e.on && e.note == 60 && e.t == T::singleOff;
-    }), omittedOff.end());
-    auto programs = programSetups(true), tabs = tabSetups(true);
-    const auto bass = std::find_if(programs.begin(), programs.end(), [](const Setup& s) { return s.name == "Bass Stack"; });
-    const auto funky = std::find_if(tabs.begin(), tabs.end(), [](const Setup& s) { return s.name == "Funky 1 + Funky 2"; });
-    require(bass != programs.end() && funky != tabs.end(), "click-causality fixtures missing");
-    for (int rate : rates)
-    {
-        const long window = (long) std::llround(0.008 * rate);
-        auto blockStart = [&](double time) { return (long) std::ceil(time * rate / kBlock) * kBlock; };
-        const auto baseline = render(*funky, rate, events, T::singleOff + 0.04);
-        const auto control = render(*funky, rate, omittedOff, T::singleOff + 0.04);
-        const long eventFrame = blockStart(T::singleOff);
-        double prefixDifference = 0.0;
-        for (long i = 0; i < eventFrame; ++i)
-            prefixDifference = std::max({ prefixDifference,
-                double(std::abs(baseline.l[(size_t) i] - control.l[(size_t) i])),
-                double(std::abs(baseline.r[(size_t) i] - control.r[(size_t) i])) });
-        require(prefixDifference == 0.0, "causal control differs before its omitted event");
-        const double reference = std::max(maxJump(baseline, eventFrame - (long) (0.06 * rate), eventFrame), 1.0e-7);
-        out << funky->name << ',' << rate << ",single_note_off,"
-            << maxJump(baseline, eventFrame, eventFrame + window) / reference << ','
-            << maxJump(control, eventFrame, eventFrame + window) / reference << ','
-            << prefixDifference << ",,\n";
-        const auto retrigger = render(*bass, rate, events, T::retrigOn2 + 0.04);
-        const double chordReference = std::max(maxJump(retrigger, idx(retrigger, T::chordOn), idx(retrigger, T::chordOff)), 1.0e-7);
-        const auto first = blockStart(T::retrigOn1), second = blockStart(T::retrigOn2);
-        out << bass->name << ',' << rate << ",note_on,,,,"
-            << maxJump(retrigger, first, first + window) / chordReference << ','
-            << maxJump(retrigger, second, second + window) / chordReference << '\n';
-        out.flush();
+    const auto events=phrase();
+    auto omittedOff=events,omittedRetrigger=events;
+    omittedOff.erase(std::remove_if(omittedOff.begin(),omittedOff.end(),[](const Event& event){
+        return !event.on&&event.note==60&&event.t==T::singleOff;
+    }),omittedOff.end());
+    omittedRetrigger.erase(std::remove_if(omittedRetrigger.begin(),omittedRetrigger.end(),[](const Event& event){
+        return event.on&&event.note==60&&event.t==T::retrigOn2;
+    }),omittedRetrigger.end());
+    auto programs=programSetups(true),tabs=tabSetups(true);
+    const auto bass=std::find_if(programs.begin(),programs.end(),[](const Setup& setup){return setup.name=="Bass Stack";});
+    const auto funky=std::find_if(tabs.begin(),tabs.end(),[](const Setup& setup){return setup.name=="Funky 1 + Funky 2";});
+    require(bass!=programs.end()&&funky!=tabs.end(),"click-causality fixtures missing");
+    for(int rate:rates) {
+        const long window=long(std::llround(.008*rate));
+        const auto blockStart=[&](double time){return long(std::ceil(time*rate/kBlock))*kBlock;};
+        const auto row=[&](const Setup& setup,const Rendered& baseline,const Rendered& control,
+                          long eventFrame,double reference,const char* event,const char* coordinate) {
+            double prefixDifference=0;
+            Rendered added=baseline;
+            for(size_t sample=0;sample<baseline.l.size();++sample) {
+                added.l[sample]-=control.l[sample];added.r[sample]-=control.r[sample];
+                if(long(sample)<eventFrame)prefixDifference=std::max({prefixDifference,
+                    double(std::abs(added.l[sample])),double(std::abs(added.r[sample]))});
+            }
+            require(prefixDifference==0,"causal control differs before its omitted event");
+            const auto b=peak(baseline,eventFrame,eventFrame+window),c=peak(control,eventFrame,eventFrame+window);
+            const auto a=peak(added,eventFrame,eventFrame+window);
+            out<<setup.name<<','<<rate<<','<<event<<','<<b.jump/reference<<','<<c.jump/reference<<','<<prefixDifference<<',';
+            if(std::string(event)=="note_on") {
+                const long first=blockStart(T::retrigOn1);
+                out<<maxJump(baseline,first,first+window)/reference<<','<<b.jump/reference;
+            }else out<<',';
+            out<<','<<coordinate<<','<<eventFrame<<','<<b.sample<<','<<c.sample<<','<<b.jump<<','<<c.jump
+               <<','<<b.channel<<','<<c.channel<<','<<a.sample<<','<<a.jump<<'\n';
+            out.flush();
+        };
+        const auto baseline=render(*funky,rate,events,T::singleOff+.04);
+        const auto control=render(*funky,rate,omittedOff,T::singleOff+.04);
+        const long off=blockStart(T::singleOff);
+        row(*funky,baseline,control,off,
+            std::max(maxJump(baseline,off-long(.06*rate),off),1e-7),"single_note_off","tone_tabs");
+        for(bool electrical:{false,true}) {
+            auto setup=*bass;setup.useProgrammer=electrical;
+            const auto retrigger=render(setup,rate,events,T::retrigOn2+.04);
+            const auto omitted=render(setup,rate,omittedRetrigger,T::retrigOn2+.04);
+            const double reference=std::max(maxJump(retrigger,idx(retrigger,T::chordOn),idx(retrigger,T::chordOff)),1e-7);
+            row(setup,retrigger,omitted,blockStart(T::retrigOn2),reference,"note_on",
+                electrical?"electrical_programmer":"original_physical_panel");
+        }
     }
 }
 

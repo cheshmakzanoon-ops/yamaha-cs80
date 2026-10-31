@@ -1,0 +1,41 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1048,6 +1048,7 @@
+ 
+ void Engine::wakeIdleVoice(Voice& v) noexcept
+ {
++    if (&v == &voices[6]) return; // diagnostic voice 6 has already run at full rate
+     voice_continuity::wakeCircuit(v.ranks, kNumRanks, (float) internalRate, idleStepSamples,
+                                   v.idleClock, v.idleSteps,
+                                   idleNoise[(size_t) (&v - voices.data())]);
+@@ -2003,7 +2004,7 @@
+         // clocked once per idle step rather than every sample, and caught up
+         // exactly when it is next assigned (ContinuousVoiceCircuit.h).
+         int idleSamples = 0;
+-        if (! v.active)
++        if (! v.active && vi != 6)
+         {
+             if (! freeRunning || ++v.idleClock < idleStepSamples)
+                 continue;
+@@ -2168,7 +2169,7 @@
+             x = sawPulse;
+             // The shared RNG draw is consumed in both engines so oscillator start
+             // phases keep their sequence; the circuit engine hears the SUB29 sample.
+-            const float rankNoise = audioRng.nextBipolar();
++            const float rankNoise = freeRunning && !v.active && vi == 6 ? 0.0f : audioRng.nextBipolar();
+             x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
+             x *= 0.9f;
+             }
+@@ -2252,6 +2253,12 @@
+                 }
+             }
+ 
++            if (freeRunning && !v.active && vi == 6)
++            {
++                r.vca.relaxIdle(1.0 / sr);
++                r.info = {cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn};
++                continue;
++            }
+             const float sine = sineWave * rs.sine;
+             // Legacy: SUB VCA modulation adds to the level CV. Circuit engine:
+             // it drives the IG00151 exponential input (Vca.h) instead, so it is
