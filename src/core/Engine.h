@@ -11,6 +11,7 @@
 #include "SourceFactoryTones.h"
 #include "KasScanner.h"
 #include "KbcContour.h"
+#include "TouchCircuit.h"
 #include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
 
@@ -242,6 +243,9 @@ public:
         float bend = 0.0f;
         float ribbonRatio = 1.0f;
         bool held = false, pedalHeld = false;
+        // Circuit engine TWS nodes (Phase 2.4): smoothed aftertouch a, held
+        // initial touch b, pitch transient C. Zero in Legacy.
+        float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
     struct RankInfo
@@ -356,6 +360,9 @@ private:
         int kbcKey = 36;
         float kbcCv[kNumRanks][2] {};
         float kbcLevelGain[kNumRanks] {};
+        // TWS a/b/C nodes (Phase 2.4, circuit engine) and their present values.
+        touch::TouchVoice touch;
+        float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
     };
 
     struct HeldKey
@@ -442,6 +449,10 @@ private:
     double idleTransientDecay = 0.0;
     // Per-voice idle-only noise for the wake replay; never the shared audioRng.
     std::array<Rng, kNumVoices> idleNoise;
+    // TWS/TRG touch model (Phase 2.4): per-sample coefficients, the TRG5 bus
+    // voltage (Newton warm start) and its single-key full-scale normalisation.
+    touch::Coefficients touchCoefficients;
+    double trg5BusVolts = 0.0, trg5FullScaleVolts = 1.0;
 
     std::array<float, 2> pwmPhase {};
     Lfo subLfo;

@@ -14,6 +14,8 @@ Engine::Engine()
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
     idleStepSamples = voice_continuity::idleStepSamples(internalRate);
     idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
+    touchCoefficients.prepare(internalRate);
+    trg5FullScaleVolts = touch::busVolts(std::array<double, 1> { 1.0 }, touch::kFullScaleVolts, 64);
     setParams(params);
 }
 
@@ -27,6 +29,7 @@ void Engine::prepare(double hostSampleRate)
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
     idleStepSamples = voice_continuity::idleStepSamples(internalRate);
     idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
+    touchCoefficients.prepare(internalRate);
 
     chorus.prepare((float) internalRate);
     bbdChorus.prepare((float) internalRate);
@@ -100,6 +103,8 @@ void Engine::reset()
         v.envelopeReset = true;
         v.idleSteps = 0;
         v.keyNode.track();
+        v.touch.reset();
+        v.touchA = v.touchB = v.touchC = 0.0f;
         // Stagger the idle steps so the eight circuits do not all step at once.
         v.idleClock = vi * idleStepSamples / kNumVoices;
         idleNoise[(size_t) vi] = Rng(kIdleNoiseSeed + (std::uint32_t) vi);
@@ -119,6 +124,7 @@ void Engine::reset()
     sustainPedals.fill(false);
     scanner.reset();
     unassignedCount = 0;
+    trg5BusVolts = 0.0;
     ringKeyDown = false;
     ringAdsr.reset();
     ringPhase = 0.0f;
@@ -587,9 +593,10 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
             // Continuous control-state inference: a source-selected filter EG
             // continues to relax after VCA retirement, avoiding a permanently
             // frozen common-bus bias. Cold never-triggered Idle remains at zero.
-            // Inactive touch is explicitly zero; no idle oscillator/audio-filter
-            // clocks or state resets are introduced by this control-only model.
-            drives[rank][voice] = {z, v.active ? v.velocity : 0.0f, v.active ? v.pressure : 0.0f};
+            // Phase 2.4: the TRG banks see every channel's held TWS b and
+            // smoothed a, silent channels included (b holds its last strike; a
+            // relaxes once the key is up). Formerly inactive touch was zero.
+            drives[rank][voice] = {z, v.touchB, v.touchA};
         }
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
@@ -900,6 +907,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     // even when PB depth is zero. Reset-to-velocity is still a MIDI/retrigger
     // approximation, not a complete model of the b sample/hold and clamp.
     v.initialPitchTransient = -(double) v.velocity;
+    // Circuit engine: TR opens the TWS b acquisition window (Phase 2.4).
+    v.touch.trigger(v.velocity);
     v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
     lastNote = note;
@@ -1259,6 +1268,9 @@ void Engine::allNotesOff(bool release, int midiChannel)
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
     pressure = clampf(pressure, 0.0f, 1.0f);
+    // Interface-layer controller curve (Phase 2.4); exact identity at default.
+    if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+        pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     for (auto& v : voices)
         if (v.active && v.note == midiNote
             && (! global.mpe || midiChannel <= 0 || v.midiChannel == midiChannel))
@@ -1270,6 +1282,8 @@ void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 void Engine::channelPressure(int midiChannel, float pressure)
 {
     pressure = clampf(pressure, 0.0f, 1.0f);
+    if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+        pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     for (auto& v : voices)
         if (v.active && (midiChannel == 1 || v.midiChannel == midiChannel))
             v.pressure = pressure;
@@ -1411,6 +1425,30 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Physical release removes this proxy even if a pedal/release tail sounds.
     // Arpeggiator extension uses its generated held voice gates.
     float sharedPressure = 0.0f;
+    if (usesSourceModels(global.renderPolicy))
+    {
+        // Circuit engine (Phase 2.4): every channel's TWS nodes advance each
+        // sample. The key's force drives a only while it is held (a released
+        // or pedal-held key exerts none); b holds the initial touch; C is the
+        // initial pitch transient. TRG5 joins every a through a 1S1555 onto one
+        // 47k bus, normalised to one full-pressure key (TouchCircuit.h).
+        std::array<double, kNumVoices> a {};
+        double top = 0.0;
+        for (int vi = 0; vi < kNumVoices; ++vi)
+        {
+            auto& voice = voices[(size_t) vi];
+            const auto t = voice.touch.tick(touchCoefficients, voice.active && voice.held ? voice.pressure : 0.0);
+            voice.touchA = (float) t.a;
+            voice.touchB = (float) t.b;
+            voice.touchC = (float) t.c;
+            voice.initialPitchTransient = t.c;
+            a[(size_t) vi] = t.a;
+            top = std::max(top, t.a);
+        }
+        trg5BusVolts = top > 0.0 ? touch::busVolts(a, trg5BusVolts, 2) : 0.0;
+        sharedPressure = (float) std::clamp(trg5BusVolts / trg5FullScaleVolts, 0.0, 1.0);
+    }
+    else
     for (const auto& voice : voices)
         if (voice.active && voice.held)
             sharedPressure = std::max(sharedPressure, voice.pressure);
@@ -1514,7 +1552,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 else
                     v.glidePitch = v.targetPitch;
             }
-            v.initialPitchTransient *= idleTransientDecay;
+
         }
         else
         {
@@ -1530,7 +1568,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // Coefficient is computed at prepare, not in this sample loop. Do not
         // freeze a permanent detuning residual; snap only a negligible state
         // to zero well before double-precision denormals are approached.
-        v.initialPitchTransient *= initialPitchDecay;
+        if (! freeRunning) // circuit engine: C comes from the TWS model (Phase 2.4)
+            v.initialPitchTransient *= initialPitchDecay;
         }
         if (std::abs(v.initialPitchTransient) < 1.0e-15)
             v.initialPitchTransient = 0.0;
@@ -1541,6 +1580,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
 
         const float glideOffset = v.glidePitch - (float) v.note;
+        // Touch drives: Legacy uses the MIDI values; the circuit engine the TWS
+        // held initial touch b and the smoothed aftertouch a (Phase 2.4).
+        const float touchVelocity = freeRunning ? v.touchB : v.velocity;
+        const float touchPressure = freeRunning ? v.touchA : v.pressure;
         const float dispersion = global.voiceDispersion;
         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
 
@@ -1557,7 +1600,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                           + glideOffset
                           + (float) (global.initBend * v.initialPitchTransient)
                           + lfoPitch
-                          + subValue * (global.subVco + global.subAtVco * v.pressure) * 1.5f
+                          + subValue * (global.subVco + global.subAtVco * touchPressure) * 1.5f
                           + subValue * modWheel * global.modWheelSub * 2.0f
                           + r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f)
                           + driftVoice;
@@ -1589,14 +1632,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // pitch and key portamento move it; ribbon routing is unverified.
             const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune, r.keyVoltsExp) * keyRatio;
             const float brillOct = global.brilliance
-                                   + (sourceActive[ch] ? 0.0f : rs.initBrill * v.velocity * 2.0f)
-                                   + (sourceActive[ch] ? 0.0f : rs.afterBrill * v.pressure * 2.0f)
+                                   + (sourceActive[ch] ? 0.0f : rs.initBrill * touchVelocity * 2.0f)
+                                   + (sourceActive[ch] ? 0.0f : rs.afterBrill * touchPressure * 2.0f)
                                    + v.timbre * 0.8f
                                    + modWheel * global.modWheelVcf * 1.5f
                                    // Owner manual p39: pressure adds SUB VCF depth,
                                    // not a static cutoff offset. The 1.5-octave scale
                                    // is provisional, not a measured circuit gain.
-                                   + subValue * (global.subVcf + global.subAtVcf * v.pressure) * 1.5f
+                                   + subValue * (global.subVcf + global.subAtVcf * touchPressure) * 1.5f
                                    + lfoFilter
                                    // Keyboard contour: zero (exactly) when both levers are centred.
                                    // Legacy: frozen per-key weights. Circuit engine: the KBC
@@ -1674,8 +1717,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                              + subValue * global.subVca * 0.45f + lfoAmp
                              + contourLevel)
                 : clampf(rs.vLevel
-                                             + rs.initLevel * v.velocity
-                                             + rs.afterLevel * v.pressure
+                                             + rs.initLevel * touchVelocity
+                                             + rs.afterLevel * touchPressure
                                              + subValue * global.subVca * 0.45f
                                              + lfoAmp
                                              + contourLevel,
@@ -1962,7 +2005,8 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
     if (index < 0 || index >= kNumVoices)
         return {};
     const auto& v = voices[(size_t) index];
-    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio, v.held, v.pedalHeld };
+    return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio, v.held, v.pedalHeld,
+             v.touchA, v.touchB, v.touchC };
 }
 
 Engine::RankInfo Engine::getRankInfo(int voice, int rank) const

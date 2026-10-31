@@ -236,6 +236,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_keyboard_contour_key_map_tests PRIVATE cs80_core)
     add_test(NAME cs80_keyboard_contour_key_map_tests COMMAND cs80_keyboard_contour_key_map_tests)
     set_tests_properties(cs80_keyboard_contour_key_map_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_touch_circuit_tests tests/TouchCircuitTests.cpp)
+    target_link_libraries(cs80_touch_circuit_tests PRIVATE cs80_core)
+    add_test(NAME cs80_touch_circuit_tests COMMAND cs80_touch_circuit_tests)
+    set_tests_properties(cs80_touch_circuit_tests PROPERTIES TIMEOUT 300)
 
     # [ws4-circuits] register this workstream's core tests below this line.
 

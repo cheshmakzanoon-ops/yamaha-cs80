@@ -355,3 +355,140 @@ different on HP and LP. At centre (the default) nothing changes.
 |---|---|
 | 9 Keyboard brilliance LOW/HIGH | A in the circuit engine: KBC1 network (KeyboardContour.h) with a declared 61-key code map meeting both adjustment anchors; KC → FH 120k / FL 39k; Legacy keeps provisional weights. C2 KAS6-code conflict reported (ws3-keyboard.md). T KeyboardContourKeyMapTests |
 | 10 Keyboard level LOW/HIGH | A in the circuit engine: KBC2 network, KB → LC 270k; same map |
+
+---
+
+## 2.4 Touch — **done** for the declared model (electrical calibration remains open)
+
+### What changed (`src/core/TouchCircuit.h`, `src/core/ControllerCurves.h`, `Engine.cpp`)
+
+Circuit engine, per voice channel, every sample (TWS17):
+
+- **a (aftertouch)**: the key's present pressure (zero once the key is up,
+  including MIDI pedal holds) through the 100k/1 µF follower, a 100 ms low-pass.
+  Drives every aftertouch destination (AFTER BRILL/LEVEL, SUB VCO/VCF depth
+  terms, the source TRG banks) instead of the raw MIDI pressure.
+- **b (initial touch)**: at TR the acquisition window opens; the AC-coupled
+  sensor signal is at rest for the contact lead, then carries the strike
+  value; the 0.33 µF hold follows it through the FET on-resistance until the
+  window closes, then holds (no droop nominal). Drives INITIAL BRILL/LEVEL and
+  the source TRG banks instead of raw velocity. A circuit that is not struck
+  (the reconsidered ninth key) acquires zero.
+- **C (initial pitch transient)**: buffered b through 1 µF into 100k‖100k
+  (50 ms), inverted; an ideal clamp keeps C ≤ 0 and so resets the coupling
+  memory when b falls to rest at the start of the next acquisition. The pitch
+  destination (INITIAL PITCH BEND) uses C; the former reset-to-velocity onset
+  is now a consequence of the circuit (a fresh and an equal repeat strike give
+  the same onset, tested), delayed by the 2 ms contact lead and softened by the
+  0.33 ms acquisition.
+- **TRG5 bus**: every channel's a feeds a 1S1555 anode; the cathodes join one
+  bus with 47k to ground (high-impedance IC17 input through 330k). Solved each
+  sample (warm-started Newton on the Shockley law, skipping non-conducting
+  diodes), normalised to one full-pressure key, and used as the shared SUB
+  speed pressure instead of the ideal maximum. Light pressure below the diode
+  knee is strongly suppressed (≤ 10 % of the former linear law at 0.04).
+
+Legacy is unchanged: it keeps the raw MIDI values, the reset-to-velocity
+transient and the ideal maximum.
+
+### Evidence class
+
+| Law | Class | Source / alternatives |
+|---|---|---|
+| a = 100k·1 µF = 100 ms follower low-pass | source-derived component product | TWS17 a1 branch |
+| C = 1 µF·(100k‖100k) = 50 ms high-pass, inverting, from buffered b | source-derived (conditional ideal-opamp) | TWS17 C1, TRG4 p23 (INITIAL_PITCH_TRANSIENT.md) |
+| b sampled by FET1 onto 0.33 µF, held, feeding IBI/IBII/ILI/ILII banks; C feeds PB | source-derived topology | TWS17/TWS18 (2SK30, 1S1555, NJM4558), TRG19/TRG23 |
+| Contact lead 2 ms | **declared** | MIDI has no sensor waveform; alternatives 0–10 ms |
+| Acquisition τ = 1 kΩ × 0.33 µF = 0.33 ms | **declared** | 2SK30 on-resistance not specified (grade unknown); alternatives 0.2–3 kΩ |
+| Window 10 ms = 0.01 µF × 1 MΩ | **declared** | trigger-path component product; threshold law not solved |
+| No b droop | **declared** | 10 MΩ goes to the FET gate, not ground (TWS18); alternative 3.3 s |
+| Ideal clamp, C ≤ 0 | **declared** | the clamp's conduction law is not established; alternative: no clamp (then an equal repeat strike gives almost no bend — tested as a mutation) |
+| TRG5 diode-OR, 47k to ground | source-derived topology | TRG25 native crops (SHARED_PRESSURE_SPEED.md) |
+| Diode law (Is 2.52 nA, n 1.752) | **declared** stand-in | 1N4148-class SPICE model for 1S1555 |
+| 5 V a at full pressure, bus normalised to one full key | **declared** calibration | alternatives 2–10 V |
+| MIDI velocity/pressure = normalised strike/force | **declared** interface | no MIDI-to-volt calibration exists |
+
+### Gate (`tests/TouchCircuitTests.cpp`) and results
+
+Truth: `src/reference/TouchCircuitTruth.h` (independent backward-Euler, 64
+sub-steps per sample, clamp as a constraint, bus to convergence), host rates
+44.1/48/96/192 kHz, strike sequences fresh / equal repeat / softer / harder,
+pressure on then off.
+
+| Gate (pre-registered) | Tolerance | Result |
+|---|---:|---:|
+| b hold relative error | ≤ 1e-4 | 8.6e-13 |
+| C transient absolute error | ≤ 1e-3 | 4.9e-4 |
+| C recovers e^-1 at 50 ms | ≤ 1e-3 | 2.8e-13 |
+| a smoothing relative error | ≤ 1e-4 | 3.3e-7 |
+| TRG5 bus (realtime vs converged) | ≤ 1e-3 V | 4.3e-6 V |
+
+**First evaluation failed** the C gate (1.36e-2): the contact and window
+instants fall at fractional sample positions (0.4 sample at 88.2 kHz, worth
+≈ 0.011 of a fast b rise). The implementation now splits the boundary sample
+exactly. Separately, my own diode-OR regression exposed that Newton iteration
+on the exponential climbs only ~nVt per step from far below (a 64-iteration
+solve from 0 V stopped at 2.9 V); the solver now starts from the single-diode
+drop estimate. Both recorded; tolerances unchanged.
+
+INITIAL_TOUCH_CIRCUIT_EVIDENCE.md implementation gate, item by item:
+
+1. *b versus C destination separation*: initial brilliance holds b for the
+   whole note with no pitch effect; C bends flat at onset and recovers without
+   moving the filters — tested.
+2. *TWS18 component identities*: used (2SK30, 1S1555, 0.33 µF hold, 10 MΩ to
+   the gate); device curves/grade not available, so FET on-resistance and
+   diode law are declared (table above).
+3. *Switched FET/diode sequence*: declared acquisition sequence implemented
+   and tested (initial touch arrives after the contact lead; repeat strike).
+4. *Passive RC products kept separate from the driven response*: a and C are
+   the component products; b is a driven acquisition, not a decay product.
+5. *Receiving-stage gain, offsets, clamps, loading before MIDI→volts*: the
+   clamp is modelled (declared ideal); the source TRG banks keep their
+   compiled receiver gains; MIDI→volt calibration is declared normalised.
+   **Open**: offsets and the clamp's real conduction.
+6. *Regressions*: destination independence, zero-depth neutrality (velocity
+   inaudible with every depth zero, sample-identical), retrigger, held notes,
+   release (aftertouch relaxes after the key lifts), staggered polyphony —
+   all tested at 48/96 kHz.
+7. *Nominal versus measured*: every constant is marked SOURCE or DECLARED in
+   `TouchCircuit.h`; nothing is presented as measured.
+
+Mutations (restored): no clamp → 3 failing checks; no contact lead → 7;
+unsmoothed a → 2; raw velocity on the initial-touch destinations → 2;
+ideal maximum instead of the TRG5 bus → 2.
+
+### Controller response curves (INTERFACE LAYER)
+
+`applyVelocityCurve` / `applyPressureCurve` act on MIDI velocity and pressure
+before any circuit model, in every policy including PURE CS-80 (they calibrate
+the controller, not the instrument; alternative: bypass in PURE). Curve
+exponent 4^-curve; the pressure threshold removes a controller's resting load
+and rescales. At the defaults both are the exact identity (tested over 1001
+points), so default renders are unchanged.
+
+### Intentional circuit-engine sound changes (re-pin V2)
+
+Initial-touch destinations follow b (≈ 2–3 ms acquisition after TR instead of
+instantaneous); the initial pitch bend starts after the contact lead with a
+0.33 ms rise; aftertouch destinations are smoothed by 100 ms; the shared SUB
+speed follows the TRG5 diode bus; silent channels' held b and relaxing a now
+load the source TRG buses.
+
+### New parameters
+
+| id | range | default | AU hint | notes |
+|---|---|---|---|---|
+| `velocity_curve` | −1..1 | 0 (identity) | 10 | interface layer |
+| `pressure_curve` | −1..1 | 0 (identity) | 10 | interface layer |
+| `pressure_threshold` | 0..0.5 | 0 | 10 | interface layer |
+
+### HARDWARE_COVERAGE.md entries (2026-10-31)
+
+| Row | New text |
+|---|---|
+| 42 Initial-touch brilliance / 43 Initial-touch level | A; circuit engine drives them from the TWS b sample/hold (declared acquisition: 2 ms contact lead, 0.33 ms FET charge, 10 ms window, no droop). T TouchCircuitTests vs TouchCircuitTruth.h |
+| 12 Aftertouch → sub speed | IB/A; circuit engine: TRG5 1S1555 diode-OR bus with 47k, declared diode law and 5 V scale, normalised to one full key |
+| 44/45 Aftertouch brilliance/level | A; circuit engine: TWS a 100 ms follower smoothing |
+| TKC/TSB initial/aftertouch circuitry | A (declared); separate a, b, C paths now modelled in the circuit engine; sensor force law and calibration still open |
+| Initial pitch bend | A; C = −HPF₅₀ms(b) with ideal clamp, onset after the contact lead |
