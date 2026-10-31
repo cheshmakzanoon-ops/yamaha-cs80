@@ -3182,6 +3182,7 @@ public:
         setInterceptsMouseClicks(false, false);
         setOpaque(false);
         setBufferedToImage(true);
+        setAccessible(false);   // decorative: what it says is also given as text (AccessibleText)
     }
 
     void paint(juce::Graphics& g) override
@@ -3201,6 +3202,30 @@ struct Placed
     juce::Component* component = nullptr;
     Rect bounds;
 };
+
+// Painted content (the model notes and the evidence register) for screen readers: an invisible static-text element
+// over the painting, with the same rows as its description. It takes no clicks and no Tab stop.
+class AccessibleText final : public juce::Component
+{
+public:
+    AccessibleText(const juce::String& title, const juce::String& text)
+    {
+        setTitle(title);
+        setDescription(text);
+        setInterceptsMouseClicks(false, false);
+        setWantsKeyboardFocus(false);
+    }
+    std::unique_ptr<juce::AccessibilityHandler> createAccessibilityHandler() override
+    {
+        return std::make_unique<juce::AccessibilityHandler>(*this, juce::AccessibilityRole::staticText);
+    }
+};
+
+juce::String registerRowText(const evidence::ModelEntry& row)
+{
+    return juce::String(row.subsystem) + ": circuit engine " + row.circuit + "; legacy " + row.legacy + "; reference " + row.reference
+         + "; evidence " + evidence::basisName(row.basis) + ", coverage " + row.coverage + ".";
+}
 
 // Evidence chip colours: green for source-derived laws, amber for a source route with an inferred law,
 // warm grey for a declared inference, cool blue for the modern layer (never one of the cap colours alone).
@@ -3426,6 +3451,11 @@ public:
                "software addition, switched off by PURE CS-80. The letters are the coverage ledger's status codes (IB "
                "implemented behaviour, A approximate law, M missing, MR measurement required, PC physical controller "
                "required). Nothing here is a hardware measurement. Settings lists every subsystem.");
+        juce::StringArray spoken;
+        for (const char* name : subsystems)
+            if (const auto* row = modelEntry(name))
+                spoken.add(registerRowText(*row));
+        adoptText(std::make_unique<AccessibleText>(title, spoken.joinIntoString(" ")), r.reduced(8.0f, 40.0f).translated(0.0f, 16.0f));
         custom([r, subsystems = std::move(subsystems)](juce::Graphics& g)
         {
             const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
@@ -3473,6 +3503,10 @@ public:
                "circuit engine's law rests on and gives the coverage ledger's status codes (IB implemented behaviour, A "
                "approximate law, M missing, MR measurement required, PC physical controller required). No row is a hardware "
                "measurement or a claim of verified parity.");
+        juce::StringArray spoken;
+        for (const auto& row : evidence::kModelRegister)
+            spoken.add(registerRowText(row));
+        adoptText(std::make_unique<AccessibleText>("Evidence register", spoken.joinIntoString(" ")), r.reduced(8.0f, 40.0f).translated(0.0f, 16.0f));
         custom([r](juce::Graphics& g)
         {
             const float x = r.getX() + 24.0f, w = r.getWidth() - 48.0f;
@@ -3643,6 +3677,16 @@ public:
         placed.push_back({ raw, at(r) });
         tickers.push_back([raw] { raw->refreshState(); });
         return raw;
+    }
+
+    // Static text for assistive technology over painted content; never a Tab stop.
+    void adoptText(std::unique_ptr<AccessibleText> component, Rect r)
+    {
+        auto* raw = component.get();
+        addAndMakeVisible(*raw);
+        raw->toBack();
+        owned.push_back(std::move(component));
+        placed.push_back({ raw, at(r) });
     }
 
     // A component made elsewhere (for example a plain button), placed in design space and owned here.

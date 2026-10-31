@@ -874,6 +874,24 @@ inline void testLearningTools(const Check& check, const Flush& flush, const juce
         auto* studio = studioOf(editor);
         check(editor.isAdvancedVisible() && studio != nullptr && studio->getActiveTab() == cs80::ui::StudioTab::settings,
               "the menu opens the evidence register in Studio > Settings");
+        // The register is painted; screen readers get the same rows as static text.
+        std::function<juce::Component*(juce::Component&)> spoken = [&](juce::Component& parent) -> juce::Component*
+        {
+            for (auto* child : parent.getChildren())
+            {
+                if (child->getTitle() == "Evidence register" && child->getDescription().contains("Oscillator"))
+                    return child;
+                if (auto* found = spoken(*child))
+                    return found;
+            }
+            return nullptr;
+        };
+        auto* text = studio != nullptr ? spoken(*studio) : nullptr;
+        bool everyRow = text != nullptr;
+        for (const auto& row : cs80::evidence::kModelRegister)
+            everyRow = everyRow && text->getDescription().contains(row.subsystem)
+                    && text->getDescription().contains(cs80::evidence::basisName(row.basis));
+        check(everyRow, "the evidence register is readable by screen readers, row by row");
         editor.showAdvancedPanel(false);
         flush(30);
     }
