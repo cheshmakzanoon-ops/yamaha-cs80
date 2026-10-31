@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "status": "Prospective source-work witness only. No candidate has been implemented or evaluated under this registration.",
+  "parent_contract_commit": "c56726fd8ad12b78edf745b319a9ddc5a6696f2f",
+  "parent_contract": "tests/cpu/exact-scalar-kernels.json",
+  "baseline_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+  "chosen_scope": "Only the four independent RHS rows and three independent elimination rows inside Ig00156PhaseCorrection::process. Newton, the nodal law, coefficient arithmetic, wrapper histories and Engine scheduling retain their original order and values.",
+  "source_observation": "The current GCC 13.3 Release x86-64 binary already SLP-vectorizes pairs of independent rows. Its row-major coefficient representation requires interleaved scalar loads and lane packing. This registration tests moving the coefficient layout work to set(), not the existence of SIMD or a whole-engine speedup.",
+  "representation": {
+    "right": "Four columns of four double values: column[j][i] has exactly the bits of the original right[i][j].",
+    "inverse": "Three columns of four double values: column[j][i] has exactly the bits of the original inverse[i][j] for i<3; lane 3 is explicitly positive zero.",
+    "lifetime": "Build the column view only after a successful changed-key set() has computed all original coefficients. Repeated same-key set calls do not build it. A copy or assignment preserves the matching view; reset preserves whatever coefficients the frozen implementation preserves. Restore invalidation forces the next set to rebuild the view together with the coefficients.",
+    "fallback": "Keep the original scalar row transform available for a platform or effective FP mode that cannot qualify the column backend under the parent bitwise contract. Fallback must be explicit and reported, never selected to hide a supported-backend work-gate failure.",
+    "arithmetic": "Each live row starts from its original expression and consumes columns in the original j order. No horizontal reduction, reciprocal substitution, new FMA, reordered add, or uninitialized padding. Scalar Newton and state reconstruction are unchanged."
+  },
+  "work_unit": {
+    "name": "coefficient layout preparation",
+    "definition": "Reading the 16 right and 9 inverse row-major coefficients to create the SIMD-ready column view, including any equivalent per-process row gather or lane-pack fallback. A complete preparation transfers exactly 25 live coefficients and writes 3 initialized padding coordinates.",
+    "not_a_load_count": "This is a source-level layout/preparation count. The optimized transform still loads coefficient data and performs the same 25 live products and ordered row sums. It does not claim 25 machine loads disappear, and it is not a count of native retired instructions, cache misses or elapsed CPU time.",
+    "direct_column_storage": "If the implementation stores coefficients directly in the registered column order instead of retaining a second row-major matrix, its changed-key set writes the same 25 live coordinates plus 3 explicit padding coordinates. The same zero-per-process layout-preparation rule applies; the implementation audit must identify how the unchanged set-time algebra accesses that layout."
+  },
+  "temporary_instrumentation": {
+    "shipping_counters": false,
+    "method": "A standalone runner copies actual production headers into a temporary build tree and inserts counters at every coefficient-layout construction/gather site and at entry to the column and scalar transform paths. Exact source anchors and source hashes are recorded; missing or multiply matched anchors are harness errors. The runner must not change arithmetic expressions, constants, branch conditions, control flow or production state.",
+    "recorded_fields": [
+      "successful changed-key coefficient preparations",
+      "complete column-view preparations",
+      "live row-coordinate transfers into the column view",
+      "padding-coordinate writes",
+      "column-backend process calls",
+      "scalar-fallback process calls",
+      "per-process row gathers or lane packs, if any"
+    ],
+    "independent_checks": "Every instrumented candidate sample still passes the independent frozen software comparator. A separate unchanged production build passes the same comparator. Source audit accounts for every transform access so counting only a renamed helper cannot satisfy the witness. No instrumented timing enters the performance scorecard."
+  },
+  "fixed_fixture": {
+    "rates_hz": [88200, 96000, 176400, 192000, 352800, 384000, 705600, 768000],
+    "networks": ["nominal HP", "nominal LP"],
+    "control_pairs_hz_q": [[0, 0.35], [40, 9], [250, 0.5], [1000, 5], [6000, 0.35], [12000, 9], [20000, 1], [48000, 5]],
+    "input": "The parent contract's amplitude-4 xorshift32 stream, starting at seed 0x8dac7955 independently for each case.",
+    "samples": 4096,
+    "setup": "Perform one changed-key set, record its work, then clear only the temporary counters. Call the same set with identical arguments before every process sample. The test must not reset physical/filter state when clearing the counters.",
+    "required_per_case": {
+      "initial_changed_key_preparations": 1,
+      "initial_column_view_preparations": 1,
+      "initial_live_coordinate_transfers_or_direct_writes": 25,
+      "initial_padding_writes": 3,
+      "steady_changed_key_preparations": 0,
+      "steady_column_view_preparations": 0,
+      "steady_row_coordinate_transfers_or_packs": 0,
+      "steady_column_backend_calls_on_qualified_backend": 4096,
+      "steady_scalar_fallback_calls_on_qualified_backend": 0
+    }
+  },
+  "moving_fixture": {
+    "schedule": "Use the parent contract's 16384-sample moving-control schedule for both nominal networks at all eight audio rates. Determine effective changed keys independently from the actual float cutoff, clamped Q and sample rate presented to the original set guard; do not infer expected counts from the candidate's counters.",
+    "requirements": [
+      "Exactly one column-view preparation for each independently determined successful changed key, and no preparation for exact repeats.",
+      "Exactly 25 live-coordinate transfers/direct writes and 3 padding writes per preparation.",
+      "No row-major gather or view reconstruction inside any column-backend process call.",
+      "Copy, assignment, reset and restore fixtures retain the parent bitwise requirements; cache ownership cannot be shared between two independent stages."
+    ]
+  },
+  "row_witnesses": {
+    "coordinates": "Drive each of the four physical-node coordinates and each causal input-history coordinate independently through valid finite restored states, then use mixed signs and distinct coefficients. Exercise all three eliminated coordinates independently. Compare every output and complete exported state with the frozen oracle.",
+    "bits": "Include positive/negative zero, smallest and largest subnormals, minimum normals, nextafter-adjacent controls, finite magnitudes 1 and 64, and the parent FP-mode transitions. Padded lane values are initialized and never influence a live row.",
+    "required_observers": "Output/state bits, accepted residual and Newton correction count remain exact. Work-only assertions additionally report preparation, transfer and backend counts separately."
+  },
+  "actual_source_mutations": [
+    {
+      "name": "rebuild_columns_for_every_process",
+      "defect": "Force actual production process() to reconstruct its column view from the unchanged coefficients before each transform, or equivalently rebuild the same layout into temporary columns for the direct-storage variant.",
+      "required_result": "Frozen numeric comparisons remain exact; the zero steady preparation/transfer assertion fails normally. This proves the work gate rejects a numerically correct implementation that performs the avoided work."
+    },
+    {
+      "name": "gather_row_coefficients_per_sample",
+      "defect": "Replace direct cached-column reads with the corresponding row-major coefficient gathers/lane packs, preserving each product/add order.",
+      "required_result": "Frozen numeric comparisons remain exact; the no per-process row-gather/lane-pack assertion fails normally. If direct column storage removes the row matrix, reconstruct its row view in the mutant only and account for every preparation."
+    },
+    {
+      "name": "stale_column_after_changed_key",
+      "defect": "Leave one live cached column at its previous-key value after an actual coefficient change.",
+      "required_result": "The frozen numeric comparator rejects the moving-control or coordinate fixture."
+    },
+    {
+      "name": "transpose_or_permute_live_column",
+      "defect": "Swap two distinct live coordinates or use a transposed matrix index in one transform.",
+      "required_result": "The frozen numeric comparator rejects the coordinate fixture."
+    },
+    {
+      "name": "reorder_accumulation",
+      "defect": "Reverse two ordered product additions of one live row without changing its mathematical expression.",
+      "required_result": "A registered deterministic finite coordinate or moving-control case rejects the bit mismatch. A surviving attempt is reported and the gate remains unqualified until an observation under the unchanged zero-ULP contract detects the defect."
+    }
+  ],
+  "publication_and_evaluation": {
+    "ordering": "Publish this witness before candidate implementation/evaluation. Profile the final integrated unmodified core as required by the parent contract before any candidate numerical evaluation. First qualify the unmodified frozen-oracle positive control, then the candidate, then actual-source mutations and restored control.",
+    "platforms": "Qualify the release Linux x86-64 backend and every other enabled backend with its own compiler/FP options. A declared unsupported backend must pass the unchanged scalar comparator and dispatch assertions, and is reported as fallback with no work-reduction claim for that backend.",
+    "release_measurement": "Retain the user's unchanged factory benchmark, at least three uncontended before and after rounds, and all legacy/V1/current-V2 compatibility gates. Extra storage, setup cost, backend dispatch and cache pressure can offset packing savings; no expected speedup is asserted here."
+  }
+}
