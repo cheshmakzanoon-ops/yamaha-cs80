@@ -106,7 +106,8 @@ distributions. No additional audio driver is bundled on any platform.
    mode, not a calibrated hardware comparison. The toolbar identifies the
    requested policy and both source routes. Source-model output uses a fixed
    -6 dB reference and an inferred driver ceiling at full scale, so very dense
-   loud chords can still reach 0 dBFS; keep normal monitoring headroom.
+   loud chords can still reach or slightly exceed 0 dBFS; keep normal
+   monitoring headroom.
 5. Use **SAVE** to name a user patch; an existing filename requires confirmation.
    Check the saved/error status. Save the DAW session for the full session mode
    and automation. A new user patch saves/restores SOURCE PERFORMANCE; factory

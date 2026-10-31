@@ -141,6 +141,18 @@ no samples above 1, loudest tab chord -19.6 / -19.3 dB against -18.6 / -18.8 dB 
 the legacy tabs. A dense eight-note velocity-127 PANEL chord peaks at 0.996 in the UI
 self-test, held by the driver. Legacy audio is unchanged.
 
+### Phase 1.1 IG00156 circuit filter (2026-10-31)
+
+The source policies now run each filter stage with the transconductor saturation
+inside the loop instead of `softClip(1.1x)` on the input (`Svf::processCircuit`,
+[IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md)). Alias suite, 48 kHz, source
+policy: worst saw non-harmonic energy -33.8 -> -51.1 dB, pulse -39.3 -> -53.5 dB; this
+is now near the PolyBLEP oscillator's own floor, so the -70 dB target needs the Phase
+1.2 oscillator. Legacy rows are unchanged. Phrase suite: several string/brass tabs are
+up to 5-6 dB louder because the 22.6 Hz feedforward contribution raises very low LP
+cutoffs; the worst tab peak is -0.8 dBFS. CPU (scratch benchmark, 8 voices, 48 kHz):
+circuit engine 0.23 -> 0.37 RTF.
+
 ### Checked and fine
 
 - No NaN or infinity in any row of any suite; no hung voice (every factory program goes idle; the rows

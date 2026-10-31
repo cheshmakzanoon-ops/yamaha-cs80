@@ -8,6 +8,13 @@ Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e
 
 ## Verified increment and source correction
 
+**2026-10-31, circuit engine filters (rows 26–29):** Source Performance/Isolation
+now run each HP/LP stage as the IG00156 model in
+[IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md): in-loop OTA saturation
+(inferred level), the source-derived 4.7 MΩ feedforward contribution (22.6 Hz added to
+each integrator), no input clip. Q law, gm law and the 1.2 MΩ/180 pF, Q-block and
+1 µF interstage elements remain open; status stays A.
+
 **2026-10-31, circuit engine envelopes (rows 32–34, 37–40):** the Source
 Performance/Isolation envelopes now use the inferred single-RC law in
 [ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md): time-to-−60 dB decay/release, an

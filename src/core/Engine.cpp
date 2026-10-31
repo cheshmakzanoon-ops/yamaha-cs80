@@ -1318,15 +1318,19 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
 
             float filtered = x;
+            // Circuit engine: IG00156 stages with in-loop OTA saturation and the
+            // source-derived 4.7 MOhm feedforward floor. Legacy: unchanged Svf.
+            const bool circuitFilter = usesSourceModels(global.renderPolicy);
+            const float cutoffFloor = circuitFilter ? kIg00156FeedforwardHz : 0.0f;
             if (rs.hpfOn)
             {
-                r.hpf.set(cutoffHp, qHp, sr);
-                filtered = r.hpf.process(filtered).hp;
+                r.hpf.set(cutoffHp + cutoffFloor, qHp, sr);
+                filtered = circuitFilter ? r.hpf.processCircuit(filtered).hp : r.hpf.process(filtered).hp;
             }
             if (rs.lpfOn)
             {
-                r.lpf.set(cutoffLp, qLp, sr);
-                filtered = r.lpf.process(filtered).lp;
+                r.lpf.set(cutoffLp + cutoffFloor, qLp, sr);
+                filtered = circuitFilter ? r.lpf.processCircuit(filtered).lp : r.lpf.process(filtered).lp;
             }
 
             const float sine = osc.sine * rs.sine;

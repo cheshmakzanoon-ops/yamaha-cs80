@@ -30,7 +30,7 @@ kept byte-identical for old sessions.
 | Subsystem | Legacy | Circuit engine | Reference / experimental (not in audio) |
 | --- | --- | --- | --- |
 | Oscillator | PolyBLEP `Oscillator` (`Dsp.h`) | same | `experimental/ReconstructedOscillator.h` |
-| HP/LP filters | TPT `Svf` with input `softClip` | same | `reference/IG00156Linear.h` |
+| HP/LP filters | TPT `Svf` with input `softClip` | IG00156 stage: in-loop OTA saturation, 22.6 Hz feedforward floor ([IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md)) | `reference/IG00156Linear.h` |
 | Envelopes | `Adsr`/`FilterEnv` float path | double-precision inferred single-RC law ([ENVELOPE_RC_MODEL.md](ENVELOPE_RC_MODEL.md)) | — |
 | VCA | linear multiply | loaded LC network gain | `reference/LevelControl.h` |
 | Tone tabs | legacy bridge voicings | `SourceFactoryTones.h` (7 complete, 15 inferred) | `HardwareControl.h` matrix |
@@ -53,6 +53,7 @@ kept byte-identical for old sessions.
 | 0.5 This status page | done | `eb486cb` |
 | 1.5 Circuit-engine gain staging: -6 dB output reference + inferred driver headroom ceiling | done; intentional circuit-engine change, legacy byte-identical; tab peaks +3.2 -> -2.9 dBFS | `228459c` |
 | 1.3 Circuit-engine envelopes as RC circuits; filter EG continuity on reuse | done; intentional circuit-engine change, legacy byte-identical; worst steal click 1.17 -> 0.90 | `131f72b` |
+| 1.1 IG00156 circuit filter (first stage): in-loop OTA saturation, feedforward floor, implicit Newton solve | done; intentional circuit-engine change, legacy byte-identical; worst saw alias -33.8 -> -51.1 dB; circuit engine 0.23 -> 0.37 RTF; full nodal graph (1.2 M/180 p branch, Q block, 1 uF coupling) still open | this change |
 
 ## Pinned compatibility gates
 

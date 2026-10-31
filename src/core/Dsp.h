@@ -227,6 +227,34 @@ private:
     float phase = 0.0f;
 };
 
+// IG00156 circuit-engine constants (docs/IG00156_REALTIME_MODEL.md).
+// Source-derived: the recovered graph places 4.7 MOhm feedforward resistors
+// across both 1.5 nF integrators (src/reference/IG00156Linear.h), adding
+// 1 / (2 pi * 4.7 MOhm * 1.5 nF) = 22.58 Hz to each integrator's unity-gain
+// frequency regardless of the gm control, a natural lower cutoff limit.
+// The paths are feedforward into the integrator summing nodes, not leakage
+// (docs/IG00156_MODEL_EVIDENCE.md); the documented control law is taken as
+// the gm part, so the floor adds to it. It is an ideal-model contribution,
+// not a measured minimum.
+// INFERRED: the transconductor saturation level in the engine's signal units.
+// 2.5 keeps a full oscillator mix (about +/-1.8 at the HP node) mildly
+// nonlinear (tanh(0.72) = 0.62) while resonant peaks compress strongly.
+inline constexpr float kIg00156FeedforwardHz = 22.575f;
+inline constexpr double kIg00156OtaLevel = 2.5;
+
+// Lambert continued-fraction (7/6) tanh, clamped where it meets +/-1.
+// Max abs error below 1e-4 (largest near the 4.97 clamp); below 1e-6 for
+// |x| < 3. Odd, monotonic, cheap. Used only by the
+// circuit-engine filter, never by legacy paths.
+inline double fastTanh(double x) noexcept
+{
+    if (x > 4.97) return 1.0;
+    if (x < -4.97) return -1.0;
+    const double x2 = x * x;
+    return x * (135135.0 + x2 * (17325.0 + x2 * (378.0 + x2)))
+             / (135135.0 + x2 * (62370.0 + x2 * (3150.0 + x2 * 28.0)));
+}
+
 // Topology-preserving state-variable filter. One instance per HP or LP stage.
 class Svf
 {
@@ -237,6 +265,7 @@ public:
     void reset() noexcept
     {
         ic1 = ic2 = 0.0f;
+        slope1 = slope2 = 1.0f;
     }
 
     void set(float cutoffHz, float q, float sampleRate) noexcept
@@ -250,6 +279,7 @@ public:
         lastCutoff = cutoffHz; lastQ = q; lastRate = sampleRate;
         const float g = std::tan(kPi * cutoffHz / sampleRate);
         const float k = 1.0f / q;
+        gc = g;
         a1 = 1.0f / (1.0f + g * (g + k));
         a2 = g * a1;
         a3 = g * a2;
@@ -276,7 +306,46 @@ public:
         return { v2, x - kk * v1 - v2, v1 };
     }
 
+    // Circuit-engine IG00156 stage (docs/IG00156_REALTIME_MODEL.md). Same
+    // integrator memories and coefficients as process(), but the transconductor
+    // saturation sits INSIDE the loop: each integrator is driven through
+    // kIg00156OtaLevel * tanh(u / kIg00156OtaLevel) (INFERRED OTA law), and the
+    // implicit trapezoidal equations are solved per sample by Newton iteration
+    // on the HP node. No input clip. Small signals reproduce process() without
+    // its pre-clip gain.
+    Output processCircuit(float input) noexcept
+    {
+        const double x = input, g = gc, k = kk, s1 = ic1, s2 = ic2;
+        const double v = kIg00156OtaLevel, inv = 1.0 / v;
+        // Starting point: the linear solution using each OTA's effective gain
+        // from the previous sample (cached slope). The evaluation that meets the
+        // tolerance (well below float output resolution) is reused, so most
+        // samples cost one or two Newton evaluations of two tanh calls each.
+        const double g1 = g * slope1, g2 = g * slope2;
+        double hp = (x - (k + g2) * s1 - s2) / (1.0 + g1 * (k + g2));
+        double bp = 0.0, lp = 0.0, t1 = 0.0, t2 = 0.0;
+        for (int iteration = 0;; ++iteration)
+        {
+            t1 = fastTanh(hp * inv);
+            bp = s1 + g * v * t1;
+            t2 = fastTanh(bp * inv);
+            lp = s2 + g * v * t2;
+            const double f = hp + k * bp + lp - x;
+            if (std::abs(f) < 1.0e-7 || iteration == 4)
+                break;
+            const double d1 = 1.0 - t1 * t1, d2 = 1.0 - t2 * t2;
+            hp -= f / (1.0 + g * d1 * (k + g * d2));
+        }
+        slope1 = std::abs(hp * inv) > 1.0e-9 ? static_cast<float>(t1 / (hp * inv)) : 1.0f;
+        slope2 = std::abs(bp * inv) > 1.0e-9 ? static_cast<float>(t2 / (bp * inv)) : 1.0f;
+        ic1 = static_cast<float>(2.0 * bp - s1);
+        ic2 = static_cast<float>(2.0 * lp - s2);
+        return { static_cast<float>(lp), static_cast<float>(hp), static_cast<float>(bp) };
+    }
+
 private:
+    float gc = 0.0f;
+    float slope1 = 1.0f, slope2 = 1.0f; // circuit path: previous OTA gain (Newton start only)
     float a1 = 0.0f, a2 = 0.0f, a3 = 0.0f, kk = 1.0f;
     float ic1 = 0.0f, ic2 = 0.0f;
     float lastCutoff = -1.0f, lastQ = -1.0f, lastRate = -1.0f;

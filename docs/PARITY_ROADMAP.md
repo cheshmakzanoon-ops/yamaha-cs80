@@ -186,7 +186,7 @@ Every numerical law needs a source or an explicit engineering-assumption row. Th
 |---|---|---|---|
 | Sine shaper third harmonic | `Oscillator::tick` | 3.5% | W3 model / optional measurement |
 | Reset pulse | `Oscillator::tick` | 30 us, weight 0.55 x 0.70 | W3 |
-| Filter pre-saturation | `Svf::process` | `softClip(1.1x)` | W4 model / optional measurement |
+| Filter pre-saturation | `Svf::process` | legacy: `softClip(1.1x)`; circuit engine since Phase 1.1: in-loop OTA tanh, level 2.5 (inferred), see [IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md) | W4 model / optional measurement |
 | Q law and rank/global mix | `provisionalFilterQ`, `Engine.cpp` | `1/Q = 2 - 1.8r`; `r = 0.8 rank + 0.6 global` | W1/W4 |
 | Filter envelope scale | `kProvisionalFilterEnvelopeOctaves` | 3 octaves | W1/W5 |
 | HP envelope gain | `kProvisionalHpfEnvelopeGain` | 0.5 | W1 (100 kOhm vs 47 kOhm branches) |
