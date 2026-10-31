@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "evidence_kind": "Native CI compiler diagnostics and a C++ header compatibility contract; not hardware measurements",
+  "failure_evidence": "GitHub build 41237400418, job 124643945990, commit c8bf1b3dc6210a8cc76b901bced1f7ec35310995: macOS arm64 Configure succeeds, then AU compilation fails because JUCE's Point macro rewrites AuAutomationQueue's private Point declaration and uses.",
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "macro_source": "modules/juce_audio_plugin_client/detail/juce_IncludeModuleHeaders.h",
+  "macro_source_normalized_sha256": "48b4eab0745bbeb36e8d7a4d16f8bb474afba8349bedf95a5eac917e3f681f2b",
+  "native_macro_definitions": [
+    "#define Component juce::Component",
+    "#define Point juce::Point"
+  ],
+  "fixture": "Compile tests/AuWrapperMacroEnvironmentTests.cpp on every test-build platform with the pinned JUCE wrapper's Component and macOS Point macro definitions active while including the production AuAutomationQueue.h. Minimal forward declarations provide the JUCE type names; no Apple SDK or JUCE implementation is substituted for the native AU gate.",
+  "required": [
+    "The fixture compiles and links with both native macro definitions active around the production header",
+    "The production header preserves both caller macro definitions and their exact type aliases after inclusion",
+    "The compiled fixture exits successfully",
+    "The existing AU curve and bridge contract tests retain their registered tolerances and pass after the private type rename",
+    "The repair changes only the private queue type spelling and its references; stored fields, arithmetic, event order and public interfaces are unchanged"
+  ],
+  "allowed_failures": 0,
+  "mutation_contract": [
+    "Rename the repaired private AutomationPoint type and its references back to Point; the same fixture must fail compilation with a Point-related diagnostic"
+  ],
+  "limits": "This compile contract does not establish native AU ABI, scheduling, rendering or pluginval results. Native macOS builds and AU host/mutation tests remain mandatory. No audio, curve, parameter or numerical tolerance change is permitted."
+}
