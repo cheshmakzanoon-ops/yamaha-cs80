@@ -35,6 +35,9 @@ void testKeyboardPressureOwnershipHost(Check check)
     for (int frames : { 0, 32 })
     {
         Cs80AudioProcessor host(fixture.getFile());
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         host.setParamValue(P_analogNoise, 0.0f);
         host.setParamValue(P_mpeOn, 0.0f);
         host.setParamValue(P_masterSustain, 0.0f);

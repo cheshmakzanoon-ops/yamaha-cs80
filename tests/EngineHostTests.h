@@ -97,4 +97,82 @@ void testOversamplingHost(Check&& check)
         check(host.getParamValue(P_oversampling) == 1.0f, "a state without the quality mode restores Standard");
     }
 }
+// Plan 1.7 engine default flip at the plugin layer: fresh instances and new
+// presets use the circuit engine; old sessions keep the meaning of their schema.
+template <typename Check>
+void testEngineDefaultHost(Check&& check)
+{
+    using Mode = Cs80AudioProcessor::EngineMode;
+    check(ParamValues {}[P_sourcePerformance] == 0.0f && ParamValues {}[P_parityMode] == 0.0f,
+          "core defaults stay Legacy, so default-ParamValues renders are unchanged");
+    {
+        Cs80AudioProcessor host;
+        auto* engine = host.getAPVTS().getParameter("source_performance");
+        auto* pure = host.getAPVTS().getParameter("parity_mode");
+        check(engine != nullptr && pure != nullptr && engine->getName(64) == "Engine"
+                  && pure->getName(64) == "PURE CS-80", "host-visible ENGINE and PURE CS-80 names");
+        check(engine->getDefaultValue() == 1.0f && host.getEngineMode() == Mode::circuit
+                  && host.getEffectiveEngineMode() == Mode::circuit && !host.isPure(),
+              "fresh instance selects the circuit engine");
+        check(engine->getText(1.0f, 64) == "Circuit" && engine->getText(0.0f, 64) == "Legacy (compat)"
+                  && engine->getValueForText("Legacy (compat)") == 0.0f && engine->getValueForText("Circuit") == 1.0f,
+              "ENGINE value text round trips");
+        host.prepareToPlay(48000.0, 64);
+        juce::AudioBuffer<float> block(2, 64);
+        juce::MidiBuffer midi;
+        host.processBlock(block, midi);
+        check(host.getEngine().getRenderPolicy() == RenderPolicy::sourcePerformance,
+              "a new instance renders the circuit engine");
+        host.setPure(true);
+        host.setEngineMode(Mode::legacy);
+        host.processBlock(block, midi);
+        check(host.isPure() && host.getEngineMode() == Mode::legacy && host.getEffectiveEngineMode() == Mode::circuit
+                  && host.getEngine().getRenderPolicy() == RenderPolicy::isolation,
+              "PURE CS-80 renders the circuit engine whatever ENGINE says");
+        host.setPure(false);
+        host.processBlock(block, midi);
+        check(host.getEngine().getRenderPolicy() == RenderPolicy::legacy, "ENGINE Legacy (compat) renders legacy");
+
+        // New-preset creation (the INIT action) is a fresh instance's patch.
+        host.setPure(true);
+        host.loadFactoryPreset(5);
+        check(host.getEngineMode() == Mode::legacy, "legacy factory bank programs keep the legacy engine");
+        host.loadInitPatch();
+        check(host.getEngineMode() == Mode::circuit && host.getParamValue(P_subOriginalMode) == 1.0f
+                  && host.getPresetName().startsWith("Init Patch") && host.isPure(),
+              "new preset: Init Patch on the circuit engine, PURE (a session policy) kept");
+    }
+
+    // Old sessions: a missing or malformed ENGINE value means the default of the
+    // schema that wrote the state, never the live value or a later default.
+    for (int schema : { 0, 1, 2, 3 })
+        for (const char* stored : { "missing", "garbage", "0", "1" })
+        {
+            Cs80AudioProcessor host;
+            auto state = host.getAPVTS().copyState();
+            if (schema > 0) state.setProperty(Cs80AudioProcessor::stateSchemaKey, schema, nullptr);
+            auto child = state.getChildWithProperty("id", "source_performance");
+            if (juce::String(stored) == "missing") state.removeChild(child, nullptr);
+            else child.setProperty("value", juce::String(stored), nullptr);
+            host.setEngineMode(schema >= 3 ? Mode::legacy : Mode::circuit); // live value must not leak
+            const auto text = state.createXml()->toString();
+            host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+            const bool literal = juce::String(stored) == "0" || juce::String(stored) == "1";
+            const float expected = literal ? juce::String(stored).getFloatValue() : (schema >= 3 ? 1.0f : 0.0f);
+            check(host.getParamValue(P_sourcePerformance) == expected,
+                  "ENGINE restores by schema: Legacy before schema 3, Circuit from schema 3");
+        }
+    {
+        Cs80AudioProcessor host;
+        host.setEngineMode(Mode::legacy);
+        juce::MemoryBlock saved;
+        host.getStateInformation(saved);
+        const auto xml = juce::parseXML(saved.toString());
+        check(xml != nullptr && xml->getIntAttribute(Cs80AudioProcessor::stateSchemaKey) == 3,
+              "states are written with schema 3");
+        Cs80AudioProcessor other;
+        other.setStateInformation(saved.getData(), (int) saved.getSize());
+        check(other.getEngineMode() == Mode::legacy, "a saved Legacy (compat) choice survives the flip");
+    }
+}
 } // namespace cs80::tests

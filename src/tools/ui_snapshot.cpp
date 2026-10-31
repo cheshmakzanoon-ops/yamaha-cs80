@@ -531,6 +531,9 @@ void testExpressionPersistence()
     auto fresh = [](float pedal)
     {
         auto target = std::make_unique<Cs80AudioProcessor>();
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         target->setParamValue(cs80::P_voiceDispersion, 0.0f);
         target->setParamValue(cs80::P_drift, 0.0f);
         target->setParamValue(cs80::P_analogNoise, 0.0f);
@@ -695,6 +698,9 @@ void testKeyPressureGesture(bool isolated = false)
 void testKeyboardHandoffHost(bool isolated)
 {
     Cs80AudioProcessor host;
+    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    host.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
     host.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
     juce::AudioBuffer<float> audio(2, 32);
     auto process = [&](juce::MidiBuffer& midi) { host.processBlock(audio, midi); };
@@ -1381,6 +1387,9 @@ void testSourceFactoryHost()
         if (p) p->setValueNotifyingHost(p->convertTo0to1((float) selector));
     };
     Cs80AudioProcessor routing;
+    // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+    // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+    routing.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
     routing.prepareToPlay(48000.0, 64);
     for (bool isolated : { false, true })
     {
@@ -1589,6 +1598,9 @@ void testSourceFactoryHost()
     for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{0, 1}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
     {
         Cs80AudioProcessor saved, restored;
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        saved.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         saved.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
         for (int rank = 0; rank < 2; ++rank) automate(saved, rank, selectors[(size_t) rank]);
         saved.setParamValue(cs80::chParam(0, cs80::CP_fIl), 0.17f);
@@ -1630,6 +1642,7 @@ void testSourceFactoryHost()
     for (int selector = 0; selector < 11; ++selector)
     {
         Cs80AudioProcessor legacy;
+        legacy.setEngineMode(Cs80AudioProcessor::EngineMode::legacy); // plan 1.7: the fresh default is Circuit
         legacy.selectHardwareSource(0, selector);
         legacy.selectHardwareSource(1, selector);
         legacy.prepareToPlay(48000.0, 64);
@@ -1723,7 +1736,11 @@ void testPerformanceControlsHost()
     restored.setStateInformation(oldText.toRawUTF8(), oldText.getNumBytesAsUTF8());
     bool neutral = true;
     for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
-        neutral = neutral && restored.getParamValue(i) == cs80::paramDef(i).def;
+        // Plan 1.7 (ws2): ENGINE is saved (Circuit for a fresh instance), not one
+        // of the removed controls, so it restores its saved value.
+        neutral = neutral && (i == cs80::P_sourcePerformance
+                                  ? restored.getParamValue(i) == host.getParamValue(i)
+                                  : restored.getParamValue(i) == cs80::paramDef(i).def);
     check(neutral && restored.getParamValue(cs80::P_outputLevel) == 1.0f,
           "a session saved before these controls restores neutral values, not live ones");
 
@@ -1816,6 +1833,8 @@ void testPerformanceControlsHost()
         Cs80AudioProcessor reference, trimmed, wah, pedalDown, pedalUp;
         for (auto* target : { &reference, &trimmed, &wah, &pedalDown, &pedalUp })
         {
+            // Plan 1.7 (ws2): the scalar -20 dB LOW trim is the legacy output law.
+            target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
             target->setParamValue(cs80::P_voiceDispersion, 0.0f);
             target->setParamValue(cs80::P_drift, 0.0f);
             target->setParamValue(cs80::P_analogNoise, 0.0f);
@@ -1945,6 +1964,7 @@ int main(int argc, char** argv)
     cs80::tests::testSourcePerformanceHost(check);
     std::puts("UI SMOKE PHASE: engine I/O host");
     cs80::tests::testOversamplingHost(check);
+    cs80::tests::testEngineDefaultHost(check);
     std::puts("UI SMOKE PHASE: editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
@@ -1993,6 +2013,12 @@ int main(int argc, char** argv)
         if (index == cs80::P_subOriginalMode)
         {
             check(processor.getParamValue(index) == 1.0f, "fresh instance selects original SUB functions");
+            continue;
+        }
+        // Plan 1.7 (intentional): a fresh instance is program 0 on the circuit engine.
+        if (index == cs80::P_sourcePerformance)
+        {
+            check(processor.getParamValue(index) == 1.0f, "fresh instance selects the circuit engine");
             continue;
         }
         check(std::abs(processor.getParamValue(index) - processor.getFactoryPresets()[0].values[index])

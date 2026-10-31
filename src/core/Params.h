@@ -321,8 +321,10 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "glide_assign", "PORTA / GLISS ASSIGN", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "foot_mode", "PEDAL EXP / WAH", 0.0f, 1.0f, 0.0f, 1.0f, "", "FOOT" },
     { "output_level", "OUTPUT HIGH / LOW", 0.0f, 1.0f, 1.0f, 1.0f, "", "MASTER" },
-    { "parity_mode", "PARITY MODE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" },
-    { "source_performance", "SOURCE PERFORMANCE (UNCALIBRATED)", 0.0f, 1.0f, 0.0f, 1.0f, "", "PERFORMANCE" },
+    // Presented as PURE CS-80 and ENGINE (Circuit on / Legacy off), plan 1.7.
+    // The core default stays Legacy; fresh plugin instances select Circuit.
+    { "parity_mode", "PURE CS-80", 0.0f, 1.0f, 0.0f, 1.0f, "", "ENGINE" },
+    { "source_performance", "ENGINE: CIRCUIT", 0.0f, 1.0f, 0.0f, 1.0f, "", "ENGINE" },
     // [ws1-voice] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws2-engine] append this workstream's ParamDefs below this line (same order as the enum).

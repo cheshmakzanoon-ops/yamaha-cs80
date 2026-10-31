@@ -59,11 +59,9 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
             for (int local = 0; local < cs80::CP_count; ++local)
                 hardwareFactoryValues[(size_t) channel][(size_t) tone][(size_t) local] = values[cs80::chParam(channel, local)];
         }
-    if (!getFactoryPresets().empty())
-        applyValues(getFactoryPresets()[0].values);
-    // Fresh instances present the original six-function panel. Factory bank0
-    // itself remains unchanged/legacy when explicitly selected or restored.
-    setParamValue(cs80::P_subOriginalMode, 1.0f);
+    // Fresh instances: factory program 0 with the original SUB panel, on the
+    // circuit engine (plan 1.7).
+    applyFreshInstancePatch();
     cached = currentValues();
     engine.setParams(cached);
     engine.prepare(48000.0);
@@ -227,15 +225,24 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     layout.add(std::make_unique<CanonicalBoolParameter>(
         juce::ParameterID { parameterId(cs80::P_outputLevel), 5 },
         "Output HIGH (on) / LOW (off)", true));
-    // W0 isolation is opt-in, appended after all 243 shipped host IDs.
+    // PURE CS-80 (plan 1.7): the W0 isolation contract, opt-in, appended after
+    // all 243 shipped host IDs. ID, index and AU hint are unchanged.
     layout.add(std::make_unique<CanonicalBoolParameter>(
-        juce::ParameterID { parameterId(cs80::P_parityMode), 6 },
-        "Parity isolation (not calibrated)", false));
-    // Source performance is a sound-model choice, not a change to isolation.
-    // Append after all 244 shipped host parameters; existing AU hints stay fixed.
+        juce::ParameterID { parameterId(cs80::P_parityMode), 6 }, "PURE CS-80", false));
+    // ENGINE (plan 1.7): on = Circuit, off = Legacy (compat); a sound-model
+    // choice, not a change to isolation. Host244/AU hint 7 unchanged. Fresh
+    // instances use the circuit engine; the CORE default stays Legacy so
+    // default-ParamValues renders, the legacy factory bank and old sessions keep
+    // their sound (normaliseRestoredState restores missing values by schema).
     layout.add(std::make_unique<CanonicalBoolParameter>(
-        juce::ParameterID { parameterId(cs80::P_sourcePerformance), 7 },
-        "Source performance (not calibrated)", false));
+        juce::ParameterID { parameterId(cs80::P_sourcePerformance), 7 }, "Engine", true,
+        juce::AudioParameterBoolAttributes()
+            .withStringFromValueFunction([](bool circuit, int) { return juce::String(circuit ? "Circuit" : "Legacy (compat)"); })
+            .withValueFromStringFunction([](const juce::String& text)
+            {
+                const auto t = text.trim();
+                return t.startsWithIgnoreCase("c") || t.equalsIgnoreCase("on") || t == "1";
+            })));
 
     // [ws1-voice] append this workstream's host parameters below this line, AU version hint 8.
 
@@ -410,6 +417,75 @@ void Cs80AudioProcessor::setPresetName(const juce::String& name)
     }
     // Host callbacks may reenter metadata getters; never hold the lock here.
     updateHostDisplay();
+}
+
+void Cs80AudioProcessor::setParameterGesture(int index, float physicalValue)
+{
+    if (auto* p = apvts.getParameter(parameterId(index)))
+    {
+        p->beginChangeGesture();
+        p->setValueNotifyingHost(p->convertTo0to1(physicalValue));
+        p->endChangeGesture();
+    }
+}
+
+void Cs80AudioProcessor::setEngineMode(EngineMode mode)
+{
+    setParameterGesture(cs80::P_sourcePerformance, mode == EngineMode::circuit ? 1.0f : 0.0f);
+}
+
+Cs80AudioProcessor::EngineMode Cs80AudioProcessor::getEngineMode() const
+{
+    return getParamValue(cs80::P_sourcePerformance) >= 0.5f ? EngineMode::circuit : EngineMode::legacy;
+}
+
+Cs80AudioProcessor::EngineMode Cs80AudioProcessor::getEffectiveEngineMode() const
+{
+    return cs80::usesSourceModels(cs80::renderPolicy(getParamValue(cs80::P_parityMode),
+                                                     getParamValue(cs80::P_sourcePerformance)))
+        ? EngineMode::circuit : EngineMode::legacy;
+}
+
+void Cs80AudioProcessor::setPure(bool pure)
+{
+    setParameterGesture(cs80::P_parityMode, pure ? 1.0f : 0.0f);
+}
+
+bool Cs80AudioProcessor::isPure() const
+{
+    return getParamValue(cs80::P_parityMode) >= 0.5f;
+}
+
+void Cs80AudioProcessor::applyFreshInstancePatch()
+{
+    if (!getFactoryPresets().empty())
+        applyValues(getFactoryPresets()[0].values);
+    // The original six-function SUB panel and the circuit engine (plan 1.7).
+    // Factory bank0 itself remains unchanged/legacy when explicitly selected.
+    setParamValue(cs80::P_subOriginalMode, 1.0f);
+    setParamValue(cs80::P_sourcePerformance, 1.0f);
+}
+
+void Cs80AudioProcessor::loadInitPatch()
+{
+    const auto& bank = getFactoryPresets();
+    int index = 0;
+    for (int i = 0; i < (int) bank.size(); ++i)
+        if (juce::String(bank[(size_t) i].name).equalsIgnoreCase("Init Patch"))
+        {
+            index = i;
+            break;
+        }
+    loadFactoryPreset(index);
+    // A new preset starts like a fresh instance: the original SUB panel on the
+    // circuit engine (plan 1.7). The bank program itself stays legacy.
+    setParamValue(cs80::P_subOriginalMode, 1.0f);
+    setParamValue(cs80::P_sourcePerformance, 1.0f);
+    if (!bank.empty())
+    {
+        setPresetMetadata(juce::String(bank[(size_t) index].name) + " / Original SUB", index);
+        updateHostDisplay();
+    }
 }
 
 void Cs80AudioProcessor::loadFactoryPreset(int index)
@@ -736,11 +812,24 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     auto result = state.createCopy();
     auto hardware = state.getChildWithName("HARDWARE");
     // Malformed or missing schema markers are treated as the oldest schema.
+    // XML attributes arrive as strings (ValueTree::fromXml), so a complete
+    // decimal integer string is a valid marker too; before schema 3 the string
+    // form was always read as schema 1, which no earlier rule could observe.
     const auto schemaValue = state.getProperty(stateSchemaKey, 1);
-    const int schema = schemaValue.isInt() || schemaValue.isInt64() || schemaValue.isDouble()
-                           ? juce::jlimit(1, stateSchemaVersion, (int) schemaValue)
-                           : 1;
+    int schema = 1;
+    if (schemaValue.isInt() || schemaValue.isInt64() || schemaValue.isDouble())
+        schema = (int) schemaValue;
+    else if (schemaValue.isString())
+    {
+        const auto text = schemaValue.toString().trim();
+        if (text.isNotEmpty() && text.containsOnly("0123456789") && text.length() < 9)
+            schema = text.getIntValue();
+    }
+    schema = juce::jlimit(1, stateSchemaVersion, schema);
     const bool legacy = hardware.isValid() && (int) hardware.getProperty("version", 1) == 1;
+    // ENGINE that a state of this schema means when its value is missing or
+    // malformed: Legacy before the plan 1.7 default flip, Circuit after it.
+    const float engineFallback = schema >= 3 ? 1.0f : 0.0f;
     auto ensure = [&](const juce::String& id, float fallback)
     {
         auto* p = apvts.getParameter(id);
@@ -759,15 +848,18 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         if (id == parameterId(cs80::P_parityMode)
             || id == parameterId(cs80::P_sourcePerformance))
         {
-            // Only complete finite numeric 0/1 values enable either opt-in policy.
-            // Reject fractional, out-of-range and partially parsed malformed values.
-            // Missing source_performance must clear a live opt-in on old-state
-            // recall, never silently inherit it and change an old patch's sound.
-            const auto encoded = child.getProperty("value", 0.0f).toString().trim();
+            // Only complete finite numeric 0/1 values are taken literally.
+            // Fractional, out-of-range, partially parsed or missing values
+            // restore the writing schema's meaning (the fallback): PURE off,
+            // ENGINE Legacy before schema 3 and Circuit from schema 3. A
+            // missing value never inherits the live instance's policy.
+            const auto encoded = child.getProperty("value", juce::var()).toString().trim();
             const auto* begin = encoded.toRawUTF8();
             char* end = nullptr;
             const auto parsed = std::strtod(begin, &end);
-            value = end != begin && *end == '\0' && parsed == 1.0 ? 1.0f : 0.0f;
+            const bool literal = child.hasProperty("value") && end != begin && *end == '\0'
+                                 && (parsed == 0.0 || parsed == 1.0);
+            value = literal ? (float) parsed : fallback;
         }
         // Round discrete choices/switches and clamp to the declared range.
         const auto& range = p->getNormalisableRange();
@@ -778,9 +870,9 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     {
         // Missing/invalid mode means old session, NOT the fresh-instance default.
         // Schema-1 states always predate any change of the render-policy default.
-        const bool oldSessionOff = i == cs80::P_subOriginalMode
-                                   || (schema < 2 && i == cs80::P_sourcePerformance);
-        ensure(parameterId(i), oldSessionOff ? 0.0f : cs80::paramDef(i).def);
+        const bool oldSessionOff = i == cs80::P_subOriginalMode;
+        ensure(parameterId(i), i == cs80::P_sourcePerformance ? engineFallback
+                               : oldSessionOff ? 0.0f : cs80::paramDef(i).def);
     }
     // The marker describes serialized data only; savers write the current one.
     result.removeProperty(stateSchemaKey, nullptr);
