@@ -243,6 +243,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_source_factory_boundary_tests
              COMMAND cs80_source_factory_boundary_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    add_executable(cs80_memory_panel_tests tests/MemoryPanelTests.cpp)
+    target_include_directories(cs80_memory_panel_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_tests
+             COMMAND cs80_memory_panel_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
