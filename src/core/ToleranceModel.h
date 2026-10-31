@@ -6,7 +6,7 @@
 // Gate: tests/ToleranceDriftTests.cpp, limits pre-registered in
 // tests/parity/tolerances-v2/ws1-voice.json ("tolerance_drift").
 //
-// Evidence classes (docs/IG00151_VCA_MODEL.md section "Tolerances and drift"):
+// Evidence classes (docs/TOLERANCE_DRIFT_MODEL.md):
 // - DECLARED distributions: 5 % resistors and 10 % capacitors, truncated normal
 //   with sigma = tolerance / 2, truncated at +/- the tolerance. The CS-80 parts
 //   lists give values, not tolerance classes; these are the common classes of
