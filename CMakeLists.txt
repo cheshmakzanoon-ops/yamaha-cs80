@@ -226,6 +226,22 @@ if (CS80_BUILD_TESTS)
     # [ws3-keyboard] register this workstream's core tests below this line.
 
     # [ws4-circuits] register this workstream's core tests below this line.
+    add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
+    target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00150_sub_tests COMMAND cs80_ig00150_sub_tests)
+    set_tests_properties(cs80_ig00150_sub_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_ring_modulator_circuit_tests tests/RingModulatorCircuitTests.cpp)
+    target_link_libraries(cs80_ring_modulator_circuit_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ring_modulator_circuit_tests COMMAND cs80_ring_modulator_circuit_tests)
+    set_tests_properties(cs80_ring_modulator_circuit_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_oe2_stereo_chorus_tests tests/Oe2StereoChorusTests.cpp)
+    target_include_directories(cs80_oe2_stereo_chorus_tests PRIVATE src tests)
+    add_test(NAME cs80_oe2_stereo_chorus_tests COMMAND cs80_oe2_stereo_chorus_tests)
+    set_tests_properties(cs80_oe2_stereo_chorus_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_pra_optical_cell_tests tests/PraOpticalCellTests.cpp)
+    target_link_libraries(cs80_pra_optical_cell_tests PRIVATE cs80_core)
+    add_test(NAME cs80_pra_optical_cell_tests COMMAND cs80_pra_optical_cell_tests)
+    set_tests_properties(cs80_pra_optical_cell_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
 
