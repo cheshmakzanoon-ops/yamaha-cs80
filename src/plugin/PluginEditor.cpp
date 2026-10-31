@@ -618,7 +618,7 @@ private:
     bool over = false, nonFinite = false;
 };
 
-// Eight voice lamps and a MIDI-in lamp. It polls the lock-free voice mask at
+// Eight voice lamps (two rows in the sixteen-voice extension) and a MIDI-in lamp. It polls the lock-free voice mask at
 // 24 Hz and repaints its own small rectangle only when a lamp changes.
 class ActivityLamps final : public juce::Component, private juce::Timer
 {
@@ -628,7 +628,7 @@ public:
         setInterceptsMouseClicks(true, false);          // only so hovering shows the description
         setComponentID("activity_lamps");
         setTitle("Voice and MIDI activity");
-        setDescription("Eight lamps follow the sounding voices (up to eight at once). The MIDI lamp flashes for any MIDI the host sends: notes, controllers, pitch bend and pressure.");
+        setDescription("Lamps follow all sounding voices: eight in the original mode, two rows of eight in the sixteen-voice extension. The MIDI lamp flashes for any MIDI the host sends: notes, controllers, pitch bend and pressure.");
         startTimerHz(24);
     }
     ~ActivityLamps() override { stopTimer(); }
@@ -657,8 +657,9 @@ public:
                     juce::Colour(0xffd8c68a), 0.8f);
         art::legend(g, "MIDI", { 88.0f, 2.0f, 38.0f, 13.0f }, spacedFont(9.5f, 0.10f), juce::Justification::centred,
                     juce::Colour(0xffd8c68a), 0.8f);
-        for (int i = 0; i < 8; ++i)
-            lamp(g, { 14.0f + (float) i * 10.5f, 27.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
+        for (int i = 0; i < shown.capacity; ++i)
+            lamp(g, { 14.0f + (float) (i % 8) * 10.5f, shown.capacity == 16 ? 23.0f + 9.0f * (float) (i / 8) : 27.0f },
+                 shown.capacity == 16 ? 3.0f : 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
         lamp(g, { 108.0f, 27.0f }, 4.4f, shown.midi, juce::Colour(0xff5cf08a));
     }
 
@@ -666,15 +667,17 @@ private:
     struct Sample
     {
         unsigned mask = 0;
+        int capacity = 8;
         bool midi = false;
-        bool operator==(const Sample& o) const noexcept { return mask == o.mask && midi == o.midi; }
+        bool operator==(const Sample& o) const noexcept { return mask == o.mask && capacity == o.capacity && midi == o.midi; }
         bool operator!=(const Sample& o) const noexcept { return ! (*this == o); }
     };
 
     Sample sample()
     {
         Sample s;
-        for (int i = 0; i < 8; ++i)
+        s.capacity = processor.getVoiceCapacity();
+        for (int i = 0; i < s.capacity; ++i)
             if (processor.isVoiceActive(i)) s.mask |= 1u << i;
         // Any host MIDI event (note, CC, bend, pressure) bumps the processor's counter; a held note keeps it lit.
         bool held = false;
@@ -1131,7 +1134,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
         voiceStatusLabel.setComponentID("voice_status");
         voiceStatusLabel.setTitle("Active voices");
-        voiceStatusLabel.setTooltip("Number of sounding voices of the eight-voice engine. The lamps in the toolbar show which voices are active.");
+        voiceStatusLabel.setTooltip("Number of sounding voices across the active instrument or both instruments in sixteen-voice mode. The lamps show every active voice.");
         midiStatusLabel.setComponentID("midi_status");
         midiStatusLabel.setTitle("MIDI input activity");
         midiStatusLabel.setTooltip("Lights while notes arrive from the host or a MIDI controller.");
@@ -1767,13 +1770,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void syncLampStatus(bool midi)
     {
-        const int voices = juce::jlimit(0, 8, processor.getActiveVoiceCount());
+        const int capacity = processor.getVoiceCapacity();
+        const int voices = juce::jlimit(0, capacity, processor.getActiveVoiceCount());
         // The toolbar lamps carry voices and MIDI; the strip keeps the (hidden) text for accessibility only.
         voiceStatusLabel.setDisplayText({});
         midiStatusLabel.setDisplayText({});
         voiceStatusLabel.setInterceptsMouseClicks(false, false);
         midiStatusLabel.setInterceptsMouseClicks(false, false);
-        voiceStatusLabel.setText("Active voices: " + juce::String(voices) + " of 8", juce::dontSendNotification);
+        voiceStatusLabel.setText("Active voices: " + juce::String(voices) + " of " + juce::String(capacity), juce::dontSendNotification);
         midiStatusLabel.setText(midi ? "MIDI input: notes arriving" : "MIDI input: idle", juce::dontSendNotification);
     }
 

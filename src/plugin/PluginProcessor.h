@@ -11,6 +11,7 @@
 #include "core/MpeZones.h"
 #include "core/Tuning.h"
 #include "OutputMeter.h"
+#include "VoiceMonitor.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
 
@@ -94,6 +95,9 @@ public:
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    int getVoiceCapacity() const noexcept { return voiceCapacity.load(std::memory_order_relaxed); }
+    void setVoiceMonitorEnabled(bool enabled) noexcept { voiceMonitorEnabled.store(enabled, std::memory_order_relaxed); }
+    bool readVoiceMonitor(cs80::VoiceMonitorFrame& frame) const noexcept { return voiceMonitor.read(frame); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
     // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
     unsigned getHostMidiEventCount() const noexcept { return hostMidiEvents.load(std::memory_order_relaxed); }
@@ -102,7 +106,7 @@ public:
     cs80::OutputMeterReading consumeOutputMeter() noexcept { return outputMeter.consume(); }
     bool isVoiceActive(int i) const noexcept
     {
-        return i >= 0 && i < 8 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
+        return i >= 0 && i < 16 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
     }
     // Single-value mailboxes: only the audio callback mutates the DSP engine.
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
@@ -319,7 +323,7 @@ private:
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;
     std::array<unsigned, 128> uiHeldMasks {}; // Audio-owned source recovery tracking.
-    cs80::KeyboardPressureOwnership keyPressureOwnership;
+    cs80::SixteenVoicePressureOwnership keyPressureOwnership;
     bool pressureArpWasOn = false; // Audio-owned effective arp edge tracking.
     std::array<std::atomic<unsigned>, 128> hostKeyMasks {};
     cs80::ParamValues cached;
@@ -337,9 +341,13 @@ private:
         pendingExpression { noPendingControl };
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
+    std::atomic<int> voiceCapacity { 8 };
     std::atomic<unsigned> hostMidiEvents { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
+    cs80::VoiceMonitor voiceMonitor;
+    std::atomic<bool> voiceMonitorEnabled { false };
+    std::uint64_t voiceMonitorSerial = 0; // audio-owned
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
     std::unique_ptr<cs80::Engine> extensionEngine;

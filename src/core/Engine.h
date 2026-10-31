@@ -351,6 +351,7 @@ public:
         // Circuit engine TWS nodes (Phase 2.4): smoothed aftertouch a, held
         // initial touch b, pitch transient C. Zero in Legacy.
         float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
+        uint64_t assignmentSerial = 0; // read-only slot identity for UI telemetry
     };
     VoiceInfo getVoiceInfo(int index) const;
     struct RankInfo

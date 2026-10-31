@@ -1054,9 +1054,11 @@ inline void testTabOrder(const Check& check, const Flush& flush)
         if (auto* scope = findById(editor, "voice_monitor"))
         {
             const auto scopeOrder = tabOrder(*scope);
-            check(scopeOrder.size() == 3 && accessibleName(*scopeOrder[0]) == "Monitor channel I"
-                      && accessibleName(*scopeOrder[2]) == "Close the voice monitor",
-                  "voice monitor order: channel I, channel II, CLOSE");
+            check(scopeOrder.size() == 4 && accessibleName(*scopeOrder[0]) == "Monitor channel I"
+                      && accessibleName(*scopeOrder[1]) == "Monitor channel II"
+                      && accessibleName(*scopeOrder[2]) == "Close the voice monitor"
+                      && accessibleName(*scopeOrder[3]) == "Monitored physical voice",
+                  "voice monitor order: channel I, channel II, CLOSE, physical voice selector");
         }
         toolbar->getActions().toggleScope();
         toolbar->getActions().startTour();

@@ -2620,7 +2620,7 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
         return {};
     const auto& v = voices[(size_t) index];
     return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio, v.held, v.pedalHeld,
-             v.touchA, v.touchB, v.touchC };
+             v.touchA, v.touchB, v.touchC, v.age };
 }
 
 Engine::RankInfo Engine::getRankInfo(int voice, int rank) const

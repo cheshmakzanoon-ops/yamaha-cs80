@@ -17,6 +17,7 @@
 #include "../../tests/PanelEditorTests.h"
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
 #include "../../tests/ParameterContextTests.h"
+#include "../../tests/VoiceMonitorHostTests.h"
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
@@ -2001,6 +2002,18 @@ int main(int argc, char** argv)
                 sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
     std::puts("UI SMOKE PHASE: JUCE initialization");
     juce::ScopedJuceInitialiser_GUI juceInit;
+    // Focused developer entry point for the registered completion mutations. The default
+    // --self-test below still runs every existing check and these same completion checks.
+    if (argc > 1 && std::strcmp(argv[1], "--ui-completion-test") == 0)
+    {
+        cs80::tests::studio::testUndoRedo(check, flushGui);
+        cs80::tests::ui_completion::testParameterContexts(check, flushGui);
+        cs80::tests::ui_completion::testVoiceMonitorAndPressure(check, flushGui);
+        cs80::tests::testWs3KeyboardHost(check);
+        cs80::tests::studio::testTabOrder(check, flushGui);
+        std::printf("UI completion: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     std::puts("UI SMOKE PHASE: host metadata");
     cs80::tests::testPluginHostMetadata(check);
     std::puts("UI SMOKE PHASE: output meter host");
@@ -3589,6 +3602,8 @@ int main(int argc, char** argv)
     cs80::tests::studio::testUndoRedo(check, flushGui);
     std::puts("UI SMOKE PHASE: parameter context completion");
     cs80::tests::ui_completion::testParameterContexts(check, flushGui);
+    std::puts("UI SMOKE PHASE: engine taps and sixteen-voice ownership");
+    cs80::tests::ui_completion::testVoiceMonitorAndPressure(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio learning tools");
     cs80::tests::studio::testLearningTools(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio tab order, hit targets and contrast");

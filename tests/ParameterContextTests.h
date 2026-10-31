@@ -55,11 +55,15 @@ inline void testParameterContexts(const Check& check, const Flush& flush)
             check(menuItem(menu, label) != nullptr, "every parameter widget has the complete context menu");
 
         // Reset/copy/paste follow the host ID, not a visually similar main-panel control.
+        // Use JUCE's direct host write as the independent boundary value: a float range's
+        // skew conversion can round the declared normalised default on its round trip.
+        parameter->setValueNotifyingHost(parameter->getDefaultValue());
+        const float hostDefault = parameter->getValue();
         parameter->setValueNotifyingHost(parameter->getDefaultValue() > 0.5f ? 0.0f : 1.0f);
         StudioGestureProbe probe;
         parameter->addListener(&probe);
         context->resetToDefault();
-        check(parameter->getValue() == parameter->getDefaultValue() && probe.oneGesture(),
+        check(parameter->getValue() == hostDefault && probe.oneGesture(),
               "context reset uses one balanced gesture on its actual host parameter");
         parameter->removeListener(&probe);
         context->copyValue();
