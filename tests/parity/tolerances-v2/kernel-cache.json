@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "evidence_kind": "numerical",
+  "description": "Pre-registered CPU-cache acceptance. Existing physical/alias/solver gates remain unchanged; these check that cached scheduling has the same continuation as recomputing from the physical state, and that the nonlinear Newton cache still solves the declared nodal equations.",
+  "oscillator": {
+    "maximum_pin_difference_volts": 0.000002,
+    "maximum_event_time_difference_seconds": 0.000000001,
+    "maximum_searches_per_sample_at_261_6_hz": 0.25,
+    "fixture": "88200, 96000, 192000 and 384000 Hz internal; nominal and 1 ms coupling RC; compare 8192 samples with an otherwise identical oscillator restored from its complete physical/residual state each sample. Include stopped/running steps, frequency changes, pulse threshold changes, waveform gates, idle advance and full/idle-state restoration. The uncached schedule is a continuation oracle, not independent hardware evidence. Existing independent event timing, pin anchors and complex-spectrum gates still apply. Efficiency fixture: 96000 Hz internal, 261.6 Hz, nominal RC, 8192 steady samples after warm-up."
+  },
+  "filter": {
+    "maximum_scalar_residual": 0.0000001,
+    "maximum_reference_output_difference": 0.000002,
+    "fixture": "Existing Ig00156NodalTests truth-model equivalence, nonlinear RMS, stability and coupling gates are unchanged. Cached Jacobian must be invalidated for changed coefficients; candidate Newton steps are accepted only after checking the same 1e-7 scalar residual. No cached nonlinear derivative is assumed independent of the signal."
+  }
+}
