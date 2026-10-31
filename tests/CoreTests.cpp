@@ -2027,6 +2027,70 @@ void testEveryFactoryPresetRenders()
     check(rendered == (int) factoryPresets().size(), "all factory presets render cleanly");
 }
 
+// Phase 0 speedups must be exact: memoized exp/exp2/tan and the mirrored
+// decimator history return the same bits as direct evaluation.
+void testExactMemoization()
+{
+    Rng rng(0x5eed);
+    ExpMemo<float> expF;
+    ExpMemo<double> expD;
+    Exp2Memo exp2F;
+    bool sameF = true, sameD = true, same2 = true;
+    float previous = 0.0f;
+    for (int i = 0; i < 4000; ++i)
+    {
+        // Repeat arguments half the time to exercise the cached branch.
+        const float x = (i % 2 == 0) ? rng.nextBipolar() * 8.0f : previous;
+        previous = x;
+        sameF = sameF && expF(x) == std::exp(x);
+        sameD = sameD && expD((double) x) == std::exp((double) x);
+        same2 = same2 && exp2F(x) == std::exp2(x);
+    }
+    check(sameF && sameD && same2, "exact-argument memos match direct evaluation");
+    check(coefficientForTime(0.3f, 96000.0f, 5.0f)
+              == std::exp(-6.0f * 5.0f / (0.3f * 96000.0f)),
+          "coefficientForTime keeps its historical expression");
+
+    // Svf with a cached coefficient set must track a fresh instance exactly.
+    Svf cached, fresh;
+    bool sameSvf = true;
+    for (int i = 0; i < 2000; ++i)
+    {
+        const float cutoff = (i / 100) % 2 == 0 ? 800.0f : 800.0f + (float) i;
+        cached.set(cutoff, 2.0f, 96000.0f);
+        Svf probe = fresh;
+        probe.set(cutoff, 2.0f, 96000.0f);
+        const float x = std::sin(0.01f * (float) i);
+        sameSvf = sameSvf && cached.process(x).lp == probe.process(x).lp;
+        fresh = probe;
+    }
+    check(sameSvf, "cached Svf coefficients are exact");
+
+    // Mirrored decimator history against a direct circular-buffer FIR.
+    Decimator decimator;
+    decimator.prepare(96000.0f);
+    const auto& c = decimator.getCoefficients();
+    std::vector<float> history((size_t) Decimator::kTaps, 0.0f);
+    int write = 0;
+    bool sameFir = true;
+    for (int n = 0; n < 1000; ++n)
+    {
+        const float x = rng.nextBipolar();
+        history[(size_t) write] = x;
+        write = (write + 1) % Decimator::kTaps;
+        auto delayed = [&](int tap) {
+            int p = write - 1 - tap;
+            if (p < 0) p += Decimator::kTaps;
+            return history[(size_t) p];
+        };
+        double y = (double) c[Decimator::kCenter] * delayed(Decimator::kCenter);
+        for (int i = 0; i < Decimator::kCenter; ++i)
+            y += (double) c[(size_t) i]
+                 * ((double) delayed(i) + (double) delayed(Decimator::kTaps - 1 - i));
+        sameFir = sameFir && decimator.process(x) == (float) y;
+    }
+    check(sameFir, "mirrored decimator history is exact");
+}
 } // namespace
 
 int main()
@@ -2042,6 +2106,7 @@ int main()
     testEnvelope();
     testHardwareFilterContour();
     testDecimator();
+    testExactMemoization();
     testFilterControlDomain();
     testSustainTimeAndWheelRouting();
     testDefaultVoiceTuning();

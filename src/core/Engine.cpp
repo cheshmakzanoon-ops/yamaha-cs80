@@ -1169,6 +1169,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     pwmPhase[1] += rankSettings[1].pwmSpeed * invSr;
     pwmPhase[0] -= std::floor(pwmPhase[0]);
     pwmPhase[1] -= std::floor(pwmPhase[1]);
+    // PWM is one shared sine per rank; evaluate it once, not once per voice.
+    const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
 
     // TRG5 positive diode-OR: normalized ideal maximum, not event memory.
     // Physical release removes this proxy even if a pedal/release tail sounds.
@@ -1200,14 +1202,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     float mixL = 0.0f;
     float mixR = 0.0f;
-    int stillActive = 0;
     int stillHeld = 0;
 
     // Double accumulator avoids long-glide float rounding stalling before target.
     // An open assigned footswitch suppresses new glides and snaps running ones to target.
     const bool glideActive = global.glideGate && global.portamento > 0.0001f;
     const double glideCoef = glideActive
-                                ? std::exp(-1.0 / ((double) global.portamento * sr))
+                                ? glideExp(-1.0 / ((double) global.portamento * sr))
                                 : 0.0;
 
     if (sourceActive[0] || sourceActive[1])
@@ -1269,7 +1270,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // equal-tempered fifths and not part of the shared filter key CV.
             const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
                                * kFeetRatios[std::clamp(rs.feet, 0, 5)];
-            const float pwm = std::sin(kTwoPi * pwmPhase[ch]);
+            const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm, 0.05f, 0.95f);
 
             const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
@@ -1280,7 +1281,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
             // Shared key-voltage domain precedes VCO footage/vibrato. Master
             // pitch and key portamento move it; ribbon routing is unverified.
-            const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune);
+            const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune, r.keyVoltsExp);
             const float brillOct = global.brilliance
                                    + (sourceActive[ch] ? 0.0f : rs.initBrill * v.velocity * 2.0f)
                                    + (sourceActive[ch] ? 0.0f : rs.afterBrill * v.pressure * 2.0f)
@@ -1301,11 +1302,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
             const float cutoffLp = sourceActive[ch]
-                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct)
-                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp);
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct, r.lpCutoffExp)
+                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp, r.lpCutoffExp);
             const float cutoffHp = sourceActive[ch]
-                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct)
-                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp);
+                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct, r.hpCutoffExp)
+                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp, r.hpCutoffExp);
             const float qLp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
                 : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
             const float qHp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
@@ -1350,9 +1351,6 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan, -1.0f, 1.0f);
             mixL += voiceOut * (0.5f - 0.5f * pan);
             mixR += voiceOut * (0.5f + 0.5f * pan);
-
-            if (! r.aenv.isIdle())
-                ++stillActive;
         }
 
         if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
@@ -1363,10 +1361,6 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         }
     }
 
-    stillActive = 0;
-    for (auto& v : voices)
-        if (v.active)
-            ++stillActive;
     heldCount = stillHeld;
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
@@ -1555,7 +1549,6 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float m = (outL + outR) * 0.5f;
         outL = outR = m;
     }
-    (void) stillActive;
 }
 
 void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <limits>
 #include <cstddef>
 #include <cstdint>
 #include <vector>
@@ -37,13 +38,37 @@ inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
 // IG00156 nominal law: Yamaha CS servicing guide p34; CS-80 IC sheet p42.
 // MIDI60 / .5V is an interface reference, not a panel-slider voltage claim.
 constexpr float kReferenceKeyVolts = 0.5f;
+// Exact-argument exp2 memo; bit-identical to std::exp2 (see ExpMemo below).
+struct Exp2Memo
+{
+    float arg = std::numeric_limits<float>::quiet_NaN();
+    float value = 0.0f;
+    float operator()(float x) noexcept
+    {
+        if (!(x == arg))
+        {
+            arg = x;
+            value = std::exp2(x);
+        }
+        return value;
+    }
+};
+
 inline float filterKeyVolts(float midiPitch) noexcept
 {
     return kReferenceKeyVolts * std::exp2((midiPitch - 60.0f) / 12.0f);
 }
+inline float filterKeyVolts(float midiPitch, Exp2Memo& memo) noexcept
+{
+    return kReferenceKeyVolts * memo((midiPitch - 60.0f) / 12.0f);
+}
 inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv) noexcept
 {
     return 125.0f * keyVolts * std::exp2(effectiveCutoffCv);
+}
+inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv, Exp2Memo& memo) noexcept
+{
+    return 125.0f * keyVolts * memo(effectiveCutoffCv);
 }
 inline float filterEffectiveCv(float referenceCutoffHz) noexcept
 {
@@ -218,6 +243,11 @@ public:
     {
         cutoffHz = clampf(cutoffHz, 18.0f, sampleRate * 0.45f);
         q = clampf(q, 0.35f, 9.0f);
+        // Exact-input memo: identical coefficients, no tan() while cutoff,
+        // Q and rate hold (common once an envelope settles).
+        if (cutoffHz == lastCutoff && q == lastQ && sampleRate == lastRate)
+            return;
+        lastCutoff = cutoffHz; lastQ = q; lastRate = sampleRate;
         const float g = std::tan(kPi * cutoffHz / sampleRate);
         const float k = 1.0f / q;
         a1 = 1.0f / (1.0f + g * (g + k));
@@ -249,6 +279,7 @@ public:
 private:
     float a1 = 0.0f, a2 = 0.0f, a3 = 0.0f, kk = 1.0f;
     float ic1 = 0.0f, ic2 = 0.0f;
+    float lastCutoff = -1.0f, lastQ = -1.0f, lastRate = -1.0f;
 };
 
 class OnePole
@@ -273,13 +304,38 @@ private:
     float a = 1.0f, b = 0.0f, z = 0.0f;
 };
 
-inline float coefficientForTime(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+// Exact-argument memo for per-sample transcendental calls whose argument is
+// usually unchanged between samples. The result is bit-identical to calling
+// the function directly; it only skips recomputation while the argument holds.
+// NaN initial state forces the first evaluation.
+template <typename T>
+struct ExpMemo
+{
+    T arg = std::numeric_limits<T>::quiet_NaN();
+    T value = T(0);
+    T operator()(T x) noexcept
+    {
+        if (!(x == arg))
+        {
+            arg = x;
+            value = std::exp(x);
+        }
+        return value;
+    }
+};
+
+inline float coefficientExponent(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
 {
     seconds = std::max(seconds, 0.00005f);
+    return -6.0f * multiplier / (seconds * sampleRate);
+}
+
+inline float coefficientForTime(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+{
     // Calibrate the control as a musical time-to-rest (-60 dB), not a raw RC
     // time constant. Without this, a 200 ms release would still be audible a
     // second later.
-    return std::exp(-6.0f * multiplier / (seconds * sampleRate));
+    return std::exp(coefficientExponent(seconds, sampleRate, multiplier));
 }
 
 // Provisional bent-envelope approximation. The fast bend and slower tail
@@ -333,7 +389,7 @@ public:
                 break;
             case Stage::Attack:
             {
-                const float c = coefficientForTime(a, sampleRate);
+                const float c = expF(coefficientExponent(a, sampleRate));
                 value = 1.0f + (value - 1.0f) * c;
                 if (value >= 0.999f || stageTime > a * 1.2f + 0.001f)
                 {
@@ -349,13 +405,13 @@ public:
                 const float fast = (bent && stageTime < 0.035f) ? 5.0f : 1.0f;
                 if (liveDecay)
                 {
-                    const double liveC = std::exp(-6.0 * fast / (std::max(d, 0.00005f) * static_cast<double>(sampleRate)));
+                    const double liveC = expD(-6.0 * fast / (std::max(d, 0.00005f) * static_cast<double>(sampleRate)));
                     decayState = s + (decayState - s) * liveC;
                     value = static_cast<float>(decayState);
                 }
                 else
                 {
-                    const float c = coefficientForTime(d, sampleRate, fast);
+                    const float c = expF(coefficientExponent(d, sampleRate, fast));
                     value = s + (value - s) * c;
                 }
                 if (std::abs(value - s) < 0.0005f)
@@ -371,7 +427,7 @@ public:
                     // Inferred retained decay-port tracking, without re-entering
                     // Decay or restarting its bend window. Double accumulation
                     // avoids float quantization stalling a long, slow transition.
-                    const double c = std::exp(-6.0 / (std::max(d, 0.00005f) * static_cast<double>(sampleRate)));
+                    const double c = expD(-6.0 / (std::max(d, 0.00005f) * static_cast<double>(sampleRate)));
                     sustainState = s + (sustainState - s) * c;
                     value = static_cast<float>(sustainState);
                     if (std::abs(sustainState - s) < 0.0005)
@@ -385,7 +441,7 @@ public:
             case Stage::Release:
             {
                 const float fast = (bent && stageTime < 0.045f) ? 5.0f : 1.0f;
-                const float c = coefficientForTime(r, sampleRate, fast);
+                const float c = expF(coefficientExponent(r, sampleRate, fast));
                 value *= c;
                 if (value < 0.0002f)
                 {
@@ -439,8 +495,8 @@ private:
     float tickReconstruction(float sampleRate, bool bent) noexcept
     {
         preciseTime += 1.0 / static_cast<double>(sampleRate);
-        const auto coefficient = [sampleRate](float time, double fast = 1.0) {
-            return std::exp(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+        const auto coefficient = [this, sampleRate](float time, double fast = 1.0) {
+            return expD(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
         };
         switch (stage)
         {
@@ -484,6 +540,8 @@ private:
     bool liveSustain = false, liveDecay = false;
     double sustainState = 0.0, decayState = 0.0;
     float a = 0.0f, d = 0.0f, s = 0.0f, r = 0.0f;
+    ExpMemo<float> expF;
+    ExpMemo<double> expD;
 };
 
 // Per-voice tuning scatter at VOICE DISPERSION = 1, in cents. Arbitrary software
@@ -569,7 +627,7 @@ public:
                 // the stage; reset/untriggered Idle remains inert.
                 if (releaseSelected && liveRelease && value != il)
                 {
-                    const double c = std::exp(-6.0 / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
+                    const double c = expD(-6.0 / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
                     releaseState += (il - releaseState) * (1.0 - c);
                     value = static_cast<float>(releaseState);
                     if (std::abs(value - il) < 0.0008f)
@@ -580,13 +638,13 @@ public:
             {
                 if (liveAttack)
                 {
-                    const double liveC = std::exp(-6.0 / (std::max(a, 0.00005f) * static_cast<double>(sampleRate)));
+                    const double liveC = expD(-6.0 / (std::max(a, 0.00005f) * static_cast<double>(sampleRate)));
                     attackState = al + (attackState - al) * liveC;
                     value = static_cast<float>(attackState);
                 }
                 else
                 {
-                    const float c = coefficientForTime(a, sampleRate);
+                    const float c = expF(coefficientExponent(a, sampleRate));
                     value = al + (value - al) * c;
                 }
                 // A moved target invalidates the old onset-based timeout. Retain
@@ -602,7 +660,7 @@ public:
             case Stage::Decay:
             {
                 const float fast = (bent && stageTime < 0.035f) ? 5.0f : 1.0f;
-                const float c = coefficientForTime(d, sampleRate, fast);
+                const float c = expF(coefficientExponent(d, sampleRate, fast));
                 value = sustain + (value - sustain) * c;
                 if (std::abs(value - sustain) < 0.0008f)
                 {
@@ -619,13 +677,13 @@ public:
                 const float fast = (bent && stageTime < 0.04f) ? 5.0f : 1.0f;
                 if (liveRelease)
                 {
-                    const double liveC = std::exp(-6.0 * fast / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
+                    const double liveC = expD(-6.0 * fast / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
                     releaseState += (il - releaseState) * (1.0 - liveC);
                     value = static_cast<float>(releaseState);
                 }
                 else
                 {
-                    const float c = coefficientForTime(r, sampleRate, fast);
+                    const float c = expF(coefficientExponent(r, sampleRate, fast));
                     value += (il - value) * (1.0f - c);
                 }
                 if (std::abs(value - il) < 0.0008f)
@@ -681,8 +739,8 @@ private:
     float tickReconstruction(float sampleRate, bool bent) noexcept
     {
         preciseTime += 1.0 / static_cast<double>(sampleRate);
-        const auto coefficient = [sampleRate](float time, double fast = 1.0) {
-            return std::exp(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+        const auto coefficient = [this, sampleRate](float time, double fast = 1.0) {
+            return expD(-6.0 * fast / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
         };
         switch (stage)
         {
@@ -724,6 +782,8 @@ private:
     bool liveAttack = false, liveRelease = false, releaseSelected = false;
     double attackState = 0.0, releaseState = 0.0;
     float il = 0.0f, al = 0.0f, a = 0.0f, d = 0.0f, r = 0.0f, sustain = 0.0f;
+    ExpMemo<float> expF;
+    ExpMemo<double> expD;
 };
 
 class Lfo
@@ -973,19 +1033,19 @@ public:
 
     void reset() noexcept { hist.fill(0.0f); idx = 0; }
 
+    // History is mirrored (each sample stored at p and p + kTaps) so taps are
+    // read contiguously without a wrap test. Summation order is unchanged.
     void push(float x) noexcept
     {
         hist[(size_t) idx] = x;
+        hist[(size_t) idx + kTaps] = x;
         if (++idx >= kTaps) idx = 0;
     }
 
     float output() const noexcept
     {
-        auto delayed = [this](int tap) {
-            int p = idx - 1 - tap;
-            if (p < 0) p += kTaps;
-            return hist[(size_t) p];
-        };
+        const float* newest = hist.data() + idx - 1 + kTaps;
+        auto delayed = [newest](int tap) { return newest[-tap]; };
         double y = (double) coeffs[kCenter] * delayed(kCenter);
         for (int i = 0; i < kCenter; ++i)
             y += (double) coeffs[(size_t) i]
@@ -1010,7 +1070,7 @@ private:
         return sum;
     }
     std::array<float, kTaps> coeffs {};
-    std::array<float, kTaps> hist {};
+    std::array<float, 2 * kTaps> hist {};
     int idx = 0;
 };
 

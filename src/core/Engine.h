@@ -288,6 +288,7 @@ private:
         float trimEnv = 0.0f;
         float trimPan = 0.0f;
         RankInfo info;
+        Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
     };
 
     struct Voice
@@ -385,6 +386,7 @@ private:
     float lfoValues[3] {};
     float lfoPitch = 0.0f, lfoFilter = 0.0f, lfoAmp = 0.0f, lfoPwm = 0.0f, lfoPan = 0.0f;
     float subSpeedSmoothed = 4.2f;
+    ExpMemo<double> glideExp;
 
     // Isolation uses the reviewed capacitor graph with an explicitly inferred
     // optical/loading/trim profile. Both branches run even in EXP (dry X).
