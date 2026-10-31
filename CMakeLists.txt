@@ -331,6 +331,7 @@ if (CS80_BUILD_PLUGIN)
 
         # [ws5-modern] add this workstream's plugin sources below this line.
         src/plugin/ModernLayerState.cpp
+        src/plugin/ModernModulationUi.cpp
 
         # [ws6-library] add this workstream's plugin sources below this line.
 
