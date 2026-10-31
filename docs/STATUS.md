@@ -163,9 +163,13 @@ way, without changing an assertion:
 - macOS-only UI-smoke failures: ws8's first-run tour opens by itself in a real
   window and covered the keybed of the real-pointer fixture whenever macOS
   window activation outlasted the tour's first timer tick (diagnosed in
-  `b2c2302`, fixed in `e048dca`; the window floats above other applications and
-  the posted F1 help card is awaited, `a721935`). The same tour covered the
-  1120x700 source-performance screenshot (`a26f583`).
+  `b2c2302`, fixed in `e048dca`; the window also floats above other
+  applications, `a721935`). The same tour covered the 1120x700
+  source-performance screenshot (`a26f583`). The F1 help-card check raced
+  JUCE's dismissal of call-outs in a background process (the CI harness is
+  never the foreground application on macOS); it now checks before any
+  message is dispatched (`df4ba22`, after macos-15-intel failed it on `main`
+  at `ec72eed`).
 
 A passing Linux pluginval run is not a fix for the intermittent exit 139.
 
