@@ -12,7 +12,9 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <iomanip>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -24,6 +26,13 @@ using Curve = std::vector<Point>;
 using Curves = std::array<Curve, cs80::kSampleAccurateParameters.size()>;
 int failures = 0;
 double curveTolerance = 0.0000001;
+struct EndpointDiagnostic
+{
+    unsigned failures = 0;
+    double largestError = 0, actual = 0, expected = 0;
+    int block = 0, frame = 0;
+};
+std::array<EndpointDiagnostic, cs80::kSampleAccurateParameters.size()> endpointDiagnostics {};
 void check(bool pass, const char* message)
 { if (!pass) { ++failures; if (failures <= 32) std::cerr << "FAIL: " << message << '\n'; } }
 void require(bool pass, const char* message)
@@ -82,6 +91,62 @@ Curves curvesFor(const cs80::ParamValues& parameters)
         for (auto& point : curves[i]) point.second = static_cast<float>(point.second);
     }
     return curves;
+}
+// Diagnostic projection only: the AU exposes a normalized Float32. This shows
+// the corresponding physical Float32 using JUCE's default range expression;
+// it is not a read of the processor's internal physical parameter storage.
+float physicalForDiagnostic(int parameter, float proportion)
+{
+    const auto& definition = cs80::paramDef(parameter);
+    proportion = std::clamp(proportion, 0.0f, 1.0f);
+    if (definition.skew != 1.0f && proportion > 0.0f)
+        proportion = std::exp(std::log(proportion) / definition.skew);
+    return definition.min + (definition.max - definition.min) * proportion;
+}
+void diagnoseEndpoint(AudioUnit unit, int parameter, size_t lane, const Curve& curve,
+                      double initial, int block, int start, int count, float actual)
+{
+    const int frame = start + count - 1;
+    const double expected = absoluteValue(curve, initial, frame, false);
+    const double error = std::abs(double(actual) - expected);
+    if (error <= curveTolerance) return;
+    auto& diagnostic = endpointDiagnostics[lane];
+    ++diagnostic.failures;
+    if (error > diagnostic.largestError)
+    {
+        diagnostic.largestError = error;
+        diagnostic.actual = actual;
+        diagnostic.expected = expected;
+        diagnostic.block = block;
+        diagnostic.frame = frame;
+    }
+    static unsigned printed = 0;
+    if (printed++ >= 64) return;
+    const float maximum = parameterMaximum(unit, parameterId(cs80::paramId(parameter)));
+    const float projectedActual = physicalForDiagnostic(parameter, actual / maximum);
+    const float projectedExpected = physicalForDiagnostic(parameter, static_cast<float>(expected));
+    const float roundTrip = normalized(parameter, projectedExpected);
+    Point previous {-1, initial}, next = previous;
+    for (const auto& point : curve)
+    {
+        next = point;
+        if (point.first > frame) break;
+        previous = point;
+    }
+    std::cerr << std::setprecision(std::numeric_limits<double>::max_digits10)
+        << "AU endpoint diagnostic: lane=" << lane << " parameter=" << cs80::paramId(parameter)
+        << " enum=" << parameter << " block=" << block << " start=" << start
+        << " count=" << count << " frame=" << frame
+        << " actual_au=" << actual << " au_max=" << maximum
+        << " actual_normalized=" << double(actual) / maximum
+        << " expected_normalized=" << expected << " expected_float=" << static_cast<float>(expected)
+        << " error=" << error << " tolerance=" << curveTolerance
+        << " actual_physical_projection=" << projectedActual
+        << " expected_physical_projection=" << projectedExpected
+        << " expected_round_trip=" << roundTrip
+        << " actual_minus_round_trip=" << double(actual) / maximum - roundTrip
+        << " segment_start=" << previous.first << " segment_start_value=" << previous.second
+        << " segment_end=" << next.first << " segment_end_value=" << next.second << '\n';
 }
 struct Module
 {
@@ -261,6 +326,8 @@ std::vector<float> render(Module& module,const cs80::ParamValues& parameters,con
                 AudioUnitParameterValue value=0;
                 require(AudioUnitGetParameter(instance.unit,parameterId(cs80::paramId(parameter)),
                     kAudioUnitScope_Global,0,&value)==noErr,"AU final parameter readback");
+                diagnoseEndpoint(instance.unit,parameter,lane,curves[lane],
+                    normalized(parameter,parameters[parameter]),block,start,count,value);
                 check(std::abs(double(value)-absoluteValue(curves[lane],normalized(parameter,parameters[parameter]),
                     start+count-1,false))<=curveTolerance,"AU publishes the current buffer endpoint, not a future ramp endpoint");
             }
@@ -315,6 +382,16 @@ int main(int argc,char** argv)
         const double sixteenError=difference(render(module,sixteen,curves,1,Kind::scalarRamp),render(module,sixteen,curves,256,Kind::ramp));
         check(sixteenError<=limits["audio_max_abs_error"],"AU automation reaches both engines");
         std::cout<<"native AU ramp error="<<rampError<<" immediate error="<<stepError<<" sixteen-voice error="<<sixteenError<<'\n';
+        for (size_t lane = 0; lane < endpointDiagnostics.size(); ++lane)
+        {
+            const auto& diagnostic = endpointDiagnostics[lane];
+            if (diagnostic.failures == 0) continue;
+            std::cerr << std::setprecision(std::numeric_limits<double>::max_digits10)
+                << "AU endpoint summary: parameter=" << cs80::paramId(cs80::kSampleAccurateParameters[lane])
+                << " failures=" << diagnostic.failures << " worst_error=" << diagnostic.largestError
+                << " actual=" << diagnostic.actual << " expected=" << diagnostic.expected
+                << " block=" << diagnostic.block << " frame=" << diagnostic.frame << '\n';
+        }
     } catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 2;}
     return failures==0?0:1;
 }
