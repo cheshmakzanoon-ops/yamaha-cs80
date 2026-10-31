@@ -116,6 +116,14 @@ public:
     void refresh();
     void focusSaveField();
     void selectCurrentPreset();
+    // [ws6-library] Load the previous (-1) or next (+1) patch of the current
+    // library filter, user patches included, wrapping at the ends. Works while
+    // the library is hidden, so a toolbar PREV/NEXT can call it.
+    void loadAdjacent(int delta);
+    // Audition: selecting a row (click, arrows, PREV/NEXT) loads it at once;
+    // REVERT still returns to the sound loaded when the library opened.
+    void setAudition(bool shouldAudition);
+    bool isAuditioning() const noexcept { return auditionOn; }
 
     std::function<void()> onClose;
     std::function<void()> onPresetLoaded;
@@ -135,6 +143,8 @@ private:
         int factoryIndex = -1;
         juce::File userFile;
         bool isUser = false;
+        bool isLegacy = false;            // read-only Legacy Library program
+        std::uint32_t techniques = 0;     // technique tag bit set (curated library)
 
         // Derived for the library (see classify() in PresetBrowser.cpp).
         int type = 0;                 // instrument type, index into the type table
@@ -193,6 +203,8 @@ private:
     bool isLoaded(const Entry& e) const { return loadedKey.isNotEmpty() && e.key == loadedKey; }
     bool isLoadedAndEdited(const Entry& e) const { return isLoaded(e) && loadedEdited; }
     void loadSelected();
+    void loadEntry(int entryIndex);
+    void setShowTechniques(bool techniques);
     void revertToOpening();
     void captureOpening();
     bool canRevert() const;
@@ -227,9 +239,13 @@ private:
     std::uint32_t stylePresent = 0;      // style tags that occur in the library
 
     // Filter state.
-    int scopeFilter = 0;                 // all, favourites, factory, hardware, user
+    int scopeFilter = 0;                 // all (library + user), favourites, library, legacy, user
     std::uint32_t typeFilter = 0;
     std::uint32_t styleFilter = 0;
+    std::uint32_t techniqueFilter = 0;   // [ws6-library] technique tags (ALL OF)
+    std::uint32_t techniquePresent = 0;
+    bool showTechniques = false;         // the third facet shows TECHNIQUE chips instead of STYLE
+    bool auditionOn = false;
     int sortMode = 0;                    // bank, A-Z, Z-A, type, newest
     bool sortReverse = false;            // clicking the lit sort segment again flips its direction
     bool restoringSelection = false;
@@ -264,6 +280,8 @@ private:
     std::vector<std::unique_ptr<ChipButton>> scopeChips;
     std::vector<std::unique_ptr<ChipButton>> typeChips;
     std::vector<std::unique_ptr<ChipButton>> styleChips;
+    std::vector<std::unique_ptr<ChipButton>> techniqueChips;
+    std::vector<std::unique_ptr<PlateButton>> facetButtons;   // STYLE | TECHNIQUE
     PlateButton resetButton { "CLEAR ALL" };
     PlateButton emptyResetButton { "CLEAR ALL FILTERS" };
 
@@ -275,6 +293,7 @@ private:
     PlateButton favouriteButton { "Favourite", PlateButton::Kind::star };
     PlateButton previousButton { "PREV", PlateButton::Kind::previous };
     PlateButton nextButton { "NEXT", PlateButton::Kind::next };
+    PlateButton auditionButton { "AUDITION" };
     GlassField saveName;
     PlateButton loadButton { "LOAD", PlateButton::Kind::primary };
     PlateButton revertButton { "REVERT" };

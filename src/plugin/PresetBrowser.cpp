@@ -305,15 +305,15 @@ std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& fi
 // order decides ties). A name with no keyword is OTHER; the Init patch is INIT.
 // ---------------------------------------------------------------------------
 enum TypeId : int { tBrass, tStrings, tKeys, tOrgan, tWinds, tPluck, tBass, tPads,
-                    tLeads, tFx, tSequence, tInit, tOther, typeCount };
+                    tPoly, tLeads, tBells, tFx, tSequence, tInit, tOther, typeCount };
 
 struct TypeInfo { const char* label; std::uint32_t colour; };
 const TypeInfo kTypes[typeCount] = {
     { "BRASS", 0xffe6b43a },    { "STRINGS", 0xff44c474 },  { "KEYS", 0xffe6dcbc },
     { "ORGAN", 0xffd9593f },    { "WINDS", 0xff3fb8b0 },    { "PLUCK", 0xfff08f3a },
-    { "BASS", 0xff5c8fe0 },     { "PADS", 0xff9a7ae6 },     { "LEADS", 0xffee4f86 },
-    { "FX", 0xffbdb7ae },       { "SEQUENCE", 0xffa6d84a }, { "INIT", 0xff9a9588 },
-    { "OTHER", 0xff8a8578 } };
+    { "BASS", 0xff5c8fe0 },     { "PADS", 0xff9a7ae6 },     { "POLY", 0xffd28fd0 },
+    { "LEADS", 0xffee4f86 },    { "BELLS", 0xff8fd0e6 },    { "FX", 0xffbdb7ae },
+    { "SEQUENCE", 0xffa6d84a }, { "INIT", 0xff9a9588 },     { "OTHER", 0xff8a8578 } };
 
 struct Keyword { const char* word; TypeId type; };
 const Keyword kKeywords[] = {
@@ -335,6 +335,12 @@ int classifyType(const juce::String& category, const juce::String& name)
     if (category == "FX") return tFx;
     if (category == "Sequences") return tSequence;
     if (category == "Init") return tInit;
+    // [ws6-library] curated library categories.
+    if (category == "Polysynth") return tPoly;
+    if (category == "Organ") return tOrgan;
+    if (category == "Winds") return tWinds;
+    if (category == "Plucked") return tPluck;
+    if (category == "Bells") return tBells;
     const auto lower = name.toLowerCase();
     for (const auto& k : kKeywords)
         if (lower.contains(k.word))
@@ -344,8 +350,32 @@ int classifyType(const juce::String& category, const juce::String& name)
 
 Colour typeColour(int type) { return Colour(kTypes[juce::jlimit(0, (int) typeCount - 1, type)].colour); }
 
-constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY PROGRAMS",
-                                        "HARDWARE TONES", "USER" };
+// [ws6-library] Technique tags of the curated library (FactoryPreset::tags):
+// how a program is played or built. One chip may stand for related tags.
+constexpr int techniqueCount = 8;
+struct TechniqueInfo { const char* label; const char* tags[3]; const char* tip; };
+const TechniqueInfo kTechniques[techniqueCount] = {
+    { "AFTERTOUCH", { "aftertouch", nullptr, nullptr }, "Pressure (after touch) shapes brilliance, level or vibrato" },
+    { "VELOCITY", { "velocity", nullptr, nullptr }, "Initial touch (velocity) sets brilliance or level" },
+    { "SWELL", { "brilliance-swell", nullptr, nullptr }, "The VCF EG or touch swells the brilliance" },
+    { "GLIDE & BEND", { "glide", "init-bend", "ribbon" }, "Portamento, glissando, initial pitch bend or ribbon playing" },
+    { "RING MOD", { "ring-mod", nullptr, nullptr }, "The ring modulator is part of the sound" },
+    { "SUB MOD", { "sub-mod", nullptr, nullptr }, "The SUB oscillator modulates pitch, filter or level" },
+    { "FOOTAGE", { "feet-layer", "dual-rank", nullptr }, "The two ranks are layered at different feet or waves" },
+    { "MODERN", { "modern", nullptr, nullptr }, "Uses the software FX, LFO or arpeggiator (off in PURE CS-80)" } };
+
+std::uint32_t techniqueBits(const std::vector<std::string>& tags)
+{
+    std::uint32_t bits = 0;
+    for (int t = 0; t < techniqueCount; ++t)
+        for (const char* name : kTechniques[t].tags)
+            if (name != nullptr && std::find(tags.begin(), tags.end(), std::string(name)) != tags.end())
+                bits |= 1u << (unsigned) t;
+    return bits;
+}
+
+constexpr const char* kScopeNames[] = { "ALL PATCHES", "FAVOURITES", "FACTORY LIBRARY",
+                                        "LEGACY LIBRARY", "USER" };
 constexpr const char* kSortNames[] = { "BANK", "A-Z", "Z-A", "TYPE", "NEW" };
 constexpr const char* kSortTitles[] = { "Sort in bank order", "Sort A to Z", "Sort Z to A",
                                         "Sort by instrument type", "Sort newest user patches first" };
@@ -367,6 +397,20 @@ bool& compactPreference()
 {
     static bool compact = false;
     return compact;
+}
+
+// [ws6-library] AUDITION and the TECHNIQUE facet are remembered the same way
+// ("#audition=on|off", "#facet=technique|style").
+bool& auditionPreference()
+{
+    static bool audition = false;
+    return audition;
+}
+
+bool& techniqueFacetPreference()
+{
+    static bool technique = false;
+    return technique;
 }
 
 juce::StringArray& favouriteKeys()
@@ -419,6 +463,10 @@ void loadFavourites()
         {
             if (trimmed == "#view=compact") compactPreference() = true;
             else if (trimmed == "#view=cards") compactPreference() = false;
+            else if (trimmed == "#audition=on") auditionPreference() = true;
+            else if (trimmed == "#audition=off") auditionPreference() = false;
+            else if (trimmed == "#facet=technique") techniqueFacetPreference() = true;
+            else if (trimmed == "#facet=style") techniqueFacetPreference() = false;
         }
         else if (trimmed.isNotEmpty())
             favouriteKeys().addIfNotAlreadyThere(trimmed);
@@ -432,7 +480,9 @@ void saveFavourites()
     if (! folder.exists() && folder.createDirectory().failed())
         return;
     const auto text = favouriteKeys().joinIntoString("\n") + (favouriteKeys().isEmpty() ? "" : "\n")
-                      + (compactPreference() ? "#view=compact\n" : "#view=cards\n");
+                      + (compactPreference() ? "#view=compact\n" : "#view=cards\n")
+                      + (auditionPreference() ? "#audition=on\n" : "#audition=off\n")
+                      + (techniqueFacetPreference() ? "#facet=technique\n" : "#facet=style\n");
     if (file.replaceWithText(text))
     {
         auto& stamp = favouritesStamp();
@@ -1685,7 +1735,8 @@ private:
         const float x = L.leftPlate.getX() + 20.0f, w = L.leftPlate.getWidth() - 40.0f;
         const auto head = [&](const juce::String& text, const juce::String& hint, float y)
         {
-            caption(g, text, { x, y, 160.0f, 16.0f });
+            if (text.isNotEmpty())
+                caption(g, text, { x, y, 160.0f, 16.0f });
             if (hint.isNotEmpty())
                 legend(g, hint, { x + w - 96.0f, y, 96.0f, 16.0f },
                        tracked(uiFont(kMinText, juce::Font::bold), 0.1f), ivoryDim.withAlpha(0.95f),
@@ -1696,7 +1747,7 @@ private:
         if (L.typeCaptionY > 0.0f)
             head("INSTRUMENT", "ANY OF", L.typeCaptionY);
         if (L.styleCaptionY > 0.0f)
-            head("STYLE", "ALL OF", L.styleCaptionY);
+            head(owner.techniquePresent != 0 ? juce::String() : juce::String("STYLE"), "ALL OF", L.styleCaptionY);
         paintFilterRow(g);
     }
 
@@ -1817,7 +1868,8 @@ private:
     // Three label/value cells: slot, origin, and either the save date or the layer balance.
     static void paintOrigin(Graphics& g, Rectangle<float> r, const Entry& e)
     {
-        const juce::String origin = e.isUser ? "USER FILE" : (e.category == "Hardware Studies" ? "HARDWARE STUDY" : "FACTORY PROGRAM");
+        const juce::String origin = e.isUser ? "USER FILE"
+            : (e.isLegacy ? (e.category == "Hardware Studies" ? "LEGACY STUDY" : "LEGACY PROGRAM") : "LIBRARY PROGRAM");
         juce::String thirdName = "LAYERS", thirdValue = "--";
         if (e.isUser && e.modified > 0)
         {
@@ -2493,6 +2545,10 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     nextButton.setTooltip("Select the next patch in the list");
     nextButton.onClick = [this] { stepSelection(1); };
     addAndMakeVisible(nextButton);
+    auditionButton.setTitle("Audition");
+    auditionButton.setClickingTogglesState(true);
+    auditionButton.onClick = [this] { setAudition(auditionButton.getToggleState()); };
+    addAndMakeVisible(auditionButton);
 
     description.setJustificationType(juce::Justification::topLeft);
     description.setColour(juce::Label::textColourId, ivory.withAlpha(0.82f));
@@ -2557,11 +2613,14 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     for (auto& b : viewButtons) b->setExplicitFocusOrder(order++);
     for (auto& b : scopeChips) b->setExplicitFocusOrder(order++);
     for (auto& b : typeChips) b->setExplicitFocusOrder(order++);
+    for (auto& b : facetButtons) b->setExplicitFocusOrder(order++);
     for (auto& b : styleChips) b->setExplicitFocusOrder(order++);
+    for (auto& b : techniqueChips) b->setExplicitFocusOrder(order++);
     resetButton.setExplicitFocusOrder(order++);
     list->setExplicitFocusOrder(order++);
     favouriteButton.setExplicitFocusOrder(order++);
     previousButton.setExplicitFocusOrder(order++);
+    auditionButton.setExplicitFocusOrder(order++);
     nextButton.setExplicitFocusOrder(order++);
     loadButton.setExplicitFocusOrder(order++);
     revertButton.setExplicitFocusOrder(order++);
@@ -2601,8 +2660,13 @@ void PresetBrowser::buildFilterChips()
         chip->setRadioGroupId(7001);
         chip->setStarGlyph(i == 1);
         chip->setTitle(juce::String("Show ") + kScopeNames[i]);
-        if (i == 3)
-            chip->setTooltip("Original hardware tab identities. Provisional voicings, not measured factory presets.");
+        if (i == 0)
+            chip->setTooltip("The factory library and your saved patches. The Legacy Library is listed on its own.");
+        else if (i == 2)
+            chip->setTooltip("The curated factory library, voiced for the circuit engine.");
+        else if (i == 3)
+            chip->setTooltip("Read-only: the 222 programs of earlier versions, including the provisional hardware-tab studies. "
+                             "Kept so old sessions recall them by name and number; they play on the legacy engine.");
         chip->setToggleState(i == scopeFilter, juce::dontSendNotification);
         chip->onClick = [this, i] { scopeFilter = i; rebuildFilter(); };
         addAndMakeVisible(*chip);
@@ -2636,6 +2700,48 @@ void PresetBrowser::buildFilterChips()
         addChildComponent(*chip);
         styleChips.push_back(std::move(chip));
     }
+    // [ws6-library] TECHNIQUE chips share the third facet's place with STYLE.
+    for (int t = 0; t < techniqueCount; ++t)
+    {
+        auto chip = std::make_unique<ChipButton>(kTechniques[t].label, ivory);
+        chip->setLamp(ChipButton::Lamp::hollow);
+        chip->setTitle(juce::String("Technique ") + kTechniques[t].label);
+        chip->setTooltip(kTechniques[t].tip);
+        chip->onClick = [this, t, raw = chip.get()]
+        {
+            if (raw->getToggleState()) techniqueFilter |= 1u << (unsigned) t;
+            else techniqueFilter &= ~(1u << (unsigned) t);
+            rebuildFilter();
+        };
+        addChildComponent(*chip);
+        techniqueChips.push_back(std::move(chip));
+    }
+    const char* const facetNames[] = { "STYLE", "TECHNIQUE" };
+    const char* const facetTips[] = { "Filter by sound character (derived from the patch values)",
+                                      "Filter by playing or programming technique (factory library tags)" };
+    for (int f = 0; f < 2; ++f)
+    {
+        auto button = std::make_unique<PlateButton>(facetNames[f], PlateButton::Kind::segment);
+        button->setRadioGroupId(7004);
+        button->setTitle(juce::String("Show ") + facetNames[f] + " filters");
+        button->setTooltip(facetTips[f]);
+        button->onClick = [this, f] { setShowTechniques(f == 1); };
+        addChildComponent(*button);
+        facetButtons.push_back(std::move(button));
+    }
+}
+
+void PresetBrowser::setShowTechniques(bool techniques)
+{
+    techniqueFacetPreference() = techniques;
+    if (techniques != showTechniques)
+    {
+        showTechniques = techniques;
+        layoutAll();
+        legends->repaintFilters();
+    }
+    for (size_t f = 0; f < facetButtons.size(); ++f)
+        facetButtons[f]->setToggleState((f == 1) == showTechniques, juce::dontSendNotification);
 }
 
 // ---------------------------------------------------------------------------
@@ -2708,7 +2814,15 @@ void PresetBrowser::layoutAll()
     // Filter column. Chips are packed top to bottom; absent types and styles
     // collapse so the column never shows dead tabs.
     const float cx = L.leftPlate.getX() + 20.0f, cw = L.leftPlate.getWidth() - 40.0f;
-    constexpr float chipH = 34.0f, chipPitch = 39.0f;
+    // [ws6-library] More instrument types and the TECHNIQUE facet: when the column
+    // would overflow, the chip pitch tightens (never below 33 units).
+    const std::uint32_t facetPresent = showTechniques ? techniquePresent : stylePresent;
+    const auto countBits = [](std::uint32_t bits) { int n = 0; for (; bits != 0; bits &= bits - 1) ++n; return n; };
+    const int chipRows = kScopeCount + (countBits(typePresent) + 1) / 2 + (countBits(facetPresent) + 1) / 2;
+    const float fixed = 26.0f + 28.0f + 10.0f + 28.0f + 10.0f + 28.0f;
+    const float room = L.leftPlate.getHeight() - 20.0f - 34.0f - 10.0f - fixed;
+    const float chipPitch = juce::jlimit(33.0f, 39.0f, room / (float) juce::jmax(1, chipRows));
+    const float chipH = chipPitch - 5.0f;
     float y = L.leftPlate.getY() + 26.0f;
     L.scopeCaptionY = y;
     y += 28.0f;
@@ -2746,30 +2860,35 @@ void PresetBrowser::layoutAll()
     else
         for (auto& chip : typeChips) chip->setVisible(false);
 
-    shown = 0;
-    L.styleCaptionY = 0.0f;
-    for (int t = 0; t < styleCount; ++t)
-        if (stylePresent & (1u << (unsigned) t))
-            ++shown;
-    if (shown > 0)
+    // Third facet: STYLE (derived character) or TECHNIQUE (library tags). The
+    // STYLE | TECHNIQUE switch replaces the caption; hidden chips keep their filter.
+    shown = countBits(facetPresent);
+    L.styleCaptionY = y;
+    for (size_t f = 0; f < facetButtons.size(); ++f)
     {
-        L.styleCaptionY = y;
-        y += 28.0f;
+        facetButtons[f]->setUiScale(s);
+        facetButtons[f]->setBounds(px(cx + (float) f * 98.0f, y - 3.0f, f == 0 ? 92.0f : 112.0f, 24.0f));
+        facetButtons[f]->setVisible(techniquePresent != 0);
+        facetButtons[f]->setToggleState((f == 1) == showTechniques, juce::dontSendNotification);
+    }
+    y += 28.0f;
+    const auto placeFacet = [&](std::vector<std::unique_ptr<ChipButton>>& chips, std::uint32_t present, bool active)
+    {
         int slot = 0;
-        for (int t = 0; t < styleCount; ++t)
+        for (size_t t = 0; t < chips.size(); ++t)
         {
-            auto& chip = *styleChips[(size_t) t];
-            const bool present = (stylePresent & (1u << (unsigned) t)) != 0;
-            chip.setVisible(present);
-            if (! present)
+            auto& chip = *chips[t];
+            const bool show = active && (present & (1u << (unsigned) t)) != 0;
+            chip.setVisible(show);
+            if (! show)
                 continue;
             chip.setUiScale(s);
             chip.setBounds(px(cx + (float) (slot % 2) * (colW + 6.0f), y + (float) (slot / 2) * chipPitch, colW, chipH));
             ++slot;
         }
-    }
-    else
-        for (auto& chip : styleChips) chip->setVisible(false);
+    };
+    placeFacet(styleChips, stylePresent, ! showTechniques);
+    placeFacet(techniqueChips, techniquePresent, showTechniques);
     L.chipsBottom = y + (float) ((shown + 1) / 2) * chipPitch;
 
     // The filter status line at the foot of the column; its CLEAR ALL key is a ghost while no filter is on.
@@ -2817,11 +2936,14 @@ void PresetBrowser::layoutAll()
     favouriteButton.setBounds(px(dx + dw - 38.0f, dy + 8.0f, 38.0f, 36.0f));
     layoutDescription();
     description.setFont(uiFont(13.0f * s));
-    const float halfW = (dw - 8.0f) * 0.5f;
+    // PREV | AUDITION | NEXT
+    const float thirdW = (dw - 16.0f) / 3.0f;
     previousButton.setUiScale(s);
-    previousButton.setBounds(px(dx, dy + plan.prevNext, halfW, 34.0f));
+    previousButton.setBounds(px(dx, dy + plan.prevNext, thirdW, 34.0f));
+    auditionButton.setUiScale(s);
+    auditionButton.setBounds(px(dx + thirdW + 8.0f, dy + plan.prevNext, thirdW, 34.0f));
     nextButton.setUiScale(s);
-    nextButton.setBounds(px(dx + dw - halfW, dy + plan.prevNext, halfW, 34.0f));
+    nextButton.setBounds(px(dx + dw - thirdW, dy + plan.prevNext, thirdW, 34.0f));
     const float smallW = 96.0f;
     loadButton.setUiScale(s);
     loadButton.setBounds(px(dx, dy + plan.load, dw - 2.0f * smallW - 16.0f, 44.0f));
@@ -2867,6 +2989,9 @@ void PresetBrowser::refresh()
 {
     loadFavourites();
     compactRows = compactPreference();
+    auditionOn = auditionPreference();
+    auditionButton.setToggleState(auditionOn, juce::dontSendNotification);
+    showTechniques = techniqueFacetPreference();
     for (size_t i = 0; i < viewButtons.size(); ++i)
         viewButtons[i]->setToggleState((i == 1) == compactRows, juce::dontSendNotification);
     entries.clear();
@@ -2891,8 +3016,11 @@ void PresetBrowser::refresh()
         for (int t = 0; t < styleCount; ++t)
             if (e.styles & (1u << (unsigned) t))
                 styleText << " " << kStyleNames[t];
+        for (int t = 0; t < techniqueCount; ++t)
+            if (e.techniques & (1u << (unsigned) t))
+                styleText << " " << kTechniques[t].label;
         e.haystack = (e.name + " " + e.category + " " + kTypes[e.type].label + styleText + " " + e.description
-                      + (e.isUser ? " user" : " factory")).toLowerCase();
+                      + (e.isUser ? " user" : (e.isLegacy ? " legacy" : " factory library"))).toLowerCase();
     };
 
     for (int i = 0; i < (int) bank.size(); ++i)
@@ -2904,7 +3032,12 @@ void PresetBrowser::refresh()
         e.description = juce::String(preset.description);
         e.factoryIndex = i;
         e.key = "F:" + e.name;
-        e.slot = juce::String(i + 1).paddedLeft('0', 3);
+        // [ws6-library] Legacy Library slots keep their shipped numbers (L001..L222);
+        // the curated library is numbered on its own (001..).
+        e.isLegacy = preset.library == cs80::ProgramLibrary::legacy;
+        e.techniques = techniqueBits(preset.tags);
+        e.slot = e.isLegacy ? "L" + juce::String(i + 1).paddedLeft('0', 3)
+                            : juce::String(cs80::curatedIndexForProgram(i) + 1).paddedLeft('0', 3);
         if ((size_t) i < factorySignatures.size())
             e.signature = factorySignatures[(size_t) i];
         finish(e);
@@ -2943,13 +3076,18 @@ void PresetBrowser::refresh()
 
     typePresent = 0;
     stylePresent = 0;
+    techniquePresent = 0;
     for (const auto& e : entries)
     {
         typePresent |= 1u << (unsigned) e.type;
         stylePresent |= e.styles;
+        techniquePresent |= e.techniques;
     }
     typeFilter &= typePresent;
     styleFilter &= stylePresent;
+    techniqueFilter &= techniquePresent;
+    for (int t = 0; t < techniqueCount; ++t)
+        techniqueChips[(size_t) t]->setToggleState((techniqueFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     for (int t = 0; t < typeCount; ++t)
         typeChips[(size_t) t]->setToggleState((typeFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     for (int t = 0; t < styleCount; ++t)
@@ -2992,7 +3130,8 @@ int PresetBrowser::sortArrow(int mode) const
 
 bool PresetBrowser::anyFilterActive() const
 {
-    return scopeFilter != 0 || typeFilter != 0 || styleFilter != 0 || search.getText().trim().isNotEmpty();
+    return scopeFilter != 0 || typeFilter != 0 || styleFilter != 0 || techniqueFilter != 0
+        || search.getText().trim().isNotEmpty();
 }
 
 int PresetBrowser::activeFilterCount() const
@@ -3002,6 +3141,8 @@ int PresetBrowser::activeFilterCount() const
         n += (typeFilter & (1u << (unsigned) t)) != 0 ? 1 : 0;
     for (int t = 0; t < styleCount; ++t)
         n += (styleFilter & (1u << (unsigned) t)) != 0 ? 1 : 0;
+    for (int t = 0; t < techniqueCount; ++t)
+        n += (techniqueFilter & (1u << (unsigned) t)) != 0 ? 1 : 0;
     return n;
 }
 
@@ -3010,21 +3151,24 @@ void PresetBrowser::clearFilters()
     scopeFilter = 0;
     typeFilter = 0;
     styleFilter = 0;
+    techniqueFilter = 0;
     search.setText({}, false);
     rebuildFilter();
 }
 
 namespace
 {
-bool scopeAccepts(int scope, bool favourite, bool isUser, bool hardware)
+// [ws6-library] ALL PATCHES = factory library + user patches; the read-only
+// Legacy Library is its own section (and appears in FAVOURITES when starred).
+bool scopeAccepts(int scope, bool favourite, bool isUser, bool legacy)
 {
     switch (scope)
     {
         case 1: return favourite;
-        case 2: return ! isUser && ! hardware;
-        case 3: return hardware;
+        case 2: return ! isUser && ! legacy;
+        case 3: return legacy;
         case 4: return isUser;
-        default: return true;
+        default: return ! legacy;
     }
 }
 } // namespace
@@ -3039,13 +3183,16 @@ void PresetBrowser::rebuildFilter()
 
     // One predicate with overrides so the facet counts on the chips can ask
     // "what would I get if this chip were on" without a second code path.
-    const auto accepts = [&](const Entry& e, int scope, std::uint32_t types, std::uint32_t styles)
+    const auto accepts = [&](const Entry& e, int scope, std::uint32_t types, std::uint32_t styles,
+                             std::uint32_t techniques)
     {
-        if (! scopeAccepts(scope, isFavourite(e), e.isUser, ! e.isUser && e.category == "Hardware Studies"))
+        if (! scopeAccepts(scope, isFavourite(e), e.isUser, e.isLegacy))
             return false;
         if (types != 0 && (types & (1u << (unsigned) e.type)) == 0)
             return false;
         if ((e.styles & styles) != styles)
+            return false;
+        if ((e.techniques & techniques) != techniques)
             return false;
         for (const auto& token : tokens)
             if (! e.haystack.contains(token))
@@ -3055,7 +3202,7 @@ void PresetBrowser::rebuildFilter()
 
     filtered.clear();
     for (int i = 0; i < (int) entries.size(); ++i)
-        if (accepts(entries[(size_t) i], scopeFilter, typeFilter, styleFilter))
+        if (accepts(entries[(size_t) i], scopeFilter, typeFilter, styleFilter, techniqueFilter))
             filtered.push_back(i);
 
     const auto byName = [this](int a, int b)
@@ -3095,7 +3242,7 @@ void PresetBrowser::rebuildFilter()
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, i, typeFilter, styleFilter))
+            if (accepts(e, i, typeFilter, styleFilter, techniqueFilter))
                 ++n;
         scopeChips[(size_t) i]->setCount(n);
         scopeChips[(size_t) i]->setToggleState(i == scopeFilter, juce::dontSendNotification);
@@ -3104,7 +3251,7 @@ void PresetBrowser::rebuildFilter()
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, scopeFilter, 1u << (unsigned) t, styleFilter))
+            if (accepts(e, scopeFilter, 1u << (unsigned) t, styleFilter, techniqueFilter))
                 ++n;
         typeChips[(size_t) t]->setCount(n);
         typeChips[(size_t) t]->setToggleState((typeFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
@@ -3113,10 +3260,19 @@ void PresetBrowser::rebuildFilter()
     {
         int n = 0;
         for (const auto& e : entries)
-            if (accepts(e, scopeFilter, typeFilter, styleFilter | (1u << (unsigned) t)))
+            if (accepts(e, scopeFilter, typeFilter, styleFilter | (1u << (unsigned) t), techniqueFilter))
                 ++n;
         styleChips[(size_t) t]->setCount(n);
         styleChips[(size_t) t]->setToggleState((styleFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
+    }
+    for (int t = 0; t < techniqueCount; ++t)
+    {
+        int n = 0;
+        for (const auto& e : entries)
+            if (accepts(e, scopeFilter, typeFilter, styleFilter, techniqueFilter | (1u << (unsigned) t)))
+                ++n;
+        techniqueChips[(size_t) t]->setCount(n);
+        techniqueChips[(size_t) t]->setToggleState((techniqueFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
     }
     const bool anyUser = userCount() > 0;
     for (int i = 0; i < kSortCount; ++i)
@@ -3206,7 +3362,8 @@ juce::String PresetBrowser::getNameForRow(int rowNumber)
         return {};
     const auto& e = entries[(size_t) index];
     return e.name + ", " + juce::String(kTypes[e.type].label).toLowerCase() + ", "
-           + (e.isUser ? "user" : "factory") + (isFavourite(e) ? ", favourite" : "") + (isLoaded(e) ? ", loaded" : "");
+           + (e.isUser ? "user" : (e.isLegacy ? "legacy library" : "factory library"))
+           + (isFavourite(e) ? ", favourite" : "") + (isLoaded(e) ? ", loaded" : "");
 }
 
 juce::Component* PresetBrowser::refreshComponentForRow(int rowNumber, bool, juce::Component* existing)
@@ -3541,6 +3698,13 @@ void PresetBrowser::selectedRowsChanged(int lastRowSelected)
         {
             saveName.setText(entry->name, false);
             saveName.setCaretPosition(0);
+            // [ws6-library] Audition: a chosen row sounds at once. Filtering,
+            // searching and reopening only restore a selection and never load.
+            if (auditionOn && ! isLoaded(*entry))
+            {
+                loadSelected();
+                return;
+            }
         }
     }
     updateSelectionWidgets();
@@ -3589,9 +3753,14 @@ void PresetBrowser::toggleFavourite(int entryIndex)
 // ---------------------------------------------------------------------------
 void PresetBrowser::loadSelected()
 {
-    const auto* entry = selectedEntry();
-    if (entry == nullptr)
+    loadEntry(entryIndexForRow(selectedFilteredRow));
+}
+
+void PresetBrowser::loadEntry(int entryIndex)
+{
+    if (entryIndex < 0 || entryIndex >= (int) entries.size())
         return;
+    const auto* entry = &entries[(size_t) entryIndex];
 
     if (entry->isUser)
         processor.loadUserPreset(entry->userFile);
@@ -3785,10 +3954,13 @@ void PresetBrowser::updateActionTips()
     deleteButton.setTooltip(deleteTip);
     resetButton.setTooltip(resetButton.isEnabled() ? "Clear every filter and the search box"
                                                    : "No filters or search text are active");
-    previousButton.setTooltip(previousButton.isEnabled() ? "Select the previous patch in the list"
+    const juce::String stepVerb = auditionOn ? "Select and hear" : "Select";
+    previousButton.setTooltip(previousButton.isEnabled() ? stepVerb + " the previous patch in the list"
                                                           : (e == nullptr ? "Select a patch in the list first" : "This is the first patch in the list"));
-    nextButton.setTooltip(nextButton.isEnabled() ? "Select the next patch in the list"
+    nextButton.setTooltip(nextButton.isEnabled() ? stepVerb + " the next patch in the list"
                                                   : (e == nullptr ? "Select a patch in the list first" : "This is the last patch in the list"));
+    auditionButton.setTooltip(auditionOn ? "Audition is on: choosing a patch loads it at once. REVERT returns to the sound you opened the library with"
+                                         : "Turn on to hear each patch as soon as you choose it (click, arrow keys, PREV/NEXT)");
 }
 
 void PresetBrowser::pollLoaded()
@@ -3979,7 +4151,19 @@ void PresetBrowser::selectCurrentPreset()
             target = row;
     }
     if (target < 0)
+    {
+        // [ws6-library] A legacy sound (an old session) opens the Legacy Library
+        // section once, so the loaded patch is always findable.
+        for (const auto& e : entries)
+            if (e.isLegacy && e.key == loadedKey && scopeFilter != 3 && scopeFilter != 1)
+            {
+                scopeFilter = 3;
+                rebuildFilter();
+                selectCurrentPreset();
+                break;
+            }
         return;
+    }
 
     selectedFilteredRow = target;
     list->selectRow(target, true, true);
@@ -3990,6 +4174,43 @@ void PresetBrowser::selectCurrentPreset()
     if (target < first || target >= first + visibleRows)
         viewport->setViewPosition(0, std::max(0, target - visibleRows / 2) * rowH);
     updateSelectionWidgets();
+}
+
+// [ws6-library] Toolbar-style PREV/NEXT: steps from the sounding patch through
+// the current filter (scope, types, facets and search; user patches included)
+// and loads, wrapping around. If the sound is not in the filter, it starts at
+// the first (NEXT) or last (PREV) listed patch.
+void PresetBrowser::loadAdjacent(int delta)
+{
+    if (entries.empty())
+        refresh();
+    syncLoaded();
+    if (filtered.empty() || delta == 0)
+        return;
+    const int count = (int) filtered.size();
+    int row = -1;
+    for (int r = 0; r < count && loadedKey.isNotEmpty(); ++r)
+        if (entries[(size_t) filtered[(size_t) r]].key == loadedKey)
+            row = r;
+    const int step = delta > 0 ? 1 : -1;
+    const int next = row < 0 ? (step > 0 ? 0 : count - 1) : ((row + step) % count + count) % count;
+    restoringSelection = true;
+    list->selectRow(next, false, true);
+    restoringSelection = false;
+    selectedFilteredRow = next;
+    loadEntry(filtered[(size_t) next]);
+}
+
+void PresetBrowser::setAudition(bool shouldAudition)
+{
+    auditionOn = shouldAudition;
+    auditionPreference() = shouldAudition;
+    auditionButton.setToggleState(shouldAudition, juce::dontSendNotification);
+    updateActionTips();
+    // Turning it on auditions the row that is already selected.
+    if (shouldAudition)
+        if (const auto* entry = selectedEntry(); entry != nullptr && ! isLoaded(*entry))
+            loadSelected();
 }
 
 void PresetBrowser::focusSaveField()
