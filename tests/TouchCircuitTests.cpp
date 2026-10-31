@@ -240,9 +240,14 @@ void testEngineGate()
                 return e.getSubOscillatorRate();
             };
             const float none = rate(0.0f), light = rate(0.04f), firm = rate(1.0f);
-            // The former linear maximum would have added this much at 0.04.
-            const float linear = OriginalSubOscillator::targetRate(4.2f, 1.0f, 0.04f)
-                               - OriginalSubOscillator::targetRate(4.2f, 1.0f, 0.0f);
+            // The former ideal maximum (SP = pressure) would have added this much
+            // at 0.04 through the same circuit-engine SUB converter (ws4).
+            const float linear = static_cast<float>(OriginalSubOscillator::circuitTargetRate(4.2, 1.0, 0.04)
+                               - OriginalSubOscillator::circuitTargetRate(4.2, 1.0, 0.0));
+            // Full pressure: the bus reads one full key, so SP enters once (not twice).
+            const float full = static_cast<float>(OriginalSubOscillator::circuitTargetRate(4.2, 1.0, 1.0));
+            check(std::abs(firm - full) < 1e-3f * full, "full pressure reaches the converter exactly once ("
+                  + std::to_string(firm) + " vs " + std::to_string(full) + ")");
             check(light - none < 0.1f * linear && firm > none * 1.2f,
                   "TRG5 diode drop: light pressure inert, firm pressure speeds the SUB ("
                   + std::to_string(none) + ", " + std::to_string(light) + ", " + std::to_string(firm) + ")");

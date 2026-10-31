@@ -28,7 +28,9 @@ ZD (1S1715P) is biased through150k from+15V and AC-coupled0.047µF into100k plus
 
 SUB29 VC3 (panel SPEED) and VC4 (TRG5 SP pressure) each enter IC5 pin1 via120k. The [Yamaha IC guidebook](https://www.goltsynth.com/resources/downloads/CS/yamaha_ic_guidebook.pdf), PDF29/printed2–1, explicitly shows an **exponential converter** at IG00150 pin1. Therefore additive electrical inputs can produce multiplicative frequency effects. No quantitative slope or complete CS80 transfer is established here; see [the independently reviewed IG00150 evidence](IG00150_CONTROL_EVIDENCE.md). Its adjacent CS15 example must not be used to calibrate CS80.
 
-Original mode deliberately retains the existing provisional multiplier:
+**Circuit engine update (2026-10-31, ws4-circuits Step 1).** In Source Performance and Isolation the provisional multiplier below is replaced by an exponential converter: rate = baseHz · 2^(ATdepth · pressure · log2(200/60)), so touch adds octaves rather than hertz and full SPEED plus full touch reaches 200 Hz. Taking the service p52 200 Hz IG00150 calibration point as that combined maximum is a declared inference; the same 10 ms smoothing now acts on log frequency, and the saw resets and comparator square are band-limited. The legacy policy below is unchanged bit for bit. Evidence classes, alternatives and tests: [ws4-circuits.md](workstreams/ws4-circuits.md).
+
+Original mode in the **legacy policy** deliberately retains the existing provisional multiplier:
 rateTarget = baseHz * (1 + 2 * ATdepth * maximumHeldPressure), bounded0.7–180Hz.
 The180Hz ceiling is a software bound, **not** a measured hardware maximum. Original-mode smoothing is an explicitly provisional10ms exponential, sample-rate independent. The intermediate speed-pot taper is also unmeasured. Legacy mode retains its old rate multiplier and per-sample0.0015 smoothing exactly. Revision-marked VR10/ground resistance differs between annotated schematic and board print; do not silently pick one to claim calibration.
 

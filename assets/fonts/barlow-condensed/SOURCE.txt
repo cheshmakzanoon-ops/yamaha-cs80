@@ -1,0 +1,16 @@
+Barlow Condensed, Medium and SemiBold, version 1.408
+Copyright 2017 The Barlow Project Authors (https://github.com/jpt/barlow)
+Licence: SIL Open Font License 1.1 (OFL.txt in this folder)
+
+Fetched 2026-10-31 from the google/fonts repository:
+  https://raw.githubusercontent.com/google/fonts/main/ofl/barlowcondensed/BarlowCondensed-Medium.ttf
+  https://raw.githubusercontent.com/google/fonts/main/ofl/barlowcondensed/BarlowCondensed-SemiBold.ttf
+  https://raw.githubusercontent.com/google/fonts/main/ofl/barlowcondensed/OFL.txt
+
+SHA-256
+  262bd143292ce479ee0cd09a42b47ab173fca8e9c6eb5ed0b5c8a845bc371d17  BarlowCondensed-Medium.ttf
+  7b619d14bc2327509a9ef32b0890f709626f7ecc9ff61191c2a4314c5499d2d9  BarlowCondensed-SemiBold.ttf
+  186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f  OFL.txt
+
+The files are unmodified. They are embedded in the plugin through juce_add_binary_data (CMakeLists.txt,
+target cs80_panel_fonts) and used as the panel typeface by src/plugin/ArtCommon.cpp.

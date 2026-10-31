@@ -3,6 +3,7 @@
 // physical resistor/capacitor nodes; no production reduction/coefficient helper
 // is reused. Reviewed upstream DSP primitives are used only to supply stimuli.
 #include "core/Engine.h"
+#include "core/RingModulatorCircuit.h"
 
 #include <algorithm>
 #include <array>
@@ -207,7 +208,8 @@ struct Pipeline
             const float amp = envelope.tick(sr, true, true);
             float source = sine*amp*0.17f*0.5f;
             ringPhase += 77.0f*(1.0f/sr); ringPhase -= std::floor(ringPhase);
-            source = lerp(source, source*std::sin(kTwoPi*ringPhase), ringAmount);
+            // ws4 Step 2, intentional circuit-engine change: offset RMO multiplier.
+            source = RingModulatorCircuit::blend(source, std::sin(kTwoPi*ringPhase), ringAmount);
             const auto nodes = wah.process(source);
             const float targetMix = wet ? 1.0f : 0.0f;
             if (wetMix != targetMix)
@@ -352,8 +354,11 @@ void lifecycleAndAlwaysRunning()
     e.allNotesOff(false); before = e.getOutputTapState(2); render(e, 1200); after = e.getOutputTapState(2);
     check(std::abs(after.state.capacitorVolts) < std::abs(before.state.capacitorVolts), "voice-idle periods continue output decay");
     e.reset(); checkReset(e, false, 96000.0);
+    // ws4 Step 2, intentional circuit-engine change: with MODULATION up the RMO carrier
+    // feedthrough sounds even with no notes, so "cleared" means identical to a fresh engine.
     const auto silent = render(e, 2000);
-    check(std::all_of(silent.begin(), silent.end(), [](float x) { return x == 0.0f; }), "reset clears output and decimator tails exactly");
+    Engine fresh; fresh.setParams(p); fresh.prepare(48000.0);
+    check(silent == render(fresh, 2000), "reset clears output and decimator tails exactly");
     p[P_outputLevel] = 1.0f; e.setParams(p); e.reset(); checkReset(e, true, 96000.0);
     e.noteOn(69, 0.8f); render(e, 500); e.prepare(192000.0); checkReset(e, true, 384000.0);
     e.noteOn(69, 0.8f); render(e, 500);
@@ -406,7 +411,9 @@ void readoutTimeConstantAndPartition()
 {
     for (double rate : {8000.0, 44100.0, 48000.0, 192000.0, 768000.0})
     {
-        auto p = fixture(); Engine e; e.setParams(p); e.prepare(rate);
+        // Silent fixture: ws4 Step 2 carrier feedthrough sounds whenever MODULATION is up,
+        // and ws4 Step 3 BBD noise whenever the chorus is on.
+        auto p = fixture(); p[P_ringAmount] = 0.0f; p[P_chorusOn] = 0.0f; Engine e; e.setParams(p); e.prepare(rate);
         const OutputOracle oracle(rate*2.0, true);
         p[P_outputLevel] = 0.0f; e.setParams(p);
         const int frames = static_cast<int>(std::round(rate*0.005)); render(e, frames);

@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "RingModulatorCircuit.h"
 
 #include <algorithm>
 #include <cmath>
@@ -1545,9 +1546,12 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // PWM is one shared sine per rank; evaluate it once, not once per voice.
     const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
 
-    // TRG5 positive diode-OR: normalized ideal maximum, not event memory.
-    // Physical release removes this proxy even if a pedal/release tail sounds.
-    // Arpeggiator extension uses its generated held voice gates.
+    // TRG5 positive diode-OR -> SP. Legacy: normalized ideal maximum of held
+    // voices, not event memory (physical release removes it even if a pedal or
+    // release tail sounds; the arpeggiator uses its generated held gates).
+    // Circuit engine: the diode bus below. Either way SP enters the SUB speed
+    // converter exactly once, scaled there by AT SPEED (VC4): the IG00150
+    // exponential converter (ws4) adds octaves for it; the bus only shapes it.
     float sharedPressure = 0.0f;
     if (usesSourceModels(global.renderPolicy))
     {
@@ -1576,7 +1580,17 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     for (const auto& voice : voices)
         if (voice.active && voice.held)
             sharedPressure = std::max(sharedPressure, voice.pressure);
-    if (global.subOriginalMode)
+    if (global.subOriginalMode && usesSourceModels(global.renderPolicy))
+    {
+        // Circuit engine: IG00150 exponential converter (touch adds octaves) smoothed on
+        // the control node, band-limited resets. ws4-circuits.md Step 1.
+        const double rate = originalSub.circuitRate(OriginalSubOscillator::circuitTargetRate(
+            global.subOriginalSpeed, global.subAtSpeed, sharedPressure), originalSubSmoothing);
+        originalSubSpeedSmoothed = (float) rate;
+        subValue = originalSub.tickCircuit(rate, sr, global.subOriginalFunction,
+                                           -global.subExtLevel * externalModulation);
+    }
+    else if (global.subOriginalMode)
     {
         const float speed = OriginalSubOscillator::targetRate(
             global.subOriginalSpeed, global.subAtSpeed, sharedPressure);
@@ -1874,8 +1888,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
     ringEnv = ringAdsr.tick(sr, false, usesSourceModels(global.renderPolicy));
-    ringFrequency = clampf(ringModulationFrequency(global.ringSpeed,
-                                                   global.ringDepth, ringEnv),
+    // Circuit engine: ADJ p19-anchored exponential converter and offset multiplier
+    // (RingModulatorCircuit.h, ws4-circuits.md Step 2). Legacy: provisional law, ideal multiply.
+    ringFrequency = clampf(usesSourceModels(global.renderPolicy)
+                               ? RingModulatorCircuit::frequency(global.ringSpeed, global.ringDepth, ringEnv)
+                               : ringModulationFrequency(global.ringSpeed, global.ringDepth, ringEnv),
                            0.0f, sr * 0.4f);
     ringPhase += ringFrequency * invSr;
     ringPhase -= std::floor(ringPhase);
@@ -1883,8 +1900,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     {
         const float carrier = std::sin(kTwoPi * ringPhase);
         const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
-        mixL = lerp(mixL, mixL * carrier, amount);
-        mixR = lerp(mixR, mixR * carrier, amount);
+        if (usesSourceModels(global.renderPolicy))
+        {
+            mixL = RingModulatorCircuit::blend(mixL, carrier, amount);
+            mixR = RingModulatorCircuit::blend(mixR, carrier, amount);
+        }
+        else
+        {
+            mixL = lerp(mixL, mixL * carrier, amount);
+            mixR = lerp(mixR, mixR * carrier, amount);
+        }
     }
 
     // PRA EXP-WAH: documented ring -> PRA -> OE1/OE2 -> expression order

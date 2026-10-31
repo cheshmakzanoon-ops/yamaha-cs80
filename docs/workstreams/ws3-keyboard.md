@@ -13,6 +13,20 @@ Tolerances for every stage gate were committed before evaluation in
 `tests/parity/tolerances-v2/ws3-keyboard.json` (mirrored in
 `tests/Ws3Tolerances.h`), commit `test: pre-register ws3 ...`.
 
+### Status at a glance
+
+| Step | State | Reason / remaining |
+|---|---|---|
+| 2.1 Free-running voices | **done** | gate passes; whole-engine idle ≤ 2 % RTF not met by this step alone (global circuits of other workstreams dominate idle) |
+| 2.2 KAS scan and sample/hold | **done** | scan period, hold capacitance and leakage are declared, not sourced |
+| 2.3 Keyboard contour key map | **done** | key map declared; C2/KAS6 conflict reported; physical lever direction unverified |
+| 2.4 Touch | **done** (declared model) | contact lead, FET on-resistance, window, clamp law, diode law and MIDI→volt scale declared; offsets not modelled |
+| Ribbon MIDI CC | **done** | off by default, CC 16 when enabled |
+| 6 Scala/KBM | **done** | — |
+| 6 MTS-ESP | **partial** | library not vendored (not fetchable byte-exactly here); shim + MTS SysEx done |
+| 6 MPE (RPN/MCM, upper zone, CC88) | **done** | MIDI 2.0 velocity unavailable through JUCE 8.0.11's plugin MIDI path |
+| 6 Voice modes | **done** | labelled extensions; no tuning/keyboard UI page (processor APIs only) |
+
 ---
 
 ## 2.1 Free-running voices — **done**
@@ -467,6 +481,27 @@ exponent 4^-curve; the pressure threshold removes a controller's resting load
 and rescales. At the defaults both are the exact identity (tested over 1001
 points), so default renders are unchanged.
 
+### Composition with ws4's IG00150 SUB converter (merged 2026-10-31)
+
+ws4 replaced the circuit-engine SUB speed law with the IG00150 exponential
+converter, `rate = SPEED · 2^(AT SPEED · SP · touchOctaves)`, which takes the
+normalised SP (shared pressure) as its touch input. In the circuit engine SP
+is now this step's TRG5 bus output (bus volts ÷ the bus volts of one
+full-pressure key). The two are in series — a_i → diode-OR bus → SP → VC4 ×
+AT SPEED → exponential converter — so pressure enters the converter exactly
+once: the bus shapes SP (knee below ≈ 0.07, strongest key wins), the converter
+adds octaves for it. `cs80_touch_circuit_tests` asserts that full pressure on
+one key gives exactly `circuitTargetRate(SPEED, 1, 1)` (no double count) and
+that light pressure is suppressed to ≤ 10 % of what an ideal-maximum SP would
+give through the same converter. Legacy keeps the ideal maximum into its
+historical linear law.
+
+On the merge, ws4's `tests/Ig00150SubTests.cpp` engine anchors assumed SP =
+raw pressure settled 0.3 s after the press. They now settle 1.5 s (the TWS a
+path is a 100 ms follower) and compute the expected rate with SP taken through
+the TRG5 bus; the converter law, its tolerances and the 200 Hz full-touch
+anchor are unchanged (327 checks pass).
+
 ### Intentional circuit-engine sound changes (re-pin V2)
 
 Initial-touch destinations follow b (≈ 2–3 ms acquisition after TR instead of
@@ -631,3 +666,51 @@ No editor code was added. A Keyboard/Tuning page needs: a file chooser calling
 `isMtsEspAvailable()` / `isMtsEspConnected()`, and the parameters above
 (curves, threshold, ribbon CC enable/number, KAS scan timing, tuning source,
 voice mode, unison detune).
+
+---
+
+## Files touched outside the ownership list
+
+| File | Change | Why |
+|---|---|---|
+| `src/core/Dsp.h` (ws1) | added `Svf::setState` (3 lines, no law change) | rate re-referencing of idle filter memories (2.1) |
+| `src/core/Params.h` | ws3 enum and ParamDef blocks below the ws3 markers | 9 appended parameters |
+| `src/plugin/PluginProcessor.h` | ws3 includes, API block, private members | processor-side Phase 6 APIs |
+| `src/plugin/PluginProcessor.cpp` | host params below the ws3 marker; `isPhysicalSetupParameter`; constructor/prepare/release; `processBlock` (SysEx, second instrument, tuning hand-over, routing); `get/setStateInformation` (WS3_TUNING child) | MIDI handling, tuning, voice modes |
+| `src/tools/ui_snapshot.cpp` (ws8) | one include + one call (`testWs3KeyboardHost`); merge kept ws7's `PanelEditorTests.h` include | host checks for the processor APIs |
+| `CMakeLists.txt` | tests and `MtsEspClient.cpp` below the ws3 markers | registration |
+| `tests/ActiveTailContinuityTests.cpp`, `tests/SourcePerformanceAuditTests.cpp`, `tests/SourceFactoryIntegrationTests.cpp` | assertions pinning pre-2.1/2.3/2.4 circuit-engine behaviour updated, each with a comment naming the change | intentional circuit-engine changes |
+| `tests/PerformanceControlTests.cpp` | constant rename only (`kLegacyKeyboard...`) | 2.3 |
+| `tests/Ig00150SubTests.cpp` (ws4) | engine anchors settle 1.5 s and take SP through the TRG5 bus | composition with 2.4 after merging ws4 |
+| `tests/test_parity_capture.py` | exact parameter count now `EXPECTED_PARAMETER_COUNT = 139 + 9` | appended parameters; each later block adds its count |
+
+## For the integrator
+
+- **Re-pin `SOURCE_AUDIO_V2`** once: every ws3 commit from 2.1 to 2.4 changes
+  circuit-engine audio intentionally (listed per step). Legacy default, legacy
+  tails and v1 numerics stay byte-identical after every step and after the
+  merge of ws4/ws7.
+- **Parameter count pins**: `tests/test_parity_capture.py` must add the other
+  workstreams' appended counts.
+- **UI mount**: no editor code; see "UI mount points" under Phase 6 for the
+  Keyboard/Tuning page the Studio view needs.
+- **Sixteen-voice mode** lives in the processor (`extensionEngine`); the voice
+  meter and on-screen pressure ownership cover the first instrument only.
+- **ws1 drift/trim work (2.5)**: the idle path reuses the sounding-voice pitch
+  and cutoff expressions in the same loop, so ws1's changes there carry over;
+  only `Oscillator::reset/getPhase/tick` and `Svf::set/processCircuit/
+  getState/setState` are relied on.
+- **MTS-ESP**: drop ODDSound's `Client/libMTSClient.h/.cpp` (with its licence)
+  at `deps/mts-esp/Client/` or move the `__has_include` paths in
+  `src/plugin/MtsEspClient.cpp` to a tracked location, then compile-test.
+
+## Open items
+
+- Hardware-only: scan period, SH hold capacitance/leakage and sign, TWS sensor
+  waveform and FET on-resistance, 1S1555 law, a-level volts, lever direction,
+  the 61-key B/Q code table (KAS6 is the 49-key layout), VR1/VR2 trim
+  positions of a real unit.
+- Whole-engine idle CPU target (plan Phase 0/7 CPU pass).
+- Keyboard debounce; TWS offsets and real clamp conduction; KBC refresh timing.
+- MTS-ESP library, per-channel retuning, scale name; a tuning UI page.
+- Unison ×8 has no last-note priority (CS-80 allocator semantics kept).
