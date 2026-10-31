@@ -1525,7 +1525,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // LEFT/RIGHT preamp-source units, not calibrated LI/RI voltages. GENERAL
         // is formed before separate coupling/loading and always clocked, even
         // when no voice sounds. Only LEFT/RIGHT reach the host in source policies.
-        outputNodes = outputCircuit.process(outL, outR);
+        // Phase 1.5 gain staging: fixed digital reference, then the inferred
+        // driver headroom, then the passive tap/coupling network.
+        outputNodes = outputCircuit.process(circuitOutputDriver(outL * kCircuitOutputReference),
+                                            circuitOutputDriver(outR * kCircuitOutputReference));
         outL = (float) outputNodes.left.audibleJackVolts;
         outR = (float) outputNodes.right.audibleJackVolts;
     }

@@ -282,20 +282,24 @@ void captureSourcePerformanceViews(const juce::File& dir)
                     actualPeak = std::max(actualPeak, std::abs(value));
                 }
         }
-        check(finite && actualPeak > (headroom ? 1.0f : 0.000001f),
-              "source screenshot renders real finite audible or above-full-scale host output");
+        // Phase 1.5 gain staging: a dense velocity-127 PANEL chord is loud but the
+        // circuit engine's output reference and driver headroom keep it at or
+        // below full scale (it exceeded 0 dBFS before). The OVER-RANGE display
+        // itself stays covered by the synthetic meter UI tests.
+        check(finite && (headroom ? actualPeak > 0.25f && actualPeak <= 1.0f : actualPeak > 0.000001f),
+              "source screenshot renders real finite audible host output within full scale");
         check(waitFor([&]
         {
             return meter->getText().contains("SAMPLE PEAK")
                 && !meter->getText().contains("<= -120")
                 && !meter->getText().contains("NON-FINITE")
-                && (!headroom || meter->getText().contains("OVER-RANGE"));
+                && !meter->getText().contains("OVER-RANGE");
         }), "source screenshot meter reflects real rendered audio through its normal GUI timer");
         std::printf("source screenshot fixture: %s, finite=%d, actual host sample peak=%.9g, meter=%s\n",
                     headroom ? "PANEL headroom" : "STRING 3 complete / STRING 2 inferred",
                     finite ? 1 : 0, actualPeak, meter->getText().replaceCharacter('\n', ' ').toRawUTF8());
         if (headroom)
-            saveSnapshot(editor, dir, "main-source-performance-over-range-1600x1000");
+            saveSnapshot(editor, dir, "main-source-performance-headroom-1600x1000");
         else
         {
             saveSnapshot(editor, dir, "main-source-performance-1600x1000");

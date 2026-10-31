@@ -104,8 +104,9 @@ distributions. No additional audio driver is bundled on any platform.
    the hardware tone tabs. MIDI bend, CC1/11/64/74, optional MPE and modern
    FX/macros remain usable. This is an explicitly hybrid software performance
    mode, not a calibrated hardware comparison. The toolbar identifies the
-   requested policy and both source routes. Keep extra monitoring headroom:
-   source-model output can exceed digital full scale.
+   requested policy and both source routes. Source-model output uses a fixed
+   -6 dB reference and an inferred driver ceiling at full scale, so very dense
+   loud chords can still reach 0 dBFS; keep normal monitoring headroom.
 5. Use **SAVE** to name a user patch; an existing filename requires confirmation.
    Check the saved/error status. Save the DAW session for the full session mode
    and automation. A new user patch saves/restores SOURCE PERFORMANCE; factory

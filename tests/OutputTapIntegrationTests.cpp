@@ -219,7 +219,11 @@ struct Pipeline
             const auto stereo = chorus.process(source, source, chorusSpeed, chorusDepth, true, false);
             volume += (volumeTarget-volume)*0.003f;
             const float gain = volume*4.0f*expression;
-            const float left = stereo.l*gain, right = stereo.r*gain;
+            // Phase 1.5 gain staging: fixed reference, then inferred driver headroom.
+            const auto stage = [](float x) {
+                return static_cast<float>(circuitOutputDriver(static_cast<double>(x) * kCircuitOutputReference));
+            };
+            const float left = stage(stereo.l*gain), right = stage(stereo.r*gain);
             const auto l = taps[0].tick(left), r = taps[1].tick(right);
             taps[2].tick(generalSource(left, right));
             decimator[0].push(static_cast<float>(l.audibleJackVolts));

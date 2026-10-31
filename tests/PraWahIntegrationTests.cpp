@@ -320,7 +320,10 @@ struct PipelineOracle
                 // and before the loaded output coupling network. Retain float
                 // source scaling, with no additional absolute active-stage gain.
                 const float source = stereo[channel] * expression;
-                const float out = isolated ? outputs[channel].tick(source, rate, outputHigh)
+                // Phase 1.5 gain staging precedes the loaded output network.
+                const float staged = static_cast<float>(
+                    circuitOutputDriver(static_cast<double>(source) * kCircuitOutputReference));
+                const float out = isolated ? outputs[channel].tick(staged, rate, outputHigh)
                                            : softClip(dc*expression);
                 decimator[channel].push(out);
             }
