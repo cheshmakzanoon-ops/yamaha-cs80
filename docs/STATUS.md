@@ -53,15 +53,15 @@ kept byte-identical for old sessions.
 | 0.5 This status page | done | `eb486cb` |
 | 1.5 Circuit-engine gain staging: -6 dB output reference + inferred driver headroom ceiling | done; intentional circuit-engine change, legacy byte-identical; tab peaks +3.2 -> -2.9 dBFS | `228459c` |
 | 1.3 Circuit-engine envelopes as RC circuits; filter EG continuity on reuse | done; intentional circuit-engine change, legacy byte-identical; worst steal click 1.17 -> 0.90 | `131f72b` |
-| 1.1 IG00156 circuit filter (first stage): in-loop OTA saturation, feedforward floor, implicit Newton solve | done; intentional circuit-engine change, legacy byte-identical; worst saw alias -33.8 -> -51.1 dB; circuit engine 0.23 -> 0.37 RTF; full nodal graph (1.2 M/180 p branch, Q block, 1 uF coupling) still open | this change |
+| 1.1 IG00156 circuit filter (first stage): in-loop OTA saturation, feedforward floor, implicit Newton solve | done; intentional circuit-engine change, legacy byte-identical; worst saw alias -33.8 -> -51.1 dB; circuit engine 0.23 -> 0.37 RTF; full nodal graph (1.2 M/180 p branch, Q block, 1 uF coupling) still open | `f6b126d` |
 
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
-  (`22d6a32`) and circuit-engine audio V2 (`131f72b`, Phase 1.3 envelopes; previously `228459c`
-  for Phase 1.5 gain staging and `6e5892f` before that — use those for earlier
+  (`22d6a32`) and circuit-engine audio V2 (`f6b126d`, Phase 1.1 filter; previously `131f72b` for
+  Phase 1.3 envelopes, `228459c` for Phase 1.5 gain staging and `6e5892f` before that — use those for earlier
   circuit-engine renders). Any intended circuit-engine
   sound change must re-pin V2 to the commit that introduces it and document the
   change here.
