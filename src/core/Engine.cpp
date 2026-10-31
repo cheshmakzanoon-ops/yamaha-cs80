@@ -74,6 +74,15 @@ void Engine::prepare(double hostSampleRate)
     prepared = true;
 
     Rng trimRng(0xC5801234u);
+    for (int vi = 0; vi < kNumVoices; ++vi)
+        for (int ch = 0; ch < kNumRanks; ++ch)
+        {
+            // Plan 2.5: fixed per-channel component draws (circuit engine).
+            auto& r = voices[(size_t) vi].ranks[ch];
+            r.tolDraws = tolerance::drawCard(vi * kNumRanks + ch);
+            r.tol = {};
+        }
+    toleranceScaleApplied = 0.0f;
     for (auto& v : voices)
     {
         for (auto& r : v.ranks)
@@ -144,11 +153,14 @@ void Engine::configureInternalRate()
     idleTransientDecay = std::exp(-(double) idleStepSamples / (kNominalInitialPitchDecaySeconds * internalRate));
     touchCoefficients.prepare(internalRate);
     scanner.prepare(internalRate);
-    for (auto& v : voices)
-        for (auto& r : v.ranks)
+    for (int vi = 0; vi < kNumVoices; ++vi)
+        for (int ch = 0; ch < kNumRanks; ++ch)
         {
+            auto& r = voices[(size_t) vi].ranks[ch];
             (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
             r.vca.prepare(internalRate);
+            r.thermal.prepare(internalRate, vi * kNumRanks + ch);   // plan 2.5; warm-up restarts here
+            r.driftCents = 0.0f;
         }
     prepareWarmColdOscillators();
 }
@@ -174,6 +186,20 @@ void Engine::setNonRealtime(bool offline) noexcept
     nonRealtime = offline;
     if (updateOversampling())
         reset();
+}
+
+void Engine::refreshToleranceRatios() noexcept
+{
+    // Plan 2.5: identity outside the Source Performance policy (Legacy keeps its
+    // own trims; PURE CS-80 masks VOICE DISPERSION to zero anyway).
+    const bool circuitVariation = global.renderPolicy == RenderPolicy::sourcePerformance;
+    const float scale = circuitVariation ? global.voiceDispersion / tolerance::kDefaultDispersion : 0.0f;
+    if (scale == toleranceScaleApplied)
+        return;
+    for (auto& voice : voices)
+        for (auto& rank : voice.ranks)
+            rank.tol = tolerance::ratios(rank.tolDraws, scale);
+    toleranceScaleApplied = scale;
 }
 
 void Engine::prepareWarmColdOscillators() noexcept
@@ -452,19 +478,20 @@ void Engine::applyParams(const ParamValues& values)
                 if (voice.active) rank.aenv.setSustain(settings.vS);
                 rank.fenv.setLevels(filterInitialTarget(ch), filterAttackTarget(ch));
                 if (voice.active)
-                    rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale),
-                                       std::max(0.001f, settings.vD * global.envTimeScale),
+                    rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale * rank.tol.ampEnvTime),
+                                       std::max(0.001f, settings.vD * global.envTimeScale * rank.tol.ampEnvTime),
                                        std::max({settings.vR, global.keyRelease, performanceRelease})
-                                           * global.envTimeScale);
-                rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale),
-                                   std::max(0.001f, settings.fD * global.envTimeScale),
+                                           * global.envTimeScale * rank.tol.ampEnvTime);
+                rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale * rank.tol.filterEnvTime),
+                                   std::max(0.001f, settings.fD * global.envTimeScale * rank.tol.filterEnvTime),
                                    std::max({settings.fR, global.keyRelease, performanceRelease})
-                                       * global.envTimeScale);
+                                       * global.envTimeScale * rank.tol.filterEnvTime);
             }
         }
     }
 
     refreshKeyboardContour();
+    refreshToleranceRatios();
     if (global.tuningMode != previousTuning)
         retuneSoundingVoices();
 
@@ -532,6 +559,7 @@ void Engine::buildSettings()
     global.stereo = p(P_outputMode) >= 0.5f;
     global.voiceDispersion = p(P_voiceDispersion);
     global.drift = p(P_drift);
+    global.driftModel = p(P_driftModel) >= 0.5f ? 1 : 0;
     global.analogNoise = p(P_analogNoise);
     global.mpe = p(P_mpeOn) >= 0.5f;
     global.pitchBendRange = p(P_pitchBendRange);
@@ -1140,15 +1168,15 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
             r.aenv.reset();
         r.fenv.noteOn(filterInitialTarget(ch),
                       filterAttackTarget(ch),
-                      std::max(0.001f, rs.fA * global.envTimeScale),
-                      std::max(0.001f, rs.fD * global.envTimeScale),
-                      std::max(0.001f, rs.fR * global.envTimeScale),
+                      std::max(0.001f, rs.fA * global.envTimeScale * r.tol.filterEnvTime),
+                      std::max(0.001f, rs.fD * global.envTimeScale * r.tol.filterEnvTime),
+                      std::max(0.001f, rs.fR * global.envTimeScale * r.tol.filterEnvTime),
                       0.0f,
                       preserveEnvelope);
-        r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale),
-                      std::max(0.001f, rs.vD * global.envTimeScale),
+        r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale * r.tol.ampEnvTime),
+                      std::max(0.001f, rs.vD * global.envTimeScale * r.tol.ampEnvTime),
                       rs.vS,
-                      std::max(0.001f, rs.vR * global.envTimeScale));
+                      std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime));
     }
 
     if (! ringKeyDown)
@@ -1182,9 +1210,9 @@ void Engine::releaseVoice(Voice& v)
         // An assigned, plugged and open footswitch disables only this term.
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
         r.aenv.setRelease(std::max({rs.vR, global.keyRelease, performanceRelease})
-                          * global.envTimeScale);
+                          * global.envTimeScale * r.tol.ampEnvTime);
         r.fenv.setRelease(std::max({rs.fR, global.keyRelease, performanceRelease})
-                          * global.envTimeScale);
+                          * global.envTimeScale * r.tol.filterEnvTime);
         r.aenv.noteOff();
         r.fenv.noteOff();
     }
@@ -1361,8 +1389,8 @@ void Engine::cancelSustainTails()
             const auto& rs = rankSettings[ch];
             // setRelease keeps stage, value and elapsed stage time, so the
             // bent fast-release window is not restarted.
-            r.aenv.setRelease(std::max(rs.vR, global.keyRelease) * global.envTimeScale);
-            r.fenv.setRelease(std::max(rs.fR, global.keyRelease) * global.envTimeScale);
+            r.aenv.setRelease(std::max(rs.vR, global.keyRelease) * global.envTimeScale * r.tol.ampEnvTime);
+            r.fenv.setRelease(std::max(rs.fR, global.keyRelease) * global.envTimeScale * r.tol.filterEnvTime);
         }
     }
 }
@@ -1801,6 +1829,18 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     if (smoothControls)
         beginSmoothedControls();
 
+    // Plan 2.5 (circuit engine): tolerance ratios for the present VOICE DISPERSION
+    // (recomputed only when it moves) and every channel's thermal drift, silent or
+    // not, so the drift's time base never depends on activity. Legacy and PURE
+    // CS-80 keep identity ratios (scale 0) and do not clock the drift.
+    {
+        refreshToleranceRatios();
+        if (global.renderPolicy == RenderPolicy::sourcePerformance)
+            for (auto& voice : voices)
+                for (auto& rank : voice.ranks)
+                    rank.driftCents = rank.thermal.tick();
+    }
+
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
         lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
@@ -2034,6 +2074,15 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             auto& r = v.ranks[ch];
             auto& rs = rankSettings[ch];
             const auto& mod = modern.rankOffsets(vi, ch);
+            // Tune trim and drift. Legacy: uniform trims and the historical sine,
+            // unchanged. Circuit engine (plan 2.5): the declared alignment
+            // residual and the thermal 1/f drift, or the sine as the "worn unit".
+            const bool circuitVariation = global.renderPolicy == RenderPolicy::sourcePerformance;
+            const float tuneTrim = circuitVariation ? r.tol.tuneSemitones
+                                                    : r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f);
+            const float driftTerm = circuitVariation && global.driftModel == 0
+                                        ? global.drift / tolerance::kDefaultDrift * r.driftCents * 0.01f
+                                        : driftVoice;
 
             float pitch = (float) v.note
                           + global.masterTune
@@ -2045,8 +2094,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                           + lfoPitch
                           + subValue * (global.subVco + global.subAtVco * touchPressure) * 1.5f
                           + subValue * modWheel * global.modWheelSub * 2.0f
-                          + r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f)
-                          + driftVoice
+                          + tuneTrim
+                          + driftTerm
                           + v.unisonOffset
                           + mod.pitch;
 
@@ -2119,16 +2168,17 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float envLp = fenv;
             const float envHp = fenv * kProvisionalHpfEnvelopeGain;
 
-            const float cutoffLp = sourceActive[ch]
+            // Plan 2.5: the channel's component ratios (exactly 1 in Legacy and PURE CS-80).
+            const float cutoffLp = r.tol.lpCutoff * (sourceActive[ch]
                 ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct + contourLp + mod.lpCutoff, r.lpCutoffExp)
-                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp + contourLp + mod.lpCutoff, r.lpCutoffExp);
-            const float cutoffHp = sourceActive[ch]
+                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp + contourLp + mod.lpCutoff, r.lpCutoffExp));
+            const float cutoffHp = r.tol.hpCutoff * (sourceActive[ch]
                 ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct + contourHp + mod.hpCutoff, r.hpCutoffExp)
-                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp + contourHp + mod.hpCutoff, r.hpCutoffExp);
-            const float qLp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
-                : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f);
-            const float qHp = sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
-                : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f);
+                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp + contourHp + mod.hpCutoff, r.hpCutoffExp));
+            const float qLp = r.tol.lpQ * (sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
+                : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f));
+            const float qHp = r.tol.hpQ * (sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
+                : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f));
 
             // Circuit engine: IG00156 nodal stages (input networks, 180 pF
             // branch, 1 uF couplings, in-loop OTA saturation; the 4.7 MOhm
@@ -2185,7 +2235,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // KBC2 -> KB -> 270k -> LC branch (Phase 2.3).
             const float contourLevel = freeRunning ? v.kbcLevelGain[ch]
                 : keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour);
-            const float levelCv = sourceActive[ch]
+            const float levelCv = r.tol.level * (sourceActive[ch]
                 ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
                              + subLevel + lfoAmp
                              + contourLevel + mod.level)
@@ -2196,7 +2246,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                              + lfoAmp
                                              + contourLevel
                                              + mod.level,
-                                         0.0f, 2.6f);
+                                         0.0f, 2.6f));
             const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;

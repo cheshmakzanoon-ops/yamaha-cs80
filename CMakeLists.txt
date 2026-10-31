@@ -235,6 +235,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_ig00151_vca_tests COMMAND cs80_ig00151_vca_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
     set_tests_properties(cs80_ig00151_vca_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_tolerance_drift_tests tests/ToleranceDriftTests.cpp)
+    target_link_libraries(cs80_tolerance_drift_tests PRIVATE cs80_core)
+    add_test(NAME cs80_tolerance_drift_tests COMMAND cs80_tolerance_drift_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
+    set_tests_properties(cs80_tolerance_drift_tests PROPERTIES TIMEOUT 300)
 
     # [ws2-engine] register this workstream's core tests below this line.
     add_executable(cs80_oversampling_tests tests/OversamplingTests.cpp)

@@ -27,6 +27,7 @@
 #include "MpeZones.h"
 #include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
+#include "ToleranceModel.h"
 
 #include <array>
 #include <cstdint>
@@ -179,6 +180,9 @@ struct GlobalSettings
     int arpMode = 0;
     float arpRate = 4.0f;
     int arpOctaves = 1;
+
+    // Plan 2.5: 0 thermal drift (circuit engine), 1 the historical sine ("worn unit").
+    int driftModel = 0;
 
     // ws3 keyboard/MIDI/tuning settings (all neutral at their defaults).
     bool kasScanTiming = false;
@@ -429,6 +433,14 @@ private:
         // the length of the first idle interval (samples) since silence.
         double idleLead = 0.0;
         int idleFirstSamples = 0;
+        // Plan 2.5 (circuit engine): this channel's component draws, the ratios
+        // they give at the present VOICE DISPERSION (identity in Legacy and PURE
+        // CS-80), its thermal drift process and the drift's present value (cents
+        // at the ANALOG DRIFT default).
+        tolerance::CardDraws tolDraws;
+        tolerance::Ratios tol;
+        tolerance::ThermalDrift thermal;
+        float driftCents = 0.0f;
     };
 
     struct Voice
@@ -504,6 +516,7 @@ private:
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
     void wakeIdleVoice(Voice& voice) noexcept;
     void prepareWarmColdOscillators() noexcept;
+    void refreshToleranceRatios() noexcept;
     // Circuit engine: recompute every channel's KBC contour contributions.
     void refreshKeyboardContour() noexcept;
     bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }
@@ -582,6 +595,8 @@ private:
     // voltage (Newton warm start) and its single-key full-scale normalisation.
     touch::Coefficients touchCoefficients;
     double trg5BusVolts = 0.0, trg5FullScaleVolts = 1.0;
+    // VOICE DISPERSION scale the tolerance ratios were last computed for.
+    float toleranceScaleApplied = 0.0f;
     // Lever values the KBC contour contributions were last computed from.
     std::array<float, 4> refreshedContourLevers {};
     bool prepared = false;

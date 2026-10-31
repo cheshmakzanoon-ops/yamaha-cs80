@@ -2067,7 +2067,8 @@ int main(int argc, char** argv)
             const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
                 || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
                 || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
-                || index == cs80::P_oversampling || index == cs80::P_outputJack;
+                || index == cs80::P_oversampling || index == cs80::P_outputJack
+                || index == cs80::P_driftModel;   // plan 2.5: a two-choice host parameter
             const float expected = discrete
                 ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
             check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),

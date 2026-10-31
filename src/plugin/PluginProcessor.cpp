@@ -313,6 +313,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
     }
 
     // [ws1-voice] append this workstream's host parameters below this line, AU version hint 8.
+    {
+        auto voice = group("ws1_voice", "Voice variation");
+        // Plan 2.5: the circuit engine's drift law; the instrument's condition, not a sound.
+        voice->addChild(std::make_unique<juce::AudioParameterChoice>(
+            juce::ParameterID { parameterId(cs80::P_driftModel), 8 }, "Drift model",
+            juce::StringArray { "Thermal (declared 1/f)", "Worn unit (22 ct sine)" }, 0));
+        layout.add(std::move(voice));
+    }
 
     // [ws2-engine] append this workstream's host parameters below this line, AU version hint 9.
     {
@@ -505,7 +513,8 @@ bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
     // part of a sound.
     return index == cs80::P_footswitchPlugged || index == cs80::P_footswitchPressed
         || index == cs80::P_footMode || index == cs80::P_outputLevel
-        || index == cs80::P_oversampling || index == cs80::P_outputJack;
+        || index == cs80::P_oversampling || index == cs80::P_outputJack
+        || index == cs80::P_driftModel;   // plan 2.5: the unit's condition survives program recall
 }
 
 void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)

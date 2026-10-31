@@ -389,11 +389,13 @@ inline constexpr ControlHelp kControlHelp[] = {
       "Stereo keeps left and right; mono averages them after the effects.",
       "Digital fold-down; the original GENERAL mono summing is not reconstructed." },
     { "voice_dispersion", 0, "-", "A", Basis::engineeringInferred,
-      "Spreads the eight voice cards in tuning and pan, as no two analog voices match.",
-      "Random trims; not a calibrated tolerance distribution." },
+      "Spreads the eight voice cards in tuning, filter, level and envelope time, as no two analog voices match.",
+      "Circuit engine: declared 5 % R / 10 % C draws mapped into cutoff, Q, level and envelope time, plus a 1 cent "
+      "alignment residual; the default is the declared distribution. Legacy: the old uniform trims. Not measured." },
     { "drift", 0, "-", "A", Basis::engineeringInferred,
       "Slowly moves each voice card's tuning, like warming analog circuits.",
-      "Slow drift model; thermal time constants are not measured." },
+      "Circuit engine: declared 1/f thermal drift, 2 cents RMS at the default, with a two-minute warm-up (or the worn-unit "
+      "sine). Thermal time constants are not measured." },
     { "analog_noise", 0, "-", "A", Basis::engineeringInferred,
       "Adds a quiet analog background noise floor.",
       "Provisional noise floor; not a measured spectrum." },
@@ -421,6 +423,12 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "source_performance", 0, "-", "EXT", Basis::modernExtension,
       "ENGINE: CIRCUIT runs the circuit-informed models; LEGACY keeps the older voicing for old sessions.",
       "Source performance policy. Not calibrated; no hardware match established." },
+
+    // ---- ws1-voice (plan step 2.5) ---------------------------------------------------------------
+    { "drift_model", 0, "-", "A", Basis::engineeringInferred,
+      "How the circuit engine's voices wander in pitch: slow thermal drift, or the large slow wobble of a worn unit.",
+      "Thermal: declared 1/f drift, 2 cents RMS at the default amount, with a two-minute warm-up. Worn unit: the "
+      "historical +/-22 cent 0.031 Hz sine. Not a measured unit; Legacy keeps the sine." },
 
     // ---- ws2-engine (Phase 1.6 and 3) -----------------------------------------------------------
     { "oversampling", 0, "-", "EXT", Basis::modernExtension,
