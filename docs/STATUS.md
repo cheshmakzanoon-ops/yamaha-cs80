@@ -100,7 +100,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 4.4 Program Change, ribbon CC | done | `ec4d853`, `7c65aaf` |
 | 5.1-5.2 Conformance audit, re-layout | done | ws7 merge `bd524f9` |
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
-| 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
+| 5.5-5.7 Readability, code health, UI tests | done; electrical programmer host oracles corrected without changed limits; full integrated UI smoke passes | `bd524f9`, `41363ea`, `61dad94` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
 | 6 Separate chorus/tremolo tab positions | done; historic default preserves original exclusive switch, circuit source can select both off/on | `6f1c4aa`, pin `adc8bbb` |
 | 6 Sample-accurate automation | VST3 native host gate done; AU scheduled adapter implemented with Linux contract gates, native macOS host/mutations pending CI | `3a37594`, `780658d` |
@@ -341,6 +341,21 @@ after the separate V2 pin passes both Legacy captures, V1 numerics, and V2
 against the published ownership commit. See
 [workstreams/ui-completion.md](workstreams/ui-completion.md).
 
+The electrical memory-programmer integration exposed **385 stale host-fixture
+assertions**. They assumed raw physical PANEL/memory targets, cold filter
+reset to IL, zero receiver readouts outside factory tabs, or a continuous
+five-position chorus parameter. Preregistered test-only commit `61dad944b46e1fe9ff80afe988343f5c24880181`
+uses independently selected APVTS banks, separate primitive envelope
+histories and stored-bit exact receiver checks. All 30 direct test APVTS
+snapshots now synchronize under the undo tree lock. No production behavior
+changed. The unchanged complete UI smoke on the combined AU/VST3 tree
+passes with **zero failures**, both original goldens **0.0000%** different,
+314 modern targets and none undersized. Four deliberate mutations reject
+(348/594/67/2 assertions); restored sources pass again. See
+[workstreams/ui-programmer-oracles.md](workstreams/ui-programmer-oracles.md)
+and the complete integrated log
+`evidence/continuation-2026-10-31/ui-integrated-au-root-smoke.log`.
+
 ## Continuation: exact nodal coefficient setup
 
 `44d11d50584c7c4800775e4234ff5dc2e1ab62ab` reduces the phase-corrected
@@ -378,11 +393,10 @@ any earlier parameter.
 
 The pre-registered source matrix covers both ranks, all explicit combinations,
 Legacy and PURE policy behavior, and the 144,037-sample continuity oracle.
-Five deliberate source mutations fail this gate. The corresponding focused
-real-window UI regression passes with zero failures; the full integrated
-real-window smoke currently reports unrelated host/core mismatches, which
-are being investigated without loosening existing assertions. The separate
-audio pin is `adc8bbb8de4cd8631423e1edcfb513be841fac1c`. See the
+Five deliberate source mutations fail this gate. The focused and complete
+real-window UI regressions both pass after the electrical programmer oracle
+update, without adjusting any limit. The separate audio pin is
+`adc8bbb8de4cd8631423e1edcfb513be841fac1c`. See the
 frozen capture under
 `evidence/continuation-2026-10-31/compat-chorus-frozen.log`.
 
@@ -541,12 +555,13 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - ADJ p11 HP setup voltage remains discrepant; native evidence and the M41
   topology conflict are recorded. Full-band small-signal numerical limits now pass.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
-- MTS-ESP is now vendored and compile-tested (`fa2016c2`, upstream 0BSD
-  licence); final integrated plugin qualification remains in progress.
+- MTS-ESP is vendored and its native/shim/fallback tests pass locally
+  (`fa2016c2`, upstream 0BSD licence); final cross-platform plugin CI
+  qualification remains in progress.
 - All 25 tone-tab cells have native-crop review records; unresolved markings
   and board revision choices remain labelled hypotheses. Independent physical
   chorus and tremolo states now have a neutral-default, append-only parameter;
-  integrated host/UI validation is pending.
+  complete integrated host/UI smoke passes locally; CI is pending.
 - Sample-accurate VST3 key automation is published and qualified with a
   native host SDK. AU scheduled automation is implemented and Linux
   curve/hook gates pass; native macOS component tests and serial mutation
