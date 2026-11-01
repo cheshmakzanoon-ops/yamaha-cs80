@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "profile_id": "source-shared-q-fanout-exact-v2",
+  "registered": "2026-11-01",
+  "evidence_kind": "declared numerical identity of existing source-factory software, not a hardware measurement",
+  "rationale": "Pre-register an exact-only CPU optimization for the 32 shared Q receiver outputs. In source_factory::evaluateShared the two rank buses and master RES are common to all eight receiver cards. At each rank and side, the original expression vq = 0.5 * (loadedQBus + masterResVolts), q = 1.0 / (0.2 + 0.18 * clamp(vq, 0.0, 10.0)) is evaluated repeatedly for each voice. It may be calculated once per rank/side and broadcast; the underlying bus, Q and touch/LC laws, and V1 numerics cannot change.",
+  "gates": {
+    "exact_32_receiver_q_fanout": {
+      "truth_model": "src/core/SourceFactoryTones.h::evaluateShared before the CPU pass, with the independent reference q formula 1.0/(0.2+0.18*clamp(0.5*(loadedQBus+masterResVolts),0.0,10.0)) evaluated separately for each of 8 voices, 2 ranks and 2 sides",
+      "tone_columns": "all 22 rank/selector columns, including explicit labelled hypotheses without changing their values",
+      "rank_boundary_pairs": "all 22x22 ordered pairs",
+      "master_res_values": [0.0, 0.137, 0.5, 0.9, 1.0],
+      "master_res_one_ulp_neighbors": true,
+      "receiver_voices_per_rank": 8,
+      "rank_count": 2,
+      "side_count": 2,
+      "q_bus_volts_bitwise_equal": true,
+      "q_pin_volts_bitwise_equal": true,
+      "q_values_bitwise_equal": true,
+      "all_level_pin_and_gain_values_bitwise_equal": true,
+      "saturation_flags_and_transactional_failures_unchanged": true,
+      "q_from_volts_evaluations_expected_after_optimization": 4,
+      "q_from_volts_evaluations_before_optimization": 32,
+      "mutation_requirements": [
+        "Broadcasting the first rank's Q to the second rank must fail the exact receiver gate.",
+        "Broadcasting HP's Q to LP must fail the exact receiver gate.",
+        "Perturbing the denominator or rounding its master-RES operation must fail the exact receiver gate."
+      ]
+    },
+    "immutable_audio": {
+      "legacy_default_changed_bytes_max": 0,
+      "legacy_tails_changed_bytes_max": 0,
+      "source_v1_numerical_changed_bytes_max": 0,
+      "source_v2_audio_changed_bytes_max": 0,
+      "oracle": "scripts/check-compat-gates.sh --strict-v2, against the pin in the audio workflow after any separately documented circuit sound change",
+      "performance_oracle": "cs80_source_factory_benchmark minimum of three independent Release rounds before and after at 48000 Hz/256 host frames/128 callbacks, reporting paired0/1/10, moving and idle median, p99 and deadline misses without claiming speedup in a noisy shared runner",
+      "note": "No new sound law, no altered parameter, no allowable V2 repin from this optimization. A numerical mismatch is a failing CPU optimization, not evidence for relaxing the gate."
+    }
+  }
+}
