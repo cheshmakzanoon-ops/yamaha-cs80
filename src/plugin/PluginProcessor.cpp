@@ -388,6 +388,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
 
     // [ws8-studio] append this workstream's host parameters below this line, AU version hint 15.
 
+    // [handover-chorus] one append-only override; no existing parameter ID or
+    // semantics change. Choice zero preserves chorus_on/chorus_mode bit-for-bit.
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_chorusTremoloRouting), 16 },
+        "Chorus and tremolo switches",
+        juce::StringArray { "Legacy selector", "Both off", "Chorus only", "Tremolo only", "Both on" }, 0));
+
     return layout;
 }
 

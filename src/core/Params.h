@@ -237,6 +237,12 @@ enum : int
 
     // [ws8-studio] append this workstream's core parameters below this line.
 
+    // [handover-chorus] AU hint >= 16. Explicit tab combinations for the OE1
+    // TREMOLO and OE2 CHORUS networks. Zero is a neutral alias for the shipped
+    // chorus_on / chorus_mode selectors; PURE and Legacy ignore overrides.
+    // 1 both off, 2 chorus only, 3 tremolo only, 4 both on (declared inference).
+    P_chorusTremoloRouting,
+
     P_numParams
 };
 
@@ -460,6 +466,9 @@ inline constexpr ParamDef kExtensionDefs[] = {
     // [ws7-panel] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws8-studio] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [handover-chorus] explicit switches; the default is deliberately inert.
+    { "chorus_trem_routing", "CHORUS / TREM SWITCHES", 0.0f, 4.0f, 0.0f, 1.0f, "", "CHORUS" },
 
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");

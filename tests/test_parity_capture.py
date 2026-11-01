@@ -15,8 +15,8 @@ CAPTURE = None
 # appended since, in marker order (src/core/Params.h): ws1-voice 1
 # (drift_model), ws2-engine 2 (oversampling, output_jack), ws3-keyboard 9
 # (kas_scan_timing .. unison_detune) and ws5-modern 39 (lfo1_wave ..
-# fx_gain_compensation). A later appended block adds its own count here.
-EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39
+# fx_gain_compensation), and handover-chorus 1 (chorus_trem_routing, AU16).
+EXPECTED_PARAMETER_COUNT = 139 + 1 + 2 + 9 + 39 + 1
 
 EXPECTED_EVENTS = [
     {'sample': 4800, 'type': 'note_on', 'note': 60, 'channel': 1, 'value': .75},
