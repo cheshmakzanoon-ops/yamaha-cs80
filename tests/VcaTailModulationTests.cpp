@@ -239,6 +239,103 @@ void neutralPolicies(const ws1::Tolerances& limits)
     }
     check(inactivePan, "Legacy inactive path does not evaluate source coupling-tail pan");
 }
+
+void prepareRetired(Engine& e, const ParamValues& p, const ModernConfig& c, bool expression = false)
+{
+    prepare(e, p, c, 48000); e.noteOn(60, 0.9f);
+    if (expression) { e.polyPressure(60, 0.75f); e.controlChange(74, 0.75f); }
+    std::array<float, 128> audio {};
+    for (int i = 0; i < 200; ++i) e.render(audio.data(), 64);
+    e.noteOff(60);
+    int samples = 0;
+    while (Probe::active(e, 0) && samples++ < e.getInternalSampleRate()) Probe::unobserved(e);
+    check(!Probe::active(e, 0), "boundary fixture retires its source voice");
+}
+
+bool expectedMix(const Probe::Sample& sample, const Engine& e, int rank, float pan)
+{
+    float left, right; constantPowerPan(pan, left, right);
+    const float closed = static_cast<float>(-e.getRankVcaState(0, rank).coupling);
+    const float voice = closed * 1.0f * 0.17f;
+    return same(sample.rankL, voice * left) && same(sample.rankR, voice * right);
+}
+
+void removePan(const ws1::Tolerances& limits)
+{
+    for (int rank : {0, 1})
+        for (int edit = 0; edit < 3; ++edit)
+        {
+            auto p = parameters(1, false, rank); p[P_mod2Amount] = 0.25f;
+            auto c = config(true, false, ModSource::velocity);
+            Engine e; prepareRetired(e, p, c);
+            check(std::abs(e.getModernRankOffsets(0, rank).pan) > limits["minimum_current_pan_change"]
+                  && std::abs(e.getRankVcaState(0, rank).coupling) > limits["minimum_retired_coupling_abs"]
+                  && Probe::untilDeadline(e, 0) > 3,
+                  "pan-removal fixture starts with cached pan and charge before its idle deadline");
+            if (edit == 0) { p[P_mod1Amount] = 0.0f; e.setParams(p); }
+            else
+            {
+                if (edit == 1) c.slots[0] = {};
+                else c.slots[0].destination = ModDestination::pitch;
+                e.setModernConfig(c);
+            }
+            check(e.isModernLayerActive(), "another live route keeps the matrix active after pan removal");
+            bool current = true, mix = true;
+            for (int sample = 0; sample < 128; ++sample)
+            {
+                const auto actual = Probe::observed(e);
+                current = current && e.getModernRankOffsets(0, rank).pan == 0.0f;
+                mix = mix && expectedMix(actual, e, rank, 0.0f);
+            }
+            check(current, "removing zeroing or rerouting pan clears its cache at the next tail sample");
+            check(mix, "removed pan cannot reach the next charged-tail mix");
+        }
+}
+
+void releasedExpression(const ws1::Tolerances& limits)
+{
+    for (ModSource source : {ModSource::polyPressure, ModSource::timbre})
+    {
+        const auto p = parameters(); auto c = config(true, false); c.slots[0].source = source;
+        Engine e; prepareRetired(e, p, c, true);
+        const float before = e.getModernRankOffsets(0, 0).pan;
+        const int deadline = Probe::untilDeadline(e, 0);
+        check(std::abs(before) > limits["minimum_current_pan_change"] && deadline > 3
+              && std::abs(e.getRankVcaState(0, 0).coupling) > limits["minimum_retired_coupling_abs"],
+              "expression fixture retains nonzero controller pan and charge before its original deadline");
+        bool exactPan = true, exactMix = true;
+        for (int sample = 0; sample < deadline * 2 + 5; ++sample)
+        {
+            const float expected = sample + 1 < deadline ? before : 0.0f;
+            const auto actual = Probe::observed(e);
+            exactPan = exactPan && same(e.getModernRankOffsets(0, 0).pan, expected);
+            exactMix = exactMix && expectedMix(actual, e, 0, expected);
+        }
+        check(exactPan, "released expression stays cleared from its original idle deadline onward");
+        check(exactMix, "tail mix consumes released-controller clearing on the original deadline");
+    }
+}
+
+void noPanCadence(const ws1::Tolerances& limits)
+{
+    const auto p = parameters(); auto c = config(true, true);
+    c.slots[0].destination = ModDestination::pitch;
+    Engine e; prepareRetired(e, p, c);
+    check(e.isModernLayerActive() && e.getModernRankOffsets(0, 0).pan == 0.0f,
+          "no-pan cadence control has an active poly MSEG routed only to pitch");
+    const double position = e.getModernMsegDisplayPosition(0), rate = e.getInternalSampleRate();
+    int scheduled = 0; double error = 0.0;
+    for (int sample = 0; sample < 2048; ++sample)
+    {
+        scheduled += Probe::untilDeadline(e, 0) == 1;
+        Probe::unobserved(e);
+        error = std::max(error, std::abs((e.getModernMsegDisplayPosition(0) - position) / 2.0
+                                       - static_cast<double>(scheduled) / rate));
+    }
+    check(scheduled > 1 && scheduled < 2048, "no-pan fixture spans several original decimated deadlines");
+    check(error <= limits["poly_elapsed_seconds_max_abs"],
+          "active modern routes without present or cached pan keep their original idle cadence");
+}
 } // namespace
 
 int main(int argc, char** argv)
@@ -262,6 +359,9 @@ int main(int argc, char** argv)
         for (ModSource source : {ModSource::velocity, ModSource::keyFollow, ModSource::noteRandom})
             for (bool late : {false, true}) ownership(limits, source, late);
         neutralPolicies(limits);
+        removePan(limits);
+        releasedExpression(limits);
+        noPanCadence(limits);
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
     std::printf("%d checks, %d failures\n", checks, failures);
