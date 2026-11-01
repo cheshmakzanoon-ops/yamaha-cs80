@@ -29,7 +29,8 @@ void testChorusRoutingHost(Check check)
     const auto& definition = paramDef(P_chorusTremoloRouting);
     check(routing->getVersionHint() >= 16 && host.getParameters().indexOf(routing) == host.getParameters().size() - 1,
           "chorus/tremolo routing is last append-only host parameter with AU hint >=16");
-    check(routing->choices.size() == (int) modes.size() && routing->getNumSteps() == (int) modes.size(),
+    const juce::AudioProcessorParameter& hostParameter = *routing;
+    check(routing->choices.size() == (int) modes.size() && hostParameter.getNumSteps() == (int) modes.size(),
           "chorus/tremolo host Choice expresses neutral, neither, each alone, and both together");
     check(definition.min == 0.0f && definition.max == 4.0f && definition.def == 0.0f
               && routing->getIndex() == 0 && ParamValues {}[P_chorusTremoloRouting] == 0.0f,
@@ -38,7 +39,7 @@ void testChorusRoutingHost(Check check)
     for (int mode = 0; mode < (int) modes.size(); ++mode)
     {
         check(routing->choices[mode] == modes[(size_t) mode]
-                  && routing->getText(routing->convertTo0to1((float) mode), 48) == modes[(size_t) mode],
+                  && hostParameter.getText(routing->convertTo0to1((float) mode), 48) == modes[(size_t) mode],
               "every explicit routing state has a stable readable host-automation label");
         host.setParamValue(P_chorusTremoloRouting, (float) mode);
         check(host.getParamValue(P_chorusTremoloRouting) == (float) mode,
