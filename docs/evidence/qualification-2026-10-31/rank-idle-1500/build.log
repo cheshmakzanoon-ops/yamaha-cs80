@@ -1,0 +1,14 @@
+COMMAND ["cmake", "--build", "/tmp/cs80-rank-idle1500-current/build", "--parallel", "2"]
+[1/11] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/11] Building CXX object CMakeFiles/free_running.dir/workspace/scratch/2f805bffd21a/cs80-cpu-study/tests/FreeRunningVoiceTests.cpp.o
+[3/11] Building CXX object CMakeFiles/cold_timing.dir/workspace/scratch/2f805bffd21a/cs80-cpu-study/tests/ColdIdleTimingTests.cpp.o
+[4/11] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[5/11] Linking CXX static library libcs80_core.a
+[6/11] Linking CXX executable free_running
+[7/11] Linking CXX executable cold_timing
+[8/11] Building CXX object CMakeFiles/note_off.dir/workspace/scratch/2f805bffd21a/cs80-cpu-study/tests/NoteOffContinuityTests.cpp.o
+[9/11] Linking CXX executable note_off
+[10/11] Building CXX object CMakeFiles/cold_filter.dir/workspace/scratch/2f805bffd21a/cs80-cpu-study/tests/ColdFilterEnvelopeTests.cpp.o
+[11/11] Linking CXX executable cold_filter
+
+EXIT 0
