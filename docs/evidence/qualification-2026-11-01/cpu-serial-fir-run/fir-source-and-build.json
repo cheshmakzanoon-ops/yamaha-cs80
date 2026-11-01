@@ -1,0 +1,56 @@
+{
+  "before_source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "after_source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+  "source_manifest_scope": [
+    "src/core",
+    "src/experimental",
+    "src/reference",
+    "src/tools/source_factory_benchmark.cpp",
+    "CMakeLists.txt"
+  ],
+  "changed_source_paths": {
+    "CMakeLists.txt": {
+      "before_sha256": "52aa49671c6869b0dad9899efabe9f7d4a7bd79c2994de0cc2b5e9f6c655c66c",
+      "after_sha256": "61ab18ff50dff8e10a4c39ce51be2782b8bb24b91a28da6bbf5b469d7f48ea2f"
+    },
+    "src/core/Dsp.h": {
+      "before_sha256": "d704003dcc4ca262e31bc98a2df0494e7b3da97f747c892644264efd5f3a4347",
+      "after_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5"
+    },
+    "src/core/Engine.h": {
+      "before_sha256": "2041497154ce70aac7465f5b81c4c493bdc6ac1196c8a7d14a4f9faab5d21ae3",
+      "after_sha256": "f0369a411eaab3bfbf9b322ce757638b2bafd517203e91cb324fef28fc705b0a"
+    }
+  },
+  "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+  "benchmark_source_identical": true,
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "normalization": "Only the absolute per-checkpoint build/source path prefix is replaced by <checkpoint>. No compiler flags, definitions, target names or source names are removed.",
+  "normalized_relevant_compile_commands_identical": true,
+  "normalized_relevant_compile_commands": [
+    {
+      "directory": "<checkpoint>/build",
+      "command": "/usr/bin/g++ -I<checkpoint>/source/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c <checkpoint>/source/src/core/Engine.cpp",
+      "file": "<checkpoint>/source/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "<checkpoint>/build",
+      "command": "/usr/bin/g++ -I<checkpoint>/source/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c <checkpoint>/source/src/core/FactoryPresets.cpp",
+      "file": "<checkpoint>/source/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "<checkpoint>/build",
+      "command": "/usr/bin/g++ -I<checkpoint>/source/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o -c <checkpoint>/source/src/tools/source_factory_benchmark.cpp",
+      "file": "<checkpoint>/source/src/tools/source_factory_benchmark.cpp",
+      "output": "CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o"
+    }
+  ],
+  "normalized_benchmark_link_rule_identical": true,
+  "normalized_benchmark_link_rule": "build cs80_source_factory_benchmark: CXX_EXECUTABLE_LINKER__cs80_source_factory_benchmark_Release CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o | libcs80_core.a || libcs80_core.a\n  DEP_FILE = CMakeFiles/cs80_source_factory_benchmark.dir/link.d\n  FLAGS = -O3 -DNDEBUG\n  LINK_FLAGS = -Wl,--dependency-file=CMakeFiles/cs80_source_factory_benchmark.dir/link.d\n  LINK_LIBRARIES = libcs80_core.a\n  OBJECT_DIR = CMakeFiles/cs80_source_factory_benchmark.dir\n  POST_BUILD = :\n  PRE_LINK = :\n  TARGET_COMPILE_PDB = CMakeFiles/cs80_source_factory_benchmark.dir/\n  TARGET_FILE = cs80_source_factory_benchmark\n  TARGET_PDB = cs80_source_factory_benchmark.pdb",
+  "source_diff_sha256": "b9ac30c487c5ae3771655f88b3f1c1e1818bb16f791377234cd23abc0020a04f",
+  "interpretation": "Dsp.h contains the FIR change; Engine.h adds test-only friend access without object-layout or runtime code change; CMakeLists.txt adds test registrations and a test-only strict-rounding compile option.",
+  "source_diff_encoding": "fir-source-diff.patch.gz stores the verbatim git diff. source_diff_sha256 refers to decompressed bytes.",
+  "source_diff_gzip_sha256": "17b84c898b918220b78340e5c1959ae2a8c71f3d96b31816a10a7887fbb0f784"
+}
