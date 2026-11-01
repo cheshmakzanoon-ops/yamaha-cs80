@@ -328,7 +328,7 @@ def main() -> None:
     parser.add_argument('--draft', action='store_true', help='Allow pending placeholders and label every page')
     args = parser.parse_args()
     data = json.loads(args.data.read_text(encoding='utf-8'))
-    if not args.draft and re.search(r'\bPENDING\b|\[FINAL:|\bTODO\b', json.dumps(data, ensure_ascii=False)):
+    if not args.draft and re.search(r'\b(?:PENDING|TODO)(?:\b|_)|\[FINAL:', json.dumps(data, ensure_ascii=False)):
         parser.error('Unresolved placeholder in evidence data; finalize it or explicitly use --draft.')
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(prefix='.cs80-handover-', suffix='.pdf',
