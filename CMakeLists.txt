@@ -622,6 +622,11 @@ if (CS80_BUILD_PLUGIN)
     add_test(NAME cs80_voice_activity_host
              COMMAND CS80Snapshots --voice-meter-host-smoke)
     set_tests_properties(cs80_voice_activity_host PROPERTIES TIMEOUT 60)
+    # Actual Engine::RankInfo audio-thread snapshots delivered to the Studio
+    # monitor in both 8/16 modes. Headless, deterministic real JUCE callback.
+    add_test(NAME cs80_voice_monitor_host
+             COMMAND CS80Snapshots --voice-monitor-host-smoke)
+    set_tests_properties(cs80_voice_monitor_host PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_undo_state_replacement_host
              COMMAND CS80Snapshots --undo-state-host-smoke)
     set_tests_properties(cs80_undo_state_replacement_host PROPERTIES TIMEOUT 60)

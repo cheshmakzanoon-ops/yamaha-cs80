@@ -7,6 +7,7 @@
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/VoiceActivityUiTests.h"
+#include "../../tests/VoiceMonitorHostTests.h"
 #include "../../tests/UndoStateReplacementHostTests.h"
 #include "../../tests/ChorusRoutingHostTests.h"
 #include "../../tests/PluginPanicTests.h"
@@ -1991,6 +1992,12 @@ int main(int argc, char** argv)
         std::printf("OE1/OE2 host parameter regression: %d failures\n", failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--voice-monitor-host-smoke") == 0)
+    {
+        cs80::tests::testVoiceMonitorHost(check);
+        std::printf("Live rank-model monitor host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--undo-state-host-smoke") == 0)
     {
         cs80::tests::testUndoStateReplacementHost(check);
@@ -2056,6 +2063,7 @@ int main(int argc, char** argv)
     std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
     cs80::tests::testWs3KeyboardHost(check);
     std::puts("UI SMOKE PHASE: engine I/O host");
+    cs80::tests::testVoiceMonitorHost(check);
     cs80::tests::testChorusRoutingHost(check);
     cs80::tests::testOversamplingHost(check);
     cs80::tests::testEngineDefaultHost(check);

@@ -15,6 +15,7 @@
 #include "plugin/PluginProcessor.h"
 #include "plugin/StudioMount.h"
 #include "plugin/StudioToolbar.h"
+#include "plugin/StudioDrawers.h"
 #include "plugin/UiComponents.h"
 
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -144,6 +145,19 @@ inline void testStudioViewsPaint(const Check& check, const Flush& flush, const j
     processor.processBlock(audio, midi);
     flush(120);
     check(scope->isVisible() && controllers->isVisible(), "menu actions open the voice monitor and the controllers strip");
+    if (auto* drawer = dynamic_cast<cs80::ui::ScopeDrawer*>(scope))
+    {
+        const auto model = processor.getVoiceMonitorSnapshot();
+        check(model.ranks[0].active && model.ranks[1].active,
+              "an audible note publishes real two-rank envelope/filter model taps");
+        drawer->setChannel(0);
+        check(drawer->getDisplayedRankModelTap() == model.ranks[0],
+              "voice monitor channel I displays audio-thread rank I tap, not a panel-derived placeholder");
+        drawer->setChannel(1);
+        check(drawer->getDisplayedRankModelTap() == model.ranks[1],
+              "voice monitor channel II displays audio-thread rank II tap from the same callback");
+        drawer->setChannel(0); // preserve the historical default screenshot selection
+    }
     for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
     {
         editor.setSize(size.x, size.y);
