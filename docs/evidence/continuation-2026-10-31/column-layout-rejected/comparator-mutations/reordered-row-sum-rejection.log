@@ -1,0 +1,25 @@
+Exact scalar filter suite=row: 21405696 checks, 3121973 failures
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=1 stage.node[2] actual=-0.00092360984607836583 expected=-0.00092360984607836605 bits=0xbf4e43cd0aa551ff/0xbf4e43cd0aa55201
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=1 stage.companion[2] actual=-0.0010918202246740769 expected=-0.0010918202246740772 bits=0xbf51e36d0a1e16fa/0xbf51e36d0a1e16fb
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=1 memory.companion[2] actual=-0.0010918202246740769 expected=-0.0010918202246740772 bits=0xbf51e36d0a1e16fa/0xbf51e36d0a1e16fb
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=1 memory.node[2] actual=-0.00092360984607836583 expected=-0.00092360984607836605 bits=0xbf4e43cd0aa551ff/0xbf4e43cd0aa55201
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=1 phase.node[2] actual=-0.00092360984607836583 expected=-0.00092360984607836605 bits=0xbf4e43cd0aa551ff/0xbf4e43cd0aa55201
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=1 phase.acceptedBpOta actual=-0.00036944392162302449 expected=-0.00036944392162302454 bits=0xbf38363d8fa2bbf7/0xbf38363d8fa2bbf8
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 stage.node[0] actual=4.9794935050106026e-05 expected=4.9794935050106033e-05 bits=0x3f0a1b5cf0bc4c3b/0x3f0a1b5cf0bc4c3c
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 stage.node[2] actual=-0.00052330027412454227 expected=-0.00052330027412454249 bits=0xbf4125c2c81bf156/0xbf4125c2c81bf158
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 stage.node[3] actual=2.1821042028642349e-06 expected=2.1821042028642354e-06 bits=0x3ec24e0878d73944/0x3ec24e0878d73945
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 stage.companion[2] actual=-0.00044571326876702419 expected=-0.0004457132687670244 bits=0xbf3d35d3e9a9d418/0xbf3d35d3e9a9d41c
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 stage.companion[3] actual=2.6031337850253353e-06 expected=2.6031337850253358e-06 bits=0x3ec5d62feec1e29c/0x3ec5d62feec1e29d
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 memory.companion[2] actual=-0.00044571326876702419 expected=-0.0004457132687670244 bits=0xbf3d35d3e9a9d418/0xbf3d35d3e9a9d41c
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 memory.companion[3] actual=2.6031337850253353e-06 expected=2.6031337850253358e-06 bits=0x3ec5d62feec1e29c/0x3ec5d62feec1e29d
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 memory.node[0] actual=4.9794935050106026e-05 expected=4.9794935050106033e-05 bits=0x3f0a1b5cf0bc4c3b/0x3f0a1b5cf0bc4c3c
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 memory.node[2] actual=-0.00052330027412454227 expected=-0.00052330027412454249 bits=0xbf4125c2c81bf156/0xbf4125c2c81bf158
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 memory.node[3] actual=2.1821042028642349e-06 expected=2.1821042028642354e-06 bits=0x3ec24e0878d73944/0x3ec24e0878d73945
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 phase.node[0] actual=4.9794935050106026e-05 expected=4.9794935050106033e-05 bits=0x3f0a1b5cf0bc4c3b/0x3f0a1b5cf0bc4c3c
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 phase.node[2] actual=-0.00052330027412454227 expected=-0.00052330027412454249 bits=0xbf4125c2c81bf156/0xbf4125c2c81bf158
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 phase.node[3] actual=2.1821042028642349e-06 expected=2.1821042028642354e-06 bits=0x3ec24e0878d73944/0x3ec24e0878d73945
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=2 phase.acceptedBpOta actual=-0.00020932010659270321 expected=-0.00020932010659270329 bits=0xbf2b6f9e0640819f/0xbf2b6f9e064081a2
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=3 stage.node[0] actual=0.00018139432403453524 expected=0.00018139432403453527 bits=0x3f27c69560fa21ca/0x3f27c69560fa21cb
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=3 stage.node[2] actual=-0.0013177650842970277 expected=-0.0013177650842970279 bits=0xbf55971b7c3727c7/0xbf55971b7c3727c8
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=3 stage.node[3] actual=3.558609725379307e-06 expected=3.5586097253793078e-06 bits=0x3ecdda0e62c966f4/0x3ecdda0e62c966f6
+FAIL row-coordinate/HP/fs=88200.000000/coordinate=0 sample=3 stage.companion[0] actual=0.00011940961742702969 expected=0.00011940961742702972 bits=0x3f1f4d719b5134c3/0x3f1f4d719b5134c5

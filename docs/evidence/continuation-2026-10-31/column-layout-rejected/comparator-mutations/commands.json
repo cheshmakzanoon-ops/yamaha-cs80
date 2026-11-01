@@ -1,0 +1,300 @@
+[
+  {
+    "label": "materialize",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/cpu/materialize-frozen-scalar-kernels.py",
+      "--fixture-root",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/fixtures/exact_scalar_kernels",
+      "--output",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle/exact_scalar_frozen"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "positive-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "positive-fixed",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/test",
+      "--suite",
+      "fixed"
+    ],
+    "exit": 0,
+    "stdout_sha256": "6c8eb3da7f100b22f74dece0706b7da3e5f681d37b50716e7b712e83efdee259",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "positive-moving",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/test",
+      "--suite",
+      "moving"
+    ],
+    "exit": 0,
+    "stdout_sha256": "190de86938112c0a7b390c8f987d64b9869938c4befb56b71cf5067d65c4b105",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "positive-state",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/test",
+      "--suite",
+      "state"
+    ],
+    "exit": 0,
+    "stdout_sha256": "fcfe9cba8eb42baefe3314eb68f44f9a8921bd9add4ba1b653f7d8f0b003f1c1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "positive-row",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/test",
+      "--suite",
+      "row"
+    ],
+    "exit": 0,
+    "stdout_sha256": "4a82145d9409da24a9f34fb2989930815c4859698af588f0b62698b51b7c1a9d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "positive-fp",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/positive/test",
+      "--suite",
+      "fp"
+    ],
+    "exit": 0,
+    "stdout_sha256": "b8d10cdb4cad8f16064c51470a17b10fdaade47a7936c6af9aa5614f308270a1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "stale-coefficients-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/stale-coefficients/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/stale-coefficients/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "stale-coefficients-rejection",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/stale-coefficients/test",
+      "--suite",
+      "moving"
+    ],
+    "exit": 1,
+    "stdout_sha256": "764e510344deadb5760e9eb6b75fad15320e044f95aa9f2cef5b3f814c19614d",
+    "stderr_sha256": "55313a6c53c03e58f28a5a392b74598dd9b094fb35c2d1088fea4959ff3bad79"
+  },
+  {
+    "label": "one-ulp-coefficient-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/one-ulp-coefficient/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/one-ulp-coefficient/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "one-ulp-coefficient-rejection",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/one-ulp-coefficient/test",
+      "--suite",
+      "row"
+    ],
+    "exit": 1,
+    "stdout_sha256": "b747d59e9760c185740a0b82710feffac60fab36c7a719ed24d903b813ac9651",
+    "stderr_sha256": "c9197fc2182b56615e34a529ddaada643b15310e23bbd5ae044ebfa1d1522902"
+  },
+  {
+    "label": "restore-drops-history-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/restore-drops-history/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restore-drops-history/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "restore-drops-history-rejection",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restore-drops-history/test",
+      "--suite",
+      "state"
+    ],
+    "exit": 1,
+    "stdout_sha256": "42d625f4ac3547f8d27388d19586a7a7f2d214ba26efa02bb569cc61ad4309a0",
+    "stderr_sha256": "bfd5125a71645d58a1802cfd73ba77f0da64fce39c718e6b28548203b5ab87c9"
+  },
+  {
+    "label": "early-newton-stop-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/early-newton-stop/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/early-newton-stop/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "early-newton-stop-rejection",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/early-newton-stop/test",
+      "--suite",
+      "moving"
+    ],
+    "exit": 1,
+    "stdout_sha256": "e7b2e12ef543bfa543b85832357a77f56317a985518ebb6e4d0d4777304d176a",
+    "stderr_sha256": "b616c6f43031107b869bb5cc9be22021691165022db69f07eaa27bc88d5e2a1c"
+  },
+  {
+    "label": "reordered-row-sum-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/reordered-row-sum/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/reordered-row-sum/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "reordered-row-sum-rejection",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/reordered-row-sum/test",
+      "--suite",
+      "row"
+    ],
+    "exit": 1,
+    "stdout_sha256": "bb6a127bf8f93d59303e40b0546c09d50d3a00d3ab8d3e185fea57e0b20ccbb7",
+    "stderr_sha256": "37a8582beb9fe63f419da4783cf0af6591ba5f5895ce7b7cb35936518da142e8"
+  },
+  {
+    "label": "restored-compile",
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/include",
+      "-I/tmp/cs80-filter-column-20261101/comparator-mutations-3/oracle",
+      "/workspace/scratch/a0e502bd4cd5/cs80-filter/tests/ExactScalarFilterTests.cpp",
+      "-o",
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/test"
+    ],
+    "exit": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "restored-fixed",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/test",
+      "--suite",
+      "fixed"
+    ],
+    "exit": 0,
+    "stdout_sha256": "6c8eb3da7f100b22f74dece0706b7da3e5f681d37b50716e7b712e83efdee259",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "restored-moving",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/test",
+      "--suite",
+      "moving"
+    ],
+    "exit": 0,
+    "stdout_sha256": "190de86938112c0a7b390c8f987d64b9869938c4befb56b71cf5067d65c4b105",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "restored-state",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/test",
+      "--suite",
+      "state"
+    ],
+    "exit": 0,
+    "stdout_sha256": "fcfe9cba8eb42baefe3314eb68f44f9a8921bd9add4ba1b653f7d8f0b003f1c1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "restored-row",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/test",
+      "--suite",
+      "row"
+    ],
+    "exit": 0,
+    "stdout_sha256": "4a82145d9409da24a9f34fb2989930815c4859698af588f0b62698b51b7c1a9d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "restored-fp",
+    "command": [
+      "/tmp/cs80-filter-column-20261101/comparator-mutations-3/restored/test",
+      "--suite",
+      "fp"
+    ],
+    "exit": 0,
+    "stdout_sha256": "b8d10cdb4cad8f16064c51470a17b10fdaade47a7936c6af9aa5614f308270a1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "complete": true,
+  "source_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+  "mutations": [
+    "stale-coefficients",
+    "one-ulp-coefficient",
+    "restore-drops-history",
+    "early-newton-stop",
+    "reordered-row-sum"
+  ],
+  "scope": "Numerical assertions only; no speed claim."
+}

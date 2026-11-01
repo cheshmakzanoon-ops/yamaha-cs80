@@ -167,3 +167,16 @@ checks because its obsolete SUSTAIN-II reset expectation was strengthened into
 exact all-circuit retention plus explicit Legacy reset checks. Its numerical
 wake limits and grid are unchanged. Results are in
 `evidence/continuation-2026-10-31/filter-coefficient-cache-qualification.txt`.
+
+## Rejected coefficient column-layout investigation
+
+The prospective column-layout optimization did not qualify against the frozen
+scalar continuation contract. Its ordinary fixed/moving-control and coordinate
+suites were bit-identical, but exceptional-state and directed-rounding suites
+failed while the unchanged positive control passed every suite. The candidate
+was restored; it contributes no production audio change or measured CPU gain.
+The source patch, hashes, complete failure totals, representative diagnostics and
+actual-source comparator mutation controls are retained in
+[`column-layout-rejected`](evidence/continuation-2026-10-31/column-layout-rejected/README.md).
+The full-grid accuracy qualification above and the unresolved ADJ p11 HP
+amplitude discrepancy are unchanged.
