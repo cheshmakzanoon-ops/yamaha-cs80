@@ -4,6 +4,7 @@
 #include "reference/IG00156PhaseCorrection.h"
 #include "reference/IG00156Network.h"
 #include "Ws1Tolerances.h"
+#include <array>
 #include <complex>
 #include <cstdio>
 #include <iostream>
@@ -11,8 +12,18 @@ using namespace cs80;
 namespace ref=cs80::reference::ig00156;
 namespace {
 constexpr double pi=3.14159265358979323846;
+// Original four internal rates plus the preregistered 44.1 kHz x 4 case.
+constexpr double additionalRate=176400.;
+constexpr std::array<double,5> rates{88200.,96000.,additionalRate,192000.,384000.};
 int failures=0,checks=0;
 void check(bool ok,const char* name) {++checks;if(!ok){++failures;std::cerr<<"FAIL: "<<name<<'\n';}}
+double coreLimit(double fs,const ws1::Tolerances& original,const ws1::Tolerances& additional){
+ return (fs==additionalRate?additional:original)["small_signal_core_rel"];
+}
+double bandLimit(double fs,const ws1::Tolerances& original,const ws1::Tolerances& additional){
+ return fs==additionalRate?additional["small_signal_band_rel"]:
+  original[fs>=192000?"small_signal_band_hi_rate_rel":"small_signal_band_rel"];
+}
 struct Truth : ref::PhaseCorrectedLinearStage {
  static ref::LinearSystem<4> system(const Ig00156Network& n,double fc,double q) {
   const ref::StageNetwork net{n.sourceOhms,n.groundOhms,n.inputFarads,n.feedbackOhms,n.feedbackFarads,n.integratorFarads,n.integratorFarads,n.feedforwardOhms,n.feedforwardOhms};
@@ -23,9 +34,9 @@ struct Truth : ref::PhaseCorrectedLinearStage {
  }
  Truth(const Ig00156Network& n,double fc,double q,double fs) : PhaseCorrectedLinearStage(system(n,fc,q),fs) {}
 };
-void equivalence(const ws1::Tolerances& tol){
- double worst=0;const double ff=1/(2*pi*4.7e6*1.5e-9);
- for(double fs:{88200.,96000.,192000.,384000.})for(double fc:{60.,250.,1000.,4000.,12000.})for(double q:{.5,1.,2.,5.,9.})for(int kind=0;kind<3;++kind){
+void equivalence(const ws1::Tolerances& tol,const ws1::Tolerances& additional){
+ double worst=0,worstAdditional=0;const double ff=1/(2*pi*4.7e6*1.5e-9);
+ for(double fs:rates)for(double fc:{60.,250.,1000.,4000.,12000.})for(double q:{.5,1.,2.,5.,9.})for(int kind=0;kind<3;++kind){
   const double hc=kind==2?std::max(60.,fc/4):fc;
   Ig00156Stage hp(kIg00156HighPassNetwork),lp(kIg00156LowPassNetwork);
   hp.set(float(hc-ff),float(q),float(fs));lp.set(float(fc-ff),float(q),float(fs));
@@ -39,14 +50,17 @@ void equivalence(const ws1::Tolerances& tol){
    if(kind!=0){y=lp.process(y).lp;truth=lt.step(truth,false);}
    error=std::max(error,std::abs(y-truth));peak=std::max(peak,std::abs(truth));
   }
-  worst=std::max(worst,error/peak);
-  if(error/peak>tol["equivalence_max_rel"])std::printf("equivalence fail fs%g fc%g q%g kind%d %.9g\n",fs,fc,q,kind,error/peak);
+  auto& rateWorst=fs==additionalRate?worstAdditional:worst;
+  rateWorst=std::max(rateWorst,error/peak);
+  if(error/peak>(fs==additionalRate?additional:tol)["equivalence_max_rel"])std::printf("equivalence fail fs%g fc%g q%g kind%d %.9g\n",fs,fc,q,kind,error/peak);
  }
  std::printf("phase-correction matrix equivalence: %.9g (limit %.9g)\n",worst,tol["equivalence_max_rel"]);
  check(worst<=tol["equivalence_max_rel"],"reduced nonlinear stage matches independent full-matrix small-signal step");
+ std::printf("176400 Hz matrix equivalence: %.9g (limit %.9g)\n",worstAdditional,additional["equivalence_max_rel"]);
+ check(worstAdditional<=additional["equivalence_max_rel"],"176400 Hz reduced stage matches independent full-matrix step");
 }
-void smallSignal(const ws1::Tolerances& tol){
- for(double fs:{88200.,96000.,192000.,384000.}){
+void smallSignal(const ws1::Tolerances& tol,const ws1::Tolerances& additional){
+ for(double fs:rates){
   double worstCore=0,worstBand=0;
   for(double fc:{60.,250.,1000.,4000.,12000.})for(double q:{.5,1.,2.,5.,9.})for(int kind=0;kind<3;++kind){
    Truth hp(kIg00156HighPassNetwork,kind==2?std::max(60.,fc/4):fc,q,fs),lp(kIg00156LowPassNetwork,fc,q,fs);
@@ -63,16 +77,16 @@ void smallSignal(const ws1::Tolerances& tol){
     if(f>=.5*fc&&f<=2*fc&&f<=fs/8)core=std::max(core,e);
     band=std::max(band,e);
    }
-   check(core<=tol["small_signal_core_rel"],"whole-grid core-band limit");
-   check(band<=tol[fs>=192000?"small_signal_band_hi_rate_rel":"small_signal_band_rel"],"whole-grid full-band limit");
+   check(core<=coreLimit(fs,tol,additional),"whole-grid core-band limit");
+   check(band<=bandLimit(fs,tol,additional),"whole-grid full-band limit");
    worstCore=std::max(worstCore,core);worstBand=std::max(worstBand,band);
   }
   std::printf("phase-corrected %g Hz: core %.9g band %.9g\n",fs,worstCore,worstBand);
  }
 }
-void direct(const ws1::Tolerances& tol){
- double worst=0;const double ff=1/(2*pi*4.7e6*1.5e-9);
- for(double fs:{88200.,96000.,192000.,384000.})for(double fc:{4000.,12000.})for(double q:{.5,5.})for(bool isHp:{false,true})for(double ratio:{.5,1.,2.}){
+void direct(const ws1::Tolerances& tol,const ws1::Tolerances& additional){
+ double worst=0,worstAdditional=0;const double ff=1/(2*pi*4.7e6*1.5e-9);
+ for(double fs:rates)for(double fc:{4000.,12000.})for(double q:{.5,5.})for(bool isHp:{false,true})for(double ratio:{.5,1.,2.}){
   const double f=fc*ratio;if(f>std::min(20000.,fs/5))continue;
   const auto net=isHp?kIg00156HighPassNetwork:kIg00156LowPassNetwork;
   Truth truth(net,fc,q,fs);Ig00156Stage rt(net);rt.set(float(fc-ff),float(q),float(fs));
@@ -85,14 +99,19 @@ void direct(const ws1::Tolerances& tol){
   const auto measured=acc*(2.0/count/1e-4);
   double peak=0;for(double g=5;g<std::min(24000.,.45*fs);g*=1.01)peak=std::max(peak,std::abs(truth.continuous(g,isHp)));
   const double e=std::abs(measured-truth.continuous(f,isHp))/peak;
-  const double lim=(ratio>=.5&&ratio<=2&&f<=fs/8)?tol["small_signal_core_rel"]:tol[fs>=192000?"small_signal_band_hi_rate_rel":"small_signal_band_rel"];
+  const double lim=(ratio>=.5&&ratio<=2&&f<=fs/8)?coreLimit(fs,tol,additional):bandLimit(fs,tol,additional);
+  if(e>lim)std::printf("direct realtime fail fs%g fc%g q%g hp%d ratio%g %.9g (limit %.9g)\n",fs,fc,q,int(isHp),ratio,e,lim);
+  if(fs==additionalRate)worstAdditional=std::max(worstAdditional,e);
   check(e<=lim,"direct realtime lock-in within unchanged continuous-truth limit");worst=std::max(worst,e);
  }
  std::printf("phase-corrected direct realtime: worst normalized error %.9g\n",worst);
+ std::printf("176400 Hz direct realtime: worst normalized error %.9g\n",worstAdditional);
 }
 }
 int main(int argc,char** argv){try{
  const ws1::Tolerances tol(argc>1?argv[1]:"tests/parity/tolerances-v2/ws1-voice.json","ig00156_nodal");
- equivalence(tol);smallSignal(tol);direct(tol);
+ const ws1::Tolerances additional(argc>2?argv[2]:"tests/parity/tolerances-v2/ig00156-176400.json","ig00156_176400");
+ check(additional["internal_rate_hz"]==additionalRate,"supplemental rate matches the committed 44.1 kHz x 4 contract");
+ equivalence(tol,additional);smallSignal(tol,additional);direct(tol,additional);
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 2;}
 std::cout<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;}

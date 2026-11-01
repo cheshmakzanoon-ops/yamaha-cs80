@@ -93,8 +93,11 @@ transfers the complete input history as well as all capacitor states.
 
 ## Gates and results
 
-Prerequisite acceptance registration: `85ccd9a`; all existing ws1 and ws3
-limits are unchanged. The grid includes isolated HP, isolated LP and their
+Prerequisite acceptance registration:
+`da8e0233b703d31bab5f5670296744b1a3ee2755` (the published commit;
+the earlier `85ccd9a` citation did not identify a published revision).
+It precedes audio `4917708268d8eed177670f4d270dbc50fc08e831`; all existing
+ws1 and ws3 limits are unchanged. The grid includes isolated HP, isolated LP and their
 cascade, five cutoffs, five Q values, and all four internal rates.
 
 | Internal rate | Worst normalized complex error, core | Worst normalized complex error, full band | Existing limits, core / full band |
@@ -132,6 +135,21 @@ so numerical integration improvements do not repair its source/topology
 uncertainty. No gain was fitted. CPU comparison and compatibility captures
 belong to the integration evidence; numerical accuracy alone is not a CPU or
 hardware-fidelity certification.
+
+### Supplemental 44.1 kHz / 4× coverage, 2026-11-01
+
+Published preregistration `2f18afc3f76c62be3e3682d113134598d3d1f8b6`
+adds the previously missing 176,400 Hz internal rate with core/full-band
+limits 0.03/0.02; every original grid point and limit is retained. The
+permanent phase test now checks all five unique internal rates needed for
+44.1/48/96 kHz at 2× and 4×. It passes 853 checks. At 176.4 kHz, the
+core/full-band errors are 0.00264237663/0.00296699871, independent-matrix
+equivalence is 1.52966926e-7, and direct realtime error is 0.000235758641.
+A production-header mutation removing phase correction only at 176.4 kHz
+fails three checks while the original rates remain unchanged. No production
+audio changes. [Fresh controls, mutation output, published chronology and
+native-source reread](evidence/nodal-review-20261101/README.md) retain the
+unresolved 1.692 Vpp HP setup prediction.
 
 
 ## Coefficient setup refactor
