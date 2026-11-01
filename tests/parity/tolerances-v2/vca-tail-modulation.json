@@ -28,7 +28,13 @@
     "run the tail update in Legacy",
     "enable the modern matrix under Pure",
     "weaken a registered exact or elapsed-time limit",
-    "ignore cached pan when the last live pan route is removed"
+    "ignore cached pan when the last live pan route is removed",
+    "publish held-gate state on an unscheduled tail update",
+    "trigger mono MSEG from an unscheduled unlatched note",
+    "omit released-controller neutralization at the original idle deadline",
+    "restore released expression between original idle deadlines",
+    "advance every active modern tail without a live or cached pan destination"
   ],
-  "route_removal_amendment": "Registered before applying or evaluating the candidate: after a charged Source voice retires, zero, remove or reroute its pan slot while another matrix route remains live. Both rank endpoints must consume exactly zero stale pan starting on the next internal sample, even before the original idle deadline. Existing exact pan and raw-mix bounds apply; no new or weakened numeric tolerance. A cached nonzero pan offset may require one final early evaluation after the last live pan route disappears."
+  "route_removal_amendment": "Registered before applying or evaluating the candidate: after a charged Source voice retires, zero, remove or reroute its pan slot while another matrix route remains live. Both rank endpoints must consume exactly zero stale pan starting on the next internal sample, even before the original idle deadline. Existing exact pan and raw-mix bounds apply; no new or weakened numeric tolerance. A cached nonzero pan offset may require one final early evaluation after the last live pan route disappears. That final clearing evaluation intentionally advances any remaining used poly MSEG/rate feedback once; steady no-pan configurations keep the original decimated call count.",
+  "boundary_amendment": "Registered before applying/evaluating the candidate: (1) directly compare unscheduled ModernLayer updates with an omitted-update reference for mono trigger and held-gate publication, requiring exact global runner values/positions and the original first scheduled trigger; (2) retire a voice with nonzero pressure or timbre routed to pan, preserve pre-deadline inputs, then use exact zero from its original first idle deadline onward, including intervening samples where host smoothing restores stored controller targets; (3) a live poly-MSEG-to-pitch route with no present or cached pan must retain exactly the original scheduled idle tick count, with elapsed-time error <= the existing 1e-12 bound. The existing exact pan/raw-mix/ownership limits apply. Direct extra-update API checks are new positive controls; the old API lacks that call and is not represented as a rejected compile mutation."
 }

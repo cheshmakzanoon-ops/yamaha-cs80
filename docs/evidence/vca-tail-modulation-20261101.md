@@ -45,3 +45,19 @@ the existing exact zero/current-mix bounds. Tail eligibility may include a
 nonzero cached pan offset, so one final scheduled-safe evaluation clears it.
 This applies only to charged Source tails; existing Legacy and neutral paths
 remain unchanged. A separate mutation will remove that cached-offset condition.
+
+## Registration amendment: independent ownership and expression boundaries
+
+Read-only review also identified three controls missing from the initial witness.
+Register direct `ModernLayer` comparisons for mono triggers and held-gate
+publication on extra unscheduled updates; nonzero pressure/timbre-to-pan across
+the first inactive deadline; and unchanged decimated poly-MSEG tick counts when
+a live matrix has neither present nor cached pan. The same exact/elapsed limits
+apply. Source control smoothing restores event-set pressure/timbre after each
+sample, so the tail must keep using the scheduled released values after its
+first deadline rather than reviving old expression between deadlines. This
+affects the input to the tail update and leaves stored controller targets and
+the original scheduled paths unchanged. The one update clearing a removed pan
+route intentionally advances remaining used poly runners/rate feedback once;
+steady no-pan configurations keep their previous cadence. Independent mutation
+cases cover each boundary. All registrations precede the production repair.
