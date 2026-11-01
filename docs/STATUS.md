@@ -79,7 +79,7 @@ policy. Host and UI rows document software ownership.
 | Output | scalar LOW trim + soft clip | -6 dB reference, driver ceiling, `OutputTapCircuit`; LISTENING OUTPUT L/R, GENERAL, PHONES | [OUTPUT_REALTIME_PROPOSAL.md](OUTPUT_REALTIME_PROPOSAL.md), ws2 report |
 | Control smoothing | Historical per-sample constants retained | Existing 5 ms control and EXP optical recurrences omit work only at a proven exact fixed point; signed-zero/nonfinite/first-movement behavior preserved | 8dac795; [stationary-control evidence](evidence/qualification-2026-10-31/stationary-controls/). 373 exact checks, seven source mutations; three-round timing remains separate. |
 | Oversampling | Original 2x audio retained | Eco 2x / Standard 2x / HQ 8x; offline HQ; 63 + 8/N samples latency. Exact complete-zero FIR history skips convolution only under its original arithmetic proof | `Oversampling.h`; FIR `23a7b8d`; both Legacy audio gates and V2 remain byte-identical. Timing qualification is separate. |
-| Engine layout | Same audio law and RNG ordering | Global/rank/mix/output pipeline with sixteen rank chains stored in arrays; exact settled receiver and control-transform reuse | Source 1207068, c3c0f5c, 50930af; final timing [serial CPU evidence](evidence/qualification-2026-11-01/cpu-serial-run/README.md). A layout change alone is not a speedup claim. |
+| Engine layout | Same audio law and RNG ordering | Global/rank/mix/output pipeline with sixteen rank chains stored in arrays; exact settled receiver and control-transform reuse | Source 1207068, c3c0f5c, 50930af; final timing [nine-checkpoint CPU evidence](evidence/qualification-2026-11-01/cpu-serial-fir-run/README.md). A layout change alone is not a speedup claim. |
 | Host automation | Earlier block-start wrapper semantics retained | Source Performance uses 18 named native VST3/AU timed lanes on both engines; external state edits refresh delayed trajectories; AU normalized publication preserves accepted knots | [Host automation](HOST_AUTOMATION.md), 6474265, 6300163. PURE retains its earlier wrapper semantics. Native AU result: actual AU component host plus seven production mutations passed on both Intel and Apple Silicon; [native evidence](evidence/qualification-2026-11-01/host-features/README.md). |
 | Tuning extension | Neutral at default mode | Unmodified ODDSound MTS-ESP client plus native/shim/fallback checks; Scala/KBM and MTS SysEx retained | [Vendoring record](../deps/mts-esp/README.vendor.md), fa2016c2, upstream 0BSD. PURE masks modern tuning; a live installed master is not claimed by no-master tests. |
 | State, undo and MSEG | Historical parameter IDs retained | Common APVTS tree lock and synchronized detached snapshots; message-thread undo ownership; exact Float32 MSEG replay/restore | [State synchronization](STATE_TREE_SYNCHRONIZATION.md), bbc57fe. The audio mailbox still uses its existing try-lock. Arbitrary concurrent processor destruction is outside these fixtures. |
@@ -100,7 +100,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 0.1 Coefficient caching | done; bit-identical | `7b55d34` |
 | 0.1 Kernels and component arrays | Event/Jacobian caches, global/rank/mix/output split and sixteen-chain component arrays implemented; receiver/transform/lazy-history/control reductions qualified. Full lane SIMD is not implemented; whole-engine CPU remains open | `6bf6055`, `031a333`, `1207068`, `50930af`, `476c2f1`, `8dac795` |
 | 0.1 Silent rank cadence | 3 kHz to 1.5 kHz qualified for the free-running circuit ranks; strict V2 re-pin complete; measured CPU target still open | audio `18400c2`, pin `9f990ae` |
-| 0.1 Exact zero-history FIR | Published complete-history/rounding proof and ten source mutations pass; no V2 re-pin. Three before and three after rounds complete; final serial timing and native CI qualification are in progress | `23a7b8d`; contract `156d82e` |
+| 0.1 Exact zero-history FIR | Complete-history/rounding proof and ten source mutations pass; no V2 re-pin. Local and serial GitHub three-before/three-after timing complete: idle improves, held and moving-control results do not establish a speedup. Final current-head native CI remains in progress | `23a7b8d`; contract `156d82e` |
 | 0.2 Parameter smoothing | done (circuit engine), ws2 | `d29f6eb` |
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
 | 0.5 This status page | done | `eb486cb` |
@@ -146,14 +146,50 @@ continuity result and full-bank score are different observations.
 | ADJ printed-p11 LP setup | 2.2 +/- 1 Vpp | Model prediction 1.648 Vpp. Native M41 trace confirms 150 kΩ in series CP7→AI and a separate 33 kΩ shunt. |
 | Exact event continuation | Zero bit mismatches at zero elapsed time; original cold-time bound 1e-8 s | 7,438 full checks pass in both policies; all 15 source mutations and both test-strength controls qualified. [Event evidence](CLICK_EVENT_CONTINUITY.md). |
 | Immutable compatibility | Byte identity | Legacy default/tails, V1 numerics and current V2 all pass after the native BBD repair and the exact FIR candidate. |
-| Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Latest completed serial historical checkpoint: 0.603543–0.890282; open. Final FIR comparison is pending below. |
-| Quiet idle | <=0.02 callback realtime factor | Latest completed serial historical checkpoint: 0.077991 (7.7991% of realtime); open. |
+| Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Final source: 0.388281–0.557422 on the completed nine-checkpoint EPYC 9V45 run; original main on that same runner: 0.353231–0.416845. Open. |
+| Quiet idle | <=0.02 callback realtime factor | Final source: 0.0360525 (3.60525% of realtime); original main on the same runner: 0.083520375. Open. |
 | Full-bank peak, steal and ring-off spectrum | <=0 dBFS; score <=1; <=−70 dB | The old `00ceccf` observations (−0.24 dBFS, 0.92, −88.3 dB at 48 kHz) remain historical. A fresh complete 44.1/48/96 kHz audit of the final code is in progress; no current full-bank pass is inferred from those older numbers. |
 
 ### Comparable serial CPU checkpoints
 
+[Run 41262684915](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41262684915)
+completed **nine immutable checkpoints, three rounds each**, on one AMD EPYC
+9V45 runner with four virtual CPUs. All nine builds finished before measurement;
+the 27 measurement intervals ran serially in the preregistered round-major
+order. The stock 48 kHz, 256-frame, 1,024-callback driver and all 27 cases/51 rows
+per round are retained. The frozen reporter selects each fixture's minimum
+callback median and takes p99 and deadline misses from that same round.
+The circuit rows use the benchmark's isolation/PURE policy; they are not a
+general modern-FX Source Performance or real-DAW load estimate.
+
+| Source on the same EPYC 9V45 runner | Held median RTF range | Held p99 RTF range | Selected held misses | Quiet idle RTF | Moving-controls median RTF |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Original main `db24a471` | 0.353231–0.416845 | 0.369217–0.466853 | 0 | 0.083520375 | 0.416251688 |
+| Pre-FIR `475063c` | 0.372466–0.545617 | 0.390135–0.653069 | 0 | 0.042132938 | 0.530522813 |
+| Final FIR `23a7b8d` | 0.388281–0.557422 | 0.397795–0.715900 | 8 | 0.036052500 | 0.537153750 |
+
+For the isolated FIR pair, the selected idle median falls **14.4316%**, and
+every after-round idle median is below every before-round median. Held and
+moving-control observations worsen: the latter's p99 rises from 0.703994 to
+0.935590 RTF and selected deadline misses from one to nine. Those results are
+retained; no held-speed improvement or attribution solely to scheduler noise
+is claimed. All 306 before/after non-timing rows match, and all 1,377 rows in
+the nine-source run have zero nonfinite counts. Both CPU targets remain open.
+
+The [complete nine-checkpoint evidence](evidence/qualification-2026-11-01/cpu-serial-fir-run/README.md)
+preserves the original ZIP, 27 raw rounds, compiler commands, independent
+262-entry artifact and 662-source-record verification, frozen reporter and
+source distinction. The original-main-to-final comparison includes the
+full-band filter and electrical programmer, so it does not isolate a cache
+speedup. The adjacent FIR pair has identical normalized production compile
+and link commands and benchmark source.
+
+#### Earlier serial run (different host; retained as history)
+
 [Run 41257213038](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41257213038)
-completed seven immutable checkpoints, three rounds each. The 48 kHz,
+completed seven immutable checkpoints, three rounds each, on an AMD EPYC 7763
+runner with four virtual CPUs. **Its absolute timings cannot be compared with
+the EPYC 9V45 run above to claim a code speedup.** The 48 kHz,
 256-frame, 1,024-callback method, all 27 cases/51 rows, and same-round p99 and
 miss counts are retained. The original-main aggregate frame and subsequent
 electrical-programmer constructor are separately sealed source blobs; their
@@ -205,8 +241,9 @@ independent prefix-identity guard. `ef166ea` makes that witness retain exactly
 six historical entries and adds its file to the workflow's trigger paths.
 The original seven-entry request and the current nine-entry request each pass
 all 27 mutations after this correction. The request, collector, reporter,
-acceptance contract and nine checkpoint identities are unchanged. The fresh
-serial comparison remains pending; this correction makes no performance claim.
+acceptance contract and nine checkpoint identities are unchanged. The completed
+fresh run is recorded above; the witness correction itself makes no performance
+claim. [Original failure and correction proof](evidence/qualification-2026-11-01/cpu-runner-prefix-fix/README.md).
 
 ### Original click criteria
 
@@ -250,13 +287,13 @@ pass. Earlier audio/pin/evidence sequences remain in the dated history.
 
 | Qualification | Confirmed scope |
 | --- | --- |
-| Core Release | The pre-FIR integration at `475063c` passed 99/99 CTests. The expanded current suite is being rebuilt and run. |
-| Linux plugin preset | The pre-FIR full plugin/standalone/native-host/snapshot build succeeded. Current full CTest and UI smoke are pending at this snapshot. |
+| Core Release | Current local integration at `1e58938` (production `23a7b8d`) passed 102/102 CTests. The first run could not execute two byte-identical local binaries with mode 0644; restoring execute permission and rerunning the complete suite passed. Original red logs and unchanged binary hashes are retained for the final integration archive. |
+| Linux plugin preset | Current complete plugin/standalone/native-host/snapshot build and 110/110 CTests passed, including the real-window UI smoke. The local exact JUCE 8.0.11 FetchContent override is recorded separately from native CI's stricter default-fetch provenance guard. |
 | Native host features | Actual AU component host and seven mutations passed on Intel and Apple Silicon; native VST3 host passed on Linux. [45 per-platform feature results](evidence/qualification-2026-11-01/host-features/README.md) retain the older workflow's separate Intel BBD failure. |
 | MTS-ESP | Real client, shim and fallback pass on all four platforms. Actual upstream licence is **0BSD**, at ODDSound `f214739b8832e7f297cb9970d0c0efbf783f1462`; a live external master is not claimed. |
 | Filter comparator | Fresh and restored positives each pass 781,314,302 exact assertions; five source mutations fail normally. [Evidence](evidence/continuation-2026-10-31/column-layout-rejected/README.md). |
 | Event regression | 7,438 full assertions; 15 source mutations; zero-limit weakening and missing-rank-II controls checked. [Evidence](CLICK_EVENT_CONTINUITY.md). |
-| FIR | Oversampling 85, exact history 227,117, rounding 3,276,237 and core 11,512 assertions pass; all ten source mutations rejected. [Complete local qualification and six rounds](evidence/qualification-2026-11-01/zero-fir/README.md). Final native/integration and serial timing remain separate. |
+| FIR | Oversampling 85, exact history 227,117, rounding 3,276,237 and core 11,512 assertions pass; all ten source mutations rejected. [Complete local qualification and six rounds](evidence/qualification-2026-11-01/zero-fir/README.md). Final serial timing is complete above; final native workflow qualification remains separate. |
 | UI/tone review | Context IDs, MIDI learn, undo gestures, taps and two-engine ownership verified; 70 native crop payloads and all 25 cells rechecked. [Evidence](evidence/qualification-2026-11-01/ui-tone-review/README.md). |
 | Final CI / landing | `build.yml` on four platforms plus pluginval, `dsp-measurements.yml`, `screenshots.yml`, the merge commit and `release.yml` are still being completed. README artifacts, screenshots and PDF will be refreshed against the actual final runs. |
 
@@ -280,12 +317,17 @@ No numerical threshold was relaxed, and original red logs remain in evidence.
 
 ## Open issues
 
-1. **Held and idle CPU budgets.** The latest completed serial historical
-   checkpoint is above both original limits. The exact FIR comparison and final
-   native gates are in progress. Component arrays, caches and skipped operations
+1. **Held and idle CPU budgets.** The final nine-checkpoint run measures
+   0.388281–0.557422 held and 0.0360525 quiet-idle RTF, above both original
+   limits. The FIR comparison improves idle but worsens held and moving-control
+   observations. Component arrays, caches and skipped operations
    do not establish a several-fold speedup. Full-kernel SIMD across independent
    chains remains a future implementation requiring its own predeclared lane,
    state, rounding and work oracles; no speculative version is shipping.
+   [The remaining exact idle-control assessment](evidence/qualification-2026-11-01/cpu-idle-follow-up.md)
+   separates nested instruction shares from native timing and specifies the
+   stable-drive/controller follow-up. Electrical readouts and exact elapsed
+   envelope clocks cannot simply be paused.
 2. **Original click scores.** Physical-PANEL Bass at 48/96 kHz and Funky note-off
    at all three rates remain above one. The charge/time defects are fixed and
    event regressions qualified, but the controls do not justify a fade, phase
