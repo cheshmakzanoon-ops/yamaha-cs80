@@ -552,7 +552,8 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
                            "maximum_difference_step,maximum_step_relative_sample,latency_samples,"
                            "maximum_early_step_after_latency,"
                            "maximum_difference_amplitude,observed_window_step,"
-                           "without_event_window_step,observed_window_score,without_event_window_score\n";
+                           "without_event_window_step,observed_window_score,without_event_window_score,"
+                           "event_local_2ms_score,event_local_8ms_score\n";
     }
     const auto ev = phrase();
     struct Job { std::vector<Setup> setups; std::vector<int> rates; };
@@ -663,7 +664,12 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
                                         << ',' << r.reportedLatency << ',' << earlyStep << ',' << maxAmplitude
                                         << ',' << observedWindowStep << ',' << withoutEventWindowStep
                                         << ',' << observedWindowStep / clickReference
-                                        << ',' << withoutEventWindowStep / clickReference << '\n';
+                                        << ',' << withoutEventWindowStep / clickReference
+                                        // These two *additive* diagnostics isolate the derivative of
+                                        // the event-minus-no-event stream. The same frozen reference
+                                        // and the original raw click acceptance columns remain intact.
+                                        << ',' << earlyStep / clickReference
+                                        << ',' << maxStep / clickReference << '\n';
                     }
                 }
             }
