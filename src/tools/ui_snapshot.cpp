@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 46986)
-Total output lines: 3634
+Warning: truncated output (original token count: 47047)
+Total output lines: 3637
 
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
@@ -21,6 +21,7 @@ Total output lines: 3634
 #include "../../tests/Ws3KeyboardHostTests.h"
 #include "../../tests/PanelEditorTests.h"
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
+#include "../../tests/ControlContextHostTests.h" // parameter menus on switches/combos/memory miniatures
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
@@ -1446,7 +1447,196 @@ void testSourceFactoryHost()
                               && info.provenance.sourceHash == sf::sourceFingerprint
                               && info.provenance.hypothesisOverrideMask == 0,
                           "host source provenance preserves known evidence and overlapping original-unknown/inferred masks");
-                    check(info.provenance.hypothes…10986 tokens truncated… "ch1_v_s",
+                    check(info.provenance.hypothesisVersion == (unknown == 0 ? 0u : 1u)
+                              && info.provenance.hypothesisHash == (unknown == 0 ? 0ull : 0xe5f877a025fc52c6ull),
+                          "host distinguishes seven unchanged complete tones from the frozen version-one inference manifest");
+                    for (int output = 0; output < 26; ++output)
+                    {
+                        knownCells += (info.provenance.knownCells >> output) & 1u;
+                        unknownCells += (info.provenance.unknownCells >> output) & 1u;
+                        inferredCells += (info.provenance.inferredCells >> output) & 1u;
+                    }
+                }
+                if (info.route == sf::Route::legacy_bridge) ++bridgeCount;
+            }
+        }
+        check(sourceCount == (isolated ? 7 : 0) && inferredCount == (isolated ? 15 : 0)
+                  && bridgeCount == (isolated ? 0 : 22),
+              "host enables seven complete plus fifteen inferred sources, retaining legacy bridges only when isolation is off");
+        check(knownCells == (isolated ? 547 : 0) && unknownCells == (isolated ? 25 : 0)
+                  && inferredCells == (isolated ? 25 : 0),
+              "all 22 host source identities expose exactly 547 classified and 25 separately inferred original unknown cells");
+    }
+
+    // A source selected before MIDI must initialize the typed targets too, not
+    // merely refresh them on the first callback after a PANEL-origin strike.
+    // All 22 envelopes include the seven unchanged raw-cell paths and inferred
+    // sustain plus String 4 filter-decay hypotheses.
+    for (int selector = 0; selector < 11; ++selector)
+    {
+        Cs80AudioProcessor host;
+        host.setParamValue(cs80::P_parityMode, 1.0f);
+        host.setParamValue(cs80::P_oversampling, 0.0f); // 2x primitive ticks below (ws2 1.6)
+        host.setParamValue(cs80::P_masterSustain, 0.0f);
+        host.setParamValue(cs80::P_keyRelease, 0.0f);
+        for (int rank = 0; rank < 2; ++rank) automate(host, rank, selector);
+        host.prepareToPlay(48000.0, 64);
+        cs80::Adsr amplitude[2];
+        cs80::FilterEnv filter[2];
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const auto expected = selector == 3 ? completePairEnvelopeExpectation(rank)
+                                                 : sourceEnvelopeExpectation(rank, selector);
+            amplitude[rank].noteOn(expected.amplitudeAttack, expected.amplitudeDecay,
+                                   expected.amplitudeSustain, expected.amplitudeRelease);
+            filter[rank].noteOn(expected.filterInitial, expected.filterTarget,
+                                expected.filterAttack, expected.filterDecay, expected.filterRelease, 0.0f);
+        }
+        juce::AudioBuffer<float> empty(2, 0);
+        juce::MidiBuffer midi;
+        midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+        host.processBlock(empty, midi);
+        midi.clear();
+        for (int block = 0; block < 4; ++block)
+        {
+            juce::AudioBuffer<float> audio(2, 64);
+            host.processBlock(audio, midi);
+            for (int sample = 0; sample < 128; ++sample)
+                for (int rank = 0; rank < 2; ++rank)
+                {
+                    amplitude[rank].tick(96000.0f, true, true);
+                    filter[rank].tick(96000.0f, true, true);
+                }
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                const auto actual = host.getEngine().getRankEnvelopeState(0, rank);
+                const auto a = amplitude[rank].getState();
+                const auto f = filter[rank].getState();
+                check(actual.amplitude.stage == a.stage && std::abs(actual.amplitude.value - a.value) < 2e-5f
+                          && std::abs(actual.amplitude.elapsed - a.elapsed) < 2e-6f
+                          && actual.fi…9047 tokens truncated…      check(p->getNumSteps() == 14 && p->convertFrom0to1(p->getDefaultValue()) == 13.0f,
+                  "source choices and PANEL default");
+        }
+    }
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+        {
+            const auto id = Cs80AudioProcessor::memoryParameterId(bank, local);
+            if (!Cs80AudioProcessor::isMemoryControl(local))
+            {
+                check(id.isEmpty(), "extensions excluded from miniature automation");
+                continue;
+            }
+            check(id == "memory_" + juce::String(bank + 1) + "_" + cs80::kChannelDefs[local].id,
+                  "stable descriptive memory parameter ID");
+            auto* p = processor.getAPVTS().getParameter(id);
+            check(p != nullptr && processor.getParameters()[next++] == p, "memory bank parameter ordering");
+            if (!p) continue;
+            check(p->getVersionHint() == 2, "new memory AU version hint follows legacy parameters");
+            const auto& d = cs80::kChannelDefs[local];
+            const auto& range = p->getNormalisableRange();
+            check(range.start == d.min && range.end == d.max && range.skew == d.skew,
+                  "memory range and skew agree with main panel");
+            for (float fraction : { 0.0f, 0.2f, 0.5f, 0.8f, 1.0f })
+            {
+                const float value = local == cs80::CP_saw || local == cs80::CP_pulse
+                    ? (fraction >= 0.5f ? 1.0f : 0.0f) : d.min + fraction * (d.max - d.min);
+                processor.setMemoryValue(bank, local, value);
+                check(std::abs(processor.getMemoryValue(bank, local) - value)
+                          <= std::max(0.0001f, (d.max - d.min) * 0.00001f), "memory API uses host skew");
+            }
+            processor.setMemoryValue(bank, local, d.def);
+        }
+
+
+    // Literal snapshot of the shipped228 IDs. This must not be generated from
+    // the live definitions, or accidental reordering could make both sides agree.
+    const char* legacyHostIds[] = {
+        "master_tune",
+        "detune",
+        "mix",
+        "brilliance",
+        "resonance",
+        "master_sustain",
+        "volume",
+        "init_bend",
+        "portamento",
+        "glide_mode",
+        "sustain_mode",
+        "key_release",
+        "ribbon",
+        "sub_wave",
+        "sub_speed",
+        "sub_vco",
+        "sub_vcf",
+        "sub_vca",
+        "sub_at_speed",
+        "sub_at_vco",
+        "ring_speed",
+        "ring_depth",
+        "ring_attack",
+        "ring_decay",
+        "ring_amount",
+        "chorus_on",
+        "chorus_mode",
+        "chorus_speed",
+        "chorus_depth",
+        "output_mode",
+        "voice_dispersion",
+        "drift",
+        "analog_noise",
+        "mpe_on",
+        "pitch_bend_range",
+        "mpe_bend_range",
+        "tuning_ref",
+        "modwheel_sub",
+        "modwheel_vcf",
+        "lfo1_rate",
+        "lfo1_depth",
+        "lfo1_dest",
+        "lfo2_rate",
+        "lfo2_depth",
+        "lfo2_dest",
+        "lfo3_rate",
+        "lfo3_depth",
+        "lfo3_dest",
+        "fx1_type",
+        "fx1_mix",
+        "fx2_type",
+        "fx2_mix",
+        "fx3_type",
+        "fx3_mix",
+        "arp_on",
+        "arp_mode",
+        "arp_rate",
+        "arp_octaves",
+        "macro1",
+        "macro2",
+        "macro3",
+        "macro4",
+        "ch1_saw",
+        "ch1_pulse",
+        "ch1_sine",
+        "ch1_noise",
+        "ch1_pw",
+        "ch1_pwm_speed",
+        "ch1_pwm_depth",
+        "ch1_feet",
+        "ch1_hpf_cutoff",
+        "ch1_hpf_res",
+        "ch1_hpf_on",
+        "ch1_lpf_cutoff",
+        "ch1_lpf_res",
+        "ch1_lpf_on",
+        "ch1_f_il",
+        "ch1_f_al",
+        "ch1_f_a",
+        "ch1_f_d",
+        "ch1_f_r",
+        "ch1_vcf_level",
+        "ch1_v_a",
+        "ch1_v_d",
+        "ch1_v_s",
         "ch1_v_r",
         "ch1_v_level",
         "ch1_init_brill",
@@ -2778,6 +2968,8 @@ void testSourceFactoryHost()
     cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio interaction");
     cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: parameter menus and host gestures");
+    cs80::tests::control_context::testParameterMenus(check, flushGui);
     std::puts("UI SMOKE PHASE: studio MIDI learn");
     cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio undo and redo");
