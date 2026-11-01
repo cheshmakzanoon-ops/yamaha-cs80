@@ -74,6 +74,27 @@
       "click_retrigger_max": 1.0,
       "click_fixture": "cs80_engine_audit --suite phrase, policy source, every row at 44.1/48/96 kHz, columns click_steal and click_retrigger"
     },
+    "click_event_causality_diagnostic": {
+      "description": "2026-11-01 pre-registration for opt-in phrase-audit counterfactual diagnostics only. The established <=1 raw click acceptance gate is unchanged and both named outliers remain OPEN. A second render with one MIDI event removed fixes the background waveform baseline; event-only derivative means (original - no-event) adjacent-sample difference. The 2 ms probe starts at the existing reported output latency, not at the unobservable MIDI instant.",
+      "evidence": "Software renders of Bass Stack (legacy-bank program through Source Performance) and Tone I/II Funky 1+2 (hardware-tab setup), cs80_engine_audit --suite phrase --explain-clicks --counterfactual. Model VCA and decimator are declared approximations, not Yamaha hardware measurements. The large 8 ms window contains normal attack waveform slopes, so a high raw score alone does not prove an event-edge click. Alternative causes include real envelope capacitor restart, VCA pedestal, oscillator phase interference, and a sustained-waveform slope with no event; only an event-local discontinuity would justify an audio repair.",
+      "reference_policy": "source",
+      "reference_numeric_rel": 0.05,
+      "first_sample_event_step_abs_max": 1e-6,
+      "early_event_step_ratio_max": 0.10,
+      "early_probe_seconds": 0.002,
+      "fixtures": [
+        {
+          "name": "Bass Stack", "rate": 44100, "event": "retrigger_on", "raw_column": "click_retrigger",
+          "observed_score": 1.51052, "without_event_score": 0.0309965,
+          "early_event_step_ratio": 0.0514200, "full_window_event_step_ratio": 1.49814
+        },
+        {
+          "name": "Funky 1 + Funky 2", "rate": 48000, "event": "single_off", "raw_column": "click_off",
+          "observed_score": 1.64797, "without_event_score": 1.67988,
+          "early_event_step_ratio": 0.0368498, "full_window_event_step_ratio": 0.277366
+        }
+      ]
+    },
     "tolerance_drift": {
       "description": "Plan step 2.5 (registered 2026-10-31 by the integrator before implementation). Circuit-engine per-card component tolerances and thermal drift (src/core/ToleranceModel.h). Declared distributions, not measured units: resistors 5 %, capacitors 10 %, truncated normal with sigma = tol / 2 and truncation at +/- tol.",
       "draw_sigma_rel": 0.1,

@@ -456,6 +456,10 @@ target_link_libraries(cs80_engine_audit PRIVATE cs80_core)
 add_executable(cs80_parity_capture src/tools/parity_capture.cpp)
 target_link_libraries(cs80_parity_capture PRIVATE cs80_core)
 if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_click_event_causality
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_click_event_causality.py
+                     --audit $<TARGET_FILE:cs80_engine_audit>)
+    set_tests_properties(cs80_click_event_causality PROPERTIES TIMEOUT 240)
     add_test(NAME cs80_parity_capture_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_capture.py
                      --capture $<TARGET_FILE:cs80_parity_capture>)
