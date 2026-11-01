@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-01",
+  "status": "Prospective source-runner acceptance. Publish before the new runner's fault-injection evaluation; no source mutation is yet counted as detected.",
+  "purpose": "Prove that the optional same-runner CPU checkpoint collector rejects tampered source, invalid sweep data and weakened timing schedules. The user's original DSP, sound, CPU and compatibility tolerances remain unchanged.",
+  "reference": {
+    "existing_measurement_contract": "docs/evidence/qualification-2026-10-31/cpu/README.md and scripts/summarize-cpu-benchmarks.py",
+    "reporter_sha256": "66f610e5c0ffcf1c574705a2328b58ffc7e800658d796efe6299a04ec0f1357c",
+    "source_fixture": "docs/evidence/qualification-2026-10-31/cpu/stationary-controls/round-1",
+    "metadata_sha256": "25954954dbedaa6413845902c3d5fb1dbbb6e85f7cd77464e31d8105c16d8e6d",
+    "completed_sha256": "1e7d20b1afb2139fe82f8f8dfa0dfd6facac4e104e7d800398fd3e0db241985c",
+    "results_csv_sha256": "2796f381f5ae4228978bd213942be0fe79e62034c1cd7669d245be070b6fa06e"
+  },
+  "fixed_request": {
+    "rate": 48000,
+    "block": 256,
+    "callbacks": 1024,
+    "rounds": 3,
+    "suite": "baseline",
+    "case_count": 27,
+    "result_rows_per_round": 51,
+    "checkpoint_source": "An immutable full 40-hex commit SHA already in the checkout; the manifest additionally pins its original 40-hex benchmark-source blob",
+    "reporter_source": "The full 64-hex SHA-256 must match the checked-in unchanged existing reporter",
+    "timing_order": "Compile every checkpoint before timing; then run round-major: all checkpoints' first rounds, all second rounds, all third rounds; each subprocess completes before the next starts",
+    "recorded_host_work": "Capture CPU, compiler, process names, clock/frequency and cgroup state only outside each benchmark subprocess",
+    "no_performance_pass_claim": true
+  },
+  "round_acceptance": {
+    "source": "Unchanged original 27-case/51-row source_factory_benchmark, exactly 48 kHz/256 frames/1024 held callbacks, no --quick and no fallback/retry",
+    "metadata": "Caller-verified full commit and baseline suite; quick_subset=false, callbacks_per_held_phase=1024; original metadata still disclaims DAW/hardware qualification",
+    "completion": "completed=true, cases=27, rows=51",
+    "csv": "Exactly 51 distinct (rate, block, mode, scenario, initial_selector, phase) rows, each rate=48000 and block=256, finite median/p99/peak/rms, no nonfinite rendered samples",
+    "integrity": "Verified source commit/tree, expected benchmark blob, clean source checkout, unmodified executable SHA-256 before each timed subprocess",
+    "serialization": "All raw rounds and logs retained; never re-run or discard an unfavourable round; p99 and deadline misses originate from the same round whose median was selected per fixture"
+  },
+  "source_mutation_observers": [
+    "Truncate the fixed schedule to two rounds; the exact three-round order check must fail.",
+    "Reverse the checkpoint order within one round; the registered order check must fail.",
+    "Accept a one-round request or a seven-character source revision; the immutable request gate must fail.",
+    "Accept a duplicate checkpoint label or commit; the request gate must fail.",
+    "Ignore the reporter SHA-256, source SHA, benchmark blob, source dirtiness or executable SHA-256; each respective tampered input must fail.",
+    "Ignore source_commit_caller_verified, suite or quick_subset metadata; each invalid control must fail.",
+    "Ignore completed=false, 26 cases or 50 declared result rows; each malformed completion record must fail.",
+    "Accept 50 CSV rows, duplicate fixture rows, 44.1 kHz / 128-frame rows, a nonfinite metric or a nonfinite rendered-sample count; each malformed CSV must fail."
+  ],
+  "mutation_method": "Mutate the actual Python source in a temporary copy, import/compile it successfully, and call the affected observer with a real sealed CSV/metadata fixture plus one deliberate bad value. A mutant is killed only if the original positive control passes and the mutant normally accepts an input its intended invariant rejects; crashes, syntax failures, timeouts and unrelated exceptions are not kills. Restore and re-evaluate the unmodified source afterward.",
+  "not_claimed": "This is a collection/provenance gate. Passing it does not meet either CPU target, validate an analog circuit law, prove absence of hypervisor interference, or replace the mandatory audio/accuracy and strict compatibility gates."
+}
