@@ -517,7 +517,22 @@ private:
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
+    // One internal sample is strictly ordered: global controls/oscillators,
+    // 16 rank chains, shared mix/effects, then listening outputs. The frame
+    // carries the former locals across those boundaries without recomputing
+    // any control or changing the arithmetic order (CPU pass, 2026-11-01).
+    struct InternalSampleFrame
+    {
+        float sr = 0.0f, invSr = 0.0f;
+        float pwmSine[kNumRanks] {};
+        float mixL = 0.0f, mixR = 0.0f;
+        bool smoothControls = false, sharedNoise = false;
+    };
     void processInternalSample(float& outL, float& outR, float externalModulation);
+    void processGlobalSample(InternalSampleFrame& frame, float externalModulation);
+    void processRankSamples(InternalSampleFrame& frame);
+    void processMixSample(InternalSampleFrame& frame);
+    void processOutputSample(InternalSampleFrame& frame, float& outL, float& outR);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).

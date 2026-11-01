@@ -1821,8 +1821,19 @@ void Engine::endSmoothedControls() noexcept
 
 void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
 {
-    const float sr = (float) internalRate;
-    const float invSr = 1.0f / sr;
+    InternalSampleFrame frame;
+    frame.sr = (float) internalRate;
+    frame.invSr = 1.0f / frame.sr;
+    processGlobalSample(frame, externalModulation);
+    processRankSamples(frame);
+    processMixSample(frame);
+    processOutputSample(frame, outL, outR);
+}
+
+void Engine::processGlobalSample(InternalSampleFrame& frame, float externalModulation)
+{
+    const float sr = frame.sr;
+    const float invSr = frame.invSr;
 
     // KAS scan instants (Phase 2.2, opt-in). Switching the option off flushes
     // anything still queued at once.
@@ -1841,6 +1852,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     updateArpeggiator(invSr);
     // Circuit engine: smoothed settings and controllers for this sample.
     const bool smoothControls = usesSourceModels(global.renderPolicy);
+    frame.smoothControls = smoothControls;
     if (smoothControls)
         beginSmoothedControls();
 
@@ -1882,6 +1894,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     pwmPhase[1] -= std::floor(pwmPhase[1]);
     // PWM is one shared sine per rank; evaluate it once, not once per voice.
     const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
+    frame.pwmSine[0] = pwmSine[0];
+    frame.pwmSine[1] = pwmSine[1];
 
     // TRG5 positive diode-OR -> SP. Legacy: normalized ideal maximum of held
     // voices, not event memory (physical release removes it even if a pedal or
@@ -1960,9 +1974,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     subValue *= modernGlobal.subDepthGain;
     driftPhase += 0.031f * invSr;
     driftPhase -= std::floor(driftPhase);
+}
 
-    float mixL = 0.0f;
-    float mixR = 0.0f;
+void Engine::processRankSamples(InternalSampleFrame& frame)
+{
+    const float sr = frame.sr;
+    const auto& pwmSine = frame.pwmSine;
+    float& mixL = frame.mixL;
+    float& mixR = frame.mixR;
     int stillHeld = 0;
 
     // Double accumulator avoids long-glide float rounding stalling before target.
@@ -1978,6 +1997,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Circuit engine: ONE shared panel-noise generator sample for every voice
     // (SUB29 fan-out, NoiseSource.h). Legacy draws per rank below, as before.
     const bool sharedNoise = usesSourceModels(global.renderPolicy);
+    frame.sharedNoise = sharedNoise;
     const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
     const bool freeRunning = freeRunningVoices();
@@ -2328,6 +2348,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     }
 
     heldCount = stillHeld;
+}
+
+void Engine::processMixSample(InternalSampleFrame& frame)
+{
+    const float sr = frame.sr;
+    const float invSr = frame.invSr;
+    const bool sharedNoise = frame.sharedNoise;
+    float& mixL = frame.mixL;
+    float& mixR = frame.mixR;
+    const auto& modernGlobal = modern.getGlobalOffsets();
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
@@ -2437,6 +2467,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         mixL = out.l;
         mixR = out.r;
     }
+}
+
+void Engine::processOutputSample(InternalSampleFrame& frame, float& outL, float& outR)
+{
+    const float mixL = frame.mixL;
+    const float mixR = frame.mixR;
+    const bool smoothControls = frame.smoothControls;
 
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
     // resets without eating the low end of the instrument.
