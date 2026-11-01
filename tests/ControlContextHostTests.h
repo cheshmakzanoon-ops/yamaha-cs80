@@ -123,17 +123,28 @@ inline void testParameterMenusHeadless(const Check& check)
 
     // Async popup actions must check policy at activation, not only when the
     // menu was built: the player can switch to PURE while the menu is open.
+    const int hpHost = processor.getParameters().indexOf(p);
+    check(processor.getMidiLearn().assign(74, hpHost),
+          "pre-register MIDI CC 74 before testing PURE forget restrictions");
     auto staleMenu = cs80::ui::buildParameterContextMenu(processor, hpId, hpf, hpIndex);
     const auto* staleLearn = menuItem(staleMenu, "MIDI learn");
+    const auto* staleForget = menuItem(staleMenu, "Forget MIDI CC 74");
     processor.setParamValue(cs80::P_parityMode, 1.0f);
     if (staleLearn != nullptr && staleLearn->action) staleLearn->action();
     check(staleLearn != nullptr && staleLearn->action
           && processor.getMidiLearn().learningParameter() < 0,
           "MIDI learn callback from a stale popup remains inert after switching into PURE");
+    if (staleForget != nullptr && staleForget->action) staleForget->action();
+    check(staleForget != nullptr && staleForget->action
+          && processor.getMidiLearn().controllerFor(hpHost) == 74,
+          "stale MIDI forget action cannot alter a mapping after entering PURE");
     auto pureMenu = cs80::ui::buildParameterContextMenu(processor, hpId, hpf, hpIndex);
     const auto* pureLearn = menuItem(pureMenu, "MIDI learn");
     check(pureLearn != nullptr && ! pureLearn->isEnabled,
           "PURE CS-80 keeps MIDI learn disabled even on switches and combos");
+    const auto* pureForget = menuItem(pureMenu, "Forget MIDI CC 74");
+    check(pureForget != nullptr && ! pureForget->isEnabled,
+          "PURE CS-80 disables MIDI forget on already mapped switches");
 }
 
 inline void testParameterMenus(const Check& check, const Flush& flush)
