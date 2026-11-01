@@ -2057,8 +2057,31 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         // its first physical sample to seed them; never invent a zero-Hz past.
         const bool coldBootstrap = freeRunning && !v.active && !v.idleControlsPrimed;
         int idleSamples = 0;
+        bool modernUpdatedForTail = false;
         if (! v.active && !coldBootstrap)
         {
+            const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
+            const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
+            // Keep a removed pan route current until its cached offset clears.
+            // Released controller inputs stay zero after the first idle deadline,
+            // even when the smoother restores their event-set targets afterward.
+            if (freeRunning && modern.isActive()
+                && (modern.hasPanDestinations()
+                    || modern.rankOffsets(vi, 0).pan != 0.0f
+                    || modern.rankOffsets(vi, 1).pan != 0.0f)
+                && (v.ranks[0].vca.hasCouplingTail() || v.ranks[1].vca.hasCouplingTail()))
+            {
+                // Tail pan needs this sample's modulation. Predict the original
+                // idle deadline without changing its clock or ownership cadence.
+                const bool scheduled = v.idleClock + 1 >= due;
+                const bool releasedControls = scheduled || v.idleSteps > 0;
+                modern.processVoice(vi,
+                    { v.age, v.held || v.pedalHeld, v.note, v.velocity,
+                      releasedControls ? 0.0f : v.pressure, releasedControls ? 0.0f : v.timbre, v.contour,
+                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, scheduled);
+                modernUpdatedForTail = true;
+            }
             // The amplitude gate may be closed while its downstream VCA
             // coupling capacitor still drives the mix. Keep that signed RC
             // discharge connected at audio rate; only the oscillator/filter
@@ -2083,8 +2106,6 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
                     mixL += voiceOut * panLeft;
                     mixR += voiceOut * panRight;
                 }
-            const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
-            const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
             if (! freeRunning || ++v.idleClock < due)
                 continue;
             idleSamples = v.idleClock;
@@ -2175,9 +2196,10 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         const float dispersion = global.voiceDispersion;
         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
         // Envelope sources are the previous sample's values of each rank.
-        modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
-                                  { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
-                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
+        if (! modernUpdatedForTail)
+            modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
+                                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
 
         for (int ch = 0; ch < 2; ++ch)
         {
