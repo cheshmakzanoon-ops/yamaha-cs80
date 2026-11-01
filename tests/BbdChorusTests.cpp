@@ -308,6 +308,56 @@ void stability()
         check(finite && peak < 10.0f, "extreme speed and depth stay finite and bounded");
     }
 }
+
+void independentTabCombinations()
+{
+    // Preregistered declared inference (OE57 clock control + OE58 four VCAs):
+    // simultaneous CHORUS/TREMOLO acts on independent nodes of ONE OE2 wet
+    // path. This tests our software contract, not unmeasured hardware behavior.
+    {
+        BbdChorus oldApi, independent;
+        oldApi.prepare(96000.0f);
+        independent.prepare(96000.0f);
+        bool identical = true;
+        for (int n = 0; n < 24000; ++n)
+        {
+            const bool on = (n / 1811) % 3 != 0;
+            const bool tremolo = (n / 437) % 2 != 0;
+            const float l = 0.4f * std::sin(0.053f * (float) n);
+            const float r = 0.3f * std::cos(0.031f * (float) n);
+            const auto legacy = oldApi.process(l, r, 2.37f, 0.95f, on, tremolo);
+            const auto separate = independent.processSwitches(l, r, 2.37f, 0.95f,
+                                                               on && !tremolo, on && tremolo);
+            identical = identical && legacy.l == separate.l && legacy.r == separate.r;
+        }
+        check(identical, "the preexisting off/chorus/tremolo API remains bit-identical at every switch edge");
+    }
+    {
+        BbdChorus combined, chorusOnly, tremoloOnly, off;
+        for (auto* effect : { &combined, &chorusOnly, &tremoloOnly, &off }) effect->prepare(96000.0f);
+        float versusChorus = 0.0f, versusTremolo = 0.0f;
+        bool dryExact = true, finite = true;
+        for (int n = 0; n < 40000; ++n)
+        {
+            const float l = 0.4f * std::sin(0.037f * (float) n);
+            const float r = 0.35f * std::sin(0.041f * (float) n);
+            const auto both = combined.processSwitches(l, r, 2.37f, 0.95f, true, true);
+            const auto c = chorusOnly.processSwitches(l, r, 2.37f, 0.95f, true, false);
+            const auto t = tremoloOnly.processSwitches(l, r, 2.37f, 0.95f, false, true);
+            const auto neither = off.processSwitches(l, r, 2.37f, 0.95f, false, false);
+            dryExact = dryExact && neither.l == l && neither.r == r;
+            finite = finite && std::isfinite(both.l) && std::isfinite(both.r);
+            if (n > 12000)
+            {
+                versusChorus = std::max(versusChorus, std::abs(both.l - c.l));
+                versusTremolo = std::max(versusTremolo, std::abs(both.r - t.r));
+            }
+        }
+        check(dryExact, "both switches off still runs the internal network with bit-exact dry output");
+        check(finite && versusChorus > 0.0001f && versusTremolo > 0.0001f,
+              "both switches on simultaneously move the clock and the four VCA gains");
+    }
+}
 } // namespace
 
 int main()
@@ -320,6 +370,7 @@ int main()
     delayFollowsIntegratedClock();
     policyCompatibility();
     stability();
+    independentTabCombinations();
     std::printf("%d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;
 }
