@@ -33,3 +33,15 @@ full-rate poly elapsed time, both ranks/policies/rates/qualities, global selecti
 timing, late matrix activation before note identity was latched, and subsequent
 note-RNG ordering. Production changes remain pending qualification of the prior
 VCA audio checkpoint and its separate published V2 pin.
+
+## Registration amendment: removal of the last pan route
+
+Before applying or evaluating the candidate, source review identified a second
+boundary: removing, zeroing or rerouting pan while another matrix slot stays
+active leaves the previous voice pan offset cached. A predicate that checks only
+current live pan destinations would miss clearing that offset before the next
+inactive tail sample. Register both-rank witnesses for those three edits using
+the existing exact zero/current-mix bounds. Tail eligibility may include a
+nonzero cached pan offset, so one final scheduled-safe evaluation clears it.
+This applies only to charged Source tails; existing Legacy and neutral paths
+remain unchanged. A separate mutation will remove that cached-offset condition.

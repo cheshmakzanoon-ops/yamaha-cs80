@@ -12,8 +12,8 @@
     "global_selection_bit_mismatches_max": 0,
     "neutral_policy_pcm_bit_mismatches_max": 0,
     "legacy_inactive_pan_max_abs": 0.0,
-    "minimum_retired_coupling_abs": 1e-6,
-    "minimum_current_pan_change": 1e-5
+    "minimum_retired_coupling_abs": 1e-06,
+    "minimum_current_pan_change": 1e-05
   },
   "engine_fixture": "Source Performance and Pure, 44.1/48/96 kHz, Eco/Standard/HQ, both rank mix endpoints, shared free and per-voice poly MSEG-to-pan. Silent oscillators charge the declared VCA pedestal. Observe the first 2048 internal samples after retirement, including the first inactive sample within a host frame. At each sample compare the consumed raw rank mix with the independently known current MSEG value, existing pan law and post-step coupling state. The observer calls the same four production stages and must equal an unobserved processInternalSample twin bit for bit. A linear, non-looping poly MSEG must advance by actual elapsed internal time, within 1e-12 seconds, with no extra tick at idle deadlines.",
   "ownership_fixture": "Compare a live-pan engine with an otherwise identical no-pan reference while routing non-MSEG velocity/key/random sources to a global destination. Keep an older note held and retire the newest. Original scheduled ownership publication must remain exact. Also enable/reroute pan when the inactive voice's modern note age has never been latched, then assign another note before the retired voice's idle deadline: extra tail updates must not consume per-note RNG or trigger mono/poly identity transitions early.",
@@ -27,6 +27,8 @@
     "latch note identity/RNG on an unscheduled tail sample",
     "run the tail update in Legacy",
     "enable the modern matrix under Pure",
-    "weaken a registered exact or elapsed-time limit"
-  ]
+    "weaken a registered exact or elapsed-time limit",
+    "ignore cached pan when the last live pan route is removed"
+  ],
+  "route_removal_amendment": "Registered before applying or evaluating the candidate: after a charged Source voice retires, zero, remove or reroute its pan slot while another matrix route remains live. Both rank endpoints must consume exactly zero stale pan starting on the next internal sample, even before the original idle deadline. Existing exact pan and raw-mix bounds apply; no new or weakened numeric tolerance. A cached nonzero pan offset may require one final early evaluation after the last live pan route disappears."
 }
