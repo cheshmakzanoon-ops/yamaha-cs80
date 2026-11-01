@@ -25,6 +25,23 @@
     "recorded_host_work": "Capture CPU, compiler, process names, clock/frequency and cgroup state only outside each benchmark subprocess",
     "no_performance_pass_claim": true
   },
+  "append_only_checkpoint_history": {
+    "scope": "The existing seven full-SHA original checkpoints must remain an exact ordered prefix. Later CPU audio revisions may add uniquely labelled, full-SHA checkpoints after the prefix, up to the runner's documented finite 16-entry limit. Changing, dropping, replacing or reordering a historical entry must fail before any build.",
+    "immutable_prefix": [
+      {"label": "main-before", "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d", "benchmark_blob": "b73298678acb6684654ed1b3771fb442352853c0"},
+      {"label": "inherited-before", "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c", "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"},
+      {"label": "lazy-filter-histories", "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9", "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"},
+      {"label": "idle-exact", "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b", "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"},
+      {"label": "stationary-controls", "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024", "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"},
+      {"label": "unused-lfo", "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b", "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"},
+      {"label": "rank-idle-1500", "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e", "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"}
+    ],
+    "mutation_observers": [
+      "Delete one originally registered checkpoint: the frozen prefix gate must reject the shortened/reordered list.",
+      "Change an original checkpoint's full source commit without losing 40-hex syntax: the frozen prefix gate must reject it.",
+      "Append one new distinct full-SHA checkpoint after the historical seven: the valid request remains accepted."
+    ]
+  },
   "round_acceptance": {
     "source": "Unchanged original 27-case/51-row source_factory_benchmark, exactly 48 kHz/256 frames/1024 held callbacks, no --quick and no fallback/retry",
     "metadata": "Caller-verified full commit and baseline suite; quick_subset=false, callbacks_per_held_phase=1024; original metadata still disclaims DAW/hardware qualification",
