@@ -330,6 +330,12 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_ig00151_idle_tail_tests COMMAND cs80_ig00151_idle_tail_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
     set_tests_properties(cs80_ig00151_idle_tail_tests PROPERTIES TIMEOUT 120)
+
+    add_executable(cs80_vca_tail_modulation_tests tests/VcaTailModulationTests.cpp)
+    target_link_libraries(cs80_vca_tail_modulation_tests PRIVATE cs80_core)
+    add_test(NAME cs80_vca_tail_modulation_tests COMMAND cs80_vca_tail_modulation_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/vca-tail-modulation.json)
+    set_tests_properties(cs80_vca_tail_modulation_tests PROPERTIES TIMEOUT 240)
     add_executable(cs80_tolerance_drift_tests tests/ToleranceDriftTests.cpp)
     target_link_libraries(cs80_tolerance_drift_tests PRIVATE cs80_core)
     add_test(NAME cs80_tolerance_drift_tests COMMAND cs80_tolerance_drift_tests
