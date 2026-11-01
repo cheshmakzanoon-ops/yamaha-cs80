@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "registered_utc": "2026-11-01",
+  "purpose": "Durable complete unmodified three-rate engine audit; retain original numerical acceptance thresholds",
+  "production_audio_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "expected_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "quick": false,
+  "rate_order_hz": [
+    44100,
+    48000,
+    96000
+  ],
+  "suite_files": {
+    "latency.csv": 40,
+    "alias.csv": 168,
+    "fx.csv": 102,
+    "phrase.csv": 566,
+    "click-causality.csv": 9
+  },
+  "policy_coverage": "Legacy and Source Performance; PURE CS-80 and CPU suite not included. Frozen 222-program factory bank under both policies at first rate, every 16th program at other rates, eleven paired tone-tab configurations at all rates.",
+  "existing_numerical_contracts": [
+    "tests/parity/tolerances-v2/ws1-voice.json",
+    "tests/parity/tolerances-v2/completion-dsp.json"
+  ],
+  "frozen_analysis": "docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py",
+  "acceptance_policy": "Do not modify tolerances, source models, analysis rules or phrase fixtures; retain failures and partial evidence. This request registers coverage, not new hardware fidelity measurements or score thresholds."
+}
