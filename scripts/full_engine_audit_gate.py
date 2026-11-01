@@ -126,8 +126,8 @@ def write_csv(path: Path, reporter, rows: list[dict[str, str]], name: str):
     (path / name).write_text(buffer.getvalue())
 
 
-def row_for(reporter, name: str, **overrides: str):
-    row = {field: "0" for field in reporter.HEADERS[name]}
+def row_for(reporter, suite_name: str, **overrides: str):
+    row = {field: "0" for field in reporter.HEADERS[suite_name]}
     for field in reporter.TEXT_FIELDS:
         if field in row:
             row[field] = "x"
