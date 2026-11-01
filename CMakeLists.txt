@@ -351,6 +351,16 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_modern_fx_tests COMMAND cs80_modern_fx_tests)
     set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
 
+    # Truth registered first in steinberg-automation-cursor-v1.json.
+    # No JUCE or VST3 SDK linkage: the real-time curve reader must stay a
+    # fixed-size, allocation-free core helper across all plugin formats.
+    add_executable(cs80_steinberg_automation_cursor_tests tests/SteinbergAutomationCursorTests.cpp)
+    target_include_directories(cs80_steinberg_automation_cursor_tests PRIVATE src)
+    add_test(NAME cs80_steinberg_automation_cursor_tests
+             COMMAND cs80_steinberg_automation_cursor_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/steinberg-automation-cursor-v1.json)
+    set_tests_properties(cs80_steinberg_automation_cursor_tests PROPERTIES TIMEOUT 30)
+
     # [ws6-library] register this workstream's core tests below this line.
     find_package(Threads REQUIRED)
     add_executable(cs80_library_audit_tests tests/LibraryAuditTests.cpp)
