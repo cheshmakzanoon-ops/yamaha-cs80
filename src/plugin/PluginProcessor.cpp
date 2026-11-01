@@ -831,6 +831,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     else if (extensionActive)
     {
         extensionEngine->allNotesOff(false, 0);
+        keyPressureOwnership.clearExtension();
         extensionActive = false;
     }
     // Scala table from the message thread (never waits for the writer).
@@ -916,8 +917,13 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     size_t uiIndex = 0;
     auto voiceSnapshot = [&]
     {
-        std::array<cs80::Engine::VoiceInfo, 8> voices;
+        // Both engines are queried on the render thread at the same sample
+        // boundary. 8-voice/PURE modes leave slots 8..15 inactive; pressure
+        // attribution must not mistake an extension-engine onset for a miss.
+        std::array<cs80::Engine::VoiceInfo, 16> voices {};
         for (int i = 0; i < 8; ++i) voices[(size_t) i] = engine.getVoiceInfo(i);
+        if (extensionActive)
+            for (int i = 0; i < 8; ++i) voices[(size_t) (8 + i)] = extensionEngine->getVoiceInfo(i);
         return voices;
     };
     auto uiPosition = [&]
@@ -981,7 +987,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             continue;
         }
         const auto message = metadata.getMessage();
-        std::array<cs80::Engine::VoiceInfo, 8> before;
+        std::array<cs80::Engine::VoiceInfo, 16> before;
         const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn;
         if (allocatingHostNote) before = voiceSnapshot();
         observeHostMidi(message);
@@ -999,8 +1005,13 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     unsigned mask = 0;
     for (int i = 0; i < 8; ++i)
         if (engine.getVoiceInfo(i).active) mask |= 1u << i;
-    activeVoiceMask.store(mask, std::memory_order_relaxed);
-    activeVoiceCount.store(engine.activeVoices(), std::memory_order_relaxed);
+    if (extensionActive)
+        for (int i = 0; i < 8; ++i)
+            if (extensionEngine->getVoiceInfo(i).active) mask |= 1u << (8 + i);
+    activeVoiceMask.store(mask | (extensionActive ? (1u << 16) : 0u), std::memory_order_relaxed);
+    activeVoiceCount.store(engine.activeVoices()
+                           + (extensionActive ? extensionEngine->activeVoices() : 0),
+                           std::memory_order_relaxed);
 
     // Inspect the completed host buffer, not pre-decimator/internal stereo
     // values: mono mapping/cancellation and its arithmetic are already applied.

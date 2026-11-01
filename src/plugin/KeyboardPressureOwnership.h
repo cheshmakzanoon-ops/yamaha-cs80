@@ -1,5 +1,6 @@
 #pragma once
 #include "KeyboardEventQueue.h"
+#include <algorithm>
 
 namespace cs80
 {
@@ -9,6 +10,16 @@ class KeyboardPressureOwnership
 {
 public:
     void clear() noexcept { current.fill({}); origins.fill({}); }
+    // Dropping the second instrument must not discard valid first-engine
+    // gestures, but no old extension origin may survive a later re-entry.
+    void clearExtension() noexcept
+    {
+        for (std::size_t i = 8; i < current.size(); ++i)
+        {
+            current[i] = {};
+            origins[i] = {};
+        }
+    }
     void noteOff(int channel, int note) noexcept
     {
         for (auto& owner : current)
@@ -23,11 +34,12 @@ public:
     bool allocated(const Snapshot& before, const Snapshot& after, KeyPressureToken token,
                    int channel, int note) noexcept
     {
-        // Acceptance by the FIFO is NOT proof Engine allocated a voice: eight
-        // held/pedal-held circuits can refuse an onset. Never claim that voice.
+        // Acceptance by the FIFO is NOT proof an Engine allocated a voice:
+        // eight or sixteen held/pedal-held circuits can refuse an onset.
         if (token) noteOff(channel, note);
         bool found = false;
-        for (size_t i = 0; i < origins.size(); ++i)
+        const auto slots = std::min({ origins.size(), before.size(), after.size() });
+        for (size_t i = 0; i < slots; ++i)
             if ((!before[i].active || (!before[i].held && !before[i].pedalHeld))
                 && after[i].active && after[i].held
                 && after[i].channel == channel && after[i].note == note)
@@ -42,11 +54,12 @@ public:
     bool allows(KeyPressureToken token, const Snapshot& voices) const noexcept
     {
         if (!token || token.channel < 1 || token.channel > 16 || token.note < 0 || token.note > 127) return false;
+        const auto slots = std::min(origins.size(), voices.size());
         bool currentGesture = false;
-        for (const auto& owner : current) currentGesture |= owner == token;
+        for (size_t i = 0; i < slots; ++i) currentGesture |= current[i] == token;
         if (!currentGesture) return false;
         bool exactHeldOrigin = false;
-        for (size_t i = 0; i < origins.size(); ++i)
+        for (size_t i = 0; i < slots; ++i)
         {
             const auto& voice = voices[i];
             if (!voice.active || voice.note != token.note) continue;
@@ -60,11 +73,12 @@ public:
         return exactHeldOrigin;
     }
 private:
-    // Only eight allocated circuits can own pressure. Index by physical slot,
-    // not a 16x128 MIDI-key table copied into every processor/test stack frame.
-    std::array<KeyPressureToken, 8> current {};
-    std::array<KeyPressureToken, 8> origins {};
+    // 16-mode adds another physical instrument. Index its eight circuits as
+    // slots 8..15; eight-voice snapshots use only 0..7. Never index by the
+    // much larger 16x128 MIDI-key space.
+    std::array<KeyPressureToken, 16> current {};
+    std::array<KeyPressureToken, 16> origins {};
 };
 static_assert(sizeof(KeyboardPressureOwnership) <= 1024,
-              "Pressure ownership must remain bounded by eight physical voices");
+              "Pressure ownership must remain bounded by sixteen physical voices");
 }
