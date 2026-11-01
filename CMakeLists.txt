@@ -555,6 +555,11 @@ if (CS80_BUILD_PLUGIN)
     add_test(NAME cs80_undo_state_replacement_host
              COMMAND CS80Snapshots --undo-state-host-smoke)
     set_tests_properties(cs80_undo_state_replacement_host PROPERTIES TIMEOUT 60)
+    # Declared OE1/OE2 independent-switch extension: host labels, exact
+    # append-only AU hint, neutral default, saved state and old-session load.
+    add_test(NAME cs80_chorus_routing_host
+             COMMAND CS80Snapshots --chorus-routing-host-smoke)
+    set_tests_properties(cs80_chorus_routing_host PROPERTIES TIMEOUT 60)
 
     # Fast, isolated native regression for both 16-voice meter banks, display
     # mode transitions and PURE semantics. Also runs in the full UI smoke above.

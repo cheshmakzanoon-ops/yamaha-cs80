@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 47047)
-Total output lines: 3637
+Warning: truncated output (original token count: 47136)
+Total output lines: 3645
 
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
@@ -11,6 +11,7 @@ Total output lines: 3637
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/VoiceActivityUiTests.h"
 #include "../../tests/UndoStateReplacementHostTests.h"
+#include "../../tests/ChorusRoutingHostTests.h"
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
@@ -1514,7 +1515,149 @@ void testSourceFactoryHost()
                 const auto f = filter[rank].getState();
                 check(actual.amplitude.stage == a.stage && std::abs(actual.amplitude.value - a.value) < 2e-5f
                           && std::abs(actual.amplitude.elapsed - a.elapsed) < 2e-6f
-                          && actual.fi…9047 tokens truncated…      check(p->getNumSteps() == 14 && p->convertFrom0to1(p->getDefaultValue()) == 13.0f,
+                          && actual.filter.stage == f.stage && std::abs(actual.filter.value - f.value) < 2e-5f
+                          && std::abs(actual.filter.elapsed - f.elapsed) < 2e-6f,
+                      "source-selected host note-on uses explicit matrix envelope targets and times from the first tick");
+            }
+        }
+    }
+
+    // Each of the 22 tones owns all 26 programmer inputs. Change every
+    // hidden PANEL input and all four inactive memories through the real APVTS,
+    // then compare sounding callbacks against an independently hosted control.
+    for (int rank = 0; rank < 2; ++rank)
+    for (int selector = 0; selector < 11; ++selector)
+    {
+        Cs80AudioProcessor reference, edited;
+        for (auto* host : { &reference, &edited })
+        {
+            host->setParamValue(cs80::P_parityMode, 1.0f);
+            automate(*host, rank, selector);
+            automate(*host, 1 - rank, 13);
+            host->prepareToPlay(48000.0, 64);
+            juce::AudioBuffer<float> empty(2, 0);
+            juce::MidiBuffer midi;
+            midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 97), 0);
+            midi.addEvent(juce::MidiMessage::channelPressureChange(1, 73), 0);
+            host->processBlock(empty, midi);
+        }
+        const auto compileCount = edited.getEngine().getSourceCompileCount();
+        int ownedControls = 0;
+        double energy = 0.0;
+        for (int control = 0; control < cs80::CP_count; ++control)
+        {
+            if (!Cs80AudioProcessor::isMemoryControl(control)) continue;
+            ++ownedControls;
+            const auto& def = cs80::kChannelDefs[control];
+            const int index = cs80::chParam(rank, control);
+            const float panelValue = edited.getParamValue(index);
+            edited.setParamValue(index, panelValue == def.min ? def.max : def.min);
+            check(edited.getParamValue(index) != panelValue, "ownership test really changes each hidden PANEL control");
+            for (int bank = 0; bank < 4; ++bank)
+            {
+                const float old = edited.getMemoryValue(bank, control);
+                edited.setMemoryValue(bank, control, old == def.min ? def.max : def.min);
+                check(edited.getMemoryValue(bank, control) != old,
+                      "ownership test really changes each inactive memory control");
+            }
+            juce::AudioBuffer<float> expected(2, 64), actual(2, 64);
+            juce::MidiBuffer midi;
+            reference.processBlock(expected, midi);
+            edited.processBlock(actual, midi);
+            bool identical = true;
+            for (int channel = 0; channel < 2; ++channel)
+                for (int sample = 0; sample < 64; ++sample)
+                {
+                    const float value = actual.getSample(channel, sample);
+                    identical = identical && std::isfinite(value) && value == expected.getSample(channel, sample);
+                    energy += (double) value * value;
+                }
+            check(identical, "every inactive PANEL/memory edit leaves the selected source's actual host audio bit-identical");
+            check(edited.getEngine().getSourceToneInfo(rank).selector == selector
+                      && sf::isSourceDriven(edited.getEngine().getSourceToneInfo(rank).route)
+                      && edited.getEngine().getSourceCompileCount() == compileCount,
+                  "inactive edits retain source identity without recompiling the tone");
+        }
+        check(ownedControls == 26 && energy > 1e-10, "all 26 source-owned host controls were tested on non-silent finite audio");
+
+        // Every exit uses this same instance, after real source audio. The
+        // selected PANEL/memory values must remain stored, become effective on
+        // selection, and never inherit a stale typed source cutoff readout.
+        for (int destination : { 13, 11, 12 })
+        {
+            automate(edited, rank, selector);
+            apply(ed…7136 tokens truncated…cessor.getFactoryPresets().size() >= 200, "factory bank present");
+    for (int index = 0; index < cs80::P_numParams; ++index)
+    {
+        const auto& def = cs80::paramDef(index);
+        if (index == cs80::P_subOriginalMode)
+        {
+            check(processor.getParamValue(index) == 1.0f, "fresh instance selects original SUB functions");
+            continue;
+        }
+        // Plan 1.7 (intentional): a fresh instance is program 0 on the circuit engine.
+        if (index == cs80::P_sourcePerformance)
+        {
+            check(processor.getParamValue(index) == 1.0f, "fresh instance selects the circuit engine");
+            continue;
+        }
+        check(std::abs(processor.getParamValue(index) - processor.getFactoryPresets()[0].values[index])
+                  <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
+              "initial program name and actual parameter values agree");
+    }
+    for (int i = 0; i < cs80::P_numParams; ++i)
+    {
+        const auto id = Cs80AudioProcessor::parameterId(i);
+        check(processor.getAPVTS().getParameter(id) != nullptr, "parameter exposed");
+    }
+
+    // Parameter physical values must use the host's skewed mapping. Linear
+    // normalization here formerly turned e.g. an 850Hz preset into ~20Hz.
+    for (int index = 0; index < cs80::P_numParams; ++index)
+    {
+        const auto& def = cs80::paramDef(index);
+        for (float fraction : { 0.0f, 0.2f, 0.5f, 0.8f, 1.0f })
+        {
+            const float physical = def.min + fraction * (def.max - def.min);
+            processor.setParamValue(index, physical);
+            const auto* hostParam = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(index));
+            const bool discrete = index == cs80::P_parityMode || index == cs80::P_sourcePerformance
+                || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
+                || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
+                || index == cs80::P_oversampling || index == cs80::P_outputJack
+                || index == cs80::P_driftModel;   // plan 2.5: a two-choice host parameter
+            const float expected = discrete
+                ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
+            check(std::abs(processor.getParamValue(index) - expected) <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
+                  "physical parameter round trips host skew");
+        }
+    }
+
+    // Preset recall deliberately leaves the jack/pedal/selector/output wiring alone, so
+    // the sweep above must not leave it at its maximum for the screenshots below.
+    for (int index = 0; index < cs80::P_numParams; ++index)
+        if (Cs80AudioProcessor::isPhysicalSetupParameter(index) || index == cs80::P_parityMode)
+            processor.setParamValue(index, cs80::paramDef(index).def);
+
+    check(processor.getParameters().size() == Cs80AudioProcessor::hostParameterCount
+          && Cs80AudioProcessor::hostParameterCount >= 245, "at least the 245 shipped host parameters");
+    for (int i = 0; i < cs80::P_legacyNumParams; ++i)
+    {
+        check(processor.getParameters()[i] == processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(i)),
+              "original host parameter order preserved");
+        check(processor.getParameters()[i]->getVersionHint() == 1, "legacy AU version hints preserved");
+    }
+    int next = cs80::P_legacyNumParams;
+    for (int channel = 0; channel < 2; ++channel)
+    {
+        const auto id = Cs80AudioProcessor::hardwareSourceParameterId(channel);
+        check(id == "hardware_source_" + juce::String(channel + 1), "stable source parameter ID");
+        auto* p = processor.getAPVTS().getParameter(id);
+        check(p != nullptr && processor.getParameters()[next++] == p, "source appended before memories");
+        if (p)
+        {
+            check(p->getVersionHint() == 2, "new source AU version hint follows legacy parameters");
+            check(p->getNumSteps() == 14 && p->convertFrom0to1(p->getDefaultValue()) == 13.0f,
                   "source choices and PANEL default");
         }
     }
