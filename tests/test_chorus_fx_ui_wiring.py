@@ -23,9 +23,25 @@ def validate_wiring(header: str, source: str) -> None:
         "OE1/OE2 choice must support right-click MIDI-learn context menus")
     has(r"\bContextToggleButton\s+gainComp\s*\{", header,
         "FX loudness checkbox must support its own MIDI-learn context menu")
+    has(r"\bContextComboBox\s+wave\s*,\s*destination\s*;", header,
+        "all three LFO waveform/destination controls need the APVTS context-menu subclass")
+    has(r"\bContextComboBox\s+model\s*,\s*type\s*,\s*oversampling\s*;", header,
+        "all three FX slot model/type/oversampling controls need context-menu subclass")
+
+    lfo = source.split("LfoPanel::LfoPanel(", 1)[1].split("void LfoPanel::paint", 1)[0]
+    for component, index in (("r.wave", "waveIds\\[i\\]"),
+                             ("r.destination", "destIds\\[i\\]")):
+        has(r"bindParameterContextMenu\(" + re.escape(component) + r",\s*p,\s*"
+            r"Cs80AudioProcessor::parameterId\(" + index + r"\),\s*" + index + r"\)", lfo,
+            f"APVTS LFO {component} MIDI learn must use each row's exact host parameter")
 
     constructor = source.split("ModernFxPage::ModernFxPage(", 1)[1].split(
         "void ModernFxPage::refreshLabels", 1)[0]
+    for component, index in (("s.model", "base"), ("s.type", "typeId"),
+                             ("s.oversampling", "base \\+ 3")):
+        has(r"bindParameterContextMenu\(" + re.escape(component) + r",\s*p,\s*"
+            r"Cs80AudioProcessor::parameterId\(" + index + r"\),\s*" + index + r"\)", constructor,
+            f"FX {component} MIDI learn must use the exact per-slot host parameter")
     has(r"chorusTremoloRouting\.addItemList\(\s*\{\s*\"Legacy selector\"\s*,"
         r"\s*\"Both off\"\s*,\s*\"Chorus only\"\s*,\s*\"Tremolo only\"\s*,"
         r"\s*\"Both on\"\s*\}\s*,\s*1\s*\)", constructor,
@@ -59,6 +75,8 @@ class ChorusFxUiWiringContract(unittest.TestCase):
             (header, source.replace("parameter(p, P_chorusTremoloRouting)", "parameter(p, P_chorusMode)")),
             (header, source.replace("bindParameterContextMenu(chorusTremoloRouting", "skipParameterContextMenu(chorusTremoloRouting")),
             (header, source.replace("bindParameterContextMenu(gainComp", "skipParameterContextMenu(gainComp")),
+            (header, source.replace("bindParameterContextMenu(r.destination", "skipParameterContextMenu(r.destination")),
+            (header, source.replace("bindParameterContextMenu(s.oversampling", "skipParameterContextMenu(s.oversampling")),
         ]
         for index, (mutated_header, mutated_source) in enumerate(faults):
             with self.subTest(mutation=index), self.assertRaises(AssertionError):

@@ -119,6 +119,22 @@ void testModernLayerUi(Check check, Flush flush, const juce::File& snapshotDir)
         check(std::abs(host.getParamValue(P_modVelocityCurve) - 0.5f) < 1e-4f, "velocity curve slider writes its parameter");
         fxPage.modelBox(1).setSelectedId((int) fx::Model::tape + 1, juce::sendNotificationSync);
         check(std::abs(host.getParamValue(P_fx2Model) - (float) fx::Model::tape) < 1e-4f, "FX model combo writes its parameter");
+        const auto* fxContext = dynamic_cast<ui::ContextComboBox*>(&fxPage.modelBox(1));
+        const auto* loudnessContext = dynamic_cast<ui::ContextToggleButton*>(&fxPage.loudnessMatchButton());
+        check(fxContext != nullptr && (bool) fxContext->onContextMenu
+                  && loudnessContext != nullptr && (bool) loudnessContext->onContextMenu,
+              "FX slot selectors and loudness checkbox expose bound APVTS MIDI-learn menus");
+        auto& chorusSwitches = fxPage.chorusTremoloBox();
+        check(chorusSwitches.getSelectedId() == 1
+                  && chorusSwitches.getComponentID() == Cs80AudioProcessor::parameterId(P_chorusTremoloRouting),
+              "FX OE1/OE2 switch dropdown defaults neutral and exposes its MIDI-learn host ID");
+        chorusSwitches.setSelectedId(5, juce::sendNotificationSync);
+        check(host.getParamValue(P_chorusTremoloRouting) == 4.0f,
+              "FX OE1/OE2 dropdown can automate BOTH independent switch tabs on");
+        host.setParamValue(P_chorusTremoloRouting, 1.0f);
+        flush(50);
+        check(chorusSwitches.getSelectedId() == 2,
+              "FX OE1/OE2 dropdown follows externally automated BOTH-off state");
         fxPage.loudnessMatchButton().triggerClick();
         flush(60);
         check(host.getParamValue(P_fxGainCompensation) >= 0.5f, "loudness-match switch writes its parameter");
