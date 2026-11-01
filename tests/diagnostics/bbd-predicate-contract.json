@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "purpose": "Diagnose the observed Intel AppleClang violation of the existing stored-bit BBD history contract; production remains untouched.",
+  "frozen_source_commit": "360a82b8487c11f289a97d2de0f950d2860834b5",
+  "existing_acceptance": "tests/parity/tolerances-v2/idle-exact-skip.json: bbd.zero_history_representation and maximum_output_bit_difference=0",
+  "probe": {
+    "representations_hex": ["00000001", "80000001", "00000000", "80000000"],
+    "expected_classification": [true, true, false, false],
+    "mxcsr_ftz_daz_masks_hex": ["0000", "0040", "8000", "8040"],
+    "cases": 16,
+    "candidate_classification_errors": 0,
+    "baseline_control": "The previously observed original predicate must reject at least one required stored-nonzero case; otherwise this compiler diagnosis is inconclusive and the diagnostic job must fail."
+  },
+  "unchanged_gate": {
+    "path": "tests/IdleExactSkipTests.cpp",
+    "expected_checks": 1245,
+    "candidate_failures": 0,
+    "baseline_control": "The original gate must reproduce the sole named BBD history predicate failure; no assertion is removed, suppressed or modified."
+  },
+  "mutation": {
+    "existing_name": "bbd_history_daz",
+    "replacement": "Classify the original float through sample != 0.0f instead of the stored integer bits.",
+    "required_assertion": "BBD history predicate classifies stored bits independently of denormal mode"
+  },
+  "evidence": [
+    "Actual AppleClang compiler version and CMake-generated original target argument array",
+    "Assembly and LLVM IR for original and candidate no-inline functions",
+    "All 16 observed FTZ/DAZ predicate cases",
+    "Complete original, candidate and floating-comparison mutation gate logs",
+    "Source/header/test/contract hashes, candidate and mutation patches, unchanged source status"
+  ],
+  "limitations": "Software compiler mechanism only. No tolerance changes, performance pass, hardware measurements or full native plugin qualification."
+}
+
