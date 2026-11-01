@@ -16,9 +16,9 @@ hardware match.
 | Legacy | Generic modulated delay (unchanged, bit-identical) | Generic amplitude law (unchanged) |
 | Source Performance, Isolation | OE2 BBD delay path, clock moved by OE1 DO1 + DO2 | OE1 four-VCA law on the OE2 returns (since 2026-10-31; previously the generic law) |
 
-No host parameter was added. The choice follows the existing render policy, so old presets
-and the legacy sound are unaffected. Changing the effective policy already resets all
-effect history.
+The original implementation added no host parameter. Its renderer selection still follows
+the existing policy, so old presets and legacy sound remain unaffected. Changing the
+effective policy already resets all effect history.
 
 ### 2026-11-01 independent switch interpretation (declared inference)
 
