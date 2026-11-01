@@ -1,0 +1,873 @@
+{
+  "audio_base_sha": "db24a47170610f81236e8829ef5536af69dfc94d",
+  "method": "Minimum of the three per-case median RTFs; p99 and misses taken from that same selected round. Shared executor experienced extreme scheduling noise, so this is not an uncontended real-time guarantee.",
+  "rows": [
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.6468868125,
+      "p99_rtf": 1.8021879375,
+      "misses": 56,
+      "all_medians": [
+        0.6468868125,
+        0.95588175,
+        0.66902025
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.1354179375,
+      "p99_rtf": 0.944215875,
+      "misses": 1,
+      "all_medians": [
+        0.1354179375,
+        0.3866925,
+        0.140032125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.2991159375,
+      "p99_rtf": 0.5778984375,
+      "misses": 2,
+      "all_medians": [
+        0.2991159375,
+        0.323740875,
+        0.30400575
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.30645825,
+      "p99_rtf": 0.586585125,
+      "misses": 0,
+      "all_medians": [
+        0.3189204375,
+        0.30645825,
+        0.3194664375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.6835783125,
+      "p99_rtf": 1.568382375,
+      "misses": 77,
+      "all_medians": [
+        0.6835783125,
+        0.731997375,
+        0.9788293125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.1255813125,
+      "p99_rtf": 0.7606745625,
+      "misses": 0,
+      "all_medians": [
+        0.1255813125,
+        0.1329076875,
+        0.244876875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "idle_quiet",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.1331263125,
+      "p99_rtf": 0.6119889375,
+      "misses": 7,
+      "all_medians": [
+        0.1331263125,
+        0.1380110625,
+        0.246237
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.6133095,
+      "p99_rtf": 1.08464475,
+      "misses": 20,
+      "all_medians": [
+        0.6133095,
+        0.6370275,
+        0.891940125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.13063875,
+      "p99_rtf": 0.2713395,
+      "misses": 0,
+      "all_medians": [
+        0.13063875,
+        0.13636125,
+        0.2275873125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.6396939375,
+      "p99_rtf": 1.258576875,
+      "misses": 22,
+      "all_medians": [
+        0.6878683125,
+        0.6396939375,
+        0.8920134375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.126817125,
+      "p99_rtf": 0.894307875,
+      "misses": 0,
+      "all_medians": [
+        0.164075625,
+        0.126817125,
+        0.2256185625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.62985075,
+      "p99_rtf": 1.0436360625,
+      "misses": 15,
+      "all_medians": [
+        0.740947125,
+        0.62985075,
+        0.9974653125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.1305496875,
+      "p99_rtf": 0.7553934375,
+      "misses": 0,
+      "all_medians": [
+        0.142474125,
+        0.1305496875,
+        0.250523625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.2683305,
+      "p99_rtf": 0.4555044375,
+      "misses": 0,
+      "all_medians": [
+        0.290577,
+        0.2683305,
+        0.4624108125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.299566125,
+      "p99_rtf": 0.7588884375,
+      "misses": 2,
+      "all_medians": [
+        0.31321725,
+        0.299566125,
+        0.5163343125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.2861548125,
+      "p99_rtf": 0.4767646875,
+      "misses": 0,
+      "all_medians": [
+        0.3042264375,
+        0.2861548125,
+        0.479241
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.022820625,
+      "p99_rtf": 0.33942825,
+      "misses": 0,
+      "all_medians": [
+        0.022820625,
+        0.02285025,
+        0.044315625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "warmed_held",
+      "selected_round": 3,
+      "median_rtf": 0.245295375,
+      "p99_rtf": 2.1125300625,
+      "misses": 20,
+      "all_medians": [
+        0.2595789375,
+        0.2531484375,
+        0.245295375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "release_tail",
+      "selected_round": 3,
+      "median_rtf": 0.0208730625,
+      "p99_rtf": 0.2808088125,
+      "misses": 0,
+      "all_medians": [
+        0.032482875,
+        0.0210796875,
+        0.0208730625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "warmed_held",
+      "selected_round": 3,
+      "median_rtf": 0.7039100625,
+      "p99_rtf": 2.2571094375,
+      "misses": 53,
+      "all_medians": [
+        0.728496375,
+        0.722413875,
+        0.7039100625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.1403169375,
+      "p99_rtf": 0.8413366875,
+      "misses": 1,
+      "all_medians": [
+        0.1403169375,
+        0.1406805,
+        0.2282435625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.684774375,
+      "p99_rtf": 1.3982165625,
+      "misses": 55,
+      "all_medians": [
+        0.684774375,
+        0.7410065625,
+        0.9805824375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.1436720625,
+      "p99_rtf": 1.6264711875,
+      "misses": 4,
+      "all_medians": [
+        0.1436720625,
+        0.144079875,
+        0.2436170625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "idle_noise",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.0229711875,
+      "p99_rtf": 0.1111220625,
+      "misses": 0,
+      "all_medians": [
+        0.0229711875,
+        0.0229970625,
+        0.040570875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.3089265,
+      "p99_rtf": 0.66970125,
+      "misses": 2,
+      "all_medians": [
+        0.3178145625,
+        0.3089265,
+        0.4676979375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.020836125,
+      "p99_rtf": 0.4547053125,
+      "misses": 0,
+      "all_medians": [
+        0.0321465,
+        0.020836125,
+        0.0386986875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.3111661875,
+      "p99_rtf": 0.5181155625,
+      "misses": 2,
+      "all_medians": [
+        0.39526575,
+        0.3111661875,
+        0.4885035
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.326365125,
+      "p99_rtf": 0.6848604375,
+      "misses": 0,
+      "all_medians": [
+        0.337172625,
+        0.326365125,
+        1.06338225
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.29210775,
+      "p99_rtf": 0.790596,
+      "misses": 3,
+      "all_medians": [
+        0.3085723125,
+        0.29210775,
+        0.4442446875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.020632875,
+      "p99_rtf": 0.080418,
+      "misses": 0,
+      "all_medians": [
+        0.0223393125,
+        0.020632875,
+        0.0365668125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "idle_quiet",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.0206285625,
+      "p99_rtf": 0.0803589375,
+      "misses": 0,
+      "all_medians": [
+        0.020674875,
+        0.0206285625,
+        0.0368480625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.5939465625,
+      "p99_rtf": 28.211857125,
+      "misses": 90,
+      "all_medians": [
+        0.5939465625,
+        0.645125625,
+        0.92042625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.1240785,
+      "p99_rtf": 0.785557125,
+      "misses": 0,
+      "all_medians": [
+        0.1240785,
+        0.138536625,
+        0.3931404375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.752241375,
+      "p99_rtf": 1.53352575,
+      "misses": 79,
+      "all_medians": [
+        0.752241375,
+        0.769852125,
+        1.5662413125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.1659380625,
+      "p99_rtf": 0.982028625,
+      "misses": 0,
+      "all_medians": [
+        0.1659380625,
+        0.1687940625,
+        0.3192241875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.795342375,
+      "p99_rtf": 1.3906483125,
+      "misses": 127,
+      "all_medians": [
+        0.8613361875,
+        0.795342375,
+        1.001641125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.137974875,
+      "p99_rtf": 0.9210481875,
+      "misses": 0,
+      "all_medians": [
+        0.137974875,
+        0.1405644375,
+        0.224478375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.2683725,
+      "p99_rtf": 0.522193875,
+      "misses": 0,
+      "all_medians": [
+        0.2683725,
+        0.2751279375,
+        0.396217875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.2942210625,
+      "p99_rtf": 0.491709375,
+      "misses": 0,
+      "all_medians": [
+        0.2942210625,
+        0.2994020625,
+        0.4335628125
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.2945188125,
+      "p99_rtf": 0.5217616875,
+      "misses": 0,
+      "all_medians": [
+        0.29832525,
+        0.2945188125,
+        0.427603875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.02059275,
+      "p99_rtf": 0.0537046875,
+      "misses": 0,
+      "all_medians": [
+        0.02059275,
+        0.0206454375,
+        0.0377090625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "warmed_held",
+      "selected_round": 2,
+      "median_rtf": 0.66700575,
+      "p99_rtf": 1.3171573125,
+      "misses": 30,
+      "all_medians": [
+        0.7766435625,
+        0.66700575,
+        1.0436315625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.1367409375,
+      "p99_rtf": 0.72885675,
+      "misses": 0,
+      "all_medians": [
+        0.2487538125,
+        0.1367409375,
+        0.241548375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.29757825,
+      "p99_rtf": 0.5797545,
+      "misses": 0,
+      "all_medians": [
+        0.29757825,
+        0.3000564375,
+        0.4716410625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.0206315625,
+      "p99_rtf": 0.1032969375,
+      "misses": 0,
+      "all_medians": [
+        0.020656125,
+        0.0206315625,
+        0.0368745
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.293398875,
+      "p99_rtf": 0.519645375,
+      "misses": 0,
+      "all_medians": [
+        0.293398875,
+        0.2947108125,
+        0.396852
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.02088525,
+      "p99_rtf": 0.426862125,
+      "misses": 0,
+      "all_medians": [
+        0.02088525,
+        0.02112075,
+        0.0392495625
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.685571625,
+      "p99_rtf": 1.156997625,
+      "misses": 36,
+      "all_medians": [
+        0.685571625,
+        0.6882763125,
+        0.8082556875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "release_tail",
+      "selected_round": 2,
+      "median_rtf": 0.136893375,
+      "p99_rtf": 0.82576725,
+      "misses": 0,
+      "all_medians": [
+        0.1402524375,
+        0.136893375,
+        0.1460956875
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "warmed_held",
+      "selected_round": 1,
+      "median_rtf": 0.299330625,
+      "p99_rtf": 0.5215010625,
+      "misses": 0,
+      "all_medians": [
+        0.299330625,
+        0.3080454375,
+        0.4238079375
+      ]
+    },
+    {
+      "rate": "48000",
+      "block": "256",
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "release_tail",
+      "selected_round": 1,
+      "median_rtf": 0.0208216875,
+      "p99_rtf": 0.341353875,
+      "misses": 0,
+      "all_medians": [
+        0.0208216875,
+        0.0211306875,
+        0.020823375
+      ]
+    }
+  ]
+}
