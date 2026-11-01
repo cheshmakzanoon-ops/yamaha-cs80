@@ -1,0 +1,31 @@
+{
+  "source_sha": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+  "argv": [
+    "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after/cs80_source_factory_benchmark",
+    "--rate",
+    "48000",
+    "--block",
+    "256",
+    "--callbacks",
+    "1024",
+    "--source-commit",
+    "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+    "--out",
+    "/workspace/scratch/a0e502bd4cd5/cs80-evidence/fir-after/round-1"
+  ],
+  "start_utc": "2026-11-01T01:34:26.950379+00:00",
+  "host_loadavg_start": [
+    7.4169921875,
+    5.5283203125,
+    6.38916015625
+  ],
+  "coordinated_window": "Parent confirmed no other agent compiler, test or profiler activity; shared executor still has unrelated background work.",
+  "end_utc": "2026-11-01T01:36:35.546353+00:00",
+  "wall_seconds": 128.5964460610012,
+  "exit_code": 0,
+  "host_loadavg_end": [
+    5.56689453125,
+    5.9716796875,
+    6.47705078125
+  ]
+}

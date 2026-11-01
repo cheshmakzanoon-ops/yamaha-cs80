@@ -1,0 +1,67 @@
+{
+  "implementation_local_sha": "c894a0ca2417f44329d54ea9388304ab04200d76",
+  "base_sha": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "command": [
+    "scripts/check-compat-gates.sh",
+    "--strict-v2"
+  ],
+  "environment_override": {
+    "CS80_COMPAT_CACHE": "/tmp/cs80-compat"
+  },
+  "exit_code": 0,
+  "captures": {
+    "legacy-default.f32": {
+      "bytes": 32863104,
+      "sha256": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6"
+    },
+    "current-default.f32": {
+      "bytes": 32863104,
+      "sha256": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6"
+    },
+    "legacy-tails.f32": {
+      "bytes": 98589312,
+      "sha256": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+    },
+    "current-tails.f32": {
+      "bytes": 98589312,
+      "sha256": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+    },
+    "circuit-v1.bin": {
+      "bytes": 133056,
+      "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+    },
+    "circuit-current.bin": {
+      "bytes": 133056,
+      "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+    },
+    "audio-v2.bin": {
+      "bytes": 9332176,
+      "sha256": "f1c49f1caa9e64d14887193df57e2908cd15ede4e4e78e2b5fcc0daf989bbc1d"
+    },
+    "audio-current.bin": {
+      "bytes": 9332176,
+      "sha256": "f1c49f1caa9e64d14887193df57e2908cd15ede4e4e78e2b5fcc0daf989bbc1d"
+    }
+  },
+  "tests": {
+    "core": {
+      "checks": 11512,
+      "failures": 0
+    },
+    "oversampling": {
+      "checks": 85,
+      "failures": 0
+    },
+    "zero_fir_history": {
+      "checks": 227117,
+      "failures": 0
+    },
+    "zero_fir_rounding": {
+      "checks": 3276237,
+      "failures": 0,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3
+    }
+  },
+  "scope": "Same-toolchain software regression captures and tests. Native platform CI and full integrated suites remain separate qualifications."
+}

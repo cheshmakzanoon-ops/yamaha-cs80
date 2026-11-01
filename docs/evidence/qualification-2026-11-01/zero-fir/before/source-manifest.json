@@ -1,0 +1,16 @@
+{
+  "source_sha": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "prepared_before_candidate_production_change": true,
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "build": "cmake -S . -B build-before -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON; cmake --build build-before --target cs80_source_factory_benchmark -j2",
+  "files": {
+    "src/core/Dsp.h": "d704003dcc4ca262e31bc98a2df0494e7b3da97f747c892644264efd5f3a4347",
+    "src/core/Engine.cpp": "76e4f0b002105d659a65a30aff685c493d4ddc3688486b64e7d8124bc132bfa6",
+    "src/core/BbdChorus.h": "f1654c5466c86aa4ae7c827f9eb7325b385eba3307a3a8fcae8a934db00d8292",
+    "src/tools/source_factory_benchmark.cpp": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+    "build-before/cs80_source_factory_benchmark": "1e67724f27229e368b64007ef875db06a7d1d01b87696e56b18fcbefa5276eda"
+  },
+  "measurement_status": "Three stock rounds completed before candidate production modification.",
+  "measurement_start_utc": "2026-11-01T01:21:43.136795+00:00",
+  "measurement_end_utc": "2026-11-01T01:27:24.877195+00:00"
+}
