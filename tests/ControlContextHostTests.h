@@ -15,6 +15,127 @@ namespace cs80::tests::control_context
 {
 using namespace cs80::tests::studio;
 
+// Display-server-independent part of the same host contract. This runs on
+// Linux environments that intentionally do not permit an X11 socket. Native
+// pointer dispatch and editor composition stay in testParameterMenus below
+// and still run in the Xvfb-backed UI CI job; no gate is skipped or weakened.
+inline void testParameterMenusHeadless(const Check& check)
+{
+    Cs80AudioProcessor processor;
+    processor.prepareToPlay(48000.0, 128);
+    const int hpIndex = cs80::chParam(0, cs80::CP_hpfOn);
+    const auto hpId = Cs80AudioProcessor::parameterId(hpIndex);
+    cs80::ui::LedButton hpf("HPF");
+    cs80::ui::bindParameterContextMenu(hpf, processor, hpId, hpIndex);
+    check(hpf.getComponentID() == hpId && static_cast<bool>(hpf.onContextMenu),
+          "headless LED button has a real APVTS context-menu binding");
+
+    auto* p = processor.getAPVTS().getParameter(hpId);
+    if (p != nullptr)
+    {
+        juce::ButtonParameterAttachment attachment(*p, hpf);
+        StudioGestureProbe probe;
+        p->addListener(&probe);
+        hpf.setToggleState(! hpf.getToggleState(), juce::sendNotificationSync);
+        p->removeListener(&probe);
+        check(probe.oneGesture(), "headless APVTS LED click has exactly one balanced host gesture");
+    }
+
+    auto menu = cs80::ui::buildParameterContextMenu(processor, hpId, hpf, hpIndex);
+    const auto* reset = menuItem(menu, "Reset to default");
+    const auto* learn = menuItem(menu, "MIDI learn");
+    check(reset != nullptr && reset->action && learn != nullptr && learn->action,
+          "headless parameter context menu exposes reset and MIDI learn");
+    if (p != nullptr && reset != nullptr && reset->action)
+    {
+        processor.setParamValue(hpIndex, 1.0f - cs80::paramDef(hpIndex).def);
+        StudioGestureProbe probe;
+        p->addListener(&probe);
+        reset->action();
+        p->removeListener(&probe);
+        check(probe.oneGesture() && p->getValue() == p->getDefaultValue(),
+              "headless menu reset sends one balanced host begin/end gesture and defaults the parameter");
+    }
+    if (learn != nullptr && learn->action)
+    {
+        learn->action();
+        check(processor.getMidiLearn().learningParameter() == processor.getParameters().indexOf(p),
+              "headless LED MIDI learn targets the exact APVTS host parameter");
+        processor.getMidiLearn().cancelLearn();
+    }
+
+    cs80::ui::ContextComboBox tuning;
+    const auto tuningId = Cs80AudioProcessor::parameterId(cs80::P_tuningMode);
+    tuning.addItemList({ "Equal temperament", "Scala / KBM", "MTS-ESP" }, 1);
+    cs80::ui::bindParameterContextMenu(tuning, processor, tuningId, cs80::P_tuningMode);
+    check(tuning.getComponentID() == tuningId && static_cast<bool>(tuning.onContextMenu),
+          "headless combo exposes the same bound context-menu callback");
+    if (auto* tuningParam = processor.getAPVTS().getParameter(tuningId))
+    {
+        juce::ComboBoxParameterAttachment attachment(*tuningParam, tuning);
+        StudioGestureProbe probe;
+        tuningParam->addListener(&probe);
+        tuning.setSelectedId(tuning.getSelectedId() == 2 ? 1 : 2, juce::sendNotificationSync);
+        tuningParam->removeListener(&probe);
+        check(probe.oneGesture(), "headless APVTS combo selection has exactly one balanced host gesture");
+    }
+    auto comboMenu = cs80::ui::buildParameterContextMenu(processor, tuningId, tuning, cs80::P_tuningMode);
+    check(menuItem(comboMenu, "MIDI learn") != nullptr,
+          "headless combo builds a MIDI-learn menu without requiring a display server");
+
+    cs80::ui::ContextToggleButton scanner("KAS scan timing");
+    const auto scannerId = Cs80AudioProcessor::parameterId(cs80::P_kasScanTiming);
+    cs80::ui::bindParameterContextMenu(scanner, processor, scannerId, cs80::P_kasScanTiming);
+    auto scannerMenu = cs80::ui::buildParameterContextMenu(processor, scannerId, scanner, cs80::P_kasScanTiming);
+    check(static_cast<bool>(scanner.onContextMenu) && menuItem(scannerMenu, "MIDI learn") != nullptr,
+          "headless native-looking toggle switch retains its parameter context menu");
+    if (auto* scannerParam = processor.getAPVTS().getParameter(scannerId))
+    {
+        juce::ButtonParameterAttachment attachment(*scannerParam, scanner);
+        StudioGestureProbe probe;
+        scannerParam->addListener(&probe);
+        scanner.setToggleState(! scanner.getToggleState(), juce::sendNotificationSync);
+        scannerParam->removeListener(&probe);
+        check(probe.oneGesture(), "headless standard toggle sends exactly one complete host gesture");
+    }
+
+    // Miniature memories are appended as 104 independent host parameters, not
+    // aliases for the two rank controls. Check all four bank names, not just
+    // the first example exercised by the native MemoryLid integration gate.
+    int hostBank[4] = { -1, -1, -1, -1 };
+    for (int bank = 0; bank < 4; ++bank)
+    {
+        const auto id = Cs80AudioProcessor::memoryParameterId(bank, cs80::CP_saw);
+        juce::Component miniature;
+        auto memoryMenu = cs80::ui::buildParameterContextMenu(
+            processor, id, miniature, cs80::chParam(bank % 2, cs80::CP_saw));
+        const auto* arm = menuItem(memoryMenu, "MIDI learn");
+        auto* memoryParameter = processor.getAPVTS().getParameter(id);
+        hostBank[bank] = processor.getParameters().indexOf(memoryParameter);
+        if (arm != nullptr && arm->action) arm->action();
+        check(arm != nullptr && arm->action && hostBank[bank] >= 0
+              && processor.getMidiLearn().learningParameter() == hostBank[bank],
+              "headless memory MIDI learn uses the selected bank's independent host index");
+        processor.getMidiLearn().cancelLearn();
+    }
+    check(hostBank[0] != hostBank[1] && hostBank[1] != hostBank[2]
+          && hostBank[2] != hostBank[3], "four miniature bank host indices are unique");
+
+    // Async popup actions must check policy at activation, not only when the
+    // menu was built: the player can switch to PURE while the menu is open.
+    auto staleMenu = cs80::ui::buildParameterContextMenu(processor, hpId, hpf, hpIndex);
+    const auto* staleLearn = menuItem(staleMenu, "MIDI learn");
+    processor.setParamValue(cs80::P_parityMode, 1.0f);
+    if (staleLearn != nullptr && staleLearn->action) staleLearn->action();
+    check(staleLearn != nullptr && staleLearn->action
+          && processor.getMidiLearn().learningParameter() < 0,
+          "MIDI learn callback from a stale popup remains inert after switching into PURE");
+    auto pureMenu = cs80::ui::buildParameterContextMenu(processor, hpId, hpf, hpIndex);
+    const auto* pureLearn = menuItem(pureMenu, "MIDI learn");
+    check(pureLearn != nullptr && ! pureLearn->isEnabled,
+          "PURE CS-80 keeps MIDI learn disabled even on switches and combos");
+}
+
 inline void testParameterMenus(const Check& check, const Flush& flush)
 {
     Cs80AudioProcessor processor;
@@ -39,9 +160,11 @@ inline void testParameterMenus(const Check& check, const Flush& flush)
     const bool wasOn = panelSwitch->getToggleState();
     panelSwitch->mouseDown(mouseAt(*panelSwitch, { 10.0f, 10.0f },
                                    juce::ModifierKeys(juce::ModifierKeys::rightButtonModifier)));
+    panelSwitch->mouseDrag(mouseAt(*panelSwitch, { 12.0f, 10.0f },
+                                   juce::ModifierKeys(juce::ModifierKeys::rightButtonModifier)));
     panelSwitch->mouseUp(mouseAt(*panelSwitch, { 10.0f, 10.0f }, {}));
-    check(switchPopups == 1 && panelSwitch->getToggleState() == wasOn,
-          "right-click on a LED switch opens only the menu, never changes its parameter");
+    check(switchPopups == 1 && panelSwitch->getToggleState() == wasOn && ! panelSwitch->isDown(),
+          "right-click/drag on a LED switch opens only the menu, never changes or latches its press state");
     panelSwitch->onContextMenu = std::move(originalSwitchMenu);
 
     auto menu = cs80::ui::buildParameterContextMenu(processor, hpId, *panelSwitch, hpIndex);
@@ -131,7 +254,7 @@ inline void testParameterMenus(const Check& check, const Flush& flush)
         if (learn != nullptr && learn->action)
         {
             learn->action();
-            const auto* param = processor.getAPVTS().getParameter(memorySliderId);
+            auto* param = processor.getAPVTS().getParameter(memorySliderId);
             check(param != nullptr && processor.getMidiLearn().learningParameter() == processor.getParameters().indexOf(param),
                   "miniature MIDI learn arms its independent memory host parameter");
             processor.getMidiLearn().cancelLearn();

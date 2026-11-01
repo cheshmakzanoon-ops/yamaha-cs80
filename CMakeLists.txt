@@ -595,6 +595,22 @@ if (CS80_BUILD_PLUGIN)
     endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
 
+    # Isolated native host contract for all APVTS-backed right-click context
+    # controls. The full UI smoke repeats it; the focused target makes a
+    # source mutation of popup suppression or menu reset gestures observable.
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_control_context_ui
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --control-context-host-smoke)
+    else()
+        add_test(NAME cs80_control_context_ui
+                 COMMAND CS80Snapshots --control-context-host-smoke)
+    endif()
+    set_tests_properties(cs80_control_context_ui PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_control_context_headless_host
+             COMMAND CS80Snapshots --control-context-headless-host-smoke)
+    set_tests_properties(cs80_control_context_headless_host PROPERTIES TIMEOUT 60)
+
     # Real JUCE processor host regression, runnable with no X11/display.
     add_test(NAME cs80_voice_activity_host
              COMMAND CS80Snapshots --voice-meter-host-smoke)

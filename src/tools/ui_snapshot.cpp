@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 47136)
-Total output lines: 3645
-
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
@@ -1586,7 +1583,530 @@ void testSourceFactoryHost()
         for (int destination : { 13, 11, 12 })
         {
             automate(edited, rank, selector);
-            apply(ed…7136 tokens truncated…cessor.getFactoryPresets().size() >= 200, "factory bank present");
+            apply(edited);
+            automate(edited, rank, destination);
+            apply(edited);
+            const auto info = edited.getEngine().getSourceToneInfo(rank);
+            check(info.selector == destination && info.route == sf::Route::panel_or_memory,
+                  "complete or inferred source clears only on PANEL and either memory selection");
+            for (int control = 0; control < cs80::CP_count; ++control)
+            {
+                if (!Cs80AudioProcessor::isMemoryControl(control)) continue;
+                const int index = cs80::chParam(rank, control);
+                const float expected = destination == 13 ? edited.getParamValue(index)
+                    : edited.getMemoryValue(rank + (destination == 12 ? 2 : 0), control);
+                check(edited.getEngine().getParams()[index] == expected,
+                      "leaving a source exposes every retained destination control without overwriting PANEL or memories");
+            }
+            juce::AudioBuffer<float> audio(2, 1);
+            juce::MidiBuffer midi;
+            edited.processBlock(audio, midi);
+            const auto cutoff = edited.getEngine().getSourceCutoffReadout(rank);
+            check(cutoff.pinVolts == sf::CutoffReadout{}.pinVolts
+                      && cutoff.effectiveCv == sf::CutoffReadout{}.effectiveCv,
+                  "non-source callback does not render stale source cutoff receiver data");
+        }
+    }
+
+    // Full session restore, including restore over an already-active source.
+    // Use T51/B and T54/E, not just selector 3, to catch fixture-order mixups.
+    for (bool isolated : { false, true })
+    for (const auto selectors : { std::array<int, 2>{1, 10}, std::array<int, 2>{0, 1}, std::array<int, 2>{11, 12}, std::array<int, 2>{13, 2} })
+    {
+        Cs80AudioProcessor saved, restored;
+        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
+        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        saved.setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
+        saved.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
+        for (int rank = 0; rank < 2; ++rank) automate(saved, rank, selectors[(size_t) rank]);
+        saved.setParamValue(cs80::chParam(0, cs80::CP_fIl), 0.17f);
+        saved.setMemoryValue(0, cs80::CP_fIl, 0.31f);
+        saved.setMemoryValue(3, cs80::CP_fIl, 0.73f);
+        juce::MemoryBlock state;
+        saved.getStateInformation(state);
+        restored.setParamValue(cs80::P_parityMode, 1.0f);
+        automate(restored, 0, 3);
+        automate(restored, 1, 3);
+        restored.prepareToPlay(48000.0, 64);
+        restored.setStateInformation(state.getData(), (int) state.getSize());
+        apply(restored);
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const int selector = selectors[(size_t) rank];
+            const auto expected = selector >= 11 ? sf::Route::panel_or_memory
+                : !isolated ? sf::Route::legacy_bridge
+                    : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
+            check(restored.getHardwareSource(rank) == selector
+                      && restored.getEngine().getSourceToneInfo(rank).selector == selector
+                      && restored.getEngine().getSourceToneInfo(rank).route == expected,
+                  "session restore reconstructs the saved rank identities and current isolation route at the real callback");
+            if (isolated && selector < 11)
+                check(restored.getEngine().getSourceToneInfo(rank).provenance.version == 2
+                          && restored.getEngine().getSourceToneInfo(rank).provenance.inferredCells
+                              == sourceFixtureUnknownMask(rank, selector),
+                      "existing isolated sessions rebuild model-two controls without adding a saved model parameter");
+        }
+        check(std::abs(restored.getParamValue(cs80::chParam(0, cs80::CP_fIl)) - saved.getParamValue(cs80::chParam(0, cs80::CP_fIl))) < 1e-6f
+                  && std::abs(restored.getMemoryValue(0, cs80::CP_fIl) - saved.getMemoryValue(0, cs80::CP_fIl)) < 1e-6f
+                  && std::abs(restored.getMemoryValue(3, cs80::CP_fIl) - saved.getMemoryValue(3, cs80::CP_fIl)) < 1e-6f,
+              "source session restores independent hidden PANEL and memory authorities");
+    }
+
+    // Default-off must still use the exact historical setParams audio path,
+    // even for a newly available complete tone. This is not a source-to-source
+    // comparison that could share the same accidental activation bug.
+    for (int selector = 0; selector < 11; ++selector)
+    {
+        Cs80AudioProcessor legacy;
+        legacy.setEngineMode(Cs80AudioProcessor::EngineMode::legacy); // plan 1.7: the fresh default is Circuit
+        legacy.selectHardwareSource(0, selector);
+        legacy.selectHardwareSource(1, selector);
+        legacy.prepareToPlay(48000.0, 64);
+        cs80::ParamValues effective;
+        for (int index = 0; index < cs80::P_numParams; ++index) effective[index] = legacy.getParamValue(index);
+        const auto stored = effective;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            cs80::ParamValues factory;
+            cs80::applyHardwareTone(factory, rank, selector);
+            for (int control = 0; control < cs80::CP_count; ++control)
+                if (Cs80AudioProcessor::isMemoryControl(control)) effective[cs80::chParam(rank, control)] = factory[cs80::chParam(rank, control)];
+        }
+        cs80::Engine historical;
+        // Match the pre-render resource lifecycle too: the processor was prepared
+        // with its stored panel before applying its selected effective snapshot.
+        historical.setParams(stored);
+        historical.prepare(48000.0);
+        historical.setParams(effective);
+        historical.noteOn(60, 100.0f / 127.0f);
+        bool identical = true;
+        for (int block = 0; block < 8; ++block)
+        {
+            juce::AudioBuffer<float> audio(2, 64);
+            juce::MidiBuffer midi;
+            if (block == 0) midi.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+            legacy.processBlock(audio, midi);
+            float expected[128] {};
+            historical.render(expected, 64);
+            for (int sample = 0; sample < 64; ++sample)
+                for (int channel = 0; channel < 2; ++channel)
+                    identical = identical && audio.getSample(channel, sample) == expected[sample * 2 + channel];
+        }
+        check(identical && !legacy.getEngine().isParityMode(), "all 22 default-off source selectors retain bit-identical historical host audio");
+    }
+}
+
+// Keyboard contour, footswitch/assigners, EXP-WAH and output switch at the host boundary.
+void testPerformanceControlsHost()
+{
+    const char* ids[] = { "kbd_brilliance_low", "kbd_brilliance_high", "kbd_level_low", "kbd_level_high",
+                          "footswitch_plugged", "footswitch_pressed", "sustain_assign", "glide_assign",
+                          "foot_mode", "output_level" };
+    Cs80AudioProcessor host;
+    for (int i = 0; i < 10; ++i)
+    {
+        auto* parameter = host.getAPVTS().getParameter(ids[i]);
+        check(parameter != nullptr && host.getParameters()[233 + i] == parameter,
+              (juce::String("performance control appended in order: ") + ids[i]).toRawUTF8());
+        if (parameter == nullptr) continue;
+        check(parameter->getVersionHint() == 5, (juce::String("AU version hint 5: ") + ids[i]).toRawUTF8());
+        check(cs80::paramId(cs80::P_kbdBrillianceLow + i) == ids[i], "core and host ids agree");
+        const float def = parameter->convertFrom0to1(parameter->getDefaultValue());
+        check(std::abs(def - cs80::paramDef(cs80::P_kbdBrillianceLow + i).def) < 1e-6f,
+              (juce::String("host default equals core default: ") + ids[i]).toRawUTF8());
+    }
+    for (int i : { 4, 5, 6, 7, 9 })
+        check(dynamic_cast<juce::AudioParameterBool*>(host.getAPVTS().getParameter(ids[i])) != nullptr,
+              (juce::String("boolean host parameter: ") + ids[i]).toRawUTF8());
+    auto* mode = dynamic_cast<juce::AudioParameterChoice*>(host.getAPVTS().getParameter("foot_mode"));
+    check(mode != nullptr && mode->choices[0] == "EXP" && mode->choices[1] == "EXP-WAH",
+          "foot controller selector exposes EXP and EXP-WAH");
+    for (int i = 0; i < 4; ++i)
+    {
+        const auto& range = host.getAPVTS().getParameter(ids[i])->getNormalisableRange();
+        check(range.start == -1.0f && range.end == 1.0f
+                  && host.getAPVTS().getParameter(ids[i])->getDefaultValue() == 0.5f,
+              "contour levers are bipolar with a centred default");
+    }
+
+    // State round trip, and old sessions fall back to the neutral defaults.
+    for (int i = 0; i < 4; ++i) host.setParamValue(cs80::P_kbdBrillianceLow + i, 0.25f * (float) (i - 1));
+    host.setParamValue(cs80::P_footswitchPlugged, 1.0f);
+    host.setParamValue(cs80::P_footswitchPressed, 1.0f);
+    host.setParamValue(cs80::P_sustainAssign, 1.0f);
+    host.setParamValue(cs80::P_glideAssign, 1.0f);
+    host.setParamValue(cs80::P_footMode, 1.0f);
+    host.setParamValue(cs80::P_outputLevel, 0.0f);
+    juce::MemoryBlock saved;
+    host.getStateInformation(saved);
+    Cs80AudioProcessor restored;
+    restored.setStateInformation(saved.getData(), (int) saved.getSize());
+    bool roundTrip = true;
+    for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
+        roundTrip = roundTrip && std::abs(restored.getParamValue(i) - host.getParamValue(i)) < 1e-5f;
+    check(roundTrip, "performance controls survive a state round trip");
+    auto oldState = host.getAPVTS().copyState();
+    for (auto* id : ids)
+        oldState.removeChild(oldState.getChildWithProperty("id", id), nullptr);
+    const auto oldText = oldState.createXml()->toString();
+    restored.setStateInformation(oldText.toRawUTF8(), oldText.getNumBytesAsUTF8());
+    bool neutral = true;
+    for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
+        // Plan 1.7 (ws2): ENGINE is saved (Circuit for a fresh instance), not one
+        // of the removed controls, so it restores its saved value.
+        neutral = neutral && (i == cs80::P_sourcePerformance
+                                  ? restored.getParamValue(i) == host.getParamValue(i)
+                                  : restored.getParamValue(i) == cs80::paramDef(i).def);
+    check(neutral && restored.getParamValue(cs80::P_outputLevel) == 1.0f,
+          "a session saved before these controls restores neutral values, not live ones");
+
+    // Factory preset recall restores the sound, not the jack/pedal/selector/output wiring.
+    host.setParamValue(cs80::P_kbdLevelHigh, 0.5f);
+    host.loadFactoryPreset(5);
+    check(host.getParamValue(cs80::P_footswitchPlugged) == 1.0f && host.getParamValue(cs80::P_footswitchPressed) == 1.0f
+              && host.getParamValue(cs80::P_footMode) == 1.0f && host.getParamValue(cs80::P_outputLevel) == 0.0f,
+          "factory preset recall leaves jack, pedal contact, EXP/WAH selector and output switch alone");
+    check(host.getParamValue(cs80::P_kbdLevelHigh) == 0.0f && host.getParamValue(cs80::P_sustainAssign) == 0.0f
+              && host.getParamValue(cs80::P_glideAssign) == 0.0f,
+          "factory preset recall does reset the contour levers and assigners with the patch");
+
+    // Unlike factory programs, user presets restore all ten performance controls,
+    // including wiring. Only parity isolation remains a live session policy.
+    // Use the same serialized state for both paths and oppose every live value,
+    // so neither a no-op nor preserving factory-only wiring can pass this test.
+    for (float liveParity : { 0.0f, 1.0f })
+    {
+        Cs80AudioProcessor presetHost;
+        const float storedParity = 1.0f - liveParity;
+        const float storedControls[] = { -0.75f, 0.25f, -0.5f, 0.75f,
+                                        storedParity, storedParity, storedParity, storedParity,
+                                        storedParity, storedParity };
+        for (int i = 0; i < 10; ++i)
+            presetHost.setParamValue(cs80::P_kbdBrillianceLow + i, storedControls[i]);
+        presetHost.setParamValue(cs80::P_parityMode, storedParity);
+        juce::MemoryBlock presetState;
+        presetHost.getStateInformation(presetState);
+        juce::TemporaryFile preset(".cs80xml");
+        const bool written = preset.getFile().replaceWithData(presetState.getData(), presetState.getSize());
+        check(written, "performance user preset fixture written");
+        if (!written) continue;
+
+        auto setOpposingLiveValues = [&]
+        {
+            for (int i = 0; i < 10; ++i)
+                presetHost.setParamValue(cs80::P_kbdBrillianceLow + i,
+                                         i < 4 ? -storedControls[i] : 1.0f - storedControls[i]);
+            presetHost.setParamValue(cs80::P_parityMode, liveParity);
+        };
+        setOpposingLiveValues();
+        presetHost.loadUserPreset(preset.getFile());
+        for (int i = 0; i < 10; ++i)
+            check(std::abs(presetHost.getParamValue(cs80::P_kbdBrillianceLow + i) - storedControls[i]) < 1e-6f,
+                  (juce::String("user preset restores performance control: ") + ids[i]).toRawUTF8());
+        check(presetHost.getParamValue(cs80::P_parityMode) == liveParity,
+              "user performance preset preserves live isolation policy in both directions");
+
+        setOpposingLiveValues();
+        presetHost.setStateInformation(presetState.getData(), (int) presetState.getSize());
+        for (int i = 0; i < 10; ++i)
+            check(std::abs(presetHost.getParamValue(cs80::P_kbdBrillianceLow + i) - storedControls[i]) < 1e-6f,
+                  (juce::String("full session restores performance control: ") + ids[i]).toRawUTF8());
+        check(presetHost.getParamValue(cs80::P_parityMode) == storedParity,
+              "full session restores saved isolation policy in both directions");
+    }
+
+    // The real audio callback: automation reaches the core, and the paths are audible.
+    auto render = [](Cs80AudioProcessor& target, float pedal, int blocks = 60)
+    {
+        target.prepareToPlay(48000.0, 512);
+        if (pedal >= 0.0f) target.setExpressionFromUI(pedal);
+        juce::AudioBuffer<float> buffer(2, 512);
+        double square = 0.0;
+        long count = 0;
+        bool finite = true;
+        for (int b = 0; b < blocks; ++b)
+        {
+            buffer.clear();
+            juce::MidiBuffer midi;
+            if (b == 0)
+            {
+                midi.addEvent(juce::MidiMessage::noteOn(1, 45, (juce::uint8) 100), 0);
+                midi.addEvent(juce::MidiMessage::noteOn(1, 52, (juce::uint8) 100), 0);
+            }
+            target.processBlock(buffer, midi);
+            if (b < blocks / 2) continue;
+            for (int i = 0; i < 512; ++i)
+            {
+                const float v = buffer.getSample(0, i);
+                finite = finite && std::isfinite(v);
+                square += (double) v * v;
+                ++count;
+            }
+        }
+        return finite ? std::sqrt(square / (double) count) : -1.0;
+    };
+    {
+        Cs80AudioProcessor reference, trimmed, wah, pedalDown, pedalUp;
+        for (auto* target : { &reference, &trimmed, &wah, &pedalDown, &pedalUp })
+        {
+            // Plan 1.7 (ws2): the scalar -20 dB LOW trim is the legacy output law.
+            target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
+            target->setParamValue(cs80::P_voiceDispersion, 0.0f);
+            target->setParamValue(cs80::P_drift, 0.0f);
+            target->setParamValue(cs80::P_analogNoise, 0.0f);
+        }
+        trimmed.setParamValue(cs80::P_outputLevel, 0.0f);
+        wah.setParamValue(cs80::P_footMode, 1.0f);
+        const double base = render(reference, -1.0f);
+        check(base > 1e-4, "host render fixture is audible");
+        check(std::abs(render(trimmed, -1.0f) / base - 0.1) < 0.002, "host output LOW is the -20 dB trim");
+        const double wahLevel = render(wah, 0.1f);
+        check(wahLevel > 1e-5 && std::abs(wahLevel - render(pedalDown, 0.1f)) > 1e-5,
+              "host EXP-WAH changes the audible result");
+        check(render(pedalUp, 0.25f) < base * 0.5, "on-screen pedal mailbox reaches expression/volume");
+        Cs80AudioProcessor automation;
+        automation.setParamValue(cs80::P_kbdBrillianceHigh, 0.75f);
+        automation.setParamValue(cs80::P_sustainAssign, 1.0f);
+        automation.setParamValue(cs80::P_footswitchPlugged, 1.0f);
+        render(automation, -1.0f, 2);
+        check(std::abs(automation.getEngine().getParams()[cs80::P_kbdBrillianceHigh] - 0.75f) < 1e-5f
+                  && automation.getEngine().getParams()[cs80::P_sustainAssign] == 1.0f
+                  && automation.getEngine().getParams()[cs80::P_footswitchPlugged] == 1.0f,
+              "host automation of performance controls reaches the core without an editor");
+    }
+}
+
+// Existing host controls must keep their event-time meaning as the isolation
+// PRA circuit replaces the legacy SVF. These compare complete audio streams;
+// they do not assume EXP is transparent or claim measured pedal calibration.
+void testIsolatedFootControllerHost()
+{
+    for (double rate : { 44100.0, 48000.0, 96000.0 })
+    {
+        auto renderScript = [&](const std::vector<int>& partitions, bool automateFoot, bool ignoredCc)
+        {
+            Cs80AudioProcessor target;
+            target.setParamValue(cs80::P_parityMode, 1.0f);
+            target.setParamValue(cs80::P_chorusOn, 0.0f);
+            target.prepareToPlay(rate, 512);
+            // ws1 merge: the circuit engine also reports its oscillator's 8
+            // internal samples (8/N host samples at factor N).
+            check(target.getLatencySamples() == 63 + 8 / target.getEngine().getOversamplingFactor()
+                      && target.getLatencySamples() == target.getEngine().getLatencySamples(),
+                  "PRA host integration preserves reported latency");
+            constexpr float pedals[] = { 0.15f, 0.95f, 0.25f, 0.8f, 0.0f, 0.6f, 1.0f, 0.35f };
+            constexpr float modes[] = { 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f };
+            constexpr int segmentFrames = 2048;
+            std::vector<float> rendered;
+            rendered.reserve(8 * segmentFrames * 2);
+            size_t nextPartition = 0;
+            bool finite = true, stereoIdentical = true;
+            double energy = 0.0;
+            for (int segment = 0; segment < 8; ++segment)
+            {
+                const float mode = automateFoot ? modes[segment] : 0.0f;
+                target.setParamValue(cs80::P_footMode, mode);
+                target.setExpressionFromUI(pedals[segment]);
+                // Invalid UI input cannot poison a previously published physical move.
+                target.setExpressionFromUI(std::numeric_limits<float>::quiet_NaN());
+                for (int offset = 0; offset < segmentFrames;)
+                {
+                    const int count = std::min(segmentFrames - offset,
+                                               partitions[nextPartition++ % partitions.size()]);
+                    juce::AudioBuffer<float> buffer(2, count);
+                    buffer.clear();
+                    juce::MidiBuffer midi;
+                    if (offset == 0)
+                    {
+                        if (segment == 0)
+                        {
+                            midi.addEvent(juce::MidiMessage::noteOn(1, 45, (juce::uint8) 100), 0);
+                            midi.addEvent(juce::MidiMessage::noteOn(1, 52, (juce::uint8) 100), 0);
+                        }
+                        if (segment == 7)
+                        {
+                            midi.addEvent(juce::MidiMessage::noteOff(1, 45), 0);
+                            midi.addEvent(juce::MidiMessage::noteOff(1, 52), 0);
+                        }
+                        if (ignoredCc)
+                            midi.addEvent(juce::MidiMessage::controllerEvent(1, 11, (segment & 1) ? 0 : 127),
+                                          std::min(17, count - 1));
+                    }
+                    target.processBlock(buffer, midi);
+                    for (int sample = 0; sample < count; ++sample)
+                    {
+                        const float left = buffer.getSample(0, sample), right = buffer.getSample(1, sample);
+                        finite = finite && std::isfinite(left) && std::isfinite(right);
+                        stereoIdentical = stereoIdentical && left == right;
+                        energy += (double) left * left + (double) right * right;
+                        rendered.push_back(left);
+                        rendered.push_back(right);
+                    }
+                    offset += count;
+                }
+                check(target.getEngine().getParams()[cs80::P_footMode] == mode,
+                      "host foot-mode automation reaches Engine during held notes and release");
+                check(target.getExpressionValue() == pedals[segment],
+                      "physical pedal wins over ignored isolated CC11 and nonfinite UI input");
+            }
+            check(finite && energy > 1e-8, "repeated isolated EXP/WAH and pedal reversals produce finite audible audio");
+            check(stereoIdentical, "paired isolated PRA channels remain identical with chorus disabled");
+            return rendered;
+        };
+        const auto regular = renderScript({ 512 }, true, false);
+        const auto irregular = renderScript({ 1, 31, 509, 7, 257, 97 }, true, false);
+        const auto withCc = renderScript({ 127, 1, 503, 17 }, true, true);
+        const auto dryOnly = renderScript({ 512 }, false, false);
+        check(regular == irregular, "isolated pedal/foot event timeline is sample-exact across host block partitions");
+        check(regular == withCc, "ignored CC11 does not change isolated moving-pedal/foot-switch audio");
+        check(regular != dryOnly, "host EXP-WAH automation audibly differs from the same pedal timeline in EXP");
+    }
+}
+
+} // namespace
+
+int main(int argc, char** argv)
+{
+    // Never read or write the user's real editor preferences (display size) from the snapshot tool.
+    const juce::TemporaryFile preferences(".settings");
+    cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
+    if (argc > 1 && std::strcmp(argv[1], "--control-context-headless-host-smoke") == 0)
+    {
+        cs80::tests::control_context::testParameterMenusHeadless(check);
+        std::printf("Headless switch/combo/memory host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--control-context-host-smoke") == 0)
+    {
+        // Same preregistered fixture as the full UI smoke, isolated to make
+        // host gesture and right-click mutation checks quick to rerun.
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::control_context::testParameterMenus(check, flushGui);
+        std::printf("Switch/combo/memory context host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--chorus-routing-host-smoke") == 0)
+    {
+        cs80::tests::testChorusRoutingHost(check);
+        std::printf("OE1/OE2 host parameter regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--undo-state-host-smoke") == 0)
+    {
+        cs80::tests::testUndoStateReplacementHost(check);
+        std::printf("APVTS replacement host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--voice-meter-host-smoke") == 0)
+    {
+        // Does not open X11: the real JUCE processor, keyboard-event pipeline,
+        // mode transitions and extension-engine pressure run without an editor.
+        cs80::tests::testWs3KeyboardHost(check);
+        std::printf("Voice-activity headless host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
+        return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--voice-meter-smoke") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::testWs3KeyboardHost(check);
+        cs80::tests::testVoiceActivityUi(check, flushGui);
+        std::printf("Voice-activity native host/editor regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--teardown-probe") == 0)
+    {
+        // Phase 7 validator diagnosis (docs/VALIDATOR_DIAGNOSTICS.md): the life cycle a host gives a
+        // plugin module, once. JUCE starts, an instance and its editor paint (warming every cache the
+        // panel art keeps), both are destroyed, JUCE shuts down, and only then does main return and
+        // the process run its static destructors, as a module unload does after the host's last
+        // instance. Run under a memory checker to see what outlives JUCE's shutdown.
+        {
+            juce::ScopedJuceInitialiser_GUI juceInit;
+            juce::TemporaryFile root("-cs80-teardown");
+            auto host = std::make_unique<Cs80AudioProcessor>(root.getFile().getChildFile("presets"));
+            host->prepareToPlay(48000.0, 256);
+            {
+                auto editor = std::unique_ptr<juce::AudioProcessorEditor>(host->createEditor());
+                editor->setSize(1600, 1000);
+                (void) editor->createComponentSnapshot(editor->getLocalBounds(), true, 1.0f);
+                editor->setSize(1120, 700);
+                (void) editor->createComponentSnapshot(editor->getLocalBounds(), true, 1.0f);
+            }
+            host.reset();
+            std::puts("teardown probe: instance and editor destroyed; JUCE shuts down next");
+        }
+        std::puts("teardown probe: JUCE shut down; static destructors run after main returns");
+        return 0;
+    }
+    // CTest captures stdout through a pipe. Keep phase evidence if a native
+    // crash occurs, without changing the isolated locale-smoke entry path.
+    std::setvbuf(stdout, nullptr, _IONBF, 0);
+    std::printf("UI SMOKE START: processor=%zu bytes engine=%zu bytes\n",
+                sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
+    std::puts("UI SMOKE PHASE: JUCE initialization");
+    juce::ScopedJuceInitialiser_GUI juceInit;
+    std::puts("UI SMOKE PHASE: host metadata");
+    cs80::tests::testPluginHostMetadata(check);
+    std::puts("UI SMOKE PHASE: output meter host");
+    cs80::tests::testOutputMeterHost(check);
+    std::puts("UI SMOKE PHASE: source performance host");
+    cs80::tests::testSourcePerformanceHost(check);
+    std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
+    cs80::tests::testWs3KeyboardHost(check);
+    std::puts("UI SMOKE PHASE: engine I/O host");
+    cs80::tests::testChorusRoutingHost(check);
+    cs80::tests::testOversamplingHost(check);
+    cs80::tests::testEngineDefaultHost(check);
+    cs80::tests::testListeningOutputHost(check);
+    cs80::tests::testParameterGroupsHost(check);
+    std::puts("UI SMOKE PHASE: editor initial size");
+    cs80::tests::testEditorInitialSize(check);
+
+    juce::String outDir = "artifacts/ui";
+    bool selfTest = false;
+    for (int i = 1; i < argc; ++i)
+    {
+        if (! juce::String(argv[i]).compareIgnoreCase("--out") && i + 1 < argc)
+            outDir = argv[++i];
+        else if (! juce::String(argv[i]).compareIgnoreCase("--self-test"))
+            selfTest = true;
+    }
+
+    juce::File dir(juce::File::getCurrentWorkingDirectory().getChildFile(outDir));
+    dir.createDirectory();
+
+    std::puts("UI SMOKE PHASE: external input host");
+    testExternalInputHost();
+    std::puts("UI SMOKE PHASE: performance and isolation host");
+    testPerformanceControlsHost();
+    testIsolatedFootControllerHost();
+    testParityIsolationHost();
+    std::puts("UI SMOKE PHASE: keyboard and expression host");
+    testKeyPressureGesture();
+    testKeyPressureGesture(true);
+    testKeyboardHandoffHost(false);
+    testKeyboardHandoffHost(true);
+    testExpressionPersistence();
+    std::puts("UI SMOKE PHASE: live envelope and factory source host");
+    testLiveEnvelopeTimingHost();
+    testSourceFactoryHost();
+
+    std::puts("UI SMOKE PHASE: editor, state and automation");
+    Cs80AudioProcessor processor;
+    // Fresh instances run the circuit engine (plan 1.7): 63 decimator samples
+    // plus its oscillator's 8 internal samples (ws1 merge).
+    check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
+          "reported latency at construction");
+    check(processor.getPresetName().contains("Original SUB"), "fresh startup identifies modified original SUB configuration");
+    processor.prepareToPlay(48000.0, 512);
+    check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
+          "reported latency after prepare");
+
+    // Parameter and preset integrity. These are the checks a host would rely
+    // on before the instrument is even asked to make a sound.
+    check(processor.getFactoryPresets().size() >= 200, "factory bank present");
     for (int index = 0; index < cs80::P_numParams; ++index)
     {
         const auto& def = cs80::paramDef(index);
