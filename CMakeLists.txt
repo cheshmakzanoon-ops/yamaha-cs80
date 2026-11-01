@@ -511,6 +511,27 @@ if (CS80_BUILD_PLUGIN)
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
 
+    # Test-first VST3 host oracle: a 256-frame automation jump at sample 128
+    # must render exactly like two 128-frame calls. The `flat` control rejects
+    # block-size drift; the driver rejects vacuous silence and bad teardown.
+    # Stock JUCE 8.0.11 intentionally fails `jump` by applying only the final
+    # point, so commit this gate before enabling any wrapper adapter.
+    if (CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_executable(cs80_vst3_automation_host tests/Vst3AutomationAudioTests.cpp)
+        target_compile_features(cs80_vst3_automation_host PRIVATE cxx_std_20)
+        target_include_directories(cs80_vst3_automation_host PRIVATE
+            "${JUCE_SOURCE_DIR}/modules/juce_audio_processors_headless/format_types/VST3_SDK")
+        target_link_libraries(cs80_vst3_automation_host PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_automation_host CS80Reference_VST3)
+        foreach(cs80_vst3_mode IN ITEMS empty flat jump)
+            add_test(NAME cs80_vst3_automation_${cs80_vst3_mode}
+                COMMAND $<TARGET_FILE:cs80_vst3_automation_host>
+                        $<TARGET_FILE:CS80Reference_VST3> ${cs80_vst3_mode})
+            set_tests_properties(cs80_vst3_automation_${cs80_vst3_mode}
+                                 PROPERTIES TIMEOUT 60)
+        endforeach()
+    endif()
+
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
     target_sources(CS80Snapshots PRIVATE
