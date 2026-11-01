@@ -273,7 +273,40 @@ inline void testParameterMenus(const Check& check, const Flush& flush)
         else check(false, "memory miniature's MIDI learn menu action exists");
     }
 
+    // Existing rotary controls use an older context-menu implementation.
+    // They must obey the same PURE no-map-edits policy, including delayed
+    // actions from a menu opened just before entering PURE.
+    auto* masterTune = knobFor(editor, cs80::P_masterTune);
+    check(masterTune != nullptr, "physical master-tune knob is available for PURE MIDI forget coverage");
+    int tuneHost = -1;
+    juce::PopupMenu staleKnobMenu;
+    const juce::PopupMenu::Item* staleKnobLearn = nullptr;
+    const juce::PopupMenu::Item* staleKnobForget = nullptr;
+    if (masterTune != nullptr)
+    {
+        tuneHost = processor.hostParameterIndex(cs80::P_masterTune);
+        check(processor.getMidiLearn().assign(73, tuneHost),
+              "pre-register MIDI CC 73 on the master-tune knob before entering PURE");
+        staleKnobMenu = masterTune->buildContextMenu();
+        staleKnobLearn = menuItem(staleKnobMenu, "MIDI learn");
+        staleKnobForget = menuItem(staleKnobMenu, "Forget MIDI CC 73");
+    }
     processor.setParamValue(cs80::P_parityMode, 1.0f);
+    if (staleKnobLearn != nullptr && staleKnobLearn->action) staleKnobLearn->action();
+    check(masterTune != nullptr && staleKnobLearn != nullptr && staleKnobLearn->action
+          && processor.getMidiLearn().learningParameter() < 0,
+          "stale physical knob MIDI learn action stays inert after entering PURE");
+    if (staleKnobForget != nullptr && staleKnobForget->action) staleKnobForget->action();
+    check(masterTune != nullptr && staleKnobForget != nullptr && staleKnobForget->action
+          && processor.getMidiLearn().controllerFor(tuneHost) == 73,
+          "stale physical knob Forget action does not mutate learned mappings in PURE");
+    if (masterTune != nullptr)
+    {
+        auto pureKnobMenu = masterTune->buildContextMenu();
+        const auto* pureKnobForget = menuItem(pureKnobMenu, "Forget MIDI CC 73");
+        check(pureKnobForget != nullptr && ! pureKnobForget->isEnabled,
+              "physical knob MIDI forget menu is disabled under PURE");
+    }
     auto pureMenu = cs80::ui::buildParameterContextMenu(processor, hpId, *panelSwitch, hpIndex);
     const auto* pureLearn = menuItem(pureMenu, "MIDI learn");
     check(pureLearn != nullptr && ! pureLearn->isEnabled,
