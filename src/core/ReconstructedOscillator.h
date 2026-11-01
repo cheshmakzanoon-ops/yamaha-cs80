@@ -297,11 +297,17 @@ public:
             const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
             double span=std::min(dt-elapsed,physical);
             const auto start=after;
-            // The physical reset boundary is cheap to update each sample.
-            // Fold, comparator, shaper-knot and turning-point roots are
-            // analytic until a branch boundary, so search ONCE for the next
-            // one and carry its remaining time across internal samples.
-            // A finite 125 ms horizon also bounds the stopped (f=0) case.
+            // Root search across an analytic segment is a FORECAST, never the
+            // integration time used for the audible state. Advancing by the
+            // cached countdown changed the last few ULPs of branch positions:
+            // repeated remaining-=dt rounds differently from a root solved
+            // against the actual node state on the event's sample. Use the
+            // forecast only to skip searches on samples known not to cross a
+            // branch. At a candidate crossing run the original exact one-tick
+            // search with `span` as its limit, preserving event time and
+            // residual accumulation byte for byte. A bounded 125 ms horizon
+            // merely refreshes a stopped oscillator's forecast; it must never
+            // split the physical integration interval itself.
             if(!segmentCache.valid){
                 bool found=false;
                 segmentCache.remaining=nextBranchEvent(start,std::min(physical,kSegmentCacheHorizonSeconds),found);
@@ -309,16 +315,24 @@ public:
                 segmentCache.branch=found;
                 segmentCache.valid=true;
             }
-            const double cachedRemaining=segmentCache.remaining;
-            span=std::min(span,cachedRemaining);
-            const bool branchEvent=segmentCache.branch&&std::abs(span-cachedRemaining)<=2e-15;
+            // At most one short forecast guard (1e-4 sample) before the
+            // predicted boundary; this exceeds the accumulated double-roundoff
+            // by orders of magnitude without reintroducing per-tick root work.
+            // If a forecast is slightly early, the precise search returns the
+            // full original interval and we simply try again next sample.
+            const double guard=dt*1.e-4;
+            bool branchEvent=false;
+            if(segmentCache.branch&&segmentCache.remaining<=span+guard){
+                span=nextBranchEvent(start,span,branchEvent);
+                ++diagnostics.branchRootSearches;
+            }
             // Roots closer than round-off to the previous event are represented
             // by its right-sided branch derivative, never a zero-progress loop.
             if(!(span>0.)){diagnostics.eventCapacityExceeded=true;break;}
             advance(span,start);
             elapsed+=span;
             segmentCache.remaining-=span;
-            if(segmentCache.remaining<=2e-15)segmentCache.valid=false;
+            if(segmentCache.remaining<=0.||branchEvent)segmentCache.valid=false;
             const bool physicalReached=std::abs(span-physical)<=2e-15;
             if(physicalReached)segmentCache.valid=false;
             if(physicalReached&&inReset)state.resetRemainingSeconds=std::numeric_limits<double>::min();

@@ -100,18 +100,39 @@ no single hotspot left for an exactness-preserving fix.
 ### 2026-11-01 analytic-segment event cache
 
 The next root of the reconstructed oscillator's fold/comparator/shaper-knot
-equations is now retained across internal samples within the **same analytic
-segment**. The physical charge/reset boundary is still updated every sample;
-any frequency, pulse-threshold or gate change invalidates the root, as do idle
-advancement and state restore. A bounded 125 ms horizon covers a stopped
-oscillator without placing infinity into the knot solver. This is a numerical
-execution optimization of the same declared circuit equations, not a new
-Yamaha measurement or a revised oscillator law.
+equations is retained as a **forecast** across internal samples within the
+same analytic segment. Most samples need no root solve; on a candidate crossing
+the engine performs the original one-sample root solve against the actual
+current physical state, preserving the original integration interval and
+residual event time exactly. The physical charge/reset boundary is still
+updated every sample; any frequency, pulse-threshold or gate change invalidates
+the forecast, as do idle advancement and state restore. A bounded 125 ms
+horizon covers a stopped oscillator without placing infinity into the knot
+solver. A forecast horizon expiry never splits a physical integration step.
+This is a numerical execution optimization of the same declared circuit
+equations, not a new Yamaha measurement or a revised oscillator law.
+
+An earlier implementation instead subtracted each sample interval from the
+forecast time and advanced to the accumulated remainder. That changed
+**25,023 V2 audio bytes out of a 9.3 MB fixture** (mostly last-bit changes),
+despite passing the finite-tolerance alias and waveform gates. It was rejected:
+the original strict source-audio gate must still be byte-identical. A detached
+pre-VCA `818975f` checkout with the corrected forecast-only implementation,
+compiled with the same Release/core and `-O2` compatibility probe, now renders
+**byte-identically** to original pin `00ceccf`; both full-fixture SHA-256 hashes
+are `08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195`.
+A separate isolated filter-only `90947ed` checkout has the exact same original
+V2 hash, proving the initial accidental drift came from the oscillator cache,
+not the IG00156 Q-coefficient cache. The later intentional IG00151 VCA
+discharge change has a separate V2 pin and is not part of this comparison.
 
 The pre-registered `oscillator_segment_cache` gate in
 `tests/parity/tolerances-v2/ws1-voice.json` caps root searches to 400 per 4096
-stable ticks at 96 kHz, 261.6 Hz. The optimized oscillator took **178**;
-deliberately disabling reuse caused **4274** and the test failed as intended.
+stable ticks at 96 kHz, 261.6 Hz. The forecast-only oscillator took **334**
+searches; deliberately invalidating the forecast each tick caused **4430**
+and the gate failed (42 checks, one expected failure). This red/green mutation
+proves that eliminating the per-tick root searches remains enforced while the
+separate strict-V2 fixture protects every audio byte.
 The independent `cs80_experimental_oscillator_tests` and promoted-engine
 `cs80_oscillator_promotion_tests` both pass; the latter still measures
 **−88.31 dB saw** and **−88.84 dB pulse** non-harmonic energy at 48 kHz, with
