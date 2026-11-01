@@ -11,6 +11,7 @@
 #include "core/MpeZones.h"
 #include "core/Tuning.h"
 #include "OutputMeter.h"
+#include "VoiceMonitorTaps.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
 
@@ -20,6 +21,7 @@
 #include <memory>
 #include <atomic>
 #include <array>
+#include <bit>
 #include <cmath>
 #include <limits>
 #include <functional>
@@ -94,6 +96,22 @@ public:
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    struct VoiceActivitySnapshot
+    {
+        unsigned mask = 0; // Bit i is the activity of voice i (0..15).
+        int capacity = 8;  // Eight in PURE/default mode; sixteen only while the second engine runs.
+        int activeCount() const noexcept { return std::popcount(mask); }
+    };
+    VoiceActivitySnapshot getVoiceActivitySnapshot() const noexcept
+    {
+        // The 16-voice mode flag and both engines' activity bits are published
+        // atomically at the end of one processBlock; no mixed-mode UI frame.
+        const unsigned value = activeVoiceMask.load(std::memory_order_relaxed);
+        return { value & 0xffffu, (value & (1u << 16)) != 0 ? 16 : 8 };
+    }
+    // Two rank-model nodes, captured on the audio thread from one selected
+    // active voice across BOTH engines. UI must never directly poll RankInfo.
+    cs80::VoiceMonitorSnapshot getVoiceMonitorSnapshot() const noexcept { return voiceMonitorTaps.read(); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
     // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
     unsigned getHostMidiEventCount() const noexcept { return hostMidiEvents.load(std::memory_order_relaxed); }
@@ -102,7 +120,8 @@ public:
     cs80::OutputMeterReading consumeOutputMeter() noexcept { return outputMeter.consume(); }
     bool isVoiceActive(int i) const noexcept
     {
-        return i >= 0 && i < 8 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
+        // Slots 8..15 belong to the second Engine in the 16-voice extension.
+        return i >= 0 && i < 16 && (getVoiceActivitySnapshot().mask & (1u << i)) != 0;
     }
     // Single-value mailboxes: only the audio callback mutates the DSP engine.
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
@@ -338,8 +357,10 @@ private:
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> hostMidiEvents { 0 };
+    // Bits 0..15: active voices; bit 16: extension capacity flag. Single audio->UI publication.
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
+    cs80::VoiceMonitorTaps voiceMonitorTaps;
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
     std::unique_ptr<cs80::Engine> extensionEngine;

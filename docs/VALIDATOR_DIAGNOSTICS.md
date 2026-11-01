@@ -108,3 +108,79 @@ pluginval locally: compare GUI validation runs that keep the module loaded with
 runs that unload it, with debug logging added around the JUCE VST3 wrapper's
 run-loop registration, to see whether a wrapper `EventHandler` registration
 survives `IPlugView::removed()`.
+
+## 2026-11-01 root cause: JUCE's *validator-host* VST3 RunLoop UAF
+
+The original failing Linux pluginval v1.0.4 logs were retrieved directly from
+GitHub Actions (not inferred from later passing runs):
+
+| Linux job | Stage and seed | Actual verdict |
+| --- | --- | --- |
+| [123632463354](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40925492958/job/123632463354) | GUI `0x2afb526` | SUCCESS, then exit139 |
+| [123660820515](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40933500223/job/123660820515) | Headless `0x65245c3` | SUCCESS, then exit139 |
+| [123779240630](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40967809044/job/123779240630) | GUI `0x63421ca` | SUCCESS, then exit139; diagnostic replay fault in JUCE RunLoop callback |
+| [123809934341](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40977141585/job/123809934341) | Headless `0x4f31605` | exit139 after `Fuzz parameters`; no overall SUCCESS; failed gate |
+
+The exit139 mechanism is now established by an independent, publicly documented
+upstream JUCE fix, not by a green rerun. [JUCE commit
+`04e167d64661d3298afd4978f6c2e77f841b5f17`](https://github.com/juce-framework/JUCE/commit/04e167d64661d3298afd4978f6c2e77f841b5f17),
+"VST3 Host: Fix an occasional crash when removing callbacks from the message loop
+during shutdown", describes the exact vulnerability. The Linux event loop copies
+ready fd callbacks before invoking them. Callback A can release the last VST3
+host `RunLoop::Impl`, unregister callback B and destroy its fd-handler map;
+callback B is still in that dispatch batch and invokes a lambda capturing the
+freed `this`. Its subsequent `eventHandlerMap[fd]` is use-after-free. The upstream
+[pluginval issue 185](https://github.com/Tracktion/pluginval/issues/185)
+independently reproduces exit139 after SUCCESS with the *identical* stack:
+`std::unordered_map::operator[]` from `juce::RunLoop::Impl::registerEventHandler`
+then `juce::LinuxEventLoop::registerFdCallback`, all inside the validator host.
+pluginval v1.0.4 embeds JUCE 8.0.3 (`5179f4e720d...`) and predates this fix.
+
+An unchanged plugin VST3 built locally in `RelWithDebInfo` reproduced the fault
+under the released pluginval 1.0.4 Linux binary and the same failing headless
+seed `0x4f31605`, with at least three SIGSEGVs across repeated batches. An
+`LD_PRELOAD` *diagnostic-only* signal handler captured a fault in pluginval's
+host ELF at relative instruction offset `0x394849`, resolved by `objdump` and
+`nm -C` to the fd callback's `unordered_map<int, vector<IEventHandler*>>`
+lookup; the faulting instruction was **outside the plugin's ELF mapping**. This
+matches the original October 29 RunLoop callback trace and the upstream
+crash stack. The signal handler did not continue execution or change a gate
+verdict. GDB ptrace was prohibited in this container, so no local core/backtrace
+is claimed. The signal-address/register diagnostic remained local and is not
+added to CI artifacts.
+
+The Linux-only CI repair builds the *same pluginval v1.0.4 test suite* from
+upstream pinned commit `ed19c2c16b57a6d94db391bea3ef4a80b769d5bf` and
+its pinned JUCE submodule `5179f4e720d8406ebd1b5401c86aea8da6cc83c9`.
+It applies the exact ownership mechanism of JUCE `04e167d` to that older
+JUCE source via
+[`scripts/patches/pluginval-juce-vst3-runloop-04e167d.patch`](../scripts/patches/pluginval-juce-vst3-runloop-04e167d.patch).
+The fd callback now captures a `weak_ptr` to the map, returns if expired, and
+never accesses the destroyed RunLoop. Source verification checks that vulnerable
+raw ownership is absent and rejects four mutations (raw lambda owner, absent
+weak lock, raw map storage, and removed key guard). The local patched validator
+built successfully and passed **30/30** repeated strictness-10 headless trials
+on the same unchanged VST3 and original seed; a passing 30-run batch is
+corroboration, **not** the sole evidence of a repair.
+
+Local GUI coverage is separate and limited: on this container's Xvfb setup,
+both the unmodified release host **and** the patched source-built host failed
+at `pluginval / Editor...` with seed `0x63421ca`. A local signal probe resolved
+the patched host's different, early Editor-stage fault to
+`juce::XEmbedComponent::Pimpl::componentParentHierarchyChanged` (host image
+offset `0x40b8cc`, fault address `0xe0`), not the RunLoop map callback site.
+There is no evidence that the weak-pointer patch caused this local GUI failure,
+but there is also **no local passing GUI result**. It must not be called green
+until the unchanged strict GUI test succeeds on GitHub Actions under its
+configured Xvfb environment; any persistent Editor-stage crash there is a
+separate blocker requiring diagnosis.
+
+Crucially, no synthesizer DSP, JUCE plugin-wrapper, processor timer, editor
+timer, font/image cache, `PaintCache`, undo flush or other plugin lifetime code
+is changed by this validator-host fix. The original crashes also reproduced
+with `--skip-gui-tests`, when editor-only resources are not required. A newly
+vendored ODDSound MTS-ESP client's module-static `dlopen`/`dlclose` is a distinct
+future teardown consideration, **not** the cause of failures recorded before
+it was introduced. The original validation strictness, required `SUCCESS` *and*
+exit-zero check, diagnostics, and retry rules remain unchanged; the workflow's
+post-change green run is still required before qualifying this CI correction.

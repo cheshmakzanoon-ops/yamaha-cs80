@@ -26,6 +26,10 @@ struct Setup
     // [0] the rank's first memory, [1] its second memory, [2] PANEL.
     std::array<mp::Positions, 3> banks {};
     mp::Electrical electrical = mp::nominalElectrical;
+    // Offline-only probe: positive current injected into a schematic output
+    // bus. Zero by default; permits independent central-difference dV/dI
+    // measurement without altering any normal source-network fixture.
+    std::array<double, 26> injectedBusCurrentAmps {};
 };
 
 struct Result
@@ -195,6 +199,8 @@ inline Result solve(const Setup& setup)
             const int bi = busBase + r;
             f[(size_t) bi] -= x[(size_t) bi] * load(r);
             J(bi, bi, -load(r));
+            const double probe = setup.injectedBusCurrentAmps[(size_t) (rows[(size_t) r] - 1)];
+            if (probe != 0.0) f[(size_t) bi] += probe;
         }
     };
 

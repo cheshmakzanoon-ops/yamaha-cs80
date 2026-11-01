@@ -40,7 +40,9 @@
 #include "FastMath.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
+#include <cstdint>
 
 namespace cs80
 {
@@ -171,39 +173,73 @@ public:
     void set(float gmCutoffHz, float q, float sampleRate, bool couplingsUnwarped = false) noexcept
     {
         q = clampf(q, 0.35f, 9.0f);
-        if (gmCutoffHz == lastCutoff && q == lastQ && sampleRate == lastRate && couplingsUnwarped == lastUnwarped)
+        // The two companion half-steps, gm and the linear 2x2 elimination
+        // depend on cutoff/rate, not on resonance. A moving Q pot should only
+        // change the affine Q current and its one coefficient in that block;
+        // in particular it must not re-evaluate tan(), sqrt() and the inverse
+        // while the clock is unchanged. Retain the original expression order
+        // below so Q-only retargeting is bit-identical to a full prepare.
+        const bool clockChanged = gmCutoffHz != lastCutoff
+                               || sampleRate != lastRate
+                               || couplingsUnwarped != lastUnwarped;
+        if (!clockChanged && q == lastQ)
             return;
         lastCutoff = gmCutoffHz; lastQ = q; lastRate = sampleRate; lastUnwarped = couplingsUnwarped;
-        const double fs = sampleRate;
         qSiemensValue = std::max(0.0, gTotal / (2.0 * q) - gf);
-        // Network natural frequency = control law + 4.7 MOhm feedforward.
-        const double total = std::clamp(static_cast<double>(gmCutoffHz), 0.0,
-                                        std::max(0.0, 0.45 * fs - feedforwardHz)) + feedforwardHz;
-        const double rate = ig00156IntegratorRate(net, total, qSiemensValue);
-        const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
-        const double theta = 3.14159265358979323846 * total / fs;
-        // CPU pass: bounded-error tan (relative 1e-10 here, FastMath.h).
-        kHalf = 0.5 * (fastmath::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
-        kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
-        gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
-        ffPart = kHalf * ffRate;
-        // Linear block (vin, x) given BP: [a11 a12; a21 a22] [vin; x] = rhs.
-        const double ki = kHalfCoupling / net.inputFarads, kf = kHalfCoupling / net.feedbackFarads;
-        kiGs = ki * gs;
-        const double a11 = 1.0 + kiGs, a21 = kf * gs, a22 = 1.0 + kf * gTotal;
-        const double det = a11 * a22 - kiGs * a21;
-        xFromFb = a11 / det;
-        xFromIn = -a21 / det;
-        xFromU = kf * gs / det;
-        xFromBp = (a11 * kf * (qSiemensValue - gs - gg) + a21 * kiGs) / det;
-        inFromX = kiGs / a11;
-        invA11 = 1.0 / a11;
+        if (clockChanged)
+        {
+            const double fs = sampleRate;
+            // Network natural frequency = control law + 4.7 MOhm feedforward.
+            const double total = std::clamp(static_cast<double>(gmCutoffHz), 0.0,
+                                            std::max(0.0, 0.45 * fs - feedforwardHz)) + feedforwardHz;
+            const double rate = ig00156IntegratorRate(net, total, qSiemensValue);
+            const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
+            const double theta = 3.14159265358979323846 * total / fs;
+            // CPU pass: bounded-error tan (relative 1e-10 here, FastMath.h).
+            kHalf = 0.5 * (fastmath::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
+            kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
+            gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
+            ffPart = kHalf * ffRate;
+            // Linear block (vin, x) given BP: [a11 a12; a21 a22] [vin; x] = rhs.
+            const double ki = kHalfCoupling / net.inputFarads;
+            cachedKf = kHalfCoupling / net.feedbackFarads;
+            kiGs = ki * gs;
+            cachedA11 = 1.0 + kiGs;
+            cachedA21 = cachedKf * gs;
+            const double a22 = 1.0 + cachedKf * gTotal;
+            cachedDet = cachedA11 * a22 - kiGs * cachedA21;
+            xFromFb = cachedA11 / cachedDet;
+            xFromIn = -cachedA21 / cachedDet;
+            xFromU = cachedKf * gs / cachedDet;
+            inFromX = kiGs / cachedA11;
+            invA11 = 1.0 / cachedA11;
+        }
+        // The exact old expression, including its floating-point order,
+        // now uses cached clock-dependent factors on resonance-only edits.
+        xFromBp = (cachedA11 * cachedKf * (qSiemensValue - gs - gg) + cachedA21 * kiGs) / cachedDet;
     }
 
     struct Output { float lp = 0.0f, hp = 0.0f, bp = 0.0f; };
 
     Output process(float input) noexcept
     {
+        // Exact silent fixed point of all four capacitor equations. Every
+        // untouched stage spends its lifetime here until the first real
+        // waveform; the implicit BP Newton solve would evaluate two tanh
+        // functions just to rediscover zero on every sample. The positive-zero
+        // bit guards also preserve the old solver's signed-zero output (BP is
+        // -0), and the slope guards keep restoreMemory() semantics exact.
+        // Node voltages are overwritten by the full solve, so do likewise.
+        if (std::bit_cast<std::uint32_t>(input) == 0u
+            && std::bit_cast<std::uint64_t>(zIn) == 0u
+            && std::bit_cast<std::uint64_t>(zFb) == 0u
+            && std::bit_cast<std::uint64_t>(zBp) == 0u
+            && std::bit_cast<std::uint64_t>(zLp) == 0u
+            && slope1 == 1.0 && slope2 == 1.0)
+        {
+            vIn = vFb = vBp = vLp = 0.0;
+            return { 0.0f, 0.0f, -0.0f };
+        }
         const double u = input * inputScale;
         const double level = kIg00156OtaLevel, inv = 1.0 / level;
         const double g1 = gmPart, f1 = ffPart, g2 = gmPart, f2 = ffPart;
@@ -251,6 +287,9 @@ private:
     double kHalf = 0.0, kHalfCoupling = 0.0, gmPart = 0.0, ffPart = 0.0, qSiemensValue = 0.0;
     double kiGs = 0.0, xFromFb = 1.0, xFromIn = 0.0, xFromU = 0.0, xFromBp = 0.0;
     double inFromX = 0.0, invA11 = 1.0;
+    // Constant Jacobian/elimination factors of the linear AI/FB block.
+    // A Q-only update changes xFromBp but not this cached 2x2 inverse.
+    double cachedKf = 0.0, cachedA11 = 1.0, cachedA21 = 0.0, cachedDet = 1.0;
     double zIn = 0.0, zFb = 0.0, zBp = 0.0, zLp = 0.0;
     double vIn = 0.0, vFb = 0.0, vBp = 0.0, vLp = 0.0;
     double slope1 = 1.0, slope2 = 1.0;

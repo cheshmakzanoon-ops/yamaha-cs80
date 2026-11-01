@@ -8,6 +8,7 @@ import base64
 import hashlib
 import io
 import json
+import os
 import time
 import urllib.request
 import re
@@ -169,6 +170,13 @@ def emit_image(gray, page, url, data):
             crop.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
         out = io.BytesIO()
         crop.save(out, format="PNG", optimize=True)
+        # CI may retain the exact native crop for a second human reader.
+        # No source image is written unless the caller explicitly requests it.
+        crop_dir = os.environ.get("CS80_CROP_OUTPUT_DIR")
+        if crop_dir:
+            artifact_dir = Path(crop_dir)
+            artifact_dir.mkdir(parents=True, exist_ok=True)
+            (artifact_dir / f"{ident}.png").write_bytes(out.getvalue())
         encoded = base64.b64encode(out.getvalue()).decode("ascii")
         print("CS80_CROP_BEGIN " + json.dumps({
             "id": ident, "source_box": list(box),

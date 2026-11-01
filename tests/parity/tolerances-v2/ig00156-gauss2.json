@@ -1,0 +1,95 @@
+{
+  "schema_version": 2,
+  "profile_id": "ig00156-four-state-high-order-v2",
+  "registered": "2026-11-01",
+  "gate_status": "PRE-REGISTERED, NOT QUALIFIED",
+  "evidence_kind": "numerical candidate versus declared M41 circuit inference; never a hardware measurement",
+  "candidate": "Two-stage Gauss-Legendre implicit fourth-order (or a demonstrably equivalent A-stable integration rule) over all four physical capacitor states per HP/LP stage. The M41 source 1 uF, 180 pF feedback, two 1.5 nF integrators, 4.7 MOhm feedforward, inferred unilateral Q gm, and inferred gm*L*tanh OTA currents stay unchanged. Solver choice and source interpolation are numerical methods, not fitted analog component laws.",
+  "rationale": "This numerical-method gate is registered BEFORE any new production filter implementation or pass/fail evaluation. Keep every original ws1-voice-v2 numerical limit (tests/parity/tolerances-v2/ws1-voice.json); this file expands the counterexample grid and the CPU/continuity acceptance. The existing 2x/4x high-octave gate is open. Preliminary offline Gauss2 with a mathematically known continuous sine passes the linear gate, but replacing the sine by four causal sample taps fails the strong-drive counterexample: a linear-only pass is insufficient.",
+  "gates": {
+    "whole_grid_small_signal": {
+      "truth_model": "src/reference/IG00156Network.h stageSystem: continuous exact complex response of the full four-capacitor M41 graph, two stages cascaded with the declared Q and gm laws",
+      "internal_rates_hz": [88200, 96000, 192000, 384000],
+      "cutoffs_hz": [60, 250, 1000, 4000, 12000],
+      "q_values": [0.5, 1.0, 2.0, 5.0, 9.0],
+      "configs": ["HP_only", "LP_only", "HP_at_max_60_or_fc_div_4_then_LP_at_fc"],
+      "core_band_relative_error_max": 0.03,
+      "core_band": "0.5..2 times cutoff, at most internal fs/8, complex-response difference normalized by analog response peak",
+      "full_band_relative_error_below_192khz_max": 0.08,
+      "full_band_relative_error_at_or_above_192khz_max": 0.02,
+      "full_band": "20 Hz..min(20 kHz, internal fs/5), complex-response difference normalized by analog response peak",
+      "source_interpolation": "Causal observed input samples only; may not assume future or analytic input values in the production implementation",
+      "tolerance_provenance": "Unchanged preregistration from ws1-voice-v2, originally b87d560; neither a threshold nor an excluded cell may be changed to pass"
+    },
+    "nonlinear_sine_physical_oracle": {
+      "truth_model": "Independent eight-state continuous-time DOP853 ODE using the same declared capacitor and OTA equations (not a copy of the candidate discrete algorithm), analytic sine voltage at the input, physical initial capacitor charges zero unless the case says resumed",
+      "oracle_relative_tolerance": 1e-9,
+      "oracle_absolute_tolerance": 1e-11,
+      "oracle_max_step_seconds": "1/(32*max(filter_cutoff_hz,input_frequency_hz))",
+      "internal_rates_hz": [88200, 96000, 192000, 384000],
+      "cases": [
+        {"cutoff_hz": 1000, "q": 1.0, "amplitude_units": 1.0, "frequency_hz": 500},
+        {"cutoff_hz": 1000, "q": 5.0, "amplitude_units": 2.5, "frequency_hz": 1000},
+        {"cutoff_hz": 4000, "q": 5.0, "amplitude_units": 5.0, "frequency_hz": 2000},
+        {"cutoff_hz": 12000, "q": 0.5, "amplitude_units": 1.0, "frequency_hz": 6000},
+        {"cutoff_hz": 12000, "q": 9.0, "amplitude_units": 8.0, "frequency_hz": 6000},
+        {"cutoff_hz": 12000, "q": 9.0, "amplitude_units": 8.0, "frequency_hz": 12000}
+      ],
+      "rms_relative_error_max": 0.03,
+      "rms_window": "Last 40 percent of at least 12 ms for >=4k cutoff; last 0.1 s of at least 1.5 s for 1k cutoff, as in the existing ws1 gate",
+      "startup_peak_relative_error_max": 0.03,
+      "startup_peak_window_seconds": 0.004,
+      "startup_peak_denominator": "Maximum absolute continuous-oracle output over the same 4 ms window",
+      "initialization": "Start from exactly zero physical capacitor voltages, no artificially injected oracle state or fabricated historical audio samples"
+    },
+    "nonlinear_discontinuous_sources": {
+      "truth_model": "Independent continuous eight-state DOP853 OTA network, driven by an explicitly declared ideal step or pulse and by seeded piecewise-linear bounded noise between sample instants; input reconstruction is an interface inference, not CS-80 hardware evidence",
+      "internal_rates_hz": [88200, 96000, 192000, 384000],
+      "cutoff_q_cases": [{"cutoff_hz": 1000, "q": 1.0}, {"cutoff_hz": 12000, "q": 9.0}],
+      "sources": ["plus_8_step_at_first_sample", "plus_8_single_sample_impulse", "uniform_noise_seed_0x00000f11_amplitude_plus_minus_8"],
+      "duration_seconds_min": 0.02,
+      "rms_relative_error_max": 0.03,
+      "peak_relative_error_max": 0.03,
+      "normalization": "Independent oracle waveform RMS or maximum respectively, over the same non-silent observation window",
+      "no_nonfinite_outputs_or_states": true
+    },
+    "state_transfer_and_legacy": {
+      "truth_model": "Continuous physical capacitor charges and node voltages before/after rate, cutoff, Q, active/idle and wake transitions. Retain every pre-existing ws3-keyboard-v2 idle phase and wake-residual numerical limit.",
+      "idle_clock_hz": 3000,
+      "rate_transitions_hz": [[88200, 192000], [192000, 88200], [96000, 384000], [384000, 96000]],
+      "capacitor_state_exact_at_parameter_event": true,
+      "idle_wake_window_seconds": 0.02,
+      "wake_residual_db_max": -40.0,
+      "short_gap_residual_db_max": -90.0,
+      "legacy_default_byte_identical": true,
+      "legacy_tails_byte_identical": true,
+      "v1_circuit_numerics_byte_identical": true,
+      "pure_cs80_modern_controls_inert": true,
+      "v2_audio_repinned_in_separate_commit_if_intentionally_changed": true
+    },
+    "newton_stability_and_cpu": {
+      "truth_model": "Converged implicit Gauss stage residual and Jacobian for the exact declared OTA equation, with bounded iterations, no allocation or blocking on the render thread",
+      "newton_relative_residual_max": 1e-7,
+      "newton_iterations_per_stage_max": 8,
+      "input_stability_range_units": [-8.0, 8.0],
+      "cutoff_stability_range_hz": "0..0.45*internal_fs",
+      "q_stability_range": [0.35, 9.0],
+      "state_output_finite": true,
+      "stage_peak_magnitude_max": 200.0,
+      "source_factory_benchmark_rate_hz": 48000,
+      "source_factory_benchmark_block_frames": 256,
+      "source_factory_benchmark_rounds_min": 3,
+      "eight_voice_median_realtime_factor_max": 0.20,
+      "idle_median_realtime_factor_max": 0.02,
+      "metric_method": "Minimum of three uncontaminated Release rounds for each before/after commit, matched on one machine; report p99 and misses, do not infer a speedup from host noise",
+      "cpu_note": "These are the user-requested hard targets, not values achieved by a Python prototype"
+    },
+    "mutation_requirements": [
+      "Replace high-order method with existing prewarped trapezoid: the unchanged 2x/4x top-octave full-grid gate must fail.",
+      "Replace causal input reconstruction by two-sample linear input: the whole-grid small-signal gate must fail.",
+      "Freeze one physical capacitor at active-to-idle or rate transfer: the exact-state/wake gate must fail.",
+      "Skip a converged Newton correction or use an incorrect Jacobian: the nonlinear oracle or residual gate must fail.",
+      "Do not satisfy any gate by increasing a limit, omitting a truth cell or resetting an established audio tail."
+    ]
+  }
+}

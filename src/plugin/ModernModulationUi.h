@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/ModernLayer.h"
+#include "UiComponents.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_basics/juce_gui_basics.h>
@@ -113,7 +114,7 @@ private:
     struct Row
     {
         juce::Label title;
-        juce::ComboBox wave, destination;
+        ContextComboBox wave, destination;
         juce::Slider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         juce::Slider depth { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::ComboBoxParameterAttachment> waveAttachment, destinationAttachment;
@@ -176,7 +177,7 @@ private:
 };
 
 // Modern FX page: three serial slots (model, classic type, mix, two controls, drive
-// oversampling) and the loudness-match switch.
+// oversampling), loudness matching and independent OE1/OE2 routing (declared inference).
 class ModernFxPage final : public juce::Component, private juce::Timer
 {
 public:
@@ -184,6 +185,7 @@ public:
     void paint(juce::Graphics&) override;
     void resized() override;
     juce::ComboBox& modelBox(int slot) { return slots[(size_t) slot].model; }
+    ContextComboBox& chorusTremoloBox() { return chorusTremoloRouting; }
     juce::ToggleButton& loudnessMatchButton() { return gainComp; }
 
 private:
@@ -192,7 +194,7 @@ private:
     struct Slot
     {
         juce::Label title, mixLabel, aLabel, bLabel;
-        juce::ComboBox model, type, oversampling;
+        ContextComboBox model, type, oversampling;
         juce::Slider mix { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         juce::Slider a { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         juce::Slider b { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
@@ -202,8 +204,11 @@ private:
     };
     Cs80AudioProcessor& processor;
     std::array<Slot, 3> slots;
-    juce::ToggleButton gainComp { "Loudness match (all slots)" };
+    ContextToggleButton gainComp { "Loudness match (all slots)" };
     std::unique_ptr<juce::ButtonParameterAttachment> gainCompAttachment;
+    juce::Label chorusRoutingLabel;
+    ContextComboBox chorusTremoloRouting;
+    std::unique_ptr<juce::ComboBoxParameterAttachment> chorusRoutingAttachment;
 };
 
 // Studio "Modulation" tab content: MSEG page above, LFOs and the matrix below.

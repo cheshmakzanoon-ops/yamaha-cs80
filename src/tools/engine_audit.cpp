@@ -7,7 +7,8 @@
 //
 //   cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all]
 //                     [--rates 44100,48000,96000] [--quick]
-//                     [--oversampling eco|standard|hq]
+//                     [--oversampling eco|standard|hq] [--match NAME]
+//                     [--explain-clicks] [--counterfactual]
 //
 // Metric definitions are in docs/ENGINE_AUDIT.md. Output is one CSV per suite.
 #include "core/Engine.h"
@@ -28,6 +29,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -40,6 +42,11 @@ void require(bool ok, const char* msg) { if (!ok) throw std::runtime_error(msg);
 // --oversampling: forces P_oversampling in every rendered frame (negative = the
 // scenario's own value, the parameter default).
 float oversamplingOverride = -1.0f;
+// Optional literal substring selector for targeted phrase regressions. With
+// no selector, the complete audit and its CSV remain exactly as before.
+std::string phraseNameMatch;
+bool explainClicks = false;
+bool compareCounterfactual = false;
 
 // ---------------------------------------------------------------------------
 // Scenario: either a full control frame (hardware tabs) or PANEL parameters.
@@ -58,6 +65,7 @@ struct Rendered
 {
     std::vector<float> l, r;
     int rate = 48000;
+    int reportedLatency = 0;
     std::uint64_t nonfinite = 0;
     int voicesAtEnd = 0;
 };
@@ -76,6 +84,7 @@ Rendered render(const Setup& s, int rate, const std::vector<Event>& events, doub
     const long frames = (long) std::llround(seconds * rate);
     Rendered out;
     out.rate = rate;
+    out.reportedLatency = e.getLatencySamples();
     out.l.resize((std::size_t) frames);
     out.r.resize((std::size_t) frames);
     std::vector<float> buf((std::size_t) kBlock * 2);
@@ -169,6 +178,22 @@ double maxJump(const Rendered& r, long a, long b)
         j = std::max({ j, (double) std::fabs(r.l[(std::size_t) i] - r.l[(std::size_t) i - 1]),
                        (double) std::fabs(r.r[(std::size_t) i] - r.r[(std::size_t) i - 1]) });
     return j;
+}
+
+struct JumpLocation { double magnitude = 0; long sample = 0; int channel = 0; };
+JumpLocation largestJump(const Rendered& r, long a, long b)
+{
+    JumpLocation worst;
+    for (int channel = 0; channel < 2; ++channel)
+    {
+        const auto& samples = channel ? r.r : r.l;
+        for (long i = std::max(1L, a); i < b; ++i)
+        {
+            const double mag = std::fabs(samples[(size_t) i] - samples[(size_t) i - 1]);
+            if (mag > worst.magnitude) worst = { mag, i, channel };
+        }
+    }
+    return worst;
 }
 double db(double x) { return 20.0 * std::log10(std::max(x, 1.0e-12)); }
 
@@ -512,6 +537,24 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
 {
     std::ofstream out(dir / "phrase.csv");
     out << header() << '\n';
+    std::ofstream diagnostics;
+    std::ofstream counterfactuals;
+    if (explainClicks)
+    {
+        diagnostics.open(dir / "click_diagnostics.csv");
+        diagnostics << "name,policy,rate,event,relative_sample,absolute_time,channel,max_step,previous_sample,current_sample,reference_step\n";
+    }
+    if (compareCounterfactual)
+    {
+        require(!phraseNameMatch.empty(), "--counterfactual requires --match NAME to bound render cost");
+        counterfactuals.open(dir / "counterfactual.csv");
+        counterfactuals << "name,policy,rate,event,first_sample_difference,first_difference_step,"
+                           "maximum_difference_step,maximum_step_relative_sample,latency_samples,"
+                           "maximum_early_step_after_latency,"
+                           "maximum_difference_amplitude,observed_window_step,"
+                           "without_event_window_step,observed_window_score,without_event_window_score,"
+                           "event_local_2ms_score,event_local_8ms_score\n";
+    }
     const auto ev = phrase();
     struct Job { std::vector<Setup> setups; std::vector<int> rates; };
     std::vector<Job> jobs;
@@ -520,20 +563,115 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
         auto tabs = tabSetups(source);
         jobs.push_back({ tabs, rates });
         auto programs = programSetups(source);
-        if (quick) programs.resize(std::min<std::size_t>(programs.size(), 12));
-        // Full bank at the first rate; every 16th program at the other rates.
-        std::vector<Setup> subset;
-        for (std::size_t i = 0; i < programs.size(); ++i) if (i % 16 == 0) subset.push_back(programs[i]);
-        jobs.push_back({ programs, { rates.front() } });
-        if (rates.size() > 1) jobs.push_back({ subset, std::vector<int>(rates.begin() + 1, rates.end()) });
+        if (quick && phraseNameMatch.empty()) programs.resize(std::min<std::size_t>(programs.size(), 12));
+        if (!phraseNameMatch.empty())
+        {
+            // A targeted regression needs the named program at every requested
+            // rate, even if its original bank index is not divisible by 16.
+            jobs.push_back({ programs, rates });
+        }
+        else
+        {
+            // Complete audit unchanged: full bank at the first rate; every
+            // 16th program at the other rates.
+            std::vector<Setup> subset;
+            for (std::size_t i = 0; i < programs.size(); ++i) if (i % 16 == 0) subset.push_back(programs[i]);
+            jobs.push_back({ programs, { rates.front() } });
+            if (rates.size() > 1) jobs.push_back({ subset, std::vector<int>(rates.begin() + 1, rates.end()) });
+        }
     }
     for (const auto& job : jobs)
         for (int rate : job.rates)
             for (const auto& s : job.setups)
             {
+                if (!phraseNameMatch.empty() && s.name.find(phraseNameMatch) == std::string::npos)
+                    continue;
                 const auto r = render(s, rate, ev, T::length);
                 out << csv(analyse(s, r)) << '\n';
                 out.flush();
+                if (explainClicks)
+                {
+                    const auto eventSample = [&](double t) {
+                        return (long) std::ceil(t * rate / kBlock) * kBlock;
+                    };
+                    const double chordStep = std::max(maxJump(r, idx(r, T::chordOn), idx(r, T::chordOff)), 1.0e-7);
+                    for (const auto& event : std::array<std::pair<const char*, double>, 3> {{
+                             { "single_off", T::singleOff },
+                             { "chord_off", T::chordOff },
+                             { "retrigger_on", T::retrigOn2 } }})
+                    {
+                        const long start = eventSample(event.second);
+                        const auto jump = largestJump(r, start, start + (long) std::llround(0.008 * rate));
+                        const auto& channel = jump.channel ? r.r : r.l;
+                        const double reference = event.second == T::retrigOn2
+                            ? chordStep : std::max(maxJump(r, start - (long) (0.06 * rate), start), 1.0e-7);
+                        diagnostics << '"' << s.name << "\"," << s.policy << ',' << rate << ',' << event.first << ','
+                                    << jump.sample - start << ',' << (double) jump.sample / rate << ','
+                                    << jump.channel << ',' << jump.magnitude << ',' << channel[(size_t) jump.sample - 1]
+                                    << ',' << channel[(size_t) jump.sample] << ',' << reference << '\n';
+                    }
+                }
+                if (compareCounterfactual)
+                {
+                    for (const auto& event : std::array<std::pair<const char*, double>, 2> {{
+                             { "single_off", T::singleOff }, { "retrigger_on", T::retrigOn2 } }})
+                    {
+                        auto withoutEvent = ev;
+                        const bool isOn = event.second == T::retrigOn2;
+                        const auto removed = std::find_if(withoutEvent.begin(), withoutEvent.end(), [&](const Event& e) {
+                            return e.t == event.second && e.on == isOn && e.note == 60;
+                        });
+                        require(removed != withoutEvent.end(), "counterfactual event missing");
+                        withoutEvent.erase(removed);
+                        const auto reference = render(s, rate, withoutEvent, T::length);
+                        const long start = (long) std::ceil(event.second * rate / kBlock) * kBlock;
+                        const long end = start + (long) std::llround(0.008 * rate);
+                        // This ratio's numerator can rise even when the MIDI
+                        // event is removed: a different part of a sustained
+                        // waveform may have the largest slope in the next
+                        // 8 ms. Keep the acceptance score unchanged, but
+                        // measure the event-less numerator with the very same
+                        // denominator to distinguish that case from a true
+                        // event-triggered transient.
+                        const double observedWindowStep = maxJump(r, start, end);
+                        const double withoutEventWindowStep = maxJump(reference, start, end);
+                        const double clickReference = isOn
+                            ? std::max(maxJump(r, idx(r, T::chordOn), idx(r, T::chordOff)), 1.0e-7)
+                            : std::max(maxJump(r, start - (long) (0.06 * rate), start), 1.0e-7);
+                        double maxAmplitude = 0.0, maxStep = 0.0, firstDifference = 0.0, firstStep = 0.0;
+                        double earlyStep = 0.0;
+                        long at = 0;
+                        for (int ch = 0; ch < 2; ++ch)
+                        {
+                            const auto& actual = ch ? r.r : r.l;
+                            const auto& control = ch ? reference.r : reference.l;
+                            for (long i = start; i < end; ++i)
+                            {
+                                const double d = (double) actual[(size_t) i] - control[(size_t) i];
+                                const double previous = (double) actual[(size_t) i - 1] - control[(size_t) i - 1];
+                                const double step = std::abs(d - previous);
+                                if (i == start) { firstDifference = std::max(firstDifference, std::abs(d));
+                                    firstStep = std::max(firstStep, step); }
+                                if (i >= start + r.reportedLatency
+                                    && i < start + r.reportedLatency + (long) std::llround(0.002 * rate))
+                                    earlyStep = std::max(earlyStep, step);
+                                maxAmplitude = std::max(maxAmplitude, std::abs(d));
+                                if (step > maxStep) { maxStep = step; at = i - start; }
+                            }
+                        }
+                        counterfactuals << '"' << s.name << "\"," << s.policy << ',' << rate << ',' << event.first << ','
+                                        << firstDifference << ',' << firstStep << ',' << maxStep << ',' << at
+                                        << ',' << r.reportedLatency << ',' << earlyStep << ',' << maxAmplitude
+                                        << ',' << observedWindowStep << ',' << withoutEventWindowStep
+                                        << ',' << observedWindowStep / clickReference
+                                        << ',' << withoutEventWindowStep / clickReference
+                                        // These two *additive* diagnostics isolate the derivative of
+                                        // the event-minus-no-event stream. The same frozen reference
+                                        // and the original raw click acceptance columns remain intact.
+                                        << ',' << earlyStep / clickReference
+                                        << ',' << maxStep / clickReference << '\n';
+                    }
+                }
             }
 }
 
@@ -694,10 +832,13 @@ int main(int argc, char** argv)
         {
             const std::string arg = argv[i];
             if (arg == "--quick") { quick = true; continue; }
+            if (arg == "--explain-clicks") { explainClicks = true; continue; }
+            if (arg == "--counterfactual") { compareCounterfactual = true; continue; }
             require(i + 1 < argc, "missing value");
             if (arg == "--out") dir = argv[++i];
             else if (arg == "--suite") suite = argv[++i];
             else if (arg == "--rates") rates = parseRates(argv[++i]);
+            else if (arg == "--match") phraseNameMatch = argv[++i];
             else if (arg == "--oversampling")
             {
                 const std::string mode = argv[++i];
@@ -706,7 +847,7 @@ int main(int argc, char** argv)
             }
             else throw std::runtime_error("unknown option " + arg);
         }
-        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq]");
+        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq] [--match NAME] [--explain-clicks] [--counterfactual]");
         require(!fs::exists(dir), "output exists; refusing to overwrite");
         fs::create_directories(dir);
         if (suite == "cpu") suiteCpu(dir, rates);

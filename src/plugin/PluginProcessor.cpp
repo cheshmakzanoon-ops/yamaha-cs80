@@ -388,6 +388,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
 
     // [ws8-studio] append this workstream's host parameters below this line, AU version hint 15.
 
+    // [handover-chorus] one append-only override; no existing parameter ID or
+    // semantics change. Choice zero preserves chorus_on/chorus_mode bit-for-bit.
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { parameterId(cs80::P_chorusTremoloRouting), 16 },
+        "Chorus and tremolo switches",
+        juce::StringArray { "Legacy selector", "Both off", "Chorus only", "Tremolo only", "Both on" }, 0));
+
     return layout;
 }
 
@@ -403,6 +410,7 @@ bool Cs80AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
+    voiceMonitorTaps.reset();
     // Offline bounces render the circuit engine at HQ (Oversampling.h).
     engine.setNonRealtime(isNonRealtime());
     engine.prepare(sampleRate);
@@ -430,6 +438,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 void Cs80AudioProcessor::releaseResources()
 {
     outputMeter.reset();
+    voiceMonitorTaps.reset();
     engine.reset();
     extensionEngine->reset();
     extensionActive = false;
@@ -831,6 +840,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     else if (extensionActive)
     {
         extensionEngine->allNotesOff(false, 0);
+        keyPressureOwnership.clearExtension();
         extensionActive = false;
     }
     // Scala table from the message thread (never waits for the writer).
@@ -916,8 +926,13 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     size_t uiIndex = 0;
     auto voiceSnapshot = [&]
     {
-        std::array<cs80::Engine::VoiceInfo, 8> voices;
+        // Both engines are queried on the render thread at the same sample
+        // boundary. 8-voice/PURE modes leave slots 8..15 inactive; pressure
+        // attribution must not mistake an extension-engine onset for a miss.
+        std::array<cs80::Engine::VoiceInfo, 16> voices {};
         for (int i = 0; i < 8; ++i) voices[(size_t) i] = engine.getVoiceInfo(i);
+        if (extensionActive)
+            for (int i = 0; i < 8; ++i) voices[(size_t) (8 + i)] = extensionEngine->getVoiceInfo(i);
         return voices;
     };
     auto uiPosition = [&]
@@ -981,7 +996,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             continue;
         }
         const auto message = metadata.getMessage();
-        std::array<cs80::Engine::VoiceInfo, 8> before;
+        std::array<cs80::Engine::VoiceInfo, 16> before;
         const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn;
         if (allocatingHostNote) before = voiceSnapshot();
         observeHostMidi(message);
@@ -999,8 +1014,37 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     unsigned mask = 0;
     for (int i = 0; i < 8; ++i)
         if (engine.getVoiceInfo(i).active) mask |= 1u << i;
-    activeVoiceMask.store(mask, std::memory_order_relaxed);
-    activeVoiceCount.store(engine.activeVoices(), std::memory_order_relaxed);
+    if (extensionActive)
+        for (int i = 0; i < 8; ++i)
+            if (extensionEngine->getVoiceInfo(i).active) mask |= 1u << (8 + i);
+    activeVoiceMask.store(mask | (extensionActive ? (1u << 16) : 0u), std::memory_order_relaxed);
+    activeVoiceCount.store(engine.activeVoices()
+                           + (extensionActive ? extensionEngine->activeVoices() : 0),
+                           std::memory_order_relaxed);
+
+    // The monitor may only consume actual Engine::RankInfo on this audio
+    // thread: select one sounding voice by VCA envelope * note-on velocity.
+    // Publish both ranks in a coherent lock-free packet, including voice slots
+    // 8..15 in extension mode, never pointing the UI at render-thread memory.
+    cs80::VoiceMonitorSnapshot liveRanks;
+    float loudest = -1.0f;
+    auto captureRankTaps = [&](const cs80::Engine& source, int voiceBitOffset)
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            if ((mask & (1u << (i + voiceBitOffset))) == 0u) continue;
+            const auto a = source.getRankInfo(i, 0), b = source.getRankInfo(i, 1);
+            const float level = std::max(a.ampEnvelope, b.ampEnvelope)
+                                * source.getVoiceInfo(i).velocity;
+            if (! std::isfinite(level) || level <= loudest) continue;
+            loudest = level;
+            liveRanks.ranks[0] = { true, a.ampEnvelope, a.filterEnvelope, a.hpfHz, a.lpfHz };
+            liveRanks.ranks[1] = { true, b.ampEnvelope, b.filterEnvelope, b.hpfHz, b.lpfHz };
+        }
+    };
+    captureRankTaps(engine, 0);
+    if (extensionActive) captureRankTaps(*extensionEngine, 8);
+    voiceMonitorTaps.publish(liveRanks);
 
     // Inspect the completed host buffer, not pre-decimator/internal stereo
     // values: mono mapping/cancellation and its arithmetic are already applied.
@@ -1256,6 +1300,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
             else
                 clearScalaTuning();
             const juce::ScopedLock treeLock(apvts.treeLock());
+            apvts.syncNow(); // Drain pending host/user parameter edits before replacing their ValueTree.
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
@@ -1395,6 +1440,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
                 restored.getChildWithProperty("id", parameterId(index))
                     .setProperty("value", getParamValue(index), nullptr);
             const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
+            apvts.syncNow(); // Preserve pre-load undo ownership before replacing the tree.
             apvts.replaceState(restored);
             setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
                               (int) tree.getProperty("factoryIndex", 0));

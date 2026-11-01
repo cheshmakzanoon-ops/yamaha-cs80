@@ -169,9 +169,18 @@ public:
 
     using Stereo = Chorus::Stereo;
 
-    // Same contract as Chorus::process. The delay path, its noise and both oscillators keep
-    // running while the effect is off, as the OE1/OE2 circuits do.
+    // Shipped six-argument contract. Exactly one of the two effects can be on;
+    // preserve its old call behavior and numerics for default V1/V2 playback.
     Stereo process(float inL, float inR, float speed, float depth, bool on, bool tremolo) noexcept
+    {
+        return processSwitches(inL, inR, speed, depth, on && !tremolo, on && tremolo);
+    }
+
+    // Declared extension, NOT a hardware measurement (BA617 p21, OE57/OE58):
+    // independent CHORUS clock and TREMOLO VCA inputs share the same OE2 wet
+    // chain. Both off still advances the chain; both on combines its controls.
+    Stereo processSwitches(float inL, float inR, float speed, float depth,
+                           bool chorusOn, bool tremoloOn) noexcept
     {
         do1Phase += (double) speed / (double) sr;
         do1Phase -= std::floor(do1Phase);
@@ -182,9 +191,9 @@ public:
         const double d = (double) clampf(depth, 0.0f, 1.0f);
 
         // CHORUS: DO1 and DO2 reach the BA617 clock node through its two equal 100 k feeds.
-        // With the tabs off or in TREMOLO the clock stays at its nominal rate.
+        // With CHORUS off the clock stays nominal even if TREMOLO is on.
         double octaves = 0.0;
-        if (on && ! tremolo)
+        if (chorusOn)
             octaves = d * (double) kClockModulationOctaves * 0.5 * (do1 + do2);
         const double clockHz = kNominalClockHz * std::exp2(octaves);
         clockPeriods += clockHz / (double) sr;
@@ -225,11 +234,11 @@ public:
             wet[c] = x * trim;
         }
 
-        if (! on)
+        if (! chorusOn && ! tremoloOn)
             return { inL, inR };
         // IG00151 VCAs. TREMOLO: linear control, LO1 = +DO1, LO2 = +DO2 (left), LO3 = -DO2,
         // LO4 = -DO1 (right); index 1 at full DEPTH. CHORUS: trimmed static gains.
-        const double m = tremolo ? d : 0.0;
+        const double m = tremoloOn ? d : 0.0;
         const double pair = kBranchVpp[0] + kBranchVpp[1];
         const double gainL = kWetGain / pair * (kBranchVpp[0] * (1.0 + m * do1) + kBranchVpp[1] * (1.0 + m * do2));
         const double gainR = kWetGain / pair * (kBranchVpp[2] * (1.0 - m * do2) + kBranchVpp[3] * (1.0 - m * do1));

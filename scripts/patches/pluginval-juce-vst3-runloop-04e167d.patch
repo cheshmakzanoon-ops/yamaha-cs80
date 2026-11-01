@@ -1,0 +1,71 @@
+diff --git a/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp b/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp
+index 14611a9..943b249 100644
+--- a/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp
++++ b/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp
+@@ -458,7 +458,7 @@ private:
+     public:
+         ~Impl()
+         {
+-            for (const auto& h : eventHandlerMap)
++            for (const auto& h : *eventHandlerMap)
+                 LinuxEventLoop::unregisterFdCallback (h.first);
+         }
+ 
+@@ -468,14 +468,26 @@ private:
+             if (handler == nullptr)
+                 return kInvalidArgument;
+ 
+-            auto& handlers = eventHandlerMap[fd];
++            auto& handlers = (*eventHandlerMap)[fd];
+ 
+             if (handlers.empty())
+             {
+-                LinuxEventLoop::registerFdCallback (fd, [this] (int descriptor)
++                // An earlier fd callback may destroy this RunLoop, while a callback
++                // already copied by the Linux event loop remains queued in that pass.
++                // A weak reference prevents dispatch through a destroyed RunLoop.
++                // Backport of JUCE 04e167d64661d3298afd4978f6c2e77f841b5f17.
++                LinuxEventLoop::registerFdCallback (fd, [weak = std::weak_ptr { eventHandlerMap }] (int descriptor)
+                 {
+-                    for (auto* h : eventHandlerMap[descriptor])
+-                        h->onFDIsSet (descriptor);
++                    if (const auto strong = weak.lock())
++                    {
++                        const auto iter = strong->find (descriptor);
++
++                        if (iter == strong->end())
++                            return true;
++
++                        for (auto* h : iter->second)
++                            h->onFDIsSet (descriptor);
++                    }
+ 
+                     return true;
+                 });
+@@ -491,7 +503,7 @@ private:
+             if (handler == nullptr)
+                 return kInvalidArgument;
+ 
+-            for (auto iter = eventHandlerMap.begin(), end = eventHandlerMap.end(); iter != end;)
++            for (auto iter = eventHandlerMap->begin(), end = eventHandlerMap->end(); iter != end;)
+             {
+                 auto& handlers = iter->second;
+ 
+@@ -504,7 +516,7 @@ private:
+                     if (handlers.empty())
+                     {
+                         LinuxEventLoop::unregisterFdCallback (iter->first);
+-                        iter = eventHandlerMap.erase (iter);
++                        iter = eventHandlerMap->erase (iter);
+                         continue;
+                     }
+                 }
+@@ -537,6 +549,7 @@ private:
+         }
+ 
+     private:
+-        std::unordered_map<Linux::FileDescriptor, std::vector<Linux::IEventHandler*>> eventHandlerMap;
++        using Map = std::unordered_map<Linux::FileDescriptor, std::vector<Linux::IEventHandler*>>;
++        std::shared_ptr<Map> eventHandlerMap = std::make_shared<Map>();
+         std::list<TimerCaller> timerCallers;
+     };

@@ -16,9 +16,29 @@ hardware match.
 | Legacy | Generic modulated delay (unchanged, bit-identical) | Generic amplitude law (unchanged) |
 | Source Performance, Isolation | OE2 BBD delay path, clock moved by OE1 DO1 + DO2 | OE1 four-VCA law on the OE2 returns (since 2026-10-31; previously the generic law) |
 
-No host parameter was added. The choice follows the existing render policy, so old presets
-and the legacy sound are unaffected. Changing the effective policy already resets all
-effect history.
+The original implementation added no host parameter. Its renderer selection still follows
+the existing policy, so old presets and legacy sound remain unaffected. Changing the
+effective policy already resets all effect history.
+
+### 2026-11-01 independent switch interpretation (declared inference)
+
+The original two-parameter interface (`chorus_on`, `chorus_mode`) selects either
+CHORUS or TREMOLO, but cannot represent both controls off or both simultaneously
+on. The printed Yamaha BA617 adjustment procedure p21 names separate TREMOLO and
+CHORUS tabs; OE57 depicts the DO1/DO2-controlled BBD clock and OE58 the four
+separate L1–L4 VCA controls. These pages support distinct control nodes, **not**
+the unverified position, electrical interaction, or simultaneous user operation
+of both physical tabs.
+
+The appended `chorus_trem_routing` host parameter therefore defaults to 0
+(previous selector, completely neutral), with opt-in positions 1 neither,
+2 CHORUS, 3 TREMOLO, and 4 both. In the combined software model the clock
+follows the existing CHORUS law while the same wet packet returns receive the
+existing TREMOLO VCA law. This is a **declared inference**, not a new hardware
+measurement; the alternatives are mechanically exclusive tabs, priority of one
+control over the other, or non-additive switching/cross-coupling. The legacy
+six-argument API and all PURE CS-80/Legacy playback ignore the new override.
+New positions are not a claim of literal hardware switch calibration.
 
 ## Signal path
 

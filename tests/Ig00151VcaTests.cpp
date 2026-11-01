@@ -87,6 +87,151 @@ void pedestal(const ws1::Tolerances& tol)
     check(std::abs(last) < 1e-5f * std::abs((float) dc), "output coupling removes the static pedestal (tau 0.1 s)");
 }
 
+// The amplitude EG can become Idle while the *downstream* coupling capacitor
+// still stores charge. The original free-running idle shortcut silently
+// discarded -coupling, causing an abrupt output cut at the active/idle
+// boundary. Use a charged zero-signal pedestal so the assertion cannot be
+// passed by oscillator phase coincidences or by making the VCA fade away.
+// Truth: the analytical zero-drive RC solution, independently of processClosed.
+void closedCapacitorDischarge(const ws1::Tolerances& tol)
+{
+    const double truthTol = tol["closed_discharge_truth_abs"];
+    const double stepTol = tol["closed_handoff_step_abs"];
+    for (double rate : { 88200.0, 96000.0, 192000.0 })
+    {
+        Ig00151Vca vca, continuing;
+        vca.prepare(rate);
+        continuing.prepare(rate);
+        vca.reset(2.0f);
+        continuing.reset(2.0f);
+        Adsr amp;
+        amp.reset();
+        amp.noteOn(0.002f, 0.015f, 0.7f, 0.005f);
+        float outputAtClose = 0.0f;
+        for (int sample = 0; sample < (int) std::lround(0.2 * rate); ++sample)
+        {
+            const float envelope = amp.tick((float) rate, true, true);
+            outputAtClose = vca.process(0.0f, 2.0f, 0.0f, envelope);
+            continuing.process(0.0f, 2.0f, 0.0f, envelope);
+        }
+        amp.noteOff();
+        int releaseSamples = 0;
+        do
+        {
+            const float envelope = amp.tick((float) rate, true, true);
+            outputAtClose = vca.process(0.0f, 2.0f, 0.0f, envelope);
+            continuing.process(0.0f, 2.0f, 0.0f, envelope);
+            ++releaseSamples;
+        }
+        while (!amp.isIdle() && releaseSamples < (int) std::lround(0.05 * rate));
+        check(amp.isIdle() && releaseSamples > 0, "fast released EG reaches Idle before the coupling capacitor discharges");
+        check(std::abs(outputAtClose) > 100.0 * stepTol,
+              "charged VCA coupling output remains audible at envelope closure; hard mute would make a step");
+
+        // This closed form is independent of the realtime recurrence. The
+        // first closed sample must be near the previous one, not a forced 0.
+        bool analyticMatch = true, fullPathMatch = true;
+        for (int sample = 1; sample <= (int) std::lround(0.2 * rate); ++sample)
+        {
+            const float closed = vca.processClosed();
+            const float full = continuing.process(0.0f, 2.0f, 0.0f, 0.0f);
+            const double truth = (double) outputAtClose
+                               * std::exp(-sample / (kIg00151CouplingSeconds * rate));
+            analyticMatch = analyticMatch && std::abs((double) closed - truth) <= truthTol;
+            fullPathMatch = fullPathMatch && std::abs((double) closed - full) <= truthTol;
+            if (sample == 1)
+                check(std::abs(closed - outputAtClose) <= stepTol,
+                      "VCA active/idle handoff preserves its charged downstream capacitor continuously");
+        }
+        check(analyticMatch, "closed VCA output equals analytical downstream coupling discharge at every sample");
+        check(fullPathMatch, "closed fast path equals the full zero-envelope VCA process at every sample");
+    }
+}
+
+// Engine wiring regression, distinct from the closed-circuit unit truth. Keep
+// two fully deterministic engines bit-identical until both have retired the
+// same released key. An explicit MIDI All Sound Off then clears only the
+// second engine's coupling state. If the first one's downstream capacitor
+// really stays in the rank mix after amplitude Idle, their next 50 ms differ;
+// if the engine silently discards processClosed(), they remain identical.
+// Silent oscillators make the difference VCA pedestal-driven, not waveform or
+// allocation phase. Deliberate panic must still hard-mute the second engine.
+void closedEngineTailInMix(const ws1::Tolerances& tol)
+{
+    constexpr int hostRate = 48000;
+    constexpr int heldFrames = hostRate / 4;
+    constexpr int comparisonFrames = hostRate / 20;
+
+    ParamValues p;
+    p[P_sourcePerformance] = 1.0f;
+    p[P_parityMode] = 0.0f;
+    p[P_mix] = 0.0f;
+    p[P_keyRelease] = 0.0f;
+    p[P_masterSustain] = 0.0f;
+    p[P_drift] = 0.0f;
+    p[P_voiceDispersion] = 0.0f;
+    p[P_analogNoise] = 0.0f;
+    p[P_chorusOn] = 0.0f;
+    p[P_arpOn] = 0.0f;
+    p[P_volume] = 0.6f;
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        p[chParam(rank, CP_saw)] = 0.0f;
+        p[chParam(rank, CP_pulse)] = 0.0f;
+        p[chParam(rank, CP_sine)] = 0.0f;
+        p[chParam(rank, CP_noise)] = 0.0f;
+        p[chParam(rank, CP_vcfLevel)] = 0.0f;
+        p[chParam(rank, CP_vLevel)] = 2.6f;
+        p[chParam(rank, CP_vA)] = 0.002f;
+        p[chParam(rank, CP_vD)] = 0.015f;
+        p[chParam(rank, CP_vS)] = 0.7f;
+        p[chParam(rank, CP_vR)] = 0.005f;
+    }
+
+    Engine normal, panic;
+    normal.setParams(p);
+    panic.setParams(p);
+    normal.prepare(hostRate);
+    panic.prepare(hostRate);
+    normal.noteOn(60, 0.9f);
+    panic.noteOn(60, 0.9f);
+    float n[2] {}, h[2] {};
+    bool identicalBeforePanic = true;
+    auto clockTwins = [&] {
+        normal.render(n, 1);
+        panic.render(h, 1);
+        identicalBeforePanic = identicalBeforePanic && n[0] == h[0] && n[1] == h[1];
+    };
+    for (int frame = 0; frame < heldFrames; ++frame)
+        clockTwins();
+    normal.noteOff(60);
+    panic.noteOff(60);
+
+    int releasedFrames = 0;
+    while (normal.activeVoices() > 0 && releasedFrames < hostRate)
+    {
+        clockTwins();
+        ++releasedFrames;
+    }
+    check(releasedFrames > 0 && releasedFrames < hostRate && normal.activeVoices() == 0
+          && panic.activeVoices() == 0,
+          "both engine twins retire the identical fast-release amplitude envelope");
+    check(identicalBeforePanic, "two silent-source engine twins are sample-identical before the diagnostic panic");
+
+    panic.allNotesOff(false);
+    double maxTailDifference = 0.0;
+    for (int frame = 0; frame < comparisonFrames; ++frame)
+    {
+        normal.render(n, 1);
+        panic.render(h, 1);
+        maxTailDifference = std::max(maxTailDifference,
+                                     std::max(std::abs((double) n[0] - h[0]), std::abs((double) n[1] - h[1])));
+    }
+    std::printf("engine capacitor-tail peak after retirement (normal minus hard panic): %.9g\n", maxTailDifference);
+    check(maxTailDifference > tol["closed_engine_tail_min_peak_abs"],
+          "inactive circuit's capacitor discharge remains wired into the engine output mix");
+}
+
 void pan(const ws1::Tolerances& tol)
 {
     const double limit = tol["pan_power_rel"];
@@ -150,6 +295,8 @@ int main(int argc, char** argv)
         levelLaws(tol);
         levelNode(tol);
         pedestal(tol);
+        closedCapacitorDischarge(tol);
+        closedEngineTailInMix(tol);
         pan(tol);
         subOnExponentialInput();
     }

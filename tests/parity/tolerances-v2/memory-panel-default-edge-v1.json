@@ -1,0 +1,23 @@
+{
+  "model_id": "memory-panel-selected-diode-default-edge-v1",
+  "registered_utc": "2026-11-01",
+  "evidence_pages": ["BA27", "BA28", "MBK63", "S31", "S32", "S33", "S34", "S35", "S36", "S37", "S38"],
+  "declared_inference": "The selected 2SC458/1S1555 numerical surrogate, 50k linear controls, and ideal follower are software model assumptions, not hardware measurements.",
+  "memory_panel_default_edge_v1": {
+    "selected_analog_bus_volts": 2e-3,
+    "local_tangent_resistance_absolute_ohms": 2.0,
+    "local_tangent_resistance_relative": 2e-3,
+    "receiver_roundtrip_volts": 1e-9,
+    "truth_newton_residual_amps": 1e-12,
+    "low_drive_diode_tangent_siemens_min": 1e-9,
+    "low_drive_diode_tangent_siemens_max": 1e-6,
+    "expected_source_scenarios": 18,
+    "mutant_missing_low_drive_tangent_count_min": 1
+  },
+  "mutation_contract": [
+    "When a legal near-zero selected pot wiper is below the diode knee, the selected Shockley junction retains a tiny nonzero differential conductance; a zero-conductance substitute must fail.",
+    "Any row may approach either wiper endpoint without causing rejection of the entire selected source transaction.",
+    "No source branch may claim precision against real CS-80 hardware; independent full-network Newton remains the oracle for the declared surrogate."
+  ],
+  "compatibility_contract": "Standalone source test committed before the default-edge tangent fix. No changes to source_factory::solveBranch, compileTone, legacy audio or V1 factory numerics."
+}

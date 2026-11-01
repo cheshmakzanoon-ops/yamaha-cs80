@@ -299,6 +299,13 @@ public:
     { return OversamplingDecimator::hostLatencyFor(oversample) + getOscillatorLatencySamples(); }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
+    // Read-only numerical telemetry for the original 10 Hz DC-blocker pole.
+    // The optimization gate registers EXACT float equality, including the
+    // internal-rate cast and operation order, before coefficient caching.
+    float getDcBlockCoefficient() const noexcept
+    {
+        return dcCoefficient;
+    }
     // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
     // render policy, the host rate and the offline flag (see Oversampling.h).
     int getOversamplingFactor() const noexcept { return oversample; }
@@ -510,7 +517,22 @@ private:
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
+    // One internal sample is strictly ordered: global controls/oscillators,
+    // 16 rank chains, shared mix/effects, then listening outputs. The frame
+    // carries the former locals across those boundaries without recomputing
+    // any control or changing the arithmetic order (CPU pass, 2026-11-01).
+    struct InternalSampleFrame
+    {
+        float sr = 0.0f, invSr = 0.0f;
+        float pwmSine[kNumRanks] {};
+        float mixL = 0.0f, mixR = 0.0f;
+        bool smoothControls = false, sharedNoise = false;
+    };
     void processInternalSample(float& outL, float& outR, float externalModulation);
+    void processGlobalSample(InternalSampleFrame& frame, float externalModulation);
+    void processRankSamples(InternalSampleFrame& frame);
+    void processMixSample(InternalSampleFrame& frame);
+    void processOutputSample(InternalSampleFrame& frame, float& outL, float& outR);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel);
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
@@ -671,6 +693,9 @@ private:
 
     float dcL = 0.0f, dcR = 0.0f;
     float dcInL = 0.0f, dcInR = 0.0f;
+    // Original per-sample 10 Hz DC pole, evaluated once per internal rate.
+    // Preserve the exact float operation order in configureInternalRate().
+    float dcCoefficient = std::exp(-kTwoPi * 10.0f * (1.0f / 96000.0f));
     float smoothedVolume = 0.62f;
     Adsr ringAdsr;
     bool ringKeyDown = false;

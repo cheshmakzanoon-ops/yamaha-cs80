@@ -117,6 +117,8 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
                 toggle->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
                 item.buttonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                     processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *toggle);
+                ui::bindParameterContextMenu(*toggle, processor,
+                    Cs80AudioProcessor::memoryParameterId(bank, local), cs80::chParam(bank % 2, local));
                 addAndMakeVisible(*toggle);
             }
             else
@@ -136,6 +138,8 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
                 slider->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
                 item.sliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
                     processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *slider);
+                ui::bindParameterContextMenu(*slider, processor,
+                    Cs80AudioProcessor::memoryParameterId(bank, local), cs80::chParam(bank % 2, local));
                 slider->onValueChange = [bank, local, slider] {
                     slider->setTooltip(slider->getTitle() + ": "
                         + ui::formatParamValue(cs80::chParam(bank % 2, local), (float) slider->getValue()));

@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        page: [oe55, oe56]
+        page: [oe55, oe56, t51, t51w, t52, t52w, t53, t53w, t54, t54w]
     steps:
       - uses: actions/checkout@v5
         with:
@@ -36,4 +36,14 @@ jobs:
       - name: Install source inspection dependency
         run: python -m pip install 'Pillow==11.3.0'
       - name: Inspect original circuit source
+        env:
+          CS80_CROP_OUTPUT_DIR: ${{ runner.temp }}/cs80-crops
         run: python scripts/inspect_circuit_sources.py --page "${{ matrix.page }}"
+      - name: Retain native inspection crops
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-manual-${{ matrix.page }}
+          path: ${{ runner.temp }}/cs80-crops
+          if-no-files-found: ignore
+          retention-days: 7

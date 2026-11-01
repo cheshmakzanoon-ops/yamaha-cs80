@@ -15,8 +15,9 @@ establish").
 ```
 cmake -S . -B build -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release
 cmake --build build --target cs80_engine_audit
-build/cs80_engine_audit --out DIR [--suite phrase|fx|alias|latency|all]
+build/cs80_engine_audit --out DIR [--suite phrase|fx|alias|latency|cpu|all]
                         [--rates 44100,48000,96000] [--quick]
+                        [--match NAME] [--explain-clicks] [--counterfactual]
 ```
 
 One CSV per suite is written to `DIR` (`phrase.csv`, `fx.csv`, `alias.csv`,
@@ -61,9 +62,29 @@ shared core. It is a manual tool and is not registered with CTest.
 | `voices_at_end` | voices still active when the 12 s phrase ends, 2.35 s after the last release; nonzero only for programs whose release is longer than that (every factory program goes idle eventually) |
 
 A click score near or below 1 means the step is no bigger than the program itself
-makes; a step well above 1 is a discontinuity. Programs with a fast attack score near
-1 on a fresh chord by construction (the attack is the reference), so compare
-`click_steal` with `click_fresh_chord`, not with a threshold.
+makes. A score above 1 **flags a possible** discontinuity, but does not prove
+one: the ratio compares different waveform windows, so even an uninterrupted
+sustained tone can have a larger maximum slope in the later window. Programs
+with a fast attack score near 1 on a fresh chord by construction (the attack
+is the reference), so compare `click_steal` with `click_fresh_chord`, not with
+a threshold. The numeric gate and its <= 1 limit are retained unchanged.
+
+For a named program or hardware tab, `--match NAME` renders every requested
+rate; `--explain-clicks` emits each event window's largest waveform jump,
+location, channel and reference. `--counterfactual` (requires `--match`)
+renders the same phrase with just the note-off or retrigger MIDI event omitted,
+and emits `counterfactual.csv`: first and maximum event-induced difference
+steps, the first 2 ms after reported latency, and raw window maxima/scores
+with and without the event using the original reference denominator. These
+are **diagnostics only** and cannot relax the existing acceptance gate.
+
+In the 2026-11-01 source-policy 48 kHz Funky 1 + Funky 2 note-off fixture,
+the original score is 1.64797, but the event-less render scores **1.67988**;
+the >1 raw ratio occurs even without a note-off. Bass Stack's 44.1 kHz
+retrigger scores 1.51052, with its largest step near 8 ms after note-on (a
+new attack), and only 0.000416 maximum event-induced slope in the first
+2 ms after output latency against a 0.008092 chord reference. Both unchanged
+numeric gates remain open; see [IG00151_VCA_MODEL](IG00151_VCA_MODEL.md).
 
 **Alias suite.** One sustained saw or pulse (50 %) note of rank I with detune, drift,
 dispersion and noise off, the high-pass off and the low-pass open, 65 536 samples

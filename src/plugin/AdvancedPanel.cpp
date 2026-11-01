@@ -1510,6 +1510,12 @@ private:
     void mouseDown(const juce::MouseEvent& e) override
     {
         const int h = hit(toDesign(e.getPosition()));
+        if (e.mods.isPopupMenu())
+        {
+            if (h == 1)
+                showParameterContextMenu(proc, Cs80AudioProcessor::parameterId(cs80::P_chorusOn), *this, cs80::P_chorusOn);
+            return;  // right-click must never toggle the real chorus lamp
+        }
         if (h == 1)
         {
             setParameterOnce(proc, cs80::P_chorusOn, v(cs80::P_chorusOn) >= 0.5f ? 0.0f : 1.0f);
@@ -1816,7 +1822,13 @@ private:
         const int h = tileAt(toDesign(e.getPosition()));
         if (h < 0)
             return;
-        setParameterOnce(proc, cs80::P_fx1Type + sel->slot * 2, (float) (h + 1));
+        const int parameter = cs80::P_fx1Type + sel->slot * 2;
+        if (e.mods.isPopupMenu())
+        {
+            showParameterContextMenu(proc, Cs80AudioProcessor::parameterId(parameter), *this, parameter);
+            return;  // an FX-type right-click is not a selection
+        }
+        setParameterOnce(proc, parameter, (float) (h + 1));
         hover = -1;
         setMouseCursor(juce::MouseCursor::NormalCursor);
         refresh();
@@ -2644,11 +2656,11 @@ private:
 // buttons; LEGACY clears both.
 // ---------------------------------------------------------------------------
 
-class AdvPolicyCell final : public juce::Button
+class AdvPolicyCell final : public ContextButton
 {
 public:
     AdvPolicyCell(Cs80AudioProcessor& p, int idx, const juce::String& name, const juce::String& caption)
-        : juce::Button(name), proc(p), index(idx), sub(caption)
+        : ContextButton(name), proc(p), index(idx), sub(caption)
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -2765,11 +2777,11 @@ public:
 // swing the engine applies; clicking it again switches the LFO off.
 // ---------------------------------------------------------------------------
 
-class AdvLfoChip final : public juce::Button
+class AdvLfoChip final : public ContextButton
 {
 public:
     AdvLfoChip(Cs80AudioProcessor& p, int lfo, int dest)
-        : juce::Button(kDestinations[dest]), proc(p), lfoIndex(lfo), destination(dest)
+        : ContextButton(kDestinations[dest]), proc(p), lfoIndex(lfo), destination(dest)
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -2882,10 +2894,10 @@ private:
 // stored name that the automation and self-test layers look for.
 // ---------------------------------------------------------------------------
 
-class AdvSwitch final : public juce::Button
+class AdvSwitch final : public ContextButton
 {
 public:
-    AdvSwitch(const juce::String& storedName, const juce::String& legendText) : juce::Button(storedName), legend(legendText)
+    AdvSwitch(const juce::String& storedName, const juce::String& legendText) : ContextButton(storedName), legend(legendText)
     {
         setClickingTogglesState(true);
         setWantsKeyboardFocus(true);
@@ -2917,10 +2929,10 @@ private:
 // Two-way selector: STEREO and MONO side by side, the one in force lit. One boolean parameter (on = stereo).
 // ---------------------------------------------------------------------------
 
-class AdvOutputSwitch final : public juce::Button
+class AdvOutputSwitch final : public ContextButton
 {
 public:
-    AdvOutputSwitch() : juce::Button("Output mode")
+    AdvOutputSwitch() : ContextButton("Output mode")
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -2932,13 +2944,13 @@ public:
 
     void mouseDown(const juce::MouseEvent& e) override
     {
-        pressed = e.x < getWidth() / 2 ? 0 : 1;
-        juce::Button::mouseDown(e);
+        if (! e.mods.isPopupMenu()) pressed = e.x < getWidth() / 2 ? 0 : 1;
+        ContextButton::mouseDown(e);
     }
 
     void mouseUp(const juce::MouseEvent& e) override
     {
-        juce::Button::mouseUp(e);
+        ContextButton::mouseUp(e);
         pressed = -1;
     }
 
@@ -3505,6 +3517,7 @@ public:
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        bindParameterContextMenu(*raw, proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         return raw;
@@ -3517,6 +3530,8 @@ public:
         auto* raw = control.get();
         raw->setExplicitFocusOrder(++focusCounter);
         addAndMakeVisible(*raw);
+        const int parameter = cs80::P_lfo1Dest + lfo * 3;
+        bindParameterContextMenu(*raw, proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         tickers.push_back([raw] { raw->refreshState(); });
@@ -3532,6 +3547,7 @@ public:
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        bindParameterContextMenu(*raw, proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         return raw;
@@ -3546,6 +3562,7 @@ public:
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        bindParameterContextMenu(*raw, proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         return raw;
@@ -3553,7 +3570,7 @@ public:
 
     juce::ComboBox* choice(Rect r, int parameter, const juce::StringArray& items)
     {
-        auto control = std::make_unique<juce::ComboBox>();
+        auto control = std::make_unique<ContextComboBox>();
         control->addItemList(items, 1);
         control->setJustificationType(juce::Justification::centredLeft);
         control->setWantsKeyboardFocus(false);
@@ -3563,6 +3580,7 @@ public:
         addAndMakeVisible(*raw);
         comboAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        bindParameterContextMenu(*raw, proc, Cs80AudioProcessor::parameterId(parameter), parameter);
         owned.push_back(std::move(control));
         const Rect a = at(r);
         placed.push_back({ raw, a });
@@ -3578,8 +3596,12 @@ public:
         raw->setExplicitFocusOrder(++focusCounter);
         addAndMakeVisible(*raw);
         if (index == 1 || index == 2)
+        {
             buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                 proc.getAPVTS(), Cs80AudioProcessor::parameterId(index == 1 ? cs80::P_sourcePerformance : cs80::P_parityMode), *raw));
+            const int parameter = index == 1 ? cs80::P_sourcePerformance : cs80::P_parityMode;
+            bindParameterContextMenu(*raw, proc, Cs80AudioProcessor::parameterId(parameter), parameter);
+        }
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         tickers.push_back([raw] { raw->refreshState(); });

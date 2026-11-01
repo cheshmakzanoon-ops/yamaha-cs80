@@ -1,4 +1,6 @@
 #include "Engine.h"
+#include "MemoryPanelControlBridge.h"
+#include "MemoryPanelToneAdapter.h"
 #include "RingModulatorCircuit.h"
 
 #include <algorithm>
@@ -116,6 +118,12 @@ void Engine::configureInternalRate()
 {
     internalRate = hostRate * (double) oversample;
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+    // Hoist the historical per-sample 10 Hz DC-blocker coefficient. The cast,
+    // reciprocal and float multiply order are intentionally unchanged:
+    // Legacy audio must remain byte-identical at every internal rate.
+    const float dcSr = (float) internalRate;
+    const float dcInvSr = 1.0f / dcSr;
+    dcCoefficient = std::exp(-kTwoPi * 10.0f * dcInvSr);
 
     chorus.prepare((float) internalRate);
     bbdChorus.prepare((float) internalRate);
@@ -375,9 +383,10 @@ bool Engine::setControlFrame(const ControlFrame& frame)
         }
 
     // Validate/compile both ranks before publishing any part of the transaction.
-    // Originally incomplete columns use the separate, versioned inference
-    // manifest. Their source_inferred identity and original unknown masks remain
-    // explicit; PANEL/memory/off routes never reuse a stale source adapter.
+    // Originally incomplete factory columns use the frozen, versioned inference
+    // manifest. Original M1..M4/PANEL sources get a distinct control-rate
+    // electrical adapter under the circuit/PURE policy; Legacy keeps its exact
+    // historical panel route and all T51-T54 factory numerics are untouched.
     auto tones = sourceTones;
     auto routes = sourceRoutes;
     std::uint64_t compilations = 0;
@@ -388,8 +397,38 @@ bool Engine::setControlFrame(const ControlFrame& frame)
                                                                 frame.effectiveValues[P_sourcePerformance]));
         if (selector != hardwareSources[rank] || sourceModels != usesSourceModels(global.renderPolicy))
             routes[rank] = source_factory::route(rank, selector, sourceModels);
-        if (source_factory::isSourceDriven(routes[rank])
-            && (!tones[rank].compiled || tones[rank].source.selector != selector))
+        if (routes[rank] == source_factory::Route::source_memory_panel)
+        {
+            // PluginProcessor has already supplied this rank's selected memory
+            // bank as effectiveValues. Avoid even computing the 26 skew inverses
+            // on an unchanged block; a changed source is compiled once for the
+            // whole rank, never inside a per-sample/voice loop. No APVTS bank,
+            // parameter ID or audio-thread allocation is introduced here.
+            bool changed = !tones[rank].compiled || tones[rank].source.rank != rank
+                || tones[rank].source.selector != selector || tones[rank].source.board != -1;
+            if (!changed)
+                for (const auto control : memory_panels::control_bridge::rowParameter)
+                    if (frame.effectiveValues[chParam(rank, control)]
+                        != params[chParam(rank, control)])
+                    {
+                        changed = true;
+                        break;
+                    }
+            if (changed)
+            {
+                source_factory::ToneControls compiled;
+                const auto positions = memory_panels::control_bridge::positions(frame.effectiveValues, rank);
+                if (!memory_panels::tone_adapter::compile(rank, selector, positions, compiled))
+                {
+                    controlFrameStatus = ControlFrameStatus::compileFailure;
+                    return false;
+                }
+                tones[rank] = compiled;
+                ++compilations;
+            }
+        }
+        else if (source_factory::isSourceDriven(routes[rank])
+                 && (!tones[rank].compiled || tones[rank].source.selector != selector))
         {
             if (!source_factory::compileTone(rank, selector, tones[rank]))
             {
@@ -1493,6 +1532,15 @@ void Engine::allNotesOff(bool release, int midiChannel)
                         || stage == FilterEnv::Stage::Sustain)
                         fenv.noteOff();
                 }
+            // All Sound Off is an intentional hard panic, unlike a normal
+            // release. The free-running output capacitor must not leave a
+            // residual in the idle-tail mix after this explicit mute.
+            if (freeRunningVoices())
+                for (auto& rank : voice.ranks)
+                {
+                    rank.vca.reset(0.0f);
+                    rank.vcaCold = true;
+                }
             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
         }
         else if (allChannels)
@@ -1806,8 +1854,19 @@ void Engine::endSmoothedControls() noexcept
 
 void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
 {
-    const float sr = (float) internalRate;
-    const float invSr = 1.0f / sr;
+    InternalSampleFrame frame;
+    frame.sr = (float) internalRate;
+    frame.invSr = 1.0f / frame.sr;
+    processGlobalSample(frame, externalModulation);
+    processRankSamples(frame);
+    processMixSample(frame);
+    processOutputSample(frame, outL, outR);
+}
+
+void Engine::processGlobalSample(InternalSampleFrame& frame, float externalModulation)
+{
+    const float sr = frame.sr;
+    const float invSr = frame.invSr;
 
     // KAS scan instants (Phase 2.2, opt-in). Switching the option off flushes
     // anything still queued at once.
@@ -1826,6 +1885,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     updateArpeggiator(invSr);
     // Circuit engine: smoothed settings and controllers for this sample.
     const bool smoothControls = usesSourceModels(global.renderPolicy);
+    frame.smoothControls = smoothControls;
     if (smoothControls)
         beginSmoothedControls();
 
@@ -1867,6 +1927,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     pwmPhase[1] -= std::floor(pwmPhase[1]);
     // PWM is one shared sine per rank; evaluate it once, not once per voice.
     const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
+    frame.pwmSine[0] = pwmSine[0];
+    frame.pwmSine[1] = pwmSine[1];
 
     // TRG5 positive diode-OR -> SP. Legacy: normalized ideal maximum of held
     // voices, not event memory (physical release removes it even if a pedal or
@@ -1945,9 +2007,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     subValue *= modernGlobal.subDepthGain;
     driftPhase += 0.031f * invSr;
     driftPhase -= std::floor(driftPhase);
+}
 
-    float mixL = 0.0f;
-    float mixR = 0.0f;
+void Engine::processRankSamples(InternalSampleFrame& frame)
+{
+    const float sr = frame.sr;
+    const auto& pwmSine = frame.pwmSine;
+    float& mixL = frame.mixL;
+    float& mixR = frame.mixR;
     int stillHeld = 0;
 
     // Double accumulator avoids long-glide float rounding stalling before target.
@@ -1963,6 +2030,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Circuit engine: ONE shared panel-noise generator sample for every voice
     // (SUB29 fan-out, NoiseSource.h). Legacy draws per rank below, as before.
     const bool sharedNoise = usesSourceModels(global.renderPolicy);
+    frame.sharedNoise = sharedNoise;
     const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
     const bool freeRunning = freeRunningVoices();
@@ -1975,6 +2043,32 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         int idleSamples = 0;
         if (! v.active)
         {
+            // The IG00151 envelope has closed, but its downstream AC-coupling
+            // capacitor still drives -coupling until it discharges. Keeping
+            // this signed output in the rank mix removes a real discontinuity
+            // at the active/idle handoff; it is not an added fade. The VCA
+            // costs one RC step/sample only while it has a nonzero tail. The
+            // oscillator and filter retain their low-cost decimated idle path.
+            if (freeRunning)
+                for (int ch = 0; ch < kNumRanks; ++ch)
+                {
+                    auto& r = v.ranks[ch];
+                    if (! r.vca.hasCouplingTail())
+                        continue;
+                    const float closed = r.vca.processClosed();
+                    const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+                    if (chGain == 0.0f)
+                        continue;
+                    const auto& rs = rankSettings[ch];
+                    const auto& mod = modern.rankOffsets(vi, ch);
+                    const float pan = clampf(rs.pan + r.trimPan * global.voiceDispersion * 0.8f
+                                             + lfoPan + mod.pan, -1.0f, 1.0f);
+                    float panLeft, panRight;
+                    constantPowerPan(pan, panLeft, panRight);
+                    const float voiceOut = closed * chGain * 0.17f;
+                    mixL += voiceOut * panLeft;
+                    mixR += voiceOut * panRight;
+                }
             if (! freeRunning || ++v.idleClock < idleStepSamples)
                 continue;
             idleSamples = v.idleClock;
@@ -2192,10 +2286,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 if (idle)
                 {
                     // Silent circuit: closed-form oscillator advance, one
-                    // decimated step of both stages, the VCA's output coupling
-                    // discharging, and no contribution to the mix.
+                    // decimated step of both stages. The VCA's residual
+                    // coupling is already discharged and mixed every sample
+                    // at the inactive-voice entry, never a second time here.
                     voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
-                    r.vca.relaxIdle((double) idleSamples / sr);
                     r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
                     continue;
                 }
@@ -2287,6 +2381,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     }
 
     heldCount = stillHeld;
+}
+
+void Engine::processMixSample(InternalSampleFrame& frame)
+{
+    const float sr = frame.sr;
+    const float invSr = frame.invSr;
+    const bool sharedNoise = frame.sharedNoise;
+    float& mixL = frame.mixL;
+    float& mixR = frame.mixR;
+    const auto& modernGlobal = modern.getGlobalOffsets();
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
@@ -2396,10 +2500,17 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         mixL = out.l;
         mixR = out.r;
     }
+}
+
+void Engine::processOutputSample(InternalSampleFrame& frame, float& outL, float& outR)
+{
+    const float mixL = frame.mixL;
+    const float mixR = frame.mixR;
+    const bool smoothControls = frame.smoothControls;
 
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
     // resets without eating the low end of the instrument.
-    const float dcCoeff = std::exp(-kTwoPi * 10.0f * invSr);
+    const float dcCoeff = dcCoefficient;
     const float dcOutL = mixL - dcInL + dcCoeff * dcL;
     const float dcOutR = mixR - dcInR + dcCoeff * dcR;
     dcInL = mixL;
