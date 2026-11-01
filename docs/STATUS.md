@@ -760,3 +760,25 @@ Legacy default and tails remain byte-identical to `d56911a`, V1 circuit
 numerics remain byte-identical to `22d6a32`, and V2 now matches `18400c2`
 byte-for-byte. See the [rank cadence evidence](evidence/qualification-2026-10-31/rank-idle-1500/)
 including the archived strict gate log.
+
+
+## Qualification: native Intel BBD history ownership (2026-11-01)
+
+Apple Clang 17 rewrote the stored-bit BBD history predicate to a floating
+comparison. With DAZ enabled, that comparison misclassified stored
+subnormal history as zero. Audio commit
+`1f842b9a18c117a31c09e7d4dae1aaa26c8dce4e`
+keeps the predicate in the integer domain through an explicit volatile
+integer observation; no floating environment or BBD equation is changed.
+The native Intel diagnostic has 1,245 checks: original 1 failure, repair
+0 failures, reintroduced floating-comparison mutation 1 failure. Its
+16-case DAZ/FTZ probe records 4 original and 0 repaired misclassifications.
+
+The audio commit was published first; separate pin commit
+`475063ca4b5640c1b17cb45eb89a23706ad18873` sets `SOURCE_AUDIO_V2` to its
+full SHA. The strict compatibility run then passed all four captures:
+legacy default/tails and V1 numerics remain byte-identical to the original
+pins; V2 is byte-identical to the new audio commit. This is the third
+evidence/status commit in that sequence. The full core and plugin suites
+are still running at this checkpoint, and the CPU and click targets remain
+open. See the [native compiler mechanism and raw evidence](evidence/qualification-2026-10-31/bbd-native-predicate/README.md).
