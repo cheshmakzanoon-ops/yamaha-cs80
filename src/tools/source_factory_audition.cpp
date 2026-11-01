@@ -139,7 +139,7 @@ Capture render(float master) {
         segment.startFrame = capture.samples.size() / channels;
         segment.source = engine.getSourceToneInfo(rank);
         if (!source_factory::isSourceDriven(segment.source.route)
-            || engine.getSourceToneInfo(1 - rank).route != source_factory::Route::panel_or_memory)
+            || engine.getSourceToneInfo(1 - rank).route != source_factory::Route::source_memory_panel)
             throw std::runtime_error("Unexpected source route");
         std::array<float, blockFrames * channels> audio {};
         int position = 0, event = 0, quietFrames = 0;

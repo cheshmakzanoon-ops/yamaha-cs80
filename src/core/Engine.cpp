@@ -1,4 +1,6 @@
 #include "Engine.h"
+#include "MemoryPanelControlBridge.h"
+#include "MemoryPanelToneAdapter.h"
 #include "RingModulatorCircuit.h"
 
 #include <algorithm>
@@ -381,9 +383,10 @@ bool Engine::setControlFrame(const ControlFrame& frame)
         }
 
     // Validate/compile both ranks before publishing any part of the transaction.
-    // Originally incomplete columns use the separate, versioned inference
-    // manifest. Their source_inferred identity and original unknown masks remain
-    // explicit; PANEL/memory/off routes never reuse a stale source adapter.
+    // Originally incomplete factory columns use the frozen, versioned inference
+    // manifest. Original M1..M4/PANEL sources get a distinct control-rate
+    // electrical adapter under the circuit/PURE policy; Legacy keeps its exact
+    // historical panel route and all T51-T54 factory numerics are untouched.
     auto tones = sourceTones;
     auto routes = sourceRoutes;
     std::uint64_t compilations = 0;
@@ -394,8 +397,38 @@ bool Engine::setControlFrame(const ControlFrame& frame)
                                                                 frame.effectiveValues[P_sourcePerformance]));
         if (selector != hardwareSources[rank] || sourceModels != usesSourceModels(global.renderPolicy))
             routes[rank] = source_factory::route(rank, selector, sourceModels);
-        if (source_factory::isSourceDriven(routes[rank])
-            && (!tones[rank].compiled || tones[rank].source.selector != selector))
+        if (routes[rank] == source_factory::Route::source_memory_panel)
+        {
+            // PluginProcessor has already supplied this rank's selected memory
+            // bank as effectiveValues. Avoid even computing the 26 skew inverses
+            // on an unchanged block; a changed source is compiled once for the
+            // whole rank, never inside a per-sample/voice loop. No APVTS bank,
+            // parameter ID or audio-thread allocation is introduced here.
+            bool changed = !tones[rank].compiled || tones[rank].source.rank != rank
+                || tones[rank].source.selector != selector || tones[rank].source.board != -1;
+            if (!changed)
+                for (const auto control : memory_panels::control_bridge::rowParameter)
+                    if (frame.effectiveValues[chParam(rank, control)]
+                        != params[chParam(rank, control)])
+                    {
+                        changed = true;
+                        break;
+                    }
+            if (changed)
+            {
+                source_factory::ToneControls compiled;
+                const auto positions = memory_panels::control_bridge::positions(frame.effectiveValues, rank);
+                if (!memory_panels::tone_adapter::compile(rank, selector, positions, compiled))
+                {
+                    controlFrameStatus = ControlFrameStatus::compileFailure;
+                    return false;
+                }
+                tones[rank] = compiled;
+                ++compilations;
+            }
+        }
+        else if (source_factory::isSourceDriven(routes[rank])
+                 && (!tones[rank].compiled || tones[rank].source.selector != selector))
         {
             if (!source_factory::compileTone(rank, selector, tones[rank]))
             {

@@ -56,13 +56,18 @@ constexpr std::uint32_t unknownMask(const Address& a) noexcept {
             mask |= 1u << (output - 1);
     return mask;
 }
-enum class Route { invalid, panel_or_memory, legacy_bridge, source_complete, source_inferred };
+// Append-only route values: the original memory/PANEL electrical source has
+// separate provenance from classified/inferred T51-T54 factory columns.
+// Legacy deliberately continues to use panel_or_memory with no source solve.
+enum class Route { invalid, panel_or_memory, legacy_bridge, source_complete, source_inferred,
+                   source_memory_panel };
 constexpr bool isSourceDriven(Route value) noexcept {
-    return value == Route::source_complete || value == Route::source_inferred;
+    return value == Route::source_complete || value == Route::source_inferred
+        || value == Route::source_memory_panel;
 }
 constexpr Route route(int rank, int selector, bool isolation) noexcept {
     if (rank < 0 || rank > 1 || selector < 0 || selector > 13) return Route::invalid;
-    if (selector >= 11) return Route::panel_or_memory;
+    if (selector >= 11) return isolation ? Route::source_memory_panel : Route::panel_or_memory;
     if (!isolation) return Route::legacy_bridge;
     return unknownMask(*address(rank, selector)) == 0 ? Route::source_complete : Route::source_inferred;
 }

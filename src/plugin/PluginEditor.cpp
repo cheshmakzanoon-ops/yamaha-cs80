@@ -83,6 +83,8 @@ constexpr std::string_view requestedSourceRouteTag(int rank, int source, cs80::R
     {
         case cs80::source_factory::Route::source_complete: return "SOURCE-COMPLETE";
         case cs80::source_factory::Route::source_inferred: return "SOURCE-INFERRED";
+        case cs80::source_factory::Route::source_memory_panel:
+            return source == 13 ? "SOURCE-PANEL" : "SOURCE-MEMORY";
         case cs80::source_factory::Route::legacy_bridge: return "LEGACY STUDY";
         case cs80::source_factory::Route::panel_or_memory: return source == 13 ? "PANEL" : "MEMORY";
         case cs80::source_factory::Route::invalid: return "INVALID";
@@ -96,7 +98,10 @@ static_assert(requestedSourceRouteTag(1, 0, cs80::renderPolicy(0.0f, 1.0f)) == "
 static_assert(cs80::renderPolicy(1.0f, 1.0f) == cs80::RenderPolicy::isolation);
 static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(1.0f, 1.0f)) == "SOURCE-COMPLETE");
 static_assert(requestedSourceRouteTag(0, 1, cs80::renderPolicy(0.0f, 0.0f)) == "LEGACY STUDY");
-static_assert(requestedSourceRouteTag(1, 12, cs80::RenderPolicy::sourcePerformance) == "MEMORY");
+static_assert(requestedSourceRouteTag(1, 12, cs80::RenderPolicy::sourcePerformance) == "SOURCE-MEMORY");
+static_assert(requestedSourceRouteTag(0, 11, cs80::RenderPolicy::isolation) == "SOURCE-MEMORY");
+static_assert(requestedSourceRouteTag(0, 13, cs80::RenderPolicy::isolation) == "SOURCE-PANEL");
+static_assert(requestedSourceRouteTag(1, 12, cs80::RenderPolicy::legacy) == "MEMORY");
 static_assert(requestedSourceRouteTag(0, 13, cs80::RenderPolicy::legacy) == "PANEL");
 static_assert(requestedSourceRouteTag(-1, 0, cs80::RenderPolicy::isolation) == "INVALID");
 
