@@ -31,7 +31,11 @@ namespace bbd_detail
 // keep the full path even if DAZ happens to make a floating comparison see zero.
 inline bool hasNonzeroMagnitude(float sample) noexcept
 {
-    return (std::bit_cast<std::uint32_t>(sample) & 0x7fffffffu) != 0u;
+    // Apple Clang 17 folds a non-volatile bit test back into fcmp/cmpneqss.
+    // DAZ then treats a stored subnormal as zero, incorrectly dropping history.
+    // Keep the classification in the integer domain; no floating law changes.
+    const volatile std::uint32_t bits = std::bit_cast<std::uint32_t>(sample);
+    return (bits & 0x7fffffffu) != 0u;
 }
 } // namespace bbd_detail
 
