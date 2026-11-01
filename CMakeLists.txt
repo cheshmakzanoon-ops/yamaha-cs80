@@ -30,6 +30,32 @@ if (CS80_BUILD_TESTS)
     endif()
     enable_testing()
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    # Frozen scalar-kernel oracle: registered in c56726f before optimization.
+    set(cs80_scalar_oracle_dir "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle/exact_scalar_frozen")
+    set(cs80_scalar_oracle_inputs "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels/manifest.json")
+    set(cs80_scalar_oracle_outputs "${cs80_scalar_oracle_dir}/oracle-source-manifest.json")
+    foreach(cs80_scalar_header Dsp.h FastMath.h Ig00156PhaseCorrection.h Ig00156Filter.h ReconstructedOscillator.h)
+        list(APPEND cs80_scalar_oracle_inputs
+             "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels/raw/${cs80_scalar_header}")
+        list(APPEND cs80_scalar_oracle_outputs "${cs80_scalar_oracle_dir}/${cs80_scalar_header}")
+    endforeach()
+    add_custom_command(OUTPUT ${cs80_scalar_oracle_outputs}
+        COMMAND ${Python3_EXECUTABLE}
+                "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/materialize-frozen-scalar-kernels.py"
+                --fixture-root "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels"
+                --output "${cs80_scalar_oracle_dir}"
+        DEPENDS ${cs80_scalar_oracle_inputs}
+                "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/materialize-frozen-scalar-kernels.py"
+        VERBATIM)
+    add_custom_target(cs80_exact_scalar_oracle DEPENDS ${cs80_scalar_oracle_outputs})
+    add_executable(cs80_exact_scalar_filter_tests tests/ExactScalarFilterTests.cpp)
+    add_dependencies(cs80_exact_scalar_filter_tests cs80_exact_scalar_oracle)
+    target_include_directories(cs80_exact_scalar_filter_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
+    foreach(cs80_scalar_suite fixed moving state row fp)
+        add_test(NAME cs80_exact_scalar_filter_${cs80_scalar_suite}_tests
+                 COMMAND cs80_exact_scalar_filter_tests --suite ${cs80_scalar_suite})
+        set_tests_properties(cs80_exact_scalar_filter_${cs80_scalar_suite}_tests PROPERTIES TIMEOUT 300)
+    endforeach()
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
