@@ -111,3 +111,55 @@ an established installed value. Static comparison against main
 of `FactoryToneHypotheses.h` and the complete `HardwareControl.h` remain
 byte-identical. This is a source and evidence audit; it does not substitute
 for the separately required numerical compatibility gates.
+
+## Fresh source and frozen-model verification — 2026-11-01
+
+An independent review at `8a85faab1a125cc14425d9184f7022f6746e40a6`
+re-fetched the workflow record, job inventory and five complete job logs from
+GitHub: S31, S33, S35, S37, and the consequential S36 board/wiring page. The
+workflow still identifies successful run `41224106605` at source commit
+`0281af873389a13452ac5dca2ef9b90dcec07c72`. This is a fresh retrieval of the
+same historical scan evidence, not a new source revision or a hardware test.
+
+The five retrieved log bodies exactly match the saved logs after accounting
+for one additional final LF in each saved file. Both sets of SHA-256 values
+are retained in
+[fresh-tone-verification.json](../qualification-2026-11-01/ui-tone-review/fresh-tone-verification.json).
+Independent decoding verified all **30** native PNGs in those five jobs:
+contiguous base64 chunk indexes, one matching end marker, payload length,
+strict base64 decoding, PNG SHA-256, IHDR dimensions, unresized crop-box
+dimensions, and byte identity with the PNGs used for visual inspection. All
+30 passed. The earlier 70-crop record continues to cover the other pages;
+this fresh retrieval does not claim to have re-fetched those additional jobs.
+
+The visual review followed the A–F column labels, unprimed output rows and
+the crop overlaps, and confirms every transcription above:
+
+| Schematic | Independently checked addresses | Paired board page |
+| --- | --- | --- |
+| S31 / T51 | A20, A25, C25, E22, E26, F22, F25, F26 | S32 |
+| S33 / T52 | A26, B9, C22, E20 | S34 |
+| S35 / T53 | A20, A25, B14, B20, C20, E23, E26, F22, F26 | S36 |
+| S37 / T54 | A26, C22, C25, C26 | S38 |
+
+T51 F25's strike-through and T52 C22's former value still prevent a stronger
+reading. S35 B14 still has an ambiguous first glyph before `5K`; S36 clearly
+shows `75K(39K)`. The proposed T53/T51 paired interpretation remains a
+declared inference, supported by neighbouring `20K(13K)` and `750(1K)`
+markings, rather than a printed legend identifying an installed revision.
+All 25 source cells retain their labelled hypotheses. No source annotation
+or numeric change is justified by this inspection.
+
+The comparison with original main
+`db24a47170610f81236e8829ef5536af69dfc94d` was repeated directly against
+its Git blobs:
+
+| Frozen scope | Bytes | SHA-256 | Result |
+| --- | ---: | --- | --- |
+| `FactoryToneHypotheses.h`, prefix before `// Re-examination of the 25 cells` | 11,526 | `9bfea255c0bdf66a629c453653d84d60fe2b242ed197b6ac9dd4fa345a53b66e` | Byte-identical |
+| Entire `HardwareControl.h` | 20,864 | `eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2` | Byte-identical |
+
+A standalone C++20 compilation of the existing header assertions also
+confirmed `manifestValid()`, `reviewValid()`, 25 manifest cells, 25 review
+entries, and fingerprint `e5f877a025fc52c6`. This documentation-only review
+adds no new acceptance tolerance or audio gate and changes no V1 numerics.
