@@ -104,6 +104,16 @@ void fixture(const ws1::Tolerances& limits, int rate, int quality, bool pure, in
         check(maximumStateError[rank] <= limits["closed_engine_coupling_truth_abs"],
               "coupling discharge conserves actual host elapsed time");
     check(panicCleared, "panicked idle coupling stays exactly cleared");
+    normal.reset();
+    bool coldCleared = true;
+    for (int frame = 0; frame <= rate / 1000; ++frame)
+    {
+        for (int rank = 0; rank < kNumRanks; ++rank)
+            coldCleared = coldCleared && std::abs(normal.getRankVcaState(0, rank).coupling)
+                <= limits["closed_engine_reset_coupling_abs_max"];
+        normal.render(n.data(), 1);
+    }
+    check(coldCleared, "explicit engine reset clears charged coupling before cold idle output");
     std::printf("%s rate=%d quality=%d rank=%d tail=%.12g coupling_error_I=%.12g coupling_error_II=%.12g\n",
                 pure ? "pure" : "source", rate, quality, audibleRank,
                 maximumOutputDifference, maximumStateError[0], maximumStateError[1]);
@@ -120,7 +130,8 @@ int main(int argc, char** argv)
         check(limits["closed_discharge_truth_abs"] == 1e-7
               && limits["closed_handoff_step_abs"] == 1e-6
               && limits["closed_engine_tail_min_peak_abs"] == 1e-9
-              && limits["closed_engine_coupling_truth_abs"] == 1e-12,
+              && limits["closed_engine_coupling_truth_abs"] == 1e-12
+              && limits["closed_engine_reset_coupling_abs_max"] == 0.0,
               "registered integration limits remain unchanged");
         for (bool pure : {false, true})
             for (int rate : {44100, 48000, 96000})

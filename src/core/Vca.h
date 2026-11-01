@@ -51,10 +51,22 @@ public:
     // or alter either node; release-continuity tests compare event boundaries.
     struct State { float level = 0.0f; double coupling = 0.0; };
     State getState() const noexcept { return { node, coupling }; }
-    // Free-running idle path (plan step 2.1): a silent circuit's VCA output is
-    // exactly zero (the envelope is closed), so the next-stage coupling simply
-    // discharges. The LI node is left to re-acquire LC through its 0.54 ms RC
-    // when the circuit is next clocked (declared simplification).
+    // Closing the envelope makes the drive zero, not the downstream output:
+    // the existing coupling capacitor still contributes -coupling to the mix.
+    // This is the same inferred 1 uF / 100 k recurrence as process(), not a
+    // fade or a new time constant. LI re-acquires LC on wake as before.
+    float processClosed() noexcept
+    {
+        coupling += (0.0 - coupling) * couplingCoefficient;
+        // Retain the original idle model's numerical zero floor. A charge
+        // below the audio threshold must still decay rather than freeze.
+        if (std::abs(coupling) < 1.0e-30) coupling = 0.0;
+        return static_cast<float>(-coupling);
+    }
+    bool hasCouplingTail() const noexcept { return coupling != 0.0; }
+
+    // Analytic advance only for elapsed time whose output is not rendered.
+    // Never apply this a second time to samples already passed to processClosed.
     void relaxIdle(double seconds) noexcept
     {
         coupling *= std::exp(-seconds / kIg00151CouplingSeconds);

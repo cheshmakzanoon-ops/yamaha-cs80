@@ -254,6 +254,9 @@ void Engine::reset()
             r.lpf.reset();
             r.hpStage.reset();
             r.lpStage.reset();
+            // Idle output is connected too, so the explicit cold reset must
+            // clear old coupling charge before any later note can clock it.
+            if (freeRunning) r.vca.reset(0.0f);
             r.vcaCold = true;
             r.fenv.reset();
             if (freeRunning) r.fenv.selectInitialWhileIdle();
@@ -1554,6 +1557,14 @@ void Engine::allNotesOff(bool release, int midiChannel)
                         || stage == FilterEnv::Stage::Sustain)
                         fenv.noteOff();
                 }
+            // Explicit MIDI All Sound Off is a hard panic, unlike ordinary
+            // envelope retirement. It intentionally clears the coupling tail.
+            if (freeRunningVoices())
+                for (auto& rank : voice.ranks)
+                {
+                    rank.vca.reset(0.0f);
+                    rank.vcaCold = true;
+                }
             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
         }
         else if (allChannels)
@@ -2048,6 +2059,30 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         int idleSamples = 0;
         if (! v.active && !coldBootstrap)
         {
+            // The amplitude gate may be closed while its downstream VCA
+            // coupling capacitor still drives the mix. Keep that signed RC
+            // discharge connected at audio rate; only the oscillator/filter
+            // use the decimated idle schedule. No fade or changed pole.
+            if (freeRunning)
+                for (int ch = 0; ch < kNumRanks; ++ch)
+                {
+                    auto& r = v.ranks[ch];
+                    if (!r.vca.hasCouplingTail())
+                        continue;
+                    const float closed = r.vca.processClosed();
+                    const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+                    if (chGain == 0.0f)
+                        continue;
+                    const auto& rs = rankSettings[ch];
+                    const auto& mod = modern.rankOffsets(vi, ch);
+                    const float pan = clampf(rs.pan + r.trimPan * global.voiceDispersion * 0.8f
+                                             + lfoPan + mod.pan, -1.0f, 1.0f);
+                    float panLeft, panRight;
+                    constantPowerPan(pan, panLeft, panRight);
+                    const float voiceOut = closed * chGain * 0.17f;
+                    mixL += voiceOut * panLeft;
+                    mixR += voiceOut * panRight;
+                }
             const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
             const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
             if (! freeRunning || ++v.idleClock < due)
@@ -2268,11 +2303,10 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
                     cutoffHp, hpQ, cutoffLp, lpQ, rs.hpfOn, rs.lpfOn };
                 if (idle)
                 {
-                    // Silent circuit: closed-form oscillator advance, one
-                    // decimated step of both stages, the VCA's output coupling
-                    // discharging, and no contribution to the mix.
+                    // Closed-form oscillator advance and one decimated step
+                    // of both stages. VCA coupling was already clocked and
+                    // mixed at the inactive entry; never discharge it twice.
                     voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
-                    r.vca.relaxIdle((double) idleSamples / sr);
                     r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
                     continue;
                 }
