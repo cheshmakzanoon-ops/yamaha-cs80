@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
 
 namespace cs80::tests
 {
@@ -35,13 +36,19 @@ void testVoiceMonitorHost(Check check)
     const auto rankII = host.getEngine().getRankInfo(0, 1);
     const auto match = [](const VoiceMonitorRank& tap, const Engine::RankInfo& truth)
     {
-        return tap.active && std::abs(tap.ampEnvelope - truth.ampEnvelope) <= 2e-5f
-            && std::abs(tap.filterEnvelope - truth.filterEnvelope) <= 4e-5f
-            && std::abs(tap.hpfHz - truth.hpfHz) <= 0.51f
-            && std::abs(tap.lpfHz - truth.lpfHz) <= 0.51f;
+        const bool matched = tap.active && tap.ampEnvelope == truth.ampEnvelope
+            && tap.filterEnvelope == truth.filterEnvelope
+            && tap.hpfHz == truth.hpfHz
+            && tap.lpfHz == truth.lpfHz;
+        if (! matched)
+            std::printf("TAP DIAG: active=%d amp=%.6g/%.6g filter=%.6g/%.6g HPF=%.6g/%.6g LPF=%.6g/%.6g\n",
+                        tap.active, tap.ampEnvelope, truth.ampEnvelope,
+                        tap.filterEnvelope, truth.filterEnvelope,
+                        tap.hpfHz, truth.hpfHz, tap.lpfHz, truth.lpfHz);
+        return matched;
     };
     check(match(sounding.ranks[0], rankI) && match(sounding.ranks[1], rankII),
-          "audio callback publishes both real Engine rank filter/envelope nodes with bounded display quantization");
+          "audio callback publishes both real Engine rank filter/envelope nodes bit-exactly");
 
     // Sixteen voices are two Engine instances. Force the loudest velocity-
     // weighted envelope to belong to a note in slots 8..15, then require its

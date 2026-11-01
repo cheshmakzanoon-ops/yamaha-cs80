@@ -1,7 +1,6 @@
 #include "plugin/VoiceMonitorTaps.h"
 
 #include <atomic>
-#include <cmath>
 #include <cstdio>
 #include <thread>
 
@@ -13,8 +12,6 @@ void check(bool condition, const char* law)
     ++checks;
     if (! condition) { ++failures; std::printf("FAIL: %s\n", law); }
 }
-bool near(float value, float reference, float tolerance)
-{ return std::isfinite(value) && std::abs(value - reference) <= tolerance; }
 }
 
 int main()
@@ -25,23 +22,25 @@ int main()
           "unprepared monitor publishes no stale active model tap");
 
     cs80::VoiceMonitorSnapshot datum;
-    datum.ranks = { cs80::VoiceMonitorRank { true, 0.25f, -0.4f, 784.0f, 6500.0f },
-                    cs80::VoiceMonitorRank { true, 0.75f, 0.6f, 234.0f, 12400.0f } };
+    // Model filter envelopes can exceed +/-1 (the actual Engine host oracle
+    // exposed -1.41807). A live tap must not clamp or invent that evidence.
+    datum.ranks = { cs80::VoiceMonitorRank { true, 0.25f, -1.41807f, 40700.0f, 6500.0f },
+                    cs80::VoiceMonitorRank { true, 0.75f, 1.42182f, 234.0f, 51000.0f } };
     taps.publish(datum);
     state = taps.read();
     check(state.ranks[0].active && state.ranks[1].active,
           "both real rank model taps are delivered from the same callback");
-    check(near(state.ranks[0].ampEnvelope, 0.25f, 2e-5f)
-              && near(state.ranks[1].ampEnvelope, 0.75f, 2e-5f),
-          "mailbox preserves both envelopes to better than 2e-5 normalized level");
-    check(near(state.ranks[0].filterEnvelope, -0.4f, 4e-5f)
-              && near(state.ranks[1].filterEnvelope, 0.6f, 4e-5f),
-          "mailbox preserves signed VCF envelopes to better than 4e-5");
-    check(near(state.ranks[0].hpfHz, 784.0f, 0.51f)
-              && near(state.ranks[0].lpfHz, 6500.0f, 0.51f)
-              && near(state.ranks[1].hpfHz, 234.0f, 0.51f)
-              && near(state.ranks[1].lpfHz, 12400.0f, 0.51f),
-          "mailbox preserves effective model HPF/LPF cutoffs to at most 0.51 Hz");
+    check(state.ranks[0].ampEnvelope == datum.ranks[0].ampEnvelope
+              && state.ranks[1].ampEnvelope == datum.ranks[1].ampEnvelope,
+          "mailbox preserves both VCA model envelope floats bit-exactly");
+    check(state.ranks[0].filterEnvelope == datum.ranks[0].filterEnvelope
+              && state.ranks[1].filterEnvelope == datum.ranks[1].filterEnvelope,
+          "mailbox preserves signed VCF model envelopes beyond +/-1 bit-exactly");
+    check(state.ranks[0].hpfHz == datum.ranks[0].hpfHz
+              && state.ranks[0].lpfHz == datum.ranks[0].lpfHz
+              && state.ranks[1].hpfHz == datum.ranks[1].hpfHz
+              && state.ranks[1].lpfHz == datum.ranks[1].lpfHz,
+          "mailbox preserves full-range effective HPF/LPF model cutoffs bit-exactly");
 
     // This is a source-only live monitor, not part of the DSP or host state;
     // concurrent writer/reader may skip contended UI frames, never mix ranks
