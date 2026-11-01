@@ -1,0 +1,19 @@
+[
+  {
+    "pid": 877635,
+    "parent": 870264,
+    "command": [
+      "/usr/bin/valgrind.bin",
+      "--tool=callgrind",
+      "--instr-atstart=no",
+      "--collect-atstart=no",
+      "--cache-sim=yes",
+      "--branch-sim=yes",
+      "--callgrind-out-file=/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/pair10.callgrind",
+      "/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile",
+      "pair10",
+      "128"
+    ],
+    "reason": "Parent reprioritized idle profiling; pending held/moving cases are no longer required."
+  }
+]
