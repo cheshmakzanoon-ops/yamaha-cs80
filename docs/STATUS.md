@@ -181,12 +181,32 @@ failures; no tolerance or oracle was changed to admit it.
 
 The separate exact FIR source is `23a7b8d`. Three pristine local before rounds
 at `475063c` and three after rounds on a clean checkout of the published FIR
-source have completed. Shared-host scheduling noise is retained. A new
-[serial run 41261598525](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41261598525)
-retains the seven historical identities and adds both immutable FIR endpoints.
-Its outcome is pending at this snapshot. FIR work omission applies to both
-policies when admitted; Legacy idle is therefore not an unchanged timing
-control, even though both Legacy audio captures remain byte-identical.
+source are retained in [the complete FIR qualification](evidence/qualification-2026-11-01/zero-fir/README.md)
+(evidence `a0f37fa`). All 306 corresponding non-timing rows match exactly.
+
+| Local FIR comparison, minimum of three callback medians | Before `475063c` | After `23a7b8d` |
+| --- | ---: | ---: |
+| Circuit held median RTF range | 0.632455–0.957676 | 0.626982–0.908651 |
+| Circuit quiet-idle median RTF | 0.070246875 | 0.060575438 |
+| Circuit moving-controls median RTF | 0.976010812 | 0.911899687 |
+| Circuit moving-controls p99 RTF, same selected round | 1.805770312 | 2.153501813 |
+
+The selected quiet-idle median falls by 13.77%, from 7.02% to 6.06% of realtime.
+Substantial shared-host scheduling noise remains in all six raw rounds; the
+lower medians and worse moving-control p99 do not establish a held speedup.
+Neither requested CPU target passes. FIR work omission applies to both policies
+when admitted; Legacy idle is therefore not an unchanged timing control, even
+though both Legacy audio captures remain byte-identical.
+
+[Serial run 41261598525](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41261598525)
+failed before any benchmark ran. Its mutation witness removed one item from an
+assumed seven-entry request; with two appended checkpoints it instead hit the
+independent prefix-identity guard. `ef166ea` makes that witness retain exactly
+six historical entries and adds its file to the workflow's trigger paths.
+The original seven-entry request and the current nine-entry request each pass
+all 27 mutations after this correction. The request, collector, reporter,
+acceptance contract and nine checkpoint identities are unchanged. The fresh
+serial comparison remains pending; this correction makes no performance claim.
 
 ### Original click criteria
 
@@ -236,7 +256,7 @@ pass. Earlier audio/pin/evidence sequences remain in the dated history.
 | MTS-ESP | Real client, shim and fallback pass on all four platforms. Actual upstream licence is **0BSD**, at ODDSound `f214739b8832e7f297cb9970d0c0efbf783f1462`; a live external master is not claimed. |
 | Filter comparator | Fresh and restored positives each pass 781,314,302 exact assertions; five source mutations fail normally. [Evidence](evidence/continuation-2026-10-31/column-layout-rejected/README.md). |
 | Event regression | 7,438 full assertions; 15 source mutations; zero-limit weakening and missing-rank-II controls checked. [Evidence](CLICK_EVENT_CONTINUITY.md). |
-| FIR | Oversampling 85, exact history 227,117, rounding 3,276,237 and core 11,512 assertions pass; all ten source mutations rejected. Final native/integration and timing remain separate. |
+| FIR | Oversampling 85, exact history 227,117, rounding 3,276,237 and core 11,512 assertions pass; all ten source mutations rejected. [Complete local qualification and six rounds](evidence/qualification-2026-11-01/zero-fir/README.md). Final native/integration and serial timing remain separate. |
 | UI/tone review | Context IDs, MIDI learn, undo gestures, taps and two-engine ownership verified; 70 native crop payloads and all 25 cells rechecked. [Evidence](evidence/qualification-2026-11-01/ui-tone-review/README.md). |
 | Final CI / landing | `build.yml` on four platforms plus pluginval, `dsp-measurements.yml`, `screenshots.yml`, the merge commit and `release.yml` are still being completed. README artifacts, screenshots and PDF will be refreshed against the actual final runs. |
 
