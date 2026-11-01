@@ -190,7 +190,7 @@ def self_test(request, reporter):
             path.write_text(original)
         causal = root / "click-causality.csv"
         original_causal = causal.read_text()
-        causal.write_text(original_causal.replace("original_physical_panel", "mutant", 1))
+        causal.write_text(original_causal.replace(",original_physical_panel,", ",mutant,", 1))
         try:
             validate_capture(root, request, reporter)
         except (ValueError, KeyError):
