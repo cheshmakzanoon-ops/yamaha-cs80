@@ -36,6 +36,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_apvts_state_lock_contract
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_apvts_state_lock.py)
     set_tests_properties(cs80_apvts_state_lock_contract PROPERTIES TIMEOUT 10)
+    # Native ModernLayerUiTests owns the actual JUCE interaction oracle; this
+    # headless preflight also mutation-checks exact MIDI-learn/host bindings.
+    add_test(NAME cs80_chorus_fx_ui_wiring_contract
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_chorus_fx_ui_wiring.py)
+    set_tests_properties(cs80_chorus_fx_ui_wiring_contract PROPERTIES TIMEOUT 10)
     if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         add_test(NAME cs80_ui_environment_tests
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_ui_smoke_environment.py)
