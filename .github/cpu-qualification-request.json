@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "One-runner comparison of starting main and each qualified CPU checkpoint. Software diagnostics; no hardware or real-DAW qualification.",
+  "description": "One-runner serial comparison retaining all seven preregistered historical checkpoints, followed by the native-BBD pre-FIR source and exact zero-history FIR candidate. Software callback timing; no hardware or real-DAW qualification.",
   "rate": 48000,
   "block": 256,
   "callbacks": 1024,
@@ -42,7 +42,16 @@
       "label": "rank-idle-1500",
       "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
       "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
     }
   ]
 }
-
