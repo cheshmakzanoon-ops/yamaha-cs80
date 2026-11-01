@@ -221,6 +221,12 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_bbd_chorus_tests PRIVATE src)
     add_test(NAME cs80_bbd_chorus_tests COMMAND cs80_bbd_chorus_tests)
     set_tests_properties(cs80_bbd_chorus_tests PROPERTIES TIMEOUT 60)
+    # Exact-only CPU optimization: preserve every PWM phase/sampled sine and
+    # original SUB exponential-control recurrence across idle-to-wake events.
+    add_executable(cs80_idle_global_clock_tests tests/IdleGlobalClockTests.cpp)
+    target_link_libraries(cs80_idle_global_clock_tests PRIVATE cs80_core)
+    add_test(NAME cs80_idle_global_clock_tests COMMAND cs80_idle_global_clock_tests)
+    set_tests_properties(cs80_idle_global_clock_tests PROPERTIES TIMEOUT 300)
     add_executable(cs80_mn3001_packet_tests tests/Mn3001PacketTests.cpp)
     target_include_directories(cs80_mn3001_packet_tests PRIVATE src)
     add_test(NAME cs80_mn3001_packet_tests COMMAND cs80_mn3001_packet_tests)
