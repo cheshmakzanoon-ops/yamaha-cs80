@@ -210,7 +210,8 @@ struct Plugin
 
     std::vector<float> render(int length, const std::vector<Queue::Point>& changes, bool noteOn,
                               int noteOffset = 0, int notePitch = 60,
-                              bool useHostContext = false, int64_t hostSamplePosition = 0)
+                              bool useHostContext = false, int64_t hostSamplePosition = 0,
+                              const char* automatedParameter = "volume")
     {
         std::vector<float> in((size_t) length);
         std::vector<float> left((size_t) length), right((size_t) length);
@@ -221,7 +222,7 @@ struct Plugin
         Vst::AudioBusBuffers outBus {};
         outBus.numChannels = 2; outBus.channelBuffers32 = outPtrs;
         Changes paramChanges;
-        paramChanges.queue.id = vstHash("volume");
+        paramChanges.queue.id = vstHash(automatedParameter);
         paramChanges.queue.points = changes;
         paramChanges.any = !changes.empty();
         Events inputEvents;
@@ -275,7 +276,7 @@ int main(int argc, char** argv)
 {
     if (argc < 2 || argc > 3)
     {
-        std::cerr << "usage: automation_driver <VST3 .so> [lifecycle|empty|flat|flat_sample|jump|offset|transport|midi|ramp]\n";
+        std::cerr << "usage: automation_driver <VST3 .so> [lifecycle|empty|flat|flat_sample|jump|offset|transport|midi|ramp|ramp_brilliance|ramp_resonance]\n";
         return 2;
     }
     try
@@ -297,7 +298,7 @@ int main(int argc, char** argv)
         const auto mode = argc == 3 ? std::string(argv[2]) : "offset";
         if (mode != "flat" && mode != "flat_sample" && mode != "jump"
             && mode != "offset" && mode != "transport" && mode != "midi"
-            && mode != "ramp")
+            && mode != "ramp" && mode != "ramp_brilliance" && mode != "ramp_resonance")
             throw std::runtime_error("unknown comparison mode");
 
         // 'jump' is a legal VST3 discontinuity: the old value is repeated at
@@ -309,8 +310,15 @@ int main(int argc, char** argv)
         // 'ramp' compares it with the actual value at every sample in a
         // microblock reference. 'flat_sample' proves this finer host partition
         // itself changes no audio, so the ramp oracle cannot pass vacuously.
+        // Truth model is committed before evaluation:
+        // tests/parity/tolerances-v2/vst3-key-ramp-audio-v1.json.
+        // All three continuous globals have the same normalized VST3 queue
+        // law, but distinct Engine smoothing, macro and filter propagation.
+        const bool rampMode = mode == "ramp" || mode == "ramp_brilliance" || mode == "ramp_resonance";
+        const char* automatedParameter = mode == "ramp_brilliance" ? "brilliance"
+                                       : mode == "ramp_resonance" ? "resonance" : "volume";
         const bool flatMode = mode == "flat" || mode == "flat_sample";
-        const bool microblockReference = mode == "flat_sample" || mode == "ramp";
+        const bool microblockReference = mode == "flat_sample" || rampMode;
         const std::vector<Queue::Point> fullBlockPoints = flatMode
             ? std::vector<Queue::Point> {}
             : (mode == "jump" || mode == "transport" || mode == "midi")
@@ -334,7 +342,7 @@ int main(int argc, char** argv)
             for (int i = 0; i < 2; ++i)
                 block256.render(256, {}, false, 0, 60, timedHostContext, (i + 1) * 256);
             one = block256.render(256, fullBlockPoints, midiAcrossSplit, 140, 64,
-                                  timedHostContext, 768);
+                                  timedHostContext, 768, automatedParameter);
         }
         std::vector<float> two;
         {
@@ -348,13 +356,15 @@ int main(int argc, char** argv)
                     // The full queue is a line from (0,.8) to (128,.2).
                     // Reference values at 0..127 must use that exact slope.
                     const double value = 0.8 + (0.2 - 0.8) * (double) i / 128.0;
-                    const std::vector<Queue::Point> samplePoint = mode == "ramp"
+                    const std::vector<Queue::Point> samplePoint = rampMode
                         ? std::vector<Queue::Point> { {0, value} }
                         : std::vector<Queue::Point> {};
-                    auto sample = twoBlocks.render(1, samplePoint, false);
+                    auto sample = twoBlocks.render(1, samplePoint, false, 0, 60,
+                                                   false, 0, automatedParameter);
                     two.insert(two.end(), sample.begin(), sample.end());
                 }
-                auto tail = twoBlocks.render(128, secondBlockPoints, false);
+                auto tail = twoBlocks.render(128, secondBlockPoints, false, 0, 60,
+                                              false, 0, automatedParameter);
                 two.insert(two.end(), tail.begin(), tail.end());
             }
             else
