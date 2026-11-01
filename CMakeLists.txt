@@ -47,6 +47,13 @@ if (CS80_BUILD_TESTS)
         set_tests_properties(cs80_ui_environment_tests PROPERTIES TIMEOUT 45)
     endif()
     find_package(Threads REQUIRED)
+    # Sample-coherent audio->UI rank telemetry. No direct GUI polling of
+    # render-thread Engine state, no locks or allocations in the callback.
+    add_executable(cs80_voice_monitor_taps_tests tests/VoiceMonitorTapsTests.cpp)
+    target_include_directories(cs80_voice_monitor_taps_tests PRIVATE src)
+    target_link_libraries(cs80_voice_monitor_taps_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_voice_monitor_taps_tests COMMAND cs80_voice_monitor_taps_tests)
+    set_tests_properties(cs80_voice_monitor_taps_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_continuous_voice_circuit_tests tests/ContinuousVoiceCircuitTests.cpp)
     target_include_directories(cs80_continuous_voice_circuit_tests PRIVATE src)
     add_test(NAME cs80_continuous_voice_circuit_tests COMMAND cs80_continuous_voice_circuit_tests)
