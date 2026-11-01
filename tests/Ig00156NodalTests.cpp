@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <cmath>
 #include <complex>
 #include <cstdio>
@@ -177,6 +178,40 @@ void resonanceCoefficientCache()
                         same = same && a.hp == b.hp && a.lp == b.lp && a.bp == b.bp;
                     }
                     check(same, "Q-only cache update is bit-identical to a full coefficient preparation");
+                }
+}
+
+// Pre-implementation exact-zero invariant for a possible fixed-point Newton
+// shortcut.  Its return value, signed zeros, all four companion histories,
+// physical node voltages and OTA slopes must remain bit-identical to the
+// original full implicit solve.  A branch that merely returns {0,0,0}, or
+// fails to restore a history, must not pass this gate.
+void silentNewtonFixedPoint()
+{
+    auto bits = [](double v) { return std::bit_cast<std::uint64_t>(v); };
+    auto fbits = [](float v) { return std::bit_cast<std::uint32_t>(v); };
+    for (const auto* net : { &kIg00156HighPassNetwork, &kIg00156LowPassNetwork })
+        for (float fs : { 88200.0f, 192000.0f, 384000.0f })
+            for (float hz : { 60.0f, 4000.0f, 12000.0f })
+                for (float q : { 0.5f, 5.0f, 9.0f })
+                {
+                    Ig00156Stage stage { *net };
+                    stage.set(hz, q, fs);
+                    stage.reset();
+                    bool exact = true;
+                    for (int n = 0; n < 256; ++n)
+                    {
+                        const auto result = stage.process(0.0f);
+                        const auto mem = stage.getMemory();
+                        exact = exact && fbits(result.hp) == 0u && fbits(result.lp) == 0u
+                                      && fbits(result.bp) == 0x80000000u
+                                      && bits(mem.z.input) == 0u && bits(mem.z.feedback) == 0u
+                                      && bits(mem.z.bp) == 0u && bits(mem.z.lp) == 0u
+                                      && bits(mem.v.input) == 0u && bits(mem.v.feedback) == 0u
+                                      && bits(mem.v.bp) == 0u && bits(mem.v.lp) == 0u
+                                      && bits(mem.slope1) == bits(1.0) && bits(mem.slope2) == bits(1.0);
+                    }
+                    check(exact, "zero-state Newton fixed point preserves every output/history bit");
                 }
 }
 
@@ -535,6 +570,7 @@ int main(int argc, char** argv)
         const ws1::Tolerances tol(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/ws1-voice.json", "ig00156_nodal");
         equivalence(tol);
         resonanceCoefficientCache();
+        silentNewtonFixedPoint();
         smallSignal(tol);
         anchors(tol);
         serviceSetup(tol);
