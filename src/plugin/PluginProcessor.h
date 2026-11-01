@@ -11,6 +11,7 @@
 #include "core/MpeZones.h"
 #include "core/Tuning.h"
 #include "OutputMeter.h"
+#include "VoiceMonitorTaps.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
 
@@ -108,6 +109,9 @@ public:
         const unsigned value = activeVoiceMask.load(std::memory_order_relaxed);
         return { value & 0xffffu, (value & (1u << 16)) != 0 ? 16 : 8 };
     }
+    // Two rank-model nodes, captured on the audio thread from one selected
+    // active voice across BOTH engines. UI must never directly poll RankInfo.
+    cs80::VoiceMonitorSnapshot getVoiceMonitorSnapshot() const noexcept { return voiceMonitorTaps.read(); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
     // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
     unsigned getHostMidiEventCount() const noexcept { return hostMidiEvents.load(std::memory_order_relaxed); }
@@ -356,6 +360,7 @@ private:
     // Bits 0..15: active voices; bit 16: extension capacity flag. Single audio->UI publication.
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
+    cs80::VoiceMonitorTaps voiceMonitorTaps;
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
     std::unique_ptr<cs80::Engine> extensionEngine;

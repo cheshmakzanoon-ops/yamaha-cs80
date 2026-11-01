@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UiComponents.h"
+#include "VoiceMonitorTaps.h"
 
 #include <array>
 #include <bit>
@@ -27,6 +28,7 @@ public:
     int getChannel() const noexcept { return channel; }
     int getDisplayedVoiceCount() const noexcept { return std::popcount(snap.voices); }
     int getDisplayedVoiceCapacity() const noexcept { return snap.capacity; }
+    cs80::VoiceMonitorRank getDisplayedRankModelTap() const noexcept { return snap.live.ranks[(size_t) channel]; }
     std::function<void()> onClose;
 
     // Design size of the drawer in the editor's 1600 x 1000 design space.
@@ -42,6 +44,7 @@ private:
     {
         std::array<float, cs80::CP_count> v {};
         unsigned voices = 0;
+        cs80::VoiceMonitorSnapshot live;
         int capacity = 8;
         int channel = 0;
         int source = 13;

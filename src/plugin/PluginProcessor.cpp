@@ -410,6 +410,7 @@ bool Cs80AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
+    voiceMonitorTaps.reset();
     // Offline bounces render the circuit engine at HQ (Oversampling.h).
     engine.setNonRealtime(isNonRealtime());
     engine.prepare(sampleRate);
@@ -437,6 +438,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 void Cs80AudioProcessor::releaseResources()
 {
     outputMeter.reset();
+    voiceMonitorTaps.reset();
     engine.reset();
     extensionEngine->reset();
     extensionActive = false;
@@ -1019,6 +1021,30 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     activeVoiceCount.store(engine.activeVoices()
                            + (extensionActive ? extensionEngine->activeVoices() : 0),
                            std::memory_order_relaxed);
+
+    // The monitor may only consume actual Engine::RankInfo on this audio
+    // thread: select one sounding voice by VCA envelope * note-on velocity.
+    // Publish both ranks in a coherent lock-free packet, including voice slots
+    // 8..15 in extension mode, never pointing the UI at render-thread memory.
+    cs80::VoiceMonitorSnapshot liveRanks;
+    float loudest = -1.0f;
+    auto captureRankTaps = [&](const cs80::Engine& source, int voiceBitOffset)
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            if ((mask & (1u << (i + voiceBitOffset))) == 0u) continue;
+            const auto a = source.getRankInfo(i, 0), b = source.getRankInfo(i, 1);
+            const float level = std::max(a.ampEnvelope, b.ampEnvelope)
+                                * source.getVoiceInfo(i).velocity;
+            if (! std::isfinite(level) || level <= loudest) continue;
+            loudest = level;
+            liveRanks.ranks[0] = { true, a.ampEnvelope, a.filterEnvelope, a.hpfHz, a.lpfHz };
+            liveRanks.ranks[1] = { true, b.ampEnvelope, b.filterEnvelope, b.hpfHz, b.lpfHz };
+        }
+    };
+    captureRankTaps(engine, 0);
+    if (extensionActive) captureRankTaps(*extensionEngine, 8);
+    voiceMonitorTaps.publish(liveRanks);
 
     // Inspect the completed host buffer, not pre-decimator/internal stereo
     // values: mono mapping/cancellation and its arithmetic are already applied.

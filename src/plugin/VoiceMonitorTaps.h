@@ -3,13 +3,13 @@
 // Engine-to-Studio voice monitor handoff. RankInfo is render-thread-only and
 // MUST NOT be polled directly by the JUCE message/UI thread. This mailbox
 // publishes the loudest active voice's two rank nodes from one audio callback.
-// Each rank is a single lock-free 64-bit packet; the even/odd sequence keeps
-// the two packets in the same rendered callback, without audio-thread locks.
+// Each pair of IEEE754 model floats occupies one lock-free 64-bit packet;
+// the even/odd sequence keeps both ranks in the same rendered callback.
 // The values are reconstructed MODEL nodes, never measured hardware voltages.
 
-#include <algorithm>
 #include <array>
 #include <atomic>
+#include <bit>
 #include <cmath>
 #include <cstdint>
 
@@ -36,15 +36,22 @@ class VoiceMonitorTaps
 public:
     static_assert(std::atomic<std::uint64_t>::is_always_lock_free,
                   "voice monitor telemetry requires a lock-free 64-bit atomic");
+    static_assert(sizeof(float) == sizeof(std::uint32_t),
+                  "voice monitor preserves exact 32-bit model node values");
 
     void publish(const VoiceMonitorSnapshot& snapshot) noexcept
     {
-        // Sequential consistency makes the two-packet seqlock race-free under
-        // the C++ memory model. The audio writer does four bounded atomics,
+        // Sequential consistency makes the multi-packet seqlock race-free under
+        // the C++ memory model. The audio writer performs bounded atomics,
         // with no retry and no allocation; only the UI reader may retry.
         revision.fetch_add(1u, std::memory_order_seq_cst); // odd / publishing
-        packets[0].store(pack(snapshot.ranks[0]), std::memory_order_seq_cst);
-        packets[1].store(pack(snapshot.ranks[1]), std::memory_order_seq_cst);
+        const auto& a = snapshot.ranks[0];
+        const auto& b = snapshot.ranks[1];
+        activeMask.store((a.active ? 1u : 0u) | (b.active ? 2u : 0u), std::memory_order_seq_cst);
+        envelopes[0].store(packFloats(a.ampEnvelope, a.filterEnvelope), std::memory_order_seq_cst);
+        cutoffs[0].store(packFloats(a.hpfHz, a.lpfHz), std::memory_order_seq_cst);
+        envelopes[1].store(packFloats(b.ampEnvelope, b.filterEnvelope), std::memory_order_seq_cst);
+        cutoffs[1].store(packFloats(b.hpfHz, b.lpfHz), std::memory_order_seq_cst);
         revision.fetch_add(1u, std::memory_order_seq_cst); // even / committed
     }
 
@@ -54,10 +61,14 @@ public:
         {
             const auto before = revision.load(std::memory_order_seq_cst);
             if ((before & 1u) != 0u) continue;
-            const auto first = packets[0].load(std::memory_order_seq_cst);
-            const auto second = packets[1].load(std::memory_order_seq_cst);
+            const auto activity = activeMask.load(std::memory_order_seq_cst);
+            const auto firstEnvelopes = envelopes[0].load(std::memory_order_seq_cst);
+            const auto firstCutoffs = cutoffs[0].load(std::memory_order_seq_cst);
+            const auto secondEnvelopes = envelopes[1].load(std::memory_order_seq_cst);
+            const auto secondCutoffs = cutoffs[1].load(std::memory_order_seq_cst);
             if (before == revision.load(std::memory_order_seq_cst))
-                return { { unpack(first), unpack(second) } };
+                return { { unpack(firstEnvelopes, firstCutoffs, (activity & 1u) != 0u),
+                           unpack(secondEnvelopes, secondCutoffs, (activity & 2u) != 0u) } };
         }
         return {}; // a contended UI frame may be dropped; DSP never waits
     }
@@ -65,37 +76,33 @@ public:
     void reset() noexcept { publish({}); }
 
 private:
-    // One packet is [active:1][LPF Hz:15][HPF Hz:16][filter env:16][amp env:16].
-    // Display resolution, not a DSP law: envelope <=~3.1e-5, cutoff <=1 Hz.
-    static std::uint32_t quantise(float value, float lo, float hi, std::uint32_t max) noexcept
+    // Preserve the *actual* model floats, including signed filter-envelope
+    // excursions beyond [-1,1]. Fixed-point clipping would falsify that tap.
+    static float finite(float value) noexcept
     {
-        if (! std::isfinite(value)) value = lo;
-        const float unit = (std::clamp(value, lo, hi) - lo) / (hi - lo);
-        return (std::uint32_t) (unit * (float) max + 0.5f);
+        return std::isfinite(value) ? value : 0.0f;
     }
 
-    static std::uint64_t pack(const VoiceMonitorRank& r) noexcept
+    static std::uint64_t packFloats(float first, float second) noexcept
     {
-        if (! r.active) return 0u;
-        const auto amp = quantise(r.ampEnvelope, 0.0f, 1.0f, 65535u);
-        const auto filter = quantise(r.filterEnvelope, -1.0f, 1.0f, 65535u);
-        const auto hpf = quantise(r.hpfHz, 0.0f, 32767.0f, 65535u);
-        const auto lpf = quantise(r.lpfHz, 0.0f, 32767.0f, 32767u);
-        return (std::uint64_t{ 1 } << 63) | ((std::uint64_t) lpf << 48)
-             | ((std::uint64_t) hpf << 32) | ((std::uint64_t) filter << 16) | amp;
+        return (std::uint64_t) std::bit_cast<std::uint32_t>(finite(first))
+             | ((std::uint64_t) std::bit_cast<std::uint32_t>(finite(second)) << 32);
     }
 
-    static VoiceMonitorRank unpack(std::uint64_t value) noexcept
+    static VoiceMonitorRank unpack(std::uint64_t envelopePair, std::uint64_t cutoffPair,
+                                   bool active) noexcept
     {
-        if ((value >> 63) == 0u) return {};
+        if (! active) return {};
         return { true,
-                 (float) (value & 0xffffu) / 65535.0f,
-                 (float) ((value >> 16) & 0xffffu) * (2.0f / 65535.0f) - 1.0f,
-                 (float) ((value >> 32) & 0xffffu) * (32767.0f / 65535.0f),
-                 (float) ((value >> 48) & 0x7fffu) };
+                 std::bit_cast<float>((std::uint32_t) envelopePair),
+                 std::bit_cast<float>((std::uint32_t) (envelopePair >> 32)),
+                 std::bit_cast<float>((std::uint32_t) cutoffPair),
+                 std::bit_cast<float>((std::uint32_t) (cutoffPair >> 32)) };
     }
 
     std::atomic<std::uint32_t> revision { 0u };
-    std::array<std::atomic<std::uint64_t>, 2> packets {};
+    std::atomic<std::uint32_t> activeMask { 0u };
+    std::array<std::atomic<std::uint64_t>, 2> envelopes {};
+    std::array<std::atomic<std::uint64_t>, 2> cutoffs {};
 };
 } // namespace cs80
