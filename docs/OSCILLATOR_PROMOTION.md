@@ -97,6 +97,27 @@ stays false until the planned post-integration SoA/CPU pass. The work per tick
 is spread over node evaluation, event search and the decay polynomial; there is
 no single hotspot left for an exactness-preserving fix.
 
+### 2026-11-01 analytic-segment event cache
+
+The next root of the reconstructed oscillator's fold/comparator/shaper-knot
+equations is now retained across internal samples within the **same analytic
+segment**. The physical charge/reset boundary is still updated every sample;
+any frequency, pulse-threshold or gate change invalidates the root, as do idle
+advancement and state restore. A bounded 125 ms horizon covers a stopped
+oscillator without placing infinity into the knot solver. This is a numerical
+execution optimization of the same declared circuit equations, not a new
+Yamaha measurement or a revised oscillator law.
+
+The pre-registered `oscillator_segment_cache` gate in
+`tests/parity/tolerances-v2/ws1-voice.json` caps root searches to 400 per 4096
+stable ticks at 96 kHz, 261.6 Hz. The optimized oscillator took **178**;
+deliberately disabling reuse caused **4274** and the test failed as intended.
+The independent `cs80_experimental_oscillator_tests` and promoted-engine
+`cs80_oscillator_promotion_tests` both pass; the latter still measures
+**−88.31 dB saw** and **−88.84 dB pulse** non-harmonic energy at 48 kHz, with
+3.4997–3.5000 Vpp pin-7 anchors and 3.0000 Vpp sine. CPU comparisons are
+reported separately after three repeatable 48 kHz / 256-frame benchmark rounds.
+
 ## Tests and mutation checks
 
 `cs80_oscillator_promotion_tests`: alias gate (same fixture and analysis as
