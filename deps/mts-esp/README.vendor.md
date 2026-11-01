@@ -55,3 +55,17 @@ Acceptance was committed first in `tests/parity/tolerances-v2/mts-client.json`
 
 No pitch-law tolerance was relaxed. The tests describe software behavior and
 make no claim about physical CS-80 measurements.
+
+### Native platform qualification, 2026-11-01
+
+The real-client, shim, and no-client CTests all pass in the Linux, Windows,
+macOS Apple Silicon, and macOS Intel jobs of
+[build run 41251946760](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760).
+The tested PR head is `156d82e9f3ee20089bb952ba853e0f0c779b903f`; the
+adapter, vendored files, and three test sources are unchanged at the reviewed
+head `475063c`. The
+[feature evidence](../../docs/evidence/qualification-2026-11-01/host-features/README.md)
+records the exact checkout, job results, log hashes, and source hashes.
+The full Intel job failed a separate BBD test, so this evidence qualifies the
+MTS paths without calling that complete workflow green. A live external
+MTS-ESP master remains outside the standalone client fixture.

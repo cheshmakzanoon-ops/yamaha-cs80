@@ -93,7 +93,7 @@ No approximation of the host curve was introduced to reduce it.
   0.0559275 (ordinary voices) and 0.112002 (sixteen voices). Restoring the bridge
   returns the CTest gate to zero failures and zero audio difference.
 
-## AU implementation and remaining native gate
+## AU implementation and native qualification
 
 The AU v2 bridge uses Apple's
 [AudioUnitScheduleParameters contract](https://developer.apple.com/documentation/audiotoolbox/audiounitscheduleparameters(_:_:_:)).
@@ -136,7 +136,29 @@ factory and calls real `AudioUnitScheduleParameters`, `AudioUnitSetParameter`,
 sampled controls with ramps and immediate events across host partitions,
 checks final value readback and advertised capabilities, preserves factory
 and memory ownership, and exercises both engines. The accompanying serial
-`cs80_au_automation_native_mutations` CTest rebuilds and tests five temporary
+`cs80_au_automation_native_mutations` CTest rebuilds and tests seven temporary
 faults in that actual component, then restores and requalifies the source
-and module. Both native macOS tests must pass before AU completion is claimed;
-the Linux contract tests are not a substitute for that pending CI result.
+and module. A mutation counts only when the built host exits with its normal
+assertion-failure code; a build error or crash cannot qualify the gate.
+
+Native qualification is now recorded on both macOS architectures. In
+[build run 41251946760](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760),
+the native component host and the seven-mutation/restored-component gate pass
+on both
+[Apple Silicon](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124200)
+and
+[Intel](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124244).
+The native Linux VST3 host passes in
+[the same run](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124151).
+The checked source is PR head `156d82e9f3ee20089bb952ba853e0f0c779b903f`,
+with Actions checkout `7190e8e1ee36d52e76c6296934c798f491052f17`.
+
+These are feature-specific passes. That complete workflow remains failed
+because the Intel job's separate BBD idle-history test failed; it is not
+reported as a green release build. Final integrated CI still follows the
+current branch. The automation implementation and native test sources are
+unchanged between that tested head and reviewed head `475063c`.
+[The dated feature review](evidence/qualification-2026-11-01/host-features/README.md)
+retains exact job excerpts, full-log hashes, source hashes, and the remaining
+scope limits. Native automated host coverage does not replace the owner's
+real-DAW session checklist.
