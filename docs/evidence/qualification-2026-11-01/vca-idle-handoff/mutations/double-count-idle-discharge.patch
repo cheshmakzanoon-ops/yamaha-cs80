@@ -1,0 +1,10 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2307,6 +2307,7 @@
+                     // of both stages. VCA coupling was already clocked and
+                     // mixed at the inactive entry; never discharge it twice.
+                     voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
++                    r.vca.relaxIdle(static_cast<double>(idleSamples) / sr);
+                     r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
+                     continue;
+                 }

@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2069,7 +2069,7 @@
+                     auto& r = v.ranks[ch];
+                     if (!r.vca.hasCouplingTail())
+                         continue;
+-                    const float closed = r.vca.processClosed();
++                    (void) r.vca.processClosed(); const float closed = 0.0f;
+                     const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+                     if (chGain == 0.0f)
+                         continue;

@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -256,7 +256,7 @@
+             r.lpStage.reset();
+             // Idle output is connected too, so the explicit cold reset must
+             // clear old coupling charge before any later note can clock it.
+-            if (freeRunning) r.vca.reset(0.0f);
++            if (freeRunning) (void) r.vca.levelNode();
+             r.vcaCold = true;
+             r.fenv.reset();
+             if (freeRunning) r.fenv.selectInitialWhileIdle();

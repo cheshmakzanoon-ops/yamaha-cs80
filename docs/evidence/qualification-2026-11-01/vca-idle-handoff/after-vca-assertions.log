@@ -1,0 +1,76 @@
+Start testing: Nov 01 03:07 EST
+----------------------------------------------------------
+62/104 Testing: cs80_ig00151_vca_tests
+62/104 Test: cs80_ig00151_vca_tests
+Command: "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_ig00151_vca_tests" "/workspace/scratch/e8b335644872/cs80-click/tests/parity/tolerances-v2/ws1-voice.json"
+Directory: /workspace/scratch/e8b335644872/cs80-click/build-core
+"cs80_ig00151_vca_tests" start time: Nov 01 03:07 EST
+Output:
+----------------------------------------------------------
+LI step at 88200 Hz: 1-1/e after 0.5420 ms (declared 0.5419 ms)
+LI step at 96000 Hz: 1-1/e after 0.5419 ms (declared 0.5419 ms)
+LI step at 192000 Hz: 1-1/e after 0.5419 ms (declared 0.5419 ms)
+offset + feedthrough pedestal at full LI: -52.04 dB re a unit signal
+SUB VCA tremolo max/min: circuit 1.413 (d 0.25) 1.998 (d 0.5); legacy 1.461 2.196
+59 checks, 0 failures
+<end of output>
+Test time =   8.54 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00151_vca_tests" end time: Nov 01 03:07 EST
+"cs80_ig00151_vca_tests" time elapsed: 00:00:08
+----------------------------------------------------------
+
+63/104 Testing: cs80_ig00151_idle_tail_tests
+63/104 Test: cs80_ig00151_idle_tail_tests
+Command: "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_ig00151_idle_tail_tests" "/workspace/scratch/e8b335644872/cs80-click/tests/parity/tolerances-v2/ws1-voice.json"
+Directory: /workspace/scratch/e8b335644872/cs80-click/build-core
+"cs80_ig00151_idle_tail_tests" start time: Nov 01 03:07 EST
+Output:
+----------------------------------------------------------
+source rate=44100 quality=0 rank=0 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+source rate=44100 quality=0 rank=1 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+source rate=44100 quality=1 rank=0 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+source rate=44100 quality=1 rank=1 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+source rate=44100 quality=2 rank=0 tail=0.000138762779898 coupling_error_I=4.77048955894e-18 coupling_error_II=4.77048955894e-18
+source rate=44100 quality=2 rank=1 tail=0.000138762779898 coupling_error_I=4.77048955894e-18 coupling_error_II=4.77048955894e-18
+source rate=48000 quality=0 rank=0 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+source rate=48000 quality=0 rank=1 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+source rate=48000 quality=1 rank=0 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+source rate=48000 quality=1 rank=1 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+source rate=48000 quality=2 rank=0 tail=0.000138726081786 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+source rate=48000 quality=2 rank=1 tail=0.000138726081786 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+source rate=96000 quality=0 rank=0 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+source rate=96000 quality=0 rank=1 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+source rate=96000 quality=1 rank=0 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+source rate=96000 quality=1 rank=1 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+source rate=96000 quality=2 rank=0 tail=0.000138361665449 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+source rate=96000 quality=2 rank=1 tail=0.000138361665449 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+pure rate=44100 quality=0 rank=0 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+pure rate=44100 quality=0 rank=1 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+pure rate=44100 quality=1 rank=0 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+pure rate=44100 quality=1 rank=1 tail=0.000137439534228 coupling_error_I=2.38524477947e-18 coupling_error_II=2.38524477947e-18
+pure rate=44100 quality=2 rank=0 tail=0.000138762779898 coupling_error_I=4.77048955894e-18 coupling_error_II=4.77048955894e-18
+pure rate=44100 quality=2 rank=1 tail=0.000138762779898 coupling_error_I=4.77048955894e-18 coupling_error_II=4.77048955894e-18
+pure rate=48000 quality=0 rank=0 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+pure rate=48000 quality=0 rank=1 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+pure rate=48000 quality=1 rank=0 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+pure rate=48000 quality=1 rank=1 tail=0.000137402763357 coupling_error_I=6.50521303491e-18 coupling_error_II=6.50521303491e-18
+pure rate=48000 quality=2 rank=0 tail=0.000138726081786 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+pure rate=48000 quality=2 rank=1 tail=0.000138726081786 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+pure rate=96000 quality=0 rank=0 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+pure rate=96000 quality=0 rank=1 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+pure rate=96000 quality=1 rank=0 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+pure rate=96000 quality=1 rank=1 tail=0.000137126991831 coupling_error_I=5.20417042793e-18 coupling_error_II=5.20417042793e-18
+pure rate=96000 quality=2 rank=0 tail=0.000138361665449 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+pure rate=96000 quality=2 rank=1 tail=0.000138361665449 coupling_error_I=1.75640751943e-17 coupling_error_II=1.75640751943e-17
+361 checks, 0 failures
+<end of output>
+Test time =  32.49 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00151_idle_tail_tests" end time: Nov 01 03:08 EST
+"cs80_ig00151_idle_tail_tests" time elapsed: 00:00:32
+----------------------------------------------------------
+
+End testing: Nov 01 03:08 EST
