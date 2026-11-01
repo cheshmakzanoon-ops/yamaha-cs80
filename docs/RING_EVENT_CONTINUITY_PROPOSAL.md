@@ -33,7 +33,7 @@ SO, its sawtooth output; it is unconnected, not a reset input. The same page
 connects EO(18) to DEPTH VR5 terminal 3, VC2(3) to VR5 terminal 2,
 VC1(4) to SPEED VR6 terminal 2, and TR(19) to KAS TR9(35).
 
-The same page separates the ring envelope's stored state from its trigger:
+The p53 schematic also separates the ring envelope's stored state from its trigger:
 IC5 OUT8 feeds IC6 BI2 with a 0.22uF capacitor; buffered IC6 OUT3/EO returns to
 IC5 -IN4 through 100k. LC drives the opposing +IN3 path through 100k and its
 470k trim network. The trigger reaches the sequence gates, and no direct
