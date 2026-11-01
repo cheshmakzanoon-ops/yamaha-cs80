@@ -74,6 +74,40 @@ ideal follower is powered separately, so its diode output current is not
 charged to the selected pot rail; it has no second term in this declared
 ideal-feedback model.
 
+### Zero-bias inactive diode network and bounded reverse omission
+
+At a near-zero selected output, the eleven inactive T51–T54 columns and the
+two other memory/PANEL banks do **not** have exactly zero small-signal load.
+Every physically present isolation diode contributes its reverse/zero-bias
+differential conductance to the assembled bus, even though the static
+reverse current is negligible under the 2 mV gate. The runtime tangent
+enumerates the actual classified factory branches (using labelled median
+hypotheses only for unresolved cells), plus two inactive memory diode
+branches. Unselected bank wiper positions are not in `ControlFrame`; their
+series path is bounded by the 1 Ω end to approximately 50 kΩ / 4 and its
+midpoint estimate is an explicit inference, not a measured taper.
+
+The only numerical reverse-bias omission follows an *analytic upper bound*.
+For a Shockley branch with `Is`, `nVt`, series resistance `R`, bus potential
+`Vb ≥ 0`, and diode current `−Is < I ≤ 0`, its voltage obeys
+
+\[
+V_d=-V_b-I R\leq -V_b+I_s R,\qquad
+0\leq g_{\rm reverse}\leq\frac{I_s}{nV_t}
+ \exp\!\left(\frac{-V_b+I_s R}{nV_t}\right).
+\]
+
+The 10 kΩ assembled shunt bounds the de-embedded local source resistance by
+10 kΩ. Consequently, deleting a conductance `g` changes it by no more than
+`(10 kΩ)² g`. The implementation skips one negligible reverse tangent only
+if its *computed upper bound* is at most
+`0.002 Ω / (13 × (10 kΩ)²)`; the thirteen possible inactive branches then
+contribute at most **0.002 Ω total** error. For the nominal surrogate this
+criterion is reached at approximately **0.5 V** reverse bias, while alternate
+diode parameters recompute it dynamically. This is **not** a fitted diode
+threshold or an allowance to weaken the preregistered **2 Ω + 0.2%** source
+tangent gate.
+
 Remove **only** the receiver loading. The 10 kΩ assembled shunt is part of
 the actual upstream source and must remain:
 

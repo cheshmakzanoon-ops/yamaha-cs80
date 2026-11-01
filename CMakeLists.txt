@@ -398,6 +398,13 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_engine_audio_tests
              COMMAND cs80_memory_panel_engine_audio_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-engine-audio-v1.json)
+    # Explicit default/endpoint diode tangent guard (low-drive branch cannot
+    # abort the whole selected source). Tolerances registered before evaluation.
+    add_executable(cs80_memory_panel_default_edge_tests tests/MemoryPanelDefaultEdgeTests.cpp)
+    target_include_directories(cs80_memory_panel_default_edge_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_default_edge_tests
+             COMMAND cs80_memory_panel_default_edge_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-default-edge-v1.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
