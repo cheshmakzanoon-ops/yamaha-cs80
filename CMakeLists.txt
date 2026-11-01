@@ -279,6 +279,14 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
     set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
 
+    # MTS-ESP is a vendored, 0BSD client. Build and exercise the actual shim in
+    # core-only CI too, so it cannot quietly regress to the unvendored branch.
+    add_executable(cs80_mts_esp_client_tests tests/MtsEspClientTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_client_tests PRIVATE src)
+    target_link_libraries(cs80_mts_esp_client_tests PRIVATE ${CMAKE_DL_LIBS})
+    add_test(NAME cs80_mts_esp_client_tests COMMAND cs80_mts_esp_client_tests)
+    set_tests_properties(cs80_mts_esp_client_tests PROPERTIES TIMEOUT 30)
+
     # [ws4-circuits] register this workstream's core tests below this line.
     add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
     target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
