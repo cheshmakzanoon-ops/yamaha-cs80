@@ -128,7 +128,7 @@ jobs:
       # voices, KAS hold, KBC contour, touch; ws4 SUB/ring/OE1/OE2/PRA; the CPU
       # pass's tan); see docs/STATUS.md. V1's original circuit numerics remain a
       # separate gate.
-      SOURCE_AUDIO_V2: 18400c29a54ac2204564b355c0e52ffd3b0dcb8e
+      SOURCE_AUDIO_V2: 1f842b9a18c117a31c09e7d4dae1aaa26c8dce4e
     steps:
       - uses: actions/checkout@v5
       - name: Build immutable circuit and audio checkpoints with one compiler
