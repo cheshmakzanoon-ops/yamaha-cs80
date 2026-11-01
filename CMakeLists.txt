@@ -371,6 +371,13 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_audio_input_tests
              COMMAND cs80_memory_panel_audio_input_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-audio-input-v1.json)
+    # Local 24-port memory/PANEL Thevenin tangent vs independent injected-current Newton truth.
+    # Preregistration lives in the separately committed memory-panel-thevenin-v1.json.
+    add_executable(cs80_memory_panel_thevenin_tests tests/MemoryPanelTheveninTests.cpp)
+    target_include_directories(cs80_memory_panel_thevenin_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_thevenin_tests
+             COMMAND cs80_memory_panel_thevenin_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-thevenin-v1.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
