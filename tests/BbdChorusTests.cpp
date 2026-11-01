@@ -1,6 +1,7 @@
 // BbdChorus checks the declared OE2 delay-path model against its own specification
 // (docs/BBD_CHORUS_MODEL.md). Agreement with these equations is not agreement with a CS-80.
 #include "core/BbdChorus.h"
+#include "Ws4Tolerances.h"
 
 #include <cmath>
 #include <complex>
@@ -207,6 +208,36 @@ void policyCompatibility()
         }
         check(exact, "chorus off passes input bit-exactly");
     }
+    // Pre-registered off->on state-equivalence gate. With the effect disabled,
+    // the BBD should evolve identically to an enabled instance at zero depth:
+    // clock rate, both LFO phases, noise RNG and all wet filter/delay histories
+    // remain live even though only dry signal reaches the host. A sine-phase
+    // freeze, or a skipped wet-path update, must fail this exact comparison.
+    for (float rate : { 88200.0f, 96000.0f, 192000.0f })
+        for (bool tremolo : { false, true })
+        {
+            BbdChorus switched, reference;
+            switched.prepare(rate);
+            reference.prepare(rate);
+            bool exact = true;
+            float wetPeak = 0.0f;
+            for (int n = 0; n < 14000; ++n)
+            {
+                const bool enabled = (n >= 6400 && n < 7100) || n >= 12000;
+                const float inL = 0.4f * std::sin(0.077f * (float) n);
+                const float inR = -0.3f * std::cos(0.041f * (float) n);
+                const auto actual = switched.process(inL, inR, 2.37f, 0.95f, enabled, tremolo);
+                const auto truth = reference.process(inL, inR, 2.37f, enabled ? 0.95f : 0.0f,
+                                                     true, tremolo);
+                if (! enabled)
+                    continue;
+                exact = exact && std::abs(actual.l - truth.l) <= cs80::ws4_tolerances::oe2::kOffToOnReactivationAbs
+                              && std::abs(actual.r - truth.r) <= cs80::ws4_tolerances::oe2::kOffToOnReactivationAbs;
+                wetPeak = std::max(wetPeak, std::abs(actual.l - inL));
+            }
+            check(exact, "off/on OE2 state equals continuously clocked zero-depth reference exactly");
+            check(wetPeak > 1.0e-3f, "off/on OE2 gate exercises audible reactivation");
+        }
     // ws4 Step 3 (intentional change): TREMOLO is the OE1 four-VCA law, no longer the generic
     // legacy amplitude law (its trajectory is checked against the OE1 truth model in
     // cs80_oe2_stereo_chorus_tests).
