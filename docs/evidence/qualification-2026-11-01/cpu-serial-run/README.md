@@ -5,7 +5,16 @@ real-DAW qualification. [Run 41257213038](https://github.com/cheshmakzanoon-ops/
 completed all seven immutable checkpoints and all three rounds per checkpoint
 on one Ubuntu 24.04 GitHub runner. Builds completed before timing; round-major
 timing ran serially. The checked-in request and runner/report hashes predate
-evaluation. The benchmark source blob is identical across all checkpoints.
+evaluation. The request seals two benchmark source blobs: original main uses
+`b73298678acb6684654ed1b3771fb442352853c0`; the six subsequent checkpoints
+use `92ea7e0b1801bf98fccaed21c13e676890039c94`. Their one-line difference is
+returning `ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources)`
+instead of the old aggregate frame, so the later driver reaches the completed
+electrical programmer. The 27 cases, 51 rows and timing/scoring loop are
+unchanged. The original artifact `SUMMARY.md` already records this distinction;
+this paragraph corrects the first retrieval report
+`d43174a6e1f4268024ce7fdd8bb057831b4682c6`, which incorrectly described the
+source blobs as identical. No raw evidence or measured number was changed.
 
 The original target remains **0.15–0.20 callback realtime factor for eight
 voices, 48 kHz, 256-frame blocks; quiet idle <=0.02**. Neither target is met.
