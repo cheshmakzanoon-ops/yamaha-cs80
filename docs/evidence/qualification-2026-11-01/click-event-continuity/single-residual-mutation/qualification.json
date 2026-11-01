@@ -1,0 +1,55 @@
+{
+  "registration_commit": "d06648c386486cf2630de6e41195ddd5d4360ff0",
+  "contract_sha256": "736b49076a592a026b1a05be3a0c3daac277a0bebde29023914faeb0c46030a8",
+  "selected_mutations": [
+    "clear-single-residual-across-both-ranks"
+  ],
+  "runner_sha256": "47a4bd7d863758f791252a8c4262ebaa4ef862316a8292e296b14329f81c3626",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "source_sha256": {
+    "src/core/Engine.cpp": "76e4f0b002105d659a65a30aff685c493d4ddc3688486b64e7d8124bc132bfa6",
+    "src/core/ReconstructedOscillator.h": "c9bb458f238ea6cb0bf74444a1a9459441da846bbf3ab98598848b45b147034c",
+    "src/core/Engine.h": "f0369a411eaab3bfbf9b322ce757638b2bafd517203e91cb324fef28fc705b0a",
+    "tests/ClickEventContinuationTests.cpp": "87349c2d786818611fe1a5121c732e881f1971d08f4783d3e4b5624ddc603063",
+    "tests/ExactContinuationComparator.h": "0c50009c5bb1db4be1f8c13491422b8ef7a76deb8a49f4412a80a3b01a574c19",
+    "tests/Ws1Tolerances.h": "28f99e080a81fb34ab194ced56e932f1ef62410e8cb4dc6cfc23889a565e3a5e",
+    "tests/ColdIdleTimingTests.cpp": "4acb0e2fc06263715826f4bac92f3b741176375727ca31fb4cd3dd1c8116f008",
+    "tests/parity/tolerances-v2/click-residual-continuity.json": "736b49076a592a026b1a05be3a0c3daac277a0bebde29023914faeb0c46030a8",
+    "tests/parity/tolerances-v2/cold-idle-timing.json": "ed8181c2c8cc9091a7e231ab1db2dc9aadf1807f8d6bf5e270f1fc95f3266b2e"
+  },
+  "results": [
+    {
+      "name": "unmutated-baseline-tail",
+      "suite": "tail",
+      "exit_code": 0,
+      "checks": 224,
+      "failures": 0,
+      "intended_assertions": [],
+      "intended_assertions_observed": true,
+      "seconds": 0.2512890479993075
+    },
+    {
+      "name": "clear-single-residual-across-both-ranks",
+      "suite": "tail",
+      "exit_code": 1,
+      "checks": 224,
+      "failures": 6,
+      "intended_assertions": [
+        "WSC residual survives zero-time sounding-tail retrigger"
+      ],
+      "intended_assertions_observed": true,
+      "seconds": 0.23773231499944814
+    },
+    {
+      "name": "restored-baseline-tail",
+      "suite": "tail",
+      "exit_code": 0,
+      "checks": 224,
+      "failures": 0,
+      "intended_assertions": [],
+      "intended_assertions_observed": true,
+      "seconds": 2.7166995350016805
+    }
+  ],
+  "scope": "Exact exposed software-state continuation. Original phrase score <=1 and hardware sound remain separate."
+}

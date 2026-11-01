@@ -1,0 +1,57 @@
+COMMAND ["/tmp/cs80-click-mutations-ivqm5zia/restored-baseline-gate", "/tmp/cs80-click-mutations-ivqm5zia/tests/parity/tolerances-v2/click-residual-continuity.json", "/tmp/cs80-click-mutations-ivqm5zia/tests/parity/tolerances-v2/cold-idle-timing.json", "all"]
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=source off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=44100 policy=source, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=source off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=48000 policy=source, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=source off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=96000 policy=source, populated WSC residual retained
+Bass cold-retrigger exact gate: rate=48000 policy=source, selected=6, pending=47 internal samples, 9376 steps
+Bass cold-retrigger exact gate: rate=96000 policy=source, selected=6, pending=95 internal samples, 9375 steps
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=pure off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=44100 policy=pure, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=pure off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=48000 policy=pure, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=pure off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=96000 policy=pure, populated WSC residual retained
+Bass cold-retrigger exact gate: rate=48000 policy=pure, selected=6, pending=47 internal samples, 9376 steps
+Bass cold-retrigger exact gate: rate=96000 policy=pure, selected=6, pending=95 internal samples, 9375 steps
+WSC cache-invalidation oracle: internal_rate=96000 control_case=0
+WSC cache-invalidation oracle: internal_rate=96000 control_case=1
+WSC cache-invalidation oracle: internal_rate=96000 control_case=2
+WSC cache-invalidation oracle: internal_rate=192000 control_case=0
+WSC cache-invalidation oracle: internal_rate=192000 control_case=1
+WSC cache-invalidation oracle: internal_rate=192000 control_case=2
+Click event continuation: 7438 checks, 0 failures
+
+EXIT 0
+SECONDS 91.80686819499897

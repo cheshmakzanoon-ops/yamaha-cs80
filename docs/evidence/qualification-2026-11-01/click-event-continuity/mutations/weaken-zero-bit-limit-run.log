@@ -1,0 +1,12 @@
+COMMAND ["/tmp/cs80-click-mutations-ivqm5zia/weaken-zero-bit-limit-gate", "/tmp/cs80-click-mutations-ivqm5zia/tests/parity/tolerances-v2/click-residual-continuity.json", "/tmp/cs80-click-mutations-ivqm5zia/tests/parity/tolerances-v2/cold-idle-timing.json", "wsc"]
+CLICK-CONTINUITY FAIL: registered bit-continuity limits must remain exactly zero
+WSC cache-invalidation oracle: internal_rate=96000 control_case=0
+WSC cache-invalidation oracle: internal_rate=96000 control_case=1
+WSC cache-invalidation oracle: internal_rate=96000 control_case=2
+WSC cache-invalidation oracle: internal_rate=192000 control_case=0
+WSC cache-invalidation oracle: internal_rate=192000 control_case=1
+WSC cache-invalidation oracle: internal_rate=192000 control_case=2
+Click event continuation: 5420 checks, 1 failures
+
+EXIT 1
+SECONDS 0.013769036999292439

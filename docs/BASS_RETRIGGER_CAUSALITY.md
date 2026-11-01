@@ -1,4 +1,4 @@
-# Bass Stack retrigger: causal controls and unresolved phase error
+# Bass Stack retrigger: causal controls and remaining score failures
 
 2026-10-31. These are deterministic software-model diagnostics, not hardware
 measurements. The original physical-unit PANEL coordinate is retained in this
@@ -84,3 +84,21 @@ within the unchanged 0.002 limit. Thus the identified cold scheduling error
 is removed, but that does not close the original all-rate click metric.
 The retained after CSV includes electrical-programmer rows and omitted-note
 controls without changing any scoring window or denominator.
+
+## Exact event continuation checkpoint, 2026-11-01
+
+The [exact event regression](CLICK_EVENT_CONTINUITY.md) now covers all 72 named
+exposed continuation fields per rank, including all antialias residuals. Its
+original and early-release Funky fixtures, sounding-tail Bass fixture,
+independently caught-up original inactive Bass fixture and cache-invalidation
+oracle pass 7,438 assertions under both source policies. Fifteen actual-source
+mutants and two test-strength controls qualify the gate. It adds no production
+sound change.
+
+At current source baseline `d06648c` / audio `18400c2`, the fresh original
+physical-PANEL Bass scores are **0.567655911 / 1.440924029 / 1.365308570** at
+44.1/48/96 kHz. The latter two remain above the unchanged limit of one; the
+Funky note-off scores also remain above one at all rates. The new exact
+continuation proof and passing electrical-programmer scores do not close
+those original criteria. The linked report retains the full causal controls,
+baseline comparison, mutation logs and the earlier preregistration red run.
