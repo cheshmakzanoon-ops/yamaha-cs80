@@ -1,0 +1,62 @@
+name: Full three-rate engine audit (evidence, not a green-score claim)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/full-engine-audit.yml'
+      - '.github/full-engine-audit-request.json'
+      - 'scripts/full_engine_audit_gate.py'
+      - 'src/core/**'
+      - 'src/tools/engine_audit.cpp'
+      - 'tests/parity/tolerances-v2/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: full-engine-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  complete-engine-audit:
+    name: Complete frozen library, tone pairs, aliases, FX and causal clicks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove source identity, registered limits and mutation-gate controls
+        run: |
+          python scripts/full_engine_audit_gate.py --self-test
+          python scripts/full_engine_audit_gate.py --preflight
+      - name: Build release core and exact engine audit binary
+        run: |
+          cmake -S . -B build-core -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON
+          cmake --build build-core --target cs80_engine_audit --parallel 2
+      - name: Run unmodified 44.1, 48 and 96 kHz all-suite audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          ./build-core/cs80_engine_audit --out artifacts/audit --suite all --rates 44100,48000,96000 2>&1 | tee artifacts/audit-run.log
+      - name: Validate complete CSV coverage and run frozen numerical reporter
+        run: python scripts/full_engine_audit_gate.py --finalize
+      - name: Preserve completed or partial raw evidence, stdout and provenance
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: complete-engine-audit-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            artifacts/audit/
+            artifacts/audit-run.log
+            artifacts/audit.complete
+            artifacts/audit-provenance.json
+            artifacts/audit-summary.json
+            artifacts/audit-summary.md
+          if-no-files-found: warn
+          retention-days: 90
