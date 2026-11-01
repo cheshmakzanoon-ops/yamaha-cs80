@@ -423,6 +423,9 @@ public:
     ListeningSample getListeningSample() const noexcept { return listeningSample; }
 
 private:
+    // Offline test access to compare a legitimately caught-up idle circuit
+    // with assignment at the same time. Defined only by the continuity test.
+    friend struct EngineEventContinuityProbe;
     static constexpr int kNumVoices = 8;
     static constexpr int kNumRanks = 2;
     static constexpr int kMaxHeldKeys = 32;

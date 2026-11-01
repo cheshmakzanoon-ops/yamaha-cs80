@@ -153,6 +153,12 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_note_off_continuity_tests COMMAND cs80_note_off_continuity_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/completion-dsp.json)
     set_tests_properties(cs80_note_off_continuity_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_click_event_continuation_tests tests/ClickEventContinuationTests.cpp)
+    target_link_libraries(cs80_click_event_continuation_tests PRIVATE cs80_core)
+    add_test(NAME cs80_click_event_continuation_tests COMMAND cs80_click_event_continuation_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/click-residual-continuity.json
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/cold-idle-timing.json)
+    set_tests_properties(cs80_click_event_continuation_tests PROPERTIES TIMEOUT 300)
     add_test(NAME cs80_core_tests COMMAND cs80_tests)
     # Experimental linear-path model only; nonlinear Engine/CPU gates are not qualified.
     add_executable(cs80_experimental_oscillator_tests tests/ReconstructedOscillatorTests.cpp)
