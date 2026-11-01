@@ -737,6 +737,21 @@ over-decimation mutant fails two original wake assertions, and the restored
 four focused CTest suites. The measured three-round CPU comparison follows
 as an independent checkpoint; no held or idle CPU target is claimed here.
 
+The three unchanged 48 kHz / 256-frame, 1,024-callback factory-benchmark
+rounds are now archived in
+[cpu/rank-idle-1500](evidence/qualification-2026-10-31/cpu/rank-idle-1500/).
+Minimum-of-three held medians are **`0.621701–0.941828` RTF**, selected-round
+p99 **`0.986629–3.543655`**, with **1,305** held deadline misses. Quiet idle
+is **`0.069984` RTF** and moving controls **`0.890971`**. The immediately
+preceding unused-LFO checkpoint had held `0.706473–1.148390`, idle
+`0.128088` and moving `1.056194`; however unrelated Rust compilers occupied
+several cores during this shared-host comparison, and the paired Legacy
+control also varied. These are real raw measurements with intact three-round
+selection, but **they do not prove an isolated speedup**. The unchanged
+0.15–0.20 held and ≤0.02 idle targets remain **open**. A separately
+pre-registered, immutable same-runner CPU workflow (`0035ef2`, `afd2b37`,
+runner `840496f`) is collecting more comparable evidence.
+
 **Three-commit audio sequence:** the audio commit above was pushed first;
 separate commit `9f990ae12d999b46407d0b34ca18d23dbaf029fb` then set
 `SOURCE_AUDIO_V2` to the full audio SHA; this status/evidence commit follows
