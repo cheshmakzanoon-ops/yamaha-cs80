@@ -8,6 +8,25 @@ Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e
 
 ## Verified increment and source correction
 
+**2026-11-01, IG00156 numerical filter investigation (rows 26–29):**
+The circuit engine's Q-only coefficient cache and exact-zero Newton
+shortcut were checked against preregistered bit-exact invariants, with
+failure-inducing mutations ([IG00156_NODAL_MODEL.md](IG00156_NODAL_MODEL.md)).
+They do not change the inferred electrical model. A *research-only*
+four-state exponential/causal-cubic discretization meets the unchanged
+2×/4× linear frequency-response limits in an independent numerical sweep,
+but the extrapolation to nonlinear OTA operation **fails** the adversarial
+88.2 kHz, 12 kHz cutoff, Q 9, amplitude 8 test (about 1.08 RMS relative
+error); neither 16× internal substeps nor a fully coupled 8-state nonlinear
+collocation has closed it from startup. Exact physical
+node-state transfer is possible, while source-tap timestamps across sample
+rate changes need a separate derivation. See the positive and negative
+evidence in [IG00156_DISCRETIZATION_PROTOTYPE.md](IG00156_DISCRETIZATION_PROTOTYPE.md).
+The official top-octave gate is still **NOT MET**, and ADJ service p11 HP
+remains a **model prediction** of 1.69 Vpp against 4.3 ± 1 Vpp. Filter
+rows remain **A / inferred**, with no new hardware measurement or V1
+numerical change claimed.
+
 **2026-10-31, circuit engine filters (rows 26–29):** Source Performance/Isolation
 now run each HP/LP stage as the IG00156 model in
 [IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md): in-loop OTA saturation
