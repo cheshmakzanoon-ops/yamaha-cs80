@@ -1,0 +1,156 @@
+[
+  {
+    "checkpoint": "main-before",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.5896588125,
+      0.695422125
+    ],
+    "held_p99_rtf_range": [
+      0.601414875,
+      0.8086340625
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.14468475,
+    "moving_median_rtf": 0.6704098125,
+    "moving_p99_rtf": 0.849894375,
+    "moving_misses": 0,
+    "legacy_held_range": [
+      0.2686756875,
+      0.3096013125
+    ],
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "inherited-before",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.6135369375,
+      0.893367375
+    ],
+    "held_p99_rtf_range": [
+      0.627464625,
+      1.0481454375
+    ],
+    "held_selected_round_budget_exceedances": 57,
+    "idle_median_rtf": 0.102847875,
+    "moving_median_rtf": 0.854164125,
+    "moving_p99_rtf": 1.050636375,
+    "moving_misses": 95,
+    "legacy_held_range": [
+      0.275019375,
+      0.3132043125
+    ],
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "lazy-filter-histories",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.60857025,
+      0.89361525
+    ],
+    "held_p99_rtf_range": [
+      0.6302465625,
+      1.054141875
+    ],
+    "held_selected_round_budget_exceedances": 64,
+    "idle_median_rtf": 0.100298625,
+    "moving_median_rtf": 0.85139025,
+    "moving_p99_rtf": 1.05696225,
+    "moving_misses": 121,
+    "legacy_held_range": [
+      0.273834,
+      0.3131405625
+    ],
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "idle-exact",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.6082415625,
+      0.888041625
+    ],
+    "held_p99_rtf_range": [
+      0.6232186875,
+      1.0569465
+    ],
+    "held_selected_round_budget_exceedances": 55,
+    "idle_median_rtf": 0.0897095625,
+    "moving_median_rtf": 0.8563464375,
+    "moving_p99_rtf": 1.0791988125,
+    "moving_misses": 111,
+    "legacy_held_range": [
+      0.273805875,
+      0.3138579375
+    ],
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "stationary-controls",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.6053315625,
+      0.8895519375
+    ],
+    "held_p99_rtf_range": [
+      0.6192345,
+      1.05810375
+    ],
+    "held_selected_round_budget_exceedances": 60,
+    "idle_median_rtf": 0.0883831875,
+    "moving_median_rtf": 0.8495355,
+    "moving_p99_rtf": 1.0616784375,
+    "moving_misses": 115,
+    "legacy_held_range": [
+      0.2736313125,
+      0.31332825
+    ],
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "unused-lfo",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.6036465,
+      0.8899935
+    ],
+    "held_p99_rtf_range": [
+      0.6227941875,
+      1.0545886875
+    ],
+    "held_selected_round_budget_exceedances": 55,
+    "idle_median_rtf": 0.0872353125,
+    "moving_median_rtf": 0.8525034375,
+    "moving_p99_rtf": 1.0564635,
+    "moving_misses": 126,
+    "legacy_held_range": [
+      0.2763568125,
+      0.3139089375
+    ],
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "rank-idle-1500",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.6035431875,
+      0.89028225
+    ],
+    "held_p99_rtf_range": [
+      0.618007875,
+      1.0547595
+    ],
+    "held_selected_round_budget_exceedances": 56,
+    "idle_median_rtf": 0.077991,
+    "moving_median_rtf": 0.849753375,
+    "moving_p99_rtf": 1.05812775,
+    "moving_misses": 110,
+    "legacy_held_range": [
+      0.274577625,
+      0.3138091875
+    ],
+    "nonfinite_all_rounds": 0
+  }
+]
