@@ -2,7 +2,7 @@
 
 2026-11-01. Software qualification only. Canonical audio `b75b4d653b6ed6f0aa5ef8ee99b670d83e975250`; local compiled equivalent `754b4cccc6f0e9a37c8e98d221757b0deec19f30`. The common source subtree is `a153b5ec6ca3b64331488af7d32fa13d8d29a7ec`. Separate published V2 pin: `fb43c04e68e91eea120add3a89e6866ef1e64e01`.
 
-Full mechanism, source/inference boundaries and reproduction: [investigation report](../../../click-20261101.md). The original score <= 1 requirements remain open where shown below.
+Full mechanism, source/inference boundaries and reproduction: [investigation report](../../click-20261101.md). The original score <= 1 requirements remain open where shown below.
 
 ## Gates
 
