@@ -9,6 +9,29 @@
 
 namespace cs80::tests
 {
+struct UndoReplayGestureProbe final : juce::AudioProcessorParameter::Listener
+{
+    int begins = 0, ends = 0, changes = 0, depth = 0, unbracketed = 0;
+    void parameterValueChanged(int, float) override
+    {
+        ++changes;
+        if (depth != 1) ++unbracketed;
+    }
+    void parameterGestureChanged(int, bool starting) override
+    {
+        starting ? (++begins, ++depth) : (++ends, --depth);
+    }
+    bool exactlyOneCompleteGesture() const noexcept
+    {
+        return begins == 1 && ends == 1 && depth == 0 && changes > 0 && unbracketed == 0;
+    }
+    bool completelyUntouched() const noexcept
+    {
+        return begins == 0 && ends == 0 && changes == 0 && depth == 0;
+    }
+    void clear() noexcept { begins = ends = changes = depth = unbracketed = 0; }
+};
+
 template <typename Check>
 void testUndoStateReplacementHost(Check check)
 {
@@ -50,5 +73,33 @@ void testUndoStateReplacementHost(Check check)
           "post-restore host gesture updates the current parameter");
     check(host.undo() && std::abs(host.getParamValue(P_mix) - 0.23f) < 1e-6f,
           "undo after state replacement returns to the restored value");
+
+    // UndoManager's ValueTree replay changes the host-facing parameter. The
+    // host must observe begin/value/end in that order, exactly once, for the
+    // changed parameter only. A matching begin/end emitted after undo() is
+    // insufficient: the value callback would still have been unbracketed.
+    auto* volume = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(P_volume));
+    check(volume != nullptr, "unchanged output-volume parameter can detect broadcast undo gestures");
+    if (volume == nullptr) return;
+    UndoReplayGestureProbe changed, unchanged;
+    mix->addListener(&changed);
+    volume->addListener(&unchanged);
+    const auto redoPendingBefore = host.getUndoManager().getRedoDescriptions().size();
+    const bool redone = host.redo();
+    check(redone && std::abs(host.getParamValue(P_mix) - 0.49f) < 1e-6f,
+          "redo of restored-state user edit applies exactly the edited mix value");
+    check(changed.exactlyOneCompleteGesture() && unchanged.completelyUntouched(),
+          "redo notifies host inside one balanced mix gesture without touching unrelated parameters");
+    changed.clear();
+    unchanged.clear();
+    const bool undone = host.undo();
+    check(undone && std::abs(host.getParamValue(P_mix) - 0.23f) < 1e-6f,
+          "undo of replayed edit restores its original mix value");
+    check(changed.exactlyOneCompleteGesture() && unchanged.completelyUntouched(),
+          "undo notifies host inside one balanced mix gesture without touching unrelated parameters");
+    check(host.getUndoManager().getRedoDescriptions().size() == redoPendingBefore,
+          "host gesture replay never records itself as another undo transaction");
+    volume->removeListener(&unchanged);
+    mix->removeListener(&changed);
 }
 } // namespace cs80::tests
