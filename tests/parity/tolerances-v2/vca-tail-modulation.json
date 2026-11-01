@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "status": "REGISTERED",
+  "registered": "2026-11-01",
+  "baseline_audio_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+  "basis": "ModernLayer is an explicitly modern software feature, with no Yamaha circuit equivalent. Its documented current-sample rank offsets must also apply to the now-connected VCA coupling output. This is a scheduling/integration contract, not hardware evidence or a replacement for the original phrase click criteria.",
+  "limits": {
+    "current_pan_max_abs": 0.0,
+    "current_rank_mix_bit_mismatches_max": 0,
+    "observer_internal_output_bit_mismatches_max": 0,
+    "poly_elapsed_seconds_max_abs": 1e-12,
+    "global_selection_bit_mismatches_max": 0,
+    "neutral_policy_pcm_bit_mismatches_max": 0,
+    "legacy_inactive_pan_max_abs": 0.0,
+    "minimum_retired_coupling_abs": 1e-6,
+    "minimum_current_pan_change": 1e-5
+  },
+  "engine_fixture": "Source Performance and Pure, 44.1/48/96 kHz, Eco/Standard/HQ, both rank mix endpoints, shared free and per-voice poly MSEG-to-pan. Silent oscillators charge the declared VCA pedestal. Observe the first 2048 internal samples after retirement, including the first inactive sample within a host frame. At each sample compare the consumed raw rank mix with the independently known current MSEG value, existing pan law and post-step coupling state. The observer calls the same four production stages and must equal an unobserved processInternalSample twin bit for bit. A linear, non-looping poly MSEG must advance by actual elapsed internal time, within 1e-12 seconds, with no extra tick at idle deadlines.",
+  "ownership_fixture": "Compare a live-pan engine with an otherwise identical no-pan reference while routing non-MSEG velocity/key/random sources to a global destination. Keep an older note held and retire the newest. Original scheduled ownership publication must remain exact. Also enable/reroute pan when the inactive voice's modern note age has never been latched, then assign another note before the retired voice's idle deadline: extra tail updates must not consume per-note RNG or trigger mono/poly identity transitions early.",
+  "policy_fixture": "Pure with a configured nonzero matrix must equal an empty matrix exactly; a zero-amount configured pan route must equal the neutral Source default. Legacy retains its original inactive path even if a prior Source tail left an otherwise unused VCA charge at a policy switch. No live pan destination keeps the existing processing path.",
+  "scope": "A single shared poly MSEG remains authoritative. Advancing it to drive an audible tail's pan also updates the values seen by any other routes sharing that runner at their scheduled evaluations; this is explicitly not a promise of pan-only audio equality for mixed routes. Global selection timing and note identity/RNG scheduling remain unchanged.",
+  "mutations": [
+    "omit the early tail update",
+    "evaluate after consuming the tail mix",
+    "tick again at the scheduled idle call",
+    "publish ownership on every extra tail sample",
+    "latch note identity/RNG on an unscheduled tail sample",
+    "run the tail update in Legacy",
+    "weaken a registered exact or elapsed-time limit"
+  ]
+}
