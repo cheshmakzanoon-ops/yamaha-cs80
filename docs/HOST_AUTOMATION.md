@@ -3,8 +3,9 @@
 ## Contract and sources
 
 `tests/parity/tolerances-v2/host-automation.json` was committed before
-implementation or evaluation (local commit
-`6807df1`). These are software protocol gates, not physical CS-80 measurements.
+implementation or evaluation in published commit
+`08e08e492b62b8078a3364d14754a6870c55ee22`. These are software protocol gates,
+not physical CS-80 measurements.
 The registered maximum errors are 1e-7 in normalized control value, 2e-6 in
 rendered sample amplitude, and zero samples in event position.
 
@@ -162,3 +163,11 @@ unchanged between that tested head and reviewed head `475063c`.
 retains exact job excerpts, full-log hashes, source hashes, and the remaining
 scope limits. Native automated host coverage does not replace the owner's
 real-DAW session checklist.
+
+A subsequent independent review retrieved the actual four build-job logs for
+[successful push run 41269271356](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356)
+at `8a85faab1a125cc14425d9184f7022f6746e40a6`. The native Linux VST3 host and
+both native macOS AU hosts and seven-mutation runners pass there, along with
+the four full UI suites. The [current-source review](evidence/host-ui-20261101/README.md)
+retains exact result lines, log hashes and source differences from the older
+feature qualification. This is qualification of that head, not a later release.

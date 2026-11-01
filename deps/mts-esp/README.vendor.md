@@ -34,7 +34,7 @@ executable. No replacement backend is present in the shipping plugin.
 ## Qualification
 
 Acceptance was committed first in `tests/parity/tolerances-v2/mts-client.json`
-(local commit `e38534502f101e3cc96d7bda13495fc975771b6a`). At this source pin:
+(published commit `6db0012c3f4d8c72b87ccc3ee591af461b4c2183`). At this source pin:
 
 - The native client registers and destroys 32 adapter instances without a master,
   preserves the caller's table, and parses an MTS single-note change from note
@@ -69,3 +69,11 @@ records the exact checkout, job results, log hashes, and source hashes.
 The full Intel job failed a separate BBD test, so this evidence qualifies the
 MTS paths without calling that complete workflow green. A live external
 MTS-ESP master remains outside the standalone client fixture.
+
+The three MTS targets also pass on all four platforms in the later successful
+[push run 41269271356](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356),
+at `8a85faab1a125cc14425d9184f7022f6746e40a6`. The
+[independent review](../../docs/evidence/host-ui-20261101/README.md) retains
+freshly retrieved result lines and exact log hashes, confirms that the adapter
+and vendor/test sources are unchanged, and records fresh local passes of all
+three targets. A live external master is still not claimed.
