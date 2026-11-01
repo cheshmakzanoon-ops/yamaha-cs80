@@ -745,6 +745,24 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_au_wrapper_macro_environment_tests PROPERTIES TIMEOUT 30)
 endif()
 
+# Exact zero-history FIR gates; published acceptance and rounding extension in
+# 156d82e9f3ee20089bb952ba853e0f0c779b903f. No production-wide FP option changes.
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_zero_fir_history_tests tests/ZeroFirHistoryTests.cpp)
+    target_include_directories(cs80_zero_fir_history_tests PRIVATE src)
+    add_test(NAME cs80_zero_fir_history_tests COMMAND cs80_zero_fir_history_tests)
+    set_tests_properties(cs80_zero_fir_history_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_zero_fir_rounding_tests tests/ZeroFirRoundingTests.cpp)
+    target_include_directories(cs80_zero_fir_rounding_tests PRIVATE src)
+    if (MSVC)
+        target_compile_options(cs80_zero_fir_rounding_tests PRIVATE /fp:strict)
+    else()
+        target_compile_options(cs80_zero_fir_rounding_tests PRIVATE -frounding-math)
+    endif()
+    add_test(NAME cs80_zero_fir_rounding_tests COMMAND cs80_zero_fir_rounding_tests)
+    set_tests_properties(cs80_zero_fir_rounding_tests PROPERTIES TIMEOUT 120)
+endif()
+
 # Exact control-transform gate; registered before implementation in c881983.
 if (CS80_BUILD_TESTS)
     add_executable(cs80_exact_control_transform_tests tests/ExactControlTransformTests.cpp)
