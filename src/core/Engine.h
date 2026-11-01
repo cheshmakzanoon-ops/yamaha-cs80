@@ -304,9 +304,7 @@ public:
     // internal-rate cast and operation order, before coefficient caching.
     float getDcBlockCoefficient() const noexcept
     {
-        const float sr = (float) internalRate;
-        const float invSr = 1.0f / sr;
-        return std::exp(-kTwoPi * 10.0f * invSr);
+        return dcCoefficient;
     }
     // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
     // render policy, the host rate and the offline flag (see Oversampling.h).
@@ -680,6 +678,9 @@ private:
 
     float dcL = 0.0f, dcR = 0.0f;
     float dcInL = 0.0f, dcInR = 0.0f;
+    // Original per-sample 10 Hz DC pole, evaluated once per internal rate.
+    // Preserve the exact float operation order in configureInternalRate().
+    float dcCoefficient = std::exp(-kTwoPi * 10.0f * (1.0f / 96000.0f));
     float smoothedVolume = 0.62f;
     Adsr ringAdsr;
     bool ringKeyDown = false;

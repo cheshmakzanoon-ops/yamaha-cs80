@@ -116,6 +116,12 @@ void Engine::configureInternalRate()
 {
     internalRate = hostRate * (double) oversample;
     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+    // Hoist the historical per-sample 10 Hz DC-blocker coefficient. The cast,
+    // reciprocal and float multiply order are intentionally unchanged:
+    // Legacy audio must remain byte-identical at every internal rate.
+    const float dcSr = (float) internalRate;
+    const float dcInvSr = 1.0f / dcSr;
+    dcCoefficient = std::exp(-kTwoPi * 10.0f * dcInvSr);
 
     chorus.prepare((float) internalRate);
     bbdChorus.prepare((float) internalRate);
@@ -2434,7 +2440,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
     // resets without eating the low end of the instrument.
-    const float dcCoeff = std::exp(-kTwoPi * 10.0f * invSr);
+    const float dcCoeff = dcCoefficient;
     const float dcOutL = mixL - dcInL + dcCoeff * dcL;
     const float dcOutR = mixR - dcInR + dcCoeff * dcR;
     dcInL = mixL;
