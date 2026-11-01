@@ -342,6 +342,13 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_tests
              COMMAND cs80_memory_panel_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    # Preregistered original memory/PANEL pot-to-bus audio-input contract.
+    # The engine route is intentionally not changed by this truth-first gate.
+    add_executable(cs80_memory_panel_audio_input_tests tests/MemoryPanelAudioInputTests.cpp)
+    target_include_directories(cs80_memory_panel_audio_input_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_audio_input_tests
+             COMMAND cs80_memory_panel_audio_input_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-audio-input-v1.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
