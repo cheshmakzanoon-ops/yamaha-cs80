@@ -378,6 +378,13 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_thevenin_tests
              COMMAND cs80_memory_panel_thevenin_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-thevenin-v1.json)
+    # Source-only 26-port ToneControls bridge; no Engine audio route yet.
+    # The separately committed acceptance JSON freezes all role and mutation gates.
+    add_executable(cs80_memory_panel_tone_adapter_tests tests/MemoryPanelToneAdapterTests.cpp)
+    target_include_directories(cs80_memory_panel_tone_adapter_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_tone_adapter_tests
+             COMMAND cs80_memory_panel_tone_adapter_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-tone-adapter-v1.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 

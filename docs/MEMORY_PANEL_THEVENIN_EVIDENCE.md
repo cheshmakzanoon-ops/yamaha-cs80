@@ -105,9 +105,36 @@ and three deliberate local mutations: omit the shunt, leave the receiver in
 the source, and delete rail backreaction. All acceptances are about **model
 consistency**; none compare a hardware CS-80 or claim a recovered device law.
 
-Numerical results must be entered here **after** the tolerance-only commit
-and clean test run. No measured figures are asserted in this preregistration
-document.
+The JSON acceptance was committed alone as `0edaf30`, before the independent
+test ran. Isolated optimized C++20 execution then passed **144/144**
+current-injection ports (two ranks × selectors 11–13 × 24 analogue outputs):
+maximum loaded-bus deviation **0.000183972 V** against the original 2 mV
+gate; local source-impedance error **0.236753 Ω** (max relative
+**6.87×10⁻⁵**) against 2 Ω + 0.2%; recovered receiver-loaded voltage
+**1.11022×10⁻¹⁶ V** against 1 nV; and **3/3** explicit topology mutants
+detected (omit 10 kΩ, omit receiver de-embedding, omit positive rail term).
+The preceding `MemoryPanelTests.cpp` rebuilt with the offline probe extension
+also passed unchanged: maximum bus difference **0.000283 V**, inactive
+current **2.52×10⁻⁹ A**, Newton residual **6.54×10⁻¹⁵ A**.
+
+The subsequent *inert* `src/core/MemoryPanelToneAdapter.h` maps all 26
+electrical outputs into named `source_factory::ToneControls` laws, including
+two exact waveform switches, and calls the existing 8-voice cutoff/Q/LC
+receiver functions. Its separately preregistered acceptance file
+`tests/parity/tolerances-v2/memory-panel-tone-adapter-v1.json` was committed
+alone as `d27ea2f`, before execution. The isolated source test passed
+**144/144 analogue output copies** and **138/138 role-law comparisons**:
+source-voltage and source-resistance copies exact to **0 V / 0 Ω**;
+largest scalar law difference **8.88178×10⁻¹⁶** against 1×10⁻¹²;
+maximum zero-drive full-network bus difference **0.000183972 V** against
+2 mV; receiver reconstruction error **1.11022×10⁻¹⁶ V** against 1 nV.
+All **3/3** adapter mutations were rejected: HP/LP swap (4.05099 V wrong
+HP bus), zero HP source impedance (0.0315365 V wrong bus), and inverted
+PULSE/SAW identities (transaction rejected).
+
+These figures compare **two mathematical models and source laws**, not a
+Yamaha CS-80 hardware measurement, audio-loop integration, or proof of the
+full shared-rail cross-port dynamics.
 
 ## Required audio-integration decision
 
