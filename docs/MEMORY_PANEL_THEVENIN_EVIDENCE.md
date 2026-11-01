@@ -214,3 +214,20 @@ the outstanding oscillator/CPU and retrigger changes have released Engine.cpp:
 The standalone diagonal adapter is intentionally only the *third* building
 block. Until a separately preregistered engine gate is run, this patch plan
 does **not** constitute integrated audio or a passing V2 measurement.
+
+### Preregistered circuit-engine RED audio gate
+
+Commit `55cce4d` separately froze
+`tests/parity/tolerances-v2/memory-panel-engine-audio-v1.json` **before**
+any waveform rerouting. The pending
+`tests/MemoryPanelEngineAudioTests.cpp` provides a deliberately RED check
+against the current source-inactive memory/PANEL engine behavior. It requires
+the ordinary Legacy API and memory selector frames to produce byte-identical
+PCM, the circuit/PURE route to enable actual memory electrical sources for
+both ranks, exact 8-voice HP/LP and shared Q/LC taps from independently
+compiled `ToneControls`, 2 mV zero-drive source buses, sample-zero state
+continuity, and observable selected-wiper recompilation. Four deliberately
+wrong alternatives are asserted: no memory source route, 0 Ω HP source,
+rank-I/rank-II bank swap, and inverted PULSE/SAW contacts. The tests must
+pass *after* an explicitly reviewed Engine audio commit and a mandatory
+full-SHA V2 audio gate re-pin; none of the RED gates is counted as closed here.

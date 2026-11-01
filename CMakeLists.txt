@@ -385,6 +385,13 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_tone_adapter_tests
              COMMAND cs80_memory_panel_tone_adapter_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-tone-adapter-v1.json)
+    # Truth-first RED gate: circuit/PURE M1..M4/PANEL must use real source
+    # audio, while the legacy programmer remains byte-identical.
+    add_executable(cs80_memory_panel_engine_audio_tests tests/MemoryPanelEngineAudioTests.cpp)
+    target_link_libraries(cs80_memory_panel_engine_audio_tests PRIVATE cs80_core)
+    add_test(NAME cs80_memory_panel_engine_audio_tests
+             COMMAND cs80_memory_panel_engine_audio_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-engine-audio-v1.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
