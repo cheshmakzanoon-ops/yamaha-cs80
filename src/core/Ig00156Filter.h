@@ -40,7 +40,9 @@
 #include "FastMath.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
+#include <cstdint>
 
 namespace cs80
 {
@@ -221,6 +223,23 @@ public:
 
     Output process(float input) noexcept
     {
+        // Exact silent fixed point of all four capacitor equations. Every
+        // untouched stage spends its lifetime here until the first real
+        // waveform; the implicit BP Newton solve would evaluate two tanh
+        // functions just to rediscover zero on every sample. The positive-zero
+        // bit guards also preserve the old solver's signed-zero output (BP is
+        // -0), and the slope guards keep restoreMemory() semantics exact.
+        // Node voltages are overwritten by the full solve, so do likewise.
+        if (std::bit_cast<std::uint32_t>(input) == 0u
+            && std::bit_cast<std::uint64_t>(zIn) == 0u
+            && std::bit_cast<std::uint64_t>(zFb) == 0u
+            && std::bit_cast<std::uint64_t>(zBp) == 0u
+            && std::bit_cast<std::uint64_t>(zLp) == 0u
+            && slope1 == 1.0 && slope2 == 1.0)
+        {
+            vIn = vFb = vBp = vLp = 0.0;
+            return { 0.0f, 0.0f, -0.0f };
+        }
         const double u = input * inputScale;
         const double level = kIg00156OtaLevel, inv = 1.0 / level;
         const double g1 = gmPart, f1 = ffPart, g2 = gmPart, f2 = ffPart;
