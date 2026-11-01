@@ -17,6 +17,8 @@ on:
       - 'scripts/analyze_dsp.py'
       - 'scripts/parity_harness.py'
       - 'CMakeLists.txt'
+      # A current-status qualification claim receives the same numerical gates.
+      - 'docs/STATUS.md'
       - '.github/workflows/dsp-measurements.yml'
 permissions:
   contents: read
