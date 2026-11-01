@@ -32,6 +32,13 @@
       "alias_worst_nonharmonic_db_48k": -70.0,
       "alias_fixture": "cs80_engine_audit --suite alias, policy source, saw and pulse rows, ring off, 48 kHz host"
     },
+    "oscillator_segment_cache": {
+      "description": "2026-11-01 pre-registration. Event-root caching may reuse the next root only inside an analytic oscillator segment. Check a long settled static run and parameter-change/idle-wake edge cases against the existing independent waveform, event-time and alias gates; all numerical outputs remain subject to the old tolerances.",
+      "stable_root_solves_per_4096_ticks_max": 400,
+      "stable_fixture": "96 kHz internal, 261.6 Hz settled waveform, saw and pulse enabled, neutral threshold, 4096 consecutive ticks. The unoptimized per-tick root solver is called at least 4096 times; a segment cache must solve only at actual branch/reset boundaries, with headroom for knot, fold and pulse events.",
+      "invalidation_root_solves_min": 1,
+      "invalidation_fixture": "A cutoff/pulse-threshold/gate edit, idle-advance and exact state restore must invalidate cached branch roots before they can be reused. Existing exact control-change and idle-wake fixtures continue to bind audible numerical behavior."
+    },
     "ig00151_vca": {
       "description": "Plan step 1.4. Circuit-engine IG00151 voice VCA (src/core/Vca.h): linear LI input with its 10 nF node, exponential EI input, declared offset and CV feedthrough, constant-power rank pan.",
       "linear_law_rel": 1e-6,
