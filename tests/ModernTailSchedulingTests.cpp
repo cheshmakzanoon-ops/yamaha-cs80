@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 {
     try
     {
-        const cs80::ws1::Tolerances limits(argc > 1 ? argv[1]
+        const ws1::Tolerances limits(argc > 1 ? argv[1]
             : "tests/parity/tolerances-v2/vca-tail-modulation.json", "limits");
         check(limits["global_selection_bit_mismatches_max"] == 0.0,
               "registered exact tail ownership limit remains zero");
