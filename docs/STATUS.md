@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-10-31, qualification branch `finish/cs80-qualification-20261031` from
+Last updated: 2026-11-01, qualification branch `finish/cs80-qualification-20261031` from
 `main` `db24a47170610f81236e8829ef5536af69dfc94d`. Earlier eight-workstream
 history is in [workstreams/HANDOVER.md](workstreams/HANDOVER.md).
 
@@ -75,6 +75,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | Plan recorded | done | `97cc815` |
 | 0.1 Coefficient caching | done; bit-identical | `7b55d34` |
 | 0.1 Split, fast math, structure of arrays | global/rank/mix/output split and 16-chain SoA done; oscillator, Jacobian and receiver caches done; whole-engine CPU target still open | `1207068`, `6bf6055`, `031a333`, `c3c0f5c` |
+| 0.1 Silent rank cadence | 3 kHz to 1.5 kHz qualified for the free-running circuit ranks; strict V2 re-pin complete; measured CPU target still open | audio `18400c2`, pin `9f990ae` |
 | 0.2 Parameter smoothing | done (circuit engine), ws2 | `d29f6eb` |
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
 | 0.5 This status page | done | `eb486cb` |
@@ -716,3 +717,31 @@ quiet idle `0.084363`, moving controls `1.011854`. Idle improves from the
 previous `0.100304`, while held and moving timings rise on this shared
 executor. Neither CPU target is closed. All raw rounds, source hashes and
 the current-pin strict capture are retained in the qualification evidence.
+
+## Qualification: silent rank cadence and exact V2 re-pin (2026-11-01)
+
+Circuit-engine audio commit `18400c29a54ac2204564b355c0e52ffd3b0dcb8e`
+changes the free-running rank oscillator/filter idle cadence from 3 kHz to
+1.5 kHz. This is a declared software scheduling approximation, with no
+claim of a hardware clock or component measurement. Legacy processing and
+the awake circuit equations are unchanged. The published acceptance limits
+and fixtures predate the candidate; they were not adjusted or skipped.
+
+The original free-running gate records **73,965 checks, zero failures**;
+the worst wake residual is **−43.33 dB** against its existing **−40 dB**
+limit. Cold elapsed time has 2,121 checks, maximum error
+`3.89466237039e-12 s`; the cold filter and note-off gates have 13,966 and
+540 checks, respectively, with zero failures. An actual-source 750 Hz
+over-decimation mutant fails two original wake assertions, and the restored
+1.5 kHz implementation passes them. The original integration passed all
+four focused CTest suites. The measured three-round CPU comparison follows
+as an independent checkpoint; no held or idle CPU target is claimed here.
+
+**Three-commit audio sequence:** the audio commit above was pushed first;
+separate commit `9f990ae12d999b46407d0b34ca18d23dbaf029fb` then set
+`SOURCE_AUDIO_V2` to the full audio SHA; this status/evidence commit follows
+the strict re-pin. `scripts/check-compat-gates.sh --strict-v2` succeeded:
+Legacy default and tails remain byte-identical to `d56911a`, V1 circuit
+numerics remain byte-identical to `22d6a32`, and V2 now matches `18400c2`
+byte-for-byte. See the [rank cadence evidence](evidence/qualification-2026-10-31/rank-idle-1500/)
+including the archived strict gate log.
