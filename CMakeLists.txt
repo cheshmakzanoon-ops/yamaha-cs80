@@ -87,6 +87,13 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_source_performance_tests PRIVATE cs80_core)
     add_test(NAME cs80_source_performance_tests COMMAND cs80_source_performance_tests)
     set_tests_properties(cs80_source_performance_tests PROPERTIES TIMEOUT 180)
+
+    # Truth-first OE1/OE2 independent switch policy gate. Its audio override is
+    # source-engine only; legacy/PURE numerics must be byte-identical.
+    add_executable(cs80_chorus_routing_engine_tests tests/ChorusRoutingEngineTests.cpp)
+    target_link_libraries(cs80_chorus_routing_engine_tests PRIVATE cs80_core)
+    add_test(NAME cs80_chorus_routing_engine_tests COMMAND cs80_chorus_routing_engine_tests)
+    set_tests_properties(cs80_chorus_routing_engine_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_source_performance_audit_tests tests/SourcePerformanceAuditTests.cpp)
     target_link_libraries(cs80_source_performance_audit_tests PRIVATE cs80_core)
     add_test(NAME cs80_source_performance_audit_tests COMMAND cs80_source_performance_audit_tests)
