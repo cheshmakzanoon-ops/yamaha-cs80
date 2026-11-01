@@ -537,7 +537,7 @@ if (CS80_BUILD_PLUGIN)
             "${JUCE_SOURCE_DIR}/modules/juce_audio_processors_headless/format_types/VST3_SDK")
         target_link_libraries(cs80_vst3_automation_host PRIVATE ${CMAKE_DL_LIBS})
         add_dependencies(cs80_vst3_automation_host CS80Reference_VST3)
-        foreach(cs80_vst3_mode IN ITEMS empty flat jump)
+        foreach(cs80_vst3_mode IN ITEMS empty flat jump transport midi)
             add_test(NAME cs80_vst3_automation_${cs80_vst3_mode}
                 COMMAND $<TARGET_FILE:cs80_vst3_automation_host>
                         $<TARGET_FILE:CS80Reference_VST3> ${cs80_vst3_mode})

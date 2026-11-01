@@ -208,7 +208,9 @@ struct Plugin
         // comparisons. Library unload is a distinct teardown validation gate.
     }
 
-    std::vector<float> render(int length, const std::vector<Queue::Point>& changes, bool noteOn)
+    std::vector<float> render(int length, const std::vector<Queue::Point>& changes, bool noteOn,
+                              int noteOffset = 0, int notePitch = 60,
+                              bool useHostContext = false, int64_t hostSamplePosition = 0)
     {
         std::vector<float> in((size_t) length);
         std::vector<float> left((size_t) length), right((size_t) length);
@@ -227,9 +229,9 @@ struct Plugin
         {
             Vst::Event e {};
             e.type = Vst::Event::kNoteOnEvent;
-            e.sampleOffset = 0;
+            e.sampleOffset = noteOffset;
             e.noteOn.channel = 0;
-            e.noteOn.pitch = 60;
+            e.noteOn.pitch = (int16) notePitch;
             e.noteOn.velocity = 0.9f;
             e.noteOn.noteId = -1;
             inputEvents.events.push_back(e);
@@ -242,6 +244,21 @@ struct Plugin
         data.numOutputs = 1; data.outputs = &outBus;
         data.inputParameterChanges = &paramChanges;
         data.inputEvents = &inputEvents;
+        Vst::ProcessContext context {};
+        if (useHostContext)
+        {
+            context.state = Vst::ProcessContext::kPlaying | Vst::ProcessContext::kContTimeValid
+                          | Vst::ProcessContext::kTempoValid | Vst::ProcessContext::kProjectTimeMusicValid
+                          | Vst::ProcessContext::kSystemTimeValid | Vst::ProcessContext::kClockValid;
+            context.sampleRate = 48000.0;
+            context.tempo = 120.0;
+            context.projectTimeSamples = hostSamplePosition;
+            context.continousTimeSamples = hostSamplePosition;
+            context.projectTimeMusic = (double) hostSamplePosition / 24000.0;
+            context.systemTime = (int64) std::llround ((double) hostSamplePosition * 1.0e9 / 48000.0);
+            context.samplesToNextClock = 240 - (int32) (hostSamplePosition % 240);
+            data.processContext = &context;
+        }
         if (processor->process(data) != kResultOk) throw std::runtime_error("process");
         float hostPeak = 0.0f;
         for (int i = 0; i < length; ++i)
@@ -258,7 +275,7 @@ int main(int argc, char** argv)
 {
     if (argc < 2 || argc > 3)
     {
-        std::cerr << "usage: automation_driver <VST3 .so> [lifecycle|empty|flat|jump|offset]\n";
+        std::cerr << "usage: automation_driver <VST3 .so> [lifecycle|empty|flat|jump|offset|transport|midi]\n";
         return 2;
     }
     try
@@ -278,7 +295,8 @@ int main(int argc, char** argv)
             return 0;
         }
         const auto mode = argc == 3 ? std::string(argv[2]) : "offset";
-        if (mode != "flat" && mode != "jump" && mode != "offset")
+        if (mode != "flat" && mode != "jump" && mode != "offset"
+            && mode != "transport" && mode != "midi")
             throw std::runtime_error("unknown comparison mode");
 
         // 'jump' is a legal VST3 discontinuity: the old value is repeated at
@@ -286,7 +304,7 @@ int main(int argc, char** argv)
         // at 0 and 128 alone describe a *linear ramp*, not a step (SDK spec).
         const std::vector<Queue::Point> fullBlockPoints = mode == "flat"
             ? std::vector<Queue::Point> {}
-            : mode == "jump"
+            : (mode == "jump" || mode == "transport" || mode == "midi")
                 ? std::vector<Queue::Point> { {0, 0.8}, {127, 0.8}, {128, 0.2} }
                 : std::vector<Queue::Point> { {0, 0.8}, {128, 0.2} };
         const std::vector<Queue::Point> firstBlockPoints = mode == "flat"
@@ -296,20 +314,28 @@ int main(int argc, char** argv)
             ? std::vector<Queue::Point> {}
             : std::vector<Queue::Point> { {0, 0.2} };
 
+        const bool timedHostContext = mode == "transport";
+        const bool midiAcrossSplit = mode == "midi";
+
         std::vector<float> one;
         Plugin block256(argv[1]);
         Plugin twoBlocks(argv[1]);
         {
-            block256.render(256, {}, true);
-            for (int i = 0; i < 2; ++i) block256.render(256, {}, false);
-            one = block256.render(256, fullBlockPoints, false);
+            block256.render(256, {}, true, 0, 60, timedHostContext, 0);
+            for (int i = 0; i < 2; ++i)
+                block256.render(256, {}, false, 0, 60, timedHostContext, (i + 1) * 256);
+            one = block256.render(256, fullBlockPoints, midiAcrossSplit, 140, 64,
+                                  timedHostContext, 768);
         }
         std::vector<float> two;
         {
-            twoBlocks.render(256, {}, true);
-            for (int i = 0; i < 2; ++i) twoBlocks.render(256, {}, false);
-            auto first = twoBlocks.render(128, firstBlockPoints, false);
-            auto second = twoBlocks.render(128, secondBlockPoints, false);
+            twoBlocks.render(256, {}, true, 0, 60, timedHostContext, 0);
+            for (int i = 0; i < 2; ++i)
+                twoBlocks.render(256, {}, false, 0, 60, timedHostContext, (i + 1) * 256);
+            auto first = twoBlocks.render(128, firstBlockPoints, false, 0, 60,
+                                          timedHostContext, 768);
+            auto second = twoBlocks.render(128, secondBlockPoints, midiAcrossSplit, 12, 64,
+                                           timedHostContext, 896);
             two = std::move(first);
             two.insert(two.end(), second.begin(), second.end());
         }
