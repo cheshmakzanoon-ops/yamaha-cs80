@@ -39,6 +39,37 @@ The AC coupling was added after ws4's ring-modulator gate ("carrier feedthrough
 is independent of the signal") failed against the DC pedestal; with it that
 gate passes on the merged tree.
 
+## Released-voice capacitor continuity (2026-11-01)
+
+The amplitude envelope reaches its digital Idle stage before the inferred
+downstream 1 uF / 100 k coupling capacitor necessarily has discharged. The
+stage ahead of that capacitor then drives zero, but the **output** is still
+`-coupling`. Retiring a free-running rank by dropping its contribution from the
+mix at the Idle boundary made a discontinuity equal to that stored output.
+
+The circuit-engine idle path now evaluates the same zero-drive RC difference
+equation on each sample while the residual is above a -160 dB engine-unit
+numerical floor, and mixes the signed discharge through the rank's existing
+level and constant-power pan. Only the expensive oscillator and filter remain
+idle-decimated. This follows the **declared inference** above, not a measured
+CS-80 coupling response; alternatives include an output without this coupling
+network or a different time constant. MIDI All Sound Off / hard panic continues
+to hard-mute and explicitly clear that state.
+
+The limits `closed_discharge_truth_abs = 1e-7` and
+`closed_handoff_step_abs = 1e-6` were pre-registered in the ws1 tolerance file
+at `1dcbd85` before implementing `Ig00151Vca::processClosed()`. The test
+compares the full zero-envelope sample path with the independently derived
+exponential RC discharge at 88.2, 96 and 192 kHz, and checks that a charged
+capacitor is not forcibly silenced on its first Idle sample. A hard-mute
+mutation failed nine assertions (three sample rates).
+
+The phrase-audit "click score" also measures ordinary attack/release
+transients over several milliseconds; scores above 1 do not by themselves
+identify a single-sample discontinuity. The 2026-11-01 Bass Stack retrigger
+maximum was ~8 ms after note-on, so its 1.51 score should not be declared
+fixed by the capacitor repair without a separate after-audit measurement.
+
 ## Gate and results
 
 `cs80_ig00151_vca_tests`, limits pre-registered in

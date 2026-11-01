@@ -47,10 +47,23 @@ public:
     // the silent voice left no charge on the output coupling.
     void reset(float linearCv) noexcept { node = linearCv; coupling = 0.0; }
     float levelNode() const noexcept { return node; }
-    // Free-running idle path (plan step 2.1): a silent circuit's VCA output is
-    // exactly zero (the envelope is closed), so the next-stage coupling simply
-    // discharges. The LI node is left to re-acquire LC through its 0.54 ms RC
-    // when the circuit is next clocked (declared simplification).
+    // Closed-envelope VCA: the stage ahead of the coupling capacitor drives
+    // zero, but its downstream AC-coupled OUTPUT is -coupling, not zero. Keep
+    // that release transient in the mix when the amplitude envelope becomes
+    // idle; otherwise silencing the rank cuts a charged capacitor in one
+    // sample. This is the same inferred 1 uF / 100 k discharge law as process.
+    // The LI node is left to re-acquire LC through its 0.54 ms RC on wake.
+    float processClosed() noexcept
+    {
+        coupling += (0.0 - coupling) * couplingCoefficient;
+        return static_cast<float>(-coupling);
+    }
+    // -160 dB in engine units: a numerical silence floor, not an audio fade.
+    // It allows the steady idle engine to skip this closed circuit entirely.
+    bool hasCouplingTail() const noexcept { return std::abs(coupling) > 1.0e-8; }
+
+    // Analytic advance for periods whose OUTPUT is *not* being rendered.
+    // Never call this in addition to processClosed() for the same samples.
     void relaxIdle(double seconds) noexcept
     {
         coupling *= std::exp(-seconds / kIg00151CouplingSeconds);

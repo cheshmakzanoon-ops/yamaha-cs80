@@ -1493,6 +1493,15 @@ void Engine::allNotesOff(bool release, int midiChannel)
                         || stage == FilterEnv::Stage::Sustain)
                         fenv.noteOff();
                 }
+            // All Sound Off is an intentional hard panic, unlike a normal
+            // release. The free-running output capacitor must not leave a
+            // residual in the idle-tail mix after this explicit mute.
+            if (freeRunningVoices())
+                for (auto& rank : voice.ranks)
+                {
+                    rank.vca.reset(0.0f);
+                    rank.vcaCold = true;
+                }
             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
         }
         else if (allChannels)
@@ -1975,6 +1984,32 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         int idleSamples = 0;
         if (! v.active)
         {
+            // The IG00151 envelope has closed, but its downstream AC-coupling
+            // capacitor still drives -coupling until it discharges. Keeping
+            // this signed output in the rank mix removes a real discontinuity
+            // at the active/idle handoff; it is not an added fade. The VCA
+            // costs one RC step/sample only while it has a nonzero tail. The
+            // oscillator and filter retain their low-cost decimated idle path.
+            if (freeRunning)
+                for (int ch = 0; ch < kNumRanks; ++ch)
+                {
+                    auto& r = v.ranks[ch];
+                    if (! r.vca.hasCouplingTail())
+                        continue;
+                    const float closed = r.vca.processClosed();
+                    const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+                    if (chGain == 0.0f)
+                        continue;
+                    const auto& rs = rankSettings[ch];
+                    const auto& mod = modern.rankOffsets(vi, ch);
+                    const float pan = clampf(rs.pan + r.trimPan * global.voiceDispersion * 0.8f
+                                             + lfoPan + mod.pan, -1.0f, 1.0f);
+                    float panLeft, panRight;
+                    constantPowerPan(pan, panLeft, panRight);
+                    const float voiceOut = closed * chGain * 0.17f;
+                    mixL += voiceOut * panLeft;
+                    mixR += voiceOut * panRight;
+                }
             if (! freeRunning || ++v.idleClock < idleStepSamples)
                 continue;
             idleSamples = v.idleClock;
@@ -2192,10 +2227,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 if (idle)
                 {
                     // Silent circuit: closed-form oscillator advance, one
-                    // decimated step of both stages, the VCA's output coupling
-                    // discharging, and no contribution to the mix.
+                    // decimated step of both stages. The VCA's residual
+                    // coupling is already discharged and mixed every sample
+                    // at the inactive-voice entry, never a second time here.
                     voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
-                    r.vca.relaxIdle((double) idleSamples / sr);
                     r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
                     continue;
                 }
