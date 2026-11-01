@@ -1089,6 +1089,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
             ? juce::String(parameter < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
         raw->setTitle(channelName + juce::String(cs80::paramDef(parameter).name));
         raw->setTooltip(raw->getTitle() + (raw->getToggleState() ? ": ON" : ": OFF"));
+        ui::bindParameterContextMenu(*raw, processor, Cs80AudioProcessor::parameterId(parameter), parameter);
         place(*raw, x, y, w, h);
         leds.push_back(std::move(button));
         return *raw;
