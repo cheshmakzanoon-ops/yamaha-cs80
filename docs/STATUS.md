@@ -105,7 +105,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 0.1 Coefficient caching | done; bit-identical | `7b55d34` |
 | 0.1 Kernels and component arrays | Event/Jacobian caches, global/rank/mix/output split and sixteen-chain component arrays implemented; receiver/transform/lazy-history/control reductions qualified. Full lane SIMD is not implemented; whole-engine CPU remains open | `6bf6055`, `031a333`, `1207068`, `50930af`, `476c2f1`, `8dac795` |
 | 0.1 Silent rank cadence | 3 kHz to 1.5 kHz qualified for the free-running circuit ranks; strict V2 re-pin complete; measured CPU target still open | audio `18400c2`, pin `9f990ae` |
-| 0.1 Exact zero-history FIR | Complete-history/rounding proof and ten source mutations pass; no V2 re-pin. Local and serial GitHub three-before/three-after timing complete: idle improves, held and moving-control results do not establish a speedup. Final current-head native CI remains in progress | `23a7b8d`; contract `156d82e` |
+| 0.1 Exact zero-history FIR | Complete-history/rounding proof and ten source mutations pass; no V2 re-pin. Local and serial GitHub three-before/three-after timing complete: idle improves, held and moving-control results do not establish a speedup. Final twelve-checkpoint / 36-round serial CI confirms improved idle, not a held speedup; both original CPU budgets remain open | `23a7b8d`; contract `156d82e` |
 | 0.2 Parameter smoothing | done (circuit engine), ws2 | `d29f6eb` |
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
 | 0.5 This status page | done | `eb486cb` |
@@ -152,11 +152,32 @@ continuity result and full-bank score are different observations.
 | ADJ printed-p11 LP setup | 2.2 +/- 1 Vpp | Model prediction 1.648 Vpp. Native M41 trace confirms 150 kΩ in series CP7→AI and a separate 33 kΩ shunt. |
 | Exact event continuation | Zero bit mismatches at zero elapsed time; original cold-time bound 1e-8 s | 7,438 full checks pass in both policies; all 15 source mutations and both test-strength controls qualified. [Event evidence](CLICK_EVENT_CONTINUITY.md). |
 | Immutable compatibility | Byte identity | Legacy default/tails, V1 numerics and current V2 all pass after the native BBD repair and the exact FIR candidate. |
-| Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Last completed serial checkpoint `23a7b8d`: 0.388281–0.557422 on EPYC 9V45; original main on the same runner: 0.353231–0.416845. This predates the ring/VCA corrections. Open. |
-| Quiet idle | <=0.02 callback realtime factor | Last completed serial checkpoint `23a7b8d`: 0.0360525 (3.60525%); original main on the same runner: 0.083520375. This is not a timing of the latest production commit. Open. |
+| Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Final 12-checkpoint same-host EPYC 7763 run: `83b7f767` **0.605709–0.888572** held median RTF (p99 up to 1.050427, 49 selected deadline misses); original `db24a471` **0.588123–0.696543**. **Target open.** [Frozen 36-round evidence](evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md). |
+| Quiet idle | <=0.02 callback realtime factor | Final EPYC 7763 run: `83b7f767` **0.067570125 (6.757%)** versus original `db24a471` **0.143822625 (14.382%)**. Idle reduces 53.02% relatively; **2% target open**. [Frozen same-host evidence](evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md). |
 | Full-bank peak, steal and ring-off spectrum | <=0 dBFS; score <=1; <=−70 dB | The old `00ceccf` observations (−0.24 dBFS, 0.92, −88.3 dB at 48 kHz) remain historical. A fresh complete 44.1/48/96 kHz audit of the final code is in progress; no current full-bank pass is inferred from those older numbers. |
 
-### Comparable serial CPU checkpoints
+### Final twelve-checkpoint CPU benchmark (latest complete production audio)
+
+[GitHub Actions run 41292549292](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41292549292)
+collected **36 serial rounds over twelve immutable source checkpoints**, on
+one AMD EPYC 7763 runner with four virtual CPUs. All builds preceded timing,
+all 27 source mutations were rejected, and independent verification matched
+346 archived hashes, 884 source hashes, 1,836 finite rows and twelve summaries.
+The [final same-host source scorecard](evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md)
+includes ring and connected VCA tail changes.
+
+| Same host, 48 kHz / 256 frames | Original `db24a471` | Final `83b7f767` | Unchanged target |
+| --- | ---: | ---: | ---: |
+| Eleven held-tone median RTF range | 0.588123–0.696543 | **0.605709–0.888572** | 0.15–0.20; **open** |
+| Quiet-idle median RTF | 0.143822625 | **0.067570125** | ≤0.02; **open** |
+| Selected held deadline misses | 1 | **49** | Diagnostic |
+| Moving-controls median / p99 RTF | 0.669017 / 0.850359 | **0.849516 / 1.052272** | Diagnostic |
+
+Idle is 53.02% lower main-to-final on this same host. The adjacent
+pre-/post-FIR pair improves idle 11.8995%; neither comparison establishes a
+held speedup, a 2% idle pass or analogue/DAW validation.
+
+#### Earlier nine-checkpoint CPU qualification (different host; history)
 
 [Run 41262684915](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41262684915)
 completed **nine immutable checkpoints, three rounds each**, on one AMD EPYC
@@ -183,7 +204,7 @@ source/benchmark identities resolve exactly; the unchanged collector accepts
 256-frame, 1,024-callback fixtures and frozen reporter remain unchanged.
 [Request validation](evidence/integration-20261101/cpu-final-request-validation.json)
 and [source map](evidence/integration-20261101/cpu-final-source-sha-map.json)
-are preserved before CI collection. Its timing result is not yet claimed.
+are preserved before CI collection. Its completed timing, hashes and selected round results are now independently verified and included above.
 
 For the isolated FIR pair, the selected idle median falls **14.4316%**, and
 every after-round idle median is below every before-round median. Held and
@@ -371,17 +392,7 @@ No numerical threshold was relaxed, and original red logs remain in evidence.
 
 ## Open issues
 
-1. **Held and idle CPU budgets.** The latest completed nine-checkpoint run measures
-   0.388281–0.557422 held and 0.0360525 quiet-idle RTF, above both original
-   limits. The FIR comparison improves idle but worsens held and moving-control
-   observations. Component arrays, caches and skipped operations
-   do not establish a several-fold speedup. Full-kernel SIMD across independent
-   chains remains a future implementation requiring its own predeclared lane,
-   state, rounding and work oracles; no speculative version is shipping.
-   [The remaining exact idle-control assessment](evidence/qualification-2026-11-01/cpu-idle-follow-up.md)
-   separates nested instruction shares from native timing and specifies the
-   stable-drive/controller follow-up. Electrical readouts and exact elapsed
-   envelope clocks cannot simply be paused.
+1. **Held and idle CPU budgets.** The latest complete 12-source/36-round same-host EPYC 7763 run records final `83b7f767` held **0.605709–0.888572 RTF** (target 0.15–0.20) and quiet-idle **0.067570125 RTF** (target ≤0.02), versus original-main held 0.588123–0.696543 and idle 0.143822625. Final idle improves 53.02% relatively; held timing remains worse than original main. All raw rounds, selected p99 values and misses are retained, without claiming a held speedup. [Final CPU run](evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md) and [the remaining idle-control assessment](evidence/qualification-2026-11-01/cpu-idle-follow-up.md) document the gap. Multi-lane architectural reduction needs predeclared state, NaN and rounding oracles; exact electrical clocks cannot simply be paused.
 2. **Original click scores.** Physical-PANEL Bass at 48/96 kHz and Funky note-off
    at all three rates remain above one. The charge/time defects are fixed and
    event regressions qualified, but the controls do not justify a fade, phase
@@ -393,8 +404,8 @@ No numerical threshold was relaxed, and original red logs remain in evidence.
    and transcribed with pages. Ambiguous glyphs, crossed topology and revision
    applicability remain hypotheses; more source/board-revision evidence is
    needed before promotion. V1 values and fingerprint `e5f877a025fc52c6` stay fixed.
-5. **Final integration and landing.** Complete current code tests, full three-rate
-   audit and final timing; obtain the three green workflows; merge PR #6 with a
+5. **Final integration and landing.** Complete current code tests and the full three-rate
+   audit (the final 36-round CPU result is recorded above); obtain the three green workflows; merge PR #6 with a
    merge commit; dispatch the main release and refresh downloads/screenshots,
    coverage and the handover PDF. No pending step is represented as completed.
 6. **Owner-only work (outside this task).** Apple/Windows signing and notarization
