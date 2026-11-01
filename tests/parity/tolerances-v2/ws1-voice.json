@@ -45,6 +45,13 @@
       "coefficient_fixture": "At host rates 44.1/48/96 kHz, all Legacy/Source Performance oversampling choices, and render-time quality/offline mode changes, the cached float must equal the original per-tick expression std::exp(-kTwoPi * 10.0f * (1.0f / static_cast<float>(internalRate))) exactly. No substituted double arithmetic, equivalent pole approximations or changed rounding are permitted.",
       "audio_fixture": "The existing scripts/check-compat-gates.sh --strict-v2 governs literal byte identity of Legacy default, Legacy tails, V1 circuit numerics and pinned V2 audio. The hoist must change none of these bytes; any intentional later VCA/oscillator re-pin is independently accounted for."
     },
+    "engine_sample_pipeline_helpers": {
+      "description": "2026-11-01 pre-registration before splitting the Engine::processInternalSample body into global, rank, mix and output helpers. This is purely control-flow extraction; no sound law or arithmetic order may change.",
+      "ordered_phases": ["global", "rank", "mix", "output"],
+      "legacy_audio_changed_bytes_max": 0,
+      "source_v2_audio_changed_bytes_max": 0,
+      "oracle": "scripts/check-compat-gates.sh --strict-v2 must report identical Legacy default, Legacy tails, V1 circuit numerics and the currently pinned V2 audio for source policies. Relevant multi-rate engine timing and wake state must continue to pass cs80_oversampling_tests, cs80_free_running_voice_tests and cs80_source_factory_integration_tests. Deliberately swapping the mix/output phases must fail the exact audio gate."
+    },
     "ig00151_vca": {
       "description": "Plan step 1.4. Circuit-engine IG00151 voice VCA (src/core/Vca.h): linear LI input with its 10 nF node, exponential EI input, declared offset and CV feedthrough, constant-power rank pan.",
       "linear_law_rel": 1e-6,
