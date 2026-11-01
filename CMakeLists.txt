@@ -287,6 +287,13 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_oscillator_cache_tests COMMAND cs80_oscillator_cache_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/kernel-cache.json)
     set_tests_properties(cs80_oscillator_cache_tests PROPERTIES TIMEOUT 30)
+    # [CPU experiment] Preregistered exact-bit comparison with frozen 7c864f
+    # original scheduler. No production audio, tolerance or V2 pin changes.
+    add_executable(cs80_wsc_fast_path_oracle_tests tests/OscillatorFastPathOracleTests.cpp)
+    target_link_libraries(cs80_wsc_fast_path_oracle_tests PRIVATE cs80_core)
+    add_test(NAME cs80_wsc_fast_path_oracle_tests COMMAND cs80_wsc_fast_path_oracle_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/wsc-steady-fastpath.json)
+    set_tests_properties(cs80_wsc_fast_path_oracle_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
     target_link_libraries(cs80_ig00156_cache_tests PRIVATE cs80_core)
     add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests
