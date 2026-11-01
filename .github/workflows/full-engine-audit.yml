@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: full-engine-audit-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   complete-engine-audit:

@@ -28,6 +28,11 @@ EXPECTED_COMMAND = [
     "--suite", "all", "--rates", "44100,48000,96000",
 ]
 COORDINATES = ("original_physical_panel", "electrical_programmer", "tone_tabs")
+CAUSAL_IDENTITIES = {
+    "original_physical_panel": ("Bass Stack", "note_on"),
+    "electrical_programmer": ("Bass Stack", "note_on"),
+    "tone_tabs": ("Funky 1 + Funky 2", "single_note_off"),
+}
 
 
 def sha(data: bytes) -> str:
@@ -113,6 +118,12 @@ def validate_capture(path: Path, request, reporter):
                    if row["raw"]["coordinate"] == coordinate]
         if sampled != request["rate_order_hz"]:
             raise ValueError(f"Missing or duplicated causality coordinate/rate: {coordinate}")
+        expected_name, expected_event = CAUSAL_IDENTITIES[coordinate]
+        for row in suites["click-causality.csv"]:
+            if row["raw"]["coordinate"] == coordinate and (
+                    row["raw"]["name"] != expected_name or
+                    row["raw"]["event"] != expected_event):
+                raise ValueError(f"Unexpected causal program/event at {coordinate}: {row['raw']['name']}/{row['raw']['event']}")
     if len(suites["click-causality.csv"]) != len(COORDINATES) * len(request["rate_order_hz"]):
         raise ValueError("Unexpected extra causality rows")
     return files, coverage, nonfinite_cells
@@ -154,7 +165,8 @@ def good_fixture(path: Path, reporter):
                 for _ in range(reporter.EXPECTED_ROWS[name])]
         write_csv(path, reporter, rows, name)
     causal = [
-        row_for(reporter, "click-causality.csv", name=f"{coordinate}-{rate}",
+        row_for(reporter, "click-causality.csv", name=CAUSAL_IDENTITIES[coordinate][0],
+                event=CAUSAL_IDENTITIES[coordinate][1],
                 rate=str(rate), coordinate=coordinate)
         for coordinate in COORDINATES for rate in reporter.RATES
     ]
@@ -198,6 +210,17 @@ def self_test(request, reporter):
         else:
             raise AssertionError("Mutation survived causal-coordinate coverage gate")
         causal.write_text(original_causal)
+        for label, old, new in (
+                ("causal program identity", "Bass Stack", "Wrong Bass"),
+                ("causal event identity", ",single_note_off,", ",note_on,")):
+            causal.write_text(original_causal.replace(old, new, 1))
+            try:
+                validate_capture(root, request, reporter)
+            except (ValueError, KeyError):
+                pass
+            else:
+                raise AssertionError(f"Mutation survived {label} gate")
+            causal.write_text(original_causal)
         (root / "unregistered.csv").write_text("x\n")
         try:
             validate_capture(root, request, reporter)
@@ -212,7 +235,7 @@ def self_test(request, reporter):
             pass
         else:
             raise AssertionError("Mutation survived source identity gate")
-        print("PASS: 8 audit coverage and production-identity mutation controls")
+        print("PASS: 10 audit coverage and production-identity mutation controls")
 
 
 def finalize(request, reporter):
@@ -251,8 +274,7 @@ def finalize(request, reporter):
         "hardware_measurement": False, "cpu_suite_included": False,
     }
     encoded = json.dumps(provenance, indent=2, sort_keys=True) + "\n"
-    (destination / "audit-provenance.json").write_text(encoded)
-    complete.write_text(
+    marker_text = (
         f"completed_utc={provenance['generated_utc']}\n"
         f"source_sha={head}\n"
         f"run_id={provenance['github_run_id']}\n"
@@ -260,16 +282,30 @@ def finalize(request, reporter):
         f"provenance_sha256={sha(encoded.encode())}\n")
     reporter.SOURCE_SHA = head
     reporter.PRODUCTION_SHA = request["production_audio_commit"]
-    saved_args = sys.argv
-    sys.argv = [
-        str(REPO / request["frozen_analysis"]), "--root", str(destination),
-        "--repo", str(REPO),
-    ]
-    try:
-        if reporter.main() != 0:
-            raise ValueError("Frozen numerical reporter refused the complete capture")
-    finally:
-        sys.argv = saved_args
+    # A failed/timed-out reporter must never leave a published completed marker.
+    # Keep its provisional marker and report files in a disposable stage.
+    with TemporaryDirectory(prefix=".cs80-audit-stage-", dir=destination) as directory:
+        stage = Path(directory)
+        (stage / "audit").symlink_to(destination / "audit", target_is_directory=True)
+        (stage / "audit.complete").write_text(marker_text)
+        saved_args = sys.argv
+        sys.argv = [
+            str(REPO / request["frozen_analysis"]), "--root", str(stage),
+            "--repo", str(REPO),
+        ]
+        try:
+            if reporter.main() != 0:
+                raise ValueError("Frozen numerical reporter refused complete capture")
+        finally:
+            sys.argv = saved_args
+        for name in ("audit-summary.json", "audit-summary.md"):
+            if not (stage / name).is_file():
+                raise ValueError(f"Frozen reporter did not produce {name}")
+        # Transfer reports before provenance and put the completion marker LAST.
+        for name in ("audit-summary.json", "audit-summary.md"):
+            (stage / name).replace(destination / name)
+    (destination / "audit-provenance.json").write_text(encoded)
+    complete.write_text(marker_text)
     print("Complete full-bank three-rate engine audit retained; numerical failures are not waived.")
 
 
