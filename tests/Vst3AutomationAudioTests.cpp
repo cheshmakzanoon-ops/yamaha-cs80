@@ -275,7 +275,7 @@ int main(int argc, char** argv)
 {
     if (argc < 2 || argc > 3)
     {
-        std::cerr << "usage: automation_driver <VST3 .so> [lifecycle|empty|flat|jump|offset|transport|midi]\n";
+        std::cerr << "usage: automation_driver <VST3 .so> [lifecycle|empty|flat|flat_sample|jump|offset|transport|midi|ramp]\n";
         return 2;
     }
     try
@@ -295,22 +295,31 @@ int main(int argc, char** argv)
             return 0;
         }
         const auto mode = argc == 3 ? std::string(argv[2]) : "offset";
-        if (mode != "flat" && mode != "jump" && mode != "offset"
-            && mode != "transport" && mode != "midi")
+        if (mode != "flat" && mode != "flat_sample" && mode != "jump"
+            && mode != "offset" && mode != "transport" && mode != "midi"
+            && mode != "ramp")
             throw std::runtime_error("unknown comparison mode");
 
         // 'jump' is a legal VST3 discontinuity: the old value is repeated at
         // sample 127 before the new value arrives at sample 128.  Two points
         // at 0 and 128 alone describe a *linear ramp*, not a step (SDK spec).
-        const std::vector<Queue::Point> fullBlockPoints = mode == "flat"
+        // The Steinberg VST3 SDK defines queue points as linear curve sections,
+        // with an implicit previous value at sample -1. Thus [0:.8,128:.2]
+        // is a genuine ramp, *not* the discontinuity that 'jump' tests.
+        // 'ramp' compares it with the actual value at every sample in a
+        // microblock reference. 'flat_sample' proves this finer host partition
+        // itself changes no audio, so the ramp oracle cannot pass vacuously.
+        const bool flatMode = mode == "flat" || mode == "flat_sample";
+        const bool microblockReference = mode == "flat_sample" || mode == "ramp";
+        const std::vector<Queue::Point> fullBlockPoints = flatMode
             ? std::vector<Queue::Point> {}
             : (mode == "jump" || mode == "transport" || mode == "midi")
                 ? std::vector<Queue::Point> { {0, 0.8}, {127, 0.8}, {128, 0.2} }
                 : std::vector<Queue::Point> { {0, 0.8}, {128, 0.2} };
-        const std::vector<Queue::Point> firstBlockPoints = mode == "flat"
+        const std::vector<Queue::Point> firstBlockPoints = flatMode
             ? std::vector<Queue::Point> {}
             : std::vector<Queue::Point> { {0, 0.8} };
-        const std::vector<Queue::Point> secondBlockPoints = mode == "flat"
+        const std::vector<Queue::Point> secondBlockPoints = flatMode
             ? std::vector<Queue::Point> {}
             : std::vector<Queue::Point> { {0, 0.2} };
 
@@ -332,12 +341,31 @@ int main(int argc, char** argv)
             twoBlocks.render(256, {}, true, 0, 60, timedHostContext, 0);
             for (int i = 0; i < 2; ++i)
                 twoBlocks.render(256, {}, false, 0, 60, timedHostContext, (i + 1) * 256);
-            auto first = twoBlocks.render(128, firstBlockPoints, false, 0, 60,
-                                          timedHostContext, 768);
-            auto second = twoBlocks.render(128, secondBlockPoints, midiAcrossSplit, 12, 64,
-                                           timedHostContext, 896);
-            two = std::move(first);
-            two.insert(two.end(), second.begin(), second.end());
+            if (microblockReference)
+            {
+                for (int i = 0; i < 128; ++i)
+                {
+                    // The full queue is a line from (0,.8) to (128,.2).
+                    // Reference values at 0..127 must use that exact slope.
+                    const double value = 0.8 + (0.2 - 0.8) * (double) i / 128.0;
+                    const std::vector<Queue::Point> samplePoint = mode == "ramp"
+                        ? std::vector<Queue::Point> { {0, value} }
+                        : std::vector<Queue::Point> {};
+                    auto sample = twoBlocks.render(1, samplePoint, false);
+                    two.insert(two.end(), sample.begin(), sample.end());
+                }
+                auto tail = twoBlocks.render(128, secondBlockPoints, false);
+                two.insert(two.end(), tail.begin(), tail.end());
+            }
+            else
+            {
+                auto first = twoBlocks.render(128, firstBlockPoints, false, 0, 60,
+                                              timedHostContext, 768);
+                auto second = twoBlocks.render(128, secondBlockPoints, midiAcrossSplit, 12, 64,
+                                               timedHostContext, 896);
+                two = std::move(first);
+                two.insert(two.end(), second.begin(), second.end());
+            }
         }
         double maxDelta = 0, energy = 0, deltaSquares = 0, referenceSquares = 0;
         for (size_t i = 0; i < one.size(); ++i)
@@ -348,7 +376,9 @@ int main(int argc, char** argv)
             referenceSquares += (double) two[i] * two[i];
             energy += std::abs((double) two[i]);
         }
-        std::cout << "VST3 automation mode=" << mode << " 256 vs 128+128 max_abs=" << maxDelta
+        std::cout << "VST3 automation mode=" << mode
+                  << (microblockReference ? " 256 vs 128x1+128 max_abs=" : " 256 vs 128+128 max_abs=")
+                  << maxDelta
                   << " rms_diff=" << std::sqrt(deltaSquares / one.size())
                   << " reference_rms=" << std::sqrt(referenceSquares / two.size())
                   << " sum_abs=" << energy << '\n';
