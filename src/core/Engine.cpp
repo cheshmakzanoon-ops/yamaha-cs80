@@ -1227,16 +1227,25 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
         r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale * r.tol.ampEnvTime),
                       std::max(0.001f, rs.vD * global.envTimeScale * r.tol.ampEnvTime),
                       rs.vS,
-                      std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime));
+                      std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime),
+                      usesSourceModels(global.renderPolicy));
     }
 
     if (! ringKeyDown)
     {
         ringKeyDown = true;
-        ringPhase = 0.0f;
-        ringEnv = 0.0f;
-        ringAdsr.reset();
-        ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f);
+        // PRA53 TR selects the IG00159 envelope stage, not the IG00150
+        // carrier phase or stored capacitor charge. Source inference and
+        // preregistered exact-state gates: RING_EVENT_CONTINUITY_PROPOSAL.md.
+        // Legacy keeps its historical phase/envelope reset bit for bit.
+        const bool retainRingState = usesSourceModels(global.renderPolicy);
+        if (!retainRingState)
+        {
+            ringPhase = 0.0f;
+            ringEnv = 0.0f;
+            ringAdsr.reset();
+        }
+        ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f, retainRingState);
     }
 }
 

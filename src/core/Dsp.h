@@ -446,7 +446,8 @@ public:
         liveSustain = liveDecay = false;
     }
 
-    void noteOn(float attack, float decay, float sustain, float release) noexcept
+    void noteOn(float attack, float decay, float sustain, float release,
+                bool preservePreciseCharge = false) noexcept
     {
         a = attack; d = decay; s = clampf(sustain, 0.0f, 1.0f); r = release;
         liveSustain = liveDecay = false;
@@ -455,7 +456,10 @@ public:
         preciseTime = 0.0;
         if (a <= 0.0002f)
             value = 1.0f;
-        preciseValue = value;
+        // Source continuation can retain the actual capacitor accumulator.
+        // Default callers keep their historical float-to-double initialization.
+        if (!preservePreciseCharge || a <= 0.0002f)
+            preciseValue = value;
         attackFrom = preciseValue;
     }
 
@@ -581,6 +585,7 @@ public:
     float getValue() const noexcept { return value; }
 
 private:
+    friend struct EngineEventContinuityProbe; // isolated test observer; no runtime state
     // Never round this state through the public float diagnostic/output. The
     // legacy path remains separate to preserve existing patches byte-for-byte.
     double preciseValue = 0.0, preciseTime = 0.0;
