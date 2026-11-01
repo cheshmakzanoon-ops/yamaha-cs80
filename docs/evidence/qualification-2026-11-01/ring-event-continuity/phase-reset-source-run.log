@@ -1,0 +1,116 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/phase-reset-source-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "ring"]
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+Ring event continuity: 2325 assertions, 117 failures
+RING-CONTINUITY FAIL: Source 44100/0 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 44100/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 44100/2 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/2 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/2 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 48000/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 48000/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 48000/2 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/2 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/2 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/0 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 96000/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/0 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 96000/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/1 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 96000/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 96000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 96000/1 released-audio-rekey source carrier phase
+
+EXIT 1

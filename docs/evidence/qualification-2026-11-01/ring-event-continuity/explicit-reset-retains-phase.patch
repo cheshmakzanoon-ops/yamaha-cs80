@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -288,7 +288,7 @@
+     trg5BusVolts = 0.0;
+     ringKeyDown = false;
+     ringAdsr.reset();
+-    ringPhase = 0.0f;
++    (void) ringPhase;
+     ringEnv = 0.0f;
+     ringFrequency = 0.0f;
+     pwmPhase = { 0.0f, 0.0f };

@@ -1,0 +1,116 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/suppress-first-key-envelope-trigger-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "ring"]
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+Ring event continuity: 2325 assertions, 306 failures
+RING-CONTINUITY FAIL: Source 44100/0 first-key enters Attack
+RING-CONTINUITY FAIL: Source 44100/0 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 last-release last release selects Release and clears gate
+RING-CONTINUITY FAIL: Source 44100/0 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/0 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey positive released ring envelope
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey positive charge
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey non-float-representable charge
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey enters Attack
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 first-key enters Attack
+RING-CONTINUITY FAIL: Source 44100/1 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/1 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 last-release last release selects Release and clears gate
+RING-CONTINUITY FAIL: Source 44100/1 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/1 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey positive released ring envelope
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey positive charge
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey non-float-representable charge
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey enters Attack
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 first-key enters Attack
+RING-CONTINUITY FAIL: Source 44100/2 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/2 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 last-release last release selects Release and clears gate
+RING-CONTINUITY FAIL: Source 44100/2 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/2 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey positive released ring envelope
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey positive charge
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey non-float-representable charge
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey enters Attack
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 first-key enters Attack
+RING-CONTINUITY FAIL: Source 48000/0 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 48000/0 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 last-release last release selects Release and clears gate
+RING-CONTINUITY FAIL: Source 48000/0 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 48000/0 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey positive released ring envelope
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey positive charge
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey non-float-representable charge
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey enters Attack
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey starts float clock at zero
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey starts double clock at zero
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 first-key enters Attack
+RING-CONTINUITY FAIL: Source 48000/1 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 48000/1 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 last-release last release selects Release and clears gate
+RING-CONTINUITY FAIL: Source 48000/1 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 48000/1 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey positive released ring envelope
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey positive charge
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey non-float-representable charge
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey enters Attack
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey starts float clock at zero
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey starts double clock at zero
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 first-key enters Attack
+RING-CONTINUITY FAIL: Source 48000/2 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 48000/2 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 last-release last release selects Release and clears gate
+RING-CONTINUITY FAIL: Source 48000/2 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 48000/2 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey positive released ring envelope
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey positive charge
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey non-float-representable charge
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey enters Attack
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey starts float clock at zero
+
+EXIT 1

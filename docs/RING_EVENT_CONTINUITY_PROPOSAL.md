@@ -1,9 +1,18 @@
 # Global ring state at key events: preregistered causal review
 
-2026-11-01. **Source review and proposed numerical contract only. No new gate
-has been evaluated and no production audio has been changed by this proposal.**
-The exact acceptance contract is
-`tests/parity/tolerances-v2/ring-event-continuity.json`.
+2026-11-01. The source review below was preregistered with the exact contract
+`tests/parity/tolerances-v2/ring-event-continuity.json` in `97147ed` before
+production evaluation. The resulting correction is now implemented as audio
+`481c7e9`, followed by separate full-SHA V2 pin `8a85faa`. The independent
+[mutation qualification](evidence/qualification-2026-11-01/ring-event-continuity/README.md)
+preserves 2,998 passing assertions in both the original and restored controls,
+and all 22 rejected source/observer/coverage/contract mutations. That evidence
+was captured at integration `b7673fe`, before the later VCA corrections.
+Original click-score criteria remain separate and unchanged; current whole-
+engine results and later audio sequences are in [STATUS.md](STATUS.md).
+
+The original causal reasoning and acceptance boundaries follow. Statements
+about the pre-change production source are historical descriptions of `23a7b8d`.
 
 ## The two omitted states
 
@@ -132,7 +141,7 @@ preserves the six tile bytes and manifest under
 These focus crops are extracted from the validated native-tile reassembly;
 they are not original Actions crop identifiers. No hardware measurement was made.
 
-Root must publish the contract before evaluating the witness or editing
-production behavior. Any resulting Source audio correction follows the separate
-audio-commit/V2-pin/strict-compatibility sequence; the current full audit remains
-an immutable pre-change baseline.
+The contract-first and separate audio/pin/strict-compatibility requirements
+above were retained for implementation. The earlier complete audit remains an
+immutable pre-change baseline; the archived mutation result identifies its own
+source and does not substitute for a later final-source full audit.

@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -1238,7 +1238,7 @@
+         // carrier phase or stored capacitor charge. Source inference and
+         // preregistered exact-state gates: RING_EVENT_CONTINUITY_PROPOSAL.md.
+         // Legacy keeps its historical phase/envelope reset bit for bit.
+-        const bool retainRingState = usesSourceModels(global.renderPolicy);
++        const bool retainRingState = true;
+         if (!retainRingState)
+         {
+             ringPhase = 0.0f;

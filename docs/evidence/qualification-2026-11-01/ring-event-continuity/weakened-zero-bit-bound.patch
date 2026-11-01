@@ -1,0 +1,11 @@
+--- tests/parity/tolerances-v2/ring-event-continuity.json
++++ tests/parity/tolerances-v2/ring-event-continuity.json
+@@ -18,7 +18,7 @@
+     "legacy default, legacy tails and circuit V1 numerics byte identity"
+   ],
+   "limits": {
+-    "source_zero_time_phase_bit_mismatches_max": 0,
++    "source_zero_time_phase_bit_mismatches_max": 1,
+     "source_zero_time_eg_charge_bit_mismatches_max": 0,
+     "source_zero_time_eg_precise_charge_bit_mismatches_max": 0,
+     "source_attack_origin_precise_charge_bit_mismatches_max": 0,

@@ -1,0 +1,21 @@
+--- src/core/Dsp.h
++++ src/core/Dsp.h
+@@ -584,6 +584,8 @@
+     bool isReleased() const noexcept { return stage == Stage::Release || stage == Stage::Idle; }
+     float getValue() const noexcept { return value; }
+ 
++public:
++    void mutationRoundAttackOrigin() noexcept { attackFrom = static_cast<double>(value); }
+ private:
+     friend struct EngineEventContinuityProbe; // isolated test observer; no runtime state
+     // Never round this state through the public float diagnostic/output. The
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -1229,6 +1229,7 @@
+                       rs.vS,
+                       std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime),
+                       usesSourceModels(global.renderPolicy));
++        if (ch == 1 && usesSourceModels(global.renderPolicy)) r.aenv.mutationRoundAttackOrigin();
+     }
+ 
+     if (! ringKeyDown)

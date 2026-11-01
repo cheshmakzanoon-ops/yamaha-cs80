@@ -1,0 +1,124 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/precise-charge-rounded-through-float-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "all"]
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE rank_charge_Source_0 9/9
+COVERAGE rank_origin_Source_0 9/9
+COVERAGE rank_charge_Source_1 9/9
+COVERAGE rank_origin_Source_1 9/9
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+COVERAGE rank_charge_Pure_0 9/9
+COVERAGE rank_origin_Pure_0 9/9
+COVERAGE rank_charge_Pure_1 9/9
+COVERAGE rank_origin_Pure_1 9/9
+Ring event continuity: 2998 assertions, 142 failures
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 44100/0 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 44100/0 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 44100/0 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 44100/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 44100/1 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 44100/1 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 44100/1 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 44100/1 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 44100/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 44100/2 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 44100/2 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 44100/2 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 44100/2 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 44100/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 48000/0 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 48000/0 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 48000/0 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 48000/0 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 48000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 48000/1 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 48000/1 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 48000/1 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 48000/1 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 48000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 48000/2 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 48000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 48000/2 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 48000/2 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 48000/2 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 48000/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 96000/0 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 96000/0 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 96000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 96000/0 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 96000/0 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 96000/0 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 96000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 96000/1 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 96000/1 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 96000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 96000/1 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 96000/1 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 96000/1 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 96000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source 96000/2 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 96000/2 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Source 96000/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source rank 96000/2 rank0 source precise retention
+RING-CONTINUITY FAIL: Source rank 96000/2 rank0 precise attack origin
+RING-CONTINUITY FAIL: Source rank 96000/2 rank1 source precise retention
+RING-CONTINUITY FAIL: Source rank 96000/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure 44100/0 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Pure 44100/0 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Pure 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Pure rank 44100/0 rank0 source precise retention
+RING-CONTINUITY FAIL: Pure rank 44100/0 rank0 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 44100/0 rank1 source precise retention
+RING-CONTINUITY FAIL: Pure rank 44100/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure 44100/1 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Pure 44100/1 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Pure 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Pure rank 44100/1 rank0 source precise retention
+RING-CONTINUITY FAIL: Pure rank 44100/1 rank0 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 44100/1 rank1 source precise retention
+RING-CONTINUITY FAIL: Pure rank 44100/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure 44100/2 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Pure 44100/2 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Pure 44100/2 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Pure rank 44100/2 rank0 source precise retention
+RING-CONTINUITY FAIL: Pure rank 44100/2 rank0 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 44100/2 rank1 source precise retention
+RING-CONTINUITY FAIL: Pure rank 44100/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure 48000/0 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Pure 48000/0 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Pure 48000/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Pure rank 48000/0 rank0 source precise retention
+RING-CONTINUITY FAIL: Pure rank 48000/0 rank0 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 48000/0 rank1 source precise retention
+RING-CONTINUITY FAIL: Pure rank 48000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure 48000/1 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Pure 48000/1 released-audio-rekey retained precise attack origin
+RING-CONTINUITY FAIL: Pure 48000/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Pure rank 48000/1 rank0 source precise retention
+RING-CONTINUITY FAIL: Pure rank 48000/1 rank0 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 48000/1 rank1 source precise retention
+RING-CONTINUITY FAIL: Pure rank 48000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure 48000/2 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Pure 48000/2 released-audio-rekey retained precise attack origin
+
+EXIT 1
