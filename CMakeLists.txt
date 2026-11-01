@@ -336,6 +336,10 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_vca_tail_modulation_tests COMMAND cs80_vca_tail_modulation_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/vca-tail-modulation.json)
     set_tests_properties(cs80_vca_tail_modulation_tests PROPERTIES TIMEOUT 240)
+    add_executable(cs80_modern_tail_scheduling_tests tests/ModernTailSchedulingTests.cpp)
+    target_link_libraries(cs80_modern_tail_scheduling_tests PRIVATE cs80_core)
+    add_test(NAME cs80_modern_tail_scheduling_tests COMMAND cs80_modern_tail_scheduling_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/vca-tail-modulation.json)
     add_executable(cs80_tolerance_drift_tests tests/ToleranceDriftTests.cpp)
     target_link_libraries(cs80_tolerance_drift_tests PRIVATE cs80_core)
     add_test(NAME cs80_tolerance_drift_tests COMMAND cs80_tolerance_drift_tests
