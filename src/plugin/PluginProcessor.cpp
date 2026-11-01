@@ -1267,6 +1267,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
             else
                 clearScalaTuning();
             const juce::ScopedLock treeLock(apvts.treeLock());
+            apvts.syncNow(); // Drain pending host/user parameter edits before replacing their ValueTree.
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
@@ -1406,6 +1407,7 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
                 restored.getChildWithProperty("id", parameterId(index))
                     .setProperty("value", getParamValue(index), nullptr);
             const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
+            apvts.syncNow(); // Preserve pre-load undo ownership before replacing the tree.
             apvts.replaceState(restored);
             setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
                               (int) tree.getProperty("factoryIndex", 0));

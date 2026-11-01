@@ -33,6 +33,9 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_apvts_state_lock_contract
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_apvts_state_lock.py)
+    set_tests_properties(cs80_apvts_state_lock_contract PROPERTIES TIMEOUT 10)
     if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         add_test(NAME cs80_ui_environment_tests
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_ui_smoke_environment.py)
@@ -549,6 +552,9 @@ if (CS80_BUILD_PLUGIN)
     add_test(NAME cs80_voice_activity_host
              COMMAND CS80Snapshots --voice-meter-host-smoke)
     set_tests_properties(cs80_voice_activity_host PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_undo_state_replacement_host
+             COMMAND CS80Snapshots --undo-state-host-smoke)
+    set_tests_properties(cs80_undo_state_replacement_host PROPERTIES TIMEOUT 60)
 
     # Fast, isolated native regression for both 16-voice meter banks, display
     # mode transitions and PURE semantics. Also runs in the full UI smoke above.

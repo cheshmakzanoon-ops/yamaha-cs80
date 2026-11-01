@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 46906)
-Total output lines: 3627
+Warning: truncated output (original token count: 46986)
+Total output lines: 3634
 
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
@@ -10,6 +10,7 @@ Total output lines: 3627
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/VoiceActivityUiTests.h"
+#include "../../tests/UndoStateReplacementHostTests.h"
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
@@ -1422,7 +1423,111 @@ void testSourceFactoryHost()
                 const auto info = routing.getEngine().getSourceToneInfo(rank);
                 const auto expected = selector >= 11 ? sf::Route::panel_or_memory
                     : !isolated ? sf::Route::legacy_bridge
-       …11906 tokens truncated…      "memory_2_f_r",
+                    : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
+                check(info.selector == selector && info.route == expected,
+                      "real host automation delivers the canonical rank-local selector and route");
+                check(routing.getEngine().getSourceToneInfo(1 - rank).selector == 13,
+                      "a rank-local source selection never selects the other rank");
+                check(routing.getEngine().getControlFrameStatus() == cs80::Engine::ControlFrameStatus::accepted,
+                      "host callback publishes an accepted whole control frame");
+                const auto compileCount = routing.getEngine().getSourceCompileCount();
+                apply(routing);
+                check(routing.getEngine().getSourceCompileCount() == compileCount,
+                      "repeated host callbacks do not compile an unchanged source");
+                if (sf::isSourceDriven(info.route))
+                {
+                    if (info.route == sf::Route::source_complete) ++sourceCount;
+                    else ++inferredCount;
+                    const auto unknown = sourceFixtureUnknownMask(rank, selector);
+                    check(info.provenance.knownCells == (sf::allOutputsMask & ~unknown)
+                              && info.provenance.unknownCells == unknown && info.provenance.inferredCells == unknown
+                              && (info.provenance.knownCells & info.provenance.inferredCells) == 0
+                              && !info.provenance.hardwareMeasured && info.provenance.version == 2
+                              && info.provenance.sourceHash == sf::sourceFingerprint
+                              && info.provenance.hypothesisOverrideMask == 0,
+                          "host source provenance preserves known evidence and overlapping original-unknown/inferred masks");
+                    check(info.provenance.hypothes…10986 tokens truncated… "ch1_v_s",
+        "ch1_v_r",
+        "ch1_v_level",
+        "ch1_init_brill",
+        "ch1_init_level",
+        "ch1_after_brill",
+        "ch1_after_level",
+        "ch1_pan",
+        "ch2_saw",
+        "ch2_pulse",
+        "ch2_sine",
+        "ch2_noise",
+        "ch2_pw",
+        "ch2_pwm_speed",
+        "ch2_pwm_depth",
+        "ch2_feet",
+        "ch2_hpf_cutoff",
+        "ch2_hpf_res",
+        "ch2_hpf_on",
+        "ch2_lpf_cutoff",
+        "ch2_lpf_res",
+        "ch2_lpf_on",
+        "ch2_f_il",
+        "ch2_f_al",
+        "ch2_f_a",
+        "ch2_f_d",
+        "ch2_f_r",
+        "ch2_vcf_level",
+        "ch2_v_a",
+        "ch2_v_d",
+        "ch2_v_s",
+        "ch2_v_r",
+        "ch2_v_level",
+        "ch2_init_brill",
+        "ch2_init_level",
+        "ch2_after_brill",
+        "ch2_after_level",
+        "ch2_pan",
+        "hardware_source_1",
+        "hardware_source_2",
+        "memory_1_saw",
+        "memory_1_pulse",
+        "memory_1_sine",
+        "memory_1_noise",
+        "memory_1_pw",
+        "memory_1_pwm_speed",
+        "memory_1_pwm_depth",
+        "memory_1_hpf_cutoff",
+        "memory_1_hpf_res",
+        "memory_1_lpf_cutoff",
+        "memory_1_lpf_res",
+        "memory_1_f_il",
+        "memory_1_f_al",
+        "memory_1_f_a",
+        "memory_1_f_d",
+        "memory_1_f_r",
+        "memory_1_vcf_level",
+        "memory_1_v_a",
+        "memory_1_v_d",
+        "memory_1_v_s",
+        "memory_1_v_r",
+        "memory_1_v_level",
+        "memory_1_init_brill",
+        "memory_1_init_level",
+        "memory_1_after_brill",
+        "memory_1_after_level",
+        "memory_2_saw",
+        "memory_2_pulse",
+        "memory_2_sine",
+        "memory_2_noise",
+        "memory_2_pw",
+        "memory_2_pwm_speed",
+        "memory_2_pwm_depth",
+        "memory_2_hpf_cutoff",
+        "memory_2_hpf_res",
+        "memory_2_lpf_cutoff",
+        "memory_2_lpf_res",
+        "memory_2_f_il",
+        "memory_2_f_al",
+        "memory_2_f_a",
+        "memory_2_f_d",
+        "memory_2_f_r",
         "memory_2_vcf_level",
         "memory_2_v_a",
         "memory_2_v_d",
