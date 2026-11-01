@@ -35,6 +35,7 @@ separately.
 | Exact lazy filter histories `476c2f1`, three rounds | 0.647884–0.926200 | 1.136551–1.751327 | 0.100304 | 0.927262 |
 | Exact BBD/PRA omission `f79b6f7`, three rounds | 0.664905–0.973445 | 1.134303–1.936314 | 0.084363 | 1.011854 |
 | Exact stationary controls `8dac795`, three rounds | 0.680555–1.015410 | 1.215958–2.009791 | 0.087349 | 0.967892 |
+| Unconsumed LFO readouts `193f1a3`, three rounds | 0.706473–1.148390 | 2.335358–6.175530 | 0.128088 | 1.056194 |
 
 The original targets remain 0.15–0.20 held realtime factor and at most 0.02
 quiet-idle realtime factor. Neither initial checkpoint meets them. Subsequent
@@ -59,3 +60,12 @@ recurrence work, but this shared-host sample does not demonstrate an overall
 speedup: held and idle medians rise, while the moving median falls. Selected
 held rounds contain 1,876 deadline exceedances and the moving row contains
 435 of 1,024 callbacks. All outputs remain finite; both targets remain open.
+
+The unused-LFO checkpoint also retains exact output and state. Five actual-source
+mutants are rejected, but its timing window was affected by unrelated compiler
+work on this shared executor. Its selected held rounds contain 3,983 deadline
+exceedances; moving controls contain 592 of 1,024 callbacks. The coincident
+Legacy p99 and deadline counts also deteriorate. All outputs remain finite.
+The complete raw rounds and contemporaneous process observation are retained;
+the observed callback-cost rise cannot be attributed to the LFO change alone.
+No CPU target is claimed met at this checkpoint.

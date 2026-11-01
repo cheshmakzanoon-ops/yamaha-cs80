@@ -1,0 +1,6 @@
+{
+  "reported_at_utc": "2026-10-31T23:21:01.729122+00:00",
+  "scope": "An observation during these rounds, not continuous host monitoring.",
+  "observation": "Unrelated rustc processes were using several executor cores while all other CS80 heavy tasks were paused. Five observed compiler processes each accumulated40\u201344CPU ticks during a half-second sample; the benchmark accumulated46. The CS80 audit was confirmed stopped. No unrelated process was modified.",
+  "interpretation": "Retain all rounds and Legacy control. Do not attribute this window\u2019s timing changes solely to the LFO optimization. Dedicated same-runner qualification is being prepared."
+}
