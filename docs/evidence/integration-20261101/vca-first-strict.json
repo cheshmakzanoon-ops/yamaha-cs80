@@ -1,0 +1,37 @@
+{
+  "audio_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+  "pin_commit": "fb43c04e68e91eea120add3a89e6866ef1e64e01",
+  "source_subtree": "a153b5ec6ca3b64331488af7d32fa13d8d29a7ec",
+  "strict_log_sha256": "0855464047c6528893e474e005c21ef6701753a89070fc3c385a12ac6f7548a2",
+  "independent_root_byte_comparison": [
+    {
+      "baseline": "legacy-default.f32",
+      "candidate": "current-default.f32",
+      "bytes": 32863104,
+      "sha256": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+      "byte_identical": true
+    },
+    {
+      "baseline": "legacy-tails.f32",
+      "candidate": "current-tails.f32",
+      "bytes": 98589312,
+      "sha256": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+      "byte_identical": true
+    },
+    {
+      "baseline": "circuit-v1.bin",
+      "candidate": "circuit-current.bin",
+      "bytes": 133056,
+      "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+      "byte_identical": true
+    },
+    {
+      "baseline": "audio-v2.bin",
+      "candidate": "audio-current.bin",
+      "bytes": 9332176,
+      "sha256": "0e8f046c2a04aea8aa0b70a4521be87881aeb4b88ced441a5f73a6037e65aab6",
+      "byte_identical": true
+    }
+  ],
+  "scope": "Production source matches the published audio commit. Future tail-pan work is not included."
+}

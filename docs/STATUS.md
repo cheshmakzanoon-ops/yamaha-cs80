@@ -5,7 +5,7 @@ when older documents disagree. Historical observations remain in
 [the dated status archive](STATUS_HISTORY_2026-11-01.md) and the linked raw evidence.
 
 Last updated: **2026-11-01 UTC**. Current production change:
-**`23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162`**, on
+**`b75b4d653b6ed6f0aa5ef8ee99b670d83e975250`**, on
 `finish/cs80-qualification-20261031`, based on original main
 `db24a47170610f81236e8829ef5536af69dfc94d`.
 [PR #6](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/6) remains the
@@ -20,7 +20,11 @@ full-band nodal accuracy, proven Linux validator-host repair, electrical
 programmer, independent original chorus/tremolo switches, native automation,
 MTS client, parameter interactions, undo gestures and two-engine telemetry are
 implemented and qualified within the scopes below. The native Intel stored-bit
-BBD repair and exact zero-history FIR optimization are also published.
+BBD repair and exact zero-history FIR optimization are also published. The
+free-running ring phase and precise envelope charge are retained at key events.
+The VCA coupling output now remains connected through envelope retirement;
+explicit reset and hard panic clear its stored charge. Final integration of
+these latest corrections is being qualified below.
 
 **The held and idle CPU budgets and the original physical-PANEL Bass/percussive
 note-off score criteria remain open.** Inspection of all 25 disputed tone cells
@@ -65,14 +69,14 @@ policy. Host and UI rows document software ownership.
 | Oscillator | Frozen PolyBLEP path | Reconstructed WSC with analytic-segment branch-event cache; explicit state/frequency/threshold/wake invalidation | [Kernel qualification](KERNEL_CACHE_QUALIFICATION.md); audio 6bf6055. Numerical continuation qualified; whole-engine CPU target remains separate. |
 | HP/LP filters | Frozen TPT SVF | IG00156 nodal stage with constant Jacobian reuse, residual-guarded Newton steps, full-band Padé phase correction, exact coefficient setup and lazy interchange histories | [Phase correction](IG00156_PHASE_CORRECTION.md), [lazy-history evidence](evidence/qualification-2026-10-31/lazy-filter-histories/). Original small-signal limits pass; HP service-point amplitude remains open. |
 | Envelopes and idle voices | Historical reset/freeze semantics retained | Existing declared RC law preserves filter charge at first/reused assignment and Sustain II; cold scheduling counts only elapsed physical time; all sixteen chains retain their free-running model | [Cold filter charge](COLD_FILTER_ENVELOPE.md), [cold time](COLD_IDLE_TIMING.md). Original physical-PANEL click score is still a separate unmet criterion. |
-| VCA | linear multiply | IG00151: LI node, exponential SUB input, pedestal, AC coupling, constant-power pan (`Vca.h`) | [IG00151_VCA_MODEL.md](IG00151_VCA_MODEL.md) |
+| VCA | linear multiply | IG00151 LI/EI inputs, pedestal and existing AC coupling; the closed-envelope capacitor discharge remains connected to the mix at audio rate, with no duplicate idle decay | Audio `b75b4d6`, pin `fb43c04`; [handoff investigation](evidence/click-20261101.md). The 0.1 s pole remains the existing declared inference; no fade or new component fit. |
 | Voice variation | uniform tune/pan trims, 0.031 Hz sine drift | declared 5 % R / 10 % C card draws into tune, cutoff, Q, level, EG times; 1/f thermal drift with warm-up; sine as "worn unit" (`ToleranceModel.h`) | [TOLERANCE_DRIFT_MODEL.md](TOLERANCE_DRIFT_MODEL.md) |
 | Keyboard | MIDI note to channel | KAS scan option, SH7 hold and droop, ninth-key reconsideration, KBC contour network | ws3 report, `KasScanner.h`, `KbcContour.h` |
 | Touch | raw MIDI velocity/pressure | TWS a/b/C nodes, TRG5 diode-OR bus | ws3 report, `TouchCircuit.h` |
 | Tone tabs | Frozen bridge values and V1 numerics | Seven complete and fifteen inferred tones; all 25 disputed cells have page-cited native readings and explicit alternatives | [Native cell review](evidence/continuation-2026-10-31/TONE_CELL_NATIVE_REVIEW.md), source 5a3027d. All 25 retain hypothesis status; fingerprint e5f877a025fc52c6 unchanged. |
 | Memory/PANEL controls | Previous APVTS path retained | MemoryPanels electrical receiver feeds the selected memory/PANEL controls of both circuit ranks | [Programmer integration](evidence/continuation-2026-10-31/PROGRAMMER_INTEGRATION.md), d66d298. Pot coordinate, taper and loading remain declared inferences. |
 | SUB | legacy `Lfo` or `OriginalSubOscillator` | IG00150 exponential converter, band-limited saw/square | [ORIGINAL_SUB_OSCILLATOR.md](ORIGINAL_SUB_OSCILLATOR.md), ws4 report |
-| Ring modulator | provisional law, ideal multiply | ADJ p19-anchored converter, offset multiplier with declared feedthrough | ws4 report |
+| Ring modulator | provisional law, ideal multiply | ADJ p19-anchored converter and declared feedthrough; carrier phase and actual double envelope charge survive key events | Audio `481c7e9`, pin `8a85faa`; [source topology and continuity contract](RING_EVENT_CONTINUITY_PROPOSAL.md). Legacy retains historical event semantics. |
 | Chorus/tremolo | Historical exclusive toggle retained | Separate OE1/OE2 states, including both off and both on, through append-only chorus_tabs; Historical is the neutral default | 6f1c4aa; AU hint 16; 191 core parameters. These are original circuit switches and work in PURE; modern overlays remain masked there. |
 | Wah / EXP | SVF band-pass stand-in, linear expression | `PraWahCircuit` with declared LDR optics; expression through the same cell | [REALTIME_PRA_WAH_MODEL.md](REALTIME_PRA_WAH_MODEL.md), ws2/ws4 reports |
 | Noise and always-on circuits | Original independent draws unchanged | Shared SUB29 panel noise and separate output hiss remain the declared source laws. Exact BBD/PRA work omission preserves every phase, optical state and nonzero tail | f79b6f7; [exact idle evidence](evidence/qualification-2026-10-31/idle-exact/). Dormant-noise integration state: deferred; no conditional-Gaussian realization change has been adopted. |
@@ -105,10 +109,10 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
 | 0.5 This status page | done | `eb486cb` |
 | 1.1 IG00156 filter, first stage | done | `f6b126d` |
-| 1.1b IG00156 nodal stage | original full-band small-signal limits pass at 2x/4x after phase correction; ADJ p11 HP voltage discrepancy remains evidence, not fitted | `4917708`, `651c74d` |
+| 1.1b IG00156 nodal stage | original full-band limits pass; permanent 176.4 kHz coverage closes the remaining 44.1 kHz/4x grid gap without a DSP change. HP voltage discrepancy remains evidence, not fitted | Audio `4917708`, `651c74d`; supplemental contract `2f18afc`, gate `99d5198` |
 | 1.2 Oscillator promotion | done; CPU over budget | `a6a574f` |
 | 1.3 RC envelopes | done; first-assignment and Sustain II filter charge retained | `131f72b`, `c54c476` |
-| 1.4 IG00151 VCA and event continuity | Model implemented; filter charge and cold-time defects repaired. Exact 72-field-per-rank event regression passes, with 15 source mutations. Original click-score criteria remain open | `c54c476`, `46a7a5a`, `6b01a8b`, `38e99f4`, `3b2af06` |
+| 1.4 IG00151 VCA and event continuity | Filter charge/time, ring/precise-charge retention and disconnected idle coupling repaired. The new 361-check handoff grid and 59-check primitive pass; original click-score criteria remain separate | `c54c476`, `46a7a5a`, `38e99f4`, `481c7e9`, `b75b4d6`; [handoff evidence](evidence/click-20261101.md) |
 | 1.5 Gain staging | done | `228459c` |
 | 1.6 Oversampling quality | done; Standard set to 2x from the measured alias | `ed877d4`, `ebbe75b` |
 | 1.7 Engine default flip | done (plugin layer; INIT and toolbar wired) | `83f8a0e`, `230f367` |
@@ -142,12 +146,13 @@ continuity result and full-bank score are different observations.
 | Item | Target | Qualified result / scope |
 | --- | --- | --- |
 | Full-band nodal small-signal error | Existing full-grid limits: 0.08 at 88.2/96 kHz internal; 0.02 at 192/384 kHz; core band 0.03 | Phase correction `4917708`: 0.04884 / 0.04392 / 0.001954 / 0.00005825, respectively; original limits pass. See [derivation and gates](IG00156_PHASE_CORRECTION.md). |
+| Nodal 44.1 kHz host / 4x | Preregistered supplemental full-band 0.02, core 0.03, matrix equivalence 2e-6 | At 176.4 kHz: 0.002967 full band, 0.002642 core, 1.5297e-7 matrix difference. Expanded permanent gate: 853 checks; a 176.4 kHz-only defect fails three assertions. [Fresh review](evidence/nodal-review-20261101/README.md). |
 | ADJ printed-p11 HP setup | 4.3 +/- 1 Vpp | Model prediction 1.692 Vpp, outside 3.3–5.3 Vpp. No component/gain fitting. |
 | ADJ printed-p11 LP setup | 2.2 +/- 1 Vpp | Model prediction 1.648 Vpp. Native M41 trace confirms 150 kΩ in series CP7→AI and a separate 33 kΩ shunt. |
 | Exact event continuation | Zero bit mismatches at zero elapsed time; original cold-time bound 1e-8 s | 7,438 full checks pass in both policies; all 15 source mutations and both test-strength controls qualified. [Event evidence](CLICK_EVENT_CONTINUITY.md). |
 | Immutable compatibility | Byte identity | Legacy default/tails, V1 numerics and current V2 all pass after the native BBD repair and the exact FIR candidate. |
-| Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Final source: 0.388281–0.557422 on the completed nine-checkpoint EPYC 9V45 run; original main on that same runner: 0.353231–0.416845. Open. |
-| Quiet idle | <=0.02 callback realtime factor | Final source: 0.0360525 (3.60525% of realtime); original main on the same runner: 0.083520375. Open. |
+| Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Last completed serial checkpoint `23a7b8d`: 0.388281–0.557422 on EPYC 9V45; original main on the same runner: 0.353231–0.416845. This predates the ring/VCA corrections. Open. |
+| Quiet idle | <=0.02 callback realtime factor | Last completed serial checkpoint `23a7b8d`: 0.0360525 (3.60525%); original main on the same runner: 0.083520375. This is not a timing of the latest production commit. Open. |
 | Full-bank peak, steal and ring-off spectrum | <=0 dBFS; score <=1; <=−70 dB | The old `00ceccf` observations (−0.24 dBFS, 0.92, −88.3 dB at 48 kHz) remain historical. A fresh complete 44.1/48/96 kHz audit of the final code is in progress; no current full-bank pass is inferred from those older numbers. |
 
 ### Comparable serial CPU checkpoints
@@ -166,7 +171,13 @@ general modern-FX Source Performance or real-DAW load estimate.
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Original main `db24a471` | 0.353231–0.416845 | 0.369217–0.466853 | 0 | 0.083520375 | 0.416251688 |
 | Pre-FIR `475063c` | 0.372466–0.545617 | 0.390135–0.653069 | 0 | 0.042132938 | 0.530522813 |
-| Final FIR `23a7b8d` | 0.388281–0.557422 | 0.397795–0.715900 | 8 | 0.036052500 | 0.537153750 |
+| FIR checkpoint `23a7b8d` | 0.388281–0.557422 | 0.397795–0.715900 | 8 | 0.036052500 | 0.537153750 |
+
+The [independent CPU review](evidence/cpu-20261101.md) freshly verified all
+262 artifact hashes, 662 source records and 1,377 result rows. A further serial
+request is being prepared to append immutable ring (`481c7e9`), VCA (`b75b4d6`)
+and any subsequent qualified production checkpoint to the existing nine,
+retaining all fixture settings and reporting rules. Its result is not yet claimed.
 
 For the isolated FIR pair, the selected idle median falls **14.4316%**, and
 every after-round idle median is below every before-round median. Held and
@@ -247,16 +258,17 @@ claim. [Original failure and correction proof](evidence/qualification-2026-11-01
 
 ### Original click criteria
 
-The latest named-fixture causal audit is `d06648c`, with `18400c2` audio.
-The later test-only event regression and exact FIR do not change these laws.
+The named-fixture values below were freshly captured with connected VCA
+discharge `b75b4d6`. Funky is unchanged from the pre-VCA capture; physical-PANEL
+Bass changes only slightly at 44.1 and 96 kHz. The complete audit is in progress.
 These are named SOURCE PERFORMANCE fixtures, not a replacement for the full-bank
 worst-case audit. Each original requirement remains **score <=1**.
 
-| Rate | Original-main physical-PANEL Bass | Current physical-PANEL Bass | Original-main Funky note-off | Current Funky note-off |
+| Rate | Original-main physical-PANEL Bass | VCA-corrected physical-PANEL Bass | Original-main Funky note-off | VCA-corrected Funky note-off |
 | ---: | ---: | ---: | ---: | ---: |
 | 44.1 kHz | 1.510516 | 0.567656 | 1.441274 | 1.626889 |
 | 48 kHz | 1.308168 | 1.440924 | 1.647965 | 1.291310 |
-| 96 kHz | 1.246674 | 1.365309 | 1.290939 | 1.220958 |
+| 96 kHz | 1.246674 | 1.365311 | 1.290939 | 1.220958 |
 
 Funky's omitted-note-off controls also score above one (1.626888 / 1.380503 /
 1.238904); all pre-event PCM comparisons are exactly equal. Bass's later
@@ -273,23 +285,41 @@ remain separately labelled. [Full evidence and regression](CLICK_EVENT_CONTINUIT
 | Legacy default | `d56911a7c5f6953cd244457226b126cc567a538b` | Byte-identical |
 | Legacy tails | `d56911a7c5f6953cd244457226b126cc567a538b` | Byte-identical |
 | Circuit V1 numerics | `22d6a32c48c85f9b813506edcd856f73f4293c2d` | Byte-identical |
-| Circuit V2 audio/state | `1f842b9a18c117a31c09e7d4dae1aaa26c8dce4e` | Byte-identical |
+| Circuit V2 audio/state | `b75b4d653b6ed6f0aa5ef8ee99b670d83e975250` | Byte-identical; strict gate passes |
 
-The latest intentional audio sequence is native Intel BBD history ownership:
+The latest intentional audio sequence is the connected VCA coupling output:
+audio **`b75b4d653b6ed6f0aa5ef8ee99b670d83e975250`**, followed by the separate
+full-SHA pin **`fb43c04e68e91eea120add3a89e6866ef1e64e01`**. Contracts
+`61adb02` and `8c5cf64` preceded evaluation. The existing capacitor pole and
+1e-30 numerical floor remain unchanged; only its physical discharge is kept
+in the mix, with explicit cold reset and MIDI All Sound Off zeroing state.
+The prior ring/precise-charge sequence is audio `481c7e9`, pin `8a85faa`.
+
+All four comparisons pass `scripts/check-compat-gates.sh --strict-v2` after
+the VCA pin. The integrator independently compared the complete saved byte
+pairs again and verified the tested `src` subtree against the published audio
+commit; [raw strict result and capture hashes](evidence/integration-20261101/vca-first-strict.json)
+retain that receipt. The 59-check primitive and 361-check two-policy/rate/quality
+handoff grid pass; eight actual defects/contract mutations are rejected, and
+the restored controls pass. The separately identified nondefault matrix-to-pan
+tail cadence is under qualification before final landing; default and PURE
+do not exercise that extension.
+
+The earlier intentional audio sequence for native Intel BBD history ownership was
 audio `1f842b9`, separate full-SHA pin `475063c`, then strict gate/status evidence
 `e1c5ee9`. Apple Clang 17 had rewritten the magnitude-bit predicate into a floating
 comparison; DAZ then discarded stored subnormal ownership. The native original,
 repair and reintroduced floating-comparison mutation give 1 / 0 / 1 failures
 out of 1,245 checks. The 16-mode probe gives 4 / 0 original/repaired mismatches.
 [Mechanism and raw native evidence](evidence/qualification-2026-10-31/bbd-native-predicate/README.md).
-The exact FIR optimization keeps this V2 pin after all four complete comparisons
-pass. Earlier audio/pin/evidence sequences remain in the dated history.
+The exact FIR optimization kept that earlier V2 pin after all four comparisons
+passed. Earlier audio/pin/evidence sequences remain in the dated history.
 
 | Qualification | Confirmed scope |
 | --- | --- |
-| Core Release | Current local integration at `1e58938` (production `23a7b8d`) passed 102/102 CTests. The first run could not execute two byte-identical local binaries with mode 0644; restoring execute permission and rerunning the complete suite passed. Original red logs and unchanged binary hashes are retained for the final integration archive. |
-| Linux plugin preset | Current complete plugin/standalone/native-host/snapshot build and 110/110 CTests passed, including the real-window UI smoke. The local exact JUCE 8.0.11 FetchContent override is recorded separately from native CI's stricter default-fetch provenance guard. |
-| Native host features | Actual AU component host and seven mutations passed on Intel and Apple Silicon; native VST3 host passed on Linux. [45 per-platform feature results](evidence/qualification-2026-11-01/host-features/README.md) retain the older workflow's separate Intel BBD failure. |
+| Core Release | Prior integration `1e58938` (production `23a7b8d`) passed 102/102 CTests. Current integration is in progress. A contended pre-VCA run passed 100/103, hitting the unchanged note-off, source-factory integration and library-audit timeouts; its red log is retained for the final complete comparison. |
+| Linux plugin preset | Prior production `23a7b8d` passed the complete plugin build and 110/110 CTests, including real-window UI smoke. Current full build/tests are in progress. |
+| Native host features | Fresh retrieval of build 41269271356 at `8a85faa` verifies 45 feature results across all four platforms, including actual AU hosts/mutations and Linux VST3/UI tests. [Independent review](evidence/host-ui-20261101/README.md) preserves the exact source scope before the VCA change. |
 | MTS-ESP | Real client, shim and fallback pass on all four platforms. Actual upstream licence is **0BSD**, at ODDSound `f214739b8832e7f297cb9970d0c0efbf783f1462`; a live external master is not claimed. |
 | Filter comparator | Fresh and restored positives each pass 781,314,302 exact assertions; five source mutations fail normally. [Evidence](evidence/continuation-2026-10-31/column-layout-rejected/README.md). |
 | Event regression | 7,438 full assertions; 15 source mutations; zero-limit weakening and missing-rank-II controls checked. [Evidence](CLICK_EVENT_CONTINUITY.md). |
@@ -317,7 +347,7 @@ No numerical threshold was relaxed, and original red logs remain in evidence.
 
 ## Open issues
 
-1. **Held and idle CPU budgets.** The final nine-checkpoint run measures
+1. **Held and idle CPU budgets.** The latest completed nine-checkpoint run measures
    0.388281–0.557422 held and 0.0360525 quiet-idle RTF, above both original
    limits. The FIR comparison improves idle but worsens held and moving-control
    observations. Component arrays, caches and skipped operations
