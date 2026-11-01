@@ -299,6 +299,15 @@ public:
     { return OversamplingDecimator::hostLatencyFor(oversample) + getOscillatorLatencySamples(); }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
+    // Read-only numerical telemetry for the original 10 Hz DC-blocker pole.
+    // The optimization gate registers EXACT float equality, including the
+    // internal-rate cast and operation order, before coefficient caching.
+    float getDcBlockCoefficient() const noexcept
+    {
+        const float sr = (float) internalRate;
+        const float invSr = 1.0f / sr;
+        return std::exp(-kTwoPi * 10.0f * invSr);
+    }
     // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
     // render policy, the host rate and the offline flag (see Oversampling.h).
     int getOversamplingFactor() const noexcept { return oversample; }

@@ -39,6 +39,12 @@
       "invalidation_root_solves_min": 1,
       "invalidation_fixture": "A cutoff/pulse-threshold/gate edit, idle-advance and exact state restore must invalidate cached branch roots before they can be reused. Existing exact control-change and idle-wake fixtures continue to bind audible numerical behavior."
     },
+    "engine_dc_coefficient_cache": {
+      "description": "2026-11-01 pre-registration before hoisting the legacy 10 Hz DC-blocker coefficient from the internal sample loop to rate preparation. This is a software performance optimization with no revised analog law or source-engine sound allowance.",
+      "coefficient_float_max_abs": 0.0,
+      "coefficient_fixture": "At host rates 44.1/48/96 kHz, all Legacy/Source Performance oversampling choices, and render-time quality/offline mode changes, the cached float must equal the original per-tick expression std::exp(-kTwoPi * 10.0f * (1.0f / static_cast<float>(internalRate))) exactly. No substituted double arithmetic, equivalent pole approximations or changed rounding are permitted.",
+      "audio_fixture": "The existing scripts/check-compat-gates.sh --strict-v2 governs literal byte identity of Legacy default, Legacy tails, V1 circuit numerics and pinned V2 audio. The hoist must change none of these bytes; any intentional later VCA/oscillator re-pin is independently accounted for."
+    },
     "ig00151_vca": {
       "description": "Plan step 1.4. Circuit-engine IG00151 voice VCA (src/core/Vca.h): linear LI input with its 10 nF node, exponential EI input, declared offset and CV feedthrough, constant-power rank pan.",
       "linear_law_rel": 1e-6,
