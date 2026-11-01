@@ -538,6 +538,23 @@ if (CS80_BUILD_PLUGIN)
     endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
 
+    # Real JUCE processor host regression, runnable with no X11/display.
+    add_test(NAME cs80_voice_activity_host
+             COMMAND CS80Snapshots --voice-meter-host-smoke)
+    set_tests_properties(cs80_voice_activity_host PROPERTIES TIMEOUT 60)
+
+    # Fast, isolated native regression for both 16-voice meter banks, display
+    # mode transitions and PURE semantics. Also runs in the full UI smoke above.
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_voice_activity_ui
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --voice-meter-smoke)
+    else()
+        add_test(NAME cs80_voice_activity_ui
+                 COMMAND CS80Snapshots --voice-meter-smoke)
+    endif()
+    set_tests_properties(cs80_voice_activity_ui PROPERTIES TIMEOUT 120)
+
     # Phase 7 validator diagnosis: one module life cycle (JUCE start, instance and editor paint,
     # destruction, JUCE shutdown, then static destructors) must exit cleanly. CI runs it plainly;
     # docs/VALIDATOR_DIAGNOSTICS.md records the memcheck run of the same probe.

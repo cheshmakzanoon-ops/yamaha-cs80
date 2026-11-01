@@ -118,7 +118,7 @@ public:
 ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
 {
     setTitle("Voice monitor");
-    setDescription("Live voice monitor: signal path, envelopes and filter response of the chosen channel, and the eight voice cards.");
+    setDescription("Live voice monitor: signal path, envelopes and filter response of the chosen channel, and the active eight or sixteen voice cards.");
     setWantsKeyboardFocus(true);
     setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
     setOpaque(false);
@@ -178,9 +178,9 @@ ScopeDrawer::Snapshot ScopeDrawer::sample() const
             if (Cs80AudioProcessor::isMemoryControl(local))
                 s.v[(size_t) local] = processor.getMemoryValue(bank, local);
     }
-    for (int i = 0; i < 8; ++i)
-        if (processor.isVoiceActive(i))
-            s.voices |= 1u << i;
+    const auto activity = processor.getVoiceActivitySnapshot();
+    s.voices = activity.mask;
+    s.capacity = activity.capacity;
     return s;
 }
 
@@ -229,15 +229,18 @@ void ScopeDrawer::paint(juce::Graphics& g)
                           : snap.source == 13 ? juce::String("PANEL") : "MEMORY " + juce::String(snap.channel + (snap.source == 12 ? 3 : 1));
     say(g, juce::String(snap.channel == 0 ? "CHANNEL I" : "CHANNEL II") + "  /  " + sourceName, { 22.0f, 38.0f, 260.0f, 16.0f }, 11.0f, goldInk());
 
-    // Voice cards: eight jewels, lit while that card sounds.
+    // Voice cards: original eight jewels, or two rows with both engines present.
     int count = 0;
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < snap.capacity; ++i)
     {
         const bool on = (snap.voices >> i) & 1u;
         count += on ? 1 : 0;
-        drawJewelLamp(g, { 30.0f + (float) i * 22.0f, 70.0f }, 6.0f, amber, on);
+        if (snap.capacity == 8)
+            drawJewelLamp(g, { 30.0f + (float) i * 22.0f, 70.0f }, 6.0f, amber, on);
+        else
+            drawJewelLamp(g, { 30.0f + (float) (i % 8) * 22.0f, i < 8 ? 65.0f : 78.0f }, 4.6f, amber, on);
     }
-    say(g, "VOICES  " + juce::String(count) + " / 8", { 210.0f, 62.0f, 120.0f, 16.0f }, 11.0f, ink());
+    say(g, "VOICES  " + juce::String(count) + " / " + juce::String(snap.capacity), { 210.0f, 62.0f, 120.0f, 16.0f }, 11.0f, ink());
 
     // Signal path: VCO -> HPF -> LPF -> VCA, with the sine bypass under it.
     const char* names[] = { "VCO", "HPF", "LPF", "VCA" };

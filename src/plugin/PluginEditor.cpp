@@ -611,8 +611,8 @@ private:
     bool over = false, nonFinite = false;
 };
 
-// Eight voice lamps and a MIDI-in lamp. It polls the lock-free voice mask at
-// 24 Hz and repaints its own small rectangle only when a lamp changes.
+// Eight voice lamps (two rows of eight in extension mode) and a MIDI-in lamp.
+// Polls the lock-free, mode-consistent voice snapshot at 24 Hz.
 class ActivityLamps final : public juce::Component, private juce::Timer
 {
 public:
@@ -634,6 +634,10 @@ public:
         const auto now = sample();
         if (now != shown)
         {
+            if (now.capacity != shown.capacity)
+                setDescription(now.capacity == 16
+                    ? "Sixteen voice lamps: the top row follows the primary eight voices and the bottom row the extension eight voices. The MIDI lamp flashes for host MIDI."
+                    : "Eight lamps follow the sounding voices (up to eight at once). The MIDI lamp flashes for any MIDI the host sends: notes, controllers, pitch bend and pressure.");
             shown = now;
             repaint();
             if (onChange) onChange(shown.midi);
@@ -642,7 +646,8 @@ public:
 
     void paint(juce::Graphics& g) override
     {
-        shown = sample();
+        // `refresh` owns snapshot publication and the accessibility callback;
+        // painting must not consume a new mode before that callback sees it.
         const float sx = (float) getWidth() / geo::lampWell.getWidth();
         FloorScope floor(sx);
         g.addTransform(juce::AffineTransform::scale(sx, (float) getHeight() / geo::lampWell.getHeight()));
@@ -650,8 +655,19 @@ public:
                     juce::Colour(0xffd8c68a), 0.8f);
         art::legend(g, "MIDI", { 88.0f, 2.0f, 38.0f, 13.0f }, spacedFont(9.5f, 0.10f), juce::Justification::centred,
                     juce::Colour(0xffd8c68a), 0.8f);
-        for (int i = 0; i < 8; ++i)
-            lamp(g, { 14.0f + (float) i * 10.5f, 27.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
+        if (shown.capacity == 8)
+        {
+            // Preserve the default eight-voice drawing and screenshot exactly.
+            for (int i = 0; i < 8; ++i)
+                lamp(g, { 14.0f + (float) i * 10.5f, 27.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
+        }
+        else
+        {
+            // Both engines remain visible within the original 128x40 lamp well.
+            for (int i = 0; i < 16; ++i)
+                lamp(g, { 14.0f + (float) (i % 8) * 10.5f, i < 8 ? 22.5f : 32.5f }, 2.65f,
+                     ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
+        }
         lamp(g, { 108.0f, 27.0f }, 4.4f, shown.midi, juce::Colour(0xff5cf08a));
     }
 
@@ -659,16 +675,18 @@ private:
     struct Sample
     {
         unsigned mask = 0;
+        int capacity = 8;
         bool midi = false;
-        bool operator==(const Sample& o) const noexcept { return mask == o.mask && midi == o.midi; }
+        bool operator==(const Sample& o) const noexcept { return mask == o.mask && capacity == o.capacity && midi == o.midi; }
         bool operator!=(const Sample& o) const noexcept { return ! (*this == o); }
     };
 
     Sample sample()
     {
         Sample s;
-        for (int i = 0; i < 8; ++i)
-            if (processor.isVoiceActive(i)) s.mask |= 1u << i;
+        const auto activity = processor.getVoiceActivitySnapshot();
+        s.mask = activity.mask;
+        s.capacity = activity.capacity;
         // Any host MIDI event (note, CC, bend, pressure) bumps the processor's counter; a held note keeps it lit.
         bool held = false;
         for (int note = 0; note < 128 && ! held; ++note)
@@ -1759,13 +1777,14 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void syncLampStatus(bool midi)
     {
-        const int voices = juce::jlimit(0, 8, processor.getActiveVoiceCount());
+        const auto activity = processor.getVoiceActivitySnapshot();
+        const int voices = activity.activeCount();
         // The toolbar lamps carry voices and MIDI; the strip keeps the (hidden) text for accessibility only.
         voiceStatusLabel.setDisplayText({});
         midiStatusLabel.setDisplayText({});
         voiceStatusLabel.setInterceptsMouseClicks(false, false);
         midiStatusLabel.setInterceptsMouseClicks(false, false);
-        voiceStatusLabel.setText("Active voices: " + juce::String(voices) + " of 8", juce::dontSendNotification);
+        voiceStatusLabel.setText("Active voices: " + juce::String(voices) + " of " + juce::String(activity.capacity), juce::dontSendNotification);
         midiStatusLabel.setText(midi ? "MIDI input: notes arriving" : "MIDI input: idle", juce::dontSendNotification);
     }
 
