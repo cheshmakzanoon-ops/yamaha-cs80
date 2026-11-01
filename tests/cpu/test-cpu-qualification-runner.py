@@ -208,8 +208,12 @@ def run():
              "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"})),
         ("request_wrong_reporter_hash", 'if not re.fullmatch(r"[0-9a-f]{64}", request.get("reporter_sha256", "")):',
          'if False:', "request", lambda data: data.__setitem__("reporter_sha256", "66f610e")),
+        # Isolate the length guard even when the live request has appended
+        # checkpoints; shifting an extension into the prefix instead would
+        # exercise the independent identity/order guard in this mutant.
         ("frozen_prefix_shortened", 'if len(checkpoints) < len(IMMUTABLE_PREFIX):',
-         'if False:', "request", lambda data: data["checkpoints"].pop(6)),
+         'if False:', "request", lambda data: data.__setitem__(
+             "checkpoints", data["checkpoints"][:len(frozen_prefix) - 1])),
         ("frozen_prefix_rewritten", 'if tuple(checkpoint.get(key) for key in CHECKPOINT_KEYS) != expected:',
          'if False:', "request", lambda data: data["checkpoints"][3].__setitem__("source_commit", "e" * 40)),
         ("schedule_two_rounds", 'range(1, FIXED_REQUEST["rounds"] + 1)',

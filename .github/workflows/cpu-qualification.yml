@@ -8,6 +8,8 @@ on:
     paths:
       - '.github/cpu-qualification-request.json'
       - '.github/workflows/cpu-qualification.yml'
+      # Collector witness changes must requalify the unchanged checkpoint request.
+      - 'tests/cpu/test-cpu-qualification-runner.py'
 
 permissions:
   contents: read
