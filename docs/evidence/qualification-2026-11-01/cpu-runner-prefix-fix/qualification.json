@@ -1,0 +1,48 @@
+{
+  "failed_run": 41261598525,
+  "failed_job": 124715818941,
+  "failed_head": "4de251d9fe3b83966cc264367ce768f01670d89a",
+  "fix_base": "1e5893854c3d0d9b0aa1ab1c725fd2e8084717f6",
+  "local_fix": "ec6d25d579e5beb3918f1c0edbfba92f1b7f77fa",
+  "workflow_artifacts": [],
+  "timing_step_started": false,
+  "request_checkpoint_count": 9,
+  "conserved_sha256": {
+    ".github/cpu-qualification-request.json": "7b21ab8ff460f5916bc6c99fd6f1ec2bf0ed49b7f1edb0879f2076a7d37b7c49",
+    "scripts/run-cpu-qualification.py": "5791b66d5343a61d2ca47afe2947dfda45816051351720250cf3fac47675592e",
+    "tests/cpu/cpu-qualification-runner-acceptance.json": "982f49e522a412386efa037f8da69aaba5a00d53061466fcddde452910d1e198",
+    "scripts/summarize-cpu-benchmarks.py": "66f610e5c0ffcf1c574705a2328b58ffc7e800658d796efe6299a04ec0f1357c"
+  },
+  "gate_before_sha256": "35aa5e53006b77afc1c1c2a9c1526a0d45c35ea715d9ce6de9dce0e55d0caaf2",
+  "gate_after_sha256": "a40646b725c22bf462b8db0efe9e26638d83f67d346d7b2d45d610f051ea39ee",
+  "seven_request_sha256": "4e4df200740f0604fe45e2dddb263df3e39782511bcd9cc8ade756a425d06624",
+  "nine_request_sha256": "7b21ab8ff460f5916bc6c99fd6f1ec2bf0ed49b7f1edb0879f2076a7d37b7c49",
+  "observations": {
+    "original_seven": {
+      "exit_code": 0,
+      "mutants_killed": 27
+    },
+    "original_nine": {
+      "exit_code": 1,
+      "last_completed_mutant": 4,
+      "failure": "mutant 05 raised unrelated ValueError: historical checkpoint identity or order changed"
+    },
+    "fixed_seven": {
+      "exit_code": 0,
+      "mutants_killed": 27
+    },
+    "fixed_nine": {
+      "exit_code": 0,
+      "mutants_killed": 27
+    }
+  },
+  "scope": "Python-only gate fixtures and actual-source mutation checks. No DSP build or benchmark was run during this diagnosis.",
+  "published_fix": "ef166ea41c309c3d12ae1c7dc27ea3009762b0a0",
+  "fixed_run": 41262684915,
+  "fixed_job": 124718989712,
+  "fixed_run_snapshot": {
+    "mutation_preflight": "success",
+    "compilation_and_timing": "in_progress",
+    "full_workflow_conclusion": null
+  }
+}
