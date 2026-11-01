@@ -8,7 +8,7 @@ An independent software reconstruction of the Yamaha CS-80, written in C++20 wit
 
 **Last published `main` release:** the October 31 integration ([#2](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/2), [#3](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/3)) remains the source of the download links below until a new merge and release actually succeed.
 
-**Plan completion and handover (PDF):** [docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf](docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf) is the dated October 31 handover, not evidence that PR #6 has landed. The six-page replacement will be published only with actual main merge, CI and release identities. [Current STATUS](docs/STATUS.md) supersedes its older open-item list.
+**Plan completion and handover (PDF):** [docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf](docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf) is now a **watermarked six-page November 1 draft** showing the latest verified model, CPU results, host fixes, native tone evidence and still-open targets. Its merge/CI/release fields are deliberately marked PENDING; it is not a release certificate. The [exact draft data](docs/evidence/qualification-2026-11-01/handover-draft-20261101.json) can be regenerated with `scripts/build-completion-handover.py --draft`. The unmarked final PDF requires real main merge, successful CI and installer links. [Current STATUS](docs/STATUS.md) remains authoritative.
 
 ## Downloads (last published `main` artifacts)
 
