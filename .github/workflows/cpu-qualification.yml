@@ -2,6 +2,12 @@ name: CPU checkpoint qualification
 
 on:
   workflow_dispatch:
+  # A new immutable checkpoint request starts one controlled serial comparison.
+  # Ordinary source, documentation and evidence commits do not rerun it.
+  push:
+    paths:
+      - '.github/cpu-qualification-request.json'
+      - '.github/workflows/cpu-qualification.yml'
 
 permissions:
   contents: read
