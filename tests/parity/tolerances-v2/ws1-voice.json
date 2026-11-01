@@ -53,6 +53,8 @@
       "closed_discharge_fixture": "2026-11-01 pre-registration: a VCA whose envelope has just reached zero still drives the downstream 1 uF/100 k coupling capacitor. The closed-output recurrence must match process(input=0, envelope=0) sample by sample across 88.2/96/192 kHz, after a 200 ms charged pedestal and a fast released envelope. This is a declared circuit-model inference, not hardware evidence.",
       "closed_handoff_step_abs": 1e-6,
       "closed_handoff_fixture": "The first idle sample following the last envelope-zero sample must continue the capacitor's exponential discharge. The difference from the physical one-sample recurrence, and the boundary step for a charged pedestal, must be at most 1e-6 engine units; a hard mute of the coupling output is explicitly forbidden.",
+      "closed_engine_tail_min_peak_abs": 1e-9,
+      "closed_engine_tail_fixture": "2026-11-01 pre-registration, 48 kHz source policy: compare identically clocked engine twins with silent oscillators but the declared VCA pedestal. At the first frame with no active voices, apply a deliberate All Sound Off hard panic to one twin only; compare the next 50 ms of output. Without hidden source differences, the unpanicked voice must pass the AC-coupling discharge through the engine mix, yielding a peak inter-stream difference above the 1e-9 normalized-output numerical detection floor. The deliberately panicked twin must remain mute. This lower bound detects disconnected idle-output wiring, not calibrated analogue audibility.",
       "pan_power_rel": 1e-6,
       "pan_fixture": "L^2 + R^2 constant over pan -1..1; exactly 0.5 per side at centre",
       "click_steal_max": 1.0,
