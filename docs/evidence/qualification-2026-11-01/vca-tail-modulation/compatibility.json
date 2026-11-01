@@ -1,0 +1,21 @@
+[
+  {
+    "phase": "compat-before-repin",
+    "pin_commit": "fb43c04e68e91eea120add3a89e6866ef1e64e01",
+    "command": [
+      "scripts/check-compat-gates.sh"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 228.70510350500263
+  },
+  {
+    "phase": "compat-strict",
+    "pin_commit": "14ef653ed60be67ff98656966f9181c5e9b6b4fc",
+    "command": [
+      "scripts/check-compat-gates.sh",
+      "--strict-v2"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 330.2031104350026
+  }
+]

@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2196,7 +2196,7 @@
+         const float dispersion = global.voiceDispersion;
+         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
+         // Envelope sources are the previous sample's values of each rank.
+-        if (! modernUpdatedForTail)
++        if (true)
+             modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
+                                       { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                                       { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });

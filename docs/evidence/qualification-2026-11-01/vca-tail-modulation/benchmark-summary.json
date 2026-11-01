@@ -1,0 +1,63 @@
+{
+  "before_audio_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+  "after_audio_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "scope": "Default baseline benchmark compares Legacy and source-model isolation (Pure), not the optional active modern pan route. Full 27 cases/51rows at48k/256/128callbacks in each round. Parent qualification jobs cause contention; descriptive only. Reuses prior VCA fix three after rounds as this change before control. Serialized CI remains the CPU qualification.",
+  "before": [
+    {
+      "held_median_rtf_min": 0.6390691875,
+      "held_median_rtf_max": 2.3577639375,
+      "idle_quiet_median_rtf": 0.0619944375,
+      "nonfinite_count": 0,
+      "rows": 51,
+      "csv_sha256": "56859947d0cbfb313275acc5d9c1bc0744dc7d9eea5114ab8874d97aa15ada80",
+      "recorded_audio_fields_exactly_match_all_rounds": true
+    },
+    {
+      "held_median_rtf_min": 0.959161125,
+      "held_median_rtf_max": 4.16454825,
+      "idle_quiet_median_rtf": 0.1386421875,
+      "nonfinite_count": 0,
+      "rows": 51,
+      "csv_sha256": "396e0b84218f64180c6297b2a6e9a6857b1cb36d8de5cf293b4525d8ac26b224",
+      "recorded_audio_fields_exactly_match_all_rounds": true
+    },
+    {
+      "held_median_rtf_min": 0.9771830625,
+      "held_median_rtf_max": 4.7223545625,
+      "idle_quiet_median_rtf": 0.12282375,
+      "nonfinite_count": 0,
+      "rows": 51,
+      "csv_sha256": "18cdfc4935335de242478a2e6e8127a702267d1136502252343d1be358d2246e",
+      "recorded_audio_fields_exactly_match_all_rounds": true
+    }
+  ],
+  "after": [
+    {
+      "held_median_rtf_min": 0.6800979375,
+      "held_median_rtf_max": 1.10299725,
+      "idle_quiet_median_rtf": 0.064788,
+      "nonfinite_count": 0,
+      "rows": 51,
+      "csv_sha256": "4e43c952d1402411d60832ec1576ff45c1bb0f701377183a9b9c46a1e4c66389",
+      "recorded_audio_fields_exactly_match_all_rounds": true
+    },
+    {
+      "held_median_rtf_min": 0.6772831875,
+      "held_median_rtf_max": 1.499974875,
+      "idle_quiet_median_rtf": 0.062041875,
+      "nonfinite_count": 0,
+      "rows": 51,
+      "csv_sha256": "bc69e3bf9bc7c7abcccad5b22825f0608e3fcd2ae59850270799698c54c8027d",
+      "recorded_audio_fields_exactly_match_all_rounds": true
+    },
+    {
+      "held_median_rtf_min": 0.8420143125,
+      "held_median_rtf_max": 1.4383648125,
+      "idle_quiet_median_rtf": 0.128268375,
+      "nonfinite_count": 0,
+      "rows": 51,
+      "csv_sha256": "ef1531a3185818aac4245930ba2699bebb24ebea5bd86045c335f6719a624a84",
+      "recorded_audio_fields_exactly_match_all_rounds": true
+    }
+  ]
+}

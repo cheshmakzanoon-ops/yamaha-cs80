@@ -1,0 +1,11 @@
+--- src/core/ModernLayer.h
++++ src/core/ModernLayer.h
+@@ -238,7 +238,7 @@
+         if (! active || voiceIndex < 0 || voiceIndex >= kVoices)
+             return;
+         auto& voice = voices[(std::size_t) voiceIndex];
+-        if (scheduled && in.age != voice.age)
++        if (in.age != voice.age)
+         {
+             // New note on this voice: restart poly envelopes and latch per-note values.
+             voice.age = in.age;
