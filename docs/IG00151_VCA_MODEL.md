@@ -70,6 +70,34 @@ identify a single-sample discontinuity. The 2026-11-01 Bass Stack retrigger
 maximum was ~8 ms after note-on, so its 1.51 score should not be declared
 fixed by the capacitor repair without a separate after-audit measurement.
 
+The independent engine-mix regression pre-registered at `6a727b6` compares
+two sample-identical source-policy engines, one hard-panicked exactly after the
+amplitude envelopes become Idle. With the old disconnected capacitor output,
+their peak difference was exactly zero (62 checks, one failure); with the
+discharge in the rank mix it is `0.000137403` normalized output and the gate
+passes all 62 checks. Temporarily mutating the engine to disconnect that output
+restored the **same single failure**, then was reverted. The implementation
+audio commit is `f7b1091` in the local tree (published by the integrator as
+`53466a4`); legacy and V1 gates remain a separate, stricter compatibility
+obligation.
+
+The unchanged acceptance scorer was investigated on that isolated audio
+commit with `cs80_engine_audit --suite phrase --match` and the opt-in
+`--counterfactual`/`--explain-clicks` diagnostics. The counterfactual removes
+the specified MIDI event without changing any render settings; its score uses
+the **same** original denominator. These are software observations, not
+hardware measurements:
+
+| Program / rate | Original score | With MIDI event removed | Timing and causal observation |
+| --- | ---: | ---: | --- |
+| Bass Stack, 44.1 kHz, retrigger | 1.51052 | 0.0309965 | The largest waveform step occurs 352 host samples after the event (~8 ms); in the first 2 ms after the 67-sample reported latency, the *event-induced difference* has max step 0.000416 versus the program's 0.008092 chord reference. This is a new attack, not a demonstrated sample-boundary reset. |
+| Funky 1 + Funky 2, 48 kHz, note-off | 1.64797 | **1.67988** | Removing note-off makes the raw 8 ms maximum step larger: 0.0591385 with the event versus 0.0602836 without. Thus this score above one cannot be a note-off-caused discontinuity. First 2 ms after latency, the event-induced difference-step maximum is 0.001322 against the 0.035886 pre-note-off reference. |
+
+Both scores remain **open against the frozen <= 1 gate**: their metrics have
+not been weakened or relabelled as passing. A further sound change would need
+an independently sourced envelope/phase law, not merely suppression of an
+ordinary new-note attack or adjustment of the score threshold.
+
 ## Gate and results
 
 `cs80_ig00151_vca_tests`, limits pre-registered in

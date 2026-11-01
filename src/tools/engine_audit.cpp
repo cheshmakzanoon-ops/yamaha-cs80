@@ -551,7 +551,8 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
         counterfactuals << "name,policy,rate,event,first_sample_difference,first_difference_step,"
                            "maximum_difference_step,maximum_step_relative_sample,latency_samples,"
                            "maximum_early_step_after_latency,"
-                           "maximum_difference_amplitude\n";
+                           "maximum_difference_amplitude,observed_window_step,"
+                           "without_event_window_step,observed_window_score,without_event_window_score\n";
     }
     const auto ev = phrase();
     struct Job { std::vector<Setup> setups; std::vector<int> rates; };
@@ -624,6 +625,18 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
                         const auto reference = render(s, rate, withoutEvent, T::length);
                         const long start = (long) std::ceil(event.second * rate / kBlock) * kBlock;
                         const long end = start + (long) std::llround(0.008 * rate);
+                        // This ratio's numerator can rise even when the MIDI
+                        // event is removed: a different part of a sustained
+                        // waveform may have the largest slope in the next
+                        // 8 ms. Keep the acceptance score unchanged, but
+                        // measure the event-less numerator with the very same
+                        // denominator to distinguish that case from a true
+                        // event-triggered transient.
+                        const double observedWindowStep = maxJump(r, start, end);
+                        const double withoutEventWindowStep = maxJump(reference, start, end);
+                        const double clickReference = isOn
+                            ? std::max(maxJump(r, idx(r, T::chordOn), idx(r, T::chordOff)), 1.0e-7)
+                            : std::max(maxJump(r, start - (long) (0.06 * rate), start), 1.0e-7);
                         double maxAmplitude = 0.0, maxStep = 0.0, firstDifference = 0.0, firstStep = 0.0;
                         double earlyStep = 0.0;
                         long at = 0;
@@ -647,7 +660,10 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
                         }
                         counterfactuals << '"' << s.name << "\"," << s.policy << ',' << rate << ',' << event.first << ','
                                         << firstDifference << ',' << firstStep << ',' << maxStep << ',' << at
-                                        << ',' << r.reportedLatency << ',' << earlyStep << ',' << maxAmplitude << '\n';
+                                        << ',' << r.reportedLatency << ',' << earlyStep << ',' << maxAmplitude
+                                        << ',' << observedWindowStep << ',' << withoutEventWindowStep
+                                        << ',' << observedWindowStep / clickReference
+                                        << ',' << withoutEventWindowStep / clickReference << '\n';
                     }
                 }
             }
