@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "One-runner serial comparison retaining all seven preregistered historical checkpoints, followed by the native-BBD pre-FIR source and exact zero-history FIR candidate. Software callback timing; no hardware or real-DAW qualification.",
+  "description": "One-runner serial comparison retaining all nine historical checkpoints and appending retained ring/precise-charge, connected VCA idle coupling, and current-sample tail pan. Software callback timing; no hardware or real-DAW qualification.",
   "rate": 48000,
   "block": 256,
   "callbacks": 1024,
@@ -51,6 +51,21 @@
     {
       "label": "zero-fir-history",
       "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "retained-ring-charge",
+      "source_commit": "481c7e9fdb20372288864eecf746bf7efb28190a",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "connected-vca-idle",
+      "source_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "current-sample-tail-pan",
+      "source_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
       "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
     }
   ]

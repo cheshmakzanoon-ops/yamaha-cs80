@@ -5,7 +5,7 @@ when older documents disagree. Historical observations remain in
 [the dated status archive](STATUS_HISTORY_2026-11-01.md) and the linked raw evidence.
 
 Last updated: **2026-11-01 UTC**. Current production change:
-**`b75b4d653b6ed6f0aa5ef8ee99b670d83e975250`**, on
+**`83b7f7670f000a95c6b44f96ffb0df3894755d14`**, on
 `finish/cs80-qualification-20261031`, based on original main
 `db24a47170610f81236e8829ef5536af69dfc94d`.
 [PR #6](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/6) remains the
@@ -23,8 +23,9 @@ implemented and qualified within the scopes below. The native Intel stored-bit
 BBD repair and exact zero-history FIR optimization are also published. The
 free-running ring phase and precise envelope charge are retained at key events.
 The VCA coupling output now remains connected through envelope retirement;
-explicit reset and hard panic clear its stored charge. Final integration of
-these latest corrections is being qualified below.
+explicit reset and hard panic clear its stored charge. Charged inactive tails
+also consume current-sample modern pan while preserving original scheduled
+trigger/expression ownership. Final integration is being qualified below.
 
 **The held and idle CPU budgets and the original physical-PANEL Bass/percussive
 note-off score criteria remain open.** Inspection of all 25 disputed tone cells
@@ -69,7 +70,7 @@ policy. Host and UI rows document software ownership.
 | Oscillator | Frozen PolyBLEP path | Reconstructed WSC with analytic-segment branch-event cache; explicit state/frequency/threshold/wake invalidation | [Kernel qualification](KERNEL_CACHE_QUALIFICATION.md); audio 6bf6055. Numerical continuation qualified; whole-engine CPU target remains separate. |
 | HP/LP filters | Frozen TPT SVF | IG00156 nodal stage with constant Jacobian reuse, residual-guarded Newton steps, full-band Padé phase correction, exact coefficient setup and lazy interchange histories | [Phase correction](IG00156_PHASE_CORRECTION.md), [lazy-history evidence](evidence/qualification-2026-10-31/lazy-filter-histories/). Original small-signal limits pass; HP service-point amplitude remains open. |
 | Envelopes and idle voices | Historical reset/freeze semantics retained | Existing declared RC law preserves filter charge at first/reused assignment and Sustain II; cold scheduling counts only elapsed physical time; all sixteen chains retain their free-running model | [Cold filter charge](COLD_FILTER_ENVELOPE.md), [cold time](COLD_IDLE_TIMING.md). Original physical-PANEL click score is still a separate unmet criterion. |
-| VCA | linear multiply | IG00151 LI/EI inputs, pedestal and existing AC coupling; the closed-envelope capacitor discharge remains connected to the mix at audio rate, with no duplicate idle decay | Audio `b75b4d6`, pin `fb43c04`; [handoff investigation](evidence/click-20261101.md). The 0.1 s pole remains the existing declared inference; no fade or new component fit. |
+| VCA | linear multiply | IG00151 LI/EI inputs, pedestal and existing AC coupling; the closed-envelope capacitor discharge remains connected to the mix at audio rate, with no duplicate idle decay | Coupling audio `b75b4d6`, current-sample tail-pan audio `83b7f76`, pin `14ef653`; [handoff investigation](evidence/click-20261101.md). The 0.1 s pole remains the existing declared inference; no fade or new component fit. |
 | Voice variation | uniform tune/pan trims, 0.031 Hz sine drift | declared 5 % R / 10 % C card draws into tune, cutoff, Q, level, EG times; 1/f thermal drift with warm-up; sine as "worn unit" (`ToleranceModel.h`) | [TOLERANCE_DRIFT_MODEL.md](TOLERANCE_DRIFT_MODEL.md) |
 | Keyboard | MIDI note to channel | KAS scan option, SH7 hold and droop, ninth-key reconsideration, KBC contour network | ws3 report, `KasScanner.h`, `KbcContour.h` |
 | Touch | raw MIDI velocity/pressure | TWS a/b/C nodes, TRG5 diode-OR bus | ws3 report, `TouchCircuit.h` |
@@ -175,9 +176,14 @@ general modern-FX Source Performance or real-DAW load estimate.
 
 The [independent CPU review](evidence/cpu-20261101.md) freshly verified all
 262 artifact hashes, 662 source records and 1,377 result rows. A further serial
-request is being prepared to append immutable ring (`481c7e9`), VCA (`b75b4d6`)
-and any subsequent qualified production checkpoint to the existing nine,
-retaining all fixture settings and reporting rules. Its result is not yet claimed.
+request now appends immutable ring (`481c7e9`), VCA (`b75b4d6`) and final
+current-sample tail-pan (`83b7f76`) checkpoints to the existing nine. All twelve
+source/benchmark identities resolve exactly; the unchanged collector accepts
+36 serial rounds and all 27 request/source mutations are rejected. The 48 kHz,
+256-frame, 1,024-callback fixtures and frozen reporter remain unchanged.
+[Request validation](evidence/integration-20261101/cpu-final-request-validation.json)
+and [source map](evidence/integration-20261101/cpu-final-source-sha-map.json)
+are preserved before CI collection. Its timing result is not yet claimed.
 
 For the isolated FIR pair, the selected idle median falls **14.4316%**, and
 every after-round idle median is below every before-round median. Held and
@@ -285,25 +291,43 @@ remain separately labelled. [Full evidence and regression](CLICK_EVENT_CONTINUIT
 | Legacy default | `d56911a7c5f6953cd244457226b126cc567a538b` | Byte-identical |
 | Legacy tails | `d56911a7c5f6953cd244457226b126cc567a538b` | Byte-identical |
 | Circuit V1 numerics | `22d6a32c48c85f9b813506edcd856f73f4293c2d` | Byte-identical |
-| Circuit V2 audio/state | `b75b4d653b6ed6f0aa5ef8ee99b670d83e975250` | Byte-identical; strict gate passes |
+| Circuit V2 audio/state | `83b7f7670f000a95c6b44f96ffb0df3894755d14` | Byte-identical; strict gate passes |
 
-The latest intentional audio sequence is the connected VCA coupling output:
-audio **`b75b4d653b6ed6f0aa5ef8ee99b670d83e975250`**, followed by the separate
-full-SHA pin **`fb43c04e68e91eea120add3a89e6866ef1e64e01`**. Contracts
-`61adb02` and `8c5cf64` preceded evaluation. The existing capacitor pole and
-1e-30 numerical floor remain unchanged; only its physical discharge is kept
-in the mix, with explicit cold reset and MIDI All Sound Off zeroing state.
-The prior ring/precise-charge sequence is audio `481c7e9`, pin `8a85faa`.
+The latest intentional audio sequence is current-sample connected-tail modulation:
+audio **`83b7f7670f000a95c6b44f96ffb0df3894755d14`**, followed by the separate
+full-SHA pin **`14ef653ed60be67ff98656966f9181c5e9b6b4fc`**. Contracts
+`4e5dc03`, `9bb6ee0` and `f31bbb4` preceded the respective evaluations. A
+charged inactive tail consumes the current modern matrix pan before mixing;
+extra updates preserve the original scheduled note/RNG, mono-trigger,
+global-gate and expression-clearing ownership. Route removal clears cached pan,
+while steady no-pan, default, PURE and Legacy paths retain their cadence.
+The shared poly-MSEG runner advances actual elapsed time for pan; other routes
+sharing that runner see its current value. No cloned runner, fade or circuit
+coefficient change was introduced.
 
-All four comparisons pass `scripts/check-compat-gates.sh --strict-v2` after
-the VCA pin. The integrator independently compared the complete saved byte
-pairs again and verified the tested `src` subtree against the published audio
-commit; [raw strict result and capture hashes](evidence/integration-20261101/vca-first-strict.json)
-retain that receipt. The 59-check primitive and 361-check two-policy/rate/quality
-handoff grid pass; eight actual defects/contract mutations are rejected, and
-the restored controls pass. The separately identified nondefault matrix-to-pan
-tail cadence is under qualification before final landing; default and PURE
-do not exercise that extension.
+The 618-check engine grid and six direct scheduling checks pass. The existing
+59-check VCA primitive and 361-check handoff grid also pass. The fourteen-defect
+mutation audit is still running at this receipt and is not yet claimed complete.
+Three local before and after stock-baseline rounds were retained at 48 kHz / 256
+frames / 128 callbacks; these are diagnostic timing under shared-host load,
+separate from the requested 1,024-callback serial CI qualification.
+
+Both the non-strict comparison against preceding V2 `b75b4d6` and
+`scripts/check-compat-gates.sh --strict-v2` against current V2 `83b7f76`
+pass all four comparisons. The integrator independently compared the complete
+saved byte pairs and verified the tested `src` tree against the published audio
+commit; [raw strict result and capture hashes](evidence/integration-20261101/tail-pan-strict.json)
+retain that receipt. The standard V2 fixture does not activate the repaired
+nondefault pan route, which is covered separately by the registered tests.
+
+The preceding connected-VCA sequence remains audio **`b75b4d6`**, separate pin
+**`fb43c04`**, then strict receipt/STATUS **`ac93191`**. Its contracts `61adb02`
+and `8c5cf64` preceded evaluation, and all eight actual defects/contract
+mutations were rejected. The original 0.1 s capacitor pole and 1e-30 numerical
+floor remain unchanged; explicit cold reset and MIDI All Sound Off clear stored
+charge. Its [independent byte receipt](evidence/integration-20261101/vca-first-strict.json)
+is retained. Ring/precise-charge retention precedes it as audio `481c7e9`,
+separate pin `8a85faa`.
 
 The earlier intentional audio sequence for native Intel BBD history ownership was
 audio `1f842b9`, separate full-SHA pin `475063c`, then strict gate/status evidence
