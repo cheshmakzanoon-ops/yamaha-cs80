@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "kind": "software-test-receipt-not-hardware",
+  "preregistration_commit": "81bef644680fa18d28f049a8af5396544b4ac9e1",
+  "repair_commit": "91b4f72bf7083fa5798aeea7b00263227e88da0e",
+  "original_base": "058224fad844b8f51e211e3b820c0ae2d8f25762",
+  "files": {
+    "dc-acquisition-after.log": {
+      "sha256": "3c9bb8fc4a55c52a1ba233f306d50922fa2f828596ffddc5f5539414d1ca8efa",
+      "bytes": 2655
+    },
+    "dc-acquisition-before.log": {
+      "sha256": "26431b5ac7f51357f06d89e6421757b485c5fcb2390a823767e5c14fe8a65845",
+      "bytes": 7195
+    },
+    "dc-acquisition-guard-deleted.log": {
+      "sha256": "b73bc8f5aa6cdbe3828fc504fbb7470fdb72178bcd71568ee2b87c489da73b2f",
+      "bytes": 7069
+    },
+    "dc-acquisition-restored.log": {
+      "sha256": "9a70cd9380aba0182cfbf709470f084871a0f532c05b61c3a519c1a83482dede",
+      "bytes": 2655
+    }
+  }
+}

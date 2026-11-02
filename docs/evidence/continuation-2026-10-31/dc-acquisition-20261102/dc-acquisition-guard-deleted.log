@@ -1,0 +1,79 @@
+test_alignment_steps_remain_in_printed_order_when_both_given (test_adj_intake.MetadataOnly.test_alignment_steps_remain_in_printed_order_when_both_given) ... ok
+test_alignment_timestamps_cannot_reverse_adjustment_causality (test_adj_intake.MetadataOnly.test_alignment_timestamps_cannot_reverse_adjustment_causality) ... ok
+test_channel_two_cannot_misidentify_noise_source_as_no1 (test_adj_intake.MetadataOnly.test_channel_two_cannot_misidentify_noise_source_as_no1) ... ok
+test_cli_emits_only_missing_report_and_does_not_overwrite (test_adj_intake.MetadataOnly.test_cli_emits_only_missing_report_and_does_not_overwrite) ... ok
+test_cli_rejects_dc_from_ac_only_without_creating_report (test_adj_intake.MetadataOnly.test_cli_rejects_dc_from_ac_only_without_creating_report) ... FAIL
+test_control_node_quantity_and_noise_metadata_boundary (test_adj_intake.MetadataOnly.test_control_node_quantity_and_noise_metadata_boundary) ... ok
+test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) ... 
+  test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='FH') ... FAIL
+  test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='FL') ... FAIL
+  test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='IC10_VFC4') ... FAIL
+  test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='IC10_QADJ6') ... FAIL
+test_missing_measurements_remain_explicitly_missing (test_adj_intake.MetadataOnly.test_missing_measurements_remain_explicitly_missing) ... ok
+test_mixed_ac_waveform_and_dc_meter_remain_distinct (test_adj_intake.MetadataOnly.test_mixed_ac_waveform_and_dc_meter_remain_distinct) ... FAIL
+test_optional_context_is_labeled_not_invented (test_adj_intake.MetadataOnly.test_optional_context_is_labeled_not_invented) ... ok
+test_oversized_integer_token_is_a_controlled_schema_rejection (test_adj_intake.MetadataOnly.test_oversized_integer_token_is_a_controlled_schema_rejection) ... ok
+test_rejects_duplicate_keys_and_non_finite_json (test_adj_intake.MetadataOnly.test_rejects_duplicate_keys_and_non_finite_json) ... ok
+test_rejects_duplicate_node_or_checkpoint (test_adj_intake.MetadataOnly.test_rejects_duplicate_node_or_checkpoint) ... ok
+test_rejects_numeric_reading_without_provenance_or_sensing_metadata (test_adj_intake.MetadataOnly.test_rejects_numeric_reading_without_provenance_or_sensing_metadata) ... ok
+test_rejects_schema_version_bool_extra_fields_missing_and_bad_types (test_adj_intake.MetadataOnly.test_rejects_schema_version_bool_extra_fields_missing_and_bad_types) ... ok
+test_synthetic_only_numeric_branch_has_unverified_warning (test_adj_intake.MetadataOnly.test_synthetic_only_numeric_branch_has_unverified_warning) ... ok
+test_untrusted_strings_cannot_form_markdown_table_columns (test_adj_intake.MetadataOnly.test_untrusted_strings_cannot_form_markdown_table_columns) ... ok
+
+======================================================================
+FAIL: test_cli_rejects_dc_from_ac_only_without_creating_report (test_adj_intake.MetadataOnly.test_cli_rejects_dc_from_ac_only_without_creating_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-intake-dc-mutant-hrgegbyt/test_adj_intake.py", line 308, in test_cli_rejects_dc_from_ac_only_without_creating_report
+    self.assertEqual(result.returncode, 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='FH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-intake-dc-mutant-hrgegbyt/test_adj_intake.py", line 261, in test_dc_observation_requires_dc_capable_acquisition
+    with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: IntakeError not raised
+
+======================================================================
+FAIL: test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='FL')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-intake-dc-mutant-hrgegbyt/test_adj_intake.py", line 261, in test_dc_observation_requires_dc_capable_acquisition
+    with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: IntakeError not raised
+
+======================================================================
+FAIL: test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='IC10_VFC4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-intake-dc-mutant-hrgegbyt/test_adj_intake.py", line 261, in test_dc_observation_requires_dc_capable_acquisition
+    with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: IntakeError not raised
+
+======================================================================
+FAIL: test_dc_observation_requires_dc_capable_acquisition (test_adj_intake.MetadataOnly.test_dc_observation_requires_dc_capable_acquisition) (node='IC10_QADJ6')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-intake-dc-mutant-hrgegbyt/test_adj_intake.py", line 261, in test_dc_observation_requires_dc_capable_acquisition
+    with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: IntakeError not raised
+
+======================================================================
+FAIL: test_mixed_ac_waveform_and_dc_meter_remain_distinct (test_adj_intake.MetadataOnly.test_mixed_ac_waveform_and_dc_meter_remain_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-intake-dc-mutant-hrgegbyt/test_adj_intake.py", line 286, in test_mixed_ac_waveform_and_dc_meter_remain_distinct
+    with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: IntakeError not raised
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.325s
+
+FAILED (failures=6)
