@@ -44,3 +44,14 @@ compile and fail its intended ordinary assertions; original/restored positives
 must pass. Run focused Release and ASan/UBSan plus existing tuning regressions.
 This is bounded protocol parsing evidence, not complete MTS/DAW conformance or
 full final-source numerical qualification. Keep original source locks intact.
+
+## Separate local sanitizer capability boundary
+
+The first instrumented attempt aborted with LeakSanitizer reporting that it
+cannot operate under ptrace; no test summary was recorded. Preserve that run
+as unqualified, not a source-test failure or sanitizer PASS. The ordinary-only
+qualifier mode may continue the original five guard mutants without claiming
+sanitizer coverage. Separately rerun the IDENTICAL hashed instrumented binary
+with detect_leaks=0, explicitly limited to address/undefined checks. Leak
+checking and native sanitizer gates remain pending; no security/ptrace change
+is proposed. Agent5 independently reviewed this diagnostic scope.

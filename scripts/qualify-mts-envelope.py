@@ -21,6 +21,7 @@ def locked(path):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ("source","out","lock"):p.add_argument("--"+name,type=Path,required=True)
+    p.add_argument("--mode",choices=("full","ordinary"),default="full")
     a=p.parse_args()
     header=a.source/"src/core/Tuning.h";test=a.source/"tests/MtsEnvelopeTests.cpp"
     cases=[
@@ -43,7 +44,7 @@ def main():
         a.out.mkdir(parents=True,exist_ok=True)
         contract={"head":subprocess.check_output(["git","rev-parse","HEAD"],cwd=a.source,text=True).strip(),
           "source_tree":subprocess.check_output(["git","rev-parse","HEAD:src"],cwd=a.source,text=True).strip(),
-          "header_sha256":sourceHash,"test_sha256":testHash,"checks":2426,
+          "header_sha256":sourceHash,"test_sha256":testHash,"checks":2426,"requested_mode":a.mode,
           "compiler":subprocess.check_output(["g++","--version"],text=True).splitlines()[0],
           "mutants":[{"name":n,"old":o,"new":v,"ordinary_failures":f,"required_assertions":q} for n,o,v,f,q in cases]}
         (a.out/"contract.json").write_text(json.dumps(contract,indent=2)+"\n")
@@ -71,7 +72,8 @@ def main():
         return record
     results=[]
     with locked(a.lock):results.append(run("positive",a.source/"src",["-O2"],0,[]))
-    with locked(a.lock):results.append(run("sanitized",a.source/"src",["-O1","-g","-fsanitize=address,undefined","-fno-omit-frame-pointer"],0,[]))
+    if a.mode == "full":
+        with locked(a.lock):results.append(run("sanitized",a.source/"src",["-O1","-g","-fsanitize=address,undefined","-fno-omit-frame-pointer"],0,[]))
     for name,old,new,failures,required in cases:
         with locked(a.lock):
             assert source.count(old)==1
@@ -86,5 +88,6 @@ def main():
         (a.out/"restored-positive.log").write_text(result.stdout+result.stderr)
         assert result.returncode==0 and "2426 MTS envelope checks, 0 failures" in result.stdout
         (a.out/"summary.json").write_text(json.dumps(dict(contract,results=results,restored_positive_sha256=sha(positive)),indent=2)+"\n")
-        print("Original/restored2426 checks, sanitizer2426 checks and all5 actual guards qualified.",flush=True)
+        print("Original/restored2426 checks and all5 actual guards qualified; sanitizer phase "
+              + ("included" if a.mode == "full" else "NOT requested in this ordinary-only run"),flush=True)
 if __name__=="__main__":main()
