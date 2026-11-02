@@ -1,8 +1,8 @@
 # Numerical release qualification — preregistered additive guard (DRAFT)
 
-**Registered 2026-11-02. Implementation and test fixture are on an isolated
-review branch, not on `main`, not a release workflow, and not permission to
-dispatch.** Existing build/DSP/screenshot pass checks, immutable main-head
+**Registered 2026-11-02. A candidate fourth numerical producer workflow now
+exists on an isolated review branch, NOT on `main`, NOT yet run at exact main,
+and NOT permission to dispatch or release.** Existing build/DSP/screenshot pass checks, immutable main-head
 checks, screenshot-only ancestry, and the original full-engine-audit
 preflight/finalize gate remain necessary and are not weakened.
 
@@ -22,15 +22,18 @@ One complete registered `--suite all --rates 44100,48000,96000` audit must
 contain exactly 566 phrase, 168 alias, 102 FX, 40 latency and 9 causal rows
 (885 total), both Source and Legacy policy coverage and all three sample
 rates. The gate checks original raw-file SHA-256/length/count against the
-summary and source-locked provenance, `audit.complete` against its digest and
+summary and source-locked provenance, the five original ordered CSV headers,
+the 222 factory-program/11 physical tone-pair identities, alias/FX/latency
+case identities, `audit.complete` against its digest and
 provenance digest, no nonfinite exported values, and every V1 target's
 **independently recalculated** max and number of exceedances. A successful
 capture or full-audit CI job is not numerical PASS.
 
 The same-host CPU comparison requires **three complete before rounds and
 three complete after rounds**, 51 CSV rows and 27 cases per round, the exact
-48 kHz/256-frame isolated warmed-held workload, at least 1,024 callbacks per
-held phase, the same 11 paired-tone identities and one quiet-idle identity,
+48 kHz/256-frame isolated warmed-held workload, 1,024 callbacks per
+held phase, the registered complete 51-row scenario/mode/selector/phase matrix
+including all off-target cases, the same 11 paired-tone identities and one quiet-idle identity,
 the same benchmark driver/compiler/flags/runner job, complete finite rows
 and same-source checksum/peak/RMS textual consistency. For each fixture the
 lowest of its three after-run median RTFs is selected; its p99 and deadline
@@ -40,9 +43,12 @@ These are callback real-time factors, not aggregate operating-system CPU.
 The before source is fixed to
 `7c864f266a939aa2a42422440dd4c1c0cabe3814` and the common benchmark
 source blob to `92ea7e0b1801bf98fccaed21c13e676890039c94`; neither can be
-substituted with a convenient faster reference.
+substituted with a convenient faster reference. Its frozen benchmark source
+file SHA-256 is `3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74`
+and the 51-row registered case identity SHA-256 is
+`8430527f7cad6540179c4024e1834e57f483faa045a6f28521354e7b35638f4b`.
 
-## Required trusted producer (not yet wired into CI)
+## Required trusted producer (local fourth-workflow candidate, not on main)
 
 1. An exact-main workflow checks out reviewed source commit `M`, obtains
    `git rev-parse HEAD` and `git rev-parse HEAD:src` from the checked-out
@@ -68,9 +74,12 @@ substituted with a convenient faster reference.
    `--expected-main-sha`, `--expected-source-tree-sha`, and
    `--expected-runner-job-id`, plus source identity, original audit directory,
    `--before-round` ×3 and `--after-round` ×3. It fails closed and emits a
-   machine-readable summary. Production use requires the workflow to verify
-   artifact digests and the actual runner receipt source, not only a copied
-   self-asserted JSON document.
+   machine-readable summary. The new local workflow builds both producers
+   in this **same GitHub Actions job** and hands the numerical validator the
+   resulting raw CSV paths directly; it never trusts a downloaded bundle's
+   self-asserted receipt strings. The source preparer binds reviewed SHA,
+   original before benchmark blob, registered `src` tree and main's current
+   ref; the job rechecks that main is still at its event SHA before success.
 5. The isolated `scripts/dispatch-reviewed-release.cjs` addition now expects
    a **fourth** exact-main/push success called
    `release-numerical-qualification.yml`, in addition to its unchanged build,
@@ -78,22 +87,21 @@ substituted with a convenient faster reference.
    PR-only or from another source SHA, dispatch is denied. The original
    screenshot-only `S` ancestry and duplicate-release check still apply;
    a successful capture job does not substitute for the fourth workflow.
-   This guard must **not** land on main ahead of its fully tested trusted
-   numerical producer workflow, but in the meantime the missing workflow is
-   intentionally fail-closed.
+   Main still lacks this numerical workflow and the candidate has never run
+   at exact main. Therefore release qualification remains fail-closed.
 
 ### Manual and tag release entrypoints (isolated preflight proposal)
 
-Review exposed an independent bypass: `release.yml` accepts both direct
-`workflow_dispatch` and `push` of `v*` tags, so a fourth check in the
-separate dispatcher alone does not protect installer construction. The
-isolated `scripts/preflight-release-entrypoint.cjs` and `release.yml`
+Review exposed an independent bypass in the old `release.yml`: direct
+`workflow_dispatch` and `push` of `v*` tags could both build installers.
+The isolated manual-only candidate removes `push.tags` entirely and accepts
+only reviewed owner `workflow_dispatch` on exact main. The
+`scripts/preflight-release-entrypoint.cjs` and `release.yml`
 changes reuse the **same** reviewed main/ancestry/four-workflow proof but
 require `.github/release-request.json` from the explicit reviewed request
-branch. They reject direct manual events not on `refs/heads/main`, require
-manual event SHA = checked-out S, and for tag pushes require a semver `vX.Y.Z`
-ref whose **peeled** lightweight/annotated target and event SHA both equal
-the checked-out approved current main S. An existing active or successful
+branch. They reject manual events not on `refs/heads/main`, require
+manual event SHA = checked-out S, and categorically reject tag events.
+An existing active or successful
 release for S also blocks. Every installer job `needs: preflight`, checks
 out the exact S from its verified output, and rechecks that main has not
 moved before uploading artifacts. The shared screenshot-only `M→S` comparison
@@ -147,18 +155,17 @@ PR, changed head/merge SHA, non-main PR base or a request whose validated
 commit differs from the actual PR merge commit, even if the four workflow
 statuses happen to be green. A reviewed screenshot-only current-main `S`
 after the exact PR merge `M` remains permitted by the existing ancestry gate.
-Both independent installer entrypoints now also require authenticated
+Both installer-request code paths now also require authenticated
 `context.actor` to be the repository owner. Direct manual release needs an
-explicit full request commit SHA input; the tag-push path has no manual input
-and instead freezes the current request-branch tip at the start of preflight.
+explicit full request commit SHA input. The earlier tag-push request path
+is disabled outright by the candidate release workflow.
 Both read only the exact JSON file via GitHub API at that immutable commit,
 verify the branch tip and its JSON-only diff from approved `S`, the
 `requested_by` owner and merged PR6 identity, then require the same four
 successful main-push workflows. A mutable branch or unapproved actor cannot
 substitute release-script/YAML content in the current definition. This does
 **not** retroactively protect old `release.yml` definitions selected from
-historical refs, and a tag-push request snapshot is not independent proof of
-prior owner review: protected `v*` tag creation and workflow ref controls
+historical refs: protected `v*` tag creation and workflow ref controls
 remain owner-admin release blockers.
 
 Red-first test cases reject forged branch scripts/YAML, extra diffs, stale
@@ -170,7 +177,7 @@ unprotected owner-level branch/tag settings remain owner-admin blockers;
 manually choosing `main` in this new workflow must not be represented as
 retroactively disabling old workflow definitions.
 
-### Producer-workflow integration still blocked
+### Producer-workflow qualification still blocked
 
 The frozen V1 full-audit preflight is source-tree-locked by registration
 commit `00da4498792523cf8d97fd40c17e12f215e190b8` to production `src`
@@ -178,15 +185,16 @@ tree `7dd159d491012fd47b46c0aa651e86ea959ca289`. Any future production
 DSP fix needs **new preregistered exact-source capture evidence** while
 keeping that historical gate and its nine limits intact. A workflow which
 simply downloads the old 39ae6c artifact, alters the frozen registration,
-or treats a green audit capture as PASS would be invalid. Therefore a new
-`release-numerical-qualification.yml` workflow is deliberately **not yet
-supplied**. It must be preregistered and tested once M, source identity,
-original V1 reporter compatibility and the exact-source audit pipeline
-are known; it should run the complete audio audit and 3+3 CPU producer,
-verify raw same-run artifacts/digests and source identity in a final
-qualification job, and go green only after `release_numerical_gate.py`
-returns `pass=true`. Review its actual job/runner provenance and mutation
-controls before enabling release dispatch.
+or treats a green audit capture as PASS would be invalid. A local candidate
+`release-numerical-qualification.yml` now runs one exact-main `push` job:
+frozen full audit, source-registered before/after CPU build and 3+3 rounds,
+then strict numerical validation of the raw same-run files. Source identity
+and provenance are bound to the workflow's checked-out HEAD/`src` tree,
+actual job ID and current-main SHA; no external receipt bundle is accepted.
+Unit and structural-mutation tests pass, but **the workflow has not run on
+main**. Actual CI compilation, provenance, wall-clock feasibility and
+numerical targets need independent verification before any integration or
+release; unresolved original sound and CPU gates remain hard blockers.
 
 ## Red/green verification
 
@@ -197,8 +205,12 @@ rejects missing/relaxed scopes, falsified maxima/pass flags, honest red
 reports, nonfinite data, wrong source/tree/reporter/manifest digest, quick
 or incomplete capture, missing/mixed CPU rounds, altered checksums, lost
 fixture rows, broken source ancestry, and median held/idle overruns. It
-additionally tests selected-round p99/miss attribution. The original 885-row
-archive is tested **unchanged** when `CS80_ORIGINAL_AUDIT_DIR` is provided;
+additionally tests selected-round p99/miss attribution, original ordered CSV
+headers, complete 27-case CPU matrix and six-round counterfeit scenarios.
+An older committed pre-ring local 885-row structural fixture at source
+`1e5893854c3d0d9b0aa1ab1c725fd2e8084717f6` is checked independently;
+**it is not** the authoritative frozen final capture. The latter is tested
+**unchanged** when `CS80_ORIGINAL_AUDIT_DIR` points to the 39ae artifact;
 it correctly fails at Source phrase retrigger.
 
 The frozen original source audit is from source `39ae6c2684456950302cb4ed10ecfae980c37ddd`, with ZIP SHA-256

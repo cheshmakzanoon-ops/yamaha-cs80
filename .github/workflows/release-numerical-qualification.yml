@@ -1,0 +1,118 @@
+name: Release numerical qualification (exact-main evidence and acceptance)
+
+# This independent *fourth* producer is required by the reviewed release
+# dispatch guard. It is source-locked and cannot be invoked by tags, PRs,
+# manual installer requests or artifacts from other jobs. A successful build,
+# audit capture or CPU collection does not imply numerical acceptance.
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-numerical-qualification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trusted-source-and-same-host-evidence:
+    name: Exact-main 885-row audit and same-host 3+3 CPU acceptance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Reject non-main events, stale main, or wrong source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/main
+          test "$GITHUB_REPOSITORY" = cheshmakzanoon-ops/yamaha-cs80
+          git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse refs/remotes/origin/main)" = "$GITHUB_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+
+      - name: Run preregistered mutation controls and original audit source preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/release/*.test.cjs
+          python -m unittest discover -s tests/release -p 'test_*.py'
+          python scripts/full_engine_audit_gate.py --self-test
+          python scripts/full_engine_audit_gate.py --preflight
+
+      - name: Generate current-main registration, never external CPU receipts
+        run: >
+          python scripts/prepare_release_numerical_request.py
+          --repo . --out "${{ runner.temp }}/cs80-numerical-registration"
+
+      - name: Build frozen original engine-audit producer from exact source
+        run: |
+          cmake -S . -B build-core -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON
+          cmake --build build-core --target cs80_engine_audit --parallel 2
+
+      - name: Run the entire original 885-row, three-rate audio audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          ./build-core/cs80_engine_audit --out artifacts/audit --suite all --rates 44100,48000,96000 2>&1 | tee artifacts/audit-run.log
+
+      - name: Complete raw audit provenance and frozen original reporter
+        run: python scripts/full_engine_audit_gate.py --finalize
+
+      - name: Build and time before and after on ONE host, 3+3 full rounds
+        run: >
+          python scripts/run_release_cpu_producer.py
+          --repo .
+          --request "${{ runner.temp }}/cs80-numerical-registration/cpu-request.json"
+          --work "${{ runner.temp }}/cs80-numerical-build-work"
+          --out "${{ runner.temp }}/cs80-numerical-cpu"
+
+      - name: Check original numerical targets and every raw timing fixture
+        shell: bash
+        env:
+          CPU_OUT: ${{ runner.temp }}/cs80-numerical-cpu
+          REG_DIR: ${{ runner.temp }}/cs80-numerical-registration
+        run: |
+          set -euo pipefail
+          EXPECTED_SRC_TREE="$(git rev-parse HEAD:src)"
+          python scripts/release_numerical_gate.py \
+            --identity "$REG_DIR/source-identity.json" \
+            --repo . \
+            --expected-main-sha "$GITHUB_SHA" \
+            --expected-source-tree-sha "$EXPECTED_SRC_TREE" \
+            --expected-runner-job-id "$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT/$GITHUB_JOB" \
+            --audit-dir artifacts/audit \
+            --before-round "$CPU_OUT/before/round-1" \
+            --before-round "$CPU_OUT/before/round-2" \
+            --before-round "$CPU_OUT/before/round-3" \
+            --after-round "$CPU_OUT/after/round-1" \
+            --after-round "$CPU_OUT/after/round-2" \
+            --after-round "$CPU_OUT/after/round-3"
+          # Reject PASS if main advanced while this expensive job ran.
+          git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main
+          test "$(git rev-parse refs/remotes/origin/main)" = "$GITHUB_SHA"
+
+      - name: Preserve raw audit and CPU provenance even when numerical targets fail
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: source-locked-numerical-evidence-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            artifacts/
+            ${{ runner.temp }}/cs80-numerical-registration/
+            ${{ runner.temp }}/cs80-numerical-cpu/
+          if-no-files-found: warn
+          retention-days: 30
