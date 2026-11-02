@@ -66,6 +66,16 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_touch_idle_exact_oracle_tests PRIVATE cs80_core)
     add_test(NAME cs80_touch_idle_exact_oracle_tests COMMAND cs80_touch_idle_exact_oracle_tests)
     set_tests_properties(cs80_touch_idle_exact_oracle_tests PROPERTIES TIMEOUT 300)
+    # Original-source sine/drift selection, including IEEE signed-zero and FP
+    # exception observations, frozen before any proposed engine fast branch.
+    add_executable(cs80_drift_sine_exact_oracle_tests tests/DriftSineExactOracleTests.cpp)
+    target_include_directories(cs80_drift_sine_exact_oracle_tests PRIVATE src tests)
+    target_link_libraries(cs80_drift_sine_exact_oracle_tests PRIVATE cs80_core)
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(cs80_drift_sine_exact_oracle_tests PRIVATE -frounding-math)
+    endif()
+    add_test(NAME cs80_drift_sine_exact_oracle_tests COMMAND cs80_drift_sine_exact_oracle_tests)
+    set_tests_properties(cs80_drift_sine_exact_oracle_tests PROPERTIES TIMEOUT 300)
     foreach(cs80_scalar_suite fixed moving state row fp)
         add_test(NAME cs80_exact_scalar_filter_${cs80_scalar_suite}_tests
                  COMMAND cs80_exact_scalar_filter_tests --suite ${cs80_scalar_suite})

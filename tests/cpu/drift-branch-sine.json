@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "preregistered_utc": "2026-11-02",
+  "status": "Test-only original-source preregistration; no production Engine source, hardware law, CPU speedup, backend or acceptance pin has changed.",
+  "baseline_commit": "5f7b9f21622ad7a34757520c2448c7721dc122d2",
+  "baseline_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "site": "src/core/Engine.cpp tickRanks; original driftVoice at 2197 and sourcePerformance thermal-vs-sine term at 2215-2217",
+  "source_original": {
+    "git_blob": "5e7271e9c545149d450ec348049cdddc9ba2d639",
+    "sha256": "a874c328d623bda38f4adffea59ac442ca721c46465f829db1c68ef20fd52a28",
+    "independent_original_arithmetic": "tests/fixtures/drift_sine/OriginalDrift.h",
+    "frozen_fixture_sha256": "77b5d26b69460ed91263c397902957e4aed8f5fc7d5a5b0712e77af934ef1b17",
+    "assertion_driver": "tests/DriftSineExactOracleTests.cpp",
+    "mutation_runner": "tests/cpu/run-drift-sine-negative-controls.py",
+    "independence": "The fixture carries the literal original drift*sin(2pi*(driftPhase+voiceDrift))*0.9 and thermal selection under a different namespace. It invokes no candidate helper and must not be regenerated from edited source. Full-engine audio and readout source fingerprints were captured before any production source edit. This is a software regression witness, not a hardware drift identification."
+  },
+  "prospective_candidate": {
+    "target": "Narrow conditional omission of truly unconsumed sine for sourcePerformance thermal drift, plus separately qualified signed-zero drift path in PURE isolation/Legacy without changing audible pitch or FP side effects.",
+    "isolation_caveat": "The hard baseline suite sets parityMode=1 and Engine::buildSettings forces effective global.drift=+0.0f. A thermal-only optimization cannot reduce the hard isolation held CPU at all. A naive drift==0 shortcut has been deliberately killed by the frozen signed-zero test.",
+    "required_same_state": "All audible samples, filter/oscillator states, pitch CV/readouts, voice/allocator state, source Q/LC ports, output capacitor/tail states, and saved/captured Legacy/V1/V2 bytes remain bit-exact. No re-pin, altered tolerance, new drift law or source-model switch.",
+    "fp_rules": "Preserve IEEE driftVoice sign of zero when its bit pattern is observed by a consumer and preserve resultant driftTerm/pitch behavior. Preserve caller FE sticky exception bits, rounding mode and supported MXCSR FTZ/DAZ control bits. Do not silently discard sinf's inexact exception, introduce unguarded FE_INVALID/UNDERFLOW, force a global FP mode or substitute rounded trig approximations. Unsupported modes must run exact original scalar expression.",
+    "scope_and_avoidance": "No destructive idle skip, no omitted touch/bus/wake/chorus/EG clocks, no performance rendering-mode switch, no reordering rank iteration, no fast-math or floating contraction change."
+  },
+  "frozen_positive_control": {
+    "status": "PASS on unchanged original source; no optimized backend exists yet",
+    "rounding": ["FE_TONEAREST", "FE_DOWNWARD", "FE_UPWARD", "FE_TOWARDZERO"],
+    "x86_mxcsr_denormals": ["gradual", "FTZ", "DAZ", "FTZ+DAZ"],
+    "independent_lanes": 8,
+    "drifts": ["+0", "-0", "+0.25", "-0.25", "float subnormal minimum"],
+    "phases": "256 per lane, including 0, -0, 0.5, nextafter(0.5, both directions), nextafter(1, 0), 1 and deterministic fractional phase samples. Each lane offset uses original float(i)*0.73f.",
+    "selection_modes": ["isolation historical sine", "sourcePerformance thermal model0", "sourcePerformance worn sine model1"],
+    "fp_mode_cases": 16,
+    "sine_pairs": 163840,
+    "zero_pairs": 94957,
+    "selection_pairs": 491520,
+    "total_exact_field_and_fp_checks": 1638423,
+    "bit_mismatches": 0,
+    "actual_optimized_source_site_calls": 0,
+    "engine_original": {
+      "host": "Linux x86_64 GCC13.3.0 glibc2.39 original source, FE_TONEAREST, MXCSR gradual underflow",
+      "host_rate": 48000,
+      "frames_per_policy_per_partition": 24576,
+      "partitions": [1, 17, 256],
+      "policies": ["PURE isolation forced drift0", "sourcePerformance thermal drift0", "sourcePerformance thermal +0.25", "sourcePerformance worn-sine +0.25", "Legacy historical sine +0.25"],
+      "events": "Eight held notes beginning frame17, release at8193, idling and eight-voice reacquisition at22529, release23553.",
+      "audio_plus_readouts": "Every interleaved stereo float sample plus 256-frame checkpoints of all eight public VoiceInfo and both RankInfo fields, source Q/LC readouts and buses, three output capacitor/jack tap states, and sub oscillator rate.",
+      "source_frozen_fingerprint_fnv64": [
+        {"policy": "isolation", "audio": "ece24f4e0b81d431", "state": "cbe3430e20a0cf6b"},
+        {"policy": "performance_drift0_thermal", "audio": "ece24f4e0b81d431", "state": "cbe3430e20a0cf6b"},
+        {"policy": "performance_drift025_thermal", "audio": "945bd7421116ecbd", "state": "710e1db62e155520"},
+        {"policy": "performance_drift025_worn", "audio": "44cfefe44b55c0c1", "state": "6adbecc0c679115a"},
+        {"policy": "legacy_drift025", "audio": "f5574236042a1539", "state": "ace3f1e915a0094d"}
+      ],
+      "cross_platform": "Original-host FNV64 golden asserted only for Linux x86_64 GCC13.3 glibc2.39. Other hosts enforce original independent sine bits and intra-host 1/17/256 partition parity; recapture frozen original compiled with their toolchain before testing any optimized source there. FNV64 does not mathematically prove collision-free bytes; strict V2 original captures remain mandatory."
+    }
+  },
+  "negative_controls": {
+    "status": "Six compiled and executed at O3, each ordinary exit1 on named specific first FAIL; none are source mutation tests of a future candidate.",
+    "CS80_DRIFT_MUTATE_ZERO_SIGN": "drift.signedZeroAndSineBits",
+    "CS80_DRIFT_MUTATE_UNSAFE_ZERO_SKIP": "drift.signedZeroAndSineBits",
+    "CS80_DRIFT_MUTATE_CROSS_LANE": "drift.signedZeroAndSineBits",
+    "CS80_DRIFT_MUTATE_FLAGS": "drift.fpStickyAndExceptions",
+    "CS80_DRIFT_MUTATE_THERMAL": "drift.thermalOrWornTermBits",
+    "CS80_DRIFT_MUTATE_ENGINE_GOLDEN": "engine.frozenAudioBits (all three partitions identically corrupted; partition self-comparison stays green)",
+    "future_actual_source_mutations": "Compile optimized Engine.cpp with disabled real fast branch, changed signed-zero sign, discarded FE_INEXACT, altered thermal selection, wrong voice offset and skipped first wake; all must fail normal exit1 real source assertions."
+  },
+  "actual_source_site_work_witness_after_implementation": {
+    "status": "Required after source change, not yet present; do not infer work from test-only wrapper counters.",
+    "method": "Compile a separate test-only instrumented Engine.cpp (without production telemetry), increment actual tickRanks site counts immediately before real sinf evaluation and each proven optimized branch. Require matching per-voice active/idle input-class counts; independently inspect final optimized binary assembly and dynamic libm call path where supported.",
+    "minimum": "On original hard isolation 8-held drift0 and sourcePerformance thermal models, at least one actual source fast entry and strictly fewer real site sinf evaluations than the original full-path source under the same samples/events. On drift nonzero and unsupported FP modes report scalar fallback counts. A source/line synthetic wrapper count alone is insufficient.",
+    "negative": "Force the engine's original sine path while falsely reporting fast calls; test must fail a named source-site-work assertion."
+  },
+  "cpu_release_gates": {
+    "original_before": {
+      "fixture": "source-core-timing-v2, --suite baseline, rate48000 block256 callbacks1024, unchanged 51 rows, 1s warmup",
+      "rounds": ["artifacts/cpu-drift-sine-before-20261102-r1", "artifacts/cpu-drift-sine-before-20261102-r2", "artifacts/cpu-drift-sine-before-20261102-r3"],
+      "host": "INTEL XEON PLATINUM 8573C, KVM, 9 vCPU, GCC13.3.0",
+      "start_utc": "2026-11-02T02:18:32Z",
+      "end_utc_approx": "2026-11-02T02:24:35Z",
+      "benchmark_binary_sha256": "3fad41e7ff9659e7dcc4c1a73ce771892de74dc7386eea24d8185635236808a5",
+      "per_round_source_11_pair_held_median_rtf": [0.8582895, 0.75276375, 0.72935325],
+      "source_11_pair_median_of_preset_medians": 0.730701,
+      "per_round_source_quiet_idle_median_rtf": [0.069322125, 0.059082375, 0.0622126875],
+      "source_quiet_idle_three_round_median_rtf": 0.0622126875,
+      "per_round_source_held_deadline_misses_of_11264": [3142, 2368, 1368],
+      "worst_source_held_p99_rtf_per_round": [36.877030125, 5.0716125, 3.3243298125],
+      "source_non_timing_checksums": "All 51 fixture rows had identical checksum, peak, RMS and other non-timing fields across all three runs; all outliers preserved.",
+      "outcome": "RED: original held target0.15-0.20 and quiet idle <=0.02 not met; no candidate speedup claimed."
+    },
+    "after_required": "Only after source candidate and full frozen/mutant/original analog/Legacy-tails/V1/V2 strict byte gates pass, obtain another exclusive same-host quiet window and run unchanged 51-case source-core-timing-v2 at least three serial rounds. Preserve all raw rows, p99, deadline misses, moving/idle/Legacy anchors, checksums and tail/voice fields; no trimming outliers or cherry-picking easy preset cases.",
+    "absolute_target": "Eight warmed-held 48000/256 source RTF 0.15-0.20, quiet-idle RTF <=0.02, with original clock and sound requirements unchanged. If not met, label candidate rejected and do not integrate source into feature/main, re-pin, merge or release."
+  }
+}
