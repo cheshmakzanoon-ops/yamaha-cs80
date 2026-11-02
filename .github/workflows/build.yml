@@ -107,6 +107,8 @@ jobs:
             packages/native-installer-ci/*.log
             packages/native-installer-ci/*receipt.json
             packages/native-installer-ci/document-verification.json
+            packages/native-installer-ci/binary-input-manifest.json
+            packages/native-installer-ci/binary-verification.json
           if-no-files-found: warn
 
   pluginval:
@@ -568,6 +570,8 @@ jobs:
             packages/native-installer-ci/*.log
             packages/native-installer-ci/*receipt.json
             packages/native-installer-ci/document-verification.json
+            packages/native-installer-ci/binary-input-manifest.json
+            packages/native-installer-ci/binary-verification.json
           if-no-files-found: warn
 
   windows-wrapper-contract:
@@ -696,6 +700,8 @@ jobs:
             packages/native-installer-ci/*.log
             packages/native-installer-ci/*receipt.json
             packages/native-installer-ci/document-verification.json
+            packages/native-installer-ci/binary-input-manifest.json
+            packages/native-installer-ci/binary-verification.json
           if-no-files-found: warn
 
   pluginval-windows:

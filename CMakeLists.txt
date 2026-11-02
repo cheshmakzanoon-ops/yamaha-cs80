@@ -43,10 +43,13 @@ if (CS80_BUILD_TESTS)
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_native_installer_payload.py)
     add_test(NAME cs80_installer_binary_payload_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_installer_binary_payload.py)
+    add_test(NAME cs80_installer_evidence_workflow_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_installer_evidence_workflow.py)
     add_test(NAME cs80_macos_package_architecture_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_macos_package_architecture.py)
     set_tests_properties(cs80_installed_distribution_docs_tests cs80_native_installer_payload_tests
-                         cs80_installer_binary_payload_tests cs80_macos_package_architecture_tests PROPERTIES TIMEOUT 60)
+                         cs80_installer_binary_payload_tests cs80_installer_evidence_workflow_tests
+                         cs80_macos_package_architecture_tests PROPERTIES TIMEOUT 60)
     # Frozen scalar-kernel oracle: registered in c56726f before optimization.
     set(cs80_scalar_oracle_dir "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle/exact_scalar_frozen")
     set(cs80_scalar_oracle_inputs "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels/manifest.json")
