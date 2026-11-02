@@ -57,3 +57,27 @@ checks Standalone bytes/scope; this is not universal cross-platform proof. Actua
 macOS package expansion and Windows install/uninstall await native Actions.
 Neither these tests nor the packaging worktree's published predecessor a6 prove
 native execution of this unpublished increment.
+
+## Older-Python directory reparse amendment
+
+Final amendment source `bb2d52da1c52ee63c347e54d589f30a2482ec700` retains the
+preceding scope, and rejects directory reparse aliases without relying on the
+newer `Path.is_junction` API. Python documents that method as added in 3.12, while
+its Windows stat attributes/constants are already present in the supported 3.10
+API: [pathlib](https://docs.python.org/3/library/pathlib.html#pathlib.Path.is_junction)
+and [stat](https://docs.python.org/3.10/library/stat.html#stat.FILE_ATTRIBUTE_REPARSE_POINT).
+The verifier reads lstat directory attributes at roots, each component ancestor
+and inventory directories. Ordinary in-bundle relative symlinks retain their
+separate exact-target checks.
+
+Three explicit metadata-simulation controls failed ordinarily before the repair.
+The final clean replay passes 30 helper tests, 13 actual helper-source mutants
+(including three intended failures when this new guard is removed), the same
+12 notice/controller mutants and all six focused CTests. Both intentional crash
+controls remain refused. Raw logs and hashes are in `reparse-amendment/`.
+These simulated Windows attributes are not an actual Windows junction test.
+
+Independent review of d55 approved the bounded component-level checker and
+replayed 27 helper/11 controller tests; review of this small amendment is pending.
+The inventory covers declared binary components and notices, **not every possible
+extra file elsewhere in an installer or a whole-package security audit**.

@@ -1,0 +1,30 @@
+test_debian_copyright_copy_is_exact (test_installed_distribution_docs.InstalledDistributionDocsTests.test_debian_copyright_copy_is_exact) ... ok
+test_duplicate_manifest_row (test_installed_distribution_docs.InstalledDistributionDocsTests.test_duplicate_manifest_row) ... ok
+test_exact_extracted_payload (test_installed_distribution_docs.InstalledDistributionDocsTests.test_exact_extracted_payload) ... ok
+test_linked_document_parent_rejected (test_installed_distribution_docs.InstalledDistributionDocsTests.test_linked_document_parent_rejected) ... ok
+test_manifest_cannot_claim_release_acceptance (test_installed_distribution_docs.InstalledDistributionDocsTests.test_manifest_cannot_claim_release_acceptance) ... ok
+test_manifest_digest_mismatch (test_installed_distribution_docs.InstalledDistributionDocsTests.test_manifest_digest_mismatch) ... FAIL
+test_missing_manifest_row (test_installed_distribution_docs.InstalledDistributionDocsTests.test_missing_manifest_row) ... ok
+test_missing_required_document (test_installed_distribution_docs.InstalledDistributionDocsTests.test_missing_required_document) ... ok
+test_rehashed_counterfeit_is_not_a_source_notice (test_installed_distribution_docs.InstalledDistributionDocsTests.test_rehashed_counterfeit_is_not_a_source_notice) ... ok
+test_rehashed_source_text_cannot_claim_qualification (test_installed_distribution_docs.InstalledDistributionDocsTests.test_rehashed_source_text_cannot_claim_qualification) ... ok
+test_unexpected_document (test_installed_distribution_docs.InstalledDistributionDocsTests.test_unexpected_document) ... ok
+test_unsafe_manifest_path (test_installed_distribution_docs.InstalledDistributionDocsTests.test_unsafe_manifest_path) ... ok
+test_wrong_expected_checkout (test_installed_distribution_docs.InstalledDistributionDocsTests.test_wrong_expected_checkout) ... ok
+test_wrong_source_identity (test_installed_distribution_docs.InstalledDistributionDocsTests.test_wrong_source_identity) ... ok
+test_wrong_source_tree (test_installed_distribution_docs.InstalledDistributionDocsTests.test_wrong_source_tree) ... ok
+test_wrong_source_url (test_installed_distribution_docs.InstalledDistributionDocsTests.test_wrong_source_url) ... ok
+
+======================================================================
+FAIL: test_manifest_digest_mismatch (test_installed_distribution_docs.InstalledDistributionDocsTests.test_manifest_digest_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installed_distribution_docs.py", line 106, in test_manifest_digest_mismatch
+    with self.assertRaisesRegex(ValueError, "digest|hash"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.821s
+
+FAILED (failures=1)
