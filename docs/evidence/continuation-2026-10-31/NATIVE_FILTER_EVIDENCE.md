@@ -144,6 +144,32 @@ This is a further **HP input** reading, not the distinct resolved
 **LP CP7 -> 150 kΩ -> AI1, with 33 kΩ shunt** reading. No documented service
 test has been fixed by tracing the NI branch.
 
+### 2026-11-02 CP3 downstream VCA-input continuation
+
+M41 printed p41 shows **IC11 LP output pin 15 -> CP8(56)**. M44 p44
+continues **CP8(56) -> CP3(29)** on the same M11/M12 board. Back on M41,
+**CP3(29) -> 1 µF/50 V nonpolar coupling capacitor (`1/50 NP`) -> 100 kΩ
+series resistor -> IC4 (IG00151 VCA) `+IN` pin 3**. There is no directly
+drawn ground resistor on CP3 itself. **LP1(27)** is a *separate* control
+branch through 100 kΩ to IC4 `LI` pin 2, with 0.01 µF from that control
+pin to ground; it is not a CP3 audio shunt. IC4 `OUT` pin 8 proceeds to
+the downstream VCA output bus/CP4(28). The 100 kΩ and coupling capacitor
+on the **far side** of CP3 are source-visible, but **the IC4 input impedance
+and the IC11 output impedance under service conditions are not established**;
+this tracing does not supply a quantitative CP3 load or an absolute Vpp.
+
+The CP3/IC4 zoom is native M41 source box `[2430,350,3380,1150]` enlarged
+2×, PNG SHA-256
+`cfdc96525597ce55df8ff3a385ca3058850b56e8139bb85eb1beb1c1df7491e5`;
+original M41 SHA-256
+`1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`.
+M44 source SHA-256
+`3320dd2f625c79d7cca9b98abd5cade9d1b95477e6d8990a93a296c9cda71256`.
+The `settledVpp` CP3/CP8 fixture still samples the **ideal LP-stage output**
+and does **not** model finite IC4 input or IC11 output loading. It must not
+be conflated with VCA output CP4. This is a newly explicit topology boundary,
+not an explanation or correction of the printed CP3 high-pass miss.
+
 ### 2026-11-01 ADJ probe and trimmer cross-check (still unresolved)
 
 The original CS-80 **M11/M12 Circuit Board & Wiring** sheet, printed p44,

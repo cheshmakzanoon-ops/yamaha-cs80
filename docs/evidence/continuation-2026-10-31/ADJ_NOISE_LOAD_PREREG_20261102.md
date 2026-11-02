@@ -54,3 +54,37 @@ production DSP, source amplitude, physical passband normalization, V1
 fingerprint, existing numeric controls, or tolerance JSON. After this source
 and pre-registration record is committed, run the variant and publish the
 unselected outputs, even if they worsen the mismatch.
+
+## Evaluation after pre-registration, 2026-11-02
+
+The complete source reading and the two unselected ideal scenarios above were
+committed first as `f8b0c9e`. Only afterward was the test-only comparison
+implemented in `tests/Ig00156NodalTests.cpp`. The two setups use the same
+preexisting control coefficients as the NI-open reference; the alternate
+source impedance is **not** used to retune cutoff or Q. Yamaha service bands
+apply to CP3, not the separate diagnostic CP2 tap.
+
+| Yamaha ADJ p11 setup | Ideal source boundary | CP2: HP stage (Vpp) | CP3/CP8: LP-stage terminal (Vpp) |
+| --- | --- | ---: | ---: |
+| HP: FH 4.0 V, RESH high | A: NI open | **4.126** | **1.692** |
+| HP: FH 4.0 V, RESH high | B: NO1 ideal zero | **3.812** | **1.482** |
+| LP: FL 3.3 V, RESL high | A: NI open | **1.038** | **1.648** |
+| LP: FL 3.3 V, RESL high | B: NO1 ideal zero | **0.891** | **1.435** |
+
+These are **simulated, linear, ideal-filter voltages** only, not Yamaha or
+restorer scope readings. Case B moves HP **CP3 downward** by 0.210 Vpp, away
+from the manufacturer's **3.3–5.3 Vpp** at CP3. Even the alternative
+ideal-source limit therefore **does not explain the ADJ HP miss**. Its CP2
+value happens to fall inside the numerical CP3 band, but this is no evidence
+to substitute the probe or alter the target. Both LP CP3 values remain within
+the original 1.2–3.2 Vpp band. No finite `Z_NO1`, nonzero noise waveform,
+FET on/off resistance, downstream loading, or VR7/VR8 adjustment law was
+measured or inferred from these numbers.
+
+The nodal executable reports **122 checks, zero failures**, including the
+unchanged full-band gate and original `ADJ p11 HP point: MISS`; the additional
+alternative has only finite-positive checks. Command:
+
+```sh
+./build-circuit/cs80_ig00156_nodal_tests tests/parity/tolerances-v2/ws1-voice.json
+```

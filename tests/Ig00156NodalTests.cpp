@@ -363,10 +363,13 @@ void anchors(const ws1::Tolerances& tol)
 // is wired to CP8 at the LP output (Yamaha M11/12 wiring p44). These are
 // still ideal-stage *model* voltages, not measured or fully loaded terminals.
 struct ServicePointVpp { double cp2Hp, cp3Lp; };
-ServicePointVpp settledVpp(double hpTotal, double qHp, double lpTotal, double qLp)
+ServicePointVpp settledVpp(double hpTotal, double qHp, double lpTotal, double qLp,
+                           const ref::StageNetwork& hpInput = hpNet, double pulseMixerGain = 0.5)
 {
     const double fs = 192000.0, f0 = 261.6255653005986; // C1 at 2'
-    auto sys = ref::pairSystem(hpNet, control(hpNet, hpTotal, qHp), lpNet, control(lpNet, lpTotal, qLp), 1.0, 1.0);
+    // Keep the physical control values fixed at the original setup when
+    // varying only the external mixer termination in an offline probe.
+    auto sys = ref::pairSystem(hpInput, control(hpNet, hpTotal, qHp), lpNet, control(lpNet, lpTotal, qLp), 1.0, 1.0);
     ref::Vector<8> z {};
     double prev = 0.0, loHp = 1e9, hiHp = -1e9, loLp = 1e9, hiLp = -1e9;
     const int n = (int) (3.0 * fs);
@@ -374,7 +377,7 @@ ServicePointVpp settledVpp(double hpTotal, double qHp, double lpTotal, double qL
     {
         const double phase = std::fmod(f0 * (i + 1) / fs, 1.0);
         const double pulse = phase < 0.5 ? 1.5 : -1.5;  // 3 Vpp square
-        const double u = 0.5 * pulse;                    // (saw + pulse) / 2, saw gated off
+        const double u = pulseMixerGain * pulse;          // saw gated off; NI boundary specified by caller
         z = sys.step(z, prev, u, 1.0 / fs).value;
         prev = u;
         if (i > n - (int) (0.2 * fs))
@@ -395,11 +398,21 @@ void serviceSetup(const ws1::Tolerances& tol)
     const double open = 18000.0, closed = 0.0;
     const auto hp = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
     const auto lp = settledVpp(closed + ffHz, 10.0 / 11.0, lpGm + ffHz, 5.0);
+    // Pre-registered model-only NI termination endpoints (2026-11-02):
+    // original NI-open = 150k pulse || 150k ground -> 75k, gain 1/2;
+    // ideal zero-volt NO1 behind NI 150k adds a third equal conductance
+    // -> 50k, gain 1/3. The hardware NO1 voltage/output Z are unknown.
+    auto niZeroHp = hpNet;
+    niZeroHp.sourceOhms = 50.0e3;
+    const auto hpNiZero = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0, niZeroHp, 1.0 / 3.0);
+    const auto lpNiZero = settledVpp(closed + ffHz, 10.0 / 11.0, lpGm + ffHz, 5.0, niZeroHp, 1.0 / 3.0);
     const double hpVpp = hp.cp3Lp, lpVpp = lp.cp3Lp;
     std::printf("service HP setup (FH 4.0 V): %.3f Vpp, documented %.1f..%.1f\n", hpVpp, hpBand.first, hpBand.second);
     std::printf("service LP setup (FL 3.3 V): %.3f Vpp, documented %.1f..%.1f\n", lpVpp, lpBand.first, lpBand.second);
     std::printf("service model stage probes (NOT hardware): HP setup CP2 %.3f Vpp, downstream CP3/CP8 %.3f Vpp; LP setup CP2 %.3f Vpp, downstream CP3/CP8 %.3f Vpp\n",
                 hp.cp2Hp, hp.cp3Lp, lp.cp2Hp, lp.cp3Lp);
+    std::printf("service model NI ideal-zero hypothesis (NOT hardware; NO1 source/impedance unknown): HP setup CP2 %.3f Vpp, downstream CP3/CP8 %.3f Vpp; LP setup CP2 %.3f Vpp, downstream CP3/CP8 %.3f Vpp\n",
+                hpNiZero.cp2Hp, hpNiZero.cp3Lp, lpNiZero.cp2Hp, lpNiZero.cp3Lp);
     std::printf("physical passband gains: HP %.4f, LP %.4f (normalized to 1 in audio)\n",
                 ref::passbandGain(hpNet), ref::passbandGain(lpNet));
     // Registered as reported, never fitted: print the verdict, assert only that
@@ -409,7 +422,11 @@ void serviceSetup(const ws1::Tolerances& tol)
                 lpVpp >= lpBand.first && lpVpp <= lpBand.second ? "within band" : "MISS");
     check(std::isfinite(hpVpp) && hpVpp > 0.0 && std::isfinite(lpVpp) && lpVpp > 0.0
               && std::isfinite(hp.cp2Hp) && hp.cp2Hp > 0.0
-              && std::isfinite(lp.cp2Hp) && lp.cp2Hp > 0.0,
+              && std::isfinite(lp.cp2Hp) && lp.cp2Hp > 0.0
+              && std::isfinite(hpNiZero.cp2Hp) && hpNiZero.cp2Hp > 0.0
+              && std::isfinite(hpNiZero.cp3Lp) && hpNiZero.cp3Lp > 0.0
+              && std::isfinite(lpNiZero.cp2Hp) && lpNiZero.cp2Hp > 0.0
+              && std::isfinite(lpNiZero.cp3Lp) && lpNiZero.cp3Lp > 0.0,
           "service-point evaluation is finite");
 }
 
