@@ -88,3 +88,23 @@ corruption was independently reproduced and remains a separately scoped blocker.
 Native wrappers/pluginval/GUI/DAW, full-source numerical qualification and the
 explicit user-facing editor affordance remain pending. The original numerical
 source locks are unchanged.
+
+## Independent bounded replay
+
+Agent5 independently approved the local Linux processor/new-choice-locale scope
+at845696f/src740854f1. They verified source substitutions and all linked project,
+JUCE/font object and executable hashes, then replayed2257+296 positives before
+and after all11 existing compiled mutants, the296/13 plain-strtod mutant and
+14/14 simulated null-locale control. This was independent replay of qualified
+binaries, not an independent recompile or native/GUI/DAW/full-audit acceptance.
+
+The failure counts above are OBSERVED counts, not promised fixed totals. The
+live-frame-reread mutant deterministically fails six main and six extension
+cached-revision assertions. The single explicitly supplemental concurrent-write
+coherence assertion can additionally fail depending on scheduling. The archived
+missing-extension run likewise includes that one stress failure. Independent
+replay requires exact deterministic failure-family multisets and permits only
+that specifically named supplementary variation; candidate positives still
+require zero failures. Their first overly exact total-count checker stopped on
+13 instead of12, and is preserved rather than called a candidate failure or a
+missed mutant. The corrected independent replay passes; both logs are archived.

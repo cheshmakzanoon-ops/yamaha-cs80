@@ -1,0 +1,165 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+Factory tone revision processor: 2257 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Factory tone locale fixture: C decimal=.
+Factory tone locale fixture: de_DE.utf8 decimal=,
+Factory tone locale processor: 296 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: 128 concurrent-write transactions keep main/extension revision coherent
+Factory tone revision processor: 2257 checks, 13 failures
+INDEPENDENT MUTANT PASS live-frame-reread 12
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: 128 concurrent-write transactions keep main/extension revision coherent
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+Factory tone revision processor: 2257 checks, 19 failures
+INDEPENDENT MUTANT PASS missing-extension-frame 19
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+Factory tone revision processor: 2257 checks, 12 failures
+INDEPENDENT MUTANT PASS missing-automation-frame 12
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+Factory tone revision processor: 2257 checks, 4 failures
+INDEPENDENT MUTANT PASS omitted-revision-normalization 4
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: missing revision always restores frozen V1, never live V2
+FAIL: missing revision always restores frozen V1, never live V2
+FAIL: missing revision always restores frozen V1, never live V2
+FAIL: missing revision value is V1 even when its PARAM child exists
+FAIL: old user preset does not inherit live V2
+Factory tone revision processor: 2257 checks, 5 failures
+INDEPENDENT MUTANT PASS inherited-missing-revision 5
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: malformed revision restores V1 without clamping into opt-in
+FAIL: old or malformed inactive A/B revision restores V1
+FAIL: old or malformed inactive A/B revision restores V1
+FAIL: old or malformed inactive A/B revision restores V1
+Factory tone revision processor: 2257 checks, 8 failures
+INDEPENDENT MUTANT PASS loose-state-parser 8
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: A/B recalls the copied V2 sound
+FAIL: inactive A/B revision survives a session round-trip
+Factory tone revision processor: 2257 checks, 2 failures
+INDEPENDENT MUTANT PASS missing-ab-recall 2
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: shipped factory recall resets to frozen V1
+FAIL: shipped factory recall resets to frozen V1
+FAIL: INIT preserves the frozen default contract
+Factory tone revision processor: 2257 checks, 3 failures
+INDEPENDENT MUTANT PASS missing-factory-reset 3
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: accepted MIDI Program Change resets revision to frozen V1
+Factory tone revision processor: 2257 checks, 1 failures
+INDEPENDENT MUTANT PASS missing-midi-reset 1
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=0 main voice mode=0 extension voice mode=1
+FAIL: MIDI Program Change publishes the same aggregate frame to both active engines
+FAIL: equal-sample extension onset receives new aggregate program, not stale source/programmer
+Factory tone revision processor: 2257 checks, 2 failures
+INDEPENDENT MUTANT PASS main-only-program 2
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: Program Change main retains aggregate physical units, not programmer coordinates
+FAIL: equal-sample extension onset receives new aggregate program, not stale source/programmer
+FAIL: ordinary eight-voice Program Change retains existing main aggregate behavior
+Factory tone revision processor: 2257 checks, 3 failures
+INDEPENDENT MUTANT PASS programmer-program 3
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Factory tone locale fixture: C decimal=.
+Factory tone locale fixture: de_DE.utf8 decimal=,
+FAIL: actual session choice round-trips independently of numeric locale
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: user preset choice round-trips independently of numeric locale
+FAIL: complete decimal/exponent/hex one retains prior literal semantics
+FAIL: complete decimal/exponent/hex one retains prior literal semantics
+FAIL: complete decimal/exponent/hex one retains prior literal semantics
+FAIL: malformed/non-one locale input cannot become an opt-in
+FAIL: inactive A/B V2 survives actual decimal serialization in every locale
+Factory tone locale processor: 296 checks, 13 failures
+Locale allocation failure simulation: 14 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+Factory tone revision processor: 2257 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Factory tone locale fixture: C decimal=.
+Factory tone locale fixture: de_DE.utf8 decimal=,
+Factory tone locale processor: 296 checks, 0 failures
+PASS: source review, recorded object/binary hashes, existing binary positives and all compiled negatives; no independent recompilation/native wrapper coverage.

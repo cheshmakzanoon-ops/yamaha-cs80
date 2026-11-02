@@ -1,0 +1,34 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+Factory tone revision processor: 2257 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Factory tone locale fixture: C decimal=.
+Factory tone locale fixture: de_DE.utf8 decimal=,
+Factory tone locale processor: 296 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation main uses captured V2, not new live V1
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: automation extension uses the same captured V2
+FAIL: 128 concurrent-write transactions keep main/extension revision coherent
+Factory tone revision processor: 2257 checks, 13 failures
+Traceback (most recent call last):
+  File "/tmp/cs80-independent-tone-host-review.py", line 40, in <module>
+    observed=run(binary,'--factory-tone-revision-test',1,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/cs80-independent-tone-host-review.py", line 24, in run
+    assert marker in p.stdout,(binary,marker)
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: (PosixPath('/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/factory-tone-host/mutations-locale-final/live-frame-reread/CS80Snapshots'), 'Factory tone revision processor: 2257 checks, 12 failures')
