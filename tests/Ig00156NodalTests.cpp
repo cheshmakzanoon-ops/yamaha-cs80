@@ -545,6 +545,55 @@ void serviceVr7LocalSensitivity(const ws1::Tolerances& tol)
     }
 }
 
+// Third opt-in, predeclared bounded log-frequency scan. Both bracket
+// endpoints originate from the separately committed coarse/local grids;
+// the intermediate points were fixed in ADJ_VR7_BRACKET_PREREG_20261102.md
+// before execution. It is not physical VR7 potentiometer behavior.
+void serviceVr7BracketSensitivity(const ws1::Tolerances& tol)
+{
+    const double kv = source_factory::alignment.referenceKeyVolts;
+    const double hpGm = 125.0 * kv * std::exp2(source_factory::alignment.hpEffectiveCv);
+    const double f0 = 261.6255653005986, open = 18000.0;
+    const double low = f0 * std::exp2(-0.5), high = f0 * std::exp2(-12.0 / 128.0);
+    const auto band = tol.range("hp_fh_4v0");
+    const auto original = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
+    std::printf("VR7 BRACKET: Yamaha ADJ p11 CP3 %.1f..%.1f Vpp; original frozen CP3 %.3f Vpp: %s\n",
+                band.first, band.second, original.cp3Lp,
+                original.cp3Lp >= band.first && original.cp3Lp <= band.second ? "within band" : "MISS");
+    for (double alpha : { 0.0, 1.0 })
+    {
+        auto hpInput = hpNet;
+        hpInput.sourceOhms = 150.0e3 / (2.0 + alpha);
+        const double pulseGain = 1.0 / (2.0 + alpha);
+        const auto frozen = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0, hpInput, pulseGain);
+        std::printf("VR7 BRACKET alpha %.2f frozen gmCutoff %.3f Hz: CP2 %.3f CP3 %.3f Vpp (reference only)\n",
+                    alpha, hpGm, frozen.cp2Hp, frozen.cp3Lp);
+        double bestCp3 = -1.0, bestCp2 = 0.0, bestHz = 0.0;
+        int bestJ = -1;
+        for (int j = 0; j <= 32; ++j)
+        {
+            const double gmHz = low * std::pow(high / low, j / 32.0);
+            const auto p = settledVpp(gmHz + ffHz, 5.0, open + ffHz, 5.0, hpInput, pulseGain);
+            std::printf("VR7 BRACKET alpha %.2f j %02d gmCutoff %.6f Hz: CP2 %.3f CP3 %.3f Vpp (NOT hardware)\n",
+                        alpha, j, gmHz, p.cp2Hp, p.cp3Lp);
+            check(std::isfinite(p.cp2Hp) && p.cp2Hp > 0.0
+                      && std::isfinite(p.cp3Lp) && p.cp3Lp > 0.0,
+                  "VR7 bracket candidate finite and positive; no ADJ gate change");
+            if (p.cp3Lp > bestCp3)
+            {
+                bestCp3 = p.cp3Lp;
+                bestCp2 = p.cp2Hp;
+                bestHz = gmHz;
+                bestJ = j;
+            }
+        }
+        std::printf("VR7 BRACKET alpha %.2f fixed-grid CP3 max %.3f Vpp; CP2 %.3f; CP3/CP2 %.5f; gmCutoff %.6f Hz j %d (%s); printed numeric interval relation %s (NOT original ADJ verdict)\n",
+                    alpha, bestCp3, bestCp2, bestCp3 / bestCp2, bestHz, bestJ,
+                    (bestJ == 0 || bestJ == 32) ? "BOUNDARY" : "INTERIOR",
+                    bestCp3 < band.first ? "below" : (bestCp3 > band.second ? "above" : "inside"));
+    }
+}
+
 // 6. Stability on hard noise at every supported internal rate.
 void stability(const ws1::Tolerances& tol)
 {
@@ -673,6 +722,12 @@ int main(int argc, char** argv)
         if (argc > 2 && std::string_view(argv[2]) == "--vr7-local-sensitivity")
         {
             serviceVr7LocalSensitivity(tol);
+            std::cout << checks << " offline checks, " << failures << " failures (not a hardware VR7 sweep)\n";
+            return failures == 0 ? 0 : 1;
+        }
+        if (argc > 2 && std::string_view(argv[2]) == "--vr7-bracket-sensitivity")
+        {
+            serviceVr7BracketSensitivity(tol);
             std::cout << checks << " offline checks, " << failures << " failures (not a hardware VR7 sweep)\n";
             return failures == 0 ? 0 : 1;
         }
