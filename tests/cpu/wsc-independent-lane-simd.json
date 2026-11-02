@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "status": "TEST-ONLY prospective independent-lane WSC SIMD contract; original production oscillator and Engine source unchanged; zero optimized backend calls or speedup claims",
+  "baseline_source_commit": "7c864f266a939aa2a42422440dd4c1c0cabe3814",
+  "baseline_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "original_oscillator_sha256": "c9bb458f238ea6cb0bf74444a1a9459441da846bbf3ab98598848b45b147034c",
+  "immutable_independent_reference": "tests/reference/WscLoopOriginal.h (separate namespace, frozen original scheduler, physical state, events, antialias residuals and diagnostic history)",
+  "why": "ReconstructedOscillator::tick accounted for 27.32% of a previously retained held-source Callgrind instruction profile, not 27.32% of native wall time. The existing one-segment no-event scalar shortcut cannot remove most full oscillator cost. Investigate actual four-double-lane AVX2 WSC arithmetic only after this independent byte/state oracle passes.",
+  "source_continuation": {
+    "exactness": "Every compared public output and state/diagnostic field must match the immutable original double bit pattern, including signed zero, all three 16-slot antialias residual histories, all 64 diagnostic event records including inactive slots, counters, reset/slice/comparator states, branch-search count and elapsedSeconds. No numerical tolerance, NaN normalization or source re-pinning.",
+    "per_lane_ownership": "Every lane owns its own frequency, comparator threshold, switch gates, reset plateau, physical capacitors, residual cursor, basis/profile, diagnostics and clocks. Masked lanes never advance. Changing one lane cannot contaminate another; copy, assignment, restore, idle advance and wake remain independently exact.",
+    "event_causality": "A variable number of branch/root/reset events per lane must follow the scalar event order. No approximation to exp, log1p, long-double root certification, 2e-15 endpoint rule or 2e-11 sided comparator guard. Eventful/exceptional/divergent lanes may take the original scalar fallback; a claimed batch must prove actual vector arithmetic in qualifying event-free subsegments.",
+    "Engine_scheduling": "Precompute original vi/ch WSC controls and RNG draws in original order; batch only independent WSC ticks; preserve modern prior-rank readouts, HP-before-LP, filter/amp/VCA clocks, old mix order, first-wake and oscillator-to-filter control flow. No dummy padding lane may be ticked, and no delayed rank state read may observe current instead of previous sample.",
+    "fp": "Cover FE_TONEAREST, FE_DOWNWARD, FE_UPWARD, FE_TOWARDZERO and all available x86 MXCSR FTZ/DAZ combinations. Preserve caller x87 and SSE rounding, sticky flags, invalid/underflow behavior and signed-zero; use scalar fallback for unqualified modes/ISA without changing the caller environment. No fast-math or FMA contraction change.",
+    "physical": "No oscillator waveform, segment-cache, alias, event time, nominal RC, profile, output unit or physical model edit is authorized by this software scheduling contract."
+  },
+  "pre_source_scalar_positive_control": {
+    "test": "cs80_wsc_independent_lane_prereg_tests",
+    "rates_hz": [88200, 96000, 192000, 384000],
+    "widths": [1, 2, 3, 4, 7, 8, 15, 16],
+    "rounding_modes": ["FE_TONEAREST", "FE_DOWNWARD", "FE_UPWARD", "FE_TOWARDZERO"],
+    "denormal_modes": "All locally supported x86 FTZ/DAZ combinations; if not supported, report noncoverage and run portable nearest fallback rather than synthesize hardware support",
+    "scheduling": "192 samples per width/rate in nearest mode, plus 128 samples for 4-lane all-rate/all-rounding/denormal matrix. Deterministic rotating order, independently masked lanes, threshold/frequency/saw/pulse changes, stopped/invalid controls, copy, reset, state restore, idle/first-wake, exact physical boundaries and diagnostic history checks every sample.",
+    "minimum": "Positive control must run all 8 widths and 4 rates, exercise each eligible lane at least once, both active and masked ticks, nonzero event and no-event counts, full exact output/state/diagnostic checks, and zero mismatches. Existing original WSC 56,576-tick/44,294,052-bit oracle remains mandatory.",
+    "optimized_backend_invocations_at_registration": 0
+  },
+  "negative_controls": {
+    "CS80_WSC_LANE_MUTATE_MASK": "Tick a masked candidate lane but not frozen original; must exit 1 with named lane.state/diagnostics assertion",
+    "CS80_WSC_LANE_MUTATE_CROSS_LANE": "Drive one candidate lane from a neighbor's frequency; must exit 1 at output/physical-state assertion",
+    "CS80_WSC_LANE_MUTATE_EVENT": "Alter one candidate-only observed diagnostic event timestamp by one ULP; must exit 1 at events.absoluteSeconds assertion",
+    "CS80_WSC_LANE_MUTATE_FP": "Clear candidate FE_INEXACT sticky exception at an instrumented tick; must exit 1 at fp.exceptions assertion"
+  },
+  "future_backend_work_witness": "Instrument real Engine WSC batch entries and actual double-precision AVX arithmetic iterations/independent lane commits, scalar event/FP fallbacks, masked/no-event lanes, copies and wake. Source mutants that fake vector work or execute scalar only must fail a named actual-work gate with exit 1; vector load/store alone is not proof of a nonlinear WSC speedup.",
+  "admission": "After the frozen positives and source mutations, pass unchanged all WSC oscillator/alias/phase/wake/Legacy/V1/V2/click/circuit core gates. Only then coordinate three uncontended before/after full 27-case, 51-row source-factory rounds with identical benchmark source and source manifests. Preserve every checksum, p99, missed deadline, moving/idle/Legacy control and outlier. Hard held 0.15-0.20 RTF and idle <=0.02 remain RED, even if local oscillator performance improves. No PR6/main/merge/tag/release or physical pin change."
+}

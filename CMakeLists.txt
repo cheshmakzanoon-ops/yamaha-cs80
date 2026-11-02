@@ -294,6 +294,32 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_wsc_fast_path_oracle_tests COMMAND cs80_wsc_fast_path_oracle_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/wsc-steady-fastpath.json)
     set_tests_properties(cs80_wsc_fast_path_oracle_tests PROPERTIES TIMEOUT 120)
+    # CPU test-first preregistration: independent 1..16-lane WSC original
+    # scheduler oracle, including masked state, event slots and caller FP modes.
+    # This does NOT enable or claim any optimized oscillator backend.
+    add_executable(cs80_wsc_independent_lane_prereg_tests tests/WscIndependentLanePreregTests.cpp)
+    target_include_directories(cs80_wsc_independent_lane_prereg_tests PRIVATE src tests)
+    target_link_libraries(cs80_wsc_independent_lane_prereg_tests PRIVATE cs80_core)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(cs80_wsc_independent_lane_prereg_tests PRIVATE -frounding-math)
+    endif()
+    add_test(NAME cs80_wsc_independent_lane_prereg_tests
+             COMMAND cs80_wsc_independent_lane_prereg_tests)
+    set_tests_properties(cs80_wsc_independent_lane_prereg_tests PROPERTIES TIMEOUT 300)
+    option(CS80_BUILD_WSC_LANE_PREREG_MUTANTS "Build test-only WSC lane oracle mutation witnesses" OFF)
+    if(CS80_BUILD_WSC_LANE_PREREG_MUTANTS)
+        foreach(mutant MASK CROSS_LANE EVENT FP)
+            add_executable(cs80_wsc_lane_mutate_${mutant} EXCLUDE_FROM_ALL
+                           tests/WscIndependentLanePreregTests.cpp)
+            target_include_directories(cs80_wsc_lane_mutate_${mutant} PRIVATE src tests)
+            target_link_libraries(cs80_wsc_lane_mutate_${mutant} PRIVATE cs80_core)
+            target_compile_definitions(cs80_wsc_lane_mutate_${mutant} PRIVATE
+                                       "CS80_WSC_LANE_MUTATE_${mutant}=1")
+            if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+                target_compile_options(cs80_wsc_lane_mutate_${mutant} PRIVATE -frounding-math)
+            endif()
+        endforeach()
+    endif()
     add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
     target_link_libraries(cs80_ig00156_cache_tests PRIVATE cs80_core)
     add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests
