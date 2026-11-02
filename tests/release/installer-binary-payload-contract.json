@@ -3,9 +3,18 @@
   "scope": "Native installer payload identity, not compilation/source equivalence, signing validity, musical acceptance or DAW qualification",
   "capture_stage": "Freeze the actual existing build inputs after any intentional signing/stripping and before package creation",
   "components": {
-    "linux": ["vst3", "standalone"],
-    "macos": ["vst3", "au", "standalone"],
-    "windows": ["standalone"]
+    "linux": [
+      "vst3",
+      "standalone"
+    ],
+    "macos": [
+      "vst3",
+      "au",
+      "standalone"
+    ],
+    "windows": [
+      "standalone"
+    ]
   },
   "requirements": [
     "Exact expected component/file inventory with independent SHA-256 and byte count comparison",
@@ -16,6 +25,10 @@
     "Windows only qualifies the actually installed Standalone, never the uninstalled VST3 component",
     "No silent expected-hash replacement when a package changes input bytes; signing/stripping must precede capture",
     "Missing, extra, stale, byte-mutated, wrongly installed and mode-changed payloads fail closed",
-    "Actual guard-source mutants must fail intended ordinary assertions with zero runtime errors and retained positive controls"
-  ]
+    "Actual guard-source mutants must fail intended ordinary assertions with zero runtime errors and retained positive controls",
+    "Expected primary executable must exist as a nonempty regular file; resources alone cannot certify a component",
+    "Artifact and expanded roots cannot be symlink/junction aliases; internal relative resource links are preserved exactly",
+    "Malformed native PackageInfo is an explicit ValueError, not an unclassified parser crash"
+  ],
+  "test_platform_limits": "Complete synthetic POSIX/link suite runs with zero skips on Linux/macOS. Windows explicitly skips POSIX permission/link fixtures and runs Standalone byte/scope tests plus native controller checks; no NTFS ACL or POSIX-on-Windows claim."
 }

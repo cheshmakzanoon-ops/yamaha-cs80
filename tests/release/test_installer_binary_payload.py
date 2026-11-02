@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import copy
 import importlib.util
+import os
 from pathlib import Path
 import shutil
 import tempfile
@@ -11,6 +12,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 PRODUCT = 'CS-80 Reference'
+requires_posix = unittest.skipIf(os.name == 'nt',
+    'POSIX permission/symlink fixture only; native Windows checks use Standalone byte identity')
 
 
 class InstallerBinaryPayloadTests(unittest.TestCase):
@@ -72,6 +75,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
     def verify(self, platform, manifest):
         return self.module.verify_installed_payload(platform, manifest, self.build, self.actual)
 
+    @requires_posix
     def test_linux_exact_inventory_hashes_and_explicit_scope(self):
         manifest = self.fixture('linux')
         before = {str(p): p.read_bytes() for p in self.inputs.rglob('*') if p.is_file()}
@@ -81,30 +85,35 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         self.assertEqual(before, {str(p): p.read_bytes() for p in self.inputs.rglob('*') if p.is_file()})
         self.assertIn(hashlib.sha256(b'explicitly synthetic nonloadable binary fixture\n').hexdigest(), str(manifest))
 
+    @requires_posix
     def test_linux_missing_binary_rejected(self):
         manifest = self.fixture('linux')
         next(self.actual.rglob('*.so')).unlink()
         with self.assertRaisesRegex(ValueError, 'inventory|missing'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_linux_stale_or_changed_bytes_rejected(self):
         manifest = self.fixture('linux')
         (self.actual / 'usr/bin/cs80-reference').write_bytes(b'wrong stale binary\n')
         with self.assertRaisesRegex(ValueError, 'bytes|hash'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_linux_unexpected_bundle_resource_rejected(self):
         manifest = self.fixture('linux')
         self.file(self.actual / 'usr/lib/vst3' / (PRODUCT + '.vst3') / 'extra.so')
         with self.assertRaisesRegex(ValueError, 'inventory'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_linux_executable_mode_loss_rejected(self):
         manifest = self.fixture('linux')
         next(self.actual.rglob('*.so')).chmod(0o644)
         with self.assertRaisesRegex(ValueError, 'mode'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_debian_standalone_mode_normalization_is_registered(self):
         manifest = self.fixture('linux')
         source = self.inputs / 'Standalone' / PRODUCT
@@ -113,6 +122,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         self.assertEqual(self.verify('linux', manifest)['verified_components'], ['standalone', 'vst3'])
         self.assertIn('0755', str(manifest['transformations']))
 
+    @requires_posix
     def test_snapshot_cannot_be_replaced_after_input_changes(self):
         manifest = self.fixture('linux')
         changed = b'changed after pre-package capture\n'
@@ -121,6 +131,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'bytes|hash'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_forged_manifest_cannot_certify_stale_payload(self):
         manifest = self.fixture('linux')
         forged = copy.deepcopy(manifest)
@@ -131,6 +142,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'build input|capture contract'):
             self.verify('linux', forged)
 
+    @requires_posix
     def test_external_source_symlink_is_rejected(self):
         self.fixture('linux')
         bundle = self.inputs / 'VST3' / (PRODUCT + '.vst3')
@@ -139,6 +151,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'link'):
             self.module.capture_build_payload('linux', self.build)
 
+    @requires_posix
     def test_payload_symlink_substitution_is_rejected(self):
         manifest = self.fixture('linux')
         target = next(self.actual.rglob('*.so'))
@@ -147,12 +160,14 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'type|link'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_macos_three_bundles_and_install_destinations(self):
         manifest = self.fixture('macos')
         receipt = self.verify('macos', manifest)
         self.assertEqual(receipt['verified_components'], ['au', 'standalone', 'vst3'])
         self.assertIn('signing validity', receipt['qualification'])
 
+    @requires_posix
     def test_macos_wrong_install_location_rejected(self):
         manifest = self.fixture('macos')
         metadata = self.actual / 'au.pkg/PackageInfo'
@@ -160,12 +175,14 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'install.location'):
             self.verify('macos', manifest)
 
+    @requires_posix
     def test_macos_missing_component_rejected(self):
         manifest = self.fixture('macos')
         shutil.rmtree(self.actual / 'au.pkg')
         with self.assertRaisesRegex(ValueError, 'component|missing'):
             self.verify('macos', manifest)
 
+    @requires_posix
     def test_macos_changed_post_capture_signature_bytes_are_not_waived(self):
         manifest = self.fixture('macos')
         next((self.actual / 'app.pkg').rglob('MacOS')).joinpath(PRODUCT).write_bytes(b'changed signature or stripped bytes\n')
@@ -201,6 +218,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'platform'):
             self.module.capture_build_payload('unknown', self.build)
 
+    @requires_posix
     def test_missing_primary_build_binary_is_not_a_resource_only_bundle(self):
         for platform in ('linux', 'macos'):
             with self.subTest(platform=platform):
@@ -221,6 +239,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'primary.*binary'):
             self.module.capture_build_payload('windows', self.build)
 
+    @requires_posix
     def test_linked_artifact_root_is_rejected(self):
         self.fixture('linux')
         moved = self.root / 'moved-artifacts'
@@ -229,6 +248,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Linked|linked'):
             self.module.capture_build_payload('linux', self.build)
 
+    @requires_posix
     def test_linked_expansion_root_is_rejected(self):
         manifest = self.fixture('linux')
         moved = self.root / 'moved-expanded'
@@ -237,6 +257,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Linked|linked'):
             self.verify('linux', manifest)
 
+    @requires_posix
     def test_internal_relative_resource_link_is_preserved(self):
         self.fixture('linux')
         relative = Path('usr/lib/vst3') / (PRODUCT + '.vst3') / 'Contents/Resources'
@@ -246,6 +267,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         manifest = self.module.capture_build_payload('linux', self.build)
         self.assertEqual(self.verify('linux', manifest)['verified_components'], ['standalone', 'vst3'])
 
+    @requires_posix
     def test_malformed_package_info_is_an_explicit_rejection(self):
         manifest = self.fixture('macos')
         (self.actual / 'au.pkg/PackageInfo').write_text('<pkg-info malformed')
@@ -256,6 +278,27 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
             self.assertIn('PackageInfo', str(error))
         else:
             self.fail('Malformed PackageInfo was accepted')
+
+    @requires_posix
+    def test_internal_relative_link_target_change_is_rejected(self):
+        self.fixture('linux')
+        folders = (self.inputs / 'VST3' / (PRODUCT + '.vst3') / 'Contents/Resources',
+                   self.actual / 'usr/lib/vst3' / (PRODUCT + '.vst3') / 'Contents/Resources')
+        for folder in folders:
+            shutil.copy2(folder / 'moduleinfo.json', folder / 'second.json')
+        (folders[0] / 'alias.json').symlink_to('moduleinfo.json')
+        (folders[1] / 'alias.json').symlink_to('second.json')
+        manifest = self.module.capture_build_payload('linux', self.build)
+        with self.assertRaisesRegex(ValueError, 'link'):
+            self.verify('linux', manifest)
+
+    @requires_posix
+    def test_special_source_file_is_rejected_without_opening_it(self):
+        self.fixture('linux')
+        fifo = self.inputs / 'VST3' / (PRODUCT + '.vst3') / 'unexpected.fifo'
+        os.mkfifo(fifo)
+        with self.assertRaisesRegex(ValueError, 'Special.file'):
+            self.module.capture_build_payload('linux', self.build)
 
 
 if __name__ == '__main__':
