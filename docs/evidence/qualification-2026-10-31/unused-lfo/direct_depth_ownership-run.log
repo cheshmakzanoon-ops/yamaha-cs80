@@ -1,0 +1,7 @@
+FAIL: source Engine direct depth owns LFO readout rate=48000 variant=0
+FAIL: source Engine direct depth owns LFO readout rate=48000 variant=2
+FAIL: unused source LFO interval matches forced-readout reference Engine rate=0 variant=-1
+FAIL: source LFO activation after disabled intervals is bit-identical rate=0 variant=-1
+unused LFO engine ownership: 9 checks, 4 failures
+
+EXIT 1

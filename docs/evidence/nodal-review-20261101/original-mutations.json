@@ -1,0 +1,56 @@
+{
+  "control": {
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-nodal-review/control",
+      "-Isrc",
+      "-Isrc/core",
+      "-Itests",
+      "tests/Ig00156PhaseCorrectionTests.cpp",
+      "-o",
+      "/tmp/cs80-nodal-review/control/phase-tests"
+    ],
+    "exit_code": 0,
+    "executable_sha256": "d1230258c3a67de97317774e9a8f544ad8f679ddac49aa9f403b47f6564cab17",
+    "header_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947"
+  },
+  "no-beta": {
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-nodal-review/no-beta",
+      "-Isrc",
+      "-Isrc/core",
+      "-Itests",
+      "tests/Ig00156PhaseCorrectionTests.cpp",
+      "-o",
+      "/tmp/cs80-nodal-review/no-beta/phase-tests"
+    ],
+    "exit_code": 1,
+    "executable_sha256": "e6602669893c1a3b33be07a3cd077123e8edd9ee9635c497f06fd461f1dd51d5",
+    "header_sha256": "4419a1878a67f123794d7e7e25d349dc575f7eb0bee4bf57d4348292a930ee02"
+  },
+  "no-input-derivative": {
+    "command": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-I/tmp/cs80-nodal-review/no-input-derivative",
+      "-Isrc",
+      "-Isrc/core",
+      "-Itests",
+      "tests/Ig00156PhaseCorrectionTests.cpp",
+      "-o",
+      "/tmp/cs80-nodal-review/no-input-derivative/phase-tests"
+    ],
+    "exit_code": 1,
+    "executable_sha256": "7d2a2eb292269b83081d969350e2303f08763c107f3dc9b2f05b0309398db411",
+    "header_sha256": "953140664b90c7a3261ddcd16ab291cf6a04b568c9e88dae5e5b11dedea808d1"
+  }
+}

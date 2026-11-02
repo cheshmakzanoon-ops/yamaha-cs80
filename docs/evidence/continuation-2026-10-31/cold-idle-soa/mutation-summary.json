@@ -1,0 +1,26 @@
+[
+  {
+    "mutation": "false_elapsed",
+    "exit": 1,
+    "summary": [
+      "cold idle worst elapsed error 0.000291666673047 seconds; worst phase 0.0808449519467 cycles",
+      "Cold idle timing: 2121 checks, 1848 failures"
+    ]
+  },
+  {
+    "mutation": "unseeded_frequency",
+    "exit": 1,
+    "summary": [
+      "cold idle worst elapsed error 8.00071120466e-12 seconds; worst phase 0.0490844331589 cycles",
+      "Cold idle timing: 2121 checks, 1056 failures"
+    ]
+  },
+  {
+    "mutation": "stale_reset_marker",
+    "exit": 1,
+    "summary": [
+      "cold idle worst elapsed error 8.00071120466e-12 seconds; worst phase 0.0490844331589 cycles",
+      "Cold idle timing: 2121 checks, 1056 failures"
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "registered": "2026-10-31",
+  "operation": "Dispatch existing release.yml on main after its reviewed merge and all three required CI workflows succeed",
+  "conditions": [
+    "request SHA is a full hexadecimal commit",
+    "main still equals expected_main_sha",
+    "validated_sha is main or its ancestor with only docs/screenshots changes",
+    "latest push run on main for build.yml is success",
+    "latest push run on main for dsp-measurements.yml is success",
+    "latest push run on main for screenshots.yml is success",
+    "release always dispatches main",
+    "an existing same-main dispatch is not duplicated"
+  ],
+  "mutation_checks": [
+    "remove main SHA lease",
+    "allow code changes after validation",
+    "ignore one failed required workflow",
+    "dispatch the request branch instead of main",
+    "duplicate an existing dispatch"
+  ],
+  "authorization": "User explicitly requested release.yml dispatch on main after merging. No account switching, new secrets, or credential exports."
+}

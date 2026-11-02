@@ -1,0 +1,39 @@
+equivalence: worst 1.91e-07 of output peak (limit 2e-06)
+small signal vs continuous truth at 88200 Hz:  fc 60 core 0.0000 band 0.0452  fc 250 core 0.0000 band 0.0453  fc 1000 core 0.0000 band 0.0452  fc 4000 core 0.0009 band 0.0425  fc 12000 core 0.0089 band 0.0488
+small signal vs continuous truth at 96000 Hz:  fc 60 core 0.0000 band 0.0437  fc 250 core 0.0000 band 0.0438  fc 1000 core 0.0000 band 0.0439  fc 4000 core 0.0006 band 0.0424  fc 12000 core 0.0089 band 0.0430
+small signal vs continuous truth at 192000 Hz:  fc 60 core 0.0000 band 0.0019  fc 250 core 0.0000 band 0.0019  fc 1000 core 0.0000 band 0.0019  fc 4000 core 0.0000 band 0.0020  fc 12000 core 0.0017 band 0.0017
+small signal vs continuous truth at 384000 Hz:  fc 60 core 0.0000 band 0.0001  fc 250 core 0.0000 band 0.0001  fc 1000 core 0.0000 band 0.0001  fc 4000 core 0.0000 band 0.0001  fc 12000 core 0.0001 band 0.0001
+pre-registered small-signal gate over the whole grid: MET
+direct lock-in vs continuous truth: 0.0071 (core limit 0.030)
+Q anchor HP VQ=0: pole Q 5.0226 (target 5)
+Q anchor HP VQ=10: pole Q 0.5016 (target 0.5)
+cutoff anchor HP 0.25V/5V: law 1000.000 Hz, pole 1025.134 Hz (law + feedforward 1022.575; uncompensated alternative 999.415)
+cutoff anchor HP 0.5V/5V: law 2000.000 Hz, pole 2031.919 Hz (law + feedforward 2022.575; uncompensated alternative 1934.447)
+cutoff anchor HP 0.25V/6V: law 2000.000 Hz, pole 2031.919 Hz (law + feedforward 2022.575; uncompensated alternative 1934.447)
+frequency-dependent resonance HP: Q setting 5 at 200 Hz -> pole Q 5.023 at 200.2 Hz (uncompensated 5.023 at 199.2 Hz)
+frequency-dependent resonance HP: Q setting 5 at 1000 Hz -> pole Q 5.086 at 1002.5 Hz (uncompensated 5.085 at 977.8 Hz)
+frequency-dependent resonance HP: Q setting 5 at 4000 Hz -> pole Q 5.008 at 4033.9 Hz (uncompensated 5.042 at 3674.7 Hz)
+frequency-dependent resonance HP: Q setting 5 at 12000 Hz -> pole Q 3.516 at 12304.0 Hz (uncompensated 4.038 at 9639.7 Hz)
+Q anchor LP VQ=0: pole Q 5.0256 (target 5)
+Q anchor LP VQ=10: pole Q 0.5005 (target 0.5)
+cutoff anchor LP 0.25V/5V: law 1000.000 Hz, pole 1025.501 Hz (law + feedforward 1022.575; uncompensated alternative 995.421)
+cutoff anchor LP 0.5V/5V: law 2000.000 Hz, pole 2033.342 Hz (law + feedforward 2022.575; uncompensated alternative 1919.944)
+cutoff anchor LP 0.25V/6V: law 2000.000 Hz, pole 2033.342 Hz (law + feedforward 2022.575; uncompensated alternative 1919.944)
+frequency-dependent resonance LP: Q setting 5 at 200 Hz -> pole Q 5.026 at 200.1 Hz (uncompensated 5.026 at 198.9 Hz)
+frequency-dependent resonance LP: Q setting 5 at 1000 Hz -> pole Q 5.096 at 1002.8 Hz (uncompensated 5.094 at 974.0 Hz)
+frequency-dependent resonance LP: Q setting 5 at 4000 Hz -> pole Q 4.925 at 4039.2 Hz (uncompensated 4.984 at 3625.0 Hz)
+frequency-dependent resonance LP: Q setting 5 at 12000 Hz -> pole Q 3.120 at 12368.5 Hz (uncompensated 3.764 at 9360.1 Hz)
+service HP setup (FH 4.0 V): 1.692 Vpp, documented 3.3..5.3
+service LP setup (FL 3.3 V): 1.648 Vpp, documented 1.2..3.2
+physical passband gains: HP 0.5997, LP 0.3527 (normalized to 1 in audio)
+ADJ p11 HP point: MISS; LP point: within band
+LP resonant gain at 1 kHz, Q 5: quiet 5.106, loud 1.110
+nonlinear q=5 f=500 amp=1: rms rel 0.0000
+nonlinear q=5 f=500 amp=2.5: rms rel 0.0001
+nonlinear q=5 f=1000 amp=1: rms rel 0.0012
+nonlinear q=5 f=1000 amp=2.5: rms rel 0.0017
+nonlinear q=1 f=500 amp=1: rms rel 0.0000
+nonlinear q=1 f=500 amp=2.5: rms rel 0.0001
+nonlinear q=1 f=1000 amp=1: rms rel 0.0001
+nonlinear q=1 f=1000 amp=2.5: rms rel 0.0011
+122 checks, 0 failures

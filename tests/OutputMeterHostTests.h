@@ -44,7 +44,9 @@ void testOutputMeterHost(Check&& check)
         for (int rank = 0; rank < 2; ++rank) host.selectHardwareSource(rank, frame.hardwareSources[rank]);
         // APVTS normalise/denormalise may round physical float values. Use the
         // actual stored controls, not pre-roundtrip literals, for the DSP oracle.
-        frame.effectiveValues = host.currentValues();
+        frame = ControlFrame::programmer(host.currentValues(), frame.hardwareSources);
+        // Meter ownership compares identical host/core electrical contracts.
+        // Programmer absolute accuracy has its separate independent nodal gate.
         auto layout = host.getBusesLayout();
         layout.outputBuses.set(0, channels == 1 ? juce::AudioChannelSet::mono()
                                                : juce::AudioChannelSet::stereo());

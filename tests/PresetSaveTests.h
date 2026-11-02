@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HostParameterState.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/PresetBrowser.h"
 
@@ -44,7 +45,7 @@ struct PresetSaveAccess
         host.setParamValue(cs80::P_parityMode, 0.0f);
         for (auto* parameter : parameters)
             expected.push_back(parameter->getValue());
-        const auto expectedState = host.getAPVTS().copyState();
+        const auto expectedState = cs80::tests::copyHostParameterState(host);
 
         const auto saved = host.saveUserPreset("Round trip");
         check(saved.wasSaved() && saved.status == Status::saved && saved.file.existsAsFile(),

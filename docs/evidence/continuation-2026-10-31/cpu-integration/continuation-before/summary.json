@@ -1,0 +1,517 @@
+{
+  "rounds": 3,
+  "rows": 153,
+  "selection": "For each scenario: minimum of three callback medians; p99/misses from that same round",
+  "selected_rows": [
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.835302",
+      "p99_rtf": "1.6133199375",
+      "budget_exceedances": "155"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "release_tail",
+      "round": "round-3",
+      "median_rtf": "0.12827475",
+      "p99_rtf": "1.516747875",
+      "budget_exceedances": "14"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.33336",
+      "p99_rtf": "0.7347165",
+      "budget_exceedances": "2"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.354423",
+      "p99_rtf": "0.5877864375",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.8433568125",
+      "p99_rtf": "2.23447275",
+      "budget_exceedances": "229"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.0980026875",
+      "p99_rtf": "1.0724731875",
+      "budget_exceedances": "2"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "idle_quiet",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.1045903125",
+      "p99_rtf": "0.35573025",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.7270363125",
+      "p99_rtf": "1.31608425",
+      "budget_exceedances": "56"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.1047740625",
+      "p99_rtf": "0.241127625",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.85330125",
+      "p99_rtf": "2.00343975",
+      "budget_exceedances": "180"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.1090565625",
+      "p99_rtf": "1.2687110625",
+      "budget_exceedances": "12"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.8789394375",
+      "p99_rtf": "3.8196834375",
+      "budget_exceedances": "281"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.106933875",
+      "p99_rtf": "1.7219233125",
+      "budget_exceedances": "8"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.309774375",
+      "p99_rtf": "0.6802014375",
+      "budget_exceedances": "2"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "2",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.3384230625",
+      "p99_rtf": "0.7936749375",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.3216684375",
+      "p99_rtf": "0.8710554375",
+      "budget_exceedances": "6"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.024758625",
+      "p99_rtf": "0.37700325",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.2729743125",
+      "p99_rtf": "0.63672375",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.023980875",
+      "p99_rtf": "0.3729255",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "1.012575375",
+      "p99_rtf": "1.8722581875",
+      "budget_exceedances": "550"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "release_tail",
+      "round": "round-3",
+      "median_rtf": "0.1457743125",
+      "p99_rtf": "1.2224131875",
+      "budget_exceedances": "9"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.823110375",
+      "p99_rtf": "3.302229",
+      "budget_exceedances": "234"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "7",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.1022559375",
+      "p99_rtf": "0.8513570625",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "idle_noise",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.02573925",
+      "p99_rtf": "0.0787288125",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.3096765",
+      "p99_rtf": "1.5490505625",
+      "budget_exceedances": "30"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "10",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.023106375",
+      "p99_rtf": "0.3834163125",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.333360375",
+      "p99_rtf": "0.6419131875",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "1",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.3240095625",
+      "p99_rtf": "0.96316425",
+      "budget_exceedances": "2"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.2939900625",
+      "p99_rtf": "0.7353586875",
+      "budget_exceedances": "2"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.0222414375",
+      "p99_rtf": "0.068304",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "idle_quiet",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.022435125",
+      "p99_rtf": "0.093619875",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-2",
+      "median_rtf": "0.6581968125",
+      "p99_rtf": "1.429992375",
+      "budget_exceedances": "73"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.0954796875",
+      "p99_rtf": "1.6491860625",
+      "budget_exceedances": "8"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "1.0081865625",
+      "p99_rtf": "2.3086456875",
+      "budget_exceedances": "526"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.1699700625",
+      "p99_rtf": "1.7967785625",
+      "budget_exceedances": "19"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.81595425",
+      "p99_rtf": "1.413435",
+      "budget_exceedances": "137"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.1295203125",
+      "p99_rtf": "1.06693875",
+      "budget_exceedances": "3"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.27647625",
+      "p99_rtf": "0.550426875",
+      "budget_exceedances": "2"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "3",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.2938228125",
+      "p99_rtf": "0.5578096875",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.3040963125",
+      "p99_rtf": "0.73181025",
+      "budget_exceedances": "3"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "6",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.0220801875",
+      "p99_rtf": "0.109709625",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.8663525625",
+      "p99_rtf": "1.7790856875",
+      "budget_exceedances": "251"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "5",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.1039944375",
+      "p99_rtf": "0.8183803125",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.312639375",
+      "p99_rtf": "0.6839484375",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "release_tail",
+      "round": "round-1",
+      "median_rtf": "0.0226815",
+      "p99_rtf": "0.084719625",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "warmed_held",
+      "round": "round-1",
+      "median_rtf": "0.31023675",
+      "p99_rtf": "0.550966875",
+      "budget_exceedances": "1"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "4",
+      "phase": "release_tail",
+      "round": "round-3",
+      "median_rtf": "0.022733625",
+      "p99_rtf": "0.391039125",
+      "budget_exceedances": "0"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.830770875",
+      "p99_rtf": "1.643374875",
+      "budget_exceedances": "180"
+    },
+    {
+      "mode": "isolation",
+      "scenario": "paired_tones",
+      "initial_selector": "8",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.1096175625",
+      "p99_rtf": "1.2161274375",
+      "budget_exceedances": "5"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "warmed_held",
+      "round": "round-3",
+      "median_rtf": "0.32051775",
+      "p99_rtf": "0.664413",
+      "budget_exceedances": "4"
+    },
+    {
+      "mode": "legacy",
+      "scenario": "paired_tones",
+      "initial_selector": "9",
+      "phase": "release_tail",
+      "round": "round-2",
+      "median_rtf": "0.0231901875",
+      "p99_rtf": "0.5079255",
+      "budget_exceedances": "0"
+    }
+  ]
+}

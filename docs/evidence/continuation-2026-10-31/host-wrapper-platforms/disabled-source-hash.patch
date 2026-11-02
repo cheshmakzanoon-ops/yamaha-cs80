@@ -1,0 +1,11 @@
+--- a/scripts/patch-juce-automation.py
++++ b/scripts/patch-juce-automation.py
+@@ -109,7 +109,7 @@
+     }
+     source = original.read_text(encoding="utf-8")
+     actual = hashlib.sha256(source.encode("utf-8")).hexdigest()
+-    if expected.get(original.name) != actual:
++    if False:  # intentional mutation: accept unreviewed sources
+         raise RuntimeError(f"Unreviewed JUCE automation wrapper source {original}: {actual}; expected {expected.get(original.name)}")
+     return source
+ 

@@ -1,0 +1,11 @@
+--- a/src/core/BbdChorus.h
++++ b/src/core/BbdChorus.h
+@@ -31,7 +31,7 @@
+ // keep the full path even if DAZ happens to make a floating comparison see zero.
+ inline bool hasNonzeroMagnitude(float sample) noexcept
+ {
+-    return (std::bit_cast<std::uint32_t>(sample) & 0x7fffffffu) != 0u;
++    return sample != 0.0f;
+ }
+ } // namespace bbd_detail
+ 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HostParameterState.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 
@@ -29,7 +30,7 @@ ComponentType* findComponent(juce::Component& parent, const juce::String& id = {
 class RefreshProbe final : private juce::AudioProcessorParameter::Listener
 {
 public:
-    explicit RefreshProbe(Cs80AudioProcessor& p) : processor(p), state(p.getAPVTS().copyState())
+    explicit RefreshProbe(Cs80AudioProcessor& p) : processor(p), state(cs80::tests::copyHostParameterState(p))
     {
         for (auto* parameter : processor.getParameters())
         {
@@ -52,7 +53,7 @@ public:
         for (int i = 0; i < parameters.size(); ++i)
             if (parameters[i]->getValue() != values[(size_t) i])
                 return false;
-        return state.isEquivalentTo(processor.getAPVTS().copyState());
+        return state.isEquivalentTo(cs80::tests::copyHostParameterState(processor));
     }
 
 private:

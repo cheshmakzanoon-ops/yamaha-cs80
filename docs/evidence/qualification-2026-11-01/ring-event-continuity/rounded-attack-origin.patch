@@ -1,0 +1,11 @@
+--- src/core/Dsp.h
++++ src/core/Dsp.h
+@@ -460,7 +460,7 @@
+         // Default callers keep their historical float-to-double initialization.
+         if (!preservePreciseCharge || a <= 0.0002f)
+             preciseValue = value;
+-        attackFrom = preciseValue;
++        attackFrom = static_cast<double>(value);
+     }
+ 
+     void noteOff() noexcept

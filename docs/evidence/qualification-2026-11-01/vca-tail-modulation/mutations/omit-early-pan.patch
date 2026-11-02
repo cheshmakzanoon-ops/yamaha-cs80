@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2065,7 +2065,7 @@
+             // Keep a removed pan route current until its cached offset clears.
+             // Released controller inputs stay zero after the first idle deadline,
+             // even when the smoother restores their event-set targets afterward.
+-            if (freeRunning && modern.isActive()
++            if (false && freeRunning && modern.isActive()
+                 && (modern.hasPanDestinations()
+                     || modern.rankOffsets(vi, 0).pan != 0.0f
+                     || modern.rankOffsets(vi, 1).pan != 0.0f)

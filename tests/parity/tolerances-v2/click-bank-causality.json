@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "REGISTERED",
+  "registered_utc": "2026-11-01",
+  "purpose": "Optional counterfactual diagnosis of unchanged original full-bank click-score failures; never a substitute for those acceptance criteria",
+  "production_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "required_phrase_csv_rows": 566,
+  "required_phrase_csv_header": "name,group,policy,rate,nonfinite,peak,peak_db,samples_over_1,softclip_frac_chord,rms_single_db,rms_chord_db,weighted_chord_db,loud_short_db,dc_single_rel,dc_chord_rel,dc_idle_abs,idle_rms,subsonic_peak,subsonic_rel,click_off,click_chord_off,click_retrigger,click_fresh_chord,click_steal,voices_at_end",
+  "source_policy_required": true,
+  "sample_rates_hz": [44100, 48000, 96000],
+  "events": ["single_note_off", "chord_note_off", "retrigger_note_on", "steal_note_on"],
+  "event_offsets_seconds": [1.4, 4.4, 6.25, 8.65],
+  "event_quantization_frames": 64,
+  "post_event_window_seconds": 0.008,
+  "pre_event_note_off_reference_seconds": 0.06,
+  "original_click_score_limit": 1.0,
+  "exact_pre_event_pcm_bit_mismatches_max": 0,
+  "original_phrase_score_replay_relative_error_max": 0.00001,
+  "control_event_omission_counts": [1, 4, 1, 4],
+  "required_mutation_controls": ["wrong_pre_event_pcm", "identical_event_control", "omission_count_error", "changed_phrase_score"],
+  "policy": "Retain every existing score/window/tolerance and all failed rows. Report event-only derivative and counterfactual peak for attribution without classifying a note-on attack as a click or waiving any score. No source, production audio, frozen reporter, audit registration or official gate modifications."
+}

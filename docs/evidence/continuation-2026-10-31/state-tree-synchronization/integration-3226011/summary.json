@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "base": "32260112971289761f9a6e8e7289916bfc7df95f",
+  "started_utc": "2026-10-31T22:18:31.160223+00:00",
+  "finished_utc": "2026-10-31T22:21:21.354007+00:00",
+  "scope": "Fresh integrated control compile of all 26 project translation units and two focused registered suites after applying the qualified UI/state patch to the automation6474265 base. All 19 unchanged pinned JUCE/font objects hash-verified. Earlier 14 mutation and full UI results remain explicitly at2ee33dc; they were not rerun or relabelled here.",
+  "production_automation_implementation_and_fixture": "Byte-identical to3226011; PluginProcessor.h retains all automation readback fields/friend and only changes the two getAPVTS return types. Snapshot retains the automation include, focused dispatch and default-suite call.",
+  "results": [
+    {
+      "name": "state-tree-synchronization",
+      "exit": 0,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/integration-3226011/state-tree.log",
+      "sha256": "3005fde9c2afa6a64db811facd2da296676049a02d4f50282cc40c3238a090bc"
+    },
+    {
+      "name": "host-automation-state-boundary",
+      "exit": 0,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/integration-3226011/host-automation.log",
+      "sha256": "8ff30ef560f52e4458a864b5c9af076f49fac44170044e5b709c9d8fed0c6b08"
+    }
+  ],
+  "host_parameter_cases": 1701,
+  "mseg_coordinate_cases": 14,
+  "admitted_subnormal_fields": 9,
+  "mseg_roundtrip_mismatches": 0,
+  "automation_maximum_normalized_error": 2.220446049250313e-16,
+  "manifest": {
+    "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/integration-3226011/qualification.json",
+    "sha256": "8d377abb257dab7cc6eb46ac1a8f40cb0ca73417146a057f2571c884faa7e59a"
+  },
+  "driver": {
+    "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/integration-3226011/focused-integration.py",
+    "sha256": "f6357fe363a8c336e4694f613ebb1d086b69179edd3a226c4efc42862ed1f964"
+  },
+  "limitation": "This is focused integrated UI verification; parent-owned native-host/plugin builds, full CTest, strict compatibility and CI gates remain separate."
+}

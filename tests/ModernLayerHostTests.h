@@ -5,6 +5,7 @@
 // - host parameters (AU version hint 12, ranges, named values);
 // - audio reaches the engine through processBlock, PURE CS-80 stays inert, host tempo sync.
 
+#include "HostParameterState.h"
 #include "plugin/ModernLayerState.h"
 #include "plugin/PluginProcessor.h"
 #include "core/FxModels.h"
@@ -98,7 +99,7 @@ void testModernLayerHost(Check check)
 
     // Fresh instance: defaults, and no child written until something is edited.
     check(layer.getConfig() == ModernConfig {}, "fresh modern layer holds the default shapes and an empty matrix");
-    check(! host.getAPVTS().copyState().getChildWithName(ModernLayerState::treeType).isValid(),
+    check(! cs80::tests::copyHostParameterState(host).getChildWithName(ModernLayerState::treeType).isValid(),
           "a fresh instance does not add modern layer state until edited");
 
     // Host parameters: AU hint 12, declared ranges and defaults, named discrete values.
@@ -117,7 +118,7 @@ void testModernLayerHost(Check check)
 
     // Round trip through the plugin state.
     layer.setConfig(routedConfig());
-    auto child = host.getAPVTS().copyState().getChildWithName(ModernLayerState::treeType);
+    auto child = cs80::tests::copyHostParameterState(host).getChildWithName(ModernLayerState::treeType);
     check(child.isValid() && (int) child.getProperty("version") == ModernLayerState::version,
           "edited modern layer is a versioned child of the plugin state");
     juce::MemoryBlock saved;

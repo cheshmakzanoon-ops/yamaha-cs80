@@ -1,0 +1,10 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1264,6 +1264,7 @@
+                           * global.envTimeScale * r.tol.ampEnvTime);
+         r.fenv.setRelease(std::max({rs.fR, global.keyRelease, performanceRelease})
+                           * global.envTimeScale * r.tol.filterEnvTime);
++        if (ch == 0) r.fenv.reset();
+         r.aenv.noteOff();
+         r.fenv.noteOff();
+     }

@@ -1,0 +1,116 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/observer-renders-one-extra-frame-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "ring"]
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+Ring event continuity: 2325 assertions, 1341 failures
+RING-CONTINUITY FAIL: Source 44100/0 first-key frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/0 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 first-key source float charge
+RING-CONTINUITY FAIL: Source 44100/0 first-key source precise charge
+RING-CONTINUITY FAIL: Source 44100/0 first-key source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 legato frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/0 legato source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 legato source float charge
+RING-CONTINUITY FAIL: Source 44100/0 legato source precise charge
+RING-CONTINUITY FAIL: Source 44100/0 legato source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/0 legato fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 legato fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 legato fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/0 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 partial-release frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/0 partial-release source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 partial-release source float charge
+RING-CONTINUITY FAIL: Source 44100/0 partial-release source precise charge
+RING-CONTINUITY FAIL: Source 44100/0 partial-release source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/0 partial-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 partial-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 partial-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 partial-release nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/0 partial-release nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/0 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 last-release frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/0 last-release source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 last-release source float charge
+RING-CONTINUITY FAIL: Source 44100/0 last-release source precise charge
+RING-CONTINUITY FAIL: Source 44100/0 last-release source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/0 last-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 last-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 last-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 last-release release float clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/0 last-release release double clock starts at zero
+RING-CONTINUITY FAIL: Source 44100/0 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey source carrier phase
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey source float charge
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey source precise charge
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 released-audio-rekey starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/0 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/0 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 first-key frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/1 first-key source carrier phase
+RING-CONTINUITY FAIL: Source 44100/1 first-key source float charge
+RING-CONTINUITY FAIL: Source 44100/1 first-key source precise charge
+RING-CONTINUITY FAIL: Source 44100/1 first-key source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 first-key fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 first-key starts float clock at zero
+RING-CONTINUITY FAIL: Source 44100/1 first-key starts double clock at zero
+RING-CONTINUITY FAIL: Source 44100/1 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 legato frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/1 legato source carrier phase
+RING-CONTINUITY FAIL: Source 44100/1 legato source float charge
+RING-CONTINUITY FAIL: Source 44100/1 legato source precise charge
+RING-CONTINUITY FAIL: Source 44100/1 legato source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/1 legato fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 legato fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 legato fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/1 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 partial-release frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/1 partial-release source carrier phase
+RING-CONTINUITY FAIL: Source 44100/1 partial-release source float charge
+RING-CONTINUITY FAIL: Source 44100/1 partial-release source precise charge
+RING-CONTINUITY FAIL: Source 44100/1 partial-release source envelope telemetry
+RING-CONTINUITY FAIL: Source 44100/1 partial-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 partial-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 partial-release fixed-input ring blend
+RING-CONTINUITY FAIL: Source 44100/1 partial-release nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/1 partial-release nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/1 nonmutating observer PCM
+RING-CONTINUITY FAIL: Source 44100/1 independent retained-state replay PCM
+RING-CONTINUITY FAIL: Source 44100/1 last-release frequency cache changes only with rendered time
+RING-CONTINUITY FAIL: Source 44100/1 last-release source carrier phase
+RING-CONTINUITY FAIL: Source 44100/1 last-release source float charge
+RING-CONTINUITY FAIL: Source 44100/1 last-release source precise charge
+
+EXIT 1

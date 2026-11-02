@@ -1,0 +1,22 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1150,6 +1150,19 @@
+     // IL is a selected drive, not an assignment-time capacitor reset. Keep
+     // charge even for a first strike before the released circuit settles.
+     const bool preserveEnvelope = preserveAudioState;
++    if (preserveAudioState && wasActive)
++    {
++        bool cleared = false;
++        for (int rank = 0; rank < 2 && !cleared; ++rank)
++        {
++            auto& oscillator = v.ranks[rank].wsc;
++            auto altered = oscillator.getState();
++            for (auto& row : altered.residual)
++                for (auto& value : row)
++                    if (!cleared && value != 0.0) { value = 0.0; cleared = true; }
++            if (cleared) oscillator.restoreState(altered);
++        }
++    }
+     v.idleClock = 0;
+     v.idleSteps = 0;
+     v.keyNode.track(); // TR low: K acquires the new key

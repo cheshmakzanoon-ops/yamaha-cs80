@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "registered": "2026-10-31",
+  "scope": "Handover section 3: parameter interaction, undo host gestures, engine voice monitor, sixteen-voice UI ownership",
+  "truth": "Host parameter listeners, audio-thread Engine::VoiceInfo/RankInfo, and the existing tagged keyboard event protocol; no hardware measurement or audio model is introduced.",
+  "interaction": {
+    "controls": [
+      "main-panel switches",
+      "Studio switches",
+      "parameter combo boxes",
+      "tone selectors",
+      "memory-lid sliders"
+    ],
+    "required_menu_actions": [
+      "MIDI learn",
+      "reset",
+      "type value",
+      "copy",
+      "paste",
+      "control help"
+    ],
+    "edits": "Exactly one balanced begin/end host gesture for each changed parameter; a context-menu pointer action must not also activate the underlying control.",
+    "pure": "MIDI learn cannot be armed or applied in PURE CS-80; existing mappings remain stored.",
+    "retargeting": "A memory miniature targets its own memory parameter; rank/tone controls target the currently represented host parameter."
+  },
+  "undo": {
+    "changed_parameters": "Each parameter actually changed by undo or redo receives one begin followed by its value callbacks followed by one end.",
+    "unchanged_parameters": "No host gesture is sent for a parameter not changed by the transaction.",
+    "history": "Replay adds no undo transaction and leaves unrelated automated parameters unchanged."
+  },
+  "monitor": {
+    "published_voice_capacity": 16,
+    "voice_fields": [
+      "active",
+      "keyDown",
+      "midiNote",
+      "midiChannel",
+      "pressure",
+      "assignmentSerial"
+    ],
+    "rank_fields": [
+      "frequency",
+      "hpfCutoff",
+      "lpfCutoff",
+      "ampEnvelope",
+      "filterEnvelope"
+    ],
+    "equality": "Published values exactly equal the corresponding read-only engine taps at the end of the last processBlock; no UI read accesses mutable engine state.",
+    "visibility": "The drawer identifies the monitored voice and rank and labels traces as engine control taps rather than a measured transfer response.",
+    "neutrality": "Enabling monitor publication leaves rendered samples exactly unchanged.",
+    "keyboard_order": "Exactly four focus stops: channel I, channel II, CLOSE, then the new Monitored physical voice selector. All four retain the existing minimum target-size gate.",
+    "selection_update": "On opening or refreshing a published frame, the physical-voice selector has exactly the frame capacity (8 or 16) choices and shows the selected slot immediately, including when no further audio block arrives."
+  },
+  "sixteen_voice": {
+    "meter": "Sixteen allocated voices publish count 16 and bits 0..15, with extension voices in bits 8..15. Leaving the mode clears extension bits.",
+    "pressure": "A tagged UI key allocated to the second engine accepts its own pressure; reassignment or host takeover revokes the token. The first eight voices retain existing behavior.",
+    "pure": "PURE CS-80 remains eight voices and publishes no extension activity."
+  },
+  "mutation_gate": "Deliberately remove each behavior category (binding, host replay gestures, engine-tap publication, extension publication, extension pressure ownership) and require the corresponding new regression to fail, then restore."
+}

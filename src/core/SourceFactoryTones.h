@@ -152,6 +152,8 @@ struct Provenance {
     // Complete source cells still use inferred device laws. Never conflate the
     // classified-cell mask with a measured/recovered control-voltage mask.
     bool hardwareMeasured = false;
+    // Nonzero only for explicit electrical Memory/PANEL controls; no matrix-cell claim.
+    std::uint32_t programmerMappingVersion = 0;
 };
 
 struct SourceEquivalent { double volts = 0.0, ohms = 0.0; };

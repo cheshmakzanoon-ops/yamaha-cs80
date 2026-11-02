@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HostParameterState.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 
@@ -73,7 +74,7 @@ void testPluginPanic(Check check, Flush flush)
         check(host.getActiveVoiceCount() >= 4, "panic fixture contains UI and multichannel host voices");
         keyboard.noteOn(1, 61, 0.8f); // Never consumed: this must not sound after panic.
         host.setKeyPressureFromUI(pressureToken, 0.9f);
-        const auto stateBefore = host.getAPVTS().copyState();
+        const auto stateBefore = cs80::tests::copyHostParameterState(host);
         const auto metadataBefore = host.getPresetMetadata();
         const int activeBefore = host.getActiveVoiceCount();
         for (int click = 0; click < 8; ++click)
@@ -82,7 +83,7 @@ void testPluginPanic(Check check, Flush flush)
               "UI panic request never mutates audio-owned voices before processBlock");
         tick();
         check(panic_detail::stopped(host), "panic clears all existing voices and host-key visuals at the block boundary");
-        check(stateBefore.isEquivalentTo(host.getAPVTS().copyState())
+        check(stateBefore.isEquivalentTo(cs80::tests::copyHostParameterState(host))
                   && host.getPresetName() == metadataBefore.name
                   && host.getCurrentPresetIndex() == metadataBefore.factoryIndex
                   && std::abs(host.getExpressionValue() - 0.37f) < 1.0e-6f,

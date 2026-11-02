@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "evidence_kind": "Build-system and source-provenance contract; not hardware measurements",
+  "failure_evidence": "GitHub build 41235843552, job 124639336716, commit 6458c5fc0e5b16d1a0cb04f6ecf43769b27e4cbc: macOS CMake Configure fails because the VST3 target exposes an Objective-C++ .mm translation unit, while the bridge only recognizes the .cpp translation unit.",
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "supported_translation_units": {
+    "VST3": ["juce_audio_plugin_client_VST3.cpp", "juce_audio_plugin_client_VST3.mm"],
+    "AU": ["juce_audio_plugin_client_AU_1.mm"]
+  },
+  "fixture": "Create temporary CMake interface targets using copies of the pinned JUCE wrappers, exercise .cpp VST3 and .mm VST3 plus AU on every host without compiling an Apple SDK, and include the production HostAutomation.cmake with the production patch script.",
+  "required": [
+    "Exactly one reviewed implementation translation unit replaces the wrapper for each present target",
+    "The generated filename retains the original .cpp or .mm extension and therefore its target language",
+    "The generated macOS VST3 translation unit contains the automation bridge rather than including an unpatched sibling implementation",
+    "Unrelated interface sources remain byte-identical, present and in their original positions",
+    "All original JUCE source files remain byte-identical",
+    "A second configure produces byte-identical generated wrapper files",
+    "Both LF and CRLF source checkouts produce identical generated content",
+    "Missing, duplicate and unreviewed wrappers fail closed; a changed .mm trampoline and a changed .cpp implementation are independently rejected"
+  ],
+  "allowed_failures": 0,
+  "mutation_contract": [
+    "Remove macOS .mm discovery",
+    "Generate a macOS .mm file that includes the pristine .cpp implementation",
+    "Disable wrapper source-hash validation",
+    "Drop an unrelated interface source"
+  ],
+  "limits": "No audio, curve, parameter, numerical or image tolerance changes are permitted by this gate. Native macOS builds and Audio Unit scheduling tests remain required separately."
+}

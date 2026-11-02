@@ -1,0 +1,214 @@
+{
+  "reviewed_utc": "2026-11-01T09:06:08.196128+00:00",
+  "draft_path_read_only": "/workspace/scratch/e8b335644872/cs80-landing-docs/.github/cpu-qualification-request.json",
+  "draft_sha256_before": "873383d66108ed15930772869fcff61814da11da2f9b282961dd7b2db4e5e5f2",
+  "draft_sha256_after": "873383d66108ed15930772869fcff61814da11da2f9b282961dd7b2db4e5e5f2",
+  "draft_unchanged": true,
+  "proposed_request_sha256": "e6fd394c084b42aae0466b18c459c79dc35b93d5e4d7299a53479480bab325f1",
+  "protocol_unchanged": {
+    "schema_version": 1,
+    "rate": 48000,
+    "block": 256,
+    "callbacks": 1024,
+    "rounds": 3,
+    "suite": "baseline"
+  },
+  "reporter_sha256": "66f610e5c0ffcf1c574705a2328b58ffc7e800658d796efe6299a04ec0f1357c",
+  "runner_sha256": "5791b66d5343a61d2ca47afe2947dfda45816051351720250cf3fac47675592e",
+  "all_original_eleven_entries_retained_in_order": true,
+  "existing_validator_accepts": true,
+  "all_full_commit_and_benchmark_blob_checks_pass": true,
+  "checkpoint_count": 12,
+  "timed_round_count": 36,
+  "expected_case_count_per_round": 27,
+  "expected_rows_per_round": 51,
+  "expected_total_result_rows": 1836,
+  "all_builds_before_timings_required": true,
+  "round_major_serial_order": [
+    {
+      "round": 1,
+      "label": "main-before",
+      "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d"
+    },
+    {
+      "round": 1,
+      "label": "inherited-before",
+      "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c"
+    },
+    {
+      "round": 1,
+      "label": "lazy-filter-histories",
+      "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9"
+    },
+    {
+      "round": 1,
+      "label": "idle-exact",
+      "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b"
+    },
+    {
+      "round": 1,
+      "label": "stationary-controls",
+      "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024"
+    },
+    {
+      "round": 1,
+      "label": "unused-lfo",
+      "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b"
+    },
+    {
+      "round": 1,
+      "label": "rank-idle-1500",
+      "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e"
+    },
+    {
+      "round": 1,
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873"
+    },
+    {
+      "round": 1,
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162"
+    },
+    {
+      "round": 1,
+      "label": "retained-ring-charge",
+      "source_commit": "481c7e9fdb20372288864eecf746bf7efb28190a"
+    },
+    {
+      "round": 1,
+      "label": "connected-vca-idle",
+      "source_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250"
+    },
+    {
+      "round": 1,
+      "label": "current-sample-tail-pan",
+      "source_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14"
+    },
+    {
+      "round": 2,
+      "label": "main-before",
+      "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d"
+    },
+    {
+      "round": 2,
+      "label": "inherited-before",
+      "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c"
+    },
+    {
+      "round": 2,
+      "label": "lazy-filter-histories",
+      "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9"
+    },
+    {
+      "round": 2,
+      "label": "idle-exact",
+      "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b"
+    },
+    {
+      "round": 2,
+      "label": "stationary-controls",
+      "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024"
+    },
+    {
+      "round": 2,
+      "label": "unused-lfo",
+      "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b"
+    },
+    {
+      "round": 2,
+      "label": "rank-idle-1500",
+      "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e"
+    },
+    {
+      "round": 2,
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873"
+    },
+    {
+      "round": 2,
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162"
+    },
+    {
+      "round": 2,
+      "label": "retained-ring-charge",
+      "source_commit": "481c7e9fdb20372288864eecf746bf7efb28190a"
+    },
+    {
+      "round": 2,
+      "label": "connected-vca-idle",
+      "source_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250"
+    },
+    {
+      "round": 2,
+      "label": "current-sample-tail-pan",
+      "source_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14"
+    },
+    {
+      "round": 3,
+      "label": "main-before",
+      "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d"
+    },
+    {
+      "round": 3,
+      "label": "inherited-before",
+      "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c"
+    },
+    {
+      "round": 3,
+      "label": "lazy-filter-histories",
+      "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9"
+    },
+    {
+      "round": 3,
+      "label": "idle-exact",
+      "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b"
+    },
+    {
+      "round": 3,
+      "label": "stationary-controls",
+      "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024"
+    },
+    {
+      "round": 3,
+      "label": "unused-lfo",
+      "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b"
+    },
+    {
+      "round": 3,
+      "label": "rank-idle-1500",
+      "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e"
+    },
+    {
+      "round": 3,
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873"
+    },
+    {
+      "round": 3,
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162"
+    },
+    {
+      "round": 3,
+      "label": "retained-ring-charge",
+      "source_commit": "481c7e9fdb20372288864eecf746bf7efb28190a"
+    },
+    {
+      "round": 3,
+      "label": "connected-vca-idle",
+      "source_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250"
+    },
+    {
+      "round": 3,
+      "label": "current-sample-tail-pan",
+      "source_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14"
+    }
+  ],
+  "performance_pass_claim": false,
+  "builds_or_benchmarks_run_for_this_review": false,
+  "separate_v2_pin_commit": "14ef653ed60be67ff98656966f9181c5e9b6b4fc",
+  "source_audio_v2_pin": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "pin_matches_final_checkpoint": true
+}

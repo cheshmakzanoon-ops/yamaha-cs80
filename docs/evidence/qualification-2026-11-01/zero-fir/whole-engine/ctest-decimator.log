@@ -1,0 +1,52 @@
+Internal ctest changing into directory: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+UpdateCTestConfiguration  from :/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/DartConfiguration.tcl
+Test project /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 62
+    Start  62: cs80_oversampling_tests
+
+62: Test command: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/cs80_oversampling_tests
+62: Working Directory: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+62: Test timeout computed to be: 10000000
+62: decimator 2x: taps 255 passband -0.0004/+0.0004 dB stopband -87.1 dB latency 63
+62: decimator 4x: taps 511 passband -0.0004/+0.0003 dB stopband -87.6 dB latency 63
+62: decimator 8x: taps 1023 passband -0.0004/+0.0003 dB stopband -87.8 dB latency 63
+62: sine render Standard vs Eco: lag +0.0381 host samples, level ratio 1.00000
+62: sine render HQ vs Eco: lag +0.4139 host samples, level ratio 1.00004
+62: 85 checks, 0 failures
+1/3 Test  #62: cs80_oversampling_tests ..........   Passed    4.64 sec
+test 99
+    Start  99: cs80_zero_fir_history_tests
+
+99: Test command: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/cs80_zero_fir_history_tests
+99: Working Directory: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+99: Test timeout computed to be: 60
+99: Zero FIR history: 227117 checks, 0 failures
+2/3 Test  #99: cs80_zero_fir_history_tests ......   Passed    0.12 sec
+test 100
+    Start 100: cs80_zero_fir_rounding_tests
+
+100: Test command: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/cs80_zero_fir_rounding_tests
+100: Working Directory: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+100: Test timeout computed to be: 120
+100: MXCSR-only direction 0x0000: standard query 0, arithmetic negative zero 0
+100: MXCSR-only direction 0x2000: standard query 0, arithmetic negative zero 1
+100: MXCSR-only direction 0x4000: standard query 0, arithmetic negative zero 0
+100: MXCSR-only direction 0x6000: standard query 0, arithmetic negative zero 0
+100: Zero FIR rounding: 3276237 checks, 0 failures, 16352 downward witnesses, 3 independent MXCSR directions
+3/3 Test #100: cs80_zero_fir_rounding_tests .....   Passed    1.17 sec
+
+The following tests passed:
+	cs80_oversampling_tests
+	cs80_zero_fir_history_tests
+	cs80_zero_fir_rounding_tests
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   5.95 sec

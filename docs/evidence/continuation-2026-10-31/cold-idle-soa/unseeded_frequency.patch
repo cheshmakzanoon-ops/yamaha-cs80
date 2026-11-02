@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -2032,7 +2032,7 @@
+         // exactly when it is next assigned (ContinuousVoiceCircuit.h).
+         // A cold circuit has no previous controls to interpolate. Run exactly
+         // its first physical sample to seed them; never invent a zero-Hz past.
+-        const bool coldBootstrap = freeRunning && !v.active && !v.idleControlsPrimed;
++        const bool coldBootstrap = false; // deliberate mutation
+         int idleSamples = 0;
+         if (! v.active && !coldBootstrap)
+         {

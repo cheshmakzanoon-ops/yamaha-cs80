@@ -1,0 +1,433 @@
+{
+  "schema": 1,
+  "date": "2026-11-01",
+  "evidence_kind": "software_protocol_and_source_review",
+  "run_id": 41251946760,
+  "run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760",
+  "run_event": "pull_request",
+  "run_conclusion": "failure",
+  "head_sha": "156d82e9f3ee20089bb952ba853e0f0c779b903f",
+  "actions_checkout_sha": "7190e8e1ee36d52e76c6296934c798f491052f17",
+  "base_sha": "db24a47170610f81236e8829ef5536af69dfc94d",
+  "reviewed_sha": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "scope": "Feature-specific gates pass. Overall workflow failed the separate native Intel BBD idle-history assertion. Final current-head CI and release qualification remain independent.",
+  "log_representation": "Decoded GitHub job logs, CRLF normalized to LF, UTF-8. Full-log hashes identify retrieval; committed excerpts preserve selected exact lines.",
+  "au_mutation_count": 7,
+  "jobs": [
+    {
+      "platform": "macos-arm64",
+      "job_id": 124687124200,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124200",
+      "job_conclusion": "success",
+      "decoded_log_lf_sha256": "0aeef6fc59b531a6e0ad20bf25b8865f8e86669300ef2e8ec585161c8b1d0997",
+      "decoded_log_lf_bytes": 166046,
+      "excerpt_file": "macos-arm64-job-excerpt.log",
+      "excerpt_sha256": "02248180841d9e6e12e9e9752823bf14633cebf7345c28bd2fd2c7bff8c9a5d7",
+      "gates": {
+        "cs80_mts_esp_native_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:54.6429770Z 61/98 Test #61: cs80_mts_esp_native_tests ...................   Passed    0.00 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:54.7637930Z 62/98 Test #62: cs80_mts_esp_shim_tests .....................   Passed    0.12 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:54.7697550Z 63/98 Test #63: cs80_mts_esp_fallback_tests .................   Passed    0.01 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:55.0365220Z 64/98 Test #64: cs80_host_automation_curve_tests ............   Passed    0.27 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:55.0621380Z 65/98 Test #65: cs80_au_automation_curve_tests ..............   Passed    0.02 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:55.0687570Z 66/98 Test #66: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:39:16.6715910Z 85/98 Test #85: cs80_programmer_integration_tests ...........   Passed   10.08 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:39:17.3775040Z 86/98 Test #86: cs80_memory_panel_tests .....................   Passed    0.70 sec"
+        },
+        "cs80_chorus_tabs_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:33:01.2318580Z 41/98 Test #41: cs80_chorus_tabs_tests ......................   Passed    0.63 sec"
+        },
+        "cs80_ui_smoke": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:42:06.6484410Z 94/98 Test #94: cs80_ui_smoke ...............................   Passed   87.65 sec"
+        },
+        "cs80_au_automation_host_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:39:27.0620740Z 92/98 Test #92: cs80_au_automation_host_tests ...............   Passed    5.08 sec"
+        },
+        "cs80_au_automation_native_mutations": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:40:38.9945060Z 93/98 Test #93: cs80_au_automation_native_mutations .........   Passed   71.93 sec"
+        }
+      }
+    },
+    {
+      "platform": "macos-intel",
+      "job_id": 124687124244,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124244",
+      "job_conclusion": "failure",
+      "decoded_log_lf_sha256": "79b949ba1f90911a792c05c759e81e2169bdf1457371e64ad41bd65e07ed43c7",
+      "decoded_log_lf_bytes": 125807,
+      "excerpt_file": "macos-intel-job-excerpt.log",
+      "excerpt_sha256": "941b37dc88aa0e42ffe43534a5946ab84a617eed59cfb5e21abca3d0d56d4e7e",
+      "gates": {
+        "cs80_mts_esp_native_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:01:15.5133790Z 61/98 Test #61: cs80_mts_esp_native_tests ...................   Passed    0.01 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:01:15.8110190Z 62/98 Test #62: cs80_mts_esp_shim_tests .....................   Passed    0.30 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:01:15.8171970Z 63/98 Test #63: cs80_mts_esp_fallback_tests .................   Passed    0.01 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:01:16.9321270Z 64/98 Test #64: cs80_host_automation_curve_tests ............   Passed    1.11 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:01:17.0151430Z 65/98 Test #65: cs80_au_automation_curve_tests ..............   Passed    0.07 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:01:17.0377740Z 66/98 Test #66: cs80_au_automation_bridge_contract_tests ....   Passed    0.02 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:14:32.0939290Z 85/98 Test #85: cs80_programmer_integration_tests ...........   Passed   12.93 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:14:32.7438820Z 86/98 Test #86: cs80_memory_panel_tests .....................   Passed    0.65 sec"
+        },
+        "cs80_chorus_tabs_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:59:25.8290070Z 41/98 Test #41: cs80_chorus_tabs_tests ......................   Passed    1.63 sec"
+        },
+        "cs80_ui_smoke": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:20:03.3741960Z 94/98 Test #94: cs80_ui_smoke ...............................   Passed  137.48 sec"
+        },
+        "cs80_au_automation_host_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:14:52.4093960Z 92/98 Test #92: cs80_au_automation_host_tests ...............   Passed    9.11 sec"
+        },
+        "cs80_au_automation_native_mutations": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:17:45.8920830Z 93/98 Test #93: cs80_au_automation_native_mutations .........   Passed  173.48 sec"
+        }
+      }
+    },
+    {
+      "platform": "linux",
+      "job_id": 124687124151,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124151",
+      "job_conclusion": "success",
+      "decoded_log_lf_sha256": "80a8d0d9a68d2b92a9a80639dadf073b7de011066c2c740840cb4ed4e087c0b7",
+      "decoded_log_lf_bytes": 217063,
+      "excerpt_file": "linux-job-excerpt.log",
+      "excerpt_sha256": "a6402c05d346cb9c99f4d15ae2894bf3da511a1866acd83dc8122f4b537c61f3",
+      "gates": {
+        "cs80_mts_esp_native_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:55:11.7000922Z  62/102 Test  #62: cs80_mts_esp_native_tests ...................   Passed    0.00 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:55:11.8611169Z  63/102 Test  #63: cs80_mts_esp_shim_tests .....................   Passed    0.16 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:55:11.8629122Z  64/102 Test  #64: cs80_mts_esp_fallback_tests .................   Passed    0.00 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:55:12.2707843Z  65/102 Test  #65: cs80_host_automation_curve_tests ............   Passed    0.41 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:55:12.2888968Z  66/102 Test  #66: cs80_au_automation_curve_tests ..............   Passed    0.02 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:55:12.2954106Z  67/102 Test  #67: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:21.3529217Z  86/102 Test  #86: cs80_programmer_integration_tests ...........   Passed    9.97 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:21.9370221Z  87/102 Test  #87: cs80_memory_panel_tests .....................   Passed    0.58 sec"
+        },
+        "cs80_chorus_tabs_tests": {
+          "result": "passed",
+          "log_line": "2026-10-31T23:54:07.4586796Z  42/102 Test  #42: cs80_chorus_tabs_tests ......................   Passed    0.82 sec"
+        },
+        "cs80_ui_smoke": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:05:48.6748413Z  94/102 Test  #94: cs80_ui_smoke ...............................   Passed   76.93 sec"
+        },
+        "cs80_vst3_automation_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:31.7415182Z  93/102 Test  #93: cs80_vst3_automation_tests ..................   Passed    5.56 sec"
+        }
+      }
+    },
+    {
+      "platform": "windows",
+      "job_id": 124687124206,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41251946760/job/124687124206",
+      "job_conclusion": "success",
+      "decoded_log_lf_sha256": "f95ffe724499cd30bd2fd90fc02189745b477ddc2d757e0b5b983ca88acf6642",
+      "decoded_log_lf_bytes": 80765,
+      "excerpt_file": "windows-job-excerpt.log",
+      "excerpt_sha256": "51213cc79dcf51b03811b5751896371864f179938fc48526e3b2276bfb932b56",
+      "gates": {
+        "cs80_mts_esp_native_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:31.1895461Z 59/94 Test #59: cs80_mts_esp_native_tests ...................   Passed    0.01 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:31.4034869Z 60/94 Test #60: cs80_mts_esp_shim_tests .....................   Passed    0.21 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:31.4118162Z 61/94 Test #61: cs80_mts_esp_fallback_tests .................   Passed    0.01 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:32.1162645Z 62/94 Test #62: cs80_host_automation_curve_tests ............   Passed    0.70 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:32.1540914Z 63/94 Test #63: cs80_au_automation_curve_tests ..............   Passed    0.04 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:04:32.1636538Z 64/94 Test #64: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:14:47.1481991Z 83/94 Test #83: cs80_programmer_integration_tests ...........   Passed   10.31 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:14:47.6736377Z 84/94 Test #84: cs80_memory_panel_tests .....................   Passed    0.52 sec"
+        },
+        "cs80_chorus_tabs_tests": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:03:11.3400922Z 40/94 Test #40: cs80_chorus_tabs_tests ......................   Passed    1.28 sec"
+        },
+        "cs80_ui_smoke": {
+          "result": "passed",
+          "log_line": "2026-11-01T00:16:20.9249893Z 90/94 Test #90: cs80_ui_smoke ...............................   Passed   85.33 sec"
+        }
+      }
+    }
+  ],
+  "unchanged_feature_sources": [
+    {
+      "path": "src/plugin/HostAutomationBridge.h",
+      "sha256": "934842df25190bb1c7c8597d2ca5a3c3fc7f663de455937fd3852bf8fd0edb25",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorAutomation.cpp",
+      "sha256": "0d8e0ee71cf329a18845ac55ea7f9567d398d5da92e540e4cd970d089b9e6e3e",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/AuAutomationHooks.inc",
+      "sha256": "3e47ad3d1f2271a1810762d75736375b913f906e69685a87710431ebd60904c4",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/AuAutomationQueue.h",
+      "sha256": "a0ee9c6b973b6e63ee2790ef61ceaaaa1f8e29596207845a5a74347e159c893f",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "sha256": "3a113c78b1f18437b88245a06a34978de80189ded2209c067744043729eb6820",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.h",
+      "sha256": "ae3a322aa533a67fab1e0cabeb81a4475f51dac92bbf135bf371de69810c5248",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/UndoHistory.cpp",
+      "sha256": "37f1cca8d6e735390a758a11b7152aa2bc48d145340fe583b23e1f46e37bd654",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/UndoHistory.h",
+      "sha256": "3845350b3c34fedf8743eb069a765a3fb793e2f68a4be44e9cf1ef3f2891a56d",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/ModernLayerState.cpp",
+      "sha256": "8e9789e18bc1de29d6d0b1f628af97e3f98eeb5dee563f0d636b9bb253afd504",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/ModernLayerState.h",
+      "sha256": "68010c30cad9c7d92379d6a83f6ee11b6ab8f6fb8f6b0ac633da89668be2a3ae",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/MtsEspClient.cpp",
+      "sha256": "2185518de1812c30a5dfff2e2117ad3e536de9714628aeb991802b6c41c56541",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/plugin/MtsEspClient.h",
+      "sha256": "3b4c6cd63afe6f6e8065ee0a1aff902649a6fec5321e1480172b272db343ae53",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/core/MemoryPanels.h",
+      "sha256": "f7d98a5f0575cd8d446060128e80606c39c2b49d6dfeb797d92d71569b053725",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/core/ChorusTabs.h",
+      "sha256": "67d38c5d9c0d48c2240ee9ceae85d841c2a1b8edc47ffc23068419bcdedabf9d",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "sha256": "e5b71b2c5de60deda00777d5e0fbf7ec854d153c97efb67ba341fbecf0981976",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "76e4f0b002105d659a65a30aff685c493d4ddc3688486b64e7d8124bc132bfa6",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "2041497154ce70aac7465f5b81c4c493bdc6ac1196c8a7d14a4f9faab5d21ae3",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "cmake/HostAutomation.cmake",
+      "sha256": "a6658c085705dd7f0a46a02bdc1935c78312bcfa7c6b70043a9c81afea51af54",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "scripts/patch-juce-automation.py",
+      "sha256": "8e2f178f0f047f2c5be04d5f6c1242c5b7be6163505e78399a2c962d6d87aa36",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/HostAutomationCurveTests.cpp",
+      "sha256": "24559652b21c3029db09d3ae8b77c9703936cb2ac750d99a3d5c6e9fea1a2c4d",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/AuAutomationCurveTests.cpp",
+      "sha256": "4180b0c4563c2905cdec0950a8bdb15ac74c53ca049e2d29bdc5445ca43983ae",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/AuAutomationBridgeContractTests.cpp",
+      "sha256": "2de528a01633f1997c857967390d90395aaeede2eda2542d0592359e8b0cc039",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/AuAutomationHostTests.cpp",
+      "sha256": "e99aa6b2b1182d14d293ca49c34faa5f7f16f201f356da7b703ba0201424de8e",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/AuAutomationNativeMutations.py",
+      "sha256": "9f66857a8b599c881556a91fa35cebcc384e58040b68ad7fdb0212059a939361",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/Vst3AutomationTests.cpp",
+      "sha256": "ca40f26c22b10fe0b02e9005763fccc38a2c2df9ca301e242df7d73c92a9d0ff",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/MtsEspNativeTests.cpp",
+      "sha256": "f38a12b32cbacbdbd3560899ceefff122357aa52879ef4daf7295fd74cd7f21a",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/MtsEspShimTests.cpp",
+      "sha256": "03123b5f418cfb60f10a9c85683cb53940f0b1e1ed2c1dc2535a0f6900585066",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/MtsEspFallbackTests.cpp",
+      "sha256": "224799d11e240234484b34e4f21c7a96ea95a83306730aed0dfa372b92087178",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/StateTreeSynchronizationTests.h",
+      "sha256": "f41ca9f636107e9af0fff0b7c27acb6d107330a9151771772c6088533919b13c",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/ProgrammerIntegrationTests.cpp",
+      "sha256": "d128e2de023407f958c2f410170c25b2d5fc1d808bcc9a3e800e7ae23a40379b",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/MemoryPanelTests.cpp",
+      "sha256": "9e46235093807d17d46db2177920013f3074e17a0933d8a9c7561d9abedb94fe",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/ChorusTabsTests.cpp",
+      "sha256": "291e8687ac2620a72ed101e2974ce3e031a9f156d2b8e95454b9e1589010579e",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/PanelEditorTests.h",
+      "sha256": "7cba3ead1f960ffcc03ade5e58f073932b1294ec578853c36a6600c6f2a5cc8e",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "tests/test_parity_capture.py",
+      "sha256": "845ee8597cd717b5e26068336b975526b0f89b05b22ccce392b1c7dc6f4f6d5b",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "deps/mts-esp/Client/libMTSClient.h",
+      "sha256": "5c89f524b41f732b955e092c35522eb007dcb3a23db7631e9f9f75f4ffcf958f",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "deps/mts-esp/Client/libMTSClient.cpp",
+      "sha256": "b854e7c2b657a660431839fb1c413522fa2877296404cee2a36db55d8813c4b3",
+      "identical_at_tested_and_reviewed_heads": true
+    },
+    {
+      "path": "deps/mts-esp/LICENSE",
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+      "identical_at_tested_and_reviewed_heads": true
+    }
+  ]
+}

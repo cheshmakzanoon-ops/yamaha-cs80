@@ -87,6 +87,67 @@ void pedestal(const ws1::Tolerances& tol)
     check(std::abs(last) < 1e-5f * std::abs((float) dc), "output coupling removes the static pedestal (tau 0.1 s)");
 }
 
+// The amplitude EG can become Idle while the *downstream* coupling capacitor
+// still stores charge. The original free-running idle shortcut silently
+// discarded -coupling, causing an abrupt output cut at the active/idle
+// boundary. Use a charged zero-signal pedestal so the assertion cannot be
+// passed by oscillator phase coincidences or by making the VCA fade away.
+// Truth: the analytical zero-drive RC solution, independently of processClosed.
+void closedCapacitorDischarge(const ws1::Tolerances& tol)
+{
+    const double truthTol = tol["closed_discharge_truth_abs"];
+    const double stepTol = tol["closed_handoff_step_abs"];
+    for (double rate : { 88200.0, 96000.0, 192000.0 })
+    {
+        Ig00151Vca vca, continuing;
+        vca.prepare(rate);
+        continuing.prepare(rate);
+        vca.reset(2.0f);
+        continuing.reset(2.0f);
+        Adsr amp;
+        amp.reset();
+        amp.noteOn(0.002f, 0.015f, 0.7f, 0.005f);
+        float outputAtClose = 0.0f;
+        for (int sample = 0; sample < (int) std::lround(0.2 * rate); ++sample)
+        {
+            const float envelope = amp.tick((float) rate, true, true);
+            outputAtClose = vca.process(0.0f, 2.0f, 0.0f, envelope);
+            continuing.process(0.0f, 2.0f, 0.0f, envelope);
+        }
+        amp.noteOff();
+        int releaseSamples = 0;
+        do
+        {
+            const float envelope = amp.tick((float) rate, true, true);
+            outputAtClose = vca.process(0.0f, 2.0f, 0.0f, envelope);
+            continuing.process(0.0f, 2.0f, 0.0f, envelope);
+            ++releaseSamples;
+        }
+        while (!amp.isIdle() && releaseSamples < (int) std::lround(0.05 * rate));
+        check(amp.isIdle() && releaseSamples > 0, "fast released EG reaches Idle before the coupling capacitor discharges");
+        check(std::abs(outputAtClose) > 100.0 * stepTol,
+              "charged VCA coupling output remains audible at envelope closure; hard mute would make a step");
+
+        // This closed form is independent of the realtime recurrence. The
+        // first closed sample must be near the previous one, not a forced 0.
+        bool analyticMatch = true, fullPathMatch = true;
+        for (int sample = 1; sample <= (int) std::lround(0.2 * rate); ++sample)
+        {
+            const float closed = vca.processClosed();
+            const float full = continuing.process(0.0f, 2.0f, 0.0f, 0.0f);
+            const double truth = (double) outputAtClose
+                               * std::exp(-sample / (kIg00151CouplingSeconds * rate));
+            analyticMatch = analyticMatch && std::abs((double) closed - truth) <= truthTol;
+            fullPathMatch = fullPathMatch && std::abs((double) closed - full) <= truthTol;
+            if (sample == 1)
+                check(std::abs(closed - outputAtClose) <= stepTol,
+                      "VCA active/idle handoff preserves its charged downstream capacitor continuously");
+        }
+        check(analyticMatch, "closed VCA output equals analytical downstream coupling discharge at every sample");
+        check(fullPathMatch, "closed fast path equals the full zero-envelope VCA process at every sample");
+    }
+}
+
 void pan(const ws1::Tolerances& tol)
 {
     const double limit = tol["pan_power_rel"];
@@ -150,6 +211,7 @@ int main(int argc, char** argv)
         levelLaws(tol);
         levelNode(tol);
         pedestal(tol);
+        closedCapacitorDischarge(tol);
         pan(tol);
         subOnExponentialInput();
     }

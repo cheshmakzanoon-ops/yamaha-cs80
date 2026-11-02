@@ -1,0 +1,34 @@
+{
+  "observation_utc_date": "2026-11-01",
+  "source_audio_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
+  "executable_sha256": "468f587507a0086c0160a9418babef3be252bba9f41dbedeba6d4c762e439002",
+  "source_verification": "The primary checkout's src/core, src/experimental, src/reference and source_factory_benchmark.cpp diff is empty against the full pinned audio commit. This freshly rebuilt and copied Release executable was frozen before all three rounds.",
+  "method": "Three complete serial unchanged factory-benchmark rounds, 48 kHz, 256 frames, 1024 callbacks, 27 cases and 51 rows each; minimum callback median for every fixture, p99 and misses selected from that same round. Full raw CSV and original program output retained.",
+  "observed_independent_contention": [
+    "Immediately before these rounds, /proc sampled an unrelated rustc soundcraft_engine compile using 710 CPU ticks in one second and an rsync using 92 ticks.",
+    "A subsequent /proc one-second sample observed three unrelated Rust compiler processes at 100, 100 and 99 CPU ticks while a separate cargo-clippy workflow was running.",
+    "These workloads belong to a distinct workspace. Their presence is not a project DSP cost and does not establish a reliable performance advantage or disadvantage for this candidate."
+  ],
+  "observed_round_durations_seconds": [137.8, 114.8, 117.2],
+  "after_change": {
+    "held_median_rtf_range": [0.6217010625, 0.94182825],
+    "held_p99_rtf_range": [0.9866293125, 3.5436553125],
+    "held_selected_round_budget_exceedances": 1305,
+    "idle_quiet_rtf": 0.069984375,
+    "moving_tabs_pressure_wah_rtf": 0.890971125,
+    "legacy_held_median_rtf_range": [0.25032225, 0.3076175625],
+    "legacy_idle_quiet_rtf": 0.021522375,
+    "legacy_moving_controls_rtf": 0.2943823125
+  },
+  "before_change": {
+    "checkpoint": "unused-lfo",
+    "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b",
+    "held_median_rtf_range": [0.706472625, 1.1483895],
+    "idle_quiet_rtf": 0.128088,
+    "moving_tabs_pressure_wah_rtf": 1.05619425,
+    "legacy_held_median_rtf_range": [0.2463061875, 0.5012600625],
+    "legacy_idle_quiet_rtf": 0.0216585,
+    "legacy_moving_controls_rtf": 0.2847525
+  },
+  "target_result": "NOT MET: held 0.15-0.20 RTF; quiet idle <=0.02 RTF. Full same-runner checkpoint collection is scheduled separately."
+}

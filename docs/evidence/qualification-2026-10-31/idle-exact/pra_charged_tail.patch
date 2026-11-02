@@ -1,0 +1,11 @@
+--- a/src/core/PraWahCircuit.h
++++ b/src/core/PraWahCircuit.h
+@@ -89,7 +89,7 @@
+         // Valid profiles also accept signed-zero trim/source resistance. Their
+         // original node or capacitor zero signs require the full algebra below.
+         if (u==0.0 && !std::signbit(profile.vr2Ohms)
+-            && !std::signbit(profile.sourceOhms) && capacitorsArePositiveZero())
++            && !std::signbit(profile.sourceOhms) && true)
+             return {.a=-0.0, .y=-0.0};
+         const double optical=std::exp(opticalLog);
+         const double rt=profile.vr1Ohms+optical/(1.0+optical/profile.parallelOhms);

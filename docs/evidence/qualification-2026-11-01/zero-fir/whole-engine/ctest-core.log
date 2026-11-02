@@ -1,0 +1,34 @@
+Internal ctest changing into directory: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+UpdateCTestConfiguration  from :/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/DartConfiguration.tcl
+Test project /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 28
+    Start 28: cs80_core_tests
+
+28: Test command: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate/cs80_tests
+28: Working Directory: /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-candidate
+28: Test timeout computed to be: 10000000
+28: EXT reconstruction sr=44100 tone=21.533Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+28: EXT reconstruction sr=44100 tone=1001.294Hz gain=-0.000047dB image=-114.60dB delay=63.5host
+28: EXT reconstruction sr=44100 tone=20004.346Hz gain=0.000378dB image=-108.18dB delay=63.5host
+28: EXT reconstruction sr=48000 tone=23.438Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+28: EXT reconstruction sr=48000 tone=996.094Hz gain=-0.000036dB image=-120.37dB delay=63.5host
+28: EXT reconstruction sr=48000 tone=20003.906Hz gain=0.000097dB image=-106.94dB delay=63.5host
+28: EXT reconstruction sr=96000 tone=23.438Hz gain=-0.000000dB image=-114.32dB delay=63.5host
+28: EXT reconstruction sr=96000 tone=1007.812Hz gain=-0.000035dB image=-121.11dB delay=63.5host
+28: EXT reconstruction sr=96000 tone=19992.188Hz gain=-0.000045dB image=-114.90dB delay=63.5host
+28: ALL 11512 CHECKS PASSED
+1/1 Test #28: cs80_core_tests ..................   Passed   21.03 sec
+
+The following tests passed:
+	cs80_core_tests
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  21.03 sec

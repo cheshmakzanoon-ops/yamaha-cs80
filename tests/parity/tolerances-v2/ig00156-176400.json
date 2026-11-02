@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "registered": "2026-11-01",
+  "evidence_kind": "numerical",
+  "rationale": "Supplement the unchanged ws1 nodal grid with the missing 44100 Hz host at 4x internal rate. This contract is committed and published before evaluating the additional rate. It changes no original grid point, tolerance, continuous circuit equation, component value or service voltage band. Agreement is numerical qualification of declared equations, not hardware evidence.",
+  "stages": {
+    "ig00156_176400": {
+      "internal_rate_hz": 176400,
+      "grid_total_cutoff_hz": [60, 250, 1000, 4000, 12000],
+      "grid_low_frequency_q": [0.5, 1, 2, 5, 9],
+      "configurations": ["isolated HP", "isolated LP", "HP-to-LP cascade"],
+      "equivalence_max_rel": 2e-6,
+      "small_signal_core_rel": 0.03,
+      "small_signal_band_rel": 0.02,
+      "small_signal_core_band": "0.5..2 x cutoff and at most fs/8; complex error normalized by the truth response peak",
+      "small_signal_band": "20 Hz .. min(20 kHz, fs/5); use the original 4x accuracy ceiling of 0.02 at this supplemental rate",
+      "fixture": "Extend Ig00156PhaseCorrectionTests with the complete existing equivalence, full-band continuous-response, and direct realtime lock-in fixtures at 176400 Hz. Preserve every original 88200/96000/192000/384000 case and its existing limits. The additional rate uses the same five cutoff and five Q grids and all three stage configurations. Direct lock-in uses cutoffs 4000/12000 Hz, Q 0.5/5, both isolated stages, and 0.5/1/2 times cutoff within the existing band.",
+      "mutation": "A temporary production-header mutation sets the phase-correction beta coefficient to zero only when the internal rate equals 176400 Hz. The expanded permanent gate must reject it with nonzero normal test exit while the four original rates retain their positive-control results. No continuous oracle, test threshold, original point, or production repository file is changed by the mutation."
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "Declared software history-clear synchronization contract; no hardware law or measurement",
+  "extends": [
+    "4f1bd64c7c5db3e61967c8db2ae93612b58f6a30:tests/parity/tolerances-v2/state-tree-synchronization.json",
+    "706c673c54772eb45cb9fe41bd7dbf342792c64a:tests/parity/tolerances-v2/state-tree-recording-ownership.json",
+    "706c673c54772eb45cb9fe41bd7dbf342792c64a:tests/parity/tolerances-v2/state-tree-history-lock.json"
+  ],
+  "source_basis": [
+    "Cs80AudioProcessor::loadFactoryPreset previously called syncNow and then cleared the live UndoManager after syncNow released its internal common lock; a host-worker state restore or synchronized history access can overlap that clear.",
+    "Constructor-only history setup runs before processor publication; this fixture targets the callable factory-load path.",
+    "Full source rg audit also found MsegEditor::mouseDown directly calling the raw APVTS UndoManager beginNewTransaction. Route this through the already-registered synchronized ScopedUserEdit transaction path, retaining one named MSEG edit."
+  ],
+  "state_tree_history_clear": {
+    "maximum_unprotected_factory_history_clears": 0,
+    "required_observed_action_destruction": true,
+    "required_empty_history_after_factory_load": true,
+    "maximum_mseg_preceding_external_value_difference": 0.0,
+    "required_named_mseg_transaction_and_roundtrip": true
+  },
+  "fixtures": [
+    {
+      "name": "factory_load_history_clear_owns_common_lock",
+      "sequence": "Add a real UndoableAction with a destructor witness to a processor UndoManager under treeLock. Call the production loadFactoryPreset path on the message thread. Destruction during its real clearUndoHistory operation probes treeLock from a separate thread using only tryEnter; acquisition must fail. Require the witness to run and the resulting history to be empty. No sleep, timer pumping, duplicate reference lock or production runtime mode switch is used."
+    },
+    {
+      "name": "mseg_mouse_down_uses_synchronized_user_transaction",
+      "sequence": "Create an earlier user edit, then set an unrelated external parameter without pumping the message thread. Construct the real MsegEditor and deliver mouseDown. Before delivering any drag or allowing a timer, its guarded ScopedUserEdit path must synchronize that external value into the live tree. Then deliver a real point drag and mouseUp; require one named MSEG edit transaction, exact shape undo/redo, preservation of the earlier user edit and unrelated external value. The previously registered actual transaction-writer witness proves the shared production open scope owns treeLock.",
+      "implementation_constraint": "Use the existing synchronized user-transaction operation rather than another raw UndoManager entry point. No audio rendering, timed race inference, or timer flush may supply the synchronization."
+    }
+  ],
+  "required_mutation_checks": [
+    "Remove the common lock that spans factory-load syncNow and clearUndoHistory. The actual UndoableAction destructor witness must fail its lock-ownership assertion.",
+    "Restore the old direct raw UndoManager beginNewTransaction in MsegEditor::mouseDown, bypassing ScopedUserEdit. The immediate pre-drag external-value synchronization assertion must fail; the existing transaction-open guard mutation remains required independently."
+  ],
+  "preservation": [
+    "Keep all ten earlier fixtures and eleven earlier mutations unchanged.",
+    "Preserve existing factory-load behavior, undo coalescing, parameter identity/defaults, and every immutable audio and UI gate.",
+    "Compiler failures, timeouts, deadlocks, crashes and environmental harness failures cannot count as detected mutations."
+  ]
+}

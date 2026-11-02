@@ -1,0 +1,107 @@
+UI smoke: WM_PROTOCOLS absent before window-manager startup.
+UI smoke: Openbox ready on :99; WM_PROTOCOLS present; running unchanged test command.
+UI SMOKE START: processor=356160 bytes engine=323392 bytes
+UI SMOKE PHASE: JUCE initialization
+UI SMOKE PHASE: host metadata
+HOST TAIL REPRO isolation=0 rate=48000 window=8..9 RMS=0.00817450861 peak=0.0128406705 active=1
+HOST TAIL REPRO isolation=1 rate=48000 window=8..9 RMS=0.00232481019 peak=0.00389791327 active=1
+UI SMOKE PHASE: output meter host
+UI SMOKE PHASE: source performance host
+UI SMOKE PHASE: ws3 keyboard/tuning host
+UI SMOKE PHASE: engine I/O host
+UI SMOKE PHASE: editor initial size
+Editor initial size: 1600x1000; logical usable display: 1920x1200
+UI SMOKE PHASE: external input host
+UI SMOKE PHASE: performance and isolation host
+UI SMOKE PHASE: keyboard and expression host
+UI SMOKE PHASE: live envelope and factory source host
+UI SMOKE PHASE: editor, state and automation
+Preset timer refresh: elapsed=133.1ms model='Timer Refresh Verified' label='Timer Refresh Verified' stateWrites=159
+wrote /tmp/cs80-evidence/root-ui-final/main-legacy-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/main-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/main-ext-enabled-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-sub-ext-enabled.png
+wrote /tmp/cs80-evidence/root-ui-final/main-1200x760.png
+wrote /tmp/cs80-evidence/root-ui-final/main-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-page1.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-page2.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-page3.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-page4.png
+wrote /tmp/cs80-evidence/root-ui-final/browser-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/main-restored-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/main-populated-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-populated-page1.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-populated-page2.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-populated-page3.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-populated-page4.png
+wrote /tmp/cs80-evidence/root-ui-final/memory-programmer-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/memory-programmer-selected-1600x1000.png
+UI SMOKE PHASE: source performance captures
+source screenshot fixture: STRING 3 complete / STRING 2 inferred, finite=1, actual host sample peak=0.141636208, meter=SAMPLE PEAK -17.0 dBFS READ-ONLY
+wrote /tmp/cs80-evidence/root-ui-final/main-source-performance-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/main-source-performance-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/advanced-source-performance-about.png
+source screenshot fixture: PANEL headroom, finite=1, actual host sample peak=0.989889205, meter=SAMPLE PEAK -0.2 dBFS READ-ONLY
+wrote /tmp/cs80-evidence/root-ui-final/main-source-performance-headroom-1600x1000.png
+UI SMOKE PHASE: preset save and panic
+UI SMOKE PHASE: program library, Program Change, A/B and randomise
+UI SMOKE PHASE: pressure ownership and UI readiness
+Pointer fixture desktop window 0: 24Cs80AudioProcessorEditor '' 400,500 1120x700 visible=1
+Pointer fixture component at key60: N4cs802ui16HardwareKeyboardE '' (keyboard=1)
+Pointer fixture peer contains key60=1 foreground=0 settle=0 ms
+Pointer fixture: editor=400,500 1120x700; usable=0,0 1920x1200; key60 screen=1063,1131 hit=60
+UI SMOKE PHASE: original panel editor (ws7)
+golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)
+golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)
+crinkle neighbour difference: 1x 0.02009, 2x 0.02173
+UI SMOKE PHASE: studio views
+wrote /tmp/cs80-evidence/root-ui-final/studio-main-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-modulation-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-modulation-2-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-modulation-3-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-2-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-3-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-fx-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-fx-2-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-arp-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-settings-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-main-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-modulation-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-modulation-2-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-modulation-3-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-2-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-3-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-fx-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-fx-2-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-arp-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-settings-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-drawers-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-drawers-1120x700.png
+UI SMOKE PHASE: studio interaction
+UI SMOKE PHASE: studio MIDI learn
+wrote /tmp/cs80-evidence/root-ui-final/studio-keyboard-midi-learn-1600x1000.png
+UI SMOKE PHASE: studio undo and redo
+UI SMOKE PHASE: parameter context completion
+UI SMOKE PHASE: engine taps and sixteen-voice ownership
+wrote /tmp/cs80-evidence/root-ui-final/studio-engine-taps-sixteen-voices-1600x1000.png
+UI SMOKE PHASE: studio learning tools
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-1-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-2-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-3-1600x1000.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-1-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-2-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-3-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-4-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-5-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-6-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-7-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-8-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-tour-9-1120x700.png
+wrote /tmp/cs80-evidence/root-ui-final/studio-help-card-1600x1000.png
+UI SMOKE PHASE: studio tab order, hit targets and contrast
+hit targets at 1120 x 700: 314 modern-layer targets checked, 0 undersized; 0 other panel targets undersized; 26 documented exceptions
+UI SMOKE PHASE: modern modulation and FX layer
+UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)
+UI SMOKE TEST PASSED

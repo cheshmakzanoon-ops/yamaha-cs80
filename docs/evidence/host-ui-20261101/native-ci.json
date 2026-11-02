@@ -1,0 +1,235 @@
+{
+  "run_id": 41269271356,
+  "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356",
+  "head_sha": "8a85faab1a125cc14425d9184f7022f6746e40a6",
+  "event": "push",
+  "conclusion": "success",
+  "attempt": 1,
+  "log_representation": "Original decoded UTF-8 GitHub job logs, CRLF normalized to LF; no added or removed final newline.",
+  "jobs": [
+    {
+      "platform": "linux",
+      "job_id": 124738485243,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356/job/124738485243",
+      "decoded_log_lf_sha256": "4fd687e388389bf9695527891c89b5be5c0cbc7f63a4ffde05663cdd9f00a453",
+      "decoded_log_bytes": 219738,
+      "excerpt_file": "linux-native-excerpt.log",
+      "excerpt_sha256": "9c9f3a5059ac2b4cf2cf809b5e20af57d76fc4349cf7ad7e38d7d30ec6215668",
+      "gates": {
+        "cs80_chorus_tabs_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:16:32.7953195Z  49/111 Test  #49: cs80_chorus_tabs_tests ......................   Passed    0.89 sec"
+        },
+        "cs80_mts_esp_native_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:38.7954145Z  69/111 Test  #69: cs80_mts_esp_native_tests ...................   Passed    0.00 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:38.9625931Z  70/111 Test  #70: cs80_mts_esp_shim_tests .....................   Passed    0.17 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:38.9645608Z  71/111 Test  #71: cs80_mts_esp_fallback_tests .................   Passed    0.00 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:39.3535491Z  72/111 Test  #72: cs80_host_automation_curve_tests ............   Passed    0.39 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:39.3692117Z  73/111 Test  #73: cs80_au_automation_curve_tests ..............   Passed    0.02 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:39.3745533Z  74/111 Test  #74: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:27:01.8766105Z  93/111 Test  #93: cs80_programmer_integration_tests ...........   Passed   10.14 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:27:02.4666564Z  94/111 Test  #94: cs80_memory_panel_tests .....................   Passed    0.59 sec"
+        },
+        "cs80_vst3_automation_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:27:12.8893184Z 100/111 Test #100: cs80_vst3_automation_tests ..................   Passed    5.92 sec"
+        },
+        "cs80_ui_smoke": {
+          "passed": true,
+          "line": "2026-11-01T04:28:26.7891470Z 101/111 Test #101: cs80_ui_smoke ...............................   Passed   73.90 sec"
+        }
+      }
+    },
+    {
+      "platform": "macos-arm64",
+      "job_id": 124738485050,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356/job/124738485050",
+      "decoded_log_lf_sha256": "a396740726456b7342b9d9b512887ad79346e28facade9c782ac8a2f970a9c83",
+      "decoded_log_bytes": 167091,
+      "excerpt_file": "macos-arm64-native-excerpt.log",
+      "excerpt_sha256": "b557d8c5c8127583420c15a5f7aee1fc7e085bcea2f16602d4e3b337e4949cfb",
+      "gates": {
+        "cs80_chorus_tabs_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:43:43.8099670Z  48/107 Test  #48: cs80_chorus_tabs_tests ......................   Passed    0.56 sec"
+        },
+        "cs80_mts_esp_native_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:44:31.8169270Z  68/107 Test  #68: cs80_mts_esp_native_tests ...................   Passed    0.00 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:44:31.9138790Z  69/107 Test  #69: cs80_mts_esp_shim_tests .....................   Passed    0.10 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:44:31.9169280Z  70/107 Test  #70: cs80_mts_esp_fallback_tests .................   Passed    0.00 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:44:32.1593370Z  71/107 Test  #71: cs80_host_automation_curve_tests ............   Passed    0.24 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:44:32.1818850Z  72/107 Test  #72: cs80_au_automation_curve_tests ..............   Passed    0.02 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:44:32.1864900Z  73/107 Test  #73: cs80_au_automation_bridge_contract_tests ....   Passed    0.00 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:49:49.3388780Z  92/107 Test  #92: cs80_programmer_integration_tests ...........   Passed    9.69 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:49:50.0143720Z  93/107 Test  #93: cs80_memory_panel_tests .....................   Passed    0.68 sec"
+        },
+        "cs80_au_automation_host_tests": {
+          "passed": true,
+          "line": "2026-11-01T03:49:58.4252150Z  99/107 Test  #99: cs80_au_automation_host_tests ...............   Passed    4.45 sec"
+        },
+        "cs80_au_automation_native_mutations": {
+          "passed": true,
+          "line": "2026-11-01T03:51:16.1235370Z 100/107 Test #100: cs80_au_automation_native_mutations .........   Passed   77.70 sec"
+        },
+        "cs80_ui_smoke": {
+          "passed": true,
+          "line": "2026-11-01T03:52:50.4043840Z 101/107 Test #101: cs80_ui_smoke ...............................   Passed   94.27 sec"
+        }
+      }
+    },
+    {
+      "platform": "macos-intel",
+      "job_id": 124738485262,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356/job/124738485262",
+      "decoded_log_lf_sha256": "a7dfe77b178093e38bbfa85bd784fffc6c48565fc6de9635cdeb75373432e8d9",
+      "decoded_log_bytes": 169931,
+      "excerpt_file": "macos-intel-native-excerpt.log",
+      "excerpt_sha256": "ba02d7018814f6d31967062f2264ec962ff148f022a85f9cd416501c4a355ec6",
+      "gates": {
+        "cs80_chorus_tabs_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:17:59.4602860Z  48/107 Test  #48: cs80_chorus_tabs_tests ......................   Passed    1.42 sec"
+        },
+        "cs80_mts_esp_native_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:19:26.2710440Z  68/107 Test  #68: cs80_mts_esp_native_tests ...................   Passed    0.01 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:19:26.5064300Z  69/107 Test  #69: cs80_mts_esp_shim_tests .....................   Passed    0.23 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:19:26.5127150Z  70/107 Test  #70: cs80_mts_esp_fallback_tests .................   Passed    0.01 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:19:27.3792720Z  71/107 Test  #71: cs80_host_automation_curve_tests ............   Passed    0.87 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:19:27.4282900Z  72/107 Test  #72: cs80_au_automation_curve_tests ..............   Passed    0.05 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:19:27.4400700Z  73/107 Test  #73: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:30:51.7913770Z  92/107 Test  #92: cs80_programmer_integration_tests ...........   Passed    9.61 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:30:52.3226110Z  93/107 Test  #93: cs80_memory_panel_tests .....................   Passed    0.53 sec"
+        },
+        "cs80_au_automation_host_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:31:04.1791000Z  99/107 Test  #99: cs80_au_automation_host_tests ...............   Passed    5.61 sec"
+        },
+        "cs80_au_automation_native_mutations": {
+          "passed": true,
+          "line": "2026-11-01T04:32:52.2573460Z 100/107 Test #100: cs80_au_automation_native_mutations .........   Passed  108.08 sec"
+        },
+        "cs80_ui_smoke": {
+          "passed": true,
+          "line": "2026-11-01T04:34:37.5948120Z 101/107 Test #101: cs80_ui_smoke ...............................   Passed  105.34 sec"
+        }
+      }
+    },
+    {
+      "platform": "windows",
+      "job_id": 124738485203,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41269271356/job/124738485203",
+      "decoded_log_lf_sha256": "06ff0df7e8e541c27154c749c44d8a45aaba1c2e2c685c58fa76962d38d440b4",
+      "decoded_log_bytes": 84743,
+      "excerpt_file": "windows-native-excerpt.log",
+      "excerpt_sha256": "8d765fa97ba645cdd6f9dae81aac2355b04450e00edaec5b5d179316a608d383",
+      "gates": {
+        "cs80_chorus_tabs_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:14:01.1476845Z  47/103 Test  #47: cs80_chorus_tabs_tests ......................   Passed    1.11 sec"
+        },
+        "cs80_mts_esp_native_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:15:06.1897278Z  66/103 Test  #66: cs80_mts_esp_native_tests ...................   Passed    0.01 sec"
+        },
+        "cs80_mts_esp_shim_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:15:06.3798384Z  67/103 Test  #67: cs80_mts_esp_shim_tests .....................   Passed    0.19 sec"
+        },
+        "cs80_mts_esp_fallback_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:15:06.3876961Z  68/103 Test  #68: cs80_mts_esp_fallback_tests .................   Passed    0.01 sec"
+        },
+        "cs80_host_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:15:06.9022424Z  69/103 Test  #69: cs80_host_automation_curve_tests ............   Passed    0.51 sec"
+        },
+        "cs80_au_automation_curve_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:15:06.9375866Z  70/103 Test  #70: cs80_au_automation_curve_tests ..............   Passed    0.03 sec"
+        },
+        "cs80_au_automation_bridge_contract_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:15:06.9468389Z  71/103 Test  #71: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec"
+        },
+        "cs80_programmer_integration_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:24:38.1988793Z  90/103 Test  #90: cs80_programmer_integration_tests ...........   Passed    8.48 sec"
+        },
+        "cs80_memory_panel_tests": {
+          "passed": true,
+          "line": "2026-11-01T04:24:38.6318168Z  91/103 Test  #91: cs80_memory_panel_tests .....................   Passed    0.43 sec"
+        },
+        "cs80_ui_smoke": {
+          "passed": true,
+          "line": "2026-11-01T04:26:02.8871466Z  97/103 Test  #97: cs80_ui_smoke ...............................   Passed   78.18 sec"
+        }
+      }
+    }
+  ]
+}

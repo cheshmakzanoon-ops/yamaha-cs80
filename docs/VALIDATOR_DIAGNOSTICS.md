@@ -1,5 +1,26 @@
 # Validator crash diagnostics
 
+## Current mechanism finding — 2026-11-01
+
+The historical checkpoints below retain their original failures and provisional
+interpretations. Subsequent symbol/source inspection and independent
+old/fixed/reintroduced ASan/LSan reproductions establish a **validator-host
+RunLoop callback lifetime defect**, documented in
+[the complete lifetime proof](evidence/VALIDATOR_HOST_LIFETIME.md).
+The faulting mapped address is in the host's handler-map lookup; the earlier
+unmapped-plugin callback interpretation was an investigation hypothesis.
+
+The repaired, SHA-checked Linux validator is pinned by `f39af47`; its callback
+uses weak/shared map ownership and checks descriptor membership. CI retains
+strictness 10, headless, GUI and fixed-seed coverage, with one attempt. The
+plugin itself remains on JUCE 8.0.11. Timer and passive image/typeface/cache
+ownership was reviewed and defensively cleaned up, but that cleanup is not
+presented as the crash mechanism. The original failed invocations remain failed,
+and this evidence does not assign every historical untyped exit 139 to one cause.
+See [STATUS.md](STATUS.md) for the current integration and release results.
+
+## Diagnostic infrastructure and historical checkpoints
+
 The original validation result remains authoritative: an exit-zero run with an
 explicit clean SUCCESS is required. A diagnostic rerun never replaces a failed
 validation attempt. The existing bounded retry eligibility is unchanged and is

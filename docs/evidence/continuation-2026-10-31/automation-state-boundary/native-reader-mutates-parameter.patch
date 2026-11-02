@@ -1,0 +1,10 @@
+--- a/tests/Vst3AutomationTests.cpp
++++ b/tests/Vst3AutomationTests.cpp
+@@ -302,6 +302,7 @@
+             const auto id = parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane]));
+             require(std::find(ids.begin(), ids.end(), id) != ids.end(), "VST3 controller exposes the named key");
+             values[lane] = controller->getParamNormalized(id);
++            require(controller->setParamNormalized(id, values[lane] < 0.5 ? 0.91 : 0.09) == kResultOk, "reader mutation changes the observed key");
+             require(std::isfinite(values[lane]) && values[lane] >= 0.0 && values[lane] <= 1.0,
+                     "VST3 flushed normalized readback is finite and in range");
+         }

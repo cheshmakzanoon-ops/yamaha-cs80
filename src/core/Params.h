@@ -237,6 +237,10 @@ enum : int
 
     // [ws8-studio] append this workstream's core parameters below this line.
 
+    // [completion-tabs] append-only physical tab state, AU version hint 16.
+    // 0 preserves chorus_on/chorus_mode; 1 off, 2 chorus, 3 tremolo, 4 both.
+    P_chorusTabs,
+
     P_numParams
 };
 
@@ -460,6 +464,9 @@ inline constexpr ParamDef kExtensionDefs[] = {
     // [ws7-panel] append this workstream's ParamDefs below this line (same order as the enum).
 
     // [ws8-studio] append this workstream's ParamDefs below this line (same order as the enum).
+
+    // [completion-tabs] same append-only order as the enum, AU version hint 16.
+    { "chorus_tabs", "CHORUS / TREMOLO TABS", 0.0f, 4.0f, 0.0f, 1.0f, "", "CHORUS" },
 
 };
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");

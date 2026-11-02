@@ -11,8 +11,10 @@
 #include "core/MpeZones.h"
 #include "core/Tuning.h"
 #include "OutputMeter.h"
+#include "VoiceMonitor.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
+#include "HostAutomationBridge.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -26,9 +28,10 @@
 #include <vector>
 
 class Cs80AudioProcessorEditor;
-namespace cs80::tests { struct PresetSaveAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct AutomationStateAccess; }
 
-class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener
+class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener,
+                           public cs80::HostAutomationClient
 {
 public:
     explicit Cs80AudioProcessor(const juce::File& presetDirectory = {});
@@ -37,6 +40,12 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    bool usesHostAutomationTiming() const noexcept override;
+    int sampleAccurateParameterIndex(const juce::AudioProcessorParameter&) const noexcept override;
+    double sampleAccurateParameterValue(size_t lane) const noexcept override;
+    void beginHostAutomationBlock(int frameCount) noexcept override;
+    bool attachHostAutomationQueue(juce::AudioProcessorParameter&, cs80::HostAutomationQueue) noexcept override;
+    void endHostAutomationBlock() noexcept override;
     bool isBusesLayoutSupported(const BusesLayout&) const override;
     bool isExternalInputEnabled() const noexcept
     { return externalInputEnabled.load(std::memory_order_relaxed); }
@@ -70,10 +79,10 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
-    juce::AudioProcessorValueTreeState& getAPVTS() noexcept { return apvts; }
+    cs80::UndoableParameterState& getAPVTS() noexcept { return apvts; }
     // Modern modulation layer session data (MSEG shapes, matrix routing; ws5-modern).
     cs80::ModernLayerState& getModernLayer() noexcept { return modernLayer; }
-    const juce::AudioProcessorValueTreeState& getAPVTS() const noexcept { return apvts; }
+    const cs80::UndoableParameterState& getAPVTS() const noexcept { return apvts; }
     cs80::Engine& getEngine() noexcept { return engine; }
     // Non-audio producers only. Never feed host MIDI into this state.
     juce::MidiKeyboardState& getKeyboardState() noexcept { return keyboardState; }
@@ -94,6 +103,9 @@ public:
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
     int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    int getVoiceCapacity() const noexcept { return voiceCapacity.load(std::memory_order_relaxed); }
+    void setVoiceMonitorEnabled(bool enabled) noexcept { voiceMonitorEnabled.store(enabled, std::memory_order_relaxed); }
+    bool readVoiceMonitor(cs80::VoiceMonitorFrame& frame) const noexcept { return voiceMonitor.read(frame); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
     // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
     unsigned getHostMidiEventCount() const noexcept { return hostMidiEvents.load(std::memory_order_relaxed); }
@@ -102,7 +114,7 @@ public:
     cs80::OutputMeterReading consumeOutputMeter() noexcept { return outputMeter.consume(); }
     bool isVoiceActive(int i) const noexcept
     {
-        return i >= 0 && i < 8 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
+        return i >= 0 && i < 16 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
     }
     // Single-value mailboxes: only the audio callback mutates the DSP engine.
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
@@ -269,6 +281,7 @@ public:
 
 private:
     friend struct cs80::tests::PresetSaveAccess;
+    friend struct cs80::tests::AutomationStateAccess;
     // [ws6-library] program change, bank select, A/B state (PluginProcessorLibrary.cpp).
     struct LibraryState;
     std::unique_ptr<LibraryState> library;
@@ -319,7 +332,7 @@ private:
     juce::MidiBuffer keyboardDiscardBuffer; // Message thread only.
     cs80::KeyboardEventQueue<> keyboardEvents;
     std::array<unsigned, 128> uiHeldMasks {}; // Audio-owned source recovery tracking.
-    cs80::KeyboardPressureOwnership keyPressureOwnership;
+    cs80::SixteenVoicePressureOwnership keyPressureOwnership;
     bool pressureArpWasOn = false; // Audio-owned effective arp edge tracking.
     std::array<std::atomic<unsigned>, 128> hostKeyMasks {};
     cs80::ParamValues cached;
@@ -330,6 +343,18 @@ private:
     std::array<std::array<std::atomic<float>*, cs80::CP_count>, 4> hardwareMemories {};
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
     std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
+    std::array<juce::RangedAudioParameter*, cs80::kSampleAccurateParameters.size()> automationParameters {};
+    std::array<cs80::HostAutomationCurve, cs80::kSampleAccurateParameters.size()> automationCurves {};
+    std::array<double, cs80::kSampleAccurateParameters.size()> automationCurrent {};
+    std::array<float, cs80::kSampleAccurateParameters.size()> automationParameterReadback {};
+    bool hostAutomationBlock = false;
+    int hostAutomationFrames = 0, hostAutomationPosition = 0;
+    void resetHostAutomationState() noexcept;
+    void refreshHostAutomationParameter(size_t lane) noexcept;
+    void prepareHostAutomation() noexcept;
+    void syncHostAutomationParameters() noexcept;
+    void applyHostAutomationAt(int position, bool publish) noexcept;
+    int hostAutomationSpan(int position, int remaining) const noexcept;
     static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();
     static_assert(std::atomic<bool>::is_always_lock_free, "Panic handoff must be lock-free");
     std::atomic<bool> pendingPanic { false };
@@ -337,9 +362,13 @@ private:
         pendingExpression { noPendingControl };
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<int> activeVoiceCount { 0 };
+    std::atomic<int> voiceCapacity { 8 };
     std::atomic<unsigned> hostMidiEvents { 0 };
     std::atomic<unsigned> activeVoiceMask { 0 };
     cs80::OutputMeter outputMeter;
+    cs80::VoiceMonitor voiceMonitor;
+    std::atomic<bool> voiceMonitorEnabled { false };
+    std::uint64_t voiceMonitorSerial = 0; // audio-owned
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
     std::unique_ptr<cs80::Engine> extensionEngine;

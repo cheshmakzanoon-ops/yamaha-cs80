@@ -1,0 +1,67 @@
+{
+  "registered": "2026-10-31",
+  "kind": "exact_arithmetic_optimization",
+  "transforms": [
+    "MIDI pitch to Hz using the existing float pow expression",
+    "ring frequency using unchanged physical converter expression",
+    "DC coefficient using unchanged float exp expression",
+    "original SUB target converter using identical arguments",
+    "original SUB log-rate smoothing with exact log/exp memoization"
+  ],
+  "absolute_error": 0,
+  "comparison": "bitwise float equality including signed zero for finite accepted controls",
+  "domain": {
+    "pitch": [
+      -128,
+      256
+    ],
+    "reference_hz": [
+      0,
+      400,
+      440,
+      442,
+      480
+    ],
+    "rates": [
+      44100,
+      48000,
+      88200,
+      96000,
+      176400,
+      192000,
+      384000
+    ],
+    "ring_depth": [
+      0,
+      0.1,
+      0.5,
+      1
+    ],
+    "ring_envelope": [
+      0,
+      1e-05,
+      0.1,
+      0.7,
+      1
+    ]
+  },
+  "signed_zero_reference_cases": [
+    "At unchanged finite pitches spanning the existing pitch domain, call the MIDI memo with +0,+0,-0,-0,+0,-0,+0,+0 references, covering both sign transitions and repeated hits.",
+    "Compare every returned float bit pattern with the original tuningRef * pow expression under the existing absolute_error=0 limit; +0 and -0 are distinct expected outputs."
+  ],
+  "requirements": [
+    "cache only exactly identical inputs",
+    "retune and note changes cannot reuse stale factors",
+    "Legacy source expression remains untouched",
+    "all existing compatibility captures pass"
+  ],
+  "mutations": [
+    "stale pitch argument",
+    "stale ring envelope or depth",
+    "stale DC rate argument",
+    "stale SUB target pressure",
+    "stale SUB smoothed log frequency",
+    "restore numeric-only MIDI reference equality, collapsing +0 and -0 cache keys"
+  ],
+  "benchmark": "minimum three rounds at48k256 before and after"
+}

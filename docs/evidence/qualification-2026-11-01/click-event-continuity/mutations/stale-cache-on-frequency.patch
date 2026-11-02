@@ -1,0 +1,11 @@
+--- a/src/core/ReconstructedOscillator.h
++++ b/src/core/ReconstructedOscillator.h
+@@ -257,7 +257,7 @@
+         // A frequency or comparator-threshold change starts another analytic
+         // segment even when its antialias residual is negligible. A cached
+         // future crossing belongs to the OLD control law and must be discarded.
+-        if(f!=state.heldFrequencyHz||threshold!=state.heldThresholdVolts)
++        if(threshold!=state.heldThresholdVolts)
+             branchEventCacheValid=false;
+         // Control changes. A full event (branch residuals) is recorded unless the
+         // change provably or negligibly alters no branch:

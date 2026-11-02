@@ -2,6 +2,7 @@
 
 #include "core/Engine.h"
 #include "core/ModernLayer.h"
+#include "UndoHistory.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
@@ -11,6 +12,7 @@
 
 namespace cs80
 {
+namespace tests { struct ModernLayerStateTestAccess; }
 
 // Session data of the modern modulation layer (IMPROVEMENT_PLAN Phase 6): the three MSEG
 // shapes and the 16 matrix routings. Matrix amounts and MSEG rates are host parameters;
@@ -27,15 +29,17 @@ namespace cs80
 // are inert until a matrix amount is raised. Unknown later versions are read as far as
 // their fields are understood; every value is sanitised.
 //
-// Threads: editing calls and restores may come from any non-audio thread; the audio
-// thread picks up a published snapshot with a try-lock and never waits.
+// Threads: editing calls and restores may come from any non-audio thread. Live-tree
+// operations take the APVTS common tree lock before the configuration lock; no code
+// takes them in the reverse order. Worker edits are external and do not enter the
+// user's UndoManager. The audio thread only try-locks the published mailbox.
 class ModernLayerState : public juce::ChangeBroadcaster, private juce::ValueTree::Listener
 {
 public:
     static constexpr int version = 1;
     static const juce::Identifier treeType;
 
-    explicit ModernLayerState(juce::AudioProcessorValueTreeState& state);
+    explicit ModernLayerState(UndoableParameterState& state);
     ~ModernLayerState() override;
 
     modern::ModernConfig getConfig() const;
@@ -67,10 +71,16 @@ private:
     void valueTreeRedirected(juce::ValueTree&) override;
     bool concernsLayer(const juce::ValueTree& tree) const;
     void reloadFromTree();
+    // One private production read scope. The friend test supplies a reader
+    // witness at the actual live-tree access, without sleeping, taking a
+    // separate reference lock, or introducing a production mode switch.
+    using TreeReader = modern::ModernConfig (*)(void*, const juce::ValueTree&);
+    void reloadFromTreeUsing(void* context, TreeReader reader);
+    friend struct tests::ModernLayerStateTestAccess;
     void store(const modern::ModernConfig& config, bool writeTree);
     void publish(const modern::ModernConfig& config);
 
-    juce::AudioProcessorValueTreeState& apvts;
+    UndoableParameterState& apvts;
     mutable juce::CriticalSection lock;
     modern::ModernConfig config;
     bool writing = false;

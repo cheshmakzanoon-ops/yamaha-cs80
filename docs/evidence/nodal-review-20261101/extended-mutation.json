@@ -1,0 +1,52 @@
+{
+  "contract_published_sha": "2f18afc3f76c62be3e3682d113134598d3d1f8b6",
+  "test_source_sha256": "2577e5a79a8acf6b8b15f7130947d30e1374429a2e56866c7be86939c0c96d7e",
+  "variants": {
+    "176400-control": {
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-I/tmp/cs80-nodal-review/176400-control",
+        "-Isrc",
+        "-Isrc/core",
+        "-Itests",
+        "/tmp/cs80-nodal-review/phase-176400-tests.cpp",
+        "-o",
+        "/tmp/cs80-nodal-review/176400-control/phase-tests"
+      ],
+      "test_command": [
+        "/tmp/cs80-nodal-review/176400-control/phase-tests",
+        "tests/parity/tolerances-v2/ws1-voice.json",
+        "tests/parity/tolerances-v2/ig00156-176400.json"
+      ],
+      "exit_code": 0,
+      "executable_sha256": "54913ccbafa5cd5549caccf00439fef0fc535029ba5ad02d8982fbdd4bafc2f6",
+      "header_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947"
+    },
+    "176400-no-beta": {
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-I/tmp/cs80-nodal-review/176400-no-beta",
+        "-Isrc",
+        "-Isrc/core",
+        "-Itests",
+        "/tmp/cs80-nodal-review/phase-176400-tests.cpp",
+        "-o",
+        "/tmp/cs80-nodal-review/176400-no-beta/phase-tests"
+      ],
+      "test_command": [
+        "/tmp/cs80-nodal-review/176400-no-beta/phase-tests",
+        "tests/parity/tolerances-v2/ws1-voice.json",
+        "tests/parity/tolerances-v2/ig00156-176400.json"
+      ],
+      "exit_code": 1,
+      "executable_sha256": "058111138b249929bcaef171192abbb396fa41c2a212101dc93644adf30d94f5",
+      "header_sha256": "b15ff561226a487646fce3153a35c897932350fb5bef251d9677ef5511a9eb78"
+    }
+  }
+}

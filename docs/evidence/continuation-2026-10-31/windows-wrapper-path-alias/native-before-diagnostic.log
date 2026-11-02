@@ -1,0 +1,11 @@
+2026-10-31T20:39:23.7363650Z   ref: c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:25.2751461Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:25.8299146Z  * branch            c352e2489000ffeb9e397051377d75eef2efe641 -> FETCH_HEAD
+2026-10-31T20:39:25.8581761Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:26.7190971Z Note: switching to 'c352e2489000ffeb9e397051377d75eef2efe641'.
+2026-10-31T20:39:26.7675858Z c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:37.5115387Z Host wrapper path diagnostic: {"actual": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "expected": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "actual_resolved": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "expected_resolved": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "samefile": true}
+2026-10-31T20:39:37.5744234Z [31;1mFAIL: the generated wrapper retains the native source name and language extension[0m
+2026-10-31T20:39:37.5750276Z [31;1mHost wrapper platforms: stopped after 8 checks; contract failed[0m
+2026-10-31T20:39:37.6126372Z ##[error]Process completed with exit code 1.
+

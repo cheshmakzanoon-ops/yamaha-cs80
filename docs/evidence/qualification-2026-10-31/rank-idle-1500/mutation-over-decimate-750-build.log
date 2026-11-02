@@ -1,0 +1,7 @@
+COMMAND ["cmake", "--build", "/tmp/cs80-rank-idle1500-current/build", "--target", "free_running", "--parallel", "2"]
+[1/4] Building CXX object CMakeFiles/free_running.dir/workspace/scratch/2f805bffd21a/cs80-cpu-study/tests/FreeRunningVoiceTests.cpp.o
+[2/4] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[3/4] Linking CXX static library libcs80_core.a
+[4/4] Linking CXX executable free_running
+
+EXIT 0

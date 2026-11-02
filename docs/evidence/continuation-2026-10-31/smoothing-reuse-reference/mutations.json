@@ -1,0 +1,18 @@
+{
+  "contract_sha": "794c339df29d2dbb159b5112b216a72f34a638eb",
+  "unchanged_full_suite_checks": 84,
+  "results": [
+    {
+      "mutation": "retain_old_pressure_smoother_on_reassignment",
+      "exit_code": 1,
+      "elapsed_seconds": 24.133277926999654,
+      "summary": "84 checks, 1 failures"
+    },
+    {
+      "mutation": "remove_reference_settling_control",
+      "exit_code": 1,
+      "elapsed_seconds": 7.699945712000044,
+      "summary": "84 checks, 1 failures"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "status": "REGISTERED",
+  "schema_version": 1,
+  "registered_proposal_date": "2026-11-01",
+  "source_review_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+  "evidence_kind": "source_informed_numerical_state_invariant",
+  "source_basis": {
+    "carrier": "Yamaha service PRA p53: TR(19) reaches IC6 IG00159 G2 directly and G1 through 100pF. IC9 VI receives VC1(4) through 100k and VC2(3) through 180k; C has a timing capacitor. No external TR branch reaches IC9 in the inspected drawing. PRA p54 identifies IC9 as IG00150 and reconciles the unconnected handwritten pin7 as SO (sawtooth output), not a reset input.",
+    "envelope": "PRA p53: IC5 OUT8 -> IC6 BI2 has a 0.22uF capacitor; IC6 OUT3/EO feeds IC5 -IN4 through 100k, and LC drives +IN3 through 100k and its trim network. This is the separately stored-state architecture described for IG00159 in docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md (IC guide PDF41 / printed2-7).",
+    "declared_inference": "With no traced direct trigger-discharge branch, keyboard events select the frequency-envelope stage without instantaneously replacing the carrier phase or envelope capacitor proxy. Re-enter Attack from the retained double-precision EG charge using the already-declared Adsr RC law; retaining only its rounded float diagnostic does not meet this invariant. This is a bounded software model, not measured hardware continuity; trigger charge injection, internal comparator behavior and exact transient currents remain unmeasured.",
+    "alternatives_not_selected": "Carrier phase synchronization would require an unestablished trigger path. A rapid but finite EG discharge or trigger feedthrough could refine the physical model if supported by source evidence; neither licenses an arbitrary zero-time assignment to zero. No new taper, offset, fade or fitted time constant is introduced."
+  },
+  "unchanged_gates": [
+    "tests/parity/tolerances-v2/click-residual-continuity.json: all 72 exposed fields per rank",
+    "tests/parity/tolerances-v2/completion-dsp.json: phrase retrigger <= 1 and note-off <= 1",
+    "tests/parity/tolerances-v2/ws1-voice.json: phrase steal <= 1",
+    "tests/Ws4Tolerances.h: all ring converter, envelope-frequency and spectral limits",
+    "legacy default, legacy tails and circuit V1 numerics byte identity"
+  ],
+  "limits": {
+    "source_zero_time_phase_bit_mismatches_max": 0,
+    "source_zero_time_eg_charge_bit_mismatches_max": 0,
+    "source_zero_time_eg_precise_charge_bit_mismatches_max": 0,
+    "source_attack_origin_precise_charge_bit_mismatches_max": 0,
+    "source_zero_time_envelope_telemetry_bit_mismatches_max": 0,
+    "source_zero_time_fixed_input_ring_blend_bit_mismatches_max": 0,
+    "nonmutating_probe_pcm_bit_mismatches_max": 0,
+    "independent_retained_state_replay_pcm_bit_mismatches_max": 0,
+    "neutral_amount_zero_pcm_bit_mismatches_max": 0,
+    "source_rank_retrigger_precise_charge_bit_mismatches_max": 0,
+    "source_rank_retrigger_attack_origin_bit_mismatches_max": 0,
+    "comparison": "Compare named IEEE-754 float and double fields by bits, including signed zero, plus exact booleans/enums; never memcmp padding. No tolerance above zero. Actual Adsr preciseValue and attackFrom are distinct from the public float diagnostic."
+  },
+  "controlled_fixture": {
+    "rates_hz": [44100, 48000, 96000],
+    "quality_indices": [0, 1, 2],
+    "policies": ["Source Performance", "PURE CS-80", "Legacy compatibility control"],
+    "parameters": "ParamValues defaults, physical PANEL; SPEED=77Hz, DEPTH=0.5, MODULATION=0.7, ring A=0.08s/D=0.45s. Chorus, drift, voice dispersion, master sustain, key release, sustain mode and optional scan timing are zero. Both ranks: saw=1, pulse/noise/sine=0, VCA A=0.02s/D=0.7s/S=0.55/R=0.7s/level=0.65. Other defaults unchanged. Parameters referred to by enum name.",
+    "events_host_frames": "Reset; render513; noteOn60 at0.8; render1024; noteOn64 at0.8 (legato); render64; noteOff64 (60 still held); render256; noteOff60 (last release); render64; noteOn67 at0.8 (first held key over released audio); render512. No rendered time between each before/after snapshot. An explicit reset after this sequence must restore positive-zero phase/EG and Idle/false gate.",
+    "nonvacuity": "Every tested key boundary must start with nonzero phase and nonzero sine carrier. Before the final re-key require ring EG float value > 0 and envelope telemetry equal to that value. In both Source policies also require positive Adsr preciseValue unequal to double(getState().value), proving that float round-trip loss is observable; Legacy tick intentionally does not evolve that unused double accumulator. Require at least one active unheld voice with positive amplitude EG in both ranks, and at least one nonzero PCM sample in the preceding 64 host frames. Fail the fixture if any applicable condition is absent; do not silently skip it.",
+    "phase_law": "All Source noteOn/noteOff boundaries preserve ringPhase bits and hence sine carrier and RingModulatorCircuit::blend at each held dry input {0,-0.1,+0.1} and the existing amount. Legacy first-held-key events reset phase to positive zero; legato and noteOff preserve it.",
+    "eg_law": "Source first-held-key events retain ringAdsr preciseValue, getState().value and ringEnv bits while entering Attack with float/double elapsed=positive zero, attackFrom equal to the retained preciseValue, and ringKeyDown=true. Legato leaves preciseValue, attackFrom, preciseTime, float value/stage/elapsed and ringEnv untouched. Partial noteOff leaves the global gate/EG unchanged; final noteOff selects Release with float/double elapsed=positive zero, retains preciseValue/value/ringEnv and clears ringKeyDown. Legacy first-held-key events retain the historical positive-zero ringEnv/EG reset and Attack selection. No note event changes cached ringFrequency before a rendered sample.",
+    "reference_replay": "Run deterministic independent event, reference and untouched-control engines. The observer must not change the ordinary event engine, proved by exact full PCM equality with the untouched control. For the source reference, snapshot the global ring phase, ringEnv and a copy of Adsr before the first-held-key event; after ordinary noteOn restore only phase and the prior Adsr/ringEnv, then call that copied Adsr's existing default noteOn with the selected A/D, sustain0/release0.35, and independently restore its preciseValue and attackFrom to the saved exact double charge. Do not call the proposed new preserving method in this reference. This implements the registered retained-state law in a separate engine without extra rendered time. Require exact post-event PCM equality against the corrected ordinary engine. Phase, float charge and actual double charge have separate assertions.",
+    "implementation_boundary": "A test-only EngineEventContinuityProbe friend in Adsr may expose actual double state without runtime behavior or object layout changes. A dedicated Source-preserving noteOn option/method may be added; default Adsr callers and all Legacy behavior must stay identical. Source rank callers are separately covered by rank_precision_continuation below. The existing rank72 gate observes float EG proxies, not private double state, and its scope must not be overstated.",
+    "neutral_control": "Repeat the controlled source sequence with MODULATION=0. Compare the ordinary retained-state policy with a separate test-only replay forcing historical global phase/EG resets at first-held-key events. Require all PCM bits equal; the declared change must be inaudible when the ring blend is neutral."
+  },
+  "rank_precision_continuation": {
+    "scope": "Separate numerical continuation gate for the same Adsr preciseValue=value round-trip at rank amplitude retrigger. Covers both ranks and Source Performance/PURE CS-80 independently. It adds no new physical envelope law and makes no claim that a sub-float state replacement explains an audible click score. Existing rank72 assertions and bounds remain unchanged.",
+    "engine_fixture": "Use the controlled fixture's physical-PANEL parameters, rates and qualities, with MODULATION=0. Fill all eight voices with notes48..55 at velocity0.8; render997 host frames; release48; render31; strike72. Before strike require the selected circuit to be voice0, active/unheld, and both ranks' float amplitude values positive. In both Source policies also require positive preciseValue unequal to double(float value); Legacy's unused double accumulator is not required to track its float envelope. Seven other keys stay held, isolating this rank assignment from a first-held-key global ring event. No elapsed sample between snapshots. Source both-rank preciseValue and float value must retain exact bits, attackFrom must equal the pre-event preciseValue, and Attack must begin with zero float/double elapsed time. Legacy keeps its historical reset to positive zero on assignment.",
+    "primitive_fixture": "At internal rates88200/96000/192000/384000, initialize Adsr A=.08/D=.45/S=.55/R=.7 and tick997 reconstruction samples. Exercise re-entry from the still-held stage and, independently, after noteOff plus31 reconstruction samples. Require positive non-float-representable preciseValue in both cases. The new preserving path must retain exact float/double charge and initialize attackFrom from the retained double, with Attack/zero-time selection unchanged. A separate default-call control must retain its historical preciseValue=double(float value) and attackFrom behavior, making compatibility of callers that do not opt in explicit.",
+    "source_caller_boundary": "Only Source ring and Source rank amplitude noteOn callers opt into exact double-charge retention. Explicit engine reset, already-defined cold/inactive/panic reset policies and all Legacy/default caller arithmetic remain unchanged. The registered ring and rank laws are asserted independently."
+  },
+  "original_phrase_diagnostic": {
+    "fixture": "Unchanged electrical-programmer Laser Sweep, Source Performance, default Standard quality, original engine_audit phrase events, 64-frame event quantization, 44.1/48/96kHz, 12s duration. The targeted re-key is6.25s. The physical-PANEL fixture, if also examined, must be labelled separately.",
+    "causal_controls": "At only the targeted event, render four independent histories with identical prefixes: historical phase+EG reset; phase retained only; EG retained only; both retained. Earlier events force the same historical global ring behavior for all four. Keep rank onset precision policy identical across these replays; when comparing with the historical baseline, a test-only historical-rank replay rounds only newly assigned ranks as the old code did. Record phase/EG/ring frequency, active/held/released voice counts and amplitude proxies immediately before/after, first nonzero PCM difference, unchanged8ms numerator, original chord denominator, maximum sample index and complete original ratio. Include an omitted-target-note replay with the same prefix. No score threshold or event/window/denominator changes.",
+    "interpretation": "A state reset and a changed waveform do not by themselves identify the row maximum. Attribute a contribution only from the targeted-event counterfactuals and nonzero pre-event old-audio/carrier witnesses. Retain any remaining >1 score as open. The Clavichord steal score is separate; ring amount0 cannot make this ring-state correction its output cause."
+  },
+  "required_mutations": [
+    "Restore phase reset only in Source Performance; phase/held-input assertions must fail.",
+    "Restore phase reset only in PURE CS-80; phase/held-input assertions must fail.",
+    "Restore EG reset only in Source Performance, leaving phase correct; charge assertion must fail with nonzero prehistory.",
+    "Restore EG reset only in PURE CS-80, leaving phase correct; charge assertion must fail with nonzero prehistory.",
+    "Preserve the ring float EG value but round preciseValue through it on re-key; the exact double-charge assertion must fail with the non-float-representable witness.",
+    "Initialize attackFrom from the rounded float instead of retained preciseValue; the independent attack-origin assertion must fail.",
+    "Restore the float-to-double round trip only for rank I on Source retrigger; the rank-I precise-charge assertion must fail in both source policies.",
+    "Restore the float-to-double round trip only for rank II on Source retrigger; the rank-II precise-charge assertion must fail in both source policies.",
+    "Use rounded attackFrom only for rank II while retaining its preciseValue; the rank-II attack-origin assertion must fail.",
+    "Zero only ringEnv on source re-key; telemetry continuity assertion must fail independently of Adsr charge.",
+    "Suppress first-key ring AD trigger while preserving phase/charge; Attack/gate assertions must fail.",
+    "Retrigger ring AD on a legato key; unchanged-stage/elapsed assertions must fail.",
+    "Preserve Legacy phase/EG on first-key events; Legacy historical-reset assertions must fail.",
+    "Advance the observer engine by one extra host frame; untouched-control PCM equality must fail.",
+    "Weaken a zero-bit limit or omit either source policy's phase/charge assertion; the gate-strength audit must reject the altered test."
+  ],
+  "publication_rule": "This contract must be committed and published by root before a new witness is evaluated or production behavior is edited. Existing rank72 gate stays unchanged. The correction is an intentional Source audio change requiring its own audio commit, separate full-SHA V2 repin, strict compatibility check and evidence update."
+}

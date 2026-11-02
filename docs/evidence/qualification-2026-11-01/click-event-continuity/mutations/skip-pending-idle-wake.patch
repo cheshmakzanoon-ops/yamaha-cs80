@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1146,7 +1146,7 @@
+     const bool wasActive = v.active;
+     const bool preserveAudioState = freeRunningVoices() && !v.held && !v.pedalHeld;
+     if (preserveAudioState && ! wasActive)
+-        wakeIdleVoice(v);
++        (void) v;
+     // IL is a selected drive, not an assignment-time capacitor reset. Keep
+     // charge even for a first strike before the released circuit settles.
+     const bool preserveEnvelope = preserveAudioState;

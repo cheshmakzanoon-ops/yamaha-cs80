@@ -1,0 +1,74 @@
+{
+  "registered": "2026-10-31",
+  "operation": "Skip retained-phase FIR convolution only when every sample in its complete history is numeric zero",
+  "oracle": "Independent chronological history with the original symmetric coefficient summation and explicit signed-zero cases",
+  "factors": [
+    2,
+    4,
+    8
+  ],
+  "absolute_error": 0,
+  "comparison": "bitwise float equality",
+  "cases": [
+    "initial zero history",
+    "positive and negative zero",
+    "isolated impulse then complete tail",
+    "random bursts separated by more than all taps",
+    "positive and negative subnormals",
+    "reset and factor changes",
+    "every output phase including first sample after silence",
+    "FTZ/DAZ transitions with retained subnormal history on supported x86",
+    "At each prepared factor and every ring position, fill a complete signed-zero history with each symmetric pair and the center opposite the sign of its coefficient, so every original summand and the full ordered sum are negative zero; require negative-zero output exactly.",
+    "Before first prepare, fill the default zero-coefficient filter with negative-zero history and compare its original ordered output; then exercise copies/assignment, reset, valid factor changes and invalid-factor fallback with signed-zero history retained before each reset.",
+    "Run the added signed-zero fixtures in fixed round-to-nearest/ties-to-even, separately with FTZ/DAZ both disabled and both enabled on supported x86; retain the original cross-mode subnormal fixtures unchanged."
+  ],
+  "mutations": [
+    "treat nonzero input as silent",
+    "forget nonzero history decrement",
+    "forget nonzero history reset",
+    "mark silent before full history drains",
+    "return positive zero for every numeric-zero history without preserving the negative-zero ordered-sum case"
+  ],
+  "additional_gates": [
+    "existing decimator passband stopband latency and allocations tests",
+    "legacy and V1 byte equality",
+    "strict current V2 byte equality"
+  ],
+  "history_classification": "Raw IEEE float magnitude bits; signed zeros are zero, subnormals remain nonzero independent of FTZ/DAZ mode.",
+  "efficiency": "The published nonzero-history count exactly matches an independent full-history count and reaches zero after all nonzero samples drain.",
+  "signed_zero_shortcut_proof": "At the registered nearest-rounding environment, a positive-zero center history value times the nonnegative finite center coefficient starts the original sum at positive zero; adding only signed-zero summands cannot change that sign. Default construction has positive-zero coefficients and all prepared factors have a positive center coefficient. A negative-zero center must retain the original convolution unless another exact sign proof is supplied. This adds no claim for changing the floating-point rounding direction.",
+  "rounding_environment_extension": {
+    "status": "Prospective addendum; no repaired candidate or numerical result has been evaluated under this extension.",
+    "registered": "2026-10-31",
+    "existing_contract": "All original nearest-rounding fixtures, zero-error limits, subnormal classification, efficiency semantics and compatibility gates above remain unchanged.",
+    "comparison": "Bitwise IEEE float equality, including positive and negative zero; maximum output ULP difference is 0. Compare the original ordered center-first symmetric FIR under the same effective arithmetic environment.",
+    "standard_rounding_modes": [
+      "FE_TONEAREST",
+      "FE_DOWNWARD",
+      "FE_UPWARD",
+      "FE_TOWARDZERO"
+    ],
+    "fast_path_admission": "Only complete numeric-zero history with a positive-zero center and verified nearest rounding may return positive zero directly. Every other rounding environment executes the original ordered convolution. A failed or unsupported rounding query must take that unchanged fallback.",
+    "x86_independent_controls": "Where SSE is available, the standard fenv query and MXCSR rounding direction are checked independently. Fast-path admission requires both std::fegetround()==FE_TONEAREST and MXCSR rounding bits 0x6000 equal to zero. Tests first set standard nearest and then vary only MXCSR rounding bits through 0x0000,0x2000,0x4000,0x6000; record the standard query separately. If a platform standard query follows MXCSR, report that coupling rather than claiming an independent x87/SSE witness.",
+    "other_targets": "On ARM and other supported targets use the standard rounding query for the actual arithmetic control. Report unavailable directed modes explicitly; do not silently replace them by nearest.",
+    "denormal_modes": "Retain original FTZ/DAZ fixtures. For the new zero-history and continuation fixtures, exercise all supported x86 FTZ/DAZ combinations 0x0000,0x0040,0x8000,0x8040 without changing any other MXCSR control or sticky bit. Other targets retain their available environment.",
+    "zero_histories": [
+      "all positive zero",
+      "negative-zero peripheral history with a positive-zero center",
+      "coefficient-aligned negative-zero summands including a negative-zero center",
+      "deterministic mixed signed zeros with a positive-zero center"
+    ],
+    "ring_and_factor_domain": "Default unprepared filter and prepared factors 2,4,8; every ring position, including retained output phases. The independent chronological oracle preserves original coefficient values and summation order.",
+    "deterministic_counterexample": "A positive-zero center plus a negative-zero peripheral summand has original ordered output negative zero under effective downward rounding. Include the unprepared all-positive-zero coefficients with negative-zero peripheral history, and prepared positive-zero history with a negative coefficient. Assert that the oracle produces the counterexample before using it to reject an unguarded shortcut.",
+    "continuation": "Without rebuilding or resetting the same zero-history filter, change rounding direction between repeated public output() calls. Then push a nonzero sample and both signs of subnormal history, compare every result, copy/assign, reset, reprepare valid factors and exercise invalid-factor fallback. Each observation uses the contemporaneous original ordered oracle; reset is not assumed to return positive zero under every direction.",
+    "control_preservation": "output() may only read the environment. Rounding, FTZ/DAZ, exception masks and all pre-existing sticky exception bits must be preserved. Tests save and restore the entire caller fenv and the original MXCSR value at exit. Additional flags raised by the unchanged nonzero convolution are compared with the same ordered reference where observed, never cleared by production code.",
+    "compiler_and_oracle": "Compile candidate and independently indexed original convolution with the same compiler and numerical options. Ensure the test translation unit honors runtime rounding (for example -frounding-math on GCC/Clang or /fp:strict on MSVC), with no global project option changes. Before evaluating the repaired candidate, run the new rounding driver against the verbatim unoptimized Dsp.h baseline and require zero failures.",
+    "mutation_witnesses": [
+      "remove both rounding checks from the actual positive-zero shortcut; require the downward signed-zero assertion to fail",
+      "retain only the standard fenv check and omit the independent MXCSR check; on a target with independent x87/SSE controls require the MXCSR-only downward counterexample to fail",
+      "cache rounding admission at preparation instead of reading it for the zero-history output; require a same-history mode-transition witness to fail",
+      "admit FE_DOWNWARD as if it were nearest; require the original ordered negative-zero result to reject the shortcut"
+    ],
+    "publication_rule": "Publish this exact addendum before running any new rounding-environment candidate or mutation evaluation. Preserve the earlier nearest-only evidence as its original narrower scope."
+  }
+}

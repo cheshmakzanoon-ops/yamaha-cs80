@@ -1,0 +1,21 @@
+{
+  "registered": "2026-10-31",
+  "gate": "Physical chorus/tremolo tab host and UI interaction",
+  "prior_exclusive_invariant": "Retain every original exclusive chorus_mode UI assertion under Legacy. Circuit policies now follow the separately registered independent physical-tab states.",
+  "requirements": [
+    "Historical mode remains default0",
+    "Existing chorus_on and chorus_mode IDs and indexes remain",
+    "Appended chorus_tabs uses AU hint16 or later",
+    "Circuit and Pure each expose both off, chorus only, tremolo only and both on by direct tab clicks",
+    "Each click produces one balanced host gesture on chorus_tabs",
+    "Master off preserves the selected independent state",
+    "Host writes update both tab lights",
+    "Switching Legacy restores exclusive host context and behavior",
+    "Default screenshots keep their original golden limits"
+  ],
+  "mutations": [
+    "force circuit UI to legacy-exclusive path",
+    "write wrong independent tab state",
+    "omit balanced host gestures"
+  ]
+}

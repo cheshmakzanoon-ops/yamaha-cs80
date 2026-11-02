@@ -1,0 +1,674 @@
+{
+  "source_commit": "1991fdb7b40ce69cc8768ef68c2a2d837bdeb154",
+  "preregistered_commit": "1bc691fac7176c7d108cd336e5aff4de1a5b3dcf",
+  "integrated_base": "2acd64adbb2dc043521defc7789423711052c61e",
+  "command": "scripts/run-ui-smoke-linux.sh CS80Snapshots --self-test --out screenshots",
+  "cpu_affinity": "4",
+  "exit_code": 0,
+  "failed_assertions": 0,
+  "binary": {
+    "file": "CS80Snapshots",
+    "bytes": 16887936,
+    "sha256": "8d6d80adfeb4a020bee264e15bb2f22aece56882e96f89188fb216246892d4f7"
+  },
+  "full_log": {
+    "file": "full-ui.log",
+    "sha256": "7b71648a83b5d0f6e96e2547913d8826447fa83b0d5c112f73d6e3ecbce11309"
+  },
+  "golden_main_1600x1000": {
+    "changed_pixels_percent": 0.0,
+    "worst_block_mean": 0.0
+  },
+  "golden_main_1120x700": {
+    "changed_pixels_percent": 0.0,
+    "worst_block_mean": 0.0
+  },
+  "hit_targets": {
+    "modern_checked": 314,
+    "modern_undersized": 0,
+    "other_panel_undersized": 0,
+    "documented_exceptions": 26
+  },
+  "screenshot_count": 71,
+  "screenshots": [
+    {
+      "file": "screenshots/advanced-page1.png",
+      "bytes": 1134234,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "555f7fd676087596087604c99f08824cf3c0ab76aef68da6c3aea0466d0dc2bf"
+    },
+    {
+      "file": "screenshots/advanced-page2.png",
+      "bytes": 964944,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "c0bba0a8e10449d33c200f4c7177b47c7dce8923b89b24b9174f11e6d1625c05"
+    },
+    {
+      "file": "screenshots/advanced-page3.png",
+      "bytes": 1159561,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "833df0197252a9da5e1ee88b83e939824f095b708297953ad4db8cca138dd4f4"
+    },
+    {
+      "file": "screenshots/advanced-page4.png",
+      "bytes": 1320994,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "6a39079e535ce572be34a2f5cfccb7a85261c1f04bc692a59f5e8eedd4ed0328"
+    },
+    {
+      "file": "screenshots/advanced-populated-page1.png",
+      "bytes": 1171002,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "6e38e107238d79cf3d111378340a0105613f37a40833098afadb20889b484190"
+    },
+    {
+      "file": "screenshots/advanced-populated-page2.png",
+      "bytes": 949261,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "6a36f0f2afa27d213f2ede2b955c0e17748b0f56d51dbb57f783993d6827f9e6"
+    },
+    {
+      "file": "screenshots/advanced-populated-page3.png",
+      "bytes": 1165951,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "e3df6bc57962159aaf83cbec5b6e0d837e4b9fa44c00dab4542780984b325147"
+    },
+    {
+      "file": "screenshots/advanced-populated-page4.png",
+      "bytes": 1319702,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "e555c2710911fda2f68c53775ca57392a50ba78adb1a11c3de17f75e99607a7c"
+    },
+    {
+      "file": "screenshots/advanced-source-performance-about.png",
+      "bytes": 1322158,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "d18368a8ff838009f78430c450046b5945163114b5e5e2b348dda24508821b96"
+    },
+    {
+      "file": "screenshots/advanced-sub-ext-enabled.png",
+      "bytes": 943460,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "0e6334b3c59513188a1a5c8aaf69baebe5c55161f3ceb75aaa3e8a857c30cd15"
+    },
+    {
+      "file": "screenshots/browser-1600x1000.png",
+      "bytes": 1480778,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "517d0a00eb611f0e8359929659c92552fcb1d3f7801683360d9e635676df872c"
+    },
+    {
+      "file": "screenshots/golden/golden-candidate-main-1120x700.png",
+      "bytes": 918591,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "aec04d06df391fec14487eee5573979d361b8f1164856eb0642778ea2b5d664c"
+    },
+    {
+      "file": "screenshots/golden/golden-candidate-main-1600x1000.png",
+      "bytes": 1627694,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "e7261e2803e5bbc98c1e88452c5852efe2182e7471736703c0a5fbb1fe3c253d"
+    },
+    {
+      "file": "screenshots/golden/golden-diff-main-1120x700.png",
+      "bytes": 2374,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "65a7f60161cd409d5010e3f722b854b860d53ad826c6867a0c350f0ccd8b8f76"
+    },
+    {
+      "file": "screenshots/golden/golden-diff-main-1600x1000.png",
+      "bytes": 4760,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "06029e296ed2f8670d2cdd32574c71c0ab781a9d91d6a76c848e345fa12532e7"
+    },
+    {
+      "file": "screenshots/main-1120x700.png",
+      "bytes": 920295,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "322aba680798786f556a38cdeff6e2726508fa6ad49611f094d29ae47e2652da"
+    },
+    {
+      "file": "screenshots/main-1200x760.png",
+      "bytes": 994427,
+      "size": [
+        1200,
+        760
+      ],
+      "sha256": "0d84b4ab397fd689b0367b4def84c58f9fc1bc4ce28867c3406cbd7ca0bfb745"
+    },
+    {
+      "file": "screenshots/main-1600x1000.png",
+      "bytes": 1630054,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "1639c7d30d4ec8a812f42eda77df179a31240ca5531413563e95c28ff6a1545d"
+    },
+    {
+      "file": "screenshots/main-ext-enabled-1600x1000.png",
+      "bytes": 1630846,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "d9b37336097e356289b26ad7c30701cd01cdb11e49510f511676af941eb40085"
+    },
+    {
+      "file": "screenshots/main-legacy-1600x1000.png",
+      "bytes": 1630402,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "ac71fb59065ca0cb6d871cce78d7ff66e26a01da6f860e5cd18072c8416f4706"
+    },
+    {
+      "file": "screenshots/main-populated-1600x1000.png",
+      "bytes": 1628812,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "ef77937490e0b799125fab26d9cb469e1344d84a1bdcb00063ffc541a4daaad4"
+    },
+    {
+      "file": "screenshots/main-restored-1600x1000.png",
+      "bytes": 1629947,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "fb5f8c74f61c781a6df578df6b15760679e23c3501b856f740e73bc6a8fba622"
+    },
+    {
+      "file": "screenshots/main-source-performance-1120x700.png",
+      "bytes": 926390,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "742e7d8080bef05a6d4433a6e2d73591d723f0c434f1eeff2f02f19dfaac2eda"
+    },
+    {
+      "file": "screenshots/main-source-performance-1600x1000.png",
+      "bytes": 1640819,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "368c4e0dbca09ff18c141449642c38bae75366a7894d7364f4a41a1386117949"
+    },
+    {
+      "file": "screenshots/main-source-performance-headroom-1600x1000.png",
+      "bytes": 1636681,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "8e7564a6c4a8cca3f89ce8b8152c4eff638d46e25b8149235744a96775c1e7fb"
+    },
+    {
+      "file": "screenshots/memory-programmer-1600x1000.png",
+      "bytes": 1515370,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "4a44ba25f9cd2bd93be521664c41614a8238b9a797ee64043f484c3f81dac4c1"
+    },
+    {
+      "file": "screenshots/memory-programmer-selected-1600x1000.png",
+      "bytes": 1515357,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "9b90071a5e805139857e1244c249f3786b4e630daf908de55d9da036f4af9395"
+    },
+    {
+      "file": "screenshots/modern-fx-1100x380.png",
+      "bytes": 21712,
+      "size": [
+        1100,
+        380
+      ],
+      "sha256": "4283b9c084de97856c2e7262cd072cc5dbe175280d7de27c1d22541f3b431f35"
+    },
+    {
+      "file": "screenshots/modern-keyboard-1100x360.png",
+      "bytes": 25062,
+      "size": [
+        1100,
+        360
+      ],
+      "sha256": "c4824f59d77c776e8e556cab9bc6a0642bb149451c6c7790d35ac73dfb09e560"
+    },
+    {
+      "file": "screenshots/modern-modulation-1100x640.png",
+      "bytes": 103291,
+      "size": [
+        1100,
+        640
+      ],
+      "sha256": "3e5797fd3052d23b72ad0190e316a11949b41a805709f982b90067c2a4e5435b"
+    },
+    {
+      "file": "screenshots/modern-modulation-1560x820.png",
+      "bytes": 126780,
+      "size": [
+        1560,
+        820
+      ],
+      "sha256": "cec4829d0408e4a1d85f43eb05cab53403fb2ce8732192a9233cb54d1c85de29"
+    },
+    {
+      "file": "screenshots/studio-arp-1120x700.png",
+      "bytes": 561327,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "0b1894892abee204b707fd602ff51184aaede9cc6b3e5f4520098ac60d7dedae"
+    },
+    {
+      "file": "screenshots/studio-arp-1600x1000.png",
+      "bytes": 1011300,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "7d359b900f3da7f69cb314deafa62183872b6d74c1764a847e965803e5a443ae"
+    },
+    {
+      "file": "screenshots/studio-drawers-1120x700.png",
+      "bytes": 816159,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "ff75c724bc6c4c41a4508edac98a9678ddda0701d3aaacf9e9487ac885694663"
+    },
+    {
+      "file": "screenshots/studio-drawers-1600x1000.png",
+      "bytes": 1456304,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "6e45c6bdad968f7181668480cdd127cb3b5cb8c11d34c12d9c800ee1b6064caa"
+    },
+    {
+      "file": "screenshots/studio-engine-taps-sixteen-voices-1600x1000.png",
+      "bytes": 1479903,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "6ab03af7889a06dd717964382e70aea8483df6b8a08505ffa519e277ee41496f"
+    },
+    {
+      "file": "screenshots/studio-fx-1120x700.png",
+      "bytes": 626513,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "a206a68178a824df7998dcd0303416d8b7388ebdf4c3a63c3452f173bd7ca1b2"
+    },
+    {
+      "file": "screenshots/studio-fx-1600x1000.png",
+      "bytes": 1159461,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "aa52d8737dd30fe285595a9c311123b9f13f31850fa28786926ff65e6201afbb"
+    },
+    {
+      "file": "screenshots/studio-fx-2-1120x700.png",
+      "bytes": 217976,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "f09f4c71ad47aa6d0e71c521ea723f8165fd9fa9fdf4a7bffdfd60d468df1ef0"
+    },
+    {
+      "file": "screenshots/studio-fx-2-1600x1000.png",
+      "bytes": 354774,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "2e81eec9573746c4cc5dd2e4c9633cb0537466e70866ce53b6b440d0c6eb37e4"
+    },
+    {
+      "file": "screenshots/studio-help-card-1600x1000.png",
+      "bytes": 1639106,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "f8c8b2236000d58573fd8547fd0cd8c85a1549b9e33fe250182829827262426c"
+    },
+    {
+      "file": "screenshots/studio-keyboard-1120x700.png",
+      "bytes": 653296,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "09fce15d12f011e2e2fbe70a6c79245c70348ecd1e8a0d204a83c27224793d4d"
+    },
+    {
+      "file": "screenshots/studio-keyboard-1600x1000.png",
+      "bytes": 1154419,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "361196ce65610d3d775c28a3992294f91c63de5cae0165e5a993fc3870d4e0b9"
+    },
+    {
+      "file": "screenshots/studio-keyboard-2-1120x700.png",
+      "bytes": 311360,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "28bd3946428799dd313b502fbbabbd53cea26f4679342f3b923154fbd37fd1bc"
+    },
+    {
+      "file": "screenshots/studio-keyboard-2-1600x1000.png",
+      "bytes": 467516,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "c9c4449f8394ae2a1ead0ed3a8c7f7bff033d900be8deb114b425b660a3ba23f"
+    },
+    {
+      "file": "screenshots/studio-keyboard-3-1120x700.png",
+      "bytes": 217444,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "b23d6bbaeb91b8eb81e4b6acaf32c60beee1f2b92f3f139944ac8f77d9795e76"
+    },
+    {
+      "file": "screenshots/studio-keyboard-3-1600x1000.png",
+      "bytes": 356728,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "8dd150a36fb9ead87430c2d2e0aae23f93de6c56c677dc2b519768732e38a1be"
+    },
+    {
+      "file": "screenshots/studio-keyboard-midi-learn-1600x1000.png",
+      "bytes": 1152776,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "1e3544c1e57c2788bf3e6fde0c1d41415c765e4c4f4d59af61710999ebfa89ec"
+    },
+    {
+      "file": "screenshots/studio-main-1120x700.png",
+      "bytes": 918591,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "aec04d06df391fec14487eee5573979d361b8f1164856eb0642778ea2b5d664c"
+    },
+    {
+      "file": "screenshots/studio-main-1600x1000.png",
+      "bytes": 1627694,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "e7261e2803e5bbc98c1e88452c5852efe2182e7471736703c0a5fbb1fe3c253d"
+    },
+    {
+      "file": "screenshots/studio-modulation-1120x700.png",
+      "bytes": 636324,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "a1700dd21483ece2c3ce9da6e87aa5ee5a74763aa1e14b06d7e0fc90d458babe"
+    },
+    {
+      "file": "screenshots/studio-modulation-1600x1000.png",
+      "bytes": 1135207,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "8564611143baafc5f3acf437feaf5ffc7a80bad8f7937fe56c69339cce4548a4"
+    },
+    {
+      "file": "screenshots/studio-modulation-2-1120x700.png",
+      "bytes": 524535,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "bec65c7f8a347ea5fdaf7b8b30ca9a0a2148c02e2a83eda6f26773b06308ce00"
+    },
+    {
+      "file": "screenshots/studio-modulation-2-1600x1000.png",
+      "bytes": 942858,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "e46208756289bc9b25b233b6f22e146bf1a467752f0512cbafb327a3d14b00c8"
+    },
+    {
+      "file": "screenshots/studio-modulation-3-1120x700.png",
+      "bytes": 291406,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "16812d186285e653f7bedeadc112ed88f782219e0e054ca01e8a8494b0e37231"
+    },
+    {
+      "file": "screenshots/studio-modulation-3-1600x1000.png",
+      "bytes": 460974,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "365a501552a9fa67c630932461e0b9601d3a30037aed221b71f42dd5e3dd745e"
+    },
+    {
+      "file": "screenshots/studio-settings-1120x700.png",
+      "bytes": 715466,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "72abd1548c25d0a942ef1540121b1fc399e95a044d41d0618f34fb42ed890422"
+    },
+    {
+      "file": "screenshots/studio-settings-1600x1000.png",
+      "bytes": 1320088,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "6be4a7924cbf194fb8b4a6b9e0a38925010adfcab281268bb27f63ec6a3f5e84"
+    },
+    {
+      "file": "screenshots/studio-tooltip-circuit-notes.png",
+      "bytes": 21353,
+      "size": [
+        397,
+        90
+      ],
+      "sha256": "089d652ad01092a1ea86c181e30e9c046ca24c90099241e1bbf5c02b2c39999a"
+    },
+    {
+      "file": "screenshots/studio-tour-1-1120x700.png",
+      "bytes": 677812,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "b0d537ed82fc2d16c2c8ed4656018ed0896b3c50825fd3b9a5da25b48e2cad6c"
+    },
+    {
+      "file": "screenshots/studio-tour-1-1600x1000.png",
+      "bytes": 1242550,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "e94e38524c4ef86439c1a4cfcc9a6d78715be26768a7ae22e932e62086dc9e84"
+    },
+    {
+      "file": "screenshots/studio-tour-2-1120x700.png",
+      "bytes": 662364,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "3f323d2d824c895526574ebbaada223a040793f8a3109604190c6fecbf9e7ba3"
+    },
+    {
+      "file": "screenshots/studio-tour-2-1600x1000.png",
+      "bytes": 1210466,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "64331b7333ad5074c8a229ae403c691ecff2346f903014053fbe9f45cd2d76f8"
+    },
+    {
+      "file": "screenshots/studio-tour-3-1120x700.png",
+      "bytes": 707071,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "6c7fea14b880ea623b46ef2df0286f258455af6246497a7df10c9d04e60b6746"
+    },
+    {
+      "file": "screenshots/studio-tour-3-1600x1000.png",
+      "bytes": 1288237,
+      "size": [
+        1600,
+        1000
+      ],
+      "sha256": "384026f666b98c1d1b170533339f036bb1a4a531fcceb6c901543ae3aa209a16"
+    },
+    {
+      "file": "screenshots/studio-tour-4-1120x700.png",
+      "bytes": 690946,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "4b12514f576fe894795110b2e554525ec4de3ebab453f0204106f8a1ad54ab35"
+    },
+    {
+      "file": "screenshots/studio-tour-5-1120x700.png",
+      "bytes": 714812,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "26bd8d0c0b44cd9309d9eb1cb207bdea9ff0b98f30aea9a9a5aeb6bf3dfff522"
+    },
+    {
+      "file": "screenshots/studio-tour-6-1120x700.png",
+      "bytes": 663275,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "54875b687ec9c784a2428662ba142bd32465fb7a11ea515cda52ec271565ed9c"
+    },
+    {
+      "file": "screenshots/studio-tour-7-1120x700.png",
+      "bytes": 661449,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "095fa6ea19b747ea3ada8750fabbce3a5371401b37715fd4908a42d0f696d072"
+    },
+    {
+      "file": "screenshots/studio-tour-8-1120x700.png",
+      "bytes": 662414,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "31c48a4e9b97b7df228e9a7d3aae884a7a820ff046a567c8f6da1deea97f09c2"
+    },
+    {
+      "file": "screenshots/studio-tour-9-1120x700.png",
+      "bytes": 662306,
+      "size": [
+        1120,
+        700
+      ],
+      "sha256": "e575f4370033f23f12cd660b970185b9194af0b5a852f22748f80f9e1e760a34"
+    }
+  ]
+}

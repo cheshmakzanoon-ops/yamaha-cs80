@@ -1,0 +1,124 @@
+{
+  "checkpoints": [
+    {
+      "label": "main-before",
+      "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "benchmark_blob": "b73298678acb6684654ed1b3771fb442352853c0",
+      "source_tree": "fbd3ca113df2d6a24c208eeef11fbeb8cf696ebf",
+      "src_subtree": "8ec4e6b8190d8f30e7a66d37afe62fac89148459",
+      "commit_subject": "Merge pull request #5: plan completion and handover PDF [skip ci]",
+      "commit_time": "2026-10-31T14:04:40-03:00",
+      "benchmark_source_sha256": "1bec0df93eeb15a0e18136d434f16ae9ca9f8dc79d8c4ae8b147d60cc20bd25f"
+    },
+    {
+      "label": "inherited-before",
+      "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "c180a622564e668cb036bb524870862b07589c19",
+      "src_subtree": "0d05905a3f368e570d90f8f3ca53fae4e67f32bd",
+      "commit_subject": "test: preregister factory-clear and MSEG transaction lock witnesses",
+      "commit_time": "2026-10-31T18:13:48-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "lazy-filter-histories",
+      "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "4800e632c370861d29b301ca21cf630f5e637179",
+      "src_subtree": "061d12c60613f3deccba69bf1de2fd77e1fc9e73",
+      "commit_subject": "perf: defer unused IG00156 companion history reconstruction",
+      "commit_time": "2026-10-31T18:47:28-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "idle-exact",
+      "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "a4cb2b6106e6e9448c84bb01a5f7327b5a24db00",
+      "src_subtree": "f3407f5460ca064bc11b1b0510f0e9cd28d2cd81",
+      "commit_subject": "perf: omit exact-zero BBD and PRA work without freezing state",
+      "commit_time": "2026-10-31T19:36:04-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "stationary-controls",
+      "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "b3b685a970929d8ac20ce7f68e2d36feab86a917",
+      "src_subtree": "f6f0d5dc180dc29cb77f69f7c7fca2e0c4bdd1f5",
+      "commit_subject": "perf: omit exact stationary control recurrences",
+      "commit_time": "2026-10-31T19:59:10-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "unused-lfo",
+      "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "30973dd45dee61aeb3bbfda9d43164d2a5b94176",
+      "src_subtree": "e92794fb896a9bc1437083a85840d79a0167a144",
+      "commit_subject": "perf: omit unconsumed LFO readouts while preserving continuation",
+      "commit_time": "2026-10-31T20:11:00-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "rank-idle-1500",
+      "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "52fdc236f97b80c6ad640aac27b7d08df33221ba",
+      "src_subtree": "4dfbe919ef12332e4d46eba7a6c6e15714926155",
+      "commit_subject": "audio: decimate silent rank circuits at qualified 1.5 kHz",
+      "commit_time": "2026-10-31T21:17:36-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "b6d3ba780d1c0de59d62a882bbaa871be602b0cc",
+      "src_subtree": "e074097399bad0d401a35980c7d85f939e1fb59a",
+      "commit_subject": "ci: re-pin circuit-engine audio V2 gate to native Intel BBD history ownership",
+      "commit_time": "2026-10-31T22:00:15-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "a0222cdef3417bade64f3a8ec395b3e957427849",
+      "src_subtree": "2e6c35e482b629576cacbe84f0e18bec43982ed8",
+      "commit_subject": "perf: elide FIR work after complete zero history",
+      "commit_time": "2026-10-31T22:33:11-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "retained-ring-charge",
+      "source_commit": "481c7e9fdb20372288864eecf746bf7efb28190a",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "48014562f90e126405c19cad7cc4b1d174dc372e",
+      "src_subtree": "b8f4aa3a8dd808c35a10a40b543371580a94ef38",
+      "commit_subject": "fix: retain source ring phase and precise envelope charge",
+      "commit_time": "2026-11-01T00:27:12-03:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "connected-vca-idle",
+      "source_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "408878c925cfa918160158b8abdc040016d40a45",
+      "src_subtree": "a153b5ec6ca3b64331488af7d32fa13d8d29a7ec",
+      "commit_subject": "fix: keep VCA coupling output connected through source idle handoff",
+      "commit_time": "2026-11-01T04:10:18-04:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    },
+    {
+      "label": "current-sample-tail-pan",
+      "source_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "7800d9d7cd7a1b6c2b544ead0ffd8e1666e77c2c",
+      "src_subtree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+      "commit_subject": "fix: evaluate connected VCA tail pan at its current sample",
+      "commit_time": "2026-11-01T05:04:12-04:00",
+      "benchmark_source_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74"
+    }
+  ]
+}

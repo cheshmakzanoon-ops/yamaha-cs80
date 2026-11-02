@@ -1,0 +1,47 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3,6 +3,12 @@
+ 
+ #include <algorithm>
+ #include <cmath>
++
++namespace cs80_bass_probe {
++extern bool capture, eventBoundary;
++void assignment(const cs80::Engine&,int,const char*);
++void tap(int,const std::array<double,23>&);
++}
+ 
+ namespace cs80
+ {
+@@ -1149,6 +1155,7 @@
+         wakeIdleVoice(v);
+     // IL is a selected drive, not an assignment-time capacitor reset. Keep
+     // charge even for a first strike before the released circuit settles.
++    if (cs80_bass_probe::eventBoundary) cs80_bass_probe::assignment(*this, static_cast<int>(&v-voices.data()), "after_pending_catchup");
+     const bool preserveEnvelope = preserveAudioState;
+     v.idleClock = 0;
+     v.idleSteps = 0;
+@@ -1230,6 +1237,7 @@
+                       std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime));
+     }
+ 
++    if (cs80_bass_probe::eventBoundary) cs80_bass_probe::assignment(*this, static_cast<int>(&v-voices.data()), "after_assignment");
+     if (! ringKeyDown)
+     {
+         ringKeyDown = true;
+@@ -2348,6 +2356,15 @@
+                 panLeft = 0.5f - 0.5f * pan;
+                 panRight = 0.5f + 0.5f * pan;
+             }
++            if (cs80_bass_probe::capture && vi == 6)
++                cs80_bass_probe::tap(ch, {x, filtered, vcaInput, amp, fenv, cutoffHp, cutoffLp, levelCv,
++                    r.vca.levelNode(), r.vca.getState().coupling, voiceOut, freq,
++                    r.wsc.getPhase(), subValue * global.subVca * kIg00151SubOctaves,
++                    r.hpStage.getNodes().bp, r.hpStage.getNodes().lp,
++                    r.lpStage.getNodes().bp, r.lpStage.getNodes().lp,
++                    r.wsc.getState().charge, r.wsc.getState().resetRemainingSeconds,
++                    static_cast<double>(r.wsc.getState().resetCount),
++                    static_cast<double>(r.aenv.getState().stage), static_cast<double>(r.fenv.getState().stage)});
+             mixL += voiceOut * panLeft;
+             mixR += voiceOut * panRight;
+         }

@@ -1,0 +1,16 @@
+{
+  "baseline_commit": "4ee391588436180de25ee8a764a1e98bcce2be9a",
+  "description": "Independent frozen software recurrences, not hardware measurements. Only namespace/include qualification changed.",
+  "files": {
+    "tests/fixtures/stationary_controls/SmoothingBefore.h": {
+      "source": "src/core/Smoothing.h",
+      "source_sha256": "3513a5073bbe4862f517165838dcb829e6277eff0601fb7e2800d4302c5830ec",
+      "fixture_sha256": "442b5ecc6ce75d907e6562a9df83545095e2d31308a75d63578724304ca3d4a9"
+    },
+    "tests/fixtures/stationary_controls/ExpressionOpticsBefore.h": {
+      "source": "src/core/ExpressionOptics.h",
+      "source_sha256": "396434daacc44a493cf9f393399bcf02d1395717b80296d154e6632a8e2fa094",
+      "fixture_sha256": "c07cc3011048105b9770405c7f538cafd18ac5410385c6628880dcb870ab9d18"
+    }
+  }
+}

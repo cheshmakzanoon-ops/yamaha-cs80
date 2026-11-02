@@ -1,0 +1,12 @@
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-ring-mutations-9a4fkh3l/src", "-c", "/tmp/cs80-ring-mutations-9a4fkh3l/src/core/Engine.cpp", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/b7a6bcef7064e6715f79923fcc7e3e13d2ee610aa0b7982ef291abca71a09c96.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-ring-mutations-9a4fkh3l/src", "-c", "/tmp/cs80-ring-mutations-9a4fkh3l/src/core/FactoryPresets.cpp", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/95d66df1f00fb5c01274fd486016f8cc6920b86fa4678e7e9f93efdb294225f9.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-ring-mutations-9a4fkh3l/src", "-c", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/RingEventContinuityTests.cpp", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/e7e9930e54d587ba7290260326a306507b49f6ee90161c71beb3b06205193ff7.o"]
+
+EXIT 0
+COMMAND ["c++", "/tmp/cs80-ring-mutations-9a4fkh3l/b7a6bcef7064e6715f79923fcc7e3e13d2ee610aa0b7982ef291abca71a09c96.o", "/tmp/cs80-ring-mutations-9a4fkh3l/95d66df1f00fb5c01274fd486016f8cc6920b86fa4678e7e9f93efdb294225f9.o", "/tmp/cs80-ring-mutations-9a4fkh3l/e7e9930e54d587ba7290260326a306507b49f6ee90161c71beb3b06205193ff7.o", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/rank-II-only-rounded-origin-gate"]
+
+EXIT 0

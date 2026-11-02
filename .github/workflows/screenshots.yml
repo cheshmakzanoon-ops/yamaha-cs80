@@ -12,6 +12,7 @@ on:
       - 'tests/*.h'
       - 'scripts/run-ui-smoke-linux.sh'
       - 'CMakeLists.txt'
+      - 'docs/STATUS.md'
       - '.github/workflows/screenshots.yml'
 
 permissions:
@@ -62,14 +63,22 @@ jobs:
         run: |
           set -euo pipefail
           rm -rf "$RUNNER_TEMP/preview" && mkdir "$RUNNER_TEMP/preview"
+          # Keep the existing evidence history. A concurrent publication must
+          # fail normally rather than overwriting another run's branch tip.
+          git -C "$RUNNER_TEMP/preview" init -q
+          git -C "$RUNNER_TEMP/preview" remote add origin \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          git -C "$RUNNER_TEMP/preview" fetch --depth=1 origin ui-preview
+          git -C "$RUNNER_TEMP/preview" checkout -q -b ui-preview FETCH_HEAD
           cp artifacts/ui/*.png artifacts/ui/provenance.json "$RUNNER_TEMP/preview/"
           cd "$RUNNER_TEMP/preview"
-          git init -q -b ui-preview
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -q -m "preview screenshots for ${GITHUB_SHA}"
-          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ui-preview
+          if ! git diff --cached --quiet; then
+            git commit -q -m "preview screenshots for ${GITHUB_SHA}"
+            git push origin HEAD:ui-preview
+          fi
       - name: Refresh repository screenshots from this exact source
         if: github.ref == 'refs/heads/main'
         run: |

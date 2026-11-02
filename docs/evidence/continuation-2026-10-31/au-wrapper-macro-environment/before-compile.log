@@ -1,0 +1,62 @@
+Registration: 111c3ed37491f818ccbf5f96534cf7c464de6051
+/workspace/scratch/6f9c3c86f8af/cs80-completion/tests/AuWrapperMacroEnvironmentTests.cpp:14:21: error: declaration of ‘class juce::Point<ValueType>’ in ‘class cs80::AuAutomationQueue’ which does not enclose ‘juce’
+   14 | #define Point juce::Point
+      |                     ^~~~~
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:136:12: note: in expansion of macro ‘Point’
+  136 |     struct Point { int position = 0; double value = 0; };
+      |            ^~~~~
+In file included from /workspace/scratch/6f9c3c86f8af/cs80-completion/tests/AuWrapperMacroEnvironmentTests.cpp:16:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:139:43: error: type/value mismatch at argument 1 in template parameter list for ‘template<class _Tp, long unsigned int _Nm> struct std::array’
+  139 |     std::array<Point, capacity * 3 + lanes> points {};
+      |                                           ^
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:139:43: note:   expected a type, got ‘Point’
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:139:10: error: ‘<expression error>’ in namespace ‘std’ does not name a type
+  139 |     std::array<Point, capacity * 3 + lanes> points {};
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:139:54: warning: extra ‘;’ [-Wpedantic]
+  139 |     std::array<Point, capacity * 3 + lanes> points {};
+      |                                                      ^
+      |                                                      -
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h: In lambda function:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:70:55: error: class template argument deduction failed:
+   70 |                 Point previous {-1, initial[laneIndex]};
+      |                                                       ^
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:70:55: error: no matching function for call to ‘Point(int, const std::array<double, 18>::value_type&)’
+/workspace/scratch/6f9c3c86f8af/cs80-completion/tests/AuWrapperMacroEnvironmentTests.cpp:9:37: note: candidate: ‘template<class ValueType> Point()-> juce::Point<ValueType>’
+    9 | template <typename ValueType> class Point;
+      |                                     ^~~~~
+/workspace/scratch/6f9c3c86f8af/cs80-completion/tests/AuWrapperMacroEnvironmentTests.cpp:9:37: note:   template argument deduction/substitution failed:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:70:55: note:   candidate expects 0 arguments, 2 provided
+   70 |                 Point previous {-1, initial[laneIndex]};
+      |                                                       ^
+/workspace/scratch/6f9c3c86f8af/cs80-completion/tests/AuWrapperMacroEnvironmentTests.cpp:9:37: note: candidate: ‘template<class ValueType> Point(juce::Point<ValueType>)-> juce::Point<ValueType>’
+    9 | template <typename ValueType> class Point;
+      |                                     ^~~~~
+/workspace/scratch/6f9c3c86f8af/cs80-completion/tests/AuWrapperMacroEnvironmentTests.cpp:9:37: note:   template argument deduction/substitution failed:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:70:55: note:   mismatched types ‘juce::Point<ValueType>’ and ‘int’
+   70 |                 Point previous {-1, initial[laneIndex]};
+      |                                                       ^
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:73:40: error: ‘points’ was not declared in this scope; did you mean ‘point’?
+   73 |                     const auto point = points[i];
+      |                                        ^~~~~~
+      |                                        point
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h: In lambda function:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:84:48: error: ‘points’ was not declared in this scope; did you mean ‘printf’?
+   84 |                 if (pointCount > firstPoint && points[pointCount - 1].position == position)
+      |                                                ^~~~~~
+      |                                                printf
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h: In member function ‘bool cs80::AuAutomationQueue::prepare(const std::array<double, 18>&, int)’:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:99:51: error: ‘points’ was not declared in this scope; did you mean ‘printf’?
+   99 |                 while (pointCount > firstPoint && points[pointCount - 1].position >= start) --pointCount;
+      |                                                   ^~~~~~
+      |                                                   printf
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:113:44: error: ‘points’ was not declared in this scope; did you mean ‘printf’?
+  113 |             if (pointCount > firstPoint && points[pointCount - 1].position >= frames)
+      |                                            ^~~~~~
+      |                                            printf
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h: In lambda function:
+/workspace/scratch/6f9c3c86f8af/cs80-completion/src/plugin/AuAutomationQueue.h:131:50: error: ‘const class cs80::AuAutomationQueue’ has no member named ‘points’
+  131 |                 const auto point = source.owner->points[source.first + static_cast<size_t>(i)];
+      |                                                  ^~~~~~
+
+Compiler exit: 1

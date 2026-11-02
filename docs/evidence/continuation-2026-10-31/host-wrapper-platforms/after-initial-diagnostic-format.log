@@ -1,0 +1,16 @@
+FAIL: trampoline: failure identifies the intended mechanism:
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 (found version "3.12.14") found components: Interpreter 
+CMake Error at cmake/HostAutomation.cmake:31 (message):
+  CS-80 host automation wrapper review required: Unreviewed JUCE automation
+  wrapper source
+  /tmp/cs80-host-wrapper-platforms-6hkwp1ct/trampoline/upstream/juce_audio_plugin_client_VST3.mm:
+  90053adb4915f0dcdd8fbbf3853ffc4fa64d428dae93ae61337dfe05e1246c84; expected
+  2f074fef9a5940c0f0e7aef15ca9ae024e44bf613ca1c6b828842b9282ebd532
+
+Call Stack (most recent call first):
+  CMakeLists.txt:7 (include)
+
+
+-- Configuring incomplete, errors occurred!
+
+Host wrapper platforms: stopped after 85 checks; contract failed

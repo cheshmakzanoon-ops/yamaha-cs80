@@ -1,0 +1,26 @@
+--- a/src/experimental/ContinuousVoiceCircuit.h
++++ b/src/experimental/ContinuousVoiceCircuit.h
+@@ -219,9 +219,11 @@
+ // v2: ported from the PolyBLEP oscillator and the first-stage Svf circuit to
+ // the reconstructed WSC oscillator and the nodal IG00156 stages (ws1 merge).
+ inline constexpr const char* modelId = "free-running-idle-v2";
+-// Idle control/step rate. 3 kHz keeps the fundamental and low harmonics of
+-// every keyboard note inside the step band while costing a few % of a sounding voice.
+-inline constexpr double kIdleStepHz = 3000.0;
++// Idle control/step rate: a declared software scheduling approximation, not a
++// measured hardware clock. The 1.5 kHz step tracks slow charge; the unchanged
++// full-rate wake replay reconstructs modes outside the step band. Acceptance is
++// the pre-registered phase/short-gap/wake truth in tests/Ws3Tolerances.h.
++inline constexpr double kIdleStepHz = 1500.0;
+ // Replay length: kCatchUpSettleTaus time constants of the slowest mode the
+ // step rate cannot represent, bounded to [kCatchUpMinSeconds, kCatchUpMaxSeconds].
+ inline constexpr double kCatchUpSettleTaus = 9.0;
+@@ -344,7 +346,7 @@
+ 
+ // Snapshot of one rank at an idle-step instant: a consistent (time,
+ // oscillator, stages) triple a replay can start from. Kept every
+-// kHistoryStride steps in a short ring (always ~1.3 ms apart, ~16 ms deep).
++// kHistoryStride steps in a short ring (~2.7 ms apart, ~32 ms deep at 1.5 kHz).
+ // Compact (about 280 bytes): the oscillator's physical state without its
+ // residual buffer, which is empty after an idle step, and the stages' memories.
+ struct IdleSnapshot

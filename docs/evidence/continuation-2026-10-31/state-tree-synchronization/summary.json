@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "Deterministic software synchronization and MSEG serialization qualification; no hardware measurement",
+  "status": "passed",
+  "source_base": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+  "started_utc": "2026-10-31T21:57:48.287118+00:00",
+  "finished_utc": "2026-10-31T22:03:30.342583+00:00",
+  "registered_contracts": [
+    {
+      "path": "tests/parity/tolerances-v2/state-tree-synchronization.json",
+      "commit": "4f1bd64c7c5db3e61967c8db2ae93612b58f6a30",
+      "sha256": "af3a477fe644cb899534d8781b16a7a2aa8218a8725c71279c54997513ebf016"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/state-tree-recording-ownership.json",
+      "commit": "706c673c54772eb45cb9fe41bd7dbf342792c64a",
+      "sha256": "b58720e95a2a7a9b86d207a16f1c8abcc49fa54381945d9c343083f6cc04c930"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/state-tree-history-lock.json",
+      "commit": "706c673c54772eb45cb9fe41bd7dbf342792c64a",
+      "sha256": "0a83319cc1580b66a020a0e95dff3416c9c3b74640a946e3720903c4b0ecc032"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/state-tree-history-clear.json",
+      "commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+      "sha256": "f0d998a146bd0186502bcd82154334d782beae15611a4d65c69f47582325a8c9"
+    }
+  ],
+  "registered_fixtures": 12,
+  "additional_exact_mseg_coordinate_cases": 14,
+  "admitted_subnormal_fields": 9,
+  "mseg_roundtrip_mismatches": 0,
+  "legal_host_parameter_cases": 1701,
+  "observed_normalized_roundtrip_physical_differences_before_sync": 161,
+  "required_mutations_detected": 13,
+  "additional_serializer_mutation_detected": 1,
+  "control_exit": 0,
+  "full_existing_ui_suite_exit": 0,
+  "scope": "All 26 project translation units use isolated current headers and sources; 19 unchanged pinned JUCE/font objects are frozen and hash-recorded. Integration native-host, full CMake/CTest, compatibility and CI qualification remains separate.",
+  "juce_revision": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "generated_panel_font_header_sha256": "37caf52888604f6622893c8d54641e568d09c79c2c4703e1bce49ff50ae7c96f",
+  "source_sha256": {
+    "src/plugin/ModernLayerState.cpp": "8e9789e18bc1de29d6d0b1f628af97e3f98eeb5dee563f0d636b9bb253afd504",
+    "src/plugin/ModernLayerState.h": "68010c30cad9c7d92379d6a83f6ee11b6ab8f6fb8f6b0ac633da89668be2a3ae",
+    "src/plugin/ModernModulationUi.cpp": "3485231d457663ae1a7263b5e3d69ba035400ad9934d37107d5c6c951713dfb9",
+    "src/plugin/ModernModulationUi.h": "f3704f551321ac120ae0bdcf4914f54a06523e1bd83941a4d764e241e6f03489",
+    "src/plugin/PluginEditor.cpp": "7dd6ac53f8393720ad50b60d292539e70b2e5689aa218d1c8b4a922fc1ed7be4",
+    "src/plugin/PluginProcessor.cpp": "3a113c78b1f18437b88245a06a34978de80189ded2209c067744043729eb6820",
+    "src/plugin/PluginProcessor.h": "d76e8de10dd9794ac77be78e4d808c5e93dfe0ced524b387ba8b2b4234794c9d",
+    "src/plugin/UndoHistory.cpp": "37f1cca8d6e735390a758a11b7152aa2bc48d145340fe583b23e1f46e37bd654",
+    "src/plugin/UndoHistory.h": "3845350b3c34fedf8743eb069a765a3fb793e2f68a4be44e9cf1ef3f2891a56d",
+    "src/tools/ui_snapshot.cpp": "26e02a8e612c088e3043265da1d8d84910de58f7140717efbe868c122ca4b6ea",
+    "tests/StateTreeSynchronizationTests.h": "f41ca9f636107e9af0fff0b7c27acb6d107330a9151771772c6088533919b13c",
+    "scripts/check-state-tree-synchronization.py": "d245f2b8a734bc3c8ad0aa70ce949b48313444521ee06e09b9d39b6331a90d1a"
+  },
+  "full_compile_link_manifest": {
+    "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/qualification.json",
+    "sha256": "a84dffc83d5e101c3ba866811bbc0952c86dcb209e245d7ff2ffddeeb5037c51"
+  },
+  "results": [
+    {
+      "name": "control",
+      "exit": 0,
+      "expected_exit": 0,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/control.log",
+      "sha256": "e2dca948f53af7836a9f69688b838ee3164f6635a4e73758f1cbf907227a9227"
+    },
+    {
+      "name": "worker-sync-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/worker-sync-omitted.log",
+      "sha256": "de26b4bcaef74476b67418ead33f07e246bc88b032049c183b09ed88a5555f52",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "1d30075cc8f493cdd6a377238df2c38259df6d2c2592d3545970ab12cd617a06",
+      "intended_assertion": "worker syncNow reconciles external values into the live tree",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "original-worker-snapshot-mechanism",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/original-worker-snapshot-mechanism.log",
+      "sha256": "4aa1f20619f90db34f3b9540fbda255f8e60a34c129c9a57120b30239955325e",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "e60fd7e157e1547a5308c9ade4f491b91753d0e5ec075b5ece113d581803e588",
+      "intended_assertion": "undo after worker snapshot preserves the unrelated automated value",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "pending-user-overlay-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/pending-user-overlay-omitted.log",
+      "sha256": "d39cc0eb65c5d69d887a07305bd62840db2d28dec5e92036ed9dae99f3cdcdfc",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "1db385f0a32d8a17fd75c8ac13e576c7349119b517e7891aed7d897c0a7f013c",
+      "intended_assertion": "worker snapshot overlays the current pending user gesture",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "modern-write-lock-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/modern-write-lock-omitted.log",
+      "sha256": "85c00a89ab9f403cb2a06e60ee31ebf1d8289984d3881568e5d38c8fc81eb1e9",
+      "source": "src/plugin/ModernLayerState.cpp",
+      "mutant_sha256": "13874a0b630a94df1d5255ccb36d9294754d0a8a7c7b3e0b5a59082228b3909f",
+      "intended_assertion": "modern child insertion owns the common APVTS tree lock during actual callbacks",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "modern-read-lock-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/modern-read-lock-omitted.log",
+      "sha256": "8bd4a19ab66340d7713c2ca808241fe89358b5e63c86d27620289351009a2a11",
+      "source": "src/plugin/ModernLayerState.cpp",
+      "mutant_sha256": "9464de7b9433f616e2e5334ab58e2310aa2f6e5c6644e30951bcf075c1f06ff7",
+      "intended_assertion": "production modern tree reader owns the common APVTS tree lock",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "modern-replay-lock-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/modern-replay-lock-omitted.log",
+      "sha256": "515a454e896b97ab9d8b9347244e958703f1159b22b03a161f2aedac91891514",
+      "source": "src/plugin/PluginProcessor.cpp",
+      "mutant_sha256": "7591aeade45a329439c47f549c45994eee008ae8add9b7a9086792e5c02a481f",
+      "intended_assertion": "modern subtree undo holds the common lock across its actual mutation callbacks",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "undo-host-gestures-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/undo-host-gestures-omitted.log",
+      "sha256": "7b8db5d6e7f8e460587980f0ace640ed4311170c3c6417049e88c283ecfe3c51",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "93168a70aa8c9d9b9609d0ad2045ccf90fe2a14af865958c92db87ef8b721de1",
+      "intended_assertion": "undo after worker snapshot brackets only the user-edited parameter",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "worker-suppresses-user-recording",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/worker-suppresses-user-recording.log",
+      "sha256": "b033a8228dbf4d01b0ecf36b8354cd7c7f4418b037d66d4ce24c185609b536e1",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "8b232b8b52ffc537bc16f33e94597225b662a175c217a033975ae2d69aff8a44",
+      "intended_assertion": "worker tree write never suppresses the final concurrent user edit on redo",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "physical-sync-one-ulp",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/physical-sync-one-ulp.log",
+      "sha256": "f448c42795b45b7ef22a10aec8b11823b255609b9b6a1f88a7a83e9e0acf33ed",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "80996f8a87977a4bbfa1d47e94c69035cc898a75f05e900f9be7e3232e2420e8",
+      "intended_assertion": "worker synchronization preserves the exact APVTS physical value in the live tree",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "history-read-lock-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/history-read-lock-omitted.log",
+      "sha256": "9218c1d6a49da78a1c834ad3575ff058e2bff824e2a29dc4298903e565bbd022",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "b51946fd7b52932ce95fd9dd8f89fddf0516d0e8a7f5f23b3f3c445bcc009f05",
+      "intended_assertion": "production history snapshot reader owns the common APVTS lock",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "transaction-open-lock-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/transaction-open-lock-omitted.log",
+      "sha256": "2066bfd52ddb864dcb0cb150ae750c280182562265bde96e37966c52d4471c78",
+      "source": "src/plugin/UndoHistory.cpp",
+      "mutant_sha256": "85bf63578c125eabb1bda7998182708fbf00bc11607320c18cace2f230933855",
+      "intended_assertion": "production user transaction open owns the common APVTS lock",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "factory-history-clear-lock-omitted",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/factory-history-clear-lock-omitted.log",
+      "sha256": "e2b46eaad5fc1676c0a3e366ca919f964c41642aaa0939e5376a9691ba7d02c0",
+      "source": "src/plugin/PluginProcessor.cpp",
+      "mutant_sha256": "9cc19d00086d0a91ea66ba12d423b107a18648d8ae9679cac31d4b1069342a7d",
+      "intended_assertion": "factory load owns the common APVTS lock during actual history action destruction",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "mseg-user-transaction-bypassed",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/mseg-user-transaction-bypassed.log",
+      "sha256": "2a27789b84634c199e0cd3e2e169eafc4f058f956c976891e92229cf27b2f3b2",
+      "source": "src/plugin/ModernModulationUi.cpp",
+      "mutant_sha256": "3e8712ad182435f4d922892b6877e5f665cbf4957f66640b21b635f6a119d185",
+      "intended_assertion": "MSEG mouse-down synchronizes a pending external value before the first drag",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "mseg-six-decimal-serialization-restored",
+      "exit": 1,
+      "expected_exit": 1,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/mseg-six-decimal-serialization-restored.log",
+      "sha256": "ea102fdba912a61ae2846f3acb59c4fed5dd8e2ce4adf6936a182d0f17c27275",
+      "source": "src/plugin/ModernLayerState.cpp",
+      "mutant_sha256": "95676e084b0f2eea5d0de538e4bb9234670860e714780b6a3a2f61efa494a7ef",
+      "intended_assertion": "MSEG redo restores the exact edited shape while preserving the earlier user edit",
+      "mutation_compile_exit": 0
+    },
+    {
+      "name": "restored-full-ui-suite",
+      "exit": 0,
+      "expected_exit": 0,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/restored-full-ui-suite.log",
+      "sha256": "975473492640166d37fd3452608706e39afd8941b88a3dd766bfc1cf304d12cf"
+    }
+  ],
+  "precision_causality": {
+    "before_control_failure": {
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/before-exact-mseg-redo.log",
+      "sha256": "6c671d2aa129bcbd8dd21ef6c90e3196535f4f1c1ef84989f5f47fbe62ef4656"
+    },
+    "before": {
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/mseg-precision-before.log",
+      "sha256": "470c778835819bb258c81daa9bd3a6868effe00bba6be689b06e430f728d1138"
+    },
+    "after": {
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/mseg-precision-after.log",
+      "sha256": "5a0998b9304b1113650cad31adbc37b7d3c0d471c0dd373fa2e749ed59b31a57"
+    },
+    "diagnostic_source": {
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/mseg-precision-probe.cpp",
+      "sha256": "81256297788d598845dfdf7b0eb5b665c86c343b7a8ec6905502610f620c3776"
+    },
+    "runtime_before_serialization": "Original sanitized float values are assigned and published by ModernLayerState::store; writing guard suppresses live-tree reload.",
+    "old_replay": "The numeric point string used six fixed decimal places, changing the actual dragged time by nine ULP and level by one ULP on redo.",
+    "new_replay": "Existing JUCE locale-independent scientific formatting with float max_digits10 decimal digits retains exact original point bits; numeric parser/schema unchanged.",
+    "point_1_time_bits": {
+      "edited": "0x3e06a3b5",
+      "old_redo": "0x3e06a3be",
+      "new_redo": "0x3e06a3b5"
+    },
+    "point_1_level_bits": {
+      "edited": "0x3f64c416",
+      "old_redo": "0x3f64c415",
+      "new_redo": "0x3f64c416"
+    }
+  },
+  "environment_exclusions": [
+    {
+      "reason": "Required generated PanelFontData.h had not been built; corrected by freezing the existing generated header, verified identical to the subsequently built primary header.",
+      "counted_as_gate_or_mutation": false,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/environment/missing-generated-font.log",
+      "sha256": "02b78fbcce154fee820a1947abc2face4faa47a4eff01654c64e6e9a739967e7"
+    },
+    {
+      "reason": "Harness stopped before application launch because xprop/xlsatoms were absent; x11-utils installed.",
+      "counted_as_gate_or_mutation": false,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/environment/missing-x11-utils.log",
+      "sha256": "47a8ef599c303c78768046260ec0f534d7208e481f0d133e78c7ab6ebaa939f6"
+    },
+    {
+      "reason": "Harness stopped before application launch because the sandboxed X server could not create local sockets.",
+      "counted_as_gate_or_mutation": false,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/environment/sandbox-display-access.log",
+      "sha256": "82dda508b8d42013eeaf8b3c6a7e68ec3ce1ee93eadef9fc788aa91f812e66a8"
+    },
+    {
+      "reason": "Independent server diagnostic confirms local/unix listener creation failure; the elevated local Xvfb diagnostic and unchanged harness succeeded.",
+      "counted_as_gate_or_mutation": false,
+      "path": "docs/evidence/continuation-2026-10-31/state-tree-synchronization/environment/sandbox-xvfb-server.log",
+      "sha256": "d3f0b6d230b9888df4dd6058b4774133350031af77be94d504e64bc0f8f2687f"
+    }
+  ],
+  "lifetime_scope": "Workers operate only while processors remain alive. These fixtures do not qualify concurrent arbitrary-thread processor destruction and do not alter or explain the separately proven historical validator host RunLoop defect."
+}

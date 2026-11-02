@@ -1,0 +1,12 @@
+COMMAND ["c++", "-std=c++20", "-O3", "-DNDEBUG", "-I", "/tmp/cs80-vca-idle-mutations-bjghrif7/src", "-c", "/tmp/cs80-vca-idle-mutations-bjghrif7/src/core/Engine.cpp", "-o", "/tmp/cs80-vca-idle-mutations-bjghrif7/dd469c2f0e3f56d824de94a3d1597441ba8e46f22fab0a0d6e25022959d9de4f.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O3", "-DNDEBUG", "-I", "/tmp/cs80-vca-idle-mutations-bjghrif7/src", "-c", "/tmp/cs80-vca-idle-mutations-bjghrif7/src/core/FactoryPresets.cpp", "-o", "/tmp/cs80-vca-idle-mutations-bjghrif7/74df0924037b0ec93121039a92230650b5fa97324f3b22ef0c800e59c0b4880a.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O3", "-DNDEBUG", "-I", "/tmp/cs80-vca-idle-mutations-bjghrif7/src", "-c", "/tmp/cs80-vca-idle-mutations-bjghrif7/tests/Ig00151VcaTests.cpp", "-o", "/tmp/cs80-vca-idle-mutations-bjghrif7/d121c6d57cea0ca6fc53adea65be180b37792f468ea38c53cfd58ed5c3d00a8f.o"]
+
+EXIT 0
+COMMAND ["c++", "/tmp/cs80-vca-idle-mutations-bjghrif7/dd469c2f0e3f56d824de94a3d1597441ba8e46f22fab0a0d6e25022959d9de4f.o", "/tmp/cs80-vca-idle-mutations-bjghrif7/74df0924037b0ec93121039a92230650b5fa97324f3b22ef0c800e59c0b4880a.o", "/tmp/cs80-vca-idle-mutations-bjghrif7/d121c6d57cea0ca6fc53adea65be180b37792f468ea38c53cfd58ed5c3d00a8f.o", "-o", "/tmp/cs80-vca-idle-mutations-bjghrif7/freeze-closed-charge-gate"]
+
+EXIT 0

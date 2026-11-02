@@ -1,0 +1,12 @@
+--- tests/RingEventContinuityTests.cpp
++++ tests/RingEventContinuityTests.cpp
+@@ -210,7 +210,8 @@
+             const std::string suffix = name(policy);
+             r.exact(before.phase, after.phase, label + " source carrier phase", "phase_" + suffix);
+             r.exact(before.charge.visible.value, after.charge.visible.value, label + " source float charge", "float_charge_" + suffix);
+-            r.exact(before.charge.charge, after.charge.charge, label + " source precise charge", "precise_charge_" + suffix);
++            if (policy != Policy::Pure)
++                r.exact(before.charge.charge, after.charge.charge, label + " source precise charge", "precise_charge_" + suffix);
+             r.exact(before.output, after.output, label + " source envelope telemetry", "telemetry_" + suffix);
+             const float afterCarrier = std::sin(kTwoPi * after.phase);
+             for (float dry : {0.0f, -0.1f, 0.1f})

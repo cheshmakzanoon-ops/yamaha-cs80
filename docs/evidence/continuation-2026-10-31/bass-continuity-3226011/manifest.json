@@ -1,0 +1,228 @@
+{
+  "base": "32260112971289761f9a6e8e7289916bfc7df95f",
+  "evidence": "Read-only diagnostic instrumentation and unchanged phrase scoring; not a sound change or new passing gate",
+  "engine_source_sha256": "3e8efb9b7a17763403024a2f993c69967a1057a7308f7e3de1ff37572c860183",
+  "traced_engine_sha256": "c62b106296d61ac7e342ccba2349b5d9e5ba6ce9dc4ccd33b7ef12c8ea6a0be7",
+  "frozen_core_archive_source": "/workspace/scratch/2f805bffd21a/cs80-qualification/build-core/libcs80_core.a",
+  "frozen_core_archive_sha256": "30653faa22ebb3bdca69b20fc31e4b745aa4a2bb86da53a04675bd0b0e8ee54b",
+  "headers": {
+    "src/core/BbdChorus.h": "090e698b426d984e3c2b47bcfedc20ec4fefca512f596aad94fee8eface14d17",
+    "src/core/ChorusTabs.h": "67d38c5d9c0d48c2240ee9ceae85d841c2a1b8edc47ffc23068419bcdedabf9d",
+    "src/core/ControllerCurves.h": "53f22bdaa8d65e1e18d2f7507a528c845599a712e691277d4919771865834419",
+    "src/core/Dsp.h": "d704003dcc4ca262e31bc98a2df0494e7b3da97f747c892644264efd5f3a4347",
+    "src/core/Engine.h": "2041497154ce70aac7465f5b81c4c493bdc6ac1196c8a7d14a4f9faab5d21ae3",
+    "src/core/ExactControlTransforms.h": "325baabf05dfe925adc9ed33daa3781be30835d2473845ee97b5a89da73e8322",
+    "src/core/ExpressionOptics.h": "396434daacc44a493cf9f393399bcf02d1395717b80296d154e6632a8e2fa094",
+    "src/core/ExternalModulationInterpolator.h": "988a98bf4987eb4f91bc19581ca9b786203735a9b3d57b2fdae74285d724a93f",
+    "src/core/FactoryPresets.h": "74c5a30269cdb4306984e55b5e9f9d12ad8467a9570dce49b5aadcf8c039a379",
+    "src/core/FactoryToneHypotheses.h": "7c4cebd358433ebea8ab32a1feaff8587eb19b69505bbf6e90dc683f4315f449",
+    "src/core/FastMath.h": "a8e87ed8e4d19a03dc99327036f401cd5d2e49c6ca8e3a5356a33d4689347ea0",
+    "src/core/FxLoudness.h": "9fa2894e8ca446c800b74be5b831d3bd8b1f748e2542e5d5e7d4d5c9ca261537",
+    "src/core/FxModels.h": "4d35f0c43c74910e7326baae3b7bc1a6d0917c2412fabc462ddfdecbfa2c731b",
+    "src/core/FxOversampler.h": "6b0a3c34cb0f288a43e6487f2544a8cc982f0ed5adce85174cbd1c97f477c561",
+    "src/core/FxSlot.h": "46e8386bcb3c513c607dbab867f1666a265814f0b2eb0ea4cf77f359ce16a88b",
+    "src/core/HardwareControl.h": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+    "src/core/HeadphoneAmpCircuit.h": "a3429931f921efc1349b7cf5e0c53fefcc658c04d140028cfee5ee6047137caf",
+    "src/core/Ig00156Filter.h": "e57664b64e2e7c21aa0afb43c16bb39610241e5297316c261eecfc27a5a5941f",
+    "src/core/Ig00156PhaseCorrection.h": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+    "src/core/KasScanner.h": "023915b466149a5d0dfb5bbf73f738bda506c943e01ef784990fe4fa3b909703",
+    "src/core/KbcContour.h": "4ba34af5fe85dcaf92e7fe16c3bc35cac866ef002cb4b5301226be1ab08a1164",
+    "src/core/MemoryPanels.h": "f7d98a5f0575cd8d446060128e80606c39c2b49d6dfeb797d92d71569b053725",
+    "src/core/ModMatrix.h": "2ac2a9e1099a851103d9bd7c9dce1f957d930d50fddbf034a92628e91d077e15",
+    "src/core/ModernLayer.h": "e3a1fd175d64fe4541190e181cd1cebccd92c97981cbc8d6bd097ee11b10ba78",
+    "src/core/ModulationLfo.h": "374c3e65f392c81be3063143b52caf21398d23d9720b8298eb69b23c6e26ad66",
+    "src/core/MpeZones.h": "7b4eeaef07336b7b1bd72293e0e8bacfc2c65918574336d9b489ce4a428392e2",
+    "src/core/Mseg.h": "ebfc004f0941b367bbc87e23fc8f533e1c4f550b453c0740409ddf438d6f82e8",
+    "src/core/NoiseSource.h": "5d96d45c64c86cedc944562e1f25e59a49d9689f04dd3787d5333f3ce95e5662",
+    "src/core/OriginalSubOscillator.h": "4ba63258f49baac87cfa97f6d216f6987a7c850c0e961925c208394990a01954",
+    "src/core/OutputTapCircuit.h": "899ad229e061731b8ef97470070a2dd3df34581f215c078718fcd87455320259",
+    "src/core/Oversampling.h": "1c18c536c22c128c968e2c9c20b082087134bbd255d3b70e3500d6e718d2d646",
+    "src/core/Params.h": "e5b71b2c5de60deda00777d5e0fbf7ec854d153c97efb67ba341fbecf0981976",
+    "src/core/PerformanceControls.h": "4b73f4c466fbdc9a86352d090709044dccb6daa8292ed86c184969c36d25abb3",
+    "src/core/PraWahCircuit.h": "b5049fa34a2a1afef6230dd6eaa8898e65af17155657d58a62a0a33421c08d7e",
+    "src/core/Randomise.h": "ca6893d5973019842681ed412395a5f875e85e844b387cb282abb8f4943140d1",
+    "src/core/ReconstructedOscillator.h": "c9bb458f238ea6cb0bf74444a1a9459441da846bbf3ab98598848b45b147034c",
+    "src/core/RingModulatorCircuit.h": "9e2ee4b2fb13f515c7f83360f4392fac8460d443078c425e27a5072a3fbdf630",
+    "src/core/Smoothing.h": "3513a5073bbe4862f517165838dcb829e6277eff0601fb7e2800d4302c5830ec",
+    "src/core/SourceFactoryTones.h": "ffbe44382a45a05c85030da980251c8230d48afaf7a15f07405c1b8b4c5204f9",
+    "src/core/ToleranceModel.h": "d6ca531134ecc7c6600f12a7664004fc1ee03d2ec815f007888d53a3716892cf",
+    "src/core/TouchCircuit.h": "f89506cc7222b778b9e694d36315e0eb8433730320f2919a8c40a19f62272045",
+    "src/core/Tuning.h": "c3df2c22f142e11006e5982eef6e9d01a8b8284f6e66d2f9fb37722193315690",
+    "src/core/Vca.h": "e93aa3d4167959c669089655b32c22e228290c6cd4bbadae29f36f898c9ec693",
+    "src/core/VoiceModes.h": "ef298d2447f8be9faddfda9825ea7aacd27a23584c37894456c2e1a5bb5d84b4",
+    "src/experimental/ContinuousVoiceCircuit.h": "51907773497a59bfc60913dd93a9286230a7ffb286adccdafa2e03123de6beff"
+  },
+  "fresh_control_qualification": {
+    "path": "/tmp/cs80-ui-rebase-focused-20261031/qualification.json",
+    "sha256": "8d377abb257dab7cc6eb46ac1a8f40cb0ca73417146a057f2571c884faa7e59a",
+    "base": "32260112971289761f9a6e8e7289916bfc7df95f"
+  },
+  "fresh_control_objects": [
+    {
+      "source": "/tmp/cs80-ui-rebase-focused-20261031/objects/src/core/Engine.cpp.o",
+      "copy": "/tmp/cs80-bass-continuity-3226011/Engine-control.o",
+      "sha256": "247f83e7c20f5341958e6a6d40d0cf4058598a2afa83369f2730b44a16b0718c",
+      "compile_command": {
+        "command": [
+          "/usr/bin/c++",
+          "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src",
+          "-O3",
+          "-DNDEBUG",
+          "-std=gnu++20",
+          "-fPIC",
+          "-Wall",
+          "-Wextra",
+          "-Wpedantic",
+          "-o",
+          "/tmp/cs80-ui-rebase-focused-20261031/objects/src/core/Engine.cpp.o",
+          "-c",
+          "/workspace/scratch/2f805bffd21a/cs80-ui-publication/src/core/Engine.cpp",
+          "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src/plugin"
+        ],
+        "source_sha256": "3e8efb9b7a17763403024a2f993c69967a1057a7308f7e3de1ff37572c860183"
+      }
+    },
+    {
+      "source": "/tmp/cs80-ui-rebase-focused-20261031/objects/src/core/FactoryPresets.cpp.o",
+      "copy": "/tmp/cs80-bass-continuity-3226011/FactoryPresets.o",
+      "sha256": "ca5f440299a8c13740c4dcdddcd041ce143a5101d41eea4f190caa0f4c3b655e",
+      "compile_command": {
+        "command": [
+          "/usr/bin/c++",
+          "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src",
+          "-O3",
+          "-DNDEBUG",
+          "-std=gnu++20",
+          "-fPIC",
+          "-Wall",
+          "-Wextra",
+          "-Wpedantic",
+          "-o",
+          "/tmp/cs80-ui-rebase-focused-20261031/objects/src/core/FactoryPresets.cpp.o",
+          "-c",
+          "/workspace/scratch/2f805bffd21a/cs80-ui-publication/src/core/FactoryPresets.cpp",
+          "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src/plugin"
+        ],
+        "source_sha256": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af"
+      }
+    }
+  ],
+  "started_utc": "2026-10-31T22:30:24.835064+00:00",
+  "steps": [
+    {
+      "name": "compile-probe",
+      "command": [
+        "c++",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIC",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src",
+        "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src/core",
+        "-c",
+        "/tmp/cs80-bass-continuity-3226011/probe.cpp",
+        "-o",
+        "/tmp/cs80-bass-continuity-3226011/probe.o"
+      ],
+      "exit": 0,
+      "log": "/tmp/cs80-bass-continuity-3226011/compile-probe.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compile-traced-engine",
+      "command": [
+        "c++",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIC",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src",
+        "-I/workspace/scratch/2f805bffd21a/cs80-ui-publication/src/core",
+        "-c",
+        "/tmp/cs80-bass-continuity-3226011/Engine-traced.cpp",
+        "-o",
+        "/tmp/cs80-bass-continuity-3226011/Engine-traced.o"
+      ],
+      "exit": 0,
+      "log": "/tmp/cs80-bass-continuity-3226011/compile-traced-engine.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "link-control",
+      "command": [
+        "c++",
+        "/tmp/cs80-bass-continuity-3226011/probe.o",
+        "/tmp/cs80-bass-continuity-3226011/Engine-control.o",
+        "/tmp/cs80-bass-continuity-3226011/FactoryPresets.o",
+        "-o",
+        "/tmp/cs80-bass-continuity-3226011/bass-control"
+      ],
+      "exit": 0,
+      "log": "/tmp/cs80-bass-continuity-3226011/link-control.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "run-control",
+      "command": [
+        "/tmp/cs80-bass-continuity-3226011/bass-control",
+        "/tmp/cs80-bass-continuity-3226011/control"
+      ],
+      "exit": 0,
+      "log": "/tmp/cs80-bass-continuity-3226011/run-control.log",
+      "log_sha256": "ffca6edd9010413dc9f5c52fa867dab2154e0fbaf8b157fa322c0d05498178ca"
+    },
+    {
+      "name": "link-traced",
+      "command": [
+        "c++",
+        "/tmp/cs80-bass-continuity-3226011/probe.o",
+        "/tmp/cs80-bass-continuity-3226011/Engine-traced.o",
+        "/tmp/cs80-bass-continuity-3226011/FactoryPresets.o",
+        "-o",
+        "/tmp/cs80-bass-continuity-3226011/bass-traced"
+      ],
+      "exit": 0,
+      "log": "/tmp/cs80-bass-continuity-3226011/link-traced.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "run-traced",
+      "command": [
+        "/tmp/cs80-bass-continuity-3226011/bass-traced",
+        "/tmp/cs80-bass-continuity-3226011/traced"
+      ],
+      "exit": 0,
+      "log": "/tmp/cs80-bass-continuity-3226011/run-traced.log",
+      "log_sha256": "ffca6edd9010413dc9f5c52fa867dab2154e0fbaf8b157fa322c0d05498178ca"
+    }
+  ],
+  "probe.cpp_sha256": "5e5c2dc7b7d1afefe9529014af8381efd2a5480c5a778b4e2d0ba555ca26f98c",
+  "Engine-traced.cpp_sha256": "c62b106296d61ac7e342ccba2349b5d9e5ba6ce9dc4ccd33b7ef12c8ea6a0be7",
+  "driver_sha256": "8b7c95c4ae8918b0662d3db68ef62a9a5c841846162109cb69d858a8c6191d60",
+  "control_binary_sha256": "33420284ed25ebf8bca0b421fc45c7438e4ff036452a46e6879ac2a5b53fa376",
+  "traced_binary_sha256": "be7620d7922478930bd1f7aee32efcf3a27f8d7424eb7611466c2bf1d8fa64fd",
+  "audio_instrumentation_equivalence": [
+    {
+      "rate": 48000,
+      "bytes": 2415360,
+      "byte_identical": true,
+      "control_sha256": "e3d448ea03705817d22fb62e12697a833b50fbf842c19a67b89cfe43850758be",
+      "traced_sha256": "e3d448ea03705817d22fb62e12697a833b50fbf842c19a67b89cfe43850758be"
+    },
+    {
+      "rate": 96000,
+      "bytes": 4830720,
+      "byte_identical": true,
+      "control_sha256": "419802fc7f46f5fe38aef5a357d5a2d28958ba4fa46fb8f40b347b3938531cf8",
+      "traced_sha256": "419802fc7f46f5fe38aef5a357d5a2d28958ba4fa46fb8f40b347b3938531cf8"
+    }
+  ],
+  "status": "passed diagnostic neutrality and renders",
+  "finished_utc": "2026-10-31T22:31:16.495641+00:00"
+}

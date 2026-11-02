@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "Declared software synchronization and host-edit contract; no hardware law or measurement",
+  "scope": "Undoable APVTS snapshots and the live MODERN_LAYER child, including host-worker calls",
+  "source_basis": [
+    "src/plugin/UndoHistory.h: user gestures enter undo history; host automation, MIDI learn, loads and restores do not",
+    "JUCE 8.0.11 AudioProcessorValueTreeState::copyState: flushParameterValuesToValueTree uses the APVTS UndoManager before returning a detached copy",
+    "src/plugin/ModernLayerState.h: modern configuration is a child of APVTS state and edits/restores may arrive on any non-audio thread",
+    "User completion requirement: APVTS state copy/replacement takes getUndoableState().treeLock() and calls syncNow() first"
+  ],
+  "state_tree_synchronization": {
+    "maximum_snapshot_parameter_difference": 0.0,
+    "maximum_unrelated_parameter_difference_after_undo": 0.0,
+    "maximum_modern_roundtrip_difference": 0.0,
+    "maximum_unexpected_undo_actions": 0,
+    "maximum_unexpected_host_gestures": 0,
+    "required_begin_gestures_per_changed_parameter_replay": 1,
+    "required_end_gestures_per_changed_parameter_replay": 1,
+    "required_external_sync_while_off_message_thread": true,
+    "required_live_tree_write_exclusion": true,
+    "required_live_tree_read_exclusion": true,
+    "required_undo_redo_common_tree_lock": true
+  },
+  "fixtures": [
+    {
+      "name": "worker_automation_immediately_followed_by_host_snapshot",
+      "sequence": "Create one user edit. Without pumping the message loop, a joined worker changes a different host parameter and immediately calls getStateInformation. Check the saved normalized/physical value against the directly observed legal host parameter value; undo/redo must replay only the original user edit, leaving the worker-automated value unchanged.",
+      "thread_control": "Thread join and explicit synchronization events; no sleep or timer flush may separate the worker automation from its snapshot."
+    },
+    {
+      "name": "worker_sync_now_updates_external_state_without_undo",
+      "sequence": "A worker changes a parameter, then holds the common tree lock and calls syncNow. The live parameter child must contain its current host value and history must contain no new action. No message-thread timer is allowed to supply the result."
+    },
+    {
+      "name": "snapshot_during_pending_user_gesture",
+      "sequence": "Begin and change a user gesture on the message thread, then capture state on a joined worker before the gesture ends or a timer runs. The detached snapshot must contain the current value; the worker must not add a generic property undo action. Ending the gesture must preserve one coalesced user transaction with balanced begin/end notifications on subsequent undo and redo."
+    },
+    {
+      "name": "modern_live_tree_write_owns_common_lock",
+      "sequence": "Observe actual MODERN_LAYER ValueTree mutation callbacks. At those synchronous callbacks a distinct probe thread attempts only tryEnter on the APVTS common tree lock. Every attempt must fail while the production writer is inside the mutation; the probe never waits on that lock. Cover both initial child insertion and replacement of an existing child."
+    },
+    {
+      "name": "modern_live_tree_read_owns_common_lock",
+      "sequence": "Exercise the production tree-read operation with a test-only reader witness at the point where it consumes the live MODERN_LAYER child. A distinct probe thread's tryEnter must fail. The witness must use the same production lock scope, without a separately implemented reference lock or a runtime production mode switch."
+    },
+    {
+      "name": "modern_configuration_snapshot_restore_and_undo",
+      "sequence": "Use non-default MSEG points, loop/trigger/sync/bipolar fields, and matrix routing. Snapshot and restore through the processor host APIs, preserving exact sanitized configuration and unrelated host parameters. Observe common-lock ownership during modern-subtree undo/redo callbacks as well as normal edits."
+    }
+  ],
+  "lock_order": {
+    "required": "APVTS common tree lock before ModernLayerState configuration lock; never acquire the common tree lock while holding the configuration lock. Hold the common lock across a coherent live-tree/configuration transaction.",
+    "audio_thread": "The audio thread continues to consume the existing mailbox with try-lock only; it never takes the APVTS common lock and never waits for a message-thread operation.",
+    "worker_snapshot": "Must finish without message-thread dispatch while the message thread joins it; no MessageManagerLock or synchronous UI callback is permitted.",
+    "undo_manager": "Worker snapshots and external synchronization must not write user undo actions. Parameter replay remains protected against recursive recording."
+  },
+  "required_mutation_checks": [
+    "Restore the former worker-sync omission: the direct live-tree synchronization fixture must fail.",
+    "Restore generic live-tree recording during a worker snapshot: the history-isolation and/or unrelated-value assertion must fail.",
+    "Drop current pending-user values from a detached worker snapshot: the snapshot-value assertion must fail.",
+    "Remove the production common lock from modern live-tree writes: the synchronous write witness must fail.",
+    "Remove the production common lock from modern live-tree reads: the production reader witness must fail.",
+    "Remove common-lock protection around modern-subtree undo/redo: the replay witness must fail.",
+    "Remove replay begin/end notifications: the existing and new exact gesture checks must fail."
+  ],
+  "preservation": [
+    "Keep all existing user-gesture coalescing, undo/redo, modern-state serialization, Pure/default-neutrality, UI and native host tests unchanged unless adding independent assertions.",
+    "Keep all existing tolerances and byte-identity requirements unchanged.",
+    "No audio-model, core-source, parameter-order, parameter-count, version-hint or default changes.",
+    "A timeout, deadlock, compiler failure or crash cannot count as a detected mutation or passing synchronization test."
+  ]
+}

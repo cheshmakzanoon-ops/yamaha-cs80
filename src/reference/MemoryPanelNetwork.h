@@ -26,6 +26,8 @@ struct Setup
     // [0] the rank's first memory, [1] its second memory, [2] PANEL.
     std::array<mp::Positions, 3> banks {};
     mp::Electrical electrical = mp::nominalElectrical;
+    // Independent differential-source fixture; positive current enters a bus.
+    std::array<double, 26> injectedAmps {};
 };
 
 struct Result
@@ -194,6 +196,7 @@ inline Result solve(const Setup& setup)
         {
             const int bi = busBase + r;
             f[(size_t) bi] -= x[(size_t) bi] * load(r);
+            f[(size_t) bi] += setup.injectedAmps[(size_t) (rows[(size_t) r] - 1)];
             J(bi, bi, -load(r));
         }
     };

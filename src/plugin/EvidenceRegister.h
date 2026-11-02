@@ -248,7 +248,11 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "chorus_mode", 15, "O13, O39", "A", Basis::sourceTopologyInferredLaw,
       "Chooses chorus (a moving ensemble delay) or tremolo (a moving level).",
       "Circuit engine: OE2 BBD delay with 256 clock periods and printed filters; clock range, wet level and "
-      "polarity are inferred. Tremolo is a generic amplitude modulator." },
+      "polarity are inferred. Circuit tremolo uses the declared OE1 four-VCA law." },
+    { "chorus_tabs", 15, "OE1/OE2, ADJ21", "A", Basis::engineeringInferred,
+      "Selects chorus, tremolo, both, or neither; Historical preserves the saved mode.",
+      "Simultaneous BBD-clock and four-VCA modulation combines the two declared laws. "
+      "Their simultaneous switching interaction remains an inference." },
     { "chorus_speed", 15, "O13, O39", "A", Basis::engineeringInferred,
       "Sets how fast the chorus or tremolo moves.",
       "Free range and gain; mode-related rates and tapers are uncalibrated." },

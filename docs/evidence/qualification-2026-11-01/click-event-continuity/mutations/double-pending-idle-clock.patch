@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1071,7 +1071,7 @@
+ void Engine::wakeIdleVoice(Voice& v) noexcept
+ {
+     voice_continuity::wakeCircuit(v.ranks, kNumRanks, (float) internalRate, idleStepSamples,
+-                                  v.idleClock, v.idleSteps,
++                                  2 * v.idleClock, v.idleSteps,
+                                   idleNoise[(size_t) (&v - voices.data())]);
+     v.idleClock = 0;
+     v.idleSteps = 0;

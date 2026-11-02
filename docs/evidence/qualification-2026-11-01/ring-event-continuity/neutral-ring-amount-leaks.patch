@@ -1,0 +1,22 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2394,7 +2394,7 @@
+                            0.0f, sr * 0.4f);
+     ringPhase += ringFrequency * invSr;
+     ringPhase -= std::floor(ringPhase);
+-    if (global.ringAmount > 0.001f)
++    if (global.ringAmount >= 0.0f)
+     {
+         const float carrier = std::sin(kTwoPi * ringPhase);
+         const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2397,7 +2397,7 @@
+     if (global.ringAmount >= 0.0f)
+     {
+         const float carrier = std::sin(kTwoPi * ringPhase);
+-        const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
++        const float amount = clampf(global.ringAmount + 0.1f, 0.0f, 1.0f);
+         if (usesSourceModels(global.renderPolicy))
+         {
+             mixL = RingModulatorCircuit::blend(mixL, carrier, amount);

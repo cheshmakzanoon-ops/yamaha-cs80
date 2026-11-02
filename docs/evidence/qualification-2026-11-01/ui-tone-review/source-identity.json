@@ -1,0 +1,112 @@
+{
+  "reviewed_head": "bcd51d3a9f8ed962b250cf1ae2113c0003e6b47f",
+  "comparison_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+  "frozen_hypothesis_prefix": {
+    "path": "src/core/FactoryToneHypotheses.h",
+    "ends_before_marker": "// Re-examination of the 25 cells",
+    "bytes": 11526,
+    "sha256": "9bfea255c0bdf66a629c453653d84d60fe2b242ed197b6ac9dd4fa345a53b66e",
+    "byte_identical": true,
+    "numeric_fingerprint": "e5f877a025fc52c6"
+  },
+  "hardware_control": {
+    "path": "src/core/HardwareControl.h",
+    "bytes": 20864,
+    "sha256": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+    "byte_identical": true
+  },
+  "reviewed_files": [
+    {
+      "path": "src/plugin/ParameterContext.h",
+      "sha256": "6a5e9f9712ab45099b77c3ff5c8236a621230deb129d7bde7f7eeb32eb910bee"
+    },
+    {
+      "path": "src/plugin/ParameterContext.cpp",
+      "sha256": "7f2dd0bb21ae59aca0a32ee78b3bc45dedf6e17fe2cf1ab8781064d1bd2d75bd"
+    },
+    {
+      "path": "src/plugin/MemoryLid.cpp",
+      "sha256": "7ff645fb8317a2efb0e987d825899416814a7dbfd659f94e4652c42a733d3351"
+    },
+    {
+      "path": "src/plugin/CentreRow.cpp",
+      "sha256": "1a0bf83990ad6987a1cc8992bf6ed3d01abe3cd90bb3ce0dc74196e065ecec98"
+    },
+    {
+      "path": "src/plugin/AdvancedPanel.cpp",
+      "sha256": "0a68dfe3c08daec027cd668d91259627f889a4ed24ea4314038391476e9eb1df"
+    },
+    {
+      "path": "src/plugin/ModernModulationUi.cpp",
+      "sha256": "3485231d457663ae1a7263b5e3d69ba035400ad9934d37107d5c6c951713dfb9"
+    },
+    {
+      "path": "src/plugin/PerformanceDeck.cpp",
+      "sha256": "78f3dcfac431cd4e3a8ffd5e17cc387b01bb679a3103c55e9fcd98dc7594e366"
+    },
+    {
+      "path": "src/plugin/UiComponents.h",
+      "sha256": "d531131615dfe1598fa6415eed540c9f256ea3fb3de65b196ce9f0682344ec38"
+    },
+    {
+      "path": "src/plugin/UiComponents.cpp",
+      "sha256": "fae4282f3e47ad15e24e470369e793d20b9705fa955ae22d2767d56a5b546650"
+    },
+    {
+      "path": "src/plugin/UndoHistory.h",
+      "sha256": "3845350b3c34fedf8743eb069a765a3fb793e2f68a4be44e9cf1ef3f2891a56d"
+    },
+    {
+      "path": "src/plugin/UndoHistory.cpp",
+      "sha256": "37f1cca8d6e735390a758a11b7152aa2bc48d145340fe583b23e1f46e37bd654"
+    },
+    {
+      "path": "src/plugin/PluginProcessor.h",
+      "sha256": "ae3a322aa533a67fab1e0cabeb81a4475f51dac92bbf135bf371de69810c5248"
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "sha256": "3a113c78b1f18437b88245a06a34978de80189ded2209c067744043729eb6820"
+    },
+    {
+      "path": "src/plugin/VoiceMonitor.h",
+      "sha256": "de08b2960729c31af27f5650cc9bf5ecfa7900e29e3776bc6d9fd8633c5e03e3"
+    },
+    {
+      "path": "src/plugin/KeyboardPressureOwnership.h",
+      "sha256": "a7f5f3a2b616d31dd0d7f126f1cffd4b72138afe0630a296df2fa9a39c854512"
+    },
+    {
+      "path": "src/plugin/StudioDrawers.cpp",
+      "sha256": "0385a647065725dc5760623ef2b660e2d77b5a4d6d5a745853c31f303c78dd81"
+    },
+    {
+      "path": "tests/ParameterContextTests.h",
+      "sha256": "97e5c160a5955282915b958d0bb94714b79eae621e221f300706194e8f028754"
+    },
+    {
+      "path": "tests/VoiceMonitorHostTests.h",
+      "sha256": "fff7c2e37b16cc94f50fb1d82e5f7bd93186910f45d25a8e56d2d3ac03429796"
+    },
+    {
+      "path": "tests/StudioUiTests.h",
+      "sha256": "b97e99f36e1a3ae92f1eee75bf46bb9cc7a3bc01bdc3d167ba98ea478e073ebd"
+    },
+    {
+      "path": "docs/workstreams/ui-completion.md",
+      "sha256": "e1a9a9dec323cc25a7e0bdf5d8a88dc52e3113d7c20f3e183401a2c29b7a232f"
+    },
+    {
+      "path": "docs/workstreams/ui-programmer-oracles.md",
+      "sha256": "4734fe48495f6ea5fcd55e7d5be2ebb6c59bfa1f05cbe93719d7e76bedc7bbce"
+    },
+    {
+      "path": "docs/evidence/continuation-2026-10-31/TONE_CELL_NATIVE_REVIEW.md",
+      "sha256": "72edca5c1cb944e206a422bda1870da465a3ee1c4110666ff39e868284e47d4e"
+    },
+    {
+      "path": "docs/evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md",
+      "sha256": "48ba9a44b5719a2c2596336bf3737b0132c99749888a77e32ef8bad3e554641b"
+    }
+  ]
+}

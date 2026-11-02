@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "Declared software common-lock ownership contract; no hardware law or measurement",
+  "extends": [
+    "4f1bd64c7c5db3e61967c8db2ae93612b58f6a30:tests/parity/tolerances-v2/state-tree-synchronization.json",
+    "tests/parity/tolerances-v2/state-tree-recording-ownership.json"
+  ],
+  "source_basis": [
+    "JUCE UndoManager is not a concurrent container: worker APVTS replaceState clears it while toolbar reads and user transaction creation previously bypassed the plugin common tree lock.",
+    "Every snapshot/restore and complete undo/redo mutation already owns the same common tree lock; history reads and opening a transaction must join that exclusion mechanism."
+  ],
+  "state_tree_history_lock": {
+    "maximum_unprotected_history_reads": 0,
+    "maximum_unprotected_transaction_opens": 0,
+    "maximum_history_snapshot_field_mismatches": 0,
+    "required_real_reader_and_transaction_witnesses": true
+  },
+  "fixtures": [
+    {
+      "name": "toolbar_history_snapshot_reads_own_common_lock",
+      "sequence": "Read canUndo, canRedo, undo description and redo description as a detached history snapshot. All four production toolbar query callbacks must consume this synchronized snapshot instead of a raw UndoManager reference. A private reader witness, invoked inside the actual production read scope and reading the same real UndoManager fields, uses another thread's nonblocking tryEnter; acquisition must fail. After a real user edit, undo and redo, compare the snapshot fields exactly with the corresponding history state under the common lock.",
+      "implementation_constraint": "Use the production read scope; no duplicate reference lock, sleep inference, or runtime mode switch."
+    },
+    {
+      "name": "user_transaction_open_owns_common_lock",
+      "sequence": "Open a named user transaction through the actual production transaction-open scope, with a private transaction-writer witness wrapping the real UndoManager::beginNewTransaction call. A separate thread's nonblocking tryEnter on the common tree lock must fail at that call. Verify the real transaction name after creation. Existing user gesture coalescing and history tests remain unchanged.",
+      "implementation_constraint": "The common lock covers synchronization and opening the transaction in one scope. Worker snapshot/restore and transaction creation cannot overlap their live history accesses. No MessageManagerLock or synchronous message dispatch is allowed."
+    }
+  ],
+  "required_mutation_checks": [
+    "Remove the common lock from the production history snapshot reader: its actual-reader lock witness must fail.",
+    "Remove the common lock from the production transaction-open scope: its actual transaction writer witness must fail."
+  ],
+  "preservation": [
+    "Keep the original six fixtures and seven mutations unchanged.",
+    "Keep both recording-ownership/value-preservation fixtures and their two mutations unchanged.",
+    "Keep every existing UI, undo, automation, serialization, Pure/default, native host, parameter identity and audio compatibility requirement unchanged.",
+    "Timeouts, deadlocks, compilation failures, crashes and environmental harness errors do not qualify a mutation."
+  ]
+}

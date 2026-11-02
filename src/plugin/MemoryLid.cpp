@@ -88,6 +88,7 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
         button->setClickingTogglesState(false);
         button->setWantsKeyboardFocus(true);
         button->setTitle("Select memory " + juce::String(bank + 1));
+        button->bindParameterContext(processor, Cs80AudioProcessor::hardwareSourceParameterId(bank % 2));
         // A lit memory key is a toggle: pressing it again hands its channel back to the PANEL.
         button->onClick = [this, bank]
         {
@@ -115,6 +116,7 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
                 toggle->accent = ui::capBlack;
                 toggle->setTitle("Memory " + juce::String(bank + 1) + " " + def.name);
                 toggle->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
+                toggle->bindParameterContext(processor, Cs80AudioProcessor::memoryParameterId(bank, local), cs80::chParam(bank % 2, local));
                 item.buttonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                     processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *toggle);
                 addAndMakeVisible(*toggle);
@@ -134,6 +136,7 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
                 slider->setTooltip(slider->getTitle());
                 slider->setDescription("Independent analog memory control. Use the arrow keys to adjust; select this memory to hear it.");
                 slider->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
+                slider->bindParameterContext(processor, Cs80AudioProcessor::memoryParameterId(bank, local), cs80::chParam(bank % 2, local));
                 item.sliderAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
                     processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *slider);
                 slider->onValueChange = [bank, local, slider] {

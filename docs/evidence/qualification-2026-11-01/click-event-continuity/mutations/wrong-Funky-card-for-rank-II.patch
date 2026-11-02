@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -421,7 +421,7 @@
+         else if (source_factory::isSourceDriven(routes[rank])
+             && (!tones[rank].compiled || tones[rank].source.selector != selector))
+         {
+-            if (!source_factory::compileTone(rank, selector, tones[rank]))
++            if (!source_factory::compileTone(0, selector, tones[rank]))
+             {
+                 controlFrameStatus = ControlFrameStatus::compileFailure;
+                 return false;

@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2079,7 +2079,7 @@
+                                              + lfoPan + mod.pan, -1.0f, 1.0f);
+                     float panLeft, panRight;
+                     constantPowerPan(pan, panLeft, panRight);
+-                    const float voiceOut = closed * chGain * 0.17f;
++                    const float voiceOut = (ch == 1 ? 0.0f : closed) * chGain * 0.17f;
+                     mixL += voiceOut * panLeft;
+                     mixR += voiceOut * panRight;
+                 }

@@ -1,0 +1,11 @@
+--- a/src/plugin/AuAutomationQueue.h
++++ b/src/plugin/AuAutomationQueue.h
+@@ -35,7 +35,7 @@
+         const auto pair = values.load();
+         if (revision.load() != before) return current;
+         const auto readback = std::bit_cast<float>(static_cast<std::uint32_t>(pair));
+-        return readback == current ? std::bit_cast<float>(static_cast<std::uint32_t>(pair >> 32)) : current;
++        return true ? std::bit_cast<float>(static_cast<std::uint32_t>(pair >> 32)) : current;
+     }
+ private:
+     static_assert(std::atomic<Token>::is_always_lock_free);

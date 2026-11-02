@@ -5,7 +5,7 @@
 // advanced at the full internal rate on EVERY sample, in double precision, with
 // the nodal-stage implicit equation solved to convergence. It restates the
 // declared realtime stage law (src/core/Ig00156Filter.h: the M41 graph with
-// the trapezoidal companion model and the inferred OTA tanh) without the
+// the fourth-order linear phase correction and the inferred OTA tanh) without the
 // realtime model's float controls, cached Newton start, fastTanh or iteration
 // cap, so the cheap idle path in src/experimental/ContinuousVoiceCircuit.h can
 // be held to it.
@@ -23,6 +23,7 @@
 
 #include "core/Ig00156Filter.h"
 #include "core/ReconstructedOscillator.h"
+#include "IG00156PhaseCorrection.h"
 
 #include <algorithm>
 #include <array>
@@ -43,59 +44,45 @@ struct RankControls
     bool hpOn = true, lpOn = true;
 };
 
-// Converged nodal IG00156 stage: the equations of Ig00156Stage::set/process.
+// Full-matrix phase-corrected stage. It solves all four nonlinear nodal
+// equations to convergence rather than using the production scalar reduction.
 class NodalStage
 {
 public:
     explicit NodalStage(const Ig00156Network& n) : net(n) {}
-    std::array<double, 4> z {}, v {}; // histories and node voltages (vin, x, bp, lp)
-
+    std::array<double, 4> z {}, v {}, inputs {};
     struct Output { double lp = 0.0, hp = 0.0, bp = 0.0; };
     Output tick(double input, double gmCutoffHz, double q, double fs)
     {
-        const double gs = 1.0 / net.sourceOhms, gg = 1.0 / net.groundOhms, gf = 1.0 / net.feedbackOhms;
-        const double gTotal = gs + gg + gf, inputScale = gTotal / (2.0 * gs);
-        const double ffHz = 1.0 / (2.0 * kPi * net.feedforwardOhms * net.integratorFarads);
-        q = std::clamp(q, 0.35, 9.0);
-        const double qs = std::max(0.0, gTotal / (2.0 * q) - gf);
-        const double total = std::clamp(gmCutoffHz, 0.0, std::max(0.0, 0.45 * fs - ffHz)) + ffHz;
-        const double rate = ig00156IntegratorRate(net, total, qs);
-        const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
-        const double theta = kPi * total / fs;
-        const double kHalf = 0.5 * (std::tan(theta) / theta) / fs;
-        const double g = kHalf * std::max(0.0, rate - ffRate), f = kHalf * ffRate;
-        const double ki = kHalf / net.inputFarads, kf = kHalf / net.feedbackFarads, kiGs = ki * gs;
-        const double a11 = 1.0 + kiGs, a21 = kf * gs, a22 = 1.0 + kf * gTotal;
-        const double det = a11 * a22 - kiGs * a21;
-        const double xFromFb = a11 / det, xFromIn = -a21 / det, xFromU = kf * gs / det;
-        const double xFromBp = (a11 * kf * (qs - gs - gg) + a21 * kiGs) / det;
-        const double u = input * inputScale, level = kIg00156OtaLevel, inv = 1.0 / level;
-        const double x0 = xFromFb * z[1] + xFromIn * z[0] + xFromU * u;
-        const double c0 = 2.0 * x0 - z[3], c1 = 2.0 * (xFromBp + 1.0);
-        double bp = (z[2] - (g + f) * c0) / (1.0 + (g + f) * (c1 + g + f));
-        double hp = 0.0, t1 = 0.0, t2 = 0.0;
-        for (int iteration = 0; iteration < 64; ++iteration)
+        const double gs=1/net.sourceOhms, gg=1/net.groundOhms, gf=1/net.feedbackOhms;
+        const double gt=gs+gg+gf, scale=gt/(2*gs), ff=1/(net.feedforwardOhms*net.integratorFarads);
+        if(gmCutoffHz!=lastCutoff||q!=lastQ||fs!=lastRate)
         {
-            t2 = std::tanh(bp * inv);
-            hp = c0 + c1 * bp + g * level * t2 + f * bp;
-            t1 = std::tanh(hp * inv);
-            const double r = bp - z[2] + g * level * t1 + f * hp;
-            if (std::abs(r) < 1.0e-14) break;
-            const double dh = c1 + g * (1.0 - t2 * t2) + f;
-            bp -= r / (1.0 + (g * (1.0 - t1 * t1) + f) * dh);
+            lastCutoff=gmCutoffHz;lastQ=q;lastRate=fs;
+            const double total=std::clamp(gmCutoffHz,0.0,std::max(0.0,.45*fs-ff/(2*kPi)))+ff/(2*kPi);
+            gq=std::max(0.0,gt/(2*std::clamp(q,.35,9.0))-gf);
+            gm=std::max(0.0,ig00156IntegratorRate(net,total,gq)-ff);
+            const ig00156::StageNetwork network{net.sourceOhms,net.groundOhms,net.inputFarads,
+                net.feedbackOhms,net.feedbackFarads,net.integratorFarads,net.integratorFarads,
+                net.feedforwardOhms,net.feedforwardOhms};
+            const double siemens=gm*net.integratorFarads;
+            oracle.configure(ig00156::stageSystem(network,{siemens,siemens,gq,0.0}),fs);
         }
-        t2 = std::tanh(bp * inv);
-        hp = c0 + c1 * bp + g * level * t2 + f * bp;
-        const double lp = z[3] - g * level * t2 - f * bp;
-        const double x = x0 + xFromBp * bp;
-        const double vin = (z[0] + kiGs * u - kiGs * bp) / a11 - (kiGs / a11) * x;
-        v = { vin, x, bp, lp };
-        for (std::size_t k = 0; k < 4; ++k) z[k] = 2.0 * v[k] - z[k];
-        return { lp, hp, -bp };
+        oracle.x=v;oracle.history=inputs;
+        const double u=input*scale;
+        oracle.nonlinearStep(u,gm,kIg00156OtaLevel,false);
+        v=oracle.x;inputs=oracle.history;
+        const double hp=2*(v[1]+v[2])-v[3],half=.5/fs;
+        z[0]=v[0]+half*gs/net.inputFarads*(u-v[0]-v[1]-v[2]);
+        z[1]=v[1]+half/net.feedbackFarads*(gs*(u-v[0])-gt*v[1]+(gq-gs-gg)*v[2]);
+        z[2]=v[2]-half*(gm*kIg00156OtaLevel*std::tanh(hp/kIg00156OtaLevel)+ff*hp);
+        z[3]=v[3]-half*(gm*kIg00156OtaLevel*std::tanh(v[2]/kIg00156OtaLevel)+ff*v[2]);
+        return {v[3],hp,-v[2]};
     }
-
 private:
     Ig00156Network net;
+    ig00156::PhaseCorrectedLinearStage oracle;
+    double lastCutoff=-1,lastQ=-1,lastRate=-1,gm=0,gq=0;
 };
 
 class RankTruth
@@ -108,11 +95,13 @@ public:
     // Synchronise to a realtime chain: oscillator state and both stages.
     void reset(const ReconstructedOscillator::State& oscillator,
                const std::array<double, 4>& hpZ, const std::array<double, 4>& hpV,
-               const std::array<double, 4>& lpZ, const std::array<double, 4>& lpV)
+               const std::array<double, 4>& lpZ, const std::array<double, 4>& lpV,
+               const std::array<double, 4>& hpInputs, const std::array<double, 4>& lpInputs)
     {
         osc.restoreState(oscillator);
         hp.z = hpZ; hp.v = hpV;
         lp.z = lpZ; lp.v = lpV;
+        hp.inputs = hpInputs; lp.inputs = lpInputs;
     }
     // One internal sample. Returns the filtered (pre-VCA) rank signal.
     double tick(const RankControls& c, double rate)

@@ -1,0 +1,11 @@
+--- a/src/core/PraWahCircuit.h
++++ b/src/core/PraWahCircuit.h
+@@ -81,7 +81,7 @@
+         const double u=std::isfinite(input)
+             ? std::clamp(input,-maximumInputMagnitude,maximumInputMagnitude) : 0.0;
+         // Falling resistance = brightening = attack; rising = darkening = decay.
+-        opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);
++        if (u!=0.0 || !capacitorsArePositiveZero()) opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);
+         // The homogeneous capacitor graph maps exact +0 state and zero input to
+         // exact +0 state. Keep the optical recurrence above running, but avoid its
+         // unused exp and zero nodal algebra. Negative-zero node signs below are the

@@ -5,7 +5,7 @@
 // It exists to find engineering defects (NaN, DC, clicks, aliasing, level and
 // sample-rate dependence), not to score fidelity.
 //
-//   cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all]
+//   cs80_engine_audit --out NEW_DIR [--suite phrase|click-causality|fx|alias|latency|cpu|all]
 //                     [--rates 44100,48000,96000] [--quick]
 //                     [--oversampling eco|standard|hq]
 //
@@ -51,6 +51,7 @@ struct Setup
     ParamValues values;
     std::array<int, 2> sources { 13, 13 };
     const char* policy = "legacy";
+    bool useProgrammer = true; // false only for the original physical-PANEL causal control
 };
 
 struct Event { double t; bool on; int note; float vel; };
@@ -71,6 +72,7 @@ Rendered render(const Setup& s, int rate, const std::vector<Event>& events, doub
     frame.effectiveValues = s.values;
     if (oversamplingOverride >= 0.0f) frame.effectiveValues[P_oversampling] = oversamplingOverride;
     frame.hardwareSources = s.sources;
+    if (s.useProgrammer) frame = ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
     require(e.setControlFrame(frame), "frame rejected");
     e.reset();
     const long frames = (long) std::llround(seconds * rate);
@@ -269,8 +271,9 @@ Row analyse(const Setup& s, const Rendered& r)
 
     // Jump scores. A "jump" is the worst sample-to-sample step. For note-ons the reference is the worst
     // step that the program's own playing makes in the whole chord window (attack included, so
-    // percussive programs are judged against their own attacks); a score above ~1 is a step bigger than
-    // that program ever makes on its own, i.e. a click. For note-offs the reference is the 60 ms before.
+    // percussive programs are judged against their own attacks). A score above ~1 flags a larger step
+    // than the reference window; this alone does not establish a causal event discontinuity. See
+    // --suite click-causality for the omitted-event control. Note-off reference: the 60 ms before.
     auto blockStart = [&](double t) { return (long) std::ceil(t * r.rate / kBlock) * kBlock; };
     const long win = (long) std::llround(0.008 * r.rate);
     const double steadyChord = std::max(maxJump(r, idx(r, T::chordOn), cb), 1.0e-7);
@@ -537,6 +540,80 @@ void suitePhrase(const fs::path& dir, const std::vector<int>& rates, bool quick)
             }
 }
 
+// Keep every phrase score/window unchanged. Omitted-event controls preserve
+// the same complete initial state and all earlier events, including RNG draws.
+// Physical-PANEL Bass is separate from the production electrical programmer:
+// changing the control coordinate is not evidence that an event defect is fixed.
+void suiteClickCausality(const fs::path& dir, const std::vector<int>& rates)
+{
+    struct Peak { double jump=0; long sample=0; char channel='L'; };
+    const auto peak=[](const Rendered& audio,long start,long end) {
+        Peak result;
+        for(long sample=std::max(1L,start);sample<end;++sample)
+            for(int channel:{0,1}) {
+                const auto& data=channel?audio.r:audio.l;
+                const double jump=std::abs(data[size_t(sample)]-data[size_t(sample-1)]);
+                if(jump>result.jump)result={jump,sample,channel?'R':'L'};
+            }
+        return result;
+    };
+    std::ofstream out(dir / "click-causality.csv");
+    out << "name,rate,event,baseline_score,omitted_event_score,prefix_max_abs,first_strike_score,retrigger_score,"
+           "coordinate,event_sample,baseline_peak_sample,omitted_peak_sample,baseline_peak_jump,omitted_peak_jump,"
+           "baseline_peak_channel,omitted_peak_channel,added_peak_sample,added_peak_jump\n";
+    out << std::setprecision(12);
+    const auto events=phrase();
+    auto omittedOff=events,omittedRetrigger=events;
+    omittedOff.erase(std::remove_if(omittedOff.begin(),omittedOff.end(),[](const Event& event){
+        return !event.on&&event.note==60&&event.t==T::singleOff;
+    }),omittedOff.end());
+    omittedRetrigger.erase(std::remove_if(omittedRetrigger.begin(),omittedRetrigger.end(),[](const Event& event){
+        return event.on&&event.note==60&&event.t==T::retrigOn2;
+    }),omittedRetrigger.end());
+    auto programs=programSetups(true),tabs=tabSetups(true);
+    const auto bass=std::find_if(programs.begin(),programs.end(),[](const Setup& setup){return setup.name=="Bass Stack";});
+    const auto funky=std::find_if(tabs.begin(),tabs.end(),[](const Setup& setup){return setup.name=="Funky 1 + Funky 2";});
+    require(bass!=programs.end()&&funky!=tabs.end(),"click-causality fixtures missing");
+    for(int rate:rates) {
+        const long window=long(std::llround(.008*rate));
+        const auto blockStart=[&](double time){return long(std::ceil(time*rate/kBlock))*kBlock;};
+        const auto row=[&](const Setup& setup,const Rendered& baseline,const Rendered& control,
+                          long eventFrame,double reference,const char* event,const char* coordinate) {
+            double prefixDifference=0;
+            Rendered added=baseline;
+            for(size_t sample=0;sample<baseline.l.size();++sample) {
+                added.l[sample]-=control.l[sample];added.r[sample]-=control.r[sample];
+                if(long(sample)<eventFrame)prefixDifference=std::max({prefixDifference,
+                    double(std::abs(added.l[sample])),double(std::abs(added.r[sample]))});
+            }
+            require(prefixDifference==0,"causal control differs before its omitted event");
+            const auto b=peak(baseline,eventFrame,eventFrame+window),c=peak(control,eventFrame,eventFrame+window);
+            const auto a=peak(added,eventFrame,eventFrame+window);
+            out<<setup.name<<','<<rate<<','<<event<<','<<b.jump/reference<<','<<c.jump/reference<<','<<prefixDifference<<',';
+            if(std::string(event)=="note_on") {
+                const long first=blockStart(T::retrigOn1);
+                out<<maxJump(baseline,first,first+window)/reference<<','<<b.jump/reference;
+            }else out<<',';
+            out<<','<<coordinate<<','<<eventFrame<<','<<b.sample<<','<<c.sample<<','<<b.jump<<','<<c.jump
+               <<','<<b.channel<<','<<c.channel<<','<<a.sample<<','<<a.jump<<'\n';
+            out.flush();
+        };
+        const auto baseline=render(*funky,rate,events,T::singleOff+.04);
+        const auto control=render(*funky,rate,omittedOff,T::singleOff+.04);
+        const long off=blockStart(T::singleOff);
+        row(*funky,baseline,control,off,
+            std::max(maxJump(baseline,off-long(.06*rate),off),1e-7),"single_note_off","tone_tabs");
+        for(bool electrical:{false,true}) {
+            auto setup=*bass;setup.useProgrammer=electrical;
+            const auto retrigger=render(setup,rate,events,T::retrigOn2+.04);
+            const auto omitted=render(setup,rate,omittedRetrigger,T::retrigOn2+.04);
+            const double reference=std::max(maxJump(retrigger,idx(retrigger,T::chordOn),idx(retrigger,T::chordOff)),1e-7);
+            row(setup,retrigger,omitted,blockStart(T::retrigOn2),reference,"note_on",
+                electrical?"electrical_programmer":"original_physical_panel");
+        }
+    }
+}
+
 Setup fxBase(int rank, const char* label)
 {
     Setup s;
@@ -627,7 +704,7 @@ void suiteLatency(const fs::path& dir, const std::vector<int>& rates)
             Engine e;
             e.prepare(rate);
             ControlFrame frame;
-            frame.effectiveValues = p;
+            frame = ControlFrame::programmer(p);
             require(e.setControlFrame(frame), "frame rejected");
             const int factor = e.getOversamplingFactor();
             for (double f : { 250.0, 1000.0, 5000.0, 10000.0, 15000.0, 18000.0, 20000.0 })
@@ -657,7 +734,7 @@ void suiteCpu(const fs::path& dir, const std::vector<int>& rates)
             Engine e;
             e.prepare(rate);
             ControlFrame frame;
-            frame.effectiveValues = p;
+            frame = ControlFrame::programmer(p);
             require(e.setControlFrame(frame), "frame rejected");
             for (int n : { 36, 43, 48, 55, 60, 64, 67, 72 }) e.noteOn(n, 0.8f, 1);
             std::vector<float> buf(2 * 128);
@@ -706,7 +783,7 @@ int main(int argc, char** argv)
             }
             else throw std::runtime_error("unknown option " + arg);
         }
-        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq]");
+        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|click-causality|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq]");
         require(!fs::exists(dir), "output exists; refusing to overwrite");
         fs::create_directories(dir);
         if (suite == "cpu") suiteCpu(dir, rates);
@@ -714,6 +791,7 @@ int main(int argc, char** argv)
         if (suite == "all" || suite == "alias") suiteAlias(dir, rates);
         if (suite == "all" || suite == "fx") suiteFx(dir, rates);
         if (suite == "all" || suite == "phrase") suitePhrase(dir, rates, quick);
+        if (suite == "all" || suite == "click-causality") suiteClickCausality(dir, rates);
         std::cout << "wrote " << dir.string() << '\n';
         return 0;
     }

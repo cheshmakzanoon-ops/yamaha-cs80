@@ -1,0 +1,346 @@
+{
+  "registered_commit": "aa3cadb4147ca9a1cd1cfe843345fcefa3d97432",
+  "ownership_registration": "9dd7762c32db2831316428444ebd1acc3547c9ab",
+  "test_sha256": "2de528a01633f1997c857967390d90395aaeede2eda2542d0592359e8b0cc039",
+  "fixed_header_sha256": {
+    "AuAutomationHooks.inc": "3e47ad3d1f2271a1810762d75736375b913f906e69685a87710431ebd60904c4",
+    "AuAutomationQueue.h": "a0ee9c6b973b6e63ee2790ef61ceaaaa1f8e29596207845a5a74347e159c893f",
+    "HostAutomationBridge.h": "934842df25190bb1c7c8597d2ca5a3c3fc7f663de455937fd3852bf8fd0edb25"
+  },
+  "runs": [
+    {
+      "name": "unmodified-control",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/unmodified-control/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/unmodified-control/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/unmodified-control/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: AU hook preserves its accepted normalized Float32 despite physical storage projection"
+      ],
+      "seconds": 0.006399071000487311,
+      "test_log": "bridge-unmodified-control.log",
+      "executable_sha256": "fee7665c87ca2d17fd2b9518d1875817d68d6c79e5aa1ea5d70ccc22f8466435",
+      "expected_assertions": [
+        "preserves its accepted normalized Float32"
+      ]
+    },
+    {
+      "name": "fixed-control",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/fixed-control/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/fixed-control/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/fixed-control/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 0,
+      "failures": [],
+      "seconds": 0.030628045999037568,
+      "test_log": "bridge-fixed-control.log",
+      "executable_sha256": "b0d1e59dc0620f1d994527edfb7bb4ad6516ee47d73cdd9185e94ec01001e008"
+    },
+    {
+      "name": "discard-normalized-publication",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/discard-normalized-publication/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/discard-normalized-publication/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/discard-normalized-publication/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: AU hook preserves its accepted normalized Float32 despite physical storage projection"
+      ],
+      "seconds": 0.010986175999278203,
+      "test_log": "bridge-discard-normalized-publication.log",
+      "executable_sha256": "e77a594a9411e262f96b88c31448af550bc38e96641fde1acf2cdceccb669bc9",
+      "expected_assertions": [
+        "preserves its accepted normalized Float32"
+      ]
+    },
+    {
+      "name": "ignore-changed-getter",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/ignore-changed-getter/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/ignore-changed-getter/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/ignore-changed-getter/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: changed underlying storage supersedes the preceding AU publication",
+        "FAIL: concurrent AU readers never combine an endpoint with another publication's readback"
+      ],
+      "seconds": 0.009080960997380316,
+      "test_log": "bridge-ignore-changed-getter.log",
+      "executable_sha256": "1ca947bdf91a43015e3a7aa7e980e7df58e9ebb46e097336f9e0aa23f89a2bc7",
+      "expected_assertions": [
+        "changed underlying storage",
+        "concurrent AU readers never combine"
+      ]
+    },
+    {
+      "name": "ignore-external-invalidation",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/ignore-external-invalidation/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/ignore-external-invalidation/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/ignore-external-invalidation/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: external notification invalidates AU ownership even with unchanged storage readback",
+        "FAIL: AU lifecycle reset discards preceding publication ownership",
+        "FAIL: an external invalidation during commit cannot be overwritten by the older AU publication"
+      ],
+      "seconds": 0.01201927500005695,
+      "test_log": "bridge-ignore-external-invalidation.log",
+      "executable_sha256": "c5164d5264688968cf2b4ca0cdbcaf3cf13a949e6eb3a820886d90042020fae9",
+      "expected_assertions": [
+        "external notification invalidates"
+      ]
+    },
+    {
+      "name": "remove-protected-readback",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/remove-protected-readback/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/remove-protected-readback/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/remove-protected-readback/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: Pure/Legacy retain the original storage getter after a modern publication"
+      ],
+      "seconds": 0.01497297400055686,
+      "test_log": "bridge-remove-protected-readback.log",
+      "executable_sha256": "fa2ac2e8e7a19a787784f8042a0bb85b355512ca2459d419ac5e5dd4254bdb64",
+      "expected_assertions": [
+        "Pure/Legacy retain the original storage getter"
+      ]
+    },
+    {
+      "name": "remove-lifecycle-reset",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/remove-lifecycle-reset/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/remove-lifecycle-reset/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/remove-lifecycle-reset/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: AU lifecycle reset discards preceding publication ownership"
+      ],
+      "seconds": 0.008915933001844678,
+      "test_log": "bridge-remove-lifecycle-reset.log",
+      "executable_sha256": "27b1f285ed5a8ece9146880dfa1e3651d7ac33dfe7f9bf20c914f007b10e9369",
+      "expected_assertions": [
+        "lifecycle reset discards"
+      ]
+    },
+    {
+      "name": "claim-newer-invalidation-token",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/claim-newer-invalidation-token/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/claim-newer-invalidation-token/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/claim-newer-invalidation-token/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 1,
+      "failures": [
+        "FAIL: an external invalidation during commit cannot be overwritten by the older AU publication"
+      ],
+      "seconds": 0.006180592001328478,
+      "test_log": "bridge-claim-newer-invalidation-token.log",
+      "executable_sha256": "83a17637a8e079794d4022d9435f90e46e35aeb4af4a5e69f51a1e122c8d3529",
+      "expected_assertions": [
+        "external invalidation during commit cannot be overwritten"
+      ]
+    },
+    {
+      "name": "restored-control",
+      "compile_command": [
+        "c++",
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-pthread",
+        "-I",
+        "/tmp/cs80-au-publication-qualification/restored-control/include",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/src",
+        "-I",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/AuAutomationBridgeContractTests.cpp",
+        "-o",
+        "/tmp/cs80-au-publication-qualification/restored-control/bridge"
+      ],
+      "test_command": [
+        "/tmp/cs80-au-publication-qualification/restored-control/bridge",
+        "/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "exit_code": 0,
+      "failures": [],
+      "seconds": 0.008781227999861585,
+      "test_log": "bridge-restored-control.log",
+      "executable_sha256": "b0d1e59dc0620f1d994527edfb7bb4ad6516ee47d73cdd9185e94ec01001e008"
+    }
+  ],
+  "original_header_sha256": {
+    "AuAutomationHooks.inc": "6402ad6154a4d9f0d14d50ba9b7c82f497662e9fb64052bba6df54c09482778d",
+    "AuAutomationQueue.h": "67ea9ebffdae2ebecd56255c5dad4caaa8ea5280fd38a5d95ea0bd97d79a0384",
+    "HostAutomationBridge.h": "934842df25190bb1c7c8597d2ca5a3c3fc7f663de455937fd3852bf8fd0edb25"
+  },
+  "result": "all six intended mutations detected; fixed and restored controls pass",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "source_invariants": {
+    "AU_queue_body_byte_identical": true,
+    "AU_prepare_and_schedule_bodies_byte_identical": true,
+    "VST3_generator_body_byte_identical": true
+  },
+  "complete_source_sha256": {
+    "scripts/patch-juce-automation.py": "8e2f178f0f047f2c5be04d5f6c1242c5b7be6163505e78399a2c962d6d87aa36",
+    "src/plugin/AuAutomationQueue.h": "a0ee9c6b973b6e63ee2790ef61ceaaaa1f8e29596207845a5a74347e159c893f",
+    "src/plugin/AuAutomationHooks.inc": "3e47ad3d1f2271a1810762d75736375b913f906e69685a87710431ebd60904c4",
+    "tests/AuAutomationBridgeContractTests.cpp": "2de528a01633f1997c857967390d90395aaeede2eda2542d0592359e8b0cc039",
+    "tests/AuAutomationHostTests.cpp": "e99aa6b2b1182d14d293ca49c34faa5f7f16f201f356da7b703ba0201424de8e",
+    "tests/AuAutomationNativeMutations.py": "9f66857a8b599c881556a91fa35cebcc384e58040b68ad7fdb0212059a939361",
+    "tests/parity/tolerances-v2/au-normalized-publication.json": "8307f72751e055b449584a4c36874c9b35b98d24817ac9ee9239cd155fad0cc3",
+    "CMakeLists.txt": "e5201ac6e7252fe2e60d6ca2bb10935ea66b5f256d6903eddc8793ffab657a62"
+  },
+  "other_verification": [
+    {
+      "test": "AU curve original gate",
+      "exit_code": 0,
+      "max_normalized_error": 2.22045e-16,
+      "log": "publication-curve.log"
+    },
+    {
+      "test": "native wrapper macro environment",
+      "exit_code": 0,
+      "log": "publication-macro.log"
+    },
+    {
+      "test": "host wrapper platform and source-rejection contracts",
+      "exit_code": 0,
+      "checks": 92,
+      "failures": 0,
+      "log": "publication-wrapper-platforms.log"
+    }
+  ],
+  "native_status": "The original Intel native118 endpoint failures prove the mechanism; repaired native AU compilation, all252 new publication/ownership checks, original interpolated/audio gates, new native mutations and restored control remain pending macOS CI."
+}

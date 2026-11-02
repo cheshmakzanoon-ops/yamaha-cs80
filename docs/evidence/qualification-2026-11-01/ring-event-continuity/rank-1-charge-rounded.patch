@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -1228,7 +1228,7 @@
+                       std::max(0.001f, rs.vD * global.envTimeScale * r.tol.ampEnvTime),
+                       rs.vS,
+                       std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime),
+-                      usesSourceModels(global.renderPolicy));
++                      usesSourceModels(global.renderPolicy) && ch != 1);
+     }
+ 
+     if (! ringKeyDown)

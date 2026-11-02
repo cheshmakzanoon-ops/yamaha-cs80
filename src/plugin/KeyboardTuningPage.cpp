@@ -86,6 +86,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     styleLabel(tuningModeLabel, "Tuning source");
     styleCombo(tuningMode, "Tuning source");
     tuningMode.addItemList({ "Equal temperament (12-TET)", "Scala / KBM file", "MIDI Tuning Standard / MTS-ESP" }, 1);
+    tuningMode.bindParameterContext(p, Cs80AudioProcessor::parameterId(cs80::P_tuningMode), cs80::P_tuningMode);
     tuningMode.setTooltip("Modern layer: PURE CS-80 always plays equal temperament.");
     if (auto* q = parameter(p, cs80::P_tuningMode))
         tuningModeAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, tuningMode);
@@ -93,6 +94,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     styleLabel(voiceModeLabel, "Voice mode");
     styleCombo(voiceMode, "Voice mode");
     voiceMode.addItemList({ "8 voices (original)", "16 voices (two instruments)", "Unison x2", "Unison x4", "Unison x8" }, 1);
+    voiceMode.bindParameterContext(p, Cs80AudioProcessor::parameterId(cs80::P_voiceMode), cs80::P_voiceMode);
     voiceMode.setTooltip("Labelled extensions beyond the eight voice cards; PURE CS-80 always plays eight single voices.");
     if (auto* q = parameter(p, cs80::P_voiceMode))
         voiceModeAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, voiceMode);
@@ -112,6 +114,8 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     styleToggle(scanTiming, "Declared KAS scanner model: key events act at 1 ms scan instants, lowest key first. "
                             "Adds at most 1 ms of note latency. Circuit engine only.");
     styleToggle(ribbonCcEnable, "Lets a MIDI controller play the ribbon: 64 centre, 0 and 127 the ends. Off by default.");
+    scanTiming.bindParameterContext(p, Cs80AudioProcessor::parameterId(cs80::P_kasScanTiming), cs80::P_kasScanTiming);
+    ribbonCcEnable.bindParameterContext(p, Cs80AudioProcessor::parameterId(cs80::P_ribbonCcEnable), cs80::P_ribbonCcEnable);
     if (auto* q = parameter(p, cs80::P_kasScanTiming))
         scanTimingAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, scanTiming);
     if (auto* q = parameter(p, cs80::P_ribbonCcEnable))

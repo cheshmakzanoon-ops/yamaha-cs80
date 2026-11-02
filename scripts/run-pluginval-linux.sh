@@ -17,7 +17,11 @@ fi
 log=$1
 shift
 attempt_log=${log%.log}
-max_attempts=3
+max_attempts=${CS80_PLUGINVAL_ATTEMPTS:-3}
+case "$max_attempts" in
+    1|2|3) ;;
+    *) echo "CS80_PLUGINVAL_ATTEMPTS must be 1, 2, or 3" >&2; exit 2 ;;
+esac
 
 run_attempt() {
     local target=$1

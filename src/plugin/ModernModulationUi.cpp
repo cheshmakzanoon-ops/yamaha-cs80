@@ -342,8 +342,8 @@ void MsegEditor::mouseDown(const juce::MouseEvent& e)
     frozenViewLength = viewLength();
     dragStart = e.position;
     drag = Drag::none;
-    if (auto* undo = processor.getAPVTS().undoManager)
-        undo->beginNewTransaction("MSEG edit");
+    userEdit.reset();
+    userEdit = std::make_unique<UndoableParameterState::ScopedUserEdit>(processor.getUndoableState(), "MSEG edit");
     if (shape.loop != MsegLoop::off && loopMarkerArea(true).expanded(2.0f).contains(e.position))
         drag = Drag::loopEnd;
     else if (shape.loop != MsegLoop::off && loopMarkerArea(false).expanded(2.0f).contains(e.position))
@@ -406,6 +406,7 @@ void MsegEditor::mouseUp(const juce::MouseEvent&)
 {
     drag = Drag::none;
     frozenViewLength = 0.0f;
+    userEdit.reset();
     repaint();
 }
 
@@ -624,6 +625,8 @@ LfoPanel::LfoPanel(Cs80AudioProcessor& p)
         for (int w = 0; w < kLfoWaveCount; ++w)
             r.wave.addItem(lfoWaveName(w), w + 1);
         r.destination.addItemList({ "No direct route", "Pitch", "Filter", "Amp", "Pan", "PWM" }, 1);
+        r.wave.bindParameterContext(p, Cs80AudioProcessor::parameterId(waveIds[i]), waveIds[i]);
+        r.destination.bindParameterContext(p, Cs80AudioProcessor::parameterId(destIds[i]), destIds[i]);
         styleCombo(r.wave, "LFO " + juce::String(i + 1) + " waveform");
         styleCombo(r.destination, "LFO " + juce::String(i + 1) + " direct destination");
         styleSlider(r.rate, "LFO " + juce::String(i + 1) + " rate");
@@ -867,8 +870,11 @@ ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
         styleLabel(s.mixLabel, "Mix");
         styleLabel(s.aLabel, "A");
         styleLabel(s.bLabel, "B");
-        auto attachCombo = [&p](int index, juce::ComboBox& box, std::unique_ptr<juce::ComboBoxParameterAttachment>& out)
-        { if (auto* q = parameter(p, index)) out = std::make_unique<juce::ComboBoxParameterAttachment>(*q, box); };
+        auto attachCombo = [&p](int index, ContextComboBox& box, std::unique_ptr<juce::ComboBoxParameterAttachment>& out)
+        {
+            box.bindParameterContext(p, Cs80AudioProcessor::parameterId(index), index);
+            if (auto* q = parameter(p, index)) out = std::make_unique<juce::ComboBoxParameterAttachment>(*q, box);
+        };
         auto attachSlider = [&p](int index, juce::Slider& slider, std::unique_ptr<juce::SliderParameterAttachment>& out)
         { if (auto* q = parameter(p, index)) out = std::make_unique<juce::SliderParameterAttachment>(*q, slider); };
         attachCombo(base, s.model, s.modelAttachment);
@@ -888,6 +894,7 @@ ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
     gainComp.setColour(juce::ToggleButton::textColourId, ivory);
     gainComp.setColour(juce::ToggleButton::tickColourId, amber);
     gainComp.setTooltip("Each slot's K-weighted (ITU-R BS.1770) output loudness follows its input loudness");
+    gainComp.bindParameterContext(p, Cs80AudioProcessor::parameterId(P_fxGainCompensation), P_fxGainCompensation);
     if (auto* q = parameter(p, P_fxGainCompensation))
         gainCompAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, gainComp);
     addAndMakeVisible(gainComp);

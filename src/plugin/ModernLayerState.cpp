@@ -1,6 +1,7 @@
 #include "ModernLayerState.h"
 
 #include <cmath>
+#include <limits>
 
 namespace cs80
 {
@@ -15,14 +16,23 @@ const juce::Identifier versionId { "version" }, indexId { "index" }, pointsId { 
     syncId { "sync" }, bipolarId { "bipolar" }, sourceId { "source" }, viaId { "via" },
     destinationId { "destination" }, targetId { "target" };
 
-// Locale-independent: juce::String(double) and getFloatValue() never use the C locale.
+// Schema 1 remains numeric triples. Preserve every admitted float, including
+// subnormals, when a live edit is serialized for undo or a session restore.
+juce::String encodePointValue(float value)
+{
+    // Scientific notation retains tiny values; this gives one more significant
+    // digit than float's max_digits10 round-trip requirement on every platform.
+    return juce::String(value, std::numeric_limits<float>::max_digits10, true);
+}
+
+// Locale-independent: JUCE's formatter and getFloatValue never use the C locale.
 juce::String encodePoints(const modern::MsegShape& s)
 {
     juce::StringArray items;
     for (int i = 0; i < s.count; ++i)
     {
         const auto& p = s.points[(std::size_t) i];
-        items.add(juce::String(p.time, 6) + " " + juce::String(p.level, 6) + " " + juce::String(p.curve, 6));
+        items.add(encodePointValue(p.time) + " " + encodePointValue(p.level) + " " + encodePointValue(p.curve));
     }
     return items.joinIntoString(";");
 }
@@ -57,9 +67,10 @@ int intProperty(const juce::ValueTree& tree, const juce::Identifier& id, int fal
 }
 } // namespace
 
-ModernLayerState::ModernLayerState(juce::AudioProcessorValueTreeState& state)
+ModernLayerState::ModernLayerState(UndoableParameterState& state)
     : apvts(state)
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     for (auto& p : displayPosition)
         p.store(-1.0, std::memory_order_relaxed);
     // Listen on the APVTS member itself: replaceState() assigns to it, and JUCE reports
@@ -71,6 +82,7 @@ ModernLayerState::ModernLayerState(juce::AudioProcessorValueTreeState& state)
 
 ModernLayerState::~ModernLayerState()
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     apvts.state.removeListener(this);
 }
 
@@ -148,18 +160,21 @@ modern::ModernConfig ModernLayerState::fromTree(const juce::ValueTree& tree)
 
 modern::ModernConfig ModernLayerState::getConfig() const
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     const juce::ScopedLock sl(lock);
     return config;
 }
 
 modern::MsegShape ModernLayerState::getShape(int index) const
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     const juce::ScopedLock sl(lock);
     return config.msegs[(std::size_t) juce::jlimit(0, modern::kMsegCount - 1, index)];
 }
 
 modern::ModSlot ModernLayerState::getSlot(int index) const
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     const juce::ScopedLock sl(lock);
     return config.slots[(std::size_t) juce::jlimit(0, modern::kModSlots - 1, index)];
 }
@@ -168,6 +183,7 @@ void ModernLayerState::setShape(int index, const modern::MsegShape& shape)
 {
     if (index < 0 || index >= modern::kMsegCount)
         return;
+    const juce::ScopedLock treeLock(apvts.treeLock());
     auto c = getConfig();
     c.msegs[(std::size_t) index] = shape;
     store(c, true);
@@ -177,6 +193,7 @@ void ModernLayerState::setSlot(int index, const modern::ModSlot& slot)
 {
     if (index < 0 || index >= modern::kModSlots)
         return;
+    const juce::ScopedLock treeLock(apvts.treeLock());
     auto c = getConfig();
     c.slots[(std::size_t) index] = slot;
     store(c, true);
@@ -189,7 +206,9 @@ void ModernLayerState::setConfig(const modern::ModernConfig& newConfig)
 
 void ModernLayerState::store(const modern::ModernConfig& newConfig, bool writeTree)
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     const auto clean = modern::sanitizeConfig(newConfig);
+    if (writeTree) apvts.syncNow();
     {
         const juce::ScopedLock sl(lock);
         if (clean == config) // a tree without the child already means the defaults
@@ -200,7 +219,9 @@ void ModernLayerState::store(const modern::ModernConfig& newConfig, bool writeTr
     {
         // Replace the child in one step, so an undo manager records one transaction.
         const juce::ScopedValueSetter<bool> guard(writing, true);
-        auto* undo = apvts.undoManager;
+        const auto* messageManager = juce::MessageManager::getInstanceWithoutCreating();
+        auto* undo = messageManager != nullptr && messageManager->isThisTheMessageThread()
+            ? apvts.undoManager : nullptr;
         auto fresh = toTree(clean);
         auto existing = apvts.state.getChildWithName(treeType);
         if (existing.isValid())
@@ -272,9 +293,14 @@ bool ModernLayerState::concernsLayer(const juce::ValueTree& tree) const
 
 void ModernLayerState::reloadFromTree()
 {
-    if (writing)
-        return;
-    store(fromTree(apvts.state.getChildWithName(treeType)), false);
+    reloadFromTreeUsing(nullptr, [](void*, const juce::ValueTree& tree) { return fromTree(tree); });
+}
+
+void ModernLayerState::reloadFromTreeUsing(void* context, TreeReader reader)
+{
+    const juce::ScopedLock treeLock(apvts.treeLock());
+    if (!writing)
+        store(reader(context, apvts.state.getChildWithName(treeType)), false);
 }
 
 void ModernLayerState::valueTreePropertyChanged(juce::ValueTree& tree, const juce::Identifier&)

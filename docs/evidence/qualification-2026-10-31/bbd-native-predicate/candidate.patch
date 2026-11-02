@@ -1,0 +1,12 @@
+--- original/BbdChorus.h
++++ candidate/BbdChorus.h
+@@ -31,7 +31,8 @@
+ // keep the full path even if DAZ happens to make a floating comparison see zero.
+ inline bool hasNonzeroMagnitude(float sample) noexcept
+ {
+-    return (std::bit_cast<std::uint32_t>(sample) & 0x7fffffffu) != 0u;
++    const volatile std::uint32_t bits = std::bit_cast<std::uint32_t>(sample);
++    return (bits & 0x7fffffffu) != 0u;
+ }
+ } // namespace bbd_detail
+ 

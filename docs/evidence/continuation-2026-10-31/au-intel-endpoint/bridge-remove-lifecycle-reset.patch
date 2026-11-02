@@ -1,0 +1,11 @@
+--- a/src/plugin/AuAutomationHooks.inc
++++ b/src/plugin/AuAutomationHooks.inc
+@@ -36,7 +36,7 @@
+ 
+     void cs80ResetAuPublications() noexcept
+     {
+-        for (auto& publication : cs80AuPublications) publication.invalidate();
++        // mutation: retain old publication ownership
+     }
+ 
+     static void cs80CommitAuParameter (void* context, float value) noexcept

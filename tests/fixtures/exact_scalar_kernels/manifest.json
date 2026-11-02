@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+  "scope": "Independent frozen scalar numerical kernels and their complete local math dependencies. Raw files are verbatim Git blobs, before any new candidate implementation or evaluation.",
+  "source_normalization": "Git LF bytes; a checkout may normalize CRLF back to LF before validating these hashes. No other normalization is permitted.",
+  "namespace_transform": {
+    "before": "namespace cs80",
+    "after": "namespace cs80::scalar_kernel_frozen",
+    "purpose": "Co-compile a separate scalar oracle without calling candidate Dsp, FastMath, phase-correction, wrapper or oscillator methods. Only the namespace declaration changes; includes resolve within the generated frozen directory.",
+    "declaration_occurrences_per_file": 1
+  },
+  "files": {
+    "tests/fixtures/exact_scalar_kernels/raw/Dsp.h": {
+      "original_path": "src/core/Dsp.h",
+      "git_blob": "1d6ec4a5e63c0c60e4233a7b62502d9971086993",
+      "sha256": "d704003dcc4ca262e31bc98a2df0494e7b3da97f747c892644264efd5f3a4347",
+      "generated_basename": "Dsp.h",
+      "generated_sha256": "19a628881ad80b040acb220b8393fbd8065ecb78bd89d259c01a3ce1cfce9455"
+    },
+    "tests/fixtures/exact_scalar_kernels/raw/FastMath.h": {
+      "original_path": "src/core/FastMath.h",
+      "git_blob": "7c81bfa3632044b6c10d781e500e83de0c690c92",
+      "sha256": "a8e87ed8e4d19a03dc99327036f401cd5d2e49c6ca8e3a5356a33d4689347ea0",
+      "generated_basename": "FastMath.h",
+      "generated_sha256": "6ee5dc2d5f5afa793203401cedea52b73d5f97001a13a71ccbe203db708ed3be"
+    },
+    "tests/fixtures/exact_scalar_kernels/raw/Ig00156PhaseCorrection.h": {
+      "original_path": "src/core/Ig00156PhaseCorrection.h",
+      "git_blob": "909a8ebacf7b10084673f3f7fbba7c7fe537825f",
+      "sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+      "generated_basename": "Ig00156PhaseCorrection.h",
+      "generated_sha256": "042265cf6b4dc3ed308269495d22cf41efb963e1993ed438879c17785fc9c9f0"
+    },
+    "tests/fixtures/exact_scalar_kernels/raw/Ig00156Filter.h": {
+      "original_path": "src/core/Ig00156Filter.h",
+      "git_blob": "ffb0bf27aafcd112dfe5ce33916f36f615a6ec43",
+      "sha256": "e57664b64e2e7c21aa0afb43c16bb39610241e5297316c261eecfc27a5a5941f",
+      "generated_basename": "Ig00156Filter.h",
+      "generated_sha256": "0c83dfc6bf3d41b32d032281337751358220023b253a7d8e51dec50065bb5d69"
+    },
+    "tests/fixtures/exact_scalar_kernels/raw/ReconstructedOscillator.h": {
+      "original_path": "src/core/ReconstructedOscillator.h",
+      "git_blob": "2fa227fab147cae4b7e45486ee3426f4fc6503ee",
+      "sha256": "c9bb458f238ea6cb0bf74444a1a9459441da846bbf3ab98598848b45b147034c",
+      "generated_basename": "ReconstructedOscillator.h",
+      "generated_sha256": "ddaec0d3af2c2c054aee29ab447592ee372543348f51ca473e1543305c77fc1b"
+    }
+  },
+  "materializer": {
+    "path": "tests/cpu/materialize-frozen-scalar-kernels.py",
+    "sha256": "4068df0115647f9371c605980a4f29013b341fc187326c160d35ee590a9429d5"
+  }
+}

@@ -311,6 +311,18 @@ void testStaticAndSnap()
         // 100 ms follower that keeps relaxing after the key lifts (Phase 2.4),
         // so let it settle; the check is about the smoothers' new-note snap.
         for (int b = 0; b < 100; ++b) e.render(block.data(), 512);
+        const int reusedActiveBefore = e.activeVoices();
+        const float touchBefore = e.getVoiceInfo(0).touchA;
+        bool initialChargeMatches = true;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            // Independent physical-PANEL coordinate, already declared in Dsp.h:
+            // IL is a selected drive; assignment cannot reset capacitor charge.
+            const float expectedIl = -3.0f * std::clamp(f.effectiveValues[chParam(rank, CP_fIl)], 0.0f, 1.0f);
+            const float charge = e.getRankEnvelopeState(0, rank).filter.value;
+            initialChargeMatches = initialChargeMatches && charge == expectedIl;
+            std::printf("reuse settled rank %d: IL %.12g, charge %.12g\n", rank, expectedIl, charge);
+        }
         e.noteOn(48, 0.8f); // cyclic assignment reuses circuit 0
         std::vector<float> one(2);
         e.render(one.data(), 1);
@@ -318,10 +330,41 @@ void testStaticAndSnap()
         Engine reference;
         reference.prepare(48000.0);
         reference.setControlFrame(f);
+        // Registered in smoothing-reuse-settled-reference.json at 794c339:
+        // evolve a never-pressed reference independently to the same selected
+        // IL, instead of comparing a warm capacitor with zero cold charge.
+        for (int b = 0; b < 100; ++b) reference.render(block.data(), 512);
+        const int referenceActiveBefore = reference.activeVoices();
+        const float referenceTouchBefore = reference.getVoiceInfo(0).touchA;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const float expectedIl = -3.0f * std::clamp(f.effectiveValues[chParam(rank, CP_fIl)], 0.0f, 1.0f);
+            const float charge = reference.getRankEnvelopeState(0, rank).filter.value;
+            initialChargeMatches = initialChargeMatches && charge == expectedIl;
+            std::printf("reference settled rank %d: IL %.12g, charge %.12g\n", rank, expectedIl, charge);
+        }
         reference.noteOn(48, 0.8f);
         reference.render(one.data(), 1);
+        const float touchAfter = e.getVoiceInfo(0).touchA;
+        const float referenceTouchAfter = reference.getVoiceInfo(0).touchA;
+        bool freshChargeMatches = true;
+        for (int rank = 0; rank < 2; ++rank)
+            freshChargeMatches = freshChargeMatches
+                && e.getRankEnvelopeState(0, rank).filter.value == reference.getRankEnvelopeState(0, rank).filter.value;
+        std::printf("reuse touch: %.12g -> %.12g, reference %.12g -> %.12g; active %d/%d -> %d/%d\n",
+                    touchBefore, touchAfter, referenceTouchBefore, referenceTouchAfter,
+                    reusedActiveBefore, referenceActiveBefore, e.activeVoices(), reference.activeVoices());
+        std::printf("reuse cutoff: pressed %.12g, fresh %.12g, reference %.12g, relative difference %.12g\n",
+                    pressed, fresh, reference.getRankInfo(0, 0).lpfHz,
+                    std::abs(fresh - reference.getRankInfo(0, 0).lpfHz) / fresh);
         check(e.activeVoices() == 1 && pressed > 1.5f * fresh
-                  && std::abs(fresh - reference.getRankInfo(0, 0).lpfHz) <= 1.0e-3f * fresh,
+                  && std::abs(fresh - reference.getRankInfo(0, 0).lpfHz) <= 1.0e-3f * fresh
+                  && reusedActiveBefore == 0 && referenceActiveBefore == 0
+                  && reference.activeVoices() == 1 && initialChargeMatches && freshChargeMatches
+                  // TWS a must only decay with zero new pressure. Reading the
+                  // restored MIDI target alone would hide a stale smoother.
+                  && referenceTouchBefore == 0.0f && referenceTouchAfter == 0.0f
+                  && touchAfter >= 0.0f && touchAfter <= touchBefore,
               "reused circuit starts at its own zero touch");
     }
 

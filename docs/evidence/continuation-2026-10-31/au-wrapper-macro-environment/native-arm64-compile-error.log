@@ -1,0 +1,53 @@
+Commit: c8bf1b3dc6210a8cc76b901bced1f7ec35310995
+Job: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41237400418/job/124643945990
+Native macOS arm64 Configure succeeded; AU Build failed.
+
+2026-10-31T20:09:31.0159140Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AuAutomationQueue.h:136:12: error: redefinition of 'Point' as different kind of symbol
+2026-10-31T20:09:31.0260340Z   136 |     struct Point { int position = 0; double value = 0; };
+2026-10-31T20:09:31.0361780Z       |            ^
+2026-10-31T20:09:31.0463020Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_plugin_client/detail/juce_IncludeModuleHeaders.h:43:22: note: expanded from macro 'Point'
+2026-10-31T20:09:31.0540440Z    43 |  #define Point juce::Point
+2026-10-31T20:09:31.0641290Z       |                      ^
+2026-10-31T20:09:31.0742500Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:50:7: note: previous definition is here
+2026-10-31T20:09:31.0843660Z    50 | class Point
+2026-10-31T20:09:31.0946410Z       |       ^
+2026-10-31T20:09:31.1048180Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80-juce-wrappers/juce_audio_plugin_client_AU_1.mm:72:
+2026-10-31T20:09:31.1149780Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AuAutomationQueue.h:136:12: error: non-friend class member 'Point' cannot have a qualified name
+2026-10-31T20:09:31.1251800Z   136 |     struct Point { int position = 0; double value = 0; };
+2026-10-31T20:09:31.1352510Z       |            ^~~~~
+2026-10-31T20:09:31.1453550Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_plugin_client/detail/juce_IncludeModuleHeaders.h:43:22: note: expanded from macro 'Point'
+2026-10-31T20:09:31.1554600Z    43 |  #define Point juce::Point
+2026-10-31T20:09:31.1592170Z       |                ~~~~~~^
+2026-10-31T20:09:31.1592710Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80-juce-wrappers/juce_audio_plugin_client_AU_1.mm:72:
+2026-10-31T20:09:31.1593640Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AuAutomationQueue.h:139:16: error: use of class template 'Point' requires template arguments
+2026-10-31T20:09:31.1594300Z   139 |     std::array<Point, capacity * 3 + lanes> points {};
+2026-10-31T20:09:31.1594840Z       |                ^
+2026-10-31T20:09:31.1595710Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_plugin_client/detail/juce_IncludeModuleHeaders.h:43:22: note: expanded from macro 'Point'
+2026-10-31T20:09:31.1596390Z    43 |  #define Point juce::Point
+2026-10-31T20:09:31.1697440Z       |                      ^
+2026-10-31T20:09:31.1819420Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:50:7: note: template is declared here
+2026-10-31T20:09:31.1920640Z    49 | template <typename ValueType>
+2026-10-31T20:09:31.2026770Z       | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-10-31T20:09:31.2127710Z    50 | class Point
+2026-10-31T20:09:31.2228460Z       |       ^
+2026-10-31T20:09:31.2329650Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/cs80-juce-wrappers/juce_audio_plugin_client_AU_1.mm:72:
+2026-10-31T20:09:31.2431180Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AuAutomationQueue.h:70:23: error: no viable constructor or deduction guide for deduction of template arguments of 'Point'
+2026-10-31T20:09:31.2532670Z    70 |                 Point previous {-1, initial[laneIndex]};
+2026-10-31T20:09:31.2648850Z       |                       ^
+2026-10-31T20:09:31.2749710Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:60:15: note: candidate template ignored: deduced conflicting types for parameter 'ValueType' ('int' vs. 'value_type' (aka 'double'))
+2026-10-31T20:09:31.2850170Z    60 |     constexpr Point (ValueType initialX, ValueType initialY) noexcept : x (initialX), y (initialY) {}
+2026-10-31T20:09:31.2951290Z       |               ^
+2026-10-31T20:09:31.3053050Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:60:15: note: implicit deduction guide declared as 'template <typename ValueType> Point(ValueType initialX, ValueType initialY) -> Point<ValueType>'
+2026-10-31T20:09:31.3153080Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:57:15: note: candidate function template not viable: requires 1 argument, but 2 were provided
+2026-10-31T20:09:31.3253030Z    57 |     constexpr Point (const Point&) = default;
+2026-10-31T20:09:31.3353460Z       |               ^      ~~~~~~~~~~~~
+2026-10-31T20:09:31.3454810Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:57:15: note: implicit deduction guide declared as 'template <typename ValueType> Point(const Point<ValueType> &) -> Point<ValueType>'
+2026-10-31T20:09:31.3556490Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:50:7: note: candidate function template not viable: requires 1 argument, but 2 were provided
+2026-10-31T20:09:31.3657550Z    50 | class Point
+2026-10-31T20:09:31.3758450Z       |       ^~~~~
+2026-10-31T20:09:31.3859690Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:50:7: note: implicit deduction guide declared as 'template <typename ValueType> Point(Point<ValueType>) -> Point<ValueType>'
+2026-10-31T20:09:31.3961570Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:54:15: note: candidate function template not viable: requires 0 arguments, but 2 were provided
+2026-10-31T20:09:31.4062860Z    54 |     constexpr Point() = default;
+2026-10-31T20:09:31.4163980Z       |               ^
+2026-10-31T20:09:31.4268250Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_graphics/geometry/juce_Point.h:54:15: note: implicit deduction guide declared as 'template <typename ValueType> Point() -> Point<ValueType>'
+

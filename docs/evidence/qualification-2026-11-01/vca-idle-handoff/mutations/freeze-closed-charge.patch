@@ -1,0 +1,11 @@
+--- src/core/Vca.h
++++ src/core/Vca.h
+@@ -57,7 +57,7 @@
+     // fade or a new time constant. LI re-acquires LC on wake as before.
+     float processClosed() noexcept
+     {
+-        coupling += (0.0 - coupling) * couplingCoefficient;
++        coupling += 0.0;
+         // Retain the original idle model's numerical zero floor. A charge
+         // below the audio threshold must still decay rather than freeze.
+         if (std::abs(coupling) < 1.0e-30) coupling = 0.0;

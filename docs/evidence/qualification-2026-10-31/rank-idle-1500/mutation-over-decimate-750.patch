@@ -1,0 +1,11 @@
+--- a/src/experimental/ContinuousVoiceCircuit.h
++++ b/src/experimental/ContinuousVoiceCircuit.h
+@@ -223,7 +223,7 @@
+ // measured hardware clock. The 1.5 kHz step tracks slow charge; the unchanged
+ // full-rate wake replay reconstructs modes outside the step band. Acceptance is
+ // the pre-registered phase/short-gap/wake truth in tests/Ws3Tolerances.h.
+-inline constexpr double kIdleStepHz = 1500.0;
++inline constexpr double kIdleStepHz = 750.0;
+ // Replay length: kCatchUpSettleTaus time constants of the slowest mode the
+ // step rate cannot represent, bounded to [kCatchUpMinSeconds, kCatchUpMaxSeconds].
+ inline constexpr double kCatchUpSettleTaus = 9.0;

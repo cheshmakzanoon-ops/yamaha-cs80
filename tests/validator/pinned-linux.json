@@ -1,0 +1,14 @@
+{
+  "registered": "2026-10-31",
+  "kind": "software_dependency_and_exit_contract",
+  "version": "2.0.0-beta3",
+  "source_commit": "37d6a37bc752606c524f7f3febffc73e0945a740",
+  "upstream_lifetime_fix": "04e167d64661d3298afd4978f6c2e77f841b5f17",
+  "linux_archive_sha256": "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f",
+  "strictness": 10,
+  "attempts_per_invocation": 1,
+  "success_requires": ["process exit 0", "explicit SUCCESS", "no FAILED"],
+  "runs": ["headless", "GUI", "GUI seed 0x2da72db"],
+  "mutation": "Force the wrapper to ignore the single-attempt policy. The no_retry mock must fail because it executes more than once.",
+  "scope": "Linux validator host only. Plugin remains JUCE 8.0.11. Other platform validators unchanged. No plugin test may be disabled to accommodate the new host."
+}

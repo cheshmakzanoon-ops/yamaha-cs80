@@ -1,0 +1,202 @@
+--------------------------------------------------------------------------------
+Profile data file '/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/idle_noise.callgrind.1' (creator: callgrind-3.22.0)
+--------------------------------------------------------------------------------
+I1 cache: 32768 B, 64 B, 8-way associative
+D1 cache: 49152 B, 64 B, 12-way associative
+LL cache: 276824064 B, 64 B, 33-way associative
+Timerange: Basic block 0 - 109976124
+Trigger: Client Request
+Profiled target:  /workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle idle_noise 128 (PID 10, part 1)
+Events recorded:  Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw Bc Bcm Bi Bim
+Events shown:     Ir
+Event sort order: Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw Bc Bcm Bi Bim
+Thresholds:       100 0 0 0 0 0 0 0 0 0 0 0 0
+Include dirs:     
+User annotated:   
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+Ir                   
+--------------------------------------------------------------------------------
+581,809,343 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+Ir                    file:function
+--------------------------------------------------------------------------------
+581,807,807 (100.0%)  /workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile.cpp:main [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+579,914,303 (99.67%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/Engine.cpp:cs80::Engine::render(float*, int, float const*)
+459,852,223 (79.04%)  src/core/Engine.cpp:cs80::Engine::render(float*, int, float const*) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+458,143,935 (78.74%)  src/core/Engine.cpp:cs80::Engine::processInternalSample(float&, float&, float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+253,915,871 (43.64%)  src/core/Engine.cpp:cs80::Engine::tickGlobals(float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+119,865,344 (20.60%)  src/core/Dsp.h:cs80::Engine::render(float*, int, float const*)
+107,171,328 (18.42%)  src/core/Engine.cpp:cs80::Engine::updateSourceReadouts(float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+105,805,277 (18.19%)  src/core/Engine.cpp:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 64,278,531 (11.05%)  src/core/Engine.cpp:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 60,751,872 (10.44%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/BbdChorus.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+ 53,018,624 ( 9.11%)  src/core/BbdChorus.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 41,943,040 ( 7.21%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/Dsp.h:cs80::FilterEnv::tick(float, bool, bool)
+ 41,943,040 ( 7.21%)  src/core/Dsp.h:cs80::FilterEnv::tick(float, bool, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 41,418,752 ( 7.12%)  src/core/Engine.cpp:cs80::Engine::beginSmoothedControls() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 40,545,283 ( 6.97%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/experimental/ContinuousVoiceCircuit.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+ 40,401,923 ( 6.94%)  src/experimental/ContinuousVoiceCircuit.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 27,000,832 ( 4.64%)  src/core/Engine.cpp:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 23,078,059 ( 3.97%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/ReconstructedOscillator.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+ 21,623,479 ( 3.72%)  src/core/ReconstructedOscillator.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0] [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 17,367,040 ( 2.99%)  src/core/TouchCircuit.h:cs80::Engine::tickGlobals(float)
+ 16,318,464 ( 2.80%)  src/core/Smoothing.h:cs80::Engine::beginSmoothedControls()
+ 15,532,032 ( 2.67%)  src/core/OutputTapCircuit.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+ 14,321,496 ( 2.46%)  src/experimental/ContinuousVoiceCircuit.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 11,440,814 ( 1.97%)  src/core/ToleranceModel.h:cs80::Engine::tickGlobals(float)
+ 10,914,773 ( 1.88%)  src/core/NoiseSource.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+ 10,551,296 ( 1.81%)  /usr/include/c++/13/cmath:cs80::Engine::tickGlobals(float)
+  9,830,400 ( 1.69%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/PraWahCircuit.h:cs80::PraWahCircuit::process(double)
+  9,038,643 ( 1.55%)  src/core/OriginalSubOscillator.h:cs80::Engine::tickGlobals(float)
+  7,396,872 ( 1.27%)  src/core/Ig00156Filter.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+  7,208,960 ( 1.24%)  src/core/PraWahCircuit.h:cs80::PraWahCircuit::process(double) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  7,012,352 ( 1.21%)  src/core/Dsp.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+  6,830,878 ( 1.17%)  src/core/NoiseSource.h:cs80::Engine::tickGlobals(float)
+  6,673,860 ( 1.15%)  ???:0x0000000000112bb0 [???]
+  6,451,398 ( 1.11%)  ./math/./w_exp_template.c:exp@@GLIBC_2.29 [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  6,023,987 ( 1.04%)  ???:0x00000000001126a0 [???]
+  5,892,915 ( 1.01%)  ./math/../sysdeps/ieee754/dbl-64/s_sin.c:__sin_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  5,668,800 ( 0.97%)  ???:0x00000000001128e0 [???]
+  5,465,664 ( 0.94%)  ./math/./w_log_template.c:log@@GLIBC_2.29 [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  4,957,824 ( 0.85%)  ???:0x0000000004ad9340 [???]
+  4,784,128 ( 0.82%)  src/core/ModulationLfo.h:cs80::Engine::tickGlobals(float)
+  4,778,504 ( 0.82%)  src/core/Dsp.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  4,754,688 ( 0.82%)  ./math/../sysdeps/ieee754/dbl-64/e_log.c:__ieee754_log_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  4,715,248 ( 0.81%)  src/core/Dsp.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+  4,259,840 ( 0.73%)  /usr/include/c++/13/cmath:cs80::Engine::beginSmoothedControls()
+  4,226,778 ( 0.73%)  ???:0x0000000004ad9400 [???]
+  4,004,316 ( 0.69%)  ./math/../sysdeps/ieee754/dbl-64/e_exp.c:__ieee754_exp_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  3,538,944 ( 0.61%)  src/core/Engine.cpp:cs80::Engine::endSmoothedControls() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  3,145,728 ( 0.54%)  /usr/include/c++/13/bits/std_abs.h:cs80::Engine::tickGlobals(float)
+  3,032,064 ( 0.52%)  ???:0x0000000000112900 [???]
+  2,753,536 ( 0.47%)  ./math/../sysdeps/ieee754/flt-32/s_sinf.c:__sinf_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  2,031,616 ( 0.35%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/Dsp.h:cs80::Adsr::tick(float, bool, bool)
+  2,031,616 ( 0.35%)  src/core/Dsp.h:cs80::Adsr::tick(float, bool, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,891,968 ( 0.33%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/Engine.cpp:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+  1,840,256 ( 0.32%)  src/core/Engine.cpp:cs80::Engine::setControlFrame(cs80::ControlFrame const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,769,472 ( 0.30%)  src/core/HeadphoneAmpCircuit.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+  1,731,552 ( 0.30%)  src/core/Dsp.h:cs80::Engine::tickGlobals(float)
+  1,641,600 ( 0.28%)  src/core/Engine.cpp:cs80::Engine::refreshToleranceRatios() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,572,864 ( 0.27%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/ModernLayer.h:cs80::modern::ModernLayer::beginSample(cs80::modern::GlobalInputs const&)
+  1,572,864 ( 0.27%)  src/core/ModernLayer.h:cs80::modern::ModernLayer::beginSample(cs80::modern::GlobalInputs const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,572,864 ( 0.27%)  src/core/FxSlot.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  1,565,824 ( 0.27%)  src/core/Engine.cpp:cs80::Engine::applyParams(cs80::ParamValues const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,310,720 ( 0.23%)  src/core/ExpressionOptics.h:cs80::Engine::beginSmoothedControls()
+  1,310,720 ( 0.23%)  /usr/include/c++/13/cmath:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  1,097,728 ( 0.19%)  src/core/Vca.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+  1,048,576 ( 0.18%)  /usr/include/c++/13/bit:cs80::PraWahCircuit::process(double)
+  1,048,576 ( 0.18%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+  1,048,576 ( 0.18%)  src/core/PraWahCircuit.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  1,048,576 ( 0.18%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::tickGlobals(float)
+  1,004,544 ( 0.17%)  ./math/../sysdeps/x86/fpu/sincosf_poly.h:__sinf_fma
+    983,040 ( 0.17%)  src/core/Engine.cpp:cs80::Engine::updateArpeggiator(float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    983,040 ( 0.17%)  src/core/ExactControlTransforms.h:cs80::Engine::tickGlobals(float)
+    917,504 ( 0.16%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::PraWahCircuit::process(double)
+    756,352 ( 0.13%)  src/core/SourceFactoryTones.h:cs80::Engine::updateSourceReadouts(float)
+    720,896 ( 0.12%)  src/core/ExactControlTransforms.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    719,184 ( 0.12%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+    655,360 ( 0.11%)  /usr/include/c++/13/cmath:cs80::PraWahCircuit::process(double)
+    655,360 ( 0.11%)  ./math/../sysdeps/x86/fpu/fenv_private.h:__sin_fma
+    648,192 ( 0.11%)  /usr/include/c++/13/cmath:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    538,788 ( 0.09%)  /usr/include/c++/13/bits/std_abs.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+    534,915 ( 0.09%)  ???:0x0000000000112c10 [???]
+    524,288 ( 0.09%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::beginSmoothedControls()
+    524,288 ( 0.09%)  /usr/include/c++/13/bits/std_abs.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+    511,841 ( 0.09%)  ./math/./w_log1p_template.c:log1p [/usr/lib/x86_64-linux-gnu/libm.so.6]
+    507,904 ( 0.09%)  src/core/Dsp.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    467,968 ( 0.08%)  ./math/../sysdeps/ieee754/flt-32/s_sincosf.h:__sinf_fma
+    454,156 ( 0.08%)  ???:0x0000000004ad9350 [???]
+    450,813 ( 0.08%)  ???:0x0000000000112800 [???]
+    444,285 ( 0.08%)  ./math/../sysdeps/ieee754/dbl-64/s_sincos.c:__sincos_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+    431,082 ( 0.07%)  ./math/../sysdeps/ieee754/dbl-64/s_log1p.c:__log1p_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+    425,984 ( 0.07%)  src/core/Ig00156PhaseCorrection.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    393,216 ( 0.07%)  /usr/include/c++/13/bits/stl_vector.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+    393,216 ( 0.07%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    377,160 ( 0.06%)  src/core/FastMath.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    352,768 ( 0.06%)  src/core/Engine.cpp:cs80::Engine::refreshKeyboardContour() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    352,256 ( 0.06%)  src/experimental/ContinuousVoiceCircuit.h:void cs80::voice_continuity::storeSnapshot<cs80::Engine::Rank>(cs80::Engine::Rank&, int, cs80::ReconstructedOscillator::IdleState const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    333,693 ( 0.06%)  ./math/../sysdeps/ieee754/dbl-64/math_config.h:__ieee754_exp_fma
+    327,680 ( 0.06%)  src/core/Engine.h:cs80::Engine::tickGlobals(float)
+    327,680 ( 0.06%)  /usr/include/c++/13/array:cs80::Engine::tickGlobals(float)
+    327,680 ( 0.06%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+    327,680 ( 0.06%)  /usr/include/c++/13/cmath:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+    325,040 ( 0.06%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    262,785 ( 0.05%)  ./math/../sysdeps/ieee754/dbl-64/s_sin.c:__sincos_fma
+    262,144 ( 0.05%)  src/core/Dsp.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+    261,992 ( 0.05%)  /usr/include/c++/13/bits/std_abs.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    247,808 ( 0.04%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/KbcContour.h:cs80::kbc::outputVolts(int, double, double)
+    244,992 ( 0.04%)  src/core/Engine.cpp:cs80::Engine::buildSettings() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    199,808 ( 0.03%)  src/core/Params.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+    196,864 ( 0.03%)  src/core/Engine.cpp:cs80::Engine::retargetSmoothedSettings() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    196,736 ( 0.03%)  src/core/ExternalModulationInterpolator.h:cs80::Engine::render(float*, int, float const*)
+    196,608 ( 0.03%)  src/core/ModernLayer.h:cs80::Engine::tickGlobals(float)
+    196,608 ( 0.03%)  /workspace/scratch/a0e502bd4cd5/cs80-cpu-qualified/src/core/ModernLayer.h:cs80::modern::ModernLayer::processVoice(int, cs80::modern::VoiceInputs const&)
+    196,608 ( 0.03%)  src/core/ModernLayer.h:cs80::modern::ModernLayer::processVoice(int, cs80::modern::VoiceInputs const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    196,608 ( 0.03%)  /usr/include/c++/13/cmath:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+    196,608 ( 0.03%)  src/core/Engine.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    194,560 ( 0.03%)  src/core/Engine.cpp:void cs80::(anonymous namespace)::visitSmoothedSettings<cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}>(cs80::GlobalSettings&, cs80::RankSettings*, int, cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}&&) [clone .constprop.0] [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    180,224 ( 0.03%)  src/core/ExactControlTransforms.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    146,432 ( 0.03%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__sinf_fma
+    135,168 ( 0.02%)  src/reference/KeyboardContour.h:cs80::kbc::outputVolts(int, double, double)
+    131,072 ( 0.02%)  src/core/ChorusTabs.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    115,584 ( 0.02%)  /usr/include/c++/13/cmath:cs80::Engine::buildSettings()
+    114,688 ( 0.02%)  src/core/ModMatrix.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    110,592 ( 0.02%)  src/core/ReconstructedOscillator.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+    107,520 ( 0.02%)  src/core/Smoothing.h:void cs80::(anonymous namespace)::visitSmoothedSettings<cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}>(cs80::GlobalSettings&, cs80::RankSettings*, int, cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}&&) [clone .constprop.0]
+    101,568 ( 0.02%)  ./math/../sysdeps/ieee754/dbl-64/math_config.h:__ieee754_log_fma
+     98,304 ( 0.02%)  src/core/KasScanner.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     97,920 ( 0.02%)  src/core/Dsp.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+     90,112 ( 0.02%)  src/core/Ig00156Filter.h:void cs80::voice_continuity::storeSnapshot<cs80::Engine::Rank>(cs80::Engine::Rank&, int, cs80::ReconstructedOscillator::IdleState const&)
+     84,480 ( 0.01%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::updateSourceReadouts(float)
+     81,920 ( 0.01%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     76,160 ( 0.01%)  ???:0x0000000000112a40 [???]
+     73,728 ( 0.01%)  /usr/include/c++/13/bits/std_abs.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     69,632 ( 0.01%)  src/core/KbcContour.h:cs80::kbc::outputVolts(int, double, double) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     68,992 ( 0.01%)  ./math/../sysdeps/ieee754/flt-32/s_lroundf.c:lroundf [/usr/lib/x86_64-linux-gnu/libm.so.6]
+     65,536 ( 0.01%)  src/core/KasScanner.h:cs80::Engine::tickGlobals(float)
+     51,584 ( 0.01%)  /usr/include/c++/13/cmath:cs80::Engine::applyParams(cs80::ParamValues const&)
+     48,896 ( 0.01%)  /usr/include/c++/13/cmath:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+     46,336 ( 0.01%)  /usr/include/c++/13/cmath:cs80::Engine::updateSourceReadouts(float)
+     35,904 ( 0.01%)  ./math/../sysdeps/x86/fpu/fenv_private.h:__sincos_fma
+     32,768 ( 0.01%)  /usr/include/c++/13/bits/stl_algobase.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+     32,768 ( 0.01%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::kbc::outputVolts(int, double, double)
+     24,576 ( 0.00%)  src/core/Ig00156PhaseCorrection.h:void cs80::voice_continuity::storeSnapshot<cs80::Engine::Rank>(cs80::Engine::Rank&, int, cs80::ReconstructedOscillator::IdleState const&)
+     18,432 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::filterAttackTarget(int) const [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     18,432 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::filterInitialTarget(int) const [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     17,920 ( 0.00%)  ???:0x0000000000112a00 [???]
+     17,920 ( 0.00%)  src/core/ModernLayer.h:cs80::Engine::buildSettings()
+     17,152 ( 0.00%)  src/core/Params.h:cs80::Engine::buildSettings()
+     16,896 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/e_log2f.c:__log2f_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+     16,384 ( 0.00%)  src/core/ModernLayer.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     11,520 ( 0.00%)  ???:0x0000000000112c20 [???]
+     10,752 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/e_exp2f.c:__exp2f_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+     10,240 ( 0.00%)  /usr/include/c++/13/cmath:cs80::kbc::outputVolts(int, double, double)
+      9,600 ( 0.00%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+      8,576 ( 0.00%)  src/core/Dsp.h:cs80::Engine::buildSettings()
+      8,192 ( 0.00%)  /usr/include/c++/13/bits/stl_algo.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+      7,168 ( 0.00%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::buildSettings()
+      5,120 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::updateOversampling() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+      4,096 ( 0.00%)  src/core/SourceFactoryTones.h:cs80::Engine::filterAttackTarget(int) const
+      4,096 ( 0.00%)  src/core/SourceFactoryTones.h:cs80::Engine::filterInitialTarget(int) const
+      2,944 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::effectiveOversampling() const [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+      2,816 ( 0.00%)  ???:0x0000000000112ac0 [???]
+      2,560 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/e_powf.c:__powf_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+      2,176 ( 0.00%)  src/core/Oversampling.h:cs80::Engine::effectiveOversampling() const
+      1,664 ( 0.00%)  src/core/Engine.h:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+      1,024 ( 0.00%)  src/core/SourceFactoryTones.h:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+        768 ( 0.00%)  src/core/PerformanceControls.h:cs80::Engine::buildSettings()
+        768 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__exp2f_fma
+        640 ( 0.00%)  src/core/Engine.h:cs80::Engine::buildSettings()
+        512 ( 0.00%)  /usr/include/c++/13/array:cs80::Engine::buildSettings()
+        512 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__log2f_fma
+        384 ( 0.00%)  /usr/include/c++/13/array:main
+        384 ( 0.00%)  src/core/OutputTapCircuit.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+        384 ( 0.00%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::effectiveOversampling() const
+        256 ( 0.00%)  ./math/../include/math.h:__powf_fma
+        256 ( 0.00%)  /usr/include/c++/13/array:cs80::Engine::applyParams(cs80::ParamValues const&)
+        256 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__powf_fma
+        128 ( 0.00%)  src/core/Params.h:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+
