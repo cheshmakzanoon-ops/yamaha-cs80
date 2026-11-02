@@ -1,0 +1,21 @@
+{
+  "id": "click-m41-vca-path-causality-control-amendment-20261102",
+  "status": "REGISTERED_BEFORE_SECOND_TRIAL",
+  "inherits_preregistration_commit": "b7b4599",
+  "source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "prior_trial_disposition": {
+    "exit_status": 1,
+    "first_fixture": "bass_panel_first_48000",
+    "observed_error": "in-engine positive CP3 branch step had no PCM effect",
+    "data_preservation": "The first trial aborted before writing its first fixture CSV rows; do not count it as a completed experiment or drop its negative-control failure from the report.",
+    "cause_to_test": "The positive control omitted the 6.0-second Bass first-strike note, potentially leaving no active VCA oscillator/filter carrier when the artificial CP3 gain switch was flipped. The absence of a carrier makes the stimulus vacuous irrespective of the model under test."
+  },
+  "narrow_change_to_independent_positive_control_only": {
+    "bass_first_and_retrigger": "Deliberate CP3 gain switch is now tested WITH the original target noteOn present; compare against the matching muted-CP3 noteOn render, requiring nonzero PCM difference after the event and exact matching prefix. This ensures a sounding carrier exists. Do not use this positive's score to classify an original click.",
+    "funky_note_off": "Preserve the original preregistered positive: target noteOff omitted leaves the oscillator held while CP3 gain switches from zero to source value at the target block; compare to muted-CP3 omitted-noteOff PCM.",
+    "source_gate_and_score": "All seven original source full/mute event/omission pairs, primary <=0.10 ratio in at least six/seven, positive digital one-sample and negative C1-smooth pitch, score references, window and native rendering remain unchanged.",
+    "total_engine_renders": 63,
+    "total_rows": 77
+  },
+  "response_if_amended_positive_still_vacuous": "Stop and report the fixture/control invalid; never infer a successful source-path result from an unresponsive control."
+}
