@@ -1,5 +1,7 @@
 # Panel conformance audit (Phase 5.1)
 
+> **2026-11-02 scoped update:** the October31 audit below is retained as a historical record, not a current blanket PASS. The public owner scan and S2 drawing were subsequently acquired and independently inspected. The [fixed direction inventory](evidence/OWNER_LEVER_DIRECTION_PREREG_20261102.md) and [component repair results](evidence/PANEL_COMPONENT_RESULTS_20261102.md) now establish a bounded source implementation: listed global levers increase toward the player, MIX/sustain/portamento retain their documented upward mapping, and TOUCH RESPONSE precedes KEYBOARD CONTROL on PN2. The exact source at439036a passes729 component assertions plus the unchanged37-check layout oracle, with actual source mutants rejected. Native painted/window/input/golden/DAW acceptance remains pending; signed detune, the portamento prose conflict and other unverified physical details are explicitly not hidden. Only those specified historical direction/order gaps are superseded.
+
 Audit date 2026-10-31, workstream ws7-panel. This is a control-by-control comparison of the editor's main view
 against the original CS-80 panel: the owner's-manual control index 1-46 and the service-manual S2 panel
 drawing. It records what the evidence says, what the editor does, and every place where the two disagree or
