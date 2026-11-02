@@ -4,6 +4,7 @@ import importlib.util
 import json
 import math
 from pathlib import Path
+import re
 import struct
 import tempfile
 import unittest
@@ -97,32 +98,32 @@ class ProvenanceControls(unittest.TestCase):
                         "contract_sha256": validator.sha256(out / "contract-v1.json"),
                         "exit_codes": {name: 0 for name in ["setup"] + contract["render"]["files"]},
                         "files": {}}
-            # All mutations fail before any purported audio/screenshot is read.
-            # No fake WAV, PNG or successful host receipt is generated here.
+            # Establish the metadata-only positive before trying negatives. No
+            # fake WAV, PNG or successful host receipt is generated here.
+            contract_hash = validator.sha256(out / "contract-v1.json")
+            self.assertIsNone(validator.verify_metadata(manifest, observed, contract, source, tree, contract_hash))
             mutations = {
-                "source": lambda m, o: m.update(source_commit="4" * 40),
-                "src-tree": lambda m, o: m.update(src_tree="4" * 40),
-                "host-hash": lambda m, o: m.update(host_archive_sha256="4" * 64),
-                "plugin-hash": lambda m, o: m.update(plugin_installed_sha256="4" * 64),
-                "contract-hash": lambda m, o: m.update(contract_sha256="4" * 64),
-                "runner-failure": lambda m, o: m.update(error="timed out"),
-                "wrong-host-version": lambda m, o: o.update(host_version="0.0/linux-x86_64"),
-                "failed-assertion": lambda m, o: o.update(checks=[{"ok": False}]),
-                "missing-assertions": lambda m, o: o.update(checks=[]),
-                "editor-closed": lambda m, o: o.update(editor_open=False),
-                "nonfinite-pdc": lambda m, o: o.update(pdc_samples=float("nan")),
-                "wrong-restored-state": lambda m, o: o["after_reopen"].update(VOLUME=0.2),
-                "missing-midi": lambda m, o: o["projects"]["restored"].update(notes=[]),
-                "lost-envelope": lambda m, o: o["projects"]["automated"].update(envelope=[]),
+                "source": ("checkout source mismatch", lambda m, o: m.update(source_commit="4" * 40)),
+                "src-tree": ("source tree mismatch", lambda m, o: m.update(src_tree="4" * 40)),
+                "host-hash": ("host archive identity mismatch", lambda m, o: m.update(host_archive_sha256="4" * 64)),
+                "plugin-hash": ("built/installed plugin mismatch", lambda m, o: m.update(plugin_installed_sha256="4" * 64)),
+                "contract-hash": ("contract hash mismatch", lambda m, o: m.update(contract_sha256="4" * 64)),
+                "runner-failure": ("host runner reported failure", lambda m, o: m.update(error="timed out")),
+                "wrong-host-version": ("running host version mismatch", lambda m, o: o.update(host_version="0.0/linux-x86_64")),
+                "failed-assertion": ("host assertions failed/missing", lambda m, o: o.update(checks=[{"ok": False}])),
+                "missing-assertions": ("host assertions failed/missing", lambda m, o: o.update(checks=[])),
+                "editor-closed": ("host editor did not open", lambda m, o: o.update(editor_open=False)),
+                "nonfinite-pdc": ("invalid host-reported latency", lambda m, o: o.update(pdc_samples=float("nan"))),
+                "wrong-restored-state": ("wrong restored VOLUME", lambda m, o: o["after_reopen"].update(VOLUME=0.2)),
+                "missing-midi": ("lost MIDI notes", lambda m, o: o["projects"]["restored"].update(notes=[])),
+                "lost-envelope": ("changed persisted envelope", lambda m, o: o["projects"]["automated"].update(envelope=[])),
             }
-            for name, mutate in mutations.items():
+            for name, (reason, mutate) in mutations.items():
                 with self.subTest(name=name):
                     m, o = copy.deepcopy(manifest), copy.deepcopy(observed)
                     mutate(m, o)
-                    (out / "provenance.json").write_text(json.dumps(m))
-                    (out / "host-observations.json").write_text(json.dumps(o))
-                    with self.assertRaises(ValueError):
-                        validator.verify_evidence(out, contract, source, tree)
+                    with self.assertRaisesRegex(ValueError, "^" + re.escape(reason) + "$"):
+                        validator.verify_metadata(m, o, contract, source, tree, contract_hash)
 
 
 if __name__ == "__main__":

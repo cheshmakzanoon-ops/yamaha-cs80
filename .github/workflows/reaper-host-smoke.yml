@@ -45,8 +45,10 @@ jobs:
       - name: Verify harness negative controls and syntax
         run: |
           python3 tests/test_reaper_smoke_validator.py
+          python3 tests/test_reaper_smoke_validator_mutations.py
           python3 -m py_compile scripts/run-reaper-smoke.py scripts/verify-reaper-smoke.py
           luac -p tests/hosts/reaper/create-projects.lua
+          lua5.4 tests/hosts/reaper/test-parameter-inventory.lua
 
       - name: Fetch exact official REAPER evaluation archive
         run: |

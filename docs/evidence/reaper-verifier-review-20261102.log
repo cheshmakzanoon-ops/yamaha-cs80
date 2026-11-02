@@ -1,0 +1,28 @@
+2026-11-02T11:03:03Z
+....
+----------------------------------------------------------------------
+Ran 4 tests in 3.346s
+
+OK
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.184s
+
+OK
+REJECTED removed metadata guard: checkout source mismatch assertion failures: 1
+REJECTED removed metadata guard: source tree mismatch assertion failures: 1
+REJECTED removed metadata guard: host archive identity mismatch assertion failures: 1
+REJECTED removed metadata guard: built/installed plugin mismatch assertion failures: 1
+REJECTED removed metadata guard: contract hash mismatch assertion failures: 1
+REJECTED removed metadata guard: host runner reported failure assertion failures: 1
+REJECTED removed metadata guard: running host version mismatch assertion failures: 1
+REJECTED removed metadata guard: host assertions failed/missing assertion failures: 2
+REJECTED removed metadata guard: host editor did not open assertion failures: 1
+REJECTED removed metadata guard: invalid host-reported latency assertion failures: 1
+REJECTED removed metadata guard: wrong restored  assertion failures: 1
+REJECTED removed metadata guard: lost MIDI notes assertion failures: 1
+REJECTED removed metadata guard: changed persisted envelope assertion failures: 1
+Five pure Lua parameter inventory assertions passed; not host execution
+tests/hosts/reaper/create-projects.lua syntax parsed only
+tests/hosts/reaper/test-parameter-inventory.lua pure helper executed
+2026-11-02T11:03:07Z

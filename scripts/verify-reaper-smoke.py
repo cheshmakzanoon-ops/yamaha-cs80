@@ -90,16 +90,15 @@ def verify_audio(contract, waves):
             "no_midi_peak": no_midi, "pre_note_peak": before_note}
 
 
-def verify_evidence(out, contract, source, src_tree):
-    manifest = json.loads((out / "provenance.json").read_text())
-    observed = json.loads((out / "host-observations.json").read_text())
+def verify_metadata(manifest, observed, contract, source, src_tree, copied_contract_sha256):
+    """Pure identity/state checks, independently testable without any fake host artifact."""
     require("error" not in manifest, "host runner reported failure")
     require(manifest["source_commit"] == source and re.fullmatch("[a-f0-9]{40}", source), "checkout source mismatch")
     require(manifest["src_tree"] == src_tree and re.fullmatch("[a-f0-9]{40}", src_tree), "source tree mismatch")
     require(manifest["host_archive_sha256"] == contract["host"]["sha256"], "host archive identity mismatch")
     require(manifest["plugin_build_sha256"] == manifest["plugin_installed_sha256"]
             and re.fullmatch("[a-f0-9]{64}", manifest["plugin_build_sha256"]), "built/installed plugin mismatch")
-    require(manifest["contract_sha256"] == sha256(out / "contract-v1.json"), "contract hash mismatch")
+    require(manifest["contract_sha256"] == copied_contract_sha256, "contract hash mismatch")
     require(observed["schema"] == contract["schema"] and "error" not in observed, "host fixture failed")
     require(observed["host_version"] == contract["host"]["version"] + "/" + contract["host"]["platform"], "running host version mismatch")
     require(observed["checks"] and all(item["ok"] is True for item in observed["checks"]), "host assertions failed/missing")
@@ -128,6 +127,12 @@ def verify_evidence(out, contract, source, src_tree):
                     and abs(note["end_seconds"] - contract["render"]["note_end_seconds"]) < 1e-8, "changed persisted MIDI")
     require(not observed["projects"]["no-midi"]["notes"], "no-MIDI project contains notes")
     require(observed["projects"]["automated"]["envelope"] == contract["render"]["automation_points"], "changed persisted envelope")
+
+
+def verify_evidence(out, contract, source, src_tree):
+    manifest = json.loads((out / "provenance.json").read_text())
+    observed = json.loads((out / "host-observations.json").read_text())
+    verify_metadata(manifest, observed, contract, source, src_tree, sha256(out / "contract-v1.json"))
     required = ["host-observations.json", "host-editor.png", "HOST_SETUP_COMPLETE", "setup.log", "cli-help.log"]
     for name in contract["render"]["files"]:
         required.extend([name + ".rpp", name + ".wav", "render-" + name + ".log"])

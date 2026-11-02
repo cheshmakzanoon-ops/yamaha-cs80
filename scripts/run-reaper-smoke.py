@@ -90,7 +90,8 @@ def main():
                       + "vstpath64=" + str(installed.parent) + "\n")
     env = os.environ.copy()
     env.update(HOME=str(home), XDG_CONFIG_HOME=str(home / ".config"),
-               CS80_REAPER_OUT=str(out), JUCE_FONT_PATH="/usr/share/fonts/truetype/dejavu")
+               CS80_REAPER_OUT=str(out), CS80_REAPER_FIXTURE=str(root / "tests/hosts/reaper"),
+               JUCE_FONT_PATH="/usr/share/fonts/truetype/dejavu")
     executable = str(args.reaper.resolve())
     common = [executable, "-newinst", "-nosplash", "-cfgfile", str(config)]
     manifest = {

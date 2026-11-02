@@ -15,3 +15,20 @@ including a third occurrence; a false sentinel alone must not re-enable it.
 These corrections strengthen the harness. They do not change the preregistered
 host, source requirements, audio fixture, numerical limits, evaluation dates,
 process timeouts or excluded claims. Native REAPER operation remains pending.
+
+## Observed review replay
+
+The pure metadata positive and fourteen exact-reason negatives passed. Actual
+AST mutation of each of the thirteen covered `require` statements was rejected
+by the unit test's assertions; unrelated execution errors are explicitly not
+accepted as a killed mutant. The four base tests passed in 3.346 seconds and
+the thirteen-guard mutation test passed in 0.184 seconds, under the shared lock.
+`reaper-verifier-review-20261102.log` preserves the raw output.
+
+The actual Lua inventory helper is shared by the real-host fixture and a pure
+Lua unit test. Five assertions cover unique identities, second and third
+duplicates, and preservation of an unrelated parameter. Restoring the reviewed
+false-sentinel defect in memory fails specifically on the third duplicate.
+`reaper-lua-mutation-20261102.log` retains that replay. The full host fixture was
+syntax-parsed only; the pure helper test did not call a DAW or create a host
+receipt. Both Python programs also compiled successfully.

@@ -1,6 +1,7 @@
 -- Runs inside the pinned, real REAPER executable. No synthetic host wrapper.
 local out = assert(os.getenv("CS80_REAPER_OUT"), "CS80_REAPER_OUT is required")
 local c = dofile(out .. "/contract.lua")
+local register_parameter = dofile(assert(os.getenv("CS80_REAPER_FIXTURE")) .. "/parameter-inventory.lua")
 local report = {schema=c.schema, host_version=reaper.GetAppVersion(), projects={}, checks={}}
 local function json(v)
   if type(v) == "string" then
@@ -62,6 +63,7 @@ local function identify()
   check(config("fx_name"):find("CS-80 Reference", 1, true) ~= nil, "expected plugin name")
   check(config("is_instrument") == "1", "host classifies plugin as instrument")
   params = {}
+  local seen = {}
   local inventory = {}
   for p=0,reaper.TrackFX_GetNumParams(track, fx)-1 do
     local ok, name = reaper.TrackFX_GetParamName(track, fx, p)
@@ -70,7 +72,7 @@ local function identify()
     check(reaper.TrackFX_GetParamFromIdent(track, fx, ident) == p, "host parameter identity round trip " .. p)
     inventory[#inventory+1] = {index=p, name=name, ident=ident}
     -- Duplicate names are not silently resolved for the parameters under test.
-    if params[name] then params[name] = false else params[name] = {index=p, ident=ident} end
+    register_parameter(params, seen, name, p, ident)
   end
   report.parameters = inventory
   report.fx_ident = config("fx_ident")
