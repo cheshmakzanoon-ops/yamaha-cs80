@@ -1,0 +1,297 @@
+{
+  "head": "88396212e1ffa83f948d05a10e2161feab211a45",
+  "src": "d387706261218b8a8ab45b95332efd34d7338365",
+  "compile_argv": [
+    "/usr/bin/c++",
+    "-DCS80_GOLDEN_DIR=\"/workspace/scratch/aa102d573ba3/cs80-ui-integration/tests/golden\"",
+    "-DJUCE_DISPLAY_SPLASH_SCREEN=0",
+    "-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1",
+    "-DJUCE_MODAL_LOOPS_PERMITTED=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_basics=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_devices=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_formats=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_processors=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_processors_headless=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_utils=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_core=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_data_structures=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_dsp=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_events=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_graphics=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_gui_basics=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_gui_extra=1",
+    "-DJUCE_STANDALONE_APPLICATION=1",
+    "-DJUCE_USE_CURL=0",
+    "-DJUCE_WEB_BROWSER=0",
+    "-DLINUX=1",
+    "-DNDEBUG=1",
+    "-D_NDEBUG=1",
+    "-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CS80Snapshots_artefacts/JuceLibraryCode",
+    "-I/workspace/scratch/aa102d573ba3/cs80-ui-integration/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include/freetype2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include/libpng16",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/juce_binarydata_cs80_panel_fonts/JuceLibraryCode",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-native-key-fixture-evidence/ui_snapshot.o",
+    "-c",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/ui_snapshot.cpp"
+  ],
+  "link_argv": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessor.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginEditor.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_UiComponents.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ParameterContext.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_AdvancedPanel.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PresetBrowser.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_MtsEspClient.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessorAutomation.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_KeyboardTuningPage.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ModernLayerState.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ModernModulationUi.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessorLibrary.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ArtCommon.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PanelWidgets.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ChannelRow.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_CentreRow.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PerformanceDeck.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_MemoryLid.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_EditorPreferences.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioToolbar.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioDrawers.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_UndoHistory.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioTour.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-native-key-fixture-evidence/ui_snapshot.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_events/juce_events.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-native-key-fixture-evidence/native-ui-snapshot",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_core_Engine.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_core_FactoryPresets.cpp.o",
+    "libcs80_panel_fonts.a",
+    "/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/lib/x86_64-linux-gnu/libfontconfig.so",
+    "/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/lib/x86_64-linux-gnu/libfreetype.so",
+    "/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/lib/x86_64-linux-gnu/libasound.so",
+    "-lrt",
+    "-ldl",
+    "-lpthread"
+  ],
+  "reused_inputs": [
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessor.cpp.o",
+      "sha256": "82bdf20fa97cbd23da6a0babeceb7f48a8f1aa8b44e54895337cf414618eb325"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginEditor.cpp.o",
+      "sha256": "b1867d9372d1312d8c858f74259005dc8aeda127a7485fd63a8add85d14126d9"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_UiComponents.cpp.o",
+      "sha256": "43a61aed224265b6f87138e830f39eba31560851a8ae1d2ed89d2e45e14b7f6f"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ParameterContext.cpp.o",
+      "sha256": "7525c8ea293393c0993fb72a4ff5cedbe0c63bbc39c2efbece6ef61fc4dfab90"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_AdvancedPanel.cpp.o",
+      "sha256": "33e1d388206a77ce726bbcec8eb041da8da0a577e0d9a9048886ab9d7f8d66ec"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PresetBrowser.cpp.o",
+      "sha256": "32418e84af964102bc30a99fc5a5efa650e89efaff659d6534cd9e6111d29300"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_MtsEspClient.cpp.o",
+      "sha256": "c2e8e54e0bba6f019e069dc64e9fff4baeb4c201e761502a54ac54d161352e4d"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessorAutomation.cpp.o",
+      "sha256": "a4a517b5d51c5fac0a6c400e4e90d8d22f73836db0d769b4fdd0d66466cd7231"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_KeyboardTuningPage.cpp.o",
+      "sha256": "2e0fb13f82828f36b52b48ef57fed6f5b035470c70e62096569fb5a95936b056"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ModernLayerState.cpp.o",
+      "sha256": "5a1d1c79ef5697e0992c0bbda714d07caead5851b40744b56dddaaea1bb44fe4"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ModernModulationUi.cpp.o",
+      "sha256": "8ded9625b6a19ee48601e07ef30139202923fd3f16269c8b78687240f43eb7b5"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessorLibrary.cpp.o",
+      "sha256": "aaf4cf512628e3bd23b2d469bee2f98e92fc13af605ea8208968b8ad68293d66"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ArtCommon.cpp.o",
+      "sha256": "2da3e523c00ca7a607fcf9dccb51deee5cb9c3f3e07315e389752f0798a36183"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PanelWidgets.cpp.o",
+      "sha256": "1e2860a22f0c206eefb1a2b4fe5c052f2dae95c9936aa330862ef6de044ef593"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ChannelRow.cpp.o",
+      "sha256": "89b7ed24bcc179aa2c2bdc155a567a31c2a2c840fb16aed47fc1ed0bcf6428d8"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_CentreRow.cpp.o",
+      "sha256": "f6bf7aaed80a8f372ca78eebd20c102a4290836d16dbbdfdbe9b49119634428b"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PerformanceDeck.cpp.o",
+      "sha256": "3860c77221a873fe44a329a787afcbed1f1555fcaba64aea661aca25e8610aa0"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_MemoryLid.cpp.o",
+      "sha256": "1801063a21fe06e14e7628f8324d4f3df2b993cfd424e5f2f9a02e5ba7b7c5ea"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_EditorPreferences.cpp.o",
+      "sha256": "863e54a7339521b6f5c441dcea1d42dc585c82c31a51b64d6463dca224877e52"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioToolbar.cpp.o",
+      "sha256": "8674117668acb3a97f695dc83fe312860bf3fc4b173f5d567b615b965d14dd28"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioDrawers.cpp.o",
+      "sha256": "509c09597a7010be099581a863c16347b0cbb02411d435559cc53e22a9f079e9"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_UndoHistory.cpp.o",
+      "sha256": "9d29c517137005f1f6e5ebc1c6c680bb730780c6cf761ed393f998a2afa11ac5"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioTour.cpp.o",
+      "sha256": "7d83bca0f1387a3d2f858e9d2b461385128c379b340510b9278134d58606738f"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/tests_ComposedUiComponentDriver.cpp.o",
+      "sha256": "93814bcc9f240ff806d9b78f426901c9248b67fad79f8ae4911e248ffac91041"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o",
+      "sha256": "3885d5f7c5e37d323b63045f0756f7ac60a77d970ba500cdb2fae063b710bd8c"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o",
+      "sha256": "58f870ca5e5cfc12a2198e1cab46387fe775be2d2b24dab1087082dd8f3f4fd6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o",
+      "sha256": "a4c2f4afe4da84d2c9a526f5578332bff7677aaa3674bc97ff376a708d84e576"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o",
+      "sha256": "cf39badb7775c5d9f3bd06a128b489176a85b5d73ae891eea8685275e8d0a6b6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o",
+      "sha256": "38942eca4eb7a59316fad1b544cc979a7de86140f80c9b2972691a9830856ecf"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o",
+      "sha256": "ba273b8954a03ff4021eb657b7db01e681e3c1e55c1721817731028533413b97"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o",
+      "sha256": "b276d4eb6a46836e83e1a15026b1ba48e67a54af7dce7434c00d2c56186add9f"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_events/juce_events.cpp.o",
+      "sha256": "0dea7c83dbec2ecc0fecb81ce150408c4093c1f46f294f8031d24e6630b4128a"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core.cpp.o",
+      "sha256": "8c1d97c31a17a73eb16760f793bbe749996d8f08e22d45c567fd9883daaa8d04"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o",
+      "sha256": "802fb8bf27dc145a24d10ed7def6663d6ebf2069e8618ff3e534bbecca0cafa6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o",
+      "sha256": "33e145810d8b719dd217f61f2b70655d65450572c353b7576e4c33b0f6bc72d8"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o",
+      "sha256": "82cb71db10c97b0bf96d31b3a06e7324af3637ed2c67db02f89e2363654df206"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o",
+      "sha256": "0869b7b3457420a891bb64a60881fa09a0a85884d265126fbd4b444c4aa0b5db"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o",
+      "sha256": "11980fc6a20776b971c2c7f4e7c76830c79c9bb6dc2829fbc4e3a64d5ca54617"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o",
+      "sha256": "11822f8ef5312fa264dd74e97a8a575865bb1f6d11bcd345b6f6b3fb6204e736"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o",
+      "sha256": "b6c9fdc43cc6d9334f9d27e0ee8fc178c95a36d28a64801aae6aab3b3ea46887"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o",
+      "sha256": "16b3115c066396a8ae58f21bf21bdba26906883947eefe7c6fd2dfb9d59c3fd0"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o",
+      "sha256": "b048bf22ab94af698978255867aff66ea7e2e1dbfaa73146ea7bd9c16d81e718"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_core_Engine.cpp.o",
+      "sha256": "9a24337aa3a2003f1b8b74cbe23653290bc466a8b4d13b8ad52d7d28eb2791cc"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_core_FactoryPresets.cpp.o",
+      "sha256": "61515235641aeec71b10cc0c02e1ea4b58201f6f00344aa07a20bf4328e9045e"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/libcs80_panel_fonts.a",
+      "sha256": "e3c881884f6717078acff34d1e0b69a40f7f4668d2f05a0026e03c699c842e08"
+    }
+  ],
+  "new_object_sha256": "5e942612760e6537443c7d2cd38d0168acc05cc90b984d37c71540297c31febb",
+  "binary_sha256": "7fcc9cbca65a15cb410cff66179af692a5ea4671b74c9c7c4b9ff1699570d1a9",
+  "scope": "compile/link actual native renderer only; not executed without native display; 25 prior fresh project objects and19 unchanged dependencies reused after identity check"
+}

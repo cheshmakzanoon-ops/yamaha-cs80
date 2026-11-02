@@ -1,0 +1,21 @@
+In file included from /workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/ui_snapshot.cpp:22:
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/../../tests/StateTreeSynchronizationTests.h: In function ‘void cs80::tests::testStateTreeSynchronization(const state_tree_detail::Check&)’:
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:401:24: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:401:51: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+      |                                        ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:402:24: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:402:51: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+      |                                        ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/ui_snapshot.cpp:3324:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3324 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-ui-integration/src/tools/ui_snapshot.cpp:3325:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3325 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
