@@ -121,6 +121,22 @@ int main(int argc, char** argv)
             check(guarded.finalValue() == 0.25,
                   "valid host endpoint survives malformed prior readback");
         }
+
+        // A hostile host can report INT_MAX as a future knot. Subtraction
+        // from the implicit previous offset -1 must widen *before* arithmetic:
+        // INT_MAX - (-1) is not representable as signed int. The independent
+        // denominator below is evaluated in double and the source must never
+        // reverse the slope of this rising ramp or invoke signed-overflow UB.
+        Points extremeFuture {{std::numeric_limits<int>::max(), 0.75}};
+        cs80::HostAutomationCurve farFuture;
+        farFuture.begin({&extremeFuture, 1, read, nullptr, nullptr}, 0.25);
+        const double actualStart = farFuture.valueAt(0);
+        const double expectedStart = 0.25 + 0.5
+            / (static_cast<double>(std::numeric_limits<int>::max()) + 1.0);
+        check(std::isfinite(actualStart) && actualStart > 0.25 && actualStart < 0.75,
+              "extreme positive host offset retains forward interpolation");
+        check(std::abs(actualStart - expectedStart) <= limits["extreme_offset_denominator_error"],
+              "extreme host offset matches widened independent denominator");
         std::cout << "maximum normalized curve error=" << maxError << '\n';
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
