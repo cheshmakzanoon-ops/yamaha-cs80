@@ -1,0 +1,75 @@
+LOCK_ACQUIRED 2026-11-02T12:53:06Z
+74f7c3e9db7f821cb982a7794e3a6488d812691a
+3de8680bda3d7107463708df1151965fbf72a09e
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+[1/23] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o
+[2/23] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o
+[3/23] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o
+[4/23] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o
+[5/23] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o
+[6/23] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o
+[7/23] Building CXX object CMakeFiles/cs80_mts_esp_windows_macro_tests.dir/tests/MtsEspWindowsMacroTests.cpp.o
+[8/23] Building CXX object CMakeFiles/cs80_tuning_input_boundary_tests.dir/tests/TuningInputBoundaryTests.cpp.o
+[9/23] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[10/23] Linking CXX static library libcs80_core.a
+[11/23] Building CXX object CMakeFiles/cs80_scala_float_pitch_bounds_tests.dir/tests/ScalaFloatPitchBoundsTests.cpp.o
+[12/23] Building CXX object CMakeFiles/cs80_mts_counted_message_tests.dir/tests/MtsCountedMessageTests.cpp.o
+[13/23] Building CXX object CMakeFiles/cs80_mts_realtime_semantics_tests.dir/tests/MtsRealtimeSemanticsTests.cpp.o
+[14/23] Linking CXX executable cs80_mts_esp_native_tests
+[15/23] Linking CXX executable cs80_mts_esp_shim_tests
+[16/23] Linking CXX executable cs80_mts_esp_fallback_tests
+[17/23] Linking CXX executable cs80_mts_esp_windows_macro_tests
+[18/23] Linking CXX executable cs80_tuning_input_boundary_tests
+[19/23] Linking CXX executable cs80_scala_float_pitch_bounds_tests
+[20/23] Linking CXX executable cs80_mts_counted_message_tests
+[21/23] Linking CXX executable cs80_mts_realtime_semantics_tests
+[22/23] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+[23/23] Linking CXX executable cs80_tuning_midi_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+      Start 74: cs80_mts_esp_native_tests
+ 1/12 Test #74: cs80_mts_esp_native_tests ..................   Passed    0.01 sec
+      Start 75: cs80_mts_esp_shim_tests
+ 2/12 Test #75: cs80_mts_esp_shim_tests ....................   Passed    0.26 sec
+      Start 76: cs80_mts_esp_fallback_tests
+ 3/12 Test #76: cs80_mts_esp_fallback_tests ................   Passed    0.00 sec
+      Start 77: cs80_mts_esp_windows_macro_tests
+ 4/12 Test #77: cs80_mts_esp_windows_macro_tests ...........   Passed    0.00 sec
+      Start 78: cs80_host_automation_curve_tests
+ 5/12 Test #78: cs80_host_automation_curve_tests ...........   Passed    0.62 sec
+      Start 79: cs80_au_automation_curve_tests
+ 6/12 Test #79: cs80_au_automation_curve_tests .............   Passed    0.03 sec
+      Start 80: cs80_au_automation_bridge_contract_tests
+ 7/12 Test #80: cs80_au_automation_bridge_contract_tests ...   Passed    0.01 sec
+      Start 85: cs80_tuning_input_boundary_tests
+ 8/12 Test #85: cs80_tuning_input_boundary_tests ...........   Passed    0.01 sec
+      Start 86: cs80_scala_float_pitch_bounds_tests
+ 9/12 Test #86: cs80_scala_float_pitch_bounds_tests ........   Passed    0.01 sec
+      Start 87: cs80_mts_counted_message_tests
+10/12 Test #87: cs80_mts_counted_message_tests .............   Passed    0.00 sec
+      Start 88: cs80_mts_realtime_semantics_tests
+11/12 Test #88: cs80_mts_realtime_semantics_tests ..........   Passed    1.65 sec
+      Start 89: cs80_tuning_midi_tests
+12/12 Test #89: cs80_tuning_midi_tests .....................   Passed    0.70 sec
+
+100% tests passed out of 12
+
+Total Test time (real) =   3.33 sec
+a505b7fd85f10408eb3b7a947566dfcbaa6e49aa0086894548131dfea5f45ca2  build-integration/scala-float-pitch-positive.f32
+26 Scala float-frequency checks, 0 failures
+ACTUAL GUARD-DELETION RESULT 1
+accepted-invalid diagnostic 2400.0: 8 nonpositive/nonfinite core frequencies
+accepted-invalid diagnostic 3600.0: 39 nonpositive/nonfinite core frequencies
+accepted-invalid diagnostic tiny reference: 128 nonpositive/nonfinite core frequencies
+26 Scala float-frequency checks, 6 failures
+
+FAIL: 2400.0 rejects unrenderable nominal float frequency
+FAIL: 2400.0 leaves caller table unchanged
+FAIL: 3600.0 rejects unrenderable nominal float frequency
+FAIL: 3600.0 leaves caller table unchanged
+FAIL: tiny reference rejects unrenderable nominal float frequency
+FAIL: tiny reference leaves caller table unchanged
+
+Positive arrays unchanged; actual guard deletion rejected semantically; original passes.
+FINISHED 2026-11-02T12:53:37Z
