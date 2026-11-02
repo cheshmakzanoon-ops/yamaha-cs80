@@ -59,6 +59,8 @@ TEXT_FIELDS = {
                             "baseline_peak_channel", "omitted_peak_channel"},
 }
 CPU_TEXT_FIELDS = {"scenario", "rank_i_name", "rank_ii_name", "phase", "mode"}
+CPU_IDENTITY_FIELDS = ("rate", "block", "mode", "scenario", "initial_selector",
+                       "rank_i_name", "rank_ii_name", "phase")
 
 
 def verify_numeric_table(name, rows, text_fields):
@@ -72,8 +74,30 @@ def verify_numeric_table(name, rows, text_fields):
                 finite(value, f"{name}:{i}:{column}")
 
 
+def verify_csv_schema(name, rows, frozen_header_sha256):
+    """Require every row to use the original reporter's ordered CSV columns."""
+    sha_string(frozen_header_sha256, f"{name} frozen header", 64)
+    require(isinstance(rows, list) and rows, f"{name}: missing CSV schema")
+    header = list(rows[0])
+    require(all(isinstance(column, str) for column in header),
+            f"{name}: nontext CSV header")
+    actual_sha = hashlib.sha256(",".join(header).encode("utf-8")).hexdigest()
+    require(actual_sha == frozen_header_sha256,
+            f"{name}: original ordered CSV header altered or incomplete")
+    require(all(list(row) == header for row in rows),
+            f"{name}: inconsistent columns across CSV rows")
+
+
 def source_phrase_rows(rows):
     return [row for row in rows if row["policy"] == "source"]
+
+
+def fixture_identity_sha256(rows):
+    """Hash the exact source-defined ordered (group, name) fixture sequence."""
+    fields = [{"group": row["group"], "name": row["name"]} for row in rows]
+    canonical = json.dumps(fields, ensure_ascii=False, sort_keys=True,
+                           separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
 
 
 def scope_rows(scope, suites):
@@ -92,18 +116,62 @@ def scope_rows(scope, suites):
 
 def verify_audit_coverage(contract, suites):
     rates = contract["audit"]["expected_rates_hz"]
+    canonical_identities = contract["audit"]["frozen_fixture_identities"]
+    # Counts alone would accept the same easy program/tone/FX case duplicated
+    # in place of a difficult registered fixture. Recheck the identity and
+    # sampling order of the original source-defined audit, independently of
+    # the capture workflow's success flag and JSON summary booleans.
+    bank_names_by_policy = {}
+    tab_names_by_policy = {}
+    expected_alias = Counter(((72, 1.0), (72, 4.0), (84, 1.0),
+                              (84, 4.0), (96, 1.0), (96, 4.0), (108, 1.0)))
+    expected_fx = Counter([("000", 0.0)] +
+                          [(f"{effect}00", mix) for effect in range(1, 6)
+                           for mix in (0.5, 1.0)] +
+                          [(slots, 1.0) for slots in ("333", "444", "222", "555", "123", "435")])
     for policy in ("source", "legacy"):
+        full_bank_names = None
+        tab_names = None
         for rate in rates:
             phrase = [r for r in suites["phrase.csv"] if r["policy"] == policy
                       and exact_integer(r["rate"], "phrase rate") == rate]
             expected_programs = 222 if rate == 44100 else 14
             require(len(phrase) == expected_programs + 11,
                     f"{policy} phrase at {rate}: incomplete program/tone coverage")
-            require(sum(r["group"] == "tab" for r in phrase) == 11,
-                    f"{policy} phrase at {rate}: missing tone tabs")
+            programs = [r for r in phrase if r["group"].startswith("program:")]
+            tabs = [r for r in phrase if r["group"] == "tab"]
+            require(len(programs) == expected_programs and len(tabs) == 11,
+                    f"{policy} phrase at {rate}: unknown group or missing program/tone")
+            current_programs = [(r["name"], r["group"]) for r in programs]
+            current_tabs = [r["name"] for r in tabs]
+            require(all(r["name"] for r in programs) and all(current_tabs),
+                    f"{policy} phrase at {rate}: blank fixture name")
+            if rate == 44100:
+                require(len({name for name, _ in current_programs}) == 222,
+                        f"{policy}: 222 uniquely named factory programs required")
+                require(fixture_identity_sha256(programs) == canonical_identities["factory_programs_44100_sha256"],
+                        f"{policy}: frozen factory program identity/hash changed")
+                full_bank_names = current_programs
+            else:
+                require(current_programs == full_bank_names[::16],
+                        f"{policy} phrase at {rate}: wrong stride-16 bank sample/order")
+            require(len(set(current_tabs)) == 11,
+                    f"{policy} phrase at {rate}: duplicate tone pairs")
+            if rate == 44100:
+                require(fixture_identity_sha256(tabs) == canonical_identities["tone_pairs_44100_sha256"],
+                        f"{policy}: frozen physical tone-pair identity/hash changed")
+            if tab_names is None:
+                tab_names = current_tabs
+            else:
+                require(current_tabs == tab_names,
+                        f"{policy} phrase at {rate}: tone-pair identity/order changed")
             fx = [r for r in suites["fx.csv"] if r["policy"] == policy
                   and exact_integer(r["rate"], "fx rate") == rate]
             require(len(fx) == 17, f"{policy} FX at {rate}: incomplete coverage")
+            require(all(r["name"] == "bright saw" and r["group"] == "fxbase" for r in fx),
+                    f"{policy} FX at {rate}: wrong fixed fixture")
+            require(Counter((r["fx_slots"], finite(r["fx_mix"], "FX mix")) for r in fx) == expected_fx,
+                    f"{policy} FX at {rate}: changed/duplicated effect configuration")
             for ring in (0, 1):
                 for wave in ("saw", "pulse"):
                     alias = [r for r in suites["alias.csv"] if r["policy"] == policy
@@ -112,10 +180,36 @@ def verify_audit_coverage(contract, suites):
                              and r["wave"] == wave]
                     require(len(alias) == 7,
                             f"{policy} {wave} ring={ring} at {rate}: incomplete alias coverage")
-    for coordinate in ("original_physical_panel", "electrical_programmer", "tone_tabs"):
+                    require(Counter((exact_integer(r["note"], "alias MIDI note"),
+                                     finite(r["feet_ratio"], "alias feet")) for r in alias) == expected_alias,
+                            f"{policy} {wave} ring={ring} at {rate}: changed/duplicated note/feet")
+            latency = [r for r in suites["latency.csv"] if r["policy"] == policy
+                       and exact_integer(r["rate"], "latency rate") == rate]
+            expected_freq = Counter(f for f in (250, 1000, 5000, 10000, 15000, 18000, 20000)
+                                    if f <= 0.45 * rate)
+            require(Counter(exact_integer(r["freq_hz"], "latency frequency")
+                            for r in latency) == expected_freq,
+                    f"{policy} latency at {rate}: changed/duplicated frequency")
+            require(all(exact_integer(r["oversampling_factor"], "latency factor") == 2
+                        for r in latency),
+                    f"{policy} latency at {rate}: unexpected default 2x factor")
+        bank_names_by_policy[policy] = full_bank_names
+        tab_names_by_policy[policy] = tab_names
+    require(bank_names_by_policy["source"] == bank_names_by_policy["legacy"],
+            "source/legacy factory bank fixture identity changed")
+    require(tab_names_by_policy["source"] == tab_names_by_policy["legacy"],
+            "source/legacy physical tone pairs differ")
+    causal_identities = {
+        "original_physical_panel": ("Bass Stack", "note_on"),
+        "electrical_programmer": ("Bass Stack", "note_on"),
+        "tone_tabs": ("Funky 1 + Funky 2", "single_note_off"),
+    }
+    for coordinate, (name, event) in causal_identities.items():
         rows = [r for r in suites["click-causality.csv"] if r["coordinate"] == coordinate]
         require(Counter(exact_integer(r["rate"], "causal rate") for r in rows) == Counter(rates),
                 f"{coordinate}: incomplete causal-rate coverage")
+        require(all(r["name"] == name and r["event"] == event for r in rows),
+                f"{coordinate}: causal program/event identity changed")
     require({r["policy"] for r in suites["latency.csv"]} == {"source", "legacy"},
             "missing source/legacy latency lanes")
     require({exact_integer(r["rate"], "latency rate") for r in suites["latency.csv"]} == set(rates),
@@ -155,12 +249,15 @@ def verify_audit(contract, source, audit):
     require(nonfinite["alias_nonfinite_render_rows"] == [] and nonfinite["numeric_csv_cells"] == [],
             "nonfinite alias/CSV report")
     require(set(suites) == set(req["expected_rows"]), "audit suite missing or extra")
+    require(set(req["frozen_csv_header_sha256"]) == set(req["expected_rows"]),
+            "frozen CSV header registration missing or extra suite")
     require(set(summary["raw_files"]) == set(suites)
             and set(provenance["raw_files"]) == set(suites)
             and set(observed) == set(suites), "raw manifest missing or extra suite")
     for name, count in req["expected_rows"].items():
         rows = suites[name]
         require(len(rows) == count, f"{name}: expected {count}, have {len(rows)}")
+        verify_csv_schema(name, rows, req["frozen_csv_header_sha256"][name])
         verify_numeric_table(name, rows, TEXT_FIELDS[name])
         if name in ("phrase.csv", "fx.csv"):
             require(all(exact_integer(r["nonfinite"], f"{name} nonfinite") == 0 for r in rows),
@@ -211,6 +308,48 @@ def case_key(row):
     return ("quiet-idle",)
 
 
+def registered_cpu_case_identities(spec):
+    """Reconstruct the frozen benchmark's *entire* baseline 27-case/51-row matrix.
+
+    The producer at Git blob 92ea7e0b... uses paired_tones for eleven physical
+    tone pairs in isolation and legacy, plus two moving and three idle cases.
+    The selected CPU threshold concerns only isolation held/idle, but all other
+    rows still have to exist under their exact registered identities.
+    """
+    pairs = spec["registered_tone_pairs_by_selector"]
+    require(isinstance(pairs, list) and len(pairs) == 11
+            and all(isinstance(pair, list) and len(pair) == 2
+                    and all(isinstance(name, str) and name for name in pair)
+                    for pair in pairs),
+            "registered CPU physical tone-pair mapping is incomplete")
+    rate, block = str(spec["rate_hz"]), str(spec["block_frames"])
+    cases = []
+
+    def add(mode, scenario, selector, phases):
+        first, second = pairs[selector]
+        for phase in phases:
+            cases.append((rate, block, mode, scenario, str(selector),
+                          first, second, phase))
+
+    for selector in range(len(pairs)):
+        for mode in ("isolation", "legacy"):
+            add(mode, "paired_tones", selector, ("warmed_held", "release_tail"))
+    for mode in ("isolation", "legacy"):
+        add(mode, "moving_tabs_pressure_wah", 0, ("warmed_held", "release_tail"))
+        add(mode, "idle_quiet", 0, ("warmed_held",))
+    add("legacy", "idle_noise", 0, ("warmed_held",))
+    require(len(cases) == spec["expected_rows_per_round"] == 51,
+            "registered CPU case matrix is not 51 rows")
+    return Counter(cases)
+
+
+def cpu_case_identity_sha256(identities):
+    """Producer-independent canonical fingerprint of 51 registered CSV rows."""
+    payload = ("\n".join(sorted("\t".join(identity) for identity in identities))
+               + "\n").encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def verify_cpu_round(contract, rd, source_sha, label):
     spec = contract["cpu"]
     metadata = rd["metadata"]
@@ -226,7 +365,10 @@ def verify_cpu_round(contract, rd, source_sha, label):
     require(metadata["clock_is_steady"] is True and metadata["order_seed"] == 803010,
             f"{label}: timing clock or registered order seed changed")
     require(exact_integer(metadata["callbacks_per_held_phase"], "callbacks per held phase")
-            >= spec["callbacks_per_held_phase_min"], f"{label}: workload shortened")
+            == spec["callbacks_per_held_phase_min"],
+            f"{label}: registered 1024-callback workload changed")
+    require(metadata["hardware_equivalence_or_realtime_qualification"] is False,
+            f"{label}: benchmark cannot claim DAW, hardware, or realtime equivalence")
     require(completed["completed"] is True
             and completed["cases"] == spec["expected_cases_per_round"]
             and completed["rows"] == spec["expected_rows_per_round"],
@@ -238,12 +380,29 @@ def verify_cpu_round(contract, rd, source_sha, label):
                 f"{label}: missing CPU receipt {field}")
     for field in ("flags_sha256", "benchmark_source_sha256", "runner_environment_sha256"):
         sha_string(receipt[field], f"{label}: {field}", 64)
+    require(receipt["benchmark_source_sha256"] == spec["registered_benchmark_source_sha256"],
+            f"{label}: unregistered benchmark driver SHA-256")
+    require(receipt["source_sha"] == source_sha,
+            f"{label}: CPU receipt source identity mismatch")
+    sha_string(receipt["benchmark_binary_sha256"], f"{label}: benchmark binary", 64)
     require(isinstance(metadata["compiler"], str) and metadata["compiler"],
             f"{label}: missing compiler version")
     require(isinstance(metadata["source_fingerprint"], str) and metadata["source_fingerprint"],
             f"{label}: missing source driver fingerprint")
     verify_numeric_table(label, rows, CPU_TEXT_FIELDS)
+    expected = registered_cpu_case_identities(spec)
+    sha_string(spec["registered_case_identity_sha256"], "registered CPU case matrix", 64)
+    require(cpu_case_identity_sha256(expected.elements())
+            == spec["registered_case_identity_sha256"],
+            "frozen 51-row CPU case matrix/physical tone mapping differs from registration")
+    actual = Counter(tuple(row[field] for field in CPU_IDENTITY_FIELDS) for row in rows)
+    require(actual == expected,
+            f"{label}: CPU rate/block/mode/scenario/selector/tone/phase coverage differs from registered 51-row baseline")
     for i, row in enumerate(rows, 2):
+        require(exact_integer(row["isolation"], f"{label}:{i} isolation flag")
+                == (1 if row["mode"] == "isolation" else 0)
+                and exact_integer(row["source_performance"], f"{label}:{i} source-performance flag") == 0,
+                f"{label}:{i}: unregistered CPU render mode flags")
         require(exact_integer(row["nonfinite_count"], f"{label}:{i}: nonfinite_count") == 0,
                 f"{label}:{i}: nonfinite audio")
         require(finite(row["median_rtf"], f"{label}:{i}: median_rtf") >= 0,
@@ -270,6 +429,8 @@ def verify_cpu_round(contract, rd, source_sha, label):
 
 def verify_cpu(contract, source, cpu):
     spec = contract["cpu"]
+    require(source["before_sha"] == spec["registered_before_source_sha"],
+            "CPU before source differs from preregistered source SHA")
     before = cpu["before"]
     after = cpu["after"]
     require(len(before) == spec["required_before_rounds"]
@@ -279,6 +440,7 @@ def verify_cpu(contract, source, cpu):
     common_runner = None
     common_driver = None
     common_workload = None
+    stage_binaries = {}
     seen_captures = set()
     for stage, group, sha in (("before", before, source["before_sha"]),
                               ("after", after, source["reviewed_sha"])):
@@ -286,6 +448,14 @@ def verify_cpu(contract, source, cpu):
             label = f"{stage}-r{index}"
             chosen = verify_cpu_round(contract, rd, sha, label)
             receipt = rd["receipt"]
+            require(receipt["capture_id"] ==
+                    f"{receipt['runner_job_id']}/{stage}/{index}/{sha}",
+                    f"{label}: CPU receipt capture/source/round identity changed")
+            if stage in stage_binaries:
+                require(receipt["benchmark_binary_sha256"] == stage_binaries[stage],
+                        f"{label}: CPU benchmark binary differs within source stage")
+            else:
+                stage_binaries[stage] = receipt["benchmark_binary_sha256"]
             runner = tuple(receipt[key] for key in ("host_id", "runner_job_id", "compiler_id",
                                                       "flags_sha256", "runner_environment_sha256"))
             driver = (rd["metadata"]["compiler"], rd["metadata"]["source_fingerprint"],
@@ -395,6 +565,15 @@ def load_disk_bundle(args):
             "checked-out source is not the approved exact-main SHA")
     require(tree == args.expected_source_tree_sha and tree == identity["source_tree_sha"],
             "checked-out src tree is not the approved tree")
+    benchmark_path = "src/tools/source_factory_benchmark.cpp"
+    expected_blob = args.contract["cpu"]["registered_benchmark_blob_sha"]
+    sha_string(expected_blob, "registered CPU benchmark Git blob")
+    for revision in (reviewed, identity["before_sha"]):
+        require(git_output(args.repo, "rev-parse", f"{revision}:{benchmark_path}") == expected_blob,
+                "before/reviewed CPU benchmark source blob differs from preregistration")
+    require(hashlib.sha256((args.repo / benchmark_path).read_bytes()).hexdigest()
+            == args.contract["cpu"]["registered_benchmark_source_sha256"],
+            "reviewed CPU benchmark source bytes differ from preregistration")
     def ancestor(sha):
         return subprocess.run(["git", "-C", str(args.repo), "merge-base", "--is-ancestor",
                                sha, reviewed], check=False).returncode == 0
