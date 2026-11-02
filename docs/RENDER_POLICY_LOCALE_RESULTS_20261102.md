@@ -58,3 +58,13 @@ compilation, GUI, pluginval, actual DAW or full composed-source qualification.
 Independent review and root integration/publication remain pending. The new
 factory-tone editor affordance and all original numerical source locks remain
 untouched.
+
+## Independent bounded Linux review
+
+Agent5 independently approved e7f5ff3/source976c922b after reviewing the exact
+old-call substitution and unchanged binary/full-consumption/schema rules.
+They hash-verified and replayed existing binaries:2290+2257+296 before/after,
+the exact89-failure reverted-call mutant with its five deterministic families,
+and98/98 simulated null-locale checks. Linked object/binary/receipt hashes
+matched. Their raw log is archived. This is independent existing-binary replay,
+not a fresh independent compile, native wrapper/GUI/DAW or full-source audit.
