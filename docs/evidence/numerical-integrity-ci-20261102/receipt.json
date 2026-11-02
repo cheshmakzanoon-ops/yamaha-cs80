@@ -1,0 +1,33 @@
+{
+  "scope": "Historical evidence verifier integrity only; not numerical or release acceptance",
+  "local_implementation_commit": "0638799869a9b5b57ede670d2e7ae74255de50b7",
+  "production_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "python_tests": 37,
+  "python_skips": 0,
+  "node_tests": 8,
+  "node_skips": 0,
+  "source_mutants_rejected": 7,
+  "source_files": {
+    ".github/workflows/numerical-integrity-tests.yml": "e352b1b74324b266da56d94daca44acea712422625070a986b3575e49b5515db",
+    "scripts/materialize_release_integrity_fixtures.py": "f5997beee1a0fec1e17c5e0cf2ece62ca6dcbbde78587fd97138f7efc4c798d6",
+    "tests/release/node_tap_guard.py": "922e9f95c1311a616fe373497f293e540c635d16ac1893ea34bc83b82b9de98b",
+    "tests/release/qualify_evidence_guard_mutations.py": "a462ecc54ee3059e3c129b3c6164e87dcbb69fc5877050791632491aac1e8299",
+    "tests/release/test_integrity_fixture_materialization.py": "cbb13790e44b37f19671ddbd8cb19c5c9625090a03021920fc48a17e90c51395",
+    "tests/release/test_node_tap_guard.py": "3fe3a461b27f558706085d26791bf7563a21a98e002eaa7c77fba9c133e7f5ee",
+    "tests/release/integrity-fixture-contract.json": "717b1a60db5988d486b236795c737cddb1dd0c557b645d10c0625c07cd77dc06"
+  },
+  "logs": {
+    "before-immediate.log": "cf60cfca273c630d93135243dd2ab5e87d75c173e1e3e01a811245602ab15357",
+    "node-guard-before.log": "d114f100035f0d02556ed85bfd75de50eca78b5e5e3f8d13d79e5856f86d81ca",
+    "actionlint-before.log": "ae7d1ee44c90e096d4399e75e04606eed428666783b3b7582670c9a7749903d8",
+    "full-python-v2.log": "94b61659757d2063a20301d4fc96ecfd3c119ff4f0e0de00fd845db17fe60bbf",
+    "node-v2.tap": "607ae160c512485300edde1b251593311b8459daf744b578ffb0e05a99b17435",
+    "node-v2-summary.json": "0dcedd9fb139457c5316f19ec661767b1e570f65151ac379536ba199729ebbbf",
+    "mutations-v2.log": "f1e832fa9f56cda44e45e4375f0f6661a91ba8d0055becfb496964c896802877",
+    "actionlint-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-v2-sequence.log": "a61c6bfe60efcbc8bf6d9912e5d083a2d585d989474f4fa1293adf10d8bc1716",
+    "materialization.log": "7a43e97cc028469625162ecde85d39c85cf53b1b46ccc6187013be961812784d"
+  },
+  "independent_review": "35-test prior slice independently replayed; final Node no-skip delta independently source-reviewed, final37/8/7 replay by coordinating engineer",
+  "failed_evidence": "Nine missing-helper assertions, two missing Node-guard assertions and initial invalid job-level runner context are retained; none counted as success."
+}

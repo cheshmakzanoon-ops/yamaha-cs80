@@ -1,0 +1,8 @@
+.github/workflows/numerical-integrity-tests.yml:40:36: context "runner" is not allowed here. available contexts are "github", "inputs", "matrix", "needs", "secrets", "strategy", "vars". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+   |
+40 |       CS80_ORIGINAL_AUDIT_DIR: ${{ runner.temp }}/cs80-integrity-fixtures/original-audit
+   |                                    ^~~~~~~~~~~
+.github/workflows/numerical-integrity-tests.yml:41:43: context "runner" is not allowed here. available contexts are "github", "inputs", "matrix", "needs", "secrets", "strategy", "vars". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+   |
+41 |       CS80_ORIGINAL_CPU_BEFORE_ROUND: ${{ runner.temp }}/cs80-integrity-fixtures/original-cpu
+   |                                           ^~~~~~~~~~~

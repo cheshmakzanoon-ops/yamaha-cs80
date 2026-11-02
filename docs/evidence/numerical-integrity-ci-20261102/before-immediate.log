@@ -1,0 +1,104 @@
+FFFFFFFFF
+======================================================================
+FAIL: test_bad_crc_rejected (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_bad_crc_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 91, in test_bad_crc_rejected
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_corrupt_cpu_is_rejected_before_writes (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_corrupt_cpu_is_rejected_before_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 112, in test_corrupt_cpu_is_rejected_before_writes
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_existing_destination_is_preserved (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_existing_destination_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 101, in test_existing_destination_is_preserved
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_missing_git_evidence_is_not_synthesized (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_missing_git_evidence_is_not_synthesized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 124, in test_missing_git_evidence_is_not_synthesized
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_pins_match_preregistered_contract (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_pins_match_preregistered_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 43, in test_pins_match_preregistered_contract
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_real_fixtures_materialize_with_exact_identities (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_real_fixtures_materialize_with_exact_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 52, in test_real_fixtures_materialize_with_exact_identities
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_symlink_member_rejected (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_symlink_member_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 88, in test_symlink_member_rejected
+    self.helper().validate_zip(archive(symlink=True))
+    ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_traversal_duplicate_and_unexpected_members_rejected (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_traversal_duplicate_and_unexpected_members_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 77, in test_traversal_duplicate_and_unexpected_members_rejected
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+======================================================================
+FAIL: test_wrong_digest_and_size_are_rejected (test_integrity_fixture_materialization.IntegrityFixtureMaterializationTests.test_wrong_digest_and_size_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 66, in test_wrong_digest_and_size_are_rejected
+    m = self.helper()
+        ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-gate-ci/tests/release/test_integrity_fixture_materialization.py", line 36, in helper
+    self.assertTrue(path.is_file(), 'Required pinned-fixture materializer is absent')
+AssertionError: False is not true : Required pinned-fixture materializer is absent
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.005s
+
+FAILED (failures=9)

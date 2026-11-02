@@ -1,0 +1,62 @@
+TAP version 13
+# Reviewed release dispatch: 24 checks, 0 failures
+# Subtest: tests/release/dispatch-reviewed-release.test.cjs
+ok 1 - tests/release/dispatch-reviewed-release.test.cjs
+  ---
+  duration_ms: 133.57411
+  type: 'test'
+  ...
+# Additive numerical dispatch: 11 checks, 0 failures
+# Subtest: tests/release/numerical-dispatch-addition.test.cjs
+ok 2 - tests/release/numerical-dispatch-addition.test.cjs
+  ---
+  duration_ms: 121.964121
+  type: 'test'
+  ...
+# Subtest: independent numerical workflow accepts only a push to exact main
+ok 3 - independent numerical workflow accepts only a push to exact main
+  ---
+  duration_ms: 2.200592
+  type: 'test'
+  ...
+# Subtest: single job directly builds original audit and collects the six raw CPU rounds
+ok 4 - single job directly builds original audit and collects the six raw CPU rounds
+  ---
+  duration_ms: 0.686023
+  type: 'test'
+  ...
+# Subtest: trusted source identity, current-main lease, and same-job receipt bind gate input
+ok 5 - trusted source identity, current-main lease, and same-job receipt bind gate input
+  ---
+  duration_ms: 0.282828
+  type: 'test'
+  ...
+# Subtest: malicious event, source, and evidence-producer mutations fail the workflow contract
+ok 6 - malicious event, source, and evidence-producer mutations fail the workflow contract
+  ---
+  duration_ms: 6.321848
+  type: 'test'
+  ...
+# Manual/tag release entrypoint preflight: 63 checks, 0 failures
+# Subtest: tests/release/release-entrypoint-preflight.test.cjs
+ok 4 - tests/release/release-entrypoint-preflight.test.cjs
+  ---
+  duration_ms: 183.918017
+  type: 'test'
+  ...
+# Trusted-main reviewed request dispatch: 45 checks, 0 failures
+# Subtest: tests/release/trusted-main-dispatch.test.cjs
+ok 5 - tests/release/trusted-main-dispatch.test.cjs
+  ---
+  duration_ms: 176.723258
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 223.167496
