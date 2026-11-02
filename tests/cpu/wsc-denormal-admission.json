@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "status": "TEST-FIRST extension of an isolated AVX2 experiment; not a production optimization or performance qualification",
+  "experiment_parent": "9785f9e5d3d4290e450f12db9597bb211aecfa9f",
+  "production_comparison_commit": "9c62d7b8813a76ce178712c82da9604a1355b112",
+  "production_comparison_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "unchanged_reference": {
+    "path": "tests/reference/WscLoopOriginal.h",
+    "sha256": "9976f2e1a2de7ec2513c156cf70cc020911edfe486b70651c4425e97bdca4c4c"
+  },
+  "observed_coverage_gaps": [
+    "The stock source_factory_benchmark ScopedDenormals enables FTZ and DAZ (0x8040). Existing tryTickFour correctly declines those unqualified modes, so it cannot accelerate that workload.",
+    "The original independent-lane FP matrix has width 4 but presents (pos*3+sample)%16. Its active indices 0..3 can never form four consecutive presented lanes; therefore the original aggregate admission count does not establish vector execution in those matrix cells. This is a coverage limitation, not a demonstrated numerical error."
+  ],
+  "unchanged_gates": "Preserve all original 96 cases on x86 with four denormal modes, frozen full-state/output/event/FP comparisons, masked lanes, physical boundary/control changes, copy/reset/restore/idle/wake coverage and the x87 trap guard witness. Preserve every original production, Legacy, V1/V2, alias, click, circuit and CPU threshold.",
+  "new_matrix": {
+    "rates_hz": [
+      88200,
+      96000,
+      192000,
+      384000
+    ],
+    "rounding_modes": [
+      "FE_TONEAREST",
+      "FE_DOWNWARD",
+      "FE_UPWARD",
+      "FE_TOWARDZERO"
+    ],
+    "denormal_modes": "All supported hardware FTZ/DAZ combinations, detected by the unchanged original oracle",
+    "width": 16,
+    "samples_per_cell": 128,
+    "presentation_and_events": "Unchanged oneCase rotating stride-3 schedule, independent masks, controls, original frozen scalar lane order and every-sample full-state comparison",
+    "total_cases_with_four_denormal_modes": 160,
+    "work_gate_per_cell": "At least 100 actual tryTickFour admission attempts in every rate/round/denormal cell; at least 100 admitted calls per nearest-round cell; exactly zero admissions for every other rounding-mode cell. Print all cell counts; aggregates cannot substitute.",
+    "fp_gate": "Every admitted batch matches frozen scalar caller-exit x87/SSE state and every rejected batch leaves all caller FP status/control untouched. The attempted optimization may broaden only nearest/masked-trap FTZ/DAZ support; no caller mode changes and no rounding/trap guard removal.",
+    "stored_denormal_probe": "Only added full-width cases seed all residual rings at sample 101 with bit-exact signed minimum/maximum subnormal and signed-zero payloads. Restore invalidates caches; require at least one admitted batch whose current residualCursor consumes a nonzero subnormal residual in every nearest-mode rate/denormal cell. Frozen state and caller-exit FP equality remain mandatory."
+  },
+  "red_first": "Run the new matrix against the untouched parent backend and retain ordinary exit 1 at WSC denormal-mode actual-admission work gate failed. Existing modes remain exact. Preserve this result before modifying any backend admission guard.",
+  "negative_controls": [
+    "Reinstate original FTZ/DAZ rejection or force false admission: ordinary exit 1 at the per-cell work gate.",
+    "Return true without physical vector/state work: ordinary exact output/state failure; inspect compiled AVX double arithmetic rather than accepting an admission counter as proof of useful vector computation.",
+    "Remove the existing x87 masked-trap guard: unchanged x87 negative witness must exit 1.",
+    "Preserve and rerun original MASK, CROSS_LANE, EVENT and FP oracle mutants."
+  ],
+  "production_admission": "No Engine call or production enablement in this step. Any later combined Engine integration needs distinct actual WSC/HP/LP vector work witnesses, complete scheduling/RNG/mix and strict Legacy/V1/V2 oracles, then original 51-row same-host three-before/three-after qualification. Held <=0.20 RTF and quiet idle <=0.02 remain mandatory; this extension alone makes no speedup or completion claim."
+}

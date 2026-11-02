@@ -6,6 +6,7 @@
 #include "core/ReconstructedOscillator.h"
 #include "reference/WscLoopOriginal.h"
 
+#include <algorithm>
 #include <array>
 #include <bit>
 #include <cfenv>
@@ -40,6 +41,8 @@ struct Checks {
     std::uint64_t fields=0,failures=0,active=0,masked=0,events=0,noEvents=0;
     std::uint64_t copies=0,resets=0,restores=0,idles=0,fpCases=0;
     std::uint64_t vectorBackendCalls=0;
+    struct CellWork { std::uint64_t attempts=0,batches=0,subnormalBatches=0; };
+    std::array<std::array<std::array<CellWork,4>,4>,4> fpWork{};
     std::uint32_t widthMask=0,rateMask=0;
     bool mutationApplied=false;
     int caseIndex=0,sample=0,lane=0;
@@ -197,7 +200,8 @@ cs80::WscControls controlsFor(int lane,int sample) {
     return c;
 }
 
-void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned denorm,int caseNumber) {
+void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned denorm,int caseNumber,
+             bool stressStoredDenormals=false) {
     RestoreCallerFp caller;
     if(std::fesetround(round)!=0)throw std::runtime_error("unsupported FE rounding mode");
 #if CS80_WSC_LANE_X86
@@ -207,6 +211,12 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
 #else
     (void)denorm;
 #endif
+    const auto rateIndex=static_cast<std::size_t>(std::find(kRates.begin(),kRates.end(),rate)-kRates.begin());
+    const auto roundIndex=static_cast<std::size_t>(std::find(kRounds.begin(),kRounds.end(),round)-kRounds.begin());
+    const auto mode=static_cast<std::size_t>(((denorm>>15)&1u)|(((denorm>>6)&1u)<<1));
+    if(rateIndex>=kRates.size()||roundIndex>=kRounds.size())
+        throw std::runtime_error("unregistered WSC FP cell");
+    auto& cellWork=g.fpWork[rateIndex][roundIndex][mode];
     std::array<Current,kLanes> candidate;
     std::array<Original,kLanes> original;
     Current::State savedCurrent{};
@@ -241,6 +251,27 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
         if(sample==97) {
             candidate[3].restoreState(savedCurrent);original[3].restoreState(savedOriginal);
             ++g.restores;
+        }
+        // Additional full-width FP cells only: seed exact stored residual
+        // subnormal payloads without arithmetic that DAZ could zero during
+        // fixture construction. State restore deliberately forces one scalar
+        // cache-priming tick; remaining ring slots then reach admitted batches.
+        if(stressStoredDenormals&&sample==101) {
+            constexpr std::array<std::uint64_t,6> bits{
+                0x0000000000000001ull,0x000fffffffffffffull,
+                0x8000000000000001ull,0x800fffffffffffffull,
+                0x0000000000000000ull,0x8000000000000000ull};
+            for(int lane=0;lane<kLanes;++lane) {
+                auto c=candidate[static_cast<std::size_t>(lane)].getState();
+                auto o=original[static_cast<std::size_t>(lane)].getState();
+                for(std::size_t branch=0;branch<3;++branch)
+                    for(std::size_t slot=0;slot<cs80::OscillatorResidualKernel::length;++slot) {
+                        const double value=std::bit_cast<double>(bits[(branch+slot+static_cast<std::size_t>(lane))%bits.size()]);
+                        c.residual[branch][slot]=o.residual[branch][slot]=value;
+                    }
+                candidate[static_cast<std::size_t>(lane)].restoreState(c);
+                original[static_cast<std::size_t>(lane)].restoreState(o);
+            }
         }
         // Exact physical event at the end of the internal sample, one ULP
         // below/above it, a one-sample reset plateau and signed-zero charge.
@@ -283,7 +314,17 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
                     controls[static_cast<std::size_t>(i)]=controlsFor(index,sample);
                 }
                 if(allActive) {
+                    ++cellWork.attempts;
                     if(sample%19==0)std::feraiseexcept(FE_INEXACT);
+                    bool hasStoredSubnormal=false;
+                    for(const auto* stage:stages) {
+                        const auto& state=stage->getState();
+                        for(const auto& branch:state.residual) {
+                            const auto bits=std::bit_cast<std::uint64_t>(branch[state.residualCursor])
+                                &0x7fffffffffffffffull;
+                            hasStoredSubnormal=hasStoredSubnormal||(bits!=0&&bits<0x0010000000000000ull);
+                        }
+                    }
                     const FpState beforeBatch=captureFp();
                     if(Current::tryTickFour(stages,requested,controls,outputs)) {
                         const FpState afterCandidate=captureFp();
@@ -304,6 +345,8 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
                         restoreFp(afterCandidate);
                         g.active+=4;
                         ++g.vectorBackendCalls;
+                        ++cellWork.batches;
+                        cellWork.subnormalBatches+=hasStoredSubnormal;
                         pos+=3;
                         continue;
                     }
@@ -377,6 +420,7 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
         }
     }
     (void)caseNumber;
+    (void)cellWork;
     ++g.fpCases;
 }
 
@@ -469,12 +513,22 @@ int main() {
                     g.caseIndex=caseNumber;
                     oneCase(g,4,rate,128,round,mxcsr,caseNumber++);
                 }
+        // Preserve the original width-4 FP matrix above. Four active indices
+        // 0..3 are never contiguous in the rotating stride-3 presentation, so
+        // that matrix alone cannot admit a four-lane batch. Add full-width
+        // cases to exercise real admission in every FP/denormal mode.
+        for(double rate:kRates)
+            for(int round:kRounds)
+                for(unsigned mxcsr:denorm) {
+                    g.caseIndex=caseNumber;
+                    oneCase(g,16,rate,128,round,mxcsr,caseNumber++,true);
+                }
 #if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST) && CS80_WSC_LANE_X86 && \
     (defined(__GNUC__) || defined(__clang__))
         checkUnmaskedX87Guard();
 #endif
-        const std::uint64_t expectedCases=32u+16u*denorm.size();
-        const std::uint64_t expectedSamples=32u*192u+16u*denorm.size()*128u;
+        const std::uint64_t expectedCases=32u+32u*denorm.size();
+        const std::uint64_t expectedSamples=32u*192u+32u*denorm.size()*128u;
         const std::uint64_t scheduledSlots=expectedSamples*kLanes;
         std::printf("WSC independent-lane frozen oracle: cases=%d widths=%u rates=%u "
                     "denormal-modes=%zu active=%llu masked=%llu events=%llu no-events=%llu "
@@ -501,6 +555,24 @@ int main() {
            ||g.restores!=expectedCases||g.idles!=expectedCases||g.failures!=0)
             throw std::runtime_error("WSC registered lane/work/bit acceptance failed");
 #if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST)
+        bool denormalWork=true;
+        for(std::size_t rate=0;rate<kRates.size();++rate)
+            for(std::size_t round=0;round<kRounds.size();++round)
+                for(unsigned mxcsr:denorm) {
+                    const auto mode=static_cast<std::size_t>(((mxcsr>>15)&1u)|(((mxcsr>>6)&1u)<<1));
+                    const auto& work=g.fpWork[rate][round][mode];
+                    std::printf("WSC FP-cell admission: rate=%.0f round=%d mxcsr-mode=0x%04x "
+                                "attempts=%llu batches=%llu consumed-subnormal-batches=%llu\n",
+                                kRates[rate],kRounds[round],mxcsr,
+                                static_cast<unsigned long long>(work.attempts),
+                                static_cast<unsigned long long>(work.batches),
+                                static_cast<unsigned long long>(work.subnormalBatches));
+                    denormalWork=denormalWork&&work.attempts>=100
+                        &&(kRounds[round]==FE_TONEAREST
+                           ?work.batches>=100&&work.subnormalBatches>0:work.batches==0);
+                }
+        if(!denormalWork)
+            throw std::runtime_error("WSC denormal-mode actual-admission work gate failed");
         if(g.vectorBackendCalls<100)
             throw std::runtime_error("WSC four-lane backend not meaningfully exercised");
 #endif
