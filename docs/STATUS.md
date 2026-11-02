@@ -4,13 +4,21 @@ This page states the project's current implementation and qualification. It wins
 when older documents disagree. Historical observations remain in
 [the dated status archive](STATUS_HISTORY_2026-11-01.md) and the linked raw evidence.
 
-Last updated: **2026-11-01 UTC**. Current production change:
+Last updated: **2026-11-02 UTC**. Current production change:
 **`83b7f7670f000a95c6b44f96ffb0df3894755d14`**, on
 `finish/cs80-qualification-20261031`, based on original main
 `db24a47170610f81236e8829ef5536af69dfc94d`.
 [PR #6](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/6) remains the
-landing PR. The final current-head integration, main merge and release are
-still in progress at this snapshot; an earlier passing job is not a final pass.
+landing PR. The final registered three-rate engine audit now has a complete, independently
+checked 885-row artifact at source `39ae6c2684456950302cb4ed10ecfae980c37ddd`
+([run 41336194253](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253)).
+Its numerical musical-click gates still fail, even though the capture workflow
+succeeded. Feature-branch build push/PR runs 41338140448/41338144467 passed at
+`7c864f2`; the WSC-oracle test-only commit `5809a528` has since advanced
+PR #6's development branch without changing production DSP, and its build,
+DSP and screenshot runs 41339574562/41339574637/41339574530 passed.
+These are not final-main qualifications. The CPU
+budgets, musical clicks, main merge and new release remain unfulfilled.
 
 ## Current assessment
 
@@ -25,7 +33,7 @@ free-running ring phase and precise envelope charge are retained at key events.
 The VCA coupling output now remains connected through envelope retirement;
 explicit reset and hard panic clear its stored charge. Charged inactive tails
 also consume current-sample modern pan while preserving original scheduled
-trigger/expression ownership. Final integration is being qualified below.
+trigger/expression ownership. The complete full-bank audit is reported below; source musical-click gates remain red.
 
 **The held and idle CPU budgets and the original physical-PANEL Bass/percussive
 note-off score criteria remain open.** Inspection of all 25 disputed tone cells
@@ -135,7 +143,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
 | 6 Separate chorus/tremolo tab positions | done; historic default preserves original exclusive switch, circuit source can select both off/on | `6f1c4aa`, pin `adc8bbb` |
 | 6 Sample-accurate automation | Eighteen named lanes; VST3 native host qualified, AU component host and seven source mutations pass on Intel and Apple Silicon; external-state and endpoint ownership repaired | `3a37594`, `780658d`, `6474265`, `6300163`, evidence `662a1a2` |
-| 7 Validator and release | Proven Linux validator-host callback lifetime mechanism removed; native Intel BBD compiler mechanism repaired. Final integrated CI, merge and release are being completed; owner exclusions remain open | `f39af47`, `a88ef86`, `1f842b9`, `e1c5ee9` |
+| 7 Validator and release | Proven Linux validator-host callback lifetime mechanism removed; native Intel BBD compiler mechanism repaired. The complete three-rate capture and feature-build CI passed their infrastructure gates, but numerical CPU/click acceptance failed. Main merge, exact-main CI and release remain pending; owner exclusions remain open | `f39af47`, `a88ef86`, `1f842b9`, `e1c5ee9` |
 | 6 MTS-ESP client | Actual pinned ODDSound client plus 0BSD licence vendored; real-client, shim and fallback compile/test on all four native platforms | `fa2016c2`, evidence `662a1a2` |
 | 6 State snapshots and undo | Common APVTS lock and sync-before-copy/replace; exact Float32 MSEG replay/restore and balanced undo host gestures | `bbc57fe`; [state evidence](STATE_TREE_SYNCHRONIZATION.md) |
 
@@ -154,7 +162,45 @@ continuity result and full-bank score are different observations.
 | Immutable compatibility | Byte identity | Legacy default/tails, V1 numerics and current V2 all pass after the native BBD repair and the exact FIR candidate. |
 | Eight held voices | 0.15–0.20 callback realtime factor, 48 kHz / 256 frames | Final 12-checkpoint same-host EPYC 7763 run: `83b7f767` **0.605709–0.888572** held median RTF (p99 up to 1.050427, 49 selected deadline misses); original `db24a471` **0.588123–0.696543**. **Target open.** [Frozen 36-round evidence](evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md). |
 | Quiet idle | <=0.02 callback realtime factor | Final EPYC 7763 run: `83b7f767` **0.067570125 (6.757%)** versus original `db24a471` **0.143822625 (14.382%)**. Idle reduces 53.02% relatively; **2% target open**. [Frozen same-host evidence](evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md). |
-| Full-bank peak, steal and ring-off spectrum | <=0 dBFS; score <=1; <=−70 dB | The old `00ceccf` observations (−0.24 dBFS, 0.92, −88.3 dB at 48 kHz) remain historical. A fresh complete 44.1/48/96 kHz audit of the final code is in progress; no current full-bank pass is inferred from those older numbers. |
+| Full-bank source phrase peak, steal and 48 kHz ring-off spectrum | ≤0 dBFS; click score ≤1; alias ≤−70 dB | Final-audio three-rate audit: phrase peak **−0.370566 dBFS** passes; worst voice-steal score **1.03039** fails (1 of 283 source phrase rows); 48 kHz ring-off saw **−71.14 dB**, pulse **−76.36 dB**, both pass. Other source click gates fail as detailed immediately below. Historical `00ceccf` measurements are not substituted. |
+
+### Complete three-rate final-source engine audit (2026-11-01)
+
+[GitHub Actions run 41336194253](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253)
+completed successfully, retaining the original
+[artifact 13097476296](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253/artifacts/13097476296)
+(ZIP SHA-256 `a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19`;
+retention currently through 2027-01-30). The collector used the frozen
+`.github/full-engine-audit-request.json` and unchanged numerical reporter at
+`39ae6c2684456950302cb4ed10ecfae980c37ddd`, with production audio
+`83b7f7670f000a95c6b44f96ffb0df3894755d14`, source tree
+`7dd159d491012fd47b46c0aa651e86ea959ca289` and prior registration
+`00da4498792523cf8d97fd40c17e12f215e190b8`. Ten coverage/source mutations
+were rejected. Independent retrieval checked the ZIP CRC, provenance/digests,
+all five CSVs and **885/885 rows**: 40 latency, 168 alias, 102 FX, 566 phrase
+(283 Source Performance + 283 Legacy), and 9 click-causality. No numeric CSV
+cells were nonfinite. A green capture is not a pass of its audio acceptance criteria.
+
+| Final-source audit result | Observation | Unchanged gate / conclusion |
+| --- | --- | --- |
+| Source phrase peak, all rates | Worst **−0.370566 dBFS** (Guitar 1+2, 96 kHz) | ≤0 dBFS **PASS** |
+| Source phrase retrigger click | Worst **1.23689**, **1/283** rows above 1 | ≤1 **FAIL** |
+| Source phrase voice-steal click | Worst **1.03039**, **1/283** rows above 1 | ≤1 **FAIL** |
+| Source phrase single-note-off click | Worst **1.62689**, **22/283** rows above 1 | ≤1 **FAIL** |
+| Source phrase chord-note-off click | Worst **1.84628**, **37/283** rows above 1 | ≤1 **FAIL** |
+| Original physical-PANEL Bass causality | **2/3** rates above 1; worst **1.440924** | ≤1 at all rates **FAIL** |
+| Funky 1 + Funky 2 tone-tab causality | **3/3** rates above 1; worst **1.626889** | ≤1 at all rates **FAIL** |
+| Electrical-programmer Bass causality | **0/3** rates above 1 | ≤1 at all rates **PASS** |
+| Source ring-off saw/pulse alias, 48 kHz | Worst **−71.14 / −76.36 dB**, respectively | ≤−70 dB **PASS** |
+| Source FX stress peak, 44.1/48/96 kHz | Worst **−7.82851 / −6.116 / −5.97371 dBFS** | Within digital full scale; **PASS** |
+| Legacy FX stress peak, 44.1/48/96 kHz | **+0.774436 / +0.725615 / +0.822149 dBFS** | Recorded diagnostic; not misrepresented as Source phrase criterion |
+| Source decimator latency | **62.9927–63.0082** host samples measured; engine reports **67** (63 + 4 internal oscillator contribution) | Measured/reported scopes separated |
+
+The 48 kHz ring-*on* non-harmonic value near −43 dB is recorded as a
+feedthrough diagnostic (the declared `0.005*x` signal term), not substituted
+for the ring-*off* alias gate. The successful audit's source/audio SHA and zero
+nonfinite count establish capture integrity only, not physical-instrument parity,
+CPU acceptance, or closure of the click failures.
 
 ### Final twelve-checkpoint CPU benchmark (latest complete production audio)
 
@@ -287,9 +333,9 @@ claim. [Original failure and correction proof](evidence/qualification-2026-11-01
 
 The named-fixture values below were freshly captured with connected VCA
 discharge `b75b4d6`. Funky is unchanged from the pre-VCA capture; physical-PANEL
-Bass changes only slightly at 44.1 and 96 kHz. The complete audit is in progress.
-These are named SOURCE PERFORMANCE fixtures, not a replacement for the full-bank
-worst-case audit. Each original requirement remains **score <=1**.
+Bass changes only slightly at 44.1 and 96 kHz. The completed full-bank audit corroborates the remaining musical-click failures.
+These are named SOURCE PERFORMANCE fixtures; the separate full-bank worst cases
+are listed above. Each original requirement remains **score <=1**.
 
 | Rate | Original-main physical-PANEL Bass | VCA-corrected physical-PANEL Bass | Original-main Funky note-off | VCA-corrected Funky note-off |
 | ---: | ---: | ---: | ---: | ---: |
@@ -370,7 +416,7 @@ passed. Earlier audio/pin/evidence sequences remain in the dated history.
 | Event regression | 7,438 full assertions; 15 source mutations; zero-limit weakening and missing-rank-II controls checked. [Evidence](CLICK_EVENT_CONTINUITY.md). |
 | FIR | Oversampling 85, exact history 227,117, rounding 3,276,237 and core 11,512 assertions pass; all ten source mutations rejected. [Complete local qualification and six rounds](evidence/qualification-2026-11-01/zero-fir/README.md). Final serial timing is complete above; final native workflow qualification remains separate. |
 | UI/tone review | Context IDs, MIDI learn, undo gestures, taps and two-engine ownership verified; 70 native crop payloads and all 25 cells rechecked. [Evidence](evidence/qualification-2026-11-01/ui-tone-review/README.md). |
-| Final CI / landing | `build.yml` on four platforms plus pluginval, `dsp-measurements.yml`, `screenshots.yml`, the merge commit and `release.yml` are still being completed. README artifacts, screenshots and PDF will be refreshed against the actual final runs. |
+| Final CI / landing | Complete 885-row three-rate full engine audit captured at `39ae6c` (run 41336194253), with numerical click failures retained. Feature build push/PR passed at `7c864f` (41338140448/41338144467), and isolated WSC-oracle build/DSP/screenshots passed at `5809a528` (41339574562/41339574637/41339574530). These do not substitute for accepted CPU/click gates or three exact-main push workflows. Main merge, release, README installer refresh and final PDF remain pending. |
 
 The Linux validator fix is a demonstrated host mechanism: its old copied file-
 descriptor callbacks retained a raw RunLoop owner, and a prior callback could
@@ -404,14 +450,10 @@ No numerical threshold was relaxed, and original red logs remain in evidence.
    and transcribed with pages. Ambiguous glyphs, crossed topology and revision
    applicability remain hypotheses; more source/board-revision evidence is
    needed before promotion. V1 values and fingerprint `e5f877a025fc52c6` stay fixed.
-5. **Final integration and landing.** Complete current code tests and the full three-rate
-   audit (the final 36-round CPU result is recorded above); obtain the three green workflows; merge PR #6 with a
-   merge commit; dispatch the main release and refresh downloads/screenshots,
-   coverage and the handover PDF. No pending step is represented as completed.
+5. **Final integration and landing.** The frozen all-suite three-rate audit is complete (885 rows) but has six source musical-click failure scopes described above. Final CPU qualification also misses both budgets. Only after real fixes and new passing measured evidence may PR #6 become ready, the three exact-main push workflows be verified at merge M, and the guarded release be dispatched. The existing dispatch guard checks exact-main build/DSP/screenshot run success and screenshot-only ancestry, but does **not** itself verify CPU or click numerical acceptance; that additional qualification evidence must be independently checked before dispatch (preferably enforced by a preregistered machine-checkable gate). README downloads/screenshots, hardware coverage and final six-page PDF must then cite the actual published identities. No pending step is represented as completed.
 6. **Owner-only work (outside this task).** Apple/Windows signing and notarization
    secrets; real-DAW sessions; trademark review of “CS-80” / “Yamaha”; AAX.
 
 Other explicitly declared circuit assumptions and source uncertainties remain in
 [HARDWARE_COVERAGE.md](HARDWARE_COVERAGE.md). Automated host tests do not replace
 real-DAW qualification or a live installed MTS master, and no result here is a
-measurement of an original instrument.
