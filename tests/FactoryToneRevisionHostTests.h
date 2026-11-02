@@ -153,7 +153,7 @@ void testFactoryToneRevisionHost(Check check)
     }
     check(parameter->getParameterIndex() == 297 && parameter->getVersionHint() == 17,
           "revision choice appends index297 with AU hint17");
-    check(!parameter->isAutomatable() && parameter->getDefaultValue() == 0.0f && choice(host) == 0,
+    check(!parameter->isAutomatable() && static_cast<juce::AudioProcessorParameter*>(parameter)->getDefaultValue() == 0.0f && choice(host) == 0,
           "factory revision is non-automatable and defaults to frozen V1");
     check(parameter->choices == juce::StringArray{"Frozen V1", "Public-source estimates V2"},
           "choice labels make the opt-in estimate and frozen revision explicit");
