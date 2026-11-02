@@ -381,6 +381,11 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_mts_esp_fallback_tests PRIVATE src)
     target_compile_definitions(cs80_mts_esp_fallback_tests PRIVATE CS80_WITH_MTS_ESP=0)
     add_test(NAME cs80_mts_esp_fallback_tests COMMAND cs80_mts_esp_fallback_tests)
+    add_executable(cs80_mts_esp_windows_macro_tests tests/MtsEspWindowsMacroTests.cpp)
+    target_include_directories(cs80_mts_esp_windows_macro_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_windows_macro_tests PRIVATE
+        CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    add_test(NAME cs80_mts_esp_windows_macro_tests COMMAND cs80_mts_esp_windows_macro_tests)
     add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
     target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
     add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
