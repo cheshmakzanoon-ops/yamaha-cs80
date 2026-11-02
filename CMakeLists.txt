@@ -51,6 +51,14 @@ if (CS80_BUILD_TESTS)
     add_executable(cs80_exact_scalar_filter_tests tests/ExactScalarFilterTests.cpp)
     add_dependencies(cs80_exact_scalar_filter_tests cs80_exact_scalar_oracle)
     target_include_directories(cs80_exact_scalar_filter_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
+    # Preregister the independent mixed-lane, full nonlinear phase-continuation
+    # truth before any production SIMD/SoA implementation. Its initial scalar
+    # positive control has no vector-backend or performance claim.
+    add_executable(cs80_phase_lane_oracle_tests tests/PhaseLaneOracleTests.cpp)
+    add_dependencies(cs80_phase_lane_oracle_tests cs80_exact_scalar_oracle)
+    target_include_directories(cs80_phase_lane_oracle_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
+    add_test(NAME cs80_phase_lane_oracle_tests COMMAND cs80_phase_lane_oracle_tests)
+    set_tests_properties(cs80_phase_lane_oracle_tests PROPERTIES TIMEOUT 300)
     foreach(cs80_scalar_suite fixed moving state row fp)
         add_test(NAME cs80_exact_scalar_filter_${cs80_scalar_suite}_tests
                  COMMAND cs80_exact_scalar_filter_tests --suite ${cs80_scalar_suite})
