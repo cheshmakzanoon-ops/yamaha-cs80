@@ -1,0 +1,78 @@
+LOCK_ACQUIRED 2026-11-02T12:28:47Z
+edc556f8f71537616677c267ba3541653dd7ccf7
+0d66630a0f9d872ffea0b442868737437c0bfd5e
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (1.7s)
+-- Generating done (0.2s)
+-- Build files have been written to: /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+[1/28] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/28] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o
+[3/28] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[4/28] Linking CXX static library libcs80_core.a
+[5/28] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o
+[6/28] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o
+[7/28] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o
+[8/28] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o
+[9/28] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o
+[10/28] Building CXX object CMakeFiles/cs80_mts_esp_windows_macro_tests.dir/tests/MtsEspWindowsMacroTests.cpp.o
+[11/28] Building CXX object CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o
+[12/28] Building CXX object CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o
+[13/28] Building CXX object CMakeFiles/cs80_tuning_input_boundary_tests.dir/tests/TuningInputBoundaryTests.cpp.o
+[14/28] Building CXX object CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o
+[15/28] Building CXX object CMakeFiles/cs80_mts_counted_message_tests.dir/tests/MtsCountedMessageTests.cpp.o
+[16/28] Building CXX object CMakeFiles/cs80_mts_realtime_semantics_tests.dir/tests/MtsRealtimeSemanticsTests.cpp.o
+[17/28] Linking CXX executable cs80_mts_esp_native_tests
+[18/28] Linking CXX executable cs80_mts_esp_shim_tests
+[19/28] Linking CXX executable cs80_mts_esp_fallback_tests
+[20/28] Linking CXX executable cs80_mts_esp_windows_macro_tests
+[21/28] Linking CXX executable cs80_host_automation_curve_tests
+[22/28] Linking CXX executable cs80_au_automation_curve_tests
+[23/28] Linking CXX executable cs80_au_automation_bridge_contract_tests
+[24/28] Linking CXX executable cs80_tuning_input_boundary_tests
+[25/28] Linking CXX executable cs80_mts_counted_message_tests
+[26/28] Linking CXX executable cs80_mts_realtime_semantics_tests
+[27/28] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+[28/28] Linking CXX executable cs80_tuning_midi_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+      Start 74: cs80_mts_esp_native_tests
+ 1/11 Test #74: cs80_mts_esp_native_tests ..................   Passed    0.01 sec
+      Start 75: cs80_mts_esp_shim_tests
+ 2/11 Test #75: cs80_mts_esp_shim_tests ....................   Passed    0.24 sec
+      Start 76: cs80_mts_esp_fallback_tests
+ 3/11 Test #76: cs80_mts_esp_fallback_tests ................   Passed    0.00 sec
+      Start 77: cs80_mts_esp_windows_macro_tests
+ 4/11 Test #77: cs80_mts_esp_windows_macro_tests ...........   Passed    0.00 sec
+      Start 78: cs80_host_automation_curve_tests
+ 5/11 Test #78: cs80_host_automation_curve_tests ...........   Passed    0.58 sec
+      Start 79: cs80_au_automation_curve_tests
+ 6/11 Test #79: cs80_au_automation_curve_tests .............   Passed    0.02 sec
+      Start 80: cs80_au_automation_bridge_contract_tests
+ 7/11 Test #80: cs80_au_automation_bridge_contract_tests ...   Passed    0.01 sec
+      Start 85: cs80_tuning_input_boundary_tests
+ 8/11 Test #85: cs80_tuning_input_boundary_tests ...........   Passed    0.00 sec
+      Start 86: cs80_mts_counted_message_tests
+ 9/11 Test #86: cs80_mts_counted_message_tests .............   Passed    0.00 sec
+      Start 87: cs80_mts_realtime_semantics_tests
+10/11 Test #87: cs80_mts_realtime_semantics_tests ..........   Passed    1.44 sec
+      Start 88: cs80_tuning_midi_tests
+11/11 Test #88: cs80_tuning_midi_tests .....................   Passed    0.66 sec
+
+100% tests passed out of 11
+
+Total Test time (real) =   2.99 sec
+FINISHED 2026-11-02T12:29:30Z
