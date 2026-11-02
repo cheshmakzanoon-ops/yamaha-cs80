@@ -1,0 +1,37 @@
+SOURCE=f31d08c4551b38646aadd9f9a1a87a5b4a470e70
+2026-11-02T10:22:16Z
+mts-shim-after-build exit=0
+EXIT=0
+mts-shim-after exit=0
+EXIT=0
+mts-vendor-before-build exit=0
+EXIT=0
+mts-vendor-before exit=1
+FAIL: native two-byte scale decodes all successive 14-bit detunes exactly
+FAIL: each native two-byte detune uses its own 14-bit sign, not prior payload bits
+EXIT=1
+mts-macro-before-build exit=1
+      |         ^~~
+tests/../src/plugin/MtsEspClient.cpp: In member function ‘bool cs80::MtsEspClient::fillTable(cs80::tuning::TuningTable&) const’:
+tests/../src/plugin/MtsEspClient.cpp:59:38: error: invalid cast from type ‘float (*)() noexcept’ to type ‘double’
+   59 |                             && hz <= (double) std::numeric_limits<float>::max() / dspHeadroom;
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EXIT=1
+host-curve-before-build exit=0
+EXIT=0
+host-curve-before exit=1
+FAIL: malformed host initial uses a finite zero fallback without moving event knots
+FAIL: malformed host initial uses a finite zero fallback without moving event knots
+FAIL: extreme positive host offset retains forward interpolation
+FAIL: extreme host offset matches widened independent denominator
+maximum normalized curve error=2.22045e-16
+EXIT=1
+host-curve-ubsan-before-build exit=0
+EXIT=0
+host-curve-ubsan-before exit=1
+FAIL: nonfinite host initial is rejected before sample interpolation
+FAIL: malformed host initial uses a finite zero fallback without moving event knots
+FAIL: malformed host initial uses a finite zero fallback without moving event knots
+src/plugin/HostAutomationBridge.h:62:89: runtime error: signed integer overflow: 2147483647 - -1 cannot be represented in type 'int'
+EXIT=1
+2026-11-02T10:22:28Z

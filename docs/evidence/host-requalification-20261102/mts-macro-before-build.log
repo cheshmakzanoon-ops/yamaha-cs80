@@ -1,0 +1,12 @@
+In file included from tests/MtsEspWindowsMacroTests.cpp:14:
+tests/../src/plugin/MtsEspClient.cpp:59:79: error: macro "max" requires 2 arguments, but only 1 given
+   59 |                             && hz <= (double) std::numeric_limits<float>::max() / dspHeadroom;
+      |                                                                               ^
+tests/MtsEspWindowsMacroTests.cpp:13:9: note: macro "max" defined here
+   13 | #define max(a, b) (((a) > (b)) ? (a) : (b))
+      |         ^~~
+tests/../src/plugin/MtsEspClient.cpp: In member function ‘bool cs80::MtsEspClient::fillTable(cs80::tuning::TuningTable&) const’:
+tests/../src/plugin/MtsEspClient.cpp:59:38: error: invalid cast from type ‘float (*)() noexcept’ to type ‘double’
+   59 |                             && hz <= (double) std::numeric_limits<float>::max() / dspHeadroom;
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EXIT=1

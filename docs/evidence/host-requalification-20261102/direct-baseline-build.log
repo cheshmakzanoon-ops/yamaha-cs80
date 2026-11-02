@@ -1,0 +1,8 @@
++ g++ -std=c++20 -O3 -DNDEBUG -Isrc -c src/core/Engine.cpp -o build-host-core/Engine.o
++ g++ -std=c++20 -O3 -DNDEBUG -Isrc -c src/core/FactoryPresets.cpp -o build-host-core/FactoryPresets.o
++ g++ -std=c++20 -O3 -DNDEBUG -Isrc -DCS80_WITH_MTS_ESP=1 -DCS80_MTS_ESP_TEST_BACKEND=1 tests/MtsEspShimTests.cpp src/plugin/MtsEspClient.cpp build-host-core/Engine.o build-host-core/FactoryPresets.o -o build-host-core/mts-shim
++ set +e
++ build-host-core/mts-shim
++ code=1
++ echo EXIT=1
++ test 1 -eq 1

@@ -1,0 +1,25 @@
+SOURCE=d2d5528e66a6c78da493f5645647cfbd26a58ab4
+SRC_TREE=7b0d3db37f3c59958808e6e08280b1119ea5b83f
+2026-11-02T10:24:39Z
+AU normalized curve maximum error=2.22045e-16
+TEST=mts-shim
+EXIT=0
+TEST=mts-native
+EXIT=0
+TEST=mts-macro
+EXIT=0
+TEST=host-curve
+maximum normalized curve error=2.22045e-16
+EXIT=0
+TEST=host-curve-ubsan
+maximum normalized curve error=2.22045e-16
+EXIT=0
+TEST=au-curve-ubsan
+AU normalized curve maximum error=2.22045e-16
+EXIT=0
+TEST=au-bridge
+EXIT=0
+TEST=mts-fallback
+EXIT=0
+CORE_DIFF_LINES=0
+2026-11-02T10:24:51Z

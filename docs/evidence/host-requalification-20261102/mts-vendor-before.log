@@ -1,0 +1,3 @@
+FAIL: native two-byte scale decodes all successive 14-bit detunes exactly
+FAIL: each native two-byte detune uses its own 14-bit sign, not prior payload bits
+EXIT=1

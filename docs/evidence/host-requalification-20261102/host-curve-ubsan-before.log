@@ -1,0 +1,5 @@
+FAIL: nonfinite host initial is rejected before sample interpolation
+FAIL: malformed host initial uses a finite zero fallback without moving event knots
+FAIL: malformed host initial uses a finite zero fallback without moving event knots
+src/plugin/HostAutomationBridge.h:62:89: runtime error: signed integer overflow: 2147483647 - -1 cannot be represented in type 'int'
+EXIT=1

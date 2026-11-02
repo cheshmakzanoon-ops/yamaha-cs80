@@ -1,0 +1,29 @@
+SOURCE=854d18058f34c58681c4ec8bc57b9142ce058478
+2026-11-02T10:23:31Z
+mts-vendor-after-build exit=0
+EXIT=0
+mts-vendor-after exit=0
+EXIT=0
+mts-macro-after-build exit=0
+EXIT=0
+mts-macro-after exit=0
+EXIT=0
+host-curve-after-build exit=0
+EXIT=0
+host-curve-after exit=0
+maximum normalized curve error=2.22045e-16
+EXIT=0
+host-curve-ubsan-after-build exit=0
+EXIT=0
+host-curve-ubsan-after exit=0
+maximum normalized curve error=2.22045e-16
+EXIT=0
+au-curve-before-build exit=0
+EXIT=0
+au-curve-before exit=1
+FAIL: malformed AU initial cannot move an immediate event before sample 7
+FAIL: malformed AU initial cannot move an immediate event before sample 7
+FAIL: malformed AU initial cannot move an immediate event before sample 7
+AU normalized curve maximum error=2.22045e-16
+EXIT=1
+2026-11-02T10:23:42Z
