@@ -19,7 +19,7 @@ const juce::Identifier stateType { "CS80_PARAMS" };
 
 // State parsing must use the serialized C numeric grammar without changing a
 // host's process/thread locale. This object is touched only by non-RT restore
-// paths. Failed locale allocation leaves parsing incomplete, hence frozen V1.
+// paths. Failed locale allocation leaves parsing incomplete: use caller fallback.
 class StateNumericLocale final
 {
 public:
@@ -1246,7 +1246,8 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
             const auto encoded = child.getProperty("value", juce::var()).toString().trim();
             const auto* begin = encoded.toRawUTF8();
             char* end = nullptr;
-            const auto parsed = std::strtod(begin, &end);
+            static const StateNumericLocale numericLocale;
+            const auto parsed = numericLocale.parse(begin, &end);
             const bool literal = child.hasProperty("value") && end != begin && *end == '\0'
                                  && (parsed == 0.0 || parsed == 1.0);
             value = literal ? (float) parsed : fallback;
