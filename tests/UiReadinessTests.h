@@ -5,6 +5,7 @@
 #include "plugin/PluginProcessor.h"
 
 #include <chrono>
+#include <cstdio>
 #include <vector>
 
 namespace cs80::tests
@@ -80,6 +81,13 @@ public:
         else { ++ends; if (--depth != 0) balanced = false; }
     }
     bool valid() const { return balanced && changes > 0 && begins == 1 && ends == 1 && depth == 0; }
+    void reportIfInvalid(float request) const
+    {
+        if (request != 1.0f || !valid())
+            std::fprintf(stderr,
+                         "READINESS CLICK: request=%g changes=%d begins=%d ends=%d depth=%d balanced=%d\n",
+                         static_cast<double>(request), changes, begins, ends, depth, balanced ? 1 : 0);
+    }
 private:
     int changes = 0, begins = 0, ends = 0, depth = 0;
     bool balanced = true;
@@ -256,6 +264,7 @@ void runUiReadinessTests(Check check, Flush flush)
         // Keep observing after the first accepted callback so a second click
         // or unbalanced notification still fails the original probe.
         flush(160);
+        probe.reportIfInvalid(host.getParamValue(cs80::P_sourcePerformance));
         sourceParameter->removeListener(&probe);
         check(host.getParamValue(cs80::P_sourcePerformance) == 1.0f && probe.valid(),
               "source toggle sends one balanced host gesture and enables its stored request");
