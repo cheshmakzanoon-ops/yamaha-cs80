@@ -783,7 +783,11 @@ struct MTSClient
                             sysex_ctr++;
                             if (!(sysex_ctr & 1))
                             {
-                                double detune = (static_cast<double>(sysex_value & 16383) - 8192.0) / (sysex_value > 8192 ? 8191.0 : 8192.0);
+                                // A new scale degree begins every two bytes; older
+                                // payload bits must not determine this detune's sign.
+                                const int detune14 = sysex_value & 16383;
+                                sysex_value = 0;
+                                double detune = (static_cast<double>(detune14) - 8192.0) / (detune14 > 8192 ? 8191.0 : 8192.0);
                                 for (int j = note; j < 128; j += 12)
                                     updateTuning(j, j, detune);
                                 if (++note >= 12)
