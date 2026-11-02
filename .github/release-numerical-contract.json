@@ -22,6 +22,12 @@
       "click-causality.csv": 9
     },
     "expected_source_phrase_rows": 283,
+    "frozen_fixture_identities": {
+      "factory_programs_44100_sha256": "d169852773dd2e43ccf951531592eb870c7aff534212059b9f967eed5c2872c1",
+      "tone_pairs_44100_sha256": "cbef2a1ffc829717bb0f996db1212f9e034148aef86451ec5cfb68219615c793",
+      "serialization": "SHA-256 of UTF-8 JSON array of ordered {group,name} objects, ensure_ascii=false, sort_keys=true, compact separators; source and legacy at 44100 Hz",
+      "source_evidence": "original 885-row source-locked audit 41336194253, src tree 7dd159d491012fd47b46c0aa651e86ea959ca289"
+    },
     "frozen_reporter_path": "docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py",
     "frozen_reporter_sha256": "3f1a68208c8c848c645088dae8d1a398190f32c05c1344bbffd3f4c071aa2fd9",
     "require_marker_source_and_provenance_hash": true,

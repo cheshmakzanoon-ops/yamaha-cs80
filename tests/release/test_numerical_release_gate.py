@@ -7,6 +7,7 @@ threshold is relaxed and no production source is touched.
 from __future__ import annotations
 
 import csv
+import copy
 import hashlib
 import importlib.util
 import json
@@ -75,6 +76,19 @@ def raw_suites():
               for rate in RATES]
     return {"phrase.csv": phrase, "alias.csv": alias, "fx.csv": fx,
             "latency.csv": latency, "click-causality.csv": causal}
+
+
+# The committed contract pins the actual frozen 222-program bank and 11 tone
+# pairs from the original archive. Only synthetic positive-fixture tests use a
+# corresponding in-memory pin; the real-archive negative control below must
+# validate against the committed canonical hashes, never this test substitute.
+TEST_CONTRACT = copy.deepcopy(CONTRACT)
+_synthetic_phrase = raw_suites()["phrase.csv"]
+for _key, _is_tab in (("factory_programs_44100_sha256", False),
+                      ("tone_pairs_44100_sha256", True)):
+    _rows = [r for r in _synthetic_phrase if r["policy"] == "source"
+             and r["rate"] == "44100" and (r["group"] == "tab") == _is_tab]
+    TEST_CONTRACT["audit"]["frozen_fixture_identities"][_key] = gate.fixture_identity_sha256(_rows)
 
 
 def target_comparisons():
@@ -181,6 +195,16 @@ class NumericalReleaseGateTests(unittest.TestCase):
                        and r["group"].startswith("program:"))
             row["name"] = "Unregistered Program"
 
+        def mutate_first_rate_program_group(f):
+            phrase = f["audit"]["suites"]["phrase.csv"]
+            phrase[1]["group"] = phrase[0]["group"]
+
+        def mutate_secondary_program_group(f):
+            phrase = f["audit"]["suites"]["phrase.csv"]
+            row = next(r for r in phrase if r["policy"] == "source" and r["rate"] == "48000"
+                       and r["group"] == "program:16")
+            row["group"] = "program:0"
+
         def mutate_alias(f):
             alias = f["audit"]["suites"]["alias.csv"]
             alias[1]["note"] = alias[0]["note"]
@@ -195,24 +219,38 @@ class NumericalReleaseGateTests(unittest.TestCase):
             latency = f["audit"]["suites"]["latency.csv"]
             latency[1]["freq_hz"] = latency[0]["freq_hz"]
 
+        def counterfeit_bank(f):
+            for row in f["audit"]["suites"]["phrase.csv"]:
+                if row["group"].startswith("program:"):
+                    row["name"] = "Counterfeit " + row["name"]
+
+        def counterfeit_tone_pairs(f):
+            for row in f["audit"]["suites"]["phrase.csv"]:
+                if row["group"] == "tab":
+                    row["name"] = "Counterfeit " + row["name"]
+
         edits = [
             ("duplicate bank program", mutate_bank),
             ("wrong secondary-rate bank sample", mutate_secondary_bank),
+            ("changed first-rate program group with same name", mutate_first_rate_program_group),
+            ("changed secondary-rate program group with same name", mutate_secondary_program_group),
             ("wrong causal program", lambda f: f["audit"]["suites"]["click-causality.csv"][0].update(name="Wrong Bass")),
             ("wrong causal event", lambda f: f["audit"]["suites"]["click-causality.csv"][0].update(event="note_off")),
             ("duplicated alias note/feet", mutate_alias),
             ("duplicated FX configuration", mutate_fx),
             ("duplicated latency frequency", mutate_latency),
+            ("entire counterfeit 222-program bank", counterfeit_bank),
+            ("entire counterfeit 11-tone-pair bank", counterfeit_tone_pairs),
         ]
         for name, change in edits:
             with self.subTest(name=name):
                 f = fixture()
                 change(f)
                 with self.assertRaises((gate.GateError, ValueError, KeyError)):
-                    gate.validate_evidence(CONTRACT, f)
+                    gate.validate_evidence(TEST_CONTRACT, f)
 
     def test_synthetic_positive(self):
-        result = gate.validate_evidence(CONTRACT, fixture())
+        result = gate.validate_evidence(TEST_CONTRACT, fixture())
         self.assertTrue(result["pass"])
         self.assertEqual(len(result["selected_held"]), 11)
         self.assertLessEqual(result["selected_idle"]["median_rtf"], 0.02)
@@ -225,7 +263,7 @@ class NumericalReleaseGateTests(unittest.TestCase):
                     row["median_rtf"] = str(0.19 - i * 0.01)
                     row["p99_rtf"] = str(0.25 + i * 0.01)
                     row["budget_exceedances"] = str(i + 2)
-        result = gate.validate_evidence(CONTRACT, f, expected_main_sha=REVIEWED,
+        result = gate.validate_evidence(TEST_CONTRACT, f, expected_main_sha=REVIEWED,
                                         expected_source_tree_sha=TREE)
         self.assertEqual({case["selected_round"] for case in result["selected_held"]}, {3})
         self.assertEqual({case["budget_exceedances"] for case in result["selected_held"]}, {4})
@@ -299,13 +337,13 @@ class NumericalReleaseGateTests(unittest.TestCase):
                 f = fixture()
                 edit(f)
                 with self.assertRaises((gate.GateError, ValueError, KeyError)):
-                    gate.validate_evidence(CONTRACT, f)
+                    gate.validate_evidence(TEST_CONTRACT, f)
 
     def test_external_trusted_sha_checks(self):
         with self.assertRaisesRegex(gate.GateError, "differs from exact main"):
-            gate.validate_evidence(CONTRACT, fixture(), expected_main_sha=BEFORE)
+            gate.validate_evidence(TEST_CONTRACT, fixture(), expected_main_sha=BEFORE)
         with self.assertRaisesRegex(gate.GateError, "tree differs from exact main"):
-            gate.validate_evidence(CONTRACT, fixture(), expected_source_tree_sha=BEFORE)
+            gate.validate_evidence(TEST_CONTRACT, fixture(), expected_source_tree_sha=BEFORE)
 
 
 if __name__ == "__main__":

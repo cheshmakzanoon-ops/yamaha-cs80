@@ -76,6 +76,14 @@ def source_phrase_rows(rows):
     return [row for row in rows if row["policy"] == "source"]
 
 
+def fixture_identity_sha256(rows):
+    """Hash the exact source-defined ordered (group, name) fixture sequence."""
+    fields = [{"group": row["group"], "name": row["name"]} for row in rows]
+    canonical = json.dumps(fields, ensure_ascii=False, sort_keys=True,
+                           separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
 def scope_rows(scope, suites):
     if scope.startswith("Source phrase "):
         return source_phrase_rows(suites["phrase.csv"])
@@ -92,6 +100,7 @@ def scope_rows(scope, suites):
 
 def verify_audit_coverage(contract, suites):
     rates = contract["audit"]["expected_rates_hz"]
+    canonical_identities = contract["audit"]["frozen_fixture_identities"]
     # Counts alone would accept the same easy program/tone/FX case duplicated
     # in place of a difficult registered fixture. Recheck the identity and
     # sampling order of the original source-defined audit, independently of
@@ -117,19 +126,24 @@ def verify_audit_coverage(contract, suites):
             tabs = [r for r in phrase if r["group"] == "tab"]
             require(len(programs) == expected_programs and len(tabs) == 11,
                     f"{policy} phrase at {rate}: unknown group or missing program/tone")
-            current_programs = [r["name"] for r in programs]
+            current_programs = [(r["name"], r["group"]) for r in programs]
             current_tabs = [r["name"] for r in tabs]
-            require(all(current_programs) and all(current_tabs),
+            require(all(r["name"] for r in programs) and all(current_tabs),
                     f"{policy} phrase at {rate}: blank fixture name")
             if rate == 44100:
-                require(len(set(current_programs)) == 222,
+                require(len({name for name, _ in current_programs}) == 222,
                         f"{policy}: 222 uniquely named factory programs required")
+                require(fixture_identity_sha256(programs) == canonical_identities["factory_programs_44100_sha256"],
+                        f"{policy}: frozen factory program identity/hash changed")
                 full_bank_names = current_programs
             else:
                 require(current_programs == full_bank_names[::16],
                         f"{policy} phrase at {rate}: wrong stride-16 bank sample/order")
             require(len(set(current_tabs)) == 11,
                     f"{policy} phrase at {rate}: duplicate tone pairs")
+            if rate == 44100:
+                require(fixture_identity_sha256(tabs) == canonical_identities["tone_pairs_44100_sha256"],
+                        f"{policy}: frozen physical tone-pair identity/hash changed")
             if tab_names is None:
                 tab_names = current_tabs
             else:
