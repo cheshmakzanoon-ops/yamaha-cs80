@@ -523,10 +523,6 @@ int main() {
                     g.caseIndex=caseNumber;
                     oneCase(g,16,rate,128,round,mxcsr,caseNumber++,true);
                 }
-#if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST) && CS80_WSC_LANE_X86 && \
-    (defined(__GNUC__) || defined(__clang__))
-        checkUnmaskedX87Guard();
-#endif
         const std::uint64_t expectedCases=32u+32u*denorm.size();
         const std::uint64_t expectedSamples=32u*192u+32u*denorm.size()*128u;
         const std::uint64_t scheduledSlots=expectedSamples*kLanes;
@@ -575,6 +571,10 @@ int main() {
             throw std::runtime_error("WSC denormal-mode actual-admission work gate failed");
         if(g.vectorBackendCalls<100)
             throw std::runtime_error("WSC four-lane backend not meaningfully exercised");
+#endif
+#if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST) && CS80_WSC_LANE_X86 && \
+    (defined(__GNUC__) || defined(__clang__))
+        checkUnmaskedX87Guard();
 #endif
 #if defined(CS80_WSC_LANE_MUTATE_MASK) || defined(CS80_WSC_LANE_MUTATE_CROSS_LANE) || \
     defined(CS80_WSC_LANE_MUTATE_EVENT) || defined(CS80_WSC_LANE_MUTATE_FP)

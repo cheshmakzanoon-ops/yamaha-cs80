@@ -1,0 +1,14 @@
+[
+  "g++",
+  "-O3",
+  "-DNDEBUG",
+  "-std=gnu++20",
+  "-frounding-math",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/unmasked-x87/src",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/unmasked-x87/tests",
+  "-DCS80_WSC_FOUR_LANE_BACKEND_TEST=1",
+  "-DCS80_WSC_FOUR_LANE_MUTATE_X87_GUARD=1",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/unmasked-x87/tests/WscIndependentLanePreregTests.cpp",
+  "-o",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/unmasked-x87/test"
+]

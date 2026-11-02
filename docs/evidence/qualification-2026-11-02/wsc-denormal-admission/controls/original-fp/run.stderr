@@ -1,0 +1,4 @@
+FAIL fp.exceptions case=0 sample=19 lane=0 actual=0 expected=32
+FAIL fp.x87StatusExceptions case=0 sample=19 lane=0 actual=0 expected=32
+FAIL fp.mxcsr case=0 sample=19 lane=0 actual=8064 expected=8096
+WSC independent-lane FAIL: WSC registered lane/work/bit acceptance failed

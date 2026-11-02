@@ -1,0 +1,12 @@
+[
+  "g++",
+  "-O3",
+  "-DNDEBUG",
+  "-std=gnu++20",
+  "-frounding-math",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/scalar-positive/src",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/scalar-positive/tests",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/scalar-positive/tests/WscIndependentLanePreregTests.cpp",
+  "-o",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/scalar-positive/test"
+]

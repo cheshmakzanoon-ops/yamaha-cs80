@@ -1,0 +1,9 @@
+FAIL lane.state.charge case=0 sample=13 lane=0 bits=0x3fefa5713280dee8/0x3fefac687d6343ea
+FAIL lane.state.inputBaselineVolts case=0 sample=13 lane=0 bits=0x3f7258afde391600/0x3f70fb7c7632da00
+FAIL lane.state.triangleBaselineVolts case=0 sample=13 lane=0 bits=0x3f72aba23ffe9e00/0x3f713c3624392000
+FAIL lane.state.elapsedSeconds case=0 sample=13 lane=0 bits=0x3f2351aa21f29430/0x3f21d53a957d7519
+FAIL lane.state.residualCursor case=0 sample=13 lane=0 actual=13 expected=12
+FAIL lane.state.residual case=0 sample=13 lane=0 bits=0x0000000000000000/0xbf61bbbcd65e15b8
+FAIL lane.diagnostics.rawPin7Volts case=0 sample=13 lane=0 bits=0x4008523685d02692/0x400857910a001885
+FAIL lane.diagnostics.coupledInputVolts case=0 sample=13 lane=0 bits=0x4008490a2de10a07/0x40084f134bc4ff18
+WSC independent-lane FAIL: WSC exact bit mismatch budget exceeded

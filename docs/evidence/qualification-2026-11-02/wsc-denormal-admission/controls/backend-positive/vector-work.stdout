@@ -1,0 +1,13 @@
+{
+  "binary": "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/backend-positive/test",
+  "kernel_found": true,
+  "kernel_call_sites": 1,
+  "four_double_arithmetic_instructions": {
+    "vaddpd": 5,
+    "vsubpd": 4,
+    "vmulpd": 8,
+    "vdivpd": 1
+  },
+  "passed": true,
+  "claim": "compiled arithmetic plus separately checked runtime admission; no performance claim"
+}

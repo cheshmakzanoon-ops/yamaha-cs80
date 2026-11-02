@@ -360,9 +360,11 @@ public:
 #if CS80_WSC_FOUR_LANE_AVX2_EXPERIMENT
         if(!__builtin_cpu_supports("avx2")||std::fegetround()!=FE_TONEAREST)return false;
         const unsigned mxcsr=_mm_getcsr();
-        // Preserve host exception behavior: SSE nearest, masked exceptions,
-        // no flush-to-zero/denormals-are-zero. Other modes use original tick.
-        if((mxcsr&((3u<<13)|(1u<<15)|(1u<<6)))!=0u ||
+        // Preserve host exception behavior: SSE nearest and masked traps.
+        // The separately registered full-lane oracle covers all supported
+        // FTZ/DAZ combinations, including consumed subnormal residuals. Never
+        // change the caller's denormal mode; foreign rounding uses tick().
+        if((mxcsr&(3u<<13))!=0u ||
            (mxcsr&(0x3fu<<7))!=(0x3fu<<7))return false;
         std::uint16_t x87Control=0;
         __asm__ volatile("fnstcw %0":"=m"(x87Control));

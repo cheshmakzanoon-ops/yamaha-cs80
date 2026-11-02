@@ -1,0 +1,13 @@
+[
+  "g++",
+  "-O3",
+  "-DNDEBUG",
+  "-std=gnu++20",
+  "-frounding-math",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/original-cross_lane/src",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/original-cross_lane/tests",
+  "-DCS80_WSC_LANE_MUTATE_CROSS_LANE=1",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/original-cross_lane/tests/WscIndependentLanePreregTests.cpp",
+  "-o",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/original-cross_lane/test"
+]

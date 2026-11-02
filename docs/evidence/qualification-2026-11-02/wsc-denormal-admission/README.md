@@ -54,3 +54,60 @@ stdout/stderr RED log contains one interleaved error message; neither content
 nor failure status is omitted. No production source was changed in this
 registration/evidence commit. No CPU speedup, physical fidelity or release claim
 follows from it. Hard held ≤0.20 RTF and idle ≤0.02 remain unchanged and RED.
+
+## Narrow experimental extension and adversarial controls
+
+After the RED registration, the candidate removes **only FTZ/DAZ bits** from the
+admission rejection mask. Independent SSE rounding, all masked SSE exceptions,
+all masked x87 exceptions, full lane eligibility and rejected-admission FP
+rollback remain. Caller denormal modes are never changed. Scalar `tick()`, node
+laws, coefficients, event handling and Engine scheduling are untouched.
+
+The extended candidate passes 160 cases, 281,092,938 field comparisons and zero
+mismatches, with 7943 admitted batches. Each nearest FTZ/DAZ cell admits 284–303
+batches, including 31–36 batches consuming nonzero subnormal residuals; every
+other rounding-mode cell admits zero. The unchanged x87 negative probe still
+rejects unmasked traps transactionally.
+
+`run-wsc-denormal-negative-controls.py` compiles independent source copies
+serially, never overwrites existing evidence, and accepts only the specified
+ordinary exit status/assertion (not a compile error or signal). Twelve variants
+were observed:
+
+- Scalar and experimental vector positives: exit 0.
+- Reinstated old denormal guard and disabled dispatch: exit 1 at per-cell work.
+- Skipped physical vector update and cross-lane frequency: exit 1 at exact state.
+- Removed x87 guard: exit 1 at the unmasked-trap admission assertion.
+- Original MASK, CROSS_LANE, EVENT and FP mutants: their original named failures.
+- **Forged scalar work:** four scalar physical advances preserve all numerical
+  outputs and admitted-call counts (exit 0), but the independent compiled-work
+  inspector rejects the binary with ordinary exit 1. Thus an accepted-call
+  counter alone is demonstrably insufficient.
+
+The actual candidate contains a called `advanceTickFourAvx2` with five YMM
+`vaddpd`, four `vsubpd`, eight `vmulpd` and one `vdivpd` instructions. This
+instruction witness is paired with runtime per-cell admission and frozen state
+checks; it is not itself a throughput result. The unchanged x87 probe is run
+*after* the new per-cell work gate so a disabled backend fails its intended
+work assertion instead of the probe's eligible-positive precondition.
+
+Detailed commands, compiler/binary/source hashes and separate stdout/stderr for
+all twelve variants are retained under `controls/`. No production Engine caller
+or whole-engine acceleration claim has been added.
+
+## Unchanged oscillator regression gates
+
+After the extension, the original standalone gates also pass without tolerance
+or source-reference edits:
+
+- Frozen original scheduler: 56,576 ticks, 44,294,052 bit comparisons, zero mismatches.
+- Cache continuation: worst pin difference `3.39565708884e-10` V and event-time
+  difference `2.38697950294e-15` s; snapshot restoration exactly zero difference;
+  307 analytic searches per 8192 samples, within the unchanged work bound.
+- Physical oscillator suite: 1,418,466 checks, zero failures. Actual 255-tap 2×
+  decimator off-harmonic energy is −92.3189 dBc against its unchanged −70 dBc gate.
+
+These exercise the unchanged scalar oscillator and guard against unrelated
+regression. They are not a new full-Engine SIMD/alias or CPU qualification; the
+new vector domain's continuation claim comes from the independent exact oracle.
+`run-regressions.sh` uses the original CTest arguments, including `no-benchmark`.

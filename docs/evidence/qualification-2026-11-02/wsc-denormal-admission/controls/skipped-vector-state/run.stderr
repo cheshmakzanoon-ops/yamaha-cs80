@@ -1,0 +1,9 @@
+FAIL output.sawPin5 case=6 sample=1 lane=2 bits=0xbf7829d8d1516000/0xbf4a812b99dd0000
+FAIL output.sawPin5 case=6 sample=1 lane=5 bits=0xbf8271e9fa7e8000/0xbf4744ec15340000
+FAIL output.sawPin5 case=6 sample=1 lane=8 bits=0xbf88cee78c548000/0xbf4408ac908e0000
+FAIL output.sawPin5 case=6 sample=1 lane=11 bits=0xbf8f2be51e2a4000/0xbf40cc6d0be40000
+FAIL lane.state.charge case=6 sample=1 lane=2 bits=0x3fed8ce01e76eec0/0x3fed8026a35443e6
+FAIL lane.state.inputBaselineVolts case=6 sample=1 lane=2 bits=0x3f346a6f431ee000/0x3f4465c197195000
+FAIL lane.state.triangleBaselineVolts case=6 sample=1 lane=2 bits=0x3f36fe7f47284000/0x3f46fe2ca9f52000
+FAIL lane.diagnostics.rawPin7Volts case=6 sample=1 lane=2 bits=0x4006b5d837557238/0x4006ac10bd569cf5
+WSC independent-lane FAIL: WSC exact bit mismatch budget exceeded

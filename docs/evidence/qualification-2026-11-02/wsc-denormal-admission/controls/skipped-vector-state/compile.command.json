@@ -1,0 +1,13 @@
+[
+  "g++",
+  "-O3",
+  "-DNDEBUG",
+  "-std=gnu++20",
+  "-frounding-math",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/skipped-vector-state/src",
+  "-I/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/skipped-vector-state/tests",
+  "-DCS80_WSC_FOUR_LANE_BACKEND_TEST=1",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/skipped-vector-state/tests/WscIndependentLanePreregTests.cpp",
+  "-o",
+  "/workspace/scratch/aa102d573ba3/cs80-cpu-evidence/wsc-denormal/controls-v1/skipped-vector-state/test"
+]
