@@ -2,7 +2,9 @@
 
 Vendored on 2026-10-31 from [ODDSound/MTS-ESP](https://github.com/ODDSound/MTS-ESP),
 commit [`f214739b8832e7f297cb9970d0c0efbf783f1462`](https://github.com/ODDSound/MTS-ESP/commit/f214739b8832e7f297cb9970d0c0efbf783f1462).
-The three upstream files below are byte-for-byte copies, without local edits.
+The three files were initially byte-for-byte copies. The client implementation
+now carries one narrow local decoder correction, documented below; the header
+and licence remain byte-for-byte upstream copies.
 
 The upstream licence is **BSD Zero Clause (SPDX: 0BSD)**, reproduced in
 [LICENSE](LICENSE) and in both source files. It is not MIT. The surrounding
@@ -14,8 +16,33 @@ CS-80 Reference project remains AGPLv3.
 | `Client/libMTSClient.cpp` | `b854e7c2b657a660431839fb1c413522fa2877296404cee2a36db55d8813c4b3` |
 | `LICENSE` | `481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837` |
 
+### Local two-byte MTS scale decoder correction (2026-11-02)
+
+The upstream `Client/libMTSClient.cpp` scale/octave two-byte parser (formats
+`08 06` and `08 09`) accumulated successive 14-bit detunes in one signed
+integer. Although it masked the low 14 bits when extracting each pair, it used
+the entire accumulated word to select the positive/negative detune denominator.
+Older pairs could therefore flip the sign test and produce a wrong pitch.
+
+A local correction uses the masked 14-bit value for that test and resets the
+accumulator after each pair. No declarations, dynamic-library discovery,
+licence text or other upstream processing was changed. The **local patched**
+`Client/libMTSClient.cpp` SHA-256 is
+`a025effcd76a2c809be4112fcf521a8966368d174e5394fb2fa8cb7913554cfe`;
+the table above deliberately retains the unmodified **upstream** hash for
+provenance. Future re-vendoring must review this small patch rather than
+silently overwriting it.
+
+`tests/MtsEspNativeTests.cpp` preregisters the valid extended 2-byte SysEx
+`F0 7F 7F 08 09 00 7F 7F`, followed by 24 bytes of `48` and `F7`. All twelve
+successive pairs represent +`1096/8191` semitone, which the upstream parser
+fails to reproduce on later notes. It also checks that a truncated pair does
+not overwrite the previous tuning. The separate preregistered test commit is
+`9f1162e`; native, shim and fallback tests pass after this correction. This is
+a demonstrated numerical decoding defect, not a reported UBSan trap.
+
 Only the client is vendored. A master and its platform `libMTS` installation
-are still needed for a live MTS-ESP connection. The unmodified client discovers
+are still needed for a live MTS-ESP connection. The vendored client discovers
 the shared library at the upstream documented platform location; this project
 does not install a replacement library, alter system paths, or supply a master.
 
