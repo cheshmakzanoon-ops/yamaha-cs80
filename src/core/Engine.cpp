@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "DriftSineExact.h"
 #include "RingModulatorCircuit.h"
 
 #include <algorithm>
@@ -6,6 +7,10 @@
 
 namespace cs80
 {
+
+#if defined(CS80_DRIFT_SINE_SOURCE_WITNESS)
+thread_local drift_opt::SourceWorkCounters drift_opt::sourceWork {};
+#endif
 
 namespace
 {
@@ -2194,7 +2199,7 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         const float touchVelocity = freeRunning ? v.touchB : v.velocity;
         const float touchPressure = freeRunning ? v.touchA : v.pressure;
         const float dispersion = global.voiceDispersion;
-        const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
+        const float driftVoice = drift_opt::sine(global.drift, driftPhase, voiceDrift[vi]);
         // Envelope sources are the previous sample's values of each rank.
         if (! modernUpdatedForTail)
             modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,

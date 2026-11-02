@@ -76,6 +76,17 @@ if (CS80_BUILD_TESTS)
     endif()
     add_test(NAME cs80_drift_sine_exact_oracle_tests COMMAND cs80_drift_sine_exact_oracle_tests)
     set_tests_properties(cs80_drift_sine_exact_oracle_tests PROPERTIES TIMEOUT 300)
+    # Test-only independent Engine build counts actual call-site fast branches
+    # and scalar sinf calls. Production cs80_core contains no work telemetry.
+    add_library(cs80_drift_sine_witness_core STATIC
+        src/core/Engine.cpp src/core/FactoryPresets.cpp)
+    target_include_directories(cs80_drift_sine_witness_core PUBLIC src)
+    target_compile_definitions(cs80_drift_sine_witness_core PRIVATE CS80_DRIFT_SINE_SOURCE_WITNESS)
+    add_executable(cs80_drift_sine_source_work_tests tests/DriftSineSourceWorkTests.cpp)
+    target_compile_definitions(cs80_drift_sine_source_work_tests PRIVATE CS80_DRIFT_SINE_SOURCE_WITNESS)
+    target_link_libraries(cs80_drift_sine_source_work_tests PRIVATE cs80_drift_sine_witness_core)
+    add_test(NAME cs80_drift_sine_source_work_tests COMMAND cs80_drift_sine_source_work_tests)
+    set_tests_properties(cs80_drift_sine_source_work_tests PROPERTIES TIMEOUT 120)
     foreach(cs80_scalar_suite fixed moving state row fp)
         add_test(NAME cs80_exact_scalar_filter_${cs80_scalar_suite}_tests
                  COMMAND cs80_exact_scalar_filter_tests --suite ${cs80_scalar_suite})

@@ -1,6 +1,7 @@
 // Test-only, independently frozen Engine sine/drift software continuation.
 // Preregister before any production Engine.cpp branch or FP change.
 #include "core/Engine.h"
+#include "core/DriftSineExact.h"
 #include "fixtures/drift_sine/OriginalDrift.h"
 
 #include <algorithm>
@@ -112,11 +113,10 @@ void selectDenormal(unsigned mode) {
 #endif
 }
 
-// This is the pre-optimization current-source positive control, deliberately
-// separate from the fixture. After implementation, a real source helper and
-// source-site work witness must replace this control; the fixture stays frozen.
-float scalarSourceControl(float drift,float phase,float offset) {
-    return drift * std::sin(cs80::kTwoPi * (phase+offset)) * 0.9f;
+// Call the *actual production source* candidate now. The preregistered
+// OriginalDrift.h literal remains immutable and separately compiled.
+float currentSourceCandidate(float drift,float phase,float offset) {
+    return cs80::drift_opt::sine(drift,phase,offset);
 }
 
 float scalarThermalControl(bool performance,int model,float drift,float rankCents,float history) {
@@ -163,7 +163,7 @@ int frozenSineGrid() {
 #if defined(CS80_DRIFT_MUTATE_CROSS_LANE)
                         if (n==7 && lane==1) candidateOffset+=(float)0.17f;
 #endif
-                        auto candidate=scalarSourceControl(drifts[di],phase,candidateOffset);
+                        auto candidate=currentSourceCandidate(drifts[di],phase,candidateOffset);
 #if defined(CS80_DRIFT_MUTATE_UNSAFE_ZERO_SKIP)
                         // Naively replacing the sine with the incoming signed
                         // zero loses sign across half-cycles and exception bits.
@@ -213,7 +213,7 @@ int frozenSineGrid() {
     check.require(check.modes>=4,"drift.fpModesPresent");
     check.require(check.sinePairs>=10000 && check.zeroPairs>=1000,"drift.signedZeroCoverage");
     check.require(check.thermalPairs>=30000,"drift.thermalCoverage");
-    std::printf("Frozen drift: modes=%llu sine-pairs=%llu signed-zero=%llu selection-pairs=%llu checks=%llu failures=%llu; production fast calls=0\n",
+    std::printf("Frozen drift: modes=%llu sine-pairs=%llu signed-zero=%llu selection-pairs=%llu checks=%llu failures=%llu; source-site work counted separately\n",
                 (unsigned long long)check.modes,(unsigned long long)check.sinePairs,
                 (unsigned long long)check.zeroPairs,(unsigned long long)check.thermalPairs,
                 (unsigned long long)check.compares,(unsigned long long)check.failures);
