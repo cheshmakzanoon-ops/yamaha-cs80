@@ -1599,11 +1599,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         // Printed ends of the six-position FUNCTION fader follow the function set it is bound to.
         {
             auto& props = subFunction->getSlider().getProperties();
-            const juce::String top = original ? "EXT" : "RAND";
-            if (props["faderLegendTop"].toString() != top || props["faderLegendBottom"].toString() != "SINE")
+            const juce::String bottom = original ? "EXT" : "RAND";
+            if (props["faderLegendTop"].toString() != "SINE" || props["faderLegendBottom"].toString() != bottom)
             {
-                props.set("faderLegendTop", top);
-                props.set("faderLegendBottom", "SINE");
+                props.set("faderLegendTop", "SINE");
+                props.set("faderLegendBottom", bottom);
                 subFunction->getSlider().repaint();
             }
         }

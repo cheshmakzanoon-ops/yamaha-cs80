@@ -2326,7 +2326,7 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
     blit(g, track, 0.0f, 0.0f);
     if (numerals)
     {
-        // Printed scale numerals (10 at the top, 5, 0 at the bottom), right of the slot. The cap is wider
+        // Printed0/5/10 numerals follow the actual value geometry, right of the slot. The cap is wider
         // than the room beside the slot, so a numeral the cap is on (or touching) is left out rather
         // than shown half covered; it returns as soon as the cap moves on.
         const float yA = f.r - f.ey * 0.5f, yB = (float) fullH - f.r - f.ey * 0.5f;
@@ -2336,20 +2336,22 @@ void LookAndFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, i
         const float capCentre = sliderPos - f.ey * 0.5f;
         const float capTop = capCentre - f.faceH * 0.5f - 1.6f * f.s;
         const float capBottom = capCentre + f.faceH * 0.5f + f.ey + 1.6f * f.s;
+        const bool increasesDown = slider.valueToProportionOfLength(slider.getMaximum())
+                                 < slider.valueToProportionOfLength(slider.getMinimum());
         for (int i = 0; i <= 10; i += 5)
         {
             const float yy = yA + (yB - yA) * (float) i / 10.0f;
             const float top = yy - fh * 0.62f, bottom = yy + fh * 0.62f;
             if (bottom > capTop && top < capBottom)
                 continue;
-            const juce::String label = i == 0 ? "10" : (i == 5 ? "5" : "0");
+            const juce::String label(increasesDown ? i : 10 - i);
             drawEngravedText(g, label, { cx + 5.6f * f.s, top, 12.0f * f.s, fh * 1.24f }, font,
                              juce::Justification::centred, juce::Colour(0xffefe6c6));
         }
     }
     if (clearLeft)
     {
-        // End legends (for example I and II beside the MIX fader, EXT and SINE on FUNCTION) sit left of
+        // End legends (for example I and II beside the MIX fader, SINE and EXT on FUNCTION) sit left of
         // the slot, where the end ticks were, at the legend floor, right-aligned against the slot. A legend
         // that does not fit at 80 percent (after its printed abbreviation) is left out, never cut.
         const float cx = (float) fullW * 0.5f;
@@ -3088,6 +3090,17 @@ private:
 
 FocusSlider::~FocusSlider() = default;
 
+double FocusSlider::proportionOfLengthToValue(double proportion)
+{
+    return juce::Slider::proportionOfLengthToValue(isDownwardHardwareSlider() ? 1.0 - proportion : proportion);
+}
+
+double FocusSlider::valueToProportionOfLength(double value)
+{
+    const auto proportion = juce::Slider::valueToProportionOfLength(value);
+    return isDownwardHardwareSlider() ? 1.0 - proportion : proportion;
+}
+
 void FocusSlider::showDragBubble()
 {
     auto* top = getTopLevelComponent();
@@ -3191,6 +3204,29 @@ void FocusSlider::matchDragToTrack()
 // ---------------------------------------------------------------------------
 namespace
 {
+// Yamaha owner printed7-14: only these global/front-strip levers increase toward the player.
+// This is a display/gesture mapping, not a change to normalized host values or signed detune.
+bool hardwareLeverIncreasesDown(int parameter)
+{
+    switch (parameter)
+    {
+        case cs80::P_detune:
+        case cs80::P_ringAttack: case cs80::P_ringDecay: case cs80::P_ringDepth:
+        case cs80::P_ringSpeed: case cs80::P_ringAmount:
+        case cs80::P_subWave: case cs80::P_subSpeed:
+        case cs80::P_subOriginalFunction: case cs80::P_subOriginalSpeed:
+        case cs80::P_subVco: case cs80::P_subVcf: case cs80::P_subVca:
+        case cs80::chParam(0, cs80::CP_feet): case cs80::chParam(1, cs80::CP_feet):
+        case cs80::P_brilliance: case cs80::P_resonance:
+        case cs80::P_kbdBrillianceLow: case cs80::P_kbdBrillianceHigh:
+        case cs80::P_kbdLevelLow: case cs80::P_kbdLevelHigh:
+        case cs80::P_initBend: case cs80::P_subAtSpeed: case cs80::P_subAtVco: case cs80::P_subAtVcf:
+            return true;
+        default:
+            return false;
+    }
+}
+
 juce::String parameterTooltip(int index, const juce::String& title, float value)
 {
     auto text = title + ": " + formatParamValue(index, value);
@@ -3272,6 +3308,7 @@ bool ParamKnob::bindParameter(int index)
     // Destroy the old attachment before changing the slider range/value.
     attachment.reset();
     parameterIndex = index;
+    slider.getProperties().set("hardwareIncreasesDown", hardwareSlider && !horizontalFader && hardwareLeverIncreasesDown(index));
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
     slider.setTitle(juce::String(cs80::paramDef(index).name));
     slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Double-click to restore its default.");
@@ -3292,6 +3329,8 @@ void ParamKnob::setCaption(const juce::String& painted)
 void ParamKnob::setHardwareSlider(juce::Colour capColour)
 {
     hardwareSlider = true;
+    horizontalFader = false;
+    slider.getProperties().set("hardwareIncreasesDown", hardwareLeverIncreasesDown(parameterIndex));
     if (parameterIndex == cs80::P_mix)
     {
         // The readout is channel I over channel II ("68/32"): the ends say which is which. A
@@ -3317,6 +3356,7 @@ void ParamKnob::setCapFader(juce::Colour capColour, bool horizontal)
     }
     hardwareSlider = true;
     horizontalFader = true;
+    slider.getProperties().set("hardwareIncreasesDown", false);
     slider.setSliderStyle(juce::Slider::LinearHorizontal);
     slider.setColour(juce::Slider::thumbColourId, capColour);
     slider.setTooltip(parameterTooltip(parameterIndex, tooltipNameFor(parameterIndex), (float) slider.getValue()));

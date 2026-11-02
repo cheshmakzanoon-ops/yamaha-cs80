@@ -23,8 +23,8 @@ juce::String CentreRow::toneTabName(int channel, int source)
     return name == "E. PIANO" ? juce::String("ELECTRIC PIANO") : name;
 }
 
-// The front strip, left to right (docs/PANEL_CONFORMANCE.md): the order is the pre-ws7 reading of PN2 with the
-// keyboard-control levers, which sit on the same board (VR19-22), placed after RESONANCE.
+// The original S2 PN2 front-strip drawing places TOUCH RESPONSE before KEYBOARD CONTROL.
+// Keep each existing group and its dimensions; the keyboard-control levers are VR19-22.
 void CentreRow::build()
 {
     const float y = geo::stripLeverY, h = geo::stripLeverH, rule = geo::stripRuleY;
@@ -78,12 +78,6 @@ void CentreRow::build()
     lever(cs80::P_brilliance, "BRILL", greenCap());
     lever(cs80::P_resonance, "RESO", redCap());
     group("GLOBAL", nullptr);
-    lever(cs80::P_kbdBrillianceLow, "LOW", greenCap());
-    lever(cs80::P_kbdBrillianceHigh, "HIGH", greenCap());
-    group("KBD BRILL", "BRILL");
-    lever(cs80::P_kbdLevelLow, "LOW", greyCap());
-    lever(cs80::P_kbdLevelHigh, "HIGH", greyCap());
-    group("KBD LEVEL", "LEVEL");
     // Initial pitch bend, then the after-touch amounts; the bracket names the group, so the levers print the
     // destination alone (titles and tooltips keep "AT SPD" and so on).
     lever(cs80::P_initBend, "BEND", whiteCap());
@@ -91,6 +85,12 @@ void CentreRow::build()
     shortCaption(lever(cs80::P_subAtVco, "AT VCO", whiteCap()), "VCO", "VCO");
     shortCaption(lever(cs80::P_subAtVcf, "AT VCF", greenCap()), "VCF", "VCF");
     group("TOUCH RESPONSE", "TOUCH");
+    lever(cs80::P_kbdBrillianceLow, "LOW", greenCap());
+    lever(cs80::P_kbdBrillianceHigh, "HIGH", greenCap());
+    group("KBD BRILL", "BRILL");
+    lever(cs80::P_kbdLevelLow, "LOW", greyCap());
+    lever(cs80::P_kbdLevelHigh, "HIGH", greyCap());
+    group("KBD LEVEL", "LEVEL");
     volumeKnob = &addKnob(cs80::P_volume, x, y, geo::stripKnobW, h, "VOLUME");
 }
 

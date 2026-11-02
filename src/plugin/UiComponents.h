@@ -207,8 +207,8 @@ public:
     juce::MouseCursor getMouseCursorFor(juce::Component&) override;
 };
 
-// Native slider semantics and accessibility are retained. Only the focus
-// decoration is added; APVTS attachments continue to own value gestures.
+// Numeric parameter meaning and accessibility are retained. Owner-documented physical
+// lever direction affects vertical geometry/keys only; APVTS attachments own gestures.
 class FocusSlider final : public juce::Slider
 {
 public:
@@ -249,6 +249,8 @@ public:
     void mouseUp(const juce::MouseEvent&) override;
     // Pixels for a full-range drag: a linear fader uses its own track length, so the cap follows the pointer.
     void matchDragToTrack();
+    double proportionOfLengthToValue(double proportion) override;
+    double valueToProportionOfLength(double value) override;
     void valueChanged() override { juce::Slider::valueChanged(); updateDragBubble(); }
     bool isGestureInProgress() const noexcept { return gestureActive; }
     bool keyPressed(const juce::KeyPress& key) override
@@ -260,15 +262,23 @@ public:
         }
         const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
             || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
+        auto physicalKey = key;
+        if (isDownwardHardwareSlider())
+        {
+            if (key.getKeyCode() == juce::KeyPress::upKey)
+                physicalKey = juce::KeyPress(juce::KeyPress::downKey, key.getModifiers(), key.getTextCharacter());
+            else if (key.getKeyCode() == juce::KeyPress::downKey)
+                physicalKey = juce::KeyPress(juce::KeyPress::upKey, key.getModifiers(), key.getTextCharacter());
+        }
         if (isEnabled() && arrow && !key.getModifiers().isAnyModifierKeyDown() && !gestureActive)
         {
             // JUCE 8.0.6 arrow keys change values without drag notifications.
             // Attachments need these to bracket host automation, just as for
             // pointer, wheel and accessibility edits.
             juce::Slider::ScopedDragNotification gesture(*this);
-            return juce::Slider::keyPressed(key);
+            return juce::Slider::keyPressed(physicalKey);
         }
-        return juce::Slider::keyPressed(key);
+        return juce::Slider::keyPressed(physicalKey);
     }
     void startedDragging() override
     {
@@ -298,6 +308,10 @@ public:
             drawFocusRing(g, getLocalBounds().toFloat());
     }
 private:
+    bool isDownwardHardwareSlider() const
+    {
+        return isVertical() && (bool) getProperties()["hardwareIncreasesDown"];
+    }
     void showDragBubble();
     void hideDragBubble();
     void updateDragBubble();
