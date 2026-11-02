@@ -7,8 +7,10 @@ import importlib.util
 import os
 from pathlib import Path
 import shutil
+import stat
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 PRODUCT = 'CS-80 Reference'
@@ -299,6 +301,48 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         os.mkfifo(fifo)
         with self.assertRaisesRegex(ValueError, 'Special.file'):
             self.module.capture_build_payload('linux', self.build)
+
+    def simulated_directory_reparse(self, target):
+        """Windows attribute witness, not actual Windows/junction execution."""
+        original = Path.lstat
+
+        class ReparseStat:
+            def __init__(self, value):
+                self.value = value
+                self.st_file_attributes = stat.FILE_ATTRIBUTE_REPARSE_POINT
+
+            def __getattr__(self, name):
+                return getattr(self.value, name)
+
+        def inspect(path, *args, **kwargs):
+            value = original(path, *args, **kwargs)
+            return ReparseStat(value) if path == target else value
+
+        return mock.patch.object(Path, 'lstat', inspect)
+
+    def test_legacy_python_directory_reparse_artifact_is_rejected(self):
+        self.fixture('windows')
+        target = self.inputs.parent
+        with self.simulated_directory_reparse(target), \
+             mock.patch.object(Path, 'is_junction', return_value=False, create=True):
+            with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+                self.module.capture_build_payload('windows', self.build)
+
+    def test_legacy_python_directory_reparse_expansion_is_rejected(self):
+        manifest = self.fixture('windows')
+        with self.simulated_directory_reparse(self.actual), \
+             mock.patch.object(Path, 'is_junction', return_value=False, create=True):
+            with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+                self.verify('windows', manifest)
+
+    @requires_posix
+    def test_legacy_python_directory_reparse_inside_bundle_is_rejected(self):
+        self.fixture('linux')
+        target = self.inputs / 'VST3' / (PRODUCT + '.vst3') / 'Contents/Resources'
+        with self.simulated_directory_reparse(target), \
+             mock.patch.object(Path, 'is_junction', return_value=False, create=True):
+            with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+                self.module.capture_build_payload('linux', self.build)
 
 
 if __name__ == '__main__':
