@@ -107,6 +107,14 @@ class MetadataOnly(unittest.TestCase):
             with self.subTest(malformed=malformed), self.assertRaises(intake.IntakeError):
                 intake.decode_json(malformed)
 
+    def test_oversized_integer_token_is_a_controlled_schema_rejection(self):
+        # Under the importer size cap, Python's JSON integer digit limit can
+        # raise ValueError rather than JSONDecodeError. It must not leak a
+        # traceback or turn a malformed technician record into a server error.
+        oversized = b'{"schema_version":' + b'9' * 5000 + b'}'
+        with self.assertRaisesRegex(intake.IntakeError, "invalid JSON"):
+            intake.decode_json(oversized)
+
     def test_rejects_schema_version_bool_extra_fields_missing_and_bad_types(self):
         changes = [
             lambda d: d.update(schema_version=True),
@@ -155,6 +163,22 @@ class MetadataOnly(unittest.TestCase):
         candidate["snapshots"].reverse()
         with self.assertRaisesRegex(intake.IntakeError, "out of printed ADJ order"):
             intake.validate_document(candidate)
+
+    def test_alignment_timestamps_cannot_reverse_adjustment_causality(self):
+        candidate = placeholder()
+        first = candidate["snapshots"][0]
+        first["checkpoint"] = "hp_after_vr7_cp3_max"
+        first["panel_setup"] = "yamaha_hp_p11"
+        first["captured_at_utc"] = "2026-11-02T00:02:00Z"
+        second = deepcopy(first)
+        second["checkpoint"] = "hp_after_vr8_cp3_setting"
+        second["captured_at_utc"] = "2026-11-02T00:01:00Z"
+        candidate["snapshots"].append(second)
+        with self.assertRaisesRegex(intake.IntakeError, "timestamp"):
+            intake.validate_document(candidate)
+        # UTC seconds may be too coarse for two near-simultaneous readings.
+        second["captured_at_utc"] = first["captured_at_utc"]
+        intake.validate_document(candidate)
 
     def test_optional_context_is_labeled_not_invented(self):
         candidate = placeholder()
@@ -217,6 +241,17 @@ class MetadataOnly(unittest.TestCase):
         candidate["snapshots"][0]["observations"][0]["node"] = "NO1"
         candidate["snapshots"][0]["observations"][1]["node"] = "NI"
         intake.validate_document(candidate)  # No implied source voltage or impedance.
+
+    def test_channel_two_cannot_misidentify_noise_source_as_no1(self):
+        # M41/M44 source trace connects channel I to SUB NO1. The separate
+        # channel-II NO2 source is deliberately absent from schema v1.
+        candidate = placeholder()
+        candidate["instrument"]["channel"] = "II"
+        candidate["snapshots"][0]["observations"][0]["node"] = "NO1"
+        with self.assertRaisesRegex(intake.IntakeError, "NO1.*channel I"):
+            intake.validate_document(candidate)
+        candidate["snapshots"][0]["observations"][0]["node"] = "NI"
+        intake.validate_document(candidate)
 
     def test_untrusted_strings_cannot_form_markdown_table_columns(self):
         candidate = placeholder()
