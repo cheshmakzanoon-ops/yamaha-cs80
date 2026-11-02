@@ -20,6 +20,33 @@
     "dc-acquisition-restored.log": {
       "sha256": "9a70cd9380aba0182cfbf709470f084871a0f532c05b61c3a519c1a83482dede",
       "bytes": 2655
+    },
+    "dc-acquisition-remote9462.log": {
+      "sha256": "457275c0cede2f648a71aa0670dffb5ec339211e7af6d74579e07033f1e4e34d",
+      "bytes": 2655
     }
+  },
+  "publication_mapping": [
+    {
+      "local_commit": "81bef644680fa18d28f049a8af5396544b4ac9e1",
+      "remote_commit": "2effb329b6887870c8e589b404081dc6ec0674fc",
+      "local_tree": "2bb485a5e1e26c792dbf4cbdf32b04be3e7e6873",
+      "remote_tree": "2bb485a5e1e26c792dbf4cbdf32b04be3e7e6873",
+      "equal": true
+    },
+    {
+      "local_commit": "91b4f72bf7083fa5798aeea7b00263227e88da0e",
+      "remote_commit": "9462fe46dce0a555bbc9d74db16a6fba5984c33f",
+      "local_tree": "3baa2dabad497fe7cdf95e7b0556c9a8c46edeb3",
+      "remote_tree": "3baa2dabad497fe7cdf95e7b0556c9a8c46edeb3",
+      "equal": true
+    }
+  ],
+  "remote_recheck": {
+    "commit": "9462fe46dce0a555bbc9d74db16a6fba5984c33f",
+    "tree": "3baa2dabad497fe7cdf95e7b0556c9a8c46edeb3",
+    "clean_detached_worktree": true,
+    "tests": 17,
+    "failures": 0
   }
 }

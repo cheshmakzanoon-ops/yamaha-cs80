@@ -11,6 +11,21 @@ was committed as `81bef644680fa18d28f049a8af5396544b4ac9e1` before the
 production importer edit `91b4f72bf7083fa5798aeea7b00263227e88da0e`.
 Both are based on `058224fad844b8f51e211e3b820c0ae2d8f25762`.
 
+These first two identifiers are **local commits**, not GitHub refs. The
+GitHub connector recreated commit metadata while preserving exact file
+trees. Fresh Git fetch and `git rev-parse <commit>^{tree}` established:
+
+| Local commit | Published commit | Exact shared Git tree |
+| --- | --- | --- |
+| `81bef644680fa18d28f049a8af5396544b4ac9e1` | [`2effb329b6887870c8e589b404081dc6ec0674fc`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/2effb329b6887870c8e589b404081dc6ec0674fc) | `2bb485a5e1e26c792dbf4cbdf32b04be3e7e6873` |
+| `91b4f72bf7083fa5798aeea7b00263227e88da0e` | [`9462fe46dce0a555bbc9d74db16a6fba5984c33f`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9462fe46dce0a555bbc9d74db16a6fba5984c33f) | `3baa2dabad497fe7cdf95e7b0556c9a8c46edeb3` |
+
+The earlier raw logs retain their actual local source paths/identities;
+they have not been rewritten to impersonate a published-commit execution.
+A separate clean detached worktree at published `9462fe46` reran the 17
+tests: **all passed**. Its [new raw output](dc-acquisition-20261102/dc-acquisition-remote9462.log)
+and both tree identities are retained in the manifest.
+
 | Run | Result | Retained raw output |
 | --- | --- | --- |
 | New tests, unchanged importer | 17 tests, 6 expected failures | [before](dc-acquisition-20261102/dc-acquisition-before.log) |
