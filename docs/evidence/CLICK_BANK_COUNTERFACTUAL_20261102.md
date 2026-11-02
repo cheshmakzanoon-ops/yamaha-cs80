@@ -101,13 +101,58 @@ The source-policy `Engine::startVoice` preserves free-running oscillator
 phase, filter integrator and VCA coupling when reassigning released circuits;
 it restarts envelope attack rather than immediately clearing those audio
 memories. A silent circuit is caught up to the current time before reuse.
-This code path and the several-millisecond peak delay are **consistent with
-a legitimate new chord attack**, but not sufficient to establish that a
-particular short transient is physically correct. A target-specific
-zero-time state/oscilloscope comparison or measured hardware trace would be
-needed to exclude a source-model pedestal or other genuinely discontinuous
-cause. **Therefore this row remains a real original score FAIL and an open
-inference, with no DSP patch or score waiver.**
+
+An **additional exploratory zero-time probe** now confirms that code-path
+in this exact fixture, without amending the preregistered diagnostic or
+creating a new acceptance gate. It replays the same 96 kHz electrical-tone
+frame and phrase to frame `830400`, captures all eight voices and both ranks,
+dispatches the four note-ons *without advancing audio time*, then compares
+all 72 exposed oscillator/residual, nodal, envelope, VCA coupling and phase
+fields per rank using the existing bit-exact comparator. Exactly four active
+but key-released voices are reassigned (slots `0, 1, 2, 7`); **0 / 1,152
+zero-time audio-state fields change** across the entire eight-voice engine.
+This excludes an immediate reset of those exposed states at MIDI dispatch,
+though not every unexposed/global modeled quantity.
+
+The same fixture's event-only maximum sample derivative, normalized to the
+**original unmodified** prior-chord reference, increases across the post-event
+waveform instead of peaking at the dispatch boundary:
+
+| Host frames after note-on block | Event-only max normalized derivative |
+| --- | ---: |
+| 0–62 | 0.0010021 |
+| 63–127 | 0.0140448 |
+| 128–255 | 0.135741 |
+| 256–383 | 0.222980 |
+| 384–511 | 0.545148 |
+| 512–767 | 1.032886 |
+
+The first 63 frames contribute just 0.1% of the ordinary attack reference,
+whereas the worst event-dependent derivative is more than 1,000 times larger
+525 frames after dispatch. This **supports an evolving note attack rather
+than an instantaneous oscillator/filter/envelope/VCA reset**. However it
+does not determine whether the full level or waveform is an accurate physical
+Clavichord-tone CS-80 attack; a measured hardware trace or independent
+circuit evidence is still required to exclude a wrong sound law or unexposed
+transient. **The original 1.03039 score remains FAIL and the physical
+attack-law inference remains OPEN. No DSP patch, attack fade or score waiver.**
+
+The standalone probe is archived solely for reproducibility; it is not
+registered with CTest, does not run in production, and is not a substitute for
+the original qualification gate. After configuring/building `cs80_core`:
+
+```bash
+g++ -std=c++20 -O3 -DNDEBUG -Isrc -Itests \
+  docs/evidence/ClavichordStealZeroTimeProbe.cpp build-core/libcs80_core.a \
+  -o build-core/clav-steal-zero-time-probe
+./build-core/clav-steal-zero-time-probe
+```
+
+The exact probe code has SHA-256
+`7aa4b94de726faf32913e098d366a814a894a7cc5b59340620400ce39c304326`;
+its archived stdout `docs/evidence/clavichord-steal-zero-time-20261102.txt`
+has SHA-256
+`19a753bfa21c40d7d0d40f0d11d66b89c8c765b22245ed96291e0f2a750bb115`.
 
 ## Verification and archived output
 
