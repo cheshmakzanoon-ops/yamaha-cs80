@@ -1765,7 +1765,9 @@ bool Engine::handleSysEx(const std::uint8_t* data, int size) noexcept
 {
     if (! tuning::applyMtsSysEx(data, size, mtsTable))
         return false;
-    if (global.tuningMode == 2) retuneSoundingVoices();
+    // Universal non-realtime tuning is a setup change for future notes. Only
+    // realtime MTS reaches held voices; MTS-ESP's setMtsTuning path stays live.
+    if (global.tuningMode == 2 && data[1] == 0x7F) retuneSoundingVoices();
     return true;
 }
 
