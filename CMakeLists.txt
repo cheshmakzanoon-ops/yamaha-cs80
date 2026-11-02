@@ -59,6 +59,13 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_phase_lane_oracle_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
     add_test(NAME cs80_phase_lane_oracle_tests COMMAND cs80_phase_lane_oracle_tests)
     set_tests_properties(cs80_phase_lane_oracle_tests PROPERTIES TIMEOUT 300)
+    # Independent frozen TouchVoice/TRG5 arithmetic plus source-engine idle and
+    # wake checkpoint parity under host partitions 1/17/256. Test-only prereg.
+    add_executable(cs80_touch_idle_exact_oracle_tests tests/TouchIdleExactOracleTests.cpp)
+    target_include_directories(cs80_touch_idle_exact_oracle_tests PRIVATE src tests)
+    target_link_libraries(cs80_touch_idle_exact_oracle_tests PRIVATE cs80_core)
+    add_test(NAME cs80_touch_idle_exact_oracle_tests COMMAND cs80_touch_idle_exact_oracle_tests)
+    set_tests_properties(cs80_touch_idle_exact_oracle_tests PROPERTIES TIMEOUT 300)
     foreach(cs80_scalar_suite fixed moving state row fp)
         add_test(NAME cs80_exact_scalar_filter_${cs80_scalar_suite}_tests
                  COMMAND cs80_exact_scalar_filter_tests --suite ${cs80_scalar_suite})

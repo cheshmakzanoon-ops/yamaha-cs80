@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "status": "Frozen test-only preregistration. No idle TouchVoice/global optimization, backend, speedup or DSP source change has been implemented or measured.",
+  "baseline_commit": "71a0226e861a751ae8c0ffef41d07ed009369170",
+  "baseline_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "target": "Prospective exact fixed-state scheduling of the eight independent TWS touch circuits and selected memoryless global readouts in warmed quiet-idle; no oscillator/filter/output/FX state may be skipped merely because audio is silent.",
+  "frozen": {
+    "manifest": "tests/fixtures/touch_idle/manifest.json",
+    "original_source_sha256": "f89506cc7222b778b9e694d36315e0eb8433730320f2919a8c40a19f62272045",
+    "independent_fixture": "tests/fixtures/touch_idle/TouchCircuitBefore.h",
+    "test_driver": "tests/TouchIdleExactOracleTests.cpp",
+    "preregistration_before_production": "The complete original TouchVoice/Coefficients/TRG5 source was frozen under a different namespace before any proposed fixed-point optimization. No optimized function or shared numerical helper is called by the frozen oracle.",
+    "scope": "A frozen software-continuation oracle; not an independent hardware measurement or authority to change an inferred circuit constant."
+  },
+  "positive_control_observed_2026_11_02": {
+    "fp_cases": 96,
+    "touch_samples": 6291456,
+    "exact_zero_exposed_samples": 2532096,
+    "shared_diode_bus_samples": 786432,
+    "copied_lanes": 96,
+    "resets": 96,
+    "triggers": 288,
+    "field_and_fp_bit_checks": 51119247,
+    "bit_mismatches": 0,
+    "source_backend_fast_skip_calls": 0,
+    "source_backend_regular_tick_calls": 6291456,
+    "engine_trace_blocks": [1, 17, 256],
+    "engine_trace_policies": ["isolation", "sourcePerformance_fx_noise"]
+  },
+  "touch_fixtures": {
+    "independent_lanes": 8,
+    "rates_hz": [48000, 96000, 384000],
+    "rounding_modes": ["FE_TONEAREST", "FE_DOWNWARD", "FE_UPWARD", "FE_TOWARDZERO"],
+    "denormal_modes": "All supported x86 MXCSR FTZ/DAZ combinations; AArch64 FPCR.FZ combinations when available; unknown target reports unavailable instead of inventing support.",
+    "hold_leak_seconds": [0.0, 3.3],
+    "samples_per_case": 8192,
+    "state_events": "Cold reset, mixed independent lane pressure, strike triggering at sample offsets128/257/4097, lane0 copy to lane7 at512, lane6 reset at2048, long settled intervals and later wake while other lanes continue.",
+    "public_bit_fields": "Every sample: exact binary64 a, b and signed C, observable state() a/b/C (no pointer/padding), coefficient a/c/acquire/leak/contact/window terms, and exact TRG5 diode bus volts with two original Newton iterations.",
+    "fp_controls": "Original and frozen function calls must preserve rounding, FTZ/DAZ and other caller control bits. At selected cold/press/wake samples, pre-raise FE_INEXACT and verify the candidate does not clear the caller's sticky exception status.",
+    "signed_zero": "Under non-nearest rounding, exact-zero subtraction may have a different zero sign. A candidate must reproduce the original output C sign bit and future continuation in every qualified FP mode; hardcoded C=-0 or clearing FE flags is prohibited. Unsupported modes must take the unchanged scalar path."
+  },
+  "engine_fixture": {
+    "host_rate_hz": 48000,
+    "host_blocks": [1, 17, 256],
+    "frames": 150528,
+    "events": "notes at frames17/2049/4097/150001, pressure at257, note-off at513/2305/4353/150257, ribbon at769, long cold/steady gaps and reacquisition after roughly three seconds of idle.",
+    "policies": "PURE isolation at exact analog-noise0 and sourcePerformance with modern drive FX and deterministic nonzero noise. Default source-rank audio model remains unchanged.",
+    "public_samples": "All interleaved float stereo audio samples, eight VoiceInfo TWS A/B/C and allocation fields, per-rank HP/LP cutoff/envelope/Q/key/oscillator readouts, 32 shared Q ports and 16 LC ports plus buses, and three always-clocked output tap capacitor/readout nodes, observed at aligned 256-frame checkpoints.",
+    "required": "For each source policy, the full 1/17/256 audio and global/readout rolling fingerprints must agree bitwise across partitions. On the preregistered Linux GCC13.3/glibc2.39 reference host, each also equals its immutable original-source fingerprint in the manifest. FNV-1a digests are regression sentinels, not mathematically collision-free proof of byte identity; strict V2 byte captures remain mandatory.",
+    "cross_platform": "Do not compare the Linux/glibc whole-engine fingerprint to a different host/compiler/libm and claim a sound-law failure. Preserve exact TouchVoice bits against the frozen same-compiler original plus partition equality; qualify a separately frozen original-engine reference before accepting an optimized source on another target."
+  },
+  "fastpath_constraints": {
+    "fixed_state": "Only an exactly proven IEEE fixed-point state may use a shortcut. The input pressure, acquisition elapsed/window, b-hold capacitor, C coupling memory, leak coefficient, model/rate changes, active pending trigger and all nonzero histories must be checked; an audio gate or absence of held notes alone is insufficient.",
+    "effects": "Always preserve the TRG5 pressure bus's Newton initial guess and previous result, source readout cache invalidation, envelope/TWS clocks, sub-modulation and RNG state, BBD and PRA/output capacitor tails, listening output, retained downsample phase and first wake sample. The known `updateSourceReadouts` already memoizes unchanged common Q/LC network algebra; do not duplicate that work as a fictitious gain.",
+    "arithmetic": "No fast-math, contraction change, reciprocal approximation, global FP-mode override, smoothing re-pin or control-parameter switch. No new hardware-law inference may be attributed to an exact software optimization.",
+    "compatibility": "All existing original scalar, circuit, TWS, touch bus, idle/wake, click, legacy tails, V1 and strict V2 byte captures and other CTest physical/continuity gates remain authoritative."
+  },
+  "true_work_witness_before_acceptance": {
+    "status": "Registered now, not implemented in original-source control; no claimed work reduction.",
+    "method": "In a test-only source-instrumented candidate build, increment at actual TouchVoice full-tick versus qualified fixed-state fast-branch entry; separately count every lane's state commit, each real shared TRG5 bus solve and source readout/EG call. No synthetic wrapper flags, no shipping telemetry and no skipped externally visible clock.",
+    "minimum": "Qualified quiet-idle fixture must execute at least one real fast-state source branch in each of eight lanes and a lower genuine full-recursion count than the frozen scalar baseline while exactly preserving every output/state/FP field; active/wake/control/foreign-FP runs must report scalar fallbacks when required.",
+    "negative": "Force unconditional scalar path under qualified fixed state or falsify a reported fast-state count; must compile and fail a named real backend-work assertion. Force one stale TWS memory/elapsed state or wrong C zero sign; must fail the frozen state oracle with exit1."
+  },
+  "negative_controls": {
+    "CS80_TOUCH_IDLE_MUTATE_ZERO_SIGN": "Flip the sign bit of one candidate C output; require FAIL touch.C.signedZeroAndWake with exit1.",
+    "CS80_TOUCH_IDLE_MUTATE_CROSS_LANE": "Add candidate-only pressure to a neighboring idle lane; require FAIL touch.a with exit1.",
+    "CS80_TOUCH_IDLE_MUTATE_BUS": "Contaminate a neighboring diode-bus coordinate, with all per-lane current states still otherwise correct; require FAIL TRG5.busVolts with exit1.",
+    "CS80_TOUCH_IDLE_MUTATE_ENGINE_GOLDEN": "Alter the source-engine audio digest identically for all three partitions. Intra-engine partition equality remains green, while independent original audio golden must fail named engine.frozenAudioBits with exit1 on the qualified host.",
+    "CS80_TOUCH_IDLE_MUTATE_STICKY": "Clear FE_INEXACT immediately after candidate TouchVoice tick; require FAIL touch.candidateStickyFlagsPreserved with exit1.",
+    "future_actual_source_mutations": "Compile/run candidate source mutations of zero-sign, missing wake, stale b/memory, masked lane/changed bus, FP sticky clearing, and defeated fast-branch work gate. Ordinary named assertion exit1 is necessary; compiler failure, crash, timeout or rewritten fixture is not a kill."
+  },
+  "cpu_and_release": {
+    "profile": "Stock quiet-idle gprof: tickGlobals17.96%, updateSourceReadouts12.86%, tickOutput9.53%, mixBus8.43%, beginSmoothedControls7.10%, BBD6.65%, FilterEnv5.76%, rank6.87%; phase process nearly absent. These are instrumented sampled CPU shares, not production RTF.",
+    "hard_targets": "At 48000 Hz / 256 / 8 voices, source warmed-held RTF 0.15–0.20, source quiet-idle RTF <=0.02; both still RED. A TWS-only fast path is not expected to close the full 3x idle gap.",
+    "timing": "Before ANY candidate production source optimization, get three serial uncontended same-host baseline rounds. After all frozen/mutation/compat tests pass, get three serial uncontended same-host candidate rounds of unchanged cs80_source_factory_benchmark; preserve original 51 fixture IDs and checksum/peak/RMS, all raw outliers, held/moving/idle, p99 and deadline misses plus Legacy control. Do not infer CPU gate from an instrumented work counter, gprof or isolated microbenchmark.",
+    "publication": "Preregistration is test-only and cannot change source, pin, control law, PR6/main/release. No optimized code publication until strict byte/circuit gates and hard absolute CPU targets are met; rejected microexperiments remain separate labeled branches."
+  }
+}

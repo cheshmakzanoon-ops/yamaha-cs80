@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "preregistered": "2026-11-02",
+  "baseline_commit": "71a0226e861a751ae8c0ffef41d07ed009369170",
+  "baseline_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "original_path": "src/core/TouchCircuit.h",
+  "original_git_blob": "1a50ecfeba752576fd60cb4d1060e94054609538",
+  "original_sha256": "f89506cc7222b778b9e694d36315e0eb8433730320f2919a8c40a19f62272045",
+  "frozen_path": "tests/fixtures/touch_idle/TouchCircuitBefore.h",
+  "frozen_sha256": "9da1b2e24182aca0f23666a0aba70205fd780d47cf4b996a642d0b0f01a91471",
+  "transformation": "Only namespace declaration cs80::touch -> cs80::touch_original_20261102 and its matching final namespace comment. The other 159 lines are byte-identical. A future optimized source must never update the frozen original.",
+  "independence": "The fixture contains an entire copy of TouchVoice, Coefficients and TRG5 diode bus with no call into candidate touch helpers. Compiler/runtime standard math may be shared, as in the existing original-scalar oracle.",
+  "engine_original_capture": {
+    "system": "Linux x86_64, GCC 13.3.0, glibc 2.39, original source tree above, FE_TONEAREST and gradual-underflow MXCSR",
+    "host_rate_hz": 48000,
+    "host_blocks": [1, 17, 256],
+    "frames_per_case": 150528,
+    "fingerprint_format": "FNV-1a 64-bit over all output float IEEE bytes (little-endian by word) and separately all explicit public global/readout IEEE/boolean/integer fields at each 256-frame checkpoint; a fingerprint is a regression witness, not a collision-free byte oracle or hardware measurement",
+    "policies": {
+      "isolation": {"audio": "0x7d101956e93b525d", "global_readouts": "0x6046acf7ccf9a6d7"},
+      "sourcePerformance_fx_noise": {"audio": "0x70ba56de3cba74ad", "global_readouts": "0xa4cedcc115867e62"}
+    },
+    "foreign_host": "The original whole-engine FNV values are asserted only on Linux x86_64 GCC 13.3 plus glibc 2.39. Other environments still enforce full independent frozen TWS arithmetic and bit-exact intra-host 1/17/256 engine partition continuation; they do not claim cross-libm golden equivalence. Native target-specific original golden qualification remains necessary before any source optimization on that target."
+  }
+}
