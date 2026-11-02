@@ -41,7 +41,9 @@ async function verifyReviewedReleasePrerequisites({ github, context, core, reque
   return { expected, validated };
 }
 
-async function dispatchReviewedRelease({ github, context, core, request }) {
+async function dispatchReviewedRelease({ github, context, core, request, requestSha }) {
+  if (typeof requestSha !== 'string' || !/^[0-9a-f]{40}$/.test(requestSha))
+    throw new Error('Installer dispatch requires the exact immutable request commit SHA');
   const { expected } = await verifyReviewedReleasePrerequisites({ github, context, core, request });
   const { owner, repo } = context.repo;
 
@@ -54,8 +56,9 @@ async function dispatchReviewedRelease({ github, context, core, request }) {
     core.info(`Release already dispatched: ${existing.html_url}`);
     return { dispatched: false, existing: existing.html_url };
   }
-  await github.rest.actions.createWorkflowDispatch({ owner, repo, workflow_id: 'release.yml', ref: 'main' });
-  core.info(`Dispatched release.yml on main at ${expected}`);
+  await github.rest.actions.createWorkflowDispatch({ owner, repo, workflow_id: 'release.yml',
+    ref: 'main', inputs: { request_commit_sha: requestSha } });
+  core.info(`Dispatched release.yml on main at ${expected} with immutable request ${requestSha}`);
   return { dispatched: true, sha: expected };
 }
 

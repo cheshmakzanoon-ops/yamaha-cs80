@@ -96,7 +96,8 @@ async function scenario(o = {}) {
   const good = await scenario();
   assert.equal(good.result.dispatched, true); checks++;
   assert.deepEqual(good.calls.filter(([verb]) => verb === 'createWorkflowDispatch'), [
-    ['createWorkflowDispatch', { owner: OWNER, repo: REPO, workflow_id: 'release.yml', ref: 'main' }],
+    ['createWorkflowDispatch', { owner: OWNER, repo: REPO, workflow_id: 'release.yml',
+      ref: 'main', inputs: { request_commit_sha: R } }],
   ]); checks++;
   assert.ok(good.calls.some(([verb, args]) => verb === 'getContent'
     && args.ref === R && args.path === REQUEST_FILE)); checks++;

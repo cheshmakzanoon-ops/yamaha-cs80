@@ -3,7 +3,7 @@
 const assert = require('node:assert/strict');
 const dispatch = require('../../scripts/dispatch-reviewed-release.cjs');
 
-const M = 'a'.repeat(40), S = 'b'.repeat(40), OTHER = 'c'.repeat(40);
+const M = 'a'.repeat(40), S = 'b'.repeat(40), OTHER = 'c'.repeat(40), REQUEST = 'd'.repeat(40);
 const NUMERICAL = 'release-numerical-qualification.yml';
 let checks = 0;
 
@@ -34,7 +34,7 @@ async function scenario(overrides = {}) {
     },
   } };
   const result = await dispatch({ github, context: { repo: { owner: 'review', repo: 'cs80' } },
-    core: { info() {} }, request });
+    core: { info() {} }, request, requestSha: REQUEST });
   return { result, calls, lookups };
 }
 
@@ -46,7 +46,8 @@ async function scenario(overrides = {}) {
   }
   const good = await scenario();
   assert.equal(good.result.dispatched, true); checks++;
-  assert.deepEqual(good.calls, [{ owner: 'review', repo: 'cs80', workflow_id: 'release.yml', ref: 'main' }]);
+  assert.deepEqual(good.calls, [{ owner: 'review', repo: 'cs80', workflow_id: 'release.yml',
+    ref: 'main', inputs: { request_commit_sha: REQUEST } }]);
   checks++;
   const numerical = good.lookups.find(lookup => lookup.workflow_id === NUMERICAL);
   assert.ok(numerical, 'the fourth workflow must be checked'); checks++;

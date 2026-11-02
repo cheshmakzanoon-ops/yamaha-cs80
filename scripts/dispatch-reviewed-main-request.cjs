@@ -104,7 +104,8 @@ async function dispatchReviewedMainRequest({ github, context, core, requestSha,
 
   // The shared guard still insists on build, DSP, screenshot and numerical
   // successes from validated SHA, exact-main lease and screenshot-only S.
-  const result = await dispatchReviewedRelease({ github, context, core, request });
+  const result = await dispatchReviewedRelease({ github, context, core, request,
+    requestSha });
   core.info(`Owner-approved immutable request ${requestSha} reviewed against main ${approvedMainSha}`);
   return result;
 }
