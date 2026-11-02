@@ -6,8 +6,8 @@ registered small-signal grid passes at 2× and 4× without widened limits.
 The equations and electrical inferences below are unchanged; the original
 trapezoid qualification is retained below as historical evidence. The
 [native ADJ/M41 review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md)
-keeps the HP voltage miss open. Its corrected LP input reading is recorded
-in the dated erratum below.
+keeps the HP voltage miss open. Its corrected LP input reading and the
+subsequently verified HP mixer shunt are recorded in the dated notes below.
 
 Plan step 1.1b of [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md), 2026-10-31. It
 replaces the first-stage realtime filter ([IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md),
@@ -36,7 +36,7 @@ Per stage, four capacitor states and ideal amplifiers:
 | 1.2 MOhm in parallel with 180 pF from BP (pin 13) to FB/AI (pins 9/1) | source-derived | M41 native crop |
 | 33 kOhm AI-node shunt (both stages) | source-derived | M41 |
 | HP input: passive mixing node of the 150 kOhm waveform branches, then 1 uF NP into AI1 | source-derived topology | M41, [oscillator evidence](OSCILLATOR_CIRCUIT_EVIDENCE.md) |
-| HP mixing-node Thevenin resistance 75 kOhm | **inferred** | two 150 kOhm branches in parallel; FET on-resistance, NI and the unvalued loading resistors neglected |
+| HP mixing-node Thevenin resistance 75 kOhm | **conditional approximation** | one selected FET waveform through 150 kOhm series, plus a distinct fixed 150 kOhm shunt to ground; off-FET impedance and other NI/PW/PWM loading neglected (M41 reading below) |
 | LP input: HP pin 15 -> 1 uF NP -> CP2 -> CP7 -> 150 kOhm -> AI1 | source-derived | M41 + harness p44; native endpoint correction below |
 | LP series source 150 kOhm | source-derived connection | M41 native crop, 2026-10-31 erratum below |
 | Q block: unilateral current Iq = -gq * BP | conditional hypothesis | as in `IG00156Linear.h` |
@@ -44,6 +44,23 @@ Per stage, four capacitor states and ideal amplifiers:
 | Integrator OTAs gm * L * tanh(v / L), L = 2.5 engine units | **inferred** | kept from the first stage; the Q block and the 4.7 MOhm paths are linear |
 | Cutoff calibration (180 pF compensation) | **inferred** | see below |
 | Stage drive normalized to unity passband gain | **inferred adapter** | no absolute port-voltage calibration exists |
+
+### HP switched-mixer source reading, 2026-11-01
+
+On original M41 printed p41, drawing KEC-4223-65, the two gated waveform
+paths are IC9 `SO` pin 5 through `T2`/FET6/150 kOhm, and IC9 `PO` pin 7
+through `T3`/FET7/150 kOhm. The two series resistors converge at a common
+HP mixer node with its **own fixed 150 kOhm shunt to ground**. With one gate
+ideal-on and the other ideal-off, this independently grounded node produces
+the nominal 75 kOhm source impedance and half-waveform level used in the
+service-point fixture. An inactive FET branch is **not** a grounded source.
+The gate impedances, remaining NI/PW/PWM paths and full CP3 voltage transfer
+are not fixed by that idealized calculation; the 1.692 Vpp HP miss remains.
+The source/crop coordinates and primary-source SHA-256 are in the
+[native review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+This HP input is not the LP `CP7 -> 150 kOhm -> AI1` series input with a
+separate 33 kOhm shunt discussed next. Numerical values, test limits and V1
+fingerprint are unchanged.
 
 ### LP series source: original inference and 2026-10-31 erratum
 

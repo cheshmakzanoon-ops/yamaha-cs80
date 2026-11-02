@@ -66,14 +66,38 @@ is historical evidence of the misinterpretation, not a remaining conflict
 in the visible CP7-to-AI1 path. The complete switched input network, chip
 laws, interstage loading and service alignment remain separate questions.
 
-M41's HP waveform branches contain FET6/FET7 gates and 150 kΩ resistors.
-The present voltage fixture assumes a 75 kΩ Thevenin source and half of the
-3 Vpp pulse when the saw is gated off. Whether the inactive branch supplies
-that loading depends on the switch and surrounding mixer network. The
-native drawing does not justify treating an off series FET as an ideal
-grounded waveform source. The alternatives are an explicit switched mixer
-with its documented shunts and off impedances, or the current declared
-simplification; neither may be chosen by its closeness to 4.3 Vpp.
+### 2026-11-01 correction of the HP switched-mixer reading
+
+A second independent inspection of the same hash-verified M41 source resolves
+the origin of the **fixed 150 kΩ mixer shunt**, which the older discussion
+implicitly attributed to an inactive waveform branch. On printed p41,
+drawing KEC-4223-65, **IC9 SO pin 5 -> T2 -> FET6 -> 150 kΩ series** and
+**IC9 PO pin 7 -> T3 -> FET7 -> 150 kΩ series** are the two switched waveform
+paths. Their resistor ends meet the common mixer node, which also has a
+**separate, permanently connected 150 kΩ resistor to ground**. The common node
+continues through the 1 µF NP input capacitor toward IC10 (HPF); it also has
+other documented controls/connections. This topology is visible in the
+5100×3300 original drawing at native box `[370,1950,1620,2900]` (1250×950):
+the FET6 resistor and grounded shunt meet near original pixel `(695,2374)`,
+and FET7's resistor joins the same horizontal node near `(890,2374)`. The
+original source SHA-256 remains
+`1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`;
+the unresized native-box PNG crop SHA-256 is
+`11c63adf6a47c23d43eeed6fe5705dbee2a542c5494e3b53c27c10a141e3e23a`.
+
+For **one ideal conducting waveform gate, the other gate open**, and with the
+other attached sources/loads ignored, the active 150 kΩ series resistor and
+the **fixed** 150 kΩ ground shunt have a 75 kΩ Thevenin resistance and halve
+that active waveform's voltage at the mixer node. The off FET is **not**
+postulated to become a grounded source. Thus the existing HP 75 kΩ/half-pulse
+fixture has a conditionally corroborated *resistor topology*, but not a
+source-verified effective drive or absolute voltage: FET impedances,
+waveform-driver levels, noise/PW/PWM connections, the interstage/CP3 loading,
+and the VR7/VR8 procedure have not been modeled end to end. In particular,
+this correction neither explains the **1.692 Vpp HP miss** nor changes any
+model value, audio normalization, acceptance band or test. This switched
+WSC mixer is distinct from the **LP CP7 -> 150 kΩ series -> AI1, 33 kΩ AI1
+shunt** endpoint correction above.
 
 The independent tasks before calling the HP band closed are to complete the
 HP mixer/source-impedance graph, verify the full interstage loading graph
