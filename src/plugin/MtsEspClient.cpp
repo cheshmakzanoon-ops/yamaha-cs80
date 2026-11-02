@@ -18,7 +18,7 @@
 #if CS80_WITH_MTS_ESP
  #include "../../deps/mts-esp/Client/libMTSClient.h"
  // The contract fixture supplies the same C API at link time. Only the test
- // target defines this; normal plugin builds include the untouched client.
+ // target defines this; normal plugin builds include the pinned vendored client.
  #ifndef CS80_MTS_ESP_TEST_BACKEND
   #include "../../deps/mts-esp/Client/libMTSClient.cpp"
  #endif
