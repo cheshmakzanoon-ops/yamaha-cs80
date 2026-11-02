@@ -28,3 +28,7 @@ before production fixes; never call the original combined prediction a PASS.
 ## Corrected binding baseline (production unchanged)
 
 Agent5 reviewed test-only c9c28b53675c149c25790dc92b75c0915f3c2544 before execution. At16:42:44 UTC, its unpeered component driver produced **609 checks/112 ordinary failures**, exactly the prospective full failure-name multiset: owner351/92, original SUB54/16, S2 both modes and sizes204/4. All497 other checks pass; zero desktop components before/after. Production source remains dbbefcc5ca0eeac5b741a90b916c0e79336246fd. Matching old project/header/object hashes and fresh driver commands are retained in `panel-component-20261102/corrected-mode-baseline`. This establishes the scoped physical-gesture and group-order RED, not painted/native/DAW acceptance.
+
+## Additional preservation and endpoint-label baseline
+
+Test-only a684ccb79f08bf4b6e97a6d141b741e1f4824547/source dbbefcc5 completed at 2026-11-02T16:49:51.381930+00:00 with **729 checks/120 ordinary failures**, exactly the full predeclared failure multiset. The original609/112 remains unchanged, all96 numeric/nonvertical controls pass, and exactly8 of24 endpoint-property checks fail for the reversed FUNCTION labels. MIX labels and bound-control identities pass. Zero desktop components; no painted/native output acceptance. Initial shell quoting failed before compilation/execution and is preserved as setup-only evidence; the corrected invocation is the qualified baseline.

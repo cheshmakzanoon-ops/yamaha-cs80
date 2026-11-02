@@ -1,0 +1,432 @@
+{
+  "head": "a684ccb79f08bf4b6e97a6d141b741e1f4824547",
+  "source_tree": "dbbefcc5ca0eeac5b741a90b916c0e79336246fd",
+  "matching_frozen_build_source": "e4f791c95ce64b8d0df9dbfa331512af40a033c9",
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "inputs": {
+    "/workspace/scratch/aa102d573ba3/cs80-panel-component/tests/PanelEditorTests.h": "9aa0076462c087dd5231e2675726b35dfe01c4a5d1435e25e26b15e8877b79ba",
+    "/workspace/scratch/aa102d573ba3/cs80-panel-component/tests/PanelComponentDriver.cpp": "f551019821e1e7fd416dab7578202b19f673b47fb9291a8209adf4f7add8bf97"
+  },
+  "original_owner_function_sha256": "888e679070ead40c63638782f6983759381af58e4a9b63a8cbc1812f519f5778",
+  "compile_argv": [
+    "/usr/bin/c++",
+    "-I/workspace/scratch/aa102d573ba3/cs80-panel-component/tests",
+    "-DCS80_GOLDEN_DIR=\"/workspace/scratch/aa102d573ba3/cs80-panel-s2/tests/golden\"",
+    "-DJUCE_DISPLAY_SPLASH_SCREEN=0",
+    "-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1",
+    "-DJUCE_MODAL_LOOPS_PERMITTED=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_basics=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_devices=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_formats=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_processors=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_processors_headless=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_audio_utils=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_core=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_data_structures=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_dsp=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_events=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_graphics=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_gui_basics=1",
+    "-DJUCE_MODULE_AVAILABLE_juce_gui_extra=1",
+    "-DJUCE_STANDALONE_APPLICATION=1",
+    "-DJUCE_USE_CURL=0",
+    "-DJUCE_WEB_BROWSER=0",
+    "-DLINUX=1",
+    "-DNDEBUG=1",
+    "-D_NDEBUG=1",
+    "-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CS80Snapshots_artefacts/JuceLibraryCode",
+    "-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include/freetype2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include/libpng16",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv",
+    "-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/juce_binarydata_cs80_panel_fonts/JuceLibraryCode",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/panel-component/red-preservation/driver.o",
+    "-c",
+    "/workspace/scratch/aa102d573ba3/cs80-panel-component/tests/PanelComponentDriver.cpp"
+  ],
+  "link_argv": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "-Wl,--dependency-file=CMakeFiles/CS80Snapshots.dir/link.d",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContext.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/panel-component/red-preservation/driver.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_events/juce_events.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o",
+    "CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/panel-component/red-preservation/panel-components",
+    "libcs80_core.a",
+    "libcs80_panel_fonts.a",
+    "/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/lib/x86_64-linux-gnu/libfontconfig.so",
+    "/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/lib/x86_64-linux-gnu/libfreetype.so",
+    "/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/lib/x86_64-linux-gnu/libasound.so",
+    "-lrt",
+    "-ldl",
+    "-lpthread"
+  ],
+  "linked_objects": [
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o",
+      "sha256": "42d69f40e4d610386f3fc454a559e32f38fe7a64898894718911c41dc4d60db2"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o",
+      "sha256": "61f4b6fc3c5b7d95d524b10595c3505472bafd77b52789b8b4a097f7fab56486"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o",
+      "sha256": "102efe914dbdcc301da2f177becc79e42700d1383ced8d96cb943f470265a32c"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContext.cpp.o",
+      "sha256": "d964445862daadf2ed24e7b9c71b77da50e46a0be458e3494780466c3ac88f4b"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o",
+      "sha256": "7909797d6be78d440ad3952ff8f35b1edcf39cc16959e22427ec56feadaad1d0"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o",
+      "sha256": "386f5ea69bb6e4f26d523cffa46853889acf3884d978d55a5885d0c11061b85d"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o",
+      "sha256": "c2e8e54e0bba6f019e069dc64e9fff4baeb4c201e761502a54ac54d161352e4d"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o",
+      "sha256": "c6d5e30676b09a2856f9144214c2deae0c56e361728cc15ec703fe2b2ff0d21f"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o",
+      "sha256": "ef0fd507d894ce4c1913eb0fa16cde74a688c77bdb235013e59c173e68116730"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o",
+      "sha256": "5a1d1c79ef5697e0992c0bbda714d07caead5851b40744b56dddaaea1bb44fe4"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o",
+      "sha256": "8ded9625b6a19ee48601e07ef30139202923fd3f16269c8b78687240f43eb7b5"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o",
+      "sha256": "9c8b0d90ed00f5cfba2a79ab471fbbf61bd7f12aa05fe30e89f73f4c01b58ead"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o",
+      "sha256": "2da3e523c00ca7a607fcf9dccb51deee5cb9c3f3e07315e389752f0798a36183"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o",
+      "sha256": "1e2860a22f0c206eefb1a2b4fe5c052f2dae95c9936aa330862ef6de044ef593"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o",
+      "sha256": "89b7ed24bcc179aa2c2bdc155a567a31c2a2c840fb16aed47fc1ed0bcf6428d8"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o",
+      "sha256": "fe36bca0a84c4b1b1f071f2fb78a33ee973aa40554b918aa99a005844c9fc0d9"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o",
+      "sha256": "d46dc3c587737d8362867dfd42bd9b299d38c47ba42dbf154d069f82adf243fb"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o",
+      "sha256": "1801063a21fe06e14e7628f8324d4f3df2b993cfd424e5f2f9a02e5ba7b7c5ea"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o",
+      "sha256": "863e54a7339521b6f5c441dcea1d42dc585c82c31a51b64d6463dca224877e52"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o",
+      "sha256": "8674117668acb3a97f695dc83fe312860bf3fc4b173f5d567b615b965d14dd28"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o",
+      "sha256": "9912b43c94de6039355772a8e293e817df4f588ec453fb43cb640a9a5cb0f7c6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o",
+      "sha256": "9d29c517137005f1f6e5ebc1c6c680bb730780c6cf761ed393f998a2afa11ac5"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o",
+      "sha256": "7d83bca0f1387a3d2f858e9d2b461385128c379b340510b9278134d58606738f"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/panel-component/red/driver.o",
+      "sha256": "c7593394b2e979f717fe3d940599811b0f666267f9e490fd191e0d876ad90a14"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o",
+      "sha256": "3885d5f7c5e37d323b63045f0756f7ac60a77d970ba500cdb2fae063b710bd8c"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o",
+      "sha256": "58f870ca5e5cfc12a2198e1cab46387fe775be2d2b24dab1087082dd8f3f4fd6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o",
+      "sha256": "a4c2f4afe4da84d2c9a526f5578332bff7677aaa3674bc97ff376a708d84e576"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o",
+      "sha256": "cf39badb7775c5d9f3bd06a128b489176a85b5d73ae891eea8685275e8d0a6b6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o",
+      "sha256": "38942eca4eb7a59316fad1b544cc979a7de86140f80c9b2972691a9830856ecf"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o",
+      "sha256": "ba273b8954a03ff4021eb657b7db01e681e3c1e55c1721817731028533413b97"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o",
+      "sha256": "b276d4eb6a46836e83e1a15026b1ba48e67a54af7dce7434c00d2c56186add9f"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_events/juce_events.cpp.o",
+      "sha256": "0dea7c83dbec2ecc0fecb81ce150408c4093c1f46f294f8031d24e6630b4128a"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core.cpp.o",
+      "sha256": "8c1d97c31a17a73eb16760f793bbe749996d8f08e22d45c567fd9883daaa8d04"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o",
+      "sha256": "802fb8bf27dc145a24d10ed7def6663d6ebf2069e8618ff3e534bbecca0cafa6"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o",
+      "sha256": "33e145810d8b719dd217f61f2b70655d65450572c353b7576e4c33b0f6bc72d8"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o",
+      "sha256": "82cb71db10c97b0bf96d31b3a06e7324af3637ed2c67db02f89e2363654df206"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o",
+      "sha256": "0869b7b3457420a891bb64a60881fa09a0a85884d265126fbd4b444c4aa0b5db"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o",
+      "sha256": "11980fc6a20776b971c2c7f4e7c76830c79c9bb6dc2829fbc4e3a64d5ca54617"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o",
+      "sha256": "11822f8ef5312fa264dd74e97a8a575865bb1f6d11bcd345b6f6b3fb6204e736"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o",
+      "sha256": "b6c9fdc43cc6d9334f9d27e0ee8fc178c95a36d28a64801aae6aab3b3ea46887"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o",
+      "sha256": "16b3115c066396a8ae58f21bf21bdba26906883947eefe7c6fd2dfb9d59c3fd0"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o",
+      "sha256": "b048bf22ab94af698978255867aff66ea7e2e1dbfaa73146ea7bd9c16d81e718"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/libcs80_core.a",
+      "sha256": "3490e54ca6916f2b9adbfebc97e7f73bbc373fd367eb9b303122726271713341"
+    },
+    {
+      "path": "/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/libcs80_panel_fonts.a",
+      "sha256": "e3c881884f6717078acff34d1e0b69a40f7f4668d2f05a0026e03c699c842e08"
+    }
+  ],
+  "scope": "unpeered component geometry/synthetic events; no window/input/render/screenshot/DAW acceptance",
+  "started_at": "2026-11-02T16:49:33.332732+00:00",
+  "binary_sha256": "99d5cdcc4176a050f209b34f739870eed850897f84076fa9fe53505c4c1298d2",
+  "driver_object_sha256": "0617042cf43c422dc81c158128fbe55bd743a268312296dd87b573cf2be5f9fb",
+  "exit_code": 1,
+  "expected_failure_multiset": [
+    "FAIL: owner lever endpoints: DETUNE II",
+    "FAIL: owner lever physical arrow direction: DETUNE II",
+    "FAIL: owner lever physical arrow direction: DETUNE II",
+    "FAIL: owner lever downward pointer drag: DETUNE II",
+    "FAIL: owner lever endpoints: RING ATTACK",
+    "FAIL: owner lever physical arrow direction: RING ATTACK",
+    "FAIL: owner lever physical arrow direction: RING ATTACK",
+    "FAIL: owner lever downward pointer drag: RING ATTACK",
+    "FAIL: owner lever endpoints: RING DECAY",
+    "FAIL: owner lever physical arrow direction: RING DECAY",
+    "FAIL: owner lever physical arrow direction: RING DECAY",
+    "FAIL: owner lever downward pointer drag: RING DECAY",
+    "FAIL: owner lever endpoints: RING DEPTH",
+    "FAIL: owner lever physical arrow direction: RING DEPTH",
+    "FAIL: owner lever physical arrow direction: RING DEPTH",
+    "FAIL: owner lever downward pointer drag: RING DEPTH",
+    "FAIL: owner lever endpoints: RING SPEED",
+    "FAIL: owner lever physical arrow direction: RING SPEED",
+    "FAIL: owner lever physical arrow direction: RING SPEED",
+    "FAIL: owner lever downward pointer drag: RING SPEED",
+    "FAIL: owner lever endpoints: RING AMOUNT",
+    "FAIL: owner lever physical arrow direction: RING AMOUNT",
+    "FAIL: owner lever physical arrow direction: RING AMOUNT",
+    "FAIL: owner lever downward pointer drag: RING AMOUNT",
+    "FAIL: owner lever endpoints: SUB OSC WAVE",
+    "FAIL: owner lever physical arrow direction: SUB OSC WAVE",
+    "FAIL: owner lever physical arrow direction: SUB OSC WAVE",
+    "FAIL: owner lever downward pointer drag: SUB OSC WAVE",
+    "FAIL: owner lever endpoints: SUB OSC SPEED",
+    "FAIL: owner lever physical arrow direction: SUB OSC SPEED",
+    "FAIL: owner lever physical arrow direction: SUB OSC SPEED",
+    "FAIL: owner lever downward pointer drag: SUB OSC SPEED",
+    "FAIL: owner lever endpoints: SUB VCO",
+    "FAIL: owner lever physical arrow direction: SUB VCO",
+    "FAIL: owner lever physical arrow direction: SUB VCO",
+    "FAIL: owner lever downward pointer drag: SUB VCO",
+    "FAIL: owner lever endpoints: SUB VCF",
+    "FAIL: owner lever physical arrow direction: SUB VCF",
+    "FAIL: owner lever physical arrow direction: SUB VCF",
+    "FAIL: owner lever downward pointer drag: SUB VCF",
+    "FAIL: owner lever endpoints: SUB VCA",
+    "FAIL: owner lever physical arrow direction: SUB VCA",
+    "FAIL: owner lever physical arrow direction: SUB VCA",
+    "FAIL: owner lever downward pointer drag: SUB VCA",
+    "FAIL: owner lever endpoints: FEET",
+    "FAIL: owner lever physical arrow direction: FEET",
+    "FAIL: owner lever physical arrow direction: FEET",
+    "FAIL: owner lever downward pointer drag: FEET",
+    "FAIL: owner lever endpoints: FEET",
+    "FAIL: owner lever physical arrow direction: FEET",
+    "FAIL: owner lever physical arrow direction: FEET",
+    "FAIL: owner lever downward pointer drag: FEET",
+    "FAIL: owner lever endpoints: BRILLIANCE",
+    "FAIL: owner lever physical arrow direction: BRILLIANCE",
+    "FAIL: owner lever physical arrow direction: BRILLIANCE",
+    "FAIL: owner lever downward pointer drag: BRILLIANCE",
+    "FAIL: owner lever endpoints: RESONANCE",
+    "FAIL: owner lever physical arrow direction: RESONANCE",
+    "FAIL: owner lever physical arrow direction: RESONANCE",
+    "FAIL: owner lever downward pointer drag: RESONANCE",
+    "FAIL: owner lever endpoints: KBD BRILLIANCE LOW",
+    "FAIL: owner lever physical arrow direction: KBD BRILLIANCE LOW",
+    "FAIL: owner lever physical arrow direction: KBD BRILLIANCE LOW",
+    "FAIL: owner lever downward pointer drag: KBD BRILLIANCE LOW",
+    "FAIL: owner lever endpoints: KBD BRILLIANCE HIGH",
+    "FAIL: owner lever physical arrow direction: KBD BRILLIANCE HIGH",
+    "FAIL: owner lever physical arrow direction: KBD BRILLIANCE HIGH",
+    "FAIL: owner lever downward pointer drag: KBD BRILLIANCE HIGH",
+    "FAIL: owner lever endpoints: KBD LEVEL LOW",
+    "FAIL: owner lever physical arrow direction: KBD LEVEL LOW",
+    "FAIL: owner lever physical arrow direction: KBD LEVEL LOW",
+    "FAIL: owner lever downward pointer drag: KBD LEVEL LOW",
+    "FAIL: owner lever endpoints: KBD LEVEL HIGH",
+    "FAIL: owner lever physical arrow direction: KBD LEVEL HIGH",
+    "FAIL: owner lever physical arrow direction: KBD LEVEL HIGH",
+    "FAIL: owner lever downward pointer drag: KBD LEVEL HIGH",
+    "FAIL: owner lever endpoints: INITIAL PITCH BEND",
+    "FAIL: owner lever physical arrow direction: INITIAL PITCH BEND",
+    "FAIL: owner lever physical arrow direction: INITIAL PITCH BEND",
+    "FAIL: owner lever downward pointer drag: INITIAL PITCH BEND",
+    "FAIL: owner lever endpoints: AT SPEED",
+    "FAIL: owner lever physical arrow direction: AT SPEED",
+    "FAIL: owner lever physical arrow direction: AT SPEED",
+    "FAIL: owner lever downward pointer drag: AT SPEED",
+    "FAIL: owner lever endpoints: AT VCO",
+    "FAIL: owner lever physical arrow direction: AT VCO",
+    "FAIL: owner lever physical arrow direction: AT VCO",
+    "FAIL: owner lever downward pointer drag: AT VCO",
+    "FAIL: owner lever endpoints: AT VCF",
+    "FAIL: owner lever physical arrow direction: AT VCF",
+    "FAIL: owner lever physical arrow direction: AT VCF",
+    "FAIL: owner lever downward pointer drag: AT VCF",
+    "FAIL: owner lever endpoints: ORIGINAL SUB FUNCTION direct",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB FUNCTION direct",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB FUNCTION direct",
+    "FAIL: owner lever downward pointer drag: ORIGINAL SUB FUNCTION direct",
+    "FAIL: owner lever endpoints: ORIGINAL SUB SPEED direct",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB SPEED direct",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB SPEED direct",
+    "FAIL: owner lever downward pointer drag: ORIGINAL SUB SPEED direct",
+    "FAIL: owner lever endpoints: ORIGINAL SUB FUNCTION rebound from MIX",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB FUNCTION rebound from MIX",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB FUNCTION rebound from MIX",
+    "FAIL: owner lever downward pointer drag: ORIGINAL SUB FUNCTION rebound from MIX",
+    "FAIL: owner lever endpoints: ORIGINAL SUB SPEED rebound from MIX",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB SPEED rebound from MIX",
+    "FAIL: owner lever physical arrow direction: ORIGINAL SUB SPEED rebound from MIX",
+    "FAIL: owner lever downward pointer drag: ORIGINAL SUB SPEED rebound from MIX",
+    "FAIL: S2 front-strip order: AT VCF before KBD BRILLIANCE LOW legacy SUB at 1600x1000",
+    "FAIL: S2 front-strip order: AT VCF before KBD BRILLIANCE LOW legacy SUB at 1120x700",
+    "FAIL: S2 front-strip order: AT VCF before KBD BRILLIANCE LOW original SUB at 1600x1000",
+    "FAIL: S2 front-strip order: AT VCF before KBD BRILLIANCE LOW original SUB at 1120x700",
+    "FAIL: SUB legend top is SINE legacy SUB at 1600x1000",
+    "FAIL: SUB legend bottom follows selected functions legacy SUB at 1600x1000",
+    "FAIL: SUB legend top is SINE legacy SUB at 1120x700",
+    "FAIL: SUB legend bottom follows selected functions legacy SUB at 1120x700",
+    "FAIL: SUB legend top is SINE original SUB at 1600x1000",
+    "FAIL: SUB legend bottom follows selected functions original SUB at 1600x1000",
+    "FAIL: SUB legend top is SINE original SUB at 1120x700",
+    "FAIL: SUB legend bottom follows selected functions original SUB at 1120x700"
+  ],
+  "prediction_matched": true,
+  "finished_at": "2026-11-02T16:49:51.381930+00:00",
+  "process_environment_overrides": {
+    "DISPLAY": "unset",
+    "XDG_CACHE_HOME": "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/panel-component/red-preservation/cache",
+    "XDG_CONFIG_HOME": "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/panel-component/red-preservation/config"
+  }
+}
