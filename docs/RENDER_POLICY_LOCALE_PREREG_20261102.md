@@ -33,3 +33,14 @@ Retain unmodified/restored positives and rerun the 2257-check revision and
 296-check revision-locale fixtures. Allocation-failure semantics remain the
 existing caller fallback, not a new default. Native platform compilation and
 final-source qualification remain pending and cannot be inferred from Linux.
+
+## Additional prospective allocation-failure control
+
+Compile an isolated POSIX mutation replacing only newlocale allocation with a
+null handle. A separate public-processor driver (not a shipping runtime hook
+or an ordinary CTest) must pass exactly 98 checks across C/German, schemas
+absent/1/2/3 and both saved binary policies. Require actual XML, schema-specific
+ENGINE fallback/PURE off despite opposite live values, deferred Engine update,
+exact effective policy and unchanged caller locale. This simulates allocation
+failure, not an observed OS failure. The unmodified2290-check positive must
+pass before/after with identical executable bytes.
