@@ -24,3 +24,7 @@ all presence/order checks. Original351 owner checks stay unchanged. Add direct
 and rebound Original SUB direction controls so physical orientation cannot be
 lost when a ParamKnob changes binding. Rerun a qualified corrected baseline
 before production fixes; never call the original combined prediction a PASS.
+
+## Corrected binding baseline (production unchanged)
+
+Agent5 reviewed test-only c9c28b53675c149c25790dc92b75c0915f3c2544 before execution. At16:42:44 UTC, its unpeered component driver produced **609 checks/112 ordinary failures**, exactly the prospective full failure-name multiset: owner351/92, original SUB54/16, S2 both modes and sizes204/4. All497 other checks pass; zero desktop components before/after. Production source remains dbbefcc5ca0eeac5b741a90b916c0e79336246fd. Matching old project/header/object hashes and fresh driver commands are retained in `panel-component-20261102/corrected-mode-baseline`. This establishes the scoped physical-gesture and group-order RED, not painted/native/DAW acceptance.
