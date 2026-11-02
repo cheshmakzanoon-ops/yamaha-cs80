@@ -39,6 +39,7 @@ TREE = "c" * 40
 AUDIO = "d" * 40
 REGISTRATION = "e" * 40
 RATES = [44100, 48000, 96000]
+CPU_HEADER = 'rate,block,isolation,scenario,initial_selector,rank_i_name,rank_ii_name,phase,callbacks,audio_seconds,budget_us,min_us,median_us,p95_us,p99_us,max_us,mean_rtf,median_rtf,p99_rtf,max_rtf,budget_exceedances,selector_events,event_median_us,event_max_us,min_active_voices,max_active_voices,final_active_voices,tail_voices_complete,source_compilations,nonfinite_count,abs_at_or_above_one,peak,rms,checksum,process_cpu_seconds_including_checks,mode,source_performance,thread_cpu_seconds_including_checks,controller_events,mpe_member_state_checks,pedal_held_callbacks,last_block_peak,pra_target_min_ohms,pra_target_max_ohms'.split(",")
 
 
 def raw_suites():
@@ -127,15 +128,25 @@ def cpu_round(source, marker, held=0.18, idle=0.01):
         # 51-row stand-in. Synthetic timing/PCM values remain test data only.
         first, second = pairs[selector]
         med = idle if scenario == "idle_quiet" else held if scenario == "paired_tones" else 0.01
-        return {"rate": "48000", "block": "256", "mode": mode,
+        row = {"rate": "48000", "block": "256", "mode": mode,
                 "isolation": "1" if mode == "isolation" else "0",
                 "source_performance": "0", "scenario": scenario, "phase": phase,
                 "initial_selector": str(selector), "rank_i_name": first,
                 "rank_ii_name": second,
-                "callbacks": "1024" if phase == "warmed_held" else "128",
+                "callbacks": "1024" if phase == "warmed_held" else "188",
                 "median_rtf": str(med), "p99_rtf": "0.19",
                 "budget_exceedances": "0", "nonfinite_count": "0",
                 "checksum": "0.123", "peak": "0.25", "rms": "0.1"}
+        idle_case = scenario.startswith("idle_")
+        held_phase = phase == "warmed_held"
+        moving = scenario == "moving_tabs_pressure_wah" and held_phase
+        row.update(min_active_voices="0" if idle_case or not held_phase else "8",
+                   max_active_voices="0" if idle_case else "8",
+                   final_active_voices="0" if idle_case or not held_phase else "8",
+                   tail_voices_complete="0" if held_phase else "1",
+                   selector_events="32" if moving else "0",
+                   source_compilations="64" if moving and mode == "isolation" else "0")
+        return {field: row.get(field, "0") for field in CPU_HEADER}
 
     for selector in range(11):
         for mode in ("isolation", "legacy"):
@@ -155,7 +166,8 @@ def cpu_round(source, marker, held=0.18, idle=0.01):
                      "compiler": "13.3.0", "source_fingerprint": "fixed-driver-v2",
                      "quick_subset": False, "callbacks_per_held_phase": 1024,
                      "clock_is_steady": True, "order_seed": 803010,
-                     "hardware_equivalence_or_realtime_qualification": False},
+                     "hardware_equivalence_or_realtime_qualification": False,
+                     **CONTRACT["cpu"]["registered_workload_metadata"]},
         "completed": {"completed": True, "cases": 27, "rows": 51},
         "receipt": {"host_id": "same-runner", "runner_job_id": "single-job",
                     "compiler_id": "gcc-13.3", "flags_sha256": "f" * 64,

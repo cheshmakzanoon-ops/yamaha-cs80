@@ -13,7 +13,11 @@
       "--rates",
       "44100,48000,96000"
     ],
-    "expected_rates_hz": [44100, 48000, 96000],
+    "expected_rates_hz": [
+      44100,
+      48000,
+      96000
+    ],
     "expected_rows": {
       "latency.csv": 40,
       "alias.csv": 168,
@@ -109,17 +113,50 @@
     "registered_case_identity_sha256": "8430527f7cad6540179c4024e1834e57f483faa045a6f28521354e7b35638f4b",
     "registered_case_identity_serialization": "SHA-256 of lexicographically sorted, newline-terminated UTF-8 TSV rows: rate,block,mode,scenario,initial_selector,rank_i_name,rank_ii_name,phase; 51 rows from frozen source_factory_benchmark.cpp baseline at 48000/256, independently cross-checked against original before-1 capture",
     "registered_tone_pairs_by_selector": [
-      ["String 1", "String 2"],
-      ["String 3", "String 4"],
-      ["Brass 1", "Brass 2"],
-      ["Flute", "Brass 3"],
-      ["E. Piano", "Bass"],
-      ["Clavichord 1", "Clavichord 2"],
-      ["Harpsichord 1", "Harpsichord 2"],
-      ["Organ 1", "Organ 2"],
-      ["Guitar 1", "Guitar 2"],
-      ["Funky 1", "Funky 2"],
-      ["Funky 3", "Funky 4"]
+      [
+        "String 1",
+        "String 2"
+      ],
+      [
+        "String 3",
+        "String 4"
+      ],
+      [
+        "Brass 1",
+        "Brass 2"
+      ],
+      [
+        "Flute",
+        "Brass 3"
+      ],
+      [
+        "E. Piano",
+        "Bass"
+      ],
+      [
+        "Clavichord 1",
+        "Clavichord 2"
+      ],
+      [
+        "Harpsichord 1",
+        "Harpsichord 2"
+      ],
+      [
+        "Organ 1",
+        "Organ 2"
+      ],
+      [
+        "Guitar 1",
+        "Guitar 2"
+      ],
+      [
+        "Funky 1",
+        "Funky 2"
+      ],
+      [
+        "Funky 3",
+        "Funky 4"
+      ]
     ],
     "registered_case_matrix_source": "git blob 92ea7e0b1801bf98fccaed21c13e676890039c94 src/tools/source_factory_benchmark.cpp baseline loop: 11 selectors x 2 modes x held/tail; selector 0 x 2 modes moving held/tail; selector 0 isolated+legacy idle_quiet held and legacy idle_noise held, 27 cases / 51 rows",
     "rate_hz": 48000,
@@ -143,7 +180,18 @@
     "require_same_runner_job_and_receipt_from_workflow": true,
     "require_source_identity_and_checksum_consistency": true,
     "require_all_rounds_complete_and_finite": true,
-    "p99_and_deadline_misses": "Recorded for each selected case, not waived or converted into fabricated thresholds"
+    "p99_and_deadline_misses": "Recorded for each selected case, not waived or converted into fabricated thresholds",
+    "frozen_csv_header_sha256": "b28bee3811ef007fb022331ec9f05fc07028ec82a4a60efb4def94ea2273b44d",
+    "registered_workload_metadata": {
+      "warmup_seconds": 1,
+      "tail_minimum_seconds": 1,
+      "tail_cap_seconds": 40,
+      "performance_fx_tail_seconds": 3,
+      "performance_pedal_hold_seconds": 0.25,
+      "performance_include_64": false,
+      "timed_scope": "setControlFrame, active control events, render; no JUCE/DAW/driver"
+    },
+    "registered_workload_witnesses": "Frozen benchmark blob92ea7e0b: all warmed_held phases exactly1024callbacks; nonidle min/max/final voices8, idle0; moving held32selector events and64isolation source compilations; other held source compilations0; no baseline MPE/controller/pedal events; release tails retain original1-to40second observation window and completion/voice consistency. These are producer identity/integrity checks, not new performance thresholds."
   },
   "release": {
     "require_reviewer_source_sha_and_source_tree_match": true,
