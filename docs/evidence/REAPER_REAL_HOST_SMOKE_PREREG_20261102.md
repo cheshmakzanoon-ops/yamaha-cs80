@@ -36,3 +36,15 @@ audio without MIDI, lost automation, changed restored output and provenance
 mismatches must fail the verifier. Synthetic negative controls test the
 **verifier only**, never stand in for real-host evidence. Any bootstrap/API
 assumption is provisional until a native Actions run demonstrates it.
+
+## Harness qualification, before native host execution
+
+On 2026-11-02 the four local verifier tests passed under the shared engineering
+lock (3.930 seconds). They exercise thirteen audio mutations, malformed RIFF
+inputs, and source/host/plugin/state/envelope/failure metadata negatives. Both
+Python programs compiled, and the Lua fixture parsed with the installed Lua 5.4
+library without executing any host code. The raw local log is
+`reaper-smoke-harness-local-20261102.log` beside this document. These results
+qualify the harness's rejection behavior only. The actual REAPER run, command
+line bootstrap, plugin discovery, rendering and screenshot review remain
+**pending** until the native Actions evidence exists.

@@ -1,0 +1,112 @@
+name: REAPER limited real-host smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['test/reaper-host-smoke-*', 'work/reaper-host-smoke-*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reaper-host-smoke-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  linux-reaper:
+    name: REAPER 7.84 / Linux x86-64 / limited VST3 smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Enforce fixed no-cost evaluation window
+        run: |
+          python3 - <<'PY'
+          import datetime, json
+          c = json.load(open('tests/hosts/reaper/contract-v1.json'))['host']
+          now = datetime.datetime.now(datetime.timezone.utc)
+          start = datetime.datetime.fromisoformat(c['evaluation_start_utc'].replace('Z', '+00:00'))
+          end = datetime.datetime.fromisoformat(c['evaluation_end_exclusive_utc'].replace('Z', '+00:00'))
+          assert start <= now < end, 'Evaluation window expired: obtain separately authorized licensing; do not reset dates.'
+          PY
+
+      - name: Install native build and display dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config curl xz-utils \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev libgtk-3-0t64 fonts-dejavu-core \
+            xvfb xauth openbox x11-utils scrot lua5.4
+
+      - name: Verify harness negative controls and syntax
+        run: |
+          python3 tests/test_reaper_smoke_validator.py
+          python3 -m py_compile scripts/run-reaper-smoke.py scripts/verify-reaper-smoke.py
+          luac -p tests/hosts/reaper/create-projects.lua
+
+      - name: Fetch exact official REAPER evaluation archive
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          c = json.load(open('tests/hosts/reaper/contract-v1.json'))['host']
+          assert c['url'].startswith('https://www.reaper.fm/files/')
+          subprocess.run(['curl', '--fail', '--location', '--retry', '3', '--output', 'reaper.tar.xz', c['url']], check=True)
+          observed = hashlib.sha256(pathlib.Path('reaper.tar.xz').read_bytes()).hexdigest()
+          assert observed == c['sha256'], 'Official archive checksum mismatch'
+          print('Verified REAPER archive SHA-256:', observed)
+          PY
+          mkdir host
+          tar -xJf reaper.tar.xz -C host
+          test -x host/reaper_linux_x86_64/REAPER/reaper
+
+      - name: Build exact checkout VST3
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=OFF
+          cmake -DBUILD_DIR=build \
+            -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 \
+            -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake
+          cmake --build build --target CS80Reference_VST3 --parallel 2
+
+      - name: Run actual host once per registered setup/render
+        run: |
+          mkdir -p artifacts
+          xvfb-run -a -s '-screen 0 1920x1200x24' bash -euo pipefail -c '
+            openbox >artifacts/openbox.log 2>&1 &
+            wm=$!
+            trap "kill $wm 2>/dev/null || true" EXIT
+            python3 scripts/run-reaper-smoke.py \
+              --reaper host/reaper_linux_x86_64/REAPER/reaper \
+              --archive reaper.tar.xz \
+              --plugin "build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3" \
+              --out artifacts/reaper
+          '
+
+      - name: Verify limited host observations and raw renders
+        run: |
+          python3 scripts/verify-reaper-smoke.py --evidence artifacts/reaper \
+            --contract tests/hosts/reaper/contract-v1.json \
+            --expected-source "$(git rev-parse HEAD)" \
+            --expected-src-tree "$(git rev-parse HEAD:src)"
+
+      - name: Upload raw host evidence (not the evaluation host)
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: reaper-linux-limited-smoke-${{ github.sha }}
+          path: |
+            artifacts/reaper/*.json
+            artifacts/reaper/*.rpp
+            artifacts/reaper/*.wav
+            artifacts/reaper/*.png
+            artifacts/reaper/*.txt
+            artifacts/reaper/*.log
+            artifacts/reaper/HOST_SETUP_COMPLETE
+            artifacts/reaper/FAILED
+            artifacts/openbox.log
+            build/ci-juce-provenance.txt
+          if-no-files-found: warn

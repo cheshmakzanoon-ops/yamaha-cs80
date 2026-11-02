@@ -71,5 +71,59 @@ class AudioControls(unittest.TestCase):
                     validator.read_wave(path)
 
 
+class ProvenanceControls(unittest.TestCase):
+    """Intentionally artificial metadata fixtures; not a host acceptance result."""
+    def test_identity_state_and_failure_mutations(self):
+        contract = json.loads((ROOT / "tests/hosts/reaper/contract-v1.json").read_text())
+        state = {"VOLUME": 0.55, "VOICE DISPERSION": 0, "ANALOG DRIFT": 0, "ANALOG NOISE": 0}
+        notes = [{"pitch": n, "velocity": 100, "start_seconds": 0.25, "end_seconds": 1.5}
+                 for n in contract["render"]["notes"]]
+        observed = {"schema": contract["schema"], "host_version": "7.84/linux-x86_64",
+                    "checks": [{"ok": True}], "scan_matches": [{"name": "synthetic unit fixture"}],
+                    "fx_name": "CS-80 Reference", "fx_ident": "unit-fixture-only", "editor_open": True,
+                    "pdc_samples": 67, "chain_reported_pdc_samples": 67,
+                    "before_save": state, "after_reopen": state,
+                    "perturbed": {"VOLUME": 0.2, "VOICE DISPERSION": 0.7},
+                    "projects": {name: {"notes": notes} for name in ("baseline", "restored", "automated")}}
+        observed["projects"]["automated"]["envelope"] = contract["render"]["automation_points"]
+        observed["projects"]["no-midi"] = {"notes": []}
+        source, tree = "1" * 40, "2" * 40
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            (out / "contract-v1.json").write_text(json.dumps(contract))
+            manifest = {"source_commit": source, "src_tree": tree,
+                        "host_archive_sha256": contract["host"]["sha256"],
+                        "plugin_build_sha256": "3" * 64, "plugin_installed_sha256": "3" * 64,
+                        "contract_sha256": validator.sha256(out / "contract-v1.json"),
+                        "exit_codes": {name: 0 for name in ["setup"] + contract["render"]["files"]},
+                        "files": {}}
+            # All mutations fail before any purported audio/screenshot is read.
+            # No fake WAV, PNG or successful host receipt is generated here.
+            mutations = {
+                "source": lambda m, o: m.update(source_commit="4" * 40),
+                "src-tree": lambda m, o: m.update(src_tree="4" * 40),
+                "host-hash": lambda m, o: m.update(host_archive_sha256="4" * 64),
+                "plugin-hash": lambda m, o: m.update(plugin_installed_sha256="4" * 64),
+                "contract-hash": lambda m, o: m.update(contract_sha256="4" * 64),
+                "runner-failure": lambda m, o: m.update(error="timed out"),
+                "wrong-host-version": lambda m, o: o.update(host_version="0.0/linux-x86_64"),
+                "failed-assertion": lambda m, o: o.update(checks=[{"ok": False}]),
+                "missing-assertions": lambda m, o: o.update(checks=[]),
+                "editor-closed": lambda m, o: o.update(editor_open=False),
+                "nonfinite-pdc": lambda m, o: o.update(pdc_samples=float("nan")),
+                "wrong-restored-state": lambda m, o: o["after_reopen"].update(VOLUME=0.2),
+                "missing-midi": lambda m, o: o["projects"]["restored"].update(notes=[]),
+                "lost-envelope": lambda m, o: o["projects"]["automated"].update(envelope=[]),
+            }
+            for name, mutate in mutations.items():
+                with self.subTest(name=name):
+                    m, o = copy.deepcopy(manifest), copy.deepcopy(observed)
+                    mutate(m, o)
+                    (out / "provenance.json").write_text(json.dumps(m))
+                    (out / "host-observations.json").write_text(json.dumps(o))
+                    with self.assertRaises(ValueError):
+                        validator.verify_evidence(out, contract, source, tree)
+
+
 if __name__ == "__main__":
     unittest.main()
