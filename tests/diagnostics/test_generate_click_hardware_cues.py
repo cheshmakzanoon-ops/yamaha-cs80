@@ -174,6 +174,43 @@ class HardwareCueSafetyTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256((destination / "click_hardware_midi_cue_manifest.csv").read_bytes()).hexdigest(),
                              "0e6d196df140530f810109ff4f20cae129490b227ddba5923948b184ada91467")
 
+    def test_general_ctest_oracles_survive_a_clean_newer_source_tree(self) -> None:
+        """Normal development may advance DSP; immutable historical cue tests must not become a false blocker.
+
+        The actual artifact producer must still reject that newer tree. Only
+        the always-on *unit* encoding/oracle tests may run independently.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = pathlib.Path(tmp) / "future-repo"
+            audit = repo / "src/tools/engine_audit.cpp"
+            audit.parent.mkdir(parents=True)
+            audit.write_text(
+                "constexpr int kBlock = 64\nretrigOn1 = 6.00\nretrigOff1 = 6.20\n"
+                "retrigOn2 = 6.25\nretrigOff2 = 6.55\nsingleOn = 0.20\nsingleOff = 1.40\n"
+            )
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            subprocess.run(["git", "-C", str(repo), "add", "src"], check=True)
+            subprocess.run(["git", "-C", str(repo), "-c", "user.name=Fixture",
+                            "-c", "user.email=fixture@example.invalid", "commit", "-qm", "future"], check=True)
+            self.assertNotEqual(cues.EXPECTED_SRC_TREE,
+                                subprocess.check_output(["git", "-C", str(repo), "rev-parse", "HEAD:src"],
+                                                        text=True).strip())
+            actual_producer = subprocess.run(
+                [sys.executable, str(SCRIPT), "--repo", str(repo),
+                 "--out", str(repo / "forbidden-real-output")],
+                text=True, capture_output=True, check=False,
+            )
+            self.assertNotEqual(actual_producer.returncode, 0)
+            self.assertFalse((repo / "forbidden-real-output").exists())
+            # Run the exact existing positive unit oracle under a simulated
+            # future checkout. It must pass without downgrading the real
+            # generator's source-refusal policy.
+            with mock.patch.dict(globals(), {"REPO": repo}):
+                direct = HardwareCueSafetyTests("test_native_smf_timeline_and_mutation_controls")
+                result = unittest.TestResult()
+                direct.run(result)
+                self.assertTrue(result.wasSuccessful(), str(result.errors + result.failures))
+
 
 if __name__ == "__main__":
     unittest.main()
