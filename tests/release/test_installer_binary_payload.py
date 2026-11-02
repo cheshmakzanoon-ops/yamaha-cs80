@@ -201,6 +201,62 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'platform'):
             self.module.capture_build_payload('unknown', self.build)
 
+    def test_missing_primary_build_binary_is_not_a_resource_only_bundle(self):
+        for platform in ('linux', 'macos'):
+            with self.subTest(platform=platform):
+                if self.inputs.exists():
+                    shutil.rmtree(self.inputs)
+                shutil.rmtree(self.actual); self.actual.mkdir()
+                self.fixture(platform)
+                primary = (self.inputs / 'VST3' / (PRODUCT + '.vst3') /
+                           ('Contents/x86_64-linux/' + PRODUCT + '.so' if platform == 'linux'
+                            else 'Contents/MacOS/' + PRODUCT))
+                primary.unlink()
+                with self.assertRaisesRegex(ValueError, 'primary.*binary'):
+                    self.module.capture_build_payload(platform, self.build)
+
+    def test_empty_primary_build_binary_is_rejected(self):
+        self.fixture('windows')
+        (self.inputs / 'Standalone' / (PRODUCT + '.exe')).write_bytes(b'')
+        with self.assertRaisesRegex(ValueError, 'primary.*binary'):
+            self.module.capture_build_payload('windows', self.build)
+
+    def test_linked_artifact_root_is_rejected(self):
+        self.fixture('linux')
+        moved = self.root / 'moved-artifacts'
+        self.inputs.rename(moved)
+        self.inputs.symlink_to(moved, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, 'Linked|linked'):
+            self.module.capture_build_payload('linux', self.build)
+
+    def test_linked_expansion_root_is_rejected(self):
+        manifest = self.fixture('linux')
+        moved = self.root / 'moved-expanded'
+        self.actual.rename(moved)
+        self.actual.symlink_to(moved, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, 'Linked|linked'):
+            self.verify('linux', manifest)
+
+    def test_internal_relative_resource_link_is_preserved(self):
+        self.fixture('linux')
+        relative = Path('usr/lib/vst3') / (PRODUCT + '.vst3') / 'Contents/Resources'
+        for folder in (self.inputs / 'VST3' / (PRODUCT + '.vst3') / 'Contents/Resources',
+                       self.actual / relative):
+            (folder / 'alias.json').symlink_to('moduleinfo.json')
+        manifest = self.module.capture_build_payload('linux', self.build)
+        self.assertEqual(self.verify('linux', manifest)['verified_components'], ['standalone', 'vst3'])
+
+    def test_malformed_package_info_is_an_explicit_rejection(self):
+        manifest = self.fixture('macos')
+        (self.actual / 'au.pkg/PackageInfo').write_text('<pkg-info malformed')
+        try:
+            self.verify('macos', manifest)
+        except Exception as error:
+            self.assertIsInstance(error, ValueError)
+            self.assertIn('PackageInfo', str(error))
+        else:
+            self.fail('Malformed PackageInfo was accepted')
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
