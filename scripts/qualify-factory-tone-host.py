@@ -42,6 +42,16 @@ def main():
     auto = "src/plugin/PluginProcessorAutomation.cpp"
     library = "src/plugin/PluginProcessorLibrary.cpp"
     wrapped = "withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources))"
+    with locked(args.lock):
+        implementation = (args.source/cpp).read_text()
+    if "const auto storedValue = child.getProperty" in implementation:
+        inheritance_old = 'const auto storedValue = child.getProperty("value", fallback);'
+        inheritance_new = ('const auto storedValue = child.getProperty("value", '
+            'id == factoryToneRevisionParameterId ? factoryToneRevisionValue->load(std::memory_order_relaxed) : fallback);')
+    else:
+        inheritance_old = 'value = restoredFactoryToneChoice(child.getProperty("value", juce::var()));'
+        inheritance_new = ('value = restoredFactoryToneChoice(child.getProperty("value", '
+            'factoryToneRevisionValue->load(std::memory_order_relaxed)));')
     cases = [
         ("live-frame-reread", cpp,
          "frame.factoryToneRevision = cachedFactoryToneRevision;",
@@ -55,8 +65,10 @@ def main():
         ("missing-automation-frame", auto, wrapped,
          "cs80::ControlFrame::programmer(cached, cachedHardwareSources)",
          "automation main uses captured V2, not new live V1", 2),
-        ("missing-state-default", cpp,
+        ("omitted-revision-normalization", cpp,
          "    ensure(factoryToneRevisionParameterId, 0.0f);\n", "",
+         "malformed revision restores V1 without clamping into opt-in", 1),
+        ("inherited-missing-revision", cpp, inheritance_old, inheritance_new,
          "missing revision always restores frozen V1, never live V2", 1),
         ("loose-state-parser", cpp,
          "return end != begin && *end == '\\0' && parsed == 1.0 ? 1.0f : 0.0f;",

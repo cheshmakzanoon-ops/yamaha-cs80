@@ -51,3 +51,19 @@ publication, so the later publisher saw no change. The fixture correction takes
 the snapshot before queue attachment and asserts both a distinct initial volume
 and the actual changed volume in both engines. No production source or test
 criterion is relaxed. The corrected fixture has 2,257 checks.
+
+## Normalization negative-control scope correction
+
+The corrected 2,257-check positive passes. Actual live-reread, missing-extension
+and missing-automation mutants now fail their intended deterministic assertions.
+The next mutant deletes the entire revision ensure() call: it fails four
+malformed-state assertions, but not the originally predicted missing-default
+assertion. Pinned JUCE8.0.11 appends an absent PARAM and initializes its declared
+default0. That run remains INVALID for its original registration.
+
+The prospective replacement separates the mechanisms: omitted normalization
+must fail the malformed opt-in assertions, while a distinct actual C++ mutant
+changes the missing-value fallback to the live revision atomic and must fail
+the unchanged missing-state V1 assertions. The fixed positive inventory and
+all missing/malformed checks are retained; no extra failure is treated as a
+substitute for the specifically registered mechanism.
