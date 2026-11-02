@@ -19,8 +19,10 @@ installer execution, signing, numerical acceptance, real DAWs or a release.
 - Existing native archive-path/mode/hash fixtures: **34 checks pass**.
 - Eight deliberate defects are rejected in isolated copies; a positive and a
   restored copy each pass. Logs and SHA-256 identities are retained in `mutations/`.
-- `bash -n`, Python compilation and focused `cs80_distribution_docs_tests` CTest
-  also pass. No DSP code or numerical limit changed.
+- `bash -n` and Python compilation pass. The focused `cs80_distribution_docs_tests`
+  CTest is registered but **not run locally yet**: `cmake` and `ctest` were not
+  found on PATH. The same 11-test Python command passes directly. No DSP code or
+  numerical limit changed.
 
 The manifest identifies the **clean packaging checkout** and the exact notice
 bytes, not the compiler's input/output relationship. It does not certify a stale
