@@ -61,3 +61,27 @@ Preserve that raw run. Before any production repair, correct only that regex and
 split staging/verifier index divergence into separate groups so an early staging
 failure cannot hide the independent verifier result. The corrected inventory is
 12 groups, expecting40 intended ordinary failures if both index paths admit it.
+
+The corrected bff2dda run observed exactly40 intended failures in12 groups, zero
+errors/skips. The first working-tree repair then passed12/12. Before evaluating
+new or inherited source mutants, register these inherited-runner migrations:
+
+- The old dirty-checkout test now changes tracked non-notice `CMakeLists.txt`
+  instead of LICENSE, retaining the same criterion while remaining sensitive to
+  the Git-wide dirty guard independently of the new raw-notice guard. The mutation
+  anchor is narrowed to the original worktree-vs-HEAD command, not the newly added
+  staged-index check.
+- Removing only `ls-files` membership no longer permits an untracked notice,
+  because the immutable blob check remains. The existing untracked-defect witness
+  is explicitly a **joint** control: remove the membership check and restore the
+  old working-file payload lookup. Expected ordinary failure set remains the one
+  original untracked-notice test. Do not report the harmless single removal as a
+  killed defect.
+- The deliberate runtime-error probe moves only its unique insertion anchor to
+  the current `notice_payload` entry. Error-only output remains refused.
+
+New raw-source mutants are registered in a separate runner before execution:
+stager bytes24, verifier forged origin12, staging mode1, verifier mode1, staged
+index staging1/verifier1, unregistered Windows conversion staging1/verifier1,
+and CI status binding2. Each number is an exact ordinary subtest failure count;
+the runner also requires exact named test-family counts and zero runtime errors.

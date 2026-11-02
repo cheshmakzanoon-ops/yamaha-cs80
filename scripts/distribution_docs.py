@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import subprocess
 import sys
 
@@ -46,9 +47,45 @@ def read_notice(path: Path, root: Path | None = None) -> bytes:
     return data
 
 
-def notice_payload(root: Path, juce_license: Path) -> dict[str, bytes]:
+def revision_notice(root: Path, relative: str, commit: str) -> bytes:
+    """Bind required notice bytes to immutable blobs, not Git index hints.
+
+    Preserve the one explicitly supported checkout transformation; never invoke
+    a repository clean/smudge filter to certify arbitrary replacement text.
+    """
+    require(bool(re.fullmatch(r"[0-9a-f]{40}", commit)), "Notice source requires a full revision")
+    records = subprocess.check_output(
+        ["git", "-C", str(root), "ls-tree", "-z", commit, "--", relative]).split(b"\0")
+    require(len(records) == 2 and records[-1] == b"" and b"\t" in records[0],
+            f"Required notice is absent from source revision: {relative}")
+    metadata, name = records[0].split(b"\t", 1)
+    mode, kind, blob = metadata.decode("ascii").split()
+    require(name == relative.encode("utf-8") and kind == "blob" and mode in ("100644", "100755"),
+            f"Required notice has unsupported source type: {relative}")
+    path = root / relative
+    actual = read_notice(path, root)
+    actual_mode = path.lstat().st_mode
+    require(stat.S_ISREG(actual_mode), f"Required notice is not a regular source file: {relative}")
+    if os.name != "nt":
+        require(bool(actual_mode & 0o111) == (mode == "100755"),
+                f"Required notice source executable mode differs: {relative}")
+    expected = subprocess.check_output(["git", "-C", str(root), "cat-file", "blob", blob])
+    if actual != expected:
+        config = subprocess.run(["git", "-C", str(root), "config", "--get", "core.autocrlf"],
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+        allow_crlf = (sys.platform == "win32" and config.returncode == 0
+                      and config.stdout.strip().lower() == b"true"
+                      and b"\r" not in expected and b"\0" not in expected)
+        require(allow_crlf and actual == expected.replace(b"\n", b"\r\n"),
+                f"Required notice bytes differ from source revision: {relative}")
+    return actual
+
+
+def notice_payload(root: Path, juce_license: Path, commit: str | None = None) -> dict[str, bytes]:
     root = root.resolve()
-    payload = {output: read_notice(root / source, root) for output, source in NOTICE_INPUTS.items()}
+    if commit is None:
+        commit = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+    payload = {output: revision_notice(root, source, commit) for output, source in NOTICE_INPUTS.items()}
     payload["licenses/JUCE-LICENSE.md"] = read_notice(juce_license)
     return payload
 
@@ -69,6 +106,9 @@ def source_identity(root: Path) -> tuple[str, str]:
     require(subprocess.run(["git", "-C", str(root), "diff", "--quiet", "HEAD", "--"],
                            check=False).returncode == 0,
             "Tracked source differs from the packaging commit")
+    require(subprocess.run(["git", "-C", str(root), "diff", "--cached", "--quiet", "HEAD", "--"],
+                           check=False).returncode == 0,
+            "Staged source index differs from the packaging commit")
     # Notice files must come from this source revision, not an untracked fallback.
     for path in NOTICE_INPUTS.values():
         git("ls-files", "--error-unmatch", "--", path)
@@ -91,7 +131,8 @@ def source_text(commit: str) -> bytes:
 
 def stage_documents(root: Path, juce_license: Path, out: Path) -> dict:
     commit, tree = source_identity(root)
-    payload = notice_payload(root, juce_license)
+    payload = notice_payload(root, juce_license, commit)
+    require(source_identity(root) == (commit, tree), "Packaging source revision changed while reading notices")
     payload["SOURCE.txt"] = source_text(commit)
     manifest = {
         "schema_version": 1,
@@ -100,6 +141,7 @@ def stage_documents(root: Path, juce_license: Path, out: Path) -> dict:
         "source_tree": tree,
         "source_url": f"{REPOSITORY}/tree/{commit}",
         "scope": "Clean packaging checkout identity and distribution-document bytes only",
+        "source_notice_policy": "Raw Git blobs; exact native-Windows core.autocrlf=true LF-to-CRLF conversion only",
         "qualification": "Not a binary/source-equivalence, numerical, hardware, signing or DAW certificate",
         "files": [
             {"path": name, "size": len(data), "sha256": hashlib.sha256(data).hexdigest()}

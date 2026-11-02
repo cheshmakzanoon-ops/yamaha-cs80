@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # Also importable through importlib by the standalone payload fixtures.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from distribution_docs import notice_payload, source_identity, source_text
+from distribution_docs import notice_payload, revision_notice, source_identity, source_text
 
 
 def require(condition: bool, message: str) -> None:
@@ -237,8 +237,8 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     license_file = source / "LICENSE.md"
     require(license_file.is_file(), "Verified JUCE source license is missing")
     extras = {
-        **notice_payload(ROOT, license_file),
-        "DISTRIBUTION_STATUS.md": (ROOT / "docs/CI_DISTRIBUTION_STATUS.md").read_bytes(),
+        **notice_payload(ROOT, license_file, commit),
+        "DISTRIBUTION_STATUS.md": revision_notice(ROOT, "docs/CI_DISTRIBUTION_STATUS.md", commit),
         "evidence/juce-provenance.txt": report_data,
         "SOURCE.txt": source_text(commit),
     }
@@ -246,6 +246,7 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
                 "workflow_run_id": os.environ.get("GITHUB_RUN_ID", ""),
                 "runner_os": platform.platform(),
                 "validation_note": "Consult every required job for this exact commit; package availability is not a pass."}
+    require(source_identity(ROOT)[0] == commit, "Packaging source revision changed while reading CI notices")
     return commit, metadata, extras
 
 

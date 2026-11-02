@@ -181,7 +181,9 @@ class DistributionDocsTests(unittest.TestCase):
         self.assertIn('"/DDistributionDocs=$distributionDocs"', workflow)
 
     def test_stage_rejects_dirty_source(self):
-        (self.root / "LICENSE").write_bytes(b"modified fixture\n")
+        # Notice blobs now have an additional independent guard. Keep this
+        # existing whole-checkout test sensitive to the Git dirty guard itself.
+        (self.root / "CMakeLists.txt").write_bytes(b"modified non-notice source fixture\n")
         with self.assertRaises(ValueError):
             self.helper().stage_documents(self.root, self.license, self.build / "out")
 

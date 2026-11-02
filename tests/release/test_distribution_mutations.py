@@ -21,13 +21,24 @@ MUTATIONS = [
     ("omit_font_attribution", '    "licenses/BarlowCondensed-SOURCE.txt": "assets/fonts/barlow-condensed/SOURCE.txt",\n', ""),
     ("change_notice_bytes", '    return payload\n', '    payload["licenses/MTS-ESP-LICENSE.txt"] += b"mutated"\n    return payload\n'),
     ("ignore_workflow_identity", 'require(not workflow_sha or workflow_sha == commit,', 'require(True,'),
-    ("ignore_dirty_checkout", 'check=False).returncode == 0,', 'check=False).returncode in (0, 1),'),
+    ("ignore_dirty_checkout", '["git", "-C", str(root), "diff", "--quiet", "HEAD", "--"],\n                           check=False).returncode == 0,',
+     '["git", "-C", str(root), "diff", "--quiet", "HEAD", "--"],\n                           check=False).returncode in (0, 1),'),
     ("allow_untracked_notice", '        git("ls-files", "--error-unmatch", "--", path)', '        pass  # mutation: trust an untracked replacement'),
     ("wrong_manifest_digest_after_self_check", '    return manifest\n',
      '    corrupted = {**manifest, "files": [{**item, "sha256": "0" * 64} for item in manifest["files"]]}\n'
      '    (out / "distribution-manifest.json").write_text(json.dumps(corrupted) + "\\n")\n'
      '    return manifest\n'),
 ]
+
+# The original untracked-notice defect now has two independent barriers. Removing
+# only the index-membership check is correctly harmless. This explicitly joint
+# control also restores the old working-file payload lookup; no survivor is
+# counted as a semantic kill.
+JOINT_REPLACEMENTS = {
+    "allow_untracked_notice": (
+        '    payload = {output: revision_notice(root, source, commit) for output, source in NOTICE_INPUTS.items()}',
+        '    payload = {output: read_notice(root / source, root) for output, source in NOTICE_INPUTS.items()}'),
+}
 
 
 EXPECTED_FAILURES = {
@@ -82,12 +93,19 @@ def main() -> int:
             shutil.copy2(ROOT / relative, target)
         helper = scratch / "scripts/distribution_docs.py"
         original = helper.read_text()
-        runtime_probe = ("runtime_error_control", "    root = root.resolve()\n    payload =",
-                         "    raise RuntimeError('deliberate unqualified mutant crash')\n    payload =")
+        runtime_probe = ("runtime_error_control", "    root = root.resolve()\n    if commit is None:",
+                         "    raise RuntimeError('deliberate unqualified mutant crash')\n    if commit is None:")
         for name, before, after in [("positive", "", ""), *MUTATIONS, runtime_probe, ("restored", "", "")]:
             if before and original.count(before) != 1:
                 raise AssertionError(f"Mutation anchor is not unique: {name}")
-            helper.write_text(original.replace(before, after) if before else original)
+            changed = original.replace(before, after) if before else original
+            joint = JOINT_REPLACEMENTS.get(name)
+            if joint is not None:
+                old, new = joint
+                if changed.count(old) != 1:
+                    raise AssertionError('Joint mutation anchor is not unique: ' + name)
+                changed = changed.replace(old, new)
+            helper.write_text(changed)
             shutil.rmtree(scratch / "scripts/__pycache__", ignore_errors=True)
             result = subprocess.run([sys.executable, str(scratch / "tests/release/test_distribution_docs.py")],
                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
@@ -98,6 +116,7 @@ def main() -> int:
                         and assessment["test_inventory"] == ["11"]) if runtime_control else assessment["qualified"]
             (args.out_dir / f"{name}.log").write_text(result.stdout)
             reports.append({"case": name, "observed_exit": result.returncode,
+                            "joint_replacement": {"old": joint[0], "new": joint[1]} if joint else None,
                             "expected": "harness_refusal_not_semantic_kill" if runtime_control else
                                         "semantic_rejection" if expected else "pass",
                             "assessment": assessment, "result": "PASS" if accepted else "FAIL",

@@ -10,8 +10,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import sys
 
@@ -58,11 +60,42 @@ def verify_documents(root: Path, juce_license: Path, documents: Path, expected_s
     require(git('rev-parse', 'HEAD') == expected_source, 'Expected source commit differs from checkout')
     require(subprocess.run(['git', '-C', str(root), 'diff', '--quiet', 'HEAD', '--'],
                            check=False).returncode == 0, 'Source checkout is dirty')
+    require(subprocess.run(['git', '-C', str(root), 'diff', '--cached', '--quiet', 'HEAD', '--'],
+                           check=False).returncode == 0, 'Source index differs from expected commit')
     tree = git('rev-parse', 'HEAD^{tree}')
     expected = {}
     for output, relative in INPUTS.items():
         git('ls-files', '--error-unmatch', '--', relative)
-        expected[output] = regular_bytes(root / relative, root)
+        actual_source = regular_bytes(root / relative, root)
+        # Independent immutable-object comparison: do not import the stager or
+        # let a matching extracted payload certify a hidden source replacement.
+        tree_record = subprocess.check_output(
+            ['git', '-C', str(root), 'ls-tree', '-z', expected_source, '--', relative])
+        records = tree_record.split(b'\0')
+        require(len(records) == 2 and records[-1] == b'' and b'\t' in records[0],
+                'Required source notice is not registered in expected commit: ' + relative)
+        metadata, name = records[0].split(b'\t', 1)
+        mode, kind, blob = metadata.decode('ascii').split()
+        require(name == relative.encode('utf-8') and kind == 'blob' and mode in ('100644', '100755'),
+                'Unsupported source notice type: ' + relative)
+        physical_mode = (root / relative).lstat().st_mode
+        require(stat.S_ISREG(physical_mode), 'Source notice is not a regular file: ' + relative)
+        if os.name != 'nt':
+            require(bool(physical_mode & 0o111) == (mode == '100755'),
+                    'Source notice executable mode differs: ' + relative)
+        raw_blob = subprocess.check_output(['git', '-C', str(root), 'cat-file', 'blob', blob])
+        expected_source_bytes = raw_blob
+        if actual_source != raw_blob:
+            setting = subprocess.run(['git', '-C', str(root), 'config', '--get', 'core.autocrlf'],
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+            require(sys.platform == 'win32' and setting.returncode == 0
+                    and setting.stdout.strip().lower() == b'true'
+                    and b'\r' not in raw_blob and b'\0' not in raw_blob,
+                    'Unsupported source notice checkout conversion: ' + relative)
+            expected_source_bytes = raw_blob.replace(b'\n', b'\r\n')
+        require(actual_source == expected_source_bytes,
+                'Source notice bytes differ from immutable Git blob: ' + relative)
+        expected[output] = expected_source_bytes
     juce_license = juce_license.absolute()
     expected['licenses/JUCE-LICENSE.md'] = regular_bytes(juce_license, juce_license.parent)
     source_url = f'{REPOSITORY}/tree/{expected_source}'
@@ -87,6 +120,9 @@ def verify_documents(root: Path, juce_license: Path, documents: Path, expected_s
     require(manifest.get('scope') == 'Clean packaging checkout identity and distribution-document bytes only'
             and manifest.get('qualification') == 'Not a binary/source-equivalence, numerical, hardware, signing or DAW certificate',
             'Document scope must not imply binary or release qualification')
+    require(manifest.get('source_notice_policy') ==
+            'Raw Git blobs; exact native-Windows core.autocrlf=true LF-to-CRLF conversion only',
+            'Document source notice policy is absent or different')
     inventory = manifest.get('files')
     require(isinstance(inventory, list) and len(inventory) == len(expected),
             'Document inventory is incomplete or duplicated')
