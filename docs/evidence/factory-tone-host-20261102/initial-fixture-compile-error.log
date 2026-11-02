@@ -1,0 +1,90 @@
+2026-11-02T13:46:04Z
+2026-11-02T13:46:04Z compile src/core/Engine.cpp
+2026-11-02T13:46:04Z compile src/core/FactoryPresets.cpp
+2026-11-02T13:46:11Z compile src/plugin/PluginProcessor.cpp
+2026-11-02T13:46:19Z compile src/plugin/PluginEditor.cpp
+2026-11-02T13:46:27Z compile src/plugin/UiComponents.cpp
+2026-11-02T13:46:40Z compile src/plugin/ParameterContext.cpp
+2026-11-02T13:46:52Z compile src/plugin/AdvancedPanel.cpp
+2026-11-02T13:46:56Z compile src/plugin/PresetBrowser.cpp
+2026-11-02T13:47:32Z compile src/plugin/MtsEspClient.cpp
+2026-11-02T13:47:35Z compile src/plugin/PluginProcessorAutomation.cpp
+2026-11-02T13:47:37Z compile src/plugin/KeyboardTuningPage.cpp
+2026-11-02T13:47:47Z compile src/plugin/ModernLayerState.cpp
+2026-11-02T13:47:49Z compile src/plugin/ModernModulationUi.cpp
+2026-11-02T13:47:55Z compile src/plugin/PluginProcessorLibrary.cpp
+2026-11-02T13:48:00Z compile src/plugin/ArtCommon.cpp
+2026-11-02T13:48:04Z compile src/plugin/PanelWidgets.cpp
+2026-11-02T13:48:09Z compile src/plugin/ChannelRow.cpp
+2026-11-02T13:48:16Z compile src/plugin/CentreRow.cpp
+2026-11-02T13:48:20Z compile src/plugin/PerformanceDeck.cpp
+2026-11-02T13:48:27Z compile src/plugin/MemoryLid.cpp
+2026-11-02T13:48:31Z compile src/plugin/EditorPreferences.cpp
+2026-11-02T13:48:33Z compile src/plugin/StudioToolbar.cpp
+2026-11-02T13:48:39Z compile src/plugin/StudioDrawers.cpp
+2026-11-02T13:48:48Z compile src/plugin/UndoHistory.cpp
+2026-11-02T13:48:55Z compile src/plugin/StudioTour.cpp
+2026-11-02T13:48:59Z compile src/tools/ui_snapshot.cpp
+In file included from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp:22:
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/StateTreeSynchronizationTests.h: In function ‘void cs80::tests::testStateTreeSynchronization(const state_tree_detail::Check&)’:
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/StateTreeSynchronizationTests.h:401:24: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/StateTreeSynchronizationTests.h:401:51: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+      |                                        ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/StateTreeSynchronizationTests.h:402:24: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/StateTreeSynchronizationTests.h:402:51: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+      |                                        ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp:3308:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3308 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp:3309:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3309 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp:28:
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/FactoryToneRevisionHostTests.h: In instantiation of ‘void cs80::tests::testFactoryToneRevisionHost(Check) [with Check = main(int, char**)::<lambda(bool, const char*)>]’:
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp:2101:49:   required from here
+ 2101 |         cs80::tests::testFactoryToneRevisionHost([&](bool ok, const char* message) { ++checks; check(ok, message); });
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/FactoryToneRevisionHostTests.h:156:68: error: ‘virtual float juce::AudioParameterChoice::getDefaultValue() const’ is private within this context
+  156 |     check(!parameter->isAutomatable() && parameter->getDefaultValue() == 0.0f && choice(host) == 0,
+      |                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+In file included from /workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:155,
+                 from /workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.h:64,
+                 from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/plugin/UndoHistory.h:30,
+                 from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/plugin/ModernLayerState.h:5,
+                 from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/plugin/PluginProcessor.h:9,
+                 from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/../../tests/HostParameterState.h:3,
+                 from /workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp:1:
+/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/utilities/juce_AudioParameterChoice.h:147:11: note: declared private here
+  147 |     float getDefaultValue() const override;
+      |           ^~~~~~~~~~~~~~~
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/factory-tone-host/build-focused.py", line 47, in <module>
+    for record in pool.map(compile_one,selected):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/factory-tone-host/build-focused.py", line 42, in compile_one
+    subprocess.run(args,cwd=build,check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/bin/c++', '-DCS80_GOLDEN_DIR="/workspace/scratch/aa102d573ba3/cs80-tone-host/tests/golden"', '-DJUCE_DISPLAY_SPLASH_SCREEN=0', '-DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1', '-DJUCE_MODAL_LOOPS_PERMITTED=1', '-DJUCE_MODULE_AVAILABLE_juce_audio_basics=1', '-DJUCE_MODULE_AVAILABLE_juce_audio_devices=1', '-DJUCE_MODULE_AVAILABLE_juce_audio_formats=1', '-DJUCE_MODULE_AVAILABLE_juce_audio_processors=1', '-DJUCE_MODULE_AVAILABLE_juce_audio_processors_headless=1', '-DJUCE_MODULE_AVAILABLE_juce_audio_utils=1', '-DJUCE_MODULE_AVAILABLE_juce_core=1', '-DJUCE_MODULE_AVAILABLE_juce_data_structures=1', '-DJUCE_MODULE_AVAILABLE_juce_dsp=1', '-DJUCE_MODULE_AVAILABLE_juce_events=1', '-DJUCE_MODULE_AVAILABLE_juce_graphics=1', '-DJUCE_MODULE_AVAILABLE_juce_gui_basics=1', '-DJUCE_MODULE_AVAILABLE_juce_gui_extra=1', '-DJUCE_STANDALONE_APPLICATION=1', '-DJUCE_USE_CURL=0', '-DJUCE_WEB_BROWSER=0', '-DLINUX=1', '-DNDEBUG=1', '-D_NDEBUG=1', '-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CS80Snapshots_artefacts/JuceLibraryCode', '-I/workspace/scratch/aa102d573ba3/cs80-tone-host/src', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include/freetype2', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/root/usr/include/libpng16', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv', '-I/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src', '-I/workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/juce_binarydata_cs80_panel_fonts/JuceLibraryCode', '-O3', '-DNDEBUG', '-std=gnu++20', '-fPIE', '-o', '/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/factory-tone-host/red/src_tools_ui_snapshot.cpp.o', '-c', '/workspace/scratch/aa102d573ba3/cs80-tone-host/src/tools/ui_snapshot.cpp']' returned non-zero exit status 1.
+2026-11-02T13:49:12Z

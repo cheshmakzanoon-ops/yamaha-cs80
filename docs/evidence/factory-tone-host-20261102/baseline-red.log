@@ -1,0 +1,8 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+FAIL: exactly one append-only revision parameter
+Program Change witness: main selector=13 extension selector=0 main voice mode=0 extension voice mode=1
+FAIL: MIDI Program Change publishes the same aggregate frame to both active engines
+FAIL: explicit versioned factory-tone choice exists
+Remaining revision-dependent checks NOT RUN: parameter absent (baseline RED).
+Factory tone revision processor: 1491 checks, 3 failures
