@@ -1,0 +1,6 @@
+All registered source inputs/26 fresh objects/19 reuse identities match
+Traceback (most recent call last):
+  File "/tmp/cs80-independent-panel-f3913.py", line 24, in <module>
+    block=s['block'].encode();assert b.count(block)==1;b=b.replace(block,b'');at=b.index(b'    lever(cs80::P_touchPitch');b=b[:at]+block+b[at:]
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: subsection not found
