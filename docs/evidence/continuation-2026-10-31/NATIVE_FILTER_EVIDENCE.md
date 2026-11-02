@@ -99,6 +99,51 @@ model value, audio normalization, acceptance band or test. This switched
 WSC mixer is distinct from the **LP CP7 -> 150 kΩ series -> AI1, 33 kΩ AI1
 shunt** endpoint correction above.
 
+### 2026-11-02 four-branch NI trace (clarifies 2026-11-01 ideal case)
+
+The **entire** HP mixer region, inspected again at enlarged original pixels,
+has **four separate 150 kΩ branches** meeting at one mixer node:
+
+1. IC9 `SO` (pin 5) -> T2 -> FET6 -> 150 kΩ -> mixer (saw, gated).
+2. IC9 `PO` (pin 7) -> T3 -> FET7 -> 150 kΩ -> mixer (pulse, gated).
+3. Mixer -> **fixed** 150 kΩ -> ground.
+4. Mixer -> **additional** 150 kΩ -> `NI(43)` (separate external source).
+
+The *fourth* resistor is immediately below the FET7/mixer junction in Yamaha
+M41 printed p41 KEC-4223-65. It was overlooked in the 2026-11-01 simplified
+two-resistor calculation: **NI is not a direct short to the mixer**. Original
+5100×3300 native box `[620,2160,1000,2560]`, enlarged 5× for legibility,
+shows the FET7 150 kΩ *above* the junction and distinct NI 150 kΩ *below*.
+M41 source image: [Yamaha M circuit p41](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/41%20-%20M%20Circuit%20Diagram.jpg),
+SHA-256 `1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`;
+enlarged detail PNG SHA-256
+`849fc31f2f9255df59fa95b973b71f6f2aaef015cb02c77dc866af03e2e933f8`.
+
+On [Yamaha M11/M12 wiring p44](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/44%20-%20M11-12%20Circuit%20Board%20%26%20Wiring.jpg)
+(KEP-NA03574-6Y, SHA-256
+`3320dd2f625c79d7cca9b98abd5cade9d1b95477e6d8990a93a296c9cda71256`),
+`NI(43)` is wired to SUB `NO1(39)`. The [original SUB circuit p29](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/29%20-%20SUB%20Circuit%20Diagram.jpg)
+(KEC-4446-68, SHA-256
+`b81c7e5ad2927ac04d5912bfc455a631237f512a0c7700bda41250a14bd33e60`)
+traces `NO1(39)` to a buffered output of IC3/2. Its **actual output waveform
+and source impedance under ADJ p11 setup are unmeasured**. A noise source
+cannot be treated as a short, ground, or silent just from its `NI` label.
+
+Two other M41 terminal traces cross this region but do **not** join the HP
+audio mixer node at the crossing: `PW(40)` via 680 kΩ and `PWM(41)` via
+100 kΩ go to the waveform-shaping circuit, IC9 WSC width-control pins
+`PWI`/`PWO` (pins 10/11), and can affect pulse timing **upstream**. They are
+not additional direct 680 kΩ/100 kΩ audio mixer loads. The old 75 kΩ source,
+half-pulse fixture assumes both the inactive FET and the **NI source are
+open**; it remains an intentionally conditional, ideal-switch calculation.
+If NO1 were an ideal zero-volt low-impedance source, its series 150 kΩ
+would add a third equal conductance, yielding 50 kΩ and pulse gain 1/3.
+Neither idealization is established as the actual hardware condition. See
+the [independently pre-registered offline comparison](ADJ_NOISE_LOAD_PREREG_20261102.md).
+This is a further **HP input** reading, not the distinct resolved
+**LP CP7 -> 150 kΩ -> AI1, with 33 kΩ shunt** reading. No documented service
+test has been fixed by tracing the NI branch.
+
 ### 2026-11-01 ADJ probe and trimmer cross-check (still unresolved)
 
 The original CS-80 **M11/M12 Circuit Board & Wiring** sheet, printed p44,

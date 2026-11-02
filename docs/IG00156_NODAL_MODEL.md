@@ -36,7 +36,7 @@ Per stage, four capacitor states and ideal amplifiers:
 | 1.2 MOhm in parallel with 180 pF from BP (pin 13) to FB/AI (pins 9/1) | source-derived | M41 native crop |
 | 33 kOhm AI-node shunt (both stages) | source-derived | M41 |
 | HP input: passive mixing node of the 150 kOhm waveform branches, then 1 uF NP into AI1 | source-derived topology | M41, [oscillator evidence](OSCILLATOR_CIRCUIT_EVIDENCE.md) |
-| HP mixing-node Thevenin resistance 75 kOhm | **conditional approximation** | one selected FET waveform through 150 kOhm series, plus a distinct fixed 150 kOhm shunt to ground; off-FET impedance and other NI/PW/PWM loading neglected (M41 reading below) |
+| HP mixing-node Thevenin resistance 75 kOhm | **conditional approximation** | one selected FET waveform through 150 kOhm series, plus a distinct fixed 150 kOhm shunt to ground; off-FET assumed open; separate 150 kOhm NI branch assumed open (M41 follow-up below) |
 | LP input: HP pin 15 -> 1 uF NP -> CP2 -> CP7 -> 150 kOhm -> AI1 | source-derived | M41 + harness p44; native endpoint correction below |
 | LP series source 150 kOhm | source-derived connection | M41 native crop, 2026-10-31 erratum below |
 | Q block: unilateral current Iq = -gq * BP | conditional hypothesis | as in `IG00156Linear.h` |
@@ -54,13 +54,28 @@ HP mixer node with its **own fixed 150 kOhm shunt to ground**. With one gate
 ideal-on and the other ideal-off, this independently grounded node produces
 the nominal 75 kOhm source impedance and half-waveform level used in the
 service-point fixture. An inactive FET branch is **not** a grounded source.
-The gate impedances, remaining NI/PW/PWM paths and full CP3 voltage transfer
+The gate impedances, NI source termination and full CP3 voltage transfer
 are not fixed by that idealized calculation; the 1.692 Vpp HP miss remains.
 The source/crop coordinates and primary-source SHA-256 are in the
 [native review](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
 This HP input is not the LP `CP7 -> 150 kOhm -> AI1` series input with a
 separate 33 kOhm shunt discussed next. Numerical values, test limits and V1
 fingerprint are unchanged.
+
+**2026-11-02 four-branch clarification:** Enlarged native M41 p41 pixels
+resolve a **fourth 150 kOhm resistor from the mixer to NI terminal 43**, in
+addition to the two gated waveform resistors and the permanently grounded
+150 kOhm. Yamaha M11/12 harness p44 connects NI(43) to SUB NO1(39), which
+Yamaha SUB schematic p29 traces to an IC3/2 buffer. The original 75 kOhm
+half-pulse calculation is therefore the **NI-open boundary**, *not* a fully
+loaded HP source model. If NO1 were ideally silent and zero impedance, the
+effective resistance would instead be 50 kOhm and pulse ratio 1/3. Actual
+NO1 voltage and loaded output impedance are unknown. `PW(40)` via 680 kOhm
+and `PWM(41)` via 100 kOhm lead to IC9 WSC pulse-width control (PWI/PWO),
+**not additional direct mixer shunts**. See the source image hashes and
+[NI topology correction](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md),
+plus the [pre-registered, model-only endpoint comparison](evidence/continuation-2026-10-31/ADJ_NOISE_LOAD_PREREG_20261102.md).
+No production model value or service band changes with this qualification.
 
 ### LP series source: original inference and 2026-10-31 erratum
 
