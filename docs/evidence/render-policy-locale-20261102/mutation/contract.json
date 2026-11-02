@@ -1,0 +1,21 @@
+{
+  "source_head": "11461720b70787d413aa795a26091f07fcb23f54",
+  "source_tree": "976c922b86216d430ad51d1ecff83c793340f28c",
+  "receipt_sha256": "3723c2980c819487f0111cb20f588f64f83774e2d9f2e73f9479c0f599eb6c21",
+  "positive_binary_sha256": "45bec00d46a92e68f0a8c7fcd93a4c751f88572278ced0c7c8f5617d5bd766c0",
+  "mutant": "replace only old ENGINE/PURE explicit-C parse with std::strtod",
+  "expected_exit": 1,
+  "checks": 2290,
+  "ordinary_failure_counts": {
+    "restored policy reaches the actual Engine at the next audio transaction": 35,
+    "session ENGINE preserves complete literals and schema fallback across locales": 24,
+    "session PURE preserves complete literals and off fallback across locales": 24,
+    "user preset reaches exact recalled ENGINE and live PURE policy": 2,
+    "user preset recalls its ENGINE independently of host numeric locale": 4
+  },
+  "positive_modes": [
+    "--render-policy-locale-test",
+    "--factory-tone-revision-test",
+    "--factory-tone-locale-test"
+  ]
+}
