@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+  "workflow_run_id": "41427704633",
+  "overall_run": "failure: ARM job cancelled; these three native jobs succeeded",
+  "juce_license_primary_url": "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/LICENSE.md",
+  "artifacts": [
+    {
+      "artifact_id": 13135277790,
+      "outer_file": "cs80-a6-linux-install-bundle.zip",
+      "outer_sha256": "40be0750f5a5606bd6c90decf37b83c5b880a5c35633e8ff277e70b6f69814ee",
+      "package_file": "cs80-reference-linux-x86_64-a6e568543f3d.tar.gz",
+      "package_sha256": "cde5ef39687ba6888e667ffb4d2206a2f1ddb0af98b2ea0a59d9305a833abf48",
+      "manifest_sha256": "bf95a6c64ace0af2deba199bfe258aee7fedb2570592183319750c68d345a646",
+      "archive_entries": 16,
+      "notices": [
+        {
+          "path": "LICENSE",
+          "bytes": 34523,
+          "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "source_bytes_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "bytes": 661,
+          "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "source_bytes_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "bytes": 4377,
+          "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "source_bytes_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "bytes": 994,
+          "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "source_bytes_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "bytes": 12301,
+          "sha256": "e643687ccc0af256d2ecb9bc115e6b2b6125f1d5e5d5c7d580925c6b05cacbab",
+          "source_bytes_sha256": "e643687ccc0af256d2ecb9bc115e6b2b6125f1d5e5d5c7d580925c6b05cacbab",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "bytes": 3147,
+          "sha256": "665edb9dfc1374838eed2bff1d1cd32a616cd9fd334f64eea17b3a1ffa3b72e8",
+          "source_bytes_sha256": "665edb9dfc1374838eed2bff1d1cd32a616cd9fd334f64eea17b3a1ffa3b72e8",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "bytes": 4971,
+          "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "source_bytes_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "SOURCE.txt",
+          "bytes": 436,
+          "sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+          "source_bytes_sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+          "comparison": "exact Git/source bytes"
+        }
+      ],
+      "native_binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+          "format": "ELF64 x86_64",
+          "bytes": 16550144,
+          "sha256": "0fabbe583483180734cb98411f6882a8fc9db5da4e387910b610171c4e399f44"
+        },
+        {
+          "path": "Standalone/CS-80 Reference",
+          "format": "ELF64 x86_64",
+          "bytes": 15900264,
+          "sha256": "d7bf105c2015800529bb1c1fbf846886b343f320da4ef5f516c4da611ec6462c"
+        }
+      ],
+      "safe_internal_symlinks": {},
+      "source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+      "workflow_run_id": "41427704633",
+      "qualification": "Downloaded development archive inventory/bytes, notice source comparison and file headers only. No binary execution, installer install/uninstall, signature validation, compiler/source equivalence, musical acceptance or release."
+    },
+    {
+      "artifact_id": 13138005606,
+      "outer_file": "cs80-a6-windows-install-bundle.zip",
+      "outer_sha256": "1a820911886511d207b1fe3877f051a83f7823255358eb0d06afe6feae8944da",
+      "package_file": "cs80-reference-windows-x86_64-a6e568543f3d.zip",
+      "package_sha256": "2cb840a6d30b341a0a058201139cf3a5c7ba336a6a83cee71b359c3e8a92637e",
+      "manifest_sha256": "3e8713b76bb93b5ae8b8eeafb5546fae2fa9dbdc53d0c6235e69b4473c014880",
+      "archive_entries": 16,
+      "notices": [
+        {
+          "path": "LICENSE",
+          "bytes": 35184,
+          "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+          "source_bytes_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "bytes": 666,
+          "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47",
+          "source_bytes_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "bytes": 4470,
+          "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608",
+          "source_bytes_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "bytes": 1010,
+          "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e",
+          "source_bytes_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "bytes": 12501,
+          "sha256": "df3213466332b1bcf6738aef14aa123e4ca72b1514fcd81fa8c458839e61f8ac",
+          "source_bytes_sha256": "e643687ccc0af256d2ecb9bc115e6b2b6125f1d5e5d5c7d580925c6b05cacbab",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "bytes": 3204,
+          "sha256": "a98f1bf4c05a685d66799bac796769b00ef3bb3df83e92ccbe208123fc97e805",
+          "source_bytes_sha256": "665edb9dfc1374838eed2bff1d1cd32a616cd9fd334f64eea17b3a1ffa3b72e8",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "bytes": 5038,
+          "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+          "source_bytes_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "comparison": "observed LF-to-CRLF checkout conversion only; not raw Git-blob byte identity"
+        },
+        {
+          "path": "SOURCE.txt",
+          "bytes": 436,
+          "sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+          "source_bytes_sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+          "comparison": "exact Git/source bytes"
+        }
+      ],
+      "native_binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+          "format": "PE x86_64",
+          "bytes": 6785536,
+          "sha256": "81b5925015306bca2535bbcb2cb9a7d53df8188ad4c6dee810590ed062ad1277"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.exe",
+          "format": "PE x86_64",
+          "bytes": 6986752,
+          "sha256": "d674a47a5c278946d854853a8ea08b3473e956bbfa410dcc5a9d119cbbacd5cb"
+        }
+      ],
+      "safe_internal_symlinks": {},
+      "source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+      "workflow_run_id": "41427704633",
+      "qualification": "Downloaded development archive inventory/bytes, notice source comparison and file headers only. No binary execution, installer install/uninstall, signature validation, compiler/source equivalence, musical acceptance or release."
+    },
+    {
+      "artifact_id": 13141651235,
+      "outer_file": "cs80-a6-macos-intel-install-bundle.zip",
+      "outer_sha256": "0a12b73c3fb72f13b83c2002be7a585c008bb60fcaf922905115e00c427ce2bc",
+      "package_file": "cs80-reference-macos-x86_64-a6e568543f3d.tar.gz",
+      "package_sha256": "9cfd58e8a805a91bf4f64e2dcfb2798827bd6199d4c79a81053f70c20075b1f9",
+      "manifest_sha256": "6d3d427b67eb798e01b386ea98d999de1171964fd7c8d994ef145f9db9e2a5fa",
+      "archive_entries": 33,
+      "notices": [
+        {
+          "path": "LICENSE",
+          "bytes": 34523,
+          "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "source_bytes_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "bytes": 661,
+          "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "source_bytes_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "bytes": 4377,
+          "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "source_bytes_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "bytes": 994,
+          "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "source_bytes_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "bytes": 12301,
+          "sha256": "e643687ccc0af256d2ecb9bc115e6b2b6125f1d5e5d5c7d580925c6b05cacbab",
+          "source_bytes_sha256": "e643687ccc0af256d2ecb9bc115e6b2b6125f1d5e5d5c7d580925c6b05cacbab",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "bytes": 3147,
+          "sha256": "665edb9dfc1374838eed2bff1d1cd32a616cd9fd334f64eea17b3a1ffa3b72e8",
+          "source_bytes_sha256": "665edb9dfc1374838eed2bff1d1cd32a616cd9fd334f64eea17b3a1ffa3b72e8",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "bytes": 4971,
+          "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "source_bytes_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "comparison": "exact Git/source bytes"
+        },
+        {
+          "path": "SOURCE.txt",
+          "bytes": 436,
+          "sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+          "source_bytes_sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+          "comparison": "exact Git/source bytes"
+        }
+      ],
+      "native_binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "format": "Mach-O64 x86_64, not universal",
+          "bytes": 14909184,
+          "sha256": "f06188c4ec8ab7a9d669df7c4c927cdcfd394d5c18c2227a97b6d57c994df58a"
+        },
+        {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "format": "Mach-O64 x86_64, not universal",
+          "bytes": 14500400,
+          "sha256": "50d13f81129d9758598cd6c7445dc56b688289696da0eade1989ebf2a3f29b0f"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+          "format": "Mach-O64 x86_64, not universal",
+          "bytes": 14321760,
+          "sha256": "c7443a95555a27f836b17070a63457fd350c9d3148de05c35d51eca871ab8214"
+        }
+      ],
+      "safe_internal_symlinks": {},
+      "source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+      "workflow_run_id": "41427704633",
+      "qualification": "Downloaded development archive inventory/bytes, notice source comparison and file headers only. No binary execution, installer install/uninstall, signature validation, compiler/source equivalence, musical acceptance or release."
+    }
+  ],
+  "scope": "Bounded downloaded CI archive verification. Does not execute or qualify the later unpublished native installer increment."
+}

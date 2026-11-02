@@ -1,0 +1,124 @@
+{
+  "architecture": "x86_64",
+  "commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+  "files": [
+    {
+      "mode": "0o777",
+      "path": "Standalone/CS-80 Reference.exe",
+      "sha256": "d674a47a5c278946d854853a8ea08b3473e956bbfa410dcc5a9d119cbbacd5cb",
+      "size": 6986752,
+      "type": "file"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3",
+      "type": "directory"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents",
+      "type": "directory"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "type": "directory"
+    },
+    {
+      "mode": "0o666",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+      "size": 1143,
+      "type": "file"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win",
+      "type": "directory"
+    },
+    {
+      "mode": "0o666",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "sha256": "81b5925015306bca2535bbcb2cb9a7d53df8188ad4c6dee810590ed062ad1277",
+      "size": 6785536,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "DISTRIBUTION_STATUS.md",
+      "sha256": "a98f1bf4c05a685d66799bac796769b00ef3bb3df83e92ccbe208123fc97e805",
+      "size": 3204,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "INSTALL_AND_QUICKSTART.md",
+      "sha256": "df3213466332b1bcf6738aef14aa123e4ca72b1514fcd81fa8c458839e61f8ac",
+      "size": 12501,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "LICENSE",
+      "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+      "size": 35184,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "SOURCE.txt",
+      "sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+      "size": 436,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "evidence/juce-provenance.txt",
+      "sha256": "437ee382c66cdc620a1b9ca10b3861c3699a8dce3312c5d00617640bdfdf8d64",
+      "size": 585,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-OFL.txt",
+      "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608",
+      "size": 4470,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-SOURCE.txt",
+      "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e",
+      "size": 1010,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/JUCE-LICENSE.md",
+      "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+      "size": 5038,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/MTS-ESP-LICENSE.txt",
+      "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47",
+      "size": 666,
+      "type": "file"
+    }
+  ],
+  "formats": [
+    "VST3",
+    "Standalone"
+  ],
+  "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "juce_version": "8.0.11",
+  "package_kind": "development CI artifact; not a release-qualification certificate",
+  "platform": "windows",
+  "product": "CS-80 Reference",
+  "runner_os": "Windows-2022Server-10.0.20348-SP0",
+  "schema_version": 1,
+  "signature_status": "not inspected; no release signing/notarization performed by this helper",
+  "validation_note": "Consult every required job for this exact commit; package availability is not a pass.",
+  "workflow_run_id": "41427704633"
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+  "workflow_run_id": 41427704633,
+  "archive_member_counts": {
+    "linux": 16,
+    "windows": 16,
+    "macos_intel": 33
+  },
+  "source_notices_each": 8,
+  "observed_native_binary_headers": {
+    "linux": 2,
+    "windows": 2,
+    "macos_intel": 3
+  },
+  "files": {
+    "downloaded-archive-verification.json": "9dc6512faab3a0816cf3a80bc26ab629e9063d06798e2e74ff0c0c38ac83879b",
+    "independent-read-only-verifier.py": "cb53ba7c659aa62d6263cadb657161230f8ecc9a12c50840d21916d090c11055",
+    "linux-manifest.json": "bf95a6c64ace0af2deba199bfe258aee7fedb2570592183319750c68d345a646",
+    "macos-manifest.json": "6d3d427b67eb798e01b386ea98d999de1171964fd7c8d994ef145f9db9e2a5fa",
+    "observed.log": "37e537ac3a8da512fa470a1f2ccb1d127ba429a50e18caa1b40ec436d8983512",
+    "terminal-jobs.json": "0200ede53cebd6ffecf374c6291c63d3281a3301185920592af40dd31a59c475",
+    "windows-manifest.json": "3e8713b76bb93b5ae8b8eeafb5546fae2fa9dbdc53d0c6235e69b4473c014880"
+  },
+  "scope": "Downloaded development ZIP/tar bundle contents and notices only. Not newer native installer execution, native ARM evidence, compiler/source equivalence, signing, CPU/audio or release qualification."
+}

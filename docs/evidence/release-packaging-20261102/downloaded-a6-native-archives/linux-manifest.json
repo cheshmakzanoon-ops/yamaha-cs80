@@ -1,0 +1,124 @@
+{
+  "architecture": "x86_64",
+  "commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+  "files": [
+    {
+      "mode": "0o755",
+      "path": "Standalone/CS-80 Reference",
+      "sha256": "d7bf105c2015800529bb1c1fbf846886b343f320da4ef5f516c4da611ec6462c",
+      "size": 15900264,
+      "type": "file"
+    },
+    {
+      "mode": "0o755",
+      "path": "VST3/CS-80 Reference.vst3",
+      "type": "directory"
+    },
+    {
+      "mode": "0o755",
+      "path": "VST3/CS-80 Reference.vst3/Contents",
+      "type": "directory"
+    },
+    {
+      "mode": "0o755",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "type": "directory"
+    },
+    {
+      "mode": "0o644",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+      "size": 1095,
+      "type": "file"
+    },
+    {
+      "mode": "0o755",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux",
+      "type": "directory"
+    },
+    {
+      "mode": "0o755",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "sha256": "0fabbe583483180734cb98411f6882a8fc9db5da4e387910b610171c4e399f44",
+      "size": 16550144,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "DISTRIBUTION_STATUS.md",
+      "sha256": "665edb9dfc1374838eed2bff1d1cd32a616cd9fd334f64eea17b3a1ffa3b72e8",
+      "size": 3147,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "INSTALL_AND_QUICKSTART.md",
+      "sha256": "e643687ccc0af256d2ecb9bc115e6b2b6125f1d5e5d5c7d580925c6b05cacbab",
+      "size": 12301,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "LICENSE",
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "size": 34523,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "SOURCE.txt",
+      "sha256": "b680c460fd835c2ac14bbd7b078a6eb16dda69f493cb6edec32c55b08890ccab",
+      "size": 436,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "evidence/juce-provenance.txt",
+      "sha256": "79a7b7abf55ec1dc8d09306eec8de1381048a3f1739e1efb7e63de1af1b05ec3",
+      "size": 609,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-OFL.txt",
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+      "size": 4377,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-SOURCE.txt",
+      "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+      "size": 994,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/JUCE-LICENSE.md",
+      "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+      "size": 4971,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/MTS-ESP-LICENSE.txt",
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+      "size": 661,
+      "type": "file"
+    }
+  ],
+  "formats": [
+    "VST3",
+    "Standalone"
+  ],
+  "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "juce_version": "8.0.11",
+  "package_kind": "development CI artifact; not a release-qualification certificate",
+  "platform": "linux",
+  "product": "CS-80 Reference",
+  "runner_os": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "schema_version": 1,
+  "signature_status": "not inspected; no release signing/notarization performed by this helper",
+  "validation_note": "Consult every required job for this exact commit; package availability is not a pass.",
+  "workflow_run_id": "41427704633"
+}

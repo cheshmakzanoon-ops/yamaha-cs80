@@ -1,0 +1,64 @@
+{
+  "workflow_run_id": 41427704633,
+  "source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+  "conclusion": "failure",
+  "jobs": [
+    {
+      "id": 125218223838,
+      "name": "Linux / VST3 + Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T10:39:08Z",
+      "completed_at": "2026-11-02T11:08:54Z"
+    },
+    {
+      "id": 125218224275,
+      "name": "Windows / VST3 + Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T10:52:24Z",
+      "completed_at": "2026-11-02T11:33:44Z"
+    },
+    {
+      "id": 125218224349,
+      "name": "Windows / host wrapper source contract",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T10:18:21Z",
+      "completed_at": "2026-11-02T10:18:58Z"
+    },
+    {
+      "id": 125218224421,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "started_at": "2026-11-02T10:18:11Z",
+      "completed_at": "2026-11-02T13:29:06Z"
+    },
+    {
+      "id": 125218224560,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T11:40:15Z",
+      "completed_at": "2026-11-02T12:26:51Z"
+    },
+    {
+      "id": 125240676171,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T11:08:56Z",
+      "completed_at": "2026-11-02T11:10:09Z"
+    },
+    {
+      "id": 125251872128,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T11:33:48Z",
+      "completed_at": "2026-11-02T11:34:05Z"
+    }
+  ],
+  "cancelled_arm_log": "official job-log endpoint returned404 BlobNotFound; no code failure or execution pass inferred"
+}

@@ -81,3 +81,18 @@ Independent review of d55 approved the bounded component-level checker and
 replayed 27 helper/11 controller tests; review of this small amendment is pending.
 The inventory covers declared binary components and notices, **not every possible
 extra file elsewhere in an installer or a whole-package security audit**.
+
+The independent qualification workstream subsequently approved the bb2 reparse
+amendment after rerunning all 30 helper tests with zero skips/errors and checking
+its three RED/guard-deletion assertions. This remains a simulated/helper scope.
+
+## Preserve evidence even when native checks fail
+
+At `fcbb0e7ed91d97f105a2c88137c952bba5e32c03`, each native always-upload
+step explicitly retains `binary-input-manifest.json` and
+`binary-verification.json`, alongside all prior notices/logs/golden images.
+Before the six added workflow paths, four tests produced six ordinary missing-
+path failures. The final source passes those four tests, four actual workflow
+mutants (three intended failures each), all twelve earlier notice/controller
+mutants, and seven focused CTests. `evidence-retention/receipt.json` pins the
+source and every raw log. This verifies workflow configuration, not execution.
