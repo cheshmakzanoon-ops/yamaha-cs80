@@ -262,6 +262,13 @@ def verify_audit(contract, source, audit):
         if name in ("phrase.csv", "fx.csv"):
             require(all(exact_integer(r["nonfinite"], f"{name} nonfinite") == 0 for r in rows),
                     f"{name}: nonfinite rendered audio detected")
+        if name == "alias.csv":
+            # The producer uses a finite numeric sentinel for nonfinite audio.
+            # Recompute this across ALL policies/rates/ring states, not only
+            # the Source/48 kHz/ring-off rows with an alias ceiling.
+            require(all(finite(r["nonharmonic_db_vs_partials"], "alias nonharmonic") != 999
+                        for r in rows),
+                    "alias.csv: nonfinite rendered audio sentinel detected")
         expected = summary["raw_files"][name]
         capture = provenance["raw_files"][name]
         actual = observed[name]
