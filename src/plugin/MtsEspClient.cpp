@@ -56,7 +56,7 @@ bool MtsEspClient::fillTable(tuning::TuningTable& table) const noexcept
         constexpr double dspHeadroom = 65536.0;
         const bool safeHz = std::isfinite(hz) && hz > 0.0
                             && hz >= (double) std::numeric_limits<float>::denorm_min()
-                            && hz <= (double) std::numeric_limits<float>::max() / dspHeadroom;
+                            && hz <= (double) (std::numeric_limits<float>::max)() / dspHeadroom;
         const float pitch = safeHz ? tuning::TuningTable::pitchFromHz(hz) : (float) n;
         if (!safeHz || !std::isfinite(pitch))
         {
