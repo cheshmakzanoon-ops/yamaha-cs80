@@ -20,9 +20,10 @@ installer execution, signing, numerical acceptance, real DAWs or a release.
 - Eight deliberate defects are rejected in isolated copies; a positive and a
   restored copy each pass. Logs and SHA-256 identities are retained in `mutations/`.
 - `bash -n` and Python compilation pass. The focused `cs80_distribution_docs_tests`
-  CTest is registered but **not run locally yet**: `cmake` and `ctest` were not
-  found on PATH. The same 11-test Python command passes directly. No DSP code or
-  numerical limit changed.
+  CTest is registered and now **observed passing** after the original tools-not-on-PATH
+  failure was preserved. A locked metadata-only configure (no C++ build) and the
+  focused test passed at local source `0827b49`; see `cmake-observed.log` and
+  `ctest-observed.log`. No DSP code or numerical limit changed.
 
 The manifest identifies the **clean packaging checkout** and the exact notice
 bytes, not the compiler's input/output relationship. It does not certify a stale
@@ -60,5 +61,6 @@ payload tests and 34 archive checks, with no tracked changes before or after.
 See [the exact-source receipt](published-a6e5685/receipt.json) and its hashed logs.
 The original local red/green evidence remains unchanged; these newer results do
 not retroactively change its source identities. `cmake-unavailable.log` preserves
-the original failed configure attempt. Focused CTest execution is still pending
-shared timing-window availability; the direct Python checks above were observed.
+the original failed configure attempt. After the CPU owner released the exclusive timing window, the focused CTest
+was run under `cs80-heavy-check.lock`: 1/1 passed, 1.19 seconds total. This closes
+the registration-execution gap, not any native installer or DSP acceptance gate.
