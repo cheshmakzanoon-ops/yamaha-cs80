@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
 const dispatch = require(process.env.CS80_DISPATCH_MODULE || '../../scripts/dispatch-reviewed-release.cjs');
-const A = 'a'.repeat(40), B = 'b'.repeat(40), C = 'c'.repeat(40);
+const A = 'a'.repeat(40), B = 'b'.repeat(40), C = 'c'.repeat(40), D = 'd'.repeat(40);
 let checks = 0;
 async function fixture(overrides = {}) {
   const calls = [];
@@ -16,13 +16,22 @@ async function fixture(overrides = {}) {
       createWorkflowDispatch: async args => { calls.push(args); }
     }
   } };
-  const result = await dispatch({ github, context: { repo: { owner: 'test', repo: 'cs80' } }, core: { info() {} }, request });
+  const requestSha = Object.prototype.hasOwnProperty.call(overrides, 'requestSha')
+    ? overrides.requestSha : D;
+  const result = await dispatch({ github, context: { repo: { owner: 'test', repo: 'cs80' } },
+    core: { info() {} }, request, requestSha });
   return { result, calls };
 }
 (async () => {
   const accepted = await fixture();
   assert.equal(accepted.result.dispatched, true); ++checks;
-  assert.deepEqual(accepted.calls, [{ owner: 'test', repo: 'cs80', workflow_id: 'release.yml', ref: 'main' }]); ++checks;
+  assert.deepEqual(accepted.calls, [{ owner: 'test', repo: 'cs80',
+    workflow_id: 'release.yml', ref: 'main',
+    inputs: { request_commit_sha: D } }]); ++checks;
+  for (const requestSha of [undefined, null, '', 'short', C.toUpperCase()]) {
+    await assert.rejects(() => fixture({ requestSha }), undefined,
+      'missing or malformed immutable request SHA must never dispatch'); ++checks;
+  }
   for (const overrides of [
     { request: { expected_main_sha: 'short' } }, { main: C },
     { comparison: { status: 'diverged' } }, { comparison: { merge_base_commit: { sha: C } } },
