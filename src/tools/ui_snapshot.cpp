@@ -3233,7 +3233,7 @@ int main(int argc, char** argv)
         GestureProbe probe;
         p->addListener(&probe);
         const double before=atSlider->getValue();
-        atSlider->keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        atSlider->keyPressed(juce::KeyPress(juce::KeyPress::downKey));
         check(atSlider->getValue()>before && probe.begins==1 && probe.ends==1
               && probe.unbracketedChanges==0 && probe.malformedGestures==0,
               "AT VCF actual keyboard edit sends one balanced host gesture");
@@ -3254,7 +3254,7 @@ int main(int argc, char** argv)
         GestureProbe probe;
         auto* parameter = processor.getAPVTS().getParameter("kbd_brilliance_high");
         parameter->addListener(&probe);
-        lever->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        lever->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));
         parameter->removeListener(&probe);
         check(processor.getParamValue(cs80::P_kbdBrillianceHigh) > 0.2f && probe.begins == 1 && probe.ends == 1
                   && probe.unbracketedChanges == 0 && probe.malformedGestures == 0,
@@ -3338,7 +3338,7 @@ int main(int argc, char** argv)
     if (auto* knob = findParameterControl(editor, cs80::P_subOriginalFunction))
     {
         const float legacyBefore = processor.getParamValue(cs80::P_subWave);
-        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));
         check(processor.getParamValue(cs80::P_subOriginalFunction) == 1.0f
                   && processor.getParamValue(cs80::P_subWave) == legacyBefore,
               "isolated main SUB edits the effective original function only");
@@ -3358,7 +3358,7 @@ int main(int argc, char** argv)
     {
         check(waitForGui([&] { return knob->getSlider().getValue() == 0.0; }),
               "legacy function host automation reaches main control");
-        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));
         check(processor.getParamValue(cs80::P_subWave) > 0.0f
                   && processor.getParamValue(cs80::P_subOriginalFunction) == 4.0f,
               "legacy main function edits legacy automation only");
@@ -3376,7 +3376,7 @@ int main(int argc, char** argv)
         auto* parameter = processor.getAPVTS().getParameter("sub_original_function");
         GestureProbe probe;
         parameter->addListener(&probe);
-        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));
         parameter->removeListener(&probe);
         check(processor.getParamValue(cs80::P_subOriginalFunction) == 1.0f
                   && processor.getParamValue(cs80::P_subWave) == oldWave,
@@ -3391,7 +3391,7 @@ int main(int argc, char** argv)
     {
         check(waitForGui([&] { return std::abs(knob->getSlider().getValue() - 12.0) < 0.0001; }),
               "original speed host automation reaches rebound main control");
-        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));
+        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));
         check(processor.getParamValue(cs80::P_subOriginalSpeed) > 12.0f
                   && std::abs(processor.getParamValue(cs80::P_subSpeed) - 7.0f) < 0.0001f,
               "original main speed edits leave legacy automation untouched");

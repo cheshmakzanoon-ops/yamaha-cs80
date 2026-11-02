@@ -1,0 +1,44 @@
+{
+  "source_sha256": "65a4e2820278099b3db3889c3239142a84746720245101be1b71fa4243779ade",
+  "checks": 6,
+  "failures": 6,
+  "scope": "textual input conflict only; actual eight native failures separately recorded",
+  "results": [
+    {
+      "assertion": "AT VCF actual keyboard edit sends one balanced host gesture",
+      "actual_key": "upKey",
+      "expected_sourced_key": "downKey",
+      "passed": false
+    },
+    {
+      "assertion": "contour lever keyboard edit sends one balanced host gesture",
+      "actual_key": "upKey",
+      "expected_sourced_key": "downKey",
+      "passed": false
+    },
+    {
+      "assertion": "isolated main SUB edits the effective original function only",
+      "actual_key": "upKey",
+      "expected_sourced_key": "downKey",
+      "passed": false
+    },
+    {
+      "assertion": "legacy main function edits legacy automation only",
+      "actual_key": "upKey",
+      "expected_sourced_key": "downKey",
+      "passed": false
+    },
+    {
+      "assertion": "original main function edits original automation only",
+      "actual_key": "upKey",
+      "expected_sourced_key": "downKey",
+      "passed": false
+    },
+    {
+      "assertion": "original main speed edits leave legacy automation untouched",
+      "actual_key": "upKey",
+      "expected_sourced_key": "downKey",
+      "passed": false
+    }
+  ]
+}
