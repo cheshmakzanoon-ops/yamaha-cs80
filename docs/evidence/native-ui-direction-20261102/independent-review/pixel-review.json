@@ -1,0 +1,74 @@
+{
+  "artifact_id": 13175181840,
+  "run_id": 41513420968,
+  "commit": "9741425ee38d578424d9405ec1015c5e519996f9",
+  "src_tree": "32ae37fe643056f66f1004066c52b61b463e695b",
+  "artifact_sha256": "817f5ea84980e70d5c709fae61f75433b6f6912967443dec4575c7b26bb9a9b0",
+  "visual_review": "Actual candidate/reference/diff pixels inspected. Front-strip lever positions and TOUCH RESPONSE/KBD group order match the preregistered intentional source changes. No unrelated changed region, missing control, overlap or clipping observed. This does not waive the failed native run.",
+  "images": [
+    {
+      "name": "main-1600x1000.png",
+      "size": [
+        1600,
+        1000
+      ],
+      "reference_sha256": "e7261e2803e5bbc98c1e88452c5852efe2182e7471736703c0a5fbb1fe3c253d",
+      "candidate_sha256": "894dfda5ef83713c212b3bfdeb3c237eb2048acc4f059610d47f6ba88ff5a6a8",
+      "raw_any_channel_changed_pixels": 24836,
+      "raw_change_bbox": [
+        104,
+        471,
+        1490,
+        612
+      ],
+      "declared_front_strip_rois": [
+        [
+          95,
+          465,
+          500,
+          615
+        ],
+        [
+          1170,
+          460,
+          1500,
+          620
+        ]
+      ],
+      "raw_changed_pixels_outside_rois": 0,
+      "outside_extent": null
+    },
+    {
+      "name": "main-1120x700.png",
+      "size": [
+        1120,
+        700
+      ],
+      "reference_sha256": "aec04d06df391fec14487eee5573979d361b8f1164856eb0642778ea2b5d664c",
+      "candidate_sha256": "2d5d1b9b0691fa9d535ddf7d536a2f04714ed10dcd7654946f69f8bfd83c0a58",
+      "raw_any_channel_changed_pixels": 14993,
+      "raw_change_bbox": [
+        73,
+        329,
+        1042,
+        428
+      ],
+      "declared_front_strip_rois": [
+        [
+          66,
+          326,
+          350,
+          430
+        ],
+        [
+          819,
+          322,
+          1050,
+          434
+        ]
+      ],
+      "raw_changed_pixels_outside_rois": 0,
+      "outside_extent": null
+    }
+  ]
+}

@@ -1,0 +1,1363 @@
+{
+  "reviewed_commit": "41ebed97db2f1727155356b1853bf6e08b0fc0e7",
+  "review_utc": "2026-11-02T20:10:20Z",
+  "scope": "README/STATUS November 2 boundary amendment and native compile-only provenance; read-only static/remote-log review, not fresh native acceptance or whole-release approval",
+  "verdict": "Approved within documented boundaries; native rerun, original golden review, original audio/CPU and real-host qualification remain open",
+  "remote_workflow_job_snapshots": [
+    {
+      "run_id": 41499724294,
+      "jobs": [
+        {
+          "id": 125463775177,
+          "name": "Windows / VST3 + Standalone",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Configure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Report CMake failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 4
+            },
+            {
+              "name": "Verify configured JUCE source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Upload Windows VST3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Package Windows VST3 and Standalone",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Upload Windows install bundle",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Upload test and JUCE source evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ]
+        },
+        {
+          "id": 125463775604,
+          "name": "Linux / VST3 + Standalone",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Install build dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Provision and verify required numeric-locale fixtures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Configure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify configured JUCE source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Upload Linux VST3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Render demo and screenshots",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Upload render artifacts",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Package Linux VST3 and Standalone",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Upload Linux install bundle",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Upload test and JUCE source evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 28
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 29
+            }
+          ]
+        },
+        {
+          "id": 125463775660,
+          "name": "Windows / host wrapper source contract",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Checkout pinned JUCE wrappers for early platform gate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Verify host wrapper platforms",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Upload host wrapper source-contract evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Checkout pinned JUCE wrappers for early platform gate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        },
+        {
+          "id": 125463775804,
+          "name": "macOS / macos-15 / VST3 + AU + Standalone",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Record native platform",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Configure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify configured JUCE source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Fetch pluginval 1.0.4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Register built AU",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Validate VST3 with pluginval",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Validate AU with pluginval",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Validate AU with pluginval GUI",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Package native macOS VST3, AU and Standalone",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Upload native macOS install bundle",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "AU registration diagnostics",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 15
+            },
+            {
+              "name": "Report pluginval failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 16
+            },
+            {
+              "name": "Upload pluginval reports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Upload test and JUCE source evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 36
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 37
+            }
+          ]
+        },
+        {
+          "id": 125463777036,
+          "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Record native platform",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Configure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify configured JUCE source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Fetch pluginval 1.0.4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Register built AU",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Validate VST3 with pluginval",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Validate AU with pluginval",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Validate AU with pluginval GUI",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Package native macOS VST3, AU and Standalone",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Upload native macOS install bundle",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "AU registration diagnostics",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 15
+            },
+            {
+              "name": "Report pluginval failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 16
+            },
+            {
+              "name": "Upload pluginval reports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Upload test and JUCE source evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 36
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 37
+            }
+          ]
+        },
+        {
+          "id": 125480407893,
+          "name": "pluginval / Linux VST3 (strictness 10)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Download Linux VST3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install pluginval runtime",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Fetch pluginval 2.0.0-beta3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify diagnostic exit propagation",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Validate VST3 headless",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Validate VST3 GUI under Xvfb",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Validate GUI state regression seed 0x2da72db",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Show first-attempt core diagnostics",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Diagnose GUI validator failure with gdb",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11
+            },
+            {
+              "name": "Build and test fault-thread diagnostic shim",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Diagnose GUI validator with fault-thread trace",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13
+            },
+            {
+              "name": "Report pluginval failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 14
+            },
+            {
+              "name": "Upload pluginval reports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 30
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            }
+          ]
+        },
+        {
+          "id": 125486504951,
+          "name": "pluginval / Windows VST3 (strictness 10)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724294,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Download Windows VST3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Fetch pluginval 1.0.4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Validate VST3 headless",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Validate state regression seed 0x5037a0c",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Report pluginval failure",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 6
+            },
+            {
+              "name": "Upload pluginval reports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 41499724146,
+      "jobs": [
+        {
+          "id": 125463776270,
+          "name": "Source circuit V1 and audio V2 compatibility",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724146,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Build immutable circuit and audio checkpoints with one compiler",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Require unchanged seven-tone V1 circuit numerics",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Require unchanged source-audio V2 and numerical history",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-artifact@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 125463776480,
+          "name": "Synthetic reference comparison (not hardware evidence)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724146,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Test comparison failures and provenance gates",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Compare deterministic synthetic stand-in traces",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-artifact@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 125463776694,
+          "name": "measure",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724146,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install pinned numerical plotting tools",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Build standalone numerical probe",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Measure and enforce regression bounds",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Export actual-engine candidate with exact-source provenance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run actions/upload-artifact@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Upload live envelope candidate trace",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Upload source-traceable graphs and raw traces",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        },
+        {
+          "id": 125463776839,
+          "name": "sanitizers",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724146,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Configure ASan and UBSan core build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Build instrument and circuit tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run sanitizer and validator-fixture tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        },
+        {
+          "id": 125463777024,
+          "name": "Default-off raw audio versus shipped baseline",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724146,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Build both revisions with the same compiler",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Require byte-identical default and noisy-reassignment traces",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run actions/upload-artifact@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 41499724445,
+      "jobs": [
+        {
+          "id": 125463778717,
+          "name": "screenshots",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41499724445,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Install official Ubuntu build dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Configure exact source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Build screenshot renderer and core tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify core",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Capture actual editor at every supported size and page",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Publish screenshot evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Publish preview PNGs to the ui-preview branch (non-main only)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Refresh repository screenshots from this exact source",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 41513420968,
+      "jobs": [
+        {
+          "id": 125510755588,
+          "name": "screenshots",
+          "status": "completed",
+          "conclusion": "failure",
+          "run_id": 41513420968,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Install official Ubuntu build dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Configure exact source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Build screenshot renderer and core tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify core",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Capture actual editor at every supported size and page",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 7
+            },
+            {
+              "name": "Publish screenshot evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Preserve raw UI result even on preregistered failure",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Publish preview PNGs to the ui-preview branch (non-main only)",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 10
+            },
+            {
+              "name": "Refresh repository screenshots from this exact source",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 41510793290,
+      "jobs": [
+        {
+          "id": 125501803192,
+          "name": "REAPER 7.84 / Linux x86-64 / limited VST3 smoke",
+          "status": "completed",
+          "conclusion": "failure",
+          "run_id": 41510793290,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Enforce fixed no-cost evaluation window",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install native build and display dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Verify harness negative controls and syntax",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Fetch exact official REAPER evaluation archive",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Build exact checkout VST3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run actual host once per registered setup/render",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 8
+            },
+            {
+              "name": "Verify limited host observations and raw renders",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9
+            },
+            {
+              "name": "Upload raw host evidence (not the evaluation host)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/checkout@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "selected_log_evidence": [
+    {
+      "job_id": 125510755588,
+      "excerpts": [
+        "2026-11-02T19:49:09.1524312Z [command]/usr/bin/git log -1 --format=%H",
+        "2026-11-02T19:49:09.1561990Z 9741425ee38d578424d9405ec1015c5e519996f9",
+        "2026-11-02T19:56:24.1383084Z FAIL: AT VCF actual keyboard edit sends one balanced host gesture",
+        "2026-11-02T19:56:24.1383985Z FAIL: contour lever keyboard edit sends one balanced host gesture",
+        "2026-11-02T19:56:24.1385239Z FAIL: isolated main SUB edits the effective original function only",
+        "2026-11-02T19:56:24.1386196Z FAIL: legacy main function edits legacy automation only",
+        "2026-11-02T19:56:24.1386718Z FAIL: original main function edits original automation only",
+        "2026-11-02T19:56:24.1387233Z FAIL: original main speed edits leave legacy automation untouched",
+        "2026-11-02T19:56:24.1410918Z golden main-1600x1000: changed 0.8059 % of pixels (limit 0.30 %), worst 8x8 block mean 170.41 (limit 8.0)",
+        "2026-11-02T19:56:24.1411493Z FAIL: main view matches its golden image within tolerance: main-1600x1000",
+        "2026-11-02T19:56:24.1412056Z golden main-1120x700: changed 1.0676 % of pixels (limit 0.30 %), worst 8x8 block mean 163.56 (limit 8.0)",
+        "2026-11-02T19:56:24.1412616Z FAIL: main view matches its golden image within tolerance: main-1120x700"
+      ]
+    },
+    {
+      "job_id": 125501803192,
+      "excerpts": [
+        "2026-11-02T19:32:05.9769783Z [command]/usr/bin/git log -1 --format=%H",
+        "2026-11-02T19:32:05.9795369Z f65197491c69c206e42329ae9b88ec5b1aa4eef6",
+        "2026-11-02T19:37:43.0955823Z ValueError: real-host fixture failed: host editor closed during tour dismissal"
+      ]
+    },
+    {
+      "job_id": 125463776839,
+      "excerpts": [
+        "2026-11-02T18:21:11.1662253Z [command]/usr/bin/git log -1 --format=%H",
+        "2026-11-02T18:21:11.1689590Z 68c466d1dd27530dfef85479c7fdc59168320c36",
+        "2026-11-02T18:25:40.5529031Z   ASAN_OPTIONS: detect_leaks=1:halt_on_error=1",
+        "2026-11-02T19:33:32.9226026Z 100% tests passed, 0 tests failed out of 117"
+      ]
+    },
+    {
+      "job_id": 125463775177,
+      "excerpts": [
+        "2026-11-02T19:02:41.3495180Z 100% tests passed, 0 tests failed out of 118"
+      ]
+    },
+    {
+      "job_id": 125463775604,
+      "excerpts": [
+        "2026-11-02T18:21:11.1603812Z [command]/usr/bin/git log -1 --format=%H",
+        "2026-11-02T18:21:11.1642567Z 68c466d1dd27530dfef85479c7fdc59168320c36",
+        "2026-11-02T18:50:22.3347788Z 100% tests passed, 0 tests failed out of 128",
+        "2026-11-02T18:51:10.6064345Z golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "2026-11-02T18:51:11.2959285Z golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)"
+      ]
+    },
+    {
+      "job_id": 125463775804,
+      "excerpts": [
+        "2026-11-02T18:21:15.1444980Z [command]/opt/homebrew/bin/git log -1 --format=%H",
+        "2026-11-02T18:21:15.1544900Z 68c466d1dd27530dfef85479c7fdc59168320c36",
+        "2026-11-02T18:44:07.7659940Z 100% tests passed out of 122"
+      ]
+    },
+    {
+      "job_id": 125463777036,
+      "excerpts": [
+        "2026-11-02T18:21:25.0316160Z [command]/usr/local/bin/git log -1 --format=%H",
+        "2026-11-02T18:21:25.0456140Z 68c466d1dd27530dfef85479c7fdc59168320c36",
+        "2026-11-02T19:06:47.9930780Z 100% tests passed out of 122"
+      ]
+    }
+  ],
+  "claims_reviewed": [
+    "9741425 is distinct from preceding native-qualified 68c466d and historical main/release.",
+    "822 component checks are explicitly not native painting or DAW acceptance.",
+    "Six fixture assumptions and two original golden mismatches are retained; no predicate or threshold waiver.",
+    "117 sanitizer tests include detect_leaks=1.",
+    "REAPER tour-dismissal failure occurred before the verification step, and is not asserted to be a proven plugin crash.",
+    "Original 885 rows/six failing musical-click scopes and held/idle budgets remain open.",
+    "No hardware measurement or physical-equivalence claim; public-source estimates retain uncertainty.",
+    "Four/eight-lane experiments and physical-SI/M41/LC/VCA research remain unadopted isolated work.",
+    "Historical preview/download links are explicitly marked historical."
+  ],
+  "terminology_note": "d3392ea is a local counterpart commit, not a tree object; parent corrected this in e7f38b7.",
+  "provenance_review_receipt": "/tmp/cs80-independent-native-key-fixture-review-20261102.json"
+}
+
