@@ -1,0 +1,72 @@
+{
+  "id": "click-m41-vca-path-causality-20261102",
+  "status": "REGISTERED",
+  "evidence_class": "software-causal counterfactual with primary-source topology; no hardware recording",
+  "source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "frozen_audit": "src/tools/engine_audit.cpp (unchanged); 64-frame event alignment and 8 ms score window unchanged",
+  "hardware_sources": [
+    "Yamaha M41 p41: IG00156 LP CP3 -> 1 uF NP -> 100 kOhm -> IG00151 IC4 +IN3; LP1(27) separately -> 100 kOhm/0.01 uF -> LI2",
+    "Yamaha M41 p41: sine bypass joins filtered voice signal before IG00151; Yamaha owner pp35/42 corroborate the parallel route",
+    "Yamaha M41 p41: IC13 IG00159 amplitude gate, separate IC2 OUT8 -> 0.22 uF charge node -> IC13 BI2; KAS applies discrete key trigger",
+    "Yamaha IG00151 guide p52: distinct LI and EI inputs; no measured internal transient or gain law"
+  ],
+  "hypothesis": {
+    "id": "H_M41_AUDIO_CARRIER_DOMINATES_JUMP",
+    "claim": "The post-event 8 ms max adjacent-sample derivatives in the seven selected Bass physical-PANEL and Funky1+2 source fixtures are dominated by oscillator/filter and bypass-sine audio entering the modeled IG00151 VCA, rather than an instantaneous key-gate reset or VCA-only envelope/pedestal transient.",
+    "primary_prediction": "If both M41-model audio carrier paths into the VCA are disconnected for the entire replay but the oscillator, filter, IG00159 envelope, IG00151 level node, envelope-driven offset/feedthrough, coupling, output and MIDI events still clock normally, absolute maxJump in the original event window will be <=10 percent of the unchanged full-path event absolute maxJump in at least six of seven fixtures.",
+    "falsifier": "Audio-carrier-disabled ratio >0.10 for at least two of seven fixtures, a non-finite trace, broken pre-event PCM pairing, or a gate-induced change of an exposed charge/history state at zero elapsed time (after independent idle wake) refutes the corresponding prediction; report without modifying production or score gates.",
+    "secondary_predictions": [
+      "Filtered-path-only and sine-only controls will partition the audio-carrier effect; no CP3 dominance percentage is assumed before measurement.",
+      "Funky original note-off omission will retain large natural post-event waveform derivative in full-path PCM; the relative note-off effect must be measured independently of this derivative.",
+      "The original source full-path scores remain FAIL where previously red; no derived control is allowed to replace the original gate."
+    ]
+  },
+  "fixtures": [
+    {"id":"bass_panel_first_48000", "coordinate":"original_physical_panel", "host_rate":48000, "event":"note_on_60", "time_seconds":6.0},
+    {"id":"bass_panel_retrigger_48000", "coordinate":"original_physical_panel", "host_rate":48000, "event":"note_on_60", "time_seconds":6.25},
+    {"id":"bass_panel_first_96000", "coordinate":"original_physical_panel", "host_rate":96000, "event":"note_on_60", "time_seconds":6.0},
+    {"id":"bass_panel_retrigger_96000", "coordinate":"original_physical_panel", "host_rate":96000, "event":"note_on_60", "time_seconds":6.25},
+    {"id":"funky_tabs_off_44100", "coordinate":"tone_tabs", "host_rate":44100, "event":"note_off_60", "time_seconds":1.4},
+    {"id":"funky_tabs_off_48000", "coordinate":"tone_tabs", "host_rate":48000, "event":"note_off_60", "time_seconds":1.4},
+    {"id":"funky_tabs_off_96000", "coordinate":"tone_tabs", "host_rate":96000, "event":"note_off_60", "time_seconds":1.4}
+  ],
+  "render_variants_per_fixture": [
+    "full_source_event",
+    "full_omitted_event",
+    "filter_cp3_muted_event",
+    "filter_cp3_muted_omitted_event",
+    "sine_bypass_muted_event",
+    "sine_bypass_muted_omitted_event",
+    "all_carriers_muted_event",
+    "all_carriers_muted_omitted_event",
+    "filter_cp3_enabled_only_at_event_with_target_midi_omitted"
+  ],
+  "intervention": {
+    "scope": "test-only EngineEventContinuityProbe friend, after accepted ControlFrame on each 64-frame block, before ordinary Engine::render; never patch src/**",
+    "filter_cp3_muted": "force both rankSettings[rank].vcfLevel=0; retain sine, all filter/VCO internal clocks and VCA state processing",
+    "sine_bypass_muted": "force both rankSettings[rank].sine=0; retain filtered audio and all remaining clocks",
+    "all_carriers_muted": "force both rankSettings[rank].vcfLevel=0 and .sine=0; preserve existing IG00151 offset/feedthrough inference and coupling recurrence",
+    "positive_in_engine": "with target MIDI event omitted, force CP3 filter gain 0 before the target block, then restore the source gain at the target block; deliberately discontinuous path control, not a Yamaha performance claim",
+    "input_timeline": "exact frozen phrase() from current src/tools/engine_audit.cpp; render from cold engine to target+20ms at original native sample rate"
+  },
+  "independent_controls": [
+    "Known positive post-render one-sample +0.20 FS left glitch at target+1 host sample added ONLY to the all-carriers-muted omitted PCM, proving a genuine discrete error remains visible downstream of path isolation.",
+    "Known C1-smooth post-render 4ms Hann-ramped 220 Hz sine at 0.10 FS added ONLY to the all-carriers-muted omitted PCM; measure derivative without labeling source PCM audibly clean.",
+    "No-target-MIDI omission for every physical audio path, including the unmodified Funky held-note waveform, to distinguish a gate-specific differential from free-running tone.",
+    "Independent full-path native audit replay with pre-event event-versus-omission PCM exact bit equality; source fixture/control source selection and unchanged original 8ms numerator and reference denominator verified.",
+    "Bitwise zero-time VCA LI/coupling state event-versus-omission comparisons for the released Funky voice; Bass idle-wake reference semantics inherited from independently qualified click_event_continuation regression, not raw stale-versus-wake comparison."
+  ],
+  "measurement_contract": {
+    "event_frame": "ceil(t*rate/64)*64",
+    "event_window_samples": "llround(0.008*rate)",
+    "source_score_reference": "original unchanged maxJump first 8ms divided by chord maxJump for Bass, or the preceding 60ms maxJump for Funky; all alternative path measurements use absolute maxJump ratios to full original, NOT a new pass threshold",
+    "columns": "fixture,rate,variant,event_frame,original_reference,maxjump,event_minus_omit_maxjump,peak_frame_offset,ratio_to_full_event,pre_event_pcm_mismatches,nonfinite",
+    "exact_prefix_mismatch_allowed": 0,
+    "nonfinite_allowed": 0,
+    "num_fixtures": 7,
+    "num_engine_renders": 63,
+    "positive_mutations": "one-sample perturbation, filter-control step and omitted-event wrong target must each be independently detected",
+    "reproducibility": "repeat complete trial twice and require byte-identical CSV digest and source tree identity",
+    "reporting": "Do not claim acoustic click PASS or calibrated hardware attack. Preserve original red source scores, 61-row bank evidence and all prior classifier controls."
+  }
+}
