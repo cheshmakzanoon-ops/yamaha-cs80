@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """One bounded native Actions smoke. Never resets or extends the evaluation window."""
 import argparse
+import csv
+import io
+import math
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -37,22 +41,151 @@ def capture(out, name):
                        check=False, timeout=10)
 
 
+def window_geometry(text, window):
+    """Fail closed on anything other than the observed default native editor."""
+    result = {}
+    for line in text.splitlines():
+        key, sep, value = line.partition("=")
+        if not sep or key in result or key not in ("WINDOW", "X", "Y", "WIDTH", "HEIGHT", "SCREEN"):
+            raise ValueError("invalid editor geometry")
+        try:
+            result[key] = int(value)
+        except ValueError as exc:
+            raise ValueError("invalid editor geometry") from exc
+    if (set(result) != {"WINDOW", "X", "Y", "WIDTH", "HEIGHT", "SCREEN"}
+            or result["WINDOW"] != int(window) or result["WIDTH"] != 1600
+            or result["HEIGHT"] != 1028 or min(result["X"], result["Y"], result["SCREEN"]) < 0):
+        raise ValueError("unsupported editor geometry")
+    return result
+
+
+def observed_text_lines(tsv):
+    """Read real Tesseract word boxes; this is never a generated UI image."""
+    groups = {}
+    fields = {"level", "page_num", "block_num", "par_num", "line_num", "word_num",
+              "left", "top", "width", "height", "conf", "text"}
+    reader = csv.DictReader(io.StringIO(tsv), delimiter="\t")
+    if set(reader.fieldnames or ()) != fields:
+        raise ValueError("invalid OCR TSV columns")
+    for row in reader:
+        try:
+            if int(row["level"]) != 5 or not row["text"].strip():
+                continue
+            word = {k: int(row[k]) for k in ("word_num", "left", "top", "width", "height")}
+            word["conf"] = float(row["conf"])
+            word["text"] = row["text"].strip()
+            if (min(word[k] for k in ("left", "top")) < 0
+                    or min(word[k] for k in ("word_num", "width", "height")) <= 0
+                    or not math.isfinite(word["conf"]) or not 0 <= word["conf"] <= 100):
+                raise ValueError("invalid OCR word box")
+            group = tuple(int(row[k]) for k in ("page_num", "block_num", "par_num", "line_num"))
+            groups.setdefault(group, []).append(word)
+        except (TypeError, KeyError, ValueError, AttributeError) as exc:
+            raise ValueError("invalid OCR word box") from exc
+    result = []
+    for words in groups.values():
+        words.sort(key=lambda w: w["word_num"])
+        if len({w["word_num"] for w in words}) != len(words):
+            raise ValueError("duplicate OCR word number")
+        result.append({"text": " ".join(w["text"] for w in words).casefold(),
+                       "confidence": min(w["conf"] for w in words),
+                       "bounds": [min(w["left"] for w in words), min(w["top"] for w in words),
+                                  max(w["left"] + w["width"] for w in words),
+                                  max(w["top"] + w["height"] for w in words)]})
+    return result
+
+
+def within(box, region):
+    return region[0] <= box[0] < box[2] <= region[2] and region[1] <= box[1] < box[3] <= region[3]
+
+
+def first_tour_target(tsv, geometry):
+    x, y = geometry["X"], geometry["Y"]
+    editor = [x, y, x + geometry["WIDTH"], y + geometry["HEIGHT"]]
+    lines = [line for line in observed_text_lines(tsv) if within(line["bounds"], editor)]
+    # The fixed first card is centred in the 1600x1000 plugin below REAPER's
+    # observed 28px preset header. These regions are only safety constraints;
+    # the click point itself always comes from the visible OCR label.
+    anchors = {"heading": ("welcome to the cs-80", [x+583, y+438, x+1017, y+478], 70),
+               "step": ("tour1/9", [x+583, y+424, x+700, y+440], 0),
+               "button": ("close tour", [x+583, y+592, x+713, y+628], 70)}
+    result = {}
+    for name, (wanted, bounds, confidence) in anchors.items():
+        matches = [line for line in lines
+                   if (line["text"].replace(" ", "") if name == "step" else line["text"]) == wanted]
+        if (len(matches) != 1 or not within(matches[0]["bounds"], bounds)
+                or matches[0]["confidence"] < confidence):
+            raise ValueError("missing, ambiguous or unsafe first-tour " + name)
+        result[name] = matches[0]
+    left, top, right, bottom = result["button"]["bounds"]
+    result["point"] = [(left + right) // 2, (top + bottom) // 2]
+    return result
+
+
+def require_tour_absent(tsv, geometry):
+    x, y = geometry["X"], geometry["Y"]
+    editor = [x, y, x + geometry["WIDTH"], y + geometry["HEIGHT"]]
+    for line in observed_text_lines(tsv):
+        if within(line["bounds"], editor) and (line["text"] in ("welcome to the cs-80", "close tour")
+                or line["text"].replace(" ", "") == "tour1/9"):
+            raise ValueError("first-tour text remains after click")
+
+
+def tour_seen(path):
+    if not path.exists():
+        return False
+    element = ET.parse(path).getroot()
+    if element.tag != "CS80_UI_SETTINGS" or element.get("tourSeen", "0") not in ("0", "1", "false", "true"):
+        raise ValueError("invalid tour settings")
+    return element.get("tourSeen", "0") in ("1", "true")
+
+
+def read_ocr(out, name):
+    image = out / name
+    stem = image.with_suffix("")
+    with (out / (stem.name + "-ocr.log")).open("w") as log:
+        subprocess.run(["tesseract", str(image), str(stem), "--psm", "11", "tsv"],
+                       check=True, timeout=30, stdout=log, stderr=subprocess.STDOUT)
+    return stem.with_suffix(".tsv").read_text()
+
+
 def dismiss_tour_and_capture(out):
-    """One real X11 key event in the unique instrument window, Actions only."""
-    capture(out, "host-editor-before-escape.png")
+    """One verified visible Close Tour click, never Escape through the host."""
+    capture(out, "host-editor-before-dismiss.png")
     windows = subprocess.check_output(
         ["xdotool", "search", "--onlyvisible", "--name", "^VST3i: CS-80 Reference .*CS-80 real-host smoke"],
         text=True, timeout=10).splitlines()
     if len(windows) != 1 or not windows[0].isdigit():
         raise ValueError("expected one visible instrument window for bounded tour dismissal")
-    subprocess.run(["xdotool", "windowactivate", "--sync", windows[0]], check=True, timeout=10)
-    subprocess.run(["xdotool", "key", "--clearmodifiers", "Escape"], check=True, timeout=10)
-    (out / "editor-escape.json").write_text(json.dumps(
-        {"window": windows[0], "key": "Escape", "count": 1,
-         "scope": "actual X input; visual result must be inspected"}, indent=2) + "\n")
+    window = windows[0]
+    query = ["xdotool", "getwindowgeometry", "--shell", window]
+    geometry = window_geometry(subprocess.check_output(query, text=True, timeout=10), window)
+    settings = out / "isolated-home/.config/CS80Reference/ui-settings.xml"
+    if tour_seen(settings):
+        raise ValueError("tour was already marked seen before input")
+    subprocess.run(["xdotool", "windowactivate", "--sync", window], check=True, timeout=10)
+    capture(out, "host-editor-ready-to-dismiss.png")
+    target = first_tour_target(read_ocr(out, "host-editor-ready-to-dismiss.png"), geometry)
+    if window_geometry(subprocess.check_output(query, text=True, timeout=10), window) != geometry:
+        raise ValueError("editor geometry changed before click")
+    if subprocess.check_output(["xdotool", "getactivewindow"], text=True, timeout=10).strip() != window:
+        raise ValueError("instrument window lost focus before click")
+    (out / "tour-target.json").write_text(json.dumps({"window": window, "geometry": geometry,
+                                                   "target": target}, indent=2) + "\n")
+    x, y = map(str, target["point"])
+    subprocess.run(["xdotool", "mousemove", "--sync", x, y], check=True, timeout=10)
+    subprocess.run(["xdotool", "click", "--clearmodifiers", "1"], check=True, timeout=10)
     time.sleep(1)
     capture(out, "host-editor.png")
-
+    require_tour_absent(read_ocr(out, "host-editor.png"), geometry)
+    if not tour_seen(settings):
+        raise ValueError("tour callback did not persist dismissal")
+    shutil.copy2(settings, out / "tour-settings.xml")
+    (out / "editor-dismissal.json").write_text(json.dumps(
+        {"window": window, "action": "left_click", "count": 1, "point": target["point"],
+         "geometry": geometry, "target": target, "tour_seen_before": False, "tour_seen_after": True,
+         "tour_text_absent_after": True,
+         "scope": "actual X input selected from raw screenshot OCR; visual result must be inspected"}, indent=2) + "\n")
 
 def stop(process):
     if process.poll() is None:

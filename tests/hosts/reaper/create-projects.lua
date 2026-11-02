@@ -224,8 +224,8 @@ local function create()
         if ack then
           ack:close()
           if c.schema == "cs80-reaper-smoke-v2-dry" then
-            report.editor_open_after_escape = reaper.TrackFX_GetOpen(track, fx)
-            if not report.editor_open_after_escape then
+            report.editor_open_after_dismissal = reaper.TrackFX_GetOpen(track, fx)
+            if not report.editor_open_after_dismissal then
               fail("host editor closed during tour dismissal"); return
             end
             write("host-observations.json", json(report))

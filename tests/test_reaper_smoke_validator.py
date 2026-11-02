@@ -94,7 +94,7 @@ class ProvenanceControls(unittest.TestCase):
         observed["projects"]["automated"]["envelope"] = contract["render"]["automation_points"]
         observed["projects"]["no-midi"] = {"notes": []}
         if self.contract_file == "contract-v2-dry.json":
-            observed["editor_open_after_escape"] = True
+            observed["editor_open_after_dismissal"] = True
         source, tree = "1" * 40, "2" * 40
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
@@ -127,7 +127,7 @@ class ProvenanceControls(unittest.TestCase):
             }
             if self.contract_file == "contract-v2-dry.json":
                 mutations["restored-chorus-enabled"] = ("wrong restored CHORUS ON", lambda m, o: o["after_reopen"].update({"CHORUS ON": 1}))
-                mutations["editor-closed-after-escape"] = ("host editor closed during tour dismissal", lambda m, o: o.update(editor_open_after_escape=False))
+                mutations["editor-closed-after-dismissal"] = ("host editor closed during tour dismissal", lambda m, o: o.update(editor_open_after_dismissal=False))
             for name, (reason, mutate) in mutations.items():
                 with self.subTest(name=name):
                     m, o = copy.deepcopy(manifest), copy.deepcopy(observed)
@@ -159,6 +159,38 @@ class DryContractControls(unittest.TestCase):
         render = v2["render"].copy()
         self.assertEqual(render.pop("chorus_on_normalized"), 0)
         self.assertEqual(render, v1["render"])
+
+
+class TourDismissalEvidenceControls(unittest.TestCase):
+    def test_raw_ocr_and_actual_callback_requirements_reject_false_receipts(self):
+        # Artificial receipt for a pure parser test, not a real-host PASS.
+        spec = importlib.util.spec_from_file_location("reaper_input_fixture", ROOT / "scripts/run-reaper-smoke.py")
+        runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(runner)
+        before = (ROOT / "tests/hosts/reaper/fixtures/actual-f651-tour.tsv").read_text()
+        after = before.splitlines()[0] + "\n"
+        geometry = {"WINDOW": 4194590, "X": 113, "Y": 160, "WIDTH": 1600, "HEIGHT": 1028, "SCREEN": 0}
+        target = runner.first_tour_target(before, geometry)
+        record = {"action": "left_click", "count": 1, "window": "4194590", "geometry": geometry,
+                  "target": target, "point": [760, 770], "tour_seen_before": False,
+                  "tour_seen_after": True, "tour_text_absent_after": True}
+        settings = '<CS80_UI_SETTINGS tourSeen="1"/>'
+        self.assertIsNone(validator.verify_tour_dismissal(record, before, after, settings))
+        mutations = [lambda r: r.update(action="Escape"), lambda r: r.update(count=2),
+                     lambda r: r.update(count=True), lambda r: r.update(point=[761, 770]),
+                     lambda r: r.update(tour_seen_before=True), lambda r: r.update(tour_seen_after=False),
+                     lambda r: r.update(tour_text_absent_after=False),
+                     lambda r: r["geometry"].update(WIDTH=1599), lambda r: r.update(window="-1"),
+                     lambda r: r["target"]["button"].update(confidence=100)]
+        for mutate in mutations:
+            with self.subTest(mutation=mutate):
+                changed = copy.deepcopy(record); mutate(changed)
+                with self.assertRaises(ValueError):
+                    validator.verify_tour_dismissal(changed, before, after, settings)
+        for observed_before, observed_after, xml in [(after, after, settings), (before, before, settings),
+                                                    (before, after, '<CS80_UI_SETTINGS tourSeen="0"/>')]:
+            with self.subTest(raw=(observed_before[:10], observed_after[:10], xml)), self.assertRaises(ValueError):
+                validator.verify_tour_dismissal(record, observed_before, observed_after, xml)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,8 @@
 """Verify narrowly scoped real-host evidence, never infer complete DAW acceptance."""
 import argparse
 import hashlib
+import importlib.util
+import xml.etree.ElementTree as ET
 import json
 import math
 from pathlib import Path
@@ -113,7 +115,7 @@ def verify_metadata(manifest, observed, contract, source, src_tree, copied_contr
             and observed["fx_ident"], "host plugin identity missing")
     require(observed["editor_open"] is True, "host editor did not open")
     if contract["schema"] == "cs80-reaper-smoke-v2-dry":
-        require(observed.get("editor_open_after_escape") is True, "host editor closed during tour dismissal")
+        require(observed.get("editor_open_after_dismissal") is True, "host editor closed during tour dismissal")
     for field in ("pdc_samples", "chain_reported_pdc_samples"):
         require(isinstance(observed[field], (float, int)) and math.isfinite(observed[field])
                 and observed[field] >= 0, "invalid host-reported latency")
@@ -140,13 +142,37 @@ def verify_metadata(manifest, observed, contract, source, src_tree, copied_contr
     require(observed["projects"]["automated"]["envelope"] == contract["render"]["automation_points"], "changed persisted envelope")
 
 
+def verify_tour_dismissal(record, before_tsv, after_tsv, settings_xml):
+    """Recompute input safety from retained raw OCR, not only a success receipt."""
+    spec = importlib.util.spec_from_file_location("reaper_input_review", Path(__file__).with_name("run-reaper-smoke.py"))
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    require(record.get("action") == "left_click" and type(record.get("count")) is int
+            and record["count"] == 1, "wrong tour input action")
+    require(isinstance(record.get("window"), str) and record["window"].isdigit(), "invalid tour window")
+    raw_geometry = record.get("geometry")
+    require(isinstance(raw_geometry, dict) and all(type(value) is int for value in raw_geometry.values()),
+            "invalid tour geometry record")
+    geometry = runner.window_geometry("\n".join(f"{key}={value}" for key, value in raw_geometry.items()), record["window"])
+    target = runner.first_tour_target(before_tsv, geometry)
+    require(record.get("target") == target and record.get("point") == target["point"], "tour click differs from raw OCR")
+    runner.require_tour_absent(after_tsv, geometry)
+    require(record.get("tour_seen_before") is False and record.get("tour_seen_after") is True
+            and record.get("tour_text_absent_after") is True, "tour dismissal callback not established")
+    element = ET.fromstring(settings_xml)
+    require(element.tag == "CS80_UI_SETTINGS" and element.get("tourSeen") in ("1", "true"),
+            "tour settings did not retain callback state")
+
+
 def verify_evidence(out, contract, source, src_tree):
     manifest = json.loads((out / "provenance.json").read_text())
     observed = json.loads((out / "host-observations.json").read_text())
     verify_metadata(manifest, observed, contract, source, src_tree, sha256(out / evidence_contract_filename(contract)))
     required = ["host-observations.json", "host-editor.png", "HOST_SETUP_COMPLETE", "setup.log", "cli-help.log"]
     if contract["schema"] == "cs80-reaper-smoke-v2-dry":
-        required.extend(["host-editor-before-escape.png", "editor-escape.json"])
+        required.extend(["host-editor-before-dismiss.png", "host-editor-ready-to-dismiss.png",
+                         "host-editor-ready-to-dismiss.tsv", "host-editor.tsv", "tour-target.json",
+                         "tour-settings.xml", "editor-dismissal.json"])
     for name in contract["render"]["files"]:
         required.extend([name + ".rpp", name + ".wav", "render-" + name + ".log"])
         require(manifest["exit_codes"][name] == 0, "host render did not exit cleanly")
@@ -158,6 +184,11 @@ def verify_evidence(out, contract, source, src_tree):
         require(manifest["files"][name] == sha256(out / name), "evidence hash mismatch: " + name)
     png = (out / "host-editor.png").read_bytes()
     require(png[:8] == b"\x89PNG\r\n\x1a\n", "not a genuine PNG capture file")
+    if contract["schema"] == "cs80-reaper-smoke-v2-dry":
+        verify_tour_dismissal(json.loads((out / "editor-dismissal.json").read_text()),
+                              (out / "host-editor-ready-to-dismiss.tsv").read_text(),
+                              (out / "host-editor.tsv").read_text(),
+                              (out / "tour-settings.xml").read_text())
     return verify_audio(contract, {name: read_wave(out / (name + ".wav")) for name in contract["render"]["files"]})
 
 
