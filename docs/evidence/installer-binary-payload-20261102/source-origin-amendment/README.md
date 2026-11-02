@@ -53,3 +53,12 @@ byte comparisons; they are not retrospectively recast as this repair's tests.
 No binary execution, native installer exercise, signing, compiler/source identity,
 audio/CPU/DAW acceptance or release qualification follows from this amendment.
 Independent review is recorded separately when terminal; publication remains held.
+
+## Archive inventory correction
+
+The first archive commit `56464fe75dc267110cdd6cc25bbb3b50662c8a5b` counted
+120 generated Python bytecode-cache files in its filesystem receipt; Git correctly
+ignored those caches. The corrected receipt hashes only the retained tracked
+source/log/result files, plus this explanation. No raw test result or log was
+rewritten. The first receipt remains visible at its original commit; bytecode
+caches are not required evidence and remain in the original scratch run trees.
