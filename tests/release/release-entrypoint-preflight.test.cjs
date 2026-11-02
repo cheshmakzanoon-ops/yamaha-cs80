@@ -140,6 +140,8 @@ async function scenario(overrides = {}) {
     ['manual missing immutable request SHA', { requestSha: null }],
     ['manual stale request commit', { requestSha: OTHER }],
     ['request branch tip moved', { requestBranchMoved: true }],
+    ['tag request branch tip moved', { requestBranchMoved: true, eventName: 'push' }],
+    ['tag forged request SHA input', { requestSha: OTHER, eventName: 'push' }],
     ['request branch code instead of JSON', { requestHasScript: true }],
     ['request commit not based on S', { requestDiverged: true }],
     ['request owner spoofed', { request: { requested_by: 'other' } }],

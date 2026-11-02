@@ -15,6 +15,11 @@ name: release packages
 #   WINDOWS_CERTIFICATE_PFX_BASE64, WINDOWS_CERTIFICATE_PASSWORD  Authenticode certificate
 on:
   workflow_dispatch:
+    inputs:
+      request_commit_sha:
+        description: Full reviewed JSON-only request branch commit SHA (required for manual release)
+        type: string
+        required: true
   push:
     tags: ['v*']
 
@@ -46,16 +51,20 @@ jobs:
           tests/release/dispatch-reviewed-release.test.cjs
           tests/release/numerical-dispatch-addition.test.cjs
           tests/release/release-entrypoint-preflight.test.cjs
+          tests/release/trusted-main-dispatch.test.cjs
 
       - name: Require reviewed main, numerical acceptance and correct event/tag
         id: guard
         uses: actions/github-script@v7
+        env:
+          REQUEST_COMMIT_SHA: ${{ inputs.request_commit_sha }}
         with:
           script: |
             const { execFileSync } = require('node:child_process');
             const preflight = require('./scripts/preflight-release-entrypoint.cjs');
             const checkoutSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-            const result = await preflight({ github, context, core, checkoutSha });
+            const result = await preflight({ github, context, core, checkoutSha,
+              requestSha: process.env.REQUEST_COMMIT_SHA });
             core.setOutput('expected_main_sha', result.expected_main_sha);
 
   macos-universal:

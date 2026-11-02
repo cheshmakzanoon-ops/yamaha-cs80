@@ -1,10 +1,11 @@
 // Fail-closed preflight for EVERY release.yml entrypoint: manual or v* tag.
 // This performs no dispatch, tagging, publication, or file mutation.
 const { verifyReviewedReleasePrerequisites } = require('./dispatch-reviewed-release.cjs');
-const { verifyLandingPR } = require('./dispatch-reviewed-main-request.cjs');
+const { verifyLandingPR, loadImmutableRequest } = require('./dispatch-reviewed-main-request.cjs');
 
-const REQUEST_BRANCH = 'codex/cs80-release-dispatch';
-const REQUEST_PATH = '.github/release-request.json';
+const OWNER = 'cheshmakzanoon-ops';
+const REPO = 'yamaha-cs80';
+const REQUEST_BRANCH = 'heads/codex/cs80-release-dispatch';
 const RELEASE_WORKFLOW = 'release.yml';
 const SEMVER_TAG_REF = /^refs\/tags\/v[0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$/;
 
@@ -14,24 +15,6 @@ function requireCondition(value, error) {
 
 function validSha(value) {
   return typeof value === 'string' && /^[a-f0-9]{40}$/.test(value);
-}
-
-async function readReviewedReleaseRequest(github, owner, repo) {
-  // Callers cannot supply a free-form request input to bypass review.
-  const { data } = await github.rest.repos.getContent({ owner, repo,
-    path: REQUEST_PATH, ref: REQUEST_BRANCH });
-  requireCondition(data && !Array.isArray(data) && data.encoding === 'base64'
-    && typeof data.content === 'string' && data.content.length > 0,
-  'Reviewed release-request.json missing or not a base64 file on the request branch');
-  let request;
-  try {
-    request = JSON.parse(Buffer.from(data.content.replace(/\s/g, ''), 'base64').toString('utf8'));
-  } catch (error) {
-    throw new Error(`Reviewed release request cannot be decoded: ${error.message}`);
-  }
-  requireCondition(request && typeof request === 'object' && !Array.isArray(request),
-    'Reviewed release request is not an object');
-  return request;
 }
 
 async function peelGitTag(github, owner, repo, fullRef) {
@@ -47,8 +30,28 @@ async function peelGitTag(github, owner, repo, fullRef) {
   return object.sha;
 }
 
-async function verifyReleaseEntrypoint({ github, context, core, checkoutSha }) {
+async function resolveRequestCommit(github, owner, repo, eventName, requestSha) {
+  if (eventName === 'workflow_dispatch') {
+    requireCondition(validSha(requestSha),
+      'Manual release requires an exact approved request commit input');
+    return requestSha;
+  }
+  requireCondition(requestSha === undefined || requestSha === null || requestSha === '',
+    'Tag push must not supply an alternate request commit input');
+  // Tag events have no dispatch input. Freeze one exact request-branch HEAD
+  // commit for this run; loadImmutableRequest rechecks it and rejects code
+  // changes relative to the approved S. The owner-tag actor remains required.
+  const head = (await github.rest.git.getRef({ owner, repo,
+    ref: REQUEST_BRANCH })).data.object;
+  requireCondition(head && head.type === 'commit' && validSha(head.sha),
+    'Tag release request branch has no valid commit tip');
+  return head.sha;
+}
+
+async function verifyReleaseEntrypoint({ github, context, core, checkoutSha, requestSha }) {
   const { owner, repo } = context.repo;
+  requireCondition(owner === OWNER && repo === REPO && context.actor === OWNER,
+    'Only the repository owner may release from the reviewed CS-80 repository');
   requireCondition(validSha(checkoutSha), 'Release preflight checkout SHA must be a full commit');
   requireCondition(Number.isInteger(context.runId) && context.runId > 0,
     'Release run identity unavailable for duplicate-run protection');
@@ -67,7 +70,12 @@ async function verifyReleaseEntrypoint({ github, context, core, checkoutSha }) {
     throw new Error('Only reviewed main workflow_dispatch or a validated v* tag push may release');
   }
 
-  const request = await readReviewedReleaseRequest(github, owner, repo);
+  const reviewedRequestSha = await resolveRequestCommit(github, owner, repo,
+    context.eventName, requestSha);
+  const request = await loadImmutableRequest(github, owner, repo,
+    reviewedRequestSha, checkoutSha);
+  requireCondition(request.requested_by === context.actor,
+    'Immutable release request owner identity differs from authenticated release actor');
   // Direct manual and tag events are independent of the reviewed dispatcher;
   // they must prove the SAME merged PR6 source identity, not just green CI.
   await verifyLandingPR(github, owner, repo, request);
@@ -84,9 +92,10 @@ async function verifyReleaseEntrypoint({ github, context, core, checkoutSha }) {
     && run.head_sha === expected
     && (run.status !== 'completed' || run.conclusion === 'success'));
   requireCondition(!previous, 'Release already active or successful for the approved main source');
-  core.info(`Release entrypoint validated: event=${context.eventName}, exact main=${expected}, reviewed source=${validated}`);
+  core.info(`Release entrypoint validated: event=${context.eventName}, exact main=${expected}, reviewed source=${validated}, immutable request=${reviewedRequestSha}`);
   return { authorized: true, expected_main_sha: expected, validated_sha: validated,
-    event: context.eventName, request_branch: REQUEST_BRANCH };
+    event: context.eventName, request_branch: REQUEST_BRANCH,
+    request_commit_sha: reviewedRequestSha };
 }
 
 module.exports = verifyReleaseEntrypoint;

@@ -147,6 +147,19 @@ PR, changed head/merge SHA, non-main PR base or a request whose validated
 commit differs from the actual PR merge commit, even if the four workflow
 statuses happen to be green. A reviewed screenshot-only current-main `S`
 after the exact PR merge `M` remains permitted by the existing ancestry gate.
+Both independent installer entrypoints now also require authenticated
+`context.actor` to be the repository owner. Direct manual release needs an
+explicit full request commit SHA input; the tag-push path has no manual input
+and instead freezes the current request-branch tip at the start of preflight.
+Both read only the exact JSON file via GitHub API at that immutable commit,
+verify the branch tip and its JSON-only diff from approved `S`, the
+`requested_by` owner and merged PR6 identity, then require the same four
+successful main-push workflows. A mutable branch or unapproved actor cannot
+substitute release-script/YAML content in the current definition. This does
+**not** retroactively protect old `release.yml` definitions selected from
+historical refs, and a tag-push request snapshot is not independent proof of
+prior owner review: protected `v*` tag creation and workflow ref controls
+remain owner-admin release blockers.
 
 Red-first test cases reject forged branch scripts/YAML, extra diffs, stale
 main/request refs, wrong event/actor/checkout/request SHA, altered PR identity,
