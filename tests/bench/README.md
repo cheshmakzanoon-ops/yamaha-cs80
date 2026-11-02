@@ -63,6 +63,14 @@ which **schema v1 cannot encode**; it must never be relabelled as `NO1`.
   `vdc`/`vrms` for IC10_VFC4 and IC10_QADJ6;
   `vdc` for FH/FL. RMS and Vpp values must be nonnegative.
 
+A `vdc` observation requires a DC-coupled scope or a declared `DC_V`
+meter. An AC-coupled scope alone cannot supply a DC value, even zero.
+Mixed waveform/DC snapshots may pair an AC-coupled scope with a DC
+meter; `not_acquired` DC nodes do not imply that any DC instrument was
+used. This is acquisition consistency, not authentication or a Yamaha
+calibration tolerance. See the [preregistered contract and primary
+instrument-maker references](../../docs/evidence/continuation-2026-10-31/ADJ_INTAKE_DC_COUPLING_PREREG_20261102.md).
+
 `probe`: positive `input_resistance_ohm`, nonnegative
 `input_capacitance_pf`, positive `attenuation`. `evidence`: nonempty
 `artifact_reference` and lowercase 64-hex-character `sha256`.
@@ -75,7 +83,8 @@ The importer refuses duplicate JSON keys, NaN/Infinity, extra fields,
 wrong types, mismatched checkpoint/setup, repeated nodes/checkpoints,
 missing acquisition instrument/probe/evidence for numeric readings,
 invalid or causally decreasing HP/LP timestamps, oversized JSON integer
-tokens, channel-II `NO1` misidentification, and negative Vpp/RMS.
+tokens, channel-II `NO1` misidentification, AC-only DC acquisition, and
+negative Vpp/RMS.
 It **never supplies missing measurements**, estimates
 NO1 source impedance, converts VR7/VR8 angles to gm/Q, substitutes CP2
 for CP3, or infers which of the 25 T51–T54 revisions was installed.

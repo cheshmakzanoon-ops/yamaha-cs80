@@ -201,6 +201,7 @@ def validate_document(value: object) -> dict:
         seen_nodes = set()
         observed = False
         waveform_observed = False
+        dc_observed = False
         for j, entry in enumerate(observations):
             opath = f"{path}.observations[{j}]"
             reading = _fields(entry, {"node", "status"},
@@ -225,6 +226,8 @@ def validate_document(value: object) -> dict:
                              f"{opath}.quantity")
             if quantity != "vdc":
                 waveform_observed = True
+            else:
+                dc_observed = True
             _number(reading["value_v"], f"{opath}.value_v",
                     minimum=0 if quantity in {"vpp", "vrms"} else None)
             probe = _fields(reading["probe"],
@@ -267,6 +270,11 @@ def validate_document(value: object) -> dict:
             _enum(meter["mode"], {"DC_V"}, f"{path}.meter.mode")
             _number(meter["input_resistance_ohm"],
                     f"{path}.meter.input_resistance_ohm", exclusive_minimum=0)
+        # AC coupling blocks the DC component. A mixed capture may still
+        # contain a separately declared DC meter; it must not borrow its
+        # DC acquisition capability from an AC-only waveform instrument.
+        if dc_observed and "meter" not in snapshot and snapshot["scope"]["coupling"] != "DC":
+            raise IntakeError(f"{path} DC readings require DC-capable acquisition: DC scope or DC_V meter")
     return root
 
 
