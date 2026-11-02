@@ -283,7 +283,26 @@ public:
         auto after=refresh?nodes(1):endNodes;
         if(event)recordEvent(0.,controlChange,before,after);
         double elapsed=0.;
-        for(std::size_t iteration=0;iteration<maximumEventsPerTick&&elapsed<dt;++iteration){
+        // A cached, strictly interior analytic segment does not need another
+        // trip through the event scheduler. Its capacitor/coupling advance,
+        // branch countdown and endpoint evaluation retain the exact original
+        // expression order; boundary and invalid-state cases use that scheduler.
+        bool steadySegment=false;
+        if(!event&&!refresh&&endNodesValid&&branchEventCacheValid
+           &&state.resetRemainingSeconds==0.&&state.charge>0.
+           &&std::isfinite(state.charge)&&f>0.&&std::isfinite(f)
+           &&std::isfinite(threshold)&&std::isfinite(requestedHz)
+           &&std::isfinite(controls.pulseThresholdVolts)){
+            const double physical=state.charge/f;
+            steadySegment=std::isfinite(physical)&&physical>dt+2e-15
+                &&(!cachedBranchEvent||cachedBranchSeconds>dt);
+        }
+        if(steadySegment){
+            advance(dt,after);
+            elapsed+=dt;
+            cachedBranchSeconds=std::max(0.,cachedBranchSeconds-dt);
+            after=nodes(1);
+        }else for(std::size_t iteration=0;iteration<maximumEventsPerTick&&elapsed<dt;++iteration){
             // A stopped q=0 capacitor does NOT retrigger the one-shot.
             if(state.resetRemainingSeconds==0.&&state.charge<=0.&&f>0.){
                 before=after;state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;
