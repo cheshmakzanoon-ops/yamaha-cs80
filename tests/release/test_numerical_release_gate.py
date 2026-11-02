@@ -33,7 +33,7 @@ if REPORTER_SPEC is None or REPORTER_SPEC.loader is None:
 reporter = importlib.util.module_from_spec(REPORTER_SPEC)
 REPORTER_SPEC.loader.exec_module(reporter)
 
-BEFORE = "a" * 40
+BEFORE = CONTRACT["cpu"]["registered_before_source_sha"]
 REVIEWED = "b" * 40
 TREE = "c" * 40
 AUDIO = "d" * 40
@@ -120,24 +120,35 @@ def target_comparisons():
 
 def cpu_round(source, marker, held=0.18, idle=0.01):
     rows = []
-    for i in range(11):
-        rows.append({"rate": "48000", "block": "256", "mode": "isolation", "isolation": "1",
-                     "scenario": "paired_tones", "phase": "warmed_held", "initial_selector": str(i),
-                     "rank_i_name": "I" + str(i), "rank_ii_name": "II" + str(i),
-                     "callbacks": "1024", "median_rtf": str(held), "p99_rtf": "0.19",
-                     "budget_exceedances": "0", "nonfinite_count": "0", "checksum": "0.123",
-                     "peak": "0.25", "rms": "0.1"})
-    rows.append({"rate": "48000", "block": "256", "mode": "isolation", "isolation": "1",
-                 "scenario": "idle_quiet", "phase": "warmed_held", "initial_selector": "0",
-                 "rank_i_name": "", "rank_ii_name": "", "callbacks": "1024",
-                 "median_rtf": str(idle), "p99_rtf": "0.013", "budget_exceedances": "0",
-                 "nonfinite_count": "0", "checksum": "0", "peak": "0", "rms": "0"})
-    for i in range(39):
-        rows.append({"rate": "48000", "block": "256", "mode": "isolation", "isolation": "1",
-                     "scenario": "other-" + str(i), "phase": "release_tail",
-                     "callbacks": "128", "median_rtf": "0.01", "p99_rtf": "0.02",
-                     "budget_exceedances": "0", "nonfinite_count": "0", "checksum": "0",
-                     "peak": "0", "rms": "0"})
+    pairs = CONTRACT["cpu"]["registered_tone_pairs_by_selector"]
+
+    def entry(mode, scenario, selector, phase):
+        # The producer's registered 48000/256 baseline matrix, not an arbitrary
+        # 51-row stand-in. Synthetic timing/PCM values remain test data only.
+        first, second = pairs[selector]
+        med = idle if scenario == "idle_quiet" else held if scenario == "paired_tones" else 0.01
+        return {"rate": "48000", "block": "256", "mode": mode,
+                "isolation": "1" if mode == "isolation" else "0",
+                "source_performance": "0", "scenario": scenario, "phase": phase,
+                "initial_selector": str(selector), "rank_i_name": first,
+                "rank_ii_name": second,
+                "callbacks": "1024" if phase == "warmed_held" else "128",
+                "median_rtf": str(med), "p99_rtf": "0.19",
+                "budget_exceedances": "0", "nonfinite_count": "0",
+                "checksum": "0.123", "peak": "0.25", "rms": "0.1"}
+
+    for selector in range(11):
+        for mode in ("isolation", "legacy"):
+            for phase in ("warmed_held", "release_tail"):
+                rows.append(entry(mode, "paired_tones", selector, phase))
+    for mode in ("isolation", "legacy"):
+        for phase in ("warmed_held", "release_tail"):
+            rows.append(entry(mode, "moving_tabs_pressure_wah", 0, phase))
+    rows.extend([entry("isolation", "idle_quiet", 0, "warmed_held"),
+                 entry("legacy", "idle_quiet", 0, "warmed_held"),
+                 entry("legacy", "idle_noise", 0, "warmed_held")])
+    assert len(rows) == 51
+    stage, round_zero = marker.rsplit("-", 1)
     return {
         "metadata": {"schema_version": 2, "fixture_id": "source-core-timing-v2",
                      "suite": "baseline", "source_commit_caller_verified": source,
@@ -147,9 +158,11 @@ def cpu_round(source, marker, held=0.18, idle=0.01):
         "completed": {"completed": True, "cases": 27, "rows": 51},
         "receipt": {"host_id": "same-runner", "runner_job_id": "single-job",
                     "compiler_id": "gcc-13.3", "flags_sha256": "f" * 64,
-                    "benchmark_source_sha256": "9" * 64,
+                    "benchmark_source_sha256": CONTRACT["cpu"]["registered_benchmark_source_sha256"],
                     "runner_environment_sha256": "8" * 64,
-                    "capture_id": marker},
+                    "source_sha": source,
+                    "benchmark_binary_sha256": ("7" if stage == "before" else "6") * 64,
+                    "capture_id": f"single-job/{stage}/{int(round_zero) + 1}/{source}"},
         "rows": rows,
     }
 
@@ -196,6 +209,67 @@ def honestly_failed_original_scope(f):
 
 
 class NumericalReleaseGateTests(unittest.TestCase):
+    def test_consistent_six_round_counterfeit_cpu_matrix_must_be_rejected(self):
+        # Fixture/driver identity must be registered independently of the six
+        # results. Agreement between all before/after rounds is not enough:
+        # a forged 27-case / 51-row sweep may otherwise satisfy CPU budgets.
+        def every_round(f):
+            return f["cpu"]["before"] + f["cpu"]["after"]
+
+        def rename_all_held_pairs(f):
+            for rd in every_round(f):
+                for row in rd["rows"]:
+                    if row["scenario"] == "paired_tones":
+                        row["rank_i_name"] = "Counterfeit " + row["rank_i_name"]
+                        row["rank_ii_name"] = "Counterfeit " + row["rank_ii_name"]
+
+        def renumber_all_held_selectors(f):
+            for rd in every_round(f):
+                for row in rd["rows"]:
+                    if row["scenario"] == "paired_tones":
+                        row["initial_selector"] = str(int(row["initial_selector"]) + 11)
+
+        def duplicate_all_nontarget_cases(f):
+            for rd in every_round(f):
+                for row in rd["rows"]:
+                    if not (row["scenario"] == "paired_tones"
+                            and row["phase"] == "warmed_held"
+                            and row["mode"] == "isolation") and not (
+                            row["scenario"] == "idle_quiet"
+                            and row["phase"] == "warmed_held"
+                            and row["mode"] == "isolation"):
+                        row["scenario"] = "duplicated-unregistered-case"
+
+        def alter_nontarget_rate(f):
+            for rd in every_round(f):
+                row = next(r for r in rd["rows"]
+                           if r["scenario"] == "moving_tabs_pressure_wah")
+                row["rate"] = "44100"
+
+        def forge_all_driver_hashes(f):
+            for rd in every_round(f):
+                rd["receipt"]["benchmark_source_sha256"] = "0" * 64
+
+        def change_registered_before(f):
+            f["source"]["before_sha"] = "f" * 40
+            for rd in f["cpu"]["before"]:
+                rd["metadata"]["source_commit_caller_verified"] = "f" * 40
+
+        edits = [
+            ("all six rounds use counterfeit held tone-pair names", rename_all_held_pairs),
+            ("all six rounds renumber held selectors", renumber_all_held_selectors),
+            ("all six rounds duplicate other cases but retain 51 rows", duplicate_all_nontarget_cases),
+            ("all six rounds alter nontarget rate", alter_nontarget_rate),
+            ("all six rounds substitute a different benchmark driver", forge_all_driver_hashes),
+            ("all six rounds substitute the preregistered before source", change_registered_before),
+        ]
+        for name, edit in edits:
+            with self.subTest(name=name):
+                candidate = fixture()
+                edit(candidate)
+                with self.assertRaises((gate.GateError, ValueError, KeyError)):
+                    gate.validate_evidence(TEST_CONTRACT, candidate)
+
     def test_same_row_count_forged_csv_schema_must_be_rejected(self):
         # Whole-file header mutations preserve all 885 row counts, source IDs,
         # numeric target values and intentionally self-consistent mock hashes.
