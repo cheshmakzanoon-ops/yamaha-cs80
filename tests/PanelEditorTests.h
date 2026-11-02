@@ -110,6 +110,71 @@ struct GestureTally final : juce::AudioProcessorParameter::Listener
 };
 } // namespace panel_editor_detail
 
+// Independent physical-direction inventory read from the Yamaha owner scan,
+// printed pages 7-14. It deliberately does not derive expectations from a
+// production direction helper. See OWNER_LEVER_DIRECTION_PREREG_20261102.md.
+template <typename Check, typename Flush>
+void testOwnerLeverDirections(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    struct Direction { int parameter; bool increasesDown; };
+    const Direction directions[] = {
+        { cs80::P_detune, true },
+        { cs80::P_ringAttack, true }, { cs80::P_ringDecay, true },
+        { cs80::P_ringDepth, true }, { cs80::P_ringSpeed, true }, { cs80::P_ringAmount, true },
+        { cs80::P_subWave, true }, { cs80::P_subSpeed, true },
+        { cs80::P_subVco, true }, { cs80::P_subVcf, true }, { cs80::P_subVca, true },
+        { cs80::chParam(0, cs80::CP_feet), true }, { cs80::chParam(1, cs80::CP_feet), true },
+        { cs80::P_brilliance, true }, { cs80::P_resonance, true },
+        { cs80::P_kbdBrillianceLow, true }, { cs80::P_kbdBrillianceHigh, true },
+        { cs80::P_kbdLevelLow, true }, { cs80::P_kbdLevelHigh, true },
+        { cs80::P_initBend, true }, { cs80::P_subAtSpeed, true },
+        { cs80::P_subAtVco, true }, { cs80::P_subAtVcf, true },
+        { cs80::P_mix, false }, { cs80::P_masterSustain, false }, { cs80::P_portamento, false },
+        // Unchanged programmer behavior: not a new claim about its physical throw.
+        { cs80::chParam(0, cs80::CP_lpfCutoff), false },
+    };
+    juce::TemporaryFile presetRoot("-cs80-owner-lever-direction");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    for (const auto expected : directions)
+    {
+        cs80::ui::ParamKnob knob(host, expected.parameter);
+        knob.setHardwareSlider(juce::Colours::white);
+        knob.setSize(72, 220);
+        auto& slider = knob.getSlider();
+        const juce::String label = juce::String(cs80::paramDef(expected.parameter).name);
+        const double minimumY = slider.getPositionOfValue(slider.getMinimum());
+        const double maximumY = slider.getPositionOfValue(slider.getMaximum());
+        check(expected.increasesDown ? maximumY > minimumY : maximumY < minimumY,
+              ("owner lever endpoints: " + label).toRawUTF8());
+        for (const double proportion : { 0.0, 0.25, 0.5, 0.75, 1.0 })
+        {
+            const double value = slider.proportionOfLengthToValue(proportion);
+            check(std::abs(slider.valueToProportionOfLength(value) - proportion) < 1.0e-9,
+                  ("owner lever reversible geometry: " + label).toRawUTF8());
+        }
+        auto* parameter = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(expected.parameter));
+        check(parameter != nullptr, ("owner lever parameter exists: " + label).toRawUTF8());
+        if (parameter == nullptr) continue;
+        for (const int key : { juce::KeyPress::downKey, juce::KeyPress::upKey })
+        {
+            parameter->setValueNotifyingHost(0.5f);
+            flush(20);
+            const float before = parameter->getValue();
+            BalancedGesture gesture;
+            parameter->addListener(&gesture);
+            const bool handled = slider.keyPressed(juce::KeyPress(key));
+            flush(20);
+            parameter->removeListener(&gesture);
+            const float after = parameter->getValue();
+            const bool shouldIncrease = (key == juce::KeyPress::downKey) == expected.increasesDown;
+            check(handled && (shouldIncrease ? after > before : after < before),
+                  ("owner lever physical arrow direction: " + label).toRawUTF8());
+            check(gesture.ok(), ("owner lever balanced arrow gesture: " + label).toRawUTF8());
+        }
+    }
+}
+
 // The program display marks unsaved edits from parameter-change notifications rather than by comparing
 // every parameter on each timer tick. Host automation of one control must still light it, and undoing
 // that edit must clear it again.
@@ -689,6 +754,7 @@ void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
     testGoldenImages(check, flush, outDir);
     testUnsavedEditIndicator(check, flush);
     testMainViewLayout(check, flush);
+    testOwnerLeverDirections(check, flush);
     testTremoloChorusTabs(check, flush);
     testIndependentChorusTabs(check, flush);
     testLegendFloorAndTypeface(check);
