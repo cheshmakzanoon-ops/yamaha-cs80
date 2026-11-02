@@ -85,3 +85,17 @@ stager bytes24, verifier forged origin12, staging mode1, verifier mode1, staged
 index staging1/verifier1, unregistered Windows conversion staging1/verifier1,
 and CI status binding2. Each number is an exact ordinary subtest failure count;
 the runner also requires exact named test-family counts and zero runtime errors.
+
+## Independent source-review clarification (before final qualification)
+
+The caller's top-level checkout path is deliberately resolved to its canonical
+Git root; a symlink alias naming that same checkout is accepted. A new positive
+subtest records this behavior without adding a test group. Linked required-notice
+leaves/ancestors **inside** the canonical checkout remain rejected. An earlier
+coordination message promised broader root-alias refusal; that statement was too
+broad and is withdrawn rather than being presented as an implemented safeguard.
+
+The LF-to-CRLF rule is a declared exact **byte-equivalence policy**, not an
+attestation that Git performed the conversion or that no `.gitattributes` could
+override the configured default. No arbitrary text normalization or custom
+filter execution is permitted. Native Windows qualification remains unrun.

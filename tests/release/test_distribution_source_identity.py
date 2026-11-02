@@ -68,6 +68,17 @@ class DistributionSourceIdentityTests(unittest.TestCase):
                 output = self.destination()
                 self.stage(output)
                 self.assertEqual(self.verify(output)['document_count'], 7)
+        # The checkout root is deliberately canonicalized. This is not the
+        # same as accepting a linked notice leaf/ancestor inside that checkout.
+        if os.name != 'nt':
+            alias = self.root.with_name('canonical-checkout-alias')
+            alias.symlink_to(self.root, target_is_directory=True)
+            output = self.destination()
+            with self.subTest(root='canonicalized top-level alias'):
+                manifest = self.stager.stage_documents(alias, self.license, output)
+                verified = self.verifier.verify_documents(alias, self.license, output, self.commit)
+                self.assertEqual(manifest['source_commit'], self.commit)
+                self.assertEqual(verified['document_count'], 7)
 
     def test_stager_rejects_changed_required_notice_behind_index_hint(self):
         for relative in fixtures.INPUTS.values():
