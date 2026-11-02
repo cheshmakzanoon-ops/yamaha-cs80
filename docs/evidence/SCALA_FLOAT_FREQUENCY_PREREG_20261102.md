@@ -22,8 +22,8 @@ frequencies and failed rejection/atomicity assertions.
 
 Positive controls retain 12TET, a five-note just scale, a non-octave tritave,
 a negative interior degree and nonmonotonic interior degrees. All128 generated
-pitches must have positive finite core conversions; 12TET keeps its existing
-1e-5-semitone fixture bound. Save the positive pitch arrays before and after and
+pitches must have positive finite core conversions; this new 12TET fixture uses
+a 1e-5-semitone bound (not a change to any existing test). Save the positive pitch arrays before and after and
 require byte identity. Replay KBM/count-MTS/original tuning tests and sanitizers.
 No shipped preset, state interpretation, original tolerance or audio deadline
 is changed. This does not claim safety under every possible subsequent pitch

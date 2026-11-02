@@ -252,6 +252,11 @@ inline std::string buildTable(const Scale& s, const KeyboardMapping& m, TuningTa
         const double hz = m.referenceHz * std::exp2((ok ? cents - refCents : (n - m.reference) * 100.0) / 1200.0);
         t.pitch[(std::size_t) n] = TuningTable::pitchFromHz(hz);
         if (!std::isfinite(t.pitch[(std::size_t) n])) return "tuning produced a non-finite pitch";
+        // Match the core's nominal midiToHz float operation order. A finite
+        // double Hz/pitch can still underflow or overflow that reconstruction.
+        const float renderedHz = 440.0f * std::pow(2.0f, (t.pitch[(std::size_t) n] - 69.0f) / 12.0f);
+        if (!std::isfinite(renderedHz) || !(renderedHz > 0.0f))
+            return "tuning produced an unrenderable nominal float frequency";
     }
     out = t;
     return {};
