@@ -770,6 +770,13 @@ if (CS80_BUILD_PLUGIN)
     endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
 
+    if (CS80_BUILD_TESTS)
+        # Processor-only: no editor/peer/display or audio device is created.
+        add_test(NAME cs80_factory_tone_revision_host_tests
+                 COMMAND CS80Snapshots --factory-tone-revision-test)
+        set_tests_properties(cs80_factory_tone_revision_host_tests PROPERTIES TIMEOUT 120)
+    endif()
+
     # Phase 7 validator diagnosis: one module life cycle (JUCE start, instance and editor paint,
     # destruction, JUCE shutdown, then static destructors) must exit cleanly. CI runs it plainly;
     # docs/VALIDATOR_DIAGNOSTICS.md records the memcheck run of the same probe.

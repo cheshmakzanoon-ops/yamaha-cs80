@@ -28,7 +28,7 @@
 #include <vector>
 
 class Cs80AudioProcessorEditor;
-namespace cs80::tests { struct PresetSaveAccess; struct AutomationStateAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct AutomationStateAccess; struct FactoryToneRevisionAccess; }
 
 class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener,
                            public cs80::HostAutomationClient
@@ -282,6 +282,7 @@ public:
 private:
     friend struct cs80::tests::PresetSaveAccess;
     friend struct cs80::tests::AutomationStateAccess;
+    friend struct cs80::tests::FactoryToneRevisionAccess;
     // [ws6-library] program change, bank select, A/B state (PluginProcessorLibrary.cpp).
     struct LibraryState;
     std::unique_ptr<LibraryState> library;

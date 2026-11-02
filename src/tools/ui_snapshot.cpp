@@ -25,6 +25,7 @@
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
 #include "../../tests/ProgramLibraryHostTests.h"
 #include "../../tests/HostAutomationStateBoundaryTests.h"
+#include "../../tests/FactoryToneRevisionHostTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -2094,6 +2095,13 @@ int main(int argc, char** argv)
                 sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
     std::puts("UI SMOKE PHASE: JUCE initialization");
     juce::ScopedJuceInitialiser_GUI juceInit;
+    if (argc > 1 && std::strcmp(argv[1], "--factory-tone-revision-test") == 0)
+    {
+        int checks = 0;
+        cs80::tests::testFactoryToneRevisionHost([&](bool ok, const char* message) { ++checks; check(ok, message); });
+        std::printf("Factory tone revision processor: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     // Focused developer entry point for the registered completion mutations. The default
     // --self-test below still runs every existing check and these same completion checks.
     if (argc > 1 && std::strcmp(argv[1], "--host-automation-boundary-test") == 0)
