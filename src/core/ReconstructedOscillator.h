@@ -364,6 +364,14 @@ public:
         // no flush-to-zero/denormals-are-zero. Other modes use original tick.
         if((mxcsr&((3u<<13)|(1u<<15)|(1u<<6)))!=0u ||
            (mxcsr&(0x3fu<<7))!=(0x3fu<<7))return false;
+        // Even finite checks on a subnormal control can set the MXCSR
+        // denormal-operand sticky bit: snapshot before *all* lane admission.
+        std::fenv_t fpBeforeAdmission{};
+        std::fegetenv(&fpBeforeAdmission);
+        const auto reject=[&]() noexcept {
+            std::fesetenv(&fpBeforeAdmission);
+            return false;
+        };
         for(std::size_t i=0;i<4;++i) {
             const auto* lane=lanes[i];
             if(!lane||!lane->basis||!lane->endNodesValid||!lane->branchEventCacheValid||
@@ -375,19 +383,13 @@ public:
                controls[i].sawEnabled!=lane->state.sawEnabled||
                controls[i].pulseEnabled!=lane->state.pulseEnabled||
                std::bit_cast<std::uint64_t>(controls[i].pulseThresholdVolts)!=
-                   std::bit_cast<std::uint64_t>(lane->state.heldThresholdVolts))return false;
-            for(std::size_t j=0;j<i;++j)if(lane==lanes[j])return false;
+                   std::bit_cast<std::uint64_t>(lane->state.heldThresholdVolts))return reject();
+            for(std::size_t j=0;j<i;++j)if(lane==lanes[j])return reject();
         }
         // Same requested-Hz clamp and original physical division. Admission
         // must occur before a single physical state or diagnostic mutation.
         // Some arithmetic eligibility checks can raise sticky FP exceptions.
         // A rejected batch must restore that caller-visible state exactly.
-        std::fenv_t fpBeforeAdmission{};
-        std::fegetenv(&fpBeforeAdmission);
-        const auto reject=[&]() noexcept {
-            std::fesetenv(&fpBeforeAdmission);
-            return false;
-        };
         std::array<double,4> physical{};
         for(std::size_t i=0;i<4;++i) {
             auto* lane=lanes[i];
