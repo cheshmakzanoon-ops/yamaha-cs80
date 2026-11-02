@@ -35,6 +35,18 @@ class BoundedEditorInputControls(unittest.TestCase):
             self.assertEqual((record["window"], record["key"], record["count"]), ("4194575", "Escape", 1))
             self.assertIn("visual result must be inspected", record["scope"])
 
+    def test_host_wrapper_escape_is_not_a_tour_dismissal(self):
+        # Actual run41510793290 closed the REAPER FX window on Escape before audio.
+        # Input must target the visible Close Tour button, never the host key route.
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(runner, "capture"), \
+                patch.object(runner.subprocess, "check_output", return_value="4194575\n"), \
+                patch.object(runner.subprocess, "run") as run, \
+                patch.object(runner.time, "sleep"):
+            runner.dismiss_tour_and_capture(Path(tmp))
+            self.assertFalse(any("Escape" in item.args[0] for item in run.call_args_list),
+                             "Escape routed to the REAPER wrapper closes the editor")
+
     def test_no_input_on_absent_ambiguous_or_invalid_window(self):
         for result in ("", "4194575\n4194576\n", "not-a-window\n"):
             with self.subTest(search_result=result), tempfile.TemporaryDirectory() as tmp, \
