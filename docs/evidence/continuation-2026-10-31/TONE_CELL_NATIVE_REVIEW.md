@@ -163,3 +163,22 @@ A standalone C++20 compilation of the existing header assertions also
 confirmed `manifestValid()`, `reviewValid()`, 25 manifest cells, 25 review
 entries, and fingerprint `e5f877a025fc52c6`. This documentation-only review
 adds no new acceptance tolerance or audio gate and changes no V1 numerics.
+
+## Yamaha service-bulletin serial-range cross-check — 2026-11-02
+
+The original [Yamaha CS-80 Adjustment Procedures and Service Bulletins](https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF)
+was independently reviewed at source PDF pages 33–36 (four printed Service
+News pages). The complete 36-page PDF SHA-256 is
+`eea101eb338494f3d1d3fddced2d8aa7f1d877ec9d6155ca44cc77ece88276ba`.
+The document does contain **specific Yamaha serial applicability**, but it
+belongs to bulletin **E-46 (January 1978)** on the **M-board IG00153 VCO
+temperature-rank selection and IS1555 thermal diode relocation**, not to
+the fixed preset-resistor networks on **T51/T52/T53/T54**. It names CS-80
+serial number **1169 and later** and enumerates certain earlier market/serial
+exceptions **for that VCO countermeasure alone**. Those numbers must **not**
+be transferred to the 25 T-board revision triangles, bypasses or resistor
+alternatives. No component-to-serial mapping for those 25 cells appears in
+this bulletin; all remain revision/installation hypotheses, with V1 values
+and fingerprint `e5f877a025fc52c6` unchanged. A relevant Yamaha T-board
+revision bulletin, populated bill of materials with serial applicability,
+or inspected dated installed board is still required.
