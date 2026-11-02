@@ -1,0 +1,199 @@
+{
+  "head": "6c75b477a30bccb3c8a1ca9741ae9bf8d2a49e00",
+  "source_tree": "0cdd66ff03ad2e359dddde97472af22928bdf019",
+  "header_sha256": "89df6fa2a2d47770e52710487a828b827001cd03a748e5ab8ebedb9a02ed73f2",
+  "test_sha256": "cd13982e7022aabf7e7a79d576e31c6d6f462a3abfb701a8402577051c62e18b",
+  "checks": 2426,
+  "requested_mode": "ordinary",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "mutants": [
+    {
+      "name": "seven-bit",
+      "old": "    for (int i = 1; i < size - 1; ++i)\n        if ((data[i] & 0x80) != 0) return false;\n",
+      "new": "",
+      "ordinary_failures": 1036,
+      "required_assertions": [
+        "bulk01 high-bit byte5 rejected",
+        "bank07-nonreal structurally complete high-bit count255 rejected"
+      ]
+    },
+    {
+      "name": "bulk-length",
+      "old": "size != 6 + 16 + 128 * 3 + 2",
+      "new": "size < 6 + 16 + 128 * 3 + 2",
+      "ordinary_failures": 8,
+      "required_assertions": [
+        "bulk01 excess payload1 rejected"
+      ]
+    },
+    {
+      "name": "counted-length",
+      "old": "size != header + data[header - 1] * 4 + 1",
+      "new": "size < header + data[header - 1] * 4 + 1",
+      "ordinary_failures": 24,
+      "required_assertions": [
+        "single02 excess payload1 rejected",
+        "bank07-nonreal excess payload4 rejected"
+      ]
+    },
+    {
+      "name": "octave-length",
+      "old": "size != 8 + (sub == 0x08 ? 12 : 24) + 1",
+      "new": "size < 8 + (sub == 0x08 ? 12 : 24) + 1",
+      "ordinary_failures": 32,
+      "required_assertions": [
+        "octave09-nonreal excess payload4 rejected"
+      ]
+    },
+    {
+      "name": "reserved-mask",
+      "old": "        if ((data[5] & 0x7C) != 0) return false; // reserved channel/options bits\n",
+      "new": "",
+      "ordinary_failures": 40,
+      "required_assertions": [
+        "octave08-real reserved mask bit2 rejected",
+        "octave09-nonreal reserved mask bit6 preserves all128 pitches/mapped bits"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "name": "positive",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-O2",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+        "-o",
+        "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/positive/test"
+      ],
+      "binary_sha256": "5c080932b5f7340cd84982c4be50d4b7f44a3ac091bd8a4ca77b770ed7c90886",
+      "exit_code": 0,
+      "checks": 2426,
+      "ordinary_failures": 0,
+      "started_at": "2026-11-02T15:59:17Z",
+      "finished_at": "2026-11-02T15:59:22Z",
+      "accepted": true
+    },
+    {
+      "name": "seven-bit",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-O2",
+        "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/seven-bit",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+        "-o",
+        "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/seven-bit/test"
+      ],
+      "binary_sha256": "24b1e19d5e124d8d0f58fe0133bcf58a7803a931808325984a7ba8778e9be2f6",
+      "exit_code": 1,
+      "checks": 2426,
+      "ordinary_failures": 1036,
+      "started_at": "2026-11-02T15:59:22Z",
+      "finished_at": "2026-11-02T15:59:24Z",
+      "accepted": true,
+      "mutant_header_sha256": "b8cf949a2e1f88a774815625e5b7b10f325f64e6ae8a5d678fe102f6650963ec"
+    },
+    {
+      "name": "bulk-length",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-O2",
+        "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/bulk-length",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+        "-o",
+        "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/bulk-length/test"
+      ],
+      "binary_sha256": "f903053f16e5759d9fdaa522b65c06b87cadb6d0e3269657008edd81e899e496",
+      "exit_code": 1,
+      "checks": 2426,
+      "ordinary_failures": 8,
+      "started_at": "2026-11-02T15:59:24Z",
+      "finished_at": "2026-11-02T15:59:27Z",
+      "accepted": true,
+      "mutant_header_sha256": "724fdc07c1ab4d5c4e5481a480c1f49b4d68b4532b3722dc42d719e56040a465"
+    },
+    {
+      "name": "counted-length",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-O2",
+        "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/counted-length",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+        "-o",
+        "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/counted-length/test"
+      ],
+      "binary_sha256": "87a60532756b72ee659b7494b6774735bd70fd3b63242e140637eb5b3d54044c",
+      "exit_code": 1,
+      "checks": 2426,
+      "ordinary_failures": 24,
+      "started_at": "2026-11-02T15:59:27Z",
+      "finished_at": "2026-11-02T15:59:41Z",
+      "accepted": true,
+      "mutant_header_sha256": "a35feff94114f1d8ac1e3bb13f5c0973f39e90ba2c364e86f27df1dc7d33851e"
+    },
+    {
+      "name": "octave-length",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-O2",
+        "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/octave-length",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+        "-o",
+        "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/octave-length/test"
+      ],
+      "binary_sha256": "edaa36432d4e09077d66067b365e68dbceb3f8144207ae91452eff59effbafc0",
+      "exit_code": 1,
+      "checks": 2426,
+      "ordinary_failures": 32,
+      "started_at": "2026-11-02T15:59:41Z",
+      "finished_at": "2026-11-02T15:59:48Z",
+      "accepted": true,
+      "mutant_header_sha256": "24e08157c1847947971fc756cbe258b83e6aac5c78db7af868c6152d36063d9e"
+    },
+    {
+      "name": "reserved-mask",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-O2",
+        "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/reserved-mask",
+        "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+        "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+        "-o",
+        "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/reserved-mask/test"
+      ],
+      "binary_sha256": "ec94aa456c6eb8c29222370d40ff07406831907d70f2f834e41e88a254614dca",
+      "exit_code": 1,
+      "checks": 2426,
+      "ordinary_failures": 40,
+      "started_at": "2026-11-02T15:59:48Z",
+      "finished_at": "2026-11-02T15:59:52Z",
+      "accepted": true,
+      "mutant_header_sha256": "236cae022ef050ae4785394987dc0a70da4822928f12443ec568f7880f5e5440"
+    }
+  ],
+  "restored_positive_sha256": "5c080932b5f7340cd84982c4be50d4b7f44a3ac091bd8a4ca77b770ed7c90886"
+}

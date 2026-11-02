@@ -1,0 +1,25 @@
+{
+  "name": "sanitized",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O1",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-omit-frame-pointer",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification/sanitized/test"
+  ],
+  "binary_sha256": "11a10bbd0c279515f28b4641c11076e1ba0f54faeb2a5646e9c125b5b461787c",
+  "exit_code": 1,
+  "checks": null,
+  "ordinary_failures": 0,
+  "started_at": "2026-11-02T15:54:01Z",
+  "finished_at": "2026-11-02T15:54:12Z",
+  "accepted": false
+}

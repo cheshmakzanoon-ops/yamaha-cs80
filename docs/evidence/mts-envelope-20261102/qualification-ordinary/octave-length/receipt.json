@@ -1,0 +1,22 @@
+{
+  "name": "octave-length",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/octave-length",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/octave-length/test"
+  ],
+  "binary_sha256": "edaa36432d4e09077d66067b365e68dbceb3f8144207ae91452eff59effbafc0",
+  "exit_code": 1,
+  "checks": 2426,
+  "ordinary_failures": 32,
+  "started_at": "2026-11-02T15:59:41Z",
+  "finished_at": "2026-11-02T15:59:48Z",
+  "accepted": true
+}

@@ -1,0 +1,11 @@
+{
+  "binary_sha256": "11a10bbd0c279515f28b4641c11076e1ba0f54faeb2a5646e9c125b5b461787c",
+  "original_failed_receipt": "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification/sanitized/receipt.json",
+  "exact_environment_overrides": {
+    "ASAN_OPTIONS": "detect_leaks=0:halt_on_error=1",
+    "UBSAN_OPTIONS": "halt_on_error=1"
+  },
+  "scope": "address/undefined-only local diagnostic; leak and native sanitizer gates NOT satisfied",
+  "exit_code": 0,
+  "finished_at": "2026-11-02T15:58:57.706612+00:00"
+}

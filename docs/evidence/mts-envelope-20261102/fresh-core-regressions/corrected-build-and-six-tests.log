@@ -1,0 +1,64 @@
+Mon Nov  2 15:55:45 UTC 2026
+[1/15] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/15] Building CXX object CMakeFiles/cs80_tuning_input_boundary_tests.dir/tests/TuningInputBoundaryTests.cpp.o
+[3/15] Building CXX object CMakeFiles/cs80_scala_float_pitch_bounds_tests.dir/tests/ScalaFloatPitchBoundsTests.cpp.o
+[4/15] Building CXX object CMakeFiles/cs80_mts_counted_message_tests.dir/tests/MtsCountedMessageTests.cpp.o
+[5/15] Building CXX object CMakeFiles/cs80_mts_envelope_tests.dir/tests/MtsEnvelopeTests.cpp.o
+In file included from /usr/include/c++/14/algorithm:60,
+                 from /workspace/scratch/aa102d573ba3/cs80-mts-envelope/src/core/Tuning.h:17,
+                 from /workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp:2:
+In function ‘constexpr typename __gnu_cxx::__enable_if<std::__is_byte<_Tp>::__value, void>::__type std::__fill_a1(_Tp*, _Tp*, const _Tp&) [with _Tp = unsigned char]’,
+    inlined from ‘constexpr void std::__fill_a(_FIte, _FIte, const _Tp&) [with _FIte = unsigned char*; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_algobase.h:998:21,
+    inlined from ‘constexpr _OutputIterator std::__fill_n_a(_OutputIterator, _Size, const _Tp&, random_access_iterator_tag) [with _OutputIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_algobase.h:1154:20,
+    inlined from ‘constexpr _OI std::fill_n(_OI, _Size, const _Tp&) [with _OI = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_algobase.h:1183:29,
+    inlined from ‘static _ForwardIterator std::__uninitialized_fill_n<true>::__uninit_fill_n(_ForwardIterator, _Size, const _Tp&) [with _ForwardIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_uninitialized.h:294:29,
+    inlined from ‘_ForwardIterator std::uninitialized_fill_n(_ForwardIterator, _Size, const _Tp&) [with _ForwardIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_uninitialized.h:327:17,
+    inlined from ‘constexpr _ForwardIterator std::__uninitialized_fill_n_a(_ForwardIterator, _Size, const _Tp&, allocator<_Tp2>&) [with _ForwardIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char; _Tp2 = unsigned char]’ at /usr/include/c++/14/bits/stl_uninitialized.h:472:39,
+    inlined from ‘constexpr void std::vector<_Tp, _Alloc>::_M_fill_insert(iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/vector.tcc:763:34,
+    inlined from ‘constexpr std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::insert(const_iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/stl_vector.h:1442:16,
+    inlined from ‘int main()’ at /workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp:93:50:
+/usr/include/c++/14/bits/stl_algobase.h:972:25: warning: ‘void* __builtin_memset(void*, int, long unsigned int)’ writing between 1 and 4 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+  972 |         __builtin_memset(__first, static_cast<unsigned char>(__tmp), __len);
+      |         ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/14/bits/c++allocator.h:33,
+                 from /usr/include/c++/14/bits/allocator.h:46,
+                 from /usr/include/c++/14/string:43,
+                 from /workspace/scratch/aa102d573ba3/cs80-mts-envelope/src/core/Tuning.h:23:
+In member function ‘_Tp* std::__new_allocator<_Tp>::allocate(size_type, const void*) [with _Tp = unsigned char]’,
+    inlined from ‘constexpr _Tp* std::allocator< <template-parameter-1-1> >::allocate(std::size_t) [with _Tp = unsigned char]’ at /usr/include/c++/14/bits/allocator.h:196:40,
+    inlined from ‘static constexpr _Tp* std::allocator_traits<std::allocator<_CharT> >::allocate(allocator_type&, size_type) [with _Tp = unsigned char]’ at /usr/include/c++/14/bits/alloc_traits.h:515:28,
+    inlined from ‘constexpr std::_Vector_base<_Tp, _Alloc>::pointer std::_Vector_base<_Tp, _Alloc>::_M_allocate(std::size_t) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/stl_vector.h:380:33,
+    inlined from ‘constexpr void std::vector<_Tp, _Alloc>::_M_fill_insert(iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/vector.tcc:758:45,
+    inlined from ‘constexpr std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::insert(const_iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/stl_vector.h:1442:16,
+    inlined from ‘int main()’ at /workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp:93:50:
+/usr/include/c++/14/bits/new_allocator.h:151:55: note: at offset -1 into destination object of size [1, 4] allocated by ‘operator new’
+  151 |         return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW(__n * sizeof(_Tp)));
+      |                                                       ^
+[6/15] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[7/15] Linking CXX static library libcs80_core.a
+[8/15] Building CXX object CMakeFiles/cs80_mts_realtime_semantics_tests.dir/tests/MtsRealtimeSemanticsTests.cpp.o
+[9/15] Linking CXX executable cs80_tuning_input_boundary_tests
+[10/15] Linking CXX executable cs80_scala_float_pitch_bounds_tests
+[11/15] Linking CXX executable cs80_mts_counted_message_tests
+[12/15] Linking CXX executable cs80_mts_envelope_tests
+[13/15] Linking CXX executable cs80_mts_realtime_semantics_tests
+[14/15] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+[15/15] Linking CXX executable cs80_tuning_midi_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-mts-envelope-build
+    Start 85: cs80_tuning_input_boundary_tests
+1/6 Test #85: cs80_tuning_input_boundary_tests ......   Passed    0.01 sec
+    Start 86: cs80_scala_float_pitch_bounds_tests
+2/6 Test #86: cs80_scala_float_pitch_bounds_tests ...   Passed    0.01 sec
+    Start 87: cs80_mts_counted_message_tests
+3/6 Test #87: cs80_mts_counted_message_tests ........   Passed    0.00 sec
+    Start 88: cs80_mts_envelope_tests
+4/6 Test #88: cs80_mts_envelope_tests ...............   Passed    0.01 sec
+    Start 89: cs80_mts_realtime_semantics_tests
+5/6 Test #89: cs80_mts_realtime_semantics_tests .....   Passed    2.70 sec
+    Start 90: cs80_tuning_midi_tests
+6/6 Test #90: cs80_tuning_midi_tests ................   Passed    1.39 sec
+
+100% tests passed out of 6
+
+Total Test time (real) =   4.12 sec
+Mon Nov  2 15:56:31 UTC 2026

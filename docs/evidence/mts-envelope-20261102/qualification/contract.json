@@ -1,0 +1,58 @@
+{
+  "head": "ff716b619d901f2743ab19756d7feaf5ea7d5700",
+  "source_tree": "0cdd66ff03ad2e359dddde97472af22928bdf019",
+  "header_sha256": "89df6fa2a2d47770e52710487a828b827001cd03a748e5ab8ebedb9a02ed73f2",
+  "test_sha256": "cd13982e7022aabf7e7a79d576e31c6d6f462a3abfb701a8402577051c62e18b",
+  "checks": 2426,
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "mutants": [
+    {
+      "name": "seven-bit",
+      "old": "    for (int i = 1; i < size - 1; ++i)\n        if ((data[i] & 0x80) != 0) return false;\n",
+      "new": "",
+      "ordinary_failures": 1036,
+      "required_assertions": [
+        "bulk01 high-bit byte5 rejected",
+        "bank07-nonreal structurally complete high-bit count255 rejected"
+      ]
+    },
+    {
+      "name": "bulk-length",
+      "old": "size != 6 + 16 + 128 * 3 + 2",
+      "new": "size < 6 + 16 + 128 * 3 + 2",
+      "ordinary_failures": 8,
+      "required_assertions": [
+        "bulk01 excess payload1 rejected"
+      ]
+    },
+    {
+      "name": "counted-length",
+      "old": "size != header + data[header - 1] * 4 + 1",
+      "new": "size < header + data[header - 1] * 4 + 1",
+      "ordinary_failures": 24,
+      "required_assertions": [
+        "single02 excess payload1 rejected",
+        "bank07-nonreal excess payload4 rejected"
+      ]
+    },
+    {
+      "name": "octave-length",
+      "old": "size != 8 + (sub == 0x08 ? 12 : 24) + 1",
+      "new": "size < 8 + (sub == 0x08 ? 12 : 24) + 1",
+      "ordinary_failures": 32,
+      "required_assertions": [
+        "octave09-nonreal excess payload4 rejected"
+      ]
+    },
+    {
+      "name": "reserved-mask",
+      "old": "        if ((data[5] & 0x7C) != 0) return false; // reserved channel/options bits\n",
+      "new": "",
+      "ordinary_failures": 40,
+      "required_assertions": [
+        "octave08-real reserved mask bit2 rejected",
+        "octave09-nonreal reserved mask bit6 preserves all128 pitches/mapped bits"
+      ]
+    }
+  ]
+}

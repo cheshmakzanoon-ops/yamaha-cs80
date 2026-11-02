@@ -1,0 +1,22 @@
+{
+  "name": "positive",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification/positive/test"
+  ],
+  "binary_sha256": "5c080932b5f7340cd84982c4be50d4b7f44a3ac091bd8a4ca77b770ed7c90886",
+  "exit_code": 0,
+  "checks": 2426,
+  "ordinary_failures": 0,
+  "started_at": "2026-11-02T15:53:56Z",
+  "finished_at": "2026-11-02T15:54:01Z",
+  "accepted": true
+}

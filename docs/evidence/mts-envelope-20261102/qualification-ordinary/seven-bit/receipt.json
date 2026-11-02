@@ -1,0 +1,22 @@
+{
+  "name": "seven-bit",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/seven-bit",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/seven-bit/test"
+  ],
+  "binary_sha256": "24b1e19d5e124d8d0f58fe0133bcf58a7803a931808325984a7ba8778e9be2f6",
+  "exit_code": 1,
+  "checks": 2426,
+  "ordinary_failures": 1036,
+  "started_at": "2026-11-02T15:59:22Z",
+  "finished_at": "2026-11-02T15:59:24Z",
+  "accepted": true
+}

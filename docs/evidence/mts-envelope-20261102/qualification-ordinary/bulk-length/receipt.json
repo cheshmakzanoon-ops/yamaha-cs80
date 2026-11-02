@@ -1,0 +1,22 @@
+{
+  "name": "bulk-length",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/bulk-length",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/bulk-length/test"
+  ],
+  "binary_sha256": "f903053f16e5759d9fdaa522b65c06b87cadb6d0e3269657008edd81e899e496",
+  "exit_code": 1,
+  "checks": 2426,
+  "ordinary_failures": 8,
+  "started_at": "2026-11-02T15:59:24Z",
+  "finished_at": "2026-11-02T15:59:27Z",
+  "accepted": true
+}

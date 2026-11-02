@@ -1,0 +1,22 @@
+{
+  "name": "reserved-mask",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/reserved-mask",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/reserved-mask/test"
+  ],
+  "binary_sha256": "ec94aa456c6eb8c29222370d40ff07406831907d70f2f834e41e88a254614dca",
+  "exit_code": 1,
+  "checks": 2426,
+  "ordinary_failures": 40,
+  "started_at": "2026-11-02T15:59:48Z",
+  "finished_at": "2026-11-02T15:59:52Z",
+  "accepted": true
+}

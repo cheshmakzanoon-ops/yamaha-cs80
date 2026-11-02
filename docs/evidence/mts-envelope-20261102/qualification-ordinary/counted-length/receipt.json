@@ -1,0 +1,22 @@
+{
+  "name": "counted-length",
+  "command": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-O2",
+    "-I/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/counted-length",
+    "-I/workspace/scratch/aa102d573ba3/cs80-mts-envelope/src",
+    "/workspace/scratch/aa102d573ba3/cs80-mts-envelope/tests/MtsEnvelopeTests.cpp",
+    "-o",
+    "/workspace/scratch/aa102d573ba3/cs80-host-tool-evidence/mts-envelope/qualification-ordinary/counted-length/test"
+  ],
+  "binary_sha256": "87a60532756b72ee659b7494b6774735bd70fd3b63242e140637eb5b3d54044c",
+  "exit_code": 1,
+  "checks": 2426,
+  "ordinary_failures": 24,
+  "started_at": "2026-11-02T15:59:27Z",
+  "finished_at": "2026-11-02T15:59:41Z",
+  "accepted": true
+}
