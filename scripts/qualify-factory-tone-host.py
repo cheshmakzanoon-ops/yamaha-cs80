@@ -123,6 +123,14 @@ def main():
             raise RuntimeError("positive executable/receipt mismatch")
         entries = {r["file"]: r for r in receipt["compile_commands"]}
         args.out.mkdir(parents=True, exist_ok=True)
+        # The receipt may also contain a different focused mode (e.g. the
+        # separate locale test). Establish THIS unmodified fixture explicitly.
+        with (args.out/"initial-positive.log").open("w") as stream:
+            initial = subprocess.run([str(binary), "--factory-tone-revision-test"],
+                stdout=stream, stderr=subprocess.STDOUT, timeout=120)
+        initial_log = (args.out/"initial-positive.log").read_text()
+        if initial.returncode != 0 or "Factory tone revision processor: 2257 checks, 0 failures" not in initial_log:
+            raise RuntimeError("unmodified 2257-check fixture did not pass before mutation")
         contract = {
             "source_head": receipt["head"], "source_tree": receipt["src_tree"],
             "positive_binary_sha256": receipt["binary_sha256"],
