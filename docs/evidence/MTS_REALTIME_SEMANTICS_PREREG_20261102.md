@@ -28,3 +28,15 @@ Base: b87e457 (previous separate parser repair). Native and full numerical
 qualification must subsequently use the actual composed source. Original
 source-locked audit registrations remain immutable. A successful focused test is
 not a claim of realtime scheduling, audible transition or all-DAW acceptance.
+
+## Supplementary preservation controls, registered before their first run
+
+The original 288-check protocol fixture produced 24 non-realtime held-note
+failures before the fix, and then passed with the fix in Release and ASan/UBSan.
+Before freezing the evidence, add 144 explicit preservation checks across the
+same two engines and three rates: direct live `setMtsTuning` versus realtime
+SysEx, each in modern and PURE CS-80 mode. Modern mode must retune both held and
+future notes; pure mode must retain equal-tempered pitch while retaining the
+accepted table for future mode selection. Voice ownership is unchanged. These
+are supplementary positive controls, not retroactively preregistered RED cases;
+the original 288 checks, tolerance and production fix remain unchanged.
