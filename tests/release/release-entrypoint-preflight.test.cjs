@@ -1,5 +1,5 @@
-// RED-first: both manual and v* tag release.yml events must independently
-// enforce exact-main, four source-qualified workflow successes, and receipt.
+// RED-first: owner manual main release.yml must enforce immutable request,
+// PR6, all four workflows and S-only ancestry; *every* tag push is rejected.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -123,15 +123,13 @@ async function scenario(overrides = {}) {
   assert.ok(manual.calls.some(([action, arg]) => action === 'pulls.get'
     && arg.pull_number === 6)); checks++;
 
-  const tag = await scenario({ eventName: 'push' });
-  assert.equal(tag.result.authorized, true); checks++;
-  assert.ok(tag.calls.some(([action, arg]) => action === 'getTag' && arg.tag_sha === TAG_OBJECT)); checks++;
-  const lightweight = await scenario({ eventName: 'push', lightweightTag: true });
-  assert.equal(lightweight.result.authorized, true); checks++;
-  assert.ok(tag.calls.some(([action, arg]) => action === 'pulls.get'
-    && arg.pull_number === 6)); checks++;
-  assert.ok(tag.calls.some(([action, arg]) => action === 'getContent'
-    && arg.ref === REQUEST_SHA)); checks++;
+  // The previous v* tag entrypoint is intentionally removed. Even a valid
+  // owner-supplied annotated/lightweight tag at the correct current main
+  // must not create installers automatically.
+  await assert.rejects(() => scenario({ eventName: 'push' }), undefined,
+    'owner annotated tag must never release'); checks++;
+  await assert.rejects(() => scenario({ eventName: 'push', lightweightTag: true }),
+    undefined, 'owner lightweight tag must never release'); checks++;
 
   const negatives = [
     ['manual on feature', { ref: 'refs/heads/feature' }],
@@ -170,9 +168,8 @@ async function scenario(overrides = {}) {
     await assert.rejects(() => scenario(overrides), undefined, label);
     checks++;
   }
-  // Both independent installer entrypoints must bind source M to the merged
-  // PR6 commit; screenshot-only S may follow it but may not substitute
-  // another unreviewed source/merge SHA.
+  // The only authorized installer entrypoint must bind source M to the merged
+  // PR6 commit; screenshot-only S may follow, but never new production code.
   const prNegatives = [
     ['PR6 unmerged', { prUnmerged: true }],
     ['PR6 still open', { prOpen: true }],
@@ -185,17 +182,17 @@ async function scenario(overrides = {}) {
     ['request wrong merge SHA', { request: { pr_merge_commit_sha: OTHER } }],
     ['request wrong validated SHA', { request: { validated_sha: OTHER } }],
   ];
-  for (const eventName of ['workflow_dispatch', 'push']) {
-    for (const [label, overrides] of prNegatives) {
-      await assert.rejects(() => scenario({ ...overrides, eventName }), undefined,
-        `${eventName}: ${label}`);
-      checks++;
-    }
+  for (const [label, overrides] of prNegatives) {
+    await assert.rejects(() => scenario(overrides), undefined, label);
+    checks++;
   }
   const workflow = fs.readFileSync(path.resolve(__dirname, '../../.github/workflows/release.yml'), 'utf8');
   assert.match(workflow, /group:\s*cs80-reviewed-release-packages/);
   checks++;
   assert.match(workflow, /^\s{2}preflight:\s*$/m); checks++;
+  assert.match(workflow, /^on:\s*\n\s{2}workflow_dispatch:/m); checks++;
+  assert.doesNotMatch(workflow, /^\s{2}push:/m,
+    'automatic v* tag release must be disabled'); checks++;
   assert.match(workflow, /request_commit_sha:/); checks++;
   assert.match(workflow, /requestSha:\s*process\.env\.REQUEST_COMMIT_SHA/); checks++;
   for (const job of ['macos-universal', 'windows-installer', 'linux-packages']) {
