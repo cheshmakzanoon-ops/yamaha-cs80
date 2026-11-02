@@ -11,6 +11,11 @@
 #include <locale.h>
 #include <system_error>
 
+#if JUCE_MAC || JUCE_IOS
+ #include <stdlib.h>
+ #include <xlocale.h>
+#endif
+
 namespace
 {
 // Schema validation must not read the live ValueTree handle while another
