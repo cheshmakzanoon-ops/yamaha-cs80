@@ -288,6 +288,9 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
         const int header = sub == 0x02 ? 7 : 8; // [prog] or [bank prog], then count
         if (size < header + 1) return false;
         const int count = data[header - 1];
+        // A framed but incomplete counted message must not partially retune the
+        // table. Each declared note needs all four bytes before any entry writes.
+        if (size < header + count * 4 + 1) return false;
         for (int i = 0; i < count; ++i)
         {
             const int at = header + i * 4;
