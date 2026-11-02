@@ -48,7 +48,10 @@ def main():
         receipt = json.loads(args.receipt.read_text())
         if subprocess.check_output(["git", "diff", "--", "src", "tests"], cwd=args.source):
             raise RuntimeError("dirty source/tests")
-        if subprocess.check_output(["git", "diff", "--name-only", receipt["head"], "HEAD", "--", "src", "tests"], cwd=args.source):
+        changed = set(subprocess.check_output(["git", "diff", "--name-only", receipt["head"], "HEAD", "--", "src", "tests"], cwd=args.source, text=True).splitlines())
+        # This standalone auxiliary driver is not in the positive console TU.
+        # No original project/header/test may differ from the linked receipt.
+        if not changed.issubset({"tests/RenderPolicyLocaleAllocationProbe.cpp"}):
             raise RuntimeError("receipt source/test identity changed")
         if subprocess.check_output(["git", "rev-parse", "HEAD:src"], cwd=args.source, text=True).strip() != receipt["src_tree"]:
             raise RuntimeError("receipt source-tree mismatch")

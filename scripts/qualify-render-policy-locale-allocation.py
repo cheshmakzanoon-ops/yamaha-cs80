@@ -14,7 +14,10 @@ sha=module.sha
 with module.locked(a.lock):
     r=json.loads(a.receipt.read_text())
     assert not subprocess.check_output(["git","diff","--","src","tests"],cwd=a.source)
-    assert not subprocess.check_output(["git","diff","--name-only",r["head"],"HEAD","--","src","tests"],cwd=a.source)
+    # The auxiliary fault driver is not linked into the original positive.
+    # Every original project/header/test byte must still match its receipt.
+    changed=set(subprocess.check_output(["git","diff","--name-only",r["head"],"HEAD","--","src","tests"],cwd=a.source,text=True).splitlines())
+    assert changed.issubset({"tests/RenderPolicyLocaleAllocationProbe.cpp"})
     assert subprocess.check_output(["git","rev-parse","HEAD:src"],cwd=a.source,text=True).strip()==r["src_tree"]
     for e in r["compile_commands"]:assert sha(e["fresh_object"])==e["sha256"]
     for e in r["reused_module_and_font_objects"]:assert sha(e["file"])==e["sha256"]
