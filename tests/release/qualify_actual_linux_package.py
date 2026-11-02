@@ -38,7 +38,7 @@ def main():
    try:
     code=child.wait(timeout=180)
     if code:
-     cleanup();raise subprocess.CalledProcessError(code,args)
+     raise subprocess.CalledProcessError(code,args)
    except BaseException:
     cleanup();raise
  save()
