@@ -357,6 +357,8 @@ production source tree `7dd159d491012fd47b46c0aa651e86ea959ca289`.
 The [raw artifact](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253/artifacts/13097476296)
 has ZIP SHA-256
 `a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19`.
+A [permanent evidence branch](https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/evidence/full-engine-audit-20261102/docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253)
+at `0151b869` also preserves exact raw CSVs and a losslessly reconstructable original ZIP.
 Independent retrieval verified its CRC, source/provenance digests,
 **885 source-defined rows** (40 latency, 168 alias, 102 FX, 566 phrase,
 9 causal clicks), and zero nonfinite numeric cells. Ten preregistered

@@ -173,7 +173,9 @@ continuity result and full-bank score are different observations.
 completed successfully, retaining the original
 [artifact 13097476296](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253/artifacts/13097476296)
 (ZIP SHA-256 `a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19`;
-retention currently through 2027-01-30). The collector used the frozen
+retention currently through 2027-01-30). A [permanent evidence branch](https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/evidence/full-engine-audit-20261102/docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253)
+at `0151b869` preserves the unmodified CSVs and the losslessly reconstructable original ZIP;
+all 18 published file hashes match the verified local copies. The collector used the frozen
 `.github/full-engine-audit-request.json` and unchanged numerical reporter at
 `39ae6c2684456950302cb4ed10ecfae980c37ddd`, with production audio
 `83b7f7670f000a95c6b44f96ffb0df3894755d14`, source tree
