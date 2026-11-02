@@ -1,0 +1,15 @@
+{
+  "id": "click-cp3-coupling-two-capacitor-topology-20261102",
+  "status": "SOURCE_REFINEMENT_REGISTERED_BEFORE_FIRST_TRIAL",
+  "original_preregistration_commit": "4743032",
+  "source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "verified_m41_extended_route": [
+    "Voice filter IC11 LP pin15 -> CP8/CP3(29) -> 1uF/50V NP -> 100k -> IG00151 IC4 +IN3 (pre-voice-VCA capacitor)",
+    "IC3 + IC4 OUT pin8 sum at CP4(28), with 27k ground shunt -> distinct 1uF/50V NP -> 100k -> IG00151 IC5 +IN3 (inter-VCA capacitor)",
+    "IC5 OUT8 -> CP5(32), 27k ground shunt -> 100k -> IC6 +IN3; IC6 OUT8 -> Tr8 -> 4.7uF/50V NP +1k -> O(33), verified from M-board/Panel 2 routing; the native crop glyph could resemble D",
+    "LC31 -> 100k + 0.01uF -> IC5 LI2; LP1(27) -> different 100k + 0.01uF -> IC4 LI2"
+  ],
+  "interpretation": "The existing Vca.h post-aggregate inferred 0.1s highpass may approximate the second CP4-to-IC5 capacitor: do NOT characterize it as unsupported or physically impossible. The source-visible CP3 pre-IC4 1uF state remains unmodeled as a distinct input coupling. The standalone test augments the existing VCA primitive with an extra ideal-source 0.1s input capacitor; it does not physically implement the IC3/IC4/IC5 gain stages, their shunts, or the downstream 4.7uF buffer.",
+  "unchanged_hypothesis": "All fixed fixture frequencies, gains, 3 native rates, warmup, 0.1s inferred resistance, 42 raw rows, known smooth/held/DC/zero/impulse controls, original score reference and numerical ±5% / <=2% / >1 predictions remain exactly as committed in 4743032.",
+  "uncertainty": "The two 100k series resistors do not alone prove the loaded input highpass time constants because source/input impedances and chip gain laws are unknown. No exact KAS-to-IG00159 gate pin/net was independently certified. No production edit or PASS decision follows from this addendum."
+}
