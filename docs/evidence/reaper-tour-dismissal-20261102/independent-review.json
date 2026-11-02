@@ -1,0 +1,67 @@
+{
+  "reviewed_commit": "5198b50e3ae86a9e9189056eb74584ec41e0c899",
+  "archive_commit": "eb7a0ac",
+  "preregistration": "529a8ff37914b0d0ee27c3ddf963173882766c3c",
+  "production_source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "status": "APPROVE bounded click correction for actual Actions rerun; native outcome and audio acceptance still PENDING",
+  "red": "4 mock tests; exactly one no-Escape regression failure",
+  "green": "14 runner/target controls; 8 validator controls; existing source-mutation suite passes",
+  "archive_sha_inventory_files": 7,
+  "original_zip_sha256": "275d1da9ac4124281c45b48444dc89dacce014c9adb88d5e4e60756a2e048fc6",
+  "pixel_inspection": "Independently viewed original before/after PNGs: Close Tour at observed OCR target in first card before; editor disappears after Escape while REAPER/FX remain. No plugin crash inferred. Evaluation/about and audio-device error windows unchanged/exposed, not bypassed.",
+  "bounds": "Only actual observed Close Tour label center can choose one click; unique window + exact geometry + focus checked, callback XML plus missing tour text required, host API editor-open remains required. No source/contract/numerical/licensing change.",
+  "not_run": [
+    "New native host/display/audio execution",
+    "Local Lua syntax/inventory; CI luac/lua gates retained"
+  ],
+  "source_sha256": {
+    "scripts/run-reaper-smoke.py": "eb686e21eef1246e991c79025f3af3c75a39ce0285a22e543f89fb5e4033dbe6",
+    "scripts/verify-reaper-smoke.py": "61ff5751e89ca9b6fae90b9ae1892b7c071f22b975f210cbdd84723d46f59c0c",
+    "tests/hosts/reaper/create-projects.lua": "a62202323a021d6e97125c05e70ae43504ac8a19c6829123cab1dfef5c3253fb",
+    "tests/test_reaper_smoke_runner.py": "ee1dd38714acf739ca603a4971be212ded83ecdf8e44e04e6e365433cadf4dc1",
+    "tests/test_reaper_smoke_validator.py": "5e0ecf961775423d3729f10995e7c271c53230217bb04230f2e13121009ce9be",
+    ".github/workflows/reaper-host-smoke.yml": "6bab9390ffed24f44de4dac47e22731ecf8ad5203a73f8c735726e578789c735"
+  },
+  "executions": [
+    {
+      "name": "preregistered-red",
+      "argv": [
+        "python3",
+        "tests/test_reaper_smoke_runner.py"
+      ],
+      "cwd": "/workspace/scratch/aa102d573ba3/cs80-independent-reaper-tour-5198/old/input",
+      "exit_code": 1,
+      "sha256": "375759e334bd959b5bde32fa91f3f6d34c43318c793fee530b4e291706fcee91"
+    },
+    {
+      "name": "runner-green",
+      "argv": [
+        "python3",
+        "tests/test_reaper_smoke_runner.py"
+      ],
+      "cwd": "/workspace/scratch/aa102d573ba3/cs80-reaper-dry",
+      "exit_code": 0,
+      "sha256": "e30b39ff40421368f77e105e6308ee328d8901dabf581ba183f23621c2c9f2aa"
+    },
+    {
+      "name": "validator-green",
+      "argv": [
+        "python3",
+        "tests/test_reaper_smoke_validator.py"
+      ],
+      "cwd": "/workspace/scratch/aa102d573ba3/cs80-reaper-dry",
+      "exit_code": 0,
+      "sha256": "9fa0919f5b7a4ac72b7e5bdeac23e41f63722198ce0c31d4aeabfa138746a621"
+    },
+    {
+      "name": "validator-source-mutants",
+      "argv": [
+        "python3",
+        "tests/test_reaper_smoke_validator_mutations.py"
+      ],
+      "cwd": "/workspace/scratch/aa102d573ba3/cs80-reaper-dry",
+      "exit_code": 0,
+      "sha256": "d4f36820351d4565996fb7e6bac7243a5f97def0b8d840af84a1b03b6948f703"
+    }
+  ]
+}
