@@ -19,8 +19,13 @@ import qualify_native_installer as controller
 
 
 class NativeInstallerPayloadTests(unittest.TestCase):
-    setUp = staging_tests.DistributionDocsTests.setUp
     git = staging_tests.DistributionDocsTests.git
+
+    def setUp(self):
+        staging_tests.DistributionDocsTests.setUp(self)
+        self.windows_binary = self.build / 'CS80Reference_artefacts/Release/Standalone/CS-80 Reference.exe'
+        self.windows_binary.parent.mkdir(parents=True)
+        self.windows_binary.write_bytes(b'synthetic Windows build input; never executed\n')
 
     def test_wrong_platform_rejected_without_output(self):
         other = 'windows' if sys.platform != 'win32' else 'linux'
@@ -98,6 +103,7 @@ class NativeInstallerPayloadTests(unittest.TestCase):
             elif any(arg.startswith('/DIR=') for arg in command):
                 installed = Path(next(arg[5:] for arg in command if arg.startswith('/DIR=')))
                 installed.mkdir()  # A success exit without an uninstaller is insufficient.
+                shutil.copy2(self.windows_binary, installed / self.windows_binary.name)
 
         with mock.patch.object(controller, 'ROOT', self.root), \
              mock.patch.object(controller.sys, 'platform', 'win32'), \
@@ -107,6 +113,68 @@ class NativeInstallerPayloadTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'uninstaller'):
                 controller.qualify('windows', self.build, output, self.commit)
         self.assertFalse((output / 'native-installer-receipt.json').exists())
+
+    def binary_windows_install(self, defect=None):
+        """Mock the native command only; compare actual synthetic filesystem bytes."""
+        output = self.root / 'packages/native'
+        compiler = self.root / 'program-files/Inno Setup 6/iscc.exe'
+        compiler.parent.mkdir(parents=True)
+        compiler.write_bytes(b'synthetic compiler placeholder; never executed')
+        observed = {'cleanup': 0, 'snapshot_before_compile': False}
+
+        def fake_run(command, log, **kwargs):
+            command = [str(arg) for arg in command]
+            if command[0] == str(compiler):
+                observed['snapshot_before_compile'] = (output / 'binary-input-manifest.json').is_file()
+                if defect == 'input_changed':
+                    self.windows_binary.write_bytes(b'changed after snapshot; never executed\n')
+                (output / 'synthetic-setup.exe').write_bytes(b'synthetic setup; never executed')
+            elif Path(command[0]).name == 'unins000.exe':
+                observed['cleanup'] += 1
+            elif any(arg.startswith('/DIR=') for arg in command):
+                installed = Path(next(arg[5:] for arg in command if arg.startswith('/DIR=')))
+                installed.mkdir()
+                shutil.copy2(self.windows_binary, installed / self.windows_binary.name)
+                if defect == 'payload_changed':
+                    (installed / self.windows_binary.name).write_bytes(b'stale installed binary\n')
+                (installed / 'unins000.exe').write_bytes(b'synthetic uninstaller; never executed')
+
+        with mock.patch.object(controller, 'ROOT', self.root), \
+             mock.patch.object(controller.sys, 'platform', 'win32'), \
+             mock.patch.dict(os.environ, {'ProgramFiles(x86)': str(compiler.parent.parent)}), \
+             mock.patch.object(controller, 'run', side_effect=fake_run), \
+             mock.patch.object(controller, 'verify_documents', return_value={'fixture': 'synthetic'}):
+            if defect:
+                with self.assertRaisesRegex(ValueError, 'bytes|hash|build input'):
+                    controller.qualify('windows', self.build, output, self.commit)
+                self.assertFalse((output / 'native-installer-receipt.json').exists())
+            else:
+                controller.qualify('windows', self.build, output, self.commit)
+        self.assertEqual(observed['cleanup'], 1, 'binary checks must remain inside uninstall cleanup')
+        return output, observed
+
+    def test_windows_binary_mismatch_is_rejected_and_cleaned(self):
+        self.binary_windows_install('payload_changed')
+
+    def test_input_transformation_after_snapshot_is_not_silently_recaptured(self):
+        self.binary_windows_install('input_changed')
+
+    def test_binary_snapshot_precedes_native_package_creation(self):
+        _, observed = self.binary_windows_install()
+        self.assertTrue(observed['snapshot_before_compile'], 'freeze actual inputs before package creation')
+
+    def test_windows_receipt_hashes_actual_binary_verification(self):
+        output, _ = self.binary_windows_install()
+        for name in ('binary-input-manifest.json', 'binary-verification.json'):
+            self.assertTrue((output / name).is_file(), 'missing binary evidence: ' + name)
+        evidence = json.loads((output / 'native-installer-receipt.json').read_text())
+        self.assertEqual(evidence.get('binary_verification_sha256'),
+                         hashlib.sha256((output / 'binary-verification.json').read_bytes()).hexdigest())
+        self.assertEqual(evidence.get('binary_input_manifest_sha256'),
+                         hashlib.sha256((output / 'binary-input-manifest.json').read_bytes()).hexdigest())
+        binary = json.loads((output / 'binary-verification.json').read_text())
+        self.assertEqual(binary['verified_components'], ['standalone'])
+        self.assertIn('VST3 not installed', binary['platform_limit'])
 
     @unittest.skipUnless(sys.platform.startswith('linux') and shutil.which('dpkg-deb'),
                          'actual Debian container roundtrip only runs natively on Linux')
@@ -131,6 +199,9 @@ class NativeInstallerPayloadTests(unittest.TestCase):
         self.assertEqual(receipt['package_sha256'], hashlib.sha256(package.read_bytes()).hexdigest())
         self.assertEqual(receipt['document_verification_sha256'], hashlib.sha256((output / 'document-verification.json').read_bytes()).hexdigest())
         self.assertIn('not a release', receipt['qualification'])
+        self.assertTrue((output / 'binary-verification.json').is_file(), 'actual Debian payload bytes need verification')
+        binary = json.loads((output / 'binary-verification.json').read_text())
+        self.assertEqual(binary['verified_components'], ['standalone', 'vst3'])
 
 
 if __name__ == '__main__':
