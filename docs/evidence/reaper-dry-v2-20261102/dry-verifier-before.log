@@ -1,0 +1,23 @@
+60de75e6ecb320d1f2973f6bdc1b81e1597d226e
+7dd159d491012fd47b46c0aa651e86ea959ca289
+2026-11-02T12:17:20Z
+....E.
+======================================================================
+ERROR: test_identity_state_and_failure_mutations (__main__.DryProvenanceControls.test_identity_state_and_failure_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-reaper-dry/tests/test_reaper_smoke_validator.py", line 109, in test_identity_state_and_failure_mutations
+    self.assertIsNone(validator.verify_metadata(manifest, observed, contract, source, tree, contract_hash))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-reaper-dry/scripts/verify-reaper-smoke.py", line 114, in verify_metadata
+    require(set(observed[phase]) == set(wanted), "missing state readback")
+  File "/workspace/scratch/aa102d573ba3/cs80-reaper-dry/scripts/verify-reaper-smoke.py", line 14, in require
+    raise ValueError(message)
+ValueError: missing state readback
+
+----------------------------------------------------------------------
+Ran 6 tests in 2.937s
+
+FAILED (errors=1)
+EXIT=1
+2026-11-02T12:17:23Z
