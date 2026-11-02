@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "scope": "Pinned historical evidence fixtures for verifier tests; not new audio/CPU acceptance",
+  "audit_commit": "0151b8699febc47f07c3b4d8cc9ebbf642692a5c",
+  "audit_bytes": 227720,
+  "audit_sha256": "a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19",
+  "cpu_commit": "3a85d66aee90f8cfaee69d875ee21997b61ad940",
+  "requirements": [
+    "Reconstruct only exact pinned Git blobs, never a moving branch or synthetic replacement",
+    "Verify every byte digest before creating the destination",
+    "Require the exact ten audit members and validate CRC, path safety, type and bounded expanded size",
+    "Refuse existing destinations and preserve unrelated files",
+    "CI must reject any skipped or missing validator test, and retain mutation failures as ordinary assertions",
+    "Historical failing numerical evidence must never be relabelled as current release acceptance"
+  ]
+}
