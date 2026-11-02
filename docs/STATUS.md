@@ -17,6 +17,9 @@ succeeded. Feature-branch build push/PR runs 41338140448/41338144467 passed at
 `7c864f2`; the WSC-oracle test-only commit `5809a528` has since advanced
 PR #6's development branch without changing production DSP, and its build,
 DSP and screenshot runs 41339574562/41339574637/41339574530 passed.
+A later feature-branch screenshot run 41369573898 also passed at `5809a528`
+and published preview provenance; checked-in `main` screenshots still reference
+historical `55bb043`.
 These are not final-main qualifications. The CPU
 budgets, musical clicks, main merge and new release remain unfulfilled.
 
@@ -457,3 +460,5 @@ No numerical threshold was relaxed, and original red logs remain in evidence.
 Other explicitly declared circuit assumptions and source uncertainties remain in
 [HARDWARE_COVERAGE.md](HARDWARE_COVERAGE.md). Automated host tests do not replace
 real-DAW qualification or a live installed MTS master, and no result here is a
+measurement of an original instrument.
+
