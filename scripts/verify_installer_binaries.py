@@ -29,6 +29,11 @@ LAYOUT = {
 }
 QUALIFICATION = ('Installer payload identity only; not compilation/source equivalence, '
                  'signing validity, numerical acceptance or DAW qualification')
+PRIMARY_BINARY = {
+    'linux': {'vst3': 'Contents/x86_64-linux/' + PRODUCT + '.so', 'standalone': '.'},
+    'macos': {key: 'Contents/MacOS/' + PRODUCT for key in ('vst3', 'au', 'standalone')},
+    'windows': {'standalone': '.'},
+}
 
 
 def require(condition, message):
@@ -38,6 +43,13 @@ def require(condition, message):
 
 def digest_json(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+
+def independent_root(root):
+    root = Path(root)
+    require(root.is_dir() and not root.is_symlink()
+            and not getattr(root, 'is_junction', lambda: False)(), 'Missing or linked payload root')
+    return root.resolve()
 
 
 def component_path(root, relative):
@@ -99,10 +111,13 @@ def inventory(root, platform, expected_kind):
 
 def capture_build_payload(platform, build):
     require(platform in LAYOUT, 'Unknown installer platform')
-    artifacts = Path(build).resolve() / 'CS80Reference_artefacts/Release'
+    artifacts = component_path(independent_root(build), 'CS80Reference_artefacts/Release')
     components, transformations = {}, []
     for key, (relative, kind, destination, identifier) in LAYOUT[platform].items():
         path = component_path(artifacts, relative)
+        primary = component_path(path, PRIMARY_BINARY[platform][key])
+        require(primary.is_file() and not primary.is_symlink() and primary.stat().st_size > 0,
+                'Missing or empty primary build binary: ' + key)
         entries = inventory(path, platform, kind)
         if platform == 'linux' and key == 'standalone':
             source_mode = entries[0]['mode']
@@ -123,7 +138,10 @@ def mac_components(expanded):
     for metadata in expanded.rglob('PackageInfo'):
         component_path(expanded, metadata.relative_to(expanded))
         require(metadata.is_file(), 'Missing native component PackageInfo')
-        info = ET.fromstring(metadata.read_bytes())
+        try:
+            info = ET.fromstring(metadata.read_bytes())
+        except ET.ParseError as error:
+            raise ValueError('Malformed native PackageInfo: ' + str(metadata)) from error
         identifier = info.get('identifier')
         require(identifier in allowed and identifier not in found, 'Unexpected or duplicate native component inventory')
         found[identifier] = (metadata.parent, info.get('install-location'))
@@ -136,7 +154,7 @@ def verify_installed_payload(platform, captured, build, expanded):
     # the actual inputs and reject signing/stripping or other changes after capture.
     current = capture_build_payload(platform, build)
     require(captured == current, 'Actual build input bytes/inventory or capture contract changed after snapshot')
-    expanded = Path(expanded).resolve()
+    expanded = independent_root(expanded)
     native_components = mac_components(expanded) if platform == 'macos' else {}
     verified = {}
     for key, expected in captured['components'].items():
