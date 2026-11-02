@@ -41,6 +41,7 @@ jobs:
       - name: Capture actual editor at every supported size and page
         run: |
           mkdir -p artifacts/ui
+          printf '{"commit":"%s","src_tree":"%s","run":"%s","renderer":"JUCE software, actual plugin editor; outcome in raw run.log"}\n' "$GITHUB_SHA" "$(git rev-parse HEAD:src)" "$GITHUB_RUN_ID" > artifacts/ui/provenance.json
           status=0
           JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu bash scripts/run-ui-smoke-linux.sh ./build/CS80Snapshots_artefacts/Release/CS80Snapshots --out artifacts/ui --self-test > artifacts/run.log 2>&1 || status=$?
           cat artifacts/run.log
@@ -50,14 +51,21 @@ jobs:
               echo "::error title=UI smoke exit ${status}::${msg}"
               exit "$status"
           fi
-          printf '{"commit":"%s","run":"%s","renderer":"JUCE software, actual plugin editor"}\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" > artifacts/ui/provenance.json
           sha256sum artifacts/ui/*.png > artifacts/ui/SHA256SUMS
       - name: Publish screenshot evidence
+        if: always()
         uses: actions/upload-artifact@v5
         with:
           name: cs80-panel-${{ github.sha }}
           path: artifacts/ui
           if-no-files-found: error
+      - name: Preserve raw UI result even on preregistered failure
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-ui-log-${{ github.sha }}
+          path: artifacts/run.log
+          if-no-files-found: warn
       - name: Publish preview PNGs to the ui-preview branch (non-main only)
         if: github.ref != 'refs/heads/main'
         run: |
