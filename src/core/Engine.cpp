@@ -2,10 +2,20 @@
 #include "RingModulatorCircuit.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
 
 namespace cs80
 {
+#if defined(CS80_PHASE_ENGINE_WORK_WITNESS)
+namespace phase_cpu_witness
+{
+std::uint64_t qualifiedSamples=0, hpVectorGroups=0, lpVectorGroups=0;
+std::uint64_t hpScalarFallbackGroups=0, lpScalarFallbackGroups=0;
+std::uint64_t rankRngCalls=0, rankRngOrderHash=0xcbf29ce484222325ull;
+bool forceScalar=false;
+}
+#endif
 
 namespace
 {
@@ -2046,6 +2056,39 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
 {
     const auto& [sr, invSr, pwmSine, glideActive, glideCoef, panelNoise,
                  freeRunning, sharedNoise, smoothControls] = context;
+    // Experimental full-nonlinear batch is restricted to already-clocked,
+    // eight-held audio lanes. All idle/replay/wake, Legacy, foreign FP/ISA and
+    // mixed/disabling cases retain the original sample order below verbatim.
+    bool phaseBatchHeld = freeRunning && rankSettings[0].hpfOn && rankSettings[0].lpfOn
+                        && rankSettings[1].hpfOn && rankSettings[1].lpfOn;
+    if (phaseBatchHeld)
+        for (int vi=0;vi<kNumVoices && phaseBatchHeld;++vi)
+        {
+            const auto& v=voices[static_cast<std::size_t>(vi)];
+            if (!v.active || !(v.held || v.pedalHeld) || !v.idleControlsPrimed)
+                { phaseBatchHeld=false; break; }
+            for (int ch=0;ch<kNumRanks && phaseBatchHeld;++ch)
+            {
+                const auto& r=v.ranks[ch];
+                if (r.idleRefs.hpRate!=sr || r.idleRefs.lpRate!=sr)
+                    phaseBatchHeld=false;
+            }
+        }
+    if (phaseBatchHeld) phaseBatchHeld=Ig00156Stage::canProcessFour();
+    struct PhaseBatchRankFrame
+    {
+        float filtered,sineWave,fenv,cutoffHp,cutoffLp;
+        float freq,keyVolts,qHp,qLp;
+        float touchVelocity,touchPressure,modLevel,modPan;
+    };
+    std::array<PhaseBatchRankFrame,kRankLanes> phaseBatchFrames;
+#if defined(CS80_PHASE_ENGINE_WORK_WITNESS)
+    if (phase_cpu_witness::forceScalar) phaseBatchHeld=false;
+    if (phaseBatchHeld) ++phase_cpu_witness::qualifiedSamples;
+#endif
+#if defined(CS80_PHASE_ENGINE_MUTATE_NO_BATCH)
+    phaseBatchHeld=false;
+#endif
     int stillHeld = 0;
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
@@ -2272,7 +2315,24 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
             x = sawPulse;
             // The shared RNG draw is consumed in both engines so oscillator start
             // phases keep their sequence; the circuit engine hears the SUB29 sample.
-            const float rankNoise = coldBootstrap ? 0.0f : audioRng.nextBipolar();
+            const auto drawRankNoise=[&]() noexcept {
+                const float result=audioRng.nextBipolar();
+#if defined(CS80_PHASE_ENGINE_WORK_WITNESS)
+                ++phase_cpu_witness::rankRngCalls;
+                const auto bits=std::bit_cast<std::uint32_t>(result);
+                for(int byte=0;byte<4;++byte) {
+                    phase_cpu_witness::rankRngOrderHash^=(bits>>(8*byte))&0xffu;
+                    phase_cpu_witness::rankRngOrderHash*=0x100000001b3ull;
+                }
+#endif
+                return result;
+            };
+            const float rankNoise = coldBootstrap ? 0.0f :
+#if defined(CS80_PHASE_ENGINE_MUTATE_RNG_DRAW)
+                (phaseBatchHeld?0.0f:drawRankNoise());
+#else
+                drawRankNoise();
+#endif
             x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
             x *= 0.9f;
             }
@@ -2328,13 +2388,23 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
                     // Closed-form oscillator advance and one decimated step
                     // of both stages. VCA coupling was already clocked and
                     // mixed at the inactive entry; never discharge it twice.
-                    voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
+#if defined(CS80_PHASE_ENGINE_MUTATE_WAKE_CLOCK)
+                    if (!(vi==0 && ch==0))
+#endif
+                        voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
                     r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
                     continue;
                 }
                 r.idle = controls;
             }
             float filtered = x;
+            if (phaseBatchHeld)
+            {
+                phaseBatchFrames[static_cast<std::size_t>(vi*kNumRanks+ch)]=
+                    { filtered,sineWave,fenv,cutoffHp,cutoffLp,freq,keyVolts,qHp,qLp,
+                      touchVelocity,touchPressure,mod.level,mod.pan };
+                continue;
+            }
             if (freeRunning)
             {
                 // Same stage clocking as the idle path (re-referencing a stage
@@ -2421,7 +2491,7 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         }
 
         v.idleControlsPrimed = true;
-        if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
+        if (!phaseBatchHeld && v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
         {
             v.active = false;
             v.held = false;
@@ -2429,6 +2499,133 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
         }
     }
 
+    if (phaseBatchHeld)
+    {
+        // HP groups are independent within this internal sample. Each LP
+        // starts only after its own HP output is known; rank summation stays
+        // in the original vi,ch sequence in the continuation below.
+        for (int i=0;i<kNumVoices*kNumRanks;++i)
+        {
+            auto& r=voices[static_cast<std::size_t>(i/kNumRanks)].ranks[i%kNumRanks];
+            voice_continuity::prepareStageClock(r.hpStage,r.idleRefs.hpRate,
+                                               r.idle.hpCutoff,r.idle.hpQ,sr,false);
+        }
+        for (int i=0;i<kNumVoices*kNumRanks;i+=4)
+        {
+            Ig00156Stage* stages[4];
+            float input[4];
+            Ig00156Stage::Output results[4];
+            for (int k=0;k<4;++k)
+            {
+                stages[k]=&voices[static_cast<std::size_t>((i+k)/kNumRanks)].ranks[(i+k)%kNumRanks].hpStage;
+                input[k]=phaseBatchFrames[static_cast<std::size_t>(i+k)].filtered;
+            }
+            const bool vectorWorked=Ig00156Stage::tryProcessFour(stages,input,results);
+#if defined(CS80_PHASE_ENGINE_WORK_WITNESS)
+            if (vectorWorked) ++phase_cpu_witness::hpVectorGroups;
+            else ++phase_cpu_witness::hpScalarFallbackGroups;
+#if defined(CS80_PHASE_ENGINE_MUTATE_FAKE_WORK)
+            if (vectorWorked) ++phase_cpu_witness::hpVectorGroups;
+#endif
+#endif
+            if (!vectorWorked)
+                for (int k=0;k<4;++k) results[k]=stages[k]->process(input[k]);
+            for (int k=0;k<4;++k)
+                phaseBatchFrames[static_cast<std::size_t>(i+k)].filtered=results[k].hp;
+        }
+        for (int i=0;i<kNumVoices*kNumRanks;++i)
+        {
+            auto& r=voices[static_cast<std::size_t>(i/kNumRanks)].ranks[i%kNumRanks];
+            voice_continuity::prepareStageClock(r.lpStage,r.idleRefs.lpRate,
+                                               r.idle.lpCutoff,r.idle.lpQ,sr,false);
+        }
+        for (int i=0;i<kNumVoices*kNumRanks;i+=4)
+        {
+            Ig00156Stage* stages[4];
+            float input[4];
+            Ig00156Stage::Output results[4];
+            for (int k=0;k<4;++k)
+            {
+                stages[k]=&voices[static_cast<std::size_t>((i+k)/kNumRanks)].ranks[(i+k)%kNumRanks].lpStage;
+                input[k]=phaseBatchFrames[static_cast<std::size_t>(i+k)].filtered;
+#if defined(CS80_PHASE_ENGINE_MUTATE_HP_LP)
+                input[k]=phaseBatchFrames[static_cast<std::size_t>(i+k)].sineWave;
+#endif
+            }
+            const bool vectorWorked=Ig00156Stage::tryProcessFour(stages,input,results);
+#if defined(CS80_PHASE_ENGINE_WORK_WITNESS)
+            if (vectorWorked) ++phase_cpu_witness::lpVectorGroups;
+            else ++phase_cpu_witness::lpScalarFallbackGroups;
+#endif
+            if (!vectorWorked)
+                for (int k=0;k<4;++k) results[k]=stages[k]->process(input[k]);
+            for (int k=0;k<4;++k)
+                phaseBatchFrames[static_cast<std::size_t>(i+k)].filtered=results[k].lp;
+        }
+        for (int batchOrder=0;batchOrder<kNumVoices;++batchOrder)
+        {
+            const int vi=
+#if defined(CS80_PHASE_ENGINE_MUTATE_MIX_ORDER)
+                kNumVoices-1-batchOrder;
+#else
+                batchOrder;
+#endif
+            auto& v=voices[static_cast<std::size_t>(vi)];
+            for (int ch=0;ch<kNumRanks;++ch)
+            {
+                auto& r=v.ranks[ch];
+                const auto& rs=rankSettings[ch];
+                const auto& pending=phaseBatchFrames[static_cast<std::size_t>(vi*kNumRanks+ch)];
+                const float filtered=pending.filtered;
+                const float sine=pending.sineWave*rs.sine;
+                const bool circuitVca=usesSourceModels(global.renderPolicy);
+                const float subLevel=circuitVca?0.0f:subValue*global.subVca*0.45f;
+                const float contourLevel=freeRunning?v.kbcLevelGain[ch]
+                    :keyboardLevelOffset(global.kbdLevelLow,global.kbdLevelHigh,v.contour);
+                const float levelCv=r.tol.level*(sourceActive[ch]
+                    ?std::max(0.0f,static_cast<float>(sourceShared.levelGain[ch][vi])
+                                    +subLevel+lfoAmp+contourLevel+pending.modLevel)
+                    :clampf(rs.vLevel
+                            +rs.initLevel*pending.touchVelocity
+                            +rs.afterLevel*pending.touchPressure
+                            +subLevel+lfoAmp+contourLevel+pending.modLevel,
+                            0.0f,2.6f));
+                const float amp=r.aenv.tick(sr,true,usesSourceModels(global.renderPolicy));
+                r.info={pending.cutoffHp,pending.cutoffLp,pending.fenv,amp,
+                        pending.freq,pending.keyVolts,pending.qHp,pending.qLp,rs.hpfOn,rs.lpfOn};
+                const float chGain=ch==0?(1.0f-global.mix):global.mix;
+                const float vcaInput=filtered*rs.vcfLevel+sine;
+                float pan=clampf(rs.pan+r.trimPan*global.voiceDispersion*0.8f
+                                  +lfoPan+pending.modPan,-1.0f,1.0f);
+                float voiceOut,panLeft,panRight;
+                if (circuitVca)
+                {
+                    if (r.vcaCold)
+                    {
+                        r.vca.reset(levelCv);
+                        r.vcaCold=false;
+                    }
+                    voiceOut=r.vca.process(vcaInput,levelCv,
+                            subValue*global.subVca*kIg00151SubOctaves,amp)*chGain*0.17f;
+                    constantPowerPan(pan,panLeft,panRight);
+                }
+                else
+                {
+                    voiceOut=vcaInput*levelCv*amp*chGain*0.17f;
+                    panLeft=0.5f-0.5f*pan;
+                    panRight=0.5f+0.5f*pan;
+                }
+                mixL+=voiceOut*panLeft;
+                mixR+=voiceOut*panRight;
+            }
+            if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
+            {
+                v.active=false;
+                v.held=false;
+                v.sustained=false;
+            }
+        }
+    }
     heldCount = stillHeld;
 }
 

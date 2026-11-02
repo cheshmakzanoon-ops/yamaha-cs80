@@ -225,8 +225,10 @@ int runLaneGrid() {
 }
 } // namespace
 
+#if !defined(CS80_PHASE_LANE_ORACLE_INCLUDED_ONLY)
 int main(int argc, char** argv) {
     if (argc != 1) { std::cerr << "usage: cs80_phase_lane_oracle_tests\n"; return 2; }
     (void)argv;
     return runLaneGrid();
 }
+#endif

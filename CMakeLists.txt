@@ -59,6 +59,51 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_phase_lane_oracle_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
     add_test(NAME cs80_phase_lane_oracle_tests COMMAND cs80_phase_lane_oracle_tests)
     set_tests_properties(cs80_phase_lane_oracle_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_phase_batch_backend_tests tests/PhaseBatchBackendTests.cpp)
+    add_dependencies(cs80_phase_batch_backend_tests cs80_exact_scalar_oracle)
+    target_include_directories(cs80_phase_batch_backend_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
+    add_test(NAME cs80_phase_batch_backend_tests COMMAND cs80_phase_batch_backend_tests)
+    set_tests_properties(cs80_phase_batch_backend_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_phase_engine_dispatch_tests
+                   tests/PhaseEngineDispatchTests.cpp
+                   src/core/Engine.cpp src/core/FactoryPresets.cpp)
+    target_include_directories(cs80_phase_engine_dispatch_tests PRIVATE src)
+    target_compile_definitions(cs80_phase_engine_dispatch_tests PRIVATE CS80_PHASE_ENGINE_WORK_WITNESS=1)
+    add_test(NAME cs80_phase_engine_dispatch_tests COMMAND cs80_phase_engine_dispatch_tests)
+    set_tests_properties(cs80_phase_engine_dispatch_tests PROPERTIES TIMEOUT 300)
+    # Immutable original-host 7dd159d idle/wake rank-state golden: freshly
+    # recorded from the separate pristine original-source static library.
+    add_executable(cs80_phase_idle_wake_state_golden_tests tests/PhaseIdleWakeStateGoldenTests.cpp)
+    target_include_directories(cs80_phase_idle_wake_state_golden_tests PRIVATE src)
+    target_link_libraries(cs80_phase_idle_wake_state_golden_tests PRIVATE cs80_core)
+    add_test(NAME cs80_phase_idle_wake_state_golden_tests COMMAND cs80_phase_idle_wake_state_golden_tests)
+    set_tests_properties(cs80_phase_idle_wake_state_golden_tests PROPERTIES TIMEOUT 300)
+    option(CS80_BUILD_PHASE_EXPERIMENT_MUTANTS "Build intentionally wrong SIMD mutation executables" OFF)
+    if(CS80_BUILD_PHASE_EXPERIMENT_MUTANTS)
+        foreach(mutant SIMD_OTA SIMD_LANE SIMD_NEWTON MASK)
+            add_executable(cs80_phase_mutate_${mutant} EXCLUDE_FROM_ALL tests/PhaseBatchBackendTests.cpp)
+            add_dependencies(cs80_phase_mutate_${mutant} cs80_exact_scalar_oracle)
+            target_include_directories(cs80_phase_mutate_${mutant} PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
+            target_compile_definitions(cs80_phase_mutate_${mutant} PRIVATE "CS80_PHASE_BATCH_MUTATE_${mutant}=1")
+        endforeach()
+        add_executable(cs80_phase_engine_mutate_SPLIT_FP EXCLUDE_FROM_ALL
+                       tests/PhaseEngineDispatchTests.cpp src/core/Engine.cpp src/core/FactoryPresets.cpp)
+        target_include_directories(cs80_phase_engine_mutate_SPLIT_FP PRIVATE src)
+        target_compile_definitions(cs80_phase_engine_mutate_SPLIT_FP PRIVATE
+                                   CS80_PHASE_ENGINE_WORK_WITNESS=1 CS80_PHASE_BATCH_MUTATE_SPLIT_FP=1)
+        foreach(mutant NO_BATCH RNG_DRAW HP_LP MIX_ORDER FAKE_WORK)
+            add_executable(cs80_phase_engine_mutate_${mutant} EXCLUDE_FROM_ALL
+                           tests/PhaseEngineDispatchTests.cpp src/core/Engine.cpp src/core/FactoryPresets.cpp)
+            target_include_directories(cs80_phase_engine_mutate_${mutant} PRIVATE src)
+            target_compile_definitions(cs80_phase_engine_mutate_${mutant} PRIVATE
+                CS80_PHASE_ENGINE_WORK_WITNESS=1 "CS80_PHASE_ENGINE_MUTATE_${mutant}=1")
+        endforeach()
+        add_executable(cs80_phase_engine_mutate_WAKE_CLOCK EXCLUDE_FROM_ALL
+                       tests/PhaseIdleWakeStateGoldenTests.cpp src/core/Engine.cpp src/core/FactoryPresets.cpp)
+        target_include_directories(cs80_phase_engine_mutate_WAKE_CLOCK PRIVATE src tests)
+        target_compile_definitions(cs80_phase_engine_mutate_WAKE_CLOCK PRIVATE
+                                   CS80_PHASE_ENGINE_MUTATE_WAKE_CLOCK=1)
+    endif()
     # Independent frozen TouchVoice/TRG5 arithmetic plus source-engine idle and
     # wake checkpoint parity under host partitions 1/17/256. Test-only prereg.
     add_executable(cs80_touch_idle_exact_oracle_tests tests/TouchIdleExactOracleTests.cpp)

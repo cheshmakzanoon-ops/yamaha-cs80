@@ -307,6 +307,41 @@ public:
         return { static_cast<float>(lp), static_cast<float>(hp), static_cast<float>(-bp) };
     }
 
+    // Four independent, already set() and rate-referenced audio stages.
+    // The Engine only calls this for qualified full-rate source/PURE held
+    // lanes; all unsupported modes and unavailable ISA remain scalar.
+    static bool canProcessFour() noexcept
+    {
+        return detail::Ig00156PhaseCorrection<Ig00156Network>::canProcessFour();
+    }
+    static bool tryProcessFour(Ig00156Stage* const* stages,
+                               const float* input, Output* output) noexcept
+    {
+        using Correction=detail::Ig00156PhaseCorrection<Ig00156Network>;
+        Correction* kernels[4];
+        for (int i=0;i<4;++i)
+        {
+            if (!stages[i] || stages[i]->lastUnwarped) return false;
+            for (int j=0;j<i;++j) if (stages[i]==stages[j]) return false;
+            kernels[i]=&stages[i]->correction;
+        }
+        Correction::Output produced[4];
+        if (!Correction::tryProcessFour(kernels,input,produced)) return false;
+        for (int i=0;i<4;++i)
+        {
+            auto& stage=*stages[i];
+            const auto& node=stage.correction.nodes();
+            stage.vIn=node[0]; stage.vFb=node[1]; stage.vBp=node[2]; stage.vLp=node[3];
+            stage.slope1=stage.correction.firstSlope();
+            stage.slope2=stage.correction.secondSlope();
+            stage.lastNewtonSteps=stage.correction.newtonSteps();
+            stage.lastAudioInput=input[i]*stage.inputScale;
+            stage.audioCompanionsPending=true;
+            output[i]={produced[i].lp,produced[i].hp,produced[i].bp};
+        }
+        return true;
+    }
+
     const Ig00156Network& network() const noexcept { return net; }
     // Physical algebraic-limit gain from the AI source to HP/LP, normalized away.
     double passbandGain() const noexcept { return 1.0 / inputScale; }

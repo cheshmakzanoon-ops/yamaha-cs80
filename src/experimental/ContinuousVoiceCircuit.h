@@ -276,8 +276,8 @@ struct IdleStageReferences { float hpRate = 0.0f, lpRate = 0.0f; };
 // Clock one stage for one interval at `rate`, re-referencing first when its
 // previous interval ran at another rate. `idleStep` selects the unwarped
 // couplings of the decimated idle clock (Ig00156Stage::set).
-inline Ig00156Stage::Output clockStage(Ig00156Stage& stage, float& clockRate, float input,
-                                       float cutoff, float q, float rate, bool idleStep) noexcept
+inline void prepareStageClock(Ig00156Stage& stage, float& clockRate,
+                              float cutoff, float q, float rate, bool idleStep) noexcept
 {
     const auto previous = stage.halfSteps();
     stage.set(cutoff, q, rate, idleStep);
@@ -287,6 +287,11 @@ inline Ig00156Stage::Output clockStage(Ig00156Stage& stage, float& clockRate, fl
             stage.reReference(previous);
         clockRate = rate;
     }
+}
+inline Ig00156Stage::Output clockStage(Ig00156Stage& stage, float& clockRate, float input,
+                                       float cutoff, float q, float rate, bool idleStep) noexcept
+{
+    prepareStageClock(stage,clockRate,cutoff,q,rate,idleStep);
     return stage.process(input);
 }
 
