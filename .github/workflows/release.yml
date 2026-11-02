@@ -204,11 +204,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            build-essential cmake ninja-build pkg-config \
+            build-essential cmake ninja-build pkg-config locales \
             libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
             libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
             libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
             fonts-dejavu-core xvfb xauth openbox x11-utils
+
+      - name: Provision and verify required numeric-locale fixtures
+        run: |
+          sudo localedef -i de_DE -f UTF-8 de_DE.UTF-8
+          python3 tests/test_numeric_locale_fixtures.py
+          python3 scripts/verify_numeric_locale_fixtures.py
 
       - name: Configure
         run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
