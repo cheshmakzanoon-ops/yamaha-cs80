@@ -31,3 +31,5 @@ Before any production edit, register these isolated AdvancedPanel.cpp mutations 
 5. **Wrong one-time policy gate:** disable the selector at construction when the stored SOURCE PERFORMANCE bit is off, ignoring PURE. The four fresh-editor fixtures must reject exactly the two stored-source-off combinations; the existing editor starts source-on, so this control specifically tests the constructor blind spot.
 
 Do not infer physical input, native accessibility API, painting or DAW acceptance from these component callback/property controls.
+
+The no-MIDI-learn promise is specifically the custom editor affordance: this selector has no learn action or ParameterContext wrapper. The existing general MIDI_LEARN state/API mechanism can still name registered host IDs; this increment does not silently add a crafted-state/API mapping ban or change its migration contract.

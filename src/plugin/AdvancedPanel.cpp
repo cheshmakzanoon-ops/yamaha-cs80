@@ -3597,6 +3597,37 @@ public:
         return raw;
     }
 
+    // A saved host-only choice, not a core-indexed performance control. Deliberately no
+    // ParameterContext/MIDI-learn action; the ordinary two-way attachment owns gestures.
+    juce::ComboBox* hostChoice(Rect r, const juce::String& id, const juce::String& title,
+                              const juce::String& description)
+    {
+        auto* parameter = dynamic_cast<juce::AudioParameterChoice*>(proc.getAPVTS().getParameter(id));
+        jassert(parameter != nullptr);
+        auto control = std::make_unique<juce::ComboBox>();
+        if (parameter != nullptr)
+            control->addItemList(parameter->choices, 1);
+        control->setJustificationType(juce::Justification::centredLeft);
+        control->setWantsKeyboardFocus(true);
+        control->setComponentID(id);
+        control->setTitle(title);
+        control->setDescription(description);
+        control->setTooltip(description);
+        control->setExplicitFocusOrder(++focusCounter);
+        auto* raw = control.get();
+        addAndMakeVisible(*raw);
+        if (parameter != nullptr)
+            comboAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(
+                proc.getAPVTS(), id, *raw));
+        else
+            raw->setEnabled(false);
+        owned.push_back(std::move(control));
+        const Rect a = at(r);
+        placed.push_back({ raw, a });
+        artOps.push_back([a](juce::Graphics& g) { drawWell(g, a.expanded(2.5f), 4.0f); });
+        return raw;
+    }
+
     // One segment of the three-way render-policy switch.
     AdvPolicyCell* policyCell(Rect r, int index, const juce::String& name, const juce::String& caption)
     {
@@ -4654,16 +4685,22 @@ void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor& proc)
                 "\n\nABOUT. A circuit-informed recreation of the Yamaha CS-80 (1977): eight voices, each with two independent ranks, for sixteen "
                 "oscillator/filter/VCA chains. The signal path follows the original's high-pass into low-pass topology, linear VCA and global "
                 "sub-oscillator. The primary panel exposes the controls a player touches; the Studio view exposes the modern layer (LFOs, MPE, effects, "
-                "dispersion). All controls are host-automatable and saved in plugin state, except transient performance gestures. The library has "
+                "dispersion). Sound settings are saved in plugin state; Factory tone revision is deliberately non-automatable. "
+                "Transient performance gestures are not saved. The library has "
                 "22 legacy tone studies and 200 performance patches; loading one returns both ranks to PANEL and resets SOURCE PERFORMANCE off. "
-                "Touch the ribbon above the keyboard to bend pitch; double-click any control to reset it, right-click it for MIDI learn, typed "
-                "values and help.",
+                "Touch the ribbon above the keyboard to bend pitch; double-click a parameter fader or knob to reset it. "
+                "Supported performance controls offer right-click MIDI learn, typed values and help.",
                 [](Cs80AudioProcessor& p)
                 { return p.getParamValue(cs80::P_parityMode) >= 0.5f || p.getParamValue(cs80::P_sourcePerformance) >= 0.5f; });
     // The three switches are the column heads of the table below them.
-    page.label("WHAT EACH POLICY CHANGES", { 96.0f, 618.0f, 290.0f, 22.0f }, 12.5f, gold, Just::centredLeft, 0.1f);
-    page.custom([](juce::Graphics& g)
-    { text(g, "THE HIGHLIGHTED COLUMN IS IN FORCE", { 96.0f, 642.0f, 290.0f, 20.0f }, 12.5f, false, panelInk(), Just::centredLeft, 0.02f); });
+    page.label("FACTORY TONE REVISION", { 96.0f, 612.0f, 290.0f, 16.0f }, 14.0f, gold, Just::centredLeft, 0.1f);
+    page.hostChoice({ 96.0f, 630.0f, 290.0f, 36.0f }, Cs80AudioProcessor::factoryToneRevisionParameterId,
+                    "Factory tone revision",
+                    "Saved, non-automatable interpretation of source-driven hardware factory tabs, including PURE CS-80. "
+                    "Frozen V1 preserves prior behaviour; Public-source estimates V2 opts into documented estimates, not a measured hardware match. "
+                    "LEGACY study voicing, PANEL and MEMORY do not use this setting. Sessions, user presets and A/B retain it; "
+                    "library presets, INIT and accepted MIDI Program Changes reset V1. Hardware tabs preserve the choice. "
+                    "The table's highlighted column shows the effective policy; its help explains ENGINE and PURE.");
     auto* legacy = page.policyCell({ 396.0f, 612.0f, 368.0f, 54.0f }, 0, "LEGACY", "STUDY VOICING, OVERLAYS LIVE");
     legacy->setComponentID("render_policy_legacy");
     legacy->setTitle("Legacy render policy");
