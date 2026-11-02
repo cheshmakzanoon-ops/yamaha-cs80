@@ -350,6 +350,67 @@ def cpu_case_identity_sha256(identities):
     return hashlib.sha256(payload).hexdigest()
 
 
+def verify_cpu_workload(spec, metadata, rows, label):
+    """Check the frozen producer's observed work, not only its fixture labels.
+
+    Every invariant below already exists in source_factory_benchmark.cpp at
+    the registered blob. This does not introduce a p99/deadline threshold or
+    make a hardware/host qualification out of the core timing fixture.
+    """
+    for field, expected in spec["registered_workload_metadata"].items():
+        actual = metadata.get(field)
+        # bool is an int subclass in Python; false must not be forged as 0.
+        require(type(actual) is type(expected) and actual == expected,
+                f"{label}: registered workload metadata changed: {field}")
+    verify_csv_schema(label, rows, spec["frozen_csv_header_sha256"])
+    held_callbacks = spec["callbacks_per_held_phase_min"]
+    minimum_tail = math.ceil(spec["registered_workload_metadata"]["tail_minimum_seconds"]
+                             * spec["rate_hz"] / spec["block_frames"])
+    maximum_tail = math.ceil(spec["registered_workload_metadata"]["tail_cap_seconds"]
+                             * spec["rate_hz"] / spec["block_frames"])
+    for index, row in enumerate(rows, 2):
+        where = f"{label}:{index}: workload witness"
+        def integer(field):
+            return exact_integer(row[field], f"{where} {field}")
+        require(all(value.strip() for field, value in row.items()
+                    if field not in CPU_TEXT_FIELDS),
+                f"{where}: missing numeric observation")
+        voices = tuple(integer(field) for field in
+                       ("min_active_voices", "max_active_voices", "final_active_voices"))
+        minimum, maximum, final = voices
+        require(0 <= minimum <= final <= maximum <= 8,
+                f"{where}: invalid active voice range")
+        callbacks = integer("callbacks")
+        complete = integer("tail_voices_complete")
+        held = row["phase"] == "warmed_held"
+        moving = row["scenario"] == "moving_tabs_pressure_wah" and held
+        idle = row["scenario"] in ("idle_quiet", "idle_noise")
+        if held:
+            require(callbacks == held_callbacks,
+                    f"{where}: held callback count differs from registered workload")
+            expected_voices = (0, 0, 0) if idle else (8, 8, 8)
+            require(voices == expected_voices and complete == 0,
+                    f"{where}: held/idle voice count or phase changed")
+            require(idle or finite(row["peak"], f"{where} peak") > 0,
+                    f"{where}: silent held-note fixture")
+        else:
+            require(minimum_tail <= callbacks <= maximum_tail,
+                    f"{where}: release observation outside original 1-to-40-second window")
+            require(complete in (0, 1) and bool(complete) == (final == 0),
+                    f"{where}: release completion disagrees with observed voices")
+            require(complete == 1 or callbacks == maximum_tail,
+                    f"{where}: incomplete release truncated before original cap")
+        events = (held_callbacks + 31) // 32 if moving else 0
+        require(integer("selector_events") == events,
+                f"{where}: selector event workload changed")
+        expected_compilations = 2 * events if moving and row["mode"] == "isolation" else 0
+        require(integer("source_compilations") == expected_compilations,
+                f"{where}: selector compilation workload changed")
+        require(all(integer(field) == 0 for field in
+                    ("controller_events", "mpe_member_state_checks", "pedal_held_callbacks")),
+                f"{where}: baseline contains unregistered expressive workload")
+
+
 def verify_cpu_round(contract, rd, source_sha, label):
     spec = contract["cpu"]
     metadata = rd["metadata"]
@@ -389,6 +450,7 @@ def verify_cpu_round(contract, rd, source_sha, label):
             f"{label}: missing compiler version")
     require(isinstance(metadata["source_fingerprint"], str) and metadata["source_fingerprint"],
             f"{label}: missing source driver fingerprint")
+    verify_cpu_workload(spec, metadata, rows, label)
     verify_numeric_table(label, rows, CPU_TEXT_FIELDS)
     expected = registered_cpu_case_identities(spec)
     sha_string(spec["registered_case_identity_sha256"], "registered CPU case matrix", 64)
