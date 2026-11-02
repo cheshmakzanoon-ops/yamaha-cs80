@@ -117,8 +117,14 @@ class DistributionDocsTests(unittest.TestCase):
         self.assertEqual(manifest["source_commit"], self.commit)
         self.assertIn("not", manifest["qualification"].lower())
         self.assertIn("checkout", manifest["scope"].lower())
-        self.assertEqual(json.loads((out / "distribution-manifest.json").read_text()), manifest)
+        serialized = json.loads((out / "distribution-manifest.json").read_text())
+        for item in serialized["files"]:
+            self.assertTrue((out / item["path"]).is_file(), item["path"])
+            data = (out / item["path"]).read_bytes()
+            self.assertEqual(item["sha256"], hashlib.sha256(data).hexdigest())
+        self.assertEqual(serialized, manifest)
         for name, data in REQUIRED.items():
+            self.assertTrue((out / name).is_file(), name)
             self.assertEqual((out / name).read_bytes(), data)
         actual = {p.relative_to(out).as_posix() for p in out.rglob("*") if p.is_file()}
         expected = {f["path"] for f in manifest["files"]} | {"distribution-manifest.json"}
@@ -211,6 +217,11 @@ class DistributionDocsTests(unittest.TestCase):
                 self.assertEqual((docs / name).read_bytes(), data)
         self.assertIn(self.commit, (docs / "SOURCE.txt").read_text())
         self.assertTrue((docs / "distribution-manifest.json").is_file())
+        for item in json.loads((docs / "distribution-manifest.json").read_text())["files"]:
+            self.assertTrue((docs / item["path"]).is_file(), item["path"])
+            data = (docs / item["path"]).read_bytes()
+            self.assertEqual(item["size"], len(data))
+            self.assertEqual(item["sha256"], hashlib.sha256(data).hexdigest())
 
 
 if __name__ == "__main__":

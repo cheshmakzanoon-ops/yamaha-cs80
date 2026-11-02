@@ -17,8 +17,15 @@ installer execution, signing, numerical acceptance, real DAWs or a release.
   binaries is built, independently extracted with `dpkg-deb`, and each required
   document compared byte-for-byte. Installer tests are not audio or host tests.
 - Existing native archive-path/mode/hash fixtures: **34 checks pass**.
-- Eight deliberate defects are rejected in isolated copies; a positive and a
-  restored copy each pass. Logs and SHA-256 identities are retained in `mutations/`.
+- The initial mutation runner reported eight rejected defects, but independent
+  review found that it incorrectly accepted runtime errors as semantic kills.
+  In particular `mutations/wrong_manifest_digest.log` contains two errors and
+  zero ordinary assertion failures; three omission variants also contain errors.
+  **The blanket eight-semantic-kill claim is withdrawn.** Original logs and
+  SHA-256 identities remain unchanged in `mutations/`; do not use that receipt
+  as qualified mutation evidence. The corrected runner requires exact intended
+  assertions, zero runtime errors/skips, unmodified/restored positives, and a
+  deliberate crash control that must be refused rather than counted as a kill.
 - `bash -n` and Python compilation pass. The focused `cs80_distribution_docs_tests`
   CTest is registered and now **observed passing** after the original tools-not-on-PATH
   failure was preserved. A locked metadata-only configure (no C++ build) and the

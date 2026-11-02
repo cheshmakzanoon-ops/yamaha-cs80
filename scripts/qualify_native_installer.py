@@ -126,6 +126,8 @@ def qualify(platform, build, out, source):
                             (out / 'uninstall-failure.log').write_text(message)
                         except OSError:
                             print(message, file=sys.stderr)
+                elif primary_error is None:
+                    raise ValueError('Successful Windows installation did not provide its expected uninstaller')
         evidence = {
             'schema_version': 1, 'source_commit': source, 'platform': platform,
             'package': package.name, 'package_bytes': package.stat().st_size,

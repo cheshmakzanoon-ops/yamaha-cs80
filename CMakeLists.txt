@@ -34,6 +34,9 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_distribution_docs_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_distribution_docs.py)
     set_tests_properties(cs80_distribution_docs_tests PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_distribution_mutation_contract_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_distribution_mutation_contract.py)
+    set_tests_properties(cs80_distribution_mutation_contract_tests PROPERTIES TIMEOUT 30)
     add_test(NAME cs80_installed_distribution_docs_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_installed_distribution_docs.py)
     add_test(NAME cs80_native_installer_payload_tests

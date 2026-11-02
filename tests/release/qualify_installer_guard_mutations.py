@@ -76,9 +76,19 @@ def main():
             native.controller = imported(controller_source.replace(old, 'if False:'), Path(temp) / 'mutant.py')
             result = execute(native.NativeInstallerPayloadTests, args.out / 'partial_install_cleanup.log')
             positive = not any('test_linux_actual_container' in str(test) for test, _ in result.failures + result.errors)
-            if result.testsRun != 6 or result.errors or not positive or len(result.failures) != 2:
+            if result.testsRun != 7 or result.errors or not positive or len(result.failures) != 2:
                 raise RuntimeError('Cleanup mutant must produce two ordinary failures without breaking the positive')
             records.append({'mutant': 'partial_install_cleanup', 'ordinary_failures': 2, 'errors': 0, 'positive_passed': positive})
+        old = 'elif primary_error is None:'
+        if controller_source.count(old) != 1:
+            raise RuntimeError('Missing-uninstaller mutation anchor absent/ambiguous')
+        with tempfile.TemporaryDirectory(prefix='cs80-cleanup-mutant-') as temp:
+            native.controller = imported(controller_source.replace(old, 'elif False:'), Path(temp) / 'mutant.py')
+            result = execute(native.NativeInstallerPayloadTests, args.out / 'missing_uninstaller.log')
+            failed = [test._testMethodName for test, _ in result.failures]
+            if result.testsRun != 7 or result.errors or failed != ['test_successful_windows_install_without_uninstaller_is_not_qualified']:
+                raise RuntimeError('Missing-uninstaller mutant must produce its one intended ordinary failure')
+            records.append({'mutant': 'missing_uninstaller', 'ordinary_failures': 1, 'errors': 0, 'positive_passed': True})
     finally:
         payload.load_module, native.controller = original_loader, original_controller
     for label, case in [('payload', payload.InstalledDistributionDocsTests), ('native', native.NativeInstallerPayloadTests)]:
