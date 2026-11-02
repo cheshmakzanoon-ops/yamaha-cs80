@@ -1,5 +1,12 @@
 # Current status
 
+**Owner scope clarification (2026-11-02):** fidelity work uses public Yamaha,
+scientific and third-party engineering sources, with defensible implemented
+estimates where evidence is incomplete. Access to an original CS-80 and new
+hardware captures are not required. Assumptions remain explicit; physical
+equivalence is not claimed. CPU, original audio and software qualification
+limits are unchanged. See [the controlling public-source scope](PUBLIC_SOURCE_COMPLETION_SCOPE.md).
+
 This page states the project's current implementation and qualification. It wins
 when older documents disagree. Historical observations remain in
 [the dated status archive](STATUS_HISTORY_2026-11-01.md) and the linked raw evidence.
