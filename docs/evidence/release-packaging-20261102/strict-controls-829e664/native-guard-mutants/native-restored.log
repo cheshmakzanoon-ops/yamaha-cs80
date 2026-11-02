@@ -1,0 +1,12 @@
+test_cleanup_failure_preserves_original_install_failure (test_native_installer_payload.NativeInstallerPayloadTests.test_cleanup_failure_preserves_original_install_failure) ... ok
+test_existing_output_preserved (test_native_installer_payload.NativeInstallerPayloadTests.test_existing_output_preserved) ... ok
+test_invalid_source_rejected_without_output (test_native_installer_payload.NativeInstallerPayloadTests.test_invalid_source_rejected_without_output) ... ok
+test_linux_actual_container_with_explicitly_synthetic_binary_payload (test_native_installer_payload.NativeInstallerPayloadTests.test_linux_actual_container_with_explicitly_synthetic_binary_payload) ... ok
+test_partial_windows_install_is_cleaned_up (test_native_installer_payload.NativeInstallerPayloadTests.test_partial_windows_install_is_cleaned_up) ... ok
+test_successful_windows_install_without_uninstaller_is_not_qualified (test_native_installer_payload.NativeInstallerPayloadTests.test_successful_windows_install_without_uninstaller_is_not_qualified) ... ok
+test_wrong_platform_rejected_without_output (test_native_installer_payload.NativeInstallerPayloadTests.test_wrong_platform_rejected_without_output) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.496s
+
+OK

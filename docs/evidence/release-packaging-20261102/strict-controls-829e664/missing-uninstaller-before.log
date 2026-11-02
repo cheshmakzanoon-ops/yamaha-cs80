@@ -1,0 +1,23 @@
+test_cleanup_failure_preserves_original_install_failure (__main__.NativeInstallerPayloadTests.test_cleanup_failure_preserves_original_install_failure) ... ok
+test_existing_output_preserved (__main__.NativeInstallerPayloadTests.test_existing_output_preserved) ... ok
+test_invalid_source_rejected_without_output (__main__.NativeInstallerPayloadTests.test_invalid_source_rejected_without_output) ... ok
+test_linux_actual_container_with_explicitly_synthetic_binary_payload (__main__.NativeInstallerPayloadTests.test_linux_actual_container_with_explicitly_synthetic_binary_payload) ... ok
+test_partial_windows_install_is_cleaned_up (__main__.NativeInstallerPayloadTests.test_partial_windows_install_is_cleaned_up) ... ok
+test_successful_windows_install_without_uninstaller_is_not_qualified (__main__.NativeInstallerPayloadTests.test_successful_windows_install_without_uninstaller_is_not_qualified) ... FAIL
+test_wrong_platform_rejected_without_output (__main__.NativeInstallerPayloadTests.test_wrong_platform_rejected_without_output) ... ok
+
+======================================================================
+FAIL: test_successful_windows_install_without_uninstaller_is_not_qualified (__main__.NativeInstallerPayloadTests.test_successful_windows_install_without_uninstaller_is_not_qualified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-package-publish/tests/release/test_native_installer_payload.py", line 107, in test_successful_windows_install_without_uninstaller_is_not_qualified
+    with self.assertRaisesRegex(ValueError, 'uninstaller'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.516s
+
+FAILED (failures=1)
+{"schema_version": 1, "source_commit": "1fabb37228b6cdefd1884103d4599ca13873ab71", "platform": "linux", "package": "cs80-reference_1.0.0_amd64-CI-UNSIGNED-1fabb37228b6.deb", "package_bytes": 2228, "package_sha256": "b95df544f55b5d367530689188b84b2a3e03ae6075c1c3e85e9487fc05481ef1", "document_verification_sha256": "8e9c3d1c288d7f7de7586c965bcf46cdf1eea0e927a8892d81221e033959afd5", "scope": "Actual Debian package extracted; no system installation or audio execution", "qualification": "CI installer document evidence only; not a release, binary/source, numerical, signing, hardware or real-DAW certificate"}
+{"schema_version": 1, "source_commit": "1fabb37228b6cdefd1884103d4599ca13873ab71", "platform": "windows", "package": "synthetic-setup-CI-UNSIGNED-1fabb37228b6.exe", "package_bytes": 31, "package_sha256": "71d428f2c0fa2c0cedf5be3d131280049ba8cda69fc4dfe670ee0a8a04413ae5", "document_verification_sha256": "d6b253f8754381265e402ffd0c28bb18c2fbf11c4dd57e805c15aa88b4a87c3c", "scope": "Actual Inno Setup Standalone-only installation in ephemeral runner temp; no VST3 or DAW test", "qualification": "CI installer document evidence only; not a release, binary/source, numerical, signing, hardware or real-DAW certificate"}

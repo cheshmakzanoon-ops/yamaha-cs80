@@ -1,0 +1,257 @@
+{
+  "scope": "Synthetic distribution-document regression and source mutations; not plugin qualification",
+  "helper_sha256": "af7dc29942f6b843f66267692787d165f2dfc29d584209cc20ab89c0e2d8e344",
+  "semantic_mutant_count": 8,
+  "runtime_control_is_not_a_semantic_kill": true,
+  "cases": [
+    {
+      "case": "positive",
+      "observed_exit": 0,
+      "expected": "pass",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": []
+      },
+      "result": "PASS",
+      "log_sha256": "bdd847099a7a0fa83d10d95b1a428c9c0deb596cc9b338e98bba58a3bec96c54"
+    },
+    {
+      "case": "omit_barlow_ofl",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement",
+          "test_ci_payload_missing_notice_fails_closed",
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_linked_notice",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement",
+          "test_ci_payload_missing_notice_fails_closed",
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_linked_notice",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "2f1450b0102c439e081ebb9307f7a5dc3de69455ab575878e0cf2be3f3d66210"
+    },
+    {
+      "case": "omit_mts_notice",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "bb90449c7101936373d7ab0dd283ffb9987b806b4033e3ec7dcd2692549fc4c5"
+    },
+    {
+      "case": "omit_font_attribution",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "f803a7cdb3ff3d07f7062c6c50f8f01c3b06ac41803c79397093c881c09e7049"
+    },
+    {
+      "case": "change_notice_bytes",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "bc3c96eebe3c7962ebb1b92bfa40426ef7cd23cb45d4e167ccd67c489c2ea720"
+    },
+    {
+      "case": "ignore_workflow_identity",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_stage_rejects_workflow_identity_mismatch"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_stage_rejects_workflow_identity_mismatch"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "173a4cc13f9cd1f91ad1811400268f4d33977005cb525188b2e97101f6443cce"
+    },
+    {
+      "case": "ignore_dirty_checkout",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_stage_rejects_dirty_source"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_stage_rejects_dirty_source"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "ba1afd193c15423111a13bfc0afcff0194e779e527bbdecb14f28cbe929e4a4e"
+    },
+    {
+      "case": "allow_untracked_notice",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "eee9a6414cd8cee081edc739ab83d4bceca16f4e826ba84a9dcc432c77746906"
+    },
+    {
+      "case": "wrong_manifest_digest_after_self_check",
+      "observed_exit": 1,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "ee6cd6554268f14645808d21f825783a7fb8b37eba52c2b8796f6188262e72cd"
+    },
+    {
+      "case": "runtime_error_control",
+      "observed_exit": 1,
+      "expected": "harness_refusal_not_semantic_kill",
+      "assessment": {
+        "qualified": false,
+        "ordinary_failures": [],
+        "runtime_errors": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_existing_output",
+          "test_stage_rejects_linked_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": []
+      },
+      "result": "PASS",
+      "log_sha256": "5000a595d783dbbc2fd90d1f031398901bfa5cc81f34b18c999f2deccac95416"
+    },
+    {
+      "case": "restored",
+      "observed_exit": 0,
+      "expected": "pass",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": []
+      },
+      "result": "PASS",
+      "log_sha256": "454e8651440ed3480f4c6f7ff2848ca5fac3c6845d4534a301d3866c41cc4a6d"
+    }
+  ]
+}

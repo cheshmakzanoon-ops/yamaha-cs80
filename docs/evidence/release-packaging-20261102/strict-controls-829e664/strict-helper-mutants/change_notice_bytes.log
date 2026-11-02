@@ -1,0 +1,42 @@
+test_ci_and_stage_reject_untracked_notice_replacement (__main__.DistributionDocsTests.test_ci_and_stage_reject_untracked_notice_replacement) ... ok
+test_ci_payload_missing_notice_fails_closed (__main__.DistributionDocsTests.test_ci_payload_missing_notice_fails_closed) ... ok
+test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) ... 
+  test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/MTS-ESP-LICENSE.txt') ... FAIL
+test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) ... 
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/MTS-ESP-LICENSE.txt') ... FAIL
+test_stage_rejects_dirty_source (__main__.DistributionDocsTests.test_stage_rejects_dirty_source) ... ok
+test_stage_rejects_existing_output (__main__.DistributionDocsTests.test_stage_rejects_existing_output) ... ok
+test_stage_rejects_linked_notice (__main__.DistributionDocsTests.test_stage_rejects_linked_notice) ... ok
+test_stage_rejects_missing_notice (__main__.DistributionDocsTests.test_stage_rejects_missing_notice) ... ok
+test_stage_rejects_workflow_identity_mismatch (__main__.DistributionDocsTests.test_stage_rejects_workflow_identity_mismatch) ... ok
+test_staged_metadata_is_exact_and_explicitly_limited (__main__.DistributionDocsTests.test_staged_metadata_is_exact_and_explicitly_limited) ... FAIL
+test_windows_installer_requires_generated_documents (__main__.DistributionDocsTests.test_windows_installer_requires_generated_documents) ... ok
+
+======================================================================
+FAIL: test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/MTS-ESP-LICENSE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-t2h1zuli/tests/release/test_distribution_docs.py", line 100, in test_ci_payload_preserves_every_notice
+    self.assertEqual(payload[name], data)
+AssertionError: b'synthetic MTS notice fixture\nmutated' != b'synthetic MTS notice fixture\n'
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/MTS-ESP-LICENSE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-t2h1zuli/tests/release/test_distribution_docs.py", line 217, in test_deb_payload_roundtrip
+    self.assertEqual((docs / name).read_bytes(), data)
+AssertionError: b'synthetic MTS notice fixture\nmutated' != b'synthetic MTS notice fixture\n'
+
+======================================================================
+FAIL: test_staged_metadata_is_exact_and_explicitly_limited (__main__.DistributionDocsTests.test_staged_metadata_is_exact_and_explicitly_limited)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-t2h1zuli/tests/release/test_distribution_docs.py", line 128, in test_staged_metadata_is_exact_and_explicitly_limited
+    self.assertEqual((out / name).read_bytes(), data)
+AssertionError: b'synthetic MTS notice fixture\nmutated' != b'synthetic MTS notice fixture\n'
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.758s
+
+FAILED (failures=3)

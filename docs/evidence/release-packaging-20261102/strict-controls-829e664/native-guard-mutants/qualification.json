@@ -1,0 +1,64 @@
+{
+  "scope": "Synthetic payload/source-guard controls; native macOS/Windows execution is not established",
+  "sources": {
+    "verify_distribution_docs.py": "88347716ff651193f8285a88d26855ac47d3d202ed4f7ddd3b427ad0a991ad58",
+    "qualify_native_installer.py": "21e0ac4ccc2e21a901b5bf9fd1efec64179f54f85c5315c5aa5e90386b70a47d"
+  },
+  "mutations": [
+    {
+      "mutant": "source_commit",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "source_tree",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "source_url",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "independent_notice_bytes",
+      "ordinary_failures": 2,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "manifest_hash",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "honest_scope",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "extra_documents",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "partial_install_cleanup",
+      "ordinary_failures": 2,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "missing_uninstaller",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    }
+  ],
+  "restored_original_passed": true
+}

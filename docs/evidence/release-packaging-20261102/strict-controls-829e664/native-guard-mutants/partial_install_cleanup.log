@@ -1,0 +1,32 @@
+test_cleanup_failure_preserves_original_install_failure (test_native_installer_payload.NativeInstallerPayloadTests.test_cleanup_failure_preserves_original_install_failure) ... FAIL
+test_existing_output_preserved (test_native_installer_payload.NativeInstallerPayloadTests.test_existing_output_preserved) ... ok
+test_invalid_source_rejected_without_output (test_native_installer_payload.NativeInstallerPayloadTests.test_invalid_source_rejected_without_output) ... ok
+test_linux_actual_container_with_explicitly_synthetic_binary_payload (test_native_installer_payload.NativeInstallerPayloadTests.test_linux_actual_container_with_explicitly_synthetic_binary_payload) ... ok
+test_partial_windows_install_is_cleaned_up (test_native_installer_payload.NativeInstallerPayloadTests.test_partial_windows_install_is_cleaned_up) ... FAIL
+test_successful_windows_install_without_uninstaller_is_not_qualified (test_native_installer_payload.NativeInstallerPayloadTests.test_successful_windows_install_without_uninstaller_is_not_qualified) ... ok
+test_wrong_platform_rejected_without_output (test_native_installer_payload.NativeInstallerPayloadTests.test_wrong_platform_rejected_without_output) ... ok
+
+======================================================================
+FAIL: test_cleanup_failure_preserves_original_install_failure (test_native_installer_payload.NativeInstallerPayloadTests.test_cleanup_failure_preserves_original_install_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-package-publish/tests/release/test_native_installer_payload.py", line 85, in test_cleanup_failure_preserves_original_install_failure
+    self.partial_windows_install(cleanup_fails=True)
+  File "/workspace/scratch/aa102d573ba3/cs80-package-publish/tests/release/test_native_installer_payload.py", line 76, in partial_windows_install
+    self.assertEqual(len(cleanup_calls), 1, 'partial install must attempt uninstall exactly once')
+AssertionError: 0 != 1 : partial install must attempt uninstall exactly once
+
+======================================================================
+FAIL: test_partial_windows_install_is_cleaned_up (test_native_installer_payload.NativeInstallerPayloadTests.test_partial_windows_install_is_cleaned_up)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-package-publish/tests/release/test_native_installer_payload.py", line 82, in test_partial_windows_install_is_cleaned_up
+    self.partial_windows_install(cleanup_fails=False)
+  File "/workspace/scratch/aa102d573ba3/cs80-package-publish/tests/release/test_native_installer_payload.py", line 76, in partial_windows_install
+    self.assertEqual(len(cleanup_calls), 1, 'partial install must attempt uninstall exactly once')
+AssertionError: 0 != 1 : partial install must attempt uninstall exactly once
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.500s
+
+FAILED (failures=2)

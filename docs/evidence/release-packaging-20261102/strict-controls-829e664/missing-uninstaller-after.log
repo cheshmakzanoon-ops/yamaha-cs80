@@ -1,0 +1,13 @@
+test_cleanup_failure_preserves_original_install_failure (__main__.NativeInstallerPayloadTests.test_cleanup_failure_preserves_original_install_failure) ... ok
+test_existing_output_preserved (__main__.NativeInstallerPayloadTests.test_existing_output_preserved) ... ok
+test_invalid_source_rejected_without_output (__main__.NativeInstallerPayloadTests.test_invalid_source_rejected_without_output) ... ok
+test_linux_actual_container_with_explicitly_synthetic_binary_payload (__main__.NativeInstallerPayloadTests.test_linux_actual_container_with_explicitly_synthetic_binary_payload) ... ok
+test_partial_windows_install_is_cleaned_up (__main__.NativeInstallerPayloadTests.test_partial_windows_install_is_cleaned_up) ... ok
+test_successful_windows_install_without_uninstaller_is_not_qualified (__main__.NativeInstallerPayloadTests.test_successful_windows_install_without_uninstaller_is_not_qualified) ... ok
+test_wrong_platform_rejected_without_output (__main__.NativeInstallerPayloadTests.test_wrong_platform_rejected_without_output) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.447s
+
+OK
+{"schema_version": 1, "source_commit": "bf06426e34395be3c5356d75946c0f0120fad2ea", "platform": "linux", "package": "cs80-reference_1.0.0_amd64-CI-UNSIGNED-bf06426e3439.deb", "package_bytes": 2224, "package_sha256": "67bb86e4026d7219d1385dc9a13b44b61981b40f19c191c4f1ab9bdbc93f6d6c", "document_verification_sha256": "510bb06b6ffdeb65f96583b8bdbe4a4fbdb2e17f54595b0fb0f95b866cf298b7", "scope": "Actual Debian package extracted; no system installation or audio execution", "qualification": "CI installer document evidence only; not a release, binary/source, numerical, signing, hardware or real-DAW certificate"}
