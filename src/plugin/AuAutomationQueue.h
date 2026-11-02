@@ -101,8 +101,13 @@ public:
             auto& lane = ready[laneIndex];
             lane.owner = this;
             lane.first = firstPoint;
+            // The previous render's normalized readback is external input.
+            // A nonfinite value would otherwise create NaN knots and shift a
+            // later immediate event into an unintended interpolated ramp.
+            const double initialValue = std::isfinite(initial[laneIndex])
+                ? std::clamp(initial[laneIndex], 0.0, 1.0) : 0.0;
             const auto valueAt = [&](int position) {
-                AutomationPoint previous {-1, initial[laneIndex]};
+                AutomationPoint previous {-1, initialValue};
                 for (size_t i = firstPoint; i < pointCount; ++i)
                 {
                     const auto point = points[i];
@@ -124,7 +129,7 @@ public:
             // current value. An explicit first point prevents interpolation
             // from a stale previous-render value before a later immediate event.
             if (eventIndex < pendingCount && pending[eventIndex].lane == static_cast<int>(laneIndex))
-                append(0, initial[laneIndex]);
+                append(0, initialValue);
             while (eventIndex < pendingCount && pending[eventIndex].lane == static_cast<int>(laneIndex))
             {
                 const auto event = pending[eventIndex++];
