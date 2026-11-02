@@ -39,6 +39,7 @@ constexpr std::array<int,4> kRounds{FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARD
 struct Checks {
     std::uint64_t fields=0,failures=0,active=0,masked=0,events=0,noEvents=0;
     std::uint64_t copies=0,resets=0,restores=0,idles=0,fpCases=0;
+    std::uint64_t vectorBackendCalls=0;
     std::uint32_t widthMask=0,rateMask=0;
     bool mutationApplied=false;
     int caseIndex=0,sample=0,lane=0;
@@ -263,6 +264,53 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
         // Every sample has a different lane presentation order. A future
         // SIMD kernel must not assume that physical lane i owns voice i.
         for(int pos=0;pos<kLanes;++pos) {
+#if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST)
+            // Separately compiled candidate build: exercise the real four-
+            // double arithmetic path. The frozen reference still executes
+            // independently, in the same presentation order and FP mode.
+            // Failed admission must be transactional even for FP flags.
+            if(pos+4<=kLanes) {
+                std::array<Current*,4> stages{};
+                std::array<double,4> requested{};
+                std::array<cs80::WscControls,4> controls{};
+                std::array<cs80::WscOutputVolts,4> outputs{};
+                bool allActive=true;
+                for(int i=0;i<4;++i) {
+                    const int index=(static_cast<int>((pos+i)*3)+sample)%kLanes;
+                    if(index>=width||(sample+3*index)%13==0) {allActive=false;break;}
+                    stages[static_cast<std::size_t>(i)]=&candidate[static_cast<std::size_t>(index)];
+                    requested[static_cast<std::size_t>(i)]=frequencyFor(index,sample);
+                    controls[static_cast<std::size_t>(i)]=controlsFor(index,sample);
+                }
+                if(allActive) {
+                    if(sample%19==0)std::feraiseexcept(FE_INEXACT);
+                    const FpState beforeBatch=captureFp();
+                    if(Current::tryTickFour(stages,requested,controls,outputs)) {
+                        const FpState afterCandidate=captureFp();
+                        restoreFp(beforeBatch);
+                        for(int i=0;i<4;++i) {
+                            const int index=(static_cast<int>((pos+i)*3)+sample)%kLanes;
+                            g.lane=index;
+                            const auto b=original[static_cast<std::size_t>(index)].tick(
+                                requested[static_cast<std::size_t>(i)],
+                                originalControls(controls[static_cast<std::size_t>(i)]));
+                            g.pins("lane.output",outputs[static_cast<std::size_t>(i)],b);
+                            const auto& diag=original[static_cast<std::size_t>(index)].getDiagnostics();
+                            g.events+=diag.eventCount;
+                            g.noEvents+=diag.eventCount==0;
+                        }
+                        const FpState afterOriginal=captureFp();
+                        checkFp(g,afterCandidate,afterOriginal);
+                        restoreFp(afterCandidate);
+                        g.active+=4;
+                        ++g.vectorBackendCalls;
+                        pos+=3;
+                        continue;
+                    }
+                    restoreFp(beforeBatch);
+                }
+            }
+#endif
             const int lane=(pos*3+sample)%kLanes;
             g.lane=lane;
             const bool masked=lane>=width||(sample+3*lane)%13==0;
@@ -353,7 +401,7 @@ int main() {
         std::printf("WSC independent-lane frozen oracle: cases=%d widths=%u rates=%u "
                     "denormal-modes=%zu active=%llu masked=%llu events=%llu no-events=%llu "
                     "copies=%llu resets=%llu restores=%llu idle-wakes=%llu "
-                    "bit-field-checks=%llu mismatches=%llu vector-backend-calls=0\n",
+                    "bit-field-checks=%llu mismatches=%llu vector-backend-calls=%llu\n",
                     caseNumber,static_cast<unsigned>(kWidths.size()),
                     static_cast<unsigned>(kRates.size()),denorm.size(),
                     static_cast<unsigned long long>(g.active),
@@ -365,7 +413,8 @@ int main() {
                     static_cast<unsigned long long>(g.restores),
                     static_cast<unsigned long long>(g.idles),
                     static_cast<unsigned long long>(g.fields),
-                    static_cast<unsigned long long>(g.failures));
+                    static_cast<unsigned long long>(g.failures),
+                    static_cast<unsigned long long>(g.vectorBackendCalls));
         if(g.widthMask!=0xffu||g.rateMask!=0xfu
            ||static_cast<std::uint64_t>(caseNumber)!=expectedCases
            ||g.active+g.masked!=scheduledSlots||g.active<10000||g.masked<10000
@@ -373,6 +422,10 @@ int main() {
            ||g.copies!=expectedCases||g.resets!=expectedCases
            ||g.restores!=expectedCases||g.idles!=expectedCases||g.failures!=0)
             throw std::runtime_error("WSC registered lane/work/bit acceptance failed");
+#if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST)
+        if(g.vectorBackendCalls<100)
+            throw std::runtime_error("WSC four-lane backend not meaningfully exercised");
+#endif
 #if defined(CS80_WSC_LANE_MUTATE_MASK) || defined(CS80_WSC_LANE_MUTATE_CROSS_LANE) || \
     defined(CS80_WSC_LANE_MUTATE_EVENT) || defined(CS80_WSC_LANE_MUTATE_FP)
         if(!g.mutationApplied)throw std::runtime_error("WSC named mutation not reached");

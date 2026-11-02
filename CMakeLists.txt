@@ -306,6 +306,21 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_wsc_independent_lane_prereg_tests
              COMMAND cs80_wsc_independent_lane_prereg_tests)
     set_tests_properties(cs80_wsc_independent_lane_prereg_tests PROPERTIES TIMEOUT 300)
+    # Isolated opt-in test of the four-double SIMD candidate. The prereg
+    # default and all four negative controls remain scalar/original-source.
+    option(CS80_BUILD_WSC_FOUR_LANE_EXPERIMENT "Build test-only AVX2 WSC four-lane candidate" OFF)
+    if(CS80_BUILD_WSC_FOUR_LANE_EXPERIMENT)
+        add_executable(cs80_wsc_four_lane_experiment_tests tests/WscIndependentLanePreregTests.cpp)
+        target_include_directories(cs80_wsc_four_lane_experiment_tests PRIVATE src tests)
+        target_link_libraries(cs80_wsc_four_lane_experiment_tests PRIVATE cs80_core)
+        target_compile_definitions(cs80_wsc_four_lane_experiment_tests PRIVATE
+                                   CS80_WSC_FOUR_LANE_BACKEND_TEST=1)
+        if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+            target_compile_options(cs80_wsc_four_lane_experiment_tests PRIVATE -frounding-math)
+        endif()
+        add_test(NAME cs80_wsc_four_lane_experiment_tests COMMAND cs80_wsc_four_lane_experiment_tests)
+        set_tests_properties(cs80_wsc_four_lane_experiment_tests PROPERTIES TIMEOUT 300)
+    endif()
     option(CS80_BUILD_WSC_LANE_PREREG_MUTANTS "Build test-only WSC lane oracle mutation witnesses" OFF)
     if(CS80_BUILD_WSC_LANE_PREREG_MUTANTS)
         foreach(mutant MASK CROSS_LANE EVENT FP)
