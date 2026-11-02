@@ -1,0 +1,85 @@
+test_partial_composed_default_v1_marker_write_fails_and_stale_retry_is_refused (__main__.CompletionFaultTests.test_partial_composed_default_v1_marker_write_fails_and_stale_retry_is_refused) ... ok
+test_truncated_v1_marker_is_not_a_completed_capture (__main__.CompletionFaultTests.test_truncated_v1_marker_is_not_a_completed_capture) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.813s
+
+OK
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-m_ag538c/repo/artifacts/.cs80-audit-stage-4l7lk3r7/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-m_ag538c/repo/artifacts/.cs80-audit-stage-4l7lk3r7/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-vphogv4u/repo/artifacts/.cs80-audit-stage-wrgdzmfg/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-vphogv4u/repo/artifacts/.cs80-audit-stage-wrgdzmfg/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.

@@ -1,0 +1,75 @@
+test_request_is_exact_frozen_composed_identity (__main__.ComposedDefaultRegistrationTests.test_request_is_exact_frozen_composed_identity) ... ok
+test_workflow_executes_all_guards_before_build (__main__.ComposedDefaultRegistrationTests.test_workflow_executes_all_guards_before_build) ... FAIL
+test_workflow_has_complete_source_and_runner_triggers (__main__.ComposedDefaultRegistrationTests.test_workflow_has_complete_source_and_runner_triggers) ... FAIL
+test_workflow_has_distinct_branch_and_readonly_identity (__main__.ComposedDefaultRegistrationTests.test_workflow_has_distinct_branch_and_readonly_identity) ... FAIL
+test_workflow_retains_both_provenance_layers_and_failures (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_both_provenance_layers_and_failures) ... FAIL
+test_workflow_retains_original_build_and_complete_capture_command (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_original_build_and_complete_capture_command) ... FAIL
+test_wrapper_keeps_exact_approved_guards_with_distinct_namespace (__main__.ComposedDefaultRegistrationTests.test_wrapper_keeps_exact_approved_guards_with_distinct_namespace) ... FAIL
+
+======================================================================
+FAIL: test_workflow_executes_all_guards_before_build (__main__.ComposedDefaultRegistrationTests.test_workflow_executes_all_guards_before_build)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 58, in test_workflow_executes_all_guards_before_build
+    text = self.workflow()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 16, in workflow
+    self.assertTrue(path.is_file(), 'separate composed-default V1 workflow not implemented')
+AssertionError: False is not true : separate composed-default V1 workflow not implemented
+
+======================================================================
+FAIL: test_workflow_has_complete_source_and_runner_triggers (__main__.ComposedDefaultRegistrationTests.test_workflow_has_complete_source_and_runner_triggers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 53, in test_workflow_has_complete_source_and_runner_triggers
+    match = re.search(r'    paths:\n((?:      - .+\n)+)', self.workflow())
+                                                          ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 16, in workflow
+    self.assertTrue(path.is_file(), 'separate composed-default V1 workflow not implemented')
+AssertionError: False is not true : separate composed-default V1 workflow not implemented
+
+======================================================================
+FAIL: test_workflow_has_distinct_branch_and_readonly_identity (__main__.ComposedDefaultRegistrationTests.test_workflow_has_distinct_branch_and_readonly_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 43, in test_workflow_has_distinct_branch_and_readonly_identity
+    text = self.workflow()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 16, in workflow
+    self.assertTrue(path.is_file(), 'separate composed-default V1 workflow not implemented')
+AssertionError: False is not true : separate composed-default V1 workflow not implemented
+
+======================================================================
+FAIL: test_workflow_retains_both_provenance_layers_and_failures (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_both_provenance_layers_and_failures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 82, in test_workflow_retains_both_provenance_layers_and_failures
+    text = self.workflow()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 16, in workflow
+    self.assertTrue(path.is_file(), 'separate composed-default V1 workflow not implemented')
+AssertionError: False is not true : separate composed-default V1 workflow not implemented
+
+======================================================================
+FAIL: test_workflow_retains_original_build_and_complete_capture_command (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_original_build_and_complete_capture_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 74, in test_workflow_retains_original_build_and_complete_capture_command
+    text = self.workflow()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 16, in workflow
+    self.assertTrue(path.is_file(), 'separate composed-default V1 workflow not implemented')
+AssertionError: False is not true : separate composed-default V1 workflow not implemented
+
+======================================================================
+FAIL: test_wrapper_keeps_exact_approved_guards_with_distinct_namespace (__main__.ComposedDefaultRegistrationTests.test_wrapper_keeps_exact_approved_guards_with_distinct_namespace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-implementation/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 33, in test_wrapper_keeps_exact_approved_guards_with_distinct_namespace
+    self.assertTrue(path.is_file(), 'separate composed-default V1 wrapper not implemented')
+AssertionError: False is not true : separate composed-default V1 wrapper not implemented
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=6)

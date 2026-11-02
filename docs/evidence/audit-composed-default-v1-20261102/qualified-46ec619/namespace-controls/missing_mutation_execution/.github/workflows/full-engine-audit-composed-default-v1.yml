@@ -1,0 +1,90 @@
+name: composed-default V1 full engine audit (capture, not numerical acceptance)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'work/cs80-composed-default-audit-v1-sara-20261102'
+    paths:
+      - '.github/workflows/full-engine-audit-composed-default-v1.yml'
+      - '.github/full-engine-audit-request-composed-default-v1.json'
+      - 'scripts/full_engine_audit_gate_composed_default_v1.py'
+      - 'tests/release/test_full_engine_audit_composed_default_v1.py'
+      - 'tests/release/test_full_engine_audit_composed_default_v1_completion_faults.py'
+      - 'tests/release/test_full_engine_audit_composed_default_v1_lock_timeout.py'
+      - 'tests/release/qualify_full_engine_audit_composed_default_v1_mutations.py'
+      - 'tests/release/full-engine-audit-composed-default-v1-contract.json'
+      - 'tests/release/test_full_engine_audit_composed_default_v1_registration.py'
+      - 'tests/release/qualify_full_engine_audit_composed_default_v1_registration.py'
+      - 'tests/release/full-engine-audit-composed-default-v1-namespace.json'
+      - 'src/**'
+      - 'CMakeLists.txt'
+      - '.github/full-engine-audit-request.json'
+      - 'scripts/full_engine_audit_gate.py'
+      - '.github/workflows/full-engine-audit.yml'
+      - 'docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py'
+      - 'tests/parity/tolerances-v2/ws1-voice.json'
+      - 'tests/parity/tolerances-v2/completion-dsp.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: full-engine-audit-composed-default-v1-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  complete-composed-default-engine-audit-v1:
+    name: Source-locked composed-default V1 complete 885-row capture (not acceptance)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove published registration, original contracts and intended mutation controls before build
+        run: |
+          python tests/release/test_full_engine_audit_composed_default_v1_lock_timeout.py
+          python tests/release/test_full_engine_audit_composed_default_v1.py
+          python tests/release/test_full_engine_audit_composed_default_v1_completion_faults.py
+          python tests/release/test_full_engine_audit_composed_default_v1_registration.py
+          python scripts/full_engine_audit_gate_composed_default_v1.py --self-test
+          python scripts/full_engine_audit_gate_composed_default_v1.py --preflight
+      - name: Replay registered actual-source guard mutations before the expensive build
+        run: echo omitted-source-controls
+      - name: Replay independent namespace and workflow registration controls
+        run: python tests/release/qualify_full_engine_audit_composed_default_v1_registration.py --out artifacts/composed-default-v1-registration-controls
+      - name: Build registered tracked core sources with unchanged source-commit CMake inputs
+        run: |
+          cmake -S . -B build-core -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON
+          cmake --build build-core --target cs80_engine_audit --parallel 2
+          python scripts/full_engine_audit_gate_composed_default_v1.py --preflight
+      - name: Run unchanged all-suite command and preserve failures without reinterpreting scores
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          ./build-core/cs80_engine_audit --out artifacts/audit --suite all --rates 44100,48000,96000 2>&1 | tee artifacts/audit-run.log
+      - name: Invoke frozen V1 reporter and write distinct hash-bound composed-default V1 completion last
+        run: python scripts/full_engine_audit_gate_composed_default_v1.py --finalize
+      - name: Preserve completed or partial raw evidence and both provenance layers
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: complete-composed-default-engine-audit-v1-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            artifacts/audit/
+            artifacts/audit-run.log
+            artifacts/audit.complete
+            artifacts/audit-provenance.json
+            artifacts/audit-summary.json
+            artifacts/audit-summary.md
+            artifacts/audit-composed-default-v1-provenance.json
+            artifacts/audit-composed-default-v1.complete
+            artifacts/composed-default-v1-guard-mutations/
+            artifacts/composed-default-v1-registration-controls/
+          if-no-files-found: warn
+          retention-days: 90

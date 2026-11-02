@@ -1,0 +1,50 @@
+{
+  "recorded_utc": "2026-11-02T20:41:29.434555+00:00",
+  "registration_local": "06043365925c0d8e6751a4e4b17ef93f1b78529c",
+  "registration_remote": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "registration_tree": "c48bca5994c18e813a148f498e118fc63dd7d5af",
+  "source_commit": "68c466d1dd27530dfef85479c7fdc59168320c36",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "test_first_commit": "598b8a52de3b5127edbb4724cb935fd9d9e467f0",
+  "implementation_tested_commit": "46ec619096d5513724d8d40edc16779f1403976b",
+  "implementation_tree": "84e7065b6b4076ae1b1fd47c917b6121bc819c8f",
+  "inherited_infrastructure_source": "fa0f2b244d6391b7166d7cdbb305826d572ba8f3",
+  "wrapper_sha256": "f3f2e9e7d0c5983292d3e170ba89bd5e5afff5488a292ebf7a1b740abd56b58b",
+  "original_wrapper_sha256": "5caea557cb0bfeb121c560d798b1b16fedf379cc2d787d577259da86ae8a447a",
+  "wrapper_namespace_only_translation_verified": true,
+  "original_F_paths_modes_blobs_unchanged": 2623,
+  "first_reds": {
+    "source_fixtures": {
+      "complete_tests": 45,
+      "ordinary_failures": 45,
+      "runtime_errors": 0
+    },
+    "namespace_registration": {
+      "complete_tests": 7,
+      "ordinary_failures": 6,
+      "runtime_errors": 0
+    }
+  },
+  "positive_tests": {
+    "source_completion": 45,
+    "namespace_workflow": 7,
+    "lock_runtime": 3,
+    "partial_completion_write": 2,
+    "frozen_V1_self_controls": 10,
+    "published_registration_preflight": "passed",
+    "actionlint_1_7_12": "passed, external optional shell/Python linters disabled"
+  },
+  "source_guard_mutants": 15,
+  "namespace_workflow_mutants": 6,
+  "control_case_logs_sha256_verified": 27,
+  "unmodified_and_restored_passed": true,
+  "runtime_crash_controls_refused": 2,
+  "checkout_clean_before": true,
+  "checkout_clean_after": true,
+  "actual_actions_executed": false,
+  "actual_885_row_capture_executed": false,
+  "numerical_acceptance": false,
+  "cpu_qualification": false,
+  "release_qualification": false,
+  "archive_policy": "Retain all raw execution logs and result metadata, new namespace mutant sources and full fixture input hashes. Duplicate originals in isolated namespace fixture copies are reconstructible from the exact tested commit."
+}

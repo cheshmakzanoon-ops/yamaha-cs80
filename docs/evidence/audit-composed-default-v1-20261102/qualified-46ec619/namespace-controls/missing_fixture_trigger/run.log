@@ -1,0 +1,30 @@
+test_request_is_exact_frozen_composed_identity (__main__.ComposedDefaultRegistrationTests.test_request_is_exact_frozen_composed_identity) ... ok
+test_workflow_executes_all_guards_before_build (__main__.ComposedDefaultRegistrationTests.test_workflow_executes_all_guards_before_build) ... ok
+test_workflow_has_complete_source_and_runner_triggers (__main__.ComposedDefaultRegistrationTests.test_workflow_has_complete_source_and_runner_triggers) ... FAIL
+test_workflow_has_distinct_branch_and_readonly_identity (__main__.ComposedDefaultRegistrationTests.test_workflow_has_distinct_branch_and_readonly_identity) ... ok
+test_workflow_retains_both_provenance_layers_and_failures (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_both_provenance_layers_and_failures) ... ok
+test_workflow_retains_original_build_and_complete_capture_command (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_original_build_and_complete_capture_command) ... ok
+test_wrapper_keeps_exact_approved_guards_with_distinct_namespace (__main__.ComposedDefaultRegistrationTests.test_wrapper_keeps_exact_approved_guards_with_distinct_namespace) ... ok
+
+======================================================================
+FAIL: test_workflow_has_complete_source_and_runner_triggers (__main__.ComposedDefaultRegistrationTests.test_workflow_has_complete_source_and_runner_triggers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-audit-composed-default-v1-evidence/namespace-controls/missing_fixture_trigger/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 55, in test_workflow_has_complete_source_and_runner_triggers
+    self.assertEqual(match[1].strip().splitlines(), CONTRACT['workflow_paths'])
+AssertionError: Lists differ: ["- '[636 chars]ease/qualify_full_engine_audit_composed_defaul[511 chars]on'"] != ["- '[636 chars]ease/test_full_engine_audit_composed_default_v[597 chars]on'"]
+
+First differing element 8:
+"    [14 chars]ease/qualify_full_engine_audit_composed_defaul[17 chars].py'"
+"    [14 chars]ease/test_full_engine_audit_composed_default_v[14 chars].py'"
+
+Second list contains 1 additional elements.
+First extra element 18:
+"      - 'tests/parity/tolerances-v2/completion-dsp.json'"
+
+Diff is 1382 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+FAILED (failures=1)
