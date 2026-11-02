@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "tested_source": "d55a503e15c67a5ea43dcf69db297771e36aea3d",
+  "tested_tree": "cb9e658127494d05247968eadc6ee2ca6a7e3447",
+  "production_src_unchanged_from_base": true,
+  "source_file_sha256": {
+    "scripts/verify_installer_binaries.py": "b9cc1374fd00f633d2ae49f214d95e29f86afe6cdfec9770df02f0938b6a6e32",
+    "scripts/qualify_native_installer.py": "5b678ffaa41f5d59b9fb68bb891ff69fd0afcd2deaf0e06e4624c6d3c453aa5c",
+    "tests/release/test_installer_binary_payload.py": "24afd7207a53fde965de75b83adfc269e19ac1fbba9829e86df2521535216661",
+    "tests/release/test_native_installer_payload.py": "b69f2a16acdd02ec5e1710399bd39ebdf31e6a3b9404da5210782bb2b7635480",
+    "tests/release/qualify_installer_binary_mutations.py": "8ab454b7ce022d5168037ce9f37c207dd39497572538c23ca11c8f33b657222e",
+    "tests/release/qualify_installer_guard_mutations.py": "2b1c25b0564c54802753f5ec0126caef7e3aca3168eadaf9328c41973bd34a4b"
+  },
+  "helper_tests": 27,
+  "controller_tests": 11,
+  "focused_ctests": 6,
+  "archive_checks": 34,
+  "actual_helper_source_mutants": 12,
+  "actual_notice_controller_source_mutants": 12,
+  "runtime_errors_accepted_as_semantic_kills": 0,
+  "native_limits": "Actual Linux Debian roundtrip has synthetic non-loadable binary bytes. Windows process calls are mocked; actual macOS and Windows native execution is pending. POSIX fixtures are explicitly skipped on native Windows, not represented as passing there.",
+  "red_and_working_tree_log_limits": "Initial development logs identify preimplementation/source-file checkpoints, not clean final source. Final source mutant controls and CTest registration run against committed d55a503; old incomplete/refused results remain unqualified.",
+  "files": {
+    "README.md": {
+      "bytes": 3774,
+      "sha256": "e4fa3352b90622a560d6fd3dd9445bf61569602b88d4bb0af1e2bc42e5a6442e"
+    },
+    "archive-self-test.log": {
+      "bytes": 83,
+      "sha256": "0666fccc02d4c5a1170e7cb3624a718bf01b5024538127a2e150c4c3a932689a"
+    },
+    "cmake-configure.log": {
+      "bytes": 943,
+      "sha256": "fc3e01125dd4bd7960b1de77034fba226aa8833cd601c2edc1bc85fe27bb7b58"
+    },
+    "controller-after-working-tree.log": {
+      "bytes": 4284,
+      "sha256": "95bffeed32b17c250551a5b75e04c03ed37ba0f87d676c3c479b018fe264f781"
+    },
+    "controller-before.log": {
+      "bytes": 8837,
+      "sha256": "8f8babe18abd225ab95e29082e3779cdb634ee575abd4d2ce2caae4fe50c9241"
+    },
+    "ctest.log": {
+      "bytes": 897,
+      "sha256": "80b2fe0c25c1c0138c186e096bf251abbb258e2bc4f34c60c3fc8cd063cf8deb"
+    },
+    "final-source.txt": {
+      "bytes": 82,
+      "sha256": "76f0bb33e8eccee0e4121136e760b5132d1fa7b28a20fbdea1f378b1b0aeda3b"
+    },
+    "helper-27-working-tree.log": {
+      "bytes": 3843,
+      "sha256": "2122f345d06fe62b3b1c61972b94a1746c203e0df037d49b4892c884826fc5ca"
+    },
+    "helper-source-mutants/allow_empty_primary.log": {
+      "bytes": 6320,
+      "sha256": "7521859c1221614a1312865885d43ef5adaafc15f7fa3de3de9e6a3b7ad498e5"
+    },
+    "helper-source-mutants/allow_external_links.log": {
+      "bytes": 4467,
+      "sha256": "424c0c6ca946f0739cc9632e152c699124876a51197aaf1eac0c76348a315f16"
+    },
+    "helper-source-mutants/allow_extra_inventory.log": {
+      "bytes": 4495,
+      "sha256": "544ed7a6ec3f391537077a06d5a10bc6e542b28179449bbd2c2874700d47312e"
+    },
+    "helper-source-mutants/claim_windows_vst3.log": {
+      "bytes": 4609,
+      "sha256": "8fe4a062edd574701c194211d79c600c31b6ede1a94fe32760ac9e911f453b30"
+    },
+    "helper-source-mutants/follow_artifact_root.log": {
+      "bytes": 4476,
+      "sha256": "d9b68bfd7adf2c180f44a86fcbfed622c2516ac1a8808a3430d94ecfa8874866"
+    },
+    "helper-source-mutants/follow_expansion_root.log": {
+      "bytes": 4479,
+      "sha256": "db61886a7b278cbe628a3d00aa0dc912629957c8d97e05ad714bfcaeaf3b6625"
+    },
+    "helper-source-mutants/ignore_input_snapshot.log": {
+      "bytes": 4542,
+      "sha256": "29f2855973e3408dcbdfb166644eaaab63883f9185030e57c7cc03f29306e443"
+    },
+    "helper-source-mutants/ignore_link_target.log": {
+      "bytes": 4506,
+      "sha256": "54bc8a043004ea58b8d0eecaf8e4a7892049d422c1d3c3a892f6ed3545819e7b"
+    },
+    "helper-source-mutants/ignore_mode.log": {
+      "bytes": 4467,
+      "sha256": "8d9e0e363b1bfa828ffe91776755ad9ed8eea69d2129c3f5e7625b8399b60a1f"
+    },
+    "helper-source-mutants/ignore_payload_bytes.log": {
+      "bytes": 5782,
+      "sha256": "edb713ec056e217959ad45b499be1b6b8105b11ccfa583c290c1dc5239ceb2ab"
+    },
+    "helper-source-mutants/positive.log": {
+      "bytes": 3843,
+      "sha256": "9925063d3f6be3d7bcf5cca678405e1e2be633ff99e8636e02e490aa056dec49"
+    },
+    "helper-source-mutants/qualification.json": {
+      "bytes": 10973,
+      "sha256": "1d467bbeec4bcc1da5d59047055bc8daca271af2d6d8dbc401941511204a31c9"
+    },
+    "helper-source-mutants/restored.log": {
+      "bytes": 3843,
+      "sha256": "9f6c1ed419415b15af122c92b7983fed5b2a5f579c07ce68e6b10e06c274c813"
+    },
+    "helper-source-mutants/runtime_error_control.log": {
+      "bytes": 33005,
+      "sha256": "d149b6117fc50ac0d25cf1d5555c75d8f77cced32af2e967c327eee81223426c"
+    },
+    "helper-source-mutants/skip_au_verification.log": {
+      "bytes": 5969,
+      "sha256": "2dc872771ecdc99bf29d3e625b6fb992340dcb9df65699d0cae64e0f7abd19e6"
+    },
+    "helper-source-mutants/wrong_component_destination.log": {
+      "bytes": 4497,
+      "sha256": "dd497685714aeb3662e9295338a7811d8f69e4d9e45325a5b5f24c36bc6dcd1c"
+    },
+    "initial-19-green.log": {
+      "bytes": 2679,
+      "sha256": "bddeb2ae63d77c519575b6267b008da5d9b621074c5b3795cecfbda69e980a94"
+    },
+    "initial-before.log": {
+      "bytes": 14003,
+      "sha256": "5f3106450ad1dbf7f3b462149f1ecc675c970a22c515a4c33533501d47271614"
+    },
+    "initial-diagnostic-failure.log": {
+      "bytes": 3590,
+      "sha256": "565ba15b1ac4d3cd71cb4d54a54c8010ff632f04c82cfd79677793eece1ed7cd"
+    },
+    "initial-incomplete-mutants/allow_extra_inventory.log": {
+      "bytes": 4495,
+      "sha256": "8fccc77dd74f4cf4fdeb8822bc973889aebd66a6c806cd1e90e25ff0426fca3e"
+    },
+    "initial-incomplete-mutants/ignore_input_snapshot.log": {
+      "bytes": 4542,
+      "sha256": "4ed3a1491652ab1173ff1095049dbeeb62b0a7ec198bd4a902300f675b1044bc"
+    },
+    "initial-incomplete-mutants/ignore_link_target.log": {
+      "bytes": 4506,
+      "sha256": "baaee93dd7fcc466867bb7d793829ad69e2793c7cd3f0a94849bfb21b8208d7d"
+    },
+    "initial-incomplete-mutants/ignore_mode.log": {
+      "bytes": 4467,
+      "sha256": "3aff398252c245b582af856a102f0c4a1ef11173041d5ddd376d9c8fc1b99207"
+    },
+    "initial-incomplete-mutants/ignore_payload_bytes.log": {
+      "bytes": 5782,
+      "sha256": "8f22629a7c9816a6accb619f642301cf544f721dbda717b855b628c5cd3544fd"
+    },
+    "initial-incomplete-mutants/incomplete-receipt.json": {
+      "bytes": 5334,
+      "sha256": "866980bbca095750b9cfbc9633a6f808dad81ca7b365e33d1810576f8a4b88bb"
+    },
+    "initial-incomplete-mutants/positive.log": {
+      "bytes": 3843,
+      "sha256": "a02d9b142b5b0b654351805a3e75848667f03fe6bb5f40f7e5d69dc172ae474e"
+    },
+    "initial-incomplete-mutants/skip_au_verification.log": {
+      "bytes": 5969,
+      "sha256": "0a4d1866361909880734410bb4595b164773cc7425b85b38540c04dd15383126"
+    },
+    "initial-incomplete-mutants/wrong_component_destination.log": {
+      "bytes": 4497,
+      "sha256": "f583b8ce88586946ba7124e5caeaa72938cc29c7c68478be9c84d39c45ae3a8f"
+    },
+    "initial-mutant-refusal.log": {
+      "bytes": 6796,
+      "sha256": "03ecf644d62156559a6995fe46efc3d9735b02c0bc20f6cf9502331cbe4b9ca5"
+    },
+    "notice-controller-mutants/extra_documents.log": {
+      "bytes": 2949,
+      "sha256": "2d82cfa07c7a6e53f7e4f7888da0073ed8fec03e1ded9c87d2a5405a79c0a829"
+    },
+    "notice-controller-mutants/honest_scope.log": {
+      "bytes": 3009,
+      "sha256": "d8a56cd08ec4279e64c2fd5a30e7e8ea9557c9305066e7f7a8ce6e7fd8ea13f7"
+    },
+    "notice-controller-mutants/independent_notice_bytes.log": {
+      "bytes": 3719,
+      "sha256": "942e52d2b68a49ce146d80c7f83f5d2d06512fa688f2e85ad508385fbf32de20"
+    },
+    "notice-controller-mutants/manifest_hash.log": {
+      "bytes": 2946,
+      "sha256": "512ee335fdbb09d8c14e0ada52bfa5289b82dbd3b298c74a8808a9d3d9f86271"
+    },
+    "notice-controller-mutants/missing_uninstaller.log": {
+      "bytes": 2761,
+      "sha256": "61d7969783e58e75b7bec8432fb63478a9337c220c4c5b755968a8a49be03ada"
+    },
+    "notice-controller-mutants/native-restored.log": {
+      "bytes": 2008,
+      "sha256": "90d7e147e581f7fda254d29f864de3d19f8075ce507316d4e5002134f5043b65"
+    },
+    "notice-controller-mutants/native-unmodified.log": {
+      "bytes": 2008,
+      "sha256": "c65af387c6f48c0c4762ac8701f8c2854c397dee7308f119ecdc5a408621768b"
+    },
+    "notice-controller-mutants/partial_install_cleanup.log": {
+      "bytes": 5676,
+      "sha256": "1a651d52c87e47b426ab85f6701b07b5293208007537312b3e9b9324fbde7431"
+    },
+    "notice-controller-mutants/payload-restored.log": {
+      "bytes": 2301,
+      "sha256": "47ce5851100771c1888d45c261193a51eae407d76ef7690f11205a2e38891566"
+    },
+    "notice-controller-mutants/payload-unmodified.log": {
+      "bytes": 2301,
+      "sha256": "4c102bd76540dd5ca5ddb5dc663605c4b0b8508f398be7179a6f78da9c4a50ff"
+    },
+    "notice-controller-mutants/qualification.json": {
+      "bytes": 4455,
+      "sha256": "e1b868fd5b3425aa76549dc676a682a32ea8aebbeb016bbdb3af75eab4aa9c31"
+    },
+    "notice-controller-mutants/runtime-error-refused.log": {
+      "bytes": 9629,
+      "sha256": "79fdbcd91e8e69cd215f08ef76620bea15f0d850544867392bc52cbe4c2ab820"
+    },
+    "notice-controller-mutants/silent_binary_recapture.log": {
+      "bytes": 2978,
+      "sha256": "1b68041abb8ccb4577bffd62f451ae09450ec9e145964d8642d02b7ed2439156"
+    },
+    "notice-controller-mutants/source_commit.log": {
+      "bytes": 2940,
+      "sha256": "a9575115ce9af01e0c92448572c23e15716509c286199beb81497b55811a4374"
+    },
+    "notice-controller-mutants/source_tree.log": {
+      "bytes": 2924,
+      "sha256": "527dd67606871512c278f3346b7b3e5fd9f03c1dcbc693687a7f07afdd99a5b7"
+    },
+    "notice-controller-mutants/source_url.log": {
+      "bytes": 2919,
+      "sha256": "2d4e30c2f1b7382975c58768a3b08b6d69533d84be6bc36636e53ee27e523880"
+    },
+    "notice-controller-mutants/trust_binary_manifest.log": {
+      "bytes": 3888,
+      "sha256": "afa7ada3bab3445f6833dd7155c790199ffd12714f995428d0433f8ab928f818"
+    },
+    "notice-controller-mutants/unbound_binary_receipt.log": {
+      "bytes": 2718,
+      "sha256": "9cead32bf19f8ac5501b8704d6e7ee747af7cc83cd0a3b1a2e8cada9fbca174b"
+    },
+    "roots-after-working-tree.log": {
+      "bytes": 3531,
+      "sha256": "bb2f3a055b763557390706d5e5af8f6bb686e4c84962d93163e6b8f83942f314"
+    },
+    "roots-before.log": {
+      "bytes": 9337,
+      "sha256": "84d65162544a210bd73a2ef3eaabc81c155cf53cd5b61d43234de2200f544d6d"
+    }
+  },
+  "scope": "Payload transport identity only; no compiler/source equivalence, valid signing, numerical acceptance, DAW qualification or release."
+}

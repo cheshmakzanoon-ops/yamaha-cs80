@@ -1,0 +1,167 @@
+test_debian_standalone_mode_normalization_is_registered (__main__.InstallerBinaryPayloadTests.test_debian_standalone_mode_normalization_is_registered) ... FAIL
+test_external_source_symlink_is_rejected (__main__.InstallerBinaryPayloadTests.test_external_source_symlink_is_rejected) ... FAIL
+test_linux_exact_inventory_hashes_and_explicit_scope (__main__.InstallerBinaryPayloadTests.test_linux_exact_inventory_hashes_and_explicit_scope) ... FAIL
+test_linux_executable_mode_loss_rejected (__main__.InstallerBinaryPayloadTests.test_linux_executable_mode_loss_rejected) ... FAIL
+test_linux_missing_binary_rejected (__main__.InstallerBinaryPayloadTests.test_linux_missing_binary_rejected) ... FAIL
+test_linux_stale_or_changed_bytes_rejected (__main__.InstallerBinaryPayloadTests.test_linux_stale_or_changed_bytes_rejected) ... FAIL
+test_linux_unexpected_bundle_resource_rejected (__main__.InstallerBinaryPayloadTests.test_linux_unexpected_bundle_resource_rejected) ... FAIL
+test_macos_changed_post_capture_signature_bytes_are_not_waived (__main__.InstallerBinaryPayloadTests.test_macos_changed_post_capture_signature_bytes_are_not_waived) ... FAIL
+test_macos_missing_component_rejected (__main__.InstallerBinaryPayloadTests.test_macos_missing_component_rejected) ... FAIL
+test_macos_three_bundles_and_install_destinations (__main__.InstallerBinaryPayloadTests.test_macos_three_bundles_and_install_destinations) ... FAIL
+test_macos_wrong_install_location_rejected (__main__.InstallerBinaryPayloadTests.test_macos_wrong_install_location_rejected) ... FAIL
+test_payload_symlink_substitution_is_rejected (__main__.InstallerBinaryPayloadTests.test_payload_symlink_substitution_is_rejected) ... FAIL
+test_platform_identity_mismatch_rejected (__main__.InstallerBinaryPayloadTests.test_platform_identity_mismatch_rejected) ... FAIL
+test_snapshot_cannot_be_replaced_after_input_changes (__main__.InstallerBinaryPayloadTests.test_snapshot_cannot_be_replaced_after_input_changes) ... FAIL
+test_unknown_platform_rejected (__main__.InstallerBinaryPayloadTests.test_unknown_platform_rejected) ... FAIL
+test_windows_missing_standalone_rejected (__main__.InstallerBinaryPayloadTests.test_windows_missing_standalone_rejected) ... FAIL
+test_windows_only_actual_standalone_scope (__main__.InstallerBinaryPayloadTests.test_windows_only_actual_standalone_scope) ... FAIL
+test_windows_stale_standalone_rejected (__main__.InstallerBinaryPayloadTests.test_windows_stale_standalone_rejected) ... FAIL
+
+======================================================================
+FAIL: test_debian_standalone_mode_normalization_is_registered (__main__.InstallerBinaryPayloadTests.test_debian_standalone_mode_normalization_is_registered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_external_source_symlink_is_rejected (__main__.InstallerBinaryPayloadTests.test_external_source_symlink_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_linux_exact_inventory_hashes_and_explicit_scope (__main__.InstallerBinaryPayloadTests.test_linux_exact_inventory_hashes_and_explicit_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_linux_executable_mode_loss_rejected (__main__.InstallerBinaryPayloadTests.test_linux_executable_mode_loss_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_linux_missing_binary_rejected (__main__.InstallerBinaryPayloadTests.test_linux_missing_binary_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_linux_stale_or_changed_bytes_rejected (__main__.InstallerBinaryPayloadTests.test_linux_stale_or_changed_bytes_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_linux_unexpected_bundle_resource_rejected (__main__.InstallerBinaryPayloadTests.test_linux_unexpected_bundle_resource_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_macos_changed_post_capture_signature_bytes_are_not_waived (__main__.InstallerBinaryPayloadTests.test_macos_changed_post_capture_signature_bytes_are_not_waived)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_macos_missing_component_rejected (__main__.InstallerBinaryPayloadTests.test_macos_missing_component_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_macos_three_bundles_and_install_destinations (__main__.InstallerBinaryPayloadTests.test_macos_three_bundles_and_install_destinations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_macos_wrong_install_location_rejected (__main__.InstallerBinaryPayloadTests.test_macos_wrong_install_location_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_payload_symlink_substitution_is_rejected (__main__.InstallerBinaryPayloadTests.test_payload_symlink_substitution_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_platform_identity_mismatch_rejected (__main__.InstallerBinaryPayloadTests.test_platform_identity_mismatch_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_snapshot_cannot_be_replaced_after_input_changes (__main__.InstallerBinaryPayloadTests.test_snapshot_cannot_be_replaced_after_input_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_unknown_platform_rejected (__main__.InstallerBinaryPayloadTests.test_unknown_platform_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_windows_missing_standalone_rejected (__main__.InstallerBinaryPayloadTests.test_windows_missing_standalone_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_windows_only_actual_standalone_scope (__main__.InstallerBinaryPayloadTests.test_windows_only_actual_standalone_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+======================================================================
+FAIL: test_windows_stale_standalone_rejected (__main__.InstallerBinaryPayloadTests.test_windows_stale_standalone_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-installer-binaries/tests/release/test_installer_binary_payload.py", line 18, in setUp
+    self.assertTrue(helper.is_file(), 'Preregistered binary payload verifier is not implemented')
+AssertionError: False is not true : Preregistered binary payload verifier is not implemented
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.002s
+
+FAILED (failures=18)

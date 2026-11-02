@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "source_commit": "688fc13d0a78f0ec0962e14ad54c93871e58e586",
+  "files": {
+    "scripts/verify_installer_binaries.py": "b9cc1374fd00f633d2ae49f214d95e29f86afe6cdfec9770df02f0938b6a6e32",
+    "tests/release/test_installer_binary_payload.py": "24afd7207a53fde965de75b83adfc269e19ac1fbba9829e86df2521535216661"
+  },
+  "semantic_mutants": 12,
+  "runtime_error_is_not_a_semantic_kill": true,
+  "scope": "Synthetic payload/helper identity controls only; no native Windows/macOS installer execution, compiler/source, signing or musical qualification",
+  "cases": [
+    {
+      "case": "positive",
+      "result": "PASS",
+      "expected": "pass",
+      "exit": 0,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": []
+      },
+      "log_sha256": "a02d9b142b5b0b654351805a3e75848667f03fe6bb5f40f7e5d69dc172ae474e"
+    },
+    {
+      "case": "ignore_input_snapshot",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_forged_manifest_cannot_certify_stale_payload"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_forged_manifest_cannot_certify_stale_payload"
+        ]
+      },
+      "log_sha256": "4ed3a1491652ab1173ff1095049dbeeb62b0a7ec198bd4a902300f675b1044bc"
+    },
+    {
+      "case": "allow_extra_inventory",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_linux_unexpected_bundle_resource_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_linux_unexpected_bundle_resource_rejected"
+        ]
+      },
+      "log_sha256": "8fccc77dd74f4cf4fdeb8822bc973889aebd66a6c806cd1e90e25ff0426fca3e"
+    },
+    {
+      "case": "ignore_payload_bytes",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_linux_stale_or_changed_bytes_rejected",
+          "test_macos_changed_post_capture_signature_bytes_are_not_waived",
+          "test_windows_stale_standalone_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_linux_stale_or_changed_bytes_rejected",
+          "test_macos_changed_post_capture_signature_bytes_are_not_waived",
+          "test_windows_stale_standalone_rejected"
+        ]
+      },
+      "log_sha256": "8f22629a7c9816a6accb619f642301cf544f721dbda717b855b628c5cd3544fd"
+    },
+    {
+      "case": "ignore_mode",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_linux_executable_mode_loss_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_linux_executable_mode_loss_rejected"
+        ]
+      },
+      "log_sha256": "3aff398252c245b582af856a102f0c4a1ef11173041d5ddd376d9c8fc1b99207"
+    },
+    {
+      "case": "ignore_link_target",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_internal_relative_link_target_change_is_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_internal_relative_link_target_change_is_rejected"
+        ]
+      },
+      "log_sha256": "baaee93dd7fcc466867bb7d793829ad69e2793c7cd3f0a94849bfb21b8208d7d"
+    },
+    {
+      "case": "wrong_component_destination",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_macos_wrong_install_location_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_macos_wrong_install_location_rejected"
+        ]
+      },
+      "log_sha256": "f583b8ce88586946ba7124e5caeaa72938cc29c7c68478be9c84d39c45ae3a8f"
+    },
+    {
+      "case": "skip_au_verification",
+      "result": "FAIL",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": false,
+        "ordinary_failures": [
+          "test_macos_missing_component_rejected",
+          "test_macos_three_bundles_and_install_destinations",
+          "test_macos_wrong_install_location_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "27"
+        ],
+        "expected_failures": [
+          "test_macos_missing_component_rejected",
+          "test_macos_three_bundles_and_install_destinations"
+        ]
+      },
+      "log_sha256": "0a4d1866361909880734410bb4595b164773cc7425b85b38540c04dd15383126"
+    }
+  ]
+}
