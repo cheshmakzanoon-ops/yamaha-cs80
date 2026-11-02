@@ -1,0 +1,45 @@
+{
+  "scope": "Independent source-diff review, not native execution",
+  "reviewed_head": "41ebed97db2f1727155356b1853bf6e08b0fc0e7",
+  "reviewed_src": "d387706261218b8a8ab45b95332efd34d7338365",
+  "production_fix": "2ecc15c",
+  "fixture_amendment": "865608d0fe5a12dca2ba16412c1f29fbbc426b59",
+  "before_sha256": "65a4e2820278099b3db3889c3239142a84746720245101be1b71fa4243779ade",
+  "after_sha256": "bc06de6f845ae6cf76dbc93621f1805c79cec5356f276e925271bf93395e4c35",
+  "changed_lines": [
+    [
+      3236,
+      "        atSlider->keyPressed(juce::KeyPress(juce::KeyPress::upKey));",
+      "        atSlider->keyPressed(juce::KeyPress(juce::KeyPress::downKey));"
+    ],
+    [
+      3257,
+      "        lever->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));",
+      "        lever->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));"
+    ],
+    [
+      3341,
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));",
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));"
+    ],
+    [
+      3361,
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));",
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));"
+    ],
+    [
+      3379,
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));",
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));"
+    ],
+    [
+      3394,
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::upKey));",
+      "        knob->getSlider().keyPressed(juce::KeyPress(juce::KeyPress::downKey));"
+    ]
+  ],
+  "exact_six_stimuli_only": true,
+  "all_other_source_bytes_preserved": true,
+  "goldens_unchanged": true,
+  "acceptance": "Approved bounded fixture correction: all six tested hardware vertical levers are in hardwareLeverIncreasesDown; FocusSlider maps Down to numeric increment; existing value, isolation and gesture predicates are unchanged. Exact-source native rerun and two golden-image mismatch reviews remain required."
+}
