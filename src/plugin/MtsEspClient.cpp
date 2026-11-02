@@ -1,5 +1,8 @@
 #include "MtsEspClient.h"
 
+#include <cmath>
+#include <limits>
+
 // Default shipping branch: the pinned client is vendored with its licence.
 // An explicit 0 is retained for the no-client fallback compile test.
 #ifndef CS80_WITH_MTS_ESP
@@ -38,11 +41,36 @@ bool MtsEspClient::fillTable(tuning::TuningTable& table) const noexcept
 {
     if (!hasMaster()) return false;
     auto* c = static_cast<MTSClient*>(client);
+    // An external MTS-ESP master may supply malformed Hz values. Stage all
+    // notes so one bad mapped value never leaks a partly updated tuning table
+    // (or non-finite pitch) into the audio engine.
+    tuning::TuningTable next = table;
     for (int n = 0; n < 128; ++n)
     {
-        table.pitch[(std::size_t) n] = tuning::TuningTable::pitchFromHz(MTS_NoteToFrequency(c, (char) n, -1));
-        table.mapped[(std::size_t) n] = !MTS_ShouldFilterNote(c, (char) n, -1);
+        const auto i = (std::size_t) n;
+        const double hz = MTS_NoteToFrequency(c, (char) n, -1);
+        const bool mapped = !MTS_ShouldFilterNote(c, (char) n, -1);
+        // Core pitch/oscillator/key-voltage calculations use float. Preserve
+        // 16 octaves of headroom for downstream filter CV and pitch multipliers
+        // before converting Hz, and prevent underflow or invalid logarithms.
+        constexpr double dspHeadroom = 65536.0;
+        const bool safeHz = std::isfinite(hz) && hz > 0.0
+                            && hz >= (double) std::numeric_limits<float>::denorm_min()
+                            && hz <= (double) std::numeric_limits<float>::max() / dspHeadroom;
+        const float pitch = safeHz ? tuning::TuningTable::pitchFromHz(hz) : (float) n;
+        if (!safeHz || !std::isfinite(pitch))
+        {
+            if (mapped) return false;
+            // A filtered note is not played, but may still be retuned in a
+            // currently sounding voice. Its fallback must remain finite.
+            next.pitch[i] = (float) n;
+            next.mapped[i] = false;
+            continue;
+        }
+        next.pitch[i] = pitch;
+        next.mapped[i] = mapped;
     }
+    table = next;
     return true;
 }
 void MtsEspClient::parseMidi(const std::uint8_t* data, int size) noexcept

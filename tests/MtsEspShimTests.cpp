@@ -6,6 +6,7 @@
 #include "Ws1Tolerances.h"
 
 #include <cmath>
+#include <cstring>
 #include <cstdint>
 #include <iostream>
 #include <limits>
@@ -61,6 +62,11 @@ int failures = 0;
 void check(bool pass, const char* message)
 {
     if (!pass) { ++failures; std::cerr << "FAIL: " << message << '\n'; }
+}
+bool tableBytesEqual(const cs80::tuning::TuningTable& a, const cs80::tuning::TuningTable& b)
+{
+    return std::memcmp(a.pitch.data(), b.pitch.data(), sizeof(float) * 128) == 0
+        && std::memcmp(a.mapped.data(), b.mapped.data(), sizeof(bool) * 128) == 0;
 }
 std::vector<float> render(const cs80::tuning::TuningTable& table, bool supplied, bool pure, int tuningMode)
 {
@@ -128,7 +134,9 @@ int main(int argc, char** argv)
                 {61, 0.0}, {62, -1.0},
                 {63, std::numeric_limits<double>::quiet_NaN()},
                 {64, std::numeric_limits<double>::infinity()},
-                {65, 1e300}
+                {65, 1e300}, // overflows float frequency immediately
+                {66, 1e-300}, // underflows float frequency to zero
+                {67, 1e36} // representable float Hz; filter CV multiplication can overflow
             };
             for (const auto& [note, hz] : badMappedHz)
             {
@@ -137,7 +145,7 @@ int main(int argc, char** argv)
                 cs80::tuning::TuningTable sentinel;
                 const auto before = sentinel;
                 check(!shim.fillTable(sentinel), "invalid mapped master Hz rejects update");
-                check(sentinel.pitch == before.pitch && sentinel.mapped == before.mapped,
+                check(tableBytesEqual(sentinel, before),
                       "failed master update leaves caller table byte-unchanged");
             }
             invalidMasterNote = -1;
