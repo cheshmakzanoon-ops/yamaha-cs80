@@ -1,0 +1,80 @@
+name: Numerical evidence verifier integrity (not release acceptance)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/numerical-integrity-tests.yml'
+      - '.github/release-numerical-contract.json'
+      - 'scripts/release_numerical_gate.py'
+      - 'scripts/materialize_release_integrity_fixtures.py'
+      - 'scripts/run_release_cpu_producer.py'
+      - 'scripts/prepare_release_numerical_request.py'
+      - 'scripts/*release*.cjs'
+      - 'scripts/dispatch-reviewed-main-request.cjs'
+      - '.github/workflows/release*.yml'
+      - '.github/release-numerical-request.json'
+      - 'tests/release/**'
+  pull_request:
+    paths:
+      - '.github/workflows/numerical-integrity-tests.yml'
+      - '.github/release-numerical-contract.json'
+      - 'scripts/release_numerical_gate.py'
+      - 'scripts/materialize_release_integrity_fixtures.py'
+      - 'scripts/run_release_cpu_producer.py'
+      - 'scripts/prepare_release_numerical_request.py'
+      - 'scripts/*release*.cjs'
+      - 'scripts/dispatch-reviewed-main-request.cjs'
+      - '.github/workflows/release*.yml'
+      - '.github/release-numerical-request.json'
+      - 'tests/release/**'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-evidence-guards:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Reconstruct hash-pinned historical fixtures without rendering
+        run: |
+          git fetch --no-tags origin 0151b8699febc47f07c3b4d8cc9ebbf642692a5c 3a85d66aee90f8cfaee69d875ee21997b61ad940
+          python scripts/materialize_release_integrity_fixtures.py --out "$RUNNER_TEMP/cs80-integrity-fixtures"
+          echo "CS80_ORIGINAL_AUDIT_DIR=$RUNNER_TEMP/cs80-integrity-fixtures/original-audit" >> "$GITHUB_ENV"
+          echo "CS80_ORIGINAL_CPU_BEFORE_ROUND=$RUNNER_TEMP/cs80-integrity-fixtures/original-cpu" >> "$GITHUB_ENV"
+      - name: Require all verifier tests with no skipped evidence controls
+        run: |
+          python - <<'PY'
+          import sys
+          import unittest
+          suite = unittest.defaultTestLoader.discover('tests/release', pattern='test_*.py')
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          if result.skipped or result.testsRun < 37 or not result.wasSuccessful():
+              sys.exit('Missing, skipped or failed numerical-integrity tests')
+          PY
+          set -euo pipefail
+          node --test --test-reporter=tap tests/release/*.test.cjs | tee "$RUNNER_TEMP/node-integrity.tap"
+          python tests/release/node_tap_guard.py "$RUNNER_TEMP/node-integrity.tap"
+      - name: Reject real source mutations without counting runtime errors
+        run: python tests/release/qualify_evidence_guard_mutations.py --out "$RUNNER_TEMP/cs80-guard-mutants"
+      - name: Preserve integrity receipts separately from numerical acceptance
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: numerical-integrity-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/cs80-integrity-fixtures/fixture-receipt.json
+            ${{ runner.temp }}/cs80-guard-mutants/
+            ${{ runner.temp }}/node-integrity.tap
+          if-no-files-found: warn
+          retention-days: 30
