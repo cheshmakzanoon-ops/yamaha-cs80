@@ -1,0 +1,3 @@
+# Custom factory-tone revision editor results (2026-11-02)
+
+Test-only0159cb04114cb9da21916c560f9e54b00cf54e09, source0f8a26e733644ac9f5985164e0175d4143c5d917, ran against matching fresh root5b26 project objects/headers and pinned JUCE/fonts, with a newly compiled component driver. At17:35:45 UTC it produced the exact prospective **5 checks/1 ordinary failure**: the custom editor has no unique revision ComboBox. Existing host metadata, Settings-page access, numeric-state preservation and unchanged Engine publication all pass. All widget-dependent assertions are explicitly NOT RUN, not passed. Zero desktop components. Raw commands/hashes are in `factory-tone-editor-20261102/original-absence-baseline`; no native window/input/render/DAW acceptance is inferred.
