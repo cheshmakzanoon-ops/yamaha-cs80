@@ -9,11 +9,21 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <bit>
+#include <cfenv>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <limits>
 #include <mutex>
+
+#if (defined(__x86_64__) || defined(__i386__)) && \
+    (defined(__GNUC__) || defined(__clang__))
+#include <immintrin.h>
+#define CS80_WSC_FOUR_LANE_AVX2_EXPERIMENT 1
+#else
+#define CS80_WSC_FOUR_LANE_AVX2_EXPERIMENT 0
+#endif
 
 namespace cs80 {
 struct OscillatorNominalProfile {
@@ -338,6 +348,92 @@ public:
         state.residualCursor=(state.residualCursor+1)%OscillatorResidualKernel::length;
         return output;
     }
+    // EXPERIMENT ONLY, deliberately not called from production audio. Four
+    // independent, event-free physical coupling steps share AVX2 arithmetic;
+    // all control changes, boundary events, FP modes and architectures not
+    // proved safe are handled by the caller's unchanged scalar tick().
+    // False means *no observable state or caller FP state* may have changed.
+    static bool tryTickFour(const std::array<ReconstructedOscillator*,4>& lanes,
+                            const std::array<double,4>& requestedHz,
+                            const std::array<WscControls,4>& controls,
+                            std::array<WscOutputVolts,4>& outputs) noexcept {
+#if CS80_WSC_FOUR_LANE_AVX2_EXPERIMENT
+        if(!__builtin_cpu_supports("avx2")||std::fegetround()!=FE_TONEAREST)return false;
+        const unsigned mxcsr=_mm_getcsr();
+        // Preserve host exception behavior: SSE nearest, masked exceptions,
+        // no flush-to-zero/denormals-are-zero. Other modes use original tick.
+        if((mxcsr&((3u<<13)|(1u<<15)|(1u<<6)))!=0u ||
+           (mxcsr&(0x3fu<<7))!=(0x3fu<<7))return false;
+        for(std::size_t i=0;i<4;++i) {
+            const auto* lane=lanes[i];
+            if(!lane||!lane->basis||!lane->endNodesValid||!lane->branchEventCacheValid||
+               !std::isfinite(requestedHz[i])||!std::isfinite(controls[i].pulseThresholdVolts)||
+               !std::isfinite(lane->state.charge)||!std::isfinite(lane->state.heldFrequencyHz)||
+               lane->state.resetRemainingSeconds!=0.||lane->state.charge<=0.||
+               lane->state.heldFrequencyHz<=0.||
+               (lane->cachedBranchEvent&&!(lane->cachedBranchSeconds>lane->dt))||
+               controls[i].sawEnabled!=lane->state.sawEnabled||
+               controls[i].pulseEnabled!=lane->state.pulseEnabled||
+               std::bit_cast<std::uint64_t>(controls[i].pulseThresholdVolts)!=
+                   std::bit_cast<std::uint64_t>(lane->state.heldThresholdVolts))return false;
+            for(std::size_t j=0;j<i;++j)if(lane==lanes[j])return false;
+        }
+        // Same requested-Hz clamp and original physical division. Admission
+        // must occur before a single physical state or diagnostic mutation.
+        // Some arithmetic eligibility checks can raise sticky FP exceptions.
+        // A rejected batch must restore that caller-visible state exactly.
+        std::fenv_t fpBeforeAdmission{};
+        std::fegetenv(&fpBeforeAdmission);
+        const auto reject=[&]() noexcept {
+            std::fesetenv(&fpBeforeAdmission);
+            return false;
+        };
+        std::array<double,4> physical{};
+        for(std::size_t i=0;i<4;++i) {
+            auto* lane=lanes[i];
+            const double f=std::clamp(requestedHz[i],0.,lane->maximumFrequencyHz());
+            if(std::bit_cast<std::uint64_t>(f)!=
+               std::bit_cast<std::uint64_t>(lane->state.heldFrequencyHz))return reject();
+            physical[i]=lane->state.charge/f;
+            if(!(physical[i]>lane->dt+2e-15)||
+               std::abs(std::min(lane->dt,physical[i])-physical[i])<=2e-15)return reject();
+        }
+        advanceTickFourAvx2(lanes);
+        for(std::size_t i=0;i<4;++i) {
+            auto* lane=lanes[i];
+            lane->diagnostics.eventCount=0;
+            const double span=std::min(lane->dt,physical[i]);
+            double elapsed=0.;elapsed+=span;
+            lane->cachedBranchSeconds=std::max(0.,lane->cachedBranchSeconds-span);
+            const bool physicalReached=std::abs(span-physical[i])<=2e-15;
+            if(physicalReached)lane->branchEventCacheValid=false; // admission excludes this
+            const auto after=lane->nodes(1);
+            if(lane->dt-elapsed<=2e-15)elapsed=lane->dt;
+            lane->state.elapsedSeconds+=lane->dt;
+            lane->endNodes=after;lane->endNodesValid=true;
+            const auto& raw=lane->endNodes;
+            lane->diagnostics.rawPin7Volts=raw.pin7;
+            lane->diagnostics.coupledInputVolts=raw.u;
+            lane->diagnostics.trianglePin3Volts=raw.triangle;
+            lane->diagnostics.shaperInputVolts=raw.w;
+            lane->diagnostics.raw=raw.ungatedValue;
+            const auto values=asArray(raw.value),slopes=asArray(raw.slope),constants=asArray(raw.constant);
+            double* destinations[3]={&outputs[i].sawPin5,&outputs[i].pulsePin7,&outputs[i].sinePin2};
+            for(std::size_t branch=0;branch<3;++branch) {
+                const double a=values[branch]-constants[branch];
+                const double b=slopes[branch]/lane->rate+lane->basis->inverseTauSamples*a;
+                *destinations[branch]=constants[branch]+a*lane->basis->weightedArea-
+                    b*lane->basis->weightedMoment+lane->state.residual[branch][lane->state.residualCursor];
+                lane->state.residual[branch][lane->state.residualCursor]=0.;
+            }
+            lane->state.residualCursor=(lane->state.residualCursor+1)%OscillatorResidualKernel::length;
+        }
+        return true;
+#else
+        (void)lanes;(void)requestedHz;(void)controls;(void)outputs;
+        return false;
+#endif
+    }
     // Idle evolution of a silent circuit (plan step 2.1, circuit engine; see
     // src/experimental/ContinuousVoiceCircuit.h). Advances the physical state
     // (charge, reset one-shot, both coupling baselines) by `seconds` at one
@@ -429,6 +525,57 @@ public:
         return std::copysign(p.shaperOrdinateInferred[i]+f*(p.shaperOrdinateInferred[i+1]-p.shaperOrdinateInferred[i]),x);
     }
 private:
+#if CS80_WSC_FOUR_LANE_AVX2_EXPERIMENT
+    // Actual four-wide operations on WSC state laws; not merely a vector
+    // load/store around four scalar tick() calls. Keep each scalar expression's
+    // parentheses/rounding boundaries and explicitly prohibit FMA contraction.
+    __attribute__((target("avx2,no-fma")))
+    static void advanceTickFourAvx2(const std::array<ReconstructedOscillator*,4>& lanes) noexcept {
+        alignas(32) std::array<double,4> tau{},dtv{},decays{},pinSlope{},startU{},
+            startTriangle{},triangleGain{},oldTriangle{},oldCharge{},freq{},startPin7{},
+            inputOut{},triangleOut{},chargeOut{};
+        for(std::size_t i=0;i<4;++i) {
+            const auto* lane=lanes[i];
+            tau[i]=lane->profile.couplingSecondsNominal;
+            dtv[i]=lane->dt;
+            decays[i]=decay(dtv[i]/tau[i]);
+            pinSlope[i]=-lane->converterGain*lane->state.heldFrequencyHz;
+            startU[i]=lane->endNodes.u;
+            startTriangle[i]=lane->endNodes.triangle;
+            triangleGain[i]=lane->endNodes.triangleGain;
+            oldTriangle[i]=lane->state.triangleBaselineVolts;
+            oldCharge[i]=lane->state.charge;
+            freq[i]=-lane->state.heldFrequencyHz;
+            startPin7[i]=lane->endNodes.pin7;
+        }
+        const auto t=_mm256_loadu_pd(tau.data()),s=_mm256_loadu_pd(dtv.data());
+        const auto e=_mm256_loadu_pd(decays.data());
+        const auto ps=_mm256_loadu_pd(pinSlope.data());
+        const auto u=_mm256_loadu_pd(startU.data());
+        const auto base=_mm256_mul_pd(ps,t);
+        const auto uEnd=_mm256_add_pd(base,_mm256_mul_pd(_mm256_sub_pd(u,base),e));
+        const auto b=_mm256_mul_pd(_mm256_loadu_pd(triangleGain.data()),_mm256_sub_pd(u,base));
+        const auto a=_mm256_sub_pd(_mm256_loadu_pd(startTriangle.data()),b);
+        const auto triangle=_mm256_add_pd(
+            _mm256_add_pd(a,_mm256_mul_pd(_mm256_sub_pd(_mm256_loadu_pd(oldTriangle.data()),a),e)),
+            _mm256_mul_pd(_mm256_mul_pd(b,_mm256_div_pd(s,t)),e));
+        const auto charge=_mm256_add_pd(_mm256_loadu_pd(oldCharge.data()),
+            _mm256_mul_pd(_mm256_loadu_pd(freq.data()),s));
+        const auto pinEnd=_mm256_add_pd(_mm256_loadu_pd(startPin7.data()),_mm256_mul_pd(ps,s));
+        const auto input=_mm256_sub_pd(pinEnd,uEnd);
+        _mm256_storeu_pd(inputOut.data(),input);
+        _mm256_storeu_pd(triangleOut.data(),triangle);
+        _mm256_storeu_pd(chargeOut.data(),charge);
+        for(std::size_t i=0;i<4;++i) {
+            auto* lane=lanes[i];
+            lane->state.triangleBaselineVolts=triangleOut[i];
+            lane->state.charge=chargeOut[i];
+            lane->state.inputBaselineVolts=inputOut[i];
+            if(std::abs(lane->state.inputBaselineVolts)<1e-300)lane->state.inputBaselineVolts=0.;
+            if(std::abs(lane->state.triangleBaselineVolts)<1e-300)lane->state.triangleBaselineVolts=0.;
+        }
+    }
+#endif
     struct Nodes {
         double pin7=0.,u=0.,uSlope=0.,triangle=0.,triangleSlope=0.,w=0.,wSlope=0.;
         double triangleGain=0.;
