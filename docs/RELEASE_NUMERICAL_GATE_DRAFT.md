@@ -29,14 +29,28 @@ capture or full-audit CI job is not numerical PASS.
 
 The same-host CPU comparison requires **three complete before rounds and
 three complete after rounds**, 51 CSV rows and 27 cases per round, the exact
-48 kHz/256-frame isolated warmed-held workload, at least 1,024 callbacks per
-held phase, the same 11 paired-tone identities and one quiet-idle identity,
+48 kHz/256-frame isolated warmed-held workload, 1,024 callbacks per held
+phase, the 11 registered physical selector/tone-pair identities and one quiet-idle identity,
 the same benchmark driver/compiler/flags/runner job, complete finite rows
 and same-source checksum/peak/RMS textual consistency. For each fixture the
 lowest of its three after-run median RTFs is selected; its p99 and deadline
 miss count come from **that same run** and all three raw measurements remain
 visible. Every selected held preset must be ≤0.20 RTF and quiet idle ≤0.02.
 These are callback real-time factors, not aggregate operating-system CPU.
+
+The gate also verifies **all 51 rows**, not just the 12 performance-target
+rows, against the unchanged benchmark's 27-case matrix: 11 selectors ×
+isolation/legacy × held/tail (44 rows); isolation/legacy moving-tabs
+held/tail (4); isolation/legacy quiet idle and legacy noise idle (3).
+It pins the original sorted eight-field CSV identity hash
+`8430527f7cad6540179c4024e1834e57f483faa045a6f28521354e7b35638f4b`,
+all 11 source-defined Rank I/II names, the registered before commit
+`7c864f266a939aa2a42422440dd4c1c0cabe3814`, and benchmark source blob
+`92ea7e0b1801bf98fccaed21c13e676890039c94` (file SHA-256
+`3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74`).
+Every round's receipt must identify that driver and its correct source/round;
+binary hashes must remain unchanged within each source stage. A consistently
+counterfeit six-round CSV suite is not acceptable evidence.
 
 ## Required trusted producer (not yet wired into CI)
 
@@ -81,6 +95,12 @@ fixture rows, broken source ancestry, and median held/idle overruns. It
 additionally tests selected-round p99/miss attribution. The original 885-row
 archive is tested **unchanged** when `CS80_ORIGINAL_AUDIT_DIR` is provided;
 it correctly fails at Source phrase retrigger.
+
+The CPU identity hardening separately showed six genuine RED-first forgery
+cases: all-six-round counterfeit tone names, shifted selectors, duplicated
+off-target cases, altered off-target sample rate, uniform substituted driver
+digest, and substituted registered before source. All are now rejected, with
+additional negative controls for render-mode flags and receipt/binary identity.
 
 The frozen original source audit is from source `39ae6c2684456950302cb4ed10ecfae980c37ddd`, with ZIP SHA-256
 `a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19`

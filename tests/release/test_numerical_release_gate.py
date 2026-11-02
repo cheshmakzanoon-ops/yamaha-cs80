@@ -154,7 +154,8 @@ def cpu_round(source, marker, held=0.18, idle=0.01):
                      "suite": "baseline", "source_commit_caller_verified": source,
                      "compiler": "13.3.0", "source_fingerprint": "fixed-driver-v2",
                      "quick_subset": False, "callbacks_per_held_phase": 1024,
-                     "clock_is_steady": True, "order_seed": 803010},
+                     "clock_is_steady": True, "order_seed": 803010,
+                     "hardware_equivalence_or_realtime_qualification": False},
         "completed": {"completed": True, "cases": 27, "rows": 51},
         "receipt": {"host_id": "same-runner", "runner_job_id": "single-job",
                     "compiler_id": "gcc-13.3", "flags_sha256": "f" * 64,
@@ -269,6 +270,47 @@ class NumericalReleaseGateTests(unittest.TestCase):
                 edit(candidate)
                 with self.assertRaises((gate.GateError, ValueError, KeyError)):
                     gate.validate_evidence(TEST_CONTRACT, candidate)
+
+    def test_cpu_mode_flags_receipts_and_registered_workload_must_be_rejected(self):
+        def alter_legacy_isolation(f):
+            row = next(r for r in f["cpu"]["after"][0]["rows"]
+                       if r["mode"] == "legacy")
+            row["isolation"] = "1"
+
+        def alter_source_performance_mode(f):
+            f["cpu"]["after"][0]["rows"][0]["source_performance"] = "1"
+
+        edits = [
+            ("legacy row impersonates isolation", alter_legacy_isolation),
+            ("benchmark row enables source-performance mode", alter_source_performance_mode),
+            ("registered held callbacks silently increased", lambda f:
+             f["cpu"]["after"][0]["metadata"].update(callbacks_per_held_phase=2048)),
+            ("timing metadata claims hardware equivalence", lambda f:
+             f["cpu"]["after"][0]["metadata"].update(
+                 hardware_equivalence_or_realtime_qualification=True)),
+            ("CPU receipt uses different source", lambda f:
+             f["cpu"]["after"][0]["receipt"].update(source_sha=BEFORE)),
+            ("CPU binary changes within source stage", lambda f:
+             f["cpu"]["after"][1]["receipt"].update(benchmark_binary_sha256="0" * 64)),
+            ("capture ID not unique registered source/round", lambda f:
+             f["cpu"]["after"][2]["receipt"].update(capture_id="unregistered-capture")),
+            ("registered moving-case phase changed", lambda f:
+             next(r for r in f["cpu"]["after"][0]["rows"]
+                  if r["scenario"] == "moving_tabs_pressure_wah"
+                  and r["phase"] == "release_tail").update(phase="sustain_pedal_hold")),
+        ]
+        for name, edit in edits:
+            with self.subTest(name=name):
+                candidate = fixture()
+                edit(candidate)
+                with self.assertRaises((gate.GateError, ValueError, KeyError)):
+                    gate.validate_evidence(TEST_CONTRACT, candidate)
+
+    def test_cpu_registered_tone_list_cannot_rewrite_original_case_hash(self):
+        contract = copy.deepcopy(TEST_CONTRACT)
+        contract["cpu"]["registered_tone_pairs_by_selector"][0] = ["Substitute I", "Substitute II"]
+        with self.assertRaisesRegex(gate.GateError, "mapping differs from registration"):
+            gate.validate_evidence(contract, fixture())
 
     def test_same_row_count_forged_csv_schema_must_be_rejected(self):
         # Whole-file header mutations preserve all 885 row counts, source IDs,

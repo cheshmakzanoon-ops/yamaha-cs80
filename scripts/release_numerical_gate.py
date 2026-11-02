@@ -59,6 +59,8 @@ TEXT_FIELDS = {
                             "baseline_peak_channel", "omitted_peak_channel"},
 }
 CPU_TEXT_FIELDS = {"scenario", "rank_i_name", "rank_ii_name", "phase", "mode"}
+CPU_IDENTITY_FIELDS = ("rate", "block", "mode", "scenario", "initial_selector",
+                       "rank_i_name", "rank_ii_name", "phase")
 
 
 def verify_numeric_table(name, rows, text_fields):
@@ -306,6 +308,48 @@ def case_key(row):
     return ("quiet-idle",)
 
 
+def registered_cpu_case_identities(spec):
+    """Reconstruct the frozen benchmark's *entire* baseline 27-case/51-row matrix.
+
+    The producer at Git blob 92ea7e0b... uses paired_tones for eleven physical
+    tone pairs in isolation and legacy, plus two moving and three idle cases.
+    The selected CPU threshold concerns only isolation held/idle, but all other
+    rows still have to exist under their exact registered identities.
+    """
+    pairs = spec["registered_tone_pairs_by_selector"]
+    require(isinstance(pairs, list) and len(pairs) == 11
+            and all(isinstance(pair, list) and len(pair) == 2
+                    and all(isinstance(name, str) and name for name in pair)
+                    for pair in pairs),
+            "registered CPU physical tone-pair mapping is incomplete")
+    rate, block = str(spec["rate_hz"]), str(spec["block_frames"])
+    cases = []
+
+    def add(mode, scenario, selector, phases):
+        first, second = pairs[selector]
+        for phase in phases:
+            cases.append((rate, block, mode, scenario, str(selector),
+                          first, second, phase))
+
+    for selector in range(len(pairs)):
+        for mode in ("isolation", "legacy"):
+            add(mode, "paired_tones", selector, ("warmed_held", "release_tail"))
+    for mode in ("isolation", "legacy"):
+        add(mode, "moving_tabs_pressure_wah", 0, ("warmed_held", "release_tail"))
+        add(mode, "idle_quiet", 0, ("warmed_held",))
+    add("legacy", "idle_noise", 0, ("warmed_held",))
+    require(len(cases) == spec["expected_rows_per_round"] == 51,
+            "registered CPU case matrix is not 51 rows")
+    return Counter(cases)
+
+
+def cpu_case_identity_sha256(identities):
+    """Producer-independent canonical fingerprint of 51 registered CSV rows."""
+    payload = ("\n".join(sorted("\t".join(identity) for identity in identities))
+               + "\n").encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def verify_cpu_round(contract, rd, source_sha, label):
     spec = contract["cpu"]
     metadata = rd["metadata"]
@@ -321,7 +365,10 @@ def verify_cpu_round(contract, rd, source_sha, label):
     require(metadata["clock_is_steady"] is True and metadata["order_seed"] == 803010,
             f"{label}: timing clock or registered order seed changed")
     require(exact_integer(metadata["callbacks_per_held_phase"], "callbacks per held phase")
-            >= spec["callbacks_per_held_phase_min"], f"{label}: workload shortened")
+            == spec["callbacks_per_held_phase_min"],
+            f"{label}: registered 1024-callback workload changed")
+    require(metadata["hardware_equivalence_or_realtime_qualification"] is False,
+            f"{label}: benchmark cannot claim DAW, hardware, or realtime equivalence")
     require(completed["completed"] is True
             and completed["cases"] == spec["expected_cases_per_round"]
             and completed["rows"] == spec["expected_rows_per_round"],
@@ -333,12 +380,29 @@ def verify_cpu_round(contract, rd, source_sha, label):
                 f"{label}: missing CPU receipt {field}")
     for field in ("flags_sha256", "benchmark_source_sha256", "runner_environment_sha256"):
         sha_string(receipt[field], f"{label}: {field}", 64)
+    require(receipt["benchmark_source_sha256"] == spec["registered_benchmark_source_sha256"],
+            f"{label}: unregistered benchmark driver SHA-256")
+    require(receipt["source_sha"] == source_sha,
+            f"{label}: CPU receipt source identity mismatch")
+    sha_string(receipt["benchmark_binary_sha256"], f"{label}: benchmark binary", 64)
     require(isinstance(metadata["compiler"], str) and metadata["compiler"],
             f"{label}: missing compiler version")
     require(isinstance(metadata["source_fingerprint"], str) and metadata["source_fingerprint"],
             f"{label}: missing source driver fingerprint")
     verify_numeric_table(label, rows, CPU_TEXT_FIELDS)
+    expected = registered_cpu_case_identities(spec)
+    sha_string(spec["registered_case_identity_sha256"], "registered CPU case matrix", 64)
+    require(cpu_case_identity_sha256(expected.elements())
+            == spec["registered_case_identity_sha256"],
+            "frozen 51-row CPU case matrix/physical tone mapping differs from registration")
+    actual = Counter(tuple(row[field] for field in CPU_IDENTITY_FIELDS) for row in rows)
+    require(actual == expected,
+            f"{label}: CPU rate/block/mode/scenario/selector/tone/phase coverage differs from registered 51-row baseline")
     for i, row in enumerate(rows, 2):
+        require(exact_integer(row["isolation"], f"{label}:{i} isolation flag")
+                == (1 if row["mode"] == "isolation" else 0)
+                and exact_integer(row["source_performance"], f"{label}:{i} source-performance flag") == 0,
+                f"{label}:{i}: unregistered CPU render mode flags")
         require(exact_integer(row["nonfinite_count"], f"{label}:{i}: nonfinite_count") == 0,
                 f"{label}:{i}: nonfinite audio")
         require(finite(row["median_rtf"], f"{label}:{i}: median_rtf") >= 0,
@@ -365,6 +429,8 @@ def verify_cpu_round(contract, rd, source_sha, label):
 
 def verify_cpu(contract, source, cpu):
     spec = contract["cpu"]
+    require(source["before_sha"] == spec["registered_before_source_sha"],
+            "CPU before source differs from preregistered source SHA")
     before = cpu["before"]
     after = cpu["after"]
     require(len(before) == spec["required_before_rounds"]
@@ -374,6 +440,7 @@ def verify_cpu(contract, source, cpu):
     common_runner = None
     common_driver = None
     common_workload = None
+    stage_binaries = {}
     seen_captures = set()
     for stage, group, sha in (("before", before, source["before_sha"]),
                               ("after", after, source["reviewed_sha"])):
@@ -381,6 +448,14 @@ def verify_cpu(contract, source, cpu):
             label = f"{stage}-r{index}"
             chosen = verify_cpu_round(contract, rd, sha, label)
             receipt = rd["receipt"]
+            require(receipt["capture_id"] ==
+                    f"{receipt['runner_job_id']}/{stage}/{index}/{sha}",
+                    f"{label}: CPU receipt capture/source/round identity changed")
+            if stage in stage_binaries:
+                require(receipt["benchmark_binary_sha256"] == stage_binaries[stage],
+                        f"{label}: CPU benchmark binary differs within source stage")
+            else:
+                stage_binaries[stage] = receipt["benchmark_binary_sha256"]
             runner = tuple(receipt[key] for key in ("host_id", "runner_job_id", "compiler_id",
                                                       "flags_sha256", "runner_environment_sha256"))
             driver = (rd["metadata"]["compiler"], rd["metadata"]["source_fingerprint"],
@@ -488,6 +563,15 @@ def load_disk_bundle(args):
             "checked-out source is not the approved exact-main SHA")
     require(tree == args.expected_source_tree_sha and tree == identity["source_tree_sha"],
             "checked-out src tree is not the approved tree")
+    benchmark_path = "src/tools/source_factory_benchmark.cpp"
+    expected_blob = args.contract["cpu"]["registered_benchmark_blob_sha"]
+    sha_string(expected_blob, "registered CPU benchmark Git blob")
+    for revision in (reviewed, identity["before_sha"]):
+        require(git_output(args.repo, "rev-parse", f"{revision}:{benchmark_path}") == expected_blob,
+                "before/reviewed CPU benchmark source blob differs from preregistration")
+    require(hashlib.sha256((args.repo / benchmark_path).read_bytes()).hexdigest()
+            == args.contract["cpu"]["registered_benchmark_source_sha256"],
+            "reviewed CPU benchmark source bytes differ from preregistration")
     def ancestor(sha):
         return subprocess.run(["git", "-C", str(args.repo), "merge-base", "--is-ancestor",
                                sha, reviewed], check=False).returncode == 0
