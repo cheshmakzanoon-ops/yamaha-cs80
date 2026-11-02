@@ -1,0 +1,350 @@
+{
+  "reviewer": "independent qualification agent",
+  "source_commit": "41ebed97db2f1727155356b1853bf6e08b0fc0e7",
+  "src": "d387706261218b8a8ab45b95332efd34d7338365",
+  "result": "PASS: six-stimulus-only fixture amendment and compile/link evidence; NO native acceptance",
+  "checks": 81,
+  "failures": 0,
+  "binary_sha256": "7fcc9cbca65a15cb410cff66179af692a5ea4671b74c9c7c4b9ff1699570d1a9",
+  "native_execution": "NOT RUN: native display access denied in prior root attempt; not retried",
+  "remaining": [
+    "Exact-source native rerun",
+    "Six native assertion runtime results not yet established",
+    "Two original golden-image failures remain open without threshold waiver",
+    "Actual new screenshot inspection and separate baseline review"
+  ],
+  "details": [
+    {
+      "name": "equal line count",
+      "passed": true
+    },
+    {
+      "name": "exact six lines, only upKey to downKey",
+      "passed": true,
+      "changed_lines": [
+        3236,
+        3257,
+        3341,
+        3361,
+        3379,
+        3394
+      ]
+    },
+    {
+      "name": "every other source byte and assertion preserved",
+      "passed": true
+    },
+    {
+      "name": "source frozen through compile receipt and final review",
+      "passed": true
+    },
+    {
+      "name": "no production source, tests, goldens, thresholds, CMake or workflow changes",
+      "passed": true
+    },
+    {
+      "name": "preregistration is direct parent",
+      "passed": true
+    },
+    {
+      "name": "before/after source hashes independently match",
+      "passed": true
+    },
+    {
+      "name": "fixture paired with assertion: AT VCF actual keyboard edit sends one balanced host gesture",
+      "passed": true
+    },
+    {
+      "name": "fixture paired with assertion: contour lever keyboard edit sends one balanced host gesture",
+      "passed": true
+    },
+    {
+      "name": "fixture paired with assertion: isolated main SUB edits the effective original function only",
+      "passed": true
+    },
+    {
+      "name": "fixture paired with assertion: legacy main function edits legacy automation only",
+      "passed": true
+    },
+    {
+      "name": "fixture paired with assertion: original main function edits original automation only",
+      "passed": true
+    },
+    {
+      "name": "fixture paired with assertion: original main speed edits leave legacy automation untouched",
+      "passed": true
+    },
+    {
+      "name": "recorded red/green are textual only",
+      "passed": true
+    },
+    {
+      "name": "independent component inventory increases down: P_subAtVcf",
+      "passed": true
+    },
+    {
+      "name": "independent component inventory increases down: P_kbdBrillianceHigh",
+      "passed": true
+    },
+    {
+      "name": "independent component inventory increases down: P_subWave",
+      "passed": true
+    },
+    {
+      "name": "independent component inventory increases down: P_subSpeed",
+      "passed": true
+    },
+    {
+      "name": "independent component inventory increases down: P_subOriginalFunction",
+      "passed": true
+    },
+    {
+      "name": "independent component inventory increases down: P_subOriginalSpeed",
+      "passed": true
+    },
+    {
+      "name": "both component inventories retain up/down control",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 SCOPE.md",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 archive-bookkeeping-stop.txt",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 compile.log",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 compile.py",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 link.log",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 receipt-v2.json",
+      "passed": true
+    },
+    {
+      "name": "archive SHA-256 receipt.json",
+      "passed": true
+    },
+    {
+      "name": "original receipt retained with clarified fields",
+      "passed": true
+    },
+    {
+      "name": "compile receipt bound to reviewed source tree",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessor.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginEditor.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_UiComponents.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ParameterContext.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_AdvancedPanel.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PresetBrowser.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_MtsEspClient.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessorAutomation.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_KeyboardTuningPage.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ModernLayerState.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ModernModulationUi.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PluginProcessorLibrary.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ArtCommon.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PanelWidgets.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_ChannelRow.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_CentreRow.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_PerformanceDeck.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_MemoryLid.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_EditorPreferences.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioToolbar.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioDrawers.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_UndoHistory.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_plugin_StudioTour.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/tests_ComposedUiComponentDriver.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_events/juce_events.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/CMakeFiles/CS80Snapshots.dir/workspace/scratch/aa102d573ba3/cs80-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_core_Engine.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-ui-composed-evidence/green/src_core_FactoryPresets.cpp.o",
+      "passed": true
+    },
+    {
+      "name": "verified prior input /workspace/scratch/aa102d573ba3/cs80-panel-s2/build-native-red/libcs80_panel_fonts.a",
+      "passed": true
+    },
+    {
+      "name": "exact 44 reused plus one replacement; no old test driver",
+      "passed": true
+    },
+    {
+      "name": "actual reuse categorization 25 project +19 dependency/font",
+      "passed": true
+    },
+    {
+      "name": "actual native translation unit compiled, not substitute component driver",
+      "passed": true
+    },
+    {
+      "name": "new object hash",
+      "passed": true
+    },
+    {
+      "name": "native executable hash",
+      "passed": true
+    },
+    {
+      "name": "prior object reusable source scope unchanged",
+      "passed": true
+    }
+  ]
+}

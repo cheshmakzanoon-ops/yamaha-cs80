@@ -11,7 +11,7 @@ This page states the project's current implementation and qualification. It wins
 when older documents disagree. Historical observations remain in
 [the dated status archive](STATUS_HISTORY_2026-11-01.md) and the linked raw evidence.
 
-Last updated: **2026-11-02 UTC**. Main remains `db24a47170610f81236e8829ef5536af69dfc94d`; PR #6 is still unmerged. The latest published reviewed integration is [`9741425ee38d578424d9405ec1015c5e519996f9`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9741425ee38d578424d9405ec1015c5e519996f9), source tree `32ae37fe643056f66f1004066c52b61b463e695b`, on `work/cs80-reviewed-integration-sara-20261102`. Its exact local tree is `d3392ea879f58ca94338c6b07941e94f9c59f415`; connector-authored commit metadata differs, file trees do not.
+Last updated: **2026-11-02 UTC**. Main remains `db24a47170610f81236e8829ef5536af69dfc94d`; PR #6 is still unmerged. The latest published reviewed integration is [`9741425ee38d578424d9405ec1015c5e519996f9`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9741425ee38d578424d9405ec1015c5e519996f9), source tree `32ae37fe643056f66f1004066c52b61b463e695b`, on `work/cs80-reviewed-integration-sara-20261102`. Its local counterpart commit (with an identical file tree) is `d3392ea879f58ca94338c6b07941e94f9c59f415`; connector-authored commit metadata differs, file trees do not.
 
 ### November 2 integration boundaries
 
