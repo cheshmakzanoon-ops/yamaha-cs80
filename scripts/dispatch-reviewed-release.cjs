@@ -15,8 +15,12 @@ async function verifyReviewedReleasePrerequisites({ github, context, core, reque
     const comparison = (await github.rest.repos.compareCommits({ owner, repo, base: validated, head: expected })).data;
     if (comparison.status !== 'ahead' || comparison.merge_base_commit.sha !== validated)
       throw new Error('The validated revision must be an ancestor of main');
+    const screenshotPath = value => typeof value === 'string'
+      && value.startsWith('docs/screenshots/');
     if (!comparison.files || comparison.files.length >= 300 || comparison.files.length === 0
-        || comparison.files.some(file => !file.filename.startsWith('docs/screenshots/')))
+        || comparison.files.some(file => !screenshotPath(file.filename)
+          || ((file.status === 'renamed' || file.previous_filename !== undefined)
+            && !screenshotPath(file.previous_filename))))
       throw new Error('Only refreshed screenshot assets may follow the validated revision');
   }
 

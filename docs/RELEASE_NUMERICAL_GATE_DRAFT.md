@@ -4,7 +4,7 @@
 review branch, not on `main`, not a release workflow, and not permission to
 dispatch.** Existing build/DSP/screenshot pass checks, immutable main-head
 checks, screenshot-only ancestry, and the original full-engine-audit
-preflight/finalize gate remain necessary and unchanged.
+preflight/finalize gate remain necessary and are not weakened.
 
 ## Evidence contract
 
@@ -96,7 +96,11 @@ ref whose **peeled** lightweight/annotated target and event SHA both equal
 the checked-out approved current main S. An existing active or successful
 release for S also blocks. Every installer job `needs: preflight`, checks
 out the exact S from its verified output, and rechecks that main has not
-moved before uploading artifacts. None of this code dispatches a release.
+moved before uploading artifacts. The shared screenshot-only `M→S` comparison
+also rejects renames with missing old-path metadata or with either the new
+path **or the previous path** outside `docs/screenshots/`: moving production
+code into the screenshots folder cannot count as a screenshot-only refresh.
+None of this code dispatches a release.
 
 This is locally tested, **not** on default main. Its protection assumes the
 updated workflow definition executes. A tag pointing to an older commit
