@@ -7,8 +7,10 @@ evidence or proof that a Yamaha CS-80 contains a MIDI interface.
 
 from __future__ import annotations
 
+import contextlib
 import importlib.util
 import hashlib
+import io
 import pathlib
 import struct
 import subprocess
@@ -80,10 +82,19 @@ def parse_smf0(data: bytes) -> tuple[int, list[tuple[int, str, object]]]:
 
 class HardwareCueSafetyTests(unittest.TestCase):
     def run_cli(self, destination: pathlib.Path) -> subprocess.CompletedProcess[str]:
-        return subprocess.run(
-            [sys.executable, str(SCRIPT), "--repo", str(REPO), "--out", str(destination)],
-            text=True, capture_output=True, check=False,
-        )
+        # This is the general CTest *unit* oracle for encoding and no-overwrite.
+        # Isolate the source-authentication boundary: the real CLI still refuses
+        # nonfrozen/dirty src, asserted below and in the artifact-only workflow.
+        # Otherwise a legitimate later DSP commit would falsely fail all CTest.
+        argv = [str(SCRIPT), "--repo", str(REPO), "--out", str(destination)]
+        stdout = io.StringIO()
+        with mock.patch.object(cues, "verify_frozen_source", return_value=None), \
+             mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(stdout):
+            try:
+                code = cues.main()
+            except SystemExit as exc:
+                return subprocess.CompletedProcess(argv, 1, stdout.getvalue(), str(exc))
+        return subprocess.CompletedProcess(argv, code, stdout.getvalue(), "")
 
     def test_does_not_overwrite_existing_directory_or_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
