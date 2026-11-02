@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <filesystem>
+#include <locale.h>
 #include <system_error>
 
 namespace
@@ -15,6 +16,42 @@ namespace
 // Schema validation must not read the live ValueTree handle while another
 // state-loading thread may replace it. This identifier never changes.
 const juce::Identifier stateType { "CS80_PARAMS" };
+
+// State parsing must use the serialized C numeric grammar without changing a
+// host's process/thread locale. This object is touched only by non-RT restore
+// paths. Failed locale allocation leaves parsing incomplete, hence frozen V1.
+class StateNumericLocale final
+{
+public:
+    StateNumericLocale() = default;
+    StateNumericLocale(const StateNumericLocale&) = delete;
+    StateNumericLocale& operator=(const StateNumericLocale&) = delete;
+    ~StateNumericLocale()
+    {
+        if (handle == nullptr) return;
+       #if JUCE_WINDOWS
+        _free_locale(handle);
+       #else
+        freelocale(handle);
+       #endif
+    }
+    double parse(const char* begin, char** end) const noexcept
+    {
+        *end = const_cast<char*>(begin);
+        if (handle == nullptr) return 0.0;
+       #if JUCE_WINDOWS
+        return _strtod_l(begin, end, handle);
+       #else
+        return strtod_l(begin, end, handle);
+       #endif
+    }
+private:
+   #if JUCE_WINDOWS
+    _locale_t handle = _create_locale(LC_NUMERIC, "C");
+   #else
+    locale_t handle = newlocale(LC_NUMERIC_MASK, "C", nullptr);
+   #endif
+};
 
 // JUCE 8.0.6 AudioParameterBool stores an unsnapped host float internally,
 // while APVTS caches its snapped 0/1 value. A same-bucket state restore may
@@ -1151,7 +1188,8 @@ float Cs80AudioProcessor::restoredFactoryToneChoice(const juce::var& value)
     const auto encoded = value.toString().trim();
     const auto* begin = encoded.toRawUTF8();
     char* end = nullptr;
-    const double parsed = std::strtod(begin, &end);
+    static const StateNumericLocale numericLocale;
+    const double parsed = numericLocale.parse(begin, &end);
     return end != begin && *end == '\0' && parsed == 1.0 ? 1.0f : 0.0f;
 }
 
@@ -1191,7 +1229,9 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
             child.setProperty("id", id, nullptr);
             result.addChild(child, -1, nullptr);
         }
-        float value = (float) child.getProperty("value", fallback);
+        const auto storedValue = child.getProperty("value", fallback);
+        float value = id == factoryToneRevisionParameterId ? restoredFactoryToneChoice(storedValue)
+                                                           : (float) storedValue;
         if (!std::isfinite(value)) value = fallback;
         if (id == parameterId(cs80::P_subOriginalMode) && value != 0.0f && value != 1.0f)
             value = 0.0f;
@@ -1211,8 +1251,6 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
                                  && (parsed == 0.0 || parsed == 1.0);
             value = literal ? (float) parsed : fallback;
         }
-        if (id == factoryToneRevisionParameterId)
-            value = restoredFactoryToneChoice(child.getProperty("value", juce::var()));
         // Round discrete choices/switches and clamp to the declared range.
         const auto& range = p->getNormalisableRange();
         value = range.snapToLegalValue(juce::jlimit(range.start, range.end, value));

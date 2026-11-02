@@ -1,0 +1,18 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Factory tone locale fixture: C decimal=.
+Factory tone locale fixture: de_DE.utf8 decimal=,
+FAIL: actual session choice round-trips independently of numeric locale
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: locale-restored choice reaches actual source engine
+FAIL: user preset choice round-trips independently of numeric locale
+FAIL: complete decimal/exponent/hex one retains prior literal semantics
+FAIL: complete decimal/exponent/hex one retains prior literal semantics
+FAIL: complete decimal/exponent/hex one retains prior literal semantics
+FAIL: malformed/non-one locale input cannot become an opt-in
+FAIL: inactive A/B V2 survives actual decimal serialization in every locale
+Factory tone locale processor: 296 checks, 13 failures
