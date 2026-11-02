@@ -8,6 +8,7 @@ evidence or proof that a Yamaha CS-80 contains a MIDI interface.
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import pathlib
 import struct
 import subprocess
@@ -142,13 +143,15 @@ class HardwareCueSafetyTests(unittest.TestCase):
             result = self.run_cli(destination)
             self.assertEqual(result.returncode, 0, result.stderr)
             expected = {
-                "bass_panel_phrase_event.mid": (6000, 14, 6720),
-                "bass_panel_phrase_omit_retrigger_on.mid": (6000, 13, 6720),
-                "funky_tabs_single_noteoff.mid": (1344, 2, 1920),
-                "funky_tabs_single_held_no_off_at_1400ms.mid": (1344, 2, 1920),
+                "bass_panel_phrase_event.mid": (6000, 14, 6720, "f77c0c93f03b8f34fcd0321853e03bdf06fe8cf58613e554f1adaa54286312e3"),
+                "bass_panel_phrase_omit_retrigger_on.mid": (6000, 13, 6720, "062b8feb1c63195652b69a441e57a9c061539aeb92f179ae9d9e57d412f5ed47"),
+                "funky_tabs_single_noteoff.mid": (1344, 2, 1920, "46be894d42f237abe48d63dcaf07065a98e18abe6c708e051984124338c4b663"),
+                "funky_tabs_single_held_no_off_at_1400ms.mid": (1344, 2, 1920, "46ea383dc49d8a2868bebf21bf725897f9ad3914edab2c84333795da30e1332b"),
             }
-            for name, (marker_tick, count, ending) in expected.items():
+            for name, (marker_tick, count, ending, digest) in expected.items():
                 raw = (destination / name).read_bytes()
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), digest,
+                                 "frozen source MIDI schedule unexpectedly changed")
                 _, events = parse_smf0(raw)
                 self.assertIn((0, "meta", (0x51, b"\x07\xa1\x20")), events)
                 self.assertIn((marker_tick, "meta", (0x06, b"SOURCE_EVENT_TARGET_NOT_PHYSICAL_GATE")), events)
@@ -168,6 +171,8 @@ class HardwareCueSafetyTests(unittest.TestCase):
             self.assertNotIn((6000, "note", (0x90, 60, 102)), omission)
             baseline = parse_smf0((destination / "bass_panel_phrase_event.mid").read_bytes())[1]
             self.assertIn((6000, "note", (0x90, 60, 102)), baseline)
+            self.assertEqual(hashlib.sha256((destination / "click_hardware_midi_cue_manifest.csv").read_bytes()).hexdigest(),
+                             "0e6d196df140530f810109ff4f20cae129490b227ddba5923948b184ada91467")
 
 
 if __name__ == "__main__":

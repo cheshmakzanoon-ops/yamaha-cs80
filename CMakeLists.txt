@@ -165,6 +165,13 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_click_bank_causality_tests PRIVATE cs80_core)
     add_test(NAME cs80_click_bank_causality_tests COMMAND cs80_click_bank_causality_tests --self-test)
     set_tests_properties(cs80_click_bank_causality_tests PROPERTIES TIMEOUT 300)
+    # Source-locked technician cue generator: independently validates SMF
+    # structure, exact schedule hashes, dirty-source rejection and no-overwrite.
+    # This is NOT a hardware listening result or a replacement click threshold.
+    add_test(NAME cs80_click_hardware_cue_guard_tests
+             COMMAND ${Python3_EXECUTABLE}
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/diagnostics/test_generate_click_hardware_cues.py)
+    set_tests_properties(cs80_click_hardware_cue_guard_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_ring_event_continuity_tests tests/RingEventContinuityTests.cpp)
     target_link_libraries(cs80_ring_event_continuity_tests PRIVATE cs80_core)
     add_test(NAME cs80_ring_event_continuity_tests COMMAND cs80_ring_event_continuity_tests
