@@ -8,12 +8,14 @@ const preflight = require('../../scripts/preflight-release-entrypoint.cjs');
 const M = 'a'.repeat(40), S = 'b'.repeat(40), OTHER = 'c'.repeat(40);
 const TAG_OBJECT = 'd'.repeat(40);
 const PR_HEAD = 'e'.repeat(40);
+const REQUEST_SHA = 'f'.repeat(40);
+const OWNER = 'cheshmakzanoon-ops', REPO = 'yamaha-cs80';
 const NUMERICAL = 'release-numerical-qualification.yml';
 const required = ['build.yml', 'dsp-measurements.yml', 'screenshots.yml', NUMERICAL];
 let checks = 0;
 
 async function scenario(overrides = {}) {
-  const request = { validated_sha: M, expected_main_sha: S,
+  const request = { validated_sha: M, expected_main_sha: S, requested_by: OWNER,
     pr_number: 6, reviewed_pr_head_sha: PR_HEAD, pr_merge_commit_sha: M,
     ...(overrides.request || {}) };
   const calls = [];
@@ -22,23 +24,37 @@ async function scenario(overrides = {}) {
       getContent: async args => {
         calls.push(['getContent', args]);
         if (overrides.noRequest) throw Error('Not Found');
-        return { data: { encoding: 'base64', content: Buffer.from(JSON.stringify(request)).toString('base64') } };
+        return { data: { type: 'file', encoding: 'base64',
+          content: Buffer.from(JSON.stringify(request)).toString('base64') } };
       },
-      compareCommits: async () => ({ data: {
-        status: overrides.diverged ? 'diverged' : 'ahead', merge_base_commit: { sha: M },
-        files: [overrides.renameFromSource
-          ? { filename: 'docs/screenshots/Engine.png', status: 'renamed',
-              previous_filename: 'src/core/Engine.cpp' }
-          : overrides.renameWithoutSource
-            ? { filename: 'docs/screenshots/Engine.png', status: 'renamed' }
-            : { filename: overrides.sourceChangedAfterM ? 'src/core/Engine.cpp'
-              : 'docs/screenshots/provenance.json' }],
-      } }),
+      compareCommits: async args => {
+        calls.push(['compareCommits', args]);
+        if (args.base === S && args.head === REQUEST_SHA) return { data: {
+          status: overrides.requestDiverged ? 'diverged' : 'ahead',
+          merge_base_commit: { sha: S },
+          files: [{ filename: overrides.requestHasScript
+            ? 'scripts/dispatch-reviewed-release.cjs' : '.github/release-request.json',
+          status: 'added' }],
+        } };
+        return { data: {
+          status: overrides.diverged ? 'diverged' : 'ahead', merge_base_commit: { sha: M },
+          files: [overrides.renameFromSource
+            ? { filename: 'docs/screenshots/Engine.png', status: 'renamed',
+                previous_filename: 'src/core/Engine.cpp' }
+            : overrides.renameWithoutSource
+              ? { filename: 'docs/screenshots/Engine.png', status: 'renamed' }
+              : { filename: overrides.sourceChangedAfterM ? 'src/core/Engine.cpp'
+                : 'docs/screenshots/provenance.json' }],
+        } };
+      },
     },
     git: {
       getRef: async args => {
         calls.push(['getRef', args]);
         if (args.ref === 'heads/main') return { data: { object: { sha: S, type: 'commit' } } };
+        if (args.ref === 'heads/codex/cs80-release-dispatch') return { data: {
+          object: { sha: overrides.requestBranchMoved ? OTHER : REQUEST_SHA,
+            type: 'commit' } } };
         if (args.ref === 'tags/v1.2.3') return { data: { object: {
           type: overrides.lightweightTag ? 'commit' : 'tag',
           sha: overrides.lightweightTag ? (overrides.badTag ? OTHER : S) : TAG_OBJECT,
@@ -82,11 +98,15 @@ async function scenario(overrides = {}) {
     },
   } };
   const eventName = overrides.eventName || 'workflow_dispatch';
-  const context = { repo: { owner: 'review', repo: 'cs80' }, eventName, runId: 777,
+  const context = { repo: { owner: OWNER, repo: REPO }, eventName, runId: 777,
+    actor: overrides.otherActor ? 'unreviewed-collaborator' : OWNER,
     ref: overrides.ref || (eventName === 'push' ? 'refs/tags/v1.2.3' : 'refs/heads/main'),
     sha: overrides.eventSha || S };
   const checkoutSha = overrides.checkoutSha || S;
-  const result = await preflight({ github, context, core: { info() {} }, checkoutSha });
+  const requestSha = overrides.requestSha !== undefined ? overrides.requestSha
+    : eventName === 'workflow_dispatch' ? REQUEST_SHA : undefined;
+  const result = await preflight({ github, context, core: { info() {} },
+    checkoutSha, requestSha });
   return { result, calls };
 }
 
@@ -99,7 +119,7 @@ async function scenario(overrides = {}) {
     && arg.head_sha === M && arg.event === 'push'))); checks++;
   assert.ok(manual.calls.some(([action, arg]) => action === 'getContent'
     && arg.path === '.github/release-request.json'
-    && arg.ref === 'codex/cs80-release-dispatch')); checks++;
+    && arg.ref === REQUEST_SHA)); checks++;
   assert.ok(manual.calls.some(([action, arg]) => action === 'pulls.get'
     && arg.pull_number === 6)); checks++;
 
@@ -110,9 +130,19 @@ async function scenario(overrides = {}) {
   assert.equal(lightweight.result.authorized, true); checks++;
   assert.ok(tag.calls.some(([action, arg]) => action === 'pulls.get'
     && arg.pull_number === 6)); checks++;
+  assert.ok(tag.calls.some(([action, arg]) => action === 'getContent'
+    && arg.ref === REQUEST_SHA)); checks++;
 
   const negatives = [
     ['manual on feature', { ref: 'refs/heads/feature' }],
+    ['non-owner manual actor', { otherActor: true }],
+    ['non-owner tag actor', { otherActor: true, eventName: 'push' }],
+    ['manual missing immutable request SHA', { requestSha: null }],
+    ['manual stale request commit', { requestSha: OTHER }],
+    ['request branch tip moved', { requestBranchMoved: true }],
+    ['request branch code instead of JSON', { requestHasScript: true }],
+    ['request commit not based on S', { requestDiverged: true }],
+    ['request owner spoofed', { request: { requested_by: 'other' } }],
     ['manual wrong event SHA', { eventSha: OTHER }],
     ['manual checkout wrong source', { checkoutSha: OTHER }],
     ['tag missing semver', { eventName: 'push', ref: 'refs/tags/vbad' }],
@@ -164,6 +194,8 @@ async function scenario(overrides = {}) {
   assert.match(workflow, /group:\s*cs80-reviewed-release-packages/);
   checks++;
   assert.match(workflow, /^\s{2}preflight:\s*$/m); checks++;
+  assert.match(workflow, /request_commit_sha:/); checks++;
+  assert.match(workflow, /requestSha:\s*process\.env\.REQUEST_COMMIT_SHA/); checks++;
   for (const job of ['macos-universal', 'windows-installer', 'linux-packages']) {
     const pos = workflow.indexOf(`  ${job}:`);
     assert.ok(pos > 0, `${job} preserved`); checks++;
