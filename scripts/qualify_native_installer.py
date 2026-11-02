@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise actual installer document payloads on native CI, never publish a release.
+"""Check native installer notices and binary transport identity, never release.
 
 Linux/macOS packages are expanded without system installation. Windows selects
 only the Standalone component in a disposable directory on its ephemeral runner,
@@ -18,6 +18,7 @@ import sys
 import tempfile
 
 from verify_distribution_docs import verify_documents
+from verify_installer_binaries import capture_build_payload, verify_installed_payload
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -48,6 +49,11 @@ def qualify(platform, build, out, source):
     if out.exists():
         raise ValueError('Refusing to overwrite native installer evidence')
     out.mkdir(parents=True)
+    # Any intentional binary signing/stripping must have finished before this
+    # snapshot. The packager may sign its outer container, not silently change
+    # the frozen inputs. This is transport identity, not compiler/source proof.
+    binary_inputs = capture_build_payload(platform, build)
+    (out / 'binary-input-manifest.json').write_text(json.dumps(binary_inputs, indent=2) + '\n')
     licence = build / '_deps/juce-src/LICENSE.md'
     if not licence.is_file():
         licence = ROOT / 'deps/juce/LICENSE.md'
@@ -96,6 +102,7 @@ def qualify(platform, build, out, source):
                 raise ValueError('Expected exactly one native Windows installer')
             package = label_ci_package(packages[0], source)
             installed = work / 'standalone-only'
+            expanded = installed
             documents = installed / 'documentation'
             native_scope = 'Actual Inno Setup Standalone-only installation in ephemeral runner temp; no VST3 or DAW test'
         primary_error = None
@@ -106,6 +113,8 @@ def qualify(platform, build, out, source):
                      f'/LOG={out / "setup.log"}'], out / 'install-process.log')
             receipt = verify_documents(ROOT, licence, documents, source)
             (out / 'document-verification.json').write_text(json.dumps(receipt, indent=2) + '\n')
+            binary_receipt = verify_installed_payload(platform, binary_inputs, build, expanded)
+            (out / 'binary-verification.json').write_text(json.dumps(binary_receipt, indent=2) + '\n')
         except BaseException as error:
             primary_error = error
             raise
@@ -133,8 +142,10 @@ def qualify(platform, build, out, source):
             'package': package.name, 'package_bytes': package.stat().st_size,
             'package_sha256': hashlib.sha256(package.read_bytes()).hexdigest(),
             'document_verification_sha256': hashlib.sha256((out / 'document-verification.json').read_bytes()).hexdigest(),
+            'binary_input_manifest_sha256': hashlib.sha256((out / 'binary-input-manifest.json').read_bytes()).hexdigest(),
+            'binary_verification_sha256': hashlib.sha256((out / 'binary-verification.json').read_bytes()).hexdigest(),
             'scope': native_scope,
-            'qualification': 'CI installer document evidence only; not a release, binary/source, numerical, signing, hardware or real-DAW certificate',
+            'qualification': 'CI installer document and payload-identity evidence only; not a release, compiler/source, numerical, signing, hardware or real-DAW certificate',
         }
         (out / 'native-installer-receipt.json').write_text(json.dumps(evidence, indent=2) + '\n')
         print(json.dumps(evidence))

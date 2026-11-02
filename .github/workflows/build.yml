@@ -80,8 +80,8 @@ jobs:
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform linux --build-dir build --out-dir packages
 
-      # CI document payload evidence only; no release, signing or DAW claim.
-      - name: Verify Linux installer document payload
+      # CI notice and binary transport identity only; no release, signing or DAW claim.
+      - name: Verify Linux installer notices and binary payload
         run: >
           python3 scripts/qualify_native_installer.py --platform linux
           --build-dir build --out-dir packages/native-installer-ci
@@ -511,8 +511,8 @@ jobs:
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages
 
-      # CI document payload evidence only; no release, signing or DAW claim.
-      - name: Verify native macOS installer document payload
+      # CI notice and binary transport identity only; no release, signing or DAW claim.
+      - name: Verify native macOS installer notices and binary payload
         run: >
           python3 scripts/qualify_native_installer.py --platform macos
           --build-dir build --out-dir packages/native-installer-ci
@@ -667,8 +667,8 @@ jobs:
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages
 
-      # CI document payload evidence only; no release, signing or DAW claim.
-      - name: Verify Windows installer document payload
+      # CI notice and binary transport identity only; no release, signing or DAW claim.
+      - name: Verify Windows installer notices and binary payload
         if: steps.configure.outcome == 'success'
         shell: pwsh
         run: |
