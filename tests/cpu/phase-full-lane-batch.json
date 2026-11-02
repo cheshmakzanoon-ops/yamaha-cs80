@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "status": "Test-only preregistration. Positive control is the unchanged scalar kernel; no nonlinear SIMD backend or speedup has been implemented or demonstrated.",
+  "baseline_commit": "3236c0cff5f6330fb1c6c44744f5f6b2d56ed24f",
+  "baseline_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "purpose": "Potential speedup of the complete nonlinear Ig00156PhaseCorrection::process across independent HP/LP filter lanes with exactly the scalar operation order and all observable continuation state preserved. A prior within-stage column-layout trial failed signed-zero/FE_DOWNWARD equality; it is not revived by this registration.",
+  "frozen_oracle": {
+    "existing_contract": "tests/cpu/exact-scalar-kernels.json",
+    "source_manifest": "tests/fixtures/exact_scalar_kernels/manifest.json",
+    "immutable_original_phase_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+    "frozen_original_header": "tests/fixtures/exact_scalar_kernels/raw/Ig00156PhaseCorrection.h",
+    "generation": "tests/cpu/materialize-frozen-scalar-kernels.py performs the sealed namespace-only transformation; the new test consumes that existing frozen artifact, never the live candidate math.",
+    "test": "tests/PhaseLaneOracleTests.cpp",
+    "independence": "Each lane has its own original frozen Ig00156PhaseCorrection instance and its own source instance. No candidate function, new coefficient/cache helper, shared state or clock scheduler is invoked by the frozen comparator. Standard runtime math may be shared, as in the parent frozen contract."
+  },
+  "baseline_positive_control": {
+    "mode": "The unchanged source Phase::process is called directly once per participating lane; there are zero SIMD backend entries and no attempted reduced work.",
+    "requirement": "All exact-bit assertions pass before changing phase source or adding a vector backend. The frozen header and fixture grid are never regenerated from an optimized candidate.",
+    "observed_on_2026_11_02_x86": {
+      "fp_cases": 128,
+      "lane_samples": 3670016,
+      "active_lanes": 3387616,
+      "masked_lanes": 282400,
+      "full_state_bit_comparisons": 79337496,
+      "bit_mismatches": 0,
+      "actual_direct_scalar_calls": 3387616,
+      "actual_vector_backend_calls": 0,
+      "copies": 112,
+      "restores": 352,
+      "resets": 240,
+      "fp_transitions": 512
+    }
+  },
+  "grid": {
+    "widths": [1, 2, 3, 4, 7, 8, 15, 16],
+    "audio_rates_hz": [88200, 96000, 176400, 192000, 352800, 384000, 705600, 768000],
+    "networks": "Alternate the original nominal HP and LP in a batch; independent per-lane control schedule and seed.",
+    "samples_per_case": 4096,
+    "rounding_modes_if_supported": ["FE_TONEAREST", "FE_DOWNWARD", "FE_UPWARD", "FE_TOWARDZERO"],
+    "denormal_modes": "All writable x86 FTZ/DAZ combinations; AArch64 FPCR.FZ modes where available; otherwise report unsupported variants, do not fake support.",
+    "transitions": "Change rounding at sample 512 and return at 1024; change denormal control at 2048 and return at 3072 with saved physical/history state intact.",
+    "controls": "Each lane independently uses fixed pairs, a moving cutoff/Q schedule, or 257-sample control changes; each set() must preserve the source's floating-point control bits.",
+    "inputs": "Deterministic hard-noise drive with original xorshift stream, and explicit final-step signed zero, subnormal, minimum normal, infinity and quiet-NaN bit patterns.",
+    "lane_mask": "(sample + lane) % 13 != 0; an inactive lane has no process() call, state write, current update, residual change or history advancement, and must retain its source-equivalent state.",
+    "state_events": "Snapshot lane at sample 512; copy the first lane to the final lane at 1024 (when width > 1); restore selected lanes at 2048; reset selected lanes at 3072; unaffected lanes continue.",
+    "comparisons_each_sample": [
+      "HP/BP/LP binary32 output for every participating lane",
+      "four physical binary64 nodes and four causal binary64 input-history coordinates for all lanes, including masked lanes",
+      "binary64 input rate, both Newton predictor slopes, both accepted OTA tanh currents",
+      "binary64 accepted solver residual and integral Newton correction count",
+      "preserved caller FP control after source and frozen set/process"
+    ],
+    "equality": "IEEE bit equality including the sign of zero and NaN payload wherever the original scalar result is defined. Maximum allowed output/state/residual ULP is 0; Newton correction difference is 0."
+  },
+  "candidate_constraints": {
+    "scope": "Full nonlinear phase calculation including RHS, initial predictor, sequential per-lane fastTanh and convergence, Newton refinement, state/output commit. Each lane may converge on a different iteration; masked or converged lanes must never receive spurious work/state mutations.",
+    "ordering": "Preserve original per-lane multiplication/addition and 4x4 / 3x3 reduction order, floating-point exceptional behavior, each lane's HP->LP dependency and eventual engine rank/mix ordering. Do not batch across a dependency edge.",
+    "compiler": "No global fast-math, FMA contraction policy change, reassociation, reciprocal approximation, relaxed transcendental, precision reduction, or global FP-mode override.",
+    "dispatch": "A backend must be guarded by actual ISA and FP-mode support; use the exact unchanged scalar fallback for unqualified width, rounding, FTZ/DAZ or exceptional input. Baseline binaries must not emit unguarded new-ISA instructions.",
+    "compatibility": "No acceptance pin or hardware claim changes. Exact legacy, legacy-tails, V1 and current V2 captures remain byte-identical, with all existing independent circuit, clock, idle, event, oscillator and physical gates retained."
+  },
+  "candidate_specific_true_work_witness": {
+    "status": "Registered now, not met by positive scalar control; a prospective backend is required for nonzero counts.",
+    "instrumentation": "In a separate test-only build, add counters at the actual batch-kernel entry, vectorized nonlinear arithmetic iteration and per-lane state commit; separately count calls to the unchanged scalar process() fallback. Counter increments must occur at real code sites and be reset/read from a controlled single-threaded test, not wrapper assumptions or selected metadata flags.",
+    "required_on_qualified_backend": "At least one real backend entry and one vector nonlinear iteration for each supported width 4/8/16 with FE_TONEAREST on hardware where that implementation claims support; total backend active-lane commits must equal its active mask's population; no scalar process() call may replace a lane claimed as vector-qualified. Mixed convergence/partial masks must prove correct per-lane iteration counts. Width 1, unsupported FP modes, scalar remainders and exceptional cases may fall back and must be explicitly counted.",
+    "negative_witnesses": "Individually force the candidate's dispatch to scalar-only despite a qualified vector case, suppress one real vector batch/active-lane commit, or process one masked-off lane. Each mutation must compile and fail a named ordinary assertion, not merely degrade timing.",
+    "no_shipping_telemetry": "Temporary counters and probes must not persist in shipping DSP state or alter audio arithmetic. A work-count improvement alone never qualifies an end-to-end CPU target."
+  },
+  "negative_controls": {
+    "status": "Test-harness candidate-call mutations before implementation; actual backend source mutations are mandatory after implementation.",
+    "CS80_PHASE_LANE_MUTATE_OUTPUT": "Toggle one bit in a computed LP output for lane 0/sample 1 and require FAIL lane.output[0] with ordinary exit 1.",
+    "CS80_PHASE_LANE_MUTATE_MASK": "Run candidate process on an excluded lane 0/sample 0 and require a phase.state/history FAIL with ordinary exit 1.",
+    "CS80_PHASE_LANE_MUTATE_CROSS_LANE": "Alter lane 1/sample 1 candidate drive only; require output and/or physical-state FAIL with ordinary exit 1.",
+    "mutation_protocol": "Each controlled mutation must separately compile successfully and terminate under the original test oracle with a named equality failure, while the unmodified positive control passes again. A crash, compiler failure, timeout or changed frozen fixture is not a mutation kill."
+  },
+  "qualification": {
+    "test_only_first": "Commit and validate this preregistration by itself, without changing DSP source. Implement no backend until baseline and mutation controls are demonstrated and registration publicly reviewable.",
+    "complete_tests": "Run this independent oracle, the pre-existing full exact scalar suite, all CTest core tests, source compatibility gates, and strict byte-identity pins from the current feature head before source eligibility.",
+    "cpu": "After a fully qualified candidate, use three serial before and three serial after cs80_source_factory_benchmark rounds on the same uncontended host at 48000 Hz, 256 frames, 8 held voices and quiet idle. Preserve all 51 fixture checksums/peaks/RMS, every per-preset median and p99, budget misses, Legacy controls and raw outliers; no timing from an instrumented build. Hard source targets: held RTF 0.15-0.20 and quiet-idle RTF <=0.02, both still RED.",
+    "publication": "No production integration, PR/main merge, audio re-pin or release until all exact numerical, physical and absolute CPU gates pass. Rejected or inconclusive experiments remain on separately labeled branches."
+  }
+}
