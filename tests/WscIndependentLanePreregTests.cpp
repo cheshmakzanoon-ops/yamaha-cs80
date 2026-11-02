@@ -307,6 +307,11 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
                         pos+=3;
                         continue;
                     }
+                    // Even rejected speculative eligibility must not alter
+                    // sticky x87/SSE flags or MXCSR control/status bits.
+                    const FpState rejectedFp=captureFp();
+                    g.lane=(pos*3+sample)%kLanes;
+                    checkFp(g,rejectedFp,beforeBatch);
                     restoreFp(beforeBatch);
                 }
             }
