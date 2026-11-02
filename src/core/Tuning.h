@@ -272,6 +272,26 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
     if ((!realtime && !nonRealtime) || data[3] != 0x08) return false;
     if (data[2] != 0x7F && data[2] != (std::uint8_t) deviceId) return false;
     const int sub = data[4];
+    // Validate the complete supported envelope before any table write. Exact
+    // layouts also bound the following data-byte scan (count is one uint8_t).
+    if (sub == 0x01)
+    {
+        if (!nonRealtime || size != 6 + 16 + 128 * 3 + 2) return false;
+        // Original bulk01 checksum ambiguity is explicitly tolerated by MTS.
+    }
+    else if (sub == 0x02 || sub == 0x07)
+    {
+        const int header = sub == 0x02 ? 7 : 8;
+        if (size < header + 1 || size != header + data[header - 1] * 4 + 1) return false;
+    }
+    else if (sub == 0x08 || sub == 0x09)
+    {
+        if (size != 8 + (sub == 0x08 ? 12 : 24) + 1) return false;
+        if ((data[5] & 0x7C) != 0) return false; // reserved channel/options bits
+    }
+    else return false;
+    for (int i = 1; i < size - 1; ++i)
+        if ((data[i] & 0x80) != 0) return false;
     auto pitch3 = [](const std::uint8_t* p, float& out) {
         if (p[0] == 0x7F && p[1] == 0x7F && p[2] == 0x7F) return false; // "no change"
         out = (float) p[0] + (float) ((p[1] << 7) | p[2]) / 16384.0f;
