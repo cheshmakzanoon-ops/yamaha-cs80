@@ -1,0 +1,165 @@
+{
+  "reviewed_commit": "6184dbbc6f8244adbe729a713e2c0f90b22a96c8",
+  "implementation_commit": "46ec619096d5513724d8d40edc16779f1403976b",
+  "preregistration_commit": "598b8a52de3b5127edbb4724cb935fd9d9e467f0",
+  "reviewed_tree": "14143db6636b27ec25aabafda8a472032d862b1c",
+  "recorded_utc": "2026-11-02T23:38:14.221965+00:00",
+  "decision": "bounded capture-infrastructure review passed; no blocking findings",
+  "scope": "independent source inspection and replay of existing exact registered fixtures; no actual musical rendering",
+  "registered_R": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "registered_R_tree": "c48bca5994c18e813a148f498e118fc63dd7d5af",
+  "source_F": "68c466d1dd27530dfef85479c7fdc59168320c36",
+  "source_T": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "base_tests": {
+    "source_completion": 45,
+    "namespace_workflow": 7,
+    "lock_runtime": 3,
+    "partial_write_faults": 2
+  },
+  "unchanged_V1_self_controls": 10,
+  "local_registered_R_F_T_preflight": "passed",
+  "source_guard_mutants": 15,
+  "namespace_mutants": 6,
+  "runtime_crashes_refused": 2,
+  "positive_and_restored": "passed both families",
+  "actionlint": "official 1.7.12 passed; optional external shellcheck/pyflakes disabled",
+  "source_F_git_paths_modes_blobs_unchanged": 2623,
+  "wrapper_and_four_copied_test_runner_files_namespace_only": true,
+  "old_archive_inventory": {
+    "hashed_payloads": 61,
+    "files_including_SHA256_json": 62,
+    "evidence_family_files_including_README_and_PREREGISTRATION": 64
+  },
+  "old_archive_hashes_verified": 61,
+  "fresh_control_logs_verified": [
+    {
+      "path": "source-mutants/unmodified.log",
+      "sha256": "d5d7395d40d1469e02bcde739441eb6ad9fa3601af8812861c89fb66a5bbd008"
+    },
+    {
+      "path": "source-mutants/ancestry.log",
+      "sha256": "77e923c875298069f4994f0a8eb0a43ae8fa372145e1b14325d6167fc9fe796b"
+    },
+    {
+      "path": "source-mutants/source_worktree.log",
+      "sha256": "44f8e5780c4913808b0f14327be626db418ba00a5d4a1fbf194948e3767f95d2"
+    },
+    {
+      "path": "source-mutants/ignored_source.log",
+      "sha256": "99490a7f074033f6184cce3fa0d741e3f5a874bd375277d60ed9a18d5fc5e8d4"
+    },
+    {
+      "path": "source-mutants/source_commit_tree.log",
+      "sha256": "795ddfc4d382dfeba9cea9ddcde9a3424adad4f428c8319a8850591d0c12ae5d"
+    },
+    {
+      "path": "source-mutants/head_source_tree.log",
+      "sha256": "ea04431dca6f0a9f0c16f81148ec834ebf98073410e932d99b70befee5e421e1"
+    },
+    {
+      "path": "source-mutants/request_bytes.log",
+      "sha256": "3a849a61356b4efc24bb489d8f31cf5ee6b48d31b2f56328e9cf6af8b62bfbcb"
+    },
+    {
+      "path": "source-mutants/original_file_bytes.log",
+      "sha256": "2357ca2ad435f7a749bb915dde22d92965928f4f6be82825ae0ec569fd828e7f"
+    },
+    {
+      "path": "source-mutants/original_contract_values.log",
+      "sha256": "987a7b1eacd52f441bb9bc0a43810565bd5a1f7686b8964952911cf76668f6c5"
+    },
+    {
+      "path": "source-mutants/build_input.log",
+      "sha256": "4f6185a7a4bffc098c280ea6720b5322f61edc93c68d7dcfa01c63c647392e0b"
+    },
+    {
+      "path": "source-mutants/completion_digest.log",
+      "sha256": "ddcf5277a5a09c38225551039f472a85201bf898125e1dd319f4d0b230310b79"
+    },
+    {
+      "path": "source-mutants/completion_validation.log",
+      "sha256": "ab39003c7bc7d737cef78321b62b27144d23aec9cebec7500bc135ca680e6cce"
+    },
+    {
+      "path": "source-mutants/physical_source_bytes.log",
+      "sha256": "f0937a205590b64753f508e2e9e75e59361823263d2500212b616d34fc697f89"
+    },
+    {
+      "path": "source-mutants/physical_source_ancestor.log",
+      "sha256": "602bb3dfc395f90abbcf7ab94a17df3512923d92f0e428d9a2bbfef2538ebb70"
+    },
+    {
+      "path": "source-mutants/physical_source_mode.log",
+      "sha256": "4d4b584027e3b4bb7c734167eb9e893a45027abe6580ee0c188a51acb35cdb96"
+    },
+    {
+      "path": "source-mutants/physical_source_leaf.log",
+      "sha256": "0a212cb5c760a1071ab7e7b8064dfd62495add9af501fbc6072a77f41299b4cb"
+    },
+    {
+      "path": "source-mutants/runtime_error_control.log",
+      "sha256": "a666e635535d8a6ad27718a3b180d8258fd8b976c868685bfe8e56df5f089259"
+    },
+    {
+      "path": "source-mutants/restored.log",
+      "sha256": "e863a01e546f4446afb971840bf2d1611fdaa1a072aa7ab1533dee35719c4b82"
+    },
+    {
+      "path": "namespace-mutants/positive/run.log",
+      "sha256": "95a900bcbe6fe6dea5d62cd4f43c00008b86e093c7717e71446ad2341506f0a4"
+    },
+    {
+      "path": "namespace-mutants/wrong_branch/run.log",
+      "sha256": "951dc259ec19ffb8f9d41edfb38c8ad4fb0cba90e37a62c0d9a5360ef0b4b6bf"
+    },
+    {
+      "path": "namespace-mutants/missing_fixture_trigger/run.log",
+      "sha256": "0b673254513ba5c4fb9c64b413e9ee4c86a1e2b5280fb29fe1604744f28dadfa"
+    },
+    {
+      "path": "namespace-mutants/missing_mutation_execution/run.log",
+      "sha256": "2f33beb05cd084eda6f1b677f7265551f8e76e09611a4328638abd3af6d7c7ee"
+    },
+    {
+      "path": "namespace-mutants/abbreviated_capture/run.log",
+      "sha256": "2a5d9b35d0ab3f3dad4a144e49016f7ba3862a928360def9e09167f4d40c04d2"
+    },
+    {
+      "path": "namespace-mutants/missing_completion_upload/run.log",
+      "sha256": "08c5f63c8eefcf70fa03f9ef4156fc41ad284848a180a4c9c21928aaae0dd20e"
+    },
+    {
+      "path": "namespace-mutants/reused_host_marker/run.log",
+      "sha256": "b969d6d0816775db2ee96d3f9c6a61d1eaf7f8a4c8960b8826d85d597a661d20"
+    },
+    {
+      "path": "namespace-mutants/runtime_error_control/run.log",
+      "sha256": "550e2467129231546c608bff77a01d5e2f65d914ca798aaed7bb34d55b836fc0"
+    },
+    {
+      "path": "namespace-mutants/restored/run.log",
+      "sha256": "95a900bcbe6fe6dea5d62cd4f43c00008b86e093c7717e71446ad2341506f0a4"
+    }
+  ],
+  "reviewer_harness_attempts_retained": [
+    "Initial static script looked for SHA256SUMS and checked zero archive files; not an archive pass.",
+    "Next script treated SHA256.json records as digest strings; failed before archive acceptance.",
+    "Next script assumed handoff 63 meant hashed payloads; actual complete manifest contains61. These are reviewer harness errors, not source-control kills."
+  ],
+  "source_edits_before_or_during_tests": false,
+  "no_new_remote_read_claimed": true,
+  "not_established": [
+    "actual885 capture",
+    "numerical PASS",
+    "later source tree coverage",
+    "CPU budget",
+    "native DAW or installer result",
+    "hardware parity",
+    "main activation or release"
+  ],
+  "limitations": [
+    "Existing cooperative-worktree assumptions preserved; no hostile-writer or fsync/atomic-durability claim.",
+    "Original V1 output markers are only interpreted through the separate source-bound completion wrapper.",
+    "Actual remote checkout and Actions capture remain required for the registered F source."
+  ]
+}

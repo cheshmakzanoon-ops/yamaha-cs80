@@ -1,0 +1,29 @@
+{
+  "case": "restored",
+  "source_commit": "6184dbbc6f8244adbe729a713e2c0f90b22a96c8",
+  "mutation": null,
+  "expected_failures": [],
+  "assessment": {
+    "qualified": true,
+    "ordinary_failures": [],
+    "runtime_errors": [],
+    "complete_test_inventory": true
+  },
+  "exit_code": 0,
+  "runtime_control_not_semantic_kill": false,
+  "log_sha256": "95a900bcbe6fe6dea5d62cd4f43c00008b86e093c7717e71446ad2341506f0a4",
+  "input_sha256": {
+    "tests/release/test_full_engine_audit_composed_default_v1_registration.py": "ea6a7951da7c58566337295c2dc53c739823b689a560abaa44cfd195920b2096",
+    ".github/workflows/full-engine-audit-composed-default-v1.yml": "125b26af483b2da73f8604dfb10293e421e93b4ec4bd78c45121e65723f753ca",
+    "scripts/full_engine_audit_gate_composed_default_v1.py": "f3f2e9e7d0c5983292d3e170ba89bd5e5afff5488a292ebf7a1b740abd56b58b",
+    "tests/release/full-engine-audit-composed-default-v1-namespace.json": "d5777137624ced5d7dde50379e91012892e644dbac015148b07f6284e60f3d4f",
+    ".github/full-engine-audit-request-composed-default-v1.json": "a27fa72a0c7a407c0b84307f4307c820b7fc35d2a40b62c0b49f76762a2b4703",
+    ".github/full-engine-audit-request.json": "913d398e627f1c4522a019b40e5b404dc8102e994ff69e1f17bc8b6ed69c4b83",
+    "scripts/full_engine_audit_gate.py": "4cd9d4a453d5edd7069350728e7edb99bf22f7db757c2d1b9d55a2248ade0adf",
+    "docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py": "3f1a68208c8c848c645088dae8d1a398190f32c05c1344bbffd3f4c071aa2fd9",
+    "tests/parity/tolerances-v2/ws1-voice.json": "998c8aac607c4b68fada8b65101246311c70d42e690fe06850136854a46461c5",
+    "tests/parity/tolerances-v2/completion-dsp.json": "61f35ff4c1400b8a456fb834a6c5667f2d835868c98fec47590d7920f28a88cb",
+    ".github/workflows/full-engine-audit.yml": "60479a9ae48f9a46bd3d550258c7abf0d516c555d6fe74d4a97f1951db1f46c9",
+    "CMakeLists.txt": "cd7ad0cc0aab45a399d02bbfa6c2877f76ff6bfaffec81c39746da05f1f5f49c"
+  }
+}

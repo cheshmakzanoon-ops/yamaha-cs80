@@ -1,0 +1,39 @@
+test_request_is_exact_frozen_composed_identity (__main__.ComposedDefaultRegistrationTests.test_request_is_exact_frozen_composed_identity) ... ok
+test_workflow_executes_all_guards_before_build (__main__.ComposedDefaultRegistrationTests.test_workflow_executes_all_guards_before_build) ... ok
+test_workflow_has_complete_source_and_runner_triggers (__main__.ComposedDefaultRegistrationTests.test_workflow_has_complete_source_and_runner_triggers) ... ok
+test_workflow_has_distinct_branch_and_readonly_identity (__main__.ComposedDefaultRegistrationTests.test_workflow_has_distinct_branch_and_readonly_identity) ... ok
+test_workflow_retains_both_provenance_layers_and_failures (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_both_provenance_layers_and_failures) ... FAIL
+test_workflow_retains_original_build_and_complete_capture_command (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_original_build_and_complete_capture_command) ... ok
+test_wrapper_keeps_exact_approved_guards_with_distinct_namespace (__main__.ComposedDefaultRegistrationTests.test_wrapper_keeps_exact_approved_guards_with_distinct_namespace) ... ok
+
+======================================================================
+FAIL: test_workflow_retains_both_provenance_layers_and_failures (__main__.ComposedDefaultRegistrationTests.test_workflow_retains_both_provenance_layers_and_failures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-composed-default-6184-results/namespace-mutants/missing_completion_upload/tests/release/test_full_engine_audit_composed_default_v1_registration.py", line 90, in test_workflow_retains_both_provenance_layers_and_failures
+    self.assertEqual(body.split(), expected)
+AssertionError: Lists differ: ['art[229 chars]acts/composed-default-v1-guard-mutations/', 'a[48 chars]ls/'] != ['art[229 chars]acts/audit-composed-default-v1.complete', 'art[96 chars]ls/']
+
+First differing element 7:
+'artifacts/composed-default-v1-guard-mutations/'
+'artifacts/audit-composed-default-v1.complete'
+
+Second list contains 1 additional elements.
+First extra element 9:
+'artifacts/composed-default-v1-registration-controls/'
+
+  ['artifacts/audit/',
+   'artifacts/audit-run.log',
+   'artifacts/audit.complete',
+   'artifacts/audit-provenance.json',
+   'artifacts/audit-summary.json',
+   'artifacts/audit-summary.md',
+   'artifacts/audit-composed-default-v1-provenance.json',
++  'artifacts/audit-composed-default-v1.complete',
+   'artifacts/composed-default-v1-guard-mutations/',
+   'artifacts/composed-default-v1-registration-controls/']
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=1)

@@ -1,0 +1,334 @@
+test_assume_unchanged_cannot_hide_modified_source (__main__.AuditComposedDefaultV1Tests.test_assume_unchanged_cannot_hide_modified_source) ... ok
+test_changed_reporter_cannot_be_laundered_by_new_registration (__main__.AuditComposedDefaultV1Tests.test_changed_reporter_cannot_be_laundered_by_new_registration) ... ok
+test_complete_synthetic_inventory_is_accepted_not_musical_proof (__main__.AuditComposedDefaultV1Tests.test_complete_synthetic_inventory_is_accepted_not_musical_proof) ... ok
+test_completion_binary_digest_mismatch (__main__.AuditComposedDefaultV1Tests.test_completion_binary_digest_mismatch) ... ok
+test_completion_provenance_digest_mismatch (__main__.AuditComposedDefaultV1Tests.test_completion_provenance_digest_mismatch) ... ok
+test_completion_raw_csv_digest_mismatch (__main__.AuditComposedDefaultV1Tests.test_completion_raw_csv_digest_mismatch) ... ok
+test_completion_registration_mismatch (__main__.AuditComposedDefaultV1Tests.test_completion_registration_mismatch) ... ok
+test_completion_source_mismatch (__main__.AuditComposedDefaultV1Tests.test_completion_source_mismatch) ... ok
+test_duplicate_causal_rate (__main__.AuditComposedDefaultV1Tests.test_duplicate_causal_rate) ... ok
+test_duplicate_phrase_program (__main__.AuditComposedDefaultV1Tests.test_duplicate_phrase_program) ... ok
+test_extra_suite (__main__.AuditComposedDefaultV1Tests.test_extra_suite) ... ok
+test_failed_reporter_cannot_emit_composed_default_v1_completion (__main__.AuditComposedDefaultV1Tests.test_failed_reporter_cannot_emit_composed_default_v1_completion) ... ok
+test_ignored_untracked_source (__main__.AuditComposedDefaultV1Tests.test_ignored_untracked_source) ... ok
+test_invalid_policy (__main__.AuditComposedDefaultV1Tests.test_invalid_policy) ... ok
+test_malformed_numeric (__main__.AuditComposedDefaultV1Tests.test_malformed_numeric) ... ok
+test_missing_causal_coordinate (__main__.AuditComposedDefaultV1Tests.test_missing_causal_coordinate) ... ok
+test_missing_phrase_row (__main__.AuditComposedDefaultV1Tests.test_missing_phrase_row) ... ok
+test_missing_registration_object (__main__.AuditComposedDefaultV1Tests.test_missing_registration_object) ... ok
+test_missing_source_object (__main__.AuditComposedDefaultV1Tests.test_missing_source_object) ... ok
+test_modified_composed_default_v1_request (__main__.AuditComposedDefaultV1Tests.test_modified_composed_default_v1_request) ... ok
+test_mutated_cmake_input (__main__.AuditComposedDefaultV1Tests.test_mutated_cmake_input) ... FAIL
+test_mutated_header (__main__.AuditComposedDefaultV1Tests.test_mutated_header) ... ok
+test_new_registration_cannot_weaken_original_inventory (__main__.AuditComposedDefaultV1Tests.test_new_registration_cannot_weaken_original_inventory) ... ok
+test_nonancestor_audio (__main__.AuditComposedDefaultV1Tests.test_nonancestor_audio) ... ok
+test_nonancestor_registration (__main__.AuditComposedDefaultV1Tests.test_nonancestor_registration) ... ok
+test_nonancestor_source (__main__.AuditComposedDefaultV1Tests.test_nonancestor_source) ... ok
+test_nonignored_untracked_source (__main__.AuditComposedDefaultV1Tests.test_nonignored_untracked_source) ... ok
+test_original_v1_files_are_not_redefined_by_composed_default_v1 (__main__.AuditComposedDefaultV1Tests.test_original_v1_files_are_not_redefined_by_composed_default_v1) ... ok
+test_physical_source_rejects_executable_mode_change (__main__.AuditComposedDefaultV1Tests.test_physical_source_rejects_executable_mode_change) ... ok
+test_physical_source_rejects_leaf_symlink (__main__.AuditComposedDefaultV1Tests.test_physical_source_rejects_leaf_symlink) ... ok
+test_physical_source_rejects_missing_tracked_file (__main__.AuditComposedDefaultV1Tests.test_physical_source_rejects_missing_tracked_file) ... ok
+test_physical_source_rejects_symlinked_ancestor (__main__.AuditComposedDefaultV1Tests.test_physical_source_rejects_symlinked_ancestor) ... ok
+test_sidecar_write_failure_cannot_leave_composed_default_v1_complete (__main__.AuditComposedDefaultV1Tests.test_sidecar_write_failure_cannot_leave_composed_default_v1_complete) ... ok
+test_skip_worktree_cannot_hide_modified_source (__main__.AuditComposedDefaultV1Tests.test_skip_worktree_cannot_hide_modified_source) ... ok
+test_staged_index_divergence_is_rejected_even_with_original_worktree_bytes (__main__.AuditComposedDefaultV1Tests.test_staged_index_divergence_is_rejected_even_with_original_worktree_bytes) ... ok
+test_staged_source (__main__.AuditComposedDefaultV1Tests.test_staged_source) ... ok
+test_stale_composed_default_v1_completion (__main__.AuditComposedDefaultV1Tests.test_stale_composed_default_v1_completion) ... ok
+test_stale_v1_completion (__main__.AuditComposedDefaultV1Tests.test_stale_v1_completion) ... ok
+test_unmodified_published_registration_and_source_pass (__main__.AuditComposedDefaultV1Tests.test_unmodified_published_registration_and_source_pass) ... ok
+test_unstaged_source (__main__.AuditComposedDefaultV1Tests.test_unstaged_source) ... ok
+test_valid_v1_outputs_get_distinct_composed_default_v1_sidecar_and_last_marker (__main__.AuditComposedDefaultV1Tests.test_valid_v1_outputs_get_distinct_composed_default_v1_sidecar_and_last_marker) ... ok
+test_wrong_causal_event (__main__.AuditComposedDefaultV1Tests.test_wrong_causal_event) ... ok
+test_wrong_causal_program (__main__.AuditComposedDefaultV1Tests.test_wrong_causal_program) ... ok
+test_wrong_head_source_tree (__main__.AuditComposedDefaultV1Tests.test_wrong_head_source_tree) ... ok
+test_wrong_registered_source_tree (__main__.AuditComposedDefaultV1Tests.test_wrong_registered_source_tree) ... ok
+
+======================================================================
+FAIL: test_mutated_cmake_input (__main__.AuditComposedDefaultV1Tests.test_mutated_cmake_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-composed-default-6184/tests/release/test_full_engine_audit_composed_default_v1.py", line 180, in test_mutated_cmake_input
+    self.refuse('build-input:CMakeLists.txt')
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-composed-default-6184/tests/release/test_full_engine_audit_composed_default_v1.py", line 48, in refuse
+    with self.assertRaises(ValueError) as failure:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 45 tests in 16.799s
+
+FAILED (failures=1)
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-07ksifsy/repo/artifacts/.cs80-audit-stage-1j4kp9gf/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-07ksifsy/repo/artifacts/.cs80-audit-stage-1j4kp9gf/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-s4b0ur5c/repo/artifacts/.cs80-audit-stage-qy96h6o1/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-s4b0ur5c/repo/artifacts/.cs80-audit-stage-qy96h6o1/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-afwsxv5o/repo/artifacts/.cs80-audit-stage-nu49z5my/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-afwsxv5o/repo/artifacts/.cs80-audit-stage-nu49z5my/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-m3n4q_bj/repo/artifacts/.cs80-audit-stage-rps65sa4/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-m3n4q_bj/repo/artifacts/.cs80-audit-stage-rps65sa4/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-ree1kecl/repo/artifacts/.cs80-audit-stage-gc3tt5kw/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-ree1kecl/repo/artifacts/.cs80-audit-stage-gc3tt5kw/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-apbpcfzc/repo/artifacts/.cs80-audit-stage-jic4xo0d/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-apbpcfzc/repo/artifacts/.cs80-audit-stage-jic4xo0d/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
+{
+  "preflight": "passed",
+  "registration_commit": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "production_audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "source_tree": "0f8a26e733644ac9f5985164e0175d4143c5d917",
+  "audit_command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "numerical_limits_modified": false
+}
+{
+  "source": "6eda5b0dee3b74e418d1c30517d4d7101fcb50f0",
+  "rows": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "targets_exceeding": [
+    {
+      "scope": "Source saw/pulse, ring off, 48 kHz",
+      "count": 14,
+      "worst": 0.0
+    }
+  ],
+  "nonfinite_stereo_frames": 0,
+  "files": [
+    "/tmp/cs80-audit-composed-default-v1-test-br29sjbz/repo/artifacts/.cs80-audit-stage-wvuzc8ln/audit-summary.json",
+    "/tmp/cs80-audit-composed-default-v1-test-br29sjbz/repo/artifacts/.cs80-audit-stage-wvuzc8ln/audit-summary.md"
+  ]
+}
+Complete full-bank three-rate engine audit retained; numerical failures are not waived.
