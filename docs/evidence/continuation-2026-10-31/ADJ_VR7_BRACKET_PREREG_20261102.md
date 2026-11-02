@@ -69,3 +69,34 @@ finite-positive assertions only. Keep all ordinary nodal, phase-correction,
 V1 compatibility, factory-tone hypotheses, original tolerance JSON and DSP
 numeric values unchanged. V1 fingerprint remains **`e5f877a025fc52c6`**.
 Commit this preregistration **before** implementing/running the bracket.
+
+## Evaluation after pre-registration, 2026-11-02
+
+The exact bracket above was committed as `72b9ffe` **before** the opt-in
+code was built or evaluated. All **66** synthetic candidate outputs passed
+finite-positive checks; zero failures. Both source-boundary experiments
+selected the **same interior** model-grid maximizer `j=28` at HP gm-law
+cutoff **236.685656 Hz**, with all other fixed controls unchanged:
+
+| Ideal NO1 zero-signal boundary | CP2 at selected cutoff (Vpp) | CP3/CP8 at selected cutoff (Vpp) | CP3/CP2 | Grid maximizer |
+| --- | ---: | ---: | ---: | --- |
+| NI open, `alpha=0` | **6.630** | **2.595** | .39137 | **INTERIOR j=28** |
+| NO1 zero impedance, `alpha=1` | **6.507** | **2.524** | .38779 | **INTERIOR j=28** |
+
+At the lower 184.997211-Hz bracket endpoint, HP CP3 was respectively
+1.010 and .857 Vpp; at the upper 245.165083-Hz endpoint, it was 2.410
+and 2.293 Vpp. Both model-grid maxima remain **below the printed Yamaha
+3.3–5.3 Vpp CP3 interval**. The frozen source-factory control point remains
+259.968 Hz with **1.692 Vpp** at CP3, `MISS`; **neither grid selection nor
+modeled NI loading modifies that report**. The fact that these peaks are
+interior makes the 33-point bracket a more informative *fixed-model
+diagnostic* than the prior edge-peaking local scan, but not a proof of a
+global or hardware maximum. In particular the unmeasured starting VR8
+setting, actual VFC-to-gm law, nonzero NO1 noise, switched FET impedance,
+and finite IC4/IC11 terminations remain open.
+
+This preregistered scan can be reproduced with:
+
+```sh
+./build-circuit/cs80_ig00156_nodal_tests tests/parity/tolerances-v2/ws1-voice.json --vr7-bracket-sensitivity
+```
