@@ -350,6 +350,8 @@ def validate_evidence(contract, bundle, expected_main_sha=None, expected_source_
     source = bundle["source"]
     for field in ("reviewed_sha", "source_tree_sha", "audio_sha", "registration_sha", "before_sha"):
         sha_string(source[field], f"source.{field}")
+    require(source["before_sha"] == contract["cpu"]["registered_before_source_sha"],
+            "CPU before source does not match preregistered checkpoint")
     require(source["before_sha"] != source["reviewed_sha"], "before and after source are identical")
     require(source["before_is_ancestor"] is True, "before source is not an ancestor")
     if expected_main_sha is not None:

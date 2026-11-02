@@ -23,7 +23,7 @@ if SPEC is None or SPEC.loader is None:
 gate = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(gate)
 
-BEFORE = "a" * 40
+BEFORE = "7c864f266a939aa2a42422440dd4c1c0cabe3814"
 REVIEWED = "b" * 40
 TREE = "c" * 40
 AUDIO = "d" * 40
@@ -234,6 +234,7 @@ class NumericalReleaseGateTests(unittest.TestCase):
             ("CPU nonfinite count", lambda f: f["cpu"]["after"][0]["rows"][0].update(nonfinite_count="1")),
             ("checksum differs across rounds", lambda f: f["cpu"]["after"][1]["rows"][0].update(checksum="0.987")),
             ("missing source ancestry", lambda f: f["source"].update(before_is_ancestor=False)),
+            ("substituted CPU baseline", lambda f: f["source"].update(before_sha="a" * 40)),
         ]
         for name, edit in edits:
             with self.subTest(name=name):

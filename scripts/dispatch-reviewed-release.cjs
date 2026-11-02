@@ -20,7 +20,12 @@ module.exports = async function dispatchReviewedRelease({ github, context, core,
       throw new Error('Only refreshed screenshot assets may follow the validated revision');
   }
 
-  const required = ['build.yml', 'dsp-measurements.yml', 'screenshots.yml'];
+  // Numerical qualification is *additive*: the existing three exact-main
+  // CI checks and screenshot-only S ancestry remain in force. This fourth
+  // workflow must run the registered full-audit score and held/idle CPU gate
+  // on validated source M; a green full-audit *capture* alone cannot pass it.
+  const required = ['build.yml', 'dsp-measurements.yml', 'screenshots.yml',
+    'release-numerical-qualification.yml'];
   for (const workflow_id of required) {
     const runs = (await github.rest.actions.listWorkflowRuns({ owner, repo, workflow_id,
       head_sha: validated, event: 'push', per_page: 100 })).data.workflow_runs;

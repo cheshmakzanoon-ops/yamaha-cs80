@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 import unittest
 
@@ -16,10 +17,10 @@ if SPEC is None or SPEC.loader is None:
 producer = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(producer)
 
-B = "a" * 40
+B = "7c864f266a939aa2a42422440dd4c1c0cabe3814"
 M = "b" * 40
 SRC = "c" * 40
-BENCH = "d" * 40
+BENCH = "92ea7e0b1801bf98fccaed21c13e676890039c94"
 
 
 def registration():
@@ -45,6 +46,12 @@ class TrustedSameHostProducer(unittest.TestCase):
             ("before", 3), ("after", 3)])
         ident = producer.require_ci_context(context(), M)
         self.assertEqual(ident["runner_job_id"], "10001/1/cpu_same_host")
+
+    def test_original_real_before_round_shape_when_available(self):
+        path = os.environ.get("CS80_ORIGINAL_CPU_BEFORE_ROUND")
+        if not path:
+            self.skipTest("set CS80_ORIGINAL_CPU_BEFORE_ROUND for real 51-row smoke check")
+        producer.verify_output(Path(path), B, CONTRACT["cpu"])
 
     def test_negative_registration_mutations(self):
         edits = [

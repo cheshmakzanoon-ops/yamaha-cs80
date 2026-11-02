@@ -37,6 +37,10 @@ lowest of its three after-run median RTFs is selected; its p99 and deadline
 miss count come from **that same run** and all three raw measurements remain
 visible. Every selected held preset must be ≤0.20 RTF and quiet idle ≤0.02.
 These are callback real-time factors, not aggregate operating-system CPU.
+The before source is fixed to
+`7c864f266a939aa2a42422440dd4c1c0cabe3814` and the common benchmark
+source blob to `92ea7e0b1801bf98fccaed21c13e676890039c94`; neither can be
+substituted with a convenient faster reference.
 
 ## Required trusted producer (not yet wired into CI)
 
@@ -47,6 +51,11 @@ These are callback real-time factors, not aggregate operating-system CPU.
    the actual CSV files, summary, provenance, `audit.complete` and frozen
    reporter. Separately, the benchmark runner produces 3+3 complete raw
    rounds on **one host in one CI job**, before `B` and after `M`.
+   `scripts/run_release_cpu_producer.py` is a local preregistered producer:
+   it refuses non-main/non-CI context, checks M and M:src, checks B ancestry
+   and both benchmark Git blobs, compiles the two exact sources before
+   timing, then alternates B/M rounds 1–3 serially. Partial/failed runs
+   cannot emit its final completion marker.
 3. The trusted runner generates a `qualification-receipt.json` **per round**
    with `host_id`, `runner_job_id`, `compiler_id`, `flags_sha256`,
    `benchmark_source_sha256`, `runner_environment_sha256`, and a unique
@@ -62,12 +71,34 @@ These are callback real-time factors, not aggregate operating-system CPU.
    machine-readable summary. Production use requires the workflow to verify
    artifact digests and the actual runner receipt source, not only a copied
    self-asserted JSON document.
-5. **Only after independent review and CI tests**, make the existing release
-   dispatcher additionally require the numerical qualification workflow's
-   successful **exact-M** conclusion and its source-bound PASS receipt before
-   sending `.github/release-request.json`. Preserve its current three green
-   exact-main checks and screenshot-only `S` ancestry. A green build, DSP,
-   screenshot or *capture* job must not satisfy or override this fourth gate.
+5. The isolated `scripts/dispatch-reviewed-release.cjs` addition now expects
+   a **fourth** exact-main/push success called
+   `release-numerical-qualification.yml`, in addition to its unchanged build,
+   DSP and screenshot checks. If that workflow is missing, pending, failed,
+   PR-only or from another source SHA, dispatch is denied. The original
+   screenshot-only `S` ancestry and duplicate-release check still apply;
+   a successful capture job does not substitute for the fourth workflow.
+   This guard must **not** land on main ahead of its fully tested trusted
+   numerical producer workflow, but in the meantime the missing workflow is
+   intentionally fail-closed.
+
+### Producer-workflow integration still blocked
+
+The frozen V1 full-audit preflight is source-tree-locked by registration
+commit `00da4498792523cf8d97fd40c17e12f215e190b8` to production `src`
+tree `7dd159d491012fd47b46c0aa651e86ea959ca289`. Any future production
+DSP fix needs **new preregistered exact-source capture evidence** while
+keeping that historical gate and its nine limits intact. A workflow which
+simply downloads the old 39ae6c artifact, alters the frozen registration,
+or treats a green audit capture as PASS would be invalid. Therefore a new
+`release-numerical-qualification.yml` workflow is deliberately **not yet
+supplied**. It must be preregistered and tested once M, source identity,
+original V1 reporter compatibility and the exact-source audit pipeline
+are known; it should run the complete audio audit and 3+3 CPU producer,
+verify raw same-run artifacts/digests and source identity in a final
+qualification job, and go green only after `release_numerical_gate.py`
+returns `pass=true`. Review its actual job/runner provenance and mutation
+controls before enabling release dispatch.
 
 ## Red/green verification
 
