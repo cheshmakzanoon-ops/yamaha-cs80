@@ -8,6 +8,7 @@
 //   cs80_engine_audit --out NEW_DIR [--suite phrase|click-causality|fx|alias|latency|cpu|all]
 //                     [--rates 44100,48000,96000] [--quick]
 //                     [--oversampling eco|standard|hq]
+//                     [--factory-tone-revision frozen-v1|public-amended-v2]
 //
 // Metric definitions are in docs/ENGINE_AUDIT.md. Output is one CSV per suite.
 #include "core/Engine.h"
@@ -40,6 +41,22 @@ void require(bool ok, const char* msg) { if (!ok) throw std::runtime_error(msg);
 // --oversampling: forces P_oversampling in every rendered frame (negative = the
 // scenario's own value, the parameter default).
 float oversamplingOverride = -1.0f;
+// Explicit opt-in only; the original audit and CPU workloads stay frozen V1.
+FactoryToneRevision auditFactoryToneRevision = FactoryToneRevision::frozenV1;
+
+// One writer keeps candidate identity testable without inventing audit results.
+void writeCandidatePolicy(std::ostream& policy)
+{
+    policy << "{\n  \"schema_version\": 1,\n  \"factory_tone_revision\": 2,\n"
+           << "  \"policy_id\": \"public-amended-marks-v2\",\n"
+           << "  \"policy_hash\": \"" << std::hex << public_tone_estimates::fingerprint
+           << "\",\n  \"default_changed\": false,\n  \"qualified\": false,\n"
+           << "  \"hardware_measured\": false,\n"
+           << "  \"boundary\": \"Explicit candidate; not original V1, CPU or full885 qualification.\"\n}\n";
+    policy.flush();
+    require(static_cast<bool>(policy), "cannot write candidate policy identity");
+}
+
 
 // ---------------------------------------------------------------------------
 // Scenario: either a full control frame (hardware tabs) or PANEL parameters.
@@ -73,6 +90,7 @@ Rendered render(const Setup& s, int rate, const std::vector<Event>& events, doub
     if (oversamplingOverride >= 0.0f) frame.effectiveValues[P_oversampling] = oversamplingOverride;
     frame.hardwareSources = s.sources;
     if (s.useProgrammer) frame = ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
+    frame.factoryToneRevision = auditFactoryToneRevision;
     require(e.setControlFrame(frame), "frame rejected");
     e.reset();
     const long frames = (long) std::llround(seconds * rate);
@@ -775,6 +793,14 @@ int main(int argc, char** argv)
             if (arg == "--out") dir = argv[++i];
             else if (arg == "--suite") suite = argv[++i];
             else if (arg == "--rates") rates = parseRates(argv[++i]);
+            else if (arg == "--factory-tone-revision")
+            {
+                const std::string revision = argv[++i];
+                require(revision == "frozen-v1" || revision == "public-amended-v2",
+                        "--factory-tone-revision takes frozen-v1 or public-amended-v2");
+                auditFactoryToneRevision = revision == "frozen-v1" ? FactoryToneRevision::frozenV1
+                                                                  : FactoryToneRevision::publicAmendedV2;
+            }
             else if (arg == "--oversampling")
             {
                 const std::string mode = argv[++i];
@@ -783,9 +809,18 @@ int main(int argc, char** argv)
             }
             else throw std::runtime_error("unknown option " + arg);
         }
-        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|click-causality|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq]");
+        require(!dir.empty(), "usage: cs80_engine_audit --out NEW_DIR [--suite phrase|click-causality|fx|alias|latency|cpu|all] [--rates a,b,c] [--quick] [--oversampling eco|standard|hq] [--factory-tone-revision frozen-v1|public-amended-v2]");
+        require(suite != "cpu" || auditFactoryToneRevision == FactoryToneRevision::frozenV1,
+                "CPU qualification requires the original frozen-v1 workload");
         require(!fs::exists(dir), "output exists; refusing to overwrite");
         fs::create_directories(dir);
+        if (auditFactoryToneRevision == FactoryToneRevision::publicAmendedV2)
+        {
+            std::ofstream policy(dir / "candidate-policy.json");
+            writeCandidatePolicy(policy);
+            policy.close();
+            require(static_cast<bool>(policy), "cannot close candidate policy identity");
+        }
         if (suite == "cpu") suiteCpu(dir, rates);
         if (suite == "all" || suite == "latency") suiteLatency(dir, rates);
         if (suite == "all" || suite == "alias") suiteAlias(dir, rates);

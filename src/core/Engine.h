@@ -59,6 +59,10 @@ inline constexpr bool isPureCs80(RenderPolicy policy) noexcept
     return policy == RenderPolicy::isolation;
 }
 
+// Explicit factory-tone interpretation only. This is independent of render
+// policy and modelVersion; existing frames retain the frozen V1 median policy.
+enum class FactoryToneRevision : std::uint32_t { frozenV1 = 1, publicAmendedV2 = 2 };
+
 // One render-thread transaction: effective parameters (including render policy)
 // and existing rank-local selector identities, not a second saved bank/authority.
 struct ControlFrame
@@ -68,6 +72,7 @@ struct ControlFrame
     std::uint32_t modelVersion = source_factory::modelVersion;
     std::array<memory_panels::Positions, 2> programmerPositions {};
     std::array<bool, 2> hasProgrammerPositions {};
+    FactoryToneRevision factoryToneRevision = FactoryToneRevision::frozenV1;
 
     // Explicit production programmer coordinate. Existing aggregate frames
     // without positions retain their historical physical-unit parameter API.
@@ -230,7 +235,7 @@ public:
     void reset();
     // Legacy entry point retains sanitization and denotes PANEL/no source model.
     void setParams(const ParamValues& values);
-    enum class ControlFrameStatus { accepted, invalidSelector, unsupportedModel, nonfiniteParameter, compileFailure, invalidProgrammerPosition };
+    enum class ControlFrameStatus { accepted, invalidSelector, unsupportedModel, nonfiniteParameter, compileFailure, invalidProgrammerPosition, unsupportedFactoryToneRevision };
     // Invalid frames are rejected as a whole, preserving parameters, compiled
     // controls and audio state. Finite core values retain established clamping.
     bool setControlFrame(const ControlFrame& frame);
@@ -686,8 +691,10 @@ private:
     std::array<bool, kNumRanks> sourceActive {};
     std::array<bool, kNumRanks> programmerActive {};
     std::array<memory_panels::Positions, kNumRanks> programmerPositions {};
-    // Immutable per-selection maps; compiled only when an active address changes.
+    // Immutable per-selection maps; factory revisions are part of each rank cache key.
     std::array<source_factory::ToneControls, kNumRanks> sourceTones;
+    std::array<FactoryToneRevision, kNumRanks> sourceToneRevisions {
+        FactoryToneRevision::frozenV1, FactoryToneRevision::frozenV1 };
     std::array<source_factory::RankBoundary, kNumRanks> sourceBoundaries;
     std::array<source_factory::CutoffReadout, kNumRanks> sourceCutoff;
     source_factory::SharedReadout sourceShared;

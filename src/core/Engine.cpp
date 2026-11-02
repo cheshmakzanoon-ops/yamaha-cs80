@@ -365,6 +365,12 @@ void Engine::setParams(const ParamValues& values)
 
 bool Engine::setControlFrame(const ControlFrame& frame)
 {
+    if (frame.factoryToneRevision != FactoryToneRevision::frozenV1
+        && frame.factoryToneRevision != FactoryToneRevision::publicAmendedV2)
+    {
+        controlFrameStatus = ControlFrameStatus::unsupportedFactoryToneRevision;
+        return false;
+    }
     if (frame.modelVersion != source_factory::modelVersion)
     {
         controlFrameStatus = ControlFrameStatus::unsupportedModel;
@@ -401,6 +407,7 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     // manifest. Their source_inferred identity and original unknown masks remain
     // explicit; PANEL/memory/off routes never reuse a stale source adapter.
     auto tones = sourceTones;
+    auto revisions = sourceToneRevisions;
     auto routes = sourceRoutes;
     std::uint64_t compilations = 0;
     for (int rank = 0; rank < kNumRanks; ++rank)
@@ -422,19 +429,25 @@ bool Engine::setControlFrame(const ControlFrame& frame)
             }
         }
         else if (source_factory::isSourceDriven(routes[rank])
-            && (!tones[rank].compiled || tones[rank].source.selector != selector))
+            && (!tones[rank].compiled || tones[rank].source.selector != selector
+                || revisions[rank] != frame.factoryToneRevision))
         {
-            if (!source_factory::compileTone(rank, selector, tones[rank]))
+            const bool compiled = frame.factoryToneRevision == FactoryToneRevision::publicAmendedV2
+                ? source_factory::compileTonePublicEstimate(rank, selector, tones[rank])
+                : source_factory::compileTone(rank, selector, tones[rank]);
+            if (!compiled)
             {
                 controlFrameStatus = ControlFrameStatus::compileFailure;
                 return false;
             }
+            revisions[rank] = frame.factoryToneRevision;
             ++compilations;
         }
     }
     hardwareSources = frame.hardwareSources;
     sourceRoutes = routes;
     sourceTones = tones;
+    sourceToneRevisions = revisions;
     sourceCompileCount += compilations;
     programmerActive = programmer;
     programmerPositions = frame.programmerPositions;

@@ -2,6 +2,7 @@
 
 #include "HardwareControl.h"
 #include "FactoryToneHypotheses.h"
+#include "FactoryTonePublicEstimates.h"
 
 #include <algorithm>
 #include <array>
@@ -636,6 +637,29 @@ inline bool compileTone(int rank, int selector, ToneControls& result,
                         Grade hpGrade = Grade::B, Grade lpGrade = Grade::B) noexcept {
     return detail::compileToneWithScenario(rank,selector,result,{},hpGrade,lpGrade);
 }
+// Explicit public-source estimate, not the engine default and not a revision
+// of the frozen V1 median. Every source exclusion remains in the provenance.
+inline InferenceScenario publicEstimateScenario(int rank, int selector) noexcept {
+    InferenceScenario scenario;
+    const auto* a = address(rank, selector);
+    if (a == nullptr) return scenario;
+    for (const auto& cell : public_tone_estimates::cells)
+        if (cell.address.board == a->board && cell.address.column == a->column)
+            scenario.overrides[scenario.count++] = {cell.address.output, cell.excitation()};
+    return scenario;
+}
+inline bool compileTonePublicEstimate(int rank, int selector, ToneControls& result,
+                                     Grade hpGrade = Grade::B, Grade lpGrade = Grade::B) noexcept {
+    ToneControls next;
+    if (!detail::compileToneWithScenario(rank,selector,next,publicEstimateScenario(rank,selector),hpGrade,lpGrade))
+        return false;
+    if (next.provenance.inferredCells != 0) {
+        next.provenance.hypothesisVersion = public_tone_estimates::version;
+        next.provenance.hypothesisHash = public_tone_estimates::fingerprint;
+    }
+    result = next;
+    return true;
+}
 inline bool compileToneForSensitivity(int rank, int selector, const InferenceScenario& scenario,
                                       ToneControls& result, Grade hpGrade = Grade::B,
                                       Grade lpGrade = Grade::B) noexcept {
@@ -695,11 +719,15 @@ struct CutoffReadout {
 };
 inline bool evaluateCutoff(const ToneControls& tone, const RankDrives& drives,
                            CutoffReadout& result) noexcept {
+    const bool knownHypothesis =
+        (tone.provenance.hypothesisVersion == factory_hypotheses::version
+            && tone.provenance.hypothesisHash == factory_hypotheses::fingerprint)
+        || (tone.provenance.hypothesisVersion == public_tone_estimates::version
+            && tone.provenance.hypothesisHash == public_tone_estimates::fingerprint
+            && tone.provenance.hypothesisOverrideMask == tone.provenance.inferredCells);
     if (!tone.compiled || tone.provenance.version != modelVersion
         || tone.provenance.sourceHash != sourceFingerprint
-        || (tone.provenance.inferredCells != 0
-            && (tone.provenance.hypothesisVersion != factory_hypotheses::version
-                || tone.provenance.hypothesisHash != factory_hypotheses::fingerprint))) return false;
+        || (tone.provenance.inferredCells != 0 && !knownHypothesis)) return false;
     std::array<double, voiceCount> touch {}, envelope {};
     double touchSum = 0.0, envelopeSum = 0.0;
     CutoffReadout next;

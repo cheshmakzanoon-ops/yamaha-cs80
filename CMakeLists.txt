@@ -511,6 +511,18 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_source_factory_boundary_tests
              COMMAND cs80_source_factory_boundary_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    add_executable(cs80_public_tone_estimate_tests tests/PublicToneEstimateTests.cpp)
+    target_include_directories(cs80_public_tone_estimate_tests PRIVATE src)
+    add_test(NAME cs80_public_tone_estimate_tests COMMAND cs80_public_tone_estimate_tests)
+    set_tests_properties(cs80_public_tone_estimate_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_public_tone_audit_revision_tests tests/PublicToneAuditRevisionTests.cpp)
+    target_link_libraries(cs80_public_tone_audit_revision_tests PRIVATE cs80_core)
+    add_test(NAME cs80_public_tone_audit_revision_tests COMMAND cs80_public_tone_audit_revision_tests)
+    set_tests_properties(cs80_public_tone_audit_revision_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_public_tone_engine_revision_tests tests/PublicToneEngineRevisionTests.cpp)
+    target_link_libraries(cs80_public_tone_engine_revision_tests PRIVATE cs80_core)
+    add_test(NAME cs80_public_tone_engine_revision_tests COMMAND cs80_public_tone_engine_revision_tests)
+    set_tests_properties(cs80_public_tone_engine_revision_tests PROPERTIES TIMEOUT 300)
     add_executable(cs80_programmer_integration_tests tests/ProgrammerIntegrationTests.cpp)
     target_link_libraries(cs80_programmer_integration_tests PRIVATE cs80_core)
     add_test(NAME cs80_programmer_integration_tests COMMAND cs80_programmer_integration_tests
