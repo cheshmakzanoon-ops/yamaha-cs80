@@ -9,6 +9,12 @@ The live draft PR #6 head was independently checked as
 is `d2d5528e66a6c78da493f5645647cfbd26a58ab4`, with `src` tree
 `7b0d3db37f3c59958808e6e08280b1119ea5b83f`.
 
+Independent review subsequently approved the production diff. Comment-only
+commit `07dd2fad182b015eb143739a160f08cab1651aca` replaces the stale phrase
+"untouched client" with "pinned vendored client"; its `src` tree is
+`dbbefcc5ca0eeac5b741a90b916c0e79336246fd`. This changes no compiled behavior,
+but later source-locked qualification must still use the actual final tree.
+
 Only incremental reviewed host/MTS and async UI-test commits were transplanted
 from `experiment/host-curve-extreme-offset-20261102` (`d934868`) and
 `experiment/ui-readiness-async-click-20261102` (`dcb3ebb`). Whole branch merges
