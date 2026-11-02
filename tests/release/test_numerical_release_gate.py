@@ -24,6 +24,15 @@ if SPEC is None or SPEC.loader is None:
 gate = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(gate)
 
+REPORTER_PATH = ROOT / CONTRACT["audit"]["frozen_reporter_path"]
+if hashlib.sha256(REPORTER_PATH.read_bytes()).hexdigest() != CONTRACT["audit"]["frozen_reporter_sha256"]:
+    raise RuntimeError("frozen original numerical reporter bytes changed")
+REPORTER_SPEC = importlib.util.spec_from_file_location("frozen_cs80_audit_reporter", REPORTER_PATH)
+if REPORTER_SPEC is None or REPORTER_SPEC.loader is None:
+    raise RuntimeError("frozen original audit reporter unavailable")
+reporter = importlib.util.module_from_spec(REPORTER_SPEC)
+REPORTER_SPEC.loader.exec_module(reporter)
+
 BEFORE = "a" * 40
 REVIEWED = "b" * 40
 TREE = "c" * 40
@@ -74,8 +83,13 @@ def raw_suites():
                "rate": str(rate), "baseline_score": "0.5"}
               for coordinate in ("original_physical_panel", "electrical_programmer", "tone_tabs")
               for rate in RATES]
-    return {"phrase.csv": phrase, "alias.csv": alias, "fx.csv": fx,
-            "latency.csv": latency, "click-causality.csv": causal}
+    suites = {"phrase.csv": phrase, "alias.csv": alias, "fx.csv": fx,
+              "latency.csv": latency, "click-causality.csv": causal}
+    # The synthetic tests use exactly the frozen CSV schema rather than
+    # allowing a positive fixture with missing, reordered or invented columns.
+    return {name: [{field: row.get(field, "" if field in reporter.TEXT_FIELDS else "0")
+                    for field in reporter.HEADERS[name]} for row in rows]
+            for name, rows in suites.items()}
 
 
 # The committed contract pins the actual frozen 222-program bank and 11 tone
@@ -182,6 +196,29 @@ def honestly_failed_original_scope(f):
 
 
 class NumericalReleaseGateTests(unittest.TestCase):
+    def test_same_row_count_forged_csv_schema_must_be_rejected(self):
+        # Whole-file header mutations preserve all 885 row counts, source IDs,
+        # numeric target values and intentionally self-consistent mock hashes.
+        def change_each(f, edit):
+            for row in f["audit"]["suites"]["phrase.csv"]:
+                edit(row)
+
+        def move_column_to_end(row):
+            value = row.pop("dc_single_rel")
+            row["dc_single_rel"] = value
+
+        edits = [
+            ("missing frozen phrase column", lambda f: change_each(f, lambda r: r.pop("dc_single_rel"))),
+            ("unregistered extra phrase column", lambda f: change_each(f, lambda r: r.update(invented_metric="0"))),
+            ("reordered frozen phrase header", lambda f: change_each(f, move_column_to_end)),
+        ]
+        for name, change in edits:
+            with self.subTest(name=name):
+                candidate = fixture()
+                change(candidate)
+                with self.assertRaises((gate.GateError, ValueError, KeyError)):
+                    gate.validate_evidence(TEST_CONTRACT, candidate)
+
     def test_same_row_count_forged_fixture_identity_must_be_rejected(self):
         # All these were false PASS cases before adding exact fixture coverage.
         # Each retains 885 rows, finite values and green numerical thresholds.

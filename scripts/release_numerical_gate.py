@@ -72,6 +72,20 @@ def verify_numeric_table(name, rows, text_fields):
                 finite(value, f"{name}:{i}:{column}")
 
 
+def verify_csv_schema(name, rows, frozen_header_sha256):
+    """Require every row to use the original reporter's ordered CSV columns."""
+    sha_string(frozen_header_sha256, f"{name} frozen header", 64)
+    require(isinstance(rows, list) and rows, f"{name}: missing CSV schema")
+    header = list(rows[0])
+    require(all(isinstance(column, str) for column in header),
+            f"{name}: nontext CSV header")
+    actual_sha = hashlib.sha256(",".join(header).encode("utf-8")).hexdigest()
+    require(actual_sha == frozen_header_sha256,
+            f"{name}: original ordered CSV header altered or incomplete")
+    require(all(list(row) == header for row in rows),
+            f"{name}: inconsistent columns across CSV rows")
+
+
 def source_phrase_rows(rows):
     return [row for row in rows if row["policy"] == "source"]
 
@@ -233,12 +247,15 @@ def verify_audit(contract, source, audit):
     require(nonfinite["alias_nonfinite_render_rows"] == [] and nonfinite["numeric_csv_cells"] == [],
             "nonfinite alias/CSV report")
     require(set(suites) == set(req["expected_rows"]), "audit suite missing or extra")
+    require(set(req["frozen_csv_header_sha256"]) == set(req["expected_rows"]),
+            "frozen CSV header registration missing or extra suite")
     require(set(summary["raw_files"]) == set(suites)
             and set(provenance["raw_files"]) == set(suites)
             and set(observed) == set(suites), "raw manifest missing or extra suite")
     for name, count in req["expected_rows"].items():
         rows = suites[name]
         require(len(rows) == count, f"{name}: expected {count}, have {len(rows)}")
+        verify_csv_schema(name, rows, req["frozen_csv_header_sha256"][name])
         verify_numeric_table(name, rows, TEXT_FIELDS[name])
         if name in ("phrase.csv", "fx.csv"):
             require(all(exact_integer(r["nonfinite"], f"{name} nonfinite") == 0 for r in rows),
