@@ -205,6 +205,89 @@ void testOwnerLeverDirections(Check check, Flush flush)
     }
 }
 
+// Supplementary original-mode bindings; the original27-control oracle above stays unchanged.
+template <typename Check, typename Flush>
+void testOriginalSubLeverDirections(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    struct Direction { int parameter; bool increasesDown; bool rebind; };
+    const Direction directions[] = {
+        { cs80::P_subOriginalFunction, true, false }, { cs80::P_subOriginalSpeed, true, false },
+        { cs80::P_subOriginalFunction, true, true }, { cs80::P_subOriginalSpeed, true, true },
+    };
+    juce::TemporaryFile presetRoot("-cs80-owner-lever-direction");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    for (const auto expected : directions)
+    {
+        cs80::ui::ParamKnob knob(host, expected.rebind ? (int) cs80::P_mix : expected.parameter);
+        knob.setHardwareSlider(juce::Colours::white);
+        if (expected.rebind)
+            check(knob.bindParameter(expected.parameter), "Original SUB rebound from MIX without a gesture");
+        knob.setSize(72, 220);
+        auto& slider = knob.getSlider();
+        const juce::String label = juce::String(cs80::paramDef(expected.parameter).name)
+            + (expected.rebind ? " rebound from MIX" : " direct");
+        const double minimumY = slider.getPositionOfValue(slider.getMinimum());
+        const double maximumY = slider.getPositionOfValue(slider.getMaximum());
+        check(expected.increasesDown ? maximumY > minimumY : maximumY < minimumY,
+              ("owner lever endpoints: " + label).toRawUTF8());
+        for (const double proportion : { 0.0, 0.25, 0.5, 0.75, 1.0 })
+        {
+            const double value = slider.proportionOfLengthToValue(proportion);
+            // The pinned JUCE attachment converts through NormalisableRange<float>,
+            // even though Slider's public geometry API is double precision.
+            check(std::abs(slider.valueToProportionOfLength(value) - proportion)
+                      <= 8.0 * std::numeric_limits<float>::epsilon(),
+                  ("owner lever reversible geometry: " + label).toRawUTF8());
+        }
+        auto* parameter = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(expected.parameter));
+        check(parameter != nullptr, ("owner lever parameter exists: " + label).toRawUTF8());
+        if (parameter == nullptr) continue;
+        for (const int key : { juce::KeyPress::downKey, juce::KeyPress::upKey })
+        {
+            parameter->setValueNotifyingHost(0.5f);
+            flush(20);
+            const float before = parameter->getValue();
+            BalancedGesture gesture;
+            parameter->addListener(&gesture);
+            const bool handled = slider.keyPressed(juce::KeyPress(key));
+            flush(20);
+            parameter->removeListener(&gesture);
+            const float after = parameter->getValue();
+            const bool shouldIncrease = (key == juce::KeyPress::downKey) == expected.increasesDown;
+            check(handled && (shouldIncrease ? after > before : after < before),
+                  ("owner lever physical arrow direction: " + label).toRawUTF8());
+            check(gesture.ok(), ("owner lever balanced arrow gesture: " + label).toRawUTF8());
+        }
+        parameter->setValueNotifyingHost(0.5f);
+        flush(20);
+        const float before = parameter->getValue();
+        const float x = 0.5f * (float) slider.getWidth();
+        const float y = (float) slider.getPositionOfValue(slider.getValue());
+        const juce::Point<float> mouseDownPoint(x, y);
+        const auto mouseDownTime = juce::Time::getCurrentTime();
+        const auto mouse = [&](float atY, juce::ModifierKeys modifiers)
+        {
+            const juce::Point<float> point(x, atY);
+            return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), point,
+                modifiers, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, &slider, &slider,
+                juce::Time::getCurrentTime(), mouseDownPoint, mouseDownTime, 1, atY != y);
+        };
+        const auto held = juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier);
+        BalancedGesture drag;
+        parameter->addListener(&drag);
+        slider.mouseDown(mouse(y, held));
+        for (int step = 1; step <= 4; ++step)
+            slider.mouseDrag(mouse(y + 6.0f * (float) step, held));
+        slider.mouseUp(mouse(y + 24.0f, juce::ModifierKeys()));
+        flush(20);
+        parameter->removeListener(&drag);
+        check(expected.increasesDown ? parameter->getValue() > before : parameter->getValue() < before,
+              ("owner lever downward pointer drag: " + label).toRawUTF8());
+        check(drag.ok(), ("owner lever balanced pointer gesture: " + label).toRawUTF8());
+    }
+}
+
 // The program display marks unsaved edits from parameter-change notifications rather than by comparing
 // every parameter on each timer tick. Host automation of one control must still light it, and undoing
 // that edit must clear it again.
@@ -307,39 +390,47 @@ template <typename Check, typename Flush>
 void testServiceS2FrontStripOrder(Check check, Flush flush)
 {
     using namespace panel_editor_detail;
-    const int order[] = {
-        cs80::P_masterTune, cs80::P_detune,
-        cs80::P_ringAttack, cs80::P_ringDecay, cs80::P_ringDepth, cs80::P_ringSpeed, cs80::P_ringAmount,
-        cs80::P_subWave, cs80::P_subSpeed, cs80::P_subVco, cs80::P_subVcf, cs80::P_subVca,
-        cs80::chParam(0, cs80::CP_feet), cs80::chParam(1, cs80::CP_feet),
-        cs80::P_mix, cs80::P_brilliance, cs80::P_resonance,
-        cs80::P_initBend, cs80::P_subAtSpeed, cs80::P_subAtVco, cs80::P_subAtVcf,
-        cs80::P_kbdBrillianceLow, cs80::P_kbdBrillianceHigh, cs80::P_kbdLevelLow, cs80::P_kbdLevelHigh,
-        cs80::P_volume,
-    };
-    juce::TemporaryFile presetRoot("-cs80-service-s2-order");
-    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
-    Cs80AudioProcessorEditor editor(host);
-    for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
+    for (const bool originalSub : { false, true })
     {
-        editor.setSize(size.x, size.y);
-        flush(30);
-        const auto label = juce::String(" at ") + juce::String(size.x) + "x" + juce::String(size.y);
-        juce::Component* previous = nullptr;
-        int previousParameter = -1;
-        for (const int parameter : order)
+        const int order[] = {
+            cs80::P_masterTune, cs80::P_detune,
+            cs80::P_ringAttack, cs80::P_ringDecay, cs80::P_ringDepth, cs80::P_ringSpeed, cs80::P_ringAmount,
+            originalSub ? (int) cs80::P_subOriginalFunction : (int) cs80::P_subWave,
+            originalSub ? (int) cs80::P_subOriginalSpeed : (int) cs80::P_subSpeed,
+            cs80::P_subVco, cs80::P_subVcf, cs80::P_subVca,
+            cs80::chParam(0, cs80::CP_feet), cs80::chParam(1, cs80::CP_feet),
+            cs80::P_mix, cs80::P_brilliance, cs80::P_resonance,
+            cs80::P_initBend, cs80::P_subAtSpeed, cs80::P_subAtVco, cs80::P_subAtVcf,
+            cs80::P_kbdBrillianceLow, cs80::P_kbdBrillianceHigh, cs80::P_kbdLevelLow, cs80::P_kbdLevelHigh,
+            cs80::P_volume,
+        };
+        juce::TemporaryFile presetRoot("-cs80-service-s2-order");
+        Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+        host.setParamValue(cs80::P_parityMode, 0.0f);
+        host.setParamValue(cs80::P_subOriginalMode, originalSub ? 1.0f : 0.0f);
+        Cs80AudioProcessorEditor editor(host);
+        for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
         {
-            auto* current = findParameterSlider(editor, parameter);
-            const auto name = juce::String(cs80::paramDef(parameter).name);
-            check(current != nullptr && current->getWidth() > 0 && current->getHeight() > 0,
-                  ("S2 front-strip control exists: " + name + label).toRawUTF8());
-            if (previousParameter >= 0)
-                check(previous != nullptr && current != nullptr
-                          && boundsIn(editor, *previous).getRight() <= boundsIn(editor, *current).getX(),
-                      ("S2 front-strip order: " + juce::String(cs80::paramDef(previousParameter).name)
-                          + " before " + name + label).toRawUTF8());
-            previous = current;
-            previousParameter = parameter;
+            editor.setSize(size.x, size.y);
+            flush(30);
+            const auto label = juce::String(originalSub ? " original SUB at " : " legacy SUB at ")
+                + juce::String(size.x) + "x" + juce::String(size.y);
+            juce::Component* previous = nullptr;
+            int previousParameter = -1;
+            for (const int parameter : order)
+            {
+                auto* current = findParameterSlider(editor, parameter);
+                const auto name = juce::String(cs80::paramDef(parameter).name);
+                check(current != nullptr && current->getWidth() > 0 && current->getHeight() > 0,
+                      ("S2 front-strip control exists: " + name + label).toRawUTF8());
+                if (previousParameter >= 0)
+                    check(previous != nullptr && current != nullptr
+                              && boundsIn(editor, *previous).getRight() <= boundsIn(editor, *current).getX(),
+                          ("S2 front-strip order: " + juce::String(cs80::paramDef(previousParameter).name)
+                              + " before " + name + label).toRawUTF8());
+                previous = current;
+                previousParameter = parameter;
+            }
         }
     }
 }
@@ -830,6 +921,7 @@ void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
     testMainViewLayout(check, flush);
     testServiceS2FrontStripOrder(check, flush);
     testOwnerLeverDirections(check, flush);
+    testOriginalSubLeverDirections(check, flush);
     testTremoloChorusTabs(check, flush);
     testIndependentChorusTabs(check, flush);
     testLegendFloorAndTypeface(check);

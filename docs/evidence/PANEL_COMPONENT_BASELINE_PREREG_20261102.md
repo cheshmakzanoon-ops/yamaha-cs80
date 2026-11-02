@@ -32,3 +32,15 @@ order only. Parameter IDs/defaults/value meaning/state/host automation remain
 unchanged. Signed detune and the portamento prose/diagram conflict retain their
 original explicit evidence boundaries. Native screenshots, real input, visual
 goldens, host integration and final-source qualification remain pending Actions.
+
+## Prospective SUB-binding fixture correction after the first execution
+
+The original unchanged run is preserved in `PANEL_COMPONENT_RESULTS_20261102.md`: owner directions351/92, S2 order102/12. The ten extra S2 failures come from looking for legacy SUB FUNCTION/SPEED IDs while the default editor binds those physical slots to the Original SUB IDs. This is an oracle binding error, not ten new placement defects. The original prediction remains failed and is not rewritten.
+
+Before production edits, the corrected S2 oracle explicitly selects PURE off and each legacy/original SUB mode. It retains26 physical slots, enumerates the two applicable IDs independently, and checks positive component size plus every adjacent pair at both1600x1000 and1120x700. This gives204 checks with four prospectively expected genuine TOUCH-before-KEYBOARD adjacency failures: one per mode/size cell. No missing or hidden control is skipped or counted as a success.
+
+The original27-control owner-direction function and351 assertions remain byte-for-byte unchanged. A separate54-check supplement applies its same thirteen assertions to original FUNCTION and SPEED, both directly constructed and rebound from MIX after hardware setup; the latter adds two successful-rebind assertions. Its prospectively expected16 failures are the four physical-direction assertions for each case. Rebinding from the opposite-direction MIX control independently challenges stale orientation. Both the unpeered driver and the native panel suite invoke this supplement.
+
+Corrected component baseline prediction:609 checks,112 ordinary failures = original owner92 + original-SUB16 + S2 order4; all497 other assertions must pass. This is a prospective prediction, not an observed result. Production source stays exactly dbbefcc5; only tests/docs change. No native window, physical input, screenshot, rendering or DAW acceptance is implied.
+
+The first fixture-edit transaction stopped before its second commit because it incorrectly looked for the owner-function invocation directly in `ui_snapshot.cpp`; the actual registration is through `runPanelEditorTests` in the test header. No corrected fixture executable ran before the complete committed registration.

@@ -1,4 +1,4 @@
-// Component-only execution of the unchanged e4f791c panel preregistration.
+// Component-only execution of the frozen owner oracle plus the explicit SUB-mode fixture refinement.
 #include "PanelEditorTests.h"
 #include <cstdio>
 
@@ -19,6 +19,9 @@ int main()
     };
     cs80::tests::testOwnerLeverDirections(check,flush);
     std::printf("Owner lever component: %d checks, %d failures\n",checks,failures);
+    const int originalStartChecks=checks,originalStartFailures=failures;
+    cs80::tests::testOriginalSubLeverDirections(check,flush);
+    std::printf("Original SUB component: %d checks, %d failures\n",checks-originalStartChecks,failures-originalStartFailures);
     const int ownerChecks=checks,ownerFailures=failures;
     cs80::tests::testServiceS2FrontStripOrder(check,flush);
     std::printf("S2 order component: %d checks, %d failures\n",checks-ownerChecks,failures-ownerFailures);
