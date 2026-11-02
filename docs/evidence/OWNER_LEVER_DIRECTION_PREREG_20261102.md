@@ -73,6 +73,11 @@ epsilons, rather than the draft double-only 1e-9 assumption. This is a
 representation-derived new-fixture bound registered before results, not a
 change to an original acceptance tolerance. Endpoint order and gesture counts
 remain exact, and direction remains a strict inequality.
+Independent review before native evaluation also corrected the synthetic mouse
+fixture to preserve its original press position and timestamp throughout the
+drag and release, while updating the current position and dragged flag. This
+matches JUCE's gesture model and prevents an artificial zero-distance drag from
+masking the direction result. No production UI code is changed by this correction.
 The original image limits remain unchanged. Any intentional new golden must be
 reviewed from actual native candidate/diff images, never generated as a fake UI.
 

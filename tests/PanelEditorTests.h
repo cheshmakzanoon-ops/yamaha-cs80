@@ -181,12 +181,14 @@ void testOwnerLeverDirections(Check check, Flush flush)
         const float before = parameter->getValue();
         const float x = 0.5f * (float) slider.getWidth();
         const float y = (float) slider.getPositionOfValue(slider.getValue());
+        const juce::Point<float> mouseDownPoint(x, y);
+        const auto mouseDownTime = juce::Time::getCurrentTime();
         const auto mouse = [&](float atY, juce::ModifierKeys modifiers)
         {
             const juce::Point<float> point(x, atY);
             return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), point,
                 modifiers, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, &slider, &slider,
-                juce::Time::getCurrentTime(), point, juce::Time::getCurrentTime(), 1, false);
+                juce::Time::getCurrentTime(), mouseDownPoint, mouseDownTime, 1, atY != y);
         };
         const auto held = juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier);
         BalancedGesture drag;
