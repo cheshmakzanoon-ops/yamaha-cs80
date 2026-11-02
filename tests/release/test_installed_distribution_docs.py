@@ -65,6 +65,18 @@ class InstalledDistributionDocsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "source|commit"):
             self.verify()
 
+    def test_wrong_source_url(self):
+        self.prepare()
+        self.change_manifest(lambda manifest: manifest.update(source_url="https://example.invalid/other-source"))
+        with self.assertRaisesRegex(ValueError, "source|URL"):
+            self.verify()
+
+    def test_manifest_cannot_claim_release_acceptance(self):
+        self.prepare()
+        self.change_manifest(lambda manifest: manifest.update(qualification="Release accepted"))
+        with self.assertRaisesRegex(ValueError, "scope|qualification"):
+            self.verify()
+
     def test_wrong_source_tree(self):
         self.prepare()
         self.change_manifest(lambda manifest: manifest.update(source_tree="f" * 40))

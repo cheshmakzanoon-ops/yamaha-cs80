@@ -15,6 +15,13 @@ bundle_id="com.referenceinstruments.cs80"
 artefacts="$build/CS80Reference_artefacts/Release"
 version="$(sed -n 's/^project(CS80Reference VERSION \([0-9.]*\).*/\1/p' "$root/CMakeLists.txt")"
 [ -n "$version" ] || { echo "cannot read the project version" >&2; exit 1; }
+# Native CI and universal release builds must not share a misleading label.
+architecture="$(python3 "$root/scripts/macos_package_architecture.py" --build-dir "$build")"
+case "$architecture" in
+    universal) host_arches="arm64,x86_64" ;;
+    arm64|x86_64) host_arches="$architecture" ;;
+    *) echo "unsupported package architecture: $architecture" >&2; exit 1 ;;
+esac
 
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
@@ -46,7 +53,7 @@ cat > "$work/distribution.xml" <<XML
 <?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="2">
     <title>$product $version</title>
-    <options customize="allow" require-scripts="false" hostArchitectures="arm64,x86_64"/>
+    <options customize="allow" require-scripts="false" hostArchitectures="$host_arches"/>
     <domains enable_localSystem="true"/>
     <choices-outline>
         <line choice="vst3"/>
@@ -65,7 +72,7 @@ cat > "$work/distribution.xml" <<XML
 </installer-gui-script>
 XML
 
-pkg="$out/CS-80-Reference-$version-macOS-universal.pkg"
+pkg="$out/CS-80-Reference-$version-macOS-$architecture.pkg"
 sign=()
 [ -n "$identity" ] && sign=(--sign "$identity")
 # macOS /bin/bash 3.2 treats an empty array as unbound under `set -u`, so expand

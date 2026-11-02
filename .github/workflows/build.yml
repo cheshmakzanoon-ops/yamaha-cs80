@@ -80,6 +80,13 @@ jobs:
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform linux --build-dir build --out-dir packages
 
+      # CI document payload evidence only; no release, signing or DAW claim.
+      - name: Verify Linux installer document payload
+        run: >
+          python3 scripts/qualify_native_installer.py --platform linux
+          --build-dir build --out-dir packages/native-installer-ci
+          --source-sha "${GITHUB_SHA}"
+
       - name: Upload Linux install bundle
         uses: actions/upload-artifact@v5
         with:
@@ -96,6 +103,10 @@ jobs:
           path: |
             build/Testing/Temporary/LastTest.log
             build/ci-juce-provenance.txt
+            build/ui-smoke/golden/*.png
+            packages/native-installer-ci/*.log
+            packages/native-installer-ci/*receipt.json
+            packages/native-installer-ci/document-verification.json
           if-no-files-found: warn
 
   pluginval:
@@ -500,6 +511,13 @@ jobs:
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages
 
+      # CI document payload evidence only; no release, signing or DAW claim.
+      - name: Verify native macOS installer document payload
+        run: >
+          python3 scripts/qualify_native_installer.py --platform macos
+          --build-dir build --out-dir packages/native-installer-ci
+          --source-sha "${GITHUB_SHA}"
+
       - name: Upload native macOS install bundle
         uses: actions/upload-artifact@v5
         with:
@@ -546,6 +564,10 @@ jobs:
           path: |
             build/Testing/Temporary/LastTest.log
             build/ci-juce-provenance.txt
+            build/ui-smoke/golden/*.png
+            packages/native-installer-ci/*.log
+            packages/native-installer-ci/*receipt.json
+            packages/native-installer-ci/document-verification.json
           if-no-files-found: warn
 
   windows-wrapper-contract:
@@ -645,6 +667,14 @@ jobs:
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform windows --build-dir build --out-dir packages
 
+      # CI document payload evidence only; no release, signing or DAW claim.
+      - name: Verify Windows installer document payload
+        if: steps.configure.outcome == 'success'
+        shell: pwsh
+        run: |
+          python scripts/qualify_native_installer.py --platform windows --build-dir build --out-dir packages/native-installer-ci --source-sha "$env:GITHUB_SHA"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Upload Windows install bundle
         if: steps.configure.outcome == 'success'
         uses: actions/upload-artifact@v5
@@ -662,6 +692,10 @@ jobs:
           path: |
             build/Testing/Temporary/LastTest.log
             build/ci-juce-provenance.txt
+            build/ui-smoke/golden/*.png
+            packages/native-installer-ci/*.log
+            packages/native-installer-ci/*receipt.json
+            packages/native-installer-ci/document-verification.json
           if-no-files-found: warn
 
   pluginval-windows:
