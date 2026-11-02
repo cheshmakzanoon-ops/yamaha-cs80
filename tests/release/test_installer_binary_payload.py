@@ -2,6 +2,7 @@
 """Synthetic build/install trees only; these are not native binary executions."""
 from __future__ import annotations
 import hashlib
+import copy
 import importlib.util
 from pathlib import Path
 import shutil
@@ -69,7 +70,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         return manifest
 
     def verify(self, platform, manifest):
-        return self.module.verify_installed_payload(platform, manifest, self.actual)
+        return self.module.verify_installed_payload(platform, manifest, self.build, self.actual)
 
     def test_linux_exact_inventory_hashes_and_explicit_scope(self):
         manifest = self.fixture('linux')
@@ -119,6 +120,16 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
         (self.actual / 'usr/bin/cs80-reference').write_bytes(changed)
         with self.assertRaisesRegex(ValueError, 'bytes|hash'):
             self.verify('linux', manifest)
+
+    def test_forged_manifest_cannot_certify_stale_payload(self):
+        manifest = self.fixture('linux')
+        forged = copy.deepcopy(manifest)
+        replacement = b'forged but self-consistent stale payload\n'
+        (self.actual / 'usr/bin/cs80-reference').write_bytes(replacement)
+        row = forged['components']['standalone']['entries'][0]
+        row.update(sha256=hashlib.sha256(replacement).hexdigest(), bytes=len(replacement))
+        with self.assertRaisesRegex(ValueError, 'build input|capture contract'):
+            self.verify('linux', forged)
 
     def test_external_source_symlink_is_rejected(self):
         self.fixture('linux')
