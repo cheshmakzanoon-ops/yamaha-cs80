@@ -779,6 +779,9 @@ if (CS80_BUILD_PLUGIN)
             add_test(NAME cs80_factory_tone_revision_locale_tests
                      COMMAND CS80Snapshots --factory-tone-locale-test)
             set_tests_properties(cs80_factory_tone_revision_locale_tests PROPERTIES TIMEOUT 120)
+            add_test(NAME cs80_render_policy_locale_tests
+                     COMMAND CS80Snapshots --render-policy-locale-test)
+            set_tests_properties(cs80_render_policy_locale_tests PROPERTIES TIMEOUT 120)
         endif()
     endif()
 

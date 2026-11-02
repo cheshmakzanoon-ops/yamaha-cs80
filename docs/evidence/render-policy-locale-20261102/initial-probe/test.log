@@ -1,0 +1,8 @@
+locale=C source_xml=0.0 pure_xml=1.0 restored_source=0 restored_pure=1 effective_pure=1
+locale=de_DE.utf8 source_xml=0.0 pure_xml=1.0 restored_source=1 restored_pure=0 effective_pure=0
+FAIL: saved Legacy ENGINE must not become Circuit under host numeric locale
+FAIL: saved PURE must not disable isolation under host numeric locale
+locale=fr_FR.utf8 source_xml=0.0 pure_xml=1.0 restored_source=1 restored_pure=0 effective_pure=0
+FAIL: saved Legacy ENGINE must not become Circuit under host numeric locale
+FAIL: saved PURE must not disable isolation under host numeric locale
+Existing policy locale probe: 6 checks, 4 failures
