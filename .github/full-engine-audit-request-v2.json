@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "registered_utc": "2026-11-02",
+  "purpose": "Intermediate HOST-only V2 capture of reviewed b91bb209 source; unchanged original 885-row inventory and numerical limits; not final production numerical acceptance or release qualification",
+  "production_audio_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "expected_src_tree": "dbbefcc5ca0eeac5b741a90b916c0e79336246fd",
+  "command": [
+    "./build-core/cs80_engine_audit",
+    "--out",
+    "artifacts/audit",
+    "--suite",
+    "all",
+    "--rates",
+    "44100,48000,96000"
+  ],
+  "quick": false,
+  "rate_order_hz": [
+    44100,
+    48000,
+    96000
+  ],
+  "suite_files": {
+    "latency.csv": 40,
+    "alias.csv": 168,
+    "fx.csv": 102,
+    "phrase.csv": 566,
+    "click-causality.csv": 9
+  },
+  "policy_coverage": "Legacy and Source Performance; PURE CS-80 and CPU suite not included. Frozen 222-program factory bank under both policies at first rate, every 16th program at other rates, eleven paired tone-tab configurations at all rates.",
+  "existing_numerical_contracts": [
+    "tests/parity/tolerances-v2/ws1-voice.json",
+    "tests/parity/tolerances-v2/completion-dsp.json"
+  ],
+  "frozen_analysis": "docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py",
+  "acceptance_policy": "Do not modify tolerances, source models, analysis rules or phrase fixtures; retain failures and partial evidence. This request registers coverage, not new hardware fidelity measurements or score thresholds.",
+  "request_version": 2,
+  "source_commit": "b91bb20978fff2c2bc0f5a3a745b939b1b23a6d3",
+  "original_v1_identity": {
+    "registration_commit": "00da4498792523cf8d97fd40c17e12f215e190b8",
+    "gate_commit": "39ae6c2684456950302cb4ed10ecfae980c37ddd",
+    "protected_files": {
+      ".github/full-engine-audit-request.json": {
+        "anchor_commit": "00da4498792523cf8d97fd40c17e12f215e190b8",
+        "git_blob": "b85bb26b415dad8e7945c2403b3b0422acf5b87a",
+        "sha256": "913d398e627f1c4522a019b40e5b404dc8102e994ff69e1f17bc8b6ed69c4b83"
+      },
+      "scripts/full_engine_audit_gate.py": {
+        "anchor_commit": "39ae6c2684456950302cb4ed10ecfae980c37ddd",
+        "git_blob": "af493c762a63f0cf1f74fbf93841b5c9a21c7f43",
+        "sha256": "4cd9d4a453d5edd7069350728e7edb99bf22f7db757c2d1b9d55a2248ade0adf"
+      },
+      "docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py": {
+        "anchor_commit": "00da4498792523cf8d97fd40c17e12f215e190b8",
+        "git_blob": "3ccb0219ee1bb5a77d4b891e7369c6897b0be789",
+        "sha256": "3f1a68208c8c848c645088dae8d1a398190f32c05c1344bbffd3f4c071aa2fd9"
+      },
+      "tests/parity/tolerances-v2/ws1-voice.json": {
+        "anchor_commit": "00da4498792523cf8d97fd40c17e12f215e190b8",
+        "git_blob": "d42fe5dc85785147449deced8995f4c75701bd62",
+        "sha256": "998c8aac607c4b68fada8b65101246311c70d42e690fe06850136854a46461c5"
+      },
+      "tests/parity/tolerances-v2/completion-dsp.json": {
+        "anchor_commit": "00da4498792523cf8d97fd40c17e12f215e190b8",
+        "git_blob": "08adb65c4aa21b808eb6df55b79cd44c8eaa4ef3",
+        "sha256": "61f35ff4c1400b8a456fb834a6c5667f2d835868c98fec47590d7920f28a88cb"
+      },
+      ".github/workflows/full-engine-audit.yml": {
+        "anchor_commit": "b91bb20978fff2c2bc0f5a3a745b939b1b23a6d3",
+        "git_blob": "2aad395e8160be14d0dbf3b2c617b61066b394e8",
+        "sha256": "60479a9ae48f9a46bd3d550258c7abf0d516c555d6fe74d4a97f1951db1f46c9"
+      }
+    }
+  },
+  "build_inputs": {
+    "CMakeLists.txt": {
+      "anchor_commit": "b91bb20978fff2c2bc0f5a3a745b939b1b23a6d3",
+      "sha256": "a94f111d2e25e6b4d4a4f8bea93cbac03bd5b2764fc1a95f4877769bf36f1e86"
+    }
+  },
+  "source_worktree_policy": "Reject staged, unstaged, nonignored untracked and ignored untracked files under src before building; compile only registered tracked sources using the unchanged source-commit CMakeLists.txt.",
+  "completion_policy": "Preserve unchanged imported V1 outputs. Emit a separate hash-bound V2 provenance sidecar and write audit-v2.complete last only after V1 marker/provenance/raw hashes and source identities agree. No stale completion reuse."
+}
