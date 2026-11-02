@@ -305,6 +305,10 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
     def simulated_directory_reparse(self, target):
         """Windows attribute witness, not actual Windows/junction execution."""
         original = Path.lstat
+        # The verifier canonicalizes its build root before visiting descendants.
+        # Select both spellings before patching; otherwise native temporary-root
+        # aliases can silently prevent the intended attributes from being seen.
+        targets = {target, target.resolve()}
 
         class ReparseStat:
             def __init__(self, value):
@@ -316,7 +320,7 @@ class InstallerBinaryPayloadTests(unittest.TestCase):
 
         def inspect(path, *args, **kwargs):
             value = original(path, *args, **kwargs)
-            return ReparseStat(value) if path == target else value
+            return ReparseStat(value) if path in targets else value
 
         return mock.patch.object(Path, 'lstat', inspect)
 
