@@ -45,10 +45,21 @@ def digest_json(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
+def directory_reparse_point(path):
+    # Windows lstat attributes predate Path.is_junction (Python 3.12). Do not
+    # silently waive directory aliases on the supported Python 3.10/3.11 path.
+    try:
+        value = path.lstat()
+    except FileNotFoundError:
+        return False
+    return (stat.S_ISDIR(value.st_mode)
+            and bool(getattr(value, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT))
+
+
 def independent_root(root):
     root = Path(root)
     require(root.is_dir() and not root.is_symlink()
-            and not getattr(root, 'is_junction', lambda: False)(), 'Missing or linked payload root')
+            and not directory_reparse_point(root), 'Missing or linked payload root')
     return root.resolve()
 
 
@@ -57,7 +68,7 @@ def component_path(root, relative):
     current = root
     for part in Path(relative).parts:
         current /= part
-        require(not current.is_symlink() and not getattr(current, 'is_junction', lambda: False)(),
+        require(not current.is_symlink() and not directory_reparse_point(current),
                 'Linked component path is not an independently verified payload')
     return current
 
@@ -85,7 +96,7 @@ def inventory(root, platform, expected_kind):
 
     def visit(path, relative):
         value = path.lstat()
-        require(not getattr(path, 'is_junction', lambda: False)(), 'Unsupported junction in binary payload')
+        require(not directory_reparse_point(path), 'Unsupported directory reparse point in binary payload')
         if stat.S_ISLNK(value.st_mode):
             target = os.readlink(path)
             require(not Path(target).is_absolute() and path.exists()
