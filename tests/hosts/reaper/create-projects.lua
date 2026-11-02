@@ -83,6 +83,9 @@ local function identify()
 end
 local settings = {VOLUME=c.render.volume_normalized, ["VOICE DISPERSION"]=0,
                   ["ANALOG DRIFT"]=0, ["ANALOG NOISE"]=0}
+if c.render.chorus_on_normalized ~= nil then
+  settings["CHORUS ON"] = c.render.chorus_on_normalized
+end
 local function state_readback()
   local result = {}
   for name, expected in pairs(settings) do
@@ -220,6 +223,13 @@ local function create()
         local ack = io.open(out .. "/SCREENSHOT_CAPTURED", "rb")
         if ack then
           ack:close()
+          if c.schema == "cs80-reaper-smoke-v2-dry" then
+            report.editor_open_after_escape = reaper.TrackFX_GetOpen(track, fx)
+            if not report.editor_open_after_escape then
+              fail("host editor closed during tour dismissal"); return
+            end
+            write("host-observations.json", json(report))
+          end
           reaper.TrackFX_Show(track, fx, 2)
           reaper.Main_SaveProject(0, false)
           write("HOST_SETUP_COMPLETE", "state, MIDI, envelope and editor observations recorded\n")

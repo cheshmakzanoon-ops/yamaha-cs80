@@ -37,6 +37,23 @@ def capture(out, name):
                        check=False, timeout=10)
 
 
+def dismiss_tour_and_capture(out):
+    """One real X11 key event in the unique instrument window, Actions only."""
+    capture(out, "host-editor-before-escape.png")
+    windows = subprocess.check_output(
+        ["xdotool", "search", "--onlyvisible", "--name", "^VST3i: CS-80 Reference .*CS-80 real-host smoke"],
+        text=True, timeout=10).splitlines()
+    if len(windows) != 1 or not windows[0].isdigit():
+        raise ValueError("expected one visible instrument window for bounded tour dismissal")
+    subprocess.run(["xdotool", "windowactivate", "--sync", windows[0]], check=True, timeout=10)
+    subprocess.run(["xdotool", "key", "--clearmodifiers", "Escape"], check=True, timeout=10)
+    (out / "editor-escape.json").write_text(json.dumps(
+        {"window": windows[0], "key": "Escape", "count": 1,
+         "scope": "actual X input; visual result must be inspected"}, indent=2) + "\n")
+    time.sleep(1)
+    capture(out, "host-editor.png")
+
+
 def stop(process):
     if process.poll() is None:
         process.terminate()
@@ -53,9 +70,10 @@ def main():
     parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument("--plugin", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--contract", type=Path)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    contract_path = root / "tests/hosts/reaper/contract-v1.json"
+    contract_path = args.contract.resolve() if args.contract else root / "tests/hosts/reaper/contract-v1.json"
     contract = json.loads(contract_path.read_text())
     if os.environ.get("GITHUB_ACTIONS") != "true" or not os.environ.get("DISPLAY"):
         raise ValueError("native host execution is restricted to an Actions X display")
@@ -84,8 +102,8 @@ def main():
     config = profile / "reaper.ini"
     # Isolated ordinary host configuration only. No license keys, registry edits,
     # evaluation-clock edits, persistent machine settings, or network audio.
-    # Request Linux's dummy backend; the actual mode is recorded by the host API.
-    # Bootstrap behavior is provisional until the native run demonstrates it.
+    # The original value 3 is retained, but V1 reported no open live device.
+    # Only offline rendering is claimed; record actual mode availability.
     config.write_text("[REAPER]\naudiomode=3\nlastproject=\n"
                       + "vstpath64=" + str(installed.parent) + "\n")
     env = os.environ.copy()
@@ -129,7 +147,10 @@ def main():
                 if (out / "READY_FOR_SCREENSHOT").exists() and not captured:
                     # Let the actual X window paint; this delay is not a pass oracle.
                     time.sleep(1)
-                    capture(out, "host-editor.png")
+                    if contract["schema"] == "cs80-reaper-smoke-v2-dry":
+                        dismiss_tour_and_capture(out)
+                    else:
+                        capture(out, "host-editor.png")
                     (out / "SCREENSHOT_CAPTURED").write_text("scrot returned successfully\n")
                     captured = True
                 if time.monotonic() > deadline:

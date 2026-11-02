@@ -24,7 +24,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import datetime, json
-          c = json.load(open('tests/hosts/reaper/contract-v1.json'))['host']
+          c = json.load(open('tests/hosts/reaper/contract-v2-dry.json'))['host']
           now = datetime.datetime.now(datetime.timezone.utc)
           start = datetime.datetime.fromisoformat(c['evaluation_start_utc'].replace('Z', '+00:00'))
           end = datetime.datetime.fromisoformat(c['evaluation_end_exclusive_utc'].replace('Z', '+00:00'))
@@ -40,7 +40,7 @@ jobs:
             libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
             libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
             libwebkit2gtk-4.1-dev libgtk-3-0t64 fonts-dejavu-core \
-            xvfb xauth openbox x11-utils scrot lua5.4
+            xvfb xauth openbox x11-utils scrot xdotool lua5.4
 
       - name: Verify harness negative controls and syntax
         run: |
@@ -54,7 +54,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import hashlib, json, pathlib, subprocess
-          c = json.load(open('tests/hosts/reaper/contract-v1.json'))['host']
+          c = json.load(open('tests/hosts/reaper/contract-v2-dry.json'))['host']
           assert c['url'].startswith('https://www.reaper.fm/files/')
           subprocess.run(['curl', '--fail', '--location', '--retry', '3', '--output', 'reaper.tar.xz', c['url']], check=True)
           observed = hashlib.sha256(pathlib.Path('reaper.tar.xz').read_bytes()).hexdigest()
@@ -84,6 +84,7 @@ jobs:
             python3 scripts/run-reaper-smoke.py \
               --reaper host/reaper_linux_x86_64/REAPER/reaper \
               --archive reaper.tar.xz \
+              --contract tests/hosts/reaper/contract-v2-dry.json \
               --plugin "build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3" \
               --out artifacts/reaper
           '
@@ -91,7 +92,7 @@ jobs:
       - name: Verify limited host observations and raw renders
         run: |
           python3 scripts/verify-reaper-smoke.py --evidence artifacts/reaper \
-            --contract tests/hosts/reaper/contract-v1.json \
+            --contract tests/hosts/reaper/contract-v2-dry.json \
             --expected-source "$(git rev-parse HEAD)" \
             --expected-src-tree "$(git rev-parse HEAD:src)"
 

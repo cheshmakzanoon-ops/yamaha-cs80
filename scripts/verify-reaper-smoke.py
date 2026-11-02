@@ -90,6 +90,13 @@ def verify_audio(contract, waves):
             "no_midi_peak": no_midi, "pre_note_peak": before_note}
 
 
+def evidence_contract_filename(contract):
+    filename = {"cs80-reaper-smoke-v1": "contract-v1.json",
+                "cs80-reaper-smoke-v2-dry": "contract-v2-dry.json"}.get(contract["schema"])
+    require(filename is not None, "unsupported host contract schema")
+    return filename
+
+
 def verify_metadata(manifest, observed, contract, source, src_tree, copied_contract_sha256):
     """Pure identity/state checks, independently testable without any fake host artifact."""
     require("error" not in manifest, "host runner reported failure")
@@ -105,11 +112,15 @@ def verify_metadata(manifest, observed, contract, source, src_tree, copied_contr
     require(len(observed["scan_matches"]) == 1 and "CS-80 Reference" in observed["fx_name"]
             and observed["fx_ident"], "host plugin identity missing")
     require(observed["editor_open"] is True, "host editor did not open")
+    if contract["schema"] == "cs80-reaper-smoke-v2-dry":
+        require(observed.get("editor_open_after_escape") is True, "host editor closed during tour dismissal")
     for field in ("pdc_samples", "chain_reported_pdc_samples"):
         require(isinstance(observed[field], (float, int)) and math.isfinite(observed[field])
                 and observed[field] >= 0, "invalid host-reported latency")
     wanted = {"VOLUME": contract["render"]["volume_normalized"], "VOICE DISPERSION": 0,
               "ANALOG DRIFT": 0, "ANALOG NOISE": 0}
+    if contract["schema"] == "cs80-reaper-smoke-v2-dry":
+        wanted["CHORUS ON"] = 0
     for phase in ("before_save", "after_reopen"):
         require(set(observed[phase]) == set(wanted), "missing state readback")
         for name, expected in wanted.items():
@@ -132,8 +143,10 @@ def verify_metadata(manifest, observed, contract, source, src_tree, copied_contr
 def verify_evidence(out, contract, source, src_tree):
     manifest = json.loads((out / "provenance.json").read_text())
     observed = json.loads((out / "host-observations.json").read_text())
-    verify_metadata(manifest, observed, contract, source, src_tree, sha256(out / "contract-v1.json"))
+    verify_metadata(manifest, observed, contract, source, src_tree, sha256(out / evidence_contract_filename(contract)))
     required = ["host-observations.json", "host-editor.png", "HOST_SETUP_COMPLETE", "setup.log", "cli-help.log"]
+    if contract["schema"] == "cs80-reaper-smoke-v2-dry":
+        required.extend(["host-editor-before-escape.png", "editor-escape.json"])
     for name in contract["render"]["files"]:
         required.extend([name + ".rpp", name + ".wav", "render-" + name + ".log"])
         require(manifest["exit_codes"][name] == 0, "host render did not exit cleanly")
@@ -156,7 +169,7 @@ def main():
     parser.add_argument("--expected-src-tree", required=True)
     args = parser.parse_args()
     contract = json.loads(args.contract.read_text())
-    require(sha256(args.contract) == sha256(args.evidence / "contract-v1.json"), "registered contract differs from evidence")
+    require(sha256(args.contract) == sha256(args.evidence / evidence_contract_filename(contract)), "registered contract differs from evidence")
     result = verify_evidence(args.evidence, contract, args.expected_source, args.expected_src_tree)
     report = {"scope": "limited REAPER Linux VST3 smoke", "result": "PASS", "metrics": result,
               "visual_review": "PENDING: inspect the actual host-editor.png; file presence is not visual acceptance",

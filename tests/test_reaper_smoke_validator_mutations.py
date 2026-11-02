@@ -35,7 +35,8 @@ class GuardMutationControls(unittest.TestCase):
         messages = ["checkout source mismatch", "source tree mismatch", "host archive identity mismatch",
                     "built/installed plugin mismatch", "contract hash mismatch", "host runner reported failure",
                     "running host version mismatch", "host assertions failed/missing", "host editor did not open",
-                    "invalid host-reported latency", "wrong restored ", "lost MIDI notes", "changed persisted envelope"]
+                    "invalid host-reported latency", "wrong restored ", "lost MIDI notes", "changed persisted envelope",
+                    "host editor closed during tour dismissal", "unsupported host contract schema"]
         try:
             for message in messages:
                 with self.subTest(removed_guard=message):
@@ -49,6 +50,8 @@ class GuardMutationControls(unittest.TestCase):
                     TESTS.validator = candidate
                     result = unittest.TestResult()
                     TESTS.ProvenanceControls("test_identity_state_and_failure_mutations").run(result)
+                    TESTS.DryProvenanceControls("test_identity_state_and_failure_mutations").run(result)
+                    TESTS.DryContractControls("test_copied_contract_filename_is_versioned").run(result)
                     self.assertEqual(result.errors, [], "unrelated execution errors are not a killed guard mutant")
                     self.assertGreater(len(result.failures), 0, "removed guard survived its specific negative control")
                     print("REJECTED removed metadata guard:", message, "assertion failures:", len(result.failures))

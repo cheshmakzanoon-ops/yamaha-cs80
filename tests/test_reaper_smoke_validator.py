@@ -93,6 +93,8 @@ class ProvenanceControls(unittest.TestCase):
                     "projects": {name: {"notes": notes} for name in ("baseline", "restored", "automated")}}
         observed["projects"]["automated"]["envelope"] = contract["render"]["automation_points"]
         observed["projects"]["no-midi"] = {"notes": []}
+        if self.contract_file == "contract-v2-dry.json":
+            observed["editor_open_after_escape"] = True
         source, tree = "1" * 40, "2" * 40
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
@@ -125,6 +127,7 @@ class ProvenanceControls(unittest.TestCase):
             }
             if self.contract_file == "contract-v2-dry.json":
                 mutations["restored-chorus-enabled"] = ("wrong restored CHORUS ON", lambda m, o: o["after_reopen"].update({"CHORUS ON": 1}))
+                mutations["editor-closed-after-escape"] = ("host editor closed during tour dismissal", lambda m, o: o.update(editor_open_after_escape=False))
             for name, (reason, mutate) in mutations.items():
                 with self.subTest(name=name):
                     m, o = copy.deepcopy(manifest), copy.deepcopy(observed)
@@ -138,6 +141,12 @@ class DryProvenanceControls(ProvenanceControls):
 
 
 class DryContractControls(unittest.TestCase):
+    def test_copied_contract_filename_is_versioned(self):
+        self.assertEqual(validator.evidence_contract_filename({"schema": "cs80-reaper-smoke-v1"}), "contract-v1.json")
+        self.assertEqual(validator.evidence_contract_filename({"schema": "cs80-reaper-smoke-v2-dry"}), "contract-v2-dry.json")
+        with self.assertRaisesRegex(ValueError, "^unsupported host contract schema$"):
+            validator.evidence_contract_filename({"schema": "unregistered"})
+
     def test_dry_fixture_preserves_original_contract_and_all_acceptance_limits(self):
         original = (ROOT / "tests/hosts/reaper/contract-v1.json").read_bytes()
         self.assertEqual(hashlib.sha256(original).hexdigest(),
