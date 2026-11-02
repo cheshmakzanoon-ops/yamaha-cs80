@@ -33,3 +33,5 @@ Before any production edit, register these isolated AdvancedPanel.cpp mutations 
 Do not infer physical input, native accessibility API, painting or DAW acceptance from these component callback/property controls.
 
 The no-MIDI-learn promise is specifically the custom editor affordance: this selector has no learn action or ParameterContext wrapper. The existing general MIDI_LEARN state/API mechanism can still name registered host IDs; this increment does not silently add a crafted-state/API mapping ban or change its migration contract.
+
+After the retained54/1 implementation run and actual raw/effective-policy diagnostic, the accepted-MIDI fixture explicitly clears live PURE and asserts sourcePerformance; the ignored case explicitly asserts isolation. These are two additional precondition assertions, not replacements. The full positive and widget-present mutant inventory is now56 (all original54 preserved), prospectively56/0 for production. Earlier54 registrations/results remain historical and unchanged; all registered mutation families still apply, including exactly two deferred-publication failures for the early-publish control.

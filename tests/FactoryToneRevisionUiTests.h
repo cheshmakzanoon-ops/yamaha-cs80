@@ -227,10 +227,18 @@ void testFactoryToneRevisionEditor(Check check, Flush flush)
         host.loadFactoryPreset(index);expectChoice(0,"shipped factory recall resets displayed revision to V1");
     }
     setChoice(host,1);host.loadInitPatch();expectChoice(0,"INIT resets displayed revision to V1");
+    host.setParamValue(cs80::P_parityMode,0);
     configure(host,true);setChoice(host,1);block(host);
+    check(host.getParamValue(cs80::P_parityMode)==0
+              && host.getParamValue(cs80::P_sourcePerformance)==1
+              && host.getEngine().getRenderPolicy()==cs80::RenderPolicy::sourcePerformance,
+          "accepted MIDI fixture explicitly runs Source Performance outside PURE");
     juce::MidiBuffer program;program.addEvent(juce::MidiMessage::programChange(1,7),0);
     block(host,32,program);expectChoice(0,"accepted MIDI Program Change synchronizes frozen V1");
     setChoice(host,1);host.setParamValue(cs80::P_parityMode,1);block(host);
+    check(host.getParamValue(cs80::P_parityMode)==1
+              && host.getEngine().getRenderPolicy()==cs80::RenderPolicy::isolation,
+          "ignored MIDI fixture explicitly runs effective PURE isolation");
     block(host,32,program);expectChoice(1,"PURE-ignored Program Change preserves displayed V2");
     setChoice(host,1);host.abCopyCurrentTo(1);setChoice(host,0);host.abToggle();
     expectChoice(1,"A/B recalls the copied V2 in the editor");
