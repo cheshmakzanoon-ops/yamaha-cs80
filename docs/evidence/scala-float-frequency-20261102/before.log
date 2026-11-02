@@ -1,0 +1,16 @@
+a24cb794244b2777e573832658f9ccc96151157d
+a1424ee1b4dc26d125805c9c482502ab2c790efc
+2026-11-02T12:25:14Z
+FAIL: 2400.0 rejects unrenderable nominal float frequency
+FAIL: 2400.0 leaves caller table unchanged
+accepted-invalid diagnostic 2400.0: 8 nonpositive/nonfinite core frequencies
+FAIL: 3600.0 rejects unrenderable nominal float frequency
+FAIL: 3600.0 leaves caller table unchanged
+accepted-invalid diagnostic 3600.0: 39 nonpositive/nonfinite core frequencies
+FAIL: tiny reference rejects unrenderable nominal float frequency
+FAIL: tiny reference leaves caller table unchanged
+accepted-invalid diagnostic tiny reference: 128 nonpositive/nonfinite core frequencies
+26 Scala float-frequency checks, 6 failures
+EXIT=1
+a505b7fd85f10408eb3b7a947566dfcbaa6e49aa0086894548131dfea5f45ca2  ../cs80-host-tool-evidence/scala-bounds/positive-before.f32
+2026-11-02T12:25:17Z

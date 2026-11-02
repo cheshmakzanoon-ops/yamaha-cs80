@@ -1,0 +1,52 @@
+55726dcc8300d5795295687d67573263cd0d826f
+6c66a20d33ffb5b1aabdd6fb9d9a49d28fba4065
+2026-11-02T12:33:27Z
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (1.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: /workspace/scratch/aa102d573ba3/cs80-scala-bounds/build-scala-qualification
+[1/13] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/13] Building CXX object CMakeFiles/cs80_tuning_input_boundary_tests.dir/tests/TuningInputBoundaryTests.cpp.o
+[3/13] Building CXX object CMakeFiles/cs80_scala_float_pitch_bounds_tests.dir/tests/ScalaFloatPitchBoundsTests.cpp.o
+[4/13] Building CXX object CMakeFiles/cs80_mts_counted_message_tests.dir/tests/MtsCountedMessageTests.cpp.o
+[5/13] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[6/13] Linking CXX static library libcs80_core.a
+[7/13] Building CXX object CMakeFiles/cs80_mts_realtime_semantics_tests.dir/tests/MtsRealtimeSemanticsTests.cpp.o
+[8/13] Linking CXX executable cs80_tuning_input_boundary_tests
+[9/13] Linking CXX executable cs80_scala_float_pitch_bounds_tests
+[10/13] Linking CXX executable cs80_mts_counted_message_tests
+[11/13] Linking CXX executable cs80_mts_realtime_semantics_tests
+[12/13] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+[13/13] Linking CXX executable cs80_tuning_midi_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-scala-bounds/build-scala-qualification
+    Start 84: cs80_tuning_input_boundary_tests
+1/5 Test #84: cs80_tuning_input_boundary_tests ......   Passed    0.00 sec
+    Start 85: cs80_scala_float_pitch_bounds_tests
+2/5 Test #85: cs80_scala_float_pitch_bounds_tests ...   Passed    0.00 sec
+    Start 86: cs80_mts_counted_message_tests
+3/5 Test #86: cs80_mts_counted_message_tests ........   Passed    0.00 sec
+    Start 87: cs80_mts_realtime_semantics_tests
+4/5 Test #87: cs80_mts_realtime_semantics_tests .....   Passed    1.73 sec
+    Start 88: cs80_tuning_midi_tests
+5/5 Test #88: cs80_tuning_midi_tests ................   Passed    0.50 sec
+
+100% tests passed out of 5
+
+Total Test time (real) =   2.25 sec
+a505b7fd85f10408eb3b7a947566dfcbaa6e49aa0086894548131dfea5f45ca2  build-scala-qualification/scala-float-pitch-positive.f32
+2026-11-02T12:33:59Z
