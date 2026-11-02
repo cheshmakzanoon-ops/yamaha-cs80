@@ -26,6 +26,7 @@
 #include "../../tests/ProgramLibraryHostTests.h"
 #include "../../tests/HostAutomationStateBoundaryTests.h"
 #include "../../tests/FactoryToneRevisionHostTests.h"
+#include "../../tests/FactoryToneRevisionLocaleTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -2095,6 +2096,13 @@ int main(int argc, char** argv)
                 sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
     std::puts("UI SMOKE PHASE: JUCE initialization");
     juce::ScopedJuceInitialiser_GUI juceInit;
+    if (argc > 1 && std::strcmp(argv[1], "--factory-tone-locale-test") == 0)
+    {
+        int checks = 0;
+        cs80::tests::testFactoryToneRevisionLocale([&](bool ok, const char* message) { ++checks; check(ok, message); });
+        std::printf("Factory tone locale processor: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--factory-tone-revision-test") == 0)
     {
         int checks = 0;

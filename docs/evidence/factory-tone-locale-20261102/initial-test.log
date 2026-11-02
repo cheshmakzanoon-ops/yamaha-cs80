@@ -1,0 +1,6 @@
+locale=C decimal=. saved=1.0 restored=1 expected=1
+locale=de_DE.utf8 decimal=, saved=1.0 restored=0 expected=1
+FAIL: actual saved V2 session must restore V2 independently of host numeric locale
+locale=fr_FR.utf8 decimal=, saved=1.0 restored=0 expected=1
+FAIL: actual saved V2 session must restore V2 independently of host numeric locale
+Locale processor probe: 3 checks, 2 failures
