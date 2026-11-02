@@ -1,0 +1,59 @@
+{
+  "id": "click-cp3-input-coupling-screen-20261102",
+  "status": "REGISTERED",
+  "preregister_before_trial": true,
+  "source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "prior_unchanged_path_evidence": "docs/evidence/m41-vca-path-causality-20261102.csv (SHA256 7fa78c747afeabf3ee25cf506c67c287a4cf0f5dbcf3e631be485566ca5b70c8)",
+  "hardware_basis": [
+    "Yamaha M41 p41: IG00156 LP pin15 -> CP8/CP3 -> 1uF/50V NP -> 100k -> IG00151 IC4 +IN3, physical capacitor BEFORE gain/current control",
+    "Yamaha M41 p41: LP1(27) -> separate 100k/0.01uF branch -> IC4 LI2; CP4 is output of voice VCA",
+    "Yamaha M41/IG00159: evolving envelope charge on a separate 0.22uF path, not a zero-time assignment to audio input capacitor",
+    "No verified exact KAS-to-IG00159 gate net; no measured input/output impedances or calibrated IG00151 internal law"
+  ],
+  "implementation_basis": [
+    "src/core/Engine.cpp: vcaInput=filtered*rs.vcfLevel+sine; no explicit CP3 input coupling at this summing boundary",
+    "src/core/Vca.h: Ig00151Vca::process() updates an inferred 1uF*100k output coupling AFTER envelope*LI*EI multiplication; this is not mathematically equivalent to a separately documented input capacitor",
+    "The existing output coupling may represent an unverified additional stage; this test does not remove it, relocate it in production, or claim it is absent in hardware"
+  ],
+  "hypothesis": {
+    "id": "H_CP3_INPUT_CAPACITOR_HIGH_FREQUENCY_INSENSITIVITY",
+    "claim": "Under the declared ideal-source 1uF/100k (0.1s) input-coupling inference, adding Yamaha's source-visible CP3 input capacitor before the frozen IG00151 equation has a strong, measurable effect on a continuous DC input driven by a smooth VCA envelope, but changes the 8ms peak sample-to-sample slope of a 1760Hz C1-smooth pitched attack by less than 5 percent. Therefore this missing pre-input capacitor alone is not a demonstrated cause of the existing high-frequency source click scores.",
+    "primary_prediction": "For each of 44100,48000,96000 native rates, 1760Hz 0.20 input amplitude, 4ms C1 half-cos attack, independent pre-warmed CP3 capacitor, maxJump(augmented input cap plus original output cap) / maxJump(original output cap alone) remains in [0.95,1.05] in the first 8ms after the artificial key gate.",
+    "source_discriminator": "For a precharged constant +1.0 source input and the same smooth envelope, first 8ms max absolute post-VCA waveform of the extra-input-coupled model is <=0.02 of the original output-coupled model, proving that the two capacitor positions are not interchangeable on control-changing/DC signals.",
+    "smooth_negative": "The 1760Hz artificial attack has an exactly zero PCM step at gate sample in each model (continuous C1 envelope); despite that known negative label, maxJump divided by the frozen Funky pre-off chord-independent 60ms jump reference exceeds 1 in at least one host rate. This is a numerical specificity test, not a hardware or subjective listening verdict.",
+    "falsifier": "Any rate outside the declared [0.95,1.05] pitched maxJump ratio, a DC discriminator ratio >0.02, a nonzero gate-sample step in either C1-smooth control, or failure of known positive/negative oracles falsifies the associated prediction. Keep exact failing rows; do not repair by changing 0.1s or source gates."
+  },
+  "independent_controls": [
+    "Grounded audio x=0 and identical C1 gate: the two VCA paths must remain bit-identical, including the existing inferred pedestal and output coupling; catches accidental control-law mutations from the input-cap test.",
+    "Constant-amplitude held 220Hz and 1760Hz sine with the same pre-warmed input capacitor: report steady state transfer and derivative ratios separately from gate attacks; no claim of calibrated Yamaha spectra.",
+    "Artificial one-sample +0.20 FS corruption at gate+1 sample of augmented pitched PCM must differ in exactly one output sample and create >0.19 absolute derivative relative to uncorrupted output.",
+    "Second positive at gate+6ms in the right-channel copy must produce an independently localized >0.19 derivative; never modify engine production PCM.",
+    "At every rate independently compare original and augmented 220Hz 0.10 input C1-smooth and 1760Hz 0.20 input C1-smooth, using source Vca.h primitive for both, one extra stand-alone RC recurrence only for augmented.",
+    "Each 1uF input capacitor receives a one-second oscillator/DC history while VCA envelope is exactly zero; same onset and exact native sample clock. The assumed 100k input load and ideal CP3 source are explicit unverified circuit inferences."
+  ],
+  "fixed_test_parameters": {
+    "rates": [44100,48000,96000],
+    "input_capacitance_F": 0.000001,
+    "assumed_input_resistance_ohms": 100000,
+    "input_highpass_tau_seconds": 0.1,
+    "test_input_gain": 1.0,
+    "exp_input_octaves": 0.0,
+    "prewarm_seconds": 1.0,
+    "post_on_seconds": 0.012,
+    "attack_seconds": 0.004,
+    "window_seconds": 0.008,
+    "pitch_controls": [
+      {"hertz": 220.0, "amplitude": 0.10},
+      {"hertz": 1760.0, "amplitude": 0.20}
+    ],
+    "funky_frozen_reference_by_rate": {
+      "44100": 0.037371031939983368,
+      "48000": 0.037026423960924149,
+      "96000": 0.029931630939245224
+    },
+    "source_reference_origin": "unmodified Funky original 60ms pre-noteOff maxJump denominator, not a new scorer or changed limit",
+    "required_scenario_rows": 42,
+    "expected_columns": "rate,case,path,input_hz,input_amplitude,reference,maxjump,normalized_score,peak_abs,gate_pcm_step,ratio_to_original,nonfinite"
+  },
+  "reporting_boundaries": "Additive stand-alone software feasibility screen, NOT Engine A/B integration, not a unique physical capacitor law, not source-calibrated hardware, not an acoustic click PASS. Existing original six click limits stay immutable and FAIL where red. No src/** or production audio change."
+}
