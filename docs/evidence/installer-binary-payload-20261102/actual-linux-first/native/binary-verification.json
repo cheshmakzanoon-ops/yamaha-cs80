@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "platform": "linux",
+  "verified_components": [
+    "standalone",
+    "vst3"
+  ],
+  "components": {
+    "vst3": {
+      "entries": 6,
+      "payload_inventory_sha256": "7365d1d28b7666ac2b0d37f6981fad0ef55cb910f83b3262459a619f9dedd93a",
+      "install_destination": "usr/lib/vst3/CS-80 Reference.vst3"
+    },
+    "standalone": {
+      "entries": 1,
+      "payload_inventory_sha256": "3e18c63c91c5b15c3254b315d51dac48e6f75d8f040c64c7ca1e768eddf19bd5",
+      "install_destination": "usr/bin/cs80-reference"
+    }
+  },
+  "input_manifest_sha256": "76c161fa6df92e30bff91b84edfcc1546d8a24192762a8a19c50ef3d0c855de3",
+  "platform_limit": "POSIX permission bits and bytes checked; ownership, extended attributes and signing validity not qualified",
+  "qualification": "Installer payload identity only; not compilation/source equivalence, signing validity, numerical acceptance or DAW qualification"
+}

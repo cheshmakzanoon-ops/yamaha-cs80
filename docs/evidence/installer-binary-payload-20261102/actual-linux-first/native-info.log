@@ -1,0 +1,14 @@
+command=["dpkg-deb", "--info", "/workspace/scratch/aa102d573ba3/cs80-native-linux-evidence/actual-e555-first/native/cs80-reference_1.0.0_amd64-CI-UNSIGNED-069794cb80d2.deb"]
+ new Debian package, version 2.0.
+ size 9327932 bytes: control archive=516 bytes.
+     491 bytes,    10 lines      control
+ Package: cs80-reference
+ Version: 1.0.0
+ Architecture: amd64
+ Maintainer: Reference Instruments <noreply@referenceinstruments.invalid>
+ Depends: libasound2t64 | libasound2, libfreetype6, libfontconfig1, libx11-6, libxext6, libxrandr2, libxinerama1, libxcursor1
+ Section: sound
+ Priority: optional
+ Description: CS-80 Reference synthesizer (VST3 and Standalone)
+  Circuit-modelled polyphonic synthesizer. Installs the VST3 bundle into
+  /usr/lib/vst3 and the Standalone application as cs80-reference.

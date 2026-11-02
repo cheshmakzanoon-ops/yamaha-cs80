@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "platform": "linux",
+  "components": {
+    "vst3": {
+      "input_relative": "VST3/CS-80 Reference.vst3",
+      "kind": "directory",
+      "install_destination": "usr/lib/vst3/CS-80 Reference.vst3",
+      "package_identifier": null,
+      "entries": [
+        {
+          "path": ".",
+          "type": "directory",
+          "mode": "0755"
+        },
+        {
+          "path": "Contents",
+          "type": "directory",
+          "mode": "0755"
+        },
+        {
+          "path": "Contents/Resources",
+          "type": "directory",
+          "mode": "0755"
+        },
+        {
+          "path": "Contents/Resources/moduleinfo.json",
+          "type": "file",
+          "bytes": 1095,
+          "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+          "mode": "0644"
+        },
+        {
+          "path": "Contents/x86_64-linux",
+          "type": "directory",
+          "mode": "0755"
+        },
+        {
+          "path": "Contents/x86_64-linux/CS-80 Reference.so",
+          "type": "file",
+          "bytes": 16550144,
+          "sha256": "0fabbe583483180734cb98411f6882a8fc9db5da4e387910b610171c4e399f44",
+          "mode": "0755"
+        }
+      ]
+    },
+    "standalone": {
+      "input_relative": "Standalone/CS-80 Reference",
+      "kind": "file",
+      "install_destination": "usr/bin/cs80-reference",
+      "package_identifier": null,
+      "entries": [
+        {
+          "path": ".",
+          "type": "file",
+          "bytes": 15900264,
+          "sha256": "d7bf105c2015800529bb1c1fbf846886b343f320da4ef5f516c4da611ec6462c",
+          "mode": "0755"
+        }
+      ]
+    }
+  },
+  "capture_stage": "Existing post-signing/stripping build inputs, frozen before installer creation",
+  "transformations": [
+    {
+      "component": "standalone",
+      "kind": "POSIX mode normalization",
+      "input_mode": "0755",
+      "installed_mode": "0755",
+      "reason": "Registered make-deb.sh install -m0755; bytes are unchanged"
+    }
+  ],
+  "qualification": "Installer payload identity only; not compilation/source equivalence, signing validity, numerical acceptance or DAW qualification"
+}
