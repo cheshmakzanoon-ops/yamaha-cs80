@@ -11,24 +11,20 @@ This page states the project's current implementation and qualification. It wins
 when older documents disagree. Historical observations remain in
 [the dated status archive](STATUS_HISTORY_2026-11-01.md) and the linked raw evidence.
 
-Last updated: **2026-11-02 UTC**. Current production change:
-**`83b7f7670f000a95c6b44f96ffb0df3894755d14`**, on
-`finish/cs80-qualification-20261031`, based on original main
-`db24a47170610f81236e8829ef5536af69dfc94d`.
-[PR #6](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/6) remains the
-landing PR. The final registered three-rate engine audit now has a complete, independently
-checked 885-row artifact at source `39ae6c2684456950302cb4ed10ecfae980c37ddd`
-([run 41336194253](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253)).
-Its numerical musical-click gates still fail, even though the capture workflow
-succeeded. Feature-branch build push/PR runs 41338140448/41338144467 passed at
-`7c864f2`; the WSC-oracle test-only commit `5809a528` has since advanced
-PR #6's development branch without changing production DSP, and its build,
-DSP and screenshot runs 41339574562/41339574637/41339574530 passed.
-A later feature-branch screenshot run 41369573898 also passed at `5809a528`
-and published preview provenance; checked-in `main` screenshots still reference
-historical `55bb043`.
-These are not final-main qualifications. The CPU
-budgets, musical clicks, main merge and new release remain unfulfilled.
+Last updated: **2026-11-02 UTC**. Main remains `db24a47170610f81236e8829ef5536af69dfc94d`; PR #6 is still unmerged. The latest published reviewed integration is [`9741425ee38d578424d9405ec1015c5e519996f9`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9741425ee38d578424d9405ec1015c5e519996f9), source tree `32ae37fe643056f66f1004066c52b61b463e695b`, on `work/cs80-reviewed-integration-sara-20261102`. Its exact local tree is `d3392ea879f58ca94338c6b07941e94f9c59f415`; connector-authored commit metadata differs, file trees do not.
+
+### November 2 integration boundaries
+
+- Public-source factory-tone revision V2 is explicit and opt-in. Frozen V1 is the default; Legacy and the seven complete tone definitions remain protected. The 25 disputed cells are estimates, not measured values. Host state, preset/A-B selection and the Studio Settings selector preserve the explicit revision.
+- The host/tuning integration includes locale-safe state parsing, Scala/KBM range and frequency validation, and atomic supported-envelope MTS checks. The later restored-Scala UI transaction repair is still a separate workstream, not included here.
+- Corrected physical lever directions, SUB endpoint legends and S2 control order are integrated. The fresh composed build rebuilt all 26 project translation units; 822 component checks passed, with an independent existing-binary replay. See [the source-bound receipt](evidence/composed-ui-20261102/SCOPE.md) and [independent review](evidence/composed-ui-20261102/independent-review/README.md). These are unpeered component tests, not native painting or DAW proof.
+- Exact preceding integration `68c466d1dd27530dfef85479c7fdc59168320c36` / source `0f8a26e733644ac9f5985164e0175d4143c5d917` passed [native build and plugin validation 41499724294](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41499724294): Linux128/128, Windows118/118, Intel122/122, Apple Silicon122/122 tests. [DSP41499724146](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41499724146) passed all five jobs including117/117 ASan/UBSan tests with leak detection; [screenshots41499724445](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41499724445) passed the then-unchanged panel goldens. Native CI for `9741425` is pending and must be assessed separately.
+- Original V1 audit source locking correctly rejects newer source trees before capture. Its original complete885-row audit and six failing click scopes remain unchanged; a distinct immutable request is required for later source. The historical audio anchor `83b7f7670f000a95c6b44f96ffb0df3894755d14` is not a claim that every later source revision has been qualified.
+- The exact numerical four/eight-lane experiment is not adopted: one unchanged-workload diagnostic did not show a broad improvement and both held/idle budgets remain missed. It is not the required qualified3+3 performance result.
+- [Dry REAPER V2 run41510793290](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41510793290), at distinct registered source `f65197491c69c206e42329ae9b88ec5b1aa4eef6`, failed during editor-tour setup before audio verification. Cause remains under investigation; neither an audio-gate result nor a proven plugin crash is inferred. Original V1 failure is preserved.
+- Physical-SI filter, staged M41/LC/VCA and wider-SIMD research remain isolated. Calibration targets are not held-out validation, and no hardware was measured. HP amplitude/resonance interpretation, original musical-click acceptance, CPU limits, real-host qualification, final installers, main merge and release remain open.
+
+The model register below describes the default runtime unless a row explicitly names an opt-in or experimental implementation. Historical observations remain evidence for their recorded source only.
 
 ## Current assessment
 

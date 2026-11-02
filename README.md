@@ -4,7 +4,9 @@ An independent software reconstruction of the Yamaha CS-80, written in C++20 wit
 
 **What it is not:** a measured clone. No CS-80 has been measured for this project. Every law is either read from a schematic, manual or adjustment page, or is a declared engineering inference with its alternatives recorded. Nothing here claims measured hardware parity.
 
-**Current development (2026-11-01):** [PR #6](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/6) integrates the remaining circuit, automation, host and native-source work on a feature branch. The final production audio is `83b7f7670f000a95c6b44f96ffb0df3894755d14`, with separate immutable audio pin `14ef653ed60be67ff98656966f9181c5e9b6b4fc`. **The PR is not merged or released.** The verified 36-round CPU benchmark improves idle but misses both required CPU budgets, and physical-PANEL click criteria remain open. For the winning current model register, acceptance boundaries and evidence, read [docs/STATUS.md](docs/STATUS.md).
+**Current development (2026-11-02):** the reviewed development integration is [`9741425`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/9741425ee38d578424d9405ec1015c5e519996f9), on `work/cs80-reviewed-integration-sara-20261102`. It adds public-source factory-tone estimates as an explicit opt-in, locale-safe host state, tuning/MTS validation, corrected lever directions/control order, and a factory-tone revision selector in Studio Settings. Frozen V1 remains the default; uncertain component values remain labelled estimates. The composed UI passed 822 component checks and independent replay, but native validation of this exact UI source is still pending.
+
+The preceding integration [`68c466d`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/68c466d1dd27530dfef85479c7fdc59168320c36) passed native Linux/Windows/Intel Mac/Apple Silicon tests and plugin validation, screenshots, and 117 sanitizer tests. Those results do not automatically qualify the later UI source. **Neither integration is merged to main or released.** The original 885-row musical-click criteria, held/idle CPU budgets, and complete real-host qualification remain open. The four/eight-lane performance experiment is not adopted. Read [docs/STATUS.md](docs/STATUS.md) for exact source identities, results, and remaining boundaries.
 
 **Last published `main` release:** the October 31 integration ([#2](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/2), [#3](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/3)) remains the source of the download links below until a new merge and release actually succeed.
 
@@ -77,6 +79,8 @@ The [fidelity requirement](docs/ANALOG_FIDELITY_REQUIREMENT.md) also names numer
 ## The editor
 
 ### Original panel
+
+The checked-in images below are historical previews, not evidence of the November 2 UI revision. Its fresh native screenshots must be inspected and source-labelled before replacing them.
 
 ![The editor at 1600x1000 on the circuit engine, playing a chord on the STRING 3 / STRING 2 tone tabs](docs/screenshots/main-source-performance-1600x1000.png)
 
