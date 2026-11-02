@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "scope": "Correction of distribution-helper mutation evidence; production helper and notice requirements unchanged",
+  "expected_test_count": 11,
+  "ordinary_failure_counts": {
+    "omit_barlow_ofl": 7,
+    "omit_mts_notice": 4,
+    "omit_font_attribution": 4,
+    "change_notice_bytes": 3,
+    "ignore_workflow_identity": 1,
+    "ignore_dirty_checkout": 1,
+    "allow_untracked_notice": 1,
+    "wrong_manifest_digest_after_self_check": 2
+  },
+  "requirements": [
+    "Exact intended failing test identities, not any arbitrary assertion",
+    "Zero runtime errors and zero skipped tests for each semantic mutant",
+    "Unmodified and restored source controls both pass all eleven tests",
+    "A deliberate RuntimeError source mutant must be refused by the classifier, not counted as a semantic kill",
+    "Preserve old raw logs and explicitly withdraw their blanket eight-semantic-kill claim",
+    "No production packaging code, required notices, or acceptance threshold changes"
+  ]
+}
