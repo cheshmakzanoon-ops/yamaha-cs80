@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
 import test_installed_distribution_docs as payload
 import test_native_installer_payload as native
+import test_installer_evidence_workflow as workflow
 
 MUTANTS = (
     ('source_commit', "require(manifest.get('source_commit') == expected_source,", 'require(True,', 1),
@@ -50,7 +51,9 @@ def main():
         raise ValueError('Complete guard replay requires native Linux Debian fixture; no skipped tests may qualify')
     args.out.mkdir(parents=True, exist_ok=False)
     original_loader, original_controller = payload.load_module, native.controller
-    for label, case in [('payload', payload.InstalledDistributionDocsTests), ('native', native.NativeInstallerPayloadTests)]:
+    original_workflow = workflow.WORKFLOW_PATH
+    for label, case in [('payload', payload.InstalledDistributionDocsTests), ('native', native.NativeInstallerPayloadTests),
+                        ('workflow', workflow.InstallerEvidenceWorkflowTests)]:
         result = execute(case, args.out / f'{label}-unmodified.log')
         if not result.wasSuccessful() or result.skipped:
             raise RuntimeError('Unmodified control failed before mutation')
@@ -111,14 +114,41 @@ def main():
             result = execute(native.NativeInstallerPayloadTests, args.out / 'runtime-error-refused.log')
             if result.testsRun != 11 or not result.errors or result.wasSuccessful():
                 raise RuntimeError('Runtime crash did not demonstrate harness refusal')
+        workflow_source = original_workflow.read_text()
+        workflow_mutants = [
+            ('omit_binary_input_evidence', '            packages/native-installer-ci/binary-input-manifest.json\n', '',
+             'test_frozen_binary_input_manifest_is_retained'),
+            ('omit_binary_verification_evidence', '            packages/native-installer-ci/binary-verification.json\n', '',
+             'test_binary_verification_receipt_is_retained'),
+            ('success_only_evidence_upload',
+             '      - name: Upload test and JUCE source evidence\n        if: always()',
+             '      - name: Upload test and JUCE source evidence\n        if: success()',
+             'test_native_evidence_uploads_run_even_after_failure'),
+            ('drop_native_golden_evidence', '            build/ui-smoke/golden/*.png\n', '',
+             'test_prior_test_notice_and_visual_evidence_is_preserved'),
+        ]
+        for name, old, new, expected in workflow_mutants:
+            if workflow_source.count(old) != 3:
+                raise RuntimeError('Workflow mutation must affect exactly three native steps: ' + name)
+            with tempfile.TemporaryDirectory(prefix='cs80-evidence-workflow-mutant-') as temp:
+                workflow.WORKFLOW_PATH = Path(temp) / 'build.yml'
+                workflow.WORKFLOW_PATH.write_text(workflow_source.replace(old, new))
+                result = execute(workflow.InstallerEvidenceWorkflowTests, args.out / (name + '.log'))
+                failed = [test.id().split(' (', 1)[0].rsplit('.', 1)[-1] for test, _ in result.failures]
+                if result.testsRun != 4 or result.errors or result.skipped or failed != [expected] * 3:
+                    raise RuntimeError(name + ': expected three intended ordinary failures')
+                records.append({'mutant': name, 'ordinary_failures': 3, 'failure_ids': failed,
+                                'errors': 0, 'positive_passed': True})
     finally:
         payload.load_module, native.controller = original_loader, original_controller
-    for label, case in [('payload', payload.InstalledDistributionDocsTests), ('native', native.NativeInstallerPayloadTests)]:
+        workflow.WORKFLOW_PATH = original_workflow
+    for label, case in [('payload', payload.InstalledDistributionDocsTests), ('native', native.NativeInstallerPayloadTests),
+                        ('workflow', workflow.InstallerEvidenceWorkflowTests)]:
         result = execute(case, args.out / f'{label}-restored.log')
         if not result.wasSuccessful() or result.skipped:
             raise RuntimeError('Restored control failed')
     report = {'scope': 'Synthetic payload/source-guard controls; native macOS/Windows execution is not established',
-              'sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (source_path, controller_path)},
+              'sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (source_path, controller_path, original_workflow, ROOT / "tests/release/test_installer_evidence_workflow.py")},
               'mutations': records, 'restored_original_passed': True,
               'runtime_error_control_refused_not_semantic_kill': True,
               'logs': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(args.out.glob('*.log'))}}
