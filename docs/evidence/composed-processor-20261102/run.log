@@ -1,0 +1,130 @@
+Pinned JUCE/font object bytes verified 19
+2026-11-02T16:22:14Z compile src/core/Engine.cpp
+2026-11-02T16:22:14Z compile src/core/FactoryPresets.cpp
+2026-11-02T16:22:21Z compile src/plugin/PluginProcessor.cpp
+2026-11-02T16:22:32Z compile src/plugin/PluginEditor.cpp
+2026-11-02T16:22:46Z compile src/plugin/UiComponents.cpp
+2026-11-02T16:22:57Z compile src/plugin/ParameterContext.cpp
+2026-11-02T16:23:07Z compile src/plugin/AdvancedPanel.cpp
+2026-11-02T16:23:09Z compile src/plugin/PresetBrowser.cpp
+2026-11-02T16:23:33Z compile src/plugin/MtsEspClient.cpp
+2026-11-02T16:23:34Z compile src/plugin/PluginProcessorAutomation.cpp
+2026-11-02T16:23:40Z compile src/plugin/KeyboardTuningPage.cpp
+2026-11-02T16:23:43Z compile src/plugin/ModernLayerState.cpp
+2026-11-02T16:23:50Z compile src/plugin/ModernModulationUi.cpp
+2026-11-02T16:23:52Z compile src/plugin/PluginProcessorLibrary.cpp
+2026-11-02T16:24:02Z compile src/plugin/ArtCommon.cpp
+2026-11-02T16:24:04Z compile src/plugin/PanelWidgets.cpp
+2026-11-02T16:24:12Z compile src/plugin/ChannelRow.cpp
+2026-11-02T16:24:16Z compile src/plugin/CentreRow.cpp
+2026-11-02T16:24:19Z compile src/plugin/PerformanceDeck.cpp
+2026-11-02T16:24:26Z compile src/plugin/MemoryLid.cpp
+2026-11-02T16:24:29Z compile src/plugin/EditorPreferences.cpp
+2026-11-02T16:24:31Z compile src/plugin/StudioToolbar.cpp
+2026-11-02T16:24:34Z compile src/plugin/StudioDrawers.cpp
+2026-11-02T16:24:45Z compile src/plugin/UndoHistory.cpp
+2026-11-02T16:24:45Z compile src/plugin/StudioTour.cpp
+2026-11-02T16:24:53Z compile src/tools/ui_snapshot.cpp
+In file included from /workspace/scratch/aa102d573ba3/cs80-integration/src/tools/ui_snapshot.cpp:22:
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/../../tests/StateTreeSynchronizationTests.h: In function ‘void cs80::tests::testStateTreeSynchronization(const state_tree_detail::Check&)’:
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:401:24: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:401:51: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+      |                                        ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:402:24: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/../../tests/StateTreeSynchronizationTests.h:402:51: warning: arithmetic between different enumeration types ‘cs80::<unnamed enum>’ and ‘cs80::ChannelParam’ is deprecated [-Wdeprecated-enum-enum-conversion]
+  402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+      |                                        ~~~~~~~~~~~^~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/ui_snapshot.cpp:3324:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3324 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/ui_snapshot.cpp:3325:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3325 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+Factory tone revision processor: 2257 checks, 0 failures
+
+TEST_EXIT 0
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Factory tone locale fixture: C decimal=.
+Factory tone locale fixture: de_DE.utf8 decimal=,
+Factory tone locale processor: 296 checks, 0 failures
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Render policy locale fixture: C decimal=.
+Render policy locale fixture: de_DE.utf8 decimal=,
+Render policy locale processor: 2290 checks, 0 failures
+All26projectTUs fresh; exact unchanged JUCE/font reuse confirmed
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+[1/14] Building CXX object CMakeFiles/cs80_tuning_input_boundary_tests.dir/tests/TuningInputBoundaryTests.cpp.o
+[2/14] Building CXX object CMakeFiles/cs80_scala_float_pitch_bounds_tests.dir/tests/ScalaFloatPitchBoundsTests.cpp.o
+[3/14] Building CXX object CMakeFiles/cs80_mts_counted_message_tests.dir/tests/MtsCountedMessageTests.cpp.o
+[4/14] Building CXX object CMakeFiles/cs80_mts_envelope_tests.dir/tests/MtsEnvelopeTests.cpp.o
+In file included from /usr/include/c++/14/algorithm:60,
+                 from /workspace/scratch/aa102d573ba3/cs80-integration/src/core/Tuning.h:17,
+                 from /workspace/scratch/aa102d573ba3/cs80-integration/tests/MtsEnvelopeTests.cpp:2:
+In function ‘constexpr typename __gnu_cxx::__enable_if<std::__is_byte<_Tp>::__value, void>::__type std::__fill_a1(_Tp*, _Tp*, const _Tp&) [with _Tp = unsigned char]’,
+    inlined from ‘constexpr void std::__fill_a(_FIte, _FIte, const _Tp&) [with _FIte = unsigned char*; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_algobase.h:998:21,
+    inlined from ‘constexpr _OutputIterator std::__fill_n_a(_OutputIterator, _Size, const _Tp&, random_access_iterator_tag) [with _OutputIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_algobase.h:1154:20,
+    inlined from ‘constexpr _OI std::fill_n(_OI, _Size, const _Tp&) [with _OI = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_algobase.h:1183:29,
+    inlined from ‘static _ForwardIterator std::__uninitialized_fill_n<true>::__uninit_fill_n(_ForwardIterator, _Size, const _Tp&) [with _ForwardIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_uninitialized.h:294:29,
+    inlined from ‘_ForwardIterator std::uninitialized_fill_n(_ForwardIterator, _Size, const _Tp&) [with _ForwardIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char]’ at /usr/include/c++/14/bits/stl_uninitialized.h:327:17,
+    inlined from ‘constexpr _ForwardIterator std::__uninitialized_fill_n_a(_ForwardIterator, _Size, const _Tp&, allocator<_Tp2>&) [with _ForwardIterator = unsigned char*; _Size = long unsigned int; _Tp = unsigned char; _Tp2 = unsigned char]’ at /usr/include/c++/14/bits/stl_uninitialized.h:472:39,
+    inlined from ‘constexpr void std::vector<_Tp, _Alloc>::_M_fill_insert(iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/vector.tcc:763:34,
+    inlined from ‘constexpr std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::insert(const_iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/stl_vector.h:1442:16,
+    inlined from ‘int main()’ at /workspace/scratch/aa102d573ba3/cs80-integration/tests/MtsEnvelopeTests.cpp:93:50:
+/usr/include/c++/14/bits/stl_algobase.h:972:25: warning: ‘void* __builtin_memset(void*, int, long unsigned int)’ writing between 1 and 4 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+  972 |         __builtin_memset(__first, static_cast<unsigned char>(__tmp), __len);
+      |         ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/14/bits/c++allocator.h:33,
+                 from /usr/include/c++/14/bits/allocator.h:46,
+                 from /usr/include/c++/14/string:43,
+                 from /workspace/scratch/aa102d573ba3/cs80-integration/src/core/Tuning.h:23:
+In member function ‘_Tp* std::__new_allocator<_Tp>::allocate(size_type, const void*) [with _Tp = unsigned char]’,
+    inlined from ‘constexpr _Tp* std::allocator< <template-parameter-1-1> >::allocate(std::size_t) [with _Tp = unsigned char]’ at /usr/include/c++/14/bits/allocator.h:196:40,
+    inlined from ‘static constexpr _Tp* std::allocator_traits<std::allocator<_CharT> >::allocate(allocator_type&, size_type) [with _Tp = unsigned char]’ at /usr/include/c++/14/bits/alloc_traits.h:515:28,
+    inlined from ‘constexpr std::_Vector_base<_Tp, _Alloc>::pointer std::_Vector_base<_Tp, _Alloc>::_M_allocate(std::size_t) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/stl_vector.h:380:33,
+    inlined from ‘constexpr void std::vector<_Tp, _Alloc>::_M_fill_insert(iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/vector.tcc:758:45,
+    inlined from ‘constexpr std::vector<_Tp, _Alloc>::iterator std::vector<_Tp, _Alloc>::insert(const_iterator, size_type, const value_type&) [with _Tp = unsigned char; _Alloc = std::allocator<unsigned char>]’ at /usr/include/c++/14/bits/stl_vector.h:1442:16,
+    inlined from ‘int main()’ at /workspace/scratch/aa102d573ba3/cs80-integration/tests/MtsEnvelopeTests.cpp:93:50:
+/usr/include/c++/14/bits/new_allocator.h:151:55: note: at offset -1 into destination object of size [1, 4] allocated by ‘operator new’
+  151 |         return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW(__n * sizeof(_Tp)));
+      |                                                       ^
+[5/14] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[6/14] Linking CXX static library libcs80_core.a
+[7/14] Building CXX object CMakeFiles/cs80_mts_realtime_semantics_tests.dir/tests/MtsRealtimeSemanticsTests.cpp.o
+[8/14] Linking CXX executable cs80_tuning_input_boundary_tests
+[9/14] Linking CXX executable cs80_scala_float_pitch_bounds_tests
+[10/14] Linking CXX executable cs80_mts_counted_message_tests
+[11/14] Linking CXX executable cs80_mts_envelope_tests
+[12/14] Linking CXX executable cs80_mts_realtime_semantics_tests
+[13/14] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+[14/14] Linking CXX executable cs80_tuning_midi_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+    Start 85: cs80_tuning_input_boundary_tests
+1/6 Test #85: cs80_tuning_input_boundary_tests ......   Passed    0.01 sec
+    Start 86: cs80_scala_float_pitch_bounds_tests
+2/6 Test #86: cs80_scala_float_pitch_bounds_tests ...   Passed    0.01 sec
+    Start 87: cs80_mts_counted_message_tests
+3/6 Test #87: cs80_mts_counted_message_tests ........   Passed    0.00 sec
+    Start 88: cs80_mts_envelope_tests
+4/6 Test #88: cs80_mts_envelope_tests ...............   Passed    0.00 sec
+    Start 89: cs80_mts_realtime_semantics_tests
+5/6 Test #89: cs80_mts_realtime_semantics_tests .....   Passed    3.59 sec
+    Start 90: cs80_tuning_midi_tests
+6/6 Test #90: cs80_tuning_midi_tests ................   Passed    0.55 sec
+
+100% tests passed out of 6
+
+Total Test time (real) =   4.17 sec
+COMPLETE 2026-11-02T16:26:11Z
