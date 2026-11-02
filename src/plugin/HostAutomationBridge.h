@@ -42,7 +42,10 @@ public:
     {
         queue = source;
         previousPosition = -1;
-        previousValue = std::clamp(initial, 0.0, 1.0);
+        // A malformed APVTS/host readback may be NaN or infinite before the
+        // first queue point. std::clamp alone does not reject NaN, and must
+        // not leak a non-finite initial value into sample interpolation.
+        previousValue = std::isfinite(initial) ? std::clamp(initial, 0.0, 1.0) : 0.0;
         nextIndex = 0;
         haveNext = false;
         readNext();
