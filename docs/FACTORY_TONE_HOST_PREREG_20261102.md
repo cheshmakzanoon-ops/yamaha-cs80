@@ -49,6 +49,10 @@ and existing programmer-versus-aggregate ControlFrame construction is retained.
    sixteen-voice block must publish the same aggregate sound frame to both
    engines. Baseline code updates only the main engine. Diagnose the actual RED
    before proposing the bounded fix; no voice-mode lifecycle redesign is implied.
+   Follow-up controls retain the aggregate (non-programmer) main frame, preserve
+   eight held main assignments, route a ninth note at exactly the Program Change
+   sample into the newly updated active extension, and leave an inactive
+   extension untouched in ordinary eight-voice mode.
 
 The focused `--factory-tone-revision-test` mode creates no editor, peer, display,
 audio device or DAW. JUCE MessageManager initialization is required for the real

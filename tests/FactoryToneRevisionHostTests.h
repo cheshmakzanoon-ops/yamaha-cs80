@@ -144,6 +144,48 @@ void testFactoryToneRevisionHost(Check check)
               && host.getEngine().getParams().v == host.getExtensionEngine().getParams().v,
           "MIDI Program Change publishes the same aggregate frame to both active engines");
 
+    const std::array<double, 26> noSourceBuses{};
+    check(host.getEngine().getSourceBusReadout(0) == noSourceBuses,
+          "Program Change main retains aggregate physical units, not programmer coordinates");
+
+    // The next event at exactly the Program Change sample must see the new
+    // extension frame; same-policy recall must not reset the eight held mains.
+    configure(host, true);
+    host.prepareToPlay(48000, 32);
+    juce::MidiBuffer eightNotes;
+    for (int note = 48; note < 56; ++note)
+        eightNotes.addEvent(juce::MidiMessage::noteOn(1, note, (juce::uint8)100), 0);
+    block(host, 32, eightNotes);
+    check(host.getEngine().activeVoices() == 8, "same-sample witness fills main instrument first");
+    std::array<std::uint64_t, 8> assignments{};
+    for (int voice = 0; voice < 8; ++voice)
+        assignments[(size_t)voice] = host.getEngine().getVoiceInfo(voice).assignmentSerial;
+    auto sameSample = program;
+    sameSample.addEvent(juce::MidiMessage::noteOn(1, 72, (juce::uint8)100), 10);
+    block(host, 32, sameSample);
+    check(host.getEngine().activeVoices() == 8 && host.getExtensionEngine().activeVoices() == 1,
+          "same-policy program keeps held mains and routes equal-sample note to active extension");
+    for (int voice = 0; voice < 8; ++voice)
+        check(host.getEngine().getVoiceInfo(voice).assignmentSerial == assignments[(size_t)voice],
+              "same-policy Program Change does not reset or reassign held main voices");
+    check(host.getExtensionEngine().getParams().v == host.getEngine().getParams().v
+              && host.getExtensionEngine().getSourceBusReadout(0) == noSourceBuses,
+          "equal-sample extension onset receives new aggregate program, not stale source/programmer");
+
+    {
+        auto ordinary = std::make_unique<Cs80AudioProcessor>(root.getFile().getChildFile("ordinary"));
+        configure(*ordinary, false);
+        ordinary->prepareToPlay(48000, 32);
+        block(*ordinary);
+        const auto inactive = ordinary->getExtensionEngine().getParams().v;
+        block(*ordinary, 32, program);
+        check(ordinary->getEngine().getSourceToneInfo(0).selector == 13
+                  && ordinary->getEngine().getSourceBusReadout(0) == noSourceBuses,
+              "ordinary eight-voice Program Change retains existing main aggregate behavior");
+        check(ordinary->getVoiceCapacity() == 8 && ordinary->getExtensionEngine().getParams().v == inactive,
+              "Program Change does not publish to an inactive extension or change its lifecycle");
+    }
+
     auto* parameter = dynamic_cast<juce::AudioParameterChoice*>(host.getAPVTS().getParameter(revisionId));
     check(parameter != nullptr, "explicit versioned factory-tone choice exists");
     if (parameter == nullptr)
