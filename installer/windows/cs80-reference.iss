@@ -11,6 +11,9 @@
 #ifndef JuceLicense
   #define JuceLicense "..\..\build\_deps\juce-src\LICENSE.md"
 #endif
+#ifndef DistributionDocs
+  #error DistributionDocs must name the verified scripts/distribution_docs.py output
+#endif
 #ifndef OutDir
   #define OutDir "..\..\packages"
 #endif
@@ -44,8 +47,7 @@ Name: "standalone"; Description: "Standalone application"; Types: full custom
 [Files]
 Source: "{#BuildDir}\VST3\CS-80 Reference.vst3\*"; DestDir: "{commoncf64}\VST3\CS-80 Reference.vst3"; Components: vst3; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#BuildDir}\Standalone\CS-80 Reference.exe"; DestDir: "{app}"; Components: standalone; Flags: ignoreversion
-Source: "..\..\LICENSE"; DestDir: "{app}\licenses"; DestName: "LICENSE.txt"; Flags: ignoreversion
-Source: "{#JuceLicense}"; DestDir: "{app}\licenses"; DestName: "JUCE-LICENSE.md"; Flags: ignoreversion
+Source: "{#DistributionDocs}\*"; DestDir: "{app}\documentation"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\CS-80 Reference"; Filename: "{app}\CS-80 Reference.exe"; Components: standalone

@@ -34,13 +34,11 @@ component vst3 "$artefacts/VST3/$product.vst3" "/Library/Audio/Plug-Ins/VST3"
 component au "$artefacts/AU/$product.component" "/Library/Audio/Plug-Ins/Components"
 component app "$artefacts/Standalone/$product.app" "/Applications"
 
-# Licence and install notes, outside the signed bundles.
-mkdir -p "$work/root-docs"
+# Licences and exact checkout identity, outside the signed bundles.
 juce_license="$build/_deps/juce-src/LICENSE.md"
 [ -f "$juce_license" ] || juce_license="$root/deps/juce/LICENSE.md"
-cp "$juce_license" "$work/root-docs/JUCE-LICENSE.md"
-cp "$root/docs/INSTALL_AND_QUICKSTART.md" "$work/root-docs/"
-cp "$root/LICENSE" "$work/root-docs/LICENSE.txt"
+python3 "$root/scripts/distribution_docs.py" --root "$root" \
+    --juce-license "$juce_license" --out-dir "$work/root-docs"
 pkgbuild --root "$work/root-docs" --install-location "/Library/Application Support/Reference Instruments/$product" \
     --identifier "$bundle_id.docs" --version "$version" "$work/components/docs.pkg"
 

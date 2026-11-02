@@ -169,7 +169,10 @@ jobs:
           New-Item -ItemType Directory -Force packages | Out-Null
           $out = (Resolve-Path packages).Path
           $license = (Resolve-Path "build\_deps\juce-src\LICENSE.md").Path
-          & "C:\Program Files (x86)\Inno Setup 6\iscc.exe" "/DAppVersion=$version" "/DBuildDir=$build" "/DOutDir=$out" "/DJuceLicense=$license" installer\windows\cs80-reference.iss
+          python scripts/distribution_docs.py --root . --juce-license "$license" --out-dir "build/distribution-docs"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $distributionDocs = (Resolve-Path "build/distribution-docs").Path
+          & "C:\Program Files (x86)\Inno Setup 6\iscc.exe" "/DAppVersion=$version" "/DBuildDir=$build" "/DOutDir=$out" "/DJuceLicense=$license" "/DDistributionDocs=$distributionDocs" installer\windows\cs80-reference.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Sign installer, or label it unsigned

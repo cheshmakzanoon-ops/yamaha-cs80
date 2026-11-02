@@ -23,15 +23,14 @@ chmod 0755 "$stage"
 mkdir -p "$stage/DEBIAN" "$stage/usr/lib/vst3" "$stage/usr/bin" "$stage/usr/share/doc/cs80-reference"
 cp -a "$artefacts/VST3/$product.vst3" "$stage/usr/lib/vst3/"
 install -m 0755 "$artefacts/Standalone/$product" "$stage/usr/bin/cs80-reference"
-cp "$root/docs/INSTALL_AND_QUICKSTART.md" "$stage/usr/share/doc/cs80-reference/"
-cp "$root/LICENSE" "$stage/usr/share/doc/cs80-reference/copyright"
-for juce_license in "$build/_deps/juce-src/LICENSE.md" "$root/deps/juce/LICENSE.md"; do
-    if [ -f "$juce_license" ]; then
-        cp "$juce_license" "$stage/usr/share/doc/cs80-reference/JUCE-LICENSE.md"
-        break
-    fi
-done
-[ -f "$stage/usr/share/doc/cs80-reference/JUCE-LICENSE.md" ] || { echo "JUCE licence not found" >&2; exit 1; }
+juce_license="$build/_deps/juce-src/LICENSE.md"
+[ -f "$juce_license" ] || juce_license="$root/deps/juce/LICENSE.md"
+# Keep notices outside binary bundles and ship the exact checkout identity.
+python3 "$root/scripts/distribution_docs.py" --root "$root" \
+    --juce-license "$juce_license" --out-dir "$stage/distribution-docs"
+cp -a "$stage/distribution-docs/." "$stage/usr/share/doc/cs80-reference/"
+cp "$stage/distribution-docs/LICENSE" "$stage/usr/share/doc/cs80-reference/copyright"
+rm -rf "$stage/distribution-docs"
 cat > "$stage/DEBIAN/control" <<CONTROL
 Package: cs80-reference
 Version: $version

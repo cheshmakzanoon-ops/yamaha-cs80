@@ -151,6 +151,29 @@ class DistributionDocsTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.helper().notice_payload(self.root, self.license)
 
+    def test_ci_and_stage_reject_untracked_notice_replacement(self):
+        path = self.root / "assets/fonts/barlow-condensed/OFL.txt"
+        data = path.read_bytes()
+        self.git("rm", "--", "assets/fonts/barlow-condensed/OFL.txt")
+        self.git("commit", "--quiet", "-m", "untracked notice fixture")
+        new_commit = self.git("rev-parse", "HEAD").strip()
+        path.write_bytes(data)
+        self.report.write_text(self.report.read_text().replace(self.commit, new_commit))
+        with mock.patch.dict(os.environ, {"GITHUB_SHA": new_commit}):
+            with self.assertRaises((ValueError, OSError, subprocess.SubprocessError)):
+                self.context()
+            with self.assertRaises((ValueError, OSError, subprocess.SubprocessError)):
+                self.helper().stage_documents(self.root, self.license, self.build / "out")
+
+    def test_windows_installer_requires_generated_documents(self):
+        installer = (ROOT / "installer/windows/cs80-reference.iss").read_text()
+        self.assertIn("#ifndef DistributionDocs", installer)
+        self.assertIn("#error DistributionDocs", installer)
+        self.assertIn('Source: "{#DistributionDocs}\\*"', installer)
+        workflow = (ROOT / ".github/workflows/release.yml").read_text()
+        self.assertIn('python scripts/distribution_docs.py --root . --juce-license "$license"', workflow)
+        self.assertIn('"/DDistributionDocs=$distributionDocs"', workflow)
+
     def test_stage_rejects_dirty_source(self):
         (self.root / "LICENSE").write_bytes(b"modified fixture\n")
         with self.assertRaises(ValueError):

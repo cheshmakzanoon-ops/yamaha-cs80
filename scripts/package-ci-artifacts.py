@@ -25,6 +25,10 @@ PRODUCT = "CS-80 Reference"
 JUCE_SHA = "c352e2489000ffeb9e397051377d75eef2efe641"
 ROOT = Path(__file__).resolve().parents[1]
 
+# Also importable through importlib by the standalone payload fixtures.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from distribution_docs import notice_payload, source_identity, source_text
+
 
 def require(condition: bool, message: str) -> None:
     if not condition:
@@ -218,12 +222,7 @@ def verify_archive(archive: Path, root: str, manifest: dict) -> None:
 
 
 def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
-    commit = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
-    require(subprocess.run(["git", "-C", str(ROOT), "diff", "--quiet", "HEAD", "--"],
-                           check=False).returncode == 0,
-            "Tracked source differs from the named commit; package a clean CI checkout")
-    if os.environ.get("GITHUB_SHA"):
-        require(os.environ["GITHUB_SHA"] == commit, "Checkout and workflow commit differ")
+    commit, _ = source_identity(ROOT)
     report = build / "ci-juce-provenance.txt"
     require(report.is_file(), "Missing CI JUCE evidence; run verify-ci-juce-source.cmake first")
     report_data = report.read_bytes()
@@ -238,14 +237,10 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     license_file = source / "LICENSE.md"
     require(license_file.is_file(), "Verified JUCE source license is missing")
     extras = {
-        "INSTALL_AND_QUICKSTART.md": (ROOT / "docs/INSTALL_AND_QUICKSTART.md").read_bytes(),
+        **notice_payload(ROOT, license_file),
         "DISTRIBUTION_STATUS.md": (ROOT / "docs/CI_DISTRIBUTION_STATUS.md").read_bytes(),
-        "LICENSE": (ROOT / "LICENSE").read_bytes(),
-        "licenses/JUCE-LICENSE.md": license_file.read_bytes(),
         "evidence/juce-provenance.txt": report_data,
-        "SOURCE.txt": (f"Source commit: {commit}\n"
-                       f"https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/{commit}\n"
-                       "Use the full source at this commit; this archive is not a source distribution.\n").encode(),
+        "SOURCE.txt": source_text(commit),
     }
     metadata = {"juce_sha": JUCE_SHA, "juce_version": "8.0.11",
                 "workflow_run_id": os.environ.get("GITHUB_RUN_ID", ""),
