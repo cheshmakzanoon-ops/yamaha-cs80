@@ -84,6 +84,30 @@ class NativeInstallerPayloadTests(unittest.TestCase):
     def test_cleanup_failure_preserves_original_install_failure(self):
         self.partial_windows_install(cleanup_fails=True)
 
+    def test_successful_windows_install_without_uninstaller_is_not_qualified(self):
+        output = self.root / 'packages/native'
+        program_files = self.root / 'program-files'
+        compiler = program_files / 'Inno Setup 6/iscc.exe'
+        compiler.parent.mkdir(parents=True)
+        compiler.write_bytes(b'synthetic compiler placeholder; never executed')
+
+        def fake_run(command, log, **kwargs):
+            command = [str(arg) for arg in command]
+            if command[0] == str(compiler):
+                (output / 'synthetic-setup.exe').write_bytes(b'synthetic setup; never executed')
+            elif any(arg.startswith('/DIR=') for arg in command):
+                installed = Path(next(arg[5:] for arg in command if arg.startswith('/DIR=')))
+                installed.mkdir()  # A success exit without an uninstaller is insufficient.
+
+        with mock.patch.object(controller, 'ROOT', self.root), \
+             mock.patch.object(controller.sys, 'platform', 'win32'), \
+             mock.patch.dict(os.environ, {'ProgramFiles(x86)': str(program_files)}), \
+             mock.patch.object(controller, 'run', side_effect=fake_run), \
+             mock.patch.object(controller, 'verify_documents', return_value={'fixture': 'synthetic'}):
+            with self.assertRaisesRegex(ValueError, 'uninstaller'):
+                controller.qualify('windows', self.build, output, self.commit)
+        self.assertFalse((output / 'native-installer-receipt.json').exists())
+
     @unittest.skipUnless(sys.platform.startswith('linux') and shutil.which('dpkg-deb'),
                          'actual Debian container roundtrip only runs natively on Linux')
     def test_linux_actual_container_with_explicitly_synthetic_binary_payload(self):
