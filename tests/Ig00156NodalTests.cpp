@@ -594,6 +594,39 @@ void serviceVr7BracketSensitivity(const ws1::Tolerances& tol)
     }
 }
 
+// Last opt-in: do *not* use the printed band to choose any Q value. The
+// model-grid cutoff was fixed by the already committed VR7 bracket result;
+// all five Q settings were preregistered before this test was evaluated.
+void serviceVr8AfterVr7Sensitivity(const ws1::Tolerances& tol)
+{
+    const double kv = source_factory::alignment.referenceKeyVolts;
+    const double hpGm = 125.0 * kv * std::exp2(source_factory::alignment.hpEffectiveCv);
+    const double f0 = 261.6255653005986, open = 18000.0;
+    const double low = f0 * std::exp2(-0.5), high = f0 * std::exp2(-12.0 / 128.0);
+    const double bracketGmHz = low * std::pow(high / low, 28.0 / 32.0);
+    const auto band = tol.range("hp_fh_4v0");
+    const auto original = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
+    std::printf("VR8 AFTER VR7: Yamaha ADJ p11 CP3 %.1f..%.1f Vpp; original frozen CP3 %.3f Vpp: %s\n",
+                band.first, band.second, original.cp3Lp,
+                original.cp3Lp >= band.first && original.cp3Lp <= band.second ? "within band" : "MISS");
+    for (double alpha : { 0.0, 1.0 })
+    {
+        auto hpInput = hpNet;
+        hpInput.sourceOhms = 150.0e3 / (2.0 + alpha);
+        const double pulseGain = 1.0 / (2.0 + alpha);
+        for (double qHp : { 0.5, 1.0, 2.0, 5.0, 9.0 })
+        {
+            const auto p = settledVpp(bracketGmHz + ffHz, qHp, open + ffHz, 5.0, hpInput, pulseGain);
+            std::printf("VR8 AFTER VR7 alpha %.2f fixed-j28 gmCutoff %.6f Hz hypothetical Qhp %.1f: CP2 %.3f CP3 %.3f CP3/CP2 %.5f; numerical printed-interval relation %s (NOT hardware or ADJ verdict)\n",
+                        alpha, bracketGmHz, qHp, p.cp2Hp, p.cp3Lp, p.cp3Lp / p.cp2Hp,
+                        p.cp3Lp < band.first ? "below" : (p.cp3Lp > band.second ? "above" : "inside"));
+            check(std::isfinite(p.cp2Hp) && p.cp2Hp > 0.0
+                      && std::isfinite(p.cp3Lp) && p.cp3Lp > 0.0,
+                  "post-VR7 Q sensitivity finite/positive, no service gate change");
+        }
+    }
+}
+
 // 6. Stability on hard noise at every supported internal rate.
 void stability(const ws1::Tolerances& tol)
 {
@@ -729,6 +762,12 @@ int main(int argc, char** argv)
         {
             serviceVr7BracketSensitivity(tol);
             std::cout << checks << " offline checks, " << failures << " failures (not a hardware VR7 sweep)\n";
+            return failures == 0 ? 0 : 1;
+        }
+        if (argc > 2 && std::string_view(argv[2]) == "--vr8-after-vr7-sensitivity")
+        {
+            serviceVr8AfterVr7Sensitivity(tol);
+            std::cout << checks << " offline checks, " << failures << " failures (not physical VR8 calibration)\n";
             return failures == 0 ? 0 : 1;
         }
         equivalence(tol);

@@ -86,6 +86,17 @@ service fixture probes CP3/CP8 at the IC11 output before that VCA input,
 **not** at CP4, and omits undocumented finite IC11/IC4 impedances. See the
 [M41 CP3 zoom and SHA-256](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
 
+**Follow-up model-only qualification:** A source-hash-verified, preregistered
+NI admittance sweep and successive *surrogate* VR7-cutoff/VR8-Q grids are
+documented in the [native ADJ evidence record](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+Even though the synthetic Q=9 case can mathematically yield about 4.1 Vpp
+at CP3, Q=9 is outside Yamaha's documented Q≈0.5–5 control endpoints,
+with about 11 Vpp simulated at CP2 under an **unvalidated large-signal
+linear assumption**. The original frozen HP CP3 calculation remains
+**1.692 Vpp MISS**. These synthetic results are not hardware calibration,
+have no source-derived VR7/VR8 potentiometer law, and make **no production
+DSP or tolerance changes**.
+
 ### LP series source: original inference and 2026-10-31 erratum
 
 **2026-10-31 erratum:** independent reinspection of the native M41 crop
