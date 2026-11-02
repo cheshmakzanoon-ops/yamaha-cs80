@@ -7,12 +7,15 @@ const preflight = require('../../scripts/preflight-release-entrypoint.cjs');
 
 const M = 'a'.repeat(40), S = 'b'.repeat(40), OTHER = 'c'.repeat(40);
 const TAG_OBJECT = 'd'.repeat(40);
+const PR_HEAD = 'e'.repeat(40);
 const NUMERICAL = 'release-numerical-qualification.yml';
 const required = ['build.yml', 'dsp-measurements.yml', 'screenshots.yml', NUMERICAL];
 let checks = 0;
 
 async function scenario(overrides = {}) {
-  const request = { validated_sha: M, expected_main_sha: S, ...(overrides.request || {}) };
+  const request = { validated_sha: M, expected_main_sha: S,
+    pr_number: 6, reviewed_pr_head_sha: PR_HEAD, pr_merge_commit_sha: M,
+    ...(overrides.request || {}) };
   const calls = [];
   const github = { rest: {
     repos: {
@@ -45,6 +48,16 @@ async function scenario(overrides = {}) {
       getTag: async args => {
         calls.push(['getTag', args]);
         return { data: { object: { type: 'commit', sha: overrides.badTag ? OTHER : S } } };
+      },
+    },
+    pulls: {
+      get: async args => {
+        calls.push(['pulls.get', args]);
+        return { data: { number: 6, state: overrides.prOpen ? 'open' : 'closed',
+          merged: !overrides.prUnmerged, draft: !!overrides.prDraft,
+          base: { ref: overrides.prWrongBase ? 'feature' : 'main' },
+          head: { sha: overrides.prWrongHead ? OTHER : PR_HEAD },
+          merge_commit_sha: overrides.prWrongMerge ? OTHER : M } };
       },
     },
     actions: {
@@ -87,12 +100,16 @@ async function scenario(overrides = {}) {
   assert.ok(manual.calls.some(([action, arg]) => action === 'getContent'
     && arg.path === '.github/release-request.json'
     && arg.ref === 'codex/cs80-release-dispatch')); checks++;
+  assert.ok(manual.calls.some(([action, arg]) => action === 'pulls.get'
+    && arg.pull_number === 6)); checks++;
 
   const tag = await scenario({ eventName: 'push' });
   assert.equal(tag.result.authorized, true); checks++;
   assert.ok(tag.calls.some(([action, arg]) => action === 'getTag' && arg.tag_sha === TAG_OBJECT)); checks++;
   const lightweight = await scenario({ eventName: 'push', lightweightTag: true });
   assert.equal(lightweight.result.authorized, true); checks++;
+  assert.ok(tag.calls.some(([action, arg]) => action === 'pulls.get'
+    && arg.pull_number === 6)); checks++;
 
   const negatives = [
     ['manual on feature', { ref: 'refs/heads/feature' }],
@@ -120,6 +137,28 @@ async function scenario(overrides = {}) {
   for (const [label, overrides] of negatives) {
     await assert.rejects(() => scenario(overrides), undefined, label);
     checks++;
+  }
+  // Both independent installer entrypoints must bind source M to the merged
+  // PR6 commit; screenshot-only S may follow it but may not substitute
+  // another unreviewed source/merge SHA.
+  const prNegatives = [
+    ['PR6 unmerged', { prUnmerged: true }],
+    ['PR6 still open', { prOpen: true }],
+    ['PR6 draft', { prDraft: true }],
+    ['PR6 non-main base', { prWrongBase: true }],
+    ['PR6 head changed', { prWrongHead: true }],
+    ['PR6 merge changed', { prWrongMerge: true }],
+    ['request wrong PR number', { request: { pr_number: 7 } }],
+    ['request wrong PR head', { request: { reviewed_pr_head_sha: OTHER } }],
+    ['request wrong merge SHA', { request: { pr_merge_commit_sha: OTHER } }],
+    ['request wrong validated SHA', { request: { validated_sha: OTHER } }],
+  ];
+  for (const eventName of ['workflow_dispatch', 'push']) {
+    for (const [label, overrides] of prNegatives) {
+      await assert.rejects(() => scenario({ ...overrides, eventName }), undefined,
+        `${eventName}: ${label}`);
+      checks++;
+    }
   }
   const workflow = fs.readFileSync(path.resolve(__dirname, '../../.github/workflows/release.yml'), 'utf8');
   assert.match(workflow, /group:\s*cs80-reviewed-release-packages/);
