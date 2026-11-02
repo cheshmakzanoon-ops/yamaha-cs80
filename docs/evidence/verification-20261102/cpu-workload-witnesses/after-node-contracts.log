@@ -1,0 +1,20 @@
+Reviewed release dispatch: 24 checks, 0 failures
+✔ tests/release/dispatch-reviewed-release.test.cjs (219.389317ms)
+Additive numerical dispatch: 11 checks, 0 failures
+✔ tests/release/numerical-dispatch-addition.test.cjs (146.325362ms)
+✔ independent numerical workflow accepts only a push to exact main (6.489645ms)
+✔ single job directly builds original audit and collects the six raw CPU rounds (1.292099ms)
+✔ trusted source identity, current-main lease, and same-job receipt bind gate input (0.705569ms)
+✔ malicious event, source, and evidence-producer mutations fail the workflow contract (11.479661ms)
+Manual/tag release entrypoint preflight: 63 checks, 0 failures
+✔ tests/release/release-entrypoint-preflight.test.cjs (191.664714ms)
+Trusted-main reviewed request dispatch: 45 checks, 0 failures
+✔ tests/release/trusted-main-dispatch.test.cjs (222.88593ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.499556

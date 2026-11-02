@@ -1,0 +1,29 @@
+test_all_original_workload_witnesses_are_enforced (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_all_original_workload_witnesses_are_enforced) ... 
+  test_all_original_workload_witnesses_are_enforced (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_all_original_workload_witnesses_are_enforced) (label='moving source compilation omission') ... FAIL
+  test_all_original_workload_witnesses_are_enforced (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_all_original_workload_witnesses_are_enforced) (label='static source recompilation') ... FAIL
+test_consistently_counterfeit_metadata_must_fail (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_consistently_counterfeit_metadata_must_fail) ... ok
+test_frozen_real_round_is_accepted_as_integrity_not_performance (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_frozen_real_round_is_accepted_as_integrity_not_performance) ... ok
+test_original_cpu_csv_schema_cannot_drop_observations (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_original_cpu_csv_schema_cannot_drop_observations) ... ok
+
+======================================================================
+FAIL: test_all_original_workload_witnesses_are_enforced (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_all_original_workload_witnesses_are_enforced) (label='moving source compilation omission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-verification/tests/release/test_cpu_workload_witnesses.py", line 84, in test_all_original_workload_witnesses_are_enforced
+    with self.assertRaisesRegex(gate.GateError, 'workload witness'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: GateError not raised
+
+======================================================================
+FAIL: test_all_original_workload_witnesses_are_enforced (test_cpu_workload_witnesses.CpuWorkloadWitnessTests.test_all_original_workload_witnesses_are_enforced) (label='static source recompilation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-verification/tests/release/test_cpu_workload_witnesses.py", line 84, in test_all_original_workload_witnesses_are_enforced
+    with self.assertRaisesRegex(gate.GateError, 'workload witness'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: GateError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.880s
+
+FAILED (failures=2)
