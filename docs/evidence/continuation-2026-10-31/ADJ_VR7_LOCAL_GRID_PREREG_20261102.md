@@ -58,3 +58,34 @@ the existing nodal test executable; the normal full-band and ADJ gates must
 run exactly as before. No production DSP, V1 numbers,
 `e5f877a025fc52c6` fingerprint, tolerance files, hardware readings, or
 unverified resistor values may change. **Commit this preregistration first.**
+
+## Evaluation after pre-registration, 2026-11-02
+
+The fixed grid above was committed as `a4e1350` **before** building/running
+the opt-in variant. All **50** candidate conditions passed their offline
+finite-positive checks; these are synthetic *linear-model* results only.
+
+| NI boundary | Frozen original gm cutoff | Original CP2/CP3 | Highest CP3 among 25 local grid points | Grid location |
+| --- | ---: | ---: | ---: | --- |
+| NI open, alpha 0 | 259.968 Hz | 4.126 / **1.692** Vpp | **2.410** Vpp (CP2 6.139) | `j=-12`, **245.165083 Hz** |
+| Silent zero-Z NO1, alpha 1 | 259.968 Hz | 3.812 / **1.482** Vpp | **2.293** Vpp (CP2 5.897) | `j=-12`, **245.165083 Hz** |
+
+Both 25-point grids **decreased monotonically from the low-frequency
+boundary to the high-frequency boundary**, with alpha-0 CP3 moving
+2.410 → 1.109 Vpp and alpha-1 CP3 2.293 → 0.934 Vpp. Thus **the maximum
+is on the scanned boundary**: these are not true local maxima, and this
+result cannot establish an upper bound or reproduce physical VR7 tuning.
+The existing original HP service reading remains **1.692 Vpp, MISS** against
+the unchanged **3.3–5.3 Vpp at CP3**.
+
+For comparison, the independently earlier half-octave scan included HP
+gm cutoff **184.997 Hz** with CP3 **1.010 Vpp** (NI open) or **0.857 Vpp**
+(ideal-zero NO1), both lower than the new boundary result at **245.165 Hz**.
+That pair of *previously fixed* frequencies creates a bounded interval
+for the next **explicitly preregistered** bracket search; it does not prove
+a single peak, a physical VR7 operating range, or an actual potentiometer
+setting. The complete CP2/CP3 series is reproducible via:
+
+```sh
+./build-circuit/cs80_ig00156_nodal_tests tests/parity/tolerances-v2/ws1-voice.json --vr7-local-sensitivity
+```
