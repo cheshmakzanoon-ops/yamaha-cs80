@@ -1,0 +1,14 @@
+{
+  "source_head": "24ef8aeaafcf1db069c605d526108d6237986219",
+  "src_tree": "740854f1fa403b41174b91750a5019a56e0519a9",
+  "plain_strtod": {
+    "expected_exit": 1,
+    "checks": 296,
+    "required_failure": "actual session choice round-trips independently of numeric locale"
+  },
+  "null_locale": {
+    "scope": "compiled fault injection, not observed OS allocation failure",
+    "expected_exit": 0,
+    "checks": 14
+  }
+}

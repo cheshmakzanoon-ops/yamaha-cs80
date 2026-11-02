@@ -1,0 +1,23 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: active extension adopts the same V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: late extension activation receives current V2
+FAIL: 128 concurrent-write transactions keep main/extension revision coherent
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+FAIL: restored V2 reaches actual extension
+Factory tone revision processor: 2257 checks, 19 failures

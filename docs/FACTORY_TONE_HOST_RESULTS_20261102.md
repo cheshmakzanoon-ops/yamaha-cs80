@@ -67,3 +67,24 @@ changes the missing-value fallback to the live revision atomic and must fail
 the unchanged missing-state V1 assertions. The fixed positive inventory and
 all missing/malformed checks are retained; no extra failure is treated as a
 substitute for the specifically registered mechanism.
+
+## Qualified local processor scope at src740854f1
+
+The corrected **2,257-check** processor fixture passed before and after all
+**11 actual compiled C++ mutants**. Each mutant failed its registered ordinary
+assertion, with no compilation/runtime-error substitute. Failure counts were
+12,19,12,4,5,8,2,3,1,2,3. Both earlier INVALID registration attempts are preserved;
+they are not counted as successful negatives.
+
+Existing host automation-boundary regression passed (maximum normalized error
+2.2204460492503131e-16). The existing host circuit-contract mode passed too, but
+its OutputMeterHost fixture constructs an offscreen editor and emitted Fontconfig
+cache warnings. It created no native peer/window or screenshot; classify this
+as limited existing regression coverage, not processor-only or native GUI proof.
+
+The factory-tone locale repair and its separate results are recorded in
+FACTORY_TONE_LOCALE_RESULTS_20261102.md. Existing ENGINE/PURE comma-locale state
+corruption was independently reproduced and remains a separately scoped blocker.
+Native wrappers/pluginval/GUI/DAW, full-source numerical qualification and the
+explicit user-facing editor affordance remain pending. The original numerical
+source locks are unchanged.

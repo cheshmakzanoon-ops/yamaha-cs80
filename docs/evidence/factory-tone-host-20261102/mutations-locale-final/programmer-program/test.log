@@ -1,0 +1,7 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=13 main voice mode=0 extension voice mode=0
+FAIL: Program Change main retains aggregate physical units, not programmer coordinates
+FAIL: equal-sample extension onset receives new aggregate program, not stale source/programmer
+FAIL: ordinary eight-voice Program Change retains existing main aggregate behavior
+Factory tone revision processor: 2257 checks, 3 failures

@@ -1,0 +1,96 @@
+{
+  "source_head": "24ef8aeaafcf1db069c605d526108d6237986219",
+  "source_tree": "740854f1fa403b41174b91750a5019a56e0519a9",
+  "positive_binary_sha256": "e8780593ecd7588a79103ee887d7c327384e1e8f8005d8bba612a3b807590e91",
+  "cases": [
+    {
+      "name": "live-frame-reread",
+      "file": "src/plugin/PluginProcessor.cpp",
+      "old": "frame.factoryToneRevision = cachedFactoryToneRevision;",
+      "new": "frame.factoryToneRevision = factoryToneRevisionValue->load(std::memory_order_relaxed) == 1.0f ? cs80::FactoryToneRevision::publicAmendedV2 : cs80::FactoryToneRevision::frozenV1;",
+      "required_failure": "automation main uses captured V2, not new live V1",
+      "replace_count": 1
+    },
+    {
+      "name": "missing-extension-frame",
+      "file": "src/plugin/PluginProcessor.cpp",
+      "old": "extensionEngine->setControlFrame(withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources)));",
+      "new": "extensionEngine->setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));",
+      "required_failure": "active extension adopts the same V2",
+      "replace_count": 1
+    },
+    {
+      "name": "missing-automation-frame",
+      "file": "src/plugin/PluginProcessorAutomation.cpp",
+      "old": "withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources))",
+      "new": "cs80::ControlFrame::programmer(cached, cachedHardwareSources)",
+      "required_failure": "automation main uses captured V2, not new live V1",
+      "replace_count": 2
+    },
+    {
+      "name": "omitted-revision-normalization",
+      "file": "src/plugin/PluginProcessor.cpp",
+      "old": "    ensure(factoryToneRevisionParameterId, 0.0f);\n",
+      "new": "",
+      "required_failure": "malformed revision restores V1 without clamping into opt-in",
+      "replace_count": 1
+    },
+    {
+      "name": "inherited-missing-revision",
+      "file": "src/plugin/PluginProcessor.cpp",
+      "old": "const auto storedValue = child.getProperty(\"value\", fallback);",
+      "new": "const auto storedValue = child.getProperty(\"value\", id == factoryToneRevisionParameterId ? factoryToneRevisionValue->load(std::memory_order_relaxed) : fallback);",
+      "required_failure": "missing revision always restores frozen V1, never live V2",
+      "replace_count": 1
+    },
+    {
+      "name": "loose-state-parser",
+      "file": "src/plugin/PluginProcessor.cpp",
+      "old": "return end != begin && *end == '\\0' && parsed == 1.0 ? 1.0f : 0.0f;",
+      "new": "return parsed >= 0.5 ? 1.0f : 0.0f;",
+      "required_failure": "malformed revision restores V1 without clamping into opt-in",
+      "replace_count": 1
+    },
+    {
+      "name": "missing-ab-recall",
+      "file": "src/plugin/PluginProcessorLibrary.cpp",
+      "old": "    write(library->factoryToneRevision, s.factoryToneRevision);\n",
+      "new": "",
+      "required_failure": "A/B recalls the copied V2 sound",
+      "replace_count": 1
+    },
+    {
+      "name": "missing-factory-reset",
+      "file": "src/plugin/PluginProcessor.cpp",
+      "old": "    if (library->factoryToneRevision != nullptr)\n        library->factoryToneRevision->setValueNotifyingHost(0.0f);\n",
+      "new": "",
+      "required_failure": "shipped factory recall resets to frozen V1",
+      "replace_count": 1
+    },
+    {
+      "name": "missing-midi-reset",
+      "file": "src/plugin/PluginProcessorLibrary.cpp",
+      "old": "    if (library->factoryToneRevision != nullptr)\n        library->factoryToneRevision->setValueNotifyingHost(0.0f);\n",
+      "new": "",
+      "required_failure": "accepted MIDI Program Change resets revision to frozen V1",
+      "replace_count": 1
+    },
+    {
+      "name": "main-only-program",
+      "file": "src/plugin/PluginProcessorLibrary.cpp",
+      "old": "    forEachEngine([&](cs80::Engine& target)\n    {\n        const auto prior = target.getRenderPolicy();\n        target.setControlFrame(frame);\n        if (target.getRenderPolicy() != prior)\n            target.setExpression(expressionValue.load(std::memory_order_relaxed));\n    });",
+      "new": "    [&](cs80::Engine& target)\n    {\n        const auto prior = target.getRenderPolicy();\n        target.setControlFrame(frame);\n        if (target.getRenderPolicy() != prior)\n            target.setExpression(expressionValue.load(std::memory_order_relaxed));\n    }(engine);",
+      "required_failure": "MIDI Program Change publishes the same aggregate frame to both active engines",
+      "replace_count": 1
+    },
+    {
+      "name": "programmer-program",
+      "file": "src/plugin/PluginProcessorLibrary.cpp",
+      "old": "withFactoryToneRevision({ cached, cachedHardwareSources })",
+      "new": "withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources))",
+      "required_failure": "Program Change main retains aggregate physical units, not programmer coordinates",
+      "replace_count": 1
+    }
+  ],
+  "acceptance": "compile/link success; process exit1; named ordinary FAIL; all2257 checks execute; no crash"
+}

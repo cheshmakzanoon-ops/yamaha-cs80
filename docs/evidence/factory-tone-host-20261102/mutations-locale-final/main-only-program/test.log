@@ -1,0 +1,6 @@
+UI SMOKE START: processor=357184 bytes engine=324352 bytes
+UI SMOKE PHASE: JUCE initialization
+Program Change witness: main selector=13 extension selector=0 main voice mode=0 extension voice mode=1
+FAIL: MIDI Program Change publishes the same aggregate frame to both active engines
+FAIL: equal-sample extension onset receives new aggregate program, not stale source/programmer
+Factory tone revision processor: 2257 checks, 2 failures
