@@ -27,6 +27,12 @@ async function fixture(overrides = {}) {
     { request: { expected_main_sha: 'short' } }, { main: C },
     { comparison: { status: 'diverged' } }, { comparison: { merge_base_commit: { sha: C } } },
     { comparison: { files: [{ filename: 'src/core/Engine.cpp' }] } },
+    // A rename has both a new and an old path: S must not remove production
+    // code just because the destination is under docs/screenshots/.
+    { comparison: { files: [{ filename: 'docs/screenshots/Engine.png',
+      status: 'renamed', previous_filename: 'src/core/Engine.cpp' }] } },
+    { comparison: { files: [{ filename: 'docs/screenshots/Engine.png',
+      status: 'renamed' }] } },
     { comparison: { files: [] } }, { comparison: { files: Array(300).fill({ filename: 'docs/screenshots/test.png' }) } },
     { failed: 'build.yml' }, { failed: 'dsp-measurements.yml' }, { failed: 'screenshots.yml' },
     { run: { head_branch: 'feature' } }, { run: { status: 'in_progress' } }, { run: { head_sha: C } }

@@ -23,8 +23,13 @@ async function scenario(overrides = {}) {
       },
       compareCommits: async () => ({ data: {
         status: overrides.diverged ? 'diverged' : 'ahead', merge_base_commit: { sha: M },
-        files: [{ filename: overrides.sourceChangedAfterM ? 'src/core/Engine.cpp'
-          : 'docs/screenshots/provenance.json' }],
+        files: [overrides.renameFromSource
+          ? { filename: 'docs/screenshots/Engine.png', status: 'renamed',
+              previous_filename: 'src/core/Engine.cpp' }
+          : overrides.renameWithoutSource
+            ? { filename: 'docs/screenshots/Engine.png', status: 'renamed' }
+            : { filename: overrides.sourceChangedAfterM ? 'src/core/Engine.cpp'
+              : 'docs/screenshots/provenance.json' }],
       } }),
     },
     git: {
@@ -102,6 +107,8 @@ async function scenario(overrides = {}) {
     ['request wrong main', { request: { expected_main_sha: OTHER } }],
     ['request diverged', { diverged: true }],
     ['non-screenshot after M', { sourceChangedAfterM: true }],
+    ['non-screenshot renamed into screenshots', { renameFromSource: true }],
+    ['renamed source path missing', { renameWithoutSource: true }],
     ['missing fourth numerical workflow', { noNumerical: true }],
     ['numerical failure', { failedNumerical: true }],
     ['numerical pending', { pendingNumerical: true }],
