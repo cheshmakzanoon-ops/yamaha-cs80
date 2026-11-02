@@ -503,6 +503,48 @@ void serviceNiSensitivity(const ws1::Tolerances& tol)
     }
 }
 
+// Second opt-in, source-independent local resolution check, frozen before
+// evaluation in ADJ_VR7_LOCAL_GRID_PREREG_20261102.md. This is neither
+// physical VR7 travel nor a continuous optimization or hardware measurement.
+void serviceVr7LocalSensitivity(const ws1::Tolerances& tol)
+{
+    const double kv = source_factory::alignment.referenceKeyVolts;
+    const double hpGm = 125.0 * kv * std::exp2(source_factory::alignment.hpEffectiveCv);
+    const double f0 = 261.6255653005986, open = 18000.0;
+    const auto band = tol.range("hp_fh_4v0");
+    const auto baseline = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
+    std::printf("VR7 LOCAL: Yamaha ADJ p11 CP3 %.1f..%.1f Vpp; original model CP3 %.3f Vpp: %s\n",
+                band.first, band.second, baseline.cp3Lp,
+                baseline.cp3Lp >= band.first && baseline.cp3Lp <= band.second ? "within band" : "MISS");
+    for (double alpha : { 0.0, 1.0 })
+    {
+        auto hpInput = hpNet;
+        hpInput.sourceOhms = 150.0e3 / (2.0 + alpha);
+        const double pulseGain = 1.0 / (2.0 + alpha);
+        const auto frozen = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0, hpInput, pulseGain);
+        std::printf("VR7 LOCAL alpha %.2f frozen-source-control gmCutoff %.3f Hz: CP2 %.3f CP3 %.3f Vpp (reference, not selected)\n",
+                    alpha, hpGm, frozen.cp2Hp, frozen.cp3Lp);
+        double best = -1.0, bestGmHz = 0.0;
+        for (int j = -12; j <= 12; ++j)
+        {
+            const double gmHz = f0 * std::exp2(j / 128.0);
+            const auto v = settledVpp(gmHz + ffHz, 5.0, open + ffHz, 5.0, hpInput, pulseGain);
+            std::printf("VR7 LOCAL alpha %.2f j %+d gmCutoff %.6f Hz: CP2 %.3f CP3 %.3f Vpp (NOT hardware)\n",
+                        alpha, j, gmHz, v.cp2Hp, v.cp3Lp);
+            check(std::isfinite(v.cp2Hp) && v.cp2Hp > 0.0
+                      && std::isfinite(v.cp3Lp) && v.cp3Lp > 0.0,
+                  "VR7 fine local-grid candidates finite and positive, no voltage gate");
+            if (v.cp3Lp > best)
+            {
+                best = v.cp3Lp;
+                bestGmHz = gmHz;
+            }
+        }
+        std::printf("VR7 LOCAL alpha %.2f fixed-grid maximum CP3 %.3f Vpp at gmCutoff %.6f Hz (NOT physical VR7 maximum)\n",
+                    alpha, best, bestGmHz);
+    }
+}
+
 // 6. Stability on hard noise at every supported internal rate.
 void stability(const ws1::Tolerances& tol)
 {
@@ -626,6 +668,12 @@ int main(int argc, char** argv)
         {
             serviceNiSensitivity(tol);
             std::cout << checks << " offline checks, " << failures << " failures (not an ADJ acceptance gate)\n";
+            return failures == 0 ? 0 : 1;
+        }
+        if (argc > 2 && std::string_view(argv[2]) == "--vr7-local-sensitivity")
+        {
+            serviceVr7LocalSensitivity(tol);
+            std::cout << checks << " offline checks, " << failures << " failures (not a hardware VR7 sweep)\n";
             return failures == 0 ? 0 : 1;
         }
         equivalence(tol);
