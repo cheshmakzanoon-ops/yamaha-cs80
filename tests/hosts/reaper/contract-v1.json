@@ -1,0 +1,43 @@
+{
+  "schema": "cs80-reaper-smoke-v1",
+  "registered_utc": "2026-11-02",
+  "purpose": "Limited actual REAPER Linux VST3 scan, project state, MIDI, automation, editor and offline-render smoke; not full DAW acceptance or numerical/CPU qualification.",
+  "host": {
+    "version": "7.84",
+    "platform": "linux-x86_64",
+    "url": "https://www.reaper.fm/files/7.x/reaper784_linux_x86_64.tar.xz",
+    "sha256": "d87b39862bec6a82bbb530731ae1fa36bba4bc9954ff72518a187420eed9ec7d",
+    "checksum_source": "https://www.reaper.fm/download.php?hashes=1",
+    "evaluation_start_utc": "2026-11-02T00:00:00Z",
+    "evaluation_end_exclusive_utc": "2026-12-31T00:00:00Z"
+  },
+  "render": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "seconds": 2,
+    "frames": 96000,
+    "files": ["baseline", "restored", "automated", "no-midi"],
+    "notes": [48, 55, 60, 64],
+    "note_start_seconds": 0.25,
+    "note_end_seconds": 1.5,
+    "velocity": 100,
+    "volume_normalized": 0.55,
+    "automation_points": [[0.0, 0.55], [0.85, 0.55], [0.9, 0.0], [1.2, 0.0], [1.25, 0.55], [2.0, 0.55]],
+    "active_window_seconds": [0.45, 0.75],
+    "muted_window_seconds": [1.0, 1.15]
+  },
+  "limits": {
+    "parameter_absolute_error": 0.000001,
+    "minimum_active_rms": 0.0001,
+    "maximum_peak": 1.0,
+    "maximum_no_midi_peak": 0.000001,
+    "maximum_automated_muted_rms": 0.000001,
+    "maximum_restored_sample_error": 0.000001,
+    "maximum_early_automation_sample_error": 0.000001,
+    "maximum_pre_note_peak": 0.000001,
+    "host_setup_timeout_seconds": 180,
+    "render_timeout_seconds_each": 180
+  },
+  "required_evidence": ["checkout commit and src tree", "host archive hash and observed version", "built and installed VST3 binary SHA-256", "host parameter identities and before/after reopen values", "MIDI and automation readback", "reported plugin and chain latency (not inferred sample compensation)", "four original projects and raw stereo WAVs", "real host editor screenshot", "host exit codes and raw logs", "validator negative controls"],
+  "excluded_claims": ["other DAWs", "macOS/Windows REAPER", "physical MIDI/audio devices", "realtime deadline qualification", "complete UI usability", "automation sample accuracy", "measured offline PDC correctness", "release qualification"]
+}
