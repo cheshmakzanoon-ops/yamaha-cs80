@@ -49,3 +49,15 @@ guard control; do not count a surviving single deletion as a killed mutant.
 No remote publication, signing, installer release or numerical acceptance is
 authorized by these tests. Actual native package execution remains a separate
 bounded check after its source identities and guard review are frozen.
+
+## First-run disclosure and pre-implementation amendment
+
+The initial c113030 run observed 40 failures/zero errors in 11 groups, not the
+predicted38. One additional failure was a real staged-index divergence: restoring
+physical bytes to HEAD makes `git diff HEAD` empty even while the index differs.
+The other was a case-sensitive test regex rejecting the correctly raised
+`Source checkout is dirty`; it is **not** an additional provenance defect.
+Preserve that raw run. Before any production repair, correct only that regex and
+split staging/verifier index divergence into separate groups so an early staging
+failure cannot hide the independent verifier result. The corrected inventory is
+12 groups, expecting40 intended ordinary failures if both index paths admit it.

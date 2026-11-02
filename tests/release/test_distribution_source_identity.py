@@ -100,20 +100,26 @@ class DistributionSourceIdentityTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'source|revision|blob|notice'):
                     self.context()
 
-    def test_index_staged_change_is_rejected_even_when_worktree_matches_head(self):
+    def stage_index_divergence(self):
         path = self.root / 'LICENSE'
         original = path.read_bytes()
         path.write_bytes(b'staged but not present in worktree\n')
         self.git('add', 'LICENSE')
         path.write_bytes(original)
-        with self.assertRaisesRegex(ValueError, 'source|dirty|commit'):
+        self.assertNotEqual(self.git('diff', '--cached', '--name-only', 'HEAD', '--', 'LICENSE').strip(), '')
+        self.assertEqual(self.git('diff', '--name-only', 'HEAD', '--', 'LICENSE').strip(), '')
+
+    def test_stager_rejects_staged_index_when_worktree_matches_head(self):
+        self.stage_index_divergence()
+        with self.assertRaisesRegex(ValueError, '[Ss]ource|dirty|commit|index'):
             self.stage(self.destination())
+
+    def test_verifier_rejects_staged_index_when_worktree_matches_head(self):
         # The verifier independently checks the index even with a preexisting
         # pristine payload; do not let manifest source agreement bypass it.
-        self.git('reset', '--quiet', 'HEAD', '--', 'LICENSE')
         output = self.destination(); self.stage(output)
-        path.write_bytes(b'staged second change\n'); self.git('add', 'LICENSE'); path.write_bytes(original)
-        with self.assertRaisesRegex(ValueError, 'source|dirty|commit'):
+        self.stage_index_divergence()
+        with self.assertRaisesRegex(ValueError, '[Ss]ource|dirty|commit|index'):
             self.verify(output)
 
     @unittest.skipIf(os.name == 'nt', 'Windows does not expose Git POSIX executable modes')
@@ -142,7 +148,7 @@ class DistributionSourceIdentityTests(unittest.TestCase):
         directory = path.parent; saved = directory.with_name('saved-notice-dir'); directory.rename(saved); directory.symlink_to(saved, target_is_directory=True)
         try:
             for name, action in [('stager', lambda: self.stage(self.destination())), ('verifier', lambda: self.verify(output))]:
-                with self.subTest(consumer=name, alias='ancestor'), self.assertRaisesRegex(ValueError, 'source|notice|[Ll]ink'):
+                with self.subTest(consumer=name, alias='ancestor'), self.assertRaisesRegex(ValueError, '[Ss]ource|notice|[Ll]ink'):
                     action()
         finally:
             directory.unlink(); saved.rename(directory)
