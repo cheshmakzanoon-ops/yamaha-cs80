@@ -380,6 +380,75 @@ void oneCase(Checks& g,int width,double rate,int samples,int round,unsigned deno
     ++g.fpCases;
 }
 
+#if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST) && CS80_WSC_LANE_X86 && \
+    (defined(__GNUC__) || defined(__clang__))
+// Opt-in independent negative witness: start from a state demonstrably
+// admitted with normal masked x87 controls, then replay its *same exact four
+// lanes* with only the x87 invalid exception unmasked. The backend must reject
+// transactionally before advancing physical state or changing any FP flag.
+void checkUnmaskedX87Guard() {
+    RestoreCallerFp caller;
+    if(std::fesetround(FE_TONEAREST)!=0)throw std::runtime_error("x87 probe rounding unavailable");
+    _mm_setcsr(_mm_getcsr()&~((1u<<15)|(1u<<6)));
+    std::array<Current,4> stages{};
+    const std::array<double,4> frequencies{180.,211.,242.,273.};
+    const std::array<cs80::WscControls,4> controls{};
+    std::array<cs80::WscOutputVolts,4> outputs{};
+    for(int lane=0;lane<4;++lane) {
+        if(!stages[static_cast<std::size_t>(lane)].prepare(96000.,{}))
+            throw std::runtime_error("x87 guard probe prepare failed");
+        stages[static_cast<std::size_t>(lane)].reset(.19+.12*static_cast<double>(lane),
+                                                    frequencies[static_cast<std::size_t>(lane)]);
+    }
+    for(int sample=0;sample<512;++sample) {
+        auto allowed=stages,refused=stages;
+        std::array<Current*,4> allowedPtrs{},refusedPtrs{};
+        for(std::size_t lane=0;lane<4;++lane) {
+            allowedPtrs[lane]=&allowed[lane];
+            refusedPtrs[lane]=&refused[lane];
+        }
+        const FpState beforeAllowed=captureFp();
+        const bool demonstrated=Current::tryTickFour(allowedPtrs,frequencies,controls,outputs);
+        restoreFp(beforeAllowed);
+        if(demonstrated) {
+            std::feclearexcept(FE_ALL_EXCEPT);
+            const std::uint16_t original=x87Control();
+            const std::uint16_t unmaskInvalid=static_cast<std::uint16_t>(original&~1u);
+            __asm__ volatile("fldcw %0"::"m"(unmaskInvalid));
+            const FpState beforeRefused=captureFp();
+            const bool wronglyAccepted=Current::tryTickFour(refusedPtrs,frequencies,controls,outputs);
+            const FpState afterRefused=captureFp();
+            __asm__ volatile("fldcw %0"::"m"(original));
+            restoreFp(beforeAllowed);
+            if(wronglyAccepted ||
+               beforeRefused.rounding!=afterRefused.rounding ||
+               beforeRefused.exceptions!=afterRefused.exceptions ||
+               beforeRefused.x87Control!=afterRefused.x87Control ||
+               (beforeRefused.x87Status&0x3fu)!=(afterRefused.x87Status&0x3fu) ||
+               beforeRefused.mxcsr!=afterRefused.mxcsr)
+                throw std::runtime_error("x87 unmasked-trap batch admitted or changed FP status");
+            for(std::size_t lane=0;lane<4;++lane) {
+                const auto& x=stages[lane].getState();
+                const auto& y=refused[lane].getState();
+                if(std::bit_cast<std::uint64_t>(x.charge)!=std::bit_cast<std::uint64_t>(y.charge)||
+                   std::bit_cast<std::uint64_t>(x.inputBaselineVolts)!=
+                       std::bit_cast<std::uint64_t>(y.inputBaselineVolts)||
+                   std::bit_cast<std::uint64_t>(x.triangleBaselineVolts)!=
+                       std::bit_cast<std::uint64_t>(y.triangleBaselineVolts)||
+                   x.residualCursor!=y.residualCursor)
+                    throw std::runtime_error("x87 rejected batch changed physical state");
+            }
+            std::printf("WSC x87 unmasked-trap negative: eligible-masked=1 rejected-unmasked=1 "
+                        "fp-mismatches=0 state-mismatches=0\n");
+            return;
+        }
+        for(std::size_t lane=0;lane<4;++lane)
+            (void)stages[lane].tick(frequencies[lane],controls[lane]);
+    }
+    throw std::runtime_error("x87 negative probe never found normally eligible lanes");
+}
+#endif
+
 } // namespace
 
 int main() {
@@ -400,6 +469,10 @@ int main() {
                     g.caseIndex=caseNumber;
                     oneCase(g,4,rate,128,round,mxcsr,caseNumber++);
                 }
+#if defined(CS80_WSC_FOUR_LANE_BACKEND_TEST) && CS80_WSC_LANE_X86 && \
+    (defined(__GNUC__) || defined(__clang__))
+        checkUnmaskedX87Guard();
+#endif
         const std::uint64_t expectedCases=32u+16u*denorm.size();
         const std::uint64_t expectedSamples=32u*192u+16u*denorm.size()*128u;
         const std::uint64_t scheduledSlots=expectedSamples*kLanes;

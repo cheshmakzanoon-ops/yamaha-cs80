@@ -364,6 +364,13 @@ public:
         // no flush-to-zero/denormals-are-zero. Other modes use original tick.
         if((mxcsr&((3u<<13)|(1u<<15)|(1u<<6)))!=0u ||
            (mxcsr&(0x3fu<<7))!=(0x3fu<<7))return false;
+        std::uint16_t x87Control=0;
+        __asm__ volatile("fnstcw %0":"=m"(x87Control));
+        // Never batch when the host has unmasked x87 traps, independently of
+        // the SSE exception masks checked above.
+#if !defined(CS80_WSC_FOUR_LANE_MUTATE_X87_GUARD)
+        if((x87Control&0x3fu)!=0x3fu)return false;
+#endif
         // Even finite checks on a subnormal control can set the MXCSR
         // denormal-operand sticky bit: snapshot before *all* lane admission.
         std::fenv_t fpBeforeAdmission{};
