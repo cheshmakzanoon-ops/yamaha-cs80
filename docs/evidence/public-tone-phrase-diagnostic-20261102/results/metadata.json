@@ -1,0 +1,71 @@
+{
+  "started": "2026-11-02T14:05:34.656988+00:00",
+  "head": "fbbbe33d906a34b0ac64989929eabcbcd9195442",
+  "src_tree": "335930af02743a272b0da6ddd0544024794ea296",
+  "request_sha256": "fbf4439e3334fd3d9089155167d3c2793d32662887ded5b2decec32ae408bdb3",
+  "scope": "Local paired musical-phrase diagnostic, not original full885 or release qualification",
+  "binary_sha256": "c5f305f5d47fb687e685dc591a0e9257915a4e1190b5d8c707fa7fa39552e5dd",
+  "relevant_compile_commands": [
+    {
+      "directory": "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration",
+      "command": "/usr/bin/c++ -I/workspace/scratch/aa102d573ba3/cs80-integration/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/scratch/aa102d573ba3/cs80-integration/src/core/Engine.cpp",
+      "file": "/workspace/scratch/aa102d573ba3/cs80-integration/src/core/Engine.cpp",
+      "output": "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration/CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration",
+      "command": "/usr/bin/c++ -I/workspace/scratch/aa102d573ba3/cs80-integration/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/scratch/aa102d573ba3/cs80-integration/src/core/FactoryPresets.cpp",
+      "file": "/workspace/scratch/aa102d573ba3/cs80-integration/src/core/FactoryPresets.cpp",
+      "output": "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration/CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration",
+      "command": "/usr/bin/c++ -I/workspace/scratch/aa102d573ba3/cs80-integration/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o -c /workspace/scratch/aa102d573ba3/cs80-integration/src/tools/engine_audit.cpp",
+      "file": "/workspace/scratch/aa102d573ba3/cs80-integration/src/tools/engine_audit.cpp",
+      "output": "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration/CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o"
+    }
+  ],
+  "compiler_path": "/usr/bin/c++",
+  "compiler_version": "c++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "arms": [
+    {
+      "name": "frozen-v1",
+      "command": [
+        "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration/cs80_engine_audit",
+        "--out",
+        "/workspace/scratch/aa102d573ba3/cs80-public-tone-phrase-20261102/frozen-v1",
+        "--suite",
+        "phrase",
+        "--rates",
+        "48000",
+        "--quick",
+        "--factory-tone-revision",
+        "frozen-v1"
+      ],
+      "started": "2026-11-02T14:05:43.640198+00:00",
+      "returncode": 0,
+      "finished": "2026-11-02T14:09:34.886975+00:00"
+    },
+    {
+      "name": "public-amended-v2",
+      "command": [
+        "/workspace/scratch/aa102d573ba3/cs80-integration/build-integration/cs80_engine_audit",
+        "--out",
+        "/workspace/scratch/aa102d573ba3/cs80-public-tone-phrase-20261102/public-amended-v2",
+        "--suite",
+        "phrase",
+        "--rates",
+        "48000",
+        "--quick",
+        "--factory-tone-revision",
+        "public-amended-v2"
+      ],
+      "started": "2026-11-02T14:09:34.899282+00:00",
+      "returncode": 0,
+      "finished": "2026-11-02T14:13:56.048629+00:00"
+    }
+  ],
+  "frozen-v1_csv_sha256": "000b75b845554f912b713f5260d78d01ef43373c245b8fb7527a41d9952b3bab",
+  "public-amended-v2_csv_sha256": "ffab5c143240daa96d04a1b2621ea065f5f403f6dd0aa2fabe3ae79b570c830b",
+  "finished": "2026-11-02T14:13:56.070987+00:00"
+}

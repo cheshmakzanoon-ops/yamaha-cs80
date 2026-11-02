@@ -1,0 +1,600 @@
+{
+  "scope": "Local paired musical-phrase diagnostic, not original full885 or release qualification",
+  "rows_per_arm": 46,
+  "protected_identical_metric_rows": 37,
+  "changed_rows": [
+    {
+      "fixture": [
+        "String 1 + String 2",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.619766",
+          "after": "0.680198"
+        },
+        "peak_db": {
+          "before": "-4.15545",
+          "after": "-3.3473"
+        },
+        "rms_single_db": {
+          "before": "-35.8566",
+          "after": "-31.4355"
+        },
+        "rms_chord_db": {
+          "before": "-30.4061",
+          "after": "-25.5107"
+        },
+        "weighted_chord_db": {
+          "before": "-30.4257",
+          "after": "-25.5249"
+        },
+        "loud_short_db": {
+          "before": "-27.0851",
+          "after": "-25.0189"
+        },
+        "dc_single_rel": {
+          "before": "0.000466275",
+          "after": "0.000357316"
+        },
+        "dc_chord_rel": {
+          "before": "0.00027149",
+          "after": "0.000269484"
+        },
+        "dc_idle_abs": {
+          "before": "5.62294e-07",
+          "after": "5.62296e-07"
+        },
+        "subsonic_peak": {
+          "before": "0.000728098",
+          "after": "0.00107424"
+        },
+        "subsonic_rel": {
+          "before": "0.0011748",
+          "after": "0.00157931"
+        },
+        "click_off": {
+          "before": "0.92738",
+          "after": "0.936775"
+        },
+        "click_chord_off": {
+          "before": "0.552699",
+          "after": "0.902936"
+        },
+        "click_retrigger": {
+          "before": "0.441843",
+          "after": "0.356028"
+        },
+        "click_fresh_chord": {
+          "before": "0.64079",
+          "after": "0.518099"
+        },
+        "click_steal": {
+          "before": "0.558284",
+          "after": "0.45918"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "String 3 + String 4",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.720384",
+          "after": "0.858471"
+        },
+        "peak_db": {
+          "before": "-2.84871",
+          "after": "-1.32549"
+        },
+        "softclip_frac_chord": {
+          "before": "0",
+          "after": "3.47222e-05"
+        },
+        "rms_single_db": {
+          "before": "-26.3412",
+          "after": "-24.5193"
+        },
+        "rms_chord_db": {
+          "before": "-20.9211",
+          "after": "-18.8785"
+        },
+        "weighted_chord_db": {
+          "before": "-21.1699",
+          "after": "-19.0732"
+        },
+        "loud_short_db": {
+          "before": "-20.5266",
+          "after": "-18.0949"
+        },
+        "dc_single_rel": {
+          "before": "0.00175398",
+          "after": "0.0014982"
+        },
+        "dc_chord_rel": {
+          "before": "0.00204144",
+          "after": "0.000676525"
+        },
+        "dc_idle_abs": {
+          "before": "5.62295e-07",
+          "after": "5.62296e-07"
+        },
+        "subsonic_peak": {
+          "before": "0.00193911",
+          "after": "0.00154417"
+        },
+        "subsonic_rel": {
+          "before": "0.00269178",
+          "after": "0.00179875"
+        },
+        "click_off": {
+          "before": "0.921091",
+          "after": "0.927574"
+        },
+        "click_chord_off": {
+          "before": "0.559239",
+          "after": "0.924146"
+        },
+        "click_retrigger": {
+          "before": "0.0621713",
+          "after": "0.0623519"
+        },
+        "click_fresh_chord": {
+          "before": "0.0857724",
+          "after": "0.0858982"
+        },
+        "click_steal": {
+          "before": "0.0662265",
+          "after": "0.0568867"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "Brass 1 + Brass 2",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.764652",
+          "after": "0.980145"
+        },
+        "peak_db": {
+          "before": "-2.33072",
+          "after": "-0.174196"
+        },
+        "softclip_frac_chord": {
+          "before": "0",
+          "after": "1.73611e-05"
+        },
+        "rms_single_db": {
+          "before": "-28.3145",
+          "after": "-24.1611"
+        },
+        "rms_chord_db": {
+          "before": "-23.0412",
+          "after": "-18.7731"
+        },
+        "weighted_chord_db": {
+          "before": "-23.2621",
+          "after": "-18.949"
+        },
+        "loud_short_db": {
+          "before": "-19.1229",
+          "after": "-17.6604"
+        },
+        "dc_single_rel": {
+          "before": "0.00217962",
+          "after": "0.00192847"
+        },
+        "dc_chord_rel": {
+          "before": "0.00176505",
+          "after": "0.000260009"
+        },
+        "dc_idle_abs": {
+          "before": "5.62294e-07",
+          "after": "5.62296e-07"
+        },
+        "subsonic_peak": {
+          "before": "0.00344272",
+          "after": "0.00354186"
+        },
+        "subsonic_rel": {
+          "before": "0.00450234",
+          "after": "0.00361361"
+        },
+        "click_off": {
+          "before": "0.74438",
+          "after": "0.892857"
+        },
+        "click_chord_off": {
+          "before": "0.726792",
+          "after": "0.871329"
+        },
+        "click_retrigger": {
+          "before": "0.0634062",
+          "after": "0.0428773"
+        },
+        "click_fresh_chord": {
+          "before": "0.148899",
+          "after": "0.100706"
+        },
+        "click_steal": {
+          "before": "0.136642",
+          "after": "0.123359"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "E. Piano + Bass",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.907215",
+          "after": "0.875207"
+        },
+        "peak_db": {
+          "before": "-0.845799",
+          "after": "-1.15779"
+        },
+        "rms_single_db": {
+          "before": "-41.4654",
+          "after": "-42.9597"
+        },
+        "rms_chord_db": {
+          "before": "-36.4881",
+          "after": "-37.9482"
+        },
+        "weighted_chord_db": {
+          "before": "-36.6659",
+          "after": "-38.1245"
+        },
+        "loud_short_db": {
+          "before": "-18.955",
+          "after": "-19.5943"
+        },
+        "dc_single_rel": {
+          "before": "0.00105529",
+          "after": "0.00118802"
+        },
+        "dc_chord_rel": {
+          "before": "0.00287726",
+          "after": "0.0029967"
+        },
+        "subsonic_peak": {
+          "before": "0.00475778",
+          "after": "0.00462369"
+        },
+        "subsonic_rel": {
+          "before": "0.00524438",
+          "after": "0.00528297"
+        },
+        "click_off": {
+          "before": "0.911838",
+          "after": "0.896934"
+        },
+        "click_chord_off": {
+          "before": "0.514529",
+          "after": "0.53211"
+        },
+        "click_retrigger": {
+          "before": "0.507188",
+          "after": "0.500254"
+        },
+        "click_fresh_chord": {
+          "before": "0.748458",
+          "after": "0.724233"
+        },
+        "click_steal": {
+          "before": "0.442074",
+          "after": "0.452862"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "Clavichord 1 + Clavichord 2",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.38076",
+          "after": "0.299219"
+        },
+        "peak_db": {
+          "before": "-8.38698",
+          "after": "-10.4802"
+        },
+        "rms_single_db": {
+          "before": "-41.0504",
+          "after": "-43.1619"
+        },
+        "rms_chord_db": {
+          "before": "-35.3107",
+          "after": "-37.3979"
+        },
+        "weighted_chord_db": {
+          "before": "-35.6602",
+          "after": "-37.7474"
+        },
+        "loud_short_db": {
+          "before": "-29.8914",
+          "after": "-32.0207"
+        },
+        "dc_single_rel": {
+          "before": "0.0011374",
+          "after": "0.00113426"
+        },
+        "dc_chord_rel": {
+          "before": "0.00288439",
+          "after": "0.00288392"
+        },
+        "subsonic_peak": {
+          "before": "0.00165327",
+          "after": "0.00132202"
+        },
+        "subsonic_rel": {
+          "before": "0.00434203",
+          "after": "0.00441824"
+        },
+        "click_off": {
+          "before": "0.691222",
+          "after": "0.688628"
+        },
+        "click_chord_off": {
+          "before": "0.60872",
+          "after": "0.608757"
+        },
+        "click_retrigger": {
+          "before": "0.551035",
+          "after": "0.540688"
+        },
+        "click_fresh_chord": {
+          "before": "0.581865",
+          "after": "0.581105"
+        },
+        "click_steal": {
+          "before": "0.845239",
+          "after": "0.841422"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "Organ 1 + Organ 2",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.745993",
+          "after": "0.590693"
+        },
+        "peak_db": {
+          "before": "-2.54531",
+          "after": "-4.57276"
+        },
+        "rms_single_db": {
+          "before": "-25.1978",
+          "after": "-25.5116"
+        },
+        "rms_chord_db": {
+          "before": "-19.2733",
+          "after": "-19.6821"
+        },
+        "weighted_chord_db": {
+          "before": "-19.7056",
+          "after": "-20.1614"
+        },
+        "loud_short_db": {
+          "before": "-18.8577",
+          "after": "-18.6931"
+        },
+        "dc_single_rel": {
+          "before": "0.000524893",
+          "after": "0.000293668"
+        },
+        "dc_chord_rel": {
+          "before": "0.00261678",
+          "after": "0.0016608"
+        },
+        "dc_idle_abs": {
+          "before": "5.62297e-07",
+          "after": "5.62298e-07"
+        },
+        "subsonic_peak": {
+          "before": "0.00537726",
+          "after": "0.00584114"
+        },
+        "subsonic_rel": {
+          "before": "0.0072082",
+          "after": "0.00988862"
+        },
+        "click_off": {
+          "before": "0.920538",
+          "after": "0.881512"
+        },
+        "click_chord_off": {
+          "before": "0.43236",
+          "after": "0.54422"
+        },
+        "click_retrigger": {
+          "before": "0.397593",
+          "after": "0.4227"
+        },
+        "click_fresh_chord": {
+          "before": "0.757107",
+          "after": "1"
+        },
+        "click_steal": {
+          "before": "0.349712",
+          "after": "0.555793"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "Guitar 1 + Guitar 2",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.933362",
+          "after": "0.756352"
+        },
+        "peak_db": {
+          "before": "-0.598998",
+          "after": "-2.42552"
+        },
+        "rms_single_db": {
+          "before": "-31.5034",
+          "after": "-33.6149"
+        },
+        "rms_chord_db": {
+          "before": "-26.4389",
+          "after": "-28.5261"
+        },
+        "weighted_chord_db": {
+          "before": "-26.8058",
+          "after": "-28.893"
+        },
+        "loud_short_db": {
+          "before": "-19.4308",
+          "after": "-21.5418"
+        },
+        "dc_single_rel": {
+          "before": "0.000344628",
+          "after": "0.000342392"
+        },
+        "dc_chord_rel": {
+          "before": "0.00347506",
+          "after": "0.00347575"
+        },
+        "dc_idle_abs": {
+          "before": "5.62294e-07",
+          "after": "5.62293e-07"
+        },
+        "subsonic_peak": {
+          "before": "0.00441747",
+          "after": "0.00445463"
+        },
+        "subsonic_rel": {
+          "before": "0.00473286",
+          "after": "0.00588963"
+        },
+        "click_off": {
+          "before": "0.925048",
+          "after": "0.923791"
+        },
+        "click_chord_off": {
+          "before": "0.7103",
+          "after": "0.70996"
+        },
+        "click_retrigger": {
+          "before": "0.665386",
+          "after": "0.658508"
+        },
+        "click_fresh_chord": {
+          "before": "0.591588",
+          "after": "0.591411"
+        },
+        "click_steal": {
+          "before": "0.489059",
+          "after": "0.487514"
+        }
+      }
+    },
+    {
+      "fixture": [
+        "Funky 3 + Funky 4",
+        "tab",
+        "source",
+        "48000"
+      ],
+      "metrics": {
+        "peak": {
+          "before": "0.872412",
+          "after": "0.911135"
+        },
+        "peak_db": {
+          "before": "-1.18557",
+          "after": "-0.808345"
+        },
+        "rms_single_db": {
+          "before": "-24.4933",
+          "after": "-23.2271"
+        },
+        "rms_chord_db": {
+          "before": "-18.7201",
+          "after": "-17.4276"
+        },
+        "weighted_chord_db": {
+          "before": "-19.0197",
+          "after": "-17.7423"
+        },
+        "loud_short_db": {
+          "before": "-17.0549",
+          "after": "-16.7255"
+        },
+        "dc_single_rel": {
+          "before": "0.00244321",
+          "after": "0.00257416"
+        },
+        "dc_chord_rel": {
+          "before": "0.00128494",
+          "after": "0.000663696"
+        },
+        "subsonic_peak": {
+          "before": "0.0104176",
+          "after": "0.0104215"
+        },
+        "subsonic_rel": {
+          "before": "0.0119412",
+          "after": "0.0114379"
+        },
+        "click_off": {
+          "before": "0.874777",
+          "after": "0.809232"
+        },
+        "click_chord_off": {
+          "before": "0.527575",
+          "after": "0.385016"
+        },
+        "click_retrigger": {
+          "before": "0.483935",
+          "after": "0.484716"
+        },
+        "click_fresh_chord": {
+          "before": "0.56705",
+          "after": "0.5671"
+        },
+        "click_steal": {
+          "before": "0.590747",
+          "after": "0.587927"
+        }
+      }
+    }
+  ],
+  "nonfinite_frames": 0,
+  "full_885_qualification": false,
+  "original_click_gates_closed": false,
+  "pcm_bit_identity_claimed": false,
+  "finished": "2026-11-02T14:13:56.069364+00:00"
+}
