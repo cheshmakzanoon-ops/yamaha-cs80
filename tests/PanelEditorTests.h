@@ -300,6 +300,50 @@ void testMainViewLayout(Check check, Flush flush)
           "tone tabs carry the full hardware names");
 }
 
+// Independent order transcribed from the original Yamaha S2 PN2 drawing, not
+// from CentreRow's production placement list. Tone tabs occupy the gap between
+// FEET II and MIX; this fixture checks the 26 parameter controls around them.
+template <typename Check, typename Flush>
+void testServiceS2FrontStripOrder(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    const int order[] = {
+        cs80::P_masterTune, cs80::P_detune,
+        cs80::P_ringAttack, cs80::P_ringDecay, cs80::P_ringDepth, cs80::P_ringSpeed, cs80::P_ringAmount,
+        cs80::P_subWave, cs80::P_subSpeed, cs80::P_subVco, cs80::P_subVcf, cs80::P_subVca,
+        cs80::chParam(0, cs80::CP_feet), cs80::chParam(1, cs80::CP_feet),
+        cs80::P_mix, cs80::P_brilliance, cs80::P_resonance,
+        cs80::P_initBend, cs80::P_subAtSpeed, cs80::P_subAtVco, cs80::P_subAtVcf,
+        cs80::P_kbdBrillianceLow, cs80::P_kbdBrillianceHigh, cs80::P_kbdLevelLow, cs80::P_kbdLevelHigh,
+        cs80::P_volume,
+    };
+    juce::TemporaryFile presetRoot("-cs80-service-s2-order");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    Cs80AudioProcessorEditor editor(host);
+    for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
+    {
+        editor.setSize(size.x, size.y);
+        flush(30);
+        const auto label = juce::String(" at ") + juce::String(size.x) + "x" + juce::String(size.y);
+        juce::Component* previous = nullptr;
+        int previousParameter = -1;
+        for (const int parameter : order)
+        {
+            auto* current = findParameterSlider(editor, parameter);
+            const auto name = juce::String(cs80::paramDef(parameter).name);
+            check(current != nullptr && current->getWidth() > 0 && current->getHeight() > 0,
+                  ("S2 front-strip control exists: " + name + label).toRawUTF8());
+            if (previousParameter >= 0)
+                check(previous != nullptr && current != nullptr
+                          && boundsIn(editor, *previous).getRight() <= boundsIn(editor, *current).getX(),
+                      ("S2 front-strip order: " + juce::String(cs80::paramDef(previousParameter).name)
+                          + " before " + name + label).toRawUTF8());
+            previous = current;
+            previousParameter = parameter;
+        }
+    }
+}
+
 // Retain every shipped exclusive-tab assertion under the immutable Legacy policy.
 template <typename Check, typename Flush>
 void testTremoloChorusTabs(Check check, Flush flush)
@@ -784,6 +828,7 @@ void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
     testGoldenImages(check, flush, outDir);
     testUnsavedEditIndicator(check, flush);
     testMainViewLayout(check, flush);
+    testServiceS2FrontStripOrder(check, flush);
     testOwnerLeverDirections(check, flush);
     testTremoloChorusTabs(check, flush);
     testIndependentChorusTabs(check, flush);
