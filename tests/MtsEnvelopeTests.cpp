@@ -115,6 +115,15 @@ int main() {
             } else {
                 const int header=f.sub==2?7:8;
                 for(int n=0;n<2;++n)for(int byte=0;byte<3;++byte)noChange[header+4*n+1+byte]=0x7F;
+                std::vector<std::uint8_t> maximum(d.begin(),d.begin()+header);
+                maximum[header-1]=127;
+                auto maximumExpected=sentinel();
+                for(int n=0;n<127;++n) {
+                    maximum.insert(maximum.end(),{(std::uint8_t)n,60,0x40,0});
+                    maximumExpected.pitch[(std::size_t)n]=60.5f;maximumExpected.mapped[(std::size_t)n]=true;
+                }
+                maximum.push_back(0xF7);
+                accepts(maximum,maximumExpected,label+" complete maximum legal127 count");
                 for(int count:{128,255}) {
                     std::vector<std::uint8_t> bad(d.begin(),d.begin()+header);
                     bad[header-1]=(std::uint8_t)count;
