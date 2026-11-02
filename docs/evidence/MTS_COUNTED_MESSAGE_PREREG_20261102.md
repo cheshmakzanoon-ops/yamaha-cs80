@@ -27,3 +27,31 @@ all earlier evidence remain intact. Require red/green focused tests, sanitizer
 coverage with environment limitations explicit, and unchanged original tuning/
 MIDI tests before integration. Any core-header change requires later exact-source
 qualification rather than silently changing the original frozen audit request.
+
+## Observed focused qualification
+
+Test-only `1e513e655db13a245121aa393d8a690c53feddf3` reproduced **20 failures
+out of 46 checks** against unchanged parser source `2029aa3b`. For both formats,
+payloads containing one complete note and zero to three bytes of the second
+partially changed the table. Count127 with one complete note did the same.
+
+Implementation `0b6301a154b120833be23c343b70fdc00d9dada4`, source tree
+`7157d3a2ee6e0ec57e7413a22f203ab981ed377d`, adds only the required full-payload
+length check before the loop. The count is an unsigned byte promoted to `int`,
+so its multiplication by four cannot overflow the supported ABI. No allocation,
+pitch conversion or extra audio-thread table copy is introduced.
+
+GCC 14.2.0, shared lock, 2026-11-02 11:21:56–11:22:11 UTC:
+
+- focused Release: **46/46**;
+- focused ASan + UBSan: **46/46**, leak detection explicitly disabled because
+  this container's ptrace restriction prevents LeakSanitizer inspection;
+- preceding KBM input boundary regression: **61/61**;
+- unchanged original tuning/MIDI/voice modes: **81/81**.
+
+The focused executables were compiled with `-std=c++20 -O2 -Isrc`, or
+`-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` for the sanitizer
+case. The original suite used its existing `CS80_TUNING_DATA_DIR` definition and
+exact PR6 Engine/FactoryPresets objects. This is not a fresh whole-engine
+sanitizer result. Native platform and composed-source qualification remain
+pending. Raw logs and hashes are in `mts-counted-message-20261102/`.
