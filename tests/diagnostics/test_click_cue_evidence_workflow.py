@@ -48,6 +48,9 @@ def validate_workflow_contract(source: str) -> None:
         raise ValueError("push is not restricted to reviewed click branch")
     if not re.search(r"(?m)^    paths:\s*\n      - '\.github/workflows/click-hardware-cue-evidence\.yml'", events):
         raise ValueError("push is not restricted to cue-related paths")
+    push_items = [line.strip() for line in events.splitlines() if line.startswith("      - ")]
+    if push_items != [f"- {BRANCH}", "- '.github/workflows/click-hardware-cue-evidence.yml'"]:
+        raise ValueError("push path scope must contain only this evidence workflow")
     if "reviewed_sha:" not in events or "required: true" not in events:
         raise ValueError("manual request lacks required reviewed SHA")
     permission_lines = [x.strip() for x in top_block(source, "permissions").splitlines()
@@ -89,6 +92,8 @@ class CueWorkflowContractTests(unittest.TestCase):
         for original, wrong in (
             ("contents: read", "contents: write"),
             (f"      - {BRANCH}", "      - main"),
+            ("      - '.github/workflows/click-hardware-cue-evidence.yml'",
+             "      - '.github/workflows/*.yml'"),
             ("  workflow_dispatch:", "  pull_request:"),
             (PIN, "0" * 40),
             ("producer.json", "missing-producer-file"),

@@ -1,0 +1,91 @@
+name: Frozen CS-80 click hardware MIDI cues (diagnostic only)
+
+# The push path exists solely so this evidence job can run on its isolated
+# experiment branch before a workflow_dispatch definition reaches default.
+# There are no release, tag, PR, schedule or installer triggers.
+on:
+  push:
+    branches:
+      - experiment/click-cue-guards-20261102
+    paths:
+      - '.github/workflows/click-hardware-cue-evidence.yml'
+  workflow_dispatch:
+    inputs:
+      reviewed_sha:
+        description: 'Reviewed exact 40-character commit SHA (must equal the selected branch HEAD)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: click-hardware-cues-${{ github.ref }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  diagnostic-cues:
+    if: github.ref == 'refs/heads/experiment/click-cue-guards-20261102'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      EXPECTED_SOURCE_TREE: 7dd159d491012fd47b46c0aa651e86ea959ca289
+      REVIEWED_SHA: ${{ inputs.reviewed_sha }}
+    steps:
+      - name: Check out only the triggering reviewed commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Reject unreviewed ref, tag, changed source or dirty checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF" == "refs/heads/experiment/click-cue-guards-20261102" ]]
+          [[ "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            [[ "$REVIEWED_SHA" =~ ^[0-9a-f]{40}$ ]]
+            [[ "$REVIEWED_SHA" == "$GITHUB_SHA" ]]
+          fi
+          [[ "$(git rev-parse HEAD)" == "$GITHUB_SHA" ]]
+          [[ "$(git rev-parse HEAD:src)" == "$EXPECTED_SOURCE_TREE" ]]
+          [[ -z "$(git status --porcelain=v1 --untracked-files=all -- src)" ]]
+
+      - name: Run independent guard, SMF0 and workflow mutation tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tests/diagnostics/test_generate_click_hardware_cues.py -v
+          python3 tests/diagnostics/test_click_cue_evidence_workflow.py -v
+
+      - name: Create one new source-locked diagnostic cue package
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e artifacts/click-hardware-cues
+          mkdir -p artifacts
+          python3 tests/diagnostics/GenerateClickHardwareCues.py \
+            --repo . --out artifacts/click-hardware-cues
+          python3 scripts/seal_click_hardware_cues.py seal \
+            --directory artifacts/click-hardware-cues --repo . \
+            --commit "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --attempt "$GITHUB_RUN_ATTEMPT"
+          python3 scripts/seal_click_hardware_cues.py verify \
+            --directory artifacts/click-hardware-cues --repo . \
+            --commit "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --attempt "$GITHUB_RUN_ATTEMPT"
+          test -f artifacts/click-hardware-cues/producer.json
+          test -f artifacts/click-hardware-cues/SHA256SUMS
+          test -f artifacts/click-hardware-cues/click_hardware_midi_cue_manifest.csv
+          (cd artifacts/click-hardware-cues && sha256sum --check SHA256SUMS)
+
+      - name: Upload non-hardware diagnostic MIDI evidence only
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-click-cues-${{ github.sha }}-${{ github.run_attempt }}
+          path: artifacts/click-hardware-cues/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false
