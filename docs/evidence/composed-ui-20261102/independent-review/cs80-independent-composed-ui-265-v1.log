@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/cs80-independent-composed-ui-265.py", line 6, in <module>
+    j=json.loads((D/'receipt.json').read_text());assert j['head']==PIN and j['source_tree']=='32ae37fe643056f66f1004066c52b61b463e695b';assert git('rev-parse','HEAD').decode().strip()==PIN;assert not git('status','--porcelain')
+                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
