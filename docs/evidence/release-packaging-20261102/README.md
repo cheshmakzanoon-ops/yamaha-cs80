@@ -44,3 +44,21 @@ Native macOS and Windows release-package execution is still required after all
 actual hard acceptance gates pass. The Windows structural fixture only checks
 that generated documents are required and wired into Inno Setup; it is not a
 native installer execution result.
+
+## Addressable post-publication check
+
+Connector publication reauthors commit metadata; local commit IDs are not assumed
+remotely addressable. The preregistration maps local `484187a56ce67d8b2e334be3d09212834c8cb60b`
+to published `45d10da794c4e85324695be715bc75d496e77d83`, with identical tree
+`f662c498bf67e5b5ec0a2b1cfcb3bcb649c0bdc6`. The repair maps local
+`2952693f1d7014f2b88cdc517399c5d2190627ce` to published
+`a6e568543f3d194f10f75af2216bd1dc686ff3e5`, with identical tree
+`0c84ed5d1d164696507e6507b76922b031520a2c`.
+
+A separate clean detached checkout of **published `a6e5685`** passes the same 11
+payload tests and 34 archive checks, with no tracked changes before or after.
+See [the exact-source receipt](published-a6e5685/receipt.json) and its hashed logs.
+The original local red/green evidence remains unchanged; these newer results do
+not retroactively change its source identities. `cmake-unavailable.log` preserves
+the original failed configure attempt. Focused CTest execution is still pending
+shared timing-window availability; the direct Python checks above were observed.

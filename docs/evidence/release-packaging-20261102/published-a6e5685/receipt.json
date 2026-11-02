@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "tested_source_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+  "tested_source_tree": "0c84ed5d1d164696507e6507b76922b031520a2c",
+  "checkout_clean_before_and_after": true,
+  "test_scope": "Synthetic notice payloads and archive structure only; no production binary, native macOS/Windows installer, signing, numerical or DAW qualification.",
+  "local_to_published": [
+    {
+      "purpose": "test-first registration",
+      "local_commit": "484187a56ce67d8b2e334be3d09212834c8cb60b",
+      "published_commit": "45d10da794c4e85324695be715bc75d496e77d83",
+      "identical_tree": "f662c498bf67e5b5ec0a2b1cfcb3bcb649c0bdc6"
+    },
+    {
+      "purpose": "packaging implementation",
+      "local_commit": "2952693f1d7014f2b88cdc517399c5d2190627ce",
+      "published_commit": "a6e568543f3d194f10f75af2216bd1dc686ff3e5",
+      "identical_tree": "0c84ed5d1d164696507e6507b76922b031520a2c"
+    }
+  ],
+  "results": [
+    {
+      "command": "python3 tests/release/test_distribution_docs.py",
+      "exit": 0,
+      "tests": 11,
+      "log": "payload-tests.log"
+    },
+    {
+      "command": "python3 scripts/package-ci-artifacts.py --self-test",
+      "exit": 0,
+      "checks": 34,
+      "log": "archive-fixtures.log"
+    }
+  ],
+  "logs": {
+    "payload-tests.log": "dd83b27c5aa33c2f207358fa28c3fa14e1c0db5b04f834c7a6b47c950fdb78b4",
+    "archive-fixtures.log": "0666fccc02d4c5a1170e7cb3624a718bf01b5024538127a2e150c4c3a932689a"
+  }
+}
