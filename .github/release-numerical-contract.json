@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "registered_utc": "2026-11-02",
+  "purpose": "Preregistered, strictly additive release acceptance. Green capture/build jobs do not waive original numerical gates.",
+  "scope": "Reviewed main source M, with a later screenshot-only main commit S allowed by the existing dispatch guard",
+  "audit": {
+    "registered_command": [
+      "./build-core/cs80_engine_audit",
+      "--out",
+      "artifacts/audit",
+      "--suite",
+      "all",
+      "--rates",
+      "44100,48000,96000"
+    ],
+    "expected_rates_hz": [44100, 48000, 96000],
+    "expected_rows": {
+      "latency.csv": 40,
+      "alias.csv": 168,
+      "fx.csv": 102,
+      "phrase.csv": 566,
+      "click-causality.csv": 9
+    },
+    "expected_source_phrase_rows": 283,
+    "require_complete_source_locked_capture": true,
+    "require_all_numeric_cells_finite": true,
+    "require_zero_exported_nonfinite_phrase_fx_frames": true,
+    "require_zero_alias_nonfinite_sentinel_rows": true,
+    "existing_targets": [
+      {
+        "scope": "Source phrase peak, rendered coverage",
+        "metric": "peak_db",
+        "maximum": 0.0,
+        "rows": 283
+      },
+      {
+        "scope": "Source phrase retrigger, rendered coverage",
+        "metric": "click_retrigger",
+        "maximum": 1.0,
+        "rows": 283
+      },
+      {
+        "scope": "Source phrase steal, rendered coverage",
+        "metric": "click_steal",
+        "maximum": 1.0,
+        "rows": 283
+      },
+      {
+        "scope": "Source phrase single note-off, rendered coverage",
+        "metric": "click_off",
+        "maximum": 1.0,
+        "rows": 283
+      },
+      {
+        "scope": "Source phrase chord note-off, rendered coverage",
+        "metric": "click_chord_off",
+        "maximum": 1.0,
+        "rows": 283
+      },
+      {
+        "scope": "Source saw/pulse, ring off, 48 kHz",
+        "metric": "nonharmonic_db_vs_partials",
+        "maximum": -70.0,
+        "rows": 14
+      },
+      {
+        "scope": "Source causal baseline: original_physical_panel",
+        "metric": "baseline_score",
+        "maximum": 1.0,
+        "rows": 3
+      },
+      {
+        "scope": "Source causal baseline: electrical_programmer",
+        "metric": "baseline_score",
+        "maximum": 1.0,
+        "rows": 3
+      },
+      {
+        "scope": "Source causal baseline: tone_tabs",
+        "metric": "baseline_score",
+        "maximum": 1.0,
+        "rows": 3
+      }
+    ]
+  },
+  "cpu": {
+    "fixture_id": "source-core-timing-v2",
+    "suite": "baseline",
+    "rate_hz": 48000,
+    "block_frames": 256,
+    "held_phase": "warmed_held",
+    "held_scenario": "paired_tones",
+    "required_held_fixture_count": 11,
+    "idle_scenario": "idle_quiet",
+    "required_before_rounds": 3,
+    "required_after_rounds": 3,
+    "callbacks_per_held_phase_min": 1024,
+    "expected_rows_per_round": 51,
+    "expected_cases_per_round": 27,
+    "selection": "Per exact held fixture and quiet-idle fixture, use the minimum of three callback median RTFs; p99 and misses come from the same selected round. Preserve unselected rounds.",
+    "upper_bounds": {
+      "held_median_rtf": 0.2,
+      "idle_median_rtf": 0.02
+    },
+    "scope": "Circuit Source Performance isolation, eight held voices, 48 kHz / 256 frames; callback RTF, not operating-system CPU utilization",
+    "require_same_host_compiler_binary_and_workload": true,
+    "require_source_identity_and_checksum_consistency": true,
+    "require_all_rounds_complete_and_finite": true,
+    "p99_and_deadline_misses": "Recorded for each selected case, not waived or converted into fabricated thresholds"
+  },
+  "release": {
+    "require_reviewer_source_sha_and_source_tree_match": true,
+    "require_audit_and_after_cpu_at_exact_reviewed_source": true,
+    "require_before_after_qualification_on_same_host": true,
+    "require_all_existing_audit_targets_pass": true,
+    "require_both_cpu_upper_bounds_pass": true,
+    "require_exact_main_success_for_numerical_gate_workflow": true,
+    "no_override_by_successful_build_dsp_screenshots_or_capture": true,
+    "no_real_hardware_or_daw_equivalence_claim": true
+  }
+}
