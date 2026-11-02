@@ -92,18 +92,56 @@ def scope_rows(scope, suites):
 
 def verify_audit_coverage(contract, suites):
     rates = contract["audit"]["expected_rates_hz"]
+    # Counts alone would accept the same easy program/tone/FX case duplicated
+    # in place of a difficult registered fixture. Recheck the identity and
+    # sampling order of the original source-defined audit, independently of
+    # the capture workflow's success flag and JSON summary booleans.
+    bank_names_by_policy = {}
+    tab_names_by_policy = {}
+    expected_alias = Counter(((72, 1.0), (72, 4.0), (84, 1.0),
+                              (84, 4.0), (96, 1.0), (96, 4.0), (108, 1.0)))
+    expected_fx = Counter([("000", 0.0)] +
+                          [(f"{effect}00", mix) for effect in range(1, 6)
+                           for mix in (0.5, 1.0)] +
+                          [(slots, 1.0) for slots in ("333", "444", "222", "555", "123", "435")])
     for policy in ("source", "legacy"):
+        full_bank_names = None
+        tab_names = None
         for rate in rates:
             phrase = [r for r in suites["phrase.csv"] if r["policy"] == policy
                       and exact_integer(r["rate"], "phrase rate") == rate]
             expected_programs = 222 if rate == 44100 else 14
             require(len(phrase) == expected_programs + 11,
                     f"{policy} phrase at {rate}: incomplete program/tone coverage")
-            require(sum(r["group"] == "tab" for r in phrase) == 11,
-                    f"{policy} phrase at {rate}: missing tone tabs")
+            programs = [r for r in phrase if r["group"].startswith("program:")]
+            tabs = [r for r in phrase if r["group"] == "tab"]
+            require(len(programs) == expected_programs and len(tabs) == 11,
+                    f"{policy} phrase at {rate}: unknown group or missing program/tone")
+            current_programs = [r["name"] for r in programs]
+            current_tabs = [r["name"] for r in tabs]
+            require(all(current_programs) and all(current_tabs),
+                    f"{policy} phrase at {rate}: blank fixture name")
+            if rate == 44100:
+                require(len(set(current_programs)) == 222,
+                        f"{policy}: 222 uniquely named factory programs required")
+                full_bank_names = current_programs
+            else:
+                require(current_programs == full_bank_names[::16],
+                        f"{policy} phrase at {rate}: wrong stride-16 bank sample/order")
+            require(len(set(current_tabs)) == 11,
+                    f"{policy} phrase at {rate}: duplicate tone pairs")
+            if tab_names is None:
+                tab_names = current_tabs
+            else:
+                require(current_tabs == tab_names,
+                        f"{policy} phrase at {rate}: tone-pair identity/order changed")
             fx = [r for r in suites["fx.csv"] if r["policy"] == policy
                   and exact_integer(r["rate"], "fx rate") == rate]
             require(len(fx) == 17, f"{policy} FX at {rate}: incomplete coverage")
+            require(all(r["name"] == "bright saw" and r["group"] == "fxbase" for r in fx),
+                    f"{policy} FX at {rate}: wrong fixed fixture")
+            require(Counter((r["fx_slots"], finite(r["fx_mix"], "FX mix")) for r in fx) == expected_fx,
+                    f"{policy} FX at {rate}: changed/duplicated effect configuration")
             for ring in (0, 1):
                 for wave in ("saw", "pulse"):
                     alias = [r for r in suites["alias.csv"] if r["policy"] == policy
@@ -112,10 +150,36 @@ def verify_audit_coverage(contract, suites):
                              and r["wave"] == wave]
                     require(len(alias) == 7,
                             f"{policy} {wave} ring={ring} at {rate}: incomplete alias coverage")
-    for coordinate in ("original_physical_panel", "electrical_programmer", "tone_tabs"):
+                    require(Counter((exact_integer(r["note"], "alias MIDI note"),
+                                     finite(r["feet_ratio"], "alias feet")) for r in alias) == expected_alias,
+                            f"{policy} {wave} ring={ring} at {rate}: changed/duplicated note/feet")
+            latency = [r for r in suites["latency.csv"] if r["policy"] == policy
+                       and exact_integer(r["rate"], "latency rate") == rate]
+            expected_freq = Counter(f for f in (250, 1000, 5000, 10000, 15000, 18000, 20000)
+                                    if f <= 0.45 * rate)
+            require(Counter(exact_integer(r["freq_hz"], "latency frequency")
+                            for r in latency) == expected_freq,
+                    f"{policy} latency at {rate}: changed/duplicated frequency")
+            require(all(exact_integer(r["oversampling_factor"], "latency factor") == 2
+                        for r in latency),
+                    f"{policy} latency at {rate}: unexpected default 2x factor")
+        bank_names_by_policy[policy] = full_bank_names
+        tab_names_by_policy[policy] = tab_names
+    require(bank_names_by_policy["source"] == bank_names_by_policy["legacy"],
+            "source/legacy factory bank fixture identity changed")
+    require(tab_names_by_policy["source"] == tab_names_by_policy["legacy"],
+            "source/legacy physical tone pairs differ")
+    causal_identities = {
+        "original_physical_panel": ("Bass Stack", "note_on"),
+        "electrical_programmer": ("Bass Stack", "note_on"),
+        "tone_tabs": ("Funky 1 + Funky 2", "single_note_off"),
+    }
+    for coordinate, (name, event) in causal_identities.items():
         rows = [r for r in suites["click-causality.csv"] if r["coordinate"] == coordinate]
         require(Counter(exact_integer(r["rate"], "causal rate") for r in rows) == Counter(rates),
                 f"{coordinate}: incomplete causal-rate coverage")
+        require(all(r["name"] == name and r["event"] == event for r in rows),
+                f"{coordinate}: causal program/event identity changed")
     require({r["policy"] for r in suites["latency.csv"]} == {"source", "legacy"},
             "missing source/legacy latency lanes")
     require({exact_integer(r["rate"], "latency rate") for r in suites["latency.csv"]} == set(rates),

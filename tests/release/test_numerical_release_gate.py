@@ -34,10 +34,16 @@ RATES = [44100, 48000, 96000]
 def raw_suites():
     phrase = []
     for policy in ("source", "legacy"):
-        for rate, programs in ((44100, 222), (48000, 14), (96000, 14)):
-            for i in range(programs + 11):
-                phrase.append({"policy": policy, "rate": str(rate), "group": "tab" if i >= programs else "program:" + str(i),
-                               "name": "Tone" if i >= programs else "Program",
+        for rate in RATES:
+            program_indices = range(222) if rate == 44100 else range(0, 222, 16)
+            for index in program_indices:
+                phrase.append({"policy": policy, "rate": str(rate), "group": "program:" + str(index),
+                               "name": f"Program-{index:03d}",
+                               "peak_db": "-1", "click_retrigger": "0.5", "click_steal": "0.5",
+                               "click_off": "0.5", "click_chord_off": "0.5", "nonfinite": "0"})
+            for index in range(11):
+                phrase.append({"policy": policy, "rate": str(rate), "group": "tab",
+                               "name": f"TonePair-{index:02d}",
                                "peak_db": "-1", "click_retrigger": "0.5", "click_steal": "0.5",
                                "click_off": "0.5", "click_chord_off": "0.5", "nonfinite": "0"})
     alias = []
@@ -45,13 +51,23 @@ def raw_suites():
         for rate in RATES:
             for ring in (0, 1):
                 for wave in ("saw", "pulse"):
-                    for _ in range(7):
+                    for note, feet in ((72, 1), (72, 4), (84, 1), (84, 4),
+                                       (96, 1), (96, 4), (108, 1)):
                         alias.append({"policy": policy, "rate": str(rate), "ring": str(ring),
-                                      "wave": wave, "nonharmonic_db_vs_partials": "-80"})
-    fx = [{"policy": policy, "rate": str(rate), "nonfinite": "0", "peak_db": "-5"}
-          for policy in ("source", "legacy") for rate in RATES for _ in range(17)]
-    latency = [{"policy": ("source" if i % 2 else "legacy"), "rate": str(RATES[i % 3]),
-                "delay_host_samples": "63", "reported_latency": "67"} for i in range(40)]
+                                      "wave": wave, "note": str(note), "feet_ratio": str(feet),
+                                      "nonharmonic_db_vs_partials": "-80"})
+    fx_cases = [("000", "0")] + [(str(i) + "00", mix) for i in range(1, 6)
+                                  for mix in ("0.5", "1")] + [
+                                      ("333", "1"), ("444", "1"), ("222", "1"),
+                                      ("555", "1"), ("123", "1"), ("435", "1")]
+    fx = [{"policy": policy, "rate": str(rate), "name": "bright saw", "group": "fxbase",
+           "fx_slots": slots, "fx_mix": mix, "nonfinite": "0", "peak_db": "-5"}
+          for policy in ("source", "legacy") for rate in RATES for slots, mix in fx_cases]
+    latency = [{"policy": policy, "rate": str(rate), "oversampling_factor": "2",
+                "freq_hz": str(freq), "delay_host_samples": "63", "reported_latency": "67"}
+               for policy in ("source", "legacy") for rate in RATES
+               for freq in (250, 1000, 5000, 10000, 15000, 18000, 20000)
+               if freq <= 0.45 * rate]
     causal = [{"coordinate": coordinate, "name": "Bass Stack" if coordinate != "tone_tabs" else "Funky 1 + Funky 2",
                "event": "single_note_off" if coordinate == "tone_tabs" else "note_on",
                "rate": str(rate), "baseline_score": "0.5"}
@@ -152,6 +168,49 @@ def honestly_failed_original_scope(f):
 
 
 class NumericalReleaseGateTests(unittest.TestCase):
+    def test_same_row_count_forged_fixture_identity_must_be_rejected(self):
+        # All these were false PASS cases before adding exact fixture coverage.
+        # Each retains 885 rows, finite values and green numerical thresholds.
+        def mutate_bank(f):
+            phrase = f["audit"]["suites"]["phrase.csv"]
+            phrase[1]["name"] = phrase[0]["name"]
+
+        def mutate_secondary_bank(f):
+            phrase = f["audit"]["suites"]["phrase.csv"]
+            row = next(r for r in phrase if r["policy"] == "source" and r["rate"] == "48000"
+                       and r["group"].startswith("program:"))
+            row["name"] = "Unregistered Program"
+
+        def mutate_alias(f):
+            alias = f["audit"]["suites"]["alias.csv"]
+            alias[1]["note"] = alias[0]["note"]
+            alias[1]["feet_ratio"] = alias[0]["feet_ratio"]
+
+        def mutate_fx(f):
+            fx = f["audit"]["suites"]["fx.csv"]
+            fx[1]["fx_slots"] = fx[0]["fx_slots"]
+            fx[1]["fx_mix"] = fx[0]["fx_mix"]
+
+        def mutate_latency(f):
+            latency = f["audit"]["suites"]["latency.csv"]
+            latency[1]["freq_hz"] = latency[0]["freq_hz"]
+
+        edits = [
+            ("duplicate bank program", mutate_bank),
+            ("wrong secondary-rate bank sample", mutate_secondary_bank),
+            ("wrong causal program", lambda f: f["audit"]["suites"]["click-causality.csv"][0].update(name="Wrong Bass")),
+            ("wrong causal event", lambda f: f["audit"]["suites"]["click-causality.csv"][0].update(event="note_off")),
+            ("duplicated alias note/feet", mutate_alias),
+            ("duplicated FX configuration", mutate_fx),
+            ("duplicated latency frequency", mutate_latency),
+        ]
+        for name, change in edits:
+            with self.subTest(name=name):
+                f = fixture()
+                change(f)
+                with self.assertRaises((gate.GateError, ValueError, KeyError)):
+                    gate.validate_evidence(CONTRACT, f)
+
     def test_synthetic_positive(self):
         result = gate.validate_evidence(CONTRACT, fixture())
         self.assertTrue(result["pass"])

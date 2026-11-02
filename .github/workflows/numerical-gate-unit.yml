@@ -1,0 +1,39 @@
+name: Numerical release gate unit and mutation tests (not release qualification)
+
+on:
+  push:
+    paths:
+      - '.github/workflows/numerical-gate-unit.yml'
+      - '.github/release-numerical-contract.json'
+      - 'scripts/release_numerical_gate.py'
+      - 'tests/release/test_numerical_release_gate.py'
+  pull_request:
+    paths:
+      - '.github/workflows/numerical-gate-unit.yml'
+      - '.github/release-numerical-contract.json'
+      - 'scripts/release_numerical_gate.py'
+      - 'tests/release/test_numerical_release_gate.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: numerical-gate-unit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fail-closed-mutations:
+    name: Reject falsified audit and CPU evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test numerical gate, including row-identity mutations
+        run: python -B tests/release/test_numerical_release_gate.py -v
+
+      # This job only checks the release gate's logic with registered synthetic
+      # positive/negative fixtures. It never accepts DSP sound quality, CPU
+      # performance, exact main, hardware parity, or installer provenance.
