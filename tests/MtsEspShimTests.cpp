@@ -8,11 +8,12 @@
 #include <cmath>
 #include <cstdint>
 #include <iostream>
+#include <limits>
 #include <vector>
 
 struct MTSClient {};
 namespace {
-bool master = false, failRegistration = false;
+bool master = false, failRegistration = false, invalidMasterFrequencies = false;
 int registered = 0, deregistered = 0, frequencyQueries = 0, mappingQueries = 0, midiCalls = 0;
 bool channelCorrect = true;
 const unsigned char* receivedMidi = nullptr;
@@ -35,6 +36,18 @@ double MTS_NoteToFrequency(MTSClient*, char note, signed char channel)
 {
     ++frequencyQueries;
     channelCorrect = channelCorrect && channel == -1;
+    // An external master is outside our numerical trust boundary. Exercise
+    // both invalid data and a finite double too large for the DSP's floats.
+    if (invalidMasterFrequencies)
+        switch (static_cast<unsigned char>(note))
+        {
+            case 60: return 0.0;
+            case 61: return -1.0;
+            case 62: return std::numeric_limits<double>::quiet_NaN();
+            case 63: return std::numeric_limits<double>::infinity();
+            case 64: return 1e300;
+            default: break;
+        }
     return 440.0 * std::exp2((static_cast<unsigned char>(note) + 0.25 - 69.0) / 12.0);
 }
 bool MTS_ShouldFilterNote(MTSClient*, char note, signed char channel)
@@ -100,6 +113,25 @@ int main(int argc, char** argv)
             check(mapping, "unmapped notes reach the table");
             check(frequencyQueries == 128 && mappingQueries == 128 && channelCorrect,
                   "one frequency and mapping query per note with channel -1");
+            invalidMasterFrequencies = true;
+            cs80::tuning::TuningTable malformed;
+            check(shim.fillTable(malformed), "connected master still supplies a safe table with bad Hz");
+            bool safeBadNotes = true, goodNotesUnchanged = true;
+            for (int note = 0; note < 128; ++note)
+            {
+                const auto index = static_cast<std::size_t>(note);
+                if (note >= 60 && note <= 64)
+                    safeBadNotes = safeBadNotes && !malformed.mapped[index]
+                        && malformed.pitch[index] == static_cast<float>(note)
+                        && std::isfinite(malformed.pitch[index]);
+                else
+                    goodNotesUnchanged = goodNotesUnchanged
+                        && malformed.pitch[index] == received.pitch[index]
+                        && malformed.mapped[index] == received.mapped[index];
+            }
+            check(safeBadNotes, "zero, negative, NaN, infinity and overflowing Hz fail closed");
+            check(goodNotesUnchanged, "bad master Hz leave all healthy notes untouched");
+            invalidMasterFrequencies = false;
             const std::uint8_t midi[] { 0xF0, 0x7F, 0x7F, 0x08, 0x02, 0, 0, 0xF7 };
             shim.parseMidi(midi, static_cast<int>(sizeof(midi)));
             check(midiCalls == 1 && receivedMidi == midi && receivedSize == sizeof(midi),
