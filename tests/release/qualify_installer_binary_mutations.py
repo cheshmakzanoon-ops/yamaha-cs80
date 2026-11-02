@@ -41,9 +41,16 @@ MUTATIONS = [
       'test_missing_primary_build_binary_is_not_a_resource_only_bundle',
       'test_missing_primary_build_binary_is_not_a_resource_only_bundle']),
     ('follow_expansion_root', '    expanded = independent_root(expanded)\n',
-     '    expanded = Path(expanded).resolve()\n', ['test_linked_expansion_root_is_rejected']),
+     '    expanded = Path(expanded).resolve()\n', ['test_linked_expansion_root_is_rejected',
+     'test_legacy_python_directory_reparse_expansion_is_rejected']),
     ('follow_artifact_root', "    artifacts = component_path(independent_root(build), 'CS80Reference_artefacts/Release')\n",
-     "    artifacts = Path(build).resolve() / 'CS80Reference_artefacts/Release'\n", ['test_linked_artifact_root_is_rejected']),
+     "    artifacts = Path(build).resolve() / 'CS80Reference_artefacts/Release'\n", ['test_linked_artifact_root_is_rejected',
+     'test_legacy_python_directory_reparse_artifact_is_rejected']),
+    ('ignore_directory_reparse_attributes',
+     "and bool(getattr(value, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT))",
+     'and False)', ['test_legacy_python_directory_reparse_artifact_is_rejected',
+      'test_legacy_python_directory_reparse_expansion_is_rejected',
+      'test_legacy_python_directory_reparse_inside_bundle_is_rejected']),
     ('allow_external_links', "require(not Path(target).is_absolute() and path.exists()\n                    and path.resolve().is_relative_to(boundary),",
      'require(True,', ['test_external_source_symlink_is_rejected']),
 ]
@@ -55,7 +62,7 @@ def classify(code, output, expected):
     inventory = re.findall(r'^Ran (\d+) tests in ', output, re.MULTILINE)
     summary = re.findall(r'^(?:OK(?: \(.*\))?|FAILED \(.*\))$', output, re.MULTILINE)
     wanted = f'FAILED (failures={len(expected)})' if expected else 'OK'
-    qualified = (inventory == ['27'] and not errors and 'skipped=' not in output
+    qualified = (inventory == ['30'] and not errors and 'skipped=' not in output
                  and sorted(failures) == sorted(expected) and summary == [wanted]
                  and code == (1 if expected else 0))
     return {'qualified': qualified, 'ordinary_failures': failures, 'runtime_errors': errors,
@@ -95,7 +102,7 @@ def main():
             assessment = classify(result.returncode, result.stdout, expected)
             runtime = name == 'runtime_error_control'
             accepted = (not assessment['qualified'] and bool(assessment['runtime_errors'])
-                        and assessment['test_inventory'] == ['27']) if runtime else assessment['qualified']
+                        and assessment['test_inventory'] == ['30']) if runtime else assessment['qualified']
             log = args.out / (name + '.log'); log.write_text(result.stdout)
             receipt['cases'].append({'case': name, 'result': 'PASS' if accepted else 'FAIL',
                                      'expected': 'harness_refusal_not_semantic_kill' if runtime else 'semantic_rejection' if expected else 'pass',
