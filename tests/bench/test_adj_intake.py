@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import adj_intake as intake
 
@@ -108,12 +109,17 @@ class MetadataOnly(unittest.TestCase):
                 intake.decode_json(malformed)
 
     def test_oversized_integer_token_is_a_controlled_schema_rejection(self):
-        # Under the importer size cap, Python's JSON integer digit limit can
-        # raise ValueError rather than JSONDecodeError. It must not leak a
-        # traceback or turn a malformed technician record into a server error.
+        # Python's JSON integer digit cap may be disabled by host settings.
+        # Exercise the parser-ValueError branch deterministically everywhere,
+        # and additionally exercise the real token when that cap is enabled.
+        with patch.object(intake.json, "loads", side_effect=ValueError("integer digit cap")):
+            with self.assertRaisesRegex(intake.IntakeError, "invalid JSON"):
+                intake.decode_json(b'{"schema_version":1}')
         oversized = b'{"schema_version":' + b'9' * 5000 + b'}'
-        with self.assertRaisesRegex(intake.IntakeError, "invalid JSON"):
-            intake.decode_json(oversized)
+        int_limit = sys.get_int_max_str_digits() if hasattr(sys, "get_int_max_str_digits") else 0
+        if 0 < int_limit < 5000:
+            with self.assertRaisesRegex(intake.IntakeError, "invalid JSON"):
+                intake.decode_json(oversized)
 
     def test_rejects_schema_version_bool_extra_fields_missing_and_bad_types(self):
         changes = [
