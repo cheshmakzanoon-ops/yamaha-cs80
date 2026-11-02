@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "status": "Frozen test-only actual-Engine batching dispatch registration before any source change. No vector backend, production speedup or sound-law change is claimed.",
+  "parent_prereg": "tests/cpu/phase-full-lane-batch.json, committed independently as 71a0226",
+  "baseline_commit": "b778cebf9d4f66eafbd3f49e81eaebf07ffb6965",
+  "baseline_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "original_phase_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+  "purpose": "An actual Engine::tickRanks 4/8/16-lane full nonlinear Ig00156PhaseCorrection::process AVX2/SoA dispatch on independent held filter ranks, not a standalone uncalled kernel. Preserve exact original byte/state continuation and per-lane clocks under every supported FP mode.",
+  "dependency_graph": {
+    "per_internal_sample": [
+      "tickGlobals/modern/source readouts and RNG scheduling stay original",
+      "prepare all live vi/rank oscillator, cutoff, touch and filter controls in original vi/ch order, preserving reads of previous-sample rank info and shared RNG draw order",
+      "clock/re-reference HP stage at its original sample rate, SIMD-batch independent HP nonlinear phase process across active ranks",
+      "clock/re-reference LP stage, taking that same rank's *already computed* HP output, SIMD-batch independent LP nonlinear process",
+      "finish envelope/VCA/pan and left/right mix in the original vi/ch summation order, update public rank readouts and voice retirement exactly once"
+    ],
+    "forbidden": "No same-rank HP/LP parallelism (LP consumes HP), no moving previous-sample modern sources into current rank readouts, no audio RNG reordering, no idle decimation skipping, no delayed mix terms across a different accumulation order, no extra/canceled VCA/touch/out clocks.",
+    "initial_candidate_eligibility": "ONLY source/PURE full-rate held operation with all eight voices active and no coldBootstrap, idleRank, pending wake replay, tail coupling or cross-voice priority event. Any mixed/unsupported policy, per-voice inactive/wake or unsupported ISA/FP state must follow byte-identical original tickRanks scalar control flow.",
+    "reduction": "Width 4/8/16 groups of actually enabled independent HP or LP filters, handling HP-off/LP-off lanes via compact masks, with exact scalar remainder; no padded masked lane may be advanced or considered vector work. Different Newton convergence iteration counts freeze their lane state at the original step.",
+    "engine_dispatch": "The wrapper must reach a real full nonlinear SIMD process from the actual default source factory Engine path, not merely materialize a unit-test vector API. Test-only counters instrument real Engine entry, batch kernel arithmetic iterations, per-lane commits, scalar fallbacks and idle/wake deferrals."
+  },
+  "frozen_checks": {
+    "phase_direct": "Parent prereg cs80_phase_lane_oracle_tests: 79,337,496 exact original Phase scalar bit comparisons; 0 mismatches, 8 rates, 4 FP rounding directions, supported MXCSR FTZ/DAZ, widths1/2/3/4/7/8/15/16, mixed masks and copy/reset/restore.",
+    "source_engine": "Preregistered cs80_drift_sine_exact_oracle_tests on unchanged src: five policies including PURE isolation with eight held notes and full idle/reacquisition, partitions1/17/256, five original-source audio/global FNV64 pairs on original Linux GCC13.3/glibc2.39. FNV is a sentinel; independent strict V2 bytes remain mandatory.",
+    "idle": "Preregistered cs80_touch_idle_exact_oracle_tests: 51,119,247 exact touch/global checks including signed zero and first wake; no free-running circuit may be fabricated silent.",
+    "source_compat": "Legacy default and tails byte identity, V1 circuit numeric byte identity, original V2 source-engine byte identity and original full CTest circuit/physical/clock/error gates, all unchanged."
+  },
+  "actual_vector_work_required": {
+    "real_simd": "At least one compiled AVX2 or equivalent vector instruction on nonlinear `fastTanh`/Newton arithmetic and at least one real 4/8/16-lane batch invoked from Engine::tickRanks on eligible 8-held fixtures. Counters distinguish physical lanes, vector arithmetic iteration, scalar stage process, a masked lane and a skipped dispatch; do not report loop unrolling, fake width or vector load/store alone as nonlinear vector work.",
+    "supported_fp": "FE_TONEAREST with runtime ISA and supported MXCSR, as qualified by independent exact-bit oracle. FE_DOWNWARD/UPWARD/TOWARDZERO, foreign FTZ/DAZ or exceptional/nonfinite state fall back to the unchanged scalar source unless separately proven byte-exact. Never change caller FP state, FMA contraction, coefficient order, Newton residual threshold, iteration limit or hp/lp stage graph.",
+    "negative_mutations": "Force scalar-only on a qualified batch, falsely increment vector counters while calling scalar, skip or overwrite a masked lane, flip HP/LP order, alter Newton step convergence, change one lane offset/state, change mix accumulation order, change shared RNG draw order, and skip one cold idle/wake stage. Each source mutation must compile and fail a specific ordinary exit1 real backend/bit/engine-golden assertion."
+  },
+  "absolute_gate": {
+    "bench": "Unchanged source-core-timing-v2 baseline 48 kHz, 256 host frames, 1024 held callbacks and original 51 rows (27 cases), three serial uncontended original-source BEFORE and three separate uncontended candidate AFTER rounds. Preserve every checksum/peak/RMS, p99 and missed callback, moving, Legacy, quiet idle, host provenance and outlier without minimum-only cherry-pick.",
+    "targets": "Eight held source RTF 0.15–0.20 maximum, quiet-idle <=0.02, strict Legacy/tails/V1/V2 original bytes and existing numerical/physical click gates. A held-only phase SIMD kernel cannot itself fix idle and must not be represented as doing so.",
+    "publication": "No production PR6/main source integration, audio pin rewrite, fast-math, inferred physical constant alteration, merge, tag or release until all absolute and exact gates pass. Failed candidates are archived on a separately labeled rejected experiment branch."
+  }
+}
