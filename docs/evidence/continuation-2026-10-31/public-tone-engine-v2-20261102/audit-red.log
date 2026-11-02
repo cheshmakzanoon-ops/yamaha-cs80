@@ -1,0 +1,28 @@
+Mon Nov  2 12:13:14 UTC 2026
+62d9cc26be75c5b9440457c02f6bcb96ac439ec1
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/build-v2
+[1/2] Building CXX object CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o
+FAILED: [code=1] CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o 
+/usr/bin/c++  -I/workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/src -O3 -DNDEBUG -std=gnu++20 -fPIE -MD -MT CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o -MF CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o.d -o CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o -c /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/PublicToneAuditRevisionTests.cpp
+/workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/PublicToneAuditRevisionTests.cpp: In function ‘int main()’:
+/workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/PublicToneAuditRevisionTests.cpp:61:62: error: reference to ‘reference’ is ambiguous
+   61 |     const auto actual=render(setup,48000,events,.5),expected=reference(setup,FactoryToneRevision::publicAmendedV2);
+      |                                                              ^~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/PublicToneAuditRevisionTests.cpp:21:10: note: candidates are: ‘{anonymous}::Rendered {anonymous}::reference(const Setup&, cs80::FactoryToneRevision)’
+   21 | Rendered reference(const Setup& setup,FactoryToneRevision revision) {
+      |          ^~~~~~~~~
+In file included from /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/src/core/KbcContour.h:36,
+                 from /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/src/core/Engine.h:27,
+                 from /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/../src/tools/engine_audit.cpp:13,
+                 from /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/PublicToneAuditRevisionTests.cpp:4:
+/workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/src/reference/KeyboardContour.h:6:17: note:                 ‘namespace cs80::reference { }’
+    6 | namespace cs80::reference::keyboard_contour
+      |                 ^~~~~~~~~
+/workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/tests/PublicToneAuditRevisionTests.cpp:61:11: error: inconsistent deduction for ‘auto’: ‘const {anonymous}::Rendered’ and then ‘<type error>’
+   61 |     const auto actual=render(setup,48000,events,.5),expected=reference(setup,FactoryToneRevision::publicAmendedV2);
+      |           ^~~~
+ninja: build stopped: subcommand failed.
+EXIT_CODE=1
+Mon Nov  2 12:13:20 UTC 2026

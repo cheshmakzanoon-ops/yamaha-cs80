@@ -1,0 +1,10 @@
+wrote /tmp/cs80-audit-revision-168463532859626/default
+wrote /tmp/cs80-audit-revision-168463532859626/frozen
+wrote /tmp/cs80-audit-revision-168463532859626/candidate
+Public tone audit revision: 400 checks, 2 failures; no full885/default qualification
+FAIL: actual audit render propagates V2 after programmer builder
+FAIL: candidate flag changes affected actual audit PCM
+engine_audit: --factory-tone-revision takes frozen-v1 or public-amended-v2
+engine_audit: --factory-tone-revision takes frozen-v1 or public-amended-v2
+engine_audit: --factory-tone-revision takes frozen-v1 or public-amended-v2
+engine_audit: CPU qualification requires the original frozen-v1 workload

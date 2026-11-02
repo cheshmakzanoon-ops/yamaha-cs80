@@ -1,0 +1,36 @@
+Mon Nov  2 12:28:02 UTC 2026
+fd068061b9e24c7422bf92d2a7647ede82a91572
+[1/4] Building CXX object CMakeFiles/cs80_public_tone_engine_revision_tests.dir/tests/PublicToneEngineRevisionTests.cpp.o
+[2/4] Linking CXX executable cs80_public_tone_engine_revision_tests
+[3/4] Building CXX object CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o
+[4/4] Linking CXX executable cs80_public_tone_audit_revision_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/build-v2
+    Start 97: cs80_public_tone_audit_revision_tests
+1/2 Test #97: cs80_public_tone_audit_revision_tests ....***Failed    1.84 sec
+FAIL: audit bit-exact PCM oracle distinguishes signed zero
+FAIL: candidate sidecar writer rejects delayed buffered-write failure
+wrote /tmp/cs80-audit-revision-167773639729525/default
+wrote /tmp/cs80-audit-revision-167773639729525/frozen
+wrote /tmp/cs80-audit-revision-167773639729525/candidate
+engine_audit: --factory-tone-revision takes frozen-v1 or public-amended-v2
+engine_audit: --factory-tone-revision takes frozen-v1 or public-amended-v2
+engine_audit: --factory-tone-revision takes frozen-v1 or public-amended-v2
+engine_audit: CPU qualification requires the original frozen-v1 workload
+Public tone audit revision: 400 checks, 2 failures; no full885/default qualification
+
+    Start 98: cs80_public_tone_engine_revision_tests
+2/2 Test #98: cs80_public_tone_engine_revision_tests ...***Failed   22.68 sec
+FAIL: bit-exact PCM oracle distinguishes signed zero
+Public tone Engine revision: 15116 checks, 1 failures; candidate is not qualified default
+
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =  24.53 sec
+
+The following tests FAILED:
+	 97 - cs80_public_tone_audit_revision_tests (Failed)
+	 98 - cs80_public_tone_engine_revision_tests (Failed)
+Errors while running CTest
+EXIT_CODE=8
+Mon Nov  2 12:28:47 UTC 2026

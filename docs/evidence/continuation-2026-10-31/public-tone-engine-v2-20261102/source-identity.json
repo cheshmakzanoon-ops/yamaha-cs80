@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "tested_local_revision": "5c1ba2b8577bbcacc32e23f1c52267708887c0ec",
+  "tested_tree": "b8c0c26aea0818546ab1843fc5cd9b3e2b30402f",
+  "tested_src_tree": "4ffb2fe36447fe835d0556102d42cd11cbfe6e5e",
+  "baseline_pre_engine_increment": "ce307860fc64a0c151991983f6157463d2fd707c",
+  "baseline_tree": "561f6bf37b8dcc46c54b5a35e328c08f0cbec399",
+  "scope": "Explicit non-default factory-tone revision candidate; not default adoption, integrated PR6, original885, CPU or physical qualification.",
+  "changed_files_sha256": {
+    "CMakeLists.txt": "e9c307603f712005f397954e25bc42722abb188f44e67e3a8b27141206759174",
+    "docs/evidence/continuation-2026-10-31/PUBLIC_TONE_ENGINE_REVISION_PREREG_20261102.md": "68282ad4cbdec06ac288a896cb158eb6d87bc487eadb1521e357f737e38ec7ae",
+    "src/core/Engine.cpp": "7835fc5b773bca231cd9c54168aa8f3f8c97d651c10c1ba7c0b2bc3e1e37cb27",
+    "src/core/Engine.h": "1d99b6b941cf7e80a1c8322fd7693507c5c276b526425aa8e8252c3878d726df",
+    "src/tools/engine_audit.cpp": "bb40f2b5d42c2770a71c79b0cc33e411cd8a88803b0cf4f78b672f9ee0093a41",
+    "tests/PublicToneAuditRevisionTests.cpp": "54493338e88c8793c8cf096878200a6d2255190d73ebf22c0de0d83e134d0bbe",
+    "tests/PublicToneEngineRevisionTests.cpp": "effdf5ee99d2a8f98b48930b7f6f4ae9767c5b460fc1543ca8965906c775bea0",
+    "tests/circuits/check_public_tone_default_replay.py": "c9a1feb0a0cecb31efaa2faadd93a9b4102f82a2d64e89bd999587db2feb3fb2",
+    "tests/circuits/check_public_tone_engine_mutations.py": "f3aeb4193f0bab593eb9e55fafb3ff6ca09367895622f52899564774fd40c126",
+    "tests/diagnostics/FactoryToneDefaultReplay.cpp": "c765932ad2abc1368bc976d4ef3c12b0a82e31f5092f3544970cc80d2c3c3958"
+  },
+  "incremental_commit_order": [
+    "fdfd187c890365ecb43d5ae5c8aa88b1625f5e46",
+    "192daef2401335b6a1fab289c03674960a0381fa",
+    "f00182ae4601059a589cd7673174de235140c48c",
+    "62d9cc26be75c5b9440457c02f6bcb96ac439ec1",
+    "25e53d6d290a1f5e94873f12f67dd59a3a4e81dc",
+    "0ba7ed6594c67519a20f30a0d86e54fc8f7fc212",
+    "810b14ad0431e7bc2936a03f2eadf5b79d02fcd5",
+    "fd068061b9e24c7422bf92d2a7647ede82a91572",
+    "2754bc8059c07b8098b079e303b90eb1290ae02e",
+    "22d067542230e7a84658301bd2ea9e5f10d73c23",
+    "5c1ba2b8577bbcacc32e23f1c52267708887c0ec"
+  ],
+  "prerequisite_commit_order_from_058": [
+    "81bef644680fa18d28f049a8af5396544b4ac9e1",
+    "91b4f72bf7083fa5798aeea7b00263227e88da0e",
+    "50833c7907c8a0c415c2ea6f10570a1fd1daf3a1",
+    "14bf0414c5d1eb095db81ddf839b161a0fcd5353",
+    "70b2b0a1f7d630dd274344a10a285ea71b48a3b1",
+    "48d939f85f05f91a71ec49f8ce630bea87dd5bd1",
+    "32dbecfad6f9094a29407deee6d435fb79ca62a0",
+    "95f13b32567ce3667fad43a35d429fee9a472cf1",
+    "c6e969e1f23c30c3e02092b836800a3a4750df4d",
+    "6e86208c8e26b7432c05d150f017b84d397d9bf2",
+    "fc559e6f075dcd3c8b3daab0c7de1afca357e7f0",
+    "329d548e1f4fe5b3d36a76d807c16b684983ff41",
+    "e019bd120f5ff41ca57bc2eb77551a60c9500ce5",
+    "00629d04d635f7010bd5e7fd1f5a68b9986b9043",
+    "e60da9f45d3aa4ddcac03a46d41fc79ae9297918",
+    "6b15fc3a2bd14da36c5de4568b66d9daa2748ae5",
+    "f3082c99e3c714a7b0de64d39d5ab5e6499445f3",
+    "687f55a62e5cc4a09593ce39bf0a3ad61d2fde81",
+    "ce307860fc64a0c151991983f6157463d2fd707c"
+  ],
+  "local_only_pcm": {
+    "pristine-replay/candidate/pcm.bin": {
+      "sha256": "43df8f5cfd923da8d8b470a03db7a0a170b1025eb435aff2f66111c5e113a9f2",
+      "bytes": 627288
+    },
+    "pristine-replay/default-v2-mutant/pcm.bin": {
+      "sha256": "d49ae5dbf5fa8361c2e7c182c6827118aedcbbae9568456892657971b5b235c0",
+      "bytes": 627288
+    },
+    "pristine-replay/pristine/pcm.bin": {
+      "sha256": "43df8f5cfd923da8d8b470a03db7a0a170b1025eb435aff2f66111c5e113a9f2",
+      "bytes": 627288
+    }
+  },
+  "remote_identity": "Not published at receipt creation. Root must record local/remote commit and exact tree mappings; local IDs are not GitHub refs."
+}

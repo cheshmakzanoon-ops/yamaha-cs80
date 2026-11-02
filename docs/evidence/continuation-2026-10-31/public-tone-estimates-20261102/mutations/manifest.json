@@ -1,0 +1,296 @@
+{
+  "schema": 1,
+  "kind": "software-policy-mutations-not-hardware",
+  "compiler": "g++",
+  "source_commit": "fc559e6f075dcd3c8b3daab0c7de1afca357e7f0",
+  "source_sha256": {
+    "HardwareControl.h": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+    "FactoryToneHypotheses.h": "7c4cebd358433ebea8ab32a1feaff8587eb19b69505bbf6e90dc683f4315f449",
+    "FactoryTonePublicEstimates.h": "35b9fb88c98863da0c7a9d5e54e8a87ad3f6a81e173905e5bb45b2c75be83cf7",
+    "SourceFactoryTones.h": "a59d634dbce3ae23b2505dce7b1b0831f3a62a9cc1a94b92389aa0c6f9569066"
+  },
+  "test_sha256": "7874f385906d161228d045e5555b6040a0fb537d25fdec981ac635799b2c31b4",
+  "retained_output": "stderr and terminal summary; full stdout SHA-256 only",
+  "results": [
+    {
+      "name": "positive-before",
+      "expected_failure": false,
+      "exit_code": 0,
+      "summary": "Public tone estimates: 42877 checks, 0 failures; no hardware claim",
+      "literal_value_failures": 0,
+      "stdout_sha256": "f84e12764da5461b0abeccf4d5d81990777068c02bd3c7498a0f5dc14274cf1b",
+      "stdout_bytes": 100780,
+      "diagnostics_sha256": "7004051f3256d8780368b4cd3306d6764005951059942cc0fa8b060388adcc90"
+    },
+    {
+      "name": "cell-51-A-20",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-51-A-25",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 324 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "5518d8bde1c749cef7260210838e60e90a9b21302a7f1daacb87c06c2fa8ddb9",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "a2e7391b028f10ae755c7dcad212f308ac487dd607cd0df101d29029621b4abf"
+    },
+    {
+      "name": "cell-51-C-25",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 324 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "5518d8bde1c749cef7260210838e60e90a9b21302a7f1daacb87c06c2fa8ddb9",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "a2e7391b028f10ae755c7dcad212f308ac487dd607cd0df101d29029621b4abf"
+    },
+    {
+      "name": "cell-51-E-22",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-51-E-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-51-F-22",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-51-F-25",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 324 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "5518d8bde1c749cef7260210838e60e90a9b21302a7f1daacb87c06c2fa8ddb9",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "a2e7391b028f10ae755c7dcad212f308ac487dd607cd0df101d29029621b4abf"
+    },
+    {
+      "name": "cell-51-F-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-52-A-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-52-B-9",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 180 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "4dad6106868393be3b4d7c62cab324841db1eaea9e679b4934d54e1682bf3206",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "0057e434327a30467b6691aeda5dff54a37fbb3dd6bc1a836ffa99bce1e0080c"
+    },
+    {
+      "name": "cell-52-C-22",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-52-E-20",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-53-A-20",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-53-A-25",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 324 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "5518d8bde1c749cef7260210838e60e90a9b21302a7f1daacb87c06c2fa8ddb9",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "a2e7391b028f10ae755c7dcad212f308ac487dd607cd0df101d29029621b4abf"
+    },
+    {
+      "name": "cell-53-B-14",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 45 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "524a082cb8eeae25eb5cdb38138300c1a9ed3837f383dac8964a87b3d8abec62",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "d23d67f396717f59c06c8abccdf2c03dc7d858b08e8041056d528b4331c78f93"
+    },
+    {
+      "name": "cell-53-B-20",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-53-C-20",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-53-E-23",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 324 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "5518d8bde1c749cef7260210838e60e90a9b21302a7f1daacb87c06c2fa8ddb9",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "a2e7391b028f10ae755c7dcad212f308ac487dd607cd0df101d29029621b4abf"
+    },
+    {
+      "name": "cell-53-E-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-53-F-22",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-53-F-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-54-A-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-54-C-22",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "cell-54-C-25",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 324 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "5518d8bde1c749cef7260210838e60e90a9b21302a7f1daacb87c06c2fa8ddb9",
+      "stdout_bytes": 100782,
+      "diagnostics_sha256": "a2e7391b028f10ae755c7dcad212f308ac487dd607cd0df101d29029621b4abf"
+    },
+    {
+      "name": "cell-54-C-26",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 36 failures; no hardware claim",
+      "literal_value_failures": 9,
+      "stdout_sha256": "8a47bead7e05d8d297736d5b71b73c2b53e5f23b9061f25575021dbf70cc95d0",
+      "stdout_bytes": 100781,
+      "diagnostics_sha256": "c8d5ead02c8104ca580b13cda29616c5c887a54f5a3b083c8e7640ef3405f6d0"
+    },
+    {
+      "name": "old-median-api",
+      "expected_failure": true,
+      "exit_code": 1,
+      "summary": "Public tone estimates: 42877 checks, 2340 failures; no hardware claim",
+      "literal_value_failures": 153,
+      "stdout_sha256": "625e076b0987f99e013950fbdac342e8b718df1b4fa8bb744c0b0828ebb19249",
+      "stdout_bytes": 100783,
+      "diagnostics_sha256": "865d2a694618eac9c83c6a21d621a5884510ec5332d5b38fdfbdfd987bec4ec7"
+    },
+    {
+      "name": "restored-after",
+      "expected_failure": false,
+      "exit_code": 0,
+      "summary": "Public tone estimates: 42877 checks, 0 failures; no hardware claim",
+      "literal_value_failures": 0,
+      "stdout_sha256": "f84e12764da5461b0abeccf4d5d81990777068c02bd3c7498a0f5dc14274cf1b",
+      "stdout_bytes": 100780,
+      "diagnostics_sha256": "7004051f3256d8780368b4cd3306d6764005951059942cc0fa8b060388adcc90"
+    }
+  ]
+}

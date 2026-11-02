@@ -1,0 +1,81 @@
+LOCK_ACQUIRED 2026-11-02T13:29:41Z
+2a8c726e4a055b7733dd8e314f334de4ac042c87
+335930af02743a272b0da6ddd0544024794ea296
+-- Configuring done (1.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+[1/26] Building CXX object CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o
+[2/26] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[3/26] Linking CXX static library libcs80_core.a
+[4/26] Building CXX object CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o
+[5/26] Building CXX object CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o
+[6/26] Building CXX object CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o
+[7/26] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o
+[8/26] Building CXX object CMakeFiles/cs80_mts_realtime_semantics_tests.dir/tests/MtsRealtimeSemanticsTests.cpp.o
+[9/26] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+[10/26] Building CXX object CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o
+[11/26] Building CXX object CMakeFiles/cs80_public_tone_estimate_tests.dir/tests/PublicToneEstimateTests.cpp.o
+[12/26] Building CXX object CMakeFiles/cs80_public_tone_engine_revision_tests.dir/tests/PublicToneEngineRevisionTests.cpp.o
+[13/26] Building CXX object CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o
+[14/26] Building CXX object CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o
+[15/26] Linking CXX executable cs80_tests
+[16/26] Linking CXX executable cs80_source_factory_tone_tests
+[17/26] Linking CXX executable cs80_source_factory_integration_tests
+[18/26] Linking CXX executable cs80_ig00156_nodal_tests
+[19/26] Linking CXX executable cs80_mts_esp_shim_tests
+[20/26] Linking CXX executable cs80_mts_realtime_semantics_tests
+[21/26] Linking CXX executable cs80_tuning_midi_tests
+[22/26] Linking CXX executable cs80_source_factory_boundary_tests
+[23/26] Linking CXX executable cs80_public_tone_estimate_tests
+[24/26] Linking CXX executable cs80_public_tone_engine_revision_tests
+[25/26] Linking CXX executable cs80_public_tone_audit_revision_tests
+[26/26] Linking CXX executable cs80_memory_panel_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-integration/build-integration
+      Start  31: cs80_core_tests
+ 1/21 Test  #31: cs80_core_tests ............................   Passed   16.66 sec
+      Start  33: cs80_source_factory_integration_tests
+ 2/21 Test  #33: cs80_source_factory_integration_tests ......   Passed  369.74 sec
+      Start  34: cs80_source_factory_tone_tests
+ 3/21 Test  #34: cs80_source_factory_tone_tests .............   Passed    0.12 sec
+      Start  61: cs80_ig00156_nodal_tests
+ 4/21 Test  #61: cs80_ig00156_nodal_tests ...................   Passed   34.82 sec
+      Start  74: cs80_mts_esp_native_tests
+ 5/21 Test  #74: cs80_mts_esp_native_tests ..................   Passed    0.00 sec
+      Start  75: cs80_mts_esp_shim_tests
+ 6/21 Test  #75: cs80_mts_esp_shim_tests ....................   Passed    0.29 sec
+      Start  76: cs80_mts_esp_fallback_tests
+ 7/21 Test  #76: cs80_mts_esp_fallback_tests ................   Passed    0.00 sec
+      Start  77: cs80_mts_esp_windows_macro_tests
+ 8/21 Test  #77: cs80_mts_esp_windows_macro_tests ...........   Passed    0.02 sec
+      Start  78: cs80_host_automation_curve_tests
+ 9/21 Test  #78: cs80_host_automation_curve_tests ...........   Passed    0.67 sec
+      Start  79: cs80_au_automation_curve_tests
+10/21 Test  #79: cs80_au_automation_curve_tests .............   Passed    0.03 sec
+      Start  80: cs80_au_automation_bridge_contract_tests
+11/21 Test  #80: cs80_au_automation_bridge_contract_tests ...   Passed    0.02 sec
+      Start  85: cs80_tuning_input_boundary_tests
+12/21 Test  #85: cs80_tuning_input_boundary_tests ...........   Passed    0.01 sec
+      Start  86: cs80_scala_float_pitch_bounds_tests
+13/21 Test  #86: cs80_scala_float_pitch_bounds_tests ........   Passed    0.01 sec
+      Start  87: cs80_mts_counted_message_tests
+14/21 Test  #87: cs80_mts_counted_message_tests .............   Passed    0.01 sec
+      Start  88: cs80_mts_realtime_semantics_tests
+15/21 Test  #88: cs80_mts_realtime_semantics_tests ..........   Passed    1.83 sec
+      Start  89: cs80_tuning_midi_tests
+16/21 Test  #89: cs80_tuning_midi_tests .....................   Passed    0.66 sec
+      Start 102: cs80_source_factory_boundary_tests
+17/21 Test #102: cs80_source_factory_boundary_tests .........   Passed    0.63 sec
+      Start 103: cs80_public_tone_estimate_tests
+18/21 Test #103: cs80_public_tone_estimate_tests ............   Passed    0.01 sec
+      Start 104: cs80_public_tone_audit_revision_tests
+19/21 Test #104: cs80_public_tone_audit_revision_tests ......   Passed    1.25 sec
+      Start 105: cs80_public_tone_engine_revision_tests
+20/21 Test #105: cs80_public_tone_engine_revision_tests .....   Passed   24.46 sec
+      Start 107: cs80_memory_panel_tests
+21/21 Test #107: cs80_memory_panel_tests ....................   Passed    0.52 sec
+
+100% tests passed out of 21
+
+Total Test time (real) = 451.81 sec
+a505b7fd85f10408eb3b7a947566dfcbaa6e49aa0086894548131dfea5f45ca2  build-integration/scala-float-pitch-positive.f32
+FINISHED 2026-11-02T13:38:07Z

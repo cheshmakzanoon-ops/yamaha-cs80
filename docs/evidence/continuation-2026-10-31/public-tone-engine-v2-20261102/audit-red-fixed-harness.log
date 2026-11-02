@@ -1,0 +1,26 @@
+Mon Nov  2 12:13:52 UTC 2026
+25e53d6d290a1f5e94873f12f67dd59a3a4e81dc
+[1/2] Building CXX object CMakeFiles/cs80_public_tone_audit_revision_tests.dir/tests/PublicToneAuditRevisionTests.cpp.o
+[2/2] Linking CXX executable cs80_public_tone_audit_revision_tests
+wrote /tmp/cs80-audit-revision-166912246494812/default
+engine_audit: unknown option --factory-tone-revision
+FAIL: explicit frozen audit option accepted
+FAIL: default and explicit V1 preserve exact audit CSV contents
+engine_audit: unknown option --factory-tone-revision
+FAIL: explicit candidate audit option accepted
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: candidate sidecar records exact policy and qualification boundary
+FAIL: actual audit render propagates V2 after programmer builder
+FAIL: candidate flag changes affected actual audit PCM
+engine_audit: unknown option --factory-tone-revision
+engine_audit: unknown option --factory-tone-revision
+engine_audit: unknown option --factory-tone-revision
+engine_audit: unknown option --factory-tone-revision
+Public tone audit revision: 397 checks, 12 failures; no full885/default qualification
+EXIT_CODE=1
+Mon Nov  2 12:14:02 UTC 2026

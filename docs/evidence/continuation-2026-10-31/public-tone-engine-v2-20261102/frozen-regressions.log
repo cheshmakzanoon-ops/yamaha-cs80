@@ -1,0 +1,35 @@
+Mon Nov  2 12:44:52 UTC 2026
+5c1ba2b8577bbcacc32e23f1c52267708887c0ec
+[1/12] Building CXX object CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o
+[2/12] Building CXX object CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o
+[3/12] Building CXX object CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o
+[4/12] Building CXX object CMakeFiles/cs80_public_tone_estimate_tests.dir/tests/PublicToneEstimateTests.cpp.o
+[5/12] Building CXX object CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o
+[6/12] Linking CXX executable cs80_tests
+[7/12] Linking CXX executable cs80_source_factory_integration_tests
+[8/12] Linking CXX executable cs80_source_factory_tone_tests
+[9/12] Linking CXX executable cs80_source_factory_boundary_tests
+[10/12] Linking CXX executable cs80_public_tone_estimate_tests
+[11/12] Building CXX object CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o
+[12/12] Linking CXX executable cs80_memory_panel_tests
+Test project /workspace/scratch/aa102d573ba3/cs80-circuit-engine-v2/build-v2
+    Start  32: cs80_source_factory_integration_tests
+1/7 Test  #32: cs80_source_factory_integration_tests ....   Passed  419.88 sec
+    Start  33: cs80_source_factory_tone_tests
+2/7 Test  #33: cs80_source_factory_tone_tests ...........   Passed    0.17 sec
+    Start  95: cs80_source_factory_boundary_tests
+3/7 Test  #95: cs80_source_factory_boundary_tests .......   Passed    0.67 sec
+    Start  96: cs80_public_tone_estimate_tests
+4/7 Test  #96: cs80_public_tone_estimate_tests ..........   Passed    0.02 sec
+    Start  97: cs80_public_tone_audit_revision_tests
+5/7 Test  #97: cs80_public_tone_audit_revision_tests ....   Passed    1.69 sec
+    Start  98: cs80_public_tone_engine_revision_tests
+6/7 Test  #98: cs80_public_tone_engine_revision_tests ...   Passed   18.37 sec
+    Start 100: cs80_memory_panel_tests
+7/7 Test #100: cs80_memory_panel_tests ..................   Passed    0.39 sec
+
+100% tests passed out of 7
+
+Total Test time (real) = 441.20 sec
+EXIT_CODE=0
+Mon Nov  2 12:52:41 UTC 2026
