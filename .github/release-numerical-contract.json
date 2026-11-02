@@ -22,6 +22,9 @@
       "click-causality.csv": 9
     },
     "expected_source_phrase_rows": 283,
+    "frozen_reporter_path": "docs/evidence/qualification-2026-11-01/pre-ring-local-integration/summarize-audit.py",
+    "frozen_reporter_sha256": "3f1a68208c8c848c645088dae8d1a398190f32c05c1344bbffd3f4c071aa2fd9",
+    "require_marker_source_and_provenance_hash": true,
     "require_complete_source_locked_capture": true,
     "require_all_numeric_cells_finite": true,
     "require_zero_exported_nonfinite_phrase_fx_frames": true,
@@ -104,6 +107,7 @@
     },
     "scope": "Circuit Source Performance isolation, eight held voices, 48 kHz / 256 frames; callback RTF, not operating-system CPU utilization",
     "require_same_host_compiler_binary_and_workload": true,
+    "require_same_runner_job_and_receipt_from_workflow": true,
     "require_source_identity_and_checksum_consistency": true,
     "require_all_rounds_complete_and_finite": true,
     "p99_and_deadline_misses": "Recorded for each selected case, not waived or converted into fabricated thresholds"
