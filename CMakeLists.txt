@@ -159,6 +159,12 @@ if (CS80_BUILD_TESTS)
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/click-residual-continuity.json
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/cold-idle-timing.json)
     set_tests_properties(cs80_click_event_continuation_tests PROPERTIES TIMEOUT 300)
+    # Optional, test-only event-omission diagnostic; the source audit and its
+    # qualification CSV contract remain frozen and unmodified.
+    add_executable(cs80_click_bank_causality_tests tests/ClickBankCausalityTests.cpp)
+    target_link_libraries(cs80_click_bank_causality_tests PRIVATE cs80_core)
+    add_test(NAME cs80_click_bank_causality_tests COMMAND cs80_click_bank_causality_tests --self-test)
+    set_tests_properties(cs80_click_bank_causality_tests PROPERTIES TIMEOUT 300)
     add_executable(cs80_ring_event_continuity_tests tests/RingEventContinuityTests.cpp)
     target_link_libraries(cs80_ring_event_continuity_tests PRIVATE cs80_core)
     add_test(NAME cs80_ring_event_continuity_tests COMMAND cs80_ring_event_continuity_tests
