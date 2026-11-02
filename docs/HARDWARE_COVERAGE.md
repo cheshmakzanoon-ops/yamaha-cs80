@@ -299,6 +299,105 @@ Original physical mechanisms, component calibration, force/touch mechanics,
 unresolved source assumptions, and the owner-only signing/real-DAW/trademark/AAX
 work retain their existing open boundaries.
 
+
+## 2026-11-02 source-probe and full-audit addendum
+
+This is a dated **source/evidence-only** checkpoint. It does not supersede the
+historical investigations above, change any acceptance tolerance, establish
+measurement of a physical CS-80, or authorize a main merge/release. The current
+qualification authority is [STATUS.md](STATUS.md).
+
+### Rows 26–29: HP switched mixer, CP2/CP3 probe identity
+
+The reviewed `integration/adj-hp-mixer-evidence-20261102` branch at
+[`b4c175f2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/integration/adj-hp-mixer-evidence-20261102)
+adds schematic-page explanation and a **model-only, non-audio** pair of stage
+probe readouts. On Yamaha M41 printed p41, drawing KEC-4223-65, IC9 SO pin 5
+and PO pin 7 route through separate FET6/FET7 and 150 kΩ series resistors
+to the common HP mixer node, which also has its **own fixed 150 kΩ shunt to
+ground**. With exactly one ideal conducting FET and other loads ignored,
+the 150 kΩ series/150 kΩ shunt divide the active waveform by two and give
+75 kΩ nominal Thevenin source impedance. The inactive FET is *not* treated
+as a grounded source. Actual FET resistance, other NI/PW/PWM paths,
+driver voltages and loading are still open.
+
+Yamaha M11/M12 wiring, printed p44, drawing KEP-NA03574-6Y, connects
+CP2 (46) to CP7 (53), and **separately** CP8 (56) to CP3 (29):
+the former is the HP-to-LP link and the latter is the downstream LP-side
+probe. Both are wires, not additional gain stages. M41 places VR7 at
+the HP cutoff-control connection and VR8 at HP Q; the independent
+CS-60 service manual printed p38 supports those control roles but
+does not change the CS-80 ADJ p11 specification. The full primary-source
+image coordinates, SHA-256 hashes and alternatives are retained in
+[NATIVE_FILTER_EVIDENCE.md](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/b4c175f2b398566dcdf2c2e70adc6ffaeb94438a/docs/evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+
+| Unchanged service fixture, ideal model readout | HP-stage CP2 | Downstream CP3/CP8 |
+| --- | ---: | ---: |
+| HP setup | **4.126 Vpp** | **1.692 Vpp** |
+| LP setup | **1.038 Vpp** | **1.648 Vpp** |
+
+**The original HP acceptance remains a MISS:** ADJ p11 prints **4.3 ± 1 Vpp
+(3.3–5.3 Vpp) at CP3**, where the model still gives **1.692 Vpp**.
+That the model's separate CP2 result (4.126 Vpp) happens to fall inside
+the printed numerical band does **not** prove a printing error, a
+hardware reading, or a corrected acceptance terminal. A first-person
+2016 calibration account cited in the native review reports a similar
+CP2-versus-CP3 concern, but is unreplicated field testimony; it is not
+a source-verified CS-80 revision. No gain, circuit coefficient, V1
+fingerprint or gate was altered to produce the CP2 reading.
+
+### Complete three-rate source-engine audit and remaining requirements
+
+The preregistered final-audio
+[run 41336194253](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253)
+finished successfully as a *capture*, using audited checkout
+`39ae6c2684456950302cb4ed10ecfae980c37ddd`, production audio
+`83b7f7670f000a95c6b44f96ffb0df3894755d14`, and unchanged
+production source tree `7dd159d491012fd47b46c0aa651e86ea959ca289`.
+The [raw artifact](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253/artifacts/13097476296)
+has ZIP SHA-256
+`a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19`.
+Independent retrieval verified its CRC, source/provenance digests,
+**885 source-defined rows** (40 latency, 168 alias, 102 FX, 566 phrase,
+9 causal clicks), and zero nonfinite numeric cells. Ten preregistered
+coverage/identity mutations were rejected. **Capture success does not mean
+the unchanged numerical acceptance limits passed.**
+
+The current source phrase peak passes at worst **−0.370566 dBFS**;
+48 kHz source ring-off saw/pulse non-harmonics pass at worst
+**−71.14/−76.36 dB** against ≤−70 dB. The **click gates fail**:
+source phrase retrigger **1.23689** (1/283 rows), steal **1.03039**
+(1/283), single-note-off **1.62689** (22/283), chord-note-off
+**1.84628** (37/283), physical-PANEL Bass **1.440924** (2/3 rates),
+and Funky 1 + Funky 2 tone-tab causality **1.626889** (3/3 rates).
+All original limits remain ≤1. These failures are software output
+observations, not identified hardware defects, and do not justify
+onset fades or retuning to a score.
+
+The separate same-host CPU qualification at
+[run 41292549292](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41292549292)
+still misses the eight-voice **0.15–0.20 RTF** target
+(observed **0.605709–0.888572**) and idle **≤0.02 RTF** target
+(observed **0.067570125**). No later optimization is accepted
+here without same-host three-before/three-after and compatibility evidence.
+
+### Row 3 and release boundary
+
+All 25 T51–T54 tone-tab cells remain **page-cited reading/revision
+hypotheses**, not verified installed component values. The native
+S31–S38 inspections remain intact and the circuit V1 fingerprint
+`e5f877a025fc52c6` is unchanged. No additional board-revision evidence
+is claimed.
+
+PR #6 remains a draft pending CPU/click qualification, exact-main CI,
+a reviewed merge, guarded installer release and verified screenshot/download
+provenance. The reviewed release dispatcher checks green exact-main
+build/DSP/screenshots workflows and screenshot-only ancestry but **does not**
+itself check the numerical CPU/click limits; a separate verified acceptance
+decision is required. The existing README downloads and main screenshots
+refer to historical builds, not the pending development branch. Owner-only
+signing, real-DAW, trademark and AAX responsibilities remain open.
+
 ## Status and evidence rules
 
 - **IMPLEMENTED_BEHAVIOR (IB):** a specified discrete or qualitative behavior exists in code. This says nothing about unmeasured transfer curves.
@@ -469,3 +568,4 @@ At this baseline, D comments call its generic input soft clip part of the IG0015
 Existing T coverage includes oscillator discontinuities, feet, filter domains/contours/stability, ring/ribbon, sustain, allocation, pressure, MIDI panic, sample rates and rendering. UT covers host/UI state and programmer gestures. Passing these does not supply missing circuit reference measurements.
 
 For each row, promotion to verified fidelity requires a linked evidence artifact containing the original control/test-point setup, recorded stimulus/reference, residuals across the operating range and a stated uncertainty. Unobserved or unmeasured behavior stays open. The project must not be called complete merely because every table row has a parameter or every CI job is green.
+
