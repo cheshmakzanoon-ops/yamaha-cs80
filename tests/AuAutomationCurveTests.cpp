@@ -72,6 +72,29 @@ int main(int argc, char** argv)
         check(std::abs(currentCurve.valueAt(0)-0.65)<=limits["normalized_curve_error"]
               && std::abs(currentCurve.valueAt(6)-0.65)<=limits["normalized_curve_error"],
               "offset-zero state replaces a stale previous-render value immediately");
+        // A malformed previous-render readback must not convert a delayed
+        // *immediate* AU event into a ramp. The first seven frames hold a
+        // finite fallback; the exact event at sample 7 remains a hard step.
+        for (double malformed : {
+                 std::numeric_limits<double>::quiet_NaN(),
+                 std::numeric_limits<double>::infinity(),
+                 -std::numeric_limits<double>::infinity()})
+        {
+            cs80::AuAutomationQueue invalidInitial;
+            std::array<double, cs80::AuAutomationQueue::lanes> prior;
+            prior.fill(0.2); prior[0] = malformed;
+            check(invalidInitial.add({0,7,0,0.25,0.25,false}) && invalidInitial.prepare(prior,9),
+                  "AU delayed immediate accepts finite event despite malformed prior readback");
+            cs80::HostAutomationCurve guarded;
+            guarded.begin(invalidInitial.queue(0), malformed);
+            bool held = true;
+            for (int sample = 0; sample < 7; ++sample)
+                held = held && guarded.valueAt(sample) == 0.0;
+            check(held && guarded.valueAt(7) == 0.25 && guarded.valueAt(8) == 0.25,
+                  "malformed AU initial cannot move an immediate event before sample 7");
+            check(guarded.finalValue() == 0.25,
+                  "AU malformed-initial recovery retains the host endpoint");
+        }
         cs80::AuAutomationQueue bounded;
         for(size_t i=0;i<bounded.capacity;++i) check(bounded.add({0,0,0,0.4,0.4,false}),"full documented scheduling capacity accepted");
         check(!bounded.add({0,0,0,0.5,0.5,false}),"overflow reported without accepting partial event");
