@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "scope": "Native installer document payload integrity only, not DSP, binary/source equivalence, signing, DAW acceptance or release authorization",
+  "required_notices": ["LICENSE", "licenses/JUCE-LICENSE.md", "licenses/MTS-ESP-LICENSE.txt", "licenses/BarlowCondensed-OFL.txt", "licenses/BarlowCondensed-SOURCE.txt", "INSTALL_AND_QUICKSTART.md", "SOURCE.txt"],
+  "acceptance": [
+    "Independently compare extracted/installed notices to the exact clean checkout and configured JUCE licence, not only self-reported manifest hashes",
+    "Check full expected commit, tree, repository URL, complete unique manifest inventory, document size/hash and truthful limited-scope SOURCE.txt",
+    "Reject missing, changed, rehashed counterfeit, linked, unexpected, duplicate and traversal-path payloads",
+    "Linux: build the actual .deb and inspect its extracted documents without system installation",
+    "macOS: build the actual .pkg and expand its document component without system installation; architecture naming must reflect inspected binary slices, not a hardcoded universal label",
+    "Windows: compile actual Inno Setup definition and inspect documents from a silent Standalone-only install into the ephemeral runner temp directory; no VST3 installation or DAW claim",
+    "Preserve native source SHA, package SHA-256, document verification receipt and installer logs as CI evidence; do not publish a release"
+  ]
+}
