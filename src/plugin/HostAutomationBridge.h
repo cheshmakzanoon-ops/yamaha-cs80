@@ -62,7 +62,11 @@ public:
             readNext();
         }
         if (!haveNext) return previousValue;
-        const auto fraction = double(position - previousPosition) / double(nextPosition - previousPosition);
+        // Widen before subtracting: an out-of-range host knot at INT_MAX
+        // follows the implicit previous position -1, whose difference does
+        // not fit in int. All ordinary offsets retain the exact same ratio.
+        const auto fraction = (double(position) - double(previousPosition))
+                            / (double(nextPosition) - double(previousPosition));
         return previousValue + (nextValue - previousValue) * fraction;
     }
 
