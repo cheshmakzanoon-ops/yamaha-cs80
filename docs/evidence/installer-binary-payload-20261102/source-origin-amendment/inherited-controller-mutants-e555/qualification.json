@@ -1,0 +1,173 @@
+{
+  "scope": "Synthetic payload/source-guard controls; native macOS/Windows execution is not established",
+  "sources": {
+    "verify_distribution_docs.py": "3a9a487718e7309ba41590cea3d379e36a303107323b957aeddc73da143ddc36",
+    "qualify_native_installer.py": "5b678ffaa41f5d59b9fb68bb891ff69fd0afcd2deaf0e06e4624c6d3c453aa5c",
+    "build.yml": "c2d4d7c5d0c40e96b10eb3327ba7a6191a1619a619c59fb9115555ab72509ab6",
+    "test_installer_evidence_workflow.py": "7f5cf8c8e0c066c97f5c27f4af0f6b222dab643eeb8be604f9be654294bdbc65"
+  },
+  "mutations": [
+    {
+      "mutant": "source_commit",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "source_tree",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "source_url",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "independent_notice_bytes",
+      "ordinary_failures": 2,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "manifest_hash",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "honest_scope",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "extra_documents",
+      "ordinary_failures": 1,
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "partial_install_cleanup",
+      "ordinary_failures": 4,
+      "failure_ids": [
+        "test_cleanup_failure_preserves_original_install_failure",
+        "test_input_transformation_after_snapshot_is_not_silently_recaptured",
+        "test_partial_windows_install_is_cleaned_up",
+        "test_windows_binary_mismatch_is_rejected_and_cleaned"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "missing_uninstaller",
+      "ordinary_failures": 1,
+      "failure_ids": [
+        "test_successful_windows_install_without_uninstaller_is_not_qualified"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "silent_binary_recapture",
+      "ordinary_failures": 1,
+      "failure_ids": [
+        "test_input_transformation_after_snapshot_is_not_silently_recaptured"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "trust_binary_manifest",
+      "ordinary_failures": 2,
+      "failure_ids": [
+        "test_input_transformation_after_snapshot_is_not_silently_recaptured",
+        "test_windows_binary_mismatch_is_rejected_and_cleaned"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "unbound_binary_receipt",
+      "ordinary_failures": 1,
+      "failure_ids": [
+        "test_windows_receipt_hashes_actual_binary_verification"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "omit_binary_input_evidence",
+      "ordinary_failures": 3,
+      "failure_ids": [
+        "test_frozen_binary_input_manifest_is_retained",
+        "test_frozen_binary_input_manifest_is_retained",
+        "test_frozen_binary_input_manifest_is_retained"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "omit_binary_verification_evidence",
+      "ordinary_failures": 3,
+      "failure_ids": [
+        "test_binary_verification_receipt_is_retained",
+        "test_binary_verification_receipt_is_retained",
+        "test_binary_verification_receipt_is_retained"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "success_only_evidence_upload",
+      "ordinary_failures": 3,
+      "failure_ids": [
+        "test_native_evidence_uploads_run_even_after_failure",
+        "test_native_evidence_uploads_run_even_after_failure",
+        "test_native_evidence_uploads_run_even_after_failure"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    },
+    {
+      "mutant": "drop_native_golden_evidence",
+      "ordinary_failures": 3,
+      "failure_ids": [
+        "test_prior_test_notice_and_visual_evidence_is_preserved",
+        "test_prior_test_notice_and_visual_evidence_is_preserved",
+        "test_prior_test_notice_and_visual_evidence_is_preserved"
+      ],
+      "errors": 0,
+      "positive_passed": true
+    }
+  ],
+  "restored_original_passed": true,
+  "runtime_error_control_refused_not_semantic_kill": true,
+  "logs": {
+    "drop_native_golden_evidence.log": "047bbe86f90d2cc39931689156e7cc5a795be6a65832584272c0dbe704e083ca",
+    "extra_documents.log": "a6af8f2239faa36f604b182c469060f3f40fb419ec5efd87bb76a3344446f999",
+    "honest_scope.log": "50c2c2d77f55006469794c8c2b0cf19a2cee0e81ab80214dd31fad0275babddd",
+    "independent_notice_bytes.log": "e1a41d9648d0cfc2b73a383dddf49b643a6bf7e0cc2cc07b3d53fdbb0d8a818c",
+    "manifest_hash.log": "6811288f2357893e00d7a6a7a55b499eb604b262ee4ce636324ff635cde6b2a5",
+    "missing_uninstaller.log": "c97787219ace8196b2b3c0f1d89c62e3c52a8b6b433308f6a24002a701c92bf2",
+    "native-restored.log": "d89ea5a63e8a7d4c310893edc703fa47077c02b5df5977e4e1fe3ae9b32d6af8",
+    "native-unmodified.log": "d0f7cf5ed34021263ef8c553103510f7e8b5f2f237b0236047bb08e00d0807f6",
+    "omit_binary_input_evidence.log": "9f5c7a9d407d21472ba00fd22dcc45a810712d097914d732f396ec243e4d2621",
+    "omit_binary_verification_evidence.log": "04e95f76db3c87ad5eb82452183837bec447d7774e77456dbe73e17fda8eaaf6",
+    "partial_install_cleanup.log": "5703c45ce498ae9d860930cd52ac5c5d6a6234e6c87b7016ea3c5eced0e98254",
+    "payload-restored.log": "e92ace3960d13ab6f3b0778099079b87905723a3c1110793f51e84115fbcf61e",
+    "payload-unmodified.log": "ed84bb9e498f6a90efcf1d7350cdaa43457151eb2f6a80a5642fbaf0e9d3cb05",
+    "runtime-error-refused.log": "2026ff24eef72d13472193f1eea1572243b9b75c9016e79470a0b2ec2c089a89",
+    "silent_binary_recapture.log": "f99188f69f7e59c37959a6e81a1ec13de24bdd345f2587eef17da21ac28fb7f1",
+    "source_commit.log": "8940da4c01d1141d5f38c77a653215056dc005d5e6439cb4a05195647e842163",
+    "source_tree.log": "77605c27ae0c72bedc04fba480ecaf2dbb43a1a21bdaa259a3214c5de51223fd",
+    "source_url.log": "3f4425ec7b4cadd7a2d9a22e66bbbb0a610f3e16b63d18fde638aa22f8dcd6e5",
+    "success_only_evidence_upload.log": "f72da58524e1362faf2c20cc6b0a09343cfcf630a2204569bdafc054ada19a12",
+    "trust_binary_manifest.log": "100f841b8e8cd242342394142e0db8883963a6037f35d24bbc2a375b3350657d",
+    "unbound_binary_receipt.log": "865c7c7faa99a7f687f1ac768c98ddc9aaea11233844cc325e4834372844fd1f",
+    "workflow-restored.log": "bdac130e278c73a1c7dd4d19a06335306e61d2a8d9cd92f3ad16db95958a2d8b",
+    "workflow-unmodified.log": "d4df498f658e300140c212b9c10b00a87c88dcdb2a106e484418fead26980fd7"
+  }
+}

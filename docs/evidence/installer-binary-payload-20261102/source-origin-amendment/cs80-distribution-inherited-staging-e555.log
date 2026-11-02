@@ -1,0 +1,275 @@
+Mon Nov  2 16:13:28 UTC 2026
+e55540b098af022137c1f90582386673b683bca2
+3f751625edd795177d80704c6411a562c4c7a0d2
+{
+  "scope": "Synthetic distribution-document regression and source mutations; not plugin qualification",
+  "helper_sha256": "ac8fb93565ee67cc8771a23627751ba7117dd183d2c6cc18c0390ed9ce42b753",
+  "semantic_mutant_count": 8,
+  "runtime_control_is_not_a_semantic_kill": true,
+  "cases": [
+    {
+      "case": "positive",
+      "observed_exit": 0,
+      "joint_replacement": null,
+      "expected": "pass",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": []
+      },
+      "result": "PASS",
+      "log_sha256": "be44812a12fd61496f7b9abcac0503f0ff55614c8b57fa1dc30b85c94cd33df1"
+    },
+    {
+      "case": "omit_barlow_ofl",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement",
+          "test_ci_payload_missing_notice_fails_closed",
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_linked_notice",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement",
+          "test_ci_payload_missing_notice_fails_closed",
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_linked_notice",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "436d87560353dd314c8cb901d044cb27078bea55f1056d8ed0e98862db8ad880"
+    },
+    {
+      "case": "omit_mts_notice",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "371ab63655ca5efde07e4e97233d0ab93b68091246f36a718be7ff5e52dbdbac"
+    },
+    {
+      "case": "omit_font_attribution",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "e587d28a11fcd58ba70212dec1d8ea9a63e6fada257bcff76d16a825128869e3"
+    },
+    {
+      "case": "change_notice_bytes",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "8a613521045a03bf16cb465be559179ee990de570723f35f1deb47fa9d15e217"
+    },
+    {
+      "case": "ignore_workflow_identity",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_stage_rejects_workflow_identity_mismatch"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_stage_rejects_workflow_identity_mismatch"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "8452ddb8fb6f2d0b07411769021a0443dbfec6278a2b351e9bcfc0ee1c628b8c"
+    },
+    {
+      "case": "ignore_dirty_checkout",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_stage_rejects_dirty_source"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_stage_rejects_dirty_source"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "222c8cef27276ae9d201c9a84a8f907a2360dfcd39094100b0ba967ae106dcbf"
+    },
+    {
+      "case": "allow_untracked_notice",
+      "observed_exit": 1,
+      "joint_replacement": {
+        "old": "    payload = {output: revision_notice(root, source, commit) for output, source in NOTICE_INPUTS.items()}",
+        "new": "    payload = {output: read_notice(root / source, root) for output, source in NOTICE_INPUTS.items()}"
+      },
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_ci_and_stage_reject_untracked_notice_replacement"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "eb9ed61432f1fc9512a574a2823a7d141d94b167908c3b7781e1f205ceeae5a6"
+    },
+    {
+      "case": "wrong_manifest_digest_after_self_check",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "semantic_rejection",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": [
+          "test_deb_payload_roundtrip",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ]
+      },
+      "result": "PASS",
+      "log_sha256": "3abc14a68bc9ef8b59abcd1aa589ae2f35c44b5e49ecdbe1b67b8bf7981b60c0"
+    },
+    {
+      "case": "runtime_error_control",
+      "observed_exit": 1,
+      "joint_replacement": null,
+      "expected": "harness_refusal_not_semantic_kill",
+      "assessment": {
+        "qualified": false,
+        "ordinary_failures": [],
+        "runtime_errors": [
+          "test_ci_payload_preserves_every_notice",
+          "test_deb_payload_roundtrip",
+          "test_stage_rejects_existing_output",
+          "test_stage_rejects_linked_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_stage_rejects_missing_notice",
+          "test_staged_metadata_is_exact_and_explicitly_limited"
+        ],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": []
+      },
+      "result": "PASS",
+      "log_sha256": "8f6b1940154d3a025932696b3e002b391f6579a7cd233d2c7d47a3c4db479b33"
+    },
+    {
+      "case": "restored",
+      "observed_exit": 0,
+      "joint_replacement": null,
+      "expected": "pass",
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "11"
+        ],
+        "expected_failures": []
+      },
+      "result": "PASS",
+      "log_sha256": "b754f33fb1a97caa7f002178157bc1cf7c3d01151ee3a41fd0c0963545f50c0b"
+    }
+  ]
+}
+Mon Nov  2 16:13:55 UTC 2026

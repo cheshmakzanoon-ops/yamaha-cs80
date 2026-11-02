@@ -1,0 +1,26 @@
+{
+  "tests": 12,
+  "failures": [
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='LICENSE', flag='--assume-unchanged')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='LICENSE', flag='--skip-worktree')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='deps/mts-esp/LICENSE', flag='--assume-unchanged')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='deps/mts-esp/LICENSE', flag='--skip-worktree')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='assets/fonts/barlow-condensed/OFL.txt', flag='--assume-unchanged')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='assets/fonts/barlow-condensed/OFL.txt', flag='--skip-worktree')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='assets/fonts/barlow-condensed/SOURCE.txt', flag='--assume-unchanged')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='assets/fonts/barlow-condensed/SOURCE.txt', flag='--skip-worktree')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='docs/INSTALL_AND_QUICKSTART.md', flag='--assume-unchanged')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_independent_verifier_rejects_self_consistent_hidden_source_substitution (path='docs/INSTALL_AND_QUICKSTART.md', flag='--skip-worktree')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_unregistered_crlf_conversion_is_rejected (consumer='verifier')",
+    "test_distribution_source_identity.DistributionSourceIdentityTests.test_windows_crlf_is_not_permission_to_change_text (consumer='verifier')"
+  ],
+  "failure_families": {
+    "test_independent_verifier_rejects_self_consistent_hidden_source_substitution": 10,
+    "test_unregistered_crlf_conversion_is_rejected": 1,
+    "test_windows_crlf_is_not_permission_to_change_text": 1
+  },
+  "errors": [],
+  "skipped": [],
+  "unexpected_successes": 0,
+  "expected_failures": 0
+}

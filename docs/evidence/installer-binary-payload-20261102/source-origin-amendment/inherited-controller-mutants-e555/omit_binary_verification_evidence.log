@@ -1,0 +1,36 @@
+test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) ... 
+  test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) (platform_index=0) ... FAIL
+  test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) (platform_index=1) ... FAIL
+  test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) (platform_index=2) ... FAIL
+test_frozen_binary_input_manifest_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_frozen_binary_input_manifest_is_retained) ... ok
+test_native_evidence_uploads_run_even_after_failure (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_native_evidence_uploads_run_even_after_failure) ... ok
+test_prior_test_notice_and_visual_evidence_is_preserved (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_prior_test_notice_and_visual_evidence_is_preserved) ... ok
+
+======================================================================
+FAIL: test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) (platform_index=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-distribution-source/tests/release/test_installer_evidence_workflow.py", line 33, in test_binary_verification_receipt_is_retained
+    self.assertIn('            packages/native-installer-ci/binary-verification.json\n', block)
+AssertionError: '            packages/native-installer-ci/binary-verification.json\n' not found in '        if: always()\n        uses: actions/upload-artifact@v5\n        with:\n          name: cs80-linux-test-evidence\n          path: |\n            build/Testing/Temporary/LastTest.log\n            build/ci-juce-provenance.txt\n            build/ui-smoke/golden/*.png\n            packages/native-installer-ci/*.log\n            packages/native-installer-ci/*receipt.json\n            packages/native-installer-ci/document-verification.json\n            packages/native-installer-ci/binary-input-manifest.json\n          if-no-files-found: warn\n\n'
+
+======================================================================
+FAIL: test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) (platform_index=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-distribution-source/tests/release/test_installer_evidence_workflow.py", line 33, in test_binary_verification_receipt_is_retained
+    self.assertIn('            packages/native-installer-ci/binary-verification.json\n', block)
+AssertionError: '            packages/native-installer-ci/binary-verification.json\n' not found in '        if: always()\n        uses: actions/upload-artifact@v5\n        with:\n          name: cs80-${{ matrix.runner }}-test-evidence\n          path: |\n            build/Testing/Temporary/LastTest.log\n            build/ci-juce-provenance.txt\n            build/ui-smoke/golden/*.png\n            packages/native-installer-ci/*.log\n            packages/native-installer-ci/*receipt.json\n            packages/native-installer-ci/document-verification.json\n            packages/native-installer-ci/binary-input-manifest.json\n          if-no-files-found: warn\n\n'
+
+======================================================================
+FAIL: test_binary_verification_receipt_is_retained (test_installer_evidence_workflow.InstallerEvidenceWorkflowTests.test_binary_verification_receipt_is_retained) (platform_index=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-distribution-source/tests/release/test_installer_evidence_workflow.py", line 33, in test_binary_verification_receipt_is_retained
+    self.assertIn('            packages/native-installer-ci/binary-verification.json\n', block)
+AssertionError: '            packages/native-installer-ci/binary-verification.json\n' not found in '        if: always()\n        uses: actions/upload-artifact@v5\n        with:\n          name: cs80-windows-test-evidence\n          path: |\n            build/Testing/Temporary/LastTest.log\n            build/ci-juce-provenance.txt\n            build/ui-smoke/golden/*.png\n            packages/native-installer-ci/*.log\n            packages/native-installer-ci/*receipt.json\n            packages/native-installer-ci/document-verification.json\n            packages/native-installer-ci/binary-input-manifest.json\n          if-no-files-found: warn\n\n'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=3)

@@ -1,0 +1,45 @@
+Mon Nov  2 16:26:25 UTC 2026
+e55540b098af022137c1f90582386673b683bca2
+3f751625edd795177d80704c6411a562c4c7a0d2
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (1.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/cs80-distribution-source-cmake-e555
+Test project /tmp/cs80-distribution-source-cmake-e555
+    Start 1: cs80_distribution_docs_tests
+1/8 Test #1: cs80_distribution_docs_tests ................   Passed    1.55 sec
+    Start 2: cs80_distribution_source_identity_tests
+2/8 Test #2: cs80_distribution_source_identity_tests .....   Passed    7.07 sec
+    Start 3: cs80_distribution_mutation_contract_tests
+3/8 Test #3: cs80_distribution_mutation_contract_tests ...   Passed    0.24 sec
+    Start 4: cs80_installed_distribution_docs_tests
+4/8 Test #4: cs80_installed_distribution_docs_tests ......   Passed    4.99 sec
+    Start 5: cs80_native_installer_payload_tests
+5/8 Test #5: cs80_native_installer_payload_tests .........   Passed    1.02 sec
+    Start 6: cs80_installer_binary_payload_tests
+6/8 Test #6: cs80_installer_binary_payload_tests .........   Passed    0.38 sec
+    Start 7: cs80_installer_evidence_workflow_tests
+7/8 Test #7: cs80_installer_evidence_workflow_tests ......   Passed    0.11 sec
+    Start 8: cs80_macos_package_architecture_tests
+8/8 Test #8: cs80_macos_package_architecture_tests .......   Passed    0.12 sec
+
+100% tests passed out of 8
+
+Total Test time (real) =  15.49 sec
+Packaging self-test passed: 34 fixture/rejection checks; synthetic artifacts only.
+Mon Nov  2 16:26:42 UTC 2026
