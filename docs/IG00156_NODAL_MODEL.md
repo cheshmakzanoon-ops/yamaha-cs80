@@ -77,7 +77,7 @@ and `PWM(41)` via 100 kOhm lead to IC9 WSC pulse-width control (PWI/PWO),
 plus the [pre-registered, model-only endpoint comparison](evidence/continuation-2026-10-31/ADJ_NOISE_LOAD_PREREG_20261102.md).
 No production model value or service band changes with this qualification.
 
-**CP3 termination boundary, 2026-11-02:** M41 + M44 route IC11 LP pin 15
+**CP3 termination boundary, 2026-11-02:** M41 + M44 route IC11 LP pin 10
 to `CP8(56)`, then the same-board `CP3(29)` probe; from CP3, a **1 µF/50 V
 nonpolar capacitor and 100 kOhm resistor** connect in series to IG00151 VCA
 IC4 `+IN` pin 3. Its `LI` control pin 2 instead connects to `LP1(27)` via

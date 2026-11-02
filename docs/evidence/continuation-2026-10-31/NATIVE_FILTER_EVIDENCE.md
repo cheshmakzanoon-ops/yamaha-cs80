@@ -146,7 +146,7 @@ test has been fixed by tracing the NI branch.
 
 ### 2026-11-02 CP3 downstream VCA-input continuation
 
-M41 printed p41 shows **IC11 LP output pin 15 -> CP8(56)**. M44 p44
+M41 printed p41 shows **IC11 LP output pin 10 -> CP8(56)**. M44 p44
 continues **CP8(56) -> CP3(29)** on the same M11/M12 board. Back on M41,
 **CP3(29) -> 1 µF/50 V nonpolar coupling capacitor (`1/50 NP`) -> 100 kΩ
 series resistor -> IC4 (IG00151 VCA) `+IN` pin 3**. There is no directly

@@ -51,7 +51,7 @@ The 25 preset tone-tab hypotheses are irrelevant to this particular
 | Technician observation requested, if safely accessible | Source-grounded electrical identity | Interpretation boundary |
 | --- | --- | --- |
 | **CP2 (46)** and optionally **CP7 (53)** | M41 IC10 IG00156 HP output pin 15; M44 CP2↔CP7 harness, then LP series path | **HP-stage** voltage, *not* the Yamaha p11 acceptance point |
-| **CP3 (29)** and optionally **CP8 (56)** | M41 IC11 IG00156 LP output pin 15 to CP8; M44 CP8↔CP3 harness | **LP-stage** output, the manufacturer's HP and LP **scope acceptance point** |
+| **CP3 (29)** and optionally **CP8 (56)** | M41 IC11 IG00156 LP output pin 10 to CP8; M44 CP8↔CP3 harness | **LP-stage** output, the manufacturer's HP and LP **scope acceptance point** |
 | Downstream **IC4 VCA +IN pin 3**, if a suitable safe observation exists | CP3 → **1 µF/50 V NP capacitor** → **100 kΩ series** → IG00151 IC4 +IN; separate **LP1(27)** 100 kΩ/0.01 µF control path to IC4 LI pin 2 | VCA input loading/impedance unquantified; **CP4(28) is later VCA output**, not CP3 |
 | **NO1 (39)** at SUB and **NI (43)** on M boards | IC3/2 buffered SUB output, shared through M44 NI harness; M41 **another 150 kΩ series resistor** between NI and HP mixer | Noise may be nonzero. Static Vpp or visual wiring alone **cannot establish output impedance** under multi-board load |
 | **IC10 Vfc pin 4** and **Qadj pin 6**, via qualified high-impedance/control-safe sensing | VR7 path to **Vfc pin 4**; VR8 path to **Qadj pin 6**, as drawn on M41 | Control pins are **not** themselves FH/CP2/CP3. Input loading may alter cutoff/Q; voltage is not an established gm/Q transfer law |
