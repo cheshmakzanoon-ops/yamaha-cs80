@@ -25,3 +25,14 @@ Engine/Processor object was linked into the new-ABI fixture.
 Evidence: `docs/evidence/factory-tone-host-20261102/`. This is not native UI,
 pluginval, DAW, sanitizer or full composed-source qualification. Implementation
 and post-change results remain pending.
+
+## Additional Program Change controls, still before implementation
+
+Test-only 74556f7 ran at 13:59:05 UTC: **1,505 checks, 4 ordinary failures,
+exit 1**. The original three-failure baseline above is retained separately.
+The extra failure is the same-sample ninth-note extension frame: it still sees
+the old source rather than the newly recalled aggregate program. Positive
+controls pass: eight held main assignment identities survive, the equal-sample
+ninth note reaches the extension, ordinary eight-voice main recall retains its
+aggregate coordinate, and an inactive extension stays untouched. Revision-
+dependent checks again explicitly did not run because the choice is absent.
