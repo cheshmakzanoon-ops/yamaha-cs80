@@ -248,6 +248,67 @@ class MetadataOnly(unittest.TestCase):
         candidate["snapshots"][0]["observations"][1]["node"] = "NI"
         intake.validate_document(candidate)  # No implied source voltage or impedance.
 
+    def test_dc_observation_requires_dc_capable_acquisition(self):
+        # Preregistered in ADJ_INTAKE_DC_COUPLING_PREREG_20261102.md.
+        # Every value is a synthetic schema sentinel, not a hardware record.
+        for node in ("FH", "FL", "IC10_VFC4", "IC10_QADJ6"):
+            with self.subTest(node=node):
+                candidate = synthetic_structure_only()
+                snapshot = candidate["snapshots"][0]
+                snapshot["observations"][0].update(node=node, quantity="vdc")
+                intake.validate_document(candidate)  # DC-coupled scope.
+                snapshot["scope"]["coupling"] = "AC"
+                with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+                    intake.validate_document(candidate)
+                snapshot.pop("scope")
+                snapshot["meter"] = {
+                    "instrument_name": "SCHEMA_TEST_METER_NOT_REAL",
+                    "input_resistance_ohm": 1,
+                    "mode": "DC_V",
+                }
+                intake.validate_document(candidate)  # Independent DC meter.
+
+    def test_mixed_ac_waveform_and_dc_meter_remain_distinct(self):
+        candidate = synthetic_structure_only()
+        snapshot = candidate["snapshots"][0]
+        snapshot["scope"]["coupling"] = "AC"
+        intake.validate_document(candidate)  # AC waveform alone is allowed.
+        dc = deepcopy(snapshot["observations"][0])
+        dc.update(node="FH", quantity="vdc")
+        snapshot["observations"].append(dc)
+        snapshot["meter"] = {
+            "instrument_name": "SCHEMA_TEST_METER_NOT_REAL",
+            "input_resistance_ohm": 1,
+            "mode": "DC_V",
+        }
+        intake.validate_document(candidate)
+        snapshot.pop("meter")
+        with self.assertRaisesRegex(intake.IntakeError, "DC.*acquisition"):
+            intake.validate_document(candidate)
+        snapshot["observations"][-1] = {
+            "node": "FH", "status": "not_acquired",
+            "reason": "SCHEMA TEST: no physical observations",
+        }
+        report = intake.render_report(intake.validate_document(candidate))
+        self.assertIn("Explicit not-acquired nodes:** 1", report)
+        self.assertNotIn("SUBMITTED vdc", report)
+
+    def test_cli_rejects_dc_from_ac_only_without_creating_report(self):
+        candidate = synthetic_structure_only()
+        snapshot = candidate["snapshots"][0]
+        snapshot["scope"]["coupling"] = "AC"
+        snapshot["observations"][0].update(node="FH", quantity="vdc")
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "schema-placeholder.json"
+            report = Path(directory) / "report.md"
+            source.write_text(json.dumps(candidate), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), "--input", str(source),
+                 "--output", str(report)], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("DC", result.stderr)
+            self.assertFalse(report.exists())
+
     def test_channel_two_cannot_misidentify_noise_source_as_no1(self):
         # M41/M44 source trace connects channel I to SUB NO1. The separate
         # channel-II NO2 source is deliberately absent from schema v1.
