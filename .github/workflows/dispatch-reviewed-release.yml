@@ -1,15 +1,20 @@
-name: dispatch reviewed main release
+name: dispatch reviewed main release (owner-only request)
 
-# A maintainer creates/updates this request branch only after the main merge.
-# The expected main SHA acts as a lease; no new credentials are required.
+# This privileged workflow is MANUAL and defined on current default main.
+# No push to a mutable request branch can start this workflow or provide code.
+# The reviewed request branch supplies one JSON file at an explicit commit SHA.
+# An old workflow definition selected from a historical ref remains an
+# owner-admin protection issue; no code in this workflow changes that fact.
 on:
-  push:
-    branches: [codex/cs80-release-dispatch]
-    paths: ['.github/release-request.json']
+  workflow_dispatch:
+    inputs:
+      request_commit_sha:
+        description: Full commit SHA at the tip of codex/cs80-release-dispatch, JSON-only diff from approved main
+        type: string
+        required: true
 
 permissions:
   contents: read
-  actions: write
 
 concurrency:
   group: dispatch-reviewed-main-release
@@ -17,18 +22,52 @@ concurrency:
 
 jobs:
   dispatch:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.actor == 'cheshmakzanoon-ops' }}
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write
     steps:
-      - uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-      - name: Check dispatch guard fixtures
-        run: node tests/release/dispatch-reviewed-release.test.cjs
-      - name: Require reviewed main and dispatch existing release workflow
+      - name: Freeze current main identity before reading any repository code
+        id: main
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('node:fs');
-            const dispatch = require('./scripts/dispatch-reviewed-release.cjs');
-            const request = JSON.parse(fs.readFileSync('.github/release-request.json', 'utf8'));
-            await dispatch({ github, context, core, request });
+            if (context.eventName !== 'workflow_dispatch' || context.ref !== 'refs/heads/main'
+                || context.actor !== 'cheshmakzanoon-ops')
+              throw new Error('Only the repo owner may dispatch this workflow on main');
+            const current = (await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' })).data.object.sha;
+            if (current !== context.sha) throw new Error('Main moved after request workflow event');
+            core.setOutput('main_sha', current);
+
+      - name: Checkout trusted guard and tests at immutable approved main SHA
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.main.outputs.main_sha }}
+          persist-credentials: false
+
+      - name: Prove checked-out guard source is exactly approved main
+        env:
+          APPROVED_MAIN_SHA: ${{ steps.main.outputs.main_sha }}
+        run: test "$(git rev-parse HEAD)" = "$APPROVED_MAIN_SHA"
+
+      - name: Check trusted dispatch and manual/tag rejection controls
+        run: >
+          node --test
+          tests/release/dispatch-reviewed-release.test.cjs
+          tests/release/numerical-dispatch-addition.test.cjs
+          tests/release/release-entrypoint-preflight.test.cjs
+          tests/release/trusted-main-dispatch.test.cjs
+
+      - name: Read exact request JSON via API, verify PR, CI and dispatch main
+        uses: actions/github-script@v7
+        env:
+          REQUEST_COMMIT_SHA: ${{ inputs.request_commit_sha }}
+          APPROVED_MAIN_SHA: ${{ steps.main.outputs.main_sha }}
+        with:
+          script: |
+            const { execFileSync } = require('node:child_process');
+            const dispatch = require('./scripts/dispatch-reviewed-main-request.cjs');
+            const checkoutSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+            await dispatch({ github, context, core, requestSha: process.env.REQUEST_COMMIT_SHA,
+              approvedMainSha: process.env.APPROVED_MAIN_SHA, checkoutSha });

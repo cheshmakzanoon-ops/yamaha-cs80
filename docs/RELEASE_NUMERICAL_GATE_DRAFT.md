@@ -116,6 +116,41 @@ installer jobs, and manually review the tag's peeled commit against current
 approved main S. Do not create tags or alter repository rules without new
 owner authorization. Code-only preflight is not complete bypass prevention.
 
+### Privileged request-branch execution removed (isolated proposal)
+
+The historical `.github/workflows/dispatch-reviewed-release.yml` used a
+`push` event on the mutable `codex/cs80-release-dispatch` branch, with
+`actions:write`. Both its workflow YAML **and** its default checked-out
+`scripts/dispatch-reviewed-release.cjs` came from that branch. Merely
+pinning a checkout inside that YAML would not protect against a branch writer
+who replaces the workflow definition itself.
+
+The separate red-first `trusted-main-dispatch` proposal removes the
+request-branch `push` trigger entirely. It permits only a repository-owner
+`workflow_dispatch` on `refs/heads/main`, with a required **full request
+commit SHA**. Before executing project code, the trusted default-main
+workflow API-checks current main against the event SHA, then checks out
+that **immutable SHA** for all scripts/tests. Its main-pinned dispatcher
+reads exactly `.github/release-request.json` via GitHub API at the supplied
+request commit, requires the request branch tip to match, and accepts only
+a single JSON change relative to current main; no request-branch executable
+code, workflow YAML or artifacts are checked out or run. It also verifies
+authenticated owner/request identity, PR #6 being closed/merged/non-draft
+onto main with the exact reviewed head and merge SHA, and the original 3+1
+exact-main green workflows before calling the existing dispatcher. The
+initial conservative request contract requires the validated SHA to equal
+that exact PR merge commit; integration must review whether a later
+non-`src` main successor needs a separately preregistered safe ancestry rule.
+
+Red-first test cases reject forged branch scripts/YAML, extra diffs, stale
+main/request refs, wrong event/actor/checkout/request SHA, altered PR identity,
+missing numerical CI and incorrect workflow event wiring. This is still
+**local review-only code**, not an approved release request or active default
+branch. Historical `workflow_dispatch` YAML selectable at older refs and
+unprotected owner-level branch/tag settings remain owner-admin blockers;
+manually choosing `main` in this new workflow must not be represented as
+retroactively disabling old workflow definitions.
+
 ### Producer-workflow integration still blocked
 
 The frozen V1 full-audit preflight is source-tree-locked by registration
