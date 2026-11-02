@@ -1,5 +1,6 @@
 """Synthetic verifier controls only; these are never real-host evidence."""
 import copy
+import hashlib
 import importlib.util
 import json
 import math
@@ -74,9 +75,13 @@ class AudioControls(unittest.TestCase):
 
 class ProvenanceControls(unittest.TestCase):
     """Intentionally artificial metadata fixtures; not a host acceptance result."""
+    contract_file = "contract-v1.json"
+
     def test_identity_state_and_failure_mutations(self):
-        contract = json.loads((ROOT / "tests/hosts/reaper/contract-v1.json").read_text())
+        contract = json.loads((ROOT / "tests/hosts/reaper" / self.contract_file).read_text())
         state = {"VOLUME": 0.55, "VOICE DISPERSION": 0, "ANALOG DRIFT": 0, "ANALOG NOISE": 0}
+        if self.contract_file == "contract-v2-dry.json":
+            state["CHORUS ON"] = 0
         notes = [{"pitch": n, "velocity": 100, "start_seconds": 0.25, "end_seconds": 1.5}
                  for n in contract["render"]["notes"]]
         observed = {"schema": contract["schema"], "host_version": "7.84/linux-x86_64",
@@ -118,12 +123,33 @@ class ProvenanceControls(unittest.TestCase):
                 "missing-midi": ("lost MIDI notes", lambda m, o: o["projects"]["restored"].update(notes=[])),
                 "lost-envelope": ("changed persisted envelope", lambda m, o: o["projects"]["automated"].update(envelope=[])),
             }
+            if self.contract_file == "contract-v2-dry.json":
+                mutations["restored-chorus-enabled"] = ("wrong restored CHORUS ON", lambda m, o: o["after_reopen"].update({"CHORUS ON": 1}))
             for name, (reason, mutate) in mutations.items():
                 with self.subTest(name=name):
                     m, o = copy.deepcopy(manifest), copy.deepcopy(observed)
                     mutate(m, o)
                     with self.assertRaisesRegex(ValueError, "^" + re.escape(reason) + "$"):
                         validator.verify_metadata(m, o, contract, source, tree, contract_hash)
+
+
+class DryProvenanceControls(ProvenanceControls):
+    contract_file = "contract-v2-dry.json"
+
+
+class DryContractControls(unittest.TestCase):
+    def test_dry_fixture_preserves_original_contract_and_all_acceptance_limits(self):
+        original = (ROOT / "tests/hosts/reaper/contract-v1.json").read_bytes()
+        self.assertEqual(hashlib.sha256(original).hexdigest(),
+                         "e0fb81082eaac5989bc25655f0f9cef4a9c9930b9c2a1193624bdc469b1ec362")
+        v1 = json.loads(original)
+        v2 = json.loads((ROOT / "tests/hosts/reaper/contract-v2-dry.json").read_text())
+        self.assertEqual(v2["limits"], v1["limits"])
+        self.assertEqual(v2["host"], v1["host"])
+        self.assertEqual(v2["excluded_claims"], v1["excluded_claims"])
+        render = v2["render"].copy()
+        self.assertEqual(render.pop("chorus_on_normalized"), 0)
+        self.assertEqual(render, v1["render"])
 
 
 if __name__ == "__main__":
