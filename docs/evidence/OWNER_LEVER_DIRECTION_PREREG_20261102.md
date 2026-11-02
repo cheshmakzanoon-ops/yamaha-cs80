@@ -62,8 +62,17 @@ control checks preservation, not a newly established hardware direction.
 An independent fixed inventory contains 23 downward-increasing controls, three
 upward-increasing globals and one unchanged programmer control. For each, test
 actual JUCE slider endpoint coordinates, five value/geometry round trips,
-physical Up/Down arrow direction and exactly one balanced host gesture per
-arrow. These expectations are not generated from a production direction table.
+physical Up/Down arrow direction, a 24-pixel downward pointer drag and exactly
+one balanced host gesture per interaction. These expectations are not generated
+from a production direction table.
+Before any native evaluation, inspection of the pinned
+[JUCE attachment source](https://github.com/juce-framework/JUCE/blob/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_processors/utilities/juce_ParameterAttachments.cpp)
+showed that its double-valued slider API intentionally converts through the
+parameter's float range. The new round-trip control therefore uses eight float
+epsilons, rather than the draft double-only 1e-9 assumption. This is a
+representation-derived new-fixture bound registered before results, not a
+change to an original acceptance tolerance. Endpoint order and gesture counts
+remain exact, and direction remains a strict inequality.
 The original image limits remain unchanged. Any intentional new golden must be
 reviewed from actual native candidate/diff images, never generated as a fake UI.
 

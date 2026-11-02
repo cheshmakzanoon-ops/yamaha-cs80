@@ -18,6 +18,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cstdio>
+#include <limits>
 #include <vector>
 
 namespace cs80::tests
@@ -150,7 +151,10 @@ void testOwnerLeverDirections(Check check, Flush flush)
         for (const double proportion : { 0.0, 0.25, 0.5, 0.75, 1.0 })
         {
             const double value = slider.proportionOfLengthToValue(proportion);
-            check(std::abs(slider.valueToProportionOfLength(value) - proportion) < 1.0e-9,
+            // The pinned JUCE attachment converts through NormalisableRange<float>,
+            // even though Slider's public geometry API is double precision.
+            check(std::abs(slider.valueToProportionOfLength(value) - proportion)
+                      <= 8.0 * std::numeric_limits<float>::epsilon(),
                   ("owner lever reversible geometry: " + label).toRawUTF8());
         }
         auto* parameter = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(expected.parameter));
@@ -172,6 +176,30 @@ void testOwnerLeverDirections(Check check, Flush flush)
                   ("owner lever physical arrow direction: " + label).toRawUTF8());
             check(gesture.ok(), ("owner lever balanced arrow gesture: " + label).toRawUTF8());
         }
+        parameter->setValueNotifyingHost(0.5f);
+        flush(20);
+        const float before = parameter->getValue();
+        const float x = 0.5f * (float) slider.getWidth();
+        const float y = (float) slider.getPositionOfValue(slider.getValue());
+        const auto mouse = [&](float atY, juce::ModifierKeys modifiers)
+        {
+            const juce::Point<float> point(x, atY);
+            return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), point,
+                modifiers, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, &slider, &slider,
+                juce::Time::getCurrentTime(), point, juce::Time::getCurrentTime(), 1, false);
+        };
+        const auto held = juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier);
+        BalancedGesture drag;
+        parameter->addListener(&drag);
+        slider.mouseDown(mouse(y, held));
+        for (int step = 1; step <= 4; ++step)
+            slider.mouseDrag(mouse(y + 6.0f * (float) step, held));
+        slider.mouseUp(mouse(y + 24.0f, juce::ModifierKeys()));
+        flush(20);
+        parameter->removeListener(&drag);
+        check(expected.increasesDown ? parameter->getValue() > before : parameter->getValue() < before,
+              ("owner lever downward pointer drag: " + label).toRawUTF8());
+        check(drag.ok(), ("owner lever balanced pointer gesture: " + label).toRawUTF8());
     }
 }
 
