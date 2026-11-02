@@ -1,0 +1,38 @@
+2026-11-02T11:46:47Z
+c6350d119d5c967e6b5e54380762e0010e5a89ba
+7157d3a2ee6e0ec57e7413a22f203ab981ed377d
+FAIL: bank-nonreal Legacy 44100 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: octave1-nonreal Legacy 44100 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: octave2-nonreal Legacy 44100 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: bulk-nonreal Legacy 44100 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: bank-nonreal Circuit 44100 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: octave1-nonreal Circuit 44100 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: octave2-nonreal Circuit 44100 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: bulk-nonreal Circuit 44100 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: bank-nonreal Legacy 48000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: octave1-nonreal Legacy 48000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: octave2-nonreal Legacy 48000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: bulk-nonreal Legacy 48000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: bank-nonreal Circuit 48000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: octave1-nonreal Circuit 48000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: octave2-nonreal Circuit 48000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: bulk-nonreal Circuit 48000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: bank-nonreal Legacy 96000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: octave1-nonreal Legacy 96000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: octave2-nonreal Legacy 96000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: bulk-nonreal Legacy 96000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: bank-nonreal Circuit 96000 held-note semitone shift expected 0.000000 observed 1.000001
+FAIL: octave1-nonreal Circuit 96000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: octave2-nonreal Circuit 96000 held-note semitone shift expected 0.000000 observed 0.500000
+FAIL: bulk-nonreal Circuit 96000 held-note semitone shift expected 0.000000 observed 1.000001
+288 MTS realtime semantic checks, 24 failures
+EXIT=1
+82eac1e4cad9eb7ad0173de16317e0f5b32bde410ecdd1fdb7a929932a02923d  ../cs80-host-tool-evidence/mts-realtime/Engine-after.o
+ecdfe27964a26e977d85392484c76f5bbc29fcb71471eb5dfea8f44190c8069e  ../cs80-host-tool-evidence/mts-realtime/Engine-before-fresh.o
+5b5990e0302ca692d306ecd195d4022bfacd3c9dabb8e05eefb2fa6d6a032c30  ../cs80-host-tool-evidence/mts-realtime/Engine-sanitized.o
+f3128d25582be24dbdc890fbc20b89530da3640a523e24ae7a949674af38ec47  ../cs80-host-tool-evidence/mts-realtime/FactoryPresets-before-fresh.o
+713858d05b422ee5edf8056539a34f3a3e4ac2b3efc1b46ba680d6f567e41626  ../cs80-host-tool-evidence/mts-realtime/FactoryPresets-sanitized.o
+61 tuning input boundary checks, 0 failures
+46 counted MTS message checks, 0 failures
+Tuning / MIDI / voice modes: 81 checks, 0 failures
+2026-11-02T11:47:14Z

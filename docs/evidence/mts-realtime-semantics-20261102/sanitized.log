@@ -1,0 +1,11 @@
+ed5f6cd9ba73509ec88c1ffe05c780c15dbd48f4
+a1424ee1b4dc26d125805c9c482502ab2c790efc
+2026-11-02T11:34:02Z
+In file included from src/core/FactoryPresets.cpp:632:
+src/core/CuratedLibrary.inc: In function ‘void cs80::curated::buildLibrary(std::vector<cs80::FactoryPreset>&)’:
+src/core/CuratedLibrary.inc:332:6: note: variable tracking size limit exceeded with ‘-fvar-tracking-assignments’, retrying without
+  332 | void buildLibrary(std::vector<FactoryPreset>& out)
+      |      ^~~~~~~~~~~~
+ASan/UBSan whole core objects; LeakSanitizer disabled for known ptrace limitation.
+288 MTS realtime semantic checks, 0 failures
+2026-11-02T11:37:00Z
