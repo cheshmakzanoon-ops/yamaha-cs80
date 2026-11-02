@@ -25,6 +25,12 @@ int main()
     const int ownerChecks=checks,ownerFailures=failures;
     cs80::tests::testServiceS2FrontStripOrder(check,flush);
     std::printf("S2 order component: %d checks, %d failures\n",checks-ownerChecks,failures-ownerFailures);
+    const int preservationChecks=checks,preservationFailures=failures;
+    cs80::tests::testLeverMappingPreservation(check,flush);
+    std::printf("Lever preservation component: %d checks, %d failures\n",checks-preservationChecks,failures-preservationFailures);
+    const int legendChecks=checks,legendFailures=failures;
+    cs80::tests::testSubFunctionEndLegends(check,flush);
+    std::printf("SUB legend component: %d checks, %d failures\n",checks-legendChecks,failures-legendFailures);
     if(juce::Desktop::getInstance().getNumComponents()!=0) {
         std::puts("INFRASTRUCTURE ERROR: unexpected desktop component after fixture");return 2;
     }

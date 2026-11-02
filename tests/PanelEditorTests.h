@@ -288,6 +288,93 @@ void testOriginalSubLeverDirections(Check check, Flush flush)
     }
 }
 
+// Independent preservation controls: physical lever direction must not redefine numeric host values
+// or spill into software rotary/horizontal controls, including a hardware-to-rotary style change.
+template <typename Check, typename Flush>
+void testLeverMappingPreservation(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    juce::TemporaryFile presetRoot("-cs80-lever-preservation");
+    Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+    for (const int parameter : { (int) cs80::P_detune, (int) cs80::P_ringAttack,
+                                 (int) cs80::P_subOriginalSpeed, (int) cs80::P_mix })
+        for (int style = 0; style < 3; ++style)
+        {
+            cs80::ui::ParamKnob knob(host, parameter);
+            if (style == 1) knob.setCapFader(juce::Colours::white, true);
+            if (style == 2)
+            {
+                knob.setHardwareSlider(juce::Colours::white);
+                knob.getSlider().setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+            }
+            knob.setSize(220, 220);
+            auto& slider = knob.getSlider();
+            auto* value = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(parameter));
+            const auto label = juce::String(cs80::paramDef(parameter).name) + " style " + juce::String(style);
+            check(slider.valueToProportionOfLength(slider.getMinimum()) == 0.0
+                      && slider.valueToProportionOfLength(slider.getMaximum()) == 1.0,
+                  ("lever preservation nonvertical endpoints: " + label).toRawUTF8());
+            for (const float normalised : { 0.0f, 0.25f, 1.0f })
+            {
+                value->setValueNotifyingHost(normalised);
+                const auto stored = value->getValue();
+                flush(20);
+                check(value->getValue() == stored
+                          && slider.getValue() == (double) value->convertFrom0to1(stored),
+                      ("lever preservation host numeric mapping: " + label).toRawUTF8());
+            }
+            for (const int key : { juce::KeyPress::rightKey, juce::KeyPress::leftKey })
+            {
+                value->setValueNotifyingHost(0.5f);
+                flush(20);
+                const auto before = value->getValue();
+                BalancedGesture gesture;
+                value->addListener(&gesture);
+                const bool handled = slider.keyPressed(juce::KeyPress(key));
+                flush(20);
+                value->removeListener(&gesture);
+                check(handled && (key == juce::KeyPress::rightKey ? value->getValue() > before : value->getValue() < before),
+                      ("lever preservation left/right numeric direction: " + label).toRawUTF8());
+                check(gesture.ok(), ("lever preservation balanced left/right gesture: " + label).toRawUTF8());
+            }
+        }
+}
+
+// Property text is the actual input to the existing painter, not a claim that a native image rendered it.
+template <typename Check, typename Flush>
+void testSubFunctionEndLegends(Check check, Flush flush)
+{
+    using namespace panel_editor_detail;
+    for (const bool original : { false, true })
+    {
+        juce::TemporaryFile presetRoot("-cs80-sub-end-legends");
+        Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
+        host.setParamValue(cs80::P_parityMode, 0.0f);
+        host.setParamValue(cs80::P_subOriginalMode, original ? 1.0f : 0.0f);
+        Cs80AudioProcessorEditor editor(host);
+        for (const auto size : { juce::Point<int>(1600, 1000), juce::Point<int>(1120, 700) })
+        {
+            editor.setSize(size.x, size.y);
+            flush(30);
+            const auto label = juce::String(original ? " original SUB at " : " legacy SUB at ")
+                + juce::String(size.x) + "x" + juce::String(size.y);
+            auto* function = dynamic_cast<cs80::ui::ParamKnob*>(findParameterSlider(editor,
+                original ? (int) cs80::P_subOriginalFunction : (int) cs80::P_subWave));
+            auto* mix = dynamic_cast<cs80::ui::ParamKnob*>(findParameterSlider(editor, cs80::P_mix));
+            check(function != nullptr, ("SUB legend bound control exists" + label).toRawUTF8());
+            check(function != nullptr && function->getSlider().getProperties()["faderLegendTop"].toString() == "SINE",
+                  ("SUB legend top is SINE" + label).toRawUTF8());
+            check(function != nullptr && function->getSlider().getProperties()["faderLegendBottom"].toString() == (original ? "EXT" : "RAND"),
+                  ("SUB legend bottom follows selected functions" + label).toRawUTF8());
+            check(mix != nullptr, ("MIX legend bound control exists" + label).toRawUTF8());
+            check(mix != nullptr && mix->getSlider().getProperties()["faderLegendTop"].toString() == "I",
+                  ("MIX legend top stays I" + label).toRawUTF8());
+            check(mix != nullptr && mix->getSlider().getProperties()["faderLegendBottom"].toString() == "II",
+                  ("MIX legend bottom stays II" + label).toRawUTF8());
+        }
+    }
+}
+
 // The program display marks unsaved edits from parameter-change notifications rather than by comparing
 // every parameter on each timer tick. Host automation of one control must still light it, and undoing
 // that edit must clear it again.
@@ -922,6 +1009,8 @@ void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
     testServiceS2FrontStripOrder(check, flush);
     testOwnerLeverDirections(check, flush);
     testOriginalSubLeverDirections(check, flush);
+    testLeverMappingPreservation(check, flush);
+    testSubFunctionEndLegends(check, flush);
     testTremoloChorusTabs(check, flush);
     testIndependentChorusTabs(check, flush);
     testLegendFloorAndTypeface(check);
