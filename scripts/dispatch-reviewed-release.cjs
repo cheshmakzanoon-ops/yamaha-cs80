@@ -1,7 +1,7 @@
 // Release only a reviewed main revision. The user/maintainer requests a run by
 // committing .github/release-request.json on codex/cs80-release-dispatch.
 // GITHUB_TOKEN can trigger workflow_dispatch: https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow
-module.exports = async function dispatchReviewedRelease({ github, context, core, request }) {
+async function verifyReviewedReleasePrerequisites({ github, context, core, request }) {
   const { owner, repo } = context.repo;
   const expected = request.expected_main_sha;
   const validated = request.validated_sha;
@@ -34,6 +34,12 @@ module.exports = async function dispatchReviewedRelease({ github, context, core,
       throw new Error(`Latest main ${workflow_id} run has not succeeded for ${validated}`);
     core.info(`Validated ${workflow_id}: ${run.html_url}`);
   }
+  return { expected, validated };
+}
+
+async function dispatchReviewedRelease({ github, context, core, request }) {
+  const { expected } = await verifyReviewedReleasePrerequisites({ github, context, core, request });
+  const { owner, repo } = context.repo;
 
   // A retry of this request must not produce another installer run.
   const releases = (await github.rest.actions.listWorkflowRuns({ owner, repo,
@@ -47,4 +53,7 @@ module.exports = async function dispatchReviewedRelease({ github, context, core,
   await github.rest.actions.createWorkflowDispatch({ owner, repo, workflow_id: 'release.yml', ref: 'main' });
   core.info(`Dispatched release.yml on main at ${expected}`);
   return { dispatched: true, sha: expected };
-};
+}
+
+module.exports = dispatchReviewedRelease;
+module.exports.verifyReviewedReleasePrerequisites = verifyReviewedReleasePrerequisites;

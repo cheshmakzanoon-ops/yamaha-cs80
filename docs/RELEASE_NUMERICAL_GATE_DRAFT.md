@@ -82,6 +82,36 @@ substituted with a convenient faster reference.
    numerical producer workflow, but in the meantime the missing workflow is
    intentionally fail-closed.
 
+### Manual and tag release entrypoints (isolated preflight proposal)
+
+Review exposed an independent bypass: `release.yml` accepts both direct
+`workflow_dispatch` and `push` of `v*` tags, so a fourth check in the
+separate dispatcher alone does not protect installer construction. The
+isolated `scripts/preflight-release-entrypoint.cjs` and `release.yml`
+changes reuse the **same** reviewed main/ancestry/four-workflow proof but
+require `.github/release-request.json` from the explicit reviewed request
+branch. They reject direct manual events not on `refs/heads/main`, require
+manual event SHA = checked-out S, and for tag pushes require a semver `vX.Y.Z`
+ref whose **peeled** lightweight/annotated target and event SHA both equal
+the checked-out approved current main S. An existing active or successful
+release for S also blocks. Every installer job `needs: preflight`, checks
+out the exact S from its verified output, and rechecks that main has not
+moved before uploading artifacts. None of this code dispatches a release.
+
+This is locally tested, **not** on default main. Its protection assumes the
+updated workflow definition executes. A tag pointing to an older commit
+that contains an old unguarded release workflow might still execute that
+historical definition; similarly, a direct manual dispatch deliberately
+selecting an older workflow ref is outside the reach of a guard added only
+to future commits. On 2026-11-02 the repository's read-only GitHub REST
+`/rulesets?includes_parents=true` response was an empty list `[]`; no tag
+ruleset was observed. **Owner-admin release blocker:** before any installer
+publication, establish and verify protected creation of `v*` tags **or** a
+protected `release` environment with actual owner approvals covering all
+installer jobs, and manually review the tag's peeled commit against current
+approved main S. Do not create tags or alter repository rules without new
+owner authorization. Code-only preflight is not complete bypass prevention.
+
 ### Producer-workflow integration still blocked
 
 The frozen V1 full-audit preflight is source-tree-locked by registration

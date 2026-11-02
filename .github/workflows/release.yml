@@ -4,6 +4,9 @@ name: release packages
 # when their secrets exist; without them every artifact is labelled UNSIGNED
 # (macOS bundles are ad-hoc signed so they load locally). This workflow does
 # not replace build.yml: validate a commit there before releasing it.
+# All entrypoints now require the independently reviewed numerical acceptance
+# as well as the existing exact-main build/DSP/screenshot checks. A tag is NOT
+# itself release approval; the peeled commit must equal approved current main.
 #
 # Optional repository secrets:
 #   MACOS_CERTIFICATE_P12_BASE64, MACOS_CERTIFICATE_PASSWORD   Developer ID certificates (.p12)
@@ -17,16 +20,59 @@ on:
 
 permissions:
   contents: read
+  actions: read
+
+concurrency:
+  group: cs80-reviewed-release-packages
+  cancel-in-progress: false
 
 jobs:
+  preflight:
+    name: Require approved exact-main source and numerical evidence
+    runs-on: ubuntu-24.04
+    outputs:
+      expected_main_sha: ${{ steps.guard.outputs.expected_main_sha }}
+    steps:
+      # Always run the guard from current main, including when the event came
+      # from a tag. A stale tag cannot supply a different guard implementation.
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Prove dispatcher and manual/tag rejection controls
+        run: >
+          node --test
+          tests/release/dispatch-reviewed-release.test.cjs
+          tests/release/numerical-dispatch-addition.test.cjs
+          tests/release/release-entrypoint-preflight.test.cjs
+
+      - name: Require reviewed main, numerical acceptance and correct event/tag
+        id: guard
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { execFileSync } = require('node:child_process');
+            const preflight = require('./scripts/preflight-release-entrypoint.cjs');
+            const checkoutSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+            const result = await preflight({ github, context, core, checkoutSha });
+            core.setOutput('expected_main_sha', result.expected_main_sha);
+
   macos-universal:
     name: macOS universal / VST3 + AU + Standalone installer
+    needs: preflight
     runs-on: macos-15
     env:
       HAVE_MAC_CERT: ${{ secrets.MACOS_CERTIFICATE_P12_BASE64 != '' }}
       HAVE_NOTARY: ${{ secrets.APPLE_APP_PASSWORD != '' }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.preflight.outputs.expected_main_sha }}
+          persist-credentials: false
+
+      - name: Require the preflight-approved source checkout
+        run: test "$(git rev-parse HEAD)" = "${{ needs.preflight.outputs.expected_main_sha }}"
 
       - name: Configure universal (arm64 + x86_64)
         run: >
@@ -116,6 +162,14 @@ jobs:
           for pkg in packages/*.pkg; do mv "$pkg" "${pkg%.pkg}-UNSIGNED.pkg"; done
           echo "::warning title=macOS package::No Developer ID or notarization secrets; the package is unsigned and Gatekeeper will block it."
 
+      - name: Recheck main lease before publishing macOS artifact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const expected = '${{ needs.preflight.outputs.expected_main_sha }}';
+            const current = (await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' })).data.object.sha;
+            if (current !== expected) throw new Error('Main moved before macOS artifact publication');
+
       - uses: actions/upload-artifact@v5
         with:
           name: cs80-macos-universal-installer
@@ -125,11 +179,21 @@ jobs:
 
   windows-installer:
     name: Windows x64 / VST3 + Standalone installer
+    needs: preflight
     runs-on: windows-2022
     env:
       HAVE_WIN_CERT: ${{ secrets.WINDOWS_CERTIFICATE_PFX_BASE64 != '' }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.preflight.outputs.expected_main_sha }}
+          persist-credentials: false
+
+      - name: Require the preflight-approved source checkout
+        shell: pwsh
+        run: |
+          $actual = git rev-parse HEAD
+          if ($actual -ne '${{ needs.preflight.outputs.expected_main_sha }}') { throw 'Release source moved from preflight approval' }
 
       - name: Configure
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
@@ -187,6 +251,14 @@ jobs:
             Write-Output "::warning title=Windows installer::No Authenticode secrets; the installer is unsigned."
           }
 
+      - name: Recheck main lease before publishing Windows artifact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const expected = '${{ needs.preflight.outputs.expected_main_sha }}';
+            const current = (await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' })).data.object.sha;
+            if (current !== expected) throw new Error('Main moved before Windows artifact publication');
+
       - uses: actions/upload-artifact@v5
         with:
           name: cs80-windows-installer
@@ -196,9 +268,16 @@ jobs:
 
   linux-packages:
     name: Linux x86_64 / .deb and tarball
+    needs: preflight
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.preflight.outputs.expected_main_sha }}
+          persist-credentials: false
+
+      - name: Require the preflight-approved source checkout
+        run: test "$(git rev-parse HEAD)" = "${{ needs.preflight.outputs.expected_main_sha }}"
 
       - name: Install build dependencies
         run: |
@@ -230,6 +309,14 @@ jobs:
         run: |
           installer/linux/make-deb.sh build packages
           python scripts/package-ci-artifacts.py --platform linux --build-dir build --out-dir packages
+
+      - name: Recheck main lease before publishing Linux artifact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const expected = '${{ needs.preflight.outputs.expected_main_sha }}';
+            const current = (await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' })).data.object.sha;
+            if (current !== expected) throw new Error('Main moved before Linux artifact publication');
 
       - uses: actions/upload-artifact@v5
         with:

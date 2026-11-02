@@ -45,11 +45,12 @@ async function scenario(overrides = {}) {
     actions: {
       listWorkflowRuns: async args => {
         calls.push(['listWorkflowRuns', args]);
-        if (args.workflow_id === 'release.yml') return { data: { workflow_runs: [
-          { id: 777, head_sha: S, head_branch: 'main', status: 'in_progress' },
-          ...(overrides.duplicate ? [{ id: 776, head_sha: S, head_branch: 'main',
-              status: 'completed', conclusion: 'success' }] : []),
-        ] } };
+        if (args.workflow_id === 'release.yml') return { data: { workflow_runs:
+          overrides.truncatedHistory ? Array(100).fill({ id: 777, head_sha: S, status: 'in_progress' }) : [
+            { id: 777, head_sha: S, head_branch: 'main', status: 'in_progress' },
+            ...(overrides.duplicate ? [{ id: 776, head_sha: S, head_branch: 'main',
+                status: 'completed', conclusion: 'success' }] : []),
+          ] } };
         if (args.workflow_id === NUMERICAL && overrides.noNumerical)
           return { data: { workflow_runs: [] } };
         return { data: { workflow_runs: [{
@@ -95,6 +96,7 @@ async function scenario(overrides = {}) {
     ['tag missing semver', { eventName: 'push', ref: 'refs/tags/vbad' }],
     ['branch push not tag', { eventName: 'push', ref: 'refs/heads/main' }],
     ['tag annotated points elsewhere', { eventName: 'push', badTag: true }],
+    ['tag moved after event', { eventName: 'push', eventSha: OTHER }],
     ['tag lightweight points elsewhere', { eventName: 'push', lightweightTag: true, badTag: true }],
     ['missing release request', { noRequest: true }],
     ['request wrong main', { request: { expected_main_sha: OTHER } }],
@@ -106,12 +108,15 @@ async function scenario(overrides = {}) {
     ['numerical from PR', { prNumerical: true }],
     ['numerical stale SHA', { wrongNumericalSource: true }],
     ['already released', { duplicate: true }],
+    ['release history truncated', { truncatedHistory: true }],
   ];
   for (const [label, overrides] of negatives) {
     await assert.rejects(() => scenario(overrides), undefined, label);
     checks++;
   }
   const workflow = fs.readFileSync(path.resolve(__dirname, '../../.github/workflows/release.yml'), 'utf8');
+  assert.match(workflow, /group:\s*cs80-reviewed-release-packages/);
+  checks++;
   assert.match(workflow, /^\s{2}preflight:\s*$/m); checks++;
   for (const job of ['macos-universal', 'windows-installer', 'linux-packages']) {
     const pos = workflow.indexOf(`  ${job}:`);
