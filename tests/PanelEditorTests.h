@@ -3,6 +3,7 @@
 // Original-panel editor checks (ws7-panel), run by the UI self-test on its JUCE message thread.
 
 #include "HostParameterState.h"
+#include "FactoryToneRevisionUiTests.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
 #include "plugin/PanelLayout.h"
@@ -1017,5 +1018,6 @@ void runPanelEditorTests(Check check, Flush flush, const juce::File& outDir)
     testZoomPresets(check, flush);
     testHiDpiTexture(check, flush);
     testMemoryEditing(check, flush);
+    testFactoryToneRevisionEditor(check, flush);
 }
 } // namespace cs80::tests

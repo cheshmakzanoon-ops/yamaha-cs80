@@ -1,0 +1,17 @@
+# Factory tone revision custom-editor registration (2026-11-02)
+
+Base b59b42d734dc5f0c4b3684b671f9cf76c6dc33a1, source0f8a26e733644ac9f5985164e0175d4143c5d917: the independently reviewed host-only revision API and locale fixes, with fresh composed processor qualification. This isolated increment does not import the separate lever/S2 branch.
+
+## Intended user-facing feature
+
+Expose the existing non-automatable `factory_tone_revision` choice in Advanced/Studio Settings, inside the existing Engine-mode module's left header cell. Use a dedicated host-ID binding and plain accessible, focusable ComboBox, not a core parameter index or MIDI-learn ContextComboBox. Keep the physical CS-80 panel unchanged. Use x96..386, label near y612, selector y630 with36 design-pixel height so the registered smallest size retains at least24 physical pixels. Preserve the existing policy-table guidance in help/tooltip. Describe applicability to active source-driven hardware factory tabs including PURE, not merely the stored ENGINE boolean. Legacy study voicing and PANEL/MEMORY are unaffected; selecting the stored option may remain available while it is inactive. Keep existing default/migration/preset/A-B/INIT/factory/MIDI semantics and deferred thread-safe audio publication.
+
+## Test-first baseline and preservation
+
+No production source changes at this checkpoint. The unpeered component driver creates no native window/peer/display server, captures no rendering, and asserts zero desktop components. It calls the same new test function registered in the ordinary native panel suite. Compare matching source/header/project-object identity before reuse; no old Engine ABI mixing.
+
+Prospective baseline: five checks, one ordinary failure because the current custom editor has no selector. Independent positives check the existing non-automatable V1 host contract, actual Settings page, unchanged numeric parameters and no Engine publication from opening the page. If the selector is absent, all later revision-widget assertions are explicitly NOT RUN, not counted as passes. Any deviation from this exact baseline must be diagnosed.
+
+The complete preregistered fixture covers: exactly one host-ID ComboBox; exact two option labels; accessible title/description/focus; no MIDI-learn context; source-factory/PURE/Legacy/Panel/Memory/non-automatable help; both editor sizes, hit dimensions, policy-control non-overlap and unchanged physical geometry; balanced manual selection both ways; unchanged Engine until the next audio transaction and then both main/active extension propagation; all stored ENGINE/PURE combinations staying selectable; async external/session/user-preset/old-session/factory/INIT/MIDI/A-B/tab/randomise/hidden-page synchronization. It uses bounded readiness polling rather than immediate async assumptions. New setting construction must not mutate existing host parameters.
+
+After actual baseline, implement only the approved AdvancedPanel affordance/help change. Do not change parameter IDs/defaults/automation flags, core DSP or processor persistence. Challenge absent/wrong binding, omitted accessible focus, inappropriate PURE disabling and stale restore synchronization with bounded actual source controls where relevant. Run existing processor suites on the same source identity when composing. Native painted/input/DAW acceptance and screenshots remain separate pending gates; component property/binding results are not substitutes.
