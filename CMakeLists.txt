@@ -30,6 +30,10 @@ if (CS80_BUILD_TESTS)
     endif()
     enable_testing()
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    # Synthetic distribution payloads only; never numerical/plugin qualification.
+    add_test(NAME cs80_distribution_docs_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/release/test_distribution_docs.py)
+    set_tests_properties(cs80_distribution_docs_tests PROPERTIES TIMEOUT 60)
     # Frozen scalar-kernel oracle: registered in c56726f before optimization.
     set(cs80_scalar_oracle_dir "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle/exact_scalar_frozen")
     set(cs80_scalar_oracle_inputs "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels/manifest.json")

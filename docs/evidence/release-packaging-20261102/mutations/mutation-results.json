@@ -1,0 +1,76 @@
+{
+  "scope": "Synthetic distribution-document regression and deliberate source mutations; not plugin qualification",
+  "helper_sha256": "af7dc29942f6b843f66267692787d165f2dfc29d584209cc20ab89c0e2d8e344",
+  "cases": [
+    {
+      "case": "positive",
+      "observed_exit": 0,
+      "expected": "pass",
+      "result": "PASS",
+      "log_sha256": "57a87806e5b8e011cf23055433777eda713e5a6519ab003570a5f8d094938339"
+    },
+    {
+      "case": "omit_barlow_ofl",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "0198b23a383b439c61de006e12baf9459217080ad7e88d50bdfe98293fb5c0f7"
+    },
+    {
+      "case": "omit_mts_notice",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "c567385345b5ec727e6bd1cfc87aa5b6b07c0221ee5ed629c504ad778d2d7805"
+    },
+    {
+      "case": "omit_font_attribution",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "9fc7d2ed9225198f2471aeb0614a2c5ec5efcef0f60e9617b5abd9abe59b444b"
+    },
+    {
+      "case": "change_notice_bytes",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "6341669b7af25c888352910f213f52f9f94d59e8a7c6db16989b16a1be3cdf50"
+    },
+    {
+      "case": "ignore_workflow_identity",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "5e6a399d6f4f6b524a8b0318ff88e06c60ee293da79bd772634ec2f6141159a7"
+    },
+    {
+      "case": "ignore_dirty_checkout",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "42c770a9b8a8d02ee8d2a4c70ebb6b114422dfa623272a3d36694f2ba29a872f"
+    },
+    {
+      "case": "allow_untracked_notice",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "0067799795d74cd5b4cc2de1f5808594d8cf7bfc34fe8ae78db9d87f82cd059b"
+    },
+    {
+      "case": "wrong_manifest_digest",
+      "observed_exit": 1,
+      "expected": "rejection",
+      "result": "PASS",
+      "log_sha256": "bf962438df296286aa6c87786d78b839a5eb27739f79962d24fe1bc7a583ae6c"
+    },
+    {
+      "case": "restored",
+      "observed_exit": 0,
+      "expected": "pass",
+      "result": "PASS",
+      "log_sha256": "3d13856b305d7b2c80c4695d7be9cb9f68db536f66f2dd81bf0c960e22405bb6"
+    }
+  ]
+}

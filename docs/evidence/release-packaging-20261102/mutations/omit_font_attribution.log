@@ -1,0 +1,59 @@
+test_ci_and_stage_reject_untracked_notice_replacement (__main__.DistributionDocsTests.test_ci_and_stage_reject_untracked_notice_replacement) ... ok
+test_ci_payload_missing_notice_fails_closed (__main__.DistributionDocsTests.test_ci_payload_missing_notice_fails_closed) ... ok
+test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) ... 
+  test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/BarlowCondensed-SOURCE.txt') ... FAIL
+test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) ... 
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/BarlowCondensed-SOURCE.txt') ... FAIL
+test_stage_rejects_dirty_source (__main__.DistributionDocsTests.test_stage_rejects_dirty_source) ... ok
+test_stage_rejects_existing_output (__main__.DistributionDocsTests.test_stage_rejects_existing_output) ... ok
+test_stage_rejects_linked_notice (__main__.DistributionDocsTests.test_stage_rejects_linked_notice) ... ok
+test_stage_rejects_missing_notice (__main__.DistributionDocsTests.test_stage_rejects_missing_notice) ... 
+  test_stage_rejects_missing_notice (__main__.DistributionDocsTests.test_stage_rejects_missing_notice) (source='assets/fonts/barlow-condensed/SOURCE.txt') ... FAIL
+test_stage_rejects_workflow_identity_mismatch (__main__.DistributionDocsTests.test_stage_rejects_workflow_identity_mismatch) ... ok
+test_staged_metadata_is_exact_and_explicitly_limited (__main__.DistributionDocsTests.test_staged_metadata_is_exact_and_explicitly_limited) ... ERROR
+test_windows_installer_requires_generated_documents (__main__.DistributionDocsTests.test_windows_installer_requires_generated_documents) ... ok
+
+======================================================================
+ERROR: test_staged_metadata_is_exact_and_explicitly_limited (__main__.DistributionDocsTests.test_staged_metadata_is_exact_and_explicitly_limited)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-9gq5pm39/tests/release/test_distribution_docs.py", line 122, in test_staged_metadata_is_exact_and_explicitly_limited
+    self.assertEqual((out / name).read_bytes(), data)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/cs80-distribution-fixture-7mfdw9uw/repo/build/distribution-docs/licenses/BarlowCondensed-SOURCE.txt'
+
+======================================================================
+FAIL: test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/BarlowCondensed-SOURCE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-9gq5pm39/tests/release/test_distribution_docs.py", line 99, in test_ci_payload_preserves_every_notice
+    self.assertIn(name, payload)
+AssertionError: 'licenses/BarlowCondensed-SOURCE.txt' not found in {'LICENSE': b'synthetic project licence fixture\n', 'licenses/MTS-ESP-LICENSE.txt': b'synthetic MTS notice fixture\n', 'licenses/BarlowCondensed-OFL.txt': b'synthetic OFL notice fixture\n', 'INSTALL_AND_QUICKSTART.md': b'synthetic installation fixture\n', 'licenses/JUCE-LICENSE.md': b'synthetic JUCE licence fixture\n', 'DISTRIBUTION_STATUS.md': b'synthetic status fixture\n', 'evidence/juce-provenance.txt': b'verification=PASS\nsource_clean=true\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\nactual_version=8.0.11\nworkflow_commit=bd87e478c336d9de9aa0986cb783a3e6445e7689\nconfigured_source=/tmp/cs80-distribution-fixture-ug86kl7e/repo/build/_deps/juce-src\n', 'SOURCE.txt': b'Packaging source checkout: bd87e478c336d9de9aa0986cb783a3e6445e7689\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/bd87e478c336d9de9aa0986cb783a3e6445e7689\nUse the complete source and build instructions at this exact revision.\nThis package is not a source distribution.\nCheckout provenance does not independently establish binary/source equivalence,\nnumerical acceptance, hardware qualification, signing or real-DAW acceptance.\n'}
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/BarlowCondensed-SOURCE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-9gq5pm39/tests/release/test_distribution_docs.py", line 210, in test_deb_payload_roundtrip
+    self.assertTrue((docs / name).is_file(), name)
+AssertionError: False is not true : licenses/BarlowCondensed-SOURCE.txt
+
+======================================================================
+FAIL: test_stage_rejects_missing_notice (__main__.DistributionDocsTests.test_stage_rejects_missing_notice) (source='assets/fonts/barlow-condensed/SOURCE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-distribution-mutations-9gq5pm39/tests/release/test_distribution_docs.py", line 138, in test_stage_rejects_missing_notice
+    with self.assertRaises((ValueError, OSError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'OSError'>) not raised
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.480s
+
+FAILED (failures=3, errors=1)

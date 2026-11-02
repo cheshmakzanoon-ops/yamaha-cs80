@@ -1,0 +1,179 @@
+test_ci_payload_missing_notice_fails_closed (__main__.DistributionDocsTests.test_ci_payload_missing_notice_fails_closed) ... FAIL
+test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) ... 
+  test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/MTS-ESP-LICENSE.txt') ... FAIL
+  test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/BarlowCondensed-OFL.txt') ... FAIL
+  test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/BarlowCondensed-SOURCE.txt') ... FAIL
+test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) ... 
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='LICENSE') ... FAIL
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/JUCE-LICENSE.md') ... FAIL
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/MTS-ESP-LICENSE.txt') ... FAIL
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/BarlowCondensed-OFL.txt') ... FAIL
+  test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/BarlowCondensed-SOURCE.txt') ... FAIL
+test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) ... ERROR
+test_stage_rejects_dirty_source (__main__.DistributionDocsTests.test_stage_rejects_dirty_source) ... ERROR
+test_stage_rejects_existing_output (__main__.DistributionDocsTests.test_stage_rejects_existing_output) ... ok
+test_stage_rejects_linked_notice (__main__.DistributionDocsTests.test_stage_rejects_linked_notice) ... ERROR
+test_stage_rejects_missing_notice (__main__.DistributionDocsTests.test_stage_rejects_missing_notice) ... ok
+test_stage_rejects_workflow_identity_mismatch (__main__.DistributionDocsTests.test_stage_rejects_workflow_identity_mismatch) ... ERROR
+test_staged_metadata_is_exact_and_explicitly_limited (__main__.DistributionDocsTests.test_staged_metadata_is_exact_and_explicitly_limited) ... ERROR
+
+======================================================================
+ERROR: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 189, in test_deb_payload_roundtrip
+    self.assertIn(self.commit, (docs / "SOURCE.txt").read_text())
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/cs80-distribution-fixture-e5zzpaix/extracted/usr/share/doc/cs80-reference/SOURCE.txt'
+
+======================================================================
+ERROR: test_stage_rejects_dirty_source (__main__.DistributionDocsTests.test_stage_rejects_dirty_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 157, in test_stage_rejects_dirty_source
+    self.helper().stage_documents(self.root, self.license, self.build / "out")
+    ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 92, in helper
+    return load_module("cs80_distribution_docs_test", ROOT / "scripts/distribution_docs.py")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 24, in load_module
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/aa102d573ba3/cs80-release/scripts/distribution_docs.py'
+
+======================================================================
+ERROR: test_stage_rejects_linked_notice (__main__.DistributionDocsTests.test_stage_rejects_linked_notice)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 152, in test_stage_rejects_linked_notice
+    self.helper().notice_payload(self.root, self.license)
+    ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 92, in helper
+    return load_module("cs80_distribution_docs_test", ROOT / "scripts/distribution_docs.py")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 24, in load_module
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/aa102d573ba3/cs80-release/scripts/distribution_docs.py'
+
+======================================================================
+ERROR: test_stage_rejects_workflow_identity_mismatch (__main__.DistributionDocsTests.test_stage_rejects_workflow_identity_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 162, in test_stage_rejects_workflow_identity_mismatch
+    self.helper().stage_documents(self.root, self.license, self.build / "out")
+    ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 92, in helper
+    return load_module("cs80_distribution_docs_test", ROOT / "scripts/distribution_docs.py")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 24, in load_module
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/aa102d573ba3/cs80-release/scripts/distribution_docs.py'
+
+======================================================================
+ERROR: test_staged_metadata_is_exact_and_explicitly_limited (__main__.DistributionDocsTests.test_staged_metadata_is_exact_and_explicitly_limited)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 116, in test_staged_metadata_is_exact_and_explicitly_limited
+    manifest = self.helper().stage_documents(self.root, self.license, out)
+               ^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 92, in helper
+    return load_module("cs80_distribution_docs_test", ROOT / "scripts/distribution_docs.py")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 24, in load_module
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/aa102d573ba3/cs80-release/scripts/distribution_docs.py'
+
+======================================================================
+FAIL: test_ci_payload_missing_notice_fails_closed (__main__.DistributionDocsTests.test_ci_payload_missing_notice_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 111, in test_ci_payload_missing_notice_fails_closed
+    with self.assertRaises((ValueError, OSError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'OSError'>) not raised
+
+======================================================================
+FAIL: test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/MTS-ESP-LICENSE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 99, in test_ci_payload_preserves_every_notice
+    self.assertIn(name, payload)
+AssertionError: 'licenses/MTS-ESP-LICENSE.txt' not found in {'INSTALL_AND_QUICKSTART.md': b'synthetic installation fixture\n', 'DISTRIBUTION_STATUS.md': b'synthetic status fixture\n', 'LICENSE': b'synthetic project licence fixture\n', 'licenses/JUCE-LICENSE.md': b'synthetic JUCE licence fixture\n', 'evidence/juce-provenance.txt': b'verification=PASS\nsource_clean=true\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\nactual_version=8.0.11\nworkflow_commit=fa907097579c5348bd260dccf8e3cd54298654f3\nconfigured_source=/tmp/cs80-distribution-fixture-sjitn7xt/repo/build/_deps/juce-src\n', 'SOURCE.txt': b'Source commit: fa907097579c5348bd260dccf8e3cd54298654f3\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/fa907097579c5348bd260dccf8e3cd54298654f3\nUse the full source at this commit; this archive is not a source distribution.\n'}
+
+======================================================================
+FAIL: test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/BarlowCondensed-OFL.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 99, in test_ci_payload_preserves_every_notice
+    self.assertIn(name, payload)
+AssertionError: 'licenses/BarlowCondensed-OFL.txt' not found in {'INSTALL_AND_QUICKSTART.md': b'synthetic installation fixture\n', 'DISTRIBUTION_STATUS.md': b'synthetic status fixture\n', 'LICENSE': b'synthetic project licence fixture\n', 'licenses/JUCE-LICENSE.md': b'synthetic JUCE licence fixture\n', 'evidence/juce-provenance.txt': b'verification=PASS\nsource_clean=true\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\nactual_version=8.0.11\nworkflow_commit=fa907097579c5348bd260dccf8e3cd54298654f3\nconfigured_source=/tmp/cs80-distribution-fixture-sjitn7xt/repo/build/_deps/juce-src\n', 'SOURCE.txt': b'Source commit: fa907097579c5348bd260dccf8e3cd54298654f3\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/fa907097579c5348bd260dccf8e3cd54298654f3\nUse the full source at this commit; this archive is not a source distribution.\n'}
+
+======================================================================
+FAIL: test_ci_payload_preserves_every_notice (__main__.DistributionDocsTests.test_ci_payload_preserves_every_notice) (name='licenses/BarlowCondensed-SOURCE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 99, in test_ci_payload_preserves_every_notice
+    self.assertIn(name, payload)
+AssertionError: 'licenses/BarlowCondensed-SOURCE.txt' not found in {'INSTALL_AND_QUICKSTART.md': b'synthetic installation fixture\n', 'DISTRIBUTION_STATUS.md': b'synthetic status fixture\n', 'LICENSE': b'synthetic project licence fixture\n', 'licenses/JUCE-LICENSE.md': b'synthetic JUCE licence fixture\n', 'evidence/juce-provenance.txt': b'verification=PASS\nsource_clean=true\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\nactual_version=8.0.11\nworkflow_commit=fa907097579c5348bd260dccf8e3cd54298654f3\nconfigured_source=/tmp/cs80-distribution-fixture-sjitn7xt/repo/build/_deps/juce-src\n', 'SOURCE.txt': b'Source commit: fa907097579c5348bd260dccf8e3cd54298654f3\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/fa907097579c5348bd260dccf8e3cd54298654f3\nUse the full source at this commit; this archive is not a source distribution.\n'}
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='LICENSE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 187, in test_deb_payload_roundtrip
+    self.assertTrue((docs / name).is_file(), name)
+AssertionError: False is not true : LICENSE
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/JUCE-LICENSE.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 187, in test_deb_payload_roundtrip
+    self.assertTrue((docs / name).is_file(), name)
+AssertionError: False is not true : licenses/JUCE-LICENSE.md
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/MTS-ESP-LICENSE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 187, in test_deb_payload_roundtrip
+    self.assertTrue((docs / name).is_file(), name)
+AssertionError: False is not true : licenses/MTS-ESP-LICENSE.txt
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/BarlowCondensed-OFL.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 187, in test_deb_payload_roundtrip
+    self.assertTrue((docs / name).is_file(), name)
+AssertionError: False is not true : licenses/BarlowCondensed-OFL.txt
+
+======================================================================
+FAIL: test_deb_payload_roundtrip (__main__.DistributionDocsTests.test_deb_payload_roundtrip) (name='licenses/BarlowCondensed-SOURCE.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-release/tests/release/test_distribution_docs.py", line 187, in test_deb_payload_roundtrip
+    self.assertTrue((docs / name).is_file(), name)
+AssertionError: False is not true : licenses/BarlowCondensed-SOURCE.txt
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.596s
+
+FAILED (failures=9, errors=5)
