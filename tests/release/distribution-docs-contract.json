@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-02",
+  "scope": "Distribution payload metadata and notices only; no audio, build, signing, hardware or release acceptance claim",
+  "required_payloads": ["LICENSE", "licenses/JUCE-LICENSE.md", "licenses/MTS-ESP-LICENSE.txt", "licenses/BarlowCondensed-OFL.txt", "licenses/BarlowCondensed-SOURCE.txt", "SOURCE.txt", "INSTALL_AND_QUICKSTART.md"],
+  "conditions": [
+    "CI tar/zip and all three native installers carry the same project and third-party notices byte-for-byte",
+    "Installer SOURCE.txt identifies a full commit from the packaging checkout, with an immutable source link and no numerical acceptance claim",
+    "Installer document manifest hashes each staged document and identifies its scope as checkout provenance, not independent binary/source equivalence",
+    "Tracked dirty checkout, mismatched GITHUB_SHA, missing required notice, linked input notice, existing output and output nested under a tracked document are rejected",
+    "Linux .deb payload is independently reopened and each expected document byte is compared",
+    "Synthetic files used by packaging tests are labelled as fixtures and never cited as successful plugin builds"
+  ],
+  "negative_controls": ["omit each mandatory notice", "change payload notice bytes", "wrong workflow SHA", "dirty tracked source", "linked notice", "overwrite staged output"],
+  "unchanged": ["numerical tolerances", "release permission guards", "DSP source", "production binary signing"]
+}
