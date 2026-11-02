@@ -69,7 +69,12 @@ def decode_json(raw: bytes) -> object:
             object_pairs_hook=_unique_pairs,
             parse_constant=_reject_constant,
         )
-    except (UnicodeError, json.JSONDecodeError) as exc:
+    except IntakeError:
+        raise
+    except (UnicodeError, ValueError) as exc:
+        # Python's integer-token digit cap raises ValueError rather than
+        # JSONDecodeError. Malformed technician metadata must always fail
+        # through the controlled intake-error path.
         raise IntakeError(f"invalid JSON/UTF-8: {exc}") from exc
 
 
@@ -150,6 +155,7 @@ def validate_document(value: object) -> dict:
         raise IntakeError("snapshots must be a nonempty array")
     seen_checkpoints = set()
     last_alignment_order = -1
+    last_alignment_timestamp = None
     for i, item in enumerate(snapshots):
         path = f"snapshots[{i}]"
         snapshot = _fields(
@@ -163,14 +169,17 @@ def validate_document(value: object) -> dict:
         if checkpoint in seen_checkpoints:
             raise IntakeError(f"{path} repeated checkpoint {checkpoint}")
         seen_checkpoints.add(checkpoint)
+        timestamp = _utc(snapshot["captured_at_utc"], f"{path}.captured_at_utc")
         if checkpoint != "noise_reference":
             order = CHECKPOINT_ORDER[checkpoint]
             if order <= last_alignment_order:
                 raise IntakeError(f"{path} HP/LP checkpoints out of printed ADJ order")
+            if last_alignment_timestamp is not None and timestamp < last_alignment_timestamp:
+                raise IntakeError(f"{path}.captured_at_utc HP/LP timestamp reverses ADJ order")
             last_alignment_order = order
+            last_alignment_timestamp = timestamp
         if snapshot["panel_setup"] != CHECKPOINT_SETUP[checkpoint]:
             raise IntakeError(f"{path}.panel_setup conflicts with checkpoint")
-        _utc(snapshot["captured_at_utc"], f"{path}.captured_at_utc")
         allowed_note = {"C1", "not_applicable"} if checkpoint == "noise_reference" else {"C1"}
         _enum(snapshot["held_note"], allowed_note, f"{path}.held_note")
         if "notes" in snapshot:
@@ -198,6 +207,8 @@ def validate_document(value: object) -> dict:
                               {"reason", "quantity", "value_v", "probe", "evidence"},
                               opath)
             node = _enum(reading["node"], set(QUANTITIES), f"{opath}.node")
+            if node == "NO1" and instrument["channel"] != "I":
+                raise IntakeError(f"{opath}.node NO1 is channel I only; NO2 is not schema v1")
             if node in seen_nodes:
                 raise IntakeError(f"{opath} duplicated node {node}")
             seen_nodes.add(node)

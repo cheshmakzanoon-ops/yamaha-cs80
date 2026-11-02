@@ -30,7 +30,7 @@ Root:
 | `record_kind` | Literal `cs80_adj_technician_observation` |
 | `technician` | Object with nonempty `identifier`, `report_reference`, `authorization_reference` |
 | `instrument` | Object with nonempty `serial`, `m_board`, `board_revision`, and `channel`: `I` or `II` |
-| `snapshots` | Nonempty array, no repeated checkpoint; HP/LP checkpoints must follow their printed sequence when both are supplied (noise-reference record may appear anywhere) |
+| `snapshots` | Nonempty array, no repeated checkpoint; HP/LP checkpoints must follow their printed sequence and nondecreasing UTC acquisition times when supplied (equal-second timestamps allowed; noise-reference record may appear anywhere) |
 
 Each snapshot:
 
@@ -51,6 +51,10 @@ Each snapshot:
 Each node observation uses `node`: `CP2`, `CP3`, `NO1`, `NI`,
 `IC10_VFC4`, `IC10_QADJ6`, `FH` or `FL`. Status is **exactly one** of:
 
+The `NO1` node is valid only for channel `I` on the documented M41/M44
+connection. Channel `II` uses a separately identified `NO2` source,
+which **schema v1 cannot encode**; it must never be relabelled as `NO1`.
+
 - `not_acquired`: requires nonempty `reason` and **forbids**
   `quantity`, `value_v`, `probe`, `evidence`.
 - `observed`: requires `quantity`, finite numeric `value_v`,
@@ -70,8 +74,9 @@ statistics are capture conditions, **not supplied Yamaha acceptance limits**.
 The importer refuses duplicate JSON keys, NaN/Infinity, extra fields,
 wrong types, mismatched checkpoint/setup, repeated nodes/checkpoints,
 missing acquisition instrument/probe/evidence for numeric readings,
-invalid timestamp, and
-negative Vpp/RMS. It **never supplies missing measurements**, estimates
+invalid or causally decreasing HP/LP timestamps, oversized JSON integer
+tokens, channel-II `NO1` misidentification, and negative Vpp/RMS.
+It **never supplies missing measurements**, estimates
 NO1 source impedance, converts VR7/VR8 angles to gm/Q, substitutes CP2
 for CP3, or infers which of the 25 T51–T54 revisions was installed.
 Unmentioned nodes remain **not supplied**, distinct from explicit
