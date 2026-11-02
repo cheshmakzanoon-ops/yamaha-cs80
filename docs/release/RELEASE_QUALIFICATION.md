@@ -5,10 +5,21 @@ the repository now automates from what only the owner can decide or run.
 
 ## 1. Packaging, signing and the universal macOS binary — automated
 
-[`.github/workflows/release.yml`](../../.github/workflows/release.yml) runs on
-`workflow_dispatch` and on `v*` tags. It does not replace `build.yml`: release
-only a commit whose `build`, `DSP numerical measurements` and `screenshots`
-workflows passed.
+**2026-11-02 isolated security candidate — not active on `main`:**
+[`release.yml`](../../.github/workflows/release.yml) is now configured for
+owner-initiated `workflow_dispatch` on `main` only, using an exact immutable
+request-commit SHA. A `v*` tag push does not dispatch installers. The old
+automatic tag entrypoint remains a published-main concern until this candidate
+is independently reviewed and integrated. No new release, installer or main
+qualification is claimed here.
+
+The candidate's release preflight requires the exact reviewed PR #6 merge
+commit, matching request identity, four successful exact-source `main` push
+workflows (`build.yml`, `dsp-measurements.yml`, `screenshots.yml` and
+`release-numerical-qualification.yml`), screenshot-only ancestry, and an
+unchanged main lease. A successful audit *capture* cannot replace passing
+musical-click and CPU numerical targets. Those targets remain open, so PR #6
+must remain draft and release dispatch must not proceed.
 
 | Platform | Output | Signing |
 | --- | --- | --- |
@@ -85,7 +96,7 @@ bundle ID without the model number. Changing the bundle ID or plugin codes break
 saved sessions, so decide before the first public release.
 
 
-## Reviewed-main dispatch request (2026-10-31)
+## Reviewed-main dispatch request (updated 2026-11-02; unmerged candidate)
 
 The existing `release.yml` remains the installer workflow. A repository
 maintainer may dispatch it through the small
@@ -97,19 +108,24 @@ Create/update `.github/release-request.json` on the dedicated
 The relay uses the repository's ephemeral Actions token, with `actions: write`
 and `contents: read`; it neither adds secrets nor exports credentials.
 
-Before dispatch, the guard checks the main SHA, the latest successful main
-push runs of `build.yml`, `dsp-measurements.yml` and `screenshots.yml`, and the
-ancestry of any automatically refreshed screenshot-only commit. A retry
+Before dispatch, the candidate guard checks the exact request SHA and JSON-only
+diff from approved main, PR #6's actual merge identity, the latest successful
+main push runs of `build.yml`, `dsp-measurements.yml`, `screenshots.yml` and
+`release-numerical-qualification.yml`, and the ancestry of any automatically
+refreshed screenshot-only commit. A retry
 recognizes an existing running or successful release of the same main SHA.
 The dispatch target is always `main`. Code changes after the validated revision,
 a failed/pending check, or a changed main head stop the request for review;
 there is no forced branch update or retry-to-green behavior.
 
-The contract was registered in `tests/release/dispatch-contract.json` before
-implementation. The standalone fixture passes 17 checks. Five temporary
-mutations are rejected: missing main lease, unvalidated code changes, ignored
-screenshot failure, wrong dispatch branch, and duplicate release dispatch.
-Run `node tests/release/dispatch-reviewed-release.test.cjs` to repeat the guard
-fixtures. The relay executes the same fixtures before invoking GitHub's API.
+The original contract was registered in `tests/release/dispatch-contract.json`
+before implementation. The extended release fixtures cover owner-only dispatch,
+immutable JSON, PR #6 source identity, numerical qualification, tag rejection,
+and duplicate-run/ancestry failures. The trusted dispatcher also forwards the
+verified `request_commit_sha` as a required installer-workflow input; omitting
+it is a test failure. Run
+`node --test tests/release/*.test.cjs` to repeat the current JavaScript guards;
+the release workflows execute the corresponding preflight fixtures before
+invoking GitHub's API.
 GitHub explicitly permits workflow-dispatch events created by `GITHUB_TOKEN`:
 <https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow>.
