@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "REGISTERED",
+  "registered_utc": "2026-11-02",
+  "purpose": "Experimental validity of the existing unmodified maximum-sample-jump score as an event-discontinuity classifier, not a replacement or waiver for any original full-engine gate",
+  "production_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "audit_renderer_source": "src/tools/engine_audit.cpp",
+  "original_score_alert": "score > 1.0",
+  "original_score_window_seconds": 0.008,
+  "original_note_off_reference_seconds": 0.06,
+  "original_on_reference": "unchanged earlier chord-window maximum sample jump",
+  "host_event_quantization_frames": 64,
+  "fixture_policy": "source",
+  "fixtures": [
+    {"id": "bass_panel_retrigger_44100", "name": "Bass Stack", "coordinate": "original_physical_panel", "rate_hz": 44100, "event_seconds": 6.25, "kind": "retrigger_note_on", "omit_notes": [60]},
+    {"id": "bass_panel_first_48000", "name": "Bass Stack", "coordinate": "original_physical_panel", "rate_hz": 48000, "event_seconds": 6.0, "kind": "first_note_on", "omit_notes": [60]},
+    {"id": "bass_panel_retrigger_48000", "name": "Bass Stack", "coordinate": "original_physical_panel", "rate_hz": 48000, "event_seconds": 6.25, "kind": "retrigger_note_on", "omit_notes": [60]},
+    {"id": "bass_panel_first_96000", "name": "Bass Stack", "coordinate": "original_physical_panel", "rate_hz": 96000, "event_seconds": 6.0, "kind": "first_note_on", "omit_notes": [60]},
+    {"id": "bass_panel_retrigger_96000", "name": "Bass Stack", "coordinate": "original_physical_panel", "rate_hz": 96000, "event_seconds": 6.25, "kind": "retrigger_note_on", "omit_notes": [60]},
+    {"id": "bass_programmer_retrigger_48000", "name": "Bass Stack", "coordinate": "electrical_programmer", "rate_hz": 48000, "event_seconds": 6.25, "kind": "retrigger_note_on", "omit_notes": [60]},
+    {"id": "bass_programmer_retrigger_96000", "name": "Bass Stack", "coordinate": "electrical_programmer", "rate_hz": 96000, "event_seconds": 6.25, "kind": "retrigger_note_on", "omit_notes": [60]},
+    {"id": "funky_tabs_off_44100", "name": "Funky 1 + Funky 2", "coordinate": "tone_tabs", "rate_hz": 44100, "event_seconds": 1.4, "kind": "single_note_off", "omit_notes": [60]},
+    {"id": "funky_tabs_off_48000", "name": "Funky 1 + Funky 2", "coordinate": "tone_tabs", "rate_hz": 48000, "event_seconds": 1.4, "kind": "single_note_off", "omit_notes": [60]},
+    {"id": "funky_tabs_off_96000", "name": "Funky 1 + Funky 2", "coordinate": "tone_tabs", "rate_hz": 96000, "event_seconds": 1.4, "kind": "single_note_off", "omit_notes": [60]},
+    {"id": "clav_tabs_steal_96000", "name": "Clavichord 1 + Clavichord 2", "coordinate": "tone_tabs", "rate_hz": 96000, "event_seconds": 8.65, "kind": "steal_note_on", "omit_notes": [48, 52, 55, 60]}
+  ],
+  "base_pcm": "unchanged complete phrase with only the target MIDI event omitted, bit-identical to the original phrase before that target event",
+  "negative_controls": [
+    {"id": "no_target_event", "kind": "unchanged_omission_pcm", "expected_changed_output_samples": 0},
+    {"id": "c1_220hz_pitched_attack", "kind": "mathematical_smooth_pitched_addition", "frequency_hz": 220.0, "amplitude_full_scale": 0.1, "attack_seconds": 0.004, "channel": "left", "envelope": "0.5-0.5*cos(pi*min(elapsed_samples,ceil(attack_seconds*rate))/ceil(attack_seconds*rate))", "oscillator": "sin(2*pi*frequency_hz*elapsed_samples/rate)", "start_event_sample_value": 0.0},
+    {"id": "c1_1760hz_pitched_attack", "kind": "mathematical_smooth_pitched_addition", "frequency_hz": 1760.0, "amplitude_full_scale": 0.2, "attack_seconds": 0.004, "channel": "left", "envelope": "0.5-0.5*cos(pi*min(elapsed_samples,ceil(attack_seconds*rate))/ceil(attack_seconds*rate))", "oscillator": "sin(2*pi*frequency_hz*elapsed_samples/rate)", "start_event_sample_value": 0.0}
+  ],
+  "positive_controls": [
+    {"id": "impulse_left_1frame_005", "kind": "single_pcm_sample_additive_impulse", "amplitude_full_scale": 0.05, "channel": "left", "event_offset_samples": 1},
+    {"id": "impulse_left_1frame_020", "kind": "single_pcm_sample_additive_impulse", "amplitude_full_scale": 0.2, "channel": "left", "event_offset_samples": 1},
+    {"id": "impulse_right_6ms_005", "kind": "single_pcm_sample_additive_impulse", "amplitude_full_scale": 0.05, "channel": "right", "event_offset_seconds": 0.006, "sample_rounding": "llround"},
+    {"id": "impulse_right_6ms_020", "kind": "single_pcm_sample_additive_impulse", "amplitude_full_scale": 0.2, "channel": "right", "event_offset_seconds": 0.006, "sample_rounding": "llround"}
+  ],
+  "observational_not_labeled_negative": ["unchanged_original_source_event_pcm", "real_Bass_or_Clav_note_on_attacks", "real_Funky_note_off_release"],
+  "required_fixture_count": 11,
+  "required_rows_per_fixture": 8,
+  "required_total_rows": 88,
+  "required_pre_event_pcm_bit_mismatches_max": 0,
+  "required_positive_changed_pcm_samples": 1,
+  "required_negative_no_event_changed_pcm_samples": 0,
+  "required_mutation_controls": ["corrupted_pre_event_sample", "two_sample_positive_impulse", "nonzero_smooth_attack_first_sample", "modified_original_score_reference"],
+  "primary_descriptive_outcomes": ["original_alert_prevalence_on_unmodified_omissions", "alert_prevalence_on_independent_c1_smooth_pitched_attacks", "alert_sensitivity_to_injected_one_sample_discontinuities", "sensitivity_conditional_on_original_omission_score_not_already_alerted", "score_increment_from_injection", "original_source_event_score_with_no_perceptual_label"],
+  "limitations": "Synthetic one-sample PCM corruption is an intentional digital discontinuity and validates detection sensitivity only. Mathematically smooth pitched attacks are definite negative controls for single-sample corruption, not verified click-free CS-80 hardware recordings. Source note-ons are musically grounded but perceptual/hardware ground truth is not established. No listening capable interface or measured hardware trace is used.",
+  "policy": "Keep all original audio and full-audit score definitions, limits, CSV schemas, event windows and source tree untouched. No fades, threshold tuning, automatic new release pass, or hardware-law claim. Only independent post-render copied PCM changes and new test-only output. Commit preregistration before test implementation or results."
+}
