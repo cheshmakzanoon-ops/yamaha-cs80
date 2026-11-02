@@ -49,3 +49,15 @@ Use the shared heavy-check lock per case. Record exact commits, source identitie
 raw logs and first failures. Independent review and an actual remote native run
 are required before describing native CI as repaired. No main, tag, release,
 security, source/DSP or original885/CPU acceptance change is authorized here.
+
+## Test-only preimplementation correction
+
+The first run at `ed6c64f` was not an acceptable registered RED: importing the
+original TestCase directly made unittest collect its30 tests too, and the
+attribute-witness assertion raised AttributeError on a real POSIX stat result.
+It ran35 tests with two intended ordinary failures and one error. Preserve that
+raw log without counting the error as proof. Import the module instead of its
+TestCase, and use `getattr(..., 0)` in the positive attribute assertion. These
+changes retain the intended five-test inventory and missing-attribute FAIL.
+The existing simulation and all production bytes remain untouched until a
+new committed five-test RED has been observed.

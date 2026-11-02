@@ -4,16 +4,15 @@
 The '..' ancestor is a portable spelling change, not a native junction claim.
 No filesystem symlink, native paint, or installer execution is required.
 """
-from pathlib import Path
 import stat
 import unittest
 
-from test_installer_binary_payload import InstallerBinaryPayloadTests, PRODUCT
+import test_installer_binary_payload as payload
 
 
 class ReparseFixtureIdentityTests(unittest.TestCase):
     def setUp(self):
-        self.case = InstallerBinaryPayloadTests('test_legacy_python_directory_reparse_artifact_is_rejected')
+        self.case = payload.InstallerBinaryPayloadTests('test_legacy_python_directory_reparse_artifact_is_rejected')
         self.case.setUp()
         self.addCleanup(self.case.doCleanups)
         parent = self.case.root / 'noncanonical-ancestor'
@@ -33,7 +32,7 @@ class ReparseFixtureIdentityTests(unittest.TestCase):
 
     def test_noncanonical_nested_bundle_reparse_is_rejected(self):
         self.case.fixture('macos')
-        target = self.case.inputs / 'VST3' / (PRODUCT + '.vst3') / 'Contents'
+        target = self.case.inputs / 'VST3' / (payload.PRODUCT + '.vst3') / 'Contents'
         with self.case.simulated_directory_reparse(target):
             with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
                 self.case.module.capture_build_payload('macos', self.case.build)
@@ -45,7 +44,7 @@ class ReparseFixtureIdentityTests(unittest.TestCase):
         with self.case.simulated_directory_reparse(target):
             for selected in (target, canonical):
                 with self.subTest(spelling=str(selected)):
-                    self.assertTrue(selected.lstat().st_file_attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT,
+                    self.assertTrue(getattr(selected.lstat(), 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT,
                                     'Registered fixture target did not receive reparse attributes')
 
     def test_unrelated_directory_does_not_receive_attributes(self):
