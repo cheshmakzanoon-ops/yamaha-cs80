@@ -1,0 +1,72 @@
+{
+  "test_head": "59522333955aea4801204ae37c57f40257ac2a08",
+  "production_commit": "1eb4d9924db1f0ef159cac4c784895c0d9324a81",
+  "source_tree": "871d58acf578a849bc198f1a1ba69be47f8b62a8",
+  "positive_binary_sha256": "96198fef5b3ff41a3a98a7b9c57782c3fd5ee543582c046f536afc107e5f2ca1",
+  "scope": "matching-source Linux unpeered component checks, no native input/painting/DAW acceptance",
+  "cases": [
+    {
+      "name": "positive-before",
+      "checks": 56,
+      "failures": 0,
+      "started_at": "2026-11-02T18:08:16.996923+00:00",
+      "finished_at": "2026-11-02T18:08:18.628705+00:00",
+      "binary_sha256": "96198fef5b3ff41a3a98a7b9c57782c3fd5ee543582c046f536afc107e5f2ca1",
+      "receipt_sha256": "71e9e811b662e62f22e8f084dd277017ef6f424cc4f6ad05c9ff88e6d0df4c9c"
+    },
+    {
+      "name": "wrong-target",
+      "checks": 56,
+      "failures": 17,
+      "started_at": "2026-11-02T18:08:18.905193+00:00",
+      "finished_at": "2026-11-02T18:10:15.095020+00:00",
+      "binary_sha256": "5747b01715beb81980501c5eee618c47415269ea47fc3969a7b6ed2c548a8dc1",
+      "receipt_sha256": "a31618c494c43cd2058da808ce5493cb12523c1afc53d377579f835e76ce4d78"
+    },
+    {
+      "name": "one-way-binding",
+      "checks": 56,
+      "failures": 9,
+      "started_at": "2026-11-02T18:10:36.436859+00:00",
+      "finished_at": "2026-11-02T18:11:21.431609+00:00",
+      "binary_sha256": "b494e90ada50b2350d37a9530485456c06f324e014f57a702d566b238ea21338",
+      "receipt_sha256": "48aed27a288471390aa52e4048dcd50d812613186dbbd62e57b024fcdcf12aec"
+    },
+    {
+      "name": "early-publication",
+      "checks": 56,
+      "failures": 2,
+      "started_at": "2026-11-02T18:11:21.642227+00:00",
+      "finished_at": "2026-11-02T18:12:33.048953+00:00",
+      "binary_sha256": "8902479eed3f37ff00a8720580776955b980b8413d74941b70fc24e76ee94946",
+      "receipt_sha256": "9e660657e1a5f8b112c5967b729f56aef052a689a11af4c8f575eb17940ff184"
+    },
+    {
+      "name": "no-keyboard-focus",
+      "checks": 56,
+      "failures": 1,
+      "started_at": "2026-11-02T18:12:41.476361+00:00",
+      "finished_at": "2026-11-02T18:13:21.130542+00:00",
+      "binary_sha256": "fa66d6a34444443058e08336868ca0c1faa809b055d3af40382d482c5572dc89",
+      "receipt_sha256": "39287682c4b65020602798ab362dd8be473b2f0cd1abb9c386e627878c2197fe"
+    },
+    {
+      "name": "stored-engine-gate",
+      "checks": 56,
+      "failures": 2,
+      "started_at": "2026-11-02T18:13:55.932234+00:00",
+      "finished_at": "2026-11-02T18:14:31.965497+00:00",
+      "binary_sha256": "83026d02c4691d28c3409741192efd9122a8d44d103ada83ecae2d239fe296b6",
+      "receipt_sha256": "a6bca023263f45a576d57322f8feb4e4b53d869087ea3f28bfbaa1c5f8a3ae67"
+    },
+    {
+      "name": "positive-after",
+      "checks": 56,
+      "failures": 0,
+      "started_at": "2026-11-02T18:14:45.409706+00:00",
+      "finished_at": "2026-11-02T18:14:46.879592+00:00",
+      "binary_sha256": "96198fef5b3ff41a3a98a7b9c57782c3fd5ee543582c046f536afc107e5f2ca1",
+      "receipt_sha256": "7720d449f96b43e5f99c5d333043c57e92bf2549517f490103854d4f8187441d"
+    }
+  ]
+}
