@@ -1,0 +1,26 @@
+{
+  "scope": "Local paired musical-phrase diagnostic, not original full885 or release qualification",
+  "source_commit": "7673266abef6649dbbce01598b1502b8179ccb52",
+  "expected_src_tree": "335930af02743a272b0da6ddd0544024794ea296",
+  "source_estimate_policy_hash": "832eee6f44f5cfcc",
+  "common_arguments": ["--suite", "phrase", "--rates", "48000", "--quick"],
+  "arms": ["frozen-v1", "public-amended-v2"],
+  "same_binary_required": true,
+  "rows_per_arm": 46,
+  "duration_per_phrase_seconds": 12,
+  "expected_unchanged_metric_rows": 37,
+  "unaffected_source_tab_pairs": ["Flute + Brass 3", "Funky 1 + Funky 2"],
+  "requirements": [
+    "Keep complete raw CSVs, exact command/source/binary/compiler identities and sidecar",
+    "Both arms have identical unique fixture keys and zero nonfinite audio frames/metrics",
+    "All Legacy rows and programmer rows retain exactly identical serialized metrics",
+    "The two fully specified source tab pairs retain identical serialized metrics",
+    "At least one eligible inferred source-tab row changes, proving option propagation",
+    "CSV equality is not a claim of full PCM bit identity",
+    "Retain all original click scores; no pass requirement or threshold change for this diagnostic",
+    "Do not retune preregistered component estimates to improve diagnostic outcomes"
+  ],
+  "full_885_qualification": false,
+  "cpu_qualification": false,
+  "hardware_measurement": false
+}
