@@ -1,0 +1,57 @@
+zero_state bass_first_on 48000 voice=5 rank=0 wsc=0 nodal=0 eg=0 vca=0 phase=0
+zero_state bass_first_on 48000 voice=5 rank=1 wsc=0 nodal=0 eg=0 vca=0 phase=0
+state_summary bass_first_on rate=48000 selected_voice=5 pending_clock=39 pending_steps=9000 reference_wake_delta=42 compared_fields=144 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary bass_first_on rate=48000 original=1.12329136581 omit=0.0272415510755 event_only_max=1.13024311776 peak_offset_frames=365 peak_offset_ms=7.60416666667 event_fraction_at_peak=1.00618873444
+window bass_first_on rate=48000 seconds=0:0.001 baseline=0.0181659364439 omitted=0.0181541097102 event_only=4.8799972671e-05
+window bass_first_on rate=48000 seconds=0.001:0.002 baseline=0.0316410059979 omitted=0.0213569299119 event_only=0.0180421929508
+window bass_first_on rate=48000 seconds=0.002:0.004 baseline=0.3883004351 omitted=0.022581751865 event_only=0.383147012127
+window bass_first_on rate=48000 seconds=0.004:0.006 baseline=0.367605363228 omitted=0.0265431730817 event_only=0.372438932574
+window bass_first_on rate=48000 seconds=0.006:0.008 baseline=1.12329136581 omitted=0.0272415510755 event_only=1.13024311776
+zero_state bass_retrigger_on 48000 voice=6 rank=0 wsc=0 nodal=0 eg=0 vca=0 phase=0
+zero_state bass_retrigger_on 48000 voice=6 rank=1 wsc=0 nodal=0 eg=0 vca=0 phase=0
+state_summary bass_retrigger_on rate=48000 selected_voice=6 pending_clock=47 pending_steps=9376 reference_wake_delta=34 compared_fields=144 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary bass_retrigger_on rate=48000 original=1.44092402862 omit=0.031435318561 event_only_max=1.4373733779 peak_offset_frames=374 peak_offset_ms=7.79166666667 event_fraction_at_peak=0.997535851543
+window bass_retrigger_on rate=48000 seconds=0:0.001 baseline=0.0278937500647 omitted=0.0278894000017 event_only=4.42317635955e-05
+window bass_retrigger_on rate=48000 seconds=0.001:0.002 baseline=0.0396974989724 omitted=0.0236939038805 event_only=0.0191590881516
+window bass_retrigger_on rate=48000 seconds=0.002:0.004 baseline=0.311728804377 omitted=0.0260029422885 event_only=0.315692328981
+window bass_retrigger_on rate=48000 seconds=0.004:0.006 baseline=0.50644943863 omitted=0.0290484713408 event_only=0.497216047876
+window bass_retrigger_on rate=48000 seconds=0.006:0.008 baseline=1.44092402862 omitted=0.031435318561 event_only=1.4373733779
+zero_state bass_first_on 96000 voice=5 rank=0 wsc=0 nodal=0 eg=0 vca=0 phase=0
+zero_state bass_first_on 96000 voice=5 rank=1 wsc=0 nodal=0 eg=0 vca=0 phase=0
+state_summary bass_first_on rate=96000 selected_voice=5 pending_clock=79 pending_steps=9000 reference_wake_delta=41 compared_fields=144 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary bass_first_on rate=96000 original=1.10608056398 omit=0.0690990854619 event_only_max=1.09311344377 peak_offset_frames=662 peak_offset_ms=6.89583333333 event_fraction_at_peak=0.982771654014
+window bass_first_on rate=96000 seconds=0:0.001 baseline=0.0616570262769 omitted=0.0580155763244 event_only=0.0175634361607
+window bass_first_on rate=96000 seconds=0.001:0.002 baseline=0.0781921610379 omitted=0.0614696675205 event_only=0.043352790257
+window bass_first_on rate=96000 seconds=0.002:0.004 baseline=0.36713056646 omitted=0.063917732371 event_only=0.356443969877
+window bass_first_on rate=96000 seconds=0.004:0.006 baseline=0.161709598711 omitted=0.0690990854619 event_only=0.122344816888
+window bass_first_on rate=96000 seconds=0.006:0.008 baseline=1.10608056398 omitted=0.0690155773092 event_only=1.09311344377
+zero_state bass_retrigger_on 96000 voice=6 rank=0 wsc=0 nodal=0 eg=0 vca=0 phase=0
+zero_state bass_retrigger_on 96000 voice=6 rank=1 wsc=0 nodal=0 eg=0 vca=0 phase=0
+state_summary bass_retrigger_on rate=96000 selected_voice=6 pending_clock=95 pending_steps=9375 reference_wake_delta=28 compared_fields=144 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary bass_retrigger_on rate=96000 original=1.36531102848 omit=0.0730431293724 event_only_max=1.35844917932 peak_offset_frames=750 peak_offset_ms=7.8125 event_fraction_at_peak=0.985782909965
+window bass_retrigger_on rate=96000 seconds=0:0.001 baseline=0.0527752955423 omitted=0.0576064588267 event_only=0.0187373035533
+window bass_retrigger_on rate=96000 seconds=0.001:0.002 baseline=0.0740551874094 omitted=0.0517891368498 event_only=0.0322859175093
+window bass_retrigger_on rate=96000 seconds=0.002:0.004 baseline=0.555421277247 omitted=0.0672925745271 event_only=0.559437771795
+window bass_retrigger_on rate=96000 seconds=0.004:0.006 baseline=0.718023805451 omitted=0.0627636077773 event_only=0.694122354075
+window bass_retrigger_on rate=96000 seconds=0.006:0.008 baseline=1.36531102848 omitted=0.0730431293724 event_only=1.35844917932
+state_summary funky_single_off rate=44100 selected_voice=-1 pending_clock=0 pending_steps=0 reference_wake_delta=0 compared_fields=1152 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary funky_single_off rate=44100 original=1.62688913455 omit=1.6268876393 event_only_max=0.293804446101 peak_offset_frames=54 peak_offset_ms=1.22448979592 event_fraction_at_peak=9.19090614982e-07
+window funky_single_off rate=44100 seconds=0:0.001 baseline=0.0358270424484 omitted=0.0358279396035 event_only=1.42049560843e-06
+window funky_single_off rate=44100 seconds=0.001:0.002 baseline=1.62688913455 omitted=1.6268876393 event_only=0.00135941429726
+window funky_single_off rate=44100 seconds=0.002:0.004 baseline=0.0992645321685 omitted=0.107696942994 event_only=0.010575265832
+window funky_single_off rate=44100 seconds=0.004:0.006 baseline=1.23871932103 omitted=1.53252376713 event_only=0.293804446101
+window funky_single_off rate=44100 seconds=0.006:0.008 baseline=0.0660509025879 omitted=0.107309720875 event_only=0.0475969201662
+state_summary funky_single_off rate=48000 selected_voice=-1 pending_clock=0 pending_steps=0 reference_wake_delta=0 compared_fields=1152 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary funky_single_off rate=48000 original=1.29131001926 omit=1.3805030684 event_only_max=0.290840867051 peak_offset_frames=76 peak_offset_ms=1.58333333333 event_fraction_at_peak=0.00799682420832
+window funky_single_off rate=48000 seconds=0:0.001 baseline=0.0253813559535 omitted=0.0253813559535 event_only=2.31406837871e-05
+window funky_single_off rate=48000 seconds=0.001:0.002 baseline=1.29131001926 omitted=1.30163639848 event_only=0.0213071367378
+window funky_single_off rate=48000 seconds=0.002:0.004 baseline=0.0991541073959 omitted=0.113131281627 event_only=0.0164401981849
+window funky_single_off rate=48000 seconds=0.004:0.006 baseline=1.08966220135 omitted=1.3805030684 event_only=0.290840867051
+window funky_single_off rate=48000 seconds=0.006:0.008 baseline=0.0673600655183 omitted=0.111154463561 event_only=0.0519223116939
+state_summary funky_single_off rate=96000 selected_voice=-1 pending_clock=0 pending_steps=0 reference_wake_delta=0 compared_fields=1152 mismatches=0 pre_event_pcm_bit_mismatches=0
+score_summary funky_single_off rate=96000 original=1.22095816514 omit=1.23890355235 event_only_max=0.290467945891 peak_offset_frames=84 peak_offset_ms=0.875 event_fraction_at_peak=0.0146977904079
+window funky_single_off rate=96000 seconds=0:0.001 baseline=1.22095816514 omitted=1.23890355235 event_only=0.0179453872081
+window funky_single_off rate=96000 seconds=0.001:0.002 baseline=0.249710474963 omitted=0.251013010922 event_only=0.00990776146149
+window funky_single_off rate=96000 seconds=0.002:0.004 baseline=0.0280588810226 omitted=0.0263273937295 event_only=0.00342551213105
+window funky_single_off rate=96000 seconds=0.004:0.006 baseline=0.899703548765 omitted=1.19017149466 event_only=0.290467945891
+window funky_single_off rate=96000 seconds=0.006:0.008 baseline=0.0216520233273 omitted=0.025431312962 event_only=0.00394466583801
