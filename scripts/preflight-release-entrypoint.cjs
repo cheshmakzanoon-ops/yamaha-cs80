@@ -1,6 +1,7 @@
 // Fail-closed preflight for EVERY release.yml entrypoint: manual or v* tag.
 // This performs no dispatch, tagging, publication, or file mutation.
 const { verifyReviewedReleasePrerequisites } = require('./dispatch-reviewed-release.cjs');
+const { verifyLandingPR } = require('./dispatch-reviewed-main-request.cjs');
 
 const REQUEST_BRANCH = 'codex/cs80-release-dispatch';
 const REQUEST_PATH = '.github/release-request.json';
@@ -67,6 +68,9 @@ async function verifyReleaseEntrypoint({ github, context, core, checkoutSha }) {
   }
 
   const request = await readReviewedReleaseRequest(github, owner, repo);
+  // Direct manual and tag events are independent of the reviewed dispatcher;
+  // they must prove the SAME merged PR6 source identity, not just green CI.
+  await verifyLandingPR(github, owner, repo, request);
   const { expected, validated } = await verifyReviewedReleasePrerequisites({ github, context, core, request });
   requireCondition(checkoutSha === expected, 'Release checkout is not the approved current-main SHA');
 

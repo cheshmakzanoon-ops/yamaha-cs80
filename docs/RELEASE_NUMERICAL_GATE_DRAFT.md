@@ -141,6 +141,12 @@ exact-main green workflows before calling the existing dispatcher. The
 initial conservative request contract requires the validated SHA to equal
 that exact PR merge commit; integration must review whether a later
 non-`src` main successor needs a separately preregistered safe ancestry rule.
+The independent `release.yml` **direct manual and tag** preflight also calls
+the same PR #6 merged-identity verifier, so it must reject an unmerged/draft
+PR, changed head/merge SHA, non-main PR base or a request whose validated
+commit differs from the actual PR merge commit, even if the four workflow
+statuses happen to be green. A reviewed screenshot-only current-main `S`
+after the exact PR merge `M` remains permitted by the existing ancestry gate.
 
 Red-first test cases reject forged branch scripts/YAML, extra diffs, stale
 main/request refs, wrong event/actor/checkout/request SHA, altered PR identity,
