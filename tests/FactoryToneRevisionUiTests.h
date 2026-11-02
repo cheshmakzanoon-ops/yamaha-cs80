@@ -183,6 +183,30 @@ void testFactoryToneRevisionEditor(Check check, Flush flush)
         flush(30);
         check(selector->isEnabled(),"revision opt-in remains selectable including PURE overriding stored Legacy");
     }
+    // Also test constructor-time enablement: an existing editor alone cannot expose a stale
+    // one-time decision based only on the stored ENGINE request when PURE overrides it.
+    for(int pure : {0,1})for(int source : {0,1})
+    {
+        Cs80AudioProcessor fresh(root.getFile().getChildFile(juce::String("fresh-")+juce::String(pure)+juce::String(source)));
+        configure(fresh,true);
+        fresh.setParamValue(cs80::P_parityMode,(float)pure);
+        fresh.setParamValue(cs80::P_sourcePerformance,(float)source);
+        setChoice(fresh,1);
+        fresh.prepareToPlay(48000,32);
+        block(fresh);
+        Cs80AudioProcessorEditor reopened(fresh);
+        reopened.setSize(1600,1000);
+        reopened.setVisible(true);
+        reopened.showAdvancedPanel(true);
+        auto* page=findType<cs80::ui::StudioView>(reopened);
+        if(page!=nullptr)page->showTab(cs80::ui::StudioTab::settings);
+        std::vector<juce::Component*> copies;
+        collectId(reopened,revisionId,copies);
+        auto* control=copies.size()==1 ? dynamic_cast<juce::ComboBox*>(copies.front()) : nullptr;
+        check(page!=nullptr && control!=nullptr && waitFor(flush,[&]{return control->isEnabled()
+                    && control->getSelectedId()==2 && choice(fresh)==1;}),
+              "fresh ENGINE/PURE combinations keep saved revision opt-in selectable");
+    }
     setChoice(host,1);
     expectChoice(1,"external parameter change synchronizes the editor asynchronously");
     const auto saved=session(host);
