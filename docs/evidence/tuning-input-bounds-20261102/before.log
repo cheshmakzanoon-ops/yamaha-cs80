@@ -1,0 +1,34 @@
+e6b2fc8721db1f1c80f6c2b50aa5300ac0d8eafe
+2026-11-02T10:56:25Z
+FAIL: header 0 value -4294967296 must be rejected, not narrowed
+FAIL: header 0 value -4294967296 must leave caller state unchanged
+FAIL: header 0 value 4294967296 must be rejected, not narrowed
+FAIL: header 0 value 4294967296 must leave caller state unchanged
+FAIL: header 1 value -4294967296 must be rejected, not narrowed
+FAIL: header 1 value -4294967296 must leave caller state unchanged
+FAIL: header 1 value 4294967296 must be rejected, not narrowed
+FAIL: header 1 value 4294967296 must leave caller state unchanged
+FAIL: header 2 value -4294967169 must be rejected, not narrowed
+FAIL: header 2 value -4294967169 must leave caller state unchanged
+FAIL: header 2 value 4294967423 must be rejected, not narrowed
+FAIL: header 2 value 4294967423 must leave caller state unchanged
+FAIL: header 3 value -4294967236 must be rejected, not narrowed
+FAIL: header 3 value -4294967236 must leave caller state unchanged
+FAIL: header 3 value 4294967356 must be rejected, not narrowed
+FAIL: header 3 value 4294967356 must leave caller state unchanged
+FAIL: header 4 value -4294967227 must be rejected, not narrowed
+FAIL: header 4 value -4294967227 must leave caller state unchanged
+FAIL: header 4 value 4294967365 must be rejected, not narrowed
+FAIL: header 4 value 4294967365 must leave caller state unchanged
+FAIL: mapping degree 2147483648 must be rejected, not narrowed
+FAIL: mapping degree 2147483648 must leave caller state unchanged
+FAIL: mapping degree 4294967295 must be rejected, not narrowed
+FAIL: mapping degree 4294967295 must leave caller state unchanged
+FAIL: mapping degree 4294967296 must be rejected, not narrowed
+FAIL: mapping degree 4294967296 must leave caller state unchanged
+FAIL: mapping degree 8589934592 must be rejected, not narrowed
+FAIL: mapping degree 8589934592 must leave caller state unchanged
+FAIL: mapping degree 999999999999 must be rejected, not narrowed
+FAIL: mapping degree 999999999999 must leave caller state unchanged
+61 tuning input boundary checks, 30 failures
+EXIT=1

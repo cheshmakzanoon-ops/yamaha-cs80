@@ -1,0 +1,8 @@
+f1b90724f37f97a645975ab8c43f012d7fddd708
+2029aa3bca615f855e00e68247c57d3a8735a661
+2026-11-02T10:59:40Z
+g++ (Debian 14.2.0-19) 14.2.0
+61 tuning input boundary checks, 0 failures
+==42==LeakSanitizer has encountered a fatal error.
+==42==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1
+==42==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)
