@@ -99,6 +99,51 @@ model value, audio normalization, acceptance band or test. This switched
 WSC mixer is distinct from the **LP CP7 -> 150 kΩ series -> AI1, 33 kΩ AI1
 shunt** endpoint correction above.
 
+### 2026-11-01 ADJ probe and trimmer cross-check (still unresolved)
+
+The original CS-80 **M11/M12 Circuit Board & Wiring** sheet, printed p44,
+drawing KEP-NA03574-6Y, explicitly connects **CP2 (46) to CP7 (53)** and,
+*separately*, **CP8 (56) to CP3 (29)** on each same-numbered M board. The
+CP2/CP7 pair carries the HP-to-LP interstage connection through the already
+verified LP series resistor. The CP8/CP3 pair exposes the later LP-side
+signal. These are wires, not extra gain stages. M44 source:
+`https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/44%20-%20M11-12%20Circuit%20Board%20%26%20Wiring.jpg`,
+SHA-256 `3320dd2f625c79d7cca9b98abd5cade9d1b95477e6d8990a93a296c9cda71256`.
+Other voice-board revision sheets require their own checks.
+
+M41 places **VR7**, via a 150 kΩ resistor, at IC10 **Vfc pin 4** and
+**VR8** at IC10 **Qadj pin 6**; the analogous IC11 adjustments are VR9/VR10.
+An independent manufacturer sheet, **Yamaha CS-60 Service Manual printed
+p38**, expressly assigns VR7 to HP cutoff and VR8 to HP Q, consistent with
+those M41 connections. The CS-60 sheet does *not* define the CS-80 p11
+4.3 Vpp specification or authorize changing it. Source:
+`https://therogoffs.com/cs80/manuals/CS60_Service_Manual/38%20-%20Adjustments%2C%20M.jpg`,
+SHA-256 `3ed81ac23d92872060277cbd6f1534550f2d4f58590b2318f063e274d0506315`.
+
+A [2016 first-person CS-80 calibration account](https://mfoxhd.blogspot.com/2016/01/calibration-3-m-boards.html)
+reports that its author could not reach the printed HP **4.3 Vpp at CP3**
+setting, proposed **CP2** as an HP-only probe, and described **CP8/CP3** as
+the same LP-side bus. The author reports substituting 7.6 Vpp at CP2 using
+a claimed CS-60 adjustment precedent. This is **unreplicated field testimony**:
+the account does not supply controlled waveform captures, a matched serial
+number/revision qualification, or the cited CS-60 *adjustment* source. It
+must not be promoted to a new CS-80 measurement, a specification erratum,
+or permission to replace the registered **3.3–5.3 Vpp at CP3** acceptance
+band. The ADJ fixture still reads **1.692 Vpp** at its LP-stage endpoint.
+With *unchanged* physical component values, source drive and frozen control
+settings, an added **model-only** readout in `tests/Ig00156NodalTests.cpp`
+evaluates both ideal stage taps. The HP service setup predicts **4.126 Vpp
+at CP2 (HP stage)** versus **1.692 Vpp at CP3/CP8 (LP stage)**. The LP
+setup predicts **1.038 Vpp at CP2** and **1.648 Vpp at CP3/CP8**. Thus the
+modeled HP-only CP2 output happens to be within the printed **3.3–5.3 Vpp**
+band specified for *CP3*, but the actual registered CP3 test **still fails**.
+This correspondence is a discriminating lead, **not** an independent
+validation of a corrected service probe, a 4.126 Vpp hardware reading, or
+license to choose a terminal for a good result. The reason for the discrepancy
+remains unproven, including whether the documented VR7 cutoff maximization
+followed by VR8 Q adjustment, the WSC source, or actual CP3 loading accounts
+for it.
+
 The independent tasks before calling the HP band closed are to complete the
 HP mixer/source-impedance graph, verify the full interstage loading graph
 from M41 and harness evidence, and reproduce the documented VR7/VR9

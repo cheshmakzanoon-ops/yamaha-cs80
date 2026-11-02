@@ -359,12 +359,16 @@ void anchors(const ws1::Tolerances& tol)
 }
 
 // 5. ADJ p11 service points in physical volts (linear stages, physical gains).
-double settledVpp(double hpTotal, double qHp, double lpTotal, double qLp)
+// Source-derived terminal map: CP2 probes the HP stage output, whereas CP3
+// is wired to CP8 at the LP output (Yamaha M11/12 wiring p44). These are
+// still ideal-stage *model* voltages, not measured or fully loaded terminals.
+struct ServicePointVpp { double cp2Hp, cp3Lp; };
+ServicePointVpp settledVpp(double hpTotal, double qHp, double lpTotal, double qLp)
 {
     const double fs = 192000.0, f0 = 261.6255653005986; // C1 at 2'
     auto sys = ref::pairSystem(hpNet, control(hpNet, hpTotal, qHp), lpNet, control(lpNet, lpTotal, qLp), 1.0, 1.0);
     ref::Vector<8> z {};
-    double prev = 0.0, lo = 1e9, hi = -1e9;
+    double prev = 0.0, loHp = 1e9, hiHp = -1e9, loLp = 1e9, hiLp = -1e9;
     const int n = (int) (3.0 * fs);
     for (int i = 0; i < n; ++i)
     {
@@ -373,9 +377,14 @@ double settledVpp(double hpTotal, double qHp, double lpTotal, double qLp)
         const double u = 0.5 * pulse;                    // (saw + pulse) / 2, saw gated off
         z = sys.step(z, prev, u, 1.0 / fs).value;
         prev = u;
-        if (i > n - (int) (0.2 * fs)) { lo = std::min(lo, z[7]); hi = std::max(hi, z[7]); }
+        if (i > n - (int) (0.2 * fs))
+        {
+            const double hpOut = 2.0 * (z[1] + z[2]) - z[3];
+            loHp = std::min(loHp, hpOut); hiHp = std::max(hiHp, hpOut);
+            loLp = std::min(loLp, z[7]); hiLp = std::max(hiLp, z[7]);
+        }
     }
-    return hi - lo;
+    return {hiHp - loHp, hiLp - loLp};
 }
 void serviceSetup(const ws1::Tolerances& tol)
 {
@@ -384,10 +393,13 @@ void serviceSetup(const ws1::Tolerances& tol)
     const double hpGm = 125.0 * kv * std::exp2(source_factory::alignment.hpEffectiveCv);
     const double lpGm = 125.0 * kv * std::exp2(source_factory::alignment.lpEffectiveCv);
     const double open = 18000.0, closed = 0.0;
-    const double hpVpp = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
-    const double lpVpp = settledVpp(closed + ffHz, 10.0 / 11.0, lpGm + ffHz, 5.0);
+    const auto hp = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
+    const auto lp = settledVpp(closed + ffHz, 10.0 / 11.0, lpGm + ffHz, 5.0);
+    const double hpVpp = hp.cp3Lp, lpVpp = lp.cp3Lp;
     std::printf("service HP setup (FH 4.0 V): %.3f Vpp, documented %.1f..%.1f\n", hpVpp, hpBand.first, hpBand.second);
     std::printf("service LP setup (FL 3.3 V): %.3f Vpp, documented %.1f..%.1f\n", lpVpp, lpBand.first, lpBand.second);
+    std::printf("service model stage probes (NOT hardware): HP setup CP2 %.3f Vpp, downstream CP3/CP8 %.3f Vpp; LP setup CP2 %.3f Vpp, downstream CP3/CP8 %.3f Vpp\n",
+                hp.cp2Hp, hp.cp3Lp, lp.cp2Hp, lp.cp3Lp);
     std::printf("physical passband gains: HP %.4f, LP %.4f (normalized to 1 in audio)\n",
                 ref::passbandGain(hpNet), ref::passbandGain(lpNet));
     // Registered as reported, never fitted: print the verdict, assert only that
@@ -395,7 +407,10 @@ void serviceSetup(const ws1::Tolerances& tol)
     std::printf("ADJ p11 HP point: %s; LP point: %s\n",
                 hpVpp >= hpBand.first && hpVpp <= hpBand.second ? "within band" : "MISS",
                 lpVpp >= lpBand.first && lpVpp <= lpBand.second ? "within band" : "MISS");
-    check(std::isfinite(hpVpp) && hpVpp > 0.0 && std::isfinite(lpVpp) && lpVpp > 0.0, "service-point evaluation is finite");
+    check(std::isfinite(hpVpp) && hpVpp > 0.0 && std::isfinite(lpVpp) && lpVpp > 0.0
+              && std::isfinite(hp.cp2Hp) && hp.cp2Hp > 0.0
+              && std::isfinite(lp.cp2Hp) && lp.cp2Hp > 0.0,
+          "service-point evaluation is finite");
 }
 
 // 6. Stability on hard noise at every supported internal rate.
