@@ -170,6 +170,37 @@ and does **not** model finite IC4 input or IC11 output loading. It must not
 be conflated with VCA output CP4. This is a newly explicit topology boundary,
 not an explanation or correction of the printed CP3 high-pass miss.
 
+### 2026-11-02 predeclared NI and VR7/VR8 model-only sensitivities
+
+Starting from the **unchanged** original source-factory ADJ point (HP setup:
+**CP2 4.126 Vpp, CP3 1.692 Vpp MISS**), a separately preregistered
+five-point **zero-signal NI admittance** sweep produced HP CP3 values
+**1.692, 1.636, 1.583, 1.531, 1.482 Vpp** from NI open through the
+*hypothetical* ideal-zero-impedance NO1 buffer. The corresponding CP2
+values were **4.126, 3.991, 3.904, 3.858, 3.812 Vpp**. These are not
+five measured NO1 source impedances; real NO1 may contain noise. Source
+loading by itself moves the HP CP3 result *farther* from Yamaha's target.
+
+As a separate **conditional VR7/VR8 sequence surrogate** with a fixed
+3 Vpp pulse and *inferred* low-frequency Q controls, the predeclared
+33-point HP cutoff bracket gave an interior grid maximum at **236.685656 Hz**
+for Qhp=5: CP2/CP3 **6.630/2.595 Vpp** (NI open) and **6.507/2.524 Vpp**
+(NO1 ideal zero). Holding that model-selected cutoff and scanning *all*
+predeclared Qhp values `{0.5,1,2,5,9}` gave at synthetic **Qhp=9**
+CP2/CP3 **11.027/4.148 Vpp** (NI open) and **10.899/4.075 Vpp**
+(ideal-zero NO1). The latter CP3 numbers merely happen to overlap the
+printed **3.3–5.3 Vpp** interval **numerically**; **Q=9 exceeds Yamaha's
+documented Q-control endpoint Q≈5 (at 0 V), and ≈11 Vpp CP2 exceeds the
+small-signal operating evidence for this linear model**. Yamaha's actual
+VR7/Vfc, VR8/Qadj, FET loading and noise output laws are not known.
+No synthetic setting may replace the original source-factory ADJ test,
+which **still prints HP `MISS`**. The full sequence is reproducible with
+the strictly chronological preregistrations and opt-in test-only executables
+[NI sweep](ADJ_NI_SENSITIVITY_PREREG_20261102.md),
+[fine C1 grid](ADJ_VR7_LOCAL_GRID_PREREG_20261102.md),
+[bounded cutoff bracket](ADJ_VR7_BRACKET_PREREG_20261102.md), and
+[post-bracket Q grid](ADJ_VR8_SEQUENCE_PREREG_20261102.md).
+
 ### 2026-11-01 ADJ probe and trimmer cross-check (still unresolved)
 
 The original CS-80 **M11/M12 Circuit Board & Wiring** sheet, printed p44,
