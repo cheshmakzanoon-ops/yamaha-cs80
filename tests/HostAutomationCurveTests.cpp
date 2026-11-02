@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <limits>
 #include <utility>
 #include <vector>
 
@@ -90,6 +91,36 @@ int main(int argc, char** argv)
         curve.begin({&dense, static_cast<int>(dense.size()), read, nullptr, nullptr}, 0.25);
         for (int i = 0; i < 10000; ++i)
             check(curve.valueAt(i) == dense[static_cast<size_t>(i)].second, "borrowed queue has no fixed point-count truncation");
+
+        // A malformed host readback can precede otherwise valid points. The
+        // prior sample (-1) must be finite so interpolation cannot inject NaN
+        // into the processor before the first scheduled event. The first knot
+        // and the final host publication retain their original sample/value.
+        Points initialGuardPoints {{7, 0.75}, {11, 0.25}};
+        for (double malformed : {
+                 std::numeric_limits<double>::quiet_NaN(),
+                 std::numeric_limits<double>::infinity(),
+                 -std::numeric_limits<double>::infinity()})
+        {
+            cs80::HostAutomationCurve guarded;
+            guarded.begin({&initialGuardPoints,
+                           static_cast<int>(initialGuardPoints.size()), read, nullptr, nullptr}, malformed);
+            bool finite = true;
+            double beforeKnot = 0.0, atKnot = 0.0, lastKnot = 0.0;
+            for (int sample = 0; sample <= 11; ++sample)
+            {
+                const double value = guarded.valueAt(sample);
+                finite = finite && std::isfinite(value) && value >= 0.0 && value <= 1.0;
+                if (sample == 6) beforeKnot = value;
+                if (sample == 7) atKnot = value;
+                if (sample == 11) lastKnot = value;
+            }
+            check(finite, "nonfinite host initial is rejected before sample interpolation");
+            check(beforeKnot == 0.75 * 7.0 / 8.0 && atKnot == 0.75 && lastKnot == 0.25,
+                  "malformed host initial uses a finite zero fallback without moving event knots");
+            check(guarded.finalValue() == 0.25,
+                  "valid host endpoint survives malformed prior readback");
+        }
         std::cout << "maximum normalized curve error=" << maxError << '\n';
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
