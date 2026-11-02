@@ -16,6 +16,7 @@
 #include <complex>
 #include <cstdio>
 #include <iostream>
+#include <string_view>
 #include <vector>
 
 using namespace cs80;
@@ -430,6 +431,78 @@ void serviceSetup(const ws1::Tolerances& tol)
           "service-point evaluation is finite");
 }
 
+// Extra *opt-in* diagnostic, pre-registered before evaluation in
+// ADJ_NI_SENSITIVITY_PREREG_20261102.md. NO1 is held at zero signal;
+// alpha is only a normalized conductance, not a measured output impedance.
+void serviceNiSensitivity(const ws1::Tolerances& tol)
+{
+    const double kv = source_factory::alignment.referenceKeyVolts;
+    const double hpGm = 125.0 * kv * std::exp2(source_factory::alignment.hpEffectiveCv);
+    const double lpGm = 125.0 * kv * std::exp2(source_factory::alignment.lpEffectiveCv);
+    const double f0 = 261.6255653005986, open = 18000.0, closed = 0.0;
+    const auto hpBand = tol.range("hp_fh_4v0");
+    const auto original = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0);
+    std::printf("NI SWEEP: original Yamaha ADJ p11 HP CP3 band %.1f..%.1f Vpp; original fixture CP3 %.3f: %s\n",
+                hpBand.first, hpBand.second, original.cp3Lp,
+                original.cp3Lp >= hpBand.first && original.cp3Lp <= hpBand.second ? "within band" : "MISS");
+
+    constexpr std::array<double, 5> alphas { 0.0, 0.25, 0.5, 0.75, 1.0 };
+    for (double alpha : alphas)
+    {
+        auto hpInput = hpNet;
+        hpInput.sourceOhms = 150.0e3 / (2.0 + alpha);
+        const double gain = 1.0 / (2.0 + alpha);
+        const auto hp = settledVpp(hpGm + ffHz, 5.0, open + ffHz, 5.0, hpInput, gain);
+        const auto lp = settledVpp(closed + ffHz, 10.0 / 11.0, lpGm + ffHz, 5.0, hpInput, gain);
+        std::printf("NI SWEEP alpha %.2f Rs %.3f kOhm pulseGain %.6f: HP CP2 %.3f CP3 %.3f CP3/CP2 %.5f; LP CP2 %.3f CP3 %.3f CP3/CP2 %.5f (model, NOT hardware)\n",
+                    alpha, hpInput.sourceOhms / 1000.0, gain,
+                    hp.cp2Hp, hp.cp3Lp, hp.cp3Lp / hp.cp2Hp,
+                    lp.cp2Hp, lp.cp3Lp, lp.cp3Lp / lp.cp2Hp);
+        check(std::isfinite(hp.cp2Hp) && hp.cp2Hp > 0.0
+                  && std::isfinite(hp.cp3Lp) && hp.cp3Lp > 0.0
+                  && std::isfinite(lp.cp2Hp) && lp.cp2Hp > 0.0
+                  && std::isfinite(lp.cp3Lp) && lp.cp3Lp > 0.0,
+              "NI sweep boundary values finite and positive (no new amplitude gate)");
+    }
+
+    // Yamaha says VR7 maximizes CP3, then VR8 adjusts resonance. No measured
+    // trimmer-angle-to-gm/Q law exists, so these are only fixed-grid
+    // sensitivities in the declared nodal model. Never fit to the CP3 band.
+    for (double alpha : { 0.0, 1.0 })
+    {
+        auto hpInput = hpNet;
+        hpInput.sourceOhms = 150.0e3 / (2.0 + alpha);
+        const double gain = 1.0 / (2.0 + alpha);
+        double selectedCutoff = 0.0, maxCp3 = -1.0;
+        for (int k = -4; k <= 4; ++k)
+        {
+            const double cutoffGmHz = f0 * std::exp2(k / 2.0);
+            const auto p = settledVpp(cutoffGmHz + ffHz, 5.0, open + ffHz, 5.0, hpInput, gain);
+            std::printf("VR7 SURROGATE alpha %.2f k %+d gmCutoff %.3f Hz: CP2 %.3f CP3 %.3f Vpp (NOT trimmer data)\n",
+                        alpha, k, cutoffGmHz, p.cp2Hp, p.cp3Lp);
+            check(std::isfinite(p.cp2Hp) && p.cp2Hp > 0.0
+                      && std::isfinite(p.cp3Lp) && p.cp3Lp > 0.0,
+                  "VR7 grid candidate finite and positive (not service acceptance)");
+            if (p.cp3Lp > maxCp3)
+            {
+                maxCp3 = p.cp3Lp;
+                selectedCutoff = cutoffGmHz;
+            }
+        }
+        std::printf("VR7 SURROGATE alpha %.2f: fixed-grid maximum CP3 %.3f Vpp at gmCutoff %.3f Hz (NOT hardware or continuous optimum)\n",
+                    alpha, maxCp3, selectedCutoff);
+        for (double qHp : { 0.5, 1.0, 2.0, 5.0, 9.0 })
+        {
+            const auto p = settledVpp(selectedCutoff + ffHz, qHp, open + ffHz, 5.0, hpInput, gain);
+            std::printf("VR8 Q-SURROGATE alpha %.2f HP low-frequency Q %.1f: CP2 %.3f CP3 %.3f Vpp (NOT VR8 ohms)\n",
+                        alpha, qHp, p.cp2Hp, p.cp3Lp);
+            check(std::isfinite(p.cp2Hp) && p.cp2Hp > 0.0
+                      && std::isfinite(p.cp3Lp) && p.cp3Lp > 0.0,
+                  "Q surrogate finite and positive (not service acceptance)");
+        }
+    }
+}
+
 // 6. Stability on hard noise at every supported internal rate.
 void stability(const ws1::Tolerances& tol)
 {
@@ -549,6 +622,12 @@ int main(int argc, char** argv)
     try
     {
         const ws1::Tolerances tol(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/ws1-voice.json", "ig00156_nodal");
+        if (argc > 2 && std::string_view(argv[2]) == "--ni-sensitivity")
+        {
+            serviceNiSensitivity(tol);
+            std::cout << checks << " offline checks, " << failures << " failures (not an ADJ acceptance gate)\n";
+            return failures == 0 ? 0 : 1;
+        }
         equivalence(tol);
         smallSignal(tol);
         anchors(tol);

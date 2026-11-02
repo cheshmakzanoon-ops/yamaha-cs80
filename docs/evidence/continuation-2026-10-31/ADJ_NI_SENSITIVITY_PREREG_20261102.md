@@ -94,3 +94,61 @@ content and time-domain Vpp cannot be inferred from this zero-signal sweep.
 The synthetic cutoffs/Q values are discriminators for a future *simultaneous
 CP2/CP3 and NO1* hardware measurement, **not** new component values or
 hardware acceptance ranges. Commit this document before running the sweep.
+
+## Evaluation of this pre-registered grid, 2026-11-02
+
+The source-only preregistration above was committed as `9fdba0a` **before**
+the opt-in test-only implementation was built or evaluated. All samples are
+from the frozen linear model, **not actual M-board measurements**. All five
+synthetic zero-signal NO1 loading points were retained, without selecting an
+intermediate impedance to match the Yamaha voltage band:
+
+| alpha | Equivalent passive `Z_NO1` hypothesis | HP CP2 Vpp | HP CP3 Vpp | HP CP3/CP2 | LP CP2 Vpp | LP CP3 Vpp |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | open / ∞ | 4.126 | 1.692 | 0.41003 | 1.038 | 1.648 |
+| .25 | 450 kΩ | 3.991 | 1.636 | 0.40997 | .997 | 1.589 |
+| .50 | 150 kΩ | 3.904 | 1.583 | 0.40543 | .959 | 1.534 |
+| .75 | 50 kΩ | 3.858 | 1.531 | 0.39687 | .924 | 1.483 |
+| 1 | ideal zero | 3.812 | 1.482 | 0.38870 | .891 | 1.435 |
+
+For all five cases the HP **CP3** result remains below the printed **3.3 Vpp
+lower boundary**. The original alpha-0 service HP gate remains `MISS`; it was
+neither replaced with a CP2 check nor relaxed. The LP output stays within the
+existing **1.2–3.2 Vpp CP3** band. The intermediate impedance values are
+**synthetic scenarios**, not values established for SUB IC3/2.
+
+The coarse **VR7 CP3-maximization surrogate**, run only at alpha=0 and 1 with
+Qhp=Qlp=5, selected the **261.626 Hz** grid point in both cases: **1.621 Vpp
+CP3 (NI open)** and **1.410 Vpp (ideal-zero NO1)**. These values are **not
+upper bounds**. The preexisting frozen alignment at approximately 260 Hz
+already predicts **1.692 Vpp** at alpha=0, larger than the coarse grid's
+1.621 Vpp. Thus half-octave spacing is too coarse to characterize a local
+amplitude maximum, and this diagnostic does **not** reproduce Yamaha's
+physical VR7 maximization procedure.
+
+At that coarse selected cutoff, the predeclared **VR8 Q surrogates** yielded:
+
+| HP model Q (not a VR8 angle) | CP3 Vpp, NI open | CP3 Vpp, ideal-zero NO1 |
+| ---: | ---: | ---: |
+| .5 | .889 | .794 |
+| 1 | 1.011 | .919 |
+| 2 | 1.263 | 1.159 |
+| 5 | 1.621 | 1.410 |
+| 9 | 1.869 | 1.688 |
+
+The model permits a large-Q increase but gives no verified mapping from VR8
+position or actual IG00156 pin-6 current to these settings. Do not interpret
+this discrete Q grid as a bound on true hardware resonance or a replacement
+adjustment instruction. Complete per-point CP2/CP3 printouts are emitted by
+the opt-in diagnostic:
+
+```sh
+./build-circuit/cs80_ig00156_nodal_tests tests/parity/tolerances-v2/ws1-voice.json --ni-sensitivity
+```
+
+It returned **33 offline finite-positive checks, zero failures**, without
+exercising or changing the normal acceptance gate. Because the coarse VR7
+sampling demonstrably misses the existing frozen-model local value, a
+**separately preregistered local C1 refinement** is needed before drawing
+anything further about narrow amplitude peaks; no parameter should be
+adjusted retrospectively to reach the Yamaha band.
