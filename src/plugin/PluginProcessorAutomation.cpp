@@ -130,8 +130,8 @@ void Cs80AudioProcessor::applyHostAutomationAt(int position, bool publish) noexc
     }
     if (changed && publish)
     {
-        engine.setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
-        if (extensionActive) extensionEngine->setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
+        engine.setControlFrame(withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources)));
+        if (extensionActive) extensionEngine->setControlFrame(withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources)));
     }
 }
 

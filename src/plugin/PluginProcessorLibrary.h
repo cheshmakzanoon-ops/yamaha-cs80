@@ -22,6 +22,7 @@ struct Cs80AudioProcessor::LibraryState final : private juce::AsyncUpdater
     // Parameter objects resolved once, so the audio thread never builds IDs.
     std::array<juce::RangedAudioParameter*, cs80::P_numParams> parameters {};
     std::array<juce::RangedAudioParameter*, 2> sources {};
+    juce::RangedAudioParameter* factoryToneRevision = nullptr;
 
     // Audio-thread bank select state (CC0 MSB, CC32 LSB), MIDI 1.0 semantics:
     // each byte holds until it is sent again.
@@ -35,6 +36,7 @@ struct Cs80AudioProcessor::LibraryState final : private juce::AsyncUpdater
         bool stored = false;
         cs80::ParamValues values;
         std::array<int, 2> sources { 13, 13 };
+        float factoryToneRevision = 0.0f; // APVTS choice index; old slots are V1
         std::array<std::array<float, cs80::CP_count>, 4> memories {};
         juce::String name;
         int program = 0;

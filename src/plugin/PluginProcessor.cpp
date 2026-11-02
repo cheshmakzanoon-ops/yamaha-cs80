@@ -49,6 +49,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
         parameterValues[(size_t) i] = apvts.getRawParameterValue(parameterId(i));
     for (int channel = 0; channel < 2; ++channel)
         hardwareSources[(size_t) channel] = apvts.getRawParameterValue(hardwareSourceParameterId(channel));
+    factoryToneRevisionValue = apvts.getRawParameterValue(factoryToneRevisionParameterId);
     initialiseLibrary(); // [ws6-library] program change, A/B, randomise
     for (int bank = 0; bank < 4; ++bank)
         for (int local = 0; local < cs80::CP_count; ++local)
@@ -394,6 +395,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
         juce::ParameterID { parameterId(cs80::P_chorusTabs), 16 }, "Chorus / tremolo tabs",
         juce::StringArray { "Historical mode", "Both off", "Chorus", "Tremolo", "Both on" }, 0));
 
+    // Append-only opt-in interpretation of inferred factory-tone cells. This is
+    // sound state, not a performance modulation or a change to old defaults.
+    layout.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID { factoryToneRevisionParameterId, 17 }, "Factory tone revision",
+        juce::StringArray { "Frozen V1", "Public-source estimates V2" }, 0,
+        juce::AudioParameterChoiceAttributes().withAutomatable(false)));
+
     return layout;
 }
 
@@ -418,7 +426,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     readParameters();
     resetHostAutomationState();
     const auto previousPolicy = engine.getRenderPolicy();
-    engine.setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
+    engine.setControlFrame(withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources)));
     if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
@@ -444,8 +452,20 @@ void Cs80AudioProcessor::releaseResources()
     resetKeyboardHandoff();
 }
 
+cs80::ControlFrame Cs80AudioProcessor::withFactoryToneRevision(cs80::ControlFrame frame) const noexcept
+{
+    // Decorate the existing frame flavor; in particular MIDI program recall
+    // retains its historical aggregate physical-unit coordinate.
+    frame.factoryToneRevision = cachedFactoryToneRevision;
+    return frame;
+}
+
 void Cs80AudioProcessor::readParameters()
 {
+    const float revision = factoryToneRevisionValue != nullptr
+        ? factoryToneRevisionValue->load(std::memory_order_relaxed) : 0.0f;
+    cachedFactoryToneRevision = revision == 1.0f ? cs80::FactoryToneRevision::publicAmendedV2
+                                               : cs80::FactoryToneRevision::frozenV1;
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
         if (auto* p = parameterValues[(size_t) i])
@@ -648,6 +668,10 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
     if (bank.empty())
         return;
     index = juce::jlimit(0, (int) bank.size() - 1, index);
+    // Shipped programs predate the opt-in. Do not inherit an unrelated live
+    // interpretation when recalling their preserved identities.
+    if (library->factoryToneRevision != nullptr)
+        library->factoryToneRevision->setValueNotifyingHost(0.0f);
     applyValues(bank[(size_t) index].values);
     setPresetMetadata(juce::String(bank[(size_t) index].name), index);
     // [ws8-studio] A program load is not an undo step and starts a fresh history (as replaceState does).
@@ -815,7 +839,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const int previousFactor = engine.getOversamplingFactor();
     // Hosts may switch to offline rendering without a new prepareToPlay.
     engine.setNonRealtime(isNonRealtime());
-    engine.setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
+    engine.setControlFrame(withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources)));
     modernLayer.applyToEngine(engine, getPlayHead()); // MSEG shapes, routing, host tempo
     // A policy or oversampling-factor change resets the engine the same way.
     if (engine.getRenderPolicy() != previousPolicy || engine.getOversamplingFactor() != previousFactor)
@@ -830,7 +854,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     if (engine.getVoiceMode() == 1)
     {
         extensionEngine->setNonRealtime(isNonRealtime());
-        extensionEngine->setControlFrame(cs80::ControlFrame::programmer(cached, cachedHardwareSources));
+        extensionEngine->setControlFrame(withFactoryToneRevision(cs80::ControlFrame::programmer(cached, cachedHardwareSources)));
         cs80::ModernLayerState::mirrorToEngine(engine, *extensionEngine);
         if (!extensionActive)
         {
@@ -1120,6 +1144,17 @@ void Cs80AudioProcessor::setMemoryValue(int bank, int local, float value) noexce
     }
 }
 
+float Cs80AudioProcessor::restoredFactoryToneChoice(const juce::var& value)
+{
+    // State/preset/A-B threads only. Never clamp malformed data into opt-in:
+    // only a complete finite numeric one means V2; all other values mean V1.
+    const auto encoded = value.toString().trim();
+    const auto* begin = encoded.toRawUTF8();
+    char* end = nullptr;
+    const double parsed = std::strtod(begin, &end);
+    return end != begin && *end == '\0' && parsed == 1.0 ? 1.0f : 0.0f;
+}
+
 juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree& state) const
 {
     // APVTS is the sole authority. Complete a detached state before replacing
@@ -1176,6 +1211,8 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
                                  && (parsed == 0.0 || parsed == 1.0);
             value = literal ? (float) parsed : fallback;
         }
+        if (id == factoryToneRevisionParameterId)
+            value = restoredFactoryToneChoice(child.getProperty("value", juce::var()));
         // Round discrete choices/switches and clamp to the declared range.
         const auto& range = p->getNormalisableRange();
         value = range.snapToLegalValue(juce::jlimit(range.start, range.end, value));
@@ -1189,6 +1226,8 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         ensure(parameterId(i), i == cs80::P_sourcePerformance ? engineFallback
                                : oldSessionOff ? 0.0f : cs80::paramDef(i).def);
     }
+    // Missing old-state data must never inherit the live instance's opt-in.
+    ensure(factoryToneRevisionParameterId, 0.0f);
     // The marker describes serialized data only; savers write the current one.
     result.removeProperty(stateSchemaKey, nullptr);
     for (int channel = 0; channel < 2; ++channel)

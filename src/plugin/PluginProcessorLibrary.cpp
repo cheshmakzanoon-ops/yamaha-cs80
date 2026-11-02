@@ -15,6 +15,7 @@ void Cs80AudioProcessor::initialiseLibrary()
         library->parameters[(size_t) i] = apvts.getParameter(parameterId(i));
     for (int channel = 0; channel < 2; ++channel)
         library->sources[(size_t) channel] = apvts.getParameter(hardwareSourceParameterId(channel));
+    library->factoryToneRevision = apvts.getParameter(factoryToneRevisionParameterId);
 }
 
 // ---------------------------------------------------------------------------
@@ -51,6 +52,8 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     // parameter writes from the audio thread are the same path as host
     // automation write-back.
     const auto& values = programs[(size_t) index].values;
+    if (library->factoryToneRevision != nullptr)
+        library->factoryToneRevision->setValueNotifyingHost(0.0f);
     for (auto* source : library->sources)
         if (source != nullptr)
             source->setValueNotifyingHost(source->convertTo0to1(13.0f));
@@ -69,12 +72,20 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     // The new sound starts at the Program Change's sample position.
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
-    engine.setControlFrame({ cached, cachedHardwareSources });
+    const auto frame = withFactoryToneRevision({ cached, cachedHardwareSources });
+    // The same-sample program sound reaches every currently active instrument.
+    // Keep the historical aggregate coordinate and existing extension lifecycle.
+    forEachEngine([&](cs80::Engine& target)
+    {
+        const auto prior = target.getRenderPolicy();
+        target.setControlFrame(frame);
+        if (target.getRenderPolicy() != prior)
+            target.setExpression(expressionValue.load(std::memory_order_relaxed));
+    });
     if (engine.getRenderPolicy() == previousPolicy)
         return false;
     // A program on the other engine is a policy transition, exactly as at a
     // block boundary: the engine resets and the keyboard handoff is revoked.
-    engine.setExpression(expressionValue.load(std::memory_order_relaxed));
     resetKeyboardHandoff();
     return true;
 }
@@ -87,6 +98,8 @@ void Cs80AudioProcessor::captureAbSnapshot(int slot)
     LibraryState::Snapshot s;
     s.stored = true;
     s.values = currentValues();
+    s.factoryToneRevision = factoryToneRevisionValue != nullptr
+        && factoryToneRevisionValue->load(std::memory_order_relaxed) == 1.0f ? 1.0f : 0.0f;
     for (int channel = 0; channel < 2; ++channel)
         s.sources[(size_t) channel] = getHardwareSource(channel);
     for (int bank = 0; bank < 4; ++bank)
@@ -113,6 +126,7 @@ void Cs80AudioProcessor::recallAbSnapshot(int slot)
         if (p != nullptr)
             p->setValueNotifyingHost(p->convertTo0to1(value));
     };
+    write(library->factoryToneRevision, s.factoryToneRevision);
     for (int channel = 0; channel < 2; ++channel)
         write(library->sources[(size_t) channel], (float) s.sources[(size_t) channel]);
     for (int i = 0; i < cs80::P_numParams; ++i)
@@ -186,6 +200,7 @@ void Cs80AudioProcessor::writeLibraryState(juce::ValueTree& state) const
     slot.setProperty("index", other, nullptr);
     slot.setProperty("presetName", s.name, nullptr);
     slot.setProperty("factoryIndex", s.program, nullptr);
+    slot.setProperty(factoryToneRevisionParameterId, s.factoryToneRevision, nullptr);
     for (int channel = 0; channel < 2; ++channel)
         slot.setProperty(hardwareSourceParameterId(channel), s.sources[(size_t) channel], nullptr);
     for (int i = 0; i < cs80::P_numParams; ++i)
@@ -221,6 +236,7 @@ void Cs80AudioProcessor::readLibraryState(const juce::ValueTree& state)
             return range.snapToLegalValue(juce::jlimit(range.start, range.end, value));
         };
         restored.stored = true;
+        restored.factoryToneRevision = restoredFactoryToneChoice(slot.getProperty(factoryToneRevisionParameterId));
         restored.name = slot.getProperty("presetName", "Init Patch").toString();
         restored.program = juce::jlimit(0, juce::jmax(0, (int) getFactoryPresets().size() - 1),
                                         (int) slot.getProperty("factoryIndex", 0));

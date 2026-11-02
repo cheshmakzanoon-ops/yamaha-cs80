@@ -189,7 +189,9 @@ public:
     static constexpr int stateSchemaVersion = 3;
     static constexpr const char* stateSchemaKey = "stateSchemaVersion";
     static constexpr int memoryControlCount = 26;
-    static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount;
+    // Explicit sound interpretation, independent of ENGINE/PURE/modelVersion.
+    static constexpr const char* factoryToneRevisionParameterId = "factory_tone_revision";
+    static constexpr int hostParameterCount = cs80::P_numParams + 2 + 4 * memoryControlCount + 1;
     static bool isMemoryControl(int local) noexcept;
     // Jack/pedal/selector/output-switch state survives preset recall.
     static bool isPhysicalSetupParameter(int index) noexcept;
@@ -299,6 +301,8 @@ private:
     void applyFreshInstancePatch();
     void setParameterGesture(int index, float physicalValue);
     void readParameters();
+    cs80::ControlFrame withFactoryToneRevision(cs80::ControlFrame) const noexcept;
+    static float restoredFactoryToneChoice(const juce::var&);
     juce::ValueTree normaliseRestoredState(const juce::ValueTree& state) const;
     void resetHardwareSources() noexcept;
     void handleMidi(const juce::MidiMessage& message);
@@ -340,6 +344,11 @@ private:
     // Captured once with the effective programmer controls; never serialized as
     // a second authority beside the existing APVTS selector parameters.
     std::array<int, 2> cachedHardwareSources { 13, 13 };
+    // One lock-free choice snapshot per readParameters transaction. Frame
+    // publication must not reread the live atomic between the two engines.
+    cs80::FactoryToneRevision cachedFactoryToneRevision = cs80::FactoryToneRevision::frozenV1;
+    std::atomic<float>* factoryToneRevisionValue = nullptr;
+    static_assert(std::atomic<float>::is_always_lock_free, "Factory revision handoff must be lock-free");
     std::array<std::atomic<float>*, 2> hardwareSources {};
     std::array<std::array<std::atomic<float>*, cs80::CP_count>, 4> hardwareMemories {};
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
