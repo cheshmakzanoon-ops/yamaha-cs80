@@ -237,11 +237,20 @@ void testFactoryToneRevisionHost(Check check)
     if (volume != nullptr)
     {
         host.beginHostAutomationBlock(32);
+        // Snapshot BEFORE attaching the curve: readParameters itself evaluates
+        // an already attached sample0 point with publish=false, which would
+        // otherwise make the later changed/publish branch vacuous.
+        FactoryToneRevisionAccess::snapshot(host);
+        const float expectedVolume = volume->convertFrom0to1(static_cast<float>(0.123456789));
+        check(host.getEngine().getParams()[P_volume] != expectedVolume,
+              "transaction witness begins with a distinct actual volume target");
         check(host.attachHostAutomationQueue(*volume, {nullptr, 1, readPoint, nullptr, nullptr}),
               "transaction witness attaches actual host curve");
-        FactoryToneRevisionAccess::snapshot(host);
         setChoice(host, 0);
         FactoryToneRevisionAccess::publishAutomation(host, 0);
+        check(host.getEngine().getParams()[P_volume] == expectedVolume
+                  && host.getExtensionEngine().getParams()[P_volume] == expectedVolume,
+              "transaction witness actually publishes the new volume to both engines");
         engineMatches(host.getEngine(), true, check, "automation main uses captured V2, not new live V1");
         engineMatches(host.getExtensionEngine(), true, check, "automation extension uses the same captured V2");
         host.endHostAutomationBlock();

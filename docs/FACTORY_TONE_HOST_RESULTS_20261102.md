@@ -36,3 +36,18 @@ controls pass: eight held main assignment identities survive, the equal-sample
 ninth note reaches the extension, ordinary eight-voice main recall retains its
 aggregate coordinate, and an inactive extension stays untouched. Revision-
 dependent checks again explicitly did not run because the choice is absent.
+
+## First implementation run and mutation-discovered witness gap
+
+Production 9ba7890543058a1de160b4181cbc413c9d2f5eac (src2425af2dc94923e01193e864f110520a65d2ad5e)
+passed 2,255 checks at 14:04:18 UTC. This is a C-locale processor result, not
+complete persistence qualification: a separate actual locale probe later fails.
+
+The first actual live-frame-reread mutant exited1 with one supplemental
+concurrency failure, but no intended deterministic automation failure. The
+qualification script correctly marked this INVALID, not a successful negative.
+readParameters had already evaluated the attached sample0 curve without
+publication, so the later publisher saw no change. The fixture correction takes
+the snapshot before queue attachment and asserts both a distinct initial volume
+and the actual changed volume in both engines. No production source or test
+criterion is relaxed. The corrected fixture has 2,257 checks.

@@ -117,7 +117,7 @@ def main():
             "cases": [{"name": n, "file": f, "old": o, "new": v,
                        "required_failure": message, "replace_count": count}
                       for n, f, o, v, message, count in cases],
-            "acceptance": "compile/link success; process exit1; named ordinary FAIL; all2255 checks execute; no crash",
+            "acceptance": "compile/link success; process exit1; named ordinary FAIL; all2257 checks execute; no crash",
         }
         (args.out/"mutation-contract.json").write_text(json.dumps(contract, indent=2)+"\n")
     results = []
@@ -160,7 +160,7 @@ def main():
             log = (case/"test.log").read_text()
             match = re.search(r"Factory tone revision processor: (\d+) checks, (\d+) failures", log)
             accepted = (result.returncode == 1 and match is not None
-                        and int(match[1]) == 2255 and int(match[2]) > 0
+                        and int(match[1]) == 2257 and int(match[2]) > 0
                         and "FAIL: "+message in log)
             record = {"name": name, "started_at": started,
                       "finished_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
