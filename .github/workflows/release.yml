@@ -4,9 +4,9 @@ name: release packages
 # when their secrets exist; without them every artifact is labelled UNSIGNED
 # (macOS bundles are ad-hoc signed so they load locally). This workflow does
 # not replace build.yml: validate a commit there before releasing it.
-# All entrypoints now require the independently reviewed numerical acceptance
-# as well as the existing exact-main build/DSP/screenshot checks. A tag is NOT
-# itself release approval; the peeled commit must equal approved current main.
+# The owner-only manual entrypoint requires independently reviewed numerical
+# acceptance as well as the exact-main build/DSP/screenshot checks. Tag pushes
+# never initiate installer builds: a tag is not release authorization.
 #
 # Optional repository secrets:
 #   MACOS_CERTIFICATE_P12_BASE64, MACOS_CERTIFICATE_PASSWORD   Developer ID certificates (.p12)
@@ -20,8 +20,6 @@ on:
         description: Full reviewed JSON-only request branch commit SHA (required for manual release)
         type: string
         required: true
-  push:
-    tags: ['v*']
 
 permissions:
   contents: read
