@@ -99,6 +99,26 @@ void runUiReadinessTests(Check check, Flush flush)
     if (! juce::MessageManager::getInstance()->isThisTheMessageThread())
         return;
 
+    // Negative controls for the one-balanced-gesture observer. They must
+    // reject absent callbacks, an incomplete transaction, and duplicate
+    // transactions before it is used to qualify the real policy switch.
+    {
+        ToggleGestureProbe missing;
+        check(!missing.valid(), "readiness gesture gate rejects an omitted host transaction");
+        ToggleGestureProbe incomplete;
+        incomplete.parameterGestureChanged(0, true);
+        incomplete.parameterValueChanged(0, 1.0f);
+        check(!incomplete.valid(), "readiness gesture gate rejects an unbalanced host transaction");
+        ToggleGestureProbe duplicate;
+        for (int attempt = 0; attempt < 2; ++attempt)
+        {
+            duplicate.parameterGestureChanged(0, true);
+            duplicate.parameterValueChanged(0, 1.0f);
+            duplicate.parameterGestureChanged(0, false);
+        }
+        check(!duplicate.valid(), "readiness gesture gate rejects two complete host transactions");
+    }
+
     // Opening the browser as part of editor construction must never inspect or
     // alter a real user's library. This fresh, uncreated root is fixture-only.
     juce::TemporaryFile presetRoot("-cs80-ui-readiness");
