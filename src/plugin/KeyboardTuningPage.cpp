@@ -161,26 +161,28 @@ KeyboardTuningPage::~KeyboardTuningPage()
 juce::String KeyboardTuningPage::loadScalaText(const juce::String& scl, const juce::String& kbm)
 {
     const auto error = processor.loadScalaTuning(scl, kbm);
-    if (error.isEmpty())
-    {
-        sclText = scl;
-        kbmText = kbm;
-    }
     lastError = error;
     refreshStatus();
     return error;
 }
 
+juce::String KeyboardTuningPage::loadKeyboardMappingText(const juce::String& kbm)
+{
+    lastError = processor.loadScalaKeyboardMapping(kbm);
+    refreshStatus();
+    return lastError;
+}
+
 void KeyboardTuningPage::clearTuning()
 {
     processor.clearScalaTuning();
-    sclText = kbmText = lastError = {};
+    lastError = {};
     refreshStatus();
 }
 
 void KeyboardTuningPage::chooseFile(bool keyboardMapping)
 {
-    if (keyboardMapping && sclText.isEmpty())
+    if (keyboardMapping && ! processor.hasScalaTuning())
     {
         lastError = "Load a .scl scale before its .kbm mapping.";
         refreshStatus();
@@ -199,7 +201,7 @@ void KeyboardTuningPage::chooseFile(bool keyboardMapping)
                                  return;
                              const auto text = file.loadFileAsString();
                              if (keyboardMapping)
-                                 safe->loadScalaText(safe->sclText, text);
+                                 safe->loadKeyboardMappingText(text);
                              else
                                  safe->loadScalaText(text, {});
                          });
@@ -208,7 +210,9 @@ void KeyboardTuningPage::chooseFile(bool keyboardMapping)
 void KeyboardTuningPage::refreshStatus()
 {
     const auto loaded = processor.getScalaDescription();
-    const auto text = loaded.isNotEmpty() ? "Scala: " + loaded : juce::String("Scala: no scale loaded");
+    const bool hasScale = processor.hasScalaTuning();
+    const auto text = ! hasScale ? juce::String("Scala: no scale loaded")
+        : loaded.isNotEmpty() ? "Scala: " + loaded : juce::String("Scala: unnamed scale");
     if (description.getText() != text)
         description.setText(text, juce::dontSendNotification);
     juce::String mts;
@@ -219,7 +223,7 @@ void KeyboardTuningPage::refreshStatus()
     const auto line = lastError.isNotEmpty() ? lastError + "\n" + mts : mts;
     if (status.getText() != line)
         status.setText(line, juce::dontSendNotification);
-    loadKbm.setEnabled(sclText.isNotEmpty() || loaded.isNotEmpty());
+    loadKbm.setEnabled(hasScale);
 }
 
 void KeyboardTuningPage::timerCallback()
