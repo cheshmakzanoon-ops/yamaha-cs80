@@ -8,6 +8,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(CS80_BUILD_PLUGIN "Build the JUCE plugin and standalone application" ON)
 option(CS80_BUILD_TESTS "Build core tests" ON)
+option(CS80_ENABLE_EXPERIMENTAL_OE2_TESTS "Run the standalone experimental OE2 topology checks" OFF)
+if (CS80_ENABLE_EXPERIMENTAL_OE2_TESTS AND NOT CS80_BUILD_TESTS)
+    message(FATAL_ERROR "Experimental OE2 checks require CS80_BUILD_TESTS=ON")
+endif()
 
 add_library(cs80_core STATIC
     src/core/Engine.cpp
@@ -30,6 +34,28 @@ if (CS80_BUILD_TESTS)
     endif()
     enable_testing()
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    if (CS80_ENABLE_EXPERIMENTAL_OE2_TESTS)
+        if (NOT CMAKE_CXX_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$"
+            OR CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+            message(FATAL_ERROR "Experimental OE2 runner currently supports GCC/Clang command-line flags only")
+        endif()
+        file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}" oe2_source_root)
+        file(REAL_PATH "${CMAKE_CURRENT_BINARY_DIR}" oe2_build_root)
+        cmake_path(IS_PREFIX oe2_source_root "${oe2_build_root}" NORMALIZE oe2_inside_source)
+        if (oe2_inside_source)
+            message(FATAL_ERROR "Experimental OE2 checks require a build directory outside the source repository")
+        endif()
+        add_test(NAME cs80_experimental_oe2_topology_tests
+            COMMAND ${CMAKE_COMMAND}
+                "-DOE2_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}"
+                "-DOE2_OUTPUT_ROOT=${CMAKE_CURRENT_BINARY_DIR}/experimental-oe2"
+                "-DOE2_PYTHON=${Python3_EXECUTABLE}"
+                "-DOE2_COMPILER=${CMAKE_CXX_COMPILER}"
+                -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/RunOe2TopologyExperiment.cmake")
+        set_tests_properties(cs80_experimental_oe2_topology_tests PROPERTIES
+            TIMEOUT 180 LABELS "experimental;oe2;topology")
+    endif()
+
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
