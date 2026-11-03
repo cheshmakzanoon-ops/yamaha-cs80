@@ -1,0 +1,50 @@
+test_noncanonical_artifact_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_artifact_retains_original_reparse_rejection) ... ERROR
+test_noncanonical_expansion_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_expansion_retains_original_reparse_rejection) ... ERROR
+test_noncanonical_nested_bundle_reparse_is_rejected (__main__.ReparseFixtureIdentityTests.test_noncanonical_nested_bundle_reparse_is_rejected) ... ERROR
+test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) ... ERROR
+test_unrelated_directory_does_not_receive_attributes (__main__.ReparseFixtureIdentityTests.test_unrelated_directory_does_not_receive_attributes) ... ERROR
+
+======================================================================
+ERROR: test_noncanonical_artifact_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_artifact_retains_original_reparse_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-canonical-reparse-controls-wvhm3vtk/tests/release/test_installer_reparse_fixture_identity.py", line 16, in setUp
+    raise RuntimeError('deliberate fixture control crash')
+RuntimeError: deliberate fixture control crash
+
+======================================================================
+ERROR: test_noncanonical_expansion_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_expansion_retains_original_reparse_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-canonical-reparse-controls-wvhm3vtk/tests/release/test_installer_reparse_fixture_identity.py", line 16, in setUp
+    raise RuntimeError('deliberate fixture control crash')
+RuntimeError: deliberate fixture control crash
+
+======================================================================
+ERROR: test_noncanonical_nested_bundle_reparse_is_rejected (__main__.ReparseFixtureIdentityTests.test_noncanonical_nested_bundle_reparse_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-canonical-reparse-controls-wvhm3vtk/tests/release/test_installer_reparse_fixture_identity.py", line 16, in setUp
+    raise RuntimeError('deliberate fixture control crash')
+RuntimeError: deliberate fixture control crash
+
+======================================================================
+ERROR: test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-canonical-reparse-controls-wvhm3vtk/tests/release/test_installer_reparse_fixture_identity.py", line 16, in setUp
+    raise RuntimeError('deliberate fixture control crash')
+RuntimeError: deliberate fixture control crash
+
+======================================================================
+ERROR: test_unrelated_directory_does_not_receive_attributes (__main__.ReparseFixtureIdentityTests.test_unrelated_directory_does_not_receive_attributes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/cs80-canonical-reparse-controls-wvhm3vtk/tests/release/test_installer_reparse_fixture_identity.py", line 16, in setUp
+    raise RuntimeError('deliberate fixture control crash')
+RuntimeError: deliberate fixture control crash
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (errors=5)

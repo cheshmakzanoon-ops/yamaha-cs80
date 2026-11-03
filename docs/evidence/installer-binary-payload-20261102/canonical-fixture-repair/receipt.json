@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "source_commit": "3fda883d2d786895731ade5eb74b45ab4a80e5a2",
+  "source_tree": "13876a1b246fc6af3ddf1db23f582f966b921dc1",
+  "base_local": "9bce169b919216da3cd1e50c8c7395ca2a2b1f3f",
+  "base_remote": "dcd5f7332f8ca67c2a66eef73f3adf9ab2bd08f4",
+  "production_src_unchanged": true,
+  "production_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "production_verifier_blob": "db3431f9da62ca65ae89e89688895efc7332f81e",
+  "original_control_blob": "44370d84f7ac1d8c2e5a37744ed49fb42360c3da",
+  "initial_diagnostic": {
+    "tests": 35,
+    "ordinary_failures": 2,
+    "runtime_errors": 1,
+    "accepted_as_red": false
+  },
+  "registered_red": {
+    "commit": "78e12476095e1423a37105b6150a52a2fb632fa8",
+    "tests": 5,
+    "ordinary_failures": 3,
+    "runtime_errors": 0,
+    "skips": 0
+  },
+  "green": {
+    "python312": {
+      "new_tests": 5,
+      "original_tests": 30
+    },
+    "python313": {
+      "new_tests": 5,
+      "original_tests": 30
+    },
+    "ctest_packaging_targets": 6
+  },
+  "original_semantic_controls": 13,
+  "new_fixture_semantic_controls": 1,
+  "new_control_expected_failures": 3,
+  "runtime_substitutes_refused": 2,
+  "native_candidate_execution": false,
+  "independent_review": "pending",
+  "ui_async_fix_composed": false,
+  "numerical_acceptance": false,
+  "cpu_acceptance": false,
+  "release_acceptance": false,
+  "inputs": [
+    {
+      "path": "CMakeLists.txt",
+      "git_tree_entry": "100644 blob 24250a25659364229bc7d99e157e900e02957d2e\tCMakeLists.txt",
+      "bytes": 57354,
+      "sha256": "189c355bd849ea6a562320c217a81a6bf67d32a2aa4d5a9fd502a4df6fc8fcac"
+    },
+    {
+      "path": "tests/release/test_installer_binary_payload.py",
+      "git_tree_entry": "100644 blob 362a3675fabf49baaafa66a61bc5cec6ab68552d\ttests/release/test_installer_binary_payload.py",
+      "bytes": 17071,
+      "sha256": "3af8fa756a526bbd454336002841e4c9bfb6799586e27cf519427a72a8491754"
+    },
+    {
+      "path": "tests/release/test_installer_reparse_fixture_identity.py",
+      "git_tree_entry": "100644 blob 94033004e3b1e1cf8fbf175570f4556f31e2d64f\ttests/release/test_installer_reparse_fixture_identity.py",
+      "bytes": 2789,
+      "sha256": "3a9c987739d2a51d2cd8fc71c60983f2fa82c6f1b7e3aa8b103bc0c125531a6e"
+    },
+    {
+      "path": "tests/release/qualify_installer_reparse_fixture_mutations.py",
+      "git_tree_entry": "100644 blob 0d5aba91e2991026199929b6593a64f71e898899\ttests/release/qualify_installer_reparse_fixture_mutations.py",
+      "bytes": 5042,
+      "sha256": "9170fa14be33f9b829c4658b55c6e5ac1ec3633eb6aad8e9b97cb45429a63adc"
+    },
+    {
+      "path": "scripts/verify_installer_binaries.py",
+      "git_tree_entry": "100644 blob db3431f9da62ca65ae89e89688895efc7332f81e\tscripts/verify_installer_binaries.py",
+      "bytes": 10827,
+      "sha256": "0bf613b672c83c7d3d55cd8db607e14d44fbbc2e3baa8daa6545cc8694680625"
+    },
+    {
+      "path": "tests/release/qualify_installer_binary_mutations.py",
+      "git_tree_entry": "100644 blob 44370d84f7ac1d8c2e5a37744ed49fb42360c3da\ttests/release/qualify_installer_binary_mutations.py",
+      "bytes": 7751,
+      "sha256": "69d1d4a97f9312e654a07e8dbf0138f016d5c3a672e90c91de4a4e420e97a7bc"
+    }
+  ]
+}

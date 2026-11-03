@@ -1,0 +1,1254 @@
+﻿2026-11-02T20:24:19.9598210Z Current runner version: '2.338.2'
+2026-11-02T20:24:19.9638270Z ##[group]Runner Image Provisioner
+2026-11-02T20:24:19.9638900Z Hosted Compute Agent
+2026-11-02T20:24:19.9639330Z Version: 20261021.618
+2026-11-02T20:24:19.9639740Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-02T20:24:19.9640270Z Build Date: 2026-10-21T00:45:21Z
+2026-11-02T20:24:19.9640710Z Worker ID: {db864776-9967-4281-bb10-14a4e6be728c}
+2026-11-02T20:24:19.9641230Z Region: westus
+2026-11-02T20:24:19.9641600Z Cloud: MacCloud
+2026-11-02T20:24:19.9642000Z ##[endgroup]
+2026-11-02T20:24:19.9643160Z ##[group]Operating System
+2026-11-02T20:24:19.9643560Z macOS
+2026-11-02T20:24:19.9643960Z 15.8.2
+2026-11-02T20:24:19.9644380Z 24H232
+2026-11-02T20:24:19.9644920Z ##[endgroup]
+2026-11-02T20:24:19.9645380Z ##[group]Runner Image
+2026-11-02T20:24:19.9645860Z Image: macos-15-arm64
+2026-11-02T20:24:19.9646300Z Version: 20261028.0489.1
+2026-11-02T20:24:19.9647440Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20261028.0489/images/macos/macos-15-arm64-Readme.md
+2026-11-02T20:24:19.9650580Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20261028.0489
+2026-11-02T20:24:19.9654130Z ##[endgroup]
+2026-11-02T20:24:19.9656870Z ##[group]GITHUB_TOKEN Permissions
+2026-11-02T20:24:19.9662470Z Contents: read
+2026-11-02T20:24:19.9663820Z Metadata: read
+2026-11-02T20:24:19.9664880Z Packages: read
+2026-11-02T20:24:19.9666000Z ##[endgroup]
+2026-11-02T20:24:19.9670450Z Secret source: Actions
+2026-11-02T20:24:19.9672160Z Cache mode: write
+2026-11-02T20:24:19.9674430Z Prepare workflow directory
+2026-11-02T20:24:20.0160450Z Prepare all required actions
+2026-11-02T20:24:20.0243380Z Getting action download info
+2026-11-02T20:24:20.5433790Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-02T20:24:20.8824130Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-02T20:24:21.1062550Z Complete job name: macOS / macos-15 / VST3 + AU + Standalone
+2026-11-02T20:24:21.1676840Z ##[group]Run actions/checkout@v5
+2026-11-02T20:24:21.1677920Z with:
+2026-11-02T20:24:21.1678340Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-02T20:24:21.1681530Z   token: ***
+2026-11-02T20:24:21.1681880Z   ssh-strict: true
+2026-11-02T20:24:21.1682260Z   ssh-user: git
+2026-11-02T20:24:21.1682630Z   persist-credentials: true
+2026-11-02T20:24:21.1683020Z   clean: true
+2026-11-02T20:24:21.1683400Z   sparse-checkout-cone-mode: true
+2026-11-02T20:24:21.1683820Z   fetch-depth: 1
+2026-11-02T20:24:21.1684180Z   fetch-tags: false
+2026-11-02T20:24:21.1684550Z   show-progress: true
+2026-11-02T20:24:21.1684930Z   lfs: false
+2026-11-02T20:24:21.1685290Z   submodules: false
+2026-11-02T20:24:21.1685660Z   set-safe-directory: true
+2026-11-02T20:24:21.1686080Z   allow-unsafe-pr-checkout: false
+2026-11-02T20:24:21.1686680Z ##[endgroup]
+2026-11-02T20:24:21.5007660Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-02T20:24:21.5009580Z ##[group]Getting Git version info
+2026-11-02T20:24:21.5010660Z Working directory is '/Users/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-02T20:24:21.5012130Z [command]/opt/homebrew/bin/git version
+2026-11-02T20:24:21.5367010Z git version 2.56.0
+2026-11-02T20:24:21.5399060Z ##[endgroup]
+2026-11-02T20:24:21.5412380Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/342139a9-ede3-43e1-afce-0969b9bb46ef/.gitconfig'
+2026-11-02T20:24:21.5418570Z Temporarily overriding HOME='/Users/runner/work/_temp/342139a9-ede3-43e1-afce-0969b9bb46ef' before making global git config changes
+2026-11-02T20:24:21.5485350Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-02T20:24:21.5488010Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-02T20:24:21.5536780Z Deleting the contents of '/Users/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-02T20:24:21.5543840Z ##[group]Initializing the repository
+2026-11-02T20:24:21.5551280Z [command]/opt/homebrew/bin/git init /Users/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-02T20:24:21.5857730Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-02T20:24:21.5859590Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-02T20:24:21.5861290Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-02T20:24:21.5862680Z hint: call:
+2026-11-02T20:24:21.5863340Z hint:
+2026-11-02T20:24:21.5864560Z hint: 	git config --global init.defaultBranch <name>
+2026-11-02T20:24:21.5865660Z hint:
+2026-11-02T20:24:21.5866560Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-02T20:24:21.5868080Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-02T20:24:21.5869250Z hint:
+2026-11-02T20:24:21.5869870Z hint: 	git branch -m <name>
+2026-11-02T20:24:21.5870560Z hint:
+2026-11-02T20:24:21.5871470Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-02T20:24:21.5877870Z Initialized empty Git repository in /Users/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-02T20:24:21.5889580Z [command]/opt/homebrew/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-02T20:24:21.5982220Z ##[endgroup]
+2026-11-02T20:24:21.5983660Z ##[group]Disabling automatic garbage collection
+2026-11-02T20:24:21.5984870Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-02T20:24:21.6054580Z ##[endgroup]
+2026-11-02T20:24:21.6056420Z ##[group]Setting up auth
+2026-11-02T20:24:21.6063590Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-02T20:24:21.6120840Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-02T20:24:21.7371750Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-02T20:24:21.7406290Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-02T20:24:21.8590540Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-02T20:24:21.8608420Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-02T20:24:21.9553550Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-02T20:24:21.9636980Z ##[endgroup]
+2026-11-02T20:24:21.9641320Z ##[group]Fetching the repository
+2026-11-02T20:24:21.9648730Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +dcd5f7332f8ca67c2a66eef73f3adf9ab2bd08f4:refs/remotes/origin/work/cs80-distribution-notices-sara-20261102
+2026-11-02T20:24:24.1117220Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-02T20:24:24.1210320Z  * [new ref]         dcd5f7332f8ca67c2a66eef73f3adf9ab2bd08f4 -> origin/work/cs80-distribution-notices-sara-20261102
+2026-11-02T20:24:24.1259970Z ##[endgroup]
+2026-11-02T20:24:24.1260590Z ##[group]Determining the checkout info
+2026-11-02T20:24:24.1261780Z ##[endgroup]
+2026-11-02T20:24:24.1262200Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-02T20:24:24.1651900Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-02T20:24:24.1804310Z ##[group]Checking out the ref
+2026-11-02T20:24:24.1806560Z [command]/opt/homebrew/bin/git checkout --progress --force -B work/cs80-distribution-notices-sara-20261102 refs/remotes/origin/work/cs80-distribution-notices-sara-20261102
+2026-11-02T20:24:25.0333220Z Switched to a new branch 'work/cs80-distribution-notices-sara-20261102'
+2026-11-02T20:24:25.0347940Z branch 'work/cs80-distribution-notices-sara-20261102' set up to track 'origin/work/cs80-distribution-notices-sara-20261102'.
+2026-11-02T20:24:25.0375060Z ##[endgroup]
+2026-11-02T20:24:25.0524920Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-02T20:24:25.0615030Z dcd5f7332f8ca67c2a66eef73f3adf9ab2bd08f4
+2026-11-02T20:24:25.0867100Z ##[group]Run uname -m
+2026-11-02T20:24:25.0867550Z [36;1muname -m[0m
+2026-11-02T20:24:25.0867700Z [36;1msw_vers[0m
+2026-11-02T20:24:25.0867960Z [36;1mxcodebuild -version[0m
+2026-11-02T20:24:25.0908930Z shell: /bin/bash -e {0}
+2026-11-02T20:24:25.0909170Z ##[endgroup]
+2026-11-02T20:24:25.1527730Z arm64
+2026-11-02T20:24:25.1648630Z ProductName:		macOS
+2026-11-02T20:24:25.1649770Z ProductVersion:		15.8.2
+2026-11-02T20:24:25.1650120Z BuildVersion:		24H232
+2026-11-02T20:24:25.2755140Z Xcode 16.4
+2026-11-02T20:24:25.2755780Z Build version 16F6
+2026-11-02T20:24:25.2826010Z ##[group]Run cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+2026-11-02T20:24:25.2826890Z [36;1mcmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON[0m
+2026-11-02T20:24:25.2857470Z shell: /bin/bash -e {0}
+2026-11-02T20:24:25.2857810Z ##[endgroup]
+2026-11-02T20:24:26.9065710Z -- The C compiler identification is AppleClang 17.0.0.17000013
+2026-11-02T20:24:28.0393260Z -- The CXX compiler identification is AppleClang 17.0.0.17000013
+2026-11-02T20:24:28.1029110Z -- Detecting C compiler ABI info
+2026-11-02T20:24:28.2971570Z -- Detecting C compiler ABI info - done
+2026-11-02T20:24:28.3423300Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-02T20:24:28.3434080Z -- Detecting C compile features
+2026-11-02T20:24:28.3447510Z -- Detecting C compile features - done
+2026-11-02T20:24:28.3553030Z -- Detecting CXX compiler ABI info
+2026-11-02T20:24:28.5592310Z -- Detecting CXX compiler ABI info - done
+2026-11-02T20:24:28.6004500Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-11-02T20:24:28.6009900Z -- Detecting CXX compile features
+2026-11-02T20:24:28.6041820Z -- Detecting CXX compile features - done
+2026-11-02T20:24:28.9305240Z -- Found Python3: /opt/homebrew/Frameworks/Python.framework/Versions/3.15/bin/python3.15 (found suitable version "3.15.2", minimum required is "3.10") found components: Interpreter
+2026-11-02T20:24:28.9356440Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-11-02T20:24:29.1250370Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-11-02T20:24:29.1255910Z -- Found Threads: TRUE
+2026-11-02T20:24:58.2247380Z -- Configuring juceaide
+2026-11-02T20:24:59.5130000Z -- Building juceaide
+2026-11-02T20:25:28.5595890Z -- Exporting juceaide
+2026-11-02T20:25:28.5647470Z -- Testing juceaide
+2026-11-02T20:25:28.7144470Z -- Finished setting up juceaide
+2026-11-02T20:25:29.0726660Z -- Found Python3: /opt/homebrew/Frameworks/Python.framework/Versions/3.15/bin/python3.15 (found version "3.15.2") found components: Interpreter
+2026-11-02T20:25:30.1265660Z -- Configuring done (64.8s)
+2026-11-02T20:25:30.2839170Z -- Generating done (0.2s)
+2026-11-02T20:25:30.2873540Z -- Build files have been written to: /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+2026-11-02T20:25:30.3201570Z ##[group]Run cmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake
+2026-11-02T20:25:30.3202820Z [36;1mcmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake[0m
+2026-11-02T20:25:30.3750520Z shell: /bin/bash -e {0}
+2026-11-02T20:25:30.3750890Z ##[endgroup]
+2026-11-02T20:25:31.5059270Z -- Verified clean JUCE 8.0.11 at c352e2489000ffeb9e397051377d75eef2efe641; evidence: /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ci-juce-provenance.txt
+2026-11-02T20:25:31.5144600Z ##[group]Run cmake --build build --parallel
+2026-11-02T20:25:31.5145020Z [36;1mcmake --build build --parallel[0m
+2026-11-02T20:25:31.5186590Z shell: /bin/bash -e {0}
+2026-11-02T20:25:31.5196570Z ##[endgroup]
+2026-11-02T20:25:31.6218480Z [0/2] Re-checking globbed directories...
+2026-11-02T20:25:31.7553710Z [1/351] Copying OS X Content 'CS80Reference_artefacts/Release/Standalone/CS-80 Reference.app/Contents/Resources/RecentFilesMenuTemplate.nib'
+2026-11-02T20:25:32.0209080Z [2/351] Generating scalar-oracle/exact_scalar_frozen/oracle-source-manifest.json, scalar-oracle/exact_scalar_frozen/Dsp.h, scalar-oracle/exact_scalar_frozen/FastMath.h, scalar-oracle/exact_scalar_frozen/Ig00156PhaseCorrection.h, scalar-oracle/exact_scalar_frozen/Ig00156Filter.h, scalar-oracle/exact_scalar_frozen/ReconstructedOscillator.h
+2026-11-02T20:25:32.2143310Z [3/351] Generating juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/PanelFontData.h
+2026-11-02T20:25:32.4798420Z [4/351] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp.o
+2026-11-02T20:25:32.7718600Z [5/351] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp.o
+2026-11-02T20:25:38.7737240Z [6/351] Building CXX object CMakeFiles/CS80Reference_vst3_helper.dir/_deps/juce-src/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.mm.o
+2026-11-02T20:25:41.2245800Z [7/351] Building CXX object CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o
+2026-11-02T20:25:42.6362060Z [8/351] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-02T20:25:46.5404600Z [9/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessor.cpp.o
+2026-11-02T20:25:50.9390280Z [10/351] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-02T20:25:55.9771740Z [11/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ParameterContext.cpp.o
+2026-11-02T20:25:55.9869240Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ParameterContext.cpp:5:
+2026-11-02T20:25:55.9980130Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:25:56.0113300Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:25:56.0188500Z       |          ^
+2026-11-02T20:25:56.0290310Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:25:56.0392080Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:25:56.0494070Z       |          ^
+2026-11-02T20:25:56.0596470Z 1 warning generated.
+2026-11-02T20:25:56.8880520Z [12/351] Linking CXX static library libcs80_core.a
+2026-11-02T20:25:58.7083220Z [13/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-02T20:26:00.6763190Z [14/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/UiComponents.cpp.o
+2026-11-02T20:26:00.6879970Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.cpp:1:
+2026-11-02T20:26:00.6982650Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:00.7087300Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:00.7189440Z       |          ^
+2026-11-02T20:26:00.7291170Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:00.7397300Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:00.7500760Z       |          ^
+2026-11-02T20:26:00.7600140Z 1 warning generated.
+2026-11-02T20:26:07.3605450Z [15/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginEditor.cpp.o
+2026-11-02T20:26:07.3704020Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PluginEditor.cpp:6:
+2026-11-02T20:26:07.3820060Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-11-02T20:26:07.3925620Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-11-02T20:26:07.4064450Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:07.4170330Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:07.4259930Z       |          ^
+2026-11-02T20:26:07.4361660Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:07.4463220Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:07.4553700Z       |          ^
+2026-11-02T20:26:07.4657360Z 1 warning generated.
+2026-11-02T20:26:08.6682820Z [16/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessorAutomation.cpp.o
+2026-11-02T20:26:11.7315410Z [17/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/KeyboardTuningPage.cpp.o
+2026-11-02T20:26:11.7417690Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/KeyboardTuningPage.cpp:5:
+2026-11-02T20:26:11.7518430Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:11.7623520Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:11.7724920Z       |          ^
+2026-11-02T20:26:11.7827620Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:11.7927370Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:11.8029380Z       |          ^
+2026-11-02T20:26:11.8135940Z 1 warning generated.
+2026-11-02T20:26:15.8006880Z [18/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ModernLayerState.cpp.o
+2026-11-02T20:26:16.1928480Z [19/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PresetBrowser.cpp.o
+2026-11-02T20:26:16.2032480Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.cpp:1:
+2026-11-02T20:26:16.2135950Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.h:3:
+2026-11-02T20:26:16.2240210Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:16.2364810Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:16.2467290Z       |          ^
+2026-11-02T20:26:16.2570280Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:16.2673190Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:16.2774690Z       |          ^
+2026-11-02T20:26:16.2876670Z 1 warning generated.
+2026-11-02T20:26:20.1745620Z [20/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessorLibrary.cpp.o
+2026-11-02T20:26:20.3626890Z [21/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ModernModulationUi.cpp.o
+2026-11-02T20:26:20.3630150Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ModernModulationUi.cpp:5:
+2026-11-02T20:26:20.3742940Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:20.3849110Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:20.3950880Z       |          ^
+2026-11-02T20:26:20.4053980Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:20.4157580Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:20.4263550Z       |          ^
+2026-11-02T20:26:20.4364970Z 1 warning generated.
+2026-11-02T20:26:20.4466400Z [22/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/AdvancedPanel.cpp.o
+2026-11-02T20:26:20.4567920Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.cpp:1:
+2026-11-02T20:26:20.4669390Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-11-02T20:26:20.4770940Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-11-02T20:26:20.4874230Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:20.4976350Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:20.5077710Z       |          ^
+2026-11-02T20:26:20.5179190Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:20.5281110Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:20.5382990Z       |          ^
+2026-11-02T20:26:20.5484550Z 1 warning generated.
+2026-11-02T20:26:22.5837770Z [23/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ArtCommon.cpp.o
+2026-11-02T20:26:22.5943040Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ArtCommon.cpp:3:
+2026-11-02T20:26:22.6156450Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:22.6257260Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:22.6360080Z       |          ^
+2026-11-02T20:26:22.6460200Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:22.6561850Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:22.6662740Z       |          ^
+2026-11-02T20:26:22.6763830Z 1 warning generated.
+2026-11-02T20:26:24.9885290Z [24/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PanelWidgets.cpp.o
+2026-11-02T20:26:24.9977180Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.cpp:1:
+2026-11-02T20:26:25.0079980Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:26:25.0179490Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:25.0282120Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:25.0381750Z       |          ^
+2026-11-02T20:26:25.0485810Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:25.0583700Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:25.0685740Z       |          ^
+2026-11-02T20:26:25.0785320Z 1 warning generated.
+2026-11-02T20:26:27.3976710Z [25/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/EditorPreferences.cpp.o
+2026-11-02T20:26:28.3065390Z [26/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/ChannelRow.cpp.o
+2026-11-02T20:26:28.3166880Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.cpp:1:
+2026-11-02T20:26:28.3267470Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.h:3:
+2026-11-02T20:26:28.3369440Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:26:28.3472360Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:28.3575870Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:28.3677320Z       |          ^
+2026-11-02T20:26:28.3779590Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:28.3884200Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:28.3986390Z       |          ^
+2026-11-02T20:26:28.3986870Z 1 warning generated.
+2026-11-02T20:26:28.4087910Z [27/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/CentreRow.cpp.o
+2026-11-02T20:26:28.4190550Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.cpp:1:
+2026-11-02T20:26:28.4293000Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.h:3:
+2026-11-02T20:26:28.4395860Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:26:28.4491580Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:28.4594780Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:28.4695940Z       |          ^
+2026-11-02T20:26:28.4797620Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:28.4913910Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:28.5015790Z       |          ^
+2026-11-02T20:26:28.5116920Z 1 warning generated.
+2026-11-02T20:26:29.2399500Z [28/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/PerformanceDeck.cpp.o
+2026-11-02T20:26:29.2499850Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.cpp:1:
+2026-11-02T20:26:29.2600820Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.h:3:
+2026-11-02T20:26:29.2701420Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:26:29.2803690Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:29.2903550Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:29.3004890Z       |          ^
+2026-11-02T20:26:29.3108190Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:29.3209460Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:29.3312060Z       |          ^
+2026-11-02T20:26:29.3412610Z 1 warning generated.
+2026-11-02T20:26:32.6650980Z [29/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/MemoryLid.cpp.o
+2026-11-02T20:26:32.6752990Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.cpp:1:
+2026-11-02T20:26:32.6853730Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.h:3:
+2026-11-02T20:26:32.6957630Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:26:32.7060230Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:32.7176100Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:32.7267730Z       |          ^
+2026-11-02T20:26:32.7369280Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:32.7471920Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:32.7573640Z       |          ^
+2026-11-02T20:26:32.7675630Z 1 warning generated.
+2026-11-02T20:26:35.2746290Z [30/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/UndoHistory.cpp.o
+2026-11-02T20:26:36.4956290Z [31/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/StudioTour.cpp.o
+2026-11-02T20:26:36.5058090Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.cpp:1:
+2026-11-02T20:26:36.5159520Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.h:3:
+2026-11-02T20:26:36.5261490Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:36.5364280Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:36.5465440Z       |          ^
+2026-11-02T20:26:36.5568530Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:36.5670960Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:36.5772480Z       |          ^
+2026-11-02T20:26:36.5874310Z 1 warning generated.
+2026-11-02T20:26:37.5997480Z [32/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/StudioDrawers.cpp.o
+2026-11-02T20:26:37.6108580Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.cpp:1:
+2026-11-02T20:26:37.6213210Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.h:3:
+2026-11-02T20:26:37.6316020Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:37.6418890Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:37.6520100Z       |          ^
+2026-11-02T20:26:37.6621650Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:37.6723240Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:37.6824980Z       |          ^
+2026-11-02T20:26:37.6902890Z 1 warning generated.
+2026-11-02T20:26:38.2768910Z [33/351] Building CXX object CMakeFiles/CS80Reference.dir/src/plugin/StudioToolbar.cpp.o
+2026-11-02T20:26:38.2870290Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.cpp:1:
+2026-11-02T20:26:38.2971960Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.h:3:
+2026-11-02T20:26:38.3073870Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:26:38.3175670Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:26:38.3276830Z       |          ^
+2026-11-02T20:26:38.3426390Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:26:38.3528950Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:26:38.3630800Z       |          ^
+2026-11-02T20:26:38.3731310Z 1 warning generated.
+2026-11-02T20:26:39.3737950Z [34/351] Building C object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+2026-11-02T20:26:47.3009410Z [35/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.mm.o
+2026-11-02T20:26:51.4358760Z [36/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.mm.o
+2026-11-02T20:26:51.5568890Z [37/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_core/juce_core_CompilationTime.cpp.o
+2026-11-02T20:26:55.0595660Z [38/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_events/juce_events.mm.o
+2026-11-02T20:26:59.7975030Z [39/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_data_structures/juce_data_structures.mm.o
+2026-11-02T20:26:59.8885590Z [40/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+2026-11-02T20:26:59.9320800Z [41/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+2026-11-02T20:27:13.4189760Z [42/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.mm.o
+2026-11-02T20:27:19.8834070Z [43/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_core/juce_core.mm.o
+2026-11-02T20:27:23.4805740Z [44/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+2026-11-02T20:27:26.0034920Z [45/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_graphics/juce_graphics.mm.o
+2026-11-02T20:27:26.4078200Z [46/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_basics/juce_audio_basics.mm.o
+2026-11-02T20:27:32.9763870Z [47/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_utils/juce_audio_utils.mm.o
+2026-11-02T20:27:33.0970730Z [48/351] Linking CXX static library libcs80_panel_fonts.a
+2026-11-02T20:27:33.3410250Z [49/351] Linking CXX executable CS80Reference_vst3_helper
+2026-11-02T20:27:35.2269250Z [50/351] Building CXX object CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o
+2026-11-02T20:27:37.3526090Z [51/351] Building CXX object CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o
+2026-11-02T20:27:38.1420250Z [52/351] Building CXX object CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o
+2026-11-02T20:27:38.9443920Z [53/351] Building CXX object CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o
+2026-11-02T20:27:41.2567460Z [54/351] Building CXX object CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o
+2026-11-02T20:27:41.9995880Z [55/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.mm.o
+2026-11-02T20:27:43.8425020Z [56/351] Building CXX object CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o
+2026-11-02T20:27:44.1313600Z [57/351] Building CXX object CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o
+2026-11-02T20:27:45.4557920Z [58/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.mm.o
+2026-11-02T20:27:46.1665040Z [59/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_audio_formats/juce_audio_formats.mm.o
+2026-11-02T20:27:46.7589910Z [60/351] Building CXX object CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o
+2026-11-02T20:27:47.3825830Z [61/351] Building CXX object CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o
+2026-11-02T20:27:48.3703060Z [62/351] Building CXX object CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o
+2026-11-02T20:27:48.4776750Z [63/351] Building CXX object CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o
+2026-11-02T20:27:49.2662270Z [64/351] Building CXX object CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o
+2026-11-02T20:27:49.9716860Z [65/351] Building CXX object CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o
+2026-11-02T20:27:51.4238140Z [66/351] Building CXX object CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o
+2026-11-02T20:27:51.7260960Z [67/351] Building CXX object CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o
+2026-11-02T20:27:51.7913480Z [68/351] Building CXX object CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o
+2026-11-02T20:27:52.7493110Z [69/351] Building CXX object CMakeFiles/cs80_cold_idle_timing_tests.dir/tests/ColdIdleTimingTests.cpp.o
+2026-11-02T20:27:54.3077020Z [70/351] Building CXX object CMakeFiles/cs80_note_off_continuity_tests.dir/tests/NoteOffContinuityTests.cpp.o
+2026-11-02T20:27:54.8121260Z [71/351] Building CXX object CMakeFiles/cs80_cold_filter_envelope_tests.dir/tests/ColdFilterEnvelopeTests.cpp.o
+2026-11-02T20:27:56.0150800Z [72/351] Building CXX object CMakeFiles/cs80_click_event_continuation_tests.dir/tests/ClickEventContinuationTests.cpp.o
+2026-11-02T20:27:58.1503810Z [73/351] Building CXX object CMakeFiles/CS80Reference.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm.o
+2026-11-02T20:27:58.1606640Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm:35:
+2026-11-02T20:27:58.1710120Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: warning: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [-W#pragma-messages]
+2026-11-02T20:27:58.1812580Z    61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-11-02T20:27:58.1914100Z       |  ^
+2026-11-02T20:27:58.2016280Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: expanded from macro 'JUCE_COMPILER_WARNING'
+2026-11-02T20:27:58.2118380Z   292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+2026-11-02T20:27:58.2220840Z       |                                      ^
+2026-11-02T20:27:58.2326220Z <scratch space>:191:2: note: expanded from here
+2026-11-02T20:27:58.2427830Z   191 |  message ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-11-02T20:27:58.2529170Z       |  ^
+2026-11-02T20:27:58.2630980Z 1 warning generated.
+2026-11-02T20:27:58.4562780Z [74/351] Building CXX object CMakeFiles/cs80_click_bank_causality_tests.dir/tests/ClickBankCausalityTests.cpp.o
+2026-11-02T20:27:58.5275800Z [75/351] Linking CXX static library "CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a"
+2026-11-02T20:27:58.6600890Z [76/351] Building CXX object CMakeFiles/cs80_ring_event_continuity_tests.dir/tests/RingEventContinuityTests.cpp.o
+2026-11-02T20:27:58.7404600Z [77/351] Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_AU/PkgInfo
+2026-11-02T20:27:58.8091820Z [78/351] Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_Standalone/PkgInfo
+2026-11-02T20:27:58.8193620Z [79/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+2026-11-02T20:27:58.8639230Z [80/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+2026-11-02T20:27:58.8819700Z [81/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+2026-11-02T20:27:58.9803280Z [82/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+2026-11-02T20:27:59.0004490Z [83/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+2026-11-02T20:28:00.2095960Z [84/351] Building CXX object CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o
+2026-11-02T20:28:00.2700760Z [85/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+2026-11-02T20:28:00.3403290Z [86/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+2026-11-02T20:28:00.4006530Z [87/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+2026-11-02T20:28:00.4630950Z [88/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+2026-11-02T20:28:00.6143020Z [89/351] Generating CS80Reference_artefacts/JuceLibraryCode/CS80Reference_VST3/PkgInfo
+2026-11-02T20:28:01.4764700Z [90/351] Building CXX object CMakeFiles/cs80_ring_event_causality.dir/tests/RingEventCausality.cpp.o
+2026-11-02T20:28:03.4801890Z [91/351] Building CXX object CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o
+2026-11-02T20:28:03.7913520Z [92/351] Building CXX object CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o
+2026-11-02T20:28:04.1732450Z [93/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+2026-11-02T20:28:04.5870860Z [94/351] Building CXX object CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o
+2026-11-02T20:28:05.3175970Z [95/351] Building CXX object CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o
+2026-11-02T20:28:05.7085570Z [96/351] Building CXX object CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o
+2026-11-02T20:28:05.9970350Z [97/351] Building CXX object CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o
+2026-11-02T20:28:06.5216020Z [98/351] Building CXX object CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o
+2026-11-02T20:28:07.2811100Z [99/351] Building CXX object CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o
+2026-11-02T20:28:08.5971360Z [100/351] Building CXX object CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o
+2026-11-02T20:28:09.1989470Z [101/351] Building CXX object CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o
+2026-11-02T20:28:09.4299810Z [102/351] Building CXX object CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o
+2026-11-02T20:28:09.6711040Z [103/351] Building CXX object CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o
+2026-11-02T20:28:10.8659680Z [104/351] Building CXX object CMakeFiles/CS80Reference_AU.dir/cs80-juce-wrappers/juce_audio_plugin_client_AU_1.mm.o
+2026-11-02T20:28:11.2725260Z [105/351] Building CXX object CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o
+2026-11-02T20:28:11.8679180Z [106/351] Building CXX object CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o
+2026-11-02T20:28:13.0798570Z [107/351] Building CXX object CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o
+2026-11-02T20:28:13.1608020Z [108/351] Building CXX object CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o
+2026-11-02T20:28:13.8855670Z [109/351] Building CXX object CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o
+2026-11-02T20:28:14.0863930Z [110/351] Building CXX object CMakeFiles/cs80_chorus_tabs_tests.dir/tests/ChorusTabsTests.cpp.o
+2026-11-02T20:28:14.3494710Z [111/351] Building CXX object CMakeFiles/cs80_idle_exact_skip_tests.dir/tests/IdleExactSkipTests.cpp.o
+2026-11-02T20:28:14.6508130Z [112/351] Building CXX object CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o
+2026-11-02T20:28:15.1658180Z [113/351] Building CXX object CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o
+2026-11-02T20:28:16.3051800Z [114/351] Building CXX object CMakeFiles/cs80_oscillator_cache_tests.dir/tests/OscillatorCacheTests.cpp.o
+2026-11-02T20:28:16.5964380Z [115/351] Building CXX object CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o
+2026-11-02T20:28:17.1542900Z [116/351] Building CXX object CMakeFiles/cs80_wsc_fast_path_oracle_tests.dir/tests/OscillatorFastPathOracleTests.cpp.o
+2026-11-02T20:28:17.2165370Z [117/351] Building CXX object CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o
+2026-11-02T20:28:17.8908750Z [118/351] Building CXX object CMakeFiles/cs80_ig00156_companion_history_tests.dir/tests/Ig00156CompanionHistoryTests.cpp.o
+2026-11-02T20:28:19.1733930Z [119/351] Building CXX object CMakeFiles/cs80_ig00156_phase_correction_tests.dir/tests/Ig00156PhaseCorrectionTests.cpp.o
+2026-11-02T20:28:19.7400720Z [120/351] Building CXX object CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o
+2026-11-02T20:28:20.2645020Z [121/351] Building CXX object CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o
+2026-11-02T20:28:20.3552330Z [122/351] Building CXX object CMakeFiles/cs80_ig00151_idle_tail_tests.dir/tests/Ig00151IdleTailTests.cpp.o
+2026-11-02T20:28:20.7286580Z [123/351] Building CXX object CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o
+2026-11-02T20:28:21.8164750Z [124/351] Building CXX object CMakeFiles/cs80_stationary_controls_exact_tests.dir/tests/StationaryControlsExactTests.cpp.o
+2026-11-02T20:28:22.3724000Z [125/351] Building CXX object CMakeFiles/cs80_modern_tail_scheduling_tests.dir/tests/ModernTailSchedulingTests.cpp.o
+2026-11-02T20:28:22.7559770Z [126/351] Building CXX object CMakeFiles/cs80_vca_tail_modulation_tests.dir/tests/VcaTailModulationTests.cpp.o
+2026-11-02T20:28:23.6529100Z [127/351] Building CXX object CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o
+2026-11-02T20:28:23.6737370Z [128/351] Building CXX object CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o
+2026-11-02T20:28:25.8296770Z [129/351] Building CXX object CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o
+2026-11-02T20:28:25.8799410Z [130/351] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-02T20:28:26.4268860Z [131/351] Building CXX object CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o
+2026-11-02T20:28:26.7990410Z [132/351] Building CXX object CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o
+2026-11-02T20:28:27.1608650Z [133/351] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-02T20:28:27.2411390Z [134/351] Building CXX object CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o
+2026-11-02T20:28:27.8695280Z [135/351] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-02T20:28:27.8997270Z [136/351] Building CXX object CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o
+2026-11-02T20:28:28.6262080Z [137/351] Building CXX object CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o
+2026-11-02T20:28:29.1536330Z [138/351] Building CXX object CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o
+2026-11-02T20:28:29.5534770Z [139/351] Building CXX object CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o
+2026-11-02T20:28:30.3591210Z [140/351] Building CXX object CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o
+2026-11-02T20:28:31.4698160Z [141/351] Building CXX object CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o
+2026-11-02T20:28:32.2782590Z [142/351] Building CXX object CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o
+2026-11-02T20:28:32.2884830Z [143/351] Building CXX object CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o
+2026-11-02T20:28:32.5833070Z [144/351] Building CXX object CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o
+2026-11-02T20:28:34.0170880Z [145/351] Building CXX object CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o
+2026-11-02T20:28:34.4007970Z [146/351] Building CXX object CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o
+2026-11-02T20:28:34.6318290Z [147/351] Building CXX object CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o
+2026-11-02T20:28:34.8835150Z [148/351] Building CXX object CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o
+2026-11-02T20:28:35.0748720Z [149/351] Building CXX object CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o
+2026-11-02T20:28:35.4282480Z [150/351] Building CXX object CMakeFiles/cs80_unused_lfo_readout_exact_tests.dir/tests/UnusedLfoReadoutExactTests.cpp.o
+2026-11-02T20:28:36.6622010Z [151/351] Building CXX object CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o
+2026-11-02T20:28:37.1695700Z [152/351] Building CXX object CMakeFiles/cs80_unused_lfo_engine_ownership_tests.dir/tests/UnusedLfoEngineOwnershipTests.cpp.o
+2026-11-02T20:28:37.4225470Z [153/351] Building CXX object CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o
+2026-11-02T20:28:39.4883400Z [154/351] Building CXX object CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o
+2026-11-02T20:28:39.6390630Z [155/351] Building CXX object CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o
+2026-11-02T20:28:40.0408920Z [156/351] Building CXX object CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o
+2026-11-02T20:28:40.2661540Z [157/351] Building CXX object CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o
+2026-11-02T20:28:40.4038120Z [158/351] Building CXX object CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o
+2026-11-02T20:28:40.6047770Z [159/351] Building CXX object CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o
+2026-11-02T20:28:42.0468050Z [160/351] Building CXX object CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o
+2026-11-02T20:28:42.2778760Z [161/351] Building CXX object CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o
+2026-11-02T20:28:43.4938730Z [162/351] Building CXX object CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o
+2026-11-02T20:28:43.9869890Z [163/351] Building CXX object CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o
+2026-11-02T20:28:44.0863210Z [164/351] Building CXX object CMakeFiles/cs80_programmer_integration_tests.dir/tests/ProgrammerIntegrationTests.cpp.o
+2026-11-02T20:28:45.1923620Z [165/351] Building CXX object CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o
+2026-11-02T20:28:46.1018270Z [166/351] Building CXX object CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o
+2026-11-02T20:28:46.1520760Z [167/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+2026-11-02T20:28:46.2324590Z [168/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+2026-11-02T20:28:46.8557830Z [169/351] Building CXX object CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o
+2026-11-02T20:28:46.9094120Z [170/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+2026-11-02T20:28:46.9662780Z [171/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+2026-11-02T20:28:47.0233260Z [172/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+2026-11-02T20:28:47.0798760Z [173/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+2026-11-02T20:28:47.1402120Z [174/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+2026-11-02T20:28:47.1948080Z [175/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+2026-11-02T20:28:47.2506180Z [176/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+2026-11-02T20:28:47.3111110Z [177/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.mm.o
+2026-11-02T20:28:47.5057260Z [178/351] Building CXX object CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o
+2026-11-02T20:28:47.5891950Z [179/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+2026-11-02T20:28:47.6462840Z [180/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+2026-11-02T20:28:47.7287870Z [181/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+2026-11-02T20:28:47.7959830Z [182/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+2026-11-02T20:28:47.8575390Z [183/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.mm.o
+2026-11-02T20:28:47.9287240Z [184/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm.o
+2026-11-02T20:28:47.9819400Z [185/351] Linking CXX CFBundle shared module "CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+2026-11-02T20:28:47.9921760Z [186/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm.o
+2026-11-02T20:28:48.0397610Z [187/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.mm.o
+2026-11-02T20:28:48.0500580Z [188/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AUv3.mm.o
+2026-11-02T20:28:48.1015240Z [189/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.mm.o
+2026-11-02T20:28:48.9321710Z [190/351] Building CXX object CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o
+2026-11-02T20:28:50.1872570Z [191/351] Building CXX object CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o
+2026-11-02T20:28:51.2389150Z [192/351] Building CXX object CMakeFiles/cs80_au_automation_host_tests.dir/tests/AuAutomationHostTests.cpp.o
+2026-11-02T20:28:53.5630140Z [193/351] Building CXX object CMakeFiles/CS80Reference_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+2026-11-02T20:28:59.4887250Z [194/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+2026-11-02T20:29:03.2930240Z [195/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContext.cpp.o
+2026-11-02T20:29:03.3031750Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ParameterContext.cpp:5:
+2026-11-02T20:29:03.3132760Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:03.3235980Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:03.3335390Z       |          ^
+2026-11-02T20:29:03.3457110Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:03.3559960Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:03.3659850Z       |          ^
+2026-11-02T20:29:03.3760850Z 1 warning generated.
+2026-11-02T20:29:05.4030120Z [196/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+2026-11-02T20:29:05.4131990Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.cpp:1:
+2026-11-02T20:29:05.4232420Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:05.4333480Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:05.4434720Z       |          ^
+2026-11-02T20:29:05.4535990Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:05.4638530Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:05.4740150Z       |          ^
+2026-11-02T20:29:05.4840270Z 1 warning generated.
+2026-11-02T20:29:07.0835260Z [197/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o
+2026-11-02T20:29:11.3738740Z [198/351] Building CXX object CMakeFiles/CS80Reference_VST3.dir/cs80-juce-wrappers/juce_audio_plugin_client_VST3.mm.o
+2026-11-02T20:29:11.7177840Z [199/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+2026-11-02T20:29:11.7278190Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PluginEditor.cpp:6:
+2026-11-02T20:29:11.7378630Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-11-02T20:29:11.7480070Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-11-02T20:29:11.7582730Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:11.7682900Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:11.7782820Z       |          ^
+2026-11-02T20:29:11.7884940Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:11.7988150Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:11.7988900Z       |          ^
+2026-11-02T20:29:11.8088060Z 1 warning generated.
+2026-11-02T20:29:16.3192990Z [200/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+2026-11-02T20:29:20.4845550Z [201/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o
+2026-11-02T20:29:22.0554630Z [202/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+2026-11-02T20:29:22.0647990Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/KeyboardTuningPage.cpp:5:
+2026-11-02T20:29:22.0747640Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:22.0851110Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:22.0952570Z       |          ^
+2026-11-02T20:29:22.1054260Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:22.1155860Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:22.1257860Z       |          ^
+2026-11-02T20:29:22.1359360Z 1 warning generated.
+2026-11-02T20:29:22.1660940Z [203/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+2026-11-02T20:29:22.1762770Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.cpp:1:
+2026-11-02T20:29:22.1864480Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PresetBrowser.h:3:
+2026-11-02T20:29:22.1968360Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:22.2070860Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:22.2171240Z       |          ^
+2026-11-02T20:29:22.2273550Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:22.2394040Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:22.2495500Z       |          ^
+2026-11-02T20:29:22.2597010Z 1 warning generated.
+2026-11-02T20:29:28.0675730Z [204/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+2026-11-02T20:29:28.0678290Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ModernModulationUi.cpp:5:
+2026-11-02T20:29:28.0780840Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:28.0886820Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:28.0988400Z       |          ^
+2026-11-02T20:29:28.1090200Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:28.1192350Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:28.1293960Z       |          ^
+2026-11-02T20:29:28.1395750Z 1 warning generated.
+2026-11-02T20:29:28.4811460Z [205/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+2026-11-02T20:29:28.5414640Z [206/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o
+2026-11-02T20:29:28.5516150Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ArtCommon.cpp:3:
+2026-11-02T20:29:28.5618480Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:28.5719160Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:28.5821030Z       |          ^
+2026-11-02T20:29:28.5923740Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:28.6026320Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:28.6126650Z       |          ^
+2026-11-02T20:29:28.6226990Z 1 warning generated.
+2026-11-02T20:29:29.1170800Z [207/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+2026-11-02T20:29:29.1269960Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.cpp:1:
+2026-11-02T20:29:29.1372320Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/AdvancedPanel.h:5:
+2026-11-02T20:29:29.1472980Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioView.h:3:
+2026-11-02T20:29:29.1573880Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:29.1676220Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:29.1777690Z       |          ^
+2026-11-02T20:29:29.1878950Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:29.2001130Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:29.2102350Z       |          ^
+2026-11-02T20:29:29.2204160Z 1 warning generated.
+2026-11-02T20:29:30.5311350Z [208/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+2026-11-02T20:29:30.5414470Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.cpp:1:
+2026-11-02T20:29:30.5517960Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:29:30.5629940Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:30.5732110Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:30.5841290Z       |          ^
+2026-11-02T20:29:30.5944410Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:30.6047340Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:30.6148790Z       |          ^
+2026-11-02T20:29:30.6249960Z 1 warning generated.
+2026-11-02T20:29:32.9557400Z [209/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o
+2026-11-02T20:29:36.9295500Z [210/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+2026-11-02T20:29:36.9385750Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.cpp:1:
+2026-11-02T20:29:36.9485420Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/ChannelRow.h:3:
+2026-11-02T20:29:36.9585610Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:29:36.9688850Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:36.9791980Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:36.9891230Z       |          ^
+2026-11-02T20:29:36.9993110Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:37.0093790Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:37.0193900Z       |          ^
+2026-11-02T20:29:37.0295480Z 1 warning generated.
+2026-11-02T20:29:37.1556020Z [211/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+2026-11-02T20:29:37.1658530Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.cpp:1:
+2026-11-02T20:29:37.1759020Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/CentreRow.h:3:
+2026-11-02T20:29:37.1862410Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:29:37.1961140Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:37.2061590Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:37.2162930Z       |          ^
+2026-11-02T20:29:37.2263740Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:37.2364670Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:37.2465300Z       |          ^
+2026-11-02T20:29:37.2565730Z 1 warning generated.
+2026-11-02T20:29:38.4446600Z [212/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+2026-11-02T20:29:38.4547010Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.cpp:1:
+2026-11-02T20:29:38.4648120Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PerformanceDeck.h:3:
+2026-11-02T20:29:38.4749520Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:29:38.4850690Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:38.4953190Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:38.5052560Z       |          ^
+2026-11-02T20:29:38.5155120Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:38.5256990Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:38.5357670Z       |          ^
+2026-11-02T20:29:38.5458660Z 1 warning generated.
+2026-11-02T20:29:40.0967630Z [213/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+2026-11-02T20:29:40.1068120Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.cpp:1:
+2026-11-02T20:29:40.1170800Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/MemoryLid.h:3:
+2026-11-02T20:29:40.1272360Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/PanelWidgets.h:8:
+2026-11-02T20:29:40.1373840Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:40.1475900Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:40.1575810Z       |          ^
+2026-11-02T20:29:40.1678260Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:40.1779370Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:40.1880890Z       |          ^
+2026-11-02T20:29:40.1981430Z 1 warning generated.
+2026-11-02T20:29:43.1913260Z [214/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o
+2026-11-02T20:29:44.5093970Z [215/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+2026-11-02T20:29:44.5193700Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.cpp:1:
+2026-11-02T20:29:44.5295270Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioToolbar.h:3:
+2026-11-02T20:29:44.5395940Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:44.5508980Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:44.5605060Z       |          ^
+2026-11-02T20:29:44.5711010Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:44.5815380Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:44.5919900Z       |          ^
+2026-11-02T20:29:44.6020640Z 1 warning generated.
+2026-11-02T20:29:44.6120940Z [216/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o
+2026-11-02T20:29:44.6223380Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.cpp:1:
+2026-11-02T20:29:44.6325280Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioTour.h:3:
+2026-11-02T20:29:44.6426100Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:44.6528050Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:44.6629270Z       |          ^
+2026-11-02T20:29:44.6732730Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:44.6833470Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:44.6933400Z       |          ^
+2026-11-02T20:29:44.7034710Z 1 warning generated.
+2026-11-02T20:29:45.5774080Z [217/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+2026-11-02T20:29:45.5877470Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.cpp:1:
+2026-11-02T20:29:45.5980110Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/StudioDrawers.h:3:
+2026-11-02T20:29:45.6082500Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:29:45.6184690Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:29:45.6286510Z       |          ^
+2026-11-02T20:29:45.6388540Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:29:45.6490210Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:29:45.6591360Z       |          ^
+2026-11-02T20:29:45.6692900Z 1 warning generated.
+2026-11-02T20:29:58.3945950Z [218/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_utils/juce_audio_utils.mm.o
+2026-11-02T20:30:00.2109110Z [219/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.mm.o
+2026-11-02T20:30:01.2083910Z [220/351] Building C object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+2026-11-02T20:30:02.5972280Z [221/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.mm.o
+2026-11-02T20:30:07.0755500Z [222/351] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+2026-11-02T20:30:07.0846160Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:4:
+2026-11-02T20:30:07.0949750Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/plugin/UiComponents.h:426:10: warning: 'setTooltip' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+2026-11-02T20:30:07.1051790Z   426 |     void setTooltip(const juce::String& customTip);
+2026-11-02T20:30:07.1153650Z       |          ^
+2026-11-02T20:30:07.1254430Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/buttons/juce_Button.h:325:10: note: overridden virtual function is here
+2026-11-02T20:30:07.1356910Z   325 |     void setTooltip (const String& newTooltip) override;
+2026-11-02T20:30:07.1462780Z       |          ^
+2026-11-02T20:30:07.1597330Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:22:
+2026-11-02T20:30:07.1599060Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/StateTreeSynchronizationTests.h:401:24: warning: arithmetic between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::ChannelParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-11-02T20:30:07.1710400Z   401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+2026-11-02T20:30:07.1811750Z       |             ~~~~~~~~~~ ^ ~~~~~~~~~~~~
+2026-11-02T20:30:07.1914210Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/StateTreeSynchronizationTests.h:401:51: warning: arithmetic between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::ChannelParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-11-02T20:30:07.2016460Z   401 |             P_ch1Start + CP_hpfCutoff, P_ch1Start + CP_lpfCutoff,
+2026-11-02T20:30:07.2122590Z       |                                        ~~~~~~~~~~ ^ ~~~~~~~~~~~~
+2026-11-02T20:30:07.2225910Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/StateTreeSynchronizationTests.h:402:24: warning: arithmetic between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::ChannelParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-11-02T20:30:07.2328800Z   402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+2026-11-02T20:30:07.2430660Z       |             ~~~~~~~~~~ ^ ~~~~~~~~~~~~
+2026-11-02T20:30:07.2533140Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/../../tests/StateTreeSynchronizationTests.h:402:51: warning: arithmetic between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::ChannelParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-11-02T20:30:07.2635410Z   402 |             P_ch2Start + CP_hpfCutoff, P_ch2Start + CP_lpfCutoff };
+2026-11-02T20:30:07.2737230Z       |                                        ~~~~~~~~~~ ^ ~~~~~~~~~~~~
+2026-11-02T20:30:07.2839230Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3300:54: warning: conditional expression between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::GlobalParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-11-02T20:30:07.2942450Z  3300 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+2026-11-02T20:30:07.3044610Z       |                                                      ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~
+2026-11-02T20:30:07.3151310Z /Users/runner/work/yamaha-cs80/yamaha-cs80/src/tools/ui_snapshot.cpp:3301:54: warning: conditional expression between different enumeration types ('cs80::(unnamed enum at /Users/runner/work/yamaha-cs80/yamaha-cs80/src/core/Params.h:123:1)' and 'cs80::GlobalParam') is deprecated [-Wdeprecated-anon-enum-enum-conversion]
+2026-11-02T20:30:07.3256700Z  3301 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+2026-11-02T20:30:07.3359210Z       |                                                      ^ ~~~~~~~~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~
+2026-11-02T20:30:07.3460720Z 7 warnings generated.
+2026-11-02T20:30:07.3563290Z [223/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_core/juce_core_CompilationTime.cpp.o
+2026-11-02T20:30:09.8292640Z [224/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_events/juce_events.mm.o
+2026-11-02T20:30:15.2992850Z [225/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_data_structures/juce_data_structures.mm.o
+2026-11-02T20:30:15.3598180Z [226/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+2026-11-02T20:30:15.4099900Z [227/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+2026-11-02T20:30:29.4140420Z [228/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.mm.o
+2026-11-02T20:30:37.9064260Z [229/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_core/juce_core.mm.o
+2026-11-02T20:30:42.7909090Z [230/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_basics/juce_audio_basics.mm.o
+2026-11-02T20:30:47.9056820Z [231/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+2026-11-02T20:30:51.2835250Z [232/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_graphics/juce_graphics.mm.o
+2026-11-02T20:30:52.1978610Z [233/351] Building CXX object CMakeFiles/cs80_au_wrapper_macro_environment_tests.dir/tests/AuWrapperMacroEnvironmentTests.cpp.o
+2026-11-02T20:30:53.4802300Z [234/351] Building CXX object CMakeFiles/cs80_zero_fir_history_tests.dir/tests/ZeroFirHistoryTests.cpp.o
+2026-11-02T20:30:55.5971000Z [235/351] Building CXX object CMakeFiles/cs80_zero_fir_rounding_tests.dir/tests/ZeroFirRoundingTests.cpp.o
+2026-11-02T20:30:57.1022050Z [236/351] Building CXX object CMakeFiles/cs80_exact_control_transform_tests.dir/tests/ExactControlTransformTests.cpp.o
+2026-11-02T20:31:00.5926760Z [237/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_formats/juce_audio_formats.mm.o
+2026-11-02T20:31:00.7900600Z [238/351] Linking CXX executable cs80_tests
+2026-11-02T20:31:00.8458980Z [239/351] Linking CXX executable cs80_continuous_voice_circuit_tests
+2026-11-02T20:31:00.8978090Z [240/351] Linking CXX executable cs80_continuous_voice_circuit_audit_tests
+2026-11-02T20:31:00.9486890Z [241/351] Linking CXX executable cs80_output_meter_display_tests
+2026-11-02T20:31:01.0014200Z [242/351] Linking CXX executable cs80_output_meter_tests
+2026-11-02T20:31:01.0625490Z [243/351] Linking CXX executable cs80_output_meter_audit_tests
+2026-11-02T20:31:01.1129290Z [244/351] Linking CXX executable cs80_keyboard_pressure_audit_tests
+2026-11-02T20:31:01.1429930Z [245/351] Building CXX object CMakeFiles/cs80_exact_scalar_filter_tests.dir/tests/ExactScalarFilterTests.cpp.o
+2026-11-02T20:31:01.1756890Z [246/351] Linking CXX executable cs80_keyboard_event_queue_tests
+2026-11-02T20:31:01.2061990Z [247/351] Linking CXX executable cs80_exact_scalar_filter_tests
+2026-11-02T20:31:01.2363590Z [248/351] Linking CXX executable cs80_parity_mode_tests
+2026-11-02T20:31:01.2666230Z [249/351] Linking CXX executable cs80_source_performance_tests
+2026-11-02T20:31:01.3068200Z [250/351] Linking CXX executable cs80_source_performance_audit_tests
+2026-11-02T20:31:01.3369840Z [251/351] Linking CXX executable cs80_envelope_precision_tests
+2026-11-02T20:31:01.3776100Z [252/351] Linking CXX executable cs80_ig00156_filter_tests
+2026-11-02T20:31:01.4078330Z [253/351] Linking CXX executable cs80_envelope_rc_model_tests
+2026-11-02T20:31:01.4379940Z [254/351] Linking CXX executable cs80_live_envelope_level_tests
+2026-11-02T20:31:01.4699100Z [255/351] Linking CXX executable cs80_live_envelope_timing_tests
+2026-11-02T20:31:01.5001790Z [256/351] Linking CXX executable cs80_active_tail_continuity_tests
+2026-11-02T20:31:01.5303650Z [257/351] Linking CXX executable cs80_cold_idle_timing_tests
+2026-11-02T20:31:01.5626410Z [258/351] Linking CXX executable cs80_cold_filter_envelope_tests
+2026-11-02T20:31:01.6030660Z [259/351] Linking CXX executable cs80_note_off_continuity_tests
+2026-11-02T20:31:01.6339950Z [260/351] Linking CXX executable cs80_click_event_continuation_tests
+2026-11-02T20:31:01.6673580Z [261/351] Linking CXX executable cs80_click_bank_causality_tests
+2026-11-02T20:31:01.6903060Z [262/351] Linking CXX executable cs80_ring_event_continuity_tests
+2026-11-02T20:31:01.7222670Z [263/351] Linking CXX executable cs80_ring_event_causality
+2026-11-02T20:31:01.7446290Z [264/351] Linking CXX executable cs80_experimental_oscillator_tests
+2026-11-02T20:31:01.7808830Z [265/351] Linking CXX executable cs80_source_factory_integration_tests
+2026-11-02T20:31:01.8038700Z [266/351] Linking CXX executable cs80_source_factory_tone_tests
+2026-11-02T20:31:01.8384140Z [267/351] Linking CXX executable cs80_hardware_control_tests
+2026-11-02T20:31:01.8588070Z [268/351] Linking CXX executable cs80_ig00156_reference_tests
+2026-11-02T20:31:01.8918880Z [269/351] Linking CXX executable cs80_keyboard_contour_reference_tests
+2026-11-02T20:31:01.9120720Z [270/351] Linking CXX executable cs80_loaded_control_reference_tests
+2026-11-02T20:31:01.9443500Z [271/351] Linking CXX executable cs80_loaded_control_rank_tests
+2026-11-02T20:31:01.9646540Z [272/351] Linking CXX executable cs80_loaded_control_transient_tests
+2026-11-02T20:31:02.0055380Z [273/351] Linking CXX executable cs80_output_tap_integration_tests
+2026-11-02T20:31:02.0260290Z [274/351] Linking CXX executable cs80_output_tap_circuit_tests
+2026-11-02T20:31:02.0668500Z [275/351] Linking CXX executable cs80_output_taps_tests
+2026-11-02T20:31:02.0769890Z [276/351] Linking CXX executable cs80_level_control_tests
+2026-11-02T20:31:02.1204980Z [277/351] Linking CXX executable cs80_resonance_control_tests
+2026-11-02T20:31:02.1306280Z [278/351] Linking CXX executable cs80_oe2_filters_tests
+2026-11-02T20:31:02.1715710Z [279/351] Linking CXX executable cs80_pra_wah_integration_tests
+2026-11-02T20:31:02.1815820Z [280/351] Linking CXX executable cs80_pra_wah_circuit_tests
+2026-11-02T20:31:02.2319490Z [281/351] Linking CXX executable cs80_pra_wah_tests
+2026-11-02T20:31:02.2420880Z [282/351] Linking CXX executable cs80_chorus_tabs_tests
+2026-11-02T20:31:02.2840980Z [283/351] Linking CXX executable cs80_idle_exact_skip_tests
+2026-11-02T20:31:02.3043400Z [284/351] Linking CXX executable cs80_bbd_chorus_tests
+2026-11-02T20:31:02.3457940Z [285/351] Linking CXX executable cs80_mn3001_packet_tests
+2026-11-02T20:31:02.3558700Z [286/351] Linking CXX executable cs80_performance_control_tests
+2026-11-02T20:31:02.4096700Z [287/351] Linking CXX executable cs80_oscillator_cache_tests
+2026-11-02T20:31:02.4196800Z [288/351] Linking CXX executable cs80_wsc_fast_path_oracle_tests
+2026-11-02T20:31:02.4720760Z [289/351] Linking CXX executable cs80_ig00156_companion_history_tests
+2026-11-02T20:31:02.4822020Z [290/351] Linking CXX executable cs80_ig00156_cache_tests
+2026-11-02T20:31:02.5255690Z [291/351] Linking CXX executable cs80_ig00156_nodal_tests
+2026-11-02T20:31:02.5355720Z [292/351] Linking CXX executable cs80_ig00156_phase_correction_tests
+2026-11-02T20:31:02.5873410Z [293/351] Linking CXX executable cs80_oscillator_promotion_tests
+2026-11-02T20:31:02.5974180Z [294/351] Linking CXX executable cs80_ig00151_vca_tests
+2026-11-02T20:31:02.6379420Z [295/351] Linking CXX executable cs80_ig00151_idle_tail_tests
+2026-11-02T20:31:02.6480790Z [296/351] Linking CXX executable cs80_vca_tail_modulation_tests
+2026-11-02T20:31:02.6941910Z [297/351] Linking CXX executable cs80_modern_tail_scheduling_tests
+2026-11-02T20:31:02.7063560Z [298/351] Linking CXX executable cs80_tolerance_drift_tests
+2026-11-02T20:31:02.7489220Z [299/351] Linking CXX executable cs80_stationary_controls_exact_tests
+2026-11-02T20:31:02.7591030Z [300/351] Linking CXX executable cs80_oversampling_tests
+2026-11-02T20:31:02.7695210Z [301/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.mm.o
+2026-11-02T20:31:02.8082220Z [302/351] Linking CXX executable cs80_output_listening_tests
+2026-11-02T20:31:02.8204680Z [303/351] Linking CXX executable cs80_smoothing_tests
+2026-11-02T20:31:02.8412610Z [304/351] Linking CXX executable cs80_noise_tests
+2026-11-02T20:31:02.8729150Z [305/351] Linking CXX executable cs80_mts_esp_shim_tests
+2026-11-02T20:31:02.8829980Z [306/351] Linking CXX executable cs80_mts_esp_native_tests
+2026-11-02T20:31:02.9032990Z [307/351] Linking CXX executable cs80_mts_esp_fallback_tests
+2026-11-02T20:31:02.9274120Z [308/351] Linking CXX executable cs80_host_automation_curve_tests
+2026-11-02T20:31:02.9503110Z [309/351] Linking CXX executable cs80_au_automation_curve_tests
+2026-11-02T20:31:02.9604420Z [310/351] Linking CXX executable cs80_au_automation_bridge_contract_tests
+2026-11-02T20:31:03.0030060Z [311/351] Linking CXX executable cs80_free_running_voice_tests
+2026-11-02T20:31:03.0232830Z [312/351] Linking CXX executable cs80_kas_scanner_tests
+2026-11-02T20:31:03.0336450Z [313/351] Linking CXX executable cs80_keyboard_contour_key_map_tests
+2026-11-02T20:31:03.0754430Z [314/351] Linking CXX executable cs80_touch_circuit_tests
+2026-11-02T20:31:03.1064190Z [315/351] Linking CXX executable cs80_tuning_midi_tests
+2026-11-02T20:31:03.1200560Z [316/351] Linking CXX executable cs80_ig00150_sub_tests
+2026-11-02T20:31:03.1534950Z [317/351] Linking CXX executable cs80_ring_modulator_circuit_tests
+2026-11-02T20:31:03.1850190Z [318/351] Linking CXX executable cs80_oe2_stereo_chorus_tests
+2026-11-02T20:31:03.1962380Z [319/351] Linking CXX executable cs80_pra_optical_cell_tests
+2026-11-02T20:31:03.2164830Z [320/351] Linking CXX executable cs80_unused_lfo_readout_exact_tests
+2026-11-02T20:31:03.2568430Z [321/351] Linking CXX executable cs80_unused_lfo_engine_ownership_tests
+2026-11-02T20:31:03.2697500Z [322/351] Linking CXX executable cs80_modern_lfo_tests
+2026-11-02T20:31:03.2901130Z [323/351] Linking CXX executable cs80_mseg_tests
+2026-11-02T20:31:03.3324260Z [324/351] Linking CXX executable cs80_mod_matrix_tests
+2026-11-02T20:31:03.3557550Z [325/351] Linking CXX executable cs80_modern_fx_tests
+2026-11-02T20:31:03.3659010Z [326/351] Linking CXX executable cs80_library_audit_tests
+2026-11-02T20:31:03.4095780Z [327/351] Linking CXX executable cs80_randomise_tests
+2026-11-02T20:31:03.4414200Z [328/351] Linking CXX executable cs80_source_factory_boundary_tests
+2026-11-02T20:31:03.4517380Z [329/351] Linking CXX executable cs80_programmer_integration_tests
+2026-11-02T20:31:03.4731520Z [330/351] Linking CXX executable cs80_memory_panel_tests
+2026-11-02T20:31:03.4935490Z [331/351] Linking CXX executable cs80_fast_math_tests
+2026-11-02T20:31:03.5136830Z [332/351] Linking CXX executable cs80_evidence_register_tests
+2026-11-02T20:31:03.5238270Z [333/351] Linking CXX executable cs80_midi_learn_tests
+2026-11-02T20:31:03.5745840Z [334/351] Linking CXX executable cs80_render
+2026-11-02T20:31:03.5848150Z [335/351] Linking CXX executable cs80_source_factory_audition
+2026-11-02T20:31:03.5954500Z [336/351] Linking CXX executable cs80_voice_continuity_probe
+2026-11-02T20:31:03.6391410Z [337/351] Linking CXX executable cs80_source_factory_benchmark
+2026-11-02T20:31:03.6700190Z [338/351] Linking CXX executable cs80_dsp_probe
+2026-11-02T20:31:03.6804490Z [339/351] Linking CXX executable cs80_engine_audit
+2026-11-02T20:31:03.7114950Z [340/351] Linking CXX executable cs80_parity_capture
+2026-11-02T20:31:03.8098070Z [341/351] Linking CXX executable cs80_au_automation_host_tests
+2026-11-02T20:31:03.8631090Z [342/351] Linking CXX executable cs80_au_wrapper_macro_environment_tests
+2026-11-02T20:31:03.9243450Z [343/351] Linking CXX executable cs80_zero_fir_history_tests
+2026-11-02T20:31:03.9845910Z [344/351] Linking CXX executable cs80_zero_fir_rounding_tests
+2026-11-02T20:31:04.0390040Z [345/351] Linking CXX executable cs80_exact_control_transform_tests
+2026-11-02T20:31:04.1726870Z [346/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.mm.o
+2026-11-02T20:31:04.1730550Z [347/351] Linking CXX executable "CS80Reference_artefacts/Release/Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference"
+2026-11-02T20:31:06.2902330Z [348/351] Linking CXX CFBundle shared module "CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference"
+2026-11-02T20:31:06.2906210Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3: code has no resources but signature indicates they must be present
+2026-11-02T20:31:06.2909040Z -- Replacing invalid signature with ad-hoc signature
+2026-11-02T20:31:06.2911350Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3: replacing existing signature
+2026-11-02T20:31:06.2913250Z removing moduleinfo.json
+2026-11-02T20:31:06.2915050Z creating /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3
+2026-11-02T20:31:08.2625710Z [349/351] Building CXX object CMakeFiles/CS80Snapshots.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm.o
+2026-11-02T20:31:08.2627960Z In file included from /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.mm:35:
+2026-11-02T20:31:08.2635540Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: warning: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored [-W#pragma-messages]
+2026-11-02T20:31:08.2637440Z    61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-11-02T20:31:08.2638060Z       |  ^
+2026-11-02T20:31:08.2638740Z /Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: expanded from macro 'JUCE_COMPILER_WARNING'
+2026-11-02T20:31:08.2653220Z   292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+2026-11-02T20:31:08.2653880Z       |                                      ^
+2026-11-02T20:31:08.2655630Z <scratch space>:191:2: note: expanded from here
+2026-11-02T20:31:08.2656300Z   191 |  message ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+2026-11-02T20:31:08.2660630Z       |  ^
+2026-11-02T20:31:08.2661930Z 1 warning generated.
+2026-11-02T20:31:08.6485200Z [350/351] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+2026-11-02T20:31:08.6907880Z ##[group]Run ctest --test-dir build --output-on-failure
+2026-11-02T20:31:08.6908530Z [36;1mctest --test-dir build --output-on-failure[0m
+2026-11-02T20:31:08.7293900Z shell: /bin/bash -e {0}
+2026-11-02T20:31:08.7294560Z ##[endgroup]
+2026-11-02T20:31:08.9209470Z Test project /Users/runner/work/yamaha-cs80/yamaha-cs80/build
+2026-11-02T20:31:08.9262390Z         Start   1: cs80_distribution_docs_tests
+2026-11-02T20:31:13.7779350Z   1/120 Test   #1: cs80_distribution_docs_tests ................   Passed    4.85 sec
+2026-11-02T20:31:13.7787420Z         Start   2: cs80_distribution_source_identity_tests
+2026-11-02T20:31:42.8274220Z   2/120 Test   #2: cs80_distribution_source_identity_tests .....   Passed   29.05 sec
+2026-11-02T20:31:42.8275420Z         Start   3: cs80_distribution_mutation_contract_tests
+2026-11-02T20:31:42.9791330Z   3/120 Test   #3: cs80_distribution_mutation_contract_tests ...   Passed    0.15 sec
+2026-11-02T20:31:42.9906800Z         Start   4: cs80_installed_distribution_docs_tests
+2026-11-02T20:31:55.8286130Z   4/120 Test   #4: cs80_installed_distribution_docs_tests ......   Passed   12.84 sec
+2026-11-02T20:31:55.8388230Z         Start   5: cs80_native_installer_payload_tests
+2026-11-02T20:31:57.4421930Z   5/120 Test   #5: cs80_native_installer_payload_tests .........   Passed    1.62 sec
+2026-11-02T20:31:57.4442240Z         Start   6: cs80_installer_binary_payload_tests
+2026-11-02T20:31:57.8043980Z   6/120 Test   #6: cs80_installer_binary_payload_tests .........***Failed    0.36 sec
+2026-11-02T20:31:57.8045210Z test_debian_standalone_mode_normalization_is_registered (__main__.InstallerBinaryPayloadTests.test_debian_standalone_mode_normalization_is_registered) ... ok
+2026-11-02T20:31:57.8048080Z test_empty_primary_build_binary_is_rejected (__main__.InstallerBinaryPayloadTests.test_empty_primary_build_binary_is_rejected) ... ok
+2026-11-02T20:31:57.8050920Z test_external_source_symlink_is_rejected (__main__.InstallerBinaryPayloadTests.test_external_source_symlink_is_rejected) ... ok
+2026-11-02T20:31:57.8055600Z test_forged_manifest_cannot_certify_stale_payload (__main__.InstallerBinaryPayloadTests.test_forged_manifest_cannot_certify_stale_payload) ... ok
+2026-11-02T20:31:57.8058250Z test_internal_relative_link_target_change_is_rejected (__main__.InstallerBinaryPayloadTests.test_internal_relative_link_target_change_is_rejected) ... ok
+2026-11-02T20:31:57.8060070Z test_internal_relative_resource_link_is_preserved (__main__.InstallerBinaryPayloadTests.test_internal_relative_resource_link_is_preserved) ... ok
+2026-11-02T20:31:57.8061130Z test_legacy_python_directory_reparse_artifact_is_rejected (__main__.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_artifact_is_rejected) ... FAIL
+2026-11-02T20:31:57.8062200Z test_legacy_python_directory_reparse_expansion_is_rejected (__main__.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_expansion_is_rejected) ... ok
+2026-11-02T20:31:57.8063320Z test_legacy_python_directory_reparse_inside_bundle_is_rejected (__main__.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_inside_bundle_is_rejected) ... FAIL
+2026-11-02T20:31:57.8064300Z test_linked_artifact_root_is_rejected (__main__.InstallerBinaryPayloadTests.test_linked_artifact_root_is_rejected) ... ok
+2026-11-02T20:31:57.8065080Z test_linked_expansion_root_is_rejected (__main__.InstallerBinaryPayloadTests.test_linked_expansion_root_is_rejected) ... ok
+2026-11-02T20:31:57.8065990Z test_linux_exact_inventory_hashes_and_explicit_scope (__main__.InstallerBinaryPayloadTests.test_linux_exact_inventory_hashes_and_explicit_scope) ... ok
+2026-11-02T20:31:57.8067010Z test_linux_executable_mode_loss_rejected (__main__.InstallerBinaryPayloadTests.test_linux_executable_mode_loss_rejected) ... ok
+2026-11-02T20:31:57.8067830Z test_linux_missing_binary_rejected (__main__.InstallerBinaryPayloadTests.test_linux_missing_binary_rejected) ... ok
+2026-11-02T20:31:57.8069230Z test_linux_stale_or_changed_bytes_rejected (__main__.InstallerBinaryPayloadTests.test_linux_stale_or_changed_bytes_rejected) ... ok
+2026-11-02T20:31:57.8070150Z test_linux_unexpected_bundle_resource_rejected (__main__.InstallerBinaryPayloadTests.test_linux_unexpected_bundle_resource_rejected) ... ok
+2026-11-02T20:31:57.8071240Z test_macos_changed_post_capture_signature_bytes_are_not_waived (__main__.InstallerBinaryPayloadTests.test_macos_changed_post_capture_signature_bytes_are_not_waived) ... ok
+2026-11-02T20:31:57.8072150Z test_macos_missing_component_rejected (__main__.InstallerBinaryPayloadTests.test_macos_missing_component_rejected) ... ok
+2026-11-02T20:31:57.8073050Z test_macos_three_bundles_and_install_destinations (__main__.InstallerBinaryPayloadTests.test_macos_three_bundles_and_install_destinations) ... ok
+2026-11-02T20:31:57.8073900Z test_macos_wrong_install_location_rejected (__main__.InstallerBinaryPayloadTests.test_macos_wrong_install_location_rejected) ... ok
+2026-11-02T20:31:57.8074800Z test_malformed_package_info_is_an_explicit_rejection (__main__.InstallerBinaryPayloadTests.test_malformed_package_info_is_an_explicit_rejection) ... ok
+2026-11-02T20:31:57.8075800Z test_missing_primary_build_binary_is_not_a_resource_only_bundle (__main__.InstallerBinaryPayloadTests.test_missing_primary_build_binary_is_not_a_resource_only_bundle) ... ok
+2026-11-02T20:31:57.8076710Z test_payload_symlink_substitution_is_rejected (__main__.InstallerBinaryPayloadTests.test_payload_symlink_substitution_is_rejected) ... ok
+2026-11-02T20:31:57.8077550Z test_platform_identity_mismatch_rejected (__main__.InstallerBinaryPayloadTests.test_platform_identity_mismatch_rejected) ... ok
+2026-11-02T20:31:57.8078360Z test_snapshot_cannot_be_replaced_after_input_changes (__main__.InstallerBinaryPayloadTests.test_snapshot_cannot_be_replaced_after_input_changes) ... ok
+2026-11-02T20:31:57.8079330Z test_special_source_file_is_rejected_without_opening_it (__main__.InstallerBinaryPayloadTests.test_special_source_file_is_rejected_without_opening_it) ... ok
+2026-11-02T20:31:57.8080230Z test_unknown_platform_rejected (__main__.InstallerBinaryPayloadTests.test_unknown_platform_rejected) ... ok
+2026-11-02T20:31:57.8081350Z test_windows_missing_standalone_rejected (__main__.InstallerBinaryPayloadTests.test_windows_missing_standalone_rejected) ... ok
+2026-11-02T20:31:57.8082190Z test_windows_only_actual_standalone_scope (__main__.InstallerBinaryPayloadTests.test_windows_only_actual_standalone_scope) ... ok
+2026-11-02T20:31:57.8082980Z test_windows_stale_standalone_rejected (__main__.InstallerBinaryPayloadTests.test_windows_stale_standalone_rejected) ... ok
+2026-11-02T20:31:57.8083430Z 
+2026-11-02T20:31:57.8083610Z ======================================================================
+2026-11-02T20:31:57.8084280Z FAIL: test_legacy_python_directory_reparse_artifact_is_rejected (__main__.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_artifact_is_rejected)
+2026-11-02T20:31:57.8086350Z ----------------------------------------------------------------------
+2026-11-02T20:31:57.8087990Z Traceback (most recent call last):
+2026-11-02T20:31:57.8089610Z   File "/Users/runner/work/yamaha-cs80/yamaha-cs80/tests/release/test_installer_binary_payload.py", line 328, in test_legacy_python_directory_reparse_artifact_is_rejected
+2026-11-02T20:31:57.8091170Z     with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+2026-11-02T20:31:57.8104960Z          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-02T20:31:57.8110340Z AssertionError: ValueError not raised
+2026-11-02T20:31:57.8149620Z 
+2026-11-02T20:31:57.8251110Z ======================================================================
+2026-11-02T20:31:57.8353530Z FAIL: test_legacy_python_directory_reparse_inside_bundle_is_rejected (__main__.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_inside_bundle_is_rejected)
+2026-11-02T20:31:57.8400270Z ----------------------------------------------------------------------
+2026-11-02T20:31:57.8400900Z Traceback (most recent call last):
+2026-11-02T20:31:57.8402120Z   File "/Users/runner/work/yamaha-cs80/yamaha-cs80/tests/release/test_installer_binary_payload.py", line 344, in test_legacy_python_directory_reparse_inside_bundle_is_rejected
+2026-11-02T20:31:57.8403200Z     with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+2026-11-02T20:31:57.8403880Z          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-02T20:31:57.8404390Z AssertionError: ValueError not raised
+2026-11-02T20:31:57.8404640Z 
+2026-11-02T20:31:57.8404990Z ----------------------------------------------------------------------
+2026-11-02T20:31:57.8405660Z Ran 30 tests in 0.238s
+2026-11-02T20:31:57.8405930Z 
+2026-11-02T20:31:57.8406080Z FAILED (failures=2)
+2026-11-02T20:31:57.8406340Z 
+2026-11-02T20:31:57.8406630Z         Start   7: cs80_installer_evidence_workflow_tests
+2026-11-02T20:31:57.8815820Z   7/120 Test   #7: cs80_installer_evidence_workflow_tests ......   Passed    0.08 sec
+2026-11-02T20:31:57.8816720Z         Start   8: cs80_macos_package_architecture_tests
+2026-11-02T20:31:57.9560370Z   8/120 Test   #8: cs80_macos_package_architecture_tests .......   Passed    0.07 sec
+2026-11-02T20:31:57.9563560Z         Start   9: cs80_exact_scalar_filter_fixed_tests
+2026-11-02T20:32:01.0834730Z   9/120 Test   #9: cs80_exact_scalar_filter_fixed_tests ........   Passed    3.13 sec
+2026-11-02T20:32:01.0838570Z         Start  10: cs80_exact_scalar_filter_moving_tests
+2026-11-02T20:32:01.2902840Z  10/120 Test  #10: cs80_exact_scalar_filter_moving_tests .......   Passed    0.21 sec
+2026-11-02T20:32:01.3002640Z         Start  11: cs80_exact_scalar_filter_state_tests
+2026-11-02T20:32:01.7245490Z  11/120 Test  #11: cs80_exact_scalar_filter_state_tests ........   Passed    0.43 sec
+2026-11-02T20:32:01.7247620Z         Start  12: cs80_exact_scalar_filter_row_tests
+2026-11-02T20:32:01.8280160Z  12/120 Test  #12: cs80_exact_scalar_filter_row_tests ..........   Passed    0.10 sec
+2026-11-02T20:32:01.8281680Z         Start  13: cs80_exact_scalar_filter_fp_tests
+2026-11-02T20:32:01.9933990Z  13/120 Test  #13: cs80_exact_scalar_filter_fp_tests ...........   Passed    0.17 sec
+2026-11-02T20:32:02.0037520Z         Start  14: cs80_parity_harness_tests
+2026-11-02T20:32:04.3815830Z  14/120 Test  #14: cs80_parity_harness_tests ...................   Passed    2.39 sec
+2026-11-02T20:32:04.3817600Z         Start  15: cs80_continuous_voice_circuit_tests
+2026-11-02T20:32:04.3983770Z  15/120 Test  #15: cs80_continuous_voice_circuit_tests .........   Passed    0.02 sec
+2026-11-02T20:32:04.3986840Z         Start  16: cs80_continuous_voice_circuit_audit_tests
+2026-11-02T20:32:05.0500840Z  16/120 Test  #16: cs80_continuous_voice_circuit_audit_tests ...   Passed    0.65 sec
+2026-11-02T20:32:05.0573740Z         Start  17: cs80_output_meter_display_tests
+2026-11-02T20:32:05.0613220Z  17/120 Test  #17: cs80_output_meter_display_tests .............   Passed    0.01 sec
+2026-11-02T20:32:05.0616700Z         Start  18: cs80_output_meter_tests
+2026-11-02T20:32:05.0646140Z  18/120 Test  #18: cs80_output_meter_tests .....................   Passed    0.01 sec
+2026-11-02T20:32:05.0660630Z         Start  19: cs80_output_meter_audit_tests
+2026-11-02T20:32:05.0722840Z  19/120 Test  #19: cs80_output_meter_audit_tests ...............   Passed    0.01 sec
+2026-11-02T20:32:05.0724080Z         Start  20: cs80_keyboard_pressure_audit_tests
+2026-11-02T20:32:05.3997690Z  20/120 Test  #20: cs80_keyboard_pressure_audit_tests ..........   Passed    0.33 sec
+2026-11-02T20:32:05.3998260Z         Start  21: cs80_keyboard_event_queue_tests
+2026-11-02T20:32:05.4041890Z  21/120 Test  #21: cs80_keyboard_event_queue_tests .............   Passed    0.00 sec
+2026-11-02T20:32:05.4042610Z         Start  22: cs80_keyboard_epoch_interleaving_tests
+2026-11-02T20:32:08.2574410Z  22/120 Test  #22: cs80_keyboard_epoch_interleaving_tests ......   Passed    2.85 sec
+2026-11-02T20:32:08.2575650Z         Start  23: cs80_parity_mode_tests
+2026-11-02T20:32:11.4171730Z  23/120 Test  #23: cs80_parity_mode_tests ......................   Passed    3.16 sec
+2026-11-02T20:32:11.4175430Z         Start  24: cs80_source_performance_tests
+2026-11-02T20:32:21.6028670Z  24/120 Test  #24: cs80_source_performance_tests ...............   Passed   10.17 sec
+2026-11-02T20:32:21.6080620Z         Start  25: cs80_source_performance_audit_tests
+2026-11-02T20:32:24.3538000Z  25/120 Test  #25: cs80_source_performance_audit_tests .........   Passed    2.76 sec
+2026-11-02T20:32:24.3550710Z         Start  26: cs80_envelope_precision_tests
+2026-11-02T20:33:21.2565520Z  26/120 Test  #26: cs80_envelope_precision_tests ...............   Passed   56.90 sec
+2026-11-02T20:33:21.2570740Z         Start  27: cs80_ig00156_filter_tests
+2026-11-02T20:33:21.7120370Z  27/120 Test  #27: cs80_ig00156_filter_tests ...................   Passed    0.45 sec
+2026-11-02T20:33:21.7124240Z         Start  28: cs80_envelope_rc_model_tests
+2026-11-02T20:33:21.9021980Z  28/120 Test  #28: cs80_envelope_rc_model_tests ................   Passed    0.19 sec
+2026-11-02T20:33:21.9022580Z         Start  29: cs80_live_envelope_level_tests
+2026-11-02T20:33:27.4793780Z  29/120 Test  #29: cs80_live_envelope_level_tests ..............   Passed    5.58 sec
+2026-11-02T20:33:27.4826360Z         Start  30: cs80_live_envelope_timing_tests
+2026-11-02T20:33:29.4735140Z  30/120 Test  #30: cs80_live_envelope_timing_tests .............   Passed    1.99 sec
+2026-11-02T20:33:29.4742550Z         Start  31: cs80_active_tail_continuity_tests
+2026-11-02T20:33:44.3547040Z  31/120 Test  #31: cs80_active_tail_continuity_tests ...........   Passed   14.88 sec
+2026-11-02T20:33:44.3552150Z         Start  32: cs80_cold_idle_timing_tests
+2026-11-02T20:33:50.1125450Z  32/120 Test  #32: cs80_cold_idle_timing_tests .................   Passed    5.76 sec
+2026-11-02T20:33:50.1128680Z         Start  33: cs80_cold_filter_envelope_tests
+2026-11-02T20:34:23.4731000Z  33/120 Test  #33: cs80_cold_filter_envelope_tests .............   Passed   33.36 sec
+2026-11-02T20:34:23.4747700Z         Start  34: cs80_note_off_continuity_tests
+2026-11-02T20:34:49.8309390Z  34/120 Test  #34: cs80_note_off_continuity_tests ..............   Passed   26.35 sec
+2026-11-02T20:34:49.8314210Z         Start  35: cs80_click_event_continuation_tests
+2026-11-02T20:35:32.8866180Z  35/120 Test  #35: cs80_click_event_continuation_tests .........   Passed   43.05 sec
+2026-11-02T20:35:32.8867310Z         Start  36: cs80_click_bank_causality_tests
+2026-11-02T20:35:35.5629220Z  36/120 Test  #36: cs80_click_bank_causality_tests .............   Passed    2.68 sec
+2026-11-02T20:35:35.5673010Z         Start  37: cs80_ring_event_continuity_tests
+2026-11-02T20:35:39.3294490Z  37/120 Test  #37: cs80_ring_event_continuity_tests ............   Passed    3.77 sec
+2026-11-02T20:35:39.3298420Z         Start  38: cs80_core_tests
+2026-11-02T20:35:48.9360400Z  38/120 Test  #38: cs80_core_tests .............................   Passed    9.60 sec
+2026-11-02T20:35:48.9366320Z         Start  39: cs80_experimental_oscillator_tests
+2026-11-02T20:35:58.5630720Z  39/120 Test  #39: cs80_experimental_oscillator_tests ..........   Passed    9.63 sec
+2026-11-02T20:35:58.5632160Z         Start  40: cs80_source_factory_integration_tests
+2026-11-02T20:38:59.5347060Z  40/120 Test  #40: cs80_source_factory_integration_tests .......   Passed  180.97 sec
+2026-11-02T20:38:59.5356920Z         Start  41: cs80_source_factory_tone_tests
+2026-11-02T20:38:59.5913650Z  41/120 Test  #41: cs80_source_factory_tone_tests ..............   Passed    0.06 sec
+2026-11-02T20:38:59.5915540Z         Start  42: cs80_hardware_control_tests
+2026-11-02T20:38:59.5955790Z  42/120 Test  #42: cs80_hardware_control_tests .................   Passed    0.00 sec
+2026-11-02T20:38:59.5956880Z         Start  43: cs80_ig00156_reference_tests
+2026-11-02T20:38:59.6130810Z  43/120 Test  #43: cs80_ig00156_reference_tests ................   Passed    0.02 sec
+2026-11-02T20:38:59.6132030Z         Start  44: cs80_keyboard_contour_reference_tests
+2026-11-02T20:38:59.6188100Z  44/120 Test  #44: cs80_keyboard_contour_reference_tests .......   Passed    0.01 sec
+2026-11-02T20:38:59.6189980Z         Start  45: cs80_loaded_control_reference_tests
+2026-11-02T20:38:59.6224580Z  45/120 Test  #45: cs80_loaded_control_reference_tests .........   Passed    0.00 sec
+2026-11-02T20:38:59.6228040Z         Start  46: cs80_loaded_control_rank_tests
+2026-11-02T20:38:59.6279660Z  46/120 Test  #46: cs80_loaded_control_rank_tests ..............   Passed    0.01 sec
+2026-11-02T20:38:59.6280280Z         Start  47: cs80_loaded_control_transient_tests
+2026-11-02T20:38:59.6380730Z  47/120 Test  #47: cs80_loaded_control_transient_tests .........   Passed    0.01 sec
+2026-11-02T20:38:59.6381350Z         Start  48: cs80_output_tap_integration_tests
+2026-11-02T20:39:01.0064090Z  48/120 Test  #48: cs80_output_tap_integration_tests ...........   Passed    1.37 sec
+2026-11-02T20:39:01.0068530Z         Start  49: cs80_output_tap_circuit_tests
+2026-11-02T20:39:02.0251050Z  49/120 Test  #49: cs80_output_tap_circuit_tests ...............   Passed    1.02 sec
+2026-11-02T20:39:02.0254120Z         Start  50: cs80_output_taps_tests
+2026-11-02T20:39:02.0331940Z  50/120 Test  #50: cs80_output_taps_tests ......................   Passed    0.01 sec
+2026-11-02T20:39:02.0332520Z         Start  51: cs80_level_control_tests
+2026-11-02T20:39:02.0533930Z  51/120 Test  #51: cs80_level_control_tests ....................   Passed    0.02 sec
+2026-11-02T20:39:02.0534470Z         Start  52: cs80_resonance_control_tests
+2026-11-02T20:39:02.0658200Z  52/120 Test  #52: cs80_resonance_control_tests ................   Passed    0.01 sec
+2026-11-02T20:39:02.0659580Z         Start  53: cs80_oe2_filters_tests
+2026-11-02T20:39:02.0752180Z  53/120 Test  #53: cs80_oe2_filters_tests ......................   Passed    0.01 sec
+2026-11-02T20:39:02.0753450Z         Start  54: cs80_pra_wah_integration_tests
+2026-11-02T20:39:03.2077910Z  54/120 Test  #54: cs80_pra_wah_integration_tests ..............   Passed    1.13 sec
+2026-11-02T20:39:03.2078590Z         Start  55: cs80_pra_wah_circuit_tests
+2026-11-02T20:39:03.8286700Z  55/120 Test  #55: cs80_pra_wah_circuit_tests ..................   Passed    0.62 sec
+2026-11-02T20:39:03.8290990Z         Start  56: cs80_pra_wah_tests
+2026-11-02T20:39:03.8536880Z  56/120 Test  #56: cs80_pra_wah_tests ..........................   Passed    0.02 sec
+2026-11-02T20:39:03.8537940Z         Start  57: cs80_chorus_tabs_tests
+2026-11-02T20:39:04.4394570Z  57/120 Test  #57: cs80_chorus_tabs_tests ......................   Passed    0.59 sec
+2026-11-02T20:39:04.4396050Z         Start  58: cs80_idle_exact_skip_tests
+2026-11-02T20:39:05.4541660Z  58/120 Test  #58: cs80_idle_exact_skip_tests ..................   Passed    1.01 sec
+2026-11-02T20:39:05.4543480Z         Start  59: cs80_bbd_chorus_tests
+2026-11-02T20:39:06.0835230Z  59/120 Test  #59: cs80_bbd_chorus_tests .......................   Passed    0.63 sec
+2026-11-02T20:39:06.0836280Z         Start  60: cs80_mn3001_packet_tests
+2026-11-02T20:39:06.1022500Z  60/120 Test  #60: cs80_mn3001_packet_tests ....................   Passed    0.02 sec
+2026-11-02T20:39:06.1023830Z         Start  61: cs80_performance_control_tests
+2026-11-02T20:39:09.9189430Z  61/120 Test  #61: cs80_performance_control_tests ..............   Passed    3.82 sec
+2026-11-02T20:39:09.9190520Z         Start  62: cs80_validator_retry_tests
+2026-11-02T20:39:14.7571220Z  62/120 Test  #62: cs80_validator_retry_tests ..................   Passed    4.84 sec
+2026-11-02T20:39:14.7572650Z         Start  63: cs80_oscillator_cache_tests
+2026-11-02T20:39:14.7936860Z  63/120 Test  #63: cs80_oscillator_cache_tests .................   Passed    0.04 sec
+2026-11-02T20:39:14.7937710Z         Start  64: cs80_wsc_fast_path_oracle_tests
+2026-11-02T20:39:14.8455840Z  64/120 Test  #64: cs80_wsc_fast_path_oracle_tests .............   Passed    0.05 sec
+2026-11-02T20:39:14.8457040Z         Start  65: cs80_ig00156_cache_tests
+2026-11-02T20:39:15.1688760Z  65/120 Test  #65: cs80_ig00156_cache_tests ....................   Passed    0.32 sec
+2026-11-02T20:39:15.1690300Z         Start  66: cs80_ig00156_companion_history_tests
+2026-11-02T20:39:15.3865630Z  66/120 Test  #66: cs80_ig00156_companion_history_tests ........   Passed    0.22 sec
+2026-11-02T20:39:15.3866380Z         Start  67: cs80_ig00156_companion_efficiency_tests
+2026-11-02T20:39:18.5267130Z  67/120 Test  #67: cs80_ig00156_companion_efficiency_tests .....   Passed    3.14 sec
+2026-11-02T20:39:18.5268140Z         Start  68: cs80_ig00156_nodal_tests
+2026-11-02T20:39:36.1943600Z  68/120 Test  #68: cs80_ig00156_nodal_tests ....................   Passed   17.67 sec
+2026-11-02T20:39:36.1945740Z         Start  69: cs80_ig00156_phase_correction_tests
+2026-11-02T20:39:36.9315050Z  69/120 Test  #69: cs80_ig00156_phase_correction_tests .........   Passed    0.74 sec
+2026-11-02T20:39:36.9316680Z         Start  70: cs80_oscillator_promotion_tests
+2026-11-02T20:39:40.6681690Z  70/120 Test  #70: cs80_oscillator_promotion_tests .............   Passed    3.74 sec
+2026-11-02T20:39:40.6682890Z         Start  71: cs80_ig00151_vca_tests
+2026-11-02T20:39:41.9636760Z  71/120 Test  #71: cs80_ig00151_vca_tests ......................   Passed    1.30 sec
+2026-11-02T20:39:41.9639260Z         Start  72: cs80_ig00151_idle_tail_tests
+2026-11-02T20:39:47.3282250Z  72/120 Test  #72: cs80_ig00151_idle_tail_tests ................   Passed    5.36 sec
+2026-11-02T20:39:47.3285440Z         Start  73: cs80_vca_tail_modulation_tests
+2026-11-02T20:39:58.7696780Z  73/120 Test  #73: cs80_vca_tail_modulation_tests ..............   Passed   11.44 sec
+2026-11-02T20:39:58.7706720Z         Start  74: cs80_modern_tail_scheduling_tests
+2026-11-02T20:39:58.7785330Z  74/120 Test  #74: cs80_modern_tail_scheduling_tests ...........   Passed    0.01 sec
+2026-11-02T20:39:58.7787170Z         Start  75: cs80_tolerance_drift_tests
+2026-11-02T20:40:02.9239000Z  75/120 Test  #75: cs80_tolerance_drift_tests ..................   Passed    4.14 sec
+2026-11-02T20:40:02.9240320Z         Start  76: cs80_oversampling_tests
+2026-11-02T20:40:04.0863480Z  76/120 Test  #76: cs80_oversampling_tests .....................   Passed    1.16 sec
+2026-11-02T20:40:04.0864400Z         Start  77: cs80_stationary_controls_exact_tests
+2026-11-02T20:40:04.2082920Z  77/120 Test  #77: cs80_stationary_controls_exact_tests ........   Passed    0.12 sec
+2026-11-02T20:40:04.2084410Z         Start  78: cs80_smoothing_tests
+2026-11-02T20:40:06.2536310Z  78/120 Test  #78: cs80_smoothing_tests ........................   Passed    2.05 sec
+2026-11-02T20:40:06.2537440Z         Start  79: cs80_output_listening_tests
+2026-11-02T20:40:07.2595380Z  79/120 Test  #79: cs80_output_listening_tests .................   Passed    1.01 sec
+2026-11-02T20:40:07.2598290Z         Start  80: cs80_noise_tests
+2026-11-02T20:40:11.9812580Z  80/120 Test  #80: cs80_noise_tests ............................   Passed    4.72 sec
+2026-11-02T20:40:11.9814460Z         Start  81: cs80_mts_esp_native_tests
+2026-11-02T20:40:11.9876030Z  81/120 Test  #81: cs80_mts_esp_native_tests ...................   Passed    0.01 sec
+2026-11-02T20:40:11.9876570Z         Start  82: cs80_mts_esp_shim_tests
+2026-11-02T20:40:12.0826130Z  82/120 Test  #82: cs80_mts_esp_shim_tests .....................   Passed    0.09 sec
+2026-11-02T20:40:12.0826800Z         Start  83: cs80_mts_esp_fallback_tests
+2026-11-02T20:40:12.0860710Z  83/120 Test  #83: cs80_mts_esp_fallback_tests .................   Passed    0.00 sec
+2026-11-02T20:40:12.0861240Z         Start  84: cs80_host_automation_curve_tests
+2026-11-02T20:40:12.3179200Z  84/120 Test  #84: cs80_host_automation_curve_tests ............   Passed    0.23 sec
+2026-11-02T20:40:12.3180030Z         Start  85: cs80_au_automation_curve_tests
+2026-11-02T20:40:12.3391490Z  85/120 Test  #85: cs80_au_automation_curve_tests ..............   Passed    0.02 sec
+2026-11-02T20:40:12.3392170Z         Start  86: cs80_au_automation_bridge_contract_tests
+2026-11-02T20:40:12.3436930Z  86/120 Test  #86: cs80_au_automation_bridge_contract_tests ....   Passed    0.00 sec
+2026-11-02T20:40:12.3437410Z         Start  87: cs80_free_running_voice_tests
+2026-11-02T20:40:17.9926220Z  87/120 Test  #87: cs80_free_running_voice_tests ...............   Passed    5.65 sec
+2026-11-02T20:40:17.9928340Z         Start  88: cs80_kas_scanner_tests
+2026-11-02T20:40:19.8106650Z  88/120 Test  #88: cs80_kas_scanner_tests ......................   Passed    1.82 sec
+2026-11-02T20:40:19.8108160Z         Start  89: cs80_keyboard_contour_key_map_tests
+2026-11-02T20:40:27.9328290Z  89/120 Test  #89: cs80_keyboard_contour_key_map_tests .........   Passed    8.12 sec
+2026-11-02T20:40:27.9330590Z         Start  90: cs80_touch_circuit_tests
+2026-11-02T20:40:31.2176770Z  90/120 Test  #90: cs80_touch_circuit_tests ....................   Passed    3.28 sec
+2026-11-02T20:40:31.2178210Z         Start  91: cs80_tuning_midi_tests
+2026-11-02T20:40:31.4790840Z  91/120 Test  #91: cs80_tuning_midi_tests ......................   Passed    0.26 sec
+2026-11-02T20:40:31.4797060Z         Start  92: cs80_ig00150_sub_tests
+2026-11-02T20:40:39.9938780Z  92/120 Test  #92: cs80_ig00150_sub_tests ......................   Passed    8.51 sec
+2026-11-02T20:40:39.9943150Z         Start  93: cs80_ring_modulator_circuit_tests
+2026-11-02T20:40:42.3494580Z  93/120 Test  #93: cs80_ring_modulator_circuit_tests ...........   Passed    2.35 sec
+2026-11-02T20:40:42.3496450Z         Start  94: cs80_oe2_stereo_chorus_tests
+2026-11-02T20:40:43.0365410Z  94/120 Test  #94: cs80_oe2_stereo_chorus_tests ................   Passed    0.69 sec
+2026-11-02T20:40:43.0366770Z         Start  95: cs80_pra_optical_cell_tests
+2026-11-02T20:40:48.4463450Z  95/120 Test  #95: cs80_pra_optical_cell_tests .................   Passed    5.41 sec
+2026-11-02T20:40:48.4473590Z         Start  96: cs80_unused_lfo_readout_exact_tests
+2026-11-02T20:40:48.5240180Z  96/120 Test  #96: cs80_unused_lfo_readout_exact_tests .........   Passed    0.08 sec
+2026-11-02T20:40:48.5242340Z         Start  97: cs80_unused_lfo_engine_ownership_tests
+2026-11-02T20:40:49.2872100Z  97/120 Test  #97: cs80_unused_lfo_engine_ownership_tests ......   Passed    0.76 sec
+2026-11-02T20:40:49.2873560Z         Start  98: cs80_modern_lfo_tests
+2026-11-02T20:40:50.4961570Z  98/120 Test  #98: cs80_modern_lfo_tests .......................   Passed    1.21 sec
+2026-11-02T20:40:50.4963840Z         Start  99: cs80_mseg_tests
+2026-11-02T20:40:51.4202800Z  99/120 Test  #99: cs80_mseg_tests .............................   Passed    0.92 sec
+2026-11-02T20:40:51.4204060Z         Start 100: cs80_mod_matrix_tests
+2026-11-02T20:41:11.7139780Z 100/120 Test #100: cs80_mod_matrix_tests .......................   Passed   20.29 sec
+2026-11-02T20:41:11.7141260Z         Start 101: cs80_modern_fx_tests
+2026-11-02T20:41:42.7052070Z 101/120 Test #101: cs80_modern_fx_tests ........................   Passed   30.99 sec
+2026-11-02T20:41:42.7053860Z         Start 102: cs80_library_audit_tests
+2026-11-02T20:44:48.9713750Z 102/120 Test #102: cs80_library_audit_tests ....................   Passed  186.26 sec
+2026-11-02T20:44:48.9716030Z         Start 103: cs80_randomise_tests
+2026-11-02T20:45:30.0237890Z 103/120 Test #103: cs80_randomise_tests ........................   Passed   41.05 sec
+2026-11-02T20:45:30.0241610Z         Start 104: cs80_source_factory_boundary_tests
+2026-11-02T20:45:30.6142150Z 104/120 Test #104: cs80_source_factory_boundary_tests ..........   Passed    0.59 sec
+2026-11-02T20:45:30.6143570Z         Start 105: cs80_programmer_integration_tests
+2026-11-02T20:45:39.8274570Z 105/120 Test #105: cs80_programmer_integration_tests ...........   Passed    9.21 sec
+2026-11-02T20:45:39.8276110Z         Start 106: cs80_memory_panel_tests
+2026-11-02T20:45:40.4525530Z 106/120 Test #106: cs80_memory_panel_tests .....................   Passed    0.62 sec
+2026-11-02T20:45:40.4528620Z         Start 107: cs80_fast_math_tests
+2026-11-02T20:45:40.4726250Z 107/120 Test #107: cs80_fast_math_tests ........................   Passed    0.02 sec
+2026-11-02T20:45:40.4727950Z         Start 108: cs80_evidence_register_tests
+2026-11-02T20:45:40.4771690Z 108/120 Test #108: cs80_evidence_register_tests ................   Passed    0.00 sec
+2026-11-02T20:45:40.4772590Z         Start 109: cs80_midi_learn_tests
+2026-11-02T20:45:40.5502230Z 109/120 Test #109: cs80_midi_learn_tests .......................   Passed    0.07 sec
+2026-11-02T20:45:40.5505750Z         Start 110: cs80_parity_capture_tests
+2026-11-02T20:45:43.0869890Z 110/120 Test #110: cs80_parity_capture_tests ...................   Passed    2.54 sec
+2026-11-02T20:45:43.0872280Z         Start 111: cs80_dsp_probe_tests
+2026-11-02T20:45:44.1072230Z 111/120 Test #111: cs80_dsp_probe_tests ........................   Passed    1.02 sec
+2026-11-02T20:45:44.1073110Z         Start 112: cs80_au_automation_host_tests
+2026-11-02T20:45:48.2196710Z 112/120 Test #112: cs80_au_automation_host_tests ...............   Passed    4.11 sec
+2026-11-02T20:45:48.2200040Z         Start 113: cs80_au_automation_native_mutations
+2026-11-02T20:46:59.0284380Z 113/120 Test #113: cs80_au_automation_native_mutations .........   Passed   70.81 sec
+2026-11-02T20:46:59.0286610Z         Start 114: cs80_ui_smoke
+2026-11-02T20:48:26.3497500Z 114/120 Test #114: cs80_ui_smoke ...............................   Passed   87.31 sec
+2026-11-02T20:48:26.3636170Z         Start 115: cs80_teardown_probe
+2026-11-02T20:48:26.7040470Z 115/120 Test #115: cs80_teardown_probe .........................   Passed    0.34 sec
+2026-11-02T20:48:26.7047450Z         Start 116: cs80_au_wrapper_macro_environment_tests
+2026-11-02T20:48:26.7084340Z 116/120 Test #116: cs80_au_wrapper_macro_environment_tests .....   Passed    0.00 sec
+2026-11-02T20:48:26.7085520Z         Start 117: cs80_zero_fir_history_tests
+2026-11-02T20:48:26.8169890Z 117/120 Test #117: cs80_zero_fir_history_tests .................   Passed    0.11 sec
+2026-11-02T20:48:26.8171180Z         Start 118: cs80_zero_fir_rounding_tests
+2026-11-02T20:48:26.9308630Z 118/120 Test #118: cs80_zero_fir_rounding_tests ................   Passed    0.11 sec
+2026-11-02T20:48:26.9309740Z         Start 119: cs80_exact_control_transform_tests
+2026-11-02T20:48:26.9361250Z 119/120 Test #119: cs80_exact_control_transform_tests ..........   Passed    0.00 sec
+2026-11-02T20:48:26.9361900Z         Start 120: cs80_host_wrapper_platform_tests
+2026-11-02T20:48:30.5420990Z 120/120 Test #120: cs80_host_wrapper_platform_tests ............   Passed    3.60 sec
+2026-11-02T20:48:30.5422630Z 
+2026-11-02T20:48:30.5424570Z 99% tests passed, 1 tests failed out of 120
+2026-11-02T20:48:30.5432500Z 
+2026-11-02T20:48:30.5432770Z Total Test time (real) = 1041.62 sec
+2026-11-02T20:48:30.5434050Z 
+2026-11-02T20:48:30.5446850Z Errors while running CTest
+2026-11-02T20:48:30.5447160Z The following tests FAILED:
+2026-11-02T20:48:30.5447970Z 	  6 - cs80_installer_binary_payload_tests (Failed)
+2026-11-02T20:48:30.5561720Z ##[error]Process completed with exit code 8.
+2026-11-02T20:48:30.5790850Z ##[group]Run echo '--- installed component ---'
+2026-11-02T20:48:30.5791270Z [36;1mecho '--- installed component ---'[0m
+2026-11-02T20:48:30.5791670Z [36;1mls -la "$HOME/Library/Audio/Plug-Ins/Components" || true[0m
+2026-11-02T20:48:30.5792110Z [36;1mcodesign -dv "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" || true[0m
+2026-11-02T20:48:30.5792590Z [36;1mecho '--- registered audio units ---'[0m
+2026-11-02T20:48:30.5792980Z [36;1mauval -a 2>&1 | grep -i 'cs-80' || true[0m
+2026-11-02T20:48:30.6150520Z shell: /bin/bash -e {0}
+2026-11-02T20:48:30.6151260Z ##[endgroup]
+2026-11-02T20:48:30.6903230Z --- installed component ---
+2026-11-02T20:48:30.7010660Z total 0
+2026-11-02T20:48:30.7011600Z drwx------+ 2 runner  staff   64 Oct 26 22:54 .
+2026-11-02T20:48:30.7014160Z drwx------+ 5 runner  staff  160 Oct 26 22:54 ..
+2026-11-02T20:48:30.7083110Z /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component: No such file or directory
+2026-11-02T20:48:30.7087750Z --- registered audio units ---
+2026-11-02T20:48:32.4308900Z ##[group]Run for log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log; do
+2026-11-02T20:48:32.4311750Z [36;1mfor log in pluginval-vst3.log pluginval-au.log pluginval-au-gui.log; do[0m
+2026-11-02T20:48:32.4312620Z [36;1m  if [ -f "$log" ]; then[0m
+2026-11-02T20:48:32.4313140Z [36;1m    echo "::error title=pluginval $(basename "$log")::$(tail -n 20 "$log" | tr '\n' ' ')"[0m
+2026-11-02T20:48:32.4313620Z [36;1m  fi[0m
+2026-11-02T20:48:32.4313790Z [36;1mdone[0m
+2026-11-02T20:48:32.4412830Z shell: /bin/bash -e {0}
+2026-11-02T20:48:32.4413080Z ##[endgroup]
+2026-11-02T20:48:32.5010870Z ##[group]Run actions/upload-artifact@v5
+2026-11-02T20:48:32.5011110Z with:
+2026-11-02T20:48:32.5011300Z   name: cs80-pluginval-macos-15
+2026-11-02T20:48:32.5011640Z   path: pluginval-reports
+pluginval-vst3.log
+pluginval-au.log
+pluginval-au-gui.log
+
+2026-11-02T20:48:32.5012030Z   if-no-files-found: warn
+2026-11-02T20:48:32.5012220Z   compression-level: 6
+2026-11-02T20:48:32.5012400Z   overwrite: false
+2026-11-02T20:48:32.5012720Z   include-hidden-files: false
+2026-11-02T20:48:32.5012910Z ##[endgroup]
+2026-11-02T20:48:32.9650570Z (node:32613) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-02T20:48:32.9652280Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-02T20:48:32.9716230Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-02T20:48:32.9725860Z The least common ancestor is /Users/runner/work/yamaha-cs80/yamaha-cs80. This will be the root directory of the artifact
+2026-11-02T20:48:32.9745570Z ##[warning]No files were found with the provided path: pluginval-reports
+pluginval-vst3.log
+pluginval-au.log
+pluginval-au-gui.log. No artifacts will be uploaded.
+2026-11-02T20:48:32.9883530Z ##[group]Run actions/upload-artifact@v5
+2026-11-02T20:48:32.9883810Z with:
+2026-11-02T20:48:32.9883970Z   name: cs80-macos-15-test-evidence
+2026-11-02T20:48:32.9885220Z   path: build/Testing/Temporary/LastTest.log
+build/ci-juce-provenance.txt
+build/ui-smoke/golden/*.png
+packages/native-installer-ci/*.log
+packages/native-installer-ci/*receipt.json
+packages/native-installer-ci/document-verification.json
+packages/native-installer-ci/binary-input-manifest.json
+packages/native-installer-ci/binary-verification.json
+
+2026-11-02T20:48:32.9889020Z   if-no-files-found: warn
+2026-11-02T20:48:32.9892390Z   compression-level: 6
+2026-11-02T20:48:32.9893000Z   overwrite: false
+2026-11-02T20:48:32.9893220Z   include-hidden-files: false
+2026-11-02T20:48:32.9893490Z ##[endgroup]
+2026-11-02T20:48:33.1876100Z (node:32615) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-02T20:48:33.1890730Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-02T20:48:33.1951700Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-02T20:48:33.1955630Z The least common ancestor is /Users/runner/work/yamaha-cs80/yamaha-cs80. This will be the root directory of the artifact
+2026-11-02T20:48:33.1956250Z With the provided path, there will be 6 files uploaded
+2026-11-02T20:48:33.1962240Z Artifact name is valid!
+2026-11-02T20:48:33.1962890Z Root directory input is valid!
+2026-11-02T20:48:33.6187170Z Beginning upload of artifact content to blob storage
+2026-11-02T20:48:33.7842130Z (node:32615) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-02T20:48:34.6277340Z Uploaded bytes 3814022
+2026-11-02T20:48:34.7070300Z Finished uploading artifact content to blob storage!
+2026-11-02T20:48:34.7071170Z SHA256 digest of uploaded artifact zip is eb02f0061b97b3079ac2f64e3afc55a2877c4df0936a207d5a0e3519ae4ad16e
+2026-11-02T20:48:34.7071990Z Finalizing artifact upload
+2026-11-02T20:48:35.2222560Z Artifact cs80-macos-15-test-evidence.zip successfully finalized. Artifact ID 13177489148
+2026-11-02T20:48:35.2224780Z Artifact cs80-macos-15-test-evidence has been successfully uploaded! Final size is 3814022 bytes. Artifact ID is 13177489148
+2026-11-02T20:48:35.2230680Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41517359655/artifacts/13177489148
+2026-11-02T20:48:35.2403690Z Post job cleanup.
+2026-11-02T20:48:35.3532270Z [command]/opt/homebrew/bin/git version
+2026-11-02T20:48:35.3768420Z git version 2.56.0
+2026-11-02T20:48:35.3788650Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/89e53872-ca24-4396-ba31-38f53ca1abe0/.gitconfig'
+2026-11-02T20:48:35.3799220Z Temporarily overriding HOME='/Users/runner/work/_temp/89e53872-ca24-4396-ba31-38f53ca1abe0' before making global git config changes
+2026-11-02T20:48:35.3800260Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-02T20:48:35.3803420Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-02T20:48:35.3912950Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-02T20:48:35.3982420Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-02T20:48:35.5121410Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-02T20:48:35.5158770Z http.https://github.com/.extraheader
+2026-11-02T20:48:35.5211110Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-02T20:48:35.5263940Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-02T20:48:35.6029000Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-02T20:48:35.6091320Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-02T20:48:35.7170500Z Cleaning up orphan processes
+2026-11-02T20:48:37.9510980Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

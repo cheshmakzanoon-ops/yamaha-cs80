@@ -1,0 +1,70 @@
+test_debian_standalone_mode_normalization_is_registered (test_installer_binary_payload.InstallerBinaryPayloadTests.test_debian_standalone_mode_normalization_is_registered) ... ok
+test_empty_primary_build_binary_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_empty_primary_build_binary_is_rejected) ... ok
+test_external_source_symlink_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_external_source_symlink_is_rejected) ... ok
+test_forged_manifest_cannot_certify_stale_payload (test_installer_binary_payload.InstallerBinaryPayloadTests.test_forged_manifest_cannot_certify_stale_payload) ... ok
+test_internal_relative_link_target_change_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_internal_relative_link_target_change_is_rejected) ... ok
+test_internal_relative_resource_link_is_preserved (test_installer_binary_payload.InstallerBinaryPayloadTests.test_internal_relative_resource_link_is_preserved) ... ok
+test_legacy_python_directory_reparse_artifact_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_artifact_is_rejected) ... ok
+test_legacy_python_directory_reparse_expansion_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_expansion_is_rejected) ... ok
+test_legacy_python_directory_reparse_inside_bundle_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_legacy_python_directory_reparse_inside_bundle_is_rejected) ... ok
+test_linked_artifact_root_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linked_artifact_root_is_rejected) ... ok
+test_linked_expansion_root_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linked_expansion_root_is_rejected) ... ok
+test_linux_exact_inventory_hashes_and_explicit_scope (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linux_exact_inventory_hashes_and_explicit_scope) ... ok
+test_linux_executable_mode_loss_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linux_executable_mode_loss_rejected) ... ok
+test_linux_missing_binary_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linux_missing_binary_rejected) ... ok
+test_linux_stale_or_changed_bytes_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linux_stale_or_changed_bytes_rejected) ... ok
+test_linux_unexpected_bundle_resource_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_linux_unexpected_bundle_resource_rejected) ... ok
+test_macos_changed_post_capture_signature_bytes_are_not_waived (test_installer_binary_payload.InstallerBinaryPayloadTests.test_macos_changed_post_capture_signature_bytes_are_not_waived) ... ok
+test_macos_missing_component_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_macos_missing_component_rejected) ... ok
+test_macos_three_bundles_and_install_destinations (test_installer_binary_payload.InstallerBinaryPayloadTests.test_macos_three_bundles_and_install_destinations) ... ok
+test_macos_wrong_install_location_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_macos_wrong_install_location_rejected) ... ok
+test_malformed_package_info_is_an_explicit_rejection (test_installer_binary_payload.InstallerBinaryPayloadTests.test_malformed_package_info_is_an_explicit_rejection) ... ok
+test_missing_primary_build_binary_is_not_a_resource_only_bundle (test_installer_binary_payload.InstallerBinaryPayloadTests.test_missing_primary_build_binary_is_not_a_resource_only_bundle) ... ok
+test_payload_symlink_substitution_is_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_payload_symlink_substitution_is_rejected) ... ok
+test_platform_identity_mismatch_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_platform_identity_mismatch_rejected) ... ok
+test_snapshot_cannot_be_replaced_after_input_changes (test_installer_binary_payload.InstallerBinaryPayloadTests.test_snapshot_cannot_be_replaced_after_input_changes) ... ok
+test_special_source_file_is_rejected_without_opening_it (test_installer_binary_payload.InstallerBinaryPayloadTests.test_special_source_file_is_rejected_without_opening_it) ... ok
+test_unknown_platform_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_unknown_platform_rejected) ... ok
+test_windows_missing_standalone_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_windows_missing_standalone_rejected) ... ok
+test_windows_only_actual_standalone_scope (test_installer_binary_payload.InstallerBinaryPayloadTests.test_windows_only_actual_standalone_scope) ... ok
+test_windows_stale_standalone_rejected (test_installer_binary_payload.InstallerBinaryPayloadTests.test_windows_stale_standalone_rejected) ... ok
+test_noncanonical_artifact_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_artifact_retains_original_reparse_rejection) ... FAIL
+test_noncanonical_expansion_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_expansion_retains_original_reparse_rejection) ... ok
+test_noncanonical_nested_bundle_reparse_is_rejected (__main__.ReparseFixtureIdentityTests.test_noncanonical_nested_bundle_reparse_is_rejected) ... FAIL
+test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) ... 
+  test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) (spelling='/tmp/cs80-binary-fixture-2s231uy5/build/CS80Reference_artefacts') ... ERROR
+test_unrelated_directory_does_not_receive_attributes (__main__.ReparseFixtureIdentityTests.test_unrelated_directory_does_not_receive_attributes) ... ok
+
+======================================================================
+ERROR: test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) (spelling='/tmp/cs80-binary-fixture-2s231uy5/build/CS80Reference_artefacts')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-packaging-canonical-fixture/tests/release/test_installer_reparse_fixture_identity.py", line 48, in test_selected_lexical_and_canonical_spellings_receive_attributes
+    self.assertTrue(selected.lstat().st_file_attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT,
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'os.stat_result' object has no attribute 'st_file_attributes'
+
+======================================================================
+FAIL: test_noncanonical_artifact_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_artifact_retains_original_reparse_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-packaging-canonical-fixture/tests/release/test_installer_reparse_fixture_identity.py", line 29, in test_noncanonical_artifact_retains_original_reparse_rejection
+    self.case.test_legacy_python_directory_reparse_artifact_is_rejected()
+  File "/workspace/scratch/aa102d573ba3/cs80-packaging-canonical-fixture/tests/release/test_installer_binary_payload.py", line 328, in test_legacy_python_directory_reparse_artifact_is_rejected
+    with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_noncanonical_nested_bundle_reparse_is_rejected (__main__.ReparseFixtureIdentityTests.test_noncanonical_nested_bundle_reparse_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-packaging-canonical-fixture/tests/release/test_installer_reparse_fixture_identity.py", line 38, in test_noncanonical_nested_bundle_reparse_is_rejected
+    with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.219s
+
+FAILED (failures=2, errors=1)

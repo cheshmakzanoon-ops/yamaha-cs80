@@ -1,0 +1,98 @@
+{
+  "source_commit": "3fda883d2d786895731ade5eb74b45ab4a80e5a2",
+  "inputs": {
+    "tests/release/test_installer_binary_payload.py": "3af8fa756a526bbd454336002841e4c9bfb6799586e27cf519427a72a8491754",
+    "tests/release/test_installer_reparse_fixture_identity.py": "3a9c987739d2a51d2cd8fc71c60983f2fa82c6f1b7e3aa8b103bc0c125531a6e",
+    "scripts/verify_installer_binaries.py": "0bf613b672c83c7d3d55cd8db607e14d44fbbc2e3baa8daa6545cc8694680625"
+  },
+  "semantic_controls": 1,
+  "cases": [
+    {
+      "case": "positive",
+      "passed": true,
+      "exit": 0,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "5"
+        ],
+        "expected_failures": [],
+        "summary": [
+          "OK"
+        ]
+      },
+      "log_sha256": "1c279e07899587285bc26f324b34ff2cec91f39901b80c2b61c88c9328ee3e48"
+    },
+    {
+      "case": "lexical_only",
+      "passed": true,
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_noncanonical_artifact_retains_original_reparse_rejection",
+          "test_noncanonical_nested_bundle_reparse_is_rejected",
+          "test_selected_lexical_and_canonical_spellings_receive_attributes"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "5"
+        ],
+        "expected_failures": [
+          "test_noncanonical_artifact_retains_original_reparse_rejection",
+          "test_noncanonical_nested_bundle_reparse_is_rejected",
+          "test_selected_lexical_and_canonical_spellings_receive_attributes"
+        ],
+        "summary": [
+          "FAILED (failures=3)"
+        ]
+      },
+      "log_sha256": "c8f420485782f6d358d5fb62fd9bab03df43d62dc2c56caa7043bc662b6c3f8c"
+    },
+    {
+      "case": "runtime_error_control",
+      "passed": true,
+      "exit": 1,
+      "assessment": {
+        "qualified": false,
+        "ordinary_failures": [],
+        "runtime_errors": [
+          "test_noncanonical_artifact_retains_original_reparse_rejection",
+          "test_noncanonical_expansion_retains_original_reparse_rejection",
+          "test_noncanonical_nested_bundle_reparse_is_rejected",
+          "test_selected_lexical_and_canonical_spellings_receive_attributes",
+          "test_unrelated_directory_does_not_receive_attributes"
+        ],
+        "test_inventory": [
+          "5"
+        ],
+        "expected_failures": [],
+        "summary": [
+          "FAILED (errors=5)"
+        ]
+      },
+      "log_sha256": "0d9a8628bc55577f1b3dc243b3e077da5fe301b703b80c7fe90776cd204acfb1"
+    },
+    {
+      "case": "restored",
+      "passed": true,
+      "exit": 0,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "5"
+        ],
+        "expected_failures": [],
+        "summary": [
+          "OK"
+        ]
+      },
+      "log_sha256": "88d116f349b5e7c7df214d564ac2e20251fe06e1c2a74c94fc5aed56fc2dadd4"
+    }
+  ],
+  "native_execution": false
+}
