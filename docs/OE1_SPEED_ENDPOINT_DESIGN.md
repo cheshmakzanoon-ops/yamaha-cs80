@@ -43,6 +43,10 @@ TREMOLO. It gives no quantitative intermediate-position curve or minimum rate.
 
 ## Control routing recovered from the drawings
 
+**Supplement:** the overall foldout grounds SPEED terminal 1, unlike the detailed
+Panel66 drawing below. See [the source-conflict note](OE1_SPEED_SOURCE_CONFLICT.md);
+this panel trace does not establish which wiring is installed in a given unit.
+
 Primary drawings for serial numbers 1001 onward:
 [Panel 3 p66](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/66%20-%20Panel%203%20Circuit%20Diagram.jpg),
 [OE1 p55](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/55%20-%20OE1%20Circuit%20Diagram.jpg),
