@@ -1182,7 +1182,11 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     if (! ringKeyDown)
     {
         ringKeyDown = true;
-        ringPhase = 0.0f;
+        // Source-informed continuity: PRA TR drives the separate ring envelope,
+        // not a carrier timing/reset input. Retain the autonomous carrier phase
+        // while retriggering its frequency envelope; legacy keeps its reset.
+        if (!usesSourceModels(global.renderPolicy))
+            ringPhase = 0.0f;
         ringEnv = 0.0f;
         ringAdsr.reset();
         ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f);

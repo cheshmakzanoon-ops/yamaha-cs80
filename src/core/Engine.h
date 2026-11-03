@@ -280,6 +280,7 @@ public:
     RenderPolicy getRenderPolicy() const noexcept { return global.renderPolicy; }
     // Offline diagnostics; read on the rendering thread, not concurrently.
     float getRingFrequency() const noexcept { return ringFrequency; }
+    float getRingCarrierPhase() const noexcept { return ringPhase; }
     float getRingEnvelope() const noexcept { return ringEnv; }
     float getSubOscillatorValue() const noexcept { return subValue; }
     float getSubOscillatorRate() const noexcept
