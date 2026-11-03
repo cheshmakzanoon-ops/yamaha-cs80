@@ -19,6 +19,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -163,11 +164,13 @@ inline std::string parseKeyboardMapping(const std::string& text, KeyboardMapping
     long long v[5] {};
     for (int i = 0; i < 5; ++i)
         if (!detail::parseInt(lines[(std::size_t) i], v[i])) return "invalid mapping header line " + std::to_string(i + 1);
+    // Validate the external wide integers before narrowing: out-of-range values
+    // must not wrap into an otherwise valid MIDI note or mapping size.
+    if (v[0] < 0 || v[0] > 1024 || v[1] < 0 || v[2] > 127 || v[1] > v[2]
+        || v[3] < 0 || v[3] > 127 || v[4] < 0 || v[4] > 127)
+        return "mapping header out of range";
     KeyboardMapping m;
     m.size = (int) v[0]; m.first = (int) v[1]; m.last = (int) v[2]; m.middle = (int) v[3]; m.reference = (int) v[4];
-    if (m.size < 0 || m.size > 1024 || m.first < 0 || m.last > 127 || m.first > m.last
-        || m.middle < 0 || m.middle > 127 || m.reference < 0 || m.reference > 127)
-        return "mapping header out of range";
     std::string freq = detail::trim(lines[5]);
     const auto space = freq.find_first_of(" \t");
     if (space != std::string::npos) freq = freq.substr(0, space);
@@ -183,7 +186,8 @@ inline std::string parseKeyboardMapping(const std::string& text, KeyboardMapping
         const std::string t = at < lines.size() ? detail::trim(lines[at]) : std::string("x");
         long long degree = 0;
         if (!t.empty() && (t[0] == 'x' || t[0] == 'X')) m.map.push_back(-1);
-        else if (detail::parseInt(t.substr(0, t.find_first_of(" \t")), degree) && degree >= 0) m.map.push_back((int) degree);
+        else if (detail::parseInt(t.substr(0, t.find_first_of(" \t")), degree)
+                 && degree >= 0 && degree <= (std::numeric_limits<int>::max)()) m.map.push_back((int) degree);
         else return "invalid mapping entry " + std::to_string(i + 1);
     }
     out = m;
@@ -248,6 +252,11 @@ inline std::string buildTable(const Scale& s, const KeyboardMapping& m, TuningTa
         const double hz = m.referenceHz * std::exp2((ok ? cents - refCents : (n - m.reference) * 100.0) / 1200.0);
         t.pitch[(std::size_t) n] = TuningTable::pitchFromHz(hz);
         if (!std::isfinite(t.pitch[(std::size_t) n])) return "tuning produced a non-finite pitch";
+        // Match the core's nominal midiToHz float operation order. A finite
+        // double Hz/pitch can still underflow or overflow that reconstruction.
+        const float renderedHz = 440.0f * std::pow(2.0f, (t.pitch[(std::size_t) n] - 69.0f) / 12.0f);
+        if (!std::isfinite(renderedHz) || !(renderedHz > 0.0f))
+            return "tuning produced an unrenderable nominal float frequency";
     }
     out = t;
     return {};
@@ -263,6 +272,26 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
     if ((!realtime && !nonRealtime) || data[3] != 0x08) return false;
     if (data[2] != 0x7F && data[2] != (std::uint8_t) deviceId) return false;
     const int sub = data[4];
+    // Validate the complete supported envelope before any table write. Exact
+    // layouts also bound the following data-byte scan (count is one uint8_t).
+    if (sub == 0x01)
+    {
+        if (!nonRealtime || size != 6 + 16 + 128 * 3 + 2) return false;
+        // Original bulk01 checksum ambiguity is explicitly tolerated by MTS.
+    }
+    else if (sub == 0x02 || sub == 0x07)
+    {
+        const int header = sub == 0x02 ? 7 : 8;
+        if (size < header + 1 || size != header + data[header - 1] * 4 + 1) return false;
+    }
+    else if (sub == 0x08 || sub == 0x09)
+    {
+        if (size != 8 + (sub == 0x08 ? 12 : 24) + 1) return false;
+        if ((data[5] & 0x7C) != 0) return false; // reserved channel/options bits
+    }
+    else return false;
+    for (int i = 1; i < size - 1; ++i)
+        if ((data[i] & 0x80) != 0) return false;
     auto pitch3 = [](const std::uint8_t* p, float& out) {
         if (p[0] == 0x7F && p[1] == 0x7F && p[2] == 0x7F) return false; // "no change"
         out = (float) p[0] + (float) ((p[1] << 7) | p[2]) / 16384.0f;
@@ -284,6 +313,9 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
         const int header = sub == 0x02 ? 7 : 8; // [prog] or [bank prog], then count
         if (size < header + 1) return false;
         const int count = data[header - 1];
+        // A framed but incomplete counted message must not partially retune the
+        // table. Each declared note needs all four bytes before any entry writes.
+        if (size < header + count * 4 + 1) return false;
         for (int i = 0; i < count; ++i)
         {
             const int at = header + i * 4;

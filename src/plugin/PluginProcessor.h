@@ -18,6 +18,7 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 
 #include <memory>
+#include <optional>
 #include <atomic>
 #include <array>
 #include <cmath>
@@ -26,7 +27,7 @@
 #include <vector>
 
 class Cs80AudioProcessorEditor;
-namespace cs80::tests { struct PresetSaveAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct ScalaMappingAccess; }
 
 class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener
 {
@@ -212,7 +213,12 @@ public:
     // success, otherwise the reason (the previous tuning is kept). The texts
     // are saved with the session, not with presets.
     juce::String loadScalaTuning(const juce::String& scl, const juce::String& kbm = {});
+    // Replaces only the keyboard mapping of the currently loaded Scala source.
+    // Editor lifetime is irrelevant. An absent or concurrently changed source
+    // returns an error and leaves the current scale/mapping pair untouched.
+    juce::String loadScalaKeyboardMapping(const juce::String& kbm);
     void clearScalaTuning();
+    bool hasScalaTuning() const; // a valid Scala description may be empty
     juce::String getScalaDescription() const;
     // MTS-ESP (tuning_mode 2): client compiled in, and a master connected.
     static bool isMtsEspAvailable() noexcept { return cs80::MtsEspClient::available(); }
@@ -269,6 +275,7 @@ public:
 
 private:
     friend struct cs80::tests::PresetSaveAccess;
+    friend struct cs80::tests::ScalaMappingAccess;
     // [ws6-library] program change, bank select, A/B state (PluginProcessorLibrary.cpp).
     struct LibraryState;
     std::unique_ptr<LibraryState> library;
@@ -297,7 +304,8 @@ private:
     void routeNoteOn(int note, float velocity, int channel);
     void routeNoteOff(int note, int channel);
     template <class F> void forEachEngine(F&& f) { f(engine); if (extensionActive) f(*extensionEngine); }
-    juce::String publishScala(const juce::String& scl, const juce::String& kbm);
+    juce::String publishScala(const juce::String& scl, const juce::String& kbm,
+                             std::optional<unsigned> expectedVersion = std::nullopt);
     void applyValues(const cs80::ParamValues& values);
     // [ws8-studio] MIDI learn on the audio thread; studio state in and out of the saved tree.
     void applyMidiLearn(const juce::MidiBuffer& midi) noexcept;

@@ -2,7 +2,7 @@
 
 // Studio "Keyboard" tab: tuning sources and the ws3 keyboard/voice settings
 // (IMPROVEMENT_PLAN Phase 2.2, 2.4 and 6). A thin view over the processor's
-// tuning API (loadScalaTuning, clearScalaTuning, getScalaDescription,
+// tuning API (loadScalaTuning, loadScalaKeyboardMapping, clearScalaTuning, hasScalaTuning, getScalaDescription,
 // isMtsEspAvailable, isMtsEspConnected) and the nine ws3 host parameters:
 // kas_scan_timing, velocity_curve, pressure_curve, pressure_threshold,
 // ribbon_cc_enable, ribbon_cc, tuning_mode, voice_mode and unison_detune.
@@ -30,6 +30,7 @@ public:
 
     // Test hooks: the same paths the file buttons take, without a file chooser.
     juce::String loadScalaText(const juce::String& scl, const juce::String& kbm = {});
+    juce::String loadKeyboardMappingText(const juce::String& kbm);
     void clearTuning();
     juce::String statusText() const { return status.getText(); }
     juce::String tuningText() const { return description.getText(); }
@@ -58,7 +59,7 @@ private:
     std::unique_ptr<juce::ButtonParameterAttachment> scanTimingAttachment, ribbonCcEnableAttachment;
     std::array<Row, 5> rows; // unison detune, velocity curve, pressure curve, pressure threshold, ribbon CC number
     std::unique_ptr<juce::FileChooser> chooser;
-    juce::String sclText, kbmText, lastError;
+    juce::String lastError;
     juce::Rectangle<int> tuningPanel, keyboardPanel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KeyboardTuningPage)

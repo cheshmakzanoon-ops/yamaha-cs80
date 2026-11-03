@@ -19,6 +19,7 @@
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
+#include "../../tests/KeyboardTuningUiTests.h"
 #include "../../tests/ProgramLibraryHostTests.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
@@ -2000,6 +2001,12 @@ int main(int argc, char** argv)
                 sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
     std::puts("UI SMOKE PHASE: JUCE initialization");
     juce::ScopedJuceInitialiser_GUI juceInit;
+    if (argc > 1 && std::strcmp(argv[1], "--keyboard-tuning-ui-test") == 0)
+    {
+        cs80::tests::testKeyboardTuningUiState(check);
+        std::printf("Keyboard tuning UI state: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     std::puts("UI SMOKE PHASE: host metadata");
     cs80::tests::testPluginHostMetadata(check);
     std::puts("UI SMOKE PHASE: output meter host");
@@ -3599,6 +3606,7 @@ int main(int argc, char** argv)
     cs80::tests::testModernLayerUi(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)");
     cs80::tests::testIntegrationUi(check, flushGui);
+    cs80::tests::testKeyboardTuningUiState(check);
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");
