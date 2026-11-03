@@ -1,0 +1,39 @@
+test_noncanonical_artifact_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_artifact_retains_original_reparse_rejection) ... FAIL
+test_noncanonical_expansion_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_expansion_retains_original_reparse_rejection) ... ok
+test_noncanonical_nested_bundle_reparse_is_rejected (__main__.ReparseFixtureIdentityTests.test_noncanonical_nested_bundle_reparse_is_rejected) ... FAIL
+test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) ... 
+  test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) (spelling='/tmp/cs80-binary-fixture-287w83ff/build/CS80Reference_artefacts') ... FAIL
+test_unrelated_directory_does_not_receive_attributes (__main__.ReparseFixtureIdentityTests.test_unrelated_directory_does_not_receive_attributes) ... ok
+
+======================================================================
+FAIL: test_noncanonical_artifact_retains_original_reparse_rejection (__main__.ReparseFixtureIdentityTests.test_noncanonical_artifact_retains_original_reparse_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-packaging-canonical-3fda-results/preimplementation/tests/release/test_installer_reparse_fixture_identity.py", line 28, in test_noncanonical_artifact_retains_original_reparse_rejection
+    self.case.test_legacy_python_directory_reparse_artifact_is_rejected()
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-packaging-canonical-3fda-results/preimplementation/tests/release/test_installer_binary_payload.py", line 328, in test_legacy_python_directory_reparse_artifact_is_rejected
+    with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_noncanonical_nested_bundle_reparse_is_rejected (__main__.ReparseFixtureIdentityTests.test_noncanonical_nested_bundle_reparse_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-packaging-canonical-3fda-results/preimplementation/tests/release/test_installer_reparse_fixture_identity.py", line 37, in test_noncanonical_nested_bundle_reparse_is_rejected
+    with self.assertRaisesRegex(ValueError, 'linked|Linked|reparse|junction'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_selected_lexical_and_canonical_spellings_receive_attributes (__main__.ReparseFixtureIdentityTests.test_selected_lexical_and_canonical_spellings_receive_attributes) (spelling='/tmp/cs80-binary-fixture-287w83ff/build/CS80Reference_artefacts')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-packaging-canonical-3fda-results/preimplementation/tests/release/test_installer_reparse_fixture_identity.py", line 47, in test_selected_lexical_and_canonical_spellings_receive_attributes
+    self.assertTrue(getattr(selected.lstat(), 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT,
+AssertionError: 0 is not true : Registered fixture target did not receive reparse attributes
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.020s
+
+FAILED (failures=3)

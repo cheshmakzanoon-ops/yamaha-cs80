@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/aa102d573ba3/cs80-independent-packaging-canonical-3fda-results/static-review.py", line 37, in <module>
+    for name,record in manifest.items():
+                       ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'items'

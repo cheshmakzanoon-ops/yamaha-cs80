@@ -1,0 +1,123 @@
+{
+  "reviewed_commit": "3fda883d2d786895731ade5eb74b45ab4a80e5a2",
+  "reviewed_base": "9bce169b919216da3cd1e50c8c7395ca2a2b1f3f",
+  "reviewed_author_evidence": "d74b9e2222f24d727ef59cd1c62f04fbc3bdfe12",
+  "recorded_utc": "2026-11-02T23:43:33.396594+00:00",
+  "decision": "bounded fixture-identity repair review passed; no blocking findings",
+  "production_source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "production_verifier_blob": "db3431f9da62ca65ae89e89688895efc7332f81e",
+  "unchanged_original_control_runner_blob": "44370d84f7ac1d8c2e5a37744ed49fb42360c3da",
+  "all_original_assertions_skips_and_test_AST_except_fixture_helper_unchanged": true,
+  "default_python": "Python 3.12.14",
+  "second_python": "Python 3.13.5",
+  "tests_each_interpreter": {
+    "new_fixture_identity": 5,
+    "original_binary_payload": 30
+  },
+  "fresh_CTest_registration_and_execution": {
+    "passed": 6,
+    "failed": 0
+  },
+  "exact_preimplementation_red": {
+    "tests": 5,
+    "ordinary_failures": [
+      "test_noncanonical_artifact_retains_original_reparse_rejection",
+      "test_noncanonical_nested_bundle_reparse_is_rejected",
+      "test_selected_lexical_and_canonical_spellings_receive_attributes"
+    ],
+    "runtime_errors": 0,
+    "exit": 1
+  },
+  "lexical_only_source_rollback": "three exact ordinary failures; zero runtime errors; complete5 tests",
+  "unchanged_original_production_source_mutants": 13,
+  "both_runtime_crash_controls_refused": true,
+  "positive_and_restored_both_families_passed": true,
+  "fresh_control_log_hashes": [
+    {
+      "path": "fixture-controls/positive/run.log",
+      "sha256": "b2982c981867010f7df2730ff9e97a033688971b2802d492c60c984731a893c5"
+    },
+    {
+      "path": "fixture-controls/lexical_only/run.log",
+      "sha256": "85856a1ec1f73995bbf7008303080eb42fc2f297f1b30c2c7ade54262e61877b"
+    },
+    {
+      "path": "fixture-controls/runtime_error_control/run.log",
+      "sha256": "845fe517e0de886b330cad512bcb813516363bc22f31c8ddbfdadbe8414a4995"
+    },
+    {
+      "path": "fixture-controls/restored/run.log",
+      "sha256": "88d116f349b5e7c7df214d564ac2e20251fe06e1c2a74c94fc5aed56fc2dadd4"
+    },
+    {
+      "path": "original-controls/positive.log",
+      "sha256": "eafaf81b86392ad9f121c43f038d6fc739bf71f2f3324710ebb1d06901af746a"
+    },
+    {
+      "path": "original-controls/ignore_input_snapshot.log",
+      "sha256": "5cafb39ff7707763dcc9b27a8a86936f0e0056e37bc33a8ac56d07efeafefef1"
+    },
+    {
+      "path": "original-controls/allow_extra_inventory.log",
+      "sha256": "921a3a27a7c610014c16dea89c1fa178b0125d665eb0389eea0e1b2269db171d"
+    },
+    {
+      "path": "original-controls/ignore_payload_bytes.log",
+      "sha256": "a016e920f9e27cac5fb193d02298ee19c81ae8e49cb7e93411429db1fba740d2"
+    },
+    {
+      "path": "original-controls/ignore_mode.log",
+      "sha256": "ff0605c224f2dbe569373331826099331c509aefdd5d0624045d7f00112a18ac"
+    },
+    {
+      "path": "original-controls/ignore_link_target.log",
+      "sha256": "bb96a6cdce38841bc4411b9319dcf37c19e25494c152c6fa8f03143d43a065f5"
+    },
+    {
+      "path": "original-controls/wrong_component_destination.log",
+      "sha256": "b33e069eb2cb816769515eda0444604c995fb09dea73f5b6db580c173069ea76"
+    },
+    {
+      "path": "original-controls/skip_au_verification.log",
+      "sha256": "6f101a4d5fc08cb1b539d09309371f376cd47d3fa510f6737bdc7f8a81afd604"
+    },
+    {
+      "path": "original-controls/claim_windows_vst3.log",
+      "sha256": "299416566c06d1933882147826d77dac4fc36d60190867637f77a8cc45fe7f3b"
+    },
+    {
+      "path": "original-controls/allow_empty_primary.log",
+      "sha256": "8e177ae840f036c32e83b93493fe7a8469c144784061e04c02028bd8c7f072cd"
+    },
+    {
+      "path": "original-controls/follow_expansion_root.log",
+      "sha256": "9824085152557ef3f8b7b7183e423682737bfba8e659d23fbe0bb139dd68955b"
+    },
+    {
+      "path": "original-controls/follow_artifact_root.log",
+      "sha256": "628433e121a6670a39510e06d0a82df540f3f3d307722a9dc2407dcf42d55d3b"
+    },
+    {
+      "path": "original-controls/ignore_directory_reparse_attributes.log",
+      "sha256": "277305aa72a97e4fe4c7c75641a82ace0c7e5b7180008bed5e278e9a9ab4d0bc"
+    },
+    {
+      "path": "original-controls/allow_external_links.log",
+      "sha256": "f719f19180ccec7a4a6965bbf696bbae523dd6982248c092f042a87c76fae9d9"
+    },
+    {
+      "path": "original-controls/runtime_error_control.log",
+      "sha256": "3ce0b5fc4b52e8817dff4aa2b74fae9ae5df9e2b8d0eff0ea52620bfd76d0b5b"
+    },
+    {
+      "path": "original-controls/restored.log",
+      "sha256": "4a6d0d4a9ecec14160abc47fc0d5cd376a6ef7aa5334adc642026280c9747247"
+    }
+  ],
+  "author_archive_complete_inventory_and_hashes_verified": 44,
+  "source_checkout_clean_before_evidence_commit": true,
+  "native_alias_hypothesis": "The old fixture missed canonicalized target spellings in the portable test. The exact native failing alias was not recorded and remains a hypothesis until a new native CI run.",
+  "proof_limit": "Synthetic payload trees and selected CTest fixtures only. Linux package-tool fixture roundtrips do not execute or install a plug-in binary. No Windows/macOS native junction or installer execution, signing, audio, CPU or release acceptance.",
+  "reviewer_harness_attempt": "First archive hash script assumed a dict while SHA256.json is a list. Exact preimplementation RED had already passed; archive code failed before acceptance. Raw attempt retained, not counted as semantic control. Corrected script verifies unique paths,44 payloads and exact inventory.",
+  "proposed_integration": "Approved fixture-only chain may be composed with separately reviewed async UI test changes and rerun in native CI; no source/DSP changes or predicate relaxation."
+}

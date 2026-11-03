@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "source_commit": "3fda883d2d786895731ade5eb74b45ab4a80e5a2",
+  "files": {
+    "scripts/verify_installer_binaries.py": "0bf613b672c83c7d3d55cd8db607e14d44fbbc2e3baa8daa6545cc8694680625",
+    "tests/release/test_installer_binary_payload.py": "3af8fa756a526bbd454336002841e4c9bfb6799586e27cf519427a72a8491754"
+  },
+  "semantic_mutants": 13,
+  "runtime_error_is_not_a_semantic_kill": true,
+  "scope": "Synthetic payload/helper identity controls only; no native Windows/macOS installer execution, compiler/source, signing or musical qualification",
+  "cases": [
+    {
+      "case": "positive",
+      "result": "PASS",
+      "expected": "pass",
+      "exit": 0,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": []
+      },
+      "log_sha256": "eafaf81b86392ad9f121c43f038d6fc739bf71f2f3324710ebb1d06901af746a"
+    },
+    {
+      "case": "ignore_input_snapshot",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_forged_manifest_cannot_certify_stale_payload"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_forged_manifest_cannot_certify_stale_payload"
+        ]
+      },
+      "log_sha256": "5cafb39ff7707763dcc9b27a8a86936f0e0056e37bc33a8ac56d07efeafefef1"
+    },
+    {
+      "case": "allow_extra_inventory",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_linux_unexpected_bundle_resource_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_linux_unexpected_bundle_resource_rejected"
+        ]
+      },
+      "log_sha256": "921a3a27a7c610014c16dea89c1fa178b0125d665eb0389eea0e1b2269db171d"
+    },
+    {
+      "case": "ignore_payload_bytes",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_linux_stale_or_changed_bytes_rejected",
+          "test_macos_changed_post_capture_signature_bytes_are_not_waived",
+          "test_windows_stale_standalone_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_linux_stale_or_changed_bytes_rejected",
+          "test_macos_changed_post_capture_signature_bytes_are_not_waived",
+          "test_windows_stale_standalone_rejected"
+        ]
+      },
+      "log_sha256": "a016e920f9e27cac5fb193d02298ee19c81ae8e49cb7e93411429db1fba740d2"
+    },
+    {
+      "case": "ignore_mode",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_linux_executable_mode_loss_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_linux_executable_mode_loss_rejected"
+        ]
+      },
+      "log_sha256": "ff0605c224f2dbe569373331826099331c509aefdd5d0624045d7f00112a18ac"
+    },
+    {
+      "case": "ignore_link_target",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_internal_relative_link_target_change_is_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_internal_relative_link_target_change_is_rejected"
+        ]
+      },
+      "log_sha256": "bb96a6cdce38841bc4411b9319dcf37c19e25494c152c6fa8f03143d43a065f5"
+    },
+    {
+      "case": "wrong_component_destination",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_macos_wrong_install_location_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_macos_wrong_install_location_rejected"
+        ]
+      },
+      "log_sha256": "b33e069eb2cb816769515eda0444604c995fb09dea73f5b6db580c173069ea76"
+    },
+    {
+      "case": "skip_au_verification",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_macos_missing_component_rejected",
+          "test_macos_three_bundles_and_install_destinations",
+          "test_macos_wrong_install_location_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_macos_missing_component_rejected",
+          "test_macos_three_bundles_and_install_destinations",
+          "test_macos_wrong_install_location_rejected"
+        ]
+      },
+      "log_sha256": "6f101a4d5fc08cb1b539d09309371f376cd47d3fa510f6737bdc7f8a81afd604"
+    },
+    {
+      "case": "claim_windows_vst3",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_windows_only_actual_standalone_scope"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_windows_only_actual_standalone_scope"
+        ]
+      },
+      "log_sha256": "299416566c06d1933882147826d77dac4fc36d60190867637f77a8cc45fe7f3b"
+    },
+    {
+      "case": "allow_empty_primary",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_empty_primary_build_binary_is_rejected",
+          "test_missing_primary_build_binary_is_not_a_resource_only_bundle",
+          "test_missing_primary_build_binary_is_not_a_resource_only_bundle"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_empty_primary_build_binary_is_rejected",
+          "test_missing_primary_build_binary_is_not_a_resource_only_bundle",
+          "test_missing_primary_build_binary_is_not_a_resource_only_bundle"
+        ]
+      },
+      "log_sha256": "8e177ae840f036c32e83b93493fe7a8469c144784061e04c02028bd8c7f072cd"
+    },
+    {
+      "case": "follow_expansion_root",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_legacy_python_directory_reparse_expansion_is_rejected",
+          "test_linked_expansion_root_is_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_linked_expansion_root_is_rejected",
+          "test_legacy_python_directory_reparse_expansion_is_rejected"
+        ]
+      },
+      "log_sha256": "9824085152557ef3f8b7b7183e423682737bfba8e659d23fbe0bb139dd68955b"
+    },
+    {
+      "case": "follow_artifact_root",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_legacy_python_directory_reparse_artifact_is_rejected",
+          "test_linked_artifact_root_is_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_linked_artifact_root_is_rejected",
+          "test_legacy_python_directory_reparse_artifact_is_rejected"
+        ]
+      },
+      "log_sha256": "628433e121a6670a39510e06d0a82df540f3f3d307722a9dc2407dcf42d55d3b"
+    },
+    {
+      "case": "ignore_directory_reparse_attributes",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_legacy_python_directory_reparse_artifact_is_rejected",
+          "test_legacy_python_directory_reparse_expansion_is_rejected",
+          "test_legacy_python_directory_reparse_inside_bundle_is_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_legacy_python_directory_reparse_artifact_is_rejected",
+          "test_legacy_python_directory_reparse_expansion_is_rejected",
+          "test_legacy_python_directory_reparse_inside_bundle_is_rejected"
+        ]
+      },
+      "log_sha256": "277305aa72a97e4fe4c7c75641a82ace0c7e5b7180008bed5e278e9a9ab4d0bc"
+    },
+    {
+      "case": "allow_external_links",
+      "result": "PASS",
+      "expected": "semantic_rejection",
+      "exit": 1,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [
+          "test_external_source_symlink_is_rejected"
+        ],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": [
+          "test_external_source_symlink_is_rejected"
+        ]
+      },
+      "log_sha256": "f719f19180ccec7a4a6965bbf696bbae523dd6982248c092f042a87c76fae9d9"
+    },
+    {
+      "case": "runtime_error_control",
+      "result": "PASS",
+      "expected": "harness_refusal_not_semantic_kill",
+      "exit": 1,
+      "assessment": {
+        "qualified": false,
+        "ordinary_failures": [],
+        "runtime_errors": [
+          "test_debian_standalone_mode_normalization_is_registered",
+          "test_empty_primary_build_binary_is_rejected",
+          "test_external_source_symlink_is_rejected",
+          "test_forged_manifest_cannot_certify_stale_payload",
+          "test_internal_relative_link_target_change_is_rejected",
+          "test_internal_relative_resource_link_is_preserved",
+          "test_legacy_python_directory_reparse_artifact_is_rejected",
+          "test_legacy_python_directory_reparse_expansion_is_rejected",
+          "test_legacy_python_directory_reparse_inside_bundle_is_rejected",
+          "test_linked_artifact_root_is_rejected",
+          "test_linked_expansion_root_is_rejected",
+          "test_linux_exact_inventory_hashes_and_explicit_scope",
+          "test_linux_executable_mode_loss_rejected",
+          "test_linux_missing_binary_rejected",
+          "test_linux_stale_or_changed_bytes_rejected",
+          "test_linux_unexpected_bundle_resource_rejected",
+          "test_macos_changed_post_capture_signature_bytes_are_not_waived",
+          "test_macos_missing_component_rejected",
+          "test_macos_three_bundles_and_install_destinations",
+          "test_macos_wrong_install_location_rejected",
+          "test_malformed_package_info_is_an_explicit_rejection",
+          "test_missing_primary_build_binary_is_not_a_resource_only_bundle",
+          "test_missing_primary_build_binary_is_not_a_resource_only_bundle",
+          "test_payload_symlink_substitution_is_rejected",
+          "test_platform_identity_mismatch_rejected",
+          "test_snapshot_cannot_be_replaced_after_input_changes",
+          "test_special_source_file_is_rejected_without_opening_it",
+          "test_unknown_platform_rejected",
+          "test_windows_missing_standalone_rejected",
+          "test_windows_only_actual_standalone_scope",
+          "test_windows_stale_standalone_rejected"
+        ],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": []
+      },
+      "log_sha256": "3ce0b5fc4b52e8817dff4aa2b74fae9ae5df9e2b8d0eff0ea52620bfd76d0b5b"
+    },
+    {
+      "case": "restored",
+      "result": "PASS",
+      "expected": "pass",
+      "exit": 0,
+      "assessment": {
+        "qualified": true,
+        "ordinary_failures": [],
+        "runtime_errors": [],
+        "test_inventory": [
+          "30"
+        ],
+        "expected_failures": []
+      },
+      "log_sha256": "4a6d0d4a9ecec14160abc47fc0d5cd376a6ef7aa5334adc642026280c9747247"
+    }
+  ]
+}
