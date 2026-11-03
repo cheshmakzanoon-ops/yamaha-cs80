@@ -244,7 +244,18 @@ void runUiReadinessTests(Check check, Flush flush)
         ToggleGestureProbe probe;
         sourceParameter->addListener(&probe);
         sourceToggle->triggerClick();
-        flush(60);
+        // JUCE Button::triggerClick posts a command to the message thread.
+        // A fixed 60-ms flush can expire on a loaded native runner before
+        // that command is dispatched, then count the late click as a status
+        // refresh mutation. Observe the real async result, without changing
+        // the one-balanced-gesture or APVTS-state acceptance criteria.
+        const auto clickDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+        while ((host.getParamValue(cs80::P_sourcePerformance) != 1.0f || !probe.valid())
+               && std::chrono::steady_clock::now() < clickDeadline)
+            flush(20);
+        // Keep observing after the first accepted callback so a second click
+        // or unbalanced notification still fails the original probe.
+        flush(160);
         sourceParameter->removeListener(&probe);
         check(host.getParamValue(cs80::P_sourcePerformance) == 1.0f && probe.valid(),
               "source toggle sends one balanced host gesture and enables its stored request");
