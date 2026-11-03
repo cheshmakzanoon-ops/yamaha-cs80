@@ -187,6 +187,12 @@ class DistributionSourceIdentityTests(unittest.TestCase):
 
     def test_unregistered_crlf_conversion_is_rejected(self):
         self.git('config', 'core.autocrlf', 'false')
+        # Windows setup may have written CRLF files while Git committed LF
+        # under an inherited core.autocrlf=true. Changing that policy does not
+        # rewrite the existing checkout. Restore this synthetic fixture first,
+        # so rejection below is caused by the hidden notice mutation alone.
+        self.git('checkout', '--force', 'HEAD', '--', '.')
+        self.assertEqual(self.git('status', '--porcelain=v1', '--untracked-files=all').strip(), '')
         output = self.destination(); self.stage(output)
         converted = fixtures.REQUIRED['LICENSE'].replace(b'\n', b'\r\n')
         with self.hidden('LICENSE', '--assume-unchanged', converted), \
