@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/cs80-package-composition-receipt.py", line 35, in <module>
+    assert '100% tests passed, 0 tests failed out of 6' in log.read_text()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
