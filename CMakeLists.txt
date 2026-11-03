@@ -278,6 +278,10 @@ if (CS80_BUILD_TESTS)
         CS80_TUNING_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/data/tuning")
     add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
     set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_tuning_robustness_tests tests/TuningRobustnessTests.cpp)
+    target_include_directories(cs80_tuning_robustness_tests PRIVATE src)
+    add_test(NAME cs80_tuning_robustness_tests COMMAND cs80_tuning_robustness_tests)
+    set_tests_properties(cs80_tuning_robustness_tests PROPERTIES TIMEOUT 30)
 
     # [ws4-circuits] register this workstream's core tests below this line.
     add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
