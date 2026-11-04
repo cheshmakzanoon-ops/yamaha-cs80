@@ -222,6 +222,8 @@ public:
     source_factory::SharedReadout getSourceSharedReadout() const noexcept { return sourceShared; }
     const ParamValues& getParams() const noexcept { return params; }
 
+    // Non-finite velocity/pressure/ribbon events are ignored. Finite values
+    // retain their existing clamping and controller-response curves.
     void noteOn(int midiNote, float velocity, int midiChannel = 1);
     void noteOff(int midiNote, int midiChannel = 1);
     void allNotesOff(bool release = true, int midiChannel = 0);

@@ -1232,7 +1232,9 @@ void Engine::releaseVoice(Voice& v)
 
 void Engine::noteOn(int midiNote, float velocity, int midiChannel)
 {
-    if (midiNote < 0 || midiNote > 127)
+    // Reject malformed events before curves, scan queuing or voice lifecycle
+    // changes. A non-finite velocity is not a new key strike.
+    if (midiNote < 0 || midiNote > 127 || ! std::isfinite(velocity))
         return;
     // Interface-layer controller curve (Phase 2.4); exact identity at 0.
     if (global.velocityCurve != 0.0f)
@@ -1524,6 +1526,8 @@ void Engine::allNotesOff(bool release, int midiChannel)
 
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
+    if (! std::isfinite(pressure))
+        return;
     pressure = clampf(pressure, 0.0f, 1.0f);
     // Interface-layer controller curve (Phase 2.4); exact identity at default.
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
@@ -1538,6 +1542,8 @@ void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 
 void Engine::channelPressure(int midiChannel, float pressure)
 {
+    if (! std::isfinite(pressure))
+        return;
     pressure = clampf(pressure, 0.0f, 1.0f);
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
@@ -1660,7 +1666,8 @@ void Engine::setExpression(float value)
 
 void Engine::setRibbon(float value)
 {
-    ribbon = clampf(value, -1.0f, 1.0f);
+    if (std::isfinite(value))
+        ribbon = clampf(value, -1.0f, 1.0f);
 }
 
 float Engine::tunedPitch(int midiNote) const noexcept

@@ -579,6 +579,127 @@ void testOutputLevel()
     check(maxStep < 0.05, "HIGH to LOW is smoothed");
 }
 
+// The float-based core API can receive malformed values even though MIDI wire
+// messages themselves are integers. Match CC/expression handling: a non-finite
+// event is absent, not a request to reset or clamp the last valid control.
+enum class PerformanceEvent { polyPressure, channelPressure, ribbon, noteOn };
+
+void applyPerformanceEvent(Engine& e, PerformanceEvent event, float value)
+{
+    switch (event)
+    {
+        case PerformanceEvent::polyPressure: e.polyPressure(60, value, 1); break;
+        case PerformanceEvent::channelPressure: e.channelPressure(1, value); break;
+        case PerformanceEvent::ribbon: e.setRibbon(value); break;
+        case PerformanceEvent::noteOn: e.noteOn(67, value, 1); break;
+    }
+}
+
+void testPerformanceEventBoundaries()
+{
+    constexpr PerformanceEvent events[] = { PerformanceEvent::polyPressure,
+        PerformanceEvent::channelPressure, PerformanceEvent::ribbon, PerformanceEvent::noteOn };
+    constexpr float invalidValues[] = { std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity() };
+    for (int policy = 0; policy < 3; ++policy)
+        for (bool curvedAndScanned : { false, true })
+        {
+            ParamValues p = quietPatch();
+            p[P_sourcePerformance] = policy != 0 ? 1.0f : 0.0f;
+            p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+            p[P_sustainMode] = 1.0f;
+            p[P_kasScanTiming] = curvedAndScanned ? 1.0f : 0.0f;
+            p[P_velocityCurve] = curvedAndScanned ? -0.5f : 0.0f;
+            p[P_pressureCurve] = curvedAndScanned ? 0.5f : 0.0f;
+            p[P_pressureThreshold] = curvedAndScanned ? 0.1f : 0.0f;
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                p[chParam(rank, CP_afterLevel)] = 0.8f;
+                p[chParam(rank, CP_afterBrill)] = 0.8f;
+                p[chParam(rank, CP_vR)] = 5.0f;
+            }
+            auto initialise = [&](Engine& e)
+            {
+                e.prepare(kRate);
+                e.setParams(p);
+                // Exercise both the per-voice pressure path and the cached
+                // channel-pressure source used by the global matrix.
+                modern::ModernConfig config;
+                config.slots[0].source = modern::ModSource::channelPressure;
+                config.slots[0].destination = modern::ModDestination::subDepth;
+                config.slots[1].source = modern::ModSource::ribbon;
+                config.slots[1].destination = modern::ModDestination::pitch;
+                e.setModernConfig(config);
+                auto withMatrix = p;
+                withMatrix[P_mod1Amount] = 0.5f;
+                withMatrix[P_mod2Amount] = 0.1f;
+                e.setParams(withMatrix);
+                e.setRibbon(0.2f);
+                e.noteOn(60, 0.7f, 1);
+                e.noteOn(64, 0.5f, 1);
+                render(e, 256); // dispatch a complete KAS scan, when enabled
+                e.channelPressure(1, 0.2f);
+                e.polyPressure(60, 0.4f, 1);
+                render(e, 256);
+                e.noteOff(64, 1);
+                render(e, 256); // retain a Sustain-II tail beside the held key
+            };
+            for (const auto event : events)
+            {
+                for (const float invalid : invalidValues)
+                {
+                    Engine expected, actual;
+                    initialise(expected);
+                    initialise(actual);
+                    check(render(expected, 64) == render(actual, 64),
+                          "performance-event fixture starts sample-identical");
+                    applyPerformanceEvent(actual, event, invalid);
+                    // Rendering also dispatches queued note-ons. A malformed
+                    // note must not consume a circuit or clear Sustain-II tails.
+                    const auto reference = render(expected, 256);
+                    const auto observed = render(actual, 256);
+                    check(observed == reference,
+                          "non-finite performance event is sample-identical to no event");
+                    check(finiteBounded(observed, 2.0f),
+                          "non-finite performance event cannot poison audio");
+                    check(actual.activeVoices() == expected.activeVoices(),
+                          "non-finite performance event preserves voice lifecycle");
+                    bool sameVoices = true;
+                    for (int voice = 0; voice < 8; ++voice)
+                    {
+                        const auto a = actual.getVoiceInfo(voice);
+                        const auto b = expected.getVoiceInfo(voice);
+                        sameVoices = sameVoices && a.active == b.active && a.held == b.held
+                            && a.note == b.note && a.velocity == b.velocity
+                            && a.pressure == b.pressure && a.ribbonRatio == b.ribbonRatio;
+                    }
+                    check(sameVoices, "non-finite performance event preserves voice controls");
+                    check(actual.getModernGlobalOffsets().subDepthGain
+                              == expected.getModernGlobalOffsets().subDepthGain,
+                          "non-finite pressure preserves the global modulation source");
+                    applyPerformanceEvent(actual, event, 0.6f);
+                    applyPerformanceEvent(expected, event, 0.6f);
+                    check(render(actual, 256) == render(expected, 256),
+                          "valid event after a malformed event keeps exact continuity");
+                }
+                // Existing finite out-of-range behavior is unchanged, including
+                // controller curves and the opt-in scan queue.
+                for (const float finite : { -2.0f, 2.0f })
+                {
+                    Engine expected, actual;
+                    initialise(expected);
+                    initialise(actual);
+                    const float bounded = std::clamp(finite,
+                        event == PerformanceEvent::ribbon ? -1.0f : 0.0f, 1.0f);
+                    applyPerformanceEvent(actual, event, finite);
+                    applyPerformanceEvent(expected, event, bounded);
+                    check(render(actual, 256) == render(expected, 256),
+                          "finite performance event retains its existing endpoint clamp");
+                }
+            }
+        }
+}
+
 void testBoundaryInputs()
 {
     // Extreme and non-finite control values must leave a finite, bounded render.
@@ -634,6 +755,7 @@ int main()
     testExpWah();
     testOutputLevel();
     testBoundaryInputs();
+    testPerformanceEventBoundaries();
 
     if (failures == 0)
         std::printf("ALL %d PERFORMANCE CONTROL CHECKS PASSED\n", checks);
