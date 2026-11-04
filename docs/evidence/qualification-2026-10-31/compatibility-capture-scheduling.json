@@ -1,0 +1,33 @@
+{
+  "change": "Run existing independent baseline/current captures concurrently; no capture cached or omitted and all comparisons unchanged.",
+  "fault_injection": [
+    {
+      "baseline_exit": 0,
+      "current_exit": 0,
+      "helper_exit": 0,
+      "both_captures_completed": true,
+      "stderr": ""
+    },
+    {
+      "baseline_exit": 1,
+      "current_exit": 0,
+      "helper_exit": 1,
+      "both_captures_completed": true,
+      "stderr": "capture failed: baseline=1 current=0\n"
+    },
+    {
+      "baseline_exit": 0,
+      "current_exit": 1,
+      "helper_exit": 1,
+      "both_captures_completed": true,
+      "stderr": "capture failed: baseline=0 current=1\n"
+    },
+    {
+      "baseline_exit": 1,
+      "current_exit": 1,
+      "helper_exit": 1,
+      "both_captures_completed": true,
+      "stderr": "capture failed: baseline=1 current=1\n"
+    }
+  ]
+}

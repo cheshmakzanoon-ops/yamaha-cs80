@@ -1,0 +1,12 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -1245,7 +1245,8 @@
+             ringEnv = 0.0f;
+             ringAdsr.reset();
+         }
+-        ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f, retainRingState);
++        if (!retainRingState)
++            ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f, retainRingState);
+     }
+ }
+ 

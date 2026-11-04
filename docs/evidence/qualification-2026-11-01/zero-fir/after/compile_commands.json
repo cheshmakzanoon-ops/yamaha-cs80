@@ -1,0 +1,1224 @@
+{
+  "before": [
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/core/Engine.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/core/FactoryPresets.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -o CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/CoreTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/CoreTests.cpp",
+      "output": "CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before/scalar-oracle -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_exact_scalar_filter_tests.dir/tests/ExactScalarFilterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ExactScalarFilterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ExactScalarFilterTests.cpp",
+      "output": "CMakeFiles/cs80_exact_scalar_filter_tests.dir/tests/ExactScalarFilterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ContinuousVoiceCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ContinuousVoiceCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ContinuousVoiceCircuitAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ContinuousVoiceCircuitAuditTests.cpp",
+      "output": "CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputMeterDisplayTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputMeterDisplayTests.cpp",
+      "output": "CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputMeterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputMeterTests.cpp",
+      "output": "CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputMeterAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputMeterAuditTests.cpp",
+      "output": "CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardPressureAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardPressureAuditTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardEventQueueTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardEventQueueTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ParityModeTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ParityModeTests.cpp",
+      "output": "CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourcePerformanceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourcePerformanceTests.cpp",
+      "output": "CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourcePerformanceAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourcePerformanceAuditTests.cpp",
+      "output": "CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/EnvelopePrecisionTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/EnvelopePrecisionTests.cpp",
+      "output": "CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156FilterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156FilterTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/EnvelopeRcModelTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/EnvelopeRcModelTests.cpp",
+      "output": "CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LiveEnvelopeLevelTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LiveEnvelopeLevelTests.cpp",
+      "output": "CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LiveEnvelopeTimingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LiveEnvelopeTimingTests.cpp",
+      "output": "CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ActiveTailContinuityTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ActiveTailContinuityTests.cpp",
+      "output": "CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_cold_idle_timing_tests.dir/tests/ColdIdleTimingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ColdIdleTimingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ColdIdleTimingTests.cpp",
+      "output": "CMakeFiles/cs80_cold_idle_timing_tests.dir/tests/ColdIdleTimingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_cold_filter_envelope_tests.dir/tests/ColdFilterEnvelopeTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ColdFilterEnvelopeTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ColdFilterEnvelopeTests.cpp",
+      "output": "CMakeFiles/cs80_cold_filter_envelope_tests.dir/tests/ColdFilterEnvelopeTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_note_off_continuity_tests.dir/tests/NoteOffContinuityTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/NoteOffContinuityTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/NoteOffContinuityTests.cpp",
+      "output": "CMakeFiles/cs80_note_off_continuity_tests.dir/tests/NoteOffContinuityTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ReconstructedOscillatorTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ReconstructedOscillatorTests.cpp",
+      "output": "CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourceFactoryIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourceFactoryIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourceFactoryToneTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourceFactoryToneTests.cpp",
+      "output": "CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/HardwareControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/HardwareControlTests.cpp",
+      "output": "CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/IG00156ReferenceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/IG00156ReferenceTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardContourReferenceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardContourReferenceTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LoadedControlReferenceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LoadedControlReferenceTests.cpp",
+      "output": "CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LoadedControlRankTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LoadedControlRankTests.cpp",
+      "output": "CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LoadedControlTransientTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LoadedControlTransientTests.cpp",
+      "output": "CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputTapIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputTapIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputTapCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputTapCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputTapsTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputTapsTests.cpp",
+      "output": "CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LevelControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LevelControlTests.cpp",
+      "output": "CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ResonanceControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ResonanceControlTests.cpp",
+      "output": "CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Oe2FiltersTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Oe2FiltersTests.cpp",
+      "output": "CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraWahIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraWahIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraWahCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraWahCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraWahTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraWahTests.cpp",
+      "output": "CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_chorus_tabs_tests.dir/tests/ChorusTabsTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ChorusTabsTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ChorusTabsTests.cpp",
+      "output": "CMakeFiles/cs80_chorus_tabs_tests.dir/tests/ChorusTabsTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_idle_exact_skip_tests.dir/tests/IdleExactSkipTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/IdleExactSkipTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/IdleExactSkipTests.cpp",
+      "output": "CMakeFiles/cs80_idle_exact_skip_tests.dir/tests/IdleExactSkipTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/BbdChorusTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/BbdChorusTests.cpp",
+      "output": "CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Mn3001PacketTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Mn3001PacketTests.cpp",
+      "output": "CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PerformanceControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PerformanceControlTests.cpp",
+      "output": "CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oscillator_cache_tests.dir/tests/OscillatorCacheTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OscillatorCacheTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OscillatorCacheTests.cpp",
+      "output": "CMakeFiles/cs80_oscillator_cache_tests.dir/tests/OscillatorCacheTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156CacheTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156CacheTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_companion_history_tests.dir/tests/Ig00156CompanionHistoryTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156CompanionHistoryTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156CompanionHistoryTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_companion_history_tests.dir/tests/Ig00156CompanionHistoryTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156NodalTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156NodalTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_phase_correction_tests.dir/tests/Ig00156PhaseCorrectionTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156PhaseCorrectionTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00156PhaseCorrectionTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_phase_correction_tests.dir/tests/Ig00156PhaseCorrectionTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OscillatorPromotionTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OscillatorPromotionTests.cpp",
+      "output": "CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00151VcaTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00151VcaTests.cpp",
+      "output": "CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ToleranceDriftTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ToleranceDriftTests.cpp",
+      "output": "CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OversamplingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OversamplingTests.cpp",
+      "output": "CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_stationary_controls_exact_tests.dir/tests/StationaryControlsExactTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/StationaryControlsExactTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/StationaryControlsExactTests.cpp",
+      "output": "CMakeFiles/cs80_stationary_controls_exact_tests.dir/tests/StationaryControlsExactTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SmoothingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SmoothingTests.cpp",
+      "output": "CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputListeningTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/OutputListeningTests.cpp",
+      "output": "CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/NoiseTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/NoiseTests.cpp",
+      "output": "CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MtsEspNativeTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MtsEspNativeTests.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/plugin/MtsEspClient.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/plugin/MtsEspClient.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MtsEspShimTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MtsEspShimTests.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/plugin/MtsEspClient.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/plugin/MtsEspClient.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -DCS80_WITH_MTS_ESP=0 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MtsEspFallbackTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MtsEspFallbackTests.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -DCS80_WITH_MTS_ESP=0 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/plugin/MtsEspClient.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/plugin/MtsEspClient.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/HostAutomationCurveTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/HostAutomationCurveTests.cpp",
+      "output": "CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/AuAutomationCurveTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/AuAutomationCurveTests.cpp",
+      "output": "CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/AuAutomationBridgeContractTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/AuAutomationBridgeContractTests.cpp",
+      "output": "CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/FreeRunningVoiceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/FreeRunningVoiceTests.cpp",
+      "output": "CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KasScannerTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KasScannerTests.cpp",
+      "output": "CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardContourKeyMapTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/KeyboardContourKeyMapTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/TouchCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/TouchCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -DCS80_TUNING_DATA_DIR=\\\"/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/data/tuning\\\" -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/TuningMidiTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/TuningMidiTests.cpp",
+      "output": "CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00150SubTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Ig00150SubTests.cpp",
+      "output": "CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/RingModulatorCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/RingModulatorCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Oe2StereoChorusTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/Oe2StereoChorusTests.cpp",
+      "output": "CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraOpticalCellTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/PraOpticalCellTests.cpp",
+      "output": "CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_unused_lfo_readout_exact_tests.dir/tests/UnusedLfoReadoutExactTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/UnusedLfoReadoutExactTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/UnusedLfoReadoutExactTests.cpp",
+      "output": "CMakeFiles/cs80_unused_lfo_readout_exact_tests.dir/tests/UnusedLfoReadoutExactTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_unused_lfo_engine_ownership_tests.dir/tests/UnusedLfoEngineOwnershipTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/UnusedLfoEngineOwnershipTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/UnusedLfoEngineOwnershipTests.cpp",
+      "output": "CMakeFiles/cs80_unused_lfo_engine_ownership_tests.dir/tests/UnusedLfoEngineOwnershipTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ModernLfoTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ModernLfoTests.cpp",
+      "output": "CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MsegTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MsegTests.cpp",
+      "output": "CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ModMatrixTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ModMatrixTests.cpp",
+      "output": "CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ModernFxTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ModernFxTests.cpp",
+      "output": "CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LibraryAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/LibraryAuditTests.cpp",
+      "output": "CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/RandomiseTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/RandomiseTests.cpp",
+      "output": "CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourceFactoryBoundaryTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/SourceFactoryBoundaryTests.cpp",
+      "output": "CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_programmer_integration_tests.dir/tests/ProgrammerIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ProgrammerIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ProgrammerIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_programmer_integration_tests.dir/tests/ProgrammerIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MemoryPanelTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MemoryPanelTests.cpp",
+      "output": "CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/FastMathTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/FastMathTests.cpp",
+      "output": "CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/EvidenceRegisterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/EvidenceRegisterTests.cpp",
+      "output": "CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MidiLearnTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/MidiLearnTests.cpp",
+      "output": "CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/render_cli.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/render_cli.cpp",
+      "output": "CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/source_factory_audition.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/source_factory_audition.cpp",
+      "output": "CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/voice_continuity_probe.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/voice_continuity_probe.cpp",
+      "output": "CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/source_factory_benchmark.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/source_factory_benchmark.cpp",
+      "output": "CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/dsp_probe.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/dsp_probe.cpp",
+      "output": "CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/engine_audit.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/engine_audit.cpp",
+      "output": "CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/parity_capture.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src/tools/parity_capture.cpp",
+      "output": "CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_au_wrapper_macro_environment_tests.dir/tests/AuWrapperMacroEnvironmentTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/AuWrapperMacroEnvironmentTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/AuWrapperMacroEnvironmentTests.cpp",
+      "output": "CMakeFiles/cs80_au_wrapper_macro_environment_tests.dir/tests/AuWrapperMacroEnvironmentTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_exact_control_transform_tests.dir/tests/ExactControlTransformTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ExactControlTransformTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/tests/ExactControlTransformTests.cpp",
+      "output": "CMakeFiles/cs80_exact_control_transform_tests.dir/tests/ExactControlTransformTests.cpp.o"
+    }
+  ],
+  "after": [
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/core/Engine.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/core/FactoryPresets.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -o CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/CoreTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/CoreTests.cpp",
+      "output": "CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after/scalar-oracle -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_exact_scalar_filter_tests.dir/tests/ExactScalarFilterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ExactScalarFilterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ExactScalarFilterTests.cpp",
+      "output": "CMakeFiles/cs80_exact_scalar_filter_tests.dir/tests/ExactScalarFilterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ContinuousVoiceCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ContinuousVoiceCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ContinuousVoiceCircuitAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ContinuousVoiceCircuitAuditTests.cpp",
+      "output": "CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputMeterDisplayTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputMeterDisplayTests.cpp",
+      "output": "CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputMeterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputMeterTests.cpp",
+      "output": "CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputMeterAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputMeterAuditTests.cpp",
+      "output": "CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardPressureAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardPressureAuditTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardEventQueueTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardEventQueueTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ParityModeTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ParityModeTests.cpp",
+      "output": "CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourcePerformanceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourcePerformanceTests.cpp",
+      "output": "CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourcePerformanceAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourcePerformanceAuditTests.cpp",
+      "output": "CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/EnvelopePrecisionTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/EnvelopePrecisionTests.cpp",
+      "output": "CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156FilterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156FilterTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/EnvelopeRcModelTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/EnvelopeRcModelTests.cpp",
+      "output": "CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LiveEnvelopeLevelTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LiveEnvelopeLevelTests.cpp",
+      "output": "CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LiveEnvelopeTimingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LiveEnvelopeTimingTests.cpp",
+      "output": "CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ActiveTailContinuityTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ActiveTailContinuityTests.cpp",
+      "output": "CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_cold_idle_timing_tests.dir/tests/ColdIdleTimingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ColdIdleTimingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ColdIdleTimingTests.cpp",
+      "output": "CMakeFiles/cs80_cold_idle_timing_tests.dir/tests/ColdIdleTimingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_cold_filter_envelope_tests.dir/tests/ColdFilterEnvelopeTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ColdFilterEnvelopeTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ColdFilterEnvelopeTests.cpp",
+      "output": "CMakeFiles/cs80_cold_filter_envelope_tests.dir/tests/ColdFilterEnvelopeTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_note_off_continuity_tests.dir/tests/NoteOffContinuityTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/NoteOffContinuityTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/NoteOffContinuityTests.cpp",
+      "output": "CMakeFiles/cs80_note_off_continuity_tests.dir/tests/NoteOffContinuityTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_click_event_continuation_tests.dir/tests/ClickEventContinuationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ClickEventContinuationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ClickEventContinuationTests.cpp",
+      "output": "CMakeFiles/cs80_click_event_continuation_tests.dir/tests/ClickEventContinuationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ReconstructedOscillatorTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ReconstructedOscillatorTests.cpp",
+      "output": "CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourceFactoryIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourceFactoryIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourceFactoryToneTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourceFactoryToneTests.cpp",
+      "output": "CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/HardwareControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/HardwareControlTests.cpp",
+      "output": "CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/IG00156ReferenceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/IG00156ReferenceTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardContourReferenceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardContourReferenceTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LoadedControlReferenceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LoadedControlReferenceTests.cpp",
+      "output": "CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LoadedControlRankTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LoadedControlRankTests.cpp",
+      "output": "CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LoadedControlTransientTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LoadedControlTransientTests.cpp",
+      "output": "CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputTapIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputTapIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputTapCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputTapCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputTapsTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputTapsTests.cpp",
+      "output": "CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LevelControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LevelControlTests.cpp",
+      "output": "CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ResonanceControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ResonanceControlTests.cpp",
+      "output": "CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Oe2FiltersTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Oe2FiltersTests.cpp",
+      "output": "CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraWahIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraWahIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraWahCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraWahCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraWahTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraWahTests.cpp",
+      "output": "CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_chorus_tabs_tests.dir/tests/ChorusTabsTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ChorusTabsTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ChorusTabsTests.cpp",
+      "output": "CMakeFiles/cs80_chorus_tabs_tests.dir/tests/ChorusTabsTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_idle_exact_skip_tests.dir/tests/IdleExactSkipTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/IdleExactSkipTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/IdleExactSkipTests.cpp",
+      "output": "CMakeFiles/cs80_idle_exact_skip_tests.dir/tests/IdleExactSkipTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/BbdChorusTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/BbdChorusTests.cpp",
+      "output": "CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Mn3001PacketTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Mn3001PacketTests.cpp",
+      "output": "CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PerformanceControlTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PerformanceControlTests.cpp",
+      "output": "CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oscillator_cache_tests.dir/tests/OscillatorCacheTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OscillatorCacheTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OscillatorCacheTests.cpp",
+      "output": "CMakeFiles/cs80_oscillator_cache_tests.dir/tests/OscillatorCacheTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156CacheTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156CacheTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_companion_history_tests.dir/tests/Ig00156CompanionHistoryTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156CompanionHistoryTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156CompanionHistoryTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_companion_history_tests.dir/tests/Ig00156CompanionHistoryTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156NodalTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156NodalTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_phase_correction_tests.dir/tests/Ig00156PhaseCorrectionTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156PhaseCorrectionTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00156PhaseCorrectionTests.cpp",
+      "output": "CMakeFiles/cs80_ig00156_phase_correction_tests.dir/tests/Ig00156PhaseCorrectionTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OscillatorPromotionTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OscillatorPromotionTests.cpp",
+      "output": "CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00151VcaTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00151VcaTests.cpp",
+      "output": "CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ToleranceDriftTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ToleranceDriftTests.cpp",
+      "output": "CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OversamplingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OversamplingTests.cpp",
+      "output": "CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_stationary_controls_exact_tests.dir/tests/StationaryControlsExactTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/StationaryControlsExactTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/StationaryControlsExactTests.cpp",
+      "output": "CMakeFiles/cs80_stationary_controls_exact_tests.dir/tests/StationaryControlsExactTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SmoothingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SmoothingTests.cpp",
+      "output": "CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputListeningTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/OutputListeningTests.cpp",
+      "output": "CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/NoiseTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/NoiseTests.cpp",
+      "output": "CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MtsEspNativeTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MtsEspNativeTests.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/plugin/MtsEspClient.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/plugin/MtsEspClient.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MtsEspShimTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MtsEspShimTests.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_shim_tests.dir/tests/MtsEspShimTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/plugin/MtsEspClient.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/plugin/MtsEspClient.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_shim_tests.dir/src/plugin/MtsEspClient.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -DCS80_WITH_MTS_ESP=0 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MtsEspFallbackTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MtsEspFallbackTests.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -DCS80_WITH_MTS_ESP=0 -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/plugin/MtsEspClient.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/plugin/MtsEspClient.cpp",
+      "output": "CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/HostAutomationCurveTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/HostAutomationCurveTests.cpp",
+      "output": "CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/AuAutomationCurveTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/AuAutomationCurveTests.cpp",
+      "output": "CMakeFiles/cs80_au_automation_curve_tests.dir/tests/AuAutomationCurveTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/AuAutomationBridgeContractTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/AuAutomationBridgeContractTests.cpp",
+      "output": "CMakeFiles/cs80_au_automation_bridge_contract_tests.dir/tests/AuAutomationBridgeContractTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/FreeRunningVoiceTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/FreeRunningVoiceTests.cpp",
+      "output": "CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KasScannerTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KasScannerTests.cpp",
+      "output": "CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardContourKeyMapTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/KeyboardContourKeyMapTests.cpp",
+      "output": "CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/TouchCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/TouchCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -DCS80_TUNING_DATA_DIR=\\\"/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/data/tuning\\\" -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/TuningMidiTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/TuningMidiTests.cpp",
+      "output": "CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00150SubTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Ig00150SubTests.cpp",
+      "output": "CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/RingModulatorCircuitTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/RingModulatorCircuitTests.cpp",
+      "output": "CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Oe2StereoChorusTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/Oe2StereoChorusTests.cpp",
+      "output": "CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraOpticalCellTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/PraOpticalCellTests.cpp",
+      "output": "CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_unused_lfo_readout_exact_tests.dir/tests/UnusedLfoReadoutExactTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/UnusedLfoReadoutExactTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/UnusedLfoReadoutExactTests.cpp",
+      "output": "CMakeFiles/cs80_unused_lfo_readout_exact_tests.dir/tests/UnusedLfoReadoutExactTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_unused_lfo_engine_ownership_tests.dir/tests/UnusedLfoEngineOwnershipTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/UnusedLfoEngineOwnershipTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/UnusedLfoEngineOwnershipTests.cpp",
+      "output": "CMakeFiles/cs80_unused_lfo_engine_ownership_tests.dir/tests/UnusedLfoEngineOwnershipTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ModernLfoTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ModernLfoTests.cpp",
+      "output": "CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MsegTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MsegTests.cpp",
+      "output": "CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ModMatrixTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ModMatrixTests.cpp",
+      "output": "CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ModernFxTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ModernFxTests.cpp",
+      "output": "CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LibraryAuditTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/LibraryAuditTests.cpp",
+      "output": "CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/RandomiseTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/RandomiseTests.cpp",
+      "output": "CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourceFactoryBoundaryTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/SourceFactoryBoundaryTests.cpp",
+      "output": "CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_programmer_integration_tests.dir/tests/ProgrammerIntegrationTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ProgrammerIntegrationTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ProgrammerIntegrationTests.cpp",
+      "output": "CMakeFiles/cs80_programmer_integration_tests.dir/tests/ProgrammerIntegrationTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MemoryPanelTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MemoryPanelTests.cpp",
+      "output": "CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/FastMathTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/FastMathTests.cpp",
+      "output": "CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/EvidenceRegisterTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/EvidenceRegisterTests.cpp",
+      "output": "CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MidiLearnTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/MidiLearnTests.cpp",
+      "output": "CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/render_cli.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/render_cli.cpp",
+      "output": "CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/source_factory_audition.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/source_factory_audition.cpp",
+      "output": "CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/voice_continuity_probe.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/voice_continuity_probe.cpp",
+      "output": "CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/source_factory_benchmark.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/source_factory_benchmark.cpp",
+      "output": "CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/dsp_probe.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/dsp_probe.cpp",
+      "output": "CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/engine_audit.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/engine_audit.cpp",
+      "output": "CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/parity_capture.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src/tools/parity_capture.cpp",
+      "output": "CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_au_wrapper_macro_environment_tests.dir/tests/AuWrapperMacroEnvironmentTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/AuWrapperMacroEnvironmentTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/AuWrapperMacroEnvironmentTests.cpp",
+      "output": "CMakeFiles/cs80_au_wrapper_macro_environment_tests.dir/tests/AuWrapperMacroEnvironmentTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_zero_fir_history_tests.dir/tests/ZeroFirHistoryTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ZeroFirHistoryTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ZeroFirHistoryTests.cpp",
+      "output": "CMakeFiles/cs80_zero_fir_history_tests.dir/tests/ZeroFirHistoryTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -frounding-math -o CMakeFiles/cs80_zero_fir_rounding_tests.dir/tests/ZeroFirRoundingTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ZeroFirRoundingTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ZeroFirRoundingTests.cpp",
+      "output": "CMakeFiles/cs80_zero_fir_rounding_tests.dir/tests/ZeroFirRoundingTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/build-after",
+      "command": "/usr/bin/c++ -I/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_exact_control_transform_tests.dir/tests/ExactControlTransformTests.cpp.o -c /workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ExactControlTransformTests.cpp",
+      "file": "/workspace/scratch/a0e502bd4cd5/cs80-cpu-after/tests/ExactControlTransformTests.cpp",
+      "output": "CMakeFiles/cs80_exact_control_transform_tests.dir/tests/ExactControlTransformTests.cpp.o"
+    }
+  ]
+}

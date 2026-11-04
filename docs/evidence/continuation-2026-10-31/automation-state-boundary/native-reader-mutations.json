@@ -1,0 +1,186 @@
+{
+  "source_registration": "5a3027ddfa5462bb9c9e8c50d77f747f69cc7e27",
+  "preregistration": "23270c713a9d1ca615fad875d65c50a339f09d99",
+  "source_sha256": "ca40f26c22b10fe0b02e9005763fccc38a2c2df9ca301e242df7d73c92a9d0ff",
+  "mutation_source_sha256": "b26e621441f197f5751d582e9e2b91d945247d83b9b07aeebda9a054e89365e9",
+  "frozen_baseline_module_sha256": "e6c8497ad48d2020b26665d6d37ad3b14ac5f8be0eb068084d616e09ae9938a4",
+  "compile_command": [
+    "/usr/bin/c++",
+    "-I/workspace/scratch/2f805bffd21a/cs80-qualification/src",
+    "-I/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE",
+    "-o",
+    "/tmp/cs80-native-reader-mutation/reader-mutation.o",
+    "-c",
+    "/tmp/cs80-native-reader-mutation/reader-mutation.cpp",
+    "-I/workspace/scratch/2f805bffd21a/cs80-automation-fix/tests"
+  ],
+  "link_command": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "/tmp/cs80-native-reader-mutation/reader-mutation.o",
+    "/workspace/scratch/2f805bffd21a/cs80-qualification/build/CMakeFiles/cs80_vst3_automation_tests.dir/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/coreiids.cpp.o",
+    "/workspace/scratch/2f805bffd21a/cs80-qualification/build/CMakeFiles/cs80_vst3_automation_tests.dir/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.cpp.o",
+    "/workspace/scratch/2f805bffd21a/cs80-qualification/build/CMakeFiles/cs80_vst3_automation_tests.dir/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/public.sdk/source/vst/vstinitiids.cpp.o",
+    "-o",
+    "/tmp/cs80-native-reader-mutation/reader-mutation",
+    "-ldl"
+  ],
+  "sdk_object_sha256": {
+    "/workspace/scratch/2f805bffd21a/cs80-qualification/build/CMakeFiles/cs80_vst3_automation_tests.dir/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/coreiids.cpp.o": "bfa3fb2145060d793ced0de0e28463a18e450cf402131a6d487d564dae871d87",
+    "/workspace/scratch/2f805bffd21a/cs80-qualification/build/CMakeFiles/cs80_vst3_automation_tests.dir/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.cpp.o": "ecb881eac681b0decaa44997f95ea0f28a1114ebb0258fb8442a981dee38b1f7",
+    "/workspace/scratch/2f805bffd21a/cs80-qualification/build/CMakeFiles/cs80_vst3_automation_tests.dir/workspace/scratch/2f805bffd21a/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/public.sdk/source/vst/vstinitiids.cpp.o": "d4bbd9906d65a032916fd11c11d7840d9c85efb325725e99942fd4fed13029d0"
+  },
+  "masked_baseline_runs": [
+    {
+      "name": "unmodified-control",
+      "command": [
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/build/cs80_vst3_automation_tests",
+        "/tmp/cs80-native-reader-mutation/CS80Reference-baseline.so",
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "executable_sha256": "cc967b487e32349ace4030f8db76acdb7d2b721c90c90085f73c1ab72c58a78a",
+      "exit_code": 1,
+      "duration_seconds": 7.015483657000004,
+      "reader_neutrality_failures": 0,
+      "boundary_failures": 12,
+      "other_failures": [],
+      "summary_lines": [
+        "real VST3 maximum partition error=0 sixteen-voice error=0",
+        "real VST3 zero-frame state-boundary maximum audio error=0.000974897 reader observation error=0"
+      ],
+      "log": "native-before.log"
+    },
+    {
+      "name": "reader-mutates-parameter",
+      "command": [
+        "/tmp/cs80-native-reader-mutation/reader-mutation",
+        "/tmp/cs80-native-reader-mutation/CS80Reference-baseline.so",
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "executable_sha256": "e0e1541158b71c92436a0de108f6f0f7c070ef8bde0bd06e09352bff7d1971b3",
+      "exit_code": 1,
+      "duration_seconds": 7.427977982999437,
+      "reader_neutrality_failures": 0,
+      "boundary_failures": 12,
+      "other_failures": [],
+      "summary_lines": [
+        "real VST3 maximum partition error=0 sixteen-voice error=0",
+        "real VST3 zero-frame state-boundary maximum audio error=0.000974897 reader observation error=0"
+      ],
+      "log": "native-reader-mutation-masked-baseline.log"
+    },
+    {
+      "name": "restored-control",
+      "command": [
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/build/cs80_vst3_automation_tests",
+        "/tmp/cs80-native-reader-mutation/CS80Reference-baseline.so",
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "executable_sha256": "cc967b487e32349ace4030f8db76acdb7d2b721c90c90085f73c1ab72c58a78a",
+      "exit_code": 1,
+      "duration_seconds": 8.089840127999196,
+      "reader_neutrality_failures": 0,
+      "boundary_failures": 12,
+      "other_failures": [],
+      "summary_lines": [
+        "real VST3 maximum partition error=0 sixteen-voice error=0",
+        "real VST3 zero-frame state-boundary maximum audio error=0.000974897 reader observation error=0"
+      ],
+      "log": "native-before-restored-control.log"
+    }
+  ],
+  "fixed_module_sha256": "a4ea4397ad79e18ea2bd2be343e12af4fa9abb1d58df71136bd7f4fe19703e4b",
+  "runs": [
+    {
+      "name": "fixed-control",
+      "command": [
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/build/cs80_vst3_automation_tests",
+        "/tmp/cs80-native-reader-mutation/CS80Reference-fixed.so",
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "executable_sha256": "cc967b487e32349ace4030f8db76acdb7d2b721c90c90085f73c1ab72c58a78a",
+      "exit_code": 0,
+      "duration_seconds": 6.626011379001284,
+      "reader_neutrality_failures": 0,
+      "boundary_failures": 0,
+      "other_failures": [],
+      "summary_lines": [
+        "real VST3 maximum partition error=0 sixteen-voice error=0",
+        "real VST3 zero-frame state-boundary maximum audio error=0 reader observation error=0"
+      ],
+      "log": "native-after.log"
+    },
+    {
+      "name": "fixed-reader-mutates-parameter",
+      "command": [
+        "/tmp/cs80-native-reader-mutation/reader-mutation",
+        "/tmp/cs80-native-reader-mutation/CS80Reference-fixed.so",
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "executable_sha256": "e0e1541158b71c92436a0de108f6f0f7c070ef8bde0bd06e09352bff7d1971b3",
+      "exit_code": 1,
+      "duration_seconds": 7.313665256999229,
+      "reader_neutrality_failures": 12,
+      "boundary_failures": 12,
+      "other_failures": [],
+      "summary_lines": [
+        "real VST3 maximum partition error=0 sixteen-voice error=0",
+        "real VST3 zero-frame state-boundary maximum audio error=0.000782946 reader observation error=0.000782946"
+      ],
+      "log": "native-reader-mutates-parameter.log"
+    },
+    {
+      "name": "fixed-restored-control",
+      "command": [
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/build/cs80_vst3_automation_tests",
+        "/tmp/cs80-native-reader-mutation/CS80Reference-fixed.so",
+        "/workspace/scratch/2f805bffd21a/cs80-qualification/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "executable_sha256": "cc967b487e32349ace4030f8db76acdb7d2b721c90c90085f73c1ab72c58a78a",
+      "exit_code": 0,
+      "duration_seconds": 6.7552526380022755,
+      "reader_neutrality_failures": 0,
+      "boundary_failures": 0,
+      "other_failures": [],
+      "summary_lines": [
+        "real VST3 maximum partition error=0 sixteen-voice error=0",
+        "real VST3 zero-frame state-boundary maximum audio error=0 reader observation error=0"
+      ],
+      "log": "native-restored-control.log"
+    }
+  ],
+  "result": "all reader mutation assertions detect the write; fixed and restored controls pass",
+  "explanation": "The native baseline stale-start defect masks even an observation that writes new parameter values. Its original and mutated observation renders remain identical while the 12 delayed-curve checks fail. After the production repair, the same registered observation mutation fails all 12 exact reader-neutrality assertions. Fixed and restored controls pass the complete native gate.",
+  "module_sources": {
+    "baseline_commit": "5a3027ddfa5462bb9c9e8c50d77f747f69cc7e27",
+    "fixed": "baseline plus only src/plugin/PluginProcessor.h and src/plugin/PluginProcessorAutomation.cpp repair",
+    "fixed_production_source_sha256": {
+      "src/plugin/PluginProcessor.h": "5b95783a8a04b885539b44fd34ebe70e098301fec66b18f89da581a186f12e40",
+      "src/plugin/PluginProcessorAutomation.cpp": "0d8e0ee71cf329a18845ac55ea7f9567d398d5da92e540e4cd970d089b9e6e3e"
+    },
+    "native_test_sha256": "ca40f26c22b10fe0b02e9005763fccc38a2c2df9ca301e242df7d73c92a9d0ff",
+    "registered_limits_sha256": {
+      "tests/parity/tolerances-v2/host-automation.json": "bbd07b70a9e9d88119cfd7489e86c6f8d09855d501f2ab823cde349d50dd7317",
+      "tests/parity/tolerances-v2/host-automation-state-boundary.json": "348a4797e1c62793c46a6937c61cc888cb9f2aace8799f7460f3ffb29194440a"
+    },
+    "JUCE_source_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "build": "cmake --preset linux-release; cmake --build --preset linux-release; ctest --test-dir build -R ^cs80_vst3_automation_tests$ --output-on-failure"
+  },
+  "archive_sha256": {
+    "native-before-ctest.log": "acbcf584b707561929ac28e88d3dc83c32da157d8e5b782baa632762b8134065",
+    "native-after-ctest.log": "cdc0fd82a2f4d176c51b4d3fd5cd0578a9593f5f7dbeca8b1590e02cdc42a40b",
+    "native-after-ctest-detail.log": "b56c367e3ca6ae44de29628dbe0802e97077b2f668d36441a8435a56d72d9819",
+    "native-before.log": "2610649daebb6b2c94d44851af8bf8705e374c228f4a5ed84ea7443818ea6e61",
+    "native-after.log": "b55542073869eea70863c3f734bab66712604fc4a40212b06773306b9f1c3404",
+    "native-reader-mutates-parameter.log": "ddd891ef259c60e1f4c9ab77f9842f33b98a700bbb23141f584906b965ed0dce",
+    "native-restored-control.log": "b55542073869eea70863c3f734bab66712604fc4a40212b06773306b9f1c3404",
+    "native-reader-mutation-masked-baseline.log": "2610649daebb6b2c94d44851af8bf8705e374c228f4a5ed84ea7443818ea6e61",
+    "native-before-restored-control.log": "2610649daebb6b2c94d44851af8bf8705e374c228f4a5ed84ea7443818ea6e61",
+    "native-reader-mutates-parameter.patch": "774b748dbee172f317b8bee8adbc667816ff944f69603f98e29c712949860c15"
+  }
+}

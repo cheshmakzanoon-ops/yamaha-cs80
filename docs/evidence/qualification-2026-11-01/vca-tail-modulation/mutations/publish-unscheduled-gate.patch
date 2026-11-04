@@ -1,0 +1,12 @@
+--- src/core/ModernLayer.h
++++ src/core/ModernLayer.h
+@@ -253,8 +253,7 @@
+             if (! anyGateLast)
+                 monoTriggerPending = true;
+         }
+-        if (scheduled)
+-            anyGateNow = anyGateNow || in.gate;
++        anyGateNow = anyGateNow || in.gate;
+ 
+         for (int m = 0; m < kMsegCount; ++m)
+             if (msegUsed[(std::size_t) m] && config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)

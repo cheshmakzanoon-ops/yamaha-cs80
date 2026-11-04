@@ -1,0 +1,248 @@
+﻿2026-10-31T20:39:16.7776484Z Current runner version: '2.338.2'
+2026-10-31T20:39:16.7795785Z ##[group]Runner Image Provisioner
+2026-10-31T20:39:16.7796384Z Hosted Compute Agent
+2026-10-31T20:39:16.7796832Z Version: 20261021.618
+2026-10-31T20:39:16.7797330Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-31T20:39:16.7797828Z Build Date: 2026-10-21T00:45:21Z
+2026-10-31T20:39:16.7798351Z Worker ID: {b1cb96c2-51c7-43af-8e26-1a91fb370657}
+2026-10-31T20:39:16.7798858Z Region: westcentralus
+2026-10-31T20:39:16.7799250Z Cloud: Azure
+2026-10-31T20:39:16.7799623Z ##[endgroup]
+2026-10-31T20:39:16.7800535Z ##[group]Operating System
+2026-10-31T20:39:16.7800991Z Microsoft Windows Server 2022
+2026-10-31T20:39:16.7801418Z 10.0.20348
+2026-10-31T20:39:16.7801800Z Datacenter
+2026-10-31T20:39:16.7802161Z ##[endgroup]
+2026-10-31T20:39:16.7802537Z ##[group]Runner Image
+2026-10-31T20:39:16.7802940Z Image: windows-2022
+2026-10-31T20:39:16.7803345Z Version: 20261025.346.1
+2026-10-31T20:39:16.7804374Z Included Software: https://github.com/actions/runner-images/blob/win22/20261025.346/images/windows/Windows2022-Readme.md
+2026-10-31T20:39:16.7805458Z Image Release: https://github.com/actions/runner-images/releases/tag/win22%2F20261025.346
+2026-10-31T20:39:16.7806144Z ##[endgroup]
+2026-10-31T20:39:16.7807021Z ##[group]GITHUB_TOKEN Permissions
+2026-10-31T20:39:16.7808388Z Contents: read
+2026-10-31T20:39:16.7808785Z Metadata: read
+2026-10-31T20:39:16.7809156Z Packages: read
+2026-10-31T20:39:16.7809544Z ##[endgroup]
+2026-10-31T20:39:16.7811064Z Secret source: Actions
+2026-10-31T20:39:16.7811739Z Cache mode: write
+2026-10-31T20:39:16.7812235Z Prepare workflow directory
+2026-10-31T20:39:16.8095815Z Prepare all required actions
+2026-10-31T20:39:16.8149284Z Getting action download info
+2026-10-31T20:39:17.0889706Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-10-31T20:39:17.1869600Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-10-31T20:39:17.4673184Z Complete job name: Windows / host wrapper source contract
+2026-10-31T20:39:17.6015178Z ##[group]Run actions/checkout@v5
+2026-10-31T20:39:17.6016080Z with:
+2026-10-31T20:39:17.6016414Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T20:39:17.6019681Z   token: ***
+2026-10-31T20:39:17.6019979Z   ssh-strict: true
+2026-10-31T20:39:17.6020282Z   ssh-user: git
+2026-10-31T20:39:17.6020587Z   persist-credentials: true
+2026-10-31T20:39:17.6020934Z   clean: true
+2026-10-31T20:39:17.6021242Z   sparse-checkout-cone-mode: true
+2026-10-31T20:39:17.6021608Z   fetch-depth: 1
+2026-10-31T20:39:17.6021903Z   fetch-tags: false
+2026-10-31T20:39:17.6022207Z   show-progress: true
+2026-10-31T20:39:17.6022512Z   lfs: false
+2026-10-31T20:39:17.6022793Z   submodules: false
+2026-10-31T20:39:17.6023104Z   set-safe-directory: true
+2026-10-31T20:39:17.6023469Z   allow-unsafe-pr-checkout: false
+2026-10-31T20:39:17.6023999Z ##[endgroup]
+2026-10-31T20:39:17.7165911Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T20:39:17.7167304Z ##[group]Getting Git version info
+2026-10-31T20:39:17.7167764Z Working directory is 'D:\a\yamaha-cs80\yamaha-cs80'
+2026-10-31T20:39:17.7888060Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-31T20:39:18.1617965Z git version 2.56.0.windows.3
+2026-10-31T20:39:18.1649666Z ##[endgroup]
+2026-10-31T20:39:18.1664015Z Temporarily overriding HOME='D:\a\_temp\88cd99c1-13d0-42ad-a9fc-69ae4047739d' before making global git config changes
+2026-10-31T20:39:18.1664987Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-31T20:39:18.1673817Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80
+2026-10-31T20:39:18.2256394Z Deleting the contents of 'D:\a\yamaha-cs80\yamaha-cs80'
+2026-10-31T20:39:18.2260385Z ##[group]Initializing the repository
+2026-10-31T20:39:18.2267461Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\yamaha-cs80\yamaha-cs80
+2026-10-31T20:39:18.3032559Z Initialized empty Git repository in D:/a/yamaha-cs80/yamaha-cs80/.git/
+2026-10-31T20:39:18.3035570Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T20:39:18.4299496Z ##[endgroup]
+2026-10-31T20:39:18.4300422Z ##[group]Disabling automatic garbage collection
+2026-10-31T20:39:18.4306767Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-31T20:39:18.4528708Z ##[endgroup]
+2026-10-31T20:39:18.4529515Z ##[group]Setting up auth
+2026-10-31T20:39:18.4537826Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T20:39:18.4760035Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-31T20:39:19.7821900Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T20:39:19.8050237Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-31T20:39:20.1864214Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T20:39:20.2087567Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-31T20:39:20.5934784Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-31T20:39:20.6169972Z ##[endgroup]
+2026-10-31T20:39:20.6170629Z ##[group]Fetching the repository
+2026-10-31T20:39:20.6182151Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b5901b2f846468038da5330ea9ce7271b8a7a8ef:refs/remotes/origin/codex/cs80-completion
+2026-10-31T20:39:23.0236559Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-10-31T20:39:23.0237131Z  * [new ref]         b5901b2f846468038da5330ea9ce7271b8a7a8ef -> origin/codex/cs80-completion
+2026-10-31T20:39:23.0258994Z ##[endgroup]
+2026-10-31T20:39:23.0259587Z ##[group]Determining the checkout info
+2026-10-31T20:39:23.0261674Z ##[endgroup]
+2026-10-31T20:39:23.0268705Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-31T20:39:23.0634898Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-31T20:39:23.0854332Z ##[group]Checking out the ref
+2026-10-31T20:39:23.0860536Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B codex/cs80-completion refs/remotes/origin/codex/cs80-completion
+2026-10-31T20:39:23.6306105Z Switched to a new branch 'codex/cs80-completion'
+2026-10-31T20:39:23.6363504Z branch 'codex/cs80-completion' set up to track 'origin/codex/cs80-completion'.
+2026-10-31T20:39:23.6437146Z ##[endgroup]
+2026-10-31T20:39:23.6828825Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-31T20:39:23.7037946Z b5901b2f846468038da5330ea9ce7271b8a7a8ef
+2026-10-31T20:39:23.7362960Z ##[group]Run actions/checkout@v5
+2026-10-31T20:39:23.7363261Z with:
+2026-10-31T20:39:23.7363424Z   repository: juce-framework/JUCE
+2026-10-31T20:39:23.7363650Z   ref: c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:23.7363886Z   path: .ci-wrapper-juce
+2026-10-31T20:39:23.7364102Z   sparse-checkout: modules/juce_audio_plugin_client
+2026-10-31T20:39:23.7364343Z   persist-credentials: false
+2026-10-31T20:39:23.7366548Z   token: ***
+2026-10-31T20:39:23.7366702Z   ssh-strict: true
+2026-10-31T20:39:23.7366854Z   ssh-user: git
+2026-10-31T20:39:23.7366990Z   clean: true
+2026-10-31T20:39:23.7367146Z   sparse-checkout-cone-mode: true
+2026-10-31T20:39:23.7367944Z   fetch-depth: 1
+2026-10-31T20:39:23.7368085Z   fetch-tags: false
+2026-10-31T20:39:23.7368238Z   show-progress: true
+2026-10-31T20:39:23.7368390Z   lfs: false
+2026-10-31T20:39:23.7368530Z   submodules: false
+2026-10-31T20:39:23.7368681Z   set-safe-directory: true
+2026-10-31T20:39:23.7368902Z   allow-unsafe-pr-checkout: false
+2026-10-31T20:39:23.7369095Z ##[endgroup]
+2026-10-31T20:39:23.8234071Z Syncing repository: juce-framework/JUCE
+2026-10-31T20:39:23.8238749Z ##[group]Getting Git version info
+2026-10-31T20:39:23.8239352Z Working directory is 'D:\a\yamaha-cs80\yamaha-cs80\.ci-wrapper-juce'
+2026-10-31T20:39:23.8726582Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-31T20:39:23.8943240Z git version 2.56.0.windows.3
+2026-10-31T20:39:23.8994013Z ##[endgroup]
+2026-10-31T20:39:23.9005702Z Temporarily overriding HOME='D:\a\_temp\05b6985d-087a-4100-ae2f-2dc18bfff247' before making global git config changes
+2026-10-31T20:39:23.9014406Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-31T20:39:23.9015245Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80\.ci-wrapper-juce
+2026-10-31T20:39:23.9279657Z ##[group]Initializing the repository
+2026-10-31T20:39:23.9287194Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\yamaha-cs80\yamaha-cs80\.ci-wrapper-juce
+2026-10-31T20:39:23.9542150Z Initialized empty Git repository in D:/a/yamaha-cs80/yamaha-cs80/.ci-wrapper-juce/.git/
+2026-10-31T20:39:23.9569865Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/juce-framework/JUCE
+2026-10-31T20:39:23.9812027Z ##[endgroup]
+2026-10-31T20:39:23.9812516Z ##[group]Disabling automatic garbage collection
+2026-10-31T20:39:23.9820215Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-31T20:39:24.0047513Z ##[endgroup]
+2026-10-31T20:39:24.0047815Z ##[group]Setting up auth
+2026-10-31T20:39:24.0060697Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T20:39:24.0295588Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-31T20:39:24.4347578Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T20:39:24.4644389Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-31T20:39:24.8411346Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T20:39:24.8635731Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-31T20:39:25.2487666Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-31T20:39:25.2740229Z ##[endgroup]
+2026-10-31T20:39:25.2740542Z ##[group]Fetching the repository
+2026-10-31T20:39:25.2751461Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:25.8298694Z From https://github.com/juce-framework/JUCE
+2026-10-31T20:39:25.8299146Z  * branch            c352e2489000ffeb9e397051377d75eef2efe641 -> FETCH_HEAD
+2026-10-31T20:39:25.8320621Z ##[endgroup]
+2026-10-31T20:39:25.8320934Z ##[group]Determining the checkout info
+2026-10-31T20:39:25.8322586Z ##[endgroup]
+2026-10-31T20:39:25.8322941Z ##[group]Setting up sparse checkout
+2026-10-31T20:39:25.8330018Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout set modules/juce_audio_plugin_client
+2026-10-31T20:39:25.8571504Z ##[endgroup]
+2026-10-31T20:39:25.8571843Z ##[group]Checking out the ref
+2026-10-31T20:39:25.8581761Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:26.7190971Z Note: switching to 'c352e2489000ffeb9e397051377d75eef2efe641'.
+2026-10-31T20:39:26.7191275Z 
+2026-10-31T20:39:26.7191447Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-31T20:39:26.7191807Z changes and commit them, and you can discard any commits you make in this
+2026-10-31T20:39:26.7192160Z state without impacting any branches by switching back to a branch.
+2026-10-31T20:39:26.7192369Z 
+2026-10-31T20:39:26.7192503Z If you want to create a new branch to retain commits you create, you may
+2026-10-31T20:39:26.7192830Z do so (now or later) by using -c with the switch command. Example:
+2026-10-31T20:39:26.7193021Z 
+2026-10-31T20:39:26.7193163Z   git switch -c <new-branch-name>
+2026-10-31T20:39:26.7193307Z 
+2026-10-31T20:39:26.7193384Z Or undo this operation with:
+2026-10-31T20:39:26.7193496Z 
+2026-10-31T20:39:26.7193558Z   git switch -
+2026-10-31T20:39:26.7193650Z 
+2026-10-31T20:39:26.7193803Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-31T20:39:26.7194044Z 
+2026-10-31T20:39:26.7194123Z HEAD is now at c352e24 JUCE version 8.0.11
+2026-10-31T20:39:26.7227355Z ##[endgroup]
+2026-10-31T20:39:26.7471070Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-31T20:39:26.7675858Z c352e2489000ffeb9e397051377d75eef2efe641
+2026-10-31T20:39:26.7699482Z ##[group]Removing auth
+2026-10-31T20:39:26.7705938Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T20:39:26.7929551Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-31T20:39:27.1773026Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T20:39:27.1973075Z http.https://github.com/.extraheader
+2026-10-31T20:39:27.1997514Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-31T20:39:27.2221090Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-31T20:39:27.6021525Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T20:39:27.6244169Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-31T20:39:28.1197884Z ##[endgroup]
+2026-10-31T20:39:28.1406981Z ##[group]Run python tests/HostWrapperPlatformTests.py `
+2026-10-31T20:39:28.1407385Z [36;1mpython tests/HostWrapperPlatformTests.py `[0m
+2026-10-31T20:39:28.1407667Z [36;1m  --source "$env:GITHUB_WORKSPACE" `[0m
+2026-10-31T20:39:28.1408075Z [36;1m  --juce-wrappers "$env:GITHUB_WORKSPACE/.ci-wrapper-juce/modules/juce_audio_plugin_client" `[0m
+2026-10-31T20:39:28.1408596Z [36;1m  --tolerances "$env:GITHUB_WORKSPACE/tests/parity/tolerances-v2/host-wrapper-platforms.json" `[0m
+2026-10-31T20:39:28.1409065Z [36;1m  2>&1 | Tee-Object -FilePath host-wrapper-platforms.log[0m
+2026-10-31T20:39:28.1409360Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-31T20:39:28.1490112Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-31T20:39:28.1490391Z ##[endgroup]
+2026-10-31T20:39:37.5115387Z Host wrapper path diagnostic: {"actual": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "expected": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "actual_resolved": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "expected_resolved": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp", "samefile": true}
+2026-10-31T20:39:37.5744234Z [31;1mFAIL: the generated wrapper retains the native source name and language extension[0m
+2026-10-31T20:39:37.5750276Z [31;1mHost wrapper platforms: stopped after 8 checks; contract failed[0m
+2026-10-31T20:39:37.6126372Z ##[error]Process completed with exit code 1.
+2026-10-31T20:39:37.6395244Z ##[group]Run actions/upload-artifact@v5
+2026-10-31T20:39:37.6395508Z with:
+2026-10-31T20:39:37.6395683Z   name: cs80-windows-wrapper-platforms
+2026-10-31T20:39:37.6395924Z   path: host-wrapper-platforms.log
+2026-10-31T20:39:37.6396122Z   if-no-files-found: warn
+2026-10-31T20:39:37.6396295Z   compression-level: 6
+2026-10-31T20:39:37.6396460Z   overwrite: false
+2026-10-31T20:39:37.6396611Z   include-hidden-files: false
+2026-10-31T20:39:37.6396785Z ##[endgroup]
+2026-10-31T20:39:37.7742510Z (node:3752) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-31T20:39:37.7743038Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-31T20:39:37.7781297Z With the provided path, there will be 1 file uploaded
+2026-10-31T20:39:37.7785317Z Artifact name is valid!
+2026-10-31T20:39:37.7787141Z Root directory input is valid!
+2026-10-31T20:39:38.0815426Z Beginning upload of artifact content to blob storage
+2026-10-31T20:39:38.0994207Z (node:3752) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-31T20:39:38.2860503Z Uploaded bytes 462
+2026-10-31T20:39:38.3412552Z Finished uploading artifact content to blob storage!
+2026-10-31T20:39:38.3413618Z SHA256 digest of uploaded artifact zip is 64b68e459b676df97bd7d8c894b5bea900249db724f6bc9e4bf3a27d5428ad4a
+2026-10-31T20:39:38.3415561Z Finalizing artifact upload
+2026-10-31T20:39:38.8073245Z Artifact cs80-windows-wrapper-platforms.zip successfully finalized. Artifact ID 13057545616
+2026-10-31T20:39:38.8074521Z Artifact cs80-windows-wrapper-platforms has been successfully uploaded! Final size is 462 bytes. Artifact ID is 13057545616
+2026-10-31T20:39:38.8082091Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239902650/artifacts/13057545616
+2026-10-31T20:39:38.8325534Z Post job cleanup.
+2026-10-31T20:39:38.9601551Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-31T20:39:38.9819344Z git version 2.56.0.windows.3
+2026-10-31T20:39:38.9865349Z Temporarily overriding HOME='D:\a\_temp\c6a5c867-fb23-4ed0-9973-b386ab6c9979' before making global git config changes
+2026-10-31T20:39:38.9866010Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-31T20:39:38.9873665Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80\.ci-wrapper-juce
+2026-10-31T20:39:39.0125193Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T20:39:39.0354156Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-31T20:39:39.4256611Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T20:39:39.4481146Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-31T20:39:39.8329336Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T20:39:39.8553585Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-31T20:39:40.2492155Z Post job cleanup.
+2026-10-31T20:39:40.3760581Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-31T20:39:40.3971446Z git version 2.56.0.windows.3
+2026-10-31T20:39:40.4015938Z Temporarily overriding HOME='D:\a\_temp\3e36311f-65e3-450b-824d-1e656d3c2469' before making global git config changes
+2026-10-31T20:39:40.4016829Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-31T20:39:40.4024497Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\yamaha-cs80\yamaha-cs80
+2026-10-31T20:39:40.4249166Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-31T20:39:40.4470647Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-31T20:39:40.8354420Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-31T20:39:40.8553948Z http.https://github.com/.extraheader
+2026-10-31T20:39:40.8580048Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-31T20:39:40.8803145Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-31T20:39:41.2587326Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-31T20:39:41.2811705Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-31T20:39:41.6813301Z Cleaning up orphan processes
+2026-10-31T20:39:41.6888320Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

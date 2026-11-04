@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "status": "Prospective acceptance only; no candidate implementation, numerical evaluation or speedup is implied.",
+  "baseline_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+  "kind": "exact scalar-kernel arithmetic optimization",
+  "scope": [
+    "Ig00156PhaseCorrection coefficient preparation and sample processing",
+    "Ig00156Stage wrapper, companion state and audio/idle reference transfer",
+    "ReconstructedOscillator per-sample branch evaluation and immutable per-profile/rate/control values",
+    "Independent-lane vector execution of precisely those scalar operations",
+    "Within-stage independent-row SIMD for the 4x4 RHS and 3x3 elimination transforms, without changing Engine rank scheduling or the scalar Newton solve"
+  ],
+  "evidence_kind": "Independent frozen software continuation; original physical/numerical gates remain authoritative. This adds no hardware law or measurement.",
+  "oracle": {
+    "manifest": "tests/fixtures/exact_scalar_kernels/manifest.json",
+    "raw_sources": "Five verbatim Git blobs from the stated baseline: Dsp.h, FastMath.h, Ig00156PhaseCorrection.h, Ig00156Filter.h, ReconstructedOscillator.h. Freeze complete local math dependencies, including fastTanh, rather than call the candidate helper.",
+    "materializer": "tests/cpu/materialize-frozen-scalar-kernels.py changes only one namespace declaration in each frozen blob; all includes resolve within the generated frozen directory. Raw and generated hashes are sealed in the manifest.",
+    "independence": "The oracle may not include a live candidate math, phase-correction, stage or oscillator helper. Candidate and oracle may share standard-library types and compiler runtime only. No generated oracle may be derived from the candidate source.",
+    "positive_control": "Before evaluating any changed kernel, the unmodified baseline compiled with the same target/compiler/FP options must pass every oracle equality assertion. A failed baseline invalidates the harness or proposed exact route; it is not permission to relax equality.",
+    "extension": "Any later baseline change affecting these numerical kernels requires a separately published frozen checkpoint before evaluating against it; metadata-only and other-source changes do not rewrite this oracle."
+  },
+  "acceptance": {
+    "maximum_float_output_ulp_difference": 0,
+    "maximum_double_state_ulp_difference": 0,
+    "maximum_solver_residual_ulp_difference": 0,
+    "maximum_event_time_ulp_difference": 0,
+    "newton_stop_count_difference": 0,
+    "comparison": "Bitwise IEEE float/double equality, including +0/-0, subnormal values and all observable history/state fields. Compare declared fields explicitly, never object padding or pointer addresses.",
+    "filter_every_sample": [
+      "HP, LP and BP output bits",
+      "four physical nodes and four exported companion histories",
+      "four causal input-history coordinates and input rate",
+      "two Newton predictor slopes and previous accepted OTA currents",
+      "accepted solver residual bits and number of corrections",
+      "logical coefficient revision and half-step state",
+      "complete public memory export before/after coefficient and clock transitions"
+    ],
+    "oscillator_every_sample": [
+      "three rendered pin outputs and all raw pin diagnostics",
+      "charge, reset timer, both coupling baselines, held controls and elapsed time",
+      "all residual-history cells, cursor and reset count",
+      "event count, kind, order, times, charge, reset state and before/after pins",
+      "invalid-control, frequency-limit and event-capacity diagnostics",
+      "full/idle snapshot and subsequent continuation"
+    ],
+    "excluded_implementation_details": "Memory layout, frozen-oracle registry addresses, allocator/mutex identities and new temporary work counters are not audio state. Existing public diagnostics remain identical unless an explicitly registered work-only field is identified before implementation; nothing may silently drop a public event or solver statistic.",
+    "no_relabeling": "A candidate with any bit mismatch fails this exact contract even if it passes an older nonzero physical-equation tolerance. Do not relabel it exact, change a tolerance, remove a case or re-pin V2 to bypass the failure."
+  },
+  "floating_point": {
+    "comparison_scope": "Each supported target compares its candidate with its frozen scalar oracle built by the same compiler, standard library and effective numerical options. Cross-platform equality to a different runtime is not asserted.",
+    "rounding": "The fast path may require FE_TONEAREST. Tests also exercise FE_DOWNWARD, FE_UPWARD and FE_TOWARDZERO where supported; an unqualified mode must use the unchanged scalar path and remain bit-identical.",
+    "denormals": "At minimum exercise gradual underflow and host FTZ/DAZ enabled, including toggling modes across a stored subnormal state. On x86 probe all supported MXCSR FTZ/DAZ combinations; on ARM use documented available FPCR modes or report the unavailable mode explicitly. No forced global FP mode is permitted.",
+    "contraction": "Preserve the original per-target multiplication/addition and FMA contraction behavior. No global fast-math, reassociation, reciprocal approximation, changed transcendental, precision reduction or legacy compiler-option change. A vector backend that cannot preserve it falls back to the frozen-equivalent scalar path.",
+    "control_preservation": "Rounding/denormal control state on return equals entry. Do not clear caller sticky flags or enable traps. Exceptional inputs take original scalar behavior when the optimized path is not proven equivalent.",
+    "nonfinite": "Quiet NaN payloads and infinities in public input/control probes must retain original acceptance/transaction/fallback behavior and future continuation. Per-target bit comparisons apply wherever the original scalar operation defines a result; never sanitize differently to obtain a match."
+  },
+  "filter_fixtures": {
+    "audio_rates_hz": [
+      88200,
+      96000,
+      176400,
+      192000,
+      352800,
+      384000,
+      705600,
+      768000
+    ],
+    "network_domain": [
+      "nominal HP and LP",
+      "one-at-a-time source/input/feedback/integrator component ratios0.5 and2.0 applied to their nominal values; this is a software stress domain, not measured component tolerances"
+    ],
+    "fixed_control_pairs_hz_q": [
+      [
+        0,
+        0.35
+      ],
+      [
+        40,
+        9
+      ],
+      [
+        250,
+        0.5
+      ],
+      [
+        1000,
+        5
+      ],
+      [
+        6000,
+        0.35
+      ],
+      [
+        12000,
+        9
+      ],
+      [
+        20000,
+        1
+      ],
+      [
+        48000,
+        5
+      ]
+    ],
+    "fixed_inputs": [
+      "all positive zero",
+      "unit impulse followed by zeros",
+      "0.6*sin(2*pi*233*n/fs)+0.2*sin(2*pi*3137*n/fs)",
+      "deterministic bipolar xorshift32 drive at amplitude4, seed0x8dac7955, recurrence x^=x<<13; x^=x>>17; x^=x<<5, uint32 wrap; map2*(x+0.5)/2^32-1"
+    ],
+    "fixed_case_length": 4096,
+    "fixed_grid": "Every nominal network, rate, control pair and input family. Component-ratio variants use the same pairs at96000/384000Hz for4096samples of the fixed two-tone and hard-noise streams.",
+    "moving_case_length": 16384,
+    "moving_schedule": "Both nominal networks at every audio rate. Cycle the eight control pairs every257samples; interleave exact-repeat sets and one-float-ulp cutoff/Q changes every31samples; sweep cutoff using12000+11999*sin(n*.0031), Q using4.675+4.325*sin(n*.0017) on alternating1024-sample segments. No control quantization.",
+    "edge_cases": [
+      "input bit patterns+0,-0,smallest/largest subnormal,+/-minimum normal,+/-1,+/-64 and quiet NaN/infinities",
+      "cutoff/Q just below, at and above original clamp boundaries using nextafter",
+      "coefficient set before first sample, repeated same-key sets, changed-key set with pending history, repeated state reads",
+      "reset/copy/assignment/self-assignment after sample lengths0,1,7,31,127,4095",
+      "restore physical state plus input history and full Memory; exports immediately before/after set, restore and reReference"
+    ],
+    "clock_transfer": "Use both audio and idle models. Exercise every audio rate with actual step-rate pairs1500,3000,48000/31,48000/32 and96000/63Hz; use the original clockStage ordering: save old half steps, set new coefficients, reReference only on actual rate change, then process. Preserve histories even when the next set is delayed. No change to the idle scheduler is part of this kernel contract.",
+    "long_continuation": "At96000Hz both nominal stages run262144samples of the fixed hard-noise stream, with snapshots/copies/restores at fixed positions65535,131071,196607, checking every output and final complete state."
+  },
+  "oscillator_fixtures": {
+    "rates_hz": [
+      8000,
+      88200,
+      96000,
+      176400,
+      192000,
+      352800,
+      384000,
+      705600,
+      768000,
+      1536000
+    ],
+    "profiles": [
+      "nominal w3-current-fold-v1",
+      "nominal with couplingSecondsNominal=.001",
+      "nominal with sliceVoltsInferred=.2,triangleSpanVoltsNominal=2.7,sineGainVoltsInferred=1.2,pulseHalfSpanVoltsInferred=1.1"
+    ],
+    "fixed_frequencies_hz": [
+      0,
+      1,
+      261.6,
+      8372,
+      16744
+    ],
+    "clamp_cases": "Also maximumFrequencyHz(), nextafter on both sides, negative and nonfinite requests; include invalid prepare rate/profile transactions.",
+    "fixed_case_length": 8192,
+    "moving_case_length": 16384,
+    "moving_schedule": "Per rate/profile: frequency261.6+200*sin(n*.0041) and threshold.7*sin(n*.0039) change every sample; gate saw/pulse independently every257/509samples; stop/restart for31-sample intervals at4096/8192/12288. Include control changes during reset plateaus and changes below/at/above existing negligible-corner criterion.",
+    "state_events": "Cold reset phases0,+/-0,.1,.5,nextafter(1,0); exact full-state and idle-state restore; audio\u2192advanceIdle\u2192audio; copy/assignment/self-assignment with active residual tails; repeated output observation must not mutate continuation.",
+    "boundary_cases": "Construct valid finite snapshots immediately before/at/after comparator, fold and PWL knees, including existing sidedness and root-exclusion boundaries. The exact optimization must match the frozen scheduler/classifier, including its current event policy. Any discovered physical-law defect is a separate correction checkpoint; never hide it by changing this oracle or its equality tolerance.",
+    "work_boundary": "Skipping an apparently unobserved branch is permitted only after proving that physical coupling state, diagnostics, residual tails and future gate reopening remain exact. A waveform gate alone is not proof that the branch is state-independent."
+  },
+  "lane_fixtures": {
+    "widths": [
+      1,
+      2,
+      3,
+      4,
+      7,
+      8,
+      15,
+      16
+    ],
+    "requirements": [
+      "Compare each optimized lane to its own independent frozen scalar instance; retain original HP-before-LP and final mixing order.",
+      "Mix HP/LP networks, rates, controls, phases, input histories and Newton counts in one batch; deterministic lane permutation cannot share coefficient or state ownership.",
+      "Keep nonparticipating lanes unchanged; partial batches and scalar remainders remain valid.",
+      "Snapshot/restore, reset and copy one lane while others continue; no stale masked updates or cross-lane writes.",
+      "Carry each converged Newton lane forward unchanged while other lanes continue. Both accepted residual bits and per-lane step count must match scalar.",
+      "Runtime feature dispatch uses a qualified backend only on supported hardware/FP mode; unsupported and unqualified paths execute unchanged scalar code. No AVX instruction may enter the baseline ABI unguarded."
+    ]
+  },
+  "engine_integration": {
+    "required": "All existing core/audio gates and strict legacy default, legacy tails, V1 numerics and current V2 captures remain unchanged. Exact scalar replacement alone must not need a V2 re-pin.",
+    "when_batch_scheduling_changes": "Use a consistently rebuilt same-current-engine reference with only the sealed kernels substituted. Compare complete audio and relevant voice taps under fixed sample-position note/controller/automation events, 1/256/17,1,63,511,4 partitions, tails, idle/wake, 8/16-voice adapter behavior and PURE/source/legacy policies. Separate compilation avoids candidate/oracle ABI mixing.",
+    "baseline_qualification": "Other staged source changes may be present identically in both current Engine builds. Their audio changes are governed by their own pins; they do not authorize any scalar-kernel mismatch."
+  },
+  "original_gates": "Retain every existing independent IG00156 nodal, phase-correction top-octave, nonlinear OTA/residual, oscillator physical/event/alias, cold-idle/wake/phase, lazy companion, click, modern-inertness and immutable compatibility gate with original limits. A frozen software oracle supplements those models; it never substitutes for them.",
+  "actual_source_mutations": [
+    "use stale cutoff/Q/rate or wrong network coefficient in one lane",
+    "change a live coefficient by one representable ulp",
+    "drop one input reconstruction history term or use stale input on one sample",
+    "continue one extra Newton correction after original convergence",
+    "stop before original residual criterion or share one lane's residual/step count",
+    "omit a physical/companion history on copy, reset, restore or clock transition",
+    "swap two lane states/coefficients or write a masked-off lane",
+    "reverse a product/add order whose registered bit witness distinguishes it",
+    "discard signed-zero or subnormal history and toggle denormal mode",
+    "reuse wrong fold/shaper piece after an event or control change",
+    "retain wrong comparator plateau, omit a residual tail, or suppress a raw ungated branch",
+    "ignore profile/rate cache invalidation or preserve stale snapshot-cache data",
+    "force scalar/expensive recomputation to witness any separately registered candidate-specific work-reduction gate"
+  ],
+  "mutation_protocol": "Mutate actual candidate source in a temporary consistent build; compile successfully; require normal assertion failure naming the intended observable. Record survivors and harness gaps honestly, strengthen only observation under this unchanged exact contract, and rerun positive/restore controls. No compile failure, crash, timeout, disabled test or statistical seed selection counts as a kill.",
+  "efficiency_and_timing": {
+    "profiling": "First profile the final integrated unmodified core, identifying coefficient-set work versus per-sample phase reconstruction, nonlinear solve, WSC classification/advance/event work, and remaining rank/output work. Instruction counts and sampled CPU cost are different metrics and must be labelled.",
+    "candidate_specific_work_gate": "Before evaluating an optimization, publish the exact operation/classifier/transform-call efficiency witness appropriate to that chosen route. Keep shipping state free of telemetry-only counters; temporary instrumentation may establish eliminated work. Never infer whole-engine speedup from that count.",
+    "source_factory": "At least3 serial before/after rounds of the unchanged cs80_source_factory_benchmark at48kHz/256frames/8voices. Report held/moving/idle,p99/deadline misses and unchanged Legacy timing control. Targets0.15-0.20 held and<=0.02idle remain open until measured.",
+    "no_timing_from_instrumentation": "Do not treat Callgrind, coverage, injected counters, native sample overhead, or a different quality mode as the release-performance scorecard."
+  },
+  "within_stage_row_transform": {
+    "right_matrix": "Cache or store coefficient columns at set() without changing their computed double values. Initialize each rhs row with its original expression, then add right[row][j]*v[j] in original j=0,1,2,3 order. SIMD lanes are independent rows, never terms of one reduction.",
+    "inverse_matrix": "Likewise initialize each elimination row at positive zero and add inverse[row][j]*rhs[e[j]] in j=0,1,2 order. Three live rows plus an explicitly initialized inert padding lane are allowed; never read uninitialized padding or use a horizontal reduction.",
+    "scalar_tail": "Keep nonlinear RHS corrections, scalar predictor/Newton solve, state reconstruction, output casts, slopes, residual and stop count unchanged. Do not reorder HP/LP or Engine rank processing.",
+    "fp_rules": "Use separate multiply/add vector operations where that matches the frozen scalar target. Do not introduce FMA or reassociation. If a target's original contraction or FP mode cannot be matched exactly by the vector backend, use the unchanged scalar path.",
+    "witnesses": "Exercise each source coordinate independently, signed-zero input coordinates, distinct row coefficients, zero-padding lanes, mixed signs and large finite inputs; one permuted column, transposed index or reordered addition must be rejected. Cross-rank lane ownership fixtures additionally apply only if that separate batching route is implemented."
+  }
+}

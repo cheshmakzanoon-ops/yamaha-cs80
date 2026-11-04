@@ -1,0 +1,132 @@
+diff --git a/src/core/Engine.cpp b/src/core/Engine.cpp
+index 7069c29..5e7271e 100644
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -2057,8 +2057,31 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
+         // its first physical sample to seed them; never invent a zero-Hz past.
+         const bool coldBootstrap = freeRunning && !v.active && !v.idleControlsPrimed;
+         int idleSamples = 0;
++        bool modernUpdatedForTail = false;
+         if (! v.active && !coldBootstrap)
+         {
++            const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
++            const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
++            // Keep a removed pan route current until its cached offset clears.
++            // Released controller inputs stay zero after the first idle deadline,
++            // even when the smoother restores their event-set targets afterward.
++            if (freeRunning && modern.isActive()
++                && (modern.hasPanDestinations()
++                    || modern.rankOffsets(vi, 0).pan != 0.0f
++                    || modern.rankOffsets(vi, 1).pan != 0.0f)
++                && (v.ranks[0].vca.hasCouplingTail() || v.ranks[1].vca.hasCouplingTail()))
++            {
++                // Tail pan needs this sample's modulation. Predict the original
++                // idle deadline without changing its clock or ownership cadence.
++                const bool scheduled = v.idleClock + 1 >= due;
++                const bool releasedControls = scheduled || v.idleSteps > 0;
++                modern.processVoice(vi,
++                    { v.age, v.held || v.pedalHeld, v.note, v.velocity,
++                      releasedControls ? 0.0f : v.pressure, releasedControls ? 0.0f : v.timbre, v.contour,
++                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
++                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, scheduled);
++                modernUpdatedForTail = true;
++            }
+             // The amplitude gate may be closed while its downstream VCA
+             // coupling capacitor still drives the mix. Keep that signed RC
+             // discharge connected at audio rate; only the oscillator/filter
+@@ -2083,8 +2106,6 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
+                     mixL += voiceOut * panLeft;
+                     mixR += voiceOut * panRight;
+                 }
+-            const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
+-            const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
+             if (! freeRunning || ++v.idleClock < due)
+                 continue;
+             idleSamples = v.idleClock;
+@@ -2175,9 +2196,10 @@ void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
+         const float dispersion = global.voiceDispersion;
+         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
+         // Envelope sources are the previous sample's values of each rank.
+-        modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
+-                                  { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+-                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
++        if (! modernUpdatedForTail)
++            modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
++                                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
++                                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
+ 
+         for (int ch = 0; ch < 2; ++ch)
+         {
+diff --git a/src/core/ModernLayer.h b/src/core/ModernLayer.h
+index 83720e7..a12decf 100644
+--- a/src/core/ModernLayer.h
++++ b/src/core/ModernLayer.h
+@@ -139,6 +139,7 @@ public:
+     }
+ 
+     bool isActive() const noexcept { return active; }
++    bool hasPanDestinations() const noexcept { return panDestinations; }
+ 
+     // Once per internal sample, before the voices: advance shared envelopes and evaluate
+     // the global destinations. Per-voice sources come from the newest voice of the
+@@ -230,12 +231,14 @@ public:
+     }
+ 
+     // Once per internal sample for each active voice, before its ranks render.
+-    void processVoice(int voiceIndex, const VoiceInputs& in) noexcept
++    // Extra closed-tail updates advance modulation without changing the original
++    // note-latching or global-source publication schedule.
++    void processVoice(int voiceIndex, const VoiceInputs& in, bool scheduled = true) noexcept
+     {
+         if (! active || voiceIndex < 0 || voiceIndex >= kVoices)
+             return;
+         auto& voice = voices[(std::size_t) voiceIndex];
+-        if (in.age != voice.age)
++        if (scheduled && in.age != voice.age)
+         {
+             // New note on this voice: restart poly envelopes and latch per-note values.
+             voice.age = in.age;
+@@ -250,7 +253,8 @@ public:
+             if (! anyGateLast)
+                 monoTriggerPending = true;
+         }
+-        anyGateNow = anyGateNow || in.gate;
++        if (scheduled)
++            anyGateNow = anyGateNow || in.gate;
+ 
+         for (int m = 0; m < kMsegCount; ++m)
+             if (msegUsed[(std::size_t) m] && config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
+@@ -269,7 +273,7 @@ public:
+                 values[msegSource(m)] = msegOutput(m, voice.runners[(std::size_t) m].getValue());
+         values[ModSource::filterEnvelope] = in.filterEnvelope[0] / kEnvelopeOctaves;
+         values[ModSource::ampEnvelope] = in.ampEnvelope[0];
+-        if (in.age >= newestThisSample)
++        if (scheduled && in.age >= newestThisSample)
+         {
+             newestThisSample = in.age;
+             newestCandidate = values;
+@@ -418,6 +422,7 @@ private:
+         liveCount = 0;
+         msegUsed = {};
+         globalDestinations = false;
++        panDestinations = false;
+         if (controls.enabled)
+             for (int s = 0; s < kModSlots; ++s)
+             {
+@@ -426,6 +431,8 @@ private:
+                     || controls.amount[(std::size_t) s] == 0.0f)
+                     continue;
+                 live[(std::size_t) liveCount++] = s;
++                if (slot.destination == ModDestination::pan)
++                    panDestinations = true;
+                 for (auto source : { slot.source, slot.via })
+                     if (source >= ModSource::mseg1 && source <= ModSource::mseg3)
+                         msegUsed[(std::size_t) ((int) source - (int) ModSource::mseg1)] = true;
+@@ -453,6 +460,7 @@ private:
+     double sampleRate = 96000.0;
+     bool active = false;
+     bool globalDestinations = false;
++    bool panDestinations = false;
+     std::array<int, kModSlots> live {};
+     int liveCount = 0;
+     std::array<bool, kMsegCount> msegUsed {};

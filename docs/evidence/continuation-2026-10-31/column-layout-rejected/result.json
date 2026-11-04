@@ -1,0 +1,64 @@
+{
+  "result": "Rejected; candidate never landed in production.",
+  "basis_commit": "d06648c386486cf2630de6e41195ddd5d4360ff0",
+  "published_comparator_commit": "08607ebd915a6dcd5cbfdf2d8d53286c8c227102",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "machine": "x86_64",
+  "compile_options": [
+    "-std=c++20",
+    "-O3",
+    "-DNDEBUG"
+  ],
+  "candidate_phase_sha256": "efead202512c69746e4c01c04d63c573dd73f6e77c663541a21733a1afabbe00",
+  "unchanged_phase_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+  "comparator_sha256": "9022fe21b7eeac8fe92ce95046911b33ea600c7a70fc4d9204104fe0ef7b1571",
+  "source_audit": "Reversing only address accessor substitutions, storage declarations and padding call recovered the complete frozen phase header byte-for-byte.",
+  "timing": "No candidate timing, work-reduction or CPU-target claim: exact numerical gate rejected adoption.",
+  "baseline": {
+    "fixed": [
+      576843520,
+      0
+    ],
+    "moving": [
+      49807360,
+      0
+    ],
+    "state": [
+      73759498,
+      0
+    ],
+    "row": [
+      21405696,
+      0
+    ],
+    "fp": [
+      59498228,
+      0
+    ]
+  },
+  "candidate": {
+    "fixed": [
+      576843520,
+      0
+    ],
+    "moving": [
+      49807360,
+      0
+    ],
+    "state": [
+      73759498,
+      113616
+    ],
+    "row": [
+      21405696,
+      0
+    ],
+    "fp": [
+      59498228,
+      3360312
+    ]
+  },
+  "count_units": "[bit/state assertions, failing assertions]; failures are not distinct samples.",
+  "candidate_patch_sha256": "db6d86d63701eeeb8ad5a337a6ab2e7960db0c54c22182ecd15740eaf0fe4ce6",
+  "investigation_date_utc": "2026-11-01"
+}

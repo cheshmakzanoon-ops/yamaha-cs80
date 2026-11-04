@@ -1,0 +1,30 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/rank-II-only-rounded-origin-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "rank"]
+COVERAGE rank_charge_Source_0 9/9
+COVERAGE rank_origin_Source_0 9/9
+COVERAGE rank_charge_Source_1 9/9
+COVERAGE rank_origin_Source_1 9/9
+COVERAGE rank_charge_Pure_0 9/9
+COVERAGE rank_origin_Pure_0 9/9
+COVERAGE rank_charge_Pure_1 9/9
+COVERAGE rank_origin_Pure_1 9/9
+Ring event continuity: 593 assertions, 18 failures
+RING-CONTINUITY FAIL: Source rank 44100/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 44100/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 44100/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 48000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 48000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 48000/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 96000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 96000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Source rank 96000/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 44100/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 44100/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 44100/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 48000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 48000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 48000/2 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 96000/0 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 96000/1 rank1 precise attack origin
+RING-CONTINUITY FAIL: Pure rank 96000/2 rank1 precise attack origin
+
+EXIT 1

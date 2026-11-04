@@ -97,7 +97,9 @@ row (compatibility gates byte-identical).
   500 Hz extension masked at 200 Hz in PURE CS-80.
 - *Row 15 Tremolo/chorus, LEFT and RIGHT outputs:* OE1 four-VCA tremolo; OE2 true L/R
   wet paths with per-transfer loss, output-pair hold, independent noise and band-limited
-  clock feedthrough.
+  clock feedthrough. Added 2026-10-31: the append-only `chorus_tabs` parameter
+  makes both-off, individual on, and both-on engine states representable;
+  Historical remains the neutral default and preserves the previous toggle.
 - *Row 17 EXP / EXP-WAH:* PRA optical cell, declared asymmetric LDR law.
 
 **Modern layer (ws5-modern, Phase 6; all EXT, inert in PURE CS-80)**
@@ -105,11 +107,21 @@ row (compatibility gates byte-identical).
   original controllers without changing their circuits, keyboard modulation curves for
   matrix sources only, modern FX (BBD ensemble, plate, spring, tape echo, oversampled
   drive, loudness matching; classic slot FX bit-identical). Mounted in the Studio view.
+- *Host automation (2026-10-31):* 18 named key parameter lanes preserve VST3
+  sample offsets and AU scheduled immediate/ramp events in the Source
+  circuit policy; timed controls reach both rank engines before their sample.
+  Checked wrapper patches are generated in the build tree. Legacy and PURE
+  retain block-rate semantics. Native macOS AU ABI validation remains a
+  gated CI task; see [HOST_AUTOMATION.md](HOST_AUTOMATION.md).
 
 **Tones, memories and library (ws6-library, Phase 4)**
 - *Row 3 tone selectors:* 25 unknown cells re-examined; all stay labelled hypotheses;
   opt-in refined BA/diode boundary (V1 numerics unchanged).
-- *Row 46 four memory panels:* electrical model with a truth model; not driving audio.
+- *Row 46 four memory panels:* electrical model with a truth model; as of
+  2026-10-31 the selected memory/PANEL receiver drives circuit-engine control
+  values while preserving the legacy APVTS path and the unchanged V1 gate.
+  Voltage and taper curves remain declared schematic inferences, not hardware
+  measurements (`d66d298`).
 - *Factory programs:* 301-program curated circuit-engine library; the 222 shipped
   programs are the read-only Legacy Library at their old host indexes.
 - *MIDI / editing:* Program Change with bank select (inert in PURE CS-80); A/B compare
@@ -122,7 +134,8 @@ row (compatibility gates byte-identical).
   open.
 - *Rows 3, 9-10, 13-15, 17, 46, HIGH/LOW:* full tab names; levers and switches moved to
   the documented blocks; separate tremolo/chorus keys (both-off/both-on states need an
-  engine parameter: open); memory-lid STORE PANEL / COPY MEMORY / COPY RANK.
+  engine parameter: completed 2026-10-31, `6f1c4aa`); memory-lid STORE PANEL /
+  COPY MEMORY / COPY RANK.
 
 **Modern UI (ws8-studio, Phase 5/6; EXT)**
 - *Row 19 Ribbon (UI):* full bend from any first-contact point (declared UI
@@ -132,6 +145,260 @@ row (compatibility gates byte-identical).
   strip hidden in PURE CS-80.
 - *Modern layer:* MIDI learn, undo/redo, typed values and context menus, guided tour,
   per-control help and the in-app evidence register.
+
+## 2026-11-01 qualification and source-evidence update
+
+Documentation snapshot: `1e5893854c3d0d9b0aa1ab1c725fd2e8084717f6` on
+`finish/cs80-qualification-20261031`. These entries supersede the earlier open
+implementation statements for the named rows; the dated entries and original
+baseline tables remain as history. [STATUS.md](STATUS.md) is the current
+qualification authority. Every result below is a source inspection or software
+model/protocol comparison, not a measurement of a Yamaha instrument. Final
+current-head CI, the main merge and release are separate landing steps; this
+entry does not claim they have completed.
+
+### Rows 26–29: full-band nodal filter accuracy and service setup
+
+**Status A remains:** the IG00156 network and its device/calibration assumptions
+remain the declared model. The numerical full-band gate is now met at the
+2×/4× internal-rate combinations below after the Padé phase correction and
+input-history correction. The original thresholds and independent continuous
+oracle were retained. Registration `85ccd9a`, production `4917708` and subsequent
+exact coefficient work `651c74d` are documented in
+[IG00156_PHASE_CORRECTION.md](IG00156_PHASE_CORRECTION.md).
+
+| Internal rate | Worst full-band normalized complex error | Original full-band limit | Result |
+| ---: | ---: | ---: | --- |
+| 88,200 Hz | 0.048837 | 0.08 | Pass |
+| 96,000 Hz | 0.043923 | 0.08 | Pass |
+| 192,000 Hz | 0.001954 | 0.02 | Pass |
+| 384,000 Hz | 0.00005825 | 0.02 | Pass |
+
+All four core-band errors remain below the original 0.03 limit. The isolated
+HP, LP and cascade grids, direct top-octave checks, nonlinear/stability tests
+and free-running wake checks remain in place. Removing the correction or only
+its input-derivative term rejects the separately registered matrix/direct gate
+(13 and 4 failures respectively). This closes the identified numerical
+top-octave gap, without certifying the underlying hardware model.
+
+**ADJ printed p11 HP remains open:** the unchanged continuous-model prediction
+is **1.692 Vpp**, outside the specified **4.3 ± 1 Vpp** (3.3–5.3 Vpp).
+LP predicts **1.648 Vpp**, inside its **2.2 ± 1 Vpp** interval. Native M41
+tracing establishes **150 kΩ in series from CP7 to AI**, with a separate
+**33 kΩ shunt**; the former 150 kΩ-shunt reading is superseded. Switched source
+impedance and the complete alignment setup still need resolution before a
+changed HP model is justified. No component or gain was fitted to force the
+fixture to pass. See [the M41/ADJ source record](evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+
+### Row 3: all 25 disputed tone cells inspected
+
+The native source-fetch and page-cited transcription task is complete. All
+**25 cells retain status A — declared source hypotheses**: readable markings
+do not establish the installed revision, and obscured glyphs or altered
+topologies remain unresolved. No cell is promoted to a verified installed value.
+The following is the current cell-level disposition; `K` denotes the printed
+kilohm marking, and a direct-diode drawing is not an installed-part assertion.
+
+| Cell | Schematic / board page | Reading and retained qualification |
+| --- | --- | --- |
+| T51 A20 | S31 / S32 | `1.2K`, revision triangle; applicability unresolved. |
+| T51 A25 | S31 / S32 | Overdrawn direct diode; altered topology/revision unresolved. |
+| T51 C25 | S31 / S32 | `10K` with marked parallel/bypass drawing; resistor/bypass applicability unresolved. |
+| T51 E22 | S31 / S32 | `12K`, revision triangle; applicability unresolved. |
+| T51 E26 | S31 / S32 | Marked direct diode; topology/revision unresolved. |
+| T51 F22 | S31 / S32 | Crossed `3.6K`, `12K` below; applicable revision unresolved. |
+| T51 F25 | S31 / S32 | Crossed resistor consistent with retained `5.6K` candidate and overdrawn diode; leading glyph remains qualified. |
+| T51 F26 | S31 / S32 | Marked direct diode; topology/revision unresolved. |
+| T52 A26 | S33 / S34 | Overdrawn direct diode; topology/revision unresolved. |
+| T52 B9 | S33 / S34 | Crossed `12K`, `10K` below; applicable revision unresolved. |
+| T52 C22 | S33 / S34 | Crossed former value, clear replacement `12K`; former glyphs/applicability unresolved. |
+| T52 E20 | S33 / S34 | `1.2K`, revision triangle; applicability unresolved. |
+| T53 A20 | S35 / S36 | `1.2K`, revision triangle; applicability unresolved. |
+| T53 A25 | S35 / S36 | Overdrawn direct diode; topology/revision unresolved. |
+| T53 B14 | S35 / S36 | Ambiguous first schematic glyph before `5K`; board candidate `75K(39K)` is clear. The paired-board convention remains an inference; retain the frozen 25K-looking alternative separately. |
+| T53 B20 | S35 / S36 | `1.2K`, revision triangle; applicability unresolved. |
+| T53 C20 | S35 / S36 | `1.2K`, revision triangle; applicability unresolved. |
+| T53 E23 | S35 / S36 | Crossed `16K`, `22K` below; applicable revision unresolved. |
+| T53 E26 | S35 / S36 | Crossed/overdrawn direct diode; topology/revision unresolved. |
+| T53 F22 | S35 / S36 | `12K`, revision triangle; applicability unresolved. |
+| T53 F26 | S35 / S36 | Crossed/overdrawn direct diode; topology/revision unresolved. |
+| T54 A26 | S37 / S38 | Crossed/overdrawn direct diode; topology/revision unresolved. |
+| T54 C22 | S37 / S38 | Crossed `8.2K`, `12K` below; applicable revision unresolved. |
+| T54 C25 | S37 / S38 | Crossed `56K` and altered diode; resistor/direct alternatives unresolved. |
+| T54 C26 | S37 / S38 | Crossed/overdrawn direct diode; topology/revision unresolved. |
+
+[Native inspection run 41224106605](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41224106605)
+at `0281af873389a13452ac5dca2ef9b90dcec07c72` has ten successful jobs. The
+2026-11-01 review independently verified all **70** emitted crop payloads,
+including **48 unresized native tone tiles**, against chunk ordering, lengths,
+PNG hashes/dimensions and locally inspected bytes. The
+[transcription](evidence/continuation-2026-10-31/TONE_CELL_NATIVE_REVIEW.md) and
+[dated source/UI review](evidence/qualification-2026-11-01/ui-tone-review/README.md)
+retain source URLs, job IDs, exact hashes and alternatives. The frozen
+`FactoryToneHypotheses.h` prefix and full `HardwareControl.h` remain byte-identical
+to original main `db24a47170610f81236e8829ef5536af69dfc94d`; V1 numerics and
+fingerprint **`e5f877a025fc52c6`** are unchanged. Resolving revision/install
+applicability requires additional evidence, not a different hypothesis median.
+
+### Row 46: electrical memory/PANEL controls now drive audio
+
+**Status IB/A:** `MemoryPanels.h` is connected to the selected circuit-engine
+control source (`d66d298`), rather than remaining an offline model. Both ranks
+compile the selected bank's 26 positions and publish only after validating the
+complete transaction. Rank I owns M1/M3 and rank II M2/M4. Selected PANEL/memory
+controls drive the cutoff, Q, waveform, level, envelope and touch receivers;
+the selected factory source retains authority over unselected programmer edits.
+The existing Legacy APVTS/physical-value path and V1 numerical gate remain
+unchanged. Original memory/PANEL controls also operate in PURE.
+
+The shaft-coordinate mapping, 50 kΩ linear pots, 1 Ω endpoints, ideal cutoff
+followers and local operating-point source reduction remain declared
+inferences, with their alternatives and dynamic-coupling limitations recorded
+in [PROGRAMMER_INTEGRATION.md](evidence/continuation-2026-10-31/PROGRAMMER_INTEGRATION.md).
+The registered full-network comparison passed **840 checks**, including both
+ranks and all rows; seven actual-source mutations were rejected. Worst bus
+error was **0.000183986 V** against **0.002 V**. The integration and memory-model
+tests also passed on all four native platforms in the dated host evidence.
+Loaded electrical timing/level predictions can differ substantially from the
+older physical-unit labels; these differences are not calibrated hardware
+timings or proof that the original click-score requirement is met.
+
+### Original switches and modern host/UI ownership
+
+| Feature | Current status and implementation | Qualification and remaining boundary |
+| --- | --- | --- |
+| Row 15 tremolo/chorus positions | IB/A; append-only `P_chorusTabs` (`6f1c4aa`) represents both off, chorus, tremolo and both on. Historical is the neutral default; Legacy ignores the added selector. Original tab states operate in PURE. | AU version hint 16 and exact core count 191 retained. Model/host tests pass; simultaneous OE1/OE2 behavior remains a declared circuit inference. |
+| Host automation, EXT | IB; 18 named key lanes preserve actual VST3/AU sample offsets, including AU immediate/ramp ownership and delivery to both engines. Legacy and PURE retain their earlier wrapper semantics. | Actual VST3 SDK host passed on Linux; actual AU component host plus all seven source mutations passed on Intel and Apple Silicon. Windows passed the platform-neutral contracts; no native Windows VST3 queue-host result is claimed. |
+| MTS-ESP tuning, EXT | IB; actual pinned ODDSound client vendored with its **0BSD** licence at upstream `f214739b8832e7f297cb9970d0c0efbf783f1462`; default mode remains neutral and PURE masks modern tuning. | Real-client, shim and explicit fallback compile/tests pass on all four native platforms. No-master and shim checks do not establish operation with a live installed external master. |
+| Parameter contexts and MIDI learn, EXT | IB; exact host-ID bindings cover switches, host-parameter combo boxes, tone/memory selectors and memory miniatures (`2c0866e`). Popup handling precedes normal control activation. | Seven widget-family binding regressions and the wrong-ID mutation qualify routing. Shared display formatting does not change the miniature's target bank. MIDI learn is inactive in PURE; nonparameter session configuration is not claimed as a host parameter. |
+| Undo and APVTS state | IB; changed parameters receive balanced host begin/end gestures on replay (`0d9f522`). Copy/replace paths take the common tree lock and synchronize first; snapshots are detached. | Replay-gesture, synchronization and exact MSEG restore checks remain in the complete UI suite; actual-source mutation evidence is retained. No concurrent-destruction guarantee is inferred from snapshot tests. |
+| Voice-monitor drawer, EXT | IB; coherent engine-tap snapshots replace settings-only curves (`3c08e8e`). Physical voice/rank selection and assignment serials prevent stale note history. | Exact publication/display tests and a blank-tap mutation cover both ranks/policies. The 15 Hz curves are control history, not audio-waveform or hardware transfer measurements. |
+| Sixteen-voice meters and pointer pressure, EXT | IB; second-instrument slots 8–15 contribute activity/counts; the meter reads combined output. Pressure ownership covers both engines and rejects host-owned same-note aliases and stale/reused tokens. | Second-engine meter and ownership mutations reject independently; monitored/unmonitored audio is byte-identical. The original 151-check eight-slot audit remains intact. PURE uses eight voices. Physical key-force mechanics and sensor calibration remain PC/MR. |
+
+The [2026-11-01 host qualification](evidence/qualification-2026-11-01/host-features/README.md)
+records the exact native test checkout, 37 unchanged feature-source identities
+and **45** per-platform passing feature results. Its older complete workflow
+still failed the separate Intel BBD assertion; these passing feature results
+are not relabelled as a green overall run. The
+[UI completion report](workstreams/ui-completion.md),
+[UI integration evidence](workstreams/ui-programmer-oracles.md) and
+[state synchronization record](STATE_TREE_SYNCHRONIZATION.md) retain
+preregistrations, original failures and mutation results. Full native landing
+CI is reported separately in STATUS.
+
+### Remaining boundaries
+
+Filter-charge and elapsed-time repairs retain free-running physical state;
+the [event-continuity regression](CLICK_EVENT_CONTINUITY.md) compares 72 fields
+per rank at zero elapsed time and rejects 15 source mutations. The original
+physical-PANEL Bass and percussive note-off score criteria nevertheless remain
+open. CPU caches, component arrays, reduced silent cadence and exact work
+omission likewise do not establish the still-open held/idle CPU budgets.
+Current numbers and named-fixture distinctions remain in [STATUS.md](STATUS.md).
+Original physical mechanisms, component calibration, force/touch mechanics,
+unresolved source assumptions, and the owner-only signing/real-DAW/trademark/AAX
+work retain their existing open boundaries.
+
+
+## 2026-11-02 source-probe and full-audit addendum
+
+This is a dated **source/evidence-only** checkpoint. It does not supersede the
+historical investigations above, change any acceptance tolerance, establish
+measurement of a physical CS-80, or authorize a main merge/release. The current
+qualification authority is [STATUS.md](STATUS.md).
+
+### Rows 26–29: HP switched mixer, CP2/CP3 probe identity
+
+The reviewed `integration/adj-hp-mixer-evidence-20261102` branch at
+[`b4c175f2`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/integration/adj-hp-mixer-evidence-20261102)
+adds schematic-page explanation and a **model-only, non-audio** pair of stage
+probe readouts. On Yamaha M41 printed p41, drawing KEC-4223-65, IC9 SO pin 5
+and PO pin 7 route through separate FET6/FET7 and 150 kΩ series resistors
+to the common HP mixer node, which also has its **own fixed 150 kΩ shunt to
+ground**. With exactly one ideal conducting FET and other loads ignored,
+the 150 kΩ series/150 kΩ shunt divide the active waveform by two and give
+75 kΩ nominal Thevenin source impedance. The inactive FET is *not* treated
+as a grounded source. Actual FET resistance, other NI/PW/PWM paths,
+driver voltages and loading are still open.
+
+Yamaha M11/M12 wiring, printed p44, drawing KEP-NA03574-6Y, connects
+CP2 (46) to CP7 (53), and **separately** CP8 (56) to CP3 (29):
+the former is the HP-to-LP link and the latter is the downstream LP-side
+probe. Both are wires, not additional gain stages. M41 places VR7 at
+the HP cutoff-control connection and VR8 at HP Q; the independent
+CS-60 service manual printed p38 supports those control roles but
+does not change the CS-80 ADJ p11 specification. The full primary-source
+image coordinates, SHA-256 hashes and alternatives are retained in
+[NATIVE_FILTER_EVIDENCE.md](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/b4c175f2b398566dcdf2c2e70adc6ffaeb94438a/docs/evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md).
+
+| Unchanged service fixture, ideal model readout | HP-stage CP2 | Downstream CP3/CP8 |
+| --- | ---: | ---: |
+| HP setup | **4.126 Vpp** | **1.692 Vpp** |
+| LP setup | **1.038 Vpp** | **1.648 Vpp** |
+
+**The original HP acceptance remains a MISS:** ADJ p11 prints **4.3 ± 1 Vpp
+(3.3–5.3 Vpp) at CP3**, where the model still gives **1.692 Vpp**.
+That the model's separate CP2 result (4.126 Vpp) happens to fall inside
+the printed numerical band does **not** prove a printing error, a
+hardware reading, or a corrected acceptance terminal. A first-person
+2016 calibration account cited in the native review reports a similar
+CP2-versus-CP3 concern, but is unreplicated field testimony; it is not
+a source-verified CS-80 revision. No gain, circuit coefficient, V1
+fingerprint or gate was altered to produce the CP2 reading.
+
+### Complete three-rate source-engine audit and remaining requirements
+
+The preregistered final-audio
+[run 41336194253](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253)
+finished successfully as a *capture*, using audited checkout
+`39ae6c2684456950302cb4ed10ecfae980c37ddd`, production audio
+`83b7f7670f000a95c6b44f96ffb0df3894755d14`, and unchanged
+production source tree `7dd159d491012fd47b46c0aa651e86ea959ca289`.
+The [raw artifact](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253/artifacts/13097476296)
+has ZIP SHA-256
+`a76dd6ee33dcfa4f14be4223ecb06331330d19d90a0baf84147745cef2c88f19`.
+A [permanent evidence branch](https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/evidence/full-engine-audit-20261102/docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253)
+at `0151b869` also preserves exact raw CSVs and a losslessly reconstructable original ZIP.
+Independent retrieval verified its CRC, source/provenance digests,
+**885 source-defined rows** (40 latency, 168 alias, 102 FX, 566 phrase,
+9 causal clicks), and zero nonfinite numeric cells. Ten preregistered
+coverage/identity mutations were rejected. **Capture success does not mean
+the unchanged numerical acceptance limits passed.**
+
+The current source phrase peak passes at worst **−0.370566 dBFS**;
+48 kHz source ring-off saw/pulse non-harmonics pass at worst
+**−71.14/−76.36 dB** against ≤−70 dB. The **click gates fail**:
+source phrase retrigger **1.23689** (1/283 rows), steal **1.03039**
+(1/283), single-note-off **1.62689** (22/283), chord-note-off
+**1.84628** (37/283), physical-PANEL Bass **1.440924** (2/3 rates),
+and Funky 1 + Funky 2 tone-tab causality **1.626889** (3/3 rates).
+All original limits remain ≤1. These failures are software output
+observations, not identified hardware defects, and do not justify
+onset fades or retuning to a score.
+
+The separate same-host CPU qualification at
+[run 41292549292](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41292549292)
+still misses the eight-voice **0.15–0.20 RTF** target
+(observed **0.605709–0.888572**) and idle **≤0.02 RTF** target
+(observed **0.067570125**). No later optimization is accepted
+here without same-host three-before/three-after and compatibility evidence.
+
+### Row 3 and release boundary
+
+All 25 T51–T54 tone-tab cells remain **page-cited reading/revision
+hypotheses**, not verified installed component values. The native
+S31–S38 inspections remain intact and the circuit V1 fingerprint
+`e5f877a025fc52c6` is unchanged. No additional board-revision evidence
+is claimed.
+
+PR #6 remains a draft pending CPU/click qualification, exact-main CI,
+a reviewed merge, guarded installer release and verified screenshot/download
+provenance. The reviewed release dispatcher checks green exact-main
+build/DSP/screenshots workflows and screenshot-only ancestry but **does not**
+itself check the numerical CPU/click limits; a separate verified acceptance
+decision is required. The existing README downloads and main screenshots
+refer to historical builds, not the pending development branch. Owner-only
+signing, real-DAW, trademark and AAX responsibilities remain open.
 
 ## Status and evidence rules
 
@@ -303,3 +570,4 @@ At this baseline, D comments call its generic input soft clip part of the IG0015
 Existing T coverage includes oscillator discontinuities, feet, filter domains/contours/stability, ring/ribbon, sustain, allocation, pressure, MIDI panic, sample rates and rendering. UT covers host/UI state and programmer gestures. Passing these does not supply missing circuit reference measurements.
 
 For each row, promotion to verified fidelity requires a linked evidence artifact containing the original control/test-point setup, recorded stimulus/reference, residuals across the operating range and a stated uncertainty. Unobserved or unmeasured behavior stays open. The project must not be called complete merely because every table row has a parameter or every CI job is green.
+

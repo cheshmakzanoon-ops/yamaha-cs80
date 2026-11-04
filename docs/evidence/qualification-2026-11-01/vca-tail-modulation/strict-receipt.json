@@ -1,0 +1,51 @@
+{
+  "canonical_audio_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "local_audio_commit": "b96c3cfd52f42eccc8cd37bbdbaa7edb84b5d94f",
+  "audio_source_subtree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "canonical_pin_commit": "14ef653ed60be67ff98656966f9181c5e9b6b4fc",
+  "strict_exit_code": 0,
+  "strict_log_sha256": "81d996354b123edc4d5bfb98afdce507118b7651c78df8fe35e37cb67f3b2991",
+  "temporary_pin_file_restored": true,
+  "pairs": [
+    {
+      "gate": "legacy_default",
+      "baseline_commit": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "baseline_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/legacy-default.f32",
+      "current_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/current-default.f32",
+      "bytes": 32863104,
+      "baseline_sha256": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+      "current_sha256": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+      "byte_comparison_equal": true
+    },
+    {
+      "gate": "legacy_tails",
+      "baseline_commit": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "baseline_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/legacy-tails.f32",
+      "current_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/current-tails.f32",
+      "bytes": 98589312,
+      "baseline_sha256": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+      "current_sha256": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+      "byte_comparison_equal": true
+    },
+    {
+      "gate": "v1",
+      "baseline_commit": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "baseline_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/circuit-v1.bin",
+      "current_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/circuit-current.bin",
+      "bytes": 133056,
+      "baseline_sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+      "current_sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+      "byte_comparison_equal": true
+    },
+    {
+      "gate": "v2",
+      "baseline_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+      "baseline_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/audio-v2.bin",
+      "current_file": "/workspace/scratch/e8b335644872/cs80-click/build-compat-gates/audio-current.bin",
+      "bytes": 9332176,
+      "baseline_sha256": "0e8f046c2a04aea8aa0b70a4521be87881aeb4b88ced441a5f73a6037e65aab6",
+      "current_sha256": "0e8f046c2a04aea8aa0b70a4521be87881aeb4b88ced441a5f73a6037e65aab6",
+      "byte_comparison_equal": true
+    }
+  ]
+}

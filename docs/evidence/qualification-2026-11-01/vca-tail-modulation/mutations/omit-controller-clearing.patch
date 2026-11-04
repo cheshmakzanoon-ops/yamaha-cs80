@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2074,7 +2074,7 @@
+                 // Tail pan needs this sample's modulation. Predict the original
+                 // idle deadline without changing its clock or ownership cadence.
+                 const bool scheduled = v.idleClock + 1 >= due;
+-                const bool releasedControls = scheduled || v.idleSteps > 0;
++                const bool releasedControls = false;
+                 modern.processVoice(vi,
+                     { v.age, v.held || v.pedalHeld, v.note, v.velocity,
+                       releasedControls ? 0.0f : v.pressure, releasedControls ? 0.0f : v.timbre, v.contour,

@@ -1,0 +1,112 @@
+COMMAND ["/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/double-tick-idle-deadline-gate", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/tests/parity/tolerances-v2/vca-tail-modulation.json"]
+current-pan policy=source rate=44100 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=0 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=44100 quality=0 rank=0 mode=poly error=0 elapsed_error=0.000385487528358
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=44100 quality=0 rank=1 mode=poly error=0 elapsed_error=0.000385487528358
+current-pan policy=source rate=44100 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=1 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=44100 quality=1 rank=0 mode=poly error=0 elapsed_error=0.000385487528358
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=44100 quality=1 rank=1 mode=poly error=0 elapsed_error=0.000385487528358
+current-pan policy=source rate=44100 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=2 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=44100 quality=2 rank=0 mode=poly error=0 elapsed_error=2.26757369647e-05
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=44100 quality=2 rank=1 mode=poly error=0 elapsed_error=2.26757369647e-05
+current-pan policy=source rate=48000 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=0 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=48000 quality=0 rank=0 mode=poly error=0 elapsed_error=0.00033333333336
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=48000 quality=0 rank=1 mode=poly error=0 elapsed_error=0.00033333333336
+current-pan policy=source rate=48000 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=1 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=48000 quality=1 rank=0 mode=poly error=0 elapsed_error=0.00033333333336
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=48000 quality=1 rank=1 mode=poly error=0 elapsed_error=0.00033333333336
+current-pan policy=source rate=48000 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=2 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=48000 quality=2 rank=0 mode=poly error=0 elapsed_error=2.08333332828e-05
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=48000 quality=2 rank=1 mode=poly error=0 elapsed_error=2.08333332828e-05
+current-pan policy=source rate=96000 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=0 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=96000 quality=0 rank=0 mode=poly error=0 elapsed_error=8.33333333465e-05
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=96000 quality=0 rank=1 mode=poly error=0 elapsed_error=8.33333333465e-05
+current-pan policy=source rate=96000 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=1 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=96000 quality=1 rank=0 mode=poly error=0 elapsed_error=8.33333333465e-05
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=96000 quality=1 rank=1 mode=poly error=0 elapsed_error=8.33333333465e-05
+current-pan policy=source rate=96000 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=2 rank=1 mode=free error=0 elapsed_error=0
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=96000 quality=2 rank=0 mode=poly error=0 elapsed_error=2.08333332828e-05
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+current-pan policy=source rate=96000 quality=2 rank=1 mode=poly error=0 elapsed_error=2.08333332828e-05
+current-pan policy=pure rate=44100 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=0 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=0 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=0 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=1 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=1 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=1 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=2 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=2 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=44100 quality=2 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=0 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=0 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=0 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=1 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=1 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=1 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=2 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=2 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=48000 quality=2 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=0 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=0 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=0 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=1 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=1 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=1 rank=1 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=2 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=2 rank=0 mode=poly error=0 elapsed_error=0
+current-pan policy=pure rate=96000 quality=2 rank=1 mode=poly error=0 elapsed_error=0
+618 checks, 36 failures
+
+EXIT 1

@@ -1,0 +1,13 @@
+diff --git a/src/plugin/PluginProcessorAutomation.cpp b/tmp/cs80-automation-boundary-qualification/mutations/unconditional-float-roundtrip/PluginProcessorAutomation.cpp
+index bb5e999..5f76ee3 100644
+--- a/src/plugin/PluginProcessorAutomation.cpp
++++ b/tmp/cs80-automation-boundary-qualification/mutations/unconditional-float-roundtrip/PluginProcessorAutomation.cpp
+@@ -21,7 +21,7 @@ void Cs80AudioProcessor::refreshHostAutomationParameter(size_t lane) noexcept
+     // preceding curve between blocks. Compare with the readback associated
+     // with our own last publication, rather than with its double endpoint:
+     // JUCE's physical Float32 storage need not invert to that endpoint exactly.
+-    if (current != automationParameterReadback[lane])
++    if (true)
+         automationCurrent[lane] = current;
+     automationParameterReadback[lane] = current;
+ }

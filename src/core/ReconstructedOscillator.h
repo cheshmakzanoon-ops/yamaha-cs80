@@ -173,6 +173,8 @@ public:
     struct Diagnostics {
         bool invalidControl=false,frequencyLimited=false,eventCapacityExceeded=false;
         std::size_t eventCount=0;
+        // Cumulative scheduler work, for the segment-cache efficiency gate.
+        std::uint64_t branchSearchCount=0;
         std::array<Event,maximumEventsPerTick> events{};
         double rawPin7Volts=0.,coupledInputVolts=0.,trianglePin3Volts=0.,shaperInputVolts=0.;
         WscOutputVolts raw{};
@@ -230,7 +232,7 @@ public:
     // Cold-start convention only. No noteOn() method deliberately exists: the
     // inspected M41 graph has no note-trigger phase/coupling reset connection.
     void reset(double phase=0.,double initialHz=261.6) noexcept {
-        state={};diagnostics={};endNodesValid=false;
+        state={};diagnostics={};endNodesValid=false;branchEventCacheValid=false;
         state.heldFrequencyHz=std::isfinite(initialHz)?std::clamp(initialHz,0.,maximumFrequencyHz()):std::clamp(profile.referenceHzNominal,0.,maximumFrequencyHz());
         phase=std::isfinite(phase)?phase-std::floor(phase):0.;
         const double f=state.heldFrequencyHz;
@@ -252,6 +254,11 @@ public:
         else diagnostics.invalidControl=true;
         if(std::isfinite(controls.pulseThresholdVolts))threshold=controls.pulseThresholdVolts;
         else diagnostics.invalidControl=true;
+        // A frequency or comparator-threshold change starts another analytic
+        // segment even when its antialias residual is negligible. A cached
+        // future crossing belongs to the OLD control law and must be discarded.
+        if(f!=state.heldFrequencyHz||threshold!=state.heldThresholdVolts)
+            branchEventCacheValid=false;
         // Control changes. A full event (branch residuals) is recorded unless the
         // change provably or negligibly alters no branch:
         // - exact: a threshold move that does not cross the comparator input
@@ -281,19 +288,33 @@ public:
             if(state.resetRemainingSeconds==0.&&state.charge<=0.&&f>0.){
                 before=after;state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;
                 after=nodes(1);recordEvent(elapsed,resetStart,before,after);
+                branchEventCacheValid=false;
             }
             const bool inReset=state.resetRemainingSeconds>0.;
             const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
             double span=std::min(dt-elapsed,physical);
             const auto start=after;
             bool branchEvent=false;
-            span=nextBranchEvent(start,span,branchEvent);
+            // The branch equations remain analytic across sample boundaries.
+            // Search to the next physical boundary ONCE, then count down the
+            // exact crossing time. A stopped oscillator has no finite physical
+            // boundary: retain the bounded one-sample search in that case.
+            if(!branchEventCacheValid){
+                cachedBranchEvent=false;
+                const double horizon=std::isfinite(physical)?physical:span;
+                cachedBranchSeconds=nextBranchEvent(start,horizon,cachedBranchEvent);
+                branchEventCacheValid=std::isfinite(physical);
+                ++diagnostics.branchSearchCount;
+            }
+            if(cachedBranchEvent&&cachedBranchSeconds<=span){span=cachedBranchSeconds;branchEvent=true;}
             // Roots closer than round-off to the previous event are represented
             // by its right-sided branch derivative, never a zero-progress loop.
             if(!(span>0.)){diagnostics.eventCapacityExceeded=true;break;}
             advance(span,start);
             elapsed+=span;
+            if(branchEventCacheValid)cachedBranchSeconds=std::max(0.,cachedBranchSeconds-span);
             const bool physicalReached=std::abs(span-physical)<=2e-15;
+            if(physicalReached||branchEvent)branchEventCacheValid=false;
             if(physicalReached&&inReset)state.resetRemainingSeconds=std::numeric_limits<double>::min();
             if(physicalReached||branchEvent)before=nodes(-1);
             if(physicalReached){
@@ -303,7 +324,7 @@ public:
             if(dt-elapsed<=2e-15)elapsed=dt;
         }
         if(elapsed<dt){ // Explicit diagnostic, bounded numerical failure policy.
-            diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);
+            diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);branchEventCacheValid=false;
         }
         state.elapsedSeconds+=dt;
         endNodes=after;endNodesValid=true;
@@ -330,7 +351,7 @@ public:
     double advanceIdle(double seconds,double requestedHz,const WscControls& controls) noexcept {
         diagnostics.eventCount=0;
         state.residual={};
-        endNodesValid=false;
+        endNodesValid=false;branchEventCacheValid=false;
         if(!(seconds>0.))return 0.;
         double f=state.heldFrequencyHz;
         if(std::isfinite(requestedHz))f=std::clamp(requestedHz,0.,maximumFrequencyHz());
@@ -367,7 +388,7 @@ public:
     static constexpr int kMaximumIdleEvents=4096;
     // Restore a state captured with getState() (same rate and profile): the
     // idle snapshot ring and the wake replay use it. Never allocates.
-    void restoreState(const State& captured) noexcept { state=captured;endNodesValid=false;diagnostics.eventCount=0; }
+    void restoreState(const State& captured) noexcept { state=captured;endNodesValid=false;branchEventCacheValid=false;diagnostics.eventCount=0; }
     // Compact physical state for the idle snapshot ring: after advanceIdle()
     // nothing is pending in the residual buffer, so it is not stored.
     struct IdleState {
@@ -387,7 +408,7 @@ public:
         state.heldFrequencyHz=s.heldFrequencyHz;state.heldThresholdVolts=s.heldThresholdVolts;
         state.elapsedSeconds=s.elapsedSeconds;state.resetCount=s.resetCount;
         state.sawEnabled=s.sawEnabled;state.pulseEnabled=s.pulseEnabled;
-        state.residual={};endNodesValid=false;diagnostics.eventCount=0;
+        state.residual={};endNodesValid=false;branchEventCacheValid=false;diagnostics.eventCount=0;
     }
     double maximumFrequencyHz() const noexcept { return std::min(.45*rate,.95/profile.resetSecondsNominal); }
     static constexpr double latencyInternalSamples() noexcept { return OscillatorResidualKernel::latencySamples; }
@@ -557,11 +578,15 @@ private:
         basis=other.basis;profile=other.profile;state=other.state;diagnostics=other.diagnostics;
         rate=other.rate;dt=other.dt;converterGain=other.converterGain;rampHalf=other.rampHalf;
         negligibleCornerScale=other.negligibleCornerScale;endNodes=other.endNodes;endNodesValid=other.endNodesValid;
+        cachedBranchSeconds=other.cachedBranchSeconds;cachedBranchEvent=other.cachedBranchEvent;
+        branchEventCacheValid=other.branchEventCacheValid;
     }
     // Node values at the end of the last tick: the next tick's start when
     // nothing changed in between (recomputation would give the same bits).
     Nodes endNodes{};
     bool endNodesValid=false;
+    double cachedBranchSeconds=0.;
+    bool cachedBranchEvent=false,branchEventCacheValid=false;
     double negligibleCornerScale=0.;
     const OscillatorExponentialBasis* basis=nullptr;
     OscillatorNominalProfile profile{};

@@ -51,6 +51,14 @@ public:
     // returns the pedal itself, so a static pedal keeps its exact gain.
     double tick() noexcept
     {
+        // Equality is an exact fixed point, not an optical settling threshold.
+        // The old recurrence selects decayStep at equality and then snaps to
+        // targetLog; retain that assignment and its nonfinite fallback.
+        if (opticalLog == targetLog && std::isfinite(targetLog) && std::isfinite(decayStep))
+        {
+            opticalLog = targetLog;
+            return pedalTarget;
+        }
         opticalLog += (targetLog < opticalLog ? attackStep : decayStep) * (targetLog - opticalLog);
         if (std::abs(targetLog - opticalLog) <= 1.0e-12 * std::max(1.0, std::abs(targetLog)))
             opticalLog = targetLog;

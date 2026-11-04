@@ -1,0 +1,108 @@
+{
+  "group": "lfo",
+  "registration_commit": "706c673c54772eb45cb9fe41bd7dbf342792c64a",
+  "contract_sha256": "628a09f7fec2632c1d45f42bd01f08d4bb4f4bda339647fdc6e49abeb762e2de",
+  "source_sha256": {
+    "src/core/ModulationLfo.h": "f4b07caa12c5a5aa3f0a92cf86c239cfe4dc664f4dd0fbadf1575b54843ad0fe",
+    "src/core/Engine.cpp": "76e4f0b002105d659a65a30aff685c493d4ddc3688486b64e7d8124bc132bfa6"
+  },
+  "driver_sha256": {
+    "lfo": "7e1b363deba00e3b489b28e6c8db498ce9373d7fb411f2fd53ccd1b992a7e34a",
+    "lfo_engine": "4ae406f84c48dd25a5bc40c2717c5f7c524b4b62db96291cc502437a9eff55b0"
+  },
+  "compiler": "/usr/bin/c++",
+  "results": [
+    {
+      "name": "candidate-lfo",
+      "target": "lfo",
+      "exit_code": 0,
+      "checks": 138,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "candidate-lfo_engine",
+      "target": "lfo_engine",
+      "exit_code": 0,
+      "checks": 9,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "disabled_phase",
+      "target": "lfo",
+      "exit_code": 1,
+      "checks": 138,
+      "failures": 96,
+      "expected_assertions": [
+        "both LFO phases stay exact during disabled/readout/copy intervals"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "disabled_sample_hold_rng",
+      "target": "lfo",
+      "exit_code": 1,
+      "checks": 138,
+      "failures": 12,
+      "expected_assertions": [
+        "enabled waveform and random continuation stays bit-identical"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "disabled_smooth_random_rng",
+      "target": "lfo",
+      "exit_code": 1,
+      "checks": 138,
+      "failures": 12,
+      "expected_assertions": [
+        "random-shape transitions while disabled retain later enabled outputs"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "direct_depth_ownership",
+      "target": "lfo_engine",
+      "exit_code": 1,
+      "checks": 9,
+      "failures": 4,
+      "expected_assertions": [
+        "source Engine direct depth owns LFO readout"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "matrix_ownership",
+      "target": "lfo_engine",
+      "exit_code": 1,
+      "checks": 9,
+      "failures": 2,
+      "expected_assertions": [
+        "active matrix owns LFO readout even at zero direct depth"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "restored-lfo",
+      "target": "lfo",
+      "exit_code": 0,
+      "checks": 138,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "restored-lfo_engine",
+      "target": "lfo_engine",
+      "exit_code": 0,
+      "checks": 9,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    }
+  ],
+  "scope": "Fresh independent software continuation and actual-source mutations; whole-engine compatibility and timings are separate."
+}

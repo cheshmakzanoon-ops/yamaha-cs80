@@ -1,0 +1,34 @@
+{
+  "reviewed_production_head": "8a85faab1a125cc14425d9184f7022f6746e40a6",
+  "original_main": "db24a47170610f81236e8829ef5536af69dfc94d",
+  "supplemental_contract_published_sha": "2f18afc3f76c62be3e3682d113134598d3d1f8b6",
+  "original_tolerance_git_blob": "54e995c974dee6d869022a95042bb02a749b6e1c",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "flags": [
+    "-std=c++20",
+    "-O3",
+    "-DNDEBUG"
+  ],
+  "source_sha256": {
+    "src/core/Ig00156Filter.h": "e57664b64e2e7c21aa0afb43c16bb39610241e5297316c261eecfc27a5a5941f",
+    "src/core/Ig00156PhaseCorrection.h": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+    "src/reference/IG00156Network.h": "03d4eed095661c3f2ecabdd7d501d1626eb51abea2b60e12a990c87f939a9cf3",
+    "src/reference/IG00156PhaseCorrection.h": "b979b817866d5528439d30189b3af3e6a5d9b3a42be3dc992d353c1544f40768",
+    "tests/Ig00156NodalTests.cpp": "3a196bd03287137430d3546ff75946fb22127b3d7527bacebba490a44e31c795",
+    "tests/Ig00156PhaseCorrectionTests.cpp": "2577e5a79a8acf6b8b15f7130947d30e1374429a2e56866c7be86939c0c96d7e",
+    "tests/parity/tolerances-v2/ws1-voice.json": "d19de5bea8f7203e76674abdb271be678526688add4807105f9dcd2098d4177c",
+    "tests/parity/tolerances-v2/ig00156-176400.json": "4a500b799fcbe0525f2d3ba00c1eb205462e00c4e1f53b14aed53b54f51e1f1c"
+  },
+  "evidence_sha256": {
+    "README.md": "b7a1dd78781b802bf82784a4a99fee19a7af82c38dbb3d825e869da590b054e1",
+    "extended-176400-no-beta.log": "e49d42fdc6927171be55fe78ebe7e919eca6579ae89380265c79ba394ca772e8",
+    "extended-mutation.json": "343fd0e4753acd78532e2a112d5148285bdf241e3d842fc0f42affa89005ba1f",
+    "extended-phase.log": "a911733bc426a779b345f9c21f7a843aff662eb8e933822ed187769d2dcd6cc9",
+    "original-cache.log": "5bfc26e9ac8ea46f776dd1ffc725eb2708964f807e810a96a005ea0859139639",
+    "original-mutations.json": "c1582da6ce63836f4cccf25df5ffcb8cb8127b09ac0aedce1f5d0903eca3c2c5",
+    "original-no-beta.log.gz": "f993ca69bc24ac349e44f69aea7c9b17c240c857d7025d53e684e22d506b083b",
+    "original-no-input-derivative.log.gz": "bef27220533b08d1f08e82e27183582f4d5044a037608a0c093a7b72fd327223",
+    "original-nodal.log": "674427ed5c4627df283a7cb5930de6bc4c224749dc3b5f02b7b5b7ad892add9a",
+    "original-phase.log": "f096990aa046c7b48c73252ae7f2a7b22fa7c82698a4511367dab6a60307176e"
+  }
+}

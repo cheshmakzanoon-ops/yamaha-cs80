@@ -1,0 +1,11 @@
+--- a/src/core/ExpressionOptics.h
++++ b/src/core/ExpressionOptics.h
+@@ -54,7 +54,7 @@
+         // Equality is an exact fixed point, not an optical settling threshold.
+         // The old recurrence selects decayStep at equality and then snaps to
+         // targetLog; retain that assignment and its nonfinite fallback.
+-        if (opticalLog == targetLog && std::isfinite(targetLog) && std::isfinite(decayStep))
++        if (opticalLog == targetLog)
+         {
+             opticalLog = targetLog;
+             return pedalTarget;

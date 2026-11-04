@@ -1,0 +1,11 @@
+FAIL: valid native source list must configure:
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 (found version "3.12.14") found components: Interpreter 
+CMake Error at cmake/HostAutomation.cmake:38 (message):
+  JUCE VST3 wrapper source not found; sample offsets would be lost
+Call Stack (most recent call first):
+  CMakeLists.txt:7 (include)
+
+
+-- Configuring incomplete, errors occurred!
+
+Host wrapper platforms: stopped after 30 checks; contract failed

@@ -1,0 +1,12 @@
+[
+  "valgrind",
+  "--tool=callgrind",
+  "--instr-atstart=no",
+  "--collect-atstart=no",
+  "--cache-sim=yes",
+  "--branch-sim=yes",
+  "--callgrind-out-file=/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/idle_quiet.callgrind",
+  "/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle",
+  "idle_quiet",
+  "128"
+]

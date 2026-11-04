@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-01",
+  "status": "Prospective implementation/observation and evaluation-order clarification. No candidate numerical result is asserted.",
+  "inherits": {
+    "numeric_contract_commit": "c56726fd8ad12b78edf745b319a9ddc5a6696f2f",
+    "work_contract_commit": "156d82e9f3ee20089bb952ba853e0f0c779b903f",
+    "numeric_contract": "tests/cpu/exact-scalar-kernels.json",
+    "work_contract": "tests/cpu/phase-column-layout-work.json"
+  },
+  "unchanged_acceptance": "Every published zero-bit numerical requirement, original physical-model gate, work count, mutation rule and three-round factory measurement requirement remains unchanged. This document neither relaxes a tolerance nor changes the frozen oracle.",
+  "implementation": {
+    "kind": "Direct column storage through a compile-time coefficient address accessor.",
+    "scope": "Ig00156PhaseCorrection only. Preserve every coefficient expression, the existing i-outer/j-inner loops, row addition order, scalar Newton solve, output conversion and state/history operation. No explicit SIMD intrinsic or new floating-point arithmetic is introduced.",
+    "right": "The original 16 right-matrix coefficient values are stored at right[column][row].",
+    "inverse": "The original 9 inverse coefficient values are stored at inverse[column][row], with three explicit positive-zero padding cells inverse[column][3]. The scalar loops continue to visit only the original three live rows; padding participates in no arithmetic.",
+    "padding_lifetime": "Initialize the three padding cells on each real changed-key coefficient preparation. Same-key returns perform no preparation. Ordinary copying preserves the complete coefficient storage. Original reset and restore invalidation rules are unchanged.",
+    "fallback": "A build defining CS80_IG00156_SCALAR_COEFFICIENT_LAYOUT uses the original row address mapping and original 3-by-3 inverse extent. Apply the definition consistently to every translation unit in that build. It changes no parameter or audio mode and has no per-sample dispatch branch.",
+    "fp_applicability": "The proposed column route is intended to qualify every already registered rounding and denormal mode because only addresses change. That is a qualification obligation, not an assumed result. If a compiler/target cannot pass every required bit comparison, it must use the declared scalar layout for that target, or remain unqualified; do not silently exempt a floating-point mode.",
+    "source_identity_check": "Reversing the address-accessor substitutions and removing only the layout declarations and zero-padding call must recover the frozen Ig00156PhaseCorrection header byte for byte. This is a source audit, not numerical qualification."
+  },
+  "independent_layout_observer": {
+    "purpose": "Enforce the physical column representation already required by the published work contract, independently of a backend flag or renamed helper.",
+    "method": "Temporary test-only inspection compares the actual address returned for each logical coefficient with the registered physical address right[column][row] or inverse[column][row]. Compare addresses directly; do not subtract pointers from different array objects. Check raw positive-zero padding bits. These checks inspect actual production storage/accessor results and change no values.",
+    "when": "After every real coefficient preparation, and during the fixed/moving work fixtures. The independent frozen numeric comparator still checks every processed sample. The production build contains neither the inspector nor counters.",
+    "work_count_integration": "On a qualified column build, any logical coefficient read served from a row-layout address during process is a per-sample gather and violates the existing zero-gather requirement. Count the actual 25 live transform reads separately from set-time coefficient writes. A successful set must still write exactly 25 live coefficient coordinates and three padding cells; unchanged-key calls must write none.",
+    "fallback_assertions": "An explicitly compiled scalar-layout run asserts the opposite address mapping, no column preparation/padding work, and scalar dispatch. It must pass the same complete numeric comparator. It is reported as fallback and cannot satisfy a claimed column-backend work improvement."
+  },
+  "concrete_work_mutations": [
+    {
+      "name": "rebuild_columns_for_every_process",
+      "implementation": "In actual production process(), copy all live coefficients into temporary volatile column arrays and initialize their three padding cells, then consume those arrays in the original scalar expression/order. Volatile storage prevents the compiler from deleting the injected layout work.",
+      "expected": "The frozen numeric comparator remains exact on the registered work fixtures. The existing zero steady preparation/transfer requirement fails normally."
+    },
+    {
+      "name": "gather_row_coefficients_per_sample",
+      "implementation": "Keep the candidate's declared column backend enabled but change its actual coefficient accessor to row addresses for both preparation and processing. This preserves the original matrix values and equations while restoring row-layout gather work. The independent address observer must not trust the unchanged backend declaration.",
+      "expected": "The frozen numeric comparator remains exact on the registered work fixtures. The actual column-address and zero per-process row-gather assertions fail normally."
+    }
+  ],
+  "numeric_mutations": "Retain the published stale-column, one-ULP coefficient, transform-coordinate permutation, ordered-add reversal, input-history loss, Newton-stop/residual, copy/restore and FP-state mutations. Their actual-source changes must compile, then fail a named ordinary numeric assertion. Compile failures, crashes, timeouts and altered oracle code do not count.",
+  "evaluation_order_clarification": {
+    "isolated_numeric_qualification": "After this clarification is published, the unchanged frozen positive control, isolated candidate bitwise suites, source-work witness and actual-source mutations may run before final whole-engine profiling, during explicitly released local test windows. They cannot establish or imply a speedup.",
+    "whole_engine_decision": "Retain the prospective final integrated unchanged-core profile before choosing this candidate for a whole-engine performance trial or adoption. Record source hashes and measured cost attribution. Preserve at least three uncontended stock factory rounds before and after any integrated production change.",
+    "reason": "Permit independent correctness work to proceed while separately staged CPU changes complete their own serial timing. Numerical requirements and performance acceptance remain separate and unchanged."
+  }
+}

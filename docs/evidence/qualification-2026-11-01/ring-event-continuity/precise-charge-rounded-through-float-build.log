@@ -1,0 +1,27 @@
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-ring-mutations-9a4fkh3l/src", "-c", "/tmp/cs80-ring-mutations-9a4fkh3l/src/core/Engine.cpp", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/b239e353d1abb0cf1e2fd7202ad68ce3c72f27a4a0349336dc4c6bfb822435e8.o"]
+In file included from /tmp/cs80-ring-mutations-9a4fkh3l/src/core/ExactControlTransforms.h:5,
+                 from /tmp/cs80-ring-mutations-9a4fkh3l/src/core/Engine.h:3,
+                 from /tmp/cs80-ring-mutations-9a4fkh3l/src/core/Engine.cpp:1:
+/tmp/cs80-ring-mutations-9a4fkh3l/src/core/Dsp.h: In member function ‘void cs80::Adsr::noteOn(float, float, float, float, bool)’:
+/tmp/cs80-ring-mutations-9a4fkh3l/src/core/Dsp.h:450:22: warning: unused parameter ‘preservePreciseCharge’ [-Wunused-parameter]
+  450 |                 bool preservePreciseCharge = false) noexcept
+      |                 ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-ring-mutations-9a4fkh3l/src", "-c", "/tmp/cs80-ring-mutations-9a4fkh3l/src/core/FactoryPresets.cpp", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/c4bb9591b34a9369888c3ad79337d5dc130facb47b27106618720ea05c96a246.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-ring-mutations-9a4fkh3l/src", "-c", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/RingEventContinuityTests.cpp", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/c5cb679f8bbf9c5b8000bb4b17140d1ef29a174d8071a8aab2c9d6ae32394942.o"]
+In file included from /tmp/cs80-ring-mutations-9a4fkh3l/src/core/ExactControlTransforms.h:5,
+                 from /tmp/cs80-ring-mutations-9a4fkh3l/src/core/Engine.h:3,
+                 from /tmp/cs80-ring-mutations-9a4fkh3l/tests/RingEventProbe.h:4,
+                 from /tmp/cs80-ring-mutations-9a4fkh3l/tests/RingEventContinuityTests.cpp:3:
+/tmp/cs80-ring-mutations-9a4fkh3l/src/core/Dsp.h: In member function ‘void cs80::Adsr::noteOn(float, float, float, float, bool)’:
+/tmp/cs80-ring-mutations-9a4fkh3l/src/core/Dsp.h:450:22: warning: unused parameter ‘preservePreciseCharge’ [-Wunused-parameter]
+  450 |                 bool preservePreciseCharge = false) noexcept
+      |                 ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+EXIT 0
+COMMAND ["c++", "/tmp/cs80-ring-mutations-9a4fkh3l/b239e353d1abb0cf1e2fd7202ad68ce3c72f27a4a0349336dc4c6bfb822435e8.o", "/tmp/cs80-ring-mutations-9a4fkh3l/c4bb9591b34a9369888c3ad79337d5dc130facb47b27106618720ea05c96a246.o", "/tmp/cs80-ring-mutations-9a4fkh3l/c5cb679f8bbf9c5b8000bb4b17140d1ef29a174d8071a8aab2c9d6ae32394942.o", "-o", "/tmp/cs80-ring-mutations-9a4fkh3l/precise-charge-rounded-through-float-gate"]
+
+EXIT 0

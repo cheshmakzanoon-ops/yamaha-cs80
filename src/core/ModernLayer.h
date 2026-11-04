@@ -139,6 +139,7 @@ public:
     }
 
     bool isActive() const noexcept { return active; }
+    bool hasPanDestinations() const noexcept { return panDestinations; }
 
     // Once per internal sample, before the voices: advance shared envelopes and evaluate
     // the global destinations. Per-voice sources come from the newest voice of the
@@ -230,12 +231,14 @@ public:
     }
 
     // Once per internal sample for each active voice, before its ranks render.
-    void processVoice(int voiceIndex, const VoiceInputs& in) noexcept
+    // Extra closed-tail updates advance modulation without changing the original
+    // note-latching or global-source publication schedule.
+    void processVoice(int voiceIndex, const VoiceInputs& in, bool scheduled = true) noexcept
     {
         if (! active || voiceIndex < 0 || voiceIndex >= kVoices)
             return;
         auto& voice = voices[(std::size_t) voiceIndex];
-        if (in.age != voice.age)
+        if (scheduled && in.age != voice.age)
         {
             // New note on this voice: restart poly envelopes and latch per-note values.
             voice.age = in.age;
@@ -250,7 +253,8 @@ public:
             if (! anyGateLast)
                 monoTriggerPending = true;
         }
-        anyGateNow = anyGateNow || in.gate;
+        if (scheduled)
+            anyGateNow = anyGateNow || in.gate;
 
         for (int m = 0; m < kMsegCount; ++m)
             if (msegUsed[(std::size_t) m] && config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
@@ -269,7 +273,7 @@ public:
                 values[msegSource(m)] = msegOutput(m, voice.runners[(std::size_t) m].getValue());
         values[ModSource::filterEnvelope] = in.filterEnvelope[0] / kEnvelopeOctaves;
         values[ModSource::ampEnvelope] = in.ampEnvelope[0];
-        if (in.age >= newestThisSample)
+        if (scheduled && in.age >= newestThisSample)
         {
             newestThisSample = in.age;
             newestCandidate = values;
@@ -418,6 +422,7 @@ private:
         liveCount = 0;
         msegUsed = {};
         globalDestinations = false;
+        panDestinations = false;
         if (controls.enabled)
             for (int s = 0; s < kModSlots; ++s)
             {
@@ -426,6 +431,8 @@ private:
                     || controls.amount[(std::size_t) s] == 0.0f)
                     continue;
                 live[(std::size_t) liveCount++] = s;
+                if (slot.destination == ModDestination::pan)
+                    panDestinations = true;
                 for (auto source : { slot.source, slot.via })
                     if (source >= ModSource::mseg1 && source <= ModSource::mseg3)
                         msegUsed[(std::size_t) ((int) source - (int) ModSource::mseg1)] = true;
@@ -453,6 +460,7 @@ private:
     double sampleRate = 96000.0;
     bool active = false;
     bool globalDestinations = false;
+    bool panDestinations = false;
     std::array<int, kModSlots> live {};
     int liveCount = 0;
     std::array<bool, kMsegCount> msegUsed {};

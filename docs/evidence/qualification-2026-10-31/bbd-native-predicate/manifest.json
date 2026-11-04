@@ -1,0 +1,32 @@
+{
+  "run_id": 41256875634,
+  "job_id": 124701801203,
+  "artifact_id": 13063624187,
+  "artifact_zip_sha256": "7277e8ffaf5ebb5b2fc49c68426e43adcfcefc1262efd7d057229146388dfa88",
+  "audio_commit": "1f842b9a18c117a31c09e7d4dae1aaa26c8dce4e",
+  "pin_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "files": {
+    "qualification.json": "d9cf866ec4ae7c36f4657fd1174a2b1dddfc75bc9d286604e7efec20e962b60b",
+    "compiler-version.log": "be86474d6eb1d122342315ec6003b7d01adf6ec71ca8a354b1474661d75f7f8b",
+    "probe-run.log": "e6e1cbebb9dfeda4f9e36491f2fcb758f81404a8521bb7baa4c371ef67aeca38",
+    "probe-assembly.s": "4d00a095e85ae479f7ed22e411e350b2d0874e3f4300e8e9bdd225f2b44a9a1d",
+    "probe-llvm.ll": "230f5a645c3ac90d7db2cc2d37643bbadde0ae55ac066dd5cfb97f8ea4652bb6",
+    "original-gate-run.log": "5f71460ca68a281ad857ebba2be2e5712724dcc3f20cb45cec2ec89a1cdf949c",
+    "candidate-gate-run.log": "30ea9483d5d155c92322fb9c7aa8cee973845dc60da3658e9036d104f4572d9a",
+    "mutation-gate-run.log": "be22475a3f12b430d604b6b407b992614d556e07aafc4a64cb2c2527506ae534",
+    "candidate.patch": "d694e64008862444af3b50ad8e7bc34016bb7a04da7444194ebba33f939072ae",
+    "floating-comparison-mutation.patch": "558b75b7b74e5ddba47a538c83778daa91d1b5316569e07caca37a75f9e978d4",
+    "contract.json": "78ed7435d329e12bc6910dd6a28fd6dd1fc489086756802ce9949f27dcc58dc7",
+    "BbdHistoryPredicateProbe.cpp": "8ea4e9642759d7c33457a82a34ae98d4ac419194a1ee8d1be7751a16717d8df5"
+  },
+  "strict_compatibility": {
+    "command": "CS80_COMPAT_CACHE=/tmp/cs80-compat scripts/check-compat-gates.sh --strict-v2",
+    "head": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+    "exit_code": 0,
+    "legacy_default": "byte-identical",
+    "legacy_tails": "byte-identical",
+    "v1_circuit_numerics": "byte-identical",
+    "v2_circuit_engine_audio": "byte-identical",
+    "log_sha256": "d6e15f76dd534397022f7c7169284ca517d5ef0c68a466f6c6b49b584ef382f3"
+  }
+}

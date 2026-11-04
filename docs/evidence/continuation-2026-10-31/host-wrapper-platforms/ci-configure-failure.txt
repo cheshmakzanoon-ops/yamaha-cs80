@@ -1,0 +1,25 @@
+CI job: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41235843552/job/124639336716
+Commit: 6458c5fc0e5b16d1a0cb04f6ecf43769b27e4cbc
+Fetched with the connected GitHub job-log tool.
+
+2026-10-31T19:48:08.2180810Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-10-31T19:48:08.2184490Z -- Found Threads: TRUE
+2026-10-31T19:48:40.2297270Z -- Configuring juceaide
+2026-10-31T19:48:41.4134750Z -- Building juceaide
+2026-10-31T19:49:16.4690980Z -- Exporting juceaide
+2026-10-31T19:49:16.4832850Z -- Testing juceaide
+2026-10-31T19:49:16.6130680Z -- Finished setting up juceaide
+2026-10-31T19:49:16.9747780Z CMake Error at cmake/HostAutomation.cmake:38 (message):
+2026-10-31T19:49:16.9748600Z -- Found Python3: /opt/homebrew/Frameworks/Python.framework/Versions/3.15/bin/python3.15 (found version "3.15.2") found components: Interpreter
+2026-10-31T19:49:16.9749960Z   JUCE VST3 wrapper source not found; sample offsets would be lost
+2026-10-31T19:49:16.9750670Z Call Stack (most recent call first):
+2026-10-31T19:49:16.9751560Z   CMakeLists.txt:468 (include)
+2026-10-31T19:49:16.9751950Z 
+2026-10-31T19:49:16.9752050Z 
+2026-10-31T19:49:16.9756030Z -- Configuring incomplete, errors occurred!
+2026-10-31T19:49:16.9903140Z ##[error]Process completed with exit code 1.
+2026-10-31T19:49:17.0142320Z ##[group]Run echo '--- installed component ---'
+2026-10-31T19:49:17.0143430Z [36;1mecho '--- installed component ---'[0m
+2026-10-31T19:49:17.0144500Z [36;1mls -la "$HOME/Library/Audio/Plug-Ins/Components" || true[0m
+2026-10-31T19:49:17.0145730Z [36;1mcodesign -dv "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component" || true[0m
+

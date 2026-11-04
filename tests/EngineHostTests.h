@@ -2,6 +2,7 @@
 // ws2-engine host contracts: oversampling quality, latency and state. Invoked by
 // the UI self-test after JUCE initialization; each fixture owns its processor.
 
+#include "HostParameterState.h"
 #include "plugin/PluginProcessor.h"
 
 #include <array>
@@ -85,14 +86,14 @@ void testOversamplingHost(Check&& check)
         check(host.getParamValue(P_oversampling) == 2.0f, "session state restores the quality mode");
         host.loadFactoryPreset(5);
         check(host.getParamValue(P_oversampling) == 2.0f, "factory preset recall keeps the quality mode");
-        auto userState = host.getAPVTS().copyState();
+        auto userState = cs80::tests::copyHostParameterState(host);
         userState.getChildWithProperty("id", Cs80AudioProcessor::parameterId(P_oversampling))
             .setProperty("value", 0.0f, nullptr);
         juce::TemporaryFile preset(".cs80xml");
         check(userState.createXml()->writeTo(preset.getFile()), "quality temporary user preset written");
         host.loadUserPreset(preset.getFile());
         check(host.getParamValue(P_oversampling) == 2.0f, "user preset recall keeps the live quality mode");
-        auto old = host.getAPVTS().copyState();
+        auto old = cs80::tests::copyHostParameterState(host);
         old.removeChild(old.getChildWithProperty("id", Cs80AudioProcessor::parameterId(P_oversampling)), nullptr);
         const auto text = old.createXml()->toString();
         host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
@@ -151,7 +152,7 @@ void testEngineDefaultHost(Check&& check)
         for (const char* stored : { "missing", "garbage", "0", "1" })
         {
             Cs80AudioProcessor host;
-            auto state = host.getAPVTS().copyState();
+            auto state = cs80::tests::copyHostParameterState(host);
             if (schema > 0) state.setProperty(Cs80AudioProcessor::stateSchemaKey, schema, nullptr);
             auto child = state.getChildWithProperty("id", "source_performance");
             if (juce::String(stored) == "missing") state.removeChild(child, nullptr);
@@ -265,7 +266,7 @@ void testParameterGroupsHost(Check&& check)
                 }
     check(named, "global subgroups are contiguous ParamDef.group runs");
 
-    const auto state = host.getAPVTS().copyState();
+    const auto state = cs80::tests::copyHostParameterState(host);
     bool flatState = true;
     for (const auto& child : state)
         flatState = flatState && child.hasType("PARAM");

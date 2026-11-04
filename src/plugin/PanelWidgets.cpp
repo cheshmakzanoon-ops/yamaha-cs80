@@ -72,6 +72,7 @@ ui::LedButton& PanelSection::addLed(int parameter, const juce::String& label, fl
 {
     auto button = std::make_unique<ui::LedButton>(label);
     auto* raw = button.get();
+    raw->bindParameterContext(processor, Cs80AudioProcessor::parameterId(parameter), parameter);
     addAndMakeVisible(*raw);
     buttonAttachments.push_back(
         std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(

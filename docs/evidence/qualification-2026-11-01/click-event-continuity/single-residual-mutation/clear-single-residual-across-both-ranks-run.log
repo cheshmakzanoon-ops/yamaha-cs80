@@ -1,0 +1,23 @@
+COMMAND ["/tmp/cs80-click-mutations-gqwrl113/clear-single-residual-across-both-ranks-gate", "/tmp/cs80-click-mutations-gqwrl113/tests/parity/tolerances-v2/click-residual-continuity.json", "/tmp/cs80-click-mutations-gqwrl113/tests/parity/tolerances-v2/cold-idle-timing.json", "tail"]
+  Bass rank I WSC residual survives zero-time sounding-tail retrigger: WSC 1, nodal 0, EG 0, VCA 0, phase 0
+CLICK-CONTINUITY FAIL: Bass rank I WSC residual survives zero-time sounding-tail retrigger
+  Bass rank I WSC residual survives zero-time sounding-tail retrigger: WSC 1, nodal 0, EG 0, VCA 0, phase 0
+CLICK-CONTINUITY FAIL: Bass rank I WSC residual survives zero-time sounding-tail retrigger
+  Bass rank II WSC residual survives zero-time sounding-tail retrigger: WSC 1, nodal 0, EG 0, VCA 0, phase 0
+CLICK-CONTINUITY FAIL: Bass rank II WSC residual survives zero-time sounding-tail retrigger
+  Bass rank I WSC residual survives zero-time sounding-tail retrigger: WSC 1, nodal 0, EG 0, VCA 0, phase 0
+CLICK-CONTINUITY FAIL: Bass rank I WSC residual survives zero-time sounding-tail retrigger
+  Bass rank I WSC residual survives zero-time sounding-tail retrigger: WSC 1, nodal 0, EG 0, VCA 0, phase 0
+CLICK-CONTINUITY FAIL: Bass rank I WSC residual survives zero-time sounding-tail retrigger
+  Bass rank II WSC residual survives zero-time sounding-tail retrigger: WSC 1, nodal 0, EG 0, VCA 0, phase 0
+CLICK-CONTINUITY FAIL: Bass rank II WSC residual survives zero-time sounding-tail retrigger
+Bass active-tail zero-time gate: rate=44100 policy=source, populated WSC residual retained
+Bass active-tail zero-time gate: rate=48000 policy=source, populated WSC residual retained
+Bass active-tail zero-time gate: rate=96000 policy=source, populated WSC residual retained
+Bass active-tail zero-time gate: rate=44100 policy=pure, populated WSC residual retained
+Bass active-tail zero-time gate: rate=48000 policy=pure, populated WSC residual retained
+Bass active-tail zero-time gate: rate=96000 policy=pure, populated WSC residual retained
+Click event continuation: 224 checks, 6 failures
+
+EXIT 1
+SECONDS 0.23757322299934458

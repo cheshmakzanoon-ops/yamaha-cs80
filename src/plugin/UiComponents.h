@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Params.h"
+#include "ParameterContext.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_extra/juce_gui_extra.h>
@@ -234,6 +235,14 @@ public:
     std::function<void()> onContextMenu;
     std::function<void()> onHelp;   // F1 on the focused control
     std::function<juce::String()> tooltipText;
+    void bindParameterContext(Cs80AudioProcessor& processor, const juce::String& id, int displayIndex)
+    {
+        context = std::make_shared<ParameterContext>(processor, *this, id, displayIndex);
+        onContextMenu = [this] { context->showContextMenu(); };
+        onTypeValue = [this] { context->showValueEntry(); };
+        onHelp = [this] { context->showHelp(); };
+    }
+    ParameterContext* getParameterContext() const noexcept { return context.get(); }
     juce::String getTooltip() override { return tooltipText ? tooltipText() : juce::Slider::getTooltip(); }
     void mouseDown(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
@@ -296,6 +305,7 @@ private:
     std::unique_ptr<juce::Component> dragBubble;
     juce::Point<float> lastPointer, virtualPointer;   // [ws8-studio] Shift-fine drag
     bool swallowPointer = false;                      // a click that opened a menu or an editor is not a drag
+    std::shared_ptr<ParameterContext> context;
 };
 
 // Parameter-bound rotary or hardware linear slider with a unit-aware readout.
@@ -396,7 +406,7 @@ juce::String controlHelpText(int parameterIndex);
 
 // A parameter-backed illuminated switch. Used for waveforms, filters,
 // effects, and performance modes.
-class LedButton final : public juce::Button
+class LedButton final : public ContextButton
 {
 public:
     explicit LedButton(const juce::String& text, bool momentary = false);

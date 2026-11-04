@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "evidence_kind": "numerical",
+  "description": "Pre-registered CPU-cache acceptance. Existing physical/alias/solver gates remain unchanged; these check that cached scheduling has the same continuation as recomputing from the physical state, and that the nonlinear Newton cache still solves the declared nodal equations.",
+  "oscillator": {
+    "maximum_pin_difference_volts": 2e-06,
+    "maximum_event_time_difference_seconds": 1e-09,
+    "maximum_searches_per_sample_at_261_6_hz": 0.25,
+    "fixture": "88200, 96000, 192000 and 384000 Hz internal; nominal and 1 ms coupling RC; compare 8192 samples with an otherwise identical oscillator restored from its complete physical/residual state each sample. Include stopped/running steps, frequency changes, pulse threshold changes, waveform gates, idle advance and full/idle-state restoration. The uncached schedule is a continuation oracle, not independent hardware evidence. Existing independent event timing, pin anchors and complex-spectrum gates still apply. Efficiency fixture: 96000 Hz internal, 261.6 Hz, nominal RC, 8192 steady samples after warm-up.",
+    "maximum_node_evaluations_per_sample_at_261_6_hz": 0.25,
+    "affine_continuation_fixture": "Compare the proposed segment-affine continuation with the full branch classifier frozen from e4a4ee3dd9ff61f8520993442e0974be119605cd, using a test-only generated oscillator variant that shares state evolution/events but always calls the frozen full classifier after each sample. Evaluate 8192 samples at 88200, 96000, 192000 and 384000 Hz, nominal and 1 ms RC, nominal and shifted/scaled profile, stationary and sample-varying frequency/threshold, stopped/running transitions, gates, idle and snapshot operations. Pin and event limits above stay unchanged. Efficiency fixture uses at most 0.25 full node classifications per sample at 96000 Hz / 261.6 Hz after warm-up; no waveform/parameter quantization is allowed.",
+    "near_origin_branch_fixture": "Adversarial positive branch crossings at 1e-14, 2e-14, 4e-14 and 1e-13 seconds after the sample origin, constructed from the unchanged analytic first- and second-coupling equations at 96000/192000 Hz and 261.6/8372/16744 Hz. Cover the comparator, all three fold boundaries and all eight nonzero shaper knees. Raw pins/triangle must match the declared continuous fold/PWL/comparator law at sample end under the existing 2e-6 V limit; crossings outside the classifier voltage-sidedness interval must appear in the diagnostic event schedule within the existing 1 ns limit. A positive root may be omitted only if the right-sided classifier already represents its post-crossing branch. This gate targets the interaction between a 3e-14-second scheduler exclusion and a 2e-11-voltage sidedness interval; it is not hardware evidence.",
+    "maximum_structural_searches_per_sample_with_moving_threshold": 0.25,
+    "comparator_partition_fixture": "The combined event scheduler is frozen from 79dfade9925c2795b73fe27ceb580a3d8b8ab36d before partitioning comparator events from the unchanged coupling/fold/shaper trajectory. Compare against that scheduler and the frozen full node classifier under all existing continuation and near-origin gates; add 8192 samples after4096 warm-up at96000Hz/261.6Hz with a .7V*sin(sample*.0039) pulse threshold changing every sample. Existing2e-6V and1ns limits apply to raw/rendered pins and event timing/order. At most.25 structural searches/sample are allowed in that moving-threshold fixture; all threshold samples remain exact and no modulation is frozen or decimated."
+  },
+  "filter": {
+    "maximum_scalar_residual": 1e-07,
+    "maximum_reference_output_difference": 2e-06,
+    "fixture": "Existing Ig00156NodalTests truth-model equivalence, nonlinear RMS, stability and coupling gates are unchanged. Cached Jacobian must be invalidated for changed coefficients; candidate Newton steps are accepted only after checking the same 1e-7 scalar residual. No cached nonlinear derivative is assumed independent of the signal."
+  }
+}

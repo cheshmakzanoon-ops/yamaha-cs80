@@ -118,6 +118,10 @@ public:
     void snap(double target) noexcept { current = target; }
     double advance(double target, double k) noexcept
     {
+        // Exact fixed point of the existing finite recurrence. Assign the target
+        // as its snap step does, so changing the sign of zero is retained too.
+        if (current == target && std::isfinite(target) && std::isfinite(k))
+            return current = target;
         current += k * (target - current);
         if (std::abs(target - current) <= 1.0e-9 * std::max(1.0, std::abs(target)))
             current = target;

@@ -1,0 +1,81 @@
+{
+  "schema_version": 2,
+  "profile_id": "smoothing-reuse-settled-reference-v2",
+  "registered": "2026-10-31",
+  "evidence_kind": "fixture isolation and deterministic model-state comparisons; not hardware measurements",
+  "purpose": "Correct the existing reused-circuit touch-snap fixture so both compared notes start from independently evolved, settled filter-envelope charge. Preserve every original smoothing assertion and all original numeric limits.",
+  "pre_evaluation_status": "Prepared before evaluating the modified fixture. Publish this contract before implementation or evaluation.",
+  "original_gate": {
+    "source": "tests/SmoothingTests.cpp:testStaticAndSnap",
+    "label": "reused circuit starts at its own zero touch",
+    "full_suite_check_count": 84,
+    "required_full_suite_check_count_after": 84,
+    "active_voice_count_exact": 1,
+    "pressed_to_fresh_ratio_strict_min": 1.5,
+    "fresh_reference_cutoff_relative_error_max": 0.001,
+    "comparators": "activeVoices()==1 && pressed > 1.5f*fresh && abs(fresh-reference.lpfHz) <= 1.0e-3f*fresh",
+    "preservation": "Keep all 84 original check calls and their thresholds. Keep the existing eight-note schedule, pressure=1 excitation, 512-frame pressure exposure, release loop, 100*512-frame follower settling, one-host-frame fresh-note measurement, all other smoothing fixtures, and the original final assertion text. Add boundary predicates to that same assertion; do not remove any conjunct, change a gain/envelope/time setting, reset physical state or insert a fade."
+  },
+  "source_laws": [
+    "docs/COLD_FILTER_ENVELOPE.md and the existing completion-dsp.json gate: circuit-engine assignment preserves capacitor charge; untriggered Idle independently relaxes toward selected IL through the existing release law. Source: M41/IC12 and service-guide p33, with declared model coordinates.",
+    "src/core/Dsp.h: the existing physical-unit PANEL coordinate maps IL to -3*clamp(IL,0,1); this is a declared three-octave interface scale, not a measured hardware voltage. The fixture has no electrical programmer positions.",
+    "src/core/TouchCircuit.h and docs/workstreams/ws3-keyboard.md: TWS17 aftertouch a is a 100kOhm/1uF follower (100ms). With zero new pressure its nonnegative residual can only decay; a never-pressed reference remains exactly zero.",
+    "src/core/Engine.cpp: a new assignment increments voice age and snaps per-voice pressure/bend/timbre smoothing to the new note controls. End-of-sample VoiceInfo.pressure is the restored control target, so observe TWS a for sensitivity to the actual smoothed drive."
+  ],
+  "fixture_correction": {
+    "reference_construction": "Construct a separate Engine, prepare at 48kHz, apply the same unannotated physical-unit ControlFrame, and render 100 blocks of 512 silent host frames before its first note. Do not send it any pressure or prior note, and do not copy production envelope state from the reused engine.",
+    "why_100_blocks": "This is the unchanged existing 100*512-frame settling duration already applied to the reused engine. It is a fixed preregistered duration, not an adaptive wait selected after observing a match.",
+    "expected_initial_charge": "For each rank independently, compute -3.0f * clamp(frame.effectiveValues[chParam(rank,CP_fIl)],0.0f,1.0f). Do not read the expected target from Engine internals or obtain it by copying the reused state.",
+    "before_note_boundaries": "Immediately before each new note, both rank envelope-state proxies must equal their independently computed IL exactly; both engines must have zero active voices; the reference touchA must equal zero exactly. Save the reused touchA residual before assignment.",
+    "note_measurement": "Retain the existing noteOn(48,0.8) and render exactly one host frame on each engine. Apply the unchanged three original predicate limits to the reused/reference cutoffs.",
+    "after_note_boundaries": "Both engines have exactly one active voice. Reference touchA remains exactly zero. Reused touchA remains nonnegative and must not exceed its saved pre-assignment residual. Both filter-envelope state proxies remain equal between reused/reference ranks at this shared one-frame boundary.",
+    "boundary_thresholds": "Exact state equality, exact voice counts, and non-increase ordering only. These strengthen fixture validity without introducing or relaxing a numerical error allowance.",
+    "diagnostics": "Print initial charge, pre/post touchA, active counts, pressed/fresh/reference cutoff and original relative cutoff error. Preserve original failure label and final 84-check count."
+  },
+  "mutations": [
+    {
+      "name": "retain_old_pressure_smoother_on_reassignment",
+      "isolated_change": "Remove only the per-voice pressure snap when the age changes; retain the initial c.snapPending snap and all bend/timbre logic. Leave startVoice pressure=0 and restored target reporting unchanged.",
+      "expected_detection": "The stale controller bank drives a positive pressure for the first new-note sample, causing TWS touchA to increase from its settled residual. The unchanged test must fail its added non-increase boundary even if the 100ms follower initially attenuates the cutoff difference below 1e-3.",
+      "reason": "Post-render VoiceInfo.pressure alone cannot detect this defect because endSmoothedControls restores the zero control target."
+    },
+    {
+      "name": "remove_reference_settling_control",
+      "isolated_change": "Remove the new reference-only 100*512 silent-frame warm-up, with every comparison and limit unchanged.",
+      "expected_detection": "The reference still has zero startup charge rather than selected IL, so exact pre-note charge equality fails and the original cutoff mismatch returns."
+    }
+  ],
+  "baseline_observation": {
+    "pre_cold_audio_sha": "780658da1e83012ae4c7e39658d261d432b005e3",
+    "post_cold_audio_sha": "46a7a5a2ce077e95b9025de81da85b3480134176",
+    "current_full_suite": "84 checks, 1 failure in /tmp/cs80-cold-core-ctest.log",
+    "isolated_probe": "Unchanged testStaticAndSnap assertion with added diagnostic prints and only that original function selected in a temporary main: 4 checks, 1 failure on both cached pre-cold and current post-cold libraries. All emitted diagnostic values are identical.",
+    "active_count_after_reuse": 1,
+    "pressed_cutoff_hz": 6748.45654297,
+    "fresh_reused_cutoff_hz": 1275.5201416,
+    "cold_reference_cutoff_hz": 3604.0390625,
+    "cutoff_relative_difference": 1.82554471493,
+    "settled_reused_filter_envelope": -1.5,
+    "new_reused_filter_envelope": -1.4969111681,
+    "new_cold_reference_filter_envelope": 0.00161796237808,
+    "pre_reuse_touch_a": 6.98041375813e-08,
+    "new_reused_touch_a": 6.97895998769e-08,
+    "new_cold_reference_touch_a": 0.0,
+    "new_note_pressure_target": 0.0,
+    "interpretation": "The old comparator equates a warm IL-charged circuit with a zero-charge cold circuit. The discrepancy is present before the cold timing repair and follows the previously intentional filter-charge continuity change, not a new touch-smoothing regression."
+  },
+  "baseline_files": [
+    {
+      "path": "/tmp/cs80-smoothing-diagnostic.cpp",
+      "sha256": "73585a2268b731b137984d5f1b3457a3fe6734477596367231dd9206888d970c"
+    },
+    {
+      "path": "/tmp/cs80-smoothing-before.log",
+      "sha256": "374aac2c60f491c9c4589f6dd56ad06a66f62e9c8ff527d39a56de35d8807c3d"
+    },
+    {
+      "path": "/tmp/cs80-smoothing-after.log",
+      "sha256": "374aac2c60f491c9c4589f6dd56ad06a66f62e9c8ff527d39a56de35d8807c3d"
+    }
+  ]
+}

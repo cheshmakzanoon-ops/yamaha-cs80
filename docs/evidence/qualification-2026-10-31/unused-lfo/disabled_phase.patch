@@ -1,0 +1,10 @@
+--- a/src/core/ModulationLfo.h
++++ b/src/core/ModulationLfo.h
+@@ -85,6 +85,7 @@
+     // selected random-shape state still advance exactly as on an audible tick.
+     float tick(float rate, float sampleRate, int waveform, bool emitOutput = true) noexcept
+     {
++        if (! emitOutput) return 0.0f;
+         // Historical sine: exactly the Lfo::tick float phase law. Its rounding is biased at
+         // low rates (a 1 Hz sine at 96 kHz runs measurably fast), but it is pinned for
+         // compatibility, so only the sine keeps it.

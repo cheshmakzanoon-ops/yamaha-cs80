@@ -164,7 +164,7 @@ ControlFrame makeFrame(const Case& c, int selector) {
         p[chParam(rank, CP_pan)] = 0.0f;
         p[chParam(rank, CP_hpfOn)] = p[chParam(rank, CP_lpfOn)] = 1.0f;
     }
-    return frame;
+    return ControlFrame::programmer(frame.effectiveValues, frame.hardwareSources);
 }
 
 double quantile(const std::vector<double>& sorted, double q) {

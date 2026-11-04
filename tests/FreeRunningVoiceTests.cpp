@@ -98,7 +98,8 @@ GateResult runGate(double internalRate, const truth::RankControls& sounding, int
     rt.wsc.reset(0.25, sounding.frequency);
     for (int i = 0; i < activeSamples; ++i) activeTick(rt, sounding, sr);
     ref.reset(rt.wsc.getState(), asArray(rt.hpStage.getState()), asArray(rt.hpStage.getNodes()),
-              asArray(rt.lpStage.getState()), asArray(rt.lpStage.getNodes()));
+              asArray(rt.lpStage.getState()), asArray(rt.lpStage.getNodes()),
+              rt.hpStage.getInputHistory(), rt.lpStage.getInputHistory());
 
     int clock = 0, steps = 0;
     for (int i = 0; i < idleSamples; ++i)
@@ -119,8 +120,8 @@ GateResult runGate(double internalRate, const truth::RankControls& sounding, int
     // Production chain started from the truth's wake state.
     TestRank fromTruth(internalRate);
     fromTruth.wsc.restoreState(ref.oscillatorState());
-    fromTruth.hpStage.setState(asState(ref.hpStage().z), asState(ref.hpStage().v));
-    fromTruth.lpStage.setState(asState(ref.lpStage().z), asState(ref.lpStage().v));
+    fromTruth.hpStage.setState(asState(ref.hpStage().z), asState(ref.hpStage().v), ref.hpStage().inputs);
+    fromTruth.lpStage.setState(asState(ref.lpStage().z), asState(ref.lpStage().v), ref.lpStage().inputs);
     fromTruth.idleRefs = { sr, sr };
     const int window = static_cast<int>(std::lround(tol::kWakeResidualWindowSeconds * internalRate));
     double error = 0.0, power = 0.0;
@@ -349,11 +350,13 @@ void testEngine()
               "woken circuit's VCA attacks from zero after hard panic");
     }
 
-    // Sustain II termination resets the filter EG: the next wake starts at IL.
+    // SUSTAIN II retires amplitude tails. Circuit filter capacitors remain
+    // connected to released TR; Legacy retains its historical resets.
+    for (int mode = 0; mode < 3; ++mode)
     {
         Engine e;
         e.prepare(48000.0);
-        auto p = quiet(1.0f, 0.0f);
+        auto p = quiet(mode == 2 ? 1.0f : 0.0f, mode == 1 ? 1.0f : 0.0f);
         p[P_sustainMode] = 1.0f;
         p[chParam(0, CP_fIl)] = 0.8f;
         e.setParams(p);
@@ -361,9 +364,18 @@ void testEngine()
         render(e, 2400);
         for (int k = 0; k < 8; ++k) e.noteOff(48 + k);
         render(e, 240);
+        std::array<std::array<float, 2>, 8> before {};
+        for (int voice = 0; voice < 8; ++voice) for (int rank = 0; rank < 2; ++rank)
+            before[voice][rank] = e.getRankEnvelopeState(voice, rank).filter.value;
         e.noteOn(70, 0.8f); // terminates the sustained tails, takes voice 0
-        check(std::abs(e.getRankEnvelopeState(0, 0).filter.value - filterInitialOffset(0.8f)) < 1.0e-6f,
-              "Sustain II terminated circuit restarts its filter EG from IL");
+        for (int voice = 0; voice < 8; ++voice) for (int rank = 0; rank < 2; ++rank)
+        {
+            const float expected = mode != 0 ? before[voice][rank]
+                : voice == 0 ? filterInitialOffset(p[chParam(rank, CP_fIl)]) : 0.0f;
+            check(e.getRankEnvelopeState(voice, rank).filter.value == expected,
+                  mode != 0 ? "Sustain II preserves all circuit filter charges exactly"
+                            : "Legacy Sustain II retains reset and IL assignment exactly");
+        }
     }
 }
 } // namespace

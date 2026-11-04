@@ -1,0 +1,11 @@
+--- a/src/core/BbdChorus.h
++++ b/src/core/BbdChorus.h
+@@ -256,7 +256,7 @@
+         std::array<float, 2> wet {};
+         for (std::size_t c = 0; c < 2; ++c)
+         {
+-            float x = (float) (packets + feedthrough + noiseScale * (double) noise[c].nextBipolar());
++            float x = (float) (packets + feedthrough + noiseScale * (double) (on ? noise[c].nextBipolar() : 0.0f));
+             x -= chains[c].couplingHp.process(x);  // output coupling: high-pass = x - low-pass
+             x = chains[c].reconLp.process(x);
+             x -= chains[c].interstageHp.process(x);

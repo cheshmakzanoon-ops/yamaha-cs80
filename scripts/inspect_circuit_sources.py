@@ -40,6 +40,7 @@ SOURCES = {
     "kas04": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/04%20-%20KAS%20schematic.jpg",
     "kas05": "https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/05%20-%20KAS%20Circuit%20Board%20%26%20Wiring.jpg",
     "cs80adjust": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
+    "cs80adjust_filter": "https://www.therogoffs.com/cs80/CS80%20Adjustment%20Procedures%20and%20updates.PDF",
     "kasguide14": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p14.gif",
     "kasguide21": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p21.gif",
     "kasguide22": "https://dragonflyalley.com/synth/jurgenHaiblePages/CSSynth/jh_CSSynthServiceGuide_p22.gif",
@@ -206,6 +207,12 @@ def inspect_pdf(url, data, key):
             selected = [31, 32, 33] if key == "adjupdates_a" else [34, 35, 36]
             print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
                   "reason": "fixed original update pages; verify revision applicability"}), flush=True)
+        elif key == "cs80adjust_filter":
+            if count < 14:
+                raise ValueError("CS80 adjustment filter candidate pages absent")
+            selected = [12, 13, 14]
+            print("CS80_PDF_SELECTION " + json.dumps({"rendered_pages": selected,
+                  "reason": "bounded candidates around printed p11 filter adjustment; verify page labels visually"}), flush=True)
         elif key == "cs80adjust":
             if count < 30:
                 raise ValueError("CS80 adjustment fixed target page30 absent")
@@ -290,7 +297,7 @@ def main():
     args = parser.parse_args()
     url = SOURCES[args.page]
     data = download(url)
-    if args.page in {"icguide_152", "icguide_sub", "icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "adjupdates_a", "adjupdates_b"}:
+    if args.page in {"icguide_152", "icguide_sub", "icguide", "icguide_index", "icguide_offset", "icguide_156", "icguide_kas", "icguide_vco", "cs20m_q", "cs80adjust", "cs80adjust_filter", "adjupdates_a", "adjupdates_b"}:
         if not data.startswith(b"%PDF-"):
             raise ValueError("guidebook source is not a PDF")
         inspect_pdf(url, data, args.page)

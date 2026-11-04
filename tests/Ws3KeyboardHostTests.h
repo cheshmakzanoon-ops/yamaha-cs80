@@ -108,9 +108,15 @@ void testWs3KeyboardHost(Check&& check)
         process(host, midi);
         check(host.getEngine().activeVoices() == 8 && host.getExtensionEngine().activeVoices() == 8,
               "sixteen-voice mode plays sixteen held keys");
+        bool allLamps = host.getActiveVoiceCount() == 16 && host.getVoiceCapacity() == 16;
+        for (int i = 0; i < 16; ++i) allLamps &= host.isVoiceActive(i);
+        check(allLamps, "sixteen-voice meter publishes both instruments and every active slot");
         host.setParamValue(P_voiceMode, 0.0f);
         process(host, midi);
         check(host.getExtensionEngine().activeVoices() == 0, "leaving sixteen-voice mode stops the second instrument");
+        bool extensionDark = host.getVoiceCapacity() == 8;
+        for (int i = 8; i < 16; ++i) extensionDark &= !host.isVoiceActive(i);
+        check(extensionDark, "leaving sixteen-voice mode clears every extension meter lamp");
     }
     {
         // Ribbon CC from the host.

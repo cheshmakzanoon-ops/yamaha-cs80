@@ -1,0 +1,11 @@
+--- a/src/plugin/AuAutomationQueue.h
++++ b/src/plugin/AuAutomationQueue.h
+@@ -25,7 +25,7 @@
+     {
+         values.store((std::uint64_t(std::bit_cast<std::uint32_t>(normalized)) << 32)
+             | std::bit_cast<std::uint32_t>(readback));
+-        committedRevision.store(token);
++        committedRevision.store(revision.load());
+     }
+     void invalidate() noexcept { revision.fetch_add(1); }
+     float read(float current) const noexcept

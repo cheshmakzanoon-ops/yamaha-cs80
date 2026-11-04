@@ -1,0 +1,11 @@
+--- a/scripts/patch-juce-automation.py
++++ b/scripts/patch-juce-automation.py
+@@ -126,6 +126,8 @@
+         # queue bridge. Neither original source file is modified.
+         source = reviewed_source(original.with_suffix(".cpp"))
+     patched = patch_au(source) if original.name == "juce_audio_plugin_client_AU_1.mm" else patch_vst3(source)
++    if original.name == "juce_audio_plugin_client_VST3.mm":
++        patched = reviewed_source(original)
+     output.parent.mkdir(parents=True, exist_ok=True)
+     if not output.exists() or output.read_text(encoding="utf-8") != patched:
+         output.write_text(patched, encoding="utf-8", newline="\n")

@@ -1,0 +1,31 @@
+{
+  "source_sha": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "argv": [
+    "/workspace/scratch/a0e502bd4cd5/cs80-cpu-idle/build-before/cs80_source_factory_benchmark",
+    "--rate",
+    "48000",
+    "--block",
+    "256",
+    "--callbacks",
+    "1024",
+    "--source-commit",
+    "475063ca4b5640c1b17cb45eb89a23706ad18873",
+    "--out",
+    "/workspace/scratch/a0e502bd4cd5/cs80-evidence/fir-before/round-3"
+  ],
+  "start_utc": "2026-11-01T01:25:42.318766+00:00",
+  "host_loadavg_start": [
+    4.71875,
+    5.7734375,
+    7.49609375
+  ],
+  "coordinated_window": "Root confirmed no compiler, test, profiler processes; other agents read-only. Shared executor, not a dedicated machine.",
+  "end_utc": "2026-11-01T01:27:24.872532+00:00",
+  "wall_seconds": 102.54936822299715,
+  "exit_code": 0,
+  "host_loadavg_end": [
+    2.06005859375,
+    4.53955078125,
+    6.87451171875
+  ]
+}

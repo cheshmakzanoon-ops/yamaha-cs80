@@ -1,0 +1,93 @@
+{
+  "internal_manifest_entries_verified": 262,
+  "completed_rounds_verified": 27,
+  "csv_rows_verified": 1377,
+  "source_file_records_verified": 662,
+  "unique_source_blobs_verified": 108,
+  "all_original_reporter_summaries_match": true,
+  "all_builds_before_timing": true,
+  "all_rounds_serial": true,
+  "source_records": [
+    {
+      "label": "main-before",
+      "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "benchmark_blob": "b73298678acb6684654ed1b3771fb442352853c0",
+      "source_tree": "fbd3ca113df2d6a24c208eeef11fbeb8cf696ebf",
+      "source_files": 70,
+      "benchmark_sha256": "1bec0df93eeb15a0e18136d434f16ae9ca9f8dc79d8c4ae8b147d60cc20bd25f",
+      "executable_sha256_recorded_by_runner": "7125196f25e3f11eda7d3e0f2e300d175e5584a6cb53f41da9e55df8cda2ef97"
+    },
+    {
+      "label": "inherited-before",
+      "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "c180a622564e668cb036bb524870862b07589c19",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "16ea58bf5a7b3fcc9b3d00f58e3d1624fffec0e302e254ff6d8b9d3a187fa550"
+    },
+    {
+      "label": "lazy-filter-histories",
+      "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "4800e632c370861d29b301ca21cf630f5e637179",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "ed0083852733c24bb1c352e0fc432c2dbfef46b2dd42f682d35e2c8e913d4230"
+    },
+    {
+      "label": "idle-exact",
+      "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "a4cb2b6106e6e9448c84bb01a5f7327b5a24db00",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "4ba878fa6af997870393ec54b22f4bdd99a0301bd0340f92daec922ef94d40b5"
+    },
+    {
+      "label": "stationary-controls",
+      "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "b3b685a970929d8ac20ce7f68e2d36feab86a917",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "2de158914c5b8e3962539717c05e714b18facc8a7e672860fa8e5d2774268efe"
+    },
+    {
+      "label": "unused-lfo",
+      "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "30973dd45dee61aeb3bbfda9d43164d2a5b94176",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "cec92c0a2cea52f6ef4198961629bfcd7cf48c631d99f17781016ccab7ddd89c"
+    },
+    {
+      "label": "rank-idle-1500",
+      "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "52fdc236f97b80c6ad640aac27b7d08df33221ba",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "19372eb59f66c70f797c806706e97dcb4625ac9f589cb98a74fd4e277c4f72e7"
+    },
+    {
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "b6d3ba780d1c0de59d62a882bbaa871be602b0cc",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "810084521a181c56b32136bcae2d8f1a152b4c8b4e90139e3b4af7ccb5728215"
+    },
+    {
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94",
+      "source_tree": "a0222cdef3417bade64f3a8ec395b3e957427849",
+      "source_files": 74,
+      "benchmark_sha256": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+      "executable_sha256_recorded_by_runner": "fda896b533ee0d5165362148205ff85efd70d4a86bf68a02e9cdace738f177af"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "contract_sha": "abcf9ea8b5038c7308a3d0cd1806d738960518b3",
+  "results": [
+    {
+      "mutation": "redirect-to-different-file",
+      "exit_code": 1,
+      "rejected_at_check": 8,
+      "expected_failure": "the generated wrapper retains the native source name and language extension"
+    },
+    {
+      "mutation": "change-native-extension",
+      "exit_code": 1,
+      "rejected_at_check": 8,
+      "expected_failure": "the generated wrapper retains the native source name and language extension"
+    }
+  ]
+}

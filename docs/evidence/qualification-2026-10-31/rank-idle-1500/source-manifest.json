@@ -1,0 +1,35 @@
+{
+  "base_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+  "source_match": "Consistent complete source snapshot from the clean published lazy-history tree. Tests and acceptance files match both the study and the published tree.",
+  "candidate_idle_hz": 1500,
+  "baseline_idle_hz": 3000,
+  "implementation_delta": [
+    "src/experimental/ContinuousVoiceCircuit.h: kIdleStepHz and matching explanatory comments only"
+  ],
+  "candidate_header_sha256": "a3d75109dca83416078c01a7cfb9248e73d1460c6691310f5d575ac80b585a4b",
+  "acceptance": {
+    "tests/Ws3Tolerances.h": {
+      "sha256": "ea848cedad402173ddd808ab69b40f555a1e982eaa9894726bf4aaafa5e7db1b",
+      "last_commit": "a08c71d975677263e2e83996e7e9cdc5aa7af165"
+    },
+    "tests/parity/tolerances-v2/ws3-keyboard.json": {
+      "sha256": "88812719a9967ec9d2ce862ecdda498c6b9865efe724d3eb80f2bec1a260554e",
+      "last_commit": "a08c71d975677263e2e83996e7e9cdc5aa7af165"
+    },
+    "tests/parity/tolerances-v2/cold-idle-timing.json": {
+      "sha256": "ed8181c2c8cc9091a7e231ab1db2dc9aadf1807f8d6bf5e270f1fc95f3266b2e",
+      "last_commit": "d906b844cf98283273b7a37b9e3a01fe1195bcf4"
+    },
+    "tests/parity/tolerances-v2/completion-dsp.json": {
+      "sha256": "61f35ff4c1400b8a456fb834a6c5667f2d835868c98fec47590d7920f28a88cb",
+      "last_commit": "a03c39aa6bfd9629fdde93a5f6bc7f49d0342f81"
+    }
+  },
+  "drivers": {
+    "FreeRunningVoiceTests.cpp": "4056a77517534e9b36abf9e2d8cadb28c4076cec6a87ccad67ff21b05a80085a",
+    "ColdIdleTimingTests.cpp": "4acb0e2fc06263715826f4bac92f3b741176375727ca31fb4cd3dd1c8116f008",
+    "ColdFilterEnvelopeTests.cpp": "f48c68f32842e7a94ae2da8c1286038a952eae110f8932038f23cea66d47a0e6",
+    "NoteOffContinuityTests.cpp": "a9e3cf2fe248bb3370abfdebb0f67ccd6993ab5b707304bffc23468b1bc4ca0b"
+  },
+  "scope": "Genuine rank oscillator/filter idle-step decimation only. Global noise, touch, readout, PRA, BBD and output circuits remain at their original clocks. Intentional V2 sound-law change; no hardware measurement claim; timing and whole-engine compatibility are separate."
+}

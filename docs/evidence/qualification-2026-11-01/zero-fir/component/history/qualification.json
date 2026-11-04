@@ -1,0 +1,74 @@
+{
+  "registration_commit": "156d82e9f3ee20089bb952ba853e0f0c779b903f",
+  "candidate_header_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5",
+  "contract_sha256": "e03a258785d23ac6135cdf932034ed7b88fc744aeb5d9a0abb3f5118ff604997",
+  "driver_sha256": "de3bd0d16d7132670720d09c057dbf6fb3713e5b7d65b1d455bb70bd7f14e60e",
+  "compiler": "c++",
+  "outcomes": {
+    "candidate": {
+      "exit_code": 0,
+      "checks": 227117,
+      "failures": 0,
+      "expected_assertion": "",
+      "expected_assertion_observed": true,
+      "header_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5"
+    },
+    "treat_nonzero_as_silent": {
+      "exit_code": 1,
+      "checks": 227117,
+      "failures": 33506,
+      "expected_assertion": "full FIR chronological convolution including signed zeros",
+      "expected_assertion_observed": true,
+      "header_sha256": "cc059c3fbe8044207e24b7541ee9f9933f18bb0f529d03d8276491db47dcf88e"
+    },
+    "forget_history_decrement": {
+      "exit_code": 1,
+      "checks": 227117,
+      "failures": 84694,
+      "expected_assertion": "exact history count including subnormals",
+      "expected_assertion_observed": true,
+      "header_sha256": "cf95673641bce05b048eaf8628e4949abf8b575b52dcb59a916f60c06d5af2b3"
+    },
+    "forget_history_reset": {
+      "exit_code": 1,
+      "checks": 227117,
+      "failures": 108104,
+      "expected_assertion": "exact history count including subnormals",
+      "expected_assertion_observed": true,
+      "header_sha256": "12322fc3322ce144743377db908821f1c110a61836cb52fc8c1afc8d15c64226"
+    },
+    "premature_silence": {
+      "exit_code": 1,
+      "checks": 227117,
+      "failures": 1892,
+      "expected_assertion": "full FIR chronological convolution including signed zeros",
+      "expected_assertion_observed": true,
+      "header_sha256": "02805cb8ffa29ee7642bb5617ecffc1b6ef02c6f81f0765c994be4705894a3b5"
+    },
+    "discard_negative_zero_sum": {
+      "exit_code": 1,
+      "checks": 227117,
+      "failures": 3608,
+      "expected_assertion": "coefficient-aligned signed zeros retain full FIR output bits",
+      "expected_assertion_observed": true,
+      "header_sha256": "6665b8554d5f8bdf965a41aa0f0aac4d38c9e16616dc9709b8d44eaef63e76e1"
+    },
+    "classify_history_through_daz": {
+      "exit_code": 1,
+      "checks": 227117,
+      "failures": 44316,
+      "expected_assertion": "exact history count including subnormals",
+      "expected_assertion_observed": true,
+      "header_sha256": "e0690cb80e01308152354a8e7eb3b4f4c5105f2db3a5ef883271a1fdbd71ca67"
+    },
+    "restored_candidate": {
+      "exit_code": 0,
+      "checks": 227117,
+      "failures": 0,
+      "expected_assertion": "",
+      "expected_assertion_observed": true,
+      "header_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5"
+    }
+  },
+  "scope": "Exact component continuation and work classification; whole-engine compatibility and timings are separate."
+}

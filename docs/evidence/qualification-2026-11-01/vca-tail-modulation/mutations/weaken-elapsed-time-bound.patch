@@ -1,0 +1,11 @@
+--- tests/parity/tolerances-v2/vca-tail-modulation.json
++++ tests/parity/tolerances-v2/vca-tail-modulation.json
+@@ -8,7 +8,7 @@
+     "current_pan_max_abs": 0.0,
+     "current_rank_mix_bit_mismatches_max": 0,
+     "observer_internal_output_bit_mismatches_max": 0,
+-    "poly_elapsed_seconds_max_abs": 1e-12,
++    "poly_elapsed_seconds_max_abs": 1e-3,
+     "global_selection_bit_mismatches_max": 0,
+     "neutral_policy_pcm_bit_mismatches_max": 0,
+     "legacy_inactive_pan_max_abs": 0.0,

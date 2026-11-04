@@ -1,0 +1,20 @@
+COMMAND ["/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/probe"]
+mxcsr=00001f82 item=0 expected=1 production=1 candidate=1
+mxcsr=00001f82 item=1 expected=1 production=1 candidate=1
+mxcsr=00001f82 item=2 expected=0 production=0 candidate=0
+mxcsr=00001f82 item=3 expected=0 production=0 candidate=0
+mxcsr=00001fc0 item=0 expected=1 production=0 candidate=1
+mxcsr=00001fc0 item=1 expected=1 production=0 candidate=1
+mxcsr=00001fc0 item=2 expected=0 production=0 candidate=0
+mxcsr=00001fc0 item=3 expected=0 production=0 candidate=0
+mxcsr=00009f82 item=0 expected=1 production=1 candidate=1
+mxcsr=00009f82 item=1 expected=1 production=1 candidate=1
+mxcsr=00009f82 item=2 expected=0 production=0 candidate=0
+mxcsr=00009f82 item=3 expected=0 production=0 candidate=0
+mxcsr=00009fc0 item=0 expected=1 production=0 candidate=1
+mxcsr=00009fc0 item=1 expected=1 production=0 candidate=1
+mxcsr=00009fc0 item=2 expected=0 production=0 candidate=0
+mxcsr=00009fc0 item=3 expected=0 production=0 candidate=0
+Original production predicate failures=4; original MXCSR restored=1
+
+EXIT 1

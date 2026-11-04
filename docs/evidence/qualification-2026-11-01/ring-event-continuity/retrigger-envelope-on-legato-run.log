@@ -1,0 +1,88 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/retrigger-envelope-on-legato-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "ring"]
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+Ring event continuity: 2325 assertions, 72 failures
+RING-CONTINUITY FAIL: Source 44100/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/0 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 44100/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/1 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 44100/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 44100/2 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 44100/2 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 48000/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 48000/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 48000/0 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 48000/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 48000/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 48000/1 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 48000/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 48000/2 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 48000/2 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 96000/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 96000/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 96000/0 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 96000/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 96000/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 96000/1 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Source 96000/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Source 96000/2 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Source 96000/2 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 44100/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 44100/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 44100/0 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 44100/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 44100/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 44100/1 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 44100/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 44100/2 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 44100/2 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 48000/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 48000/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 48000/0 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 48000/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 48000/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 48000/1 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 48000/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 48000/2 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 48000/2 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 96000/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 96000/0 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 96000/0 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 96000/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 96000/1 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 96000/1 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Pure 96000/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Pure 96000/2 legato nontrigger selection double elapsed
+RING-CONTINUITY FAIL: Pure 96000/2 legato nontrigger selection attack origin
+RING-CONTINUITY FAIL: Legacy 44100/0 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 44100/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 44100/1 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 44100/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 44100/2 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 44100/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 48000/0 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 48000/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 48000/1 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 48000/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 48000/2 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 48000/2 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 96000/0 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 96000/0 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 96000/1 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 96000/1 legato nontrigger selection float elapsed
+RING-CONTINUITY FAIL: Legacy 96000/2 legato Legacy nontrigger phase retention
+RING-CONTINUITY FAIL: Legacy 96000/2 legato nontrigger selection float elapsed
+
+EXIT 1

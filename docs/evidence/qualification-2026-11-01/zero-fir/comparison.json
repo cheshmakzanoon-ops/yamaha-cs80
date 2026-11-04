@@ -1,0 +1,188 @@
+{
+  "method": "Minimum callback median per fixture; p99 and misses from the same selected round; shared host, not DAW qualification",
+  "conditions": "All six complete stock rounds at 48 kHz, 256 frames, 1,024 held callbacks. Shared managed executor; other agents paused heavy work, but unrelated background activity remained. Do not infer held speedup from this noisy local comparison.",
+  "before": {
+    "source_sha": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+    "rounds": 3,
+    "rows": 153,
+    "held_median_rtf_range": [
+      0.63245475,
+      0.9576759375
+    ],
+    "held_p99_rtf_range": [
+      1.0788645,
+      1.99751775
+    ],
+    "held_selected_round_budget_exceedances": 974,
+    "idle_median_rtf": 0.070246875,
+    "idle": {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "idle_quiet",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "rank_i_name": "String 1",
+      "rank_ii_name": "String 2",
+      "selected_round": "round-3",
+      "all_round_medians_rtf": {
+        "round-1": 0.0727340625,
+        "round-2": 0.1475398125,
+        "round-3": 0.070246875
+      },
+      "median_rtf": 0.070246875,
+      "p99_rtf": 0.217028625,
+      "budget_exceedances": 0,
+      "callbacks": 1024,
+      "nonfinite_count_all_rounds": 0
+    },
+    "moving_controls": {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "rank_i_name": "String 1",
+      "rank_ii_name": "String 2",
+      "selected_round": "round-3",
+      "all_round_medians_rtf": {
+        "round-1": 1.164864,
+        "round-2": 1.0304945625,
+        "round-3": 0.9760108125
+      },
+      "median_rtf": 0.9760108125,
+      "p99_rtf": 1.8057703125,
+      "budget_exceedances": 444,
+      "callbacks": 1024,
+      "nonfinite_count_all_rounds": 0
+    },
+    "legacy_held_median_rtf_range": [
+      0.2557018125,
+      0.30500175
+    ],
+    "legacy_idle_median_rtf": 0.021546375,
+    "nonfinite_all_rounds": 0
+  },
+  "after": {
+    "source_sha": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+    "rounds": 3,
+    "rows": 153,
+    "held_median_rtf_range": [
+      0.626982375,
+      0.908650875
+    ],
+    "held_p99_rtf_range": [
+      0.9819973125,
+      1.5810121875
+    ],
+    "held_selected_round_budget_exceedances": 745,
+    "idle_median_rtf": 0.0605754375,
+    "idle": {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "idle_quiet",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "rank_i_name": "String 1",
+      "rank_ii_name": "String 2",
+      "selected_round": "round-2",
+      "all_round_medians_rtf": {
+        "round-1": 0.113987625,
+        "round-2": 0.0605754375,
+        "round-3": 0.0625635
+      },
+      "median_rtf": 0.0605754375,
+      "p99_rtf": 0.12840375,
+      "budget_exceedances": 0,
+      "callbacks": 1024,
+      "nonfinite_count_all_rounds": 0
+    },
+    "moving_controls": {
+      "rate": "48000",
+      "block": "256",
+      "mode": "isolation",
+      "scenario": "moving_tabs_pressure_wah",
+      "initial_selector": "0",
+      "phase": "warmed_held",
+      "rank_i_name": "String 1",
+      "rank_ii_name": "String 2",
+      "selected_round": "round-1",
+      "all_round_medians_rtf": {
+        "round-1": 0.9118996875,
+        "round-2": 0.9853554375,
+        "round-3": 1.20361575
+      },
+      "median_rtf": 0.9118996875,
+      "p99_rtf": 2.1535018125,
+      "budget_exceedances": 274,
+      "callbacks": 1024,
+      "nonfinite_count_all_rounds": 0
+    },
+    "legacy_held_median_rtf_range": [
+      0.24763875,
+      0.3008743125
+    ],
+    "legacy_idle_median_rtf": 0.0126391875,
+    "nonfinite_all_rounds": 0
+  },
+  "idle_median_relative_reduction": 0.13767783264380085,
+  "deterministic_fields": [
+    "abs_at_or_above_one",
+    "audio_seconds",
+    "block",
+    "budget_us",
+    "callbacks",
+    "checksum",
+    "controller_events",
+    "final_active_voices",
+    "initial_selector",
+    "isolation",
+    "last_block_peak",
+    "max_active_voices",
+    "min_active_voices",
+    "mode",
+    "mpe_member_state_checks",
+    "nonfinite_count",
+    "peak",
+    "pedal_held_callbacks",
+    "phase",
+    "pra_target_max_ohms",
+    "pra_target_min_ohms",
+    "rank_i_name",
+    "rank_ii_name",
+    "rate",
+    "rms",
+    "scenario",
+    "selector_events",
+    "source_compilations",
+    "source_performance",
+    "tail_voices_complete"
+  ],
+  "deterministic_differences": [],
+  "all_deterministic_fields_equal_in_all_six_rounds": true,
+  "fixture_count": 51,
+  "row_count": 306,
+  "timing_fields_excluded_from_exact_comparison": [
+    "budget_exceedances",
+    "event_max_us",
+    "event_median_us",
+    "max_rtf",
+    "max_us",
+    "mean_rtf",
+    "median_rtf",
+    "median_us",
+    "min_us",
+    "p95_us",
+    "p99_rtf",
+    "p99_us",
+    "process_cpu_seconds_including_checks",
+    "thread_cpu_seconds_including_checks"
+  ],
+  "target_status": {
+    "held_rtf_0_15_to_0_20": "not_met",
+    "quiet_idle_rtf_0_02": "not_met"
+  },
+  "scope": "The deterministic CSV field check supplements the separate raw-byte compatibility gates; it does not substitute for them."
+}

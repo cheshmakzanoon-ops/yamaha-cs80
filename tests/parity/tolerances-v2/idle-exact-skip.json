@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "registered": "2026-10-31",
+  "baseline_commit": "8f42c7f43a28fb4c5ff759d47ab9592e34fe773d",
+  "scope": "Exact arithmetic skipping in the always-clocked BBD and PRA circuits; no change to physical model, integration rate, clocks, noise, or nonzero tails",
+  "evidence_kind": "software continuation equivalence, not hardware measurement",
+  "oracle": "Independent frozen BbdChorus and PraWahCircuit implementations from the baseline commit; only class/include names may change. Existing physical, spectral, source, legacy and V1 gates remain unchanged.",
+  "internal_rates_hz": [
+    88200,
+    96000,
+    176400,
+    192000,
+    352800,
+    384000
+  ],
+  "bbd": {
+    "maximum_output_bit_difference": 0,
+    "clock_contract": "The DO1/DO2 floating-point phase recurrences and integrated BBD clock still advance at every original sample while all tab combinations are exercised, including off-to-on after long silence.",
+    "noise_contract": "Both independent packet-noise streams and all reconstruction/coupling states continue on every original sample, including when both tabs are off.",
+    "fixtures": [
+      "cold zero input with both tabs off",
+      "long off-state then chorus/tremolo/both enabled",
+      "nonzero signal and noise input",
+      "nonzero tails after input becomes zero",
+      "tab/depth/speed changes around wake",
+      "zero-history packet shortcut entry and exit",
+      "reset and prepare at each rate"
+    ],
+    "zero_history_representation": "The zero-history cache classifies stored magnitude bits, including subnormals independently of the current denormal mode. On SSE/x64, train subnormal history with DAZ enabled and FTZ disabled, then disable DAZ before normal-signal wake; exact output equality still applies."
+  },
+  "pra": {
+    "maximum_node_bit_difference": 0,
+    "maximum_capacitor_state_bit_difference": 0,
+    "maximum_optical_readout_bit_difference": 0,
+    "zero_guard": "Only a provably exact zero capacitor graph with zero bounded input may bypass its zero nodal algebra. No epsilon or amplitude threshold is permitted. Signed zero output/state bits remain part of equality.",
+    "optical_contract": "Every original opticalLog recurrence remains clocked, including pedal/resistance movement during silence before a nonzero input wakes the graph.",
+    "fixtures": [
+      "cold zero and negative-zero input",
+      "nonfinite input through the existing numerical guard",
+      "moving pedal and resistance in silence",
+      "first nonzero sample after long silence",
+      "nonzero capacitor tail with zero input",
+      "default and boundary profiles",
+      "reset and prepare at each rate",
+      "Accepted profiles with sourceOhms and vr2Ohms independently and jointly set to positive or negative zero, leaving the other profile fields at their valid defaults; test both signed-zero inputs at every registered rate.",
+      "For those signed-zero boundary profiles, compare every node, all four capacitor voltages/currents and optical readouts through cold processing, reset/prepare, copy/assignment, and a subsequent nonzero wake."
+    ],
+    "signed_zero_boundary_environment": "The added profile fixtures use fixed round-to-nearest/ties-to-even; on supported x86 they run separately with FTZ/DAZ both disabled and both enabled. Existing fixtures, limits and denormal-mode transition checks remain unchanged."
+  },
+  "mutations_required": [
+    "freeze off-state BBD phases",
+    "suppress off-state BBD packet-noise advancement",
+    "force zero-packet bypass with nonzero history",
+    "bypass PRA for zero input despite charged capacitors",
+    "freeze PRA optical movement in the zero-state path",
+    "lose PRA signed-zero node semantics",
+    "classify stored BBD history through the current DAZ floating comparison",
+    "allow the PRA zero-state shortcut for an accepted negative-zero vr2Ohms profile",
+    "allow the PRA zero-state shortcut for an accepted negative-zero sourceOhms profile"
+  ],
+  "performance": "Root compares the unchanged source_factory_benchmark baseline and candidate with at least three rounds per snapshot. Timing is diagnostic and cannot substitute for the exact continuation gates."
+}

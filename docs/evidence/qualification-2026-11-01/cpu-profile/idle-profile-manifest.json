@@ -1,0 +1,11 @@
+{
+  "source_sha": "d06648c386486cf2630de6e41195ddd5d4360ff0",
+  "driver_sha256": "fd7c3abb1a63dd4f488fc9caa7e563a241c558a666f881897fe16099c7bf22cd",
+  "callbacks": 128,
+  "cases": {
+    "idle_quiet": "Stock baseline quiet Pure CS-80 case, exact makeFrame controls.",
+    "idle_noise": "Supplemental Source Performance circuit case using stock makeFrame with noise=true, analogNoise=0.12. Pure would force this gain to0, so its policy differs. No voice is sounding; active noise consumer is retained."
+  },
+  "scope": "Instruction/simulated-cache/branch diagnosis, not timing; separate policy cases cannot by themselves isolate a native noise cost.",
+  "retained_driver_artifact": "engine_profile_idle.cpp"
+}

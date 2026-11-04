@@ -1,0 +1,52 @@
+COMMAND ["/tmp/cs80-ring-mutations-9a4fkh3l/change-historical-legacy-reset-gate", "/tmp/cs80-ring-mutations-9a4fkh3l/tests/parity/tolerances-v2/ring-event-continuity.json", "--suite", "ring"]
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+Ring event continuity: 2325 assertions, 36 failures
+RING-CONTINUITY FAIL: Legacy 44100/0 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 44100/0 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 44100/0 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 44100/0 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 44100/1 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 44100/1 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 44100/1 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 44100/1 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 44100/2 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 44100/2 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 44100/2 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 44100/2 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 48000/0 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 48000/0 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 48000/0 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 48000/0 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 48000/1 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 48000/1 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 48000/1 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 48000/1 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 48000/2 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 48000/2 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 48000/2 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 48000/2 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 96000/0 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 96000/0 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 96000/0 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 96000/0 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 96000/1 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 96000/1 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 96000/1 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 96000/1 released-audio-rekey historical Legacy float reset
+RING-CONTINUITY FAIL: Legacy 96000/2 first-key historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 96000/2 released-audio-rekey historical Legacy phase reset
+RING-CONTINUITY FAIL: Legacy 96000/2 released-audio-rekey historical Legacy envelope reset
+RING-CONTINUITY FAIL: Legacy 96000/2 released-audio-rekey historical Legacy float reset
+
+EXIT 1

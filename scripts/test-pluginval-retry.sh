@@ -27,7 +27,7 @@ case "$MOCK_CASE" in
     crash_during_test) completed; echo 'Starting tests in: Next test'; exit 139 ;;
     crash_no_phase) echo 'Unrelated diagnostic'; exit 139 ;;
     crash_orphan_completion) echo 'Completed tests in: Orphan'; exit 139 ;;
-    recover)
+    recover|no_retry)
         completed
         if [ "$n" -eq 1 ]; then exit 139; fi
         echo SUCCESS; exit 0 ;;
@@ -46,7 +46,7 @@ check_case() {
     local name=$1 expected_status=$2 expected_attempts=$3
     local dir="$tmp/$1" status actual i
     mkdir "$dir" || exit 1
-    MOCK_CASE=$name MOCK_COUNTER="$dir/counter" \
+    CS80_PLUGINVAL_ATTEMPTS=${4:-3} MOCK_CASE=$name MOCK_COUNTER="$dir/counter" \
         bash "$wrapper" "$dir/validation.log" bash "$tmp/mock-validator.sh" \
         > "$dir/output" 2>&1
     status=$?
@@ -95,6 +95,8 @@ check_case crash_orphan_completion 139 1
 check_case recover 0 2
 check_case retry_no_success 1 2
 check_case always_crash 139 3
+# The corrected Linux validator has no retry-to-green policy.
+check_case no_retry 139 1 1
 
 if [ "$failures" -ne 0 ]; then
     echo "$failures failure(s) in $checks pluginval wrapper cases" >&2

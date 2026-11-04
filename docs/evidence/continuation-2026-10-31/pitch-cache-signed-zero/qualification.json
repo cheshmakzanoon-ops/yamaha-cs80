@@ -1,0 +1,31 @@
+{
+  "registration": "81b8c79e5cf226c9de6bbb0a2991b2c4a76c309b",
+  "before_header_sha256": "26ae6a4849e1a5950f765bb55b360f6bc53aab381bbb2d47dbe4121a143e1561",
+  "candidate_header_sha256": "325baabf05dfe925adc9ed33daa3781be30835d2473845ee97b5a89da73e8322",
+  "driver_sha256": "a95b142b0b6a972350f8d19082496d901393128ddc73a3726c0c4d8eea26d875",
+  "before": {
+    "exit": 1,
+    "checks": 199562,
+    "failures": 9219
+  },
+  "results": [
+    {
+      "name": "fixed",
+      "exit": 0,
+      "checks": 199562,
+      "failures": 0,
+      "header_sha256": "325baabf05dfe925adc9ed33daa3781be30835d2473845ee97b5a89da73e8322"
+    },
+    {
+      "name": "numeric-only-key",
+      "exit": 1,
+      "checks": 199562,
+      "failures": 9219,
+      "header_sha256": "7b4e4b8e6983212f9d70e45e22138a3363bb7178c42db5f4538eaef34fad0393"
+    }
+  ],
+  "original_checks_preserved": 174978,
+  "additional_checks": 24584,
+  "nan_miss_rule": "Both existing floating-point equality checks are retained. A NaN pitch or reference therefore makes the cache-hit predicate false before the added sign-bit condition can accept a hit.",
+  "engine_boundary": "P_tuningRef is clamped to 415..465 Hz, and Pure selects 440 Hz. Zero references belong to the registered transform API contract and are not reachable through normal engine parameters."
+}

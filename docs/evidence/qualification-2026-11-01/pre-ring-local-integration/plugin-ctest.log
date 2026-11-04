@@ -1,0 +1,225 @@
+Test project /workspace/scratch/a0e502bd4cd5/yamaha-cs80/build
+        Start   1: cs80_exact_scalar_filter_fixed_tests
+  1/110 Test   #1: cs80_exact_scalar_filter_fixed_tests ........   Passed    9.87 sec
+        Start   2: cs80_exact_scalar_filter_moving_tests
+  2/110 Test   #2: cs80_exact_scalar_filter_moving_tests .......   Passed    0.37 sec
+        Start   3: cs80_exact_scalar_filter_state_tests
+  3/110 Test   #3: cs80_exact_scalar_filter_state_tests ........   Passed    0.89 sec
+        Start   4: cs80_exact_scalar_filter_row_tests
+  4/110 Test   #4: cs80_exact_scalar_filter_row_tests ..........   Passed    0.18 sec
+        Start   5: cs80_exact_scalar_filter_fp_tests
+  5/110 Test   #5: cs80_exact_scalar_filter_fp_tests ...........   Passed    0.70 sec
+        Start   6: cs80_parity_harness_tests
+  6/110 Test   #6: cs80_parity_harness_tests ...................   Passed    3.24 sec
+        Start   7: cs80_ui_environment_tests
+  7/110 Test   #7: cs80_ui_environment_tests ...................   Passed   16.01 sec
+        Start   8: cs80_continuous_voice_circuit_tests
+  8/110 Test   #8: cs80_continuous_voice_circuit_tests .........   Passed    0.04 sec
+        Start   9: cs80_continuous_voice_circuit_audit_tests
+  9/110 Test   #9: cs80_continuous_voice_circuit_audit_tests ...   Passed    1.38 sec
+        Start  10: cs80_output_meter_display_tests
+ 10/110 Test  #10: cs80_output_meter_display_tests .............   Passed    0.01 sec
+        Start  11: cs80_output_meter_tests
+ 11/110 Test  #11: cs80_output_meter_tests .....................   Passed    0.00 sec
+        Start  12: cs80_output_meter_audit_tests
+ 12/110 Test  #12: cs80_output_meter_audit_tests ...............   Passed    0.01 sec
+        Start  13: cs80_keyboard_pressure_audit_tests
+ 13/110 Test  #13: cs80_keyboard_pressure_audit_tests ..........   Passed    0.01 sec
+        Start  14: cs80_keyboard_event_queue_tests
+ 14/110 Test  #14: cs80_keyboard_event_queue_tests .............   Passed    0.01 sec
+        Start  15: cs80_keyboard_epoch_interleaving_tests
+ 15/110 Test  #15: cs80_keyboard_epoch_interleaving_tests ......   Passed    3.43 sec
+        Start  16: cs80_parity_mode_tests
+ 16/110 Test  #16: cs80_parity_mode_tests ......................   Passed    6.71 sec
+        Start  17: cs80_source_performance_tests
+ 17/110 Test  #17: cs80_source_performance_tests ...............   Passed   18.95 sec
+        Start  18: cs80_source_performance_audit_tests
+ 18/110 Test  #18: cs80_source_performance_audit_tests .........   Passed    4.41 sec
+        Start  19: cs80_envelope_precision_tests
+ 19/110 Test  #19: cs80_envelope_precision_tests ...............   Passed  142.15 sec
+        Start  20: cs80_ig00156_filter_tests
+ 20/110 Test  #20: cs80_ig00156_filter_tests ...................   Passed    1.37 sec
+        Start  21: cs80_envelope_rc_model_tests
+ 21/110 Test  #21: cs80_envelope_rc_model_tests ................   Passed    0.80 sec
+        Start  22: cs80_live_envelope_level_tests
+ 22/110 Test  #22: cs80_live_envelope_level_tests ..............   Passed   15.90 sec
+        Start  23: cs80_live_envelope_timing_tests
+ 23/110 Test  #23: cs80_live_envelope_timing_tests .............   Passed    3.91 sec
+        Start  24: cs80_active_tail_continuity_tests
+ 24/110 Test  #24: cs80_active_tail_continuity_tests ...........   Passed   29.94 sec
+        Start  25: cs80_cold_idle_timing_tests
+ 25/110 Test  #25: cs80_cold_idle_timing_tests .................   Passed    9.76 sec
+        Start  26: cs80_cold_filter_envelope_tests
+ 26/110 Test  #26: cs80_cold_filter_envelope_tests .............   Passed   66.84 sec
+        Start  27: cs80_note_off_continuity_tests
+ 27/110 Test  #27: cs80_note_off_continuity_tests ..............   Passed   48.37 sec
+        Start  28: cs80_click_event_continuation_tests
+ 28/110 Test  #28: cs80_click_event_continuation_tests .........   Passed  118.23 sec
+        Start  29: cs80_core_tests
+ 29/110 Test  #29: cs80_core_tests .............................   Passed   25.38 sec
+        Start  30: cs80_experimental_oscillator_tests
+ 30/110 Test  #30: cs80_experimental_oscillator_tests ..........   Passed   20.09 sec
+        Start  31: cs80_source_factory_integration_tests
+ 31/110 Test  #31: cs80_source_factory_integration_tests .......   Passed  421.76 sec
+        Start  32: cs80_source_factory_tone_tests
+ 32/110 Test  #32: cs80_source_factory_tone_tests ..............   Passed    0.64 sec
+        Start  33: cs80_hardware_control_tests
+ 33/110 Test  #33: cs80_hardware_control_tests .................   Passed    0.01 sec
+        Start  34: cs80_ig00156_reference_tests
+ 34/110 Test  #34: cs80_ig00156_reference_tests ................   Passed    0.30 sec
+        Start  35: cs80_keyboard_contour_reference_tests
+ 35/110 Test  #35: cs80_keyboard_contour_reference_tests .......   Passed    0.02 sec
+        Start  36: cs80_loaded_control_reference_tests
+ 36/110 Test  #36: cs80_loaded_control_reference_tests .........   Passed    0.04 sec
+        Start  37: cs80_loaded_control_rank_tests
+ 37/110 Test  #37: cs80_loaded_control_rank_tests ..............   Passed    0.03 sec
+        Start  38: cs80_loaded_control_transient_tests
+ 38/110 Test  #38: cs80_loaded_control_transient_tests .........   Passed    0.04 sec
+        Start  39: cs80_output_tap_integration_tests
+ 39/110 Test  #39: cs80_output_tap_integration_tests ...........   Passed   21.62 sec
+        Start  40: cs80_output_tap_circuit_tests
+ 40/110 Test  #40: cs80_output_tap_circuit_tests ...............   Passed    4.71 sec
+        Start  41: cs80_output_taps_tests
+ 41/110 Test  #41: cs80_output_taps_tests ......................   Passed    0.01 sec
+        Start  42: cs80_level_control_tests
+ 42/110 Test  #42: cs80_level_control_tests ....................   Passed    0.19 sec
+        Start  43: cs80_resonance_control_tests
+ 43/110 Test  #43: cs80_resonance_control_tests ................   Passed    0.06 sec
+        Start  44: cs80_oe2_filters_tests
+ 44/110 Test  #44: cs80_oe2_filters_tests ......................   Passed    0.03 sec
+        Start  45: cs80_pra_wah_integration_tests
+ 45/110 Test  #45: cs80_pra_wah_integration_tests ..............   Passed    5.17 sec
+        Start  46: cs80_pra_wah_circuit_tests
+ 46/110 Test  #46: cs80_pra_wah_circuit_tests ..................   Passed    9.15 sec
+        Start  47: cs80_pra_wah_tests
+ 47/110 Test  #47: cs80_pra_wah_tests ..........................   Passed    0.20 sec
+        Start  48: cs80_chorus_tabs_tests
+ 48/110 Test  #48: cs80_chorus_tabs_tests ......................   Passed    1.57 sec
+        Start  49: cs80_idle_exact_skip_tests
+ 49/110 Test  #49: cs80_idle_exact_skip_tests ..................   Passed    4.09 sec
+        Start  50: cs80_bbd_chorus_tests
+ 50/110 Test  #50: cs80_bbd_chorus_tests .......................   Passed    5.73 sec
+        Start  51: cs80_mn3001_packet_tests
+ 51/110 Test  #51: cs80_mn3001_packet_tests ....................   Passed    0.13 sec
+        Start  52: cs80_performance_control_tests
+ 52/110 Test  #52: cs80_performance_control_tests ..............   Passed   16.75 sec
+        Start  53: cs80_validator_retry_tests
+ 53/110 Test  #53: cs80_validator_retry_tests ..................   Passed    4.86 sec
+        Start  54: cs80_oscillator_cache_tests
+ 54/110 Test  #54: cs80_oscillator_cache_tests .................   Passed    0.15 sec
+        Start  55: cs80_ig00156_cache_tests
+ 55/110 Test  #55: cs80_ig00156_cache_tests ....................   Passed    1.22 sec
+        Start  56: cs80_ig00156_companion_history_tests
+ 56/110 Test  #56: cs80_ig00156_companion_history_tests ........   Passed    0.95 sec
+        Start  57: cs80_ig00156_companion_efficiency_tests
+ 57/110 Test  #57: cs80_ig00156_companion_efficiency_tests .....   Passed    1.99 sec
+        Start  58: cs80_ig00156_nodal_tests
+ 58/110 Test  #58: cs80_ig00156_nodal_tests ....................   Passed   49.52 sec
+        Start  59: cs80_ig00156_phase_correction_tests
+ 59/110 Test  #59: cs80_ig00156_phase_correction_tests .........   Passed    1.18 sec
+        Start  60: cs80_oscillator_promotion_tests
+ 60/110 Test  #60: cs80_oscillator_promotion_tests .............   Passed   11.75 sec
+        Start  61: cs80_ig00151_vca_tests
+ 61/110 Test  #61: cs80_ig00151_vca_tests ......................   Passed    1.83 sec
+        Start  62: cs80_tolerance_drift_tests
+ 62/110 Test  #62: cs80_tolerance_drift_tests ..................   Passed    8.17 sec
+        Start  63: cs80_oversampling_tests
+ 63/110 Test  #63: cs80_oversampling_tests .....................   Passed    3.86 sec
+        Start  64: cs80_stationary_controls_exact_tests
+ 64/110 Test  #64: cs80_stationary_controls_exact_tests ........   Passed    0.42 sec
+        Start  65: cs80_smoothing_tests
+ 65/110 Test  #65: cs80_smoothing_tests ........................   Passed   19.80 sec
+        Start  66: cs80_output_listening_tests
+ 66/110 Test  #66: cs80_output_listening_tests .................   Passed    2.35 sec
+        Start  67: cs80_noise_tests
+ 67/110 Test  #67: cs80_noise_tests ............................   Passed   15.01 sec
+        Start  68: cs80_mts_esp_native_tests
+ 68/110 Test  #68: cs80_mts_esp_native_tests ...................   Passed    0.01 sec
+        Start  69: cs80_mts_esp_shim_tests
+ 69/110 Test  #69: cs80_mts_esp_shim_tests .....................   Passed    0.33 sec
+        Start  70: cs80_mts_esp_fallback_tests
+ 70/110 Test  #70: cs80_mts_esp_fallback_tests .................   Passed    0.00 sec
+        Start  71: cs80_host_automation_curve_tests
+ 71/110 Test  #71: cs80_host_automation_curve_tests ............   Passed    0.73 sec
+        Start  72: cs80_au_automation_curve_tests
+ 72/110 Test  #72: cs80_au_automation_curve_tests ..............   Passed    0.04 sec
+        Start  73: cs80_au_automation_bridge_contract_tests
+ 73/110 Test  #73: cs80_au_automation_bridge_contract_tests ....   Passed    0.01 sec
+        Start  74: cs80_free_running_voice_tests
+ 74/110 Test  #74: cs80_free_running_voice_tests ...............   Passed   13.90 sec
+        Start  75: cs80_kas_scanner_tests
+ 75/110 Test  #75: cs80_kas_scanner_tests ......................   Passed    5.76 sec
+        Start  76: cs80_keyboard_contour_key_map_tests
+ 76/110 Test  #76: cs80_keyboard_contour_key_map_tests .........   Passed   35.31 sec
+        Start  77: cs80_touch_circuit_tests
+ 77/110 Test  #77: cs80_touch_circuit_tests ....................   Passed    9.12 sec
+        Start  78: cs80_tuning_midi_tests
+ 78/110 Test  #78: cs80_tuning_midi_tests ......................   Passed    0.72 sec
+        Start  79: cs80_ig00150_sub_tests
+ 79/110 Test  #79: cs80_ig00150_sub_tests ......................   Passed   28.02 sec
+        Start  80: cs80_ring_modulator_circuit_tests
+ 80/110 Test  #80: cs80_ring_modulator_circuit_tests ...........   Passed   11.33 sec
+        Start  81: cs80_oe2_stereo_chorus_tests
+ 81/110 Test  #81: cs80_oe2_stereo_chorus_tests ................   Passed    1.02 sec
+        Start  82: cs80_pra_optical_cell_tests
+ 82/110 Test  #82: cs80_pra_optical_cell_tests .................   Passed    8.17 sec
+        Start  83: cs80_unused_lfo_readout_exact_tests
+ 83/110 Test  #83: cs80_unused_lfo_readout_exact_tests .........   Passed    0.09 sec
+        Start  84: cs80_unused_lfo_engine_ownership_tests
+ 84/110 Test  #84: cs80_unused_lfo_engine_ownership_tests ......   Passed    1.97 sec
+        Start  85: cs80_modern_lfo_tests
+ 85/110 Test  #85: cs80_modern_lfo_tests .......................   Passed    2.33 sec
+        Start  86: cs80_mseg_tests
+ 86/110 Test  #86: cs80_mseg_tests .............................   Passed    3.72 sec
+        Start  87: cs80_mod_matrix_tests
+ 87/110 Test  #87: cs80_mod_matrix_tests .......................   Passed   36.50 sec
+        Start  88: cs80_modern_fx_tests
+ 88/110 Test  #88: cs80_modern_fx_tests ........................   Passed  216.15 sec
+        Start  89: cs80_library_audit_tests
+ 89/110 Test  #89: cs80_library_audit_tests ....................   Passed  414.41 sec
+        Start  90: cs80_randomise_tests
+ 90/110 Test  #90: cs80_randomise_tests ........................   Passed  102.48 sec
+        Start  91: cs80_source_factory_boundary_tests
+ 91/110 Test  #91: cs80_source_factory_boundary_tests ..........   Passed    1.36 sec
+        Start  92: cs80_programmer_integration_tests
+ 92/110 Test  #92: cs80_programmer_integration_tests ...........   Passed   16.54 sec
+        Start  93: cs80_memory_panel_tests
+ 93/110 Test  #93: cs80_memory_panel_tests .....................   Passed    0.89 sec
+        Start  94: cs80_fast_math_tests
+ 94/110 Test  #94: cs80_fast_math_tests ........................   Passed    0.04 sec
+        Start  95: cs80_evidence_register_tests
+ 95/110 Test  #95: cs80_evidence_register_tests ................   Passed    0.01 sec
+        Start  96: cs80_midi_learn_tests
+ 96/110 Test  #96: cs80_midi_learn_tests .......................   Passed    0.22 sec
+        Start  97: cs80_parity_capture_tests
+ 97/110 Test  #97: cs80_parity_capture_tests ...................   Passed    6.07 sec
+        Start  98: cs80_dsp_probe_tests
+ 98/110 Test  #98: cs80_dsp_probe_tests ........................   Passed    2.09 sec
+        Start  99: cs80_vst3_automation_tests
+ 99/110 Test  #99: cs80_vst3_automation_tests ..................   Passed    9.70 sec
+        Start 100: cs80_ui_smoke
+100/110 Test #100: cs80_ui_smoke ...............................   Passed  134.94 sec
+        Start 101: cs80_teardown_probe
+101/110 Test #101: cs80_teardown_probe .........................   Passed    1.50 sec
+        Start 102: cs80_locale_query
+102/110 Test #102: cs80_locale_query ...........................   Passed    0.30 sec
+        Start 103: cs80_locale_query_mixed
+103/110 Test #103: cs80_locale_query_mixed .....................   Passed    0.30 sec
+        Start 104: cs80_locale_editor
+104/110 Test #104: cs80_locale_editor ..........................   Passed    0.70 sec
+        Start 105: cs80_locale_editor_mixed
+105/110 Test #105: cs80_locale_editor_mixed ....................   Passed    0.91 sec
+        Start 106: cs80_au_wrapper_macro_environment_tests
+106/110 Test #106: cs80_au_wrapper_macro_environment_tests .....   Passed    0.01 sec
+        Start 107: cs80_zero_fir_history_tests
+107/110 Test #107: cs80_zero_fir_history_tests .................   Passed    0.45 sec
+        Start 108: cs80_zero_fir_rounding_tests
+108/110 Test #108: cs80_zero_fir_rounding_tests ................   Passed    2.14 sec
+        Start 109: cs80_exact_control_transform_tests
+109/110 Test #109: cs80_exact_control_transform_tests ..........   Passed    0.01 sec
+        Start 110: cs80_host_wrapper_platform_tests
+110/110 Test #110: cs80_host_wrapper_platform_tests ............   Passed    5.12 sec
+
+100% tests passed, 0 tests failed out of 110
+
+Total Test time (real) = 2239.86 sec

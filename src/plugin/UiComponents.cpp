@@ -147,6 +147,10 @@ juce::String formatParamValue(int parameterIndex, float value)
             case cs80::P_mpeOn:
             case cs80::P_arpOn: return value >= 0.5f ? "ON" : "OFF";
             case cs80::P_chorusMode: return value >= 0.5f ? "TREMOLO" : "CHORUS";
+            case cs80::P_chorusTabs: {
+                constexpr const char* names[] { "HISTORICAL", "BOTH OFF", "CHORUS", "TREMOLO", "BOTH ON" };
+                return enumName(names, 5, value);
+            }
             case cs80::P_chorusSpeed:
             case cs80::P_lfo1Rate:
             case cs80::P_lfo2Rate:
@@ -2257,6 +2261,7 @@ LookAndFeel::~LookAndFeel()
     {
         PaintCache::get().clear();
         EngravedCache::get().clear();
+        art::releasePanelResources();
     }
 }
 
@@ -4033,7 +4038,7 @@ void ParamKnob::paintOverChildren(juce::Graphics& g)
 // LedButton
 // ---------------------------------------------------------------------------
 LedButton::LedButton(const juce::String& text, bool momentary)
-    : juce::Button(text)
+    : ContextButton(text)
 {
     setClickingTogglesState(! momentary);
     setMouseClickGrabsKeyboardFocus(true);

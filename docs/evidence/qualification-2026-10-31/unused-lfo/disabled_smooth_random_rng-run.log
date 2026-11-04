@@ -1,0 +1,15 @@
+FAIL: enabled waveform and random continuation stays bit-identical rate=88200 variant=6
+FAIL: random-shape transitions while disabled retain later enabled outputs rate=88200 variant=-1
+FAIL: enabled waveform and random continuation stays bit-identical rate=96000 variant=6
+FAIL: random-shape transitions while disabled retain later enabled outputs rate=96000 variant=-1
+FAIL: enabled waveform and random continuation stays bit-identical rate=176400 variant=6
+FAIL: random-shape transitions while disabled retain later enabled outputs rate=176400 variant=-1
+FAIL: enabled waveform and random continuation stays bit-identical rate=192000 variant=6
+FAIL: random-shape transitions while disabled retain later enabled outputs rate=192000 variant=-1
+FAIL: enabled waveform and random continuation stays bit-identical rate=352800 variant=6
+FAIL: random-shape transitions while disabled retain later enabled outputs rate=352800 variant=-1
+FAIL: enabled waveform and random continuation stays bit-identical rate=384000 variant=6
+FAIL: random-shape transitions while disabled retain later enabled outputs rate=384000 variant=-1
+unused LFO class exact: 138 checks, 12 failures; 8473680 paired samples
+
+EXIT 1

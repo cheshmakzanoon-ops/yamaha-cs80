@@ -11,6 +11,7 @@
 
 namespace cs80::ui
 {
+namespace { std::atomic<int> liveBrowsers { 0 }; }
 
 // ===========================================================================
 // Patch signature: a drawable summary computed from parameter values only.
@@ -755,9 +756,17 @@ Colour wrinkleMean()
 // The same finish as an overlay for plates that are lighter than the panel: white where a facet is
 // brighter than the average, black where it is darker, scaled so a plate keeps the finish's
 // proportional relief (a lit fleck stays a fleck, the grooves stay grooves).
+juce::Image& wrinkleReliefCache()
+{
+    static juce::Image relief;
+    return relief;
+}
+
 const juce::Image& wrinkleRelief()
 {
-    static const juce::Image relief = []
+    auto& relief = wrinkleReliefCache();
+    if (!relief.isNull()) return relief;
+    relief = []
     {
         const auto& tile = wrinkleTile();
         const float mean = std::max(0.01f, tileLuma(wrinkleMean()));
@@ -2265,6 +2274,7 @@ private:
 // ===========================================================================
 PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
 {
+    ++liveBrowsers;
     setOpaque(false);
     setTitle("Preset library");
     setWantsKeyboardFocus(false);
@@ -2534,6 +2544,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
 PresetBrowser::~PresetBrowser()
 {
     stopTimer();
+    if (--liveBrowsers == 0) wrinkleReliefCache() = {}; // release while JUCE graphics is still live
     if (watcher != nullptr)
         watcher->stopTimer();
     if (list != nullptr)

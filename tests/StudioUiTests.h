@@ -6,6 +6,7 @@
 // learning tools, keyboard tab order and minimum hit targets. Every capture is written as a PNG
 // next to the other snapshots for visual review.
 
+#include "HostParameterState.h"
 #include "plugin/AdvancedPanel.h"
 #include "plugin/EvidenceRegister.h"
 #include "plugin/PanelLayout.h"
@@ -557,7 +558,7 @@ inline void testMidiLearnRoundTrip(const Check& check, const Flush& flush, const
         auto* restoredParameter = restored.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(lpf));
         sendController(restored, 74, 127);
         check(std::abs(restoredParameter->getValue() - 1.0f) < 1.0e-4f, "the restored map drives the restored instance");
-        check(restored.getAPVTS().copyState().getChildWithName("MIDI_LEARN").isValid() == false,
+        check(cs80::tests::copyHostParameterState(restored).getChildWithName("MIDI_LEARN").isValid() == false,
               "the map never lives in the parameter tree (so presets cannot carry it)");
         restored.loadFactoryPreset(3);
         check(restored.getMidiLearn().count() == 1, "loading a preset keeps the session's map");
@@ -655,14 +656,30 @@ inline void testUndoRedo(const Check& check, const Flush& flush)
     check(steps() == 2, "MIDI-learned controller moves add no undo step");
     const float automatedVolume = processor.getParamValue(cs80::P_volume);
 
+    StudioGestureProbe replayAttack, replayCutoff, replayVolume;
+    auto* attackParameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(vA));
+    auto* cutoffParameter = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(lpf));
+    attackParameter->addListener(&replayAttack);
+    cutoffParameter->addListener(&replayCutoff);
+    volume->addListener(&replayVolume);
     check(processor.undo(), "undo the drag");
+    check(replayAttack.oneGesture(), "undo brackets its changed parameter in one host gesture");
+    check(replayCutoff.begins == 0 && replayCutoff.ends == 0 && replayVolume.begins == 0 && replayVolume.ends == 0,
+          "undo sends no host gestures to unrelated parameters");
     flush(30);
     check(std::abs(processor.getParamValue(vA) - attack0) < 1.0e-5f, "undo returns the drag to where it began");
     check(std::abs(processor.getParamValue(cs80::P_volume) - automatedVolume) < 1.0e-6f, "undo leaves automated parameters alone");
     check(processor.undo(), "undo the typed value");
+    check(replayCutoff.oneGesture(), "a second undo brackets only its own changed parameter");
     flush(30);
     check(std::abs(processor.getParamValue(lpf) - lpf0) < 0.5f && ! history.canUndo(), "undo restores the typed control; nothing older");
+    replayAttack = {}; replayCutoff = {};
     check(processor.redo() && processor.redo(), "redo both steps");
+    check(replayAttack.oneGesture() && replayCutoff.oneGesture() && replayVolume.begins == 0,
+          "redo brackets each changed parameter once and leaves automation alone");
+    attackParameter->removeListener(&replayAttack);
+    cutoffParameter->removeListener(&replayCutoff);
+    volume->removeListener(&replayVolume);
     flush(30);
     check(std::abs(processor.getParamValue(lpf) - 1200.0f) < 1.0f && std::abs(processor.getParamValue(vA) - attackDragged) < 1.0e-5f,
           "redo replays both edits");
@@ -1038,9 +1055,11 @@ inline void testTabOrder(const Check& check, const Flush& flush)
         if (auto* scope = findById(editor, "voice_monitor"))
         {
             const auto scopeOrder = tabOrder(*scope);
-            check(scopeOrder.size() == 3 && accessibleName(*scopeOrder[0]) == "Monitor channel I"
-                      && accessibleName(*scopeOrder[2]) == "Close the voice monitor",
-                  "voice monitor order: channel I, channel II, CLOSE");
+            check(scopeOrder.size() == 4 && accessibleName(*scopeOrder[0]) == "Monitor channel I"
+                      && accessibleName(*scopeOrder[1]) == "Monitor channel II"
+                      && accessibleName(*scopeOrder[2]) == "Close the voice monitor"
+                      && accessibleName(*scopeOrder[3]) == "Monitored physical voice",
+                  "voice monitor order: channel I, channel II, CLOSE, physical voice selector");
         }
         toolbar->getActions().toggleScope();
         toolbar->getActions().startTour();

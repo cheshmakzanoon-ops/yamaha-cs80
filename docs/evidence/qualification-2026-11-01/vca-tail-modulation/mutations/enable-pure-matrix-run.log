@@ -1,0 +1,203 @@
+COMMAND ["/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/enable-pure-matrix-gate", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/tests/parity/tolerances-v2/vca-tail-modulation.json"]
+current-pan policy=source rate=44100 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=0 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=0 rank=0 mode=poly error=0 elapsed_error=1.29098121082e-14
+current-pan policy=source rate=44100 quality=0 rank=1 mode=poly error=0 elapsed_error=1.29098121082e-14
+current-pan policy=source rate=44100 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=1 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=1 rank=0 mode=poly error=0 elapsed_error=1.29098121082e-14
+current-pan policy=source rate=44100 quality=1 rank=1 mode=poly error=0 elapsed_error=1.29098121082e-14
+current-pan policy=source rate=44100 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=2 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=44100 quality=2 rank=0 mode=poly error=0 elapsed_error=3.22745302705e-15
+current-pan policy=source rate=44100 quality=2 rank=1 mode=poly error=0 elapsed_error=3.22745302705e-15
+current-pan policy=source rate=48000 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=0 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=0 rank=0 mode=poly error=0 elapsed_error=2.60728938439e-14
+current-pan policy=source rate=48000 quality=0 rank=1 mode=poly error=0 elapsed_error=2.60728938439e-14
+current-pan policy=source rate=48000 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=1 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=1 rank=0 mode=poly error=0 elapsed_error=2.60728938439e-14
+current-pan policy=source rate=48000 quality=1 rank=1 mode=poly error=0 elapsed_error=2.60728938439e-14
+current-pan policy=source rate=48000 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=2 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=48000 quality=2 rank=0 mode=poly error=0 elapsed_error=5.03251953998e-14
+current-pan policy=source rate=48000 quality=2 rank=1 mode=poly error=0 elapsed_error=5.03251953998e-14
+current-pan policy=source rate=96000 quality=0 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=0 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=0 rank=0 mode=poly error=0 elapsed_error=1.3036446922e-14
+current-pan policy=source rate=96000 quality=0 rank=1 mode=poly error=0 elapsed_error=1.3036446922e-14
+current-pan policy=source rate=96000 quality=1 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=1 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=1 rank=0 mode=poly error=0 elapsed_error=1.3036446922e-14
+current-pan policy=source rate=96000 quality=1 rank=1 mode=poly error=0 elapsed_error=1.3036446922e-14
+current-pan policy=source rate=96000 quality=2 rank=0 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=2 rank=1 mode=free error=0 elapsed_error=0
+current-pan policy=source rate=96000 quality=2 rank=0 mode=poly error=0 elapsed_error=5.03251953998e-14
+current-pan policy=source rate=96000 quality=2 rank=1 mode=poly error=0 elapsed_error=5.03251953998e-14
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=0 rank=0 mode=free error=0.170242875814 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=0 rank=1 mode=free error=0.170242875814 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=0 rank=0 mode=poly error=0.170242875814 elapsed_error=0.0464399092971
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=0 rank=1 mode=poly error=0.170242875814 elapsed_error=0.0464399092971
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=1 rank=0 mode=free error=0.170242875814 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=1 rank=1 mode=free error=0.170242875814 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=1 rank=0 mode=poly error=0.170242875814 elapsed_error=0.0464399092971
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=1 rank=1 mode=poly error=0.170242875814 elapsed_error=0.0464399092971
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=2 rank=0 mode=free error=0.167108178139 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=2 rank=1 mode=free error=0.167108178139 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=2 rank=0 mode=poly error=0.167108178139 elapsed_error=0.0116099773243
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=44100 quality=2 rank=1 mode=poly error=0.167108178139 elapsed_error=0.0116099773243
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=0 rank=0 mode=free error=0.169905006886 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=0 rank=1 mode=free error=0.169905006886 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=0 rank=0 mode=poly error=0.169905006886 elapsed_error=0.0426666666667
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=0 rank=1 mode=poly error=0.169905006886 elapsed_error=0.0426666666667
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=1 rank=0 mode=free error=0.169905006886 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=1 rank=1 mode=free error=0.169905006886 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=1 rank=0 mode=poly error=0.169905006886 elapsed_error=0.0426666666667
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=1 rank=1 mode=poly error=0.169905006886 elapsed_error=0.0426666666667
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=2 rank=0 mode=free error=0.167023614049 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=2 rank=1 mode=free error=0.167023614049 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=2 rank=0 mode=poly error=0.167023614049 elapsed_error=0.0106666666666
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=48000 quality=2 rank=1 mode=poly error=0.167023614049 elapsed_error=0.0106666666666
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=0 rank=0 mode=free error=0.167984068394 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=0 rank=1 mode=free error=0.167984068394 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=0 rank=0 mode=poly error=0.167984068394 elapsed_error=0.0213333333334
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=0 rank=1 mode=poly error=0.167984068394 elapsed_error=0.0213333333334
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=1 rank=0 mode=free error=0.167984068394 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=1 rank=1 mode=free error=0.167984068394 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=1 rank=0 mode=poly error=0.167984068394 elapsed_error=0.0213333333334
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=1 rank=1 mode=poly error=0.167984068394 elapsed_error=0.0213333333334
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=2 rank=0 mode=free error=0.167023614049 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=2 rank=1 mode=free error=0.167023614049 elapsed_error=0
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=2 rank=0 mode=poly error=0.167023614049 elapsed_error=0.0106666666666
+FAIL: retired rank pan is from the current modulation sample
+FAIL: retired rank mix consumes current pan before downstream processing
+FAIL: tail poly MSEG advances once per actual internal sample
+FAIL: current-pan control is changing in Source and inert in Pure
+current-pan policy=pure rate=96000 quality=2 rank=1 mode=poly error=0.167023614049 elapsed_error=0.0106666666666
+FAIL: Pure nonzero matrix remains bit-identical to empty matrix
+618 checks, 127 failures
+
+EXIT 1

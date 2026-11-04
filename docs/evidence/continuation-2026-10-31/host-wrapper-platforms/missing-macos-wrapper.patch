@@ -1,0 +1,11 @@
+--- a/cmake/HostAutomation.cmake
++++ b/cmake/HostAutomation.cmake
+@@ -12,7 +12,7 @@
+         # JUCE lists a .mm trampoline on macOS so its VST3 implementation is
+         # compiled as Objective-C++. Retain that native language in the
+         # generated target source instead of replacing it with a .cpp file.
+-        set(_cs80_filenames "juce_audio_plugin_client_VST3.cpp" "juce_audio_plugin_client_VST3.mm")
++        set(_cs80_filenames "juce_audio_plugin_client_VST3.cpp")
+     else()
+         set(_cs80_filenames "juce_audio_plugin_client_AU_1.mm")
+     endif()

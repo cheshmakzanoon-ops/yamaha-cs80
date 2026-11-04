@@ -1,0 +1,11 @@
+--- src/core/Dsp.h
++++ src/core/Dsp.h
+@@ -458,7 +458,7 @@
+             value = 1.0f;
+         // Source continuation can retain the actual capacitor accumulator.
+         // Default callers keep their historical float-to-double initialization.
+-        if (!preservePreciseCharge || a <= 0.0002f)
++        if (true)
+             preciseValue = value;
+         attackFrom = preciseValue;
+     }

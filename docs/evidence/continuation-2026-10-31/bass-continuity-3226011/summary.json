@@ -1,0 +1,309 @@
+{
+  "schema_version": 1,
+  "kind": "Diagnostic software evidence only; no hardware measurement; original phrase gate remains open",
+  "source_base": "32260112971289761f9a6e8e7289916bfc7df95f",
+  "status": "No zero-time restart mechanism observed in these original physical-PANEL Bass fixtures; existing score fails unchanged",
+  "methods": {
+    "phrase": "Original engine_audit events,64-frame quantization, original physical control coordinate and exact original float-step/chord-reference metric. Source performance policy,2x internal sampling.",
+    "state": "Capture after legitimate pending idle-time catchup, then immediately after assignment without elapsed render time. Compare all72 exposed continuation fields per rank, including oscillator residual tails, filter histories, both envelope values and both VCA nodes. Gate stages/control selectors are allowed to change and are excluded from the charge comparison.",
+    "neutrality": "Fresh uninstrumented core objects from the integrated3226011 compile are compared byte-for-byte against the instrumented Engine for every output sample. One-sample observation is also compared with the original64-frame rendering.",
+    "decomposition": "For diagnostics, write VCA output as y=.085*(c*(u+.0025)-q), c=LI*EG*2^EI, q=coupling. Delta y = .085*(c_previous*Delta u + (u_current+.0025)*Delta c - Delta q). Evaluate from recorded float nodes in double; report rounding residual and do not fit any coefficients. The direct pedestal term is .085*.0025*Delta c.",
+    "excerpt_selection": "Keep first16 active host frames; +/-8 frames around observed oscillator resets and EG stage transitions; +/-24 frames around each rank maximum slope before the63-host-sample FIR latency. Full raw traces and output binaries retain hashes/commands in the manifest."
+  },
+  "instrumentation_equivalence": [
+    {
+      "rate": 48000,
+      "bytes": 2415360,
+      "byte_identical": true,
+      "control_sha256": "e3d448ea03705817d22fb62e12697a833b50fbf842c19a67b89cfe43850758be",
+      "traced_sha256": "e3d448ea03705817d22fb62e12697a833b50fbf842c19a67b89cfe43850758be"
+    },
+    {
+      "rate": 96000,
+      "bytes": 4830720,
+      "byte_identical": true,
+      "control_sha256": "419802fc7f46f5fe38aef5a357d5a2d28958ba4fa46fb8f40b347b3938531cf8",
+      "traced_sha256": "419802fc7f46f5fe38aef5a357d5a2d28958ba4fa46fb8f40b347b3938531cf8"
+    }
+  ],
+  "rows": [
+    {
+      "rate": 48000,
+      "metrics": {
+        "rate": 48000.0,
+        "latency_samples": 67.0,
+        "oversampling": 2.0,
+        "event_frame": 300032.0,
+        "peak_frame": 300406.0,
+        "peak_delay_ms": 7.791666666666667,
+        "peak_jump": 0.011415889486670494,
+        "retrigger_score": 1.4409805099904638,
+        "chord_reference": 0.007922306656837463,
+        "chord_peak_frame": 144722.0,
+        "first_strike_event": 288000.0,
+        "first_strike_peak_frame": 288365.0,
+        "first_strike_peak": 0.00889226607978344,
+        "first_strike_score": 1.1224339658840192,
+        "event_jump": 0.00011494266800582409,
+        "omitted_score": 0.03143454978962,
+        "prefix_max_abs": 0.0,
+        "partition_max_abs": 0.0
+      },
+      "assignment": [
+        {
+          "rank": 0,
+          "compared_fields": 72,
+          "bit_mismatches": [],
+          "maximum_numeric_difference": 0.0,
+          "pending_seconds_caught_up": 7.291666680231401e-05,
+          "filter_charge_before_after": -1.4399999380111694,
+          "amplitude_charge_before_after": 0.0,
+          "vca_li_before_after": 0.0,
+          "vca_coupling_before_after": 0.0
+        },
+        {
+          "rank": 1,
+          "compared_fields": 72,
+          "bit_mismatches": [],
+          "maximum_numeric_difference": 0.0,
+          "pending_seconds_caught_up": 7.291666680231401e-05,
+          "filter_charge_before_after": -1.4399999380111694,
+          "amplitude_charge_before_after": 0.0,
+          "vca_li_before_after": 0.0,
+          "vca_coupling_before_after": 0.0
+        }
+      ],
+      "internal": [
+        {
+          "rank": 0,
+          "sample": 300343,
+          "internal_index": 1,
+          "time_since_event_ms": 6.489583333333333,
+          "output_peak_minus_internal_host_frames": 63,
+          "rank_output_step": -0.007715044543147087,
+          "vca_input_step_contribution": -0.0077191951397835665,
+          "control_step_contribution": 1.4373323962439126e-06,
+          "coupling_step_contribution": 2.7110631430026262e-06,
+          "direct_pedestal_step_contribution": -9.725515158320875e-09,
+          "decomposition_rounding_residual": 2.2010972329063355e-09,
+          "amp": 0.9854879975318909,
+          "amp_stage": 2,
+          "filter_eg": 1.7162368297576904,
+          "filter_stage": 2,
+          "lp_cutoff_hz": 2484.99072265625,
+          "oscillator_phase": 0.04253703228695249,
+          "oscillator_hz": 262.2768249511719,
+          "reset_count": 1999
+        },
+        {
+          "rank": 1,
+          "sample": 300340,
+          "internal_index": 1,
+          "time_since_event_ms": 6.427083333333333,
+          "output_peak_minus_internal_host_frames": 66,
+          "rank_output_step": -0.00512564554810524,
+          "vca_input_step_contribution": -0.0051243768004975345,
+          "control_step_contribution": -4.464092855430056e-07,
+          "coupling_step_contribution": -8.238820311266935e-07,
+          "direct_pedestal_step_contribution": -9.53482066687883e-09,
+          "decomposition_rounding_residual": 1.5437089643401846e-09,
+          "amp": 0.9866437315940857,
+          "amp_stage": 2,
+          "filter_eg": 1.7015652656555176,
+          "filter_stage": 2,
+          "lp_cutoff_hz": 1738.7728271484375,
+          "oscillator_phase": 0.5487985339166889,
+          "oscillator_hz": 262.1217041015625,
+          "reset_count": 1999
+        }
+      ],
+      "first_rendered_event_sample_minus_omitted": {
+        "left": -4.656612873077393e-10,
+        "right": -4.656612873077393e-10
+      },
+      "archived_cold_clock_before_after": {
+        "old_peak_jump": 0.0114985071123,
+        "new_peak_jump": 0.0114158894867,
+        "peak_percent_change": -0.7185074096412447,
+        "old_chord_reference": 0.008832618594181966,
+        "new_chord_reference": 0.00792230665686049,
+        "reference_percent_change": -10.306252077057842,
+        "old_score": 1.30182312184,
+        "new_score": 1.44098050999
+      }
+    },
+    {
+      "rate": 96000,
+      "metrics": {
+        "rate": 96000.0,
+        "latency_samples": 67.0,
+        "oversampling": 2.0,
+        "event_frame": 600000.0,
+        "peak_frame": 600750.0,
+        "peak_delay_ms": 7.8125,
+        "peak_jump": 0.005650459788739681,
+        "retrigger_score": 1.3656450779347997,
+        "chord_reference": 0.004137575626373291,
+        "chord_peak_frame": 289376.0,
+        "first_strike_event": 576000.0,
+        "first_strike_peak_frame": 576662.0,
+        "first_strike_peak": 0.004572668112814426,
+        "first_strike_score": 1.1051563828024835,
+        "event_jump": 4.7073233872652054e-05,
+        "omitted_score": 0.07304358166722488,
+        "prefix_max_abs": 0.0,
+        "partition_max_abs": 0.0
+      },
+      "assignment": [
+        {
+          "rank": 0,
+          "compared_fields": 72,
+          "bit_mismatches": [],
+          "maximum_numeric_difference": 0.0,
+          "pending_seconds_caught_up": 7.812500015713653e-05,
+          "filter_charge_before_after": -1.4399999380111694,
+          "amplitude_charge_before_after": 0.0,
+          "vca_li_before_after": 0.0,
+          "vca_coupling_before_after": 0.0
+        },
+        {
+          "rank": 1,
+          "compared_fields": 72,
+          "bit_mismatches": [],
+          "maximum_numeric_difference": 0.0,
+          "pending_seconds_caught_up": 7.812500015713653e-05,
+          "filter_charge_before_after": -1.4399999380111694,
+          "amplitude_charge_before_after": 0.0,
+          "vca_li_before_after": 0.0,
+          "vca_coupling_before_after": 0.0
+        }
+      ],
+      "internal": [
+        {
+          "rank": 0,
+          "sample": 600687,
+          "internal_index": 0,
+          "time_since_event_ms": 7.15625,
+          "output_peak_minus_internal_host_frames": 63,
+          "rank_output_step": -0.003764631226658821,
+          "vca_input_step_contribution": -0.0037664520104668,
+          "control_step_contribution": 6.333047300642389e-07,
+          "coupling_step_contribution": 1.1887605166670171e-06,
+          "direct_pedestal_step_contribution": -4.875743402577015e-09,
+          "decomposition_rounding_residual": -1.2814387521979712e-09,
+          "amp": 0.9819096922874451,
+          "amp_stage": 2,
+          "filter_eg": 1.6881927251815796,
+          "filter_stage": 2,
+          "lp_cutoff_hz": 2437.153076171875,
+          "oscillator_phase": 0.030842231115305596,
+          "oscillator_hz": 262.2768249511719,
+          "reset_count": 1999
+        },
+        {
+          "rank": 1,
+          "sample": 600681,
+          "internal_index": 0,
+          "time_since_event_ms": 7.09375,
+          "output_peak_minus_internal_host_frames": 69,
+          "rank_output_step": -0.002502836287021637,
+          "vca_input_step_contribution": -0.0025019854132968715,
+          "control_step_contribution": -2.9938798306457824e-07,
+          "coupling_step_contribution": -5.528570465264871e-07,
+          "direct_pedestal_step_contribution": -4.792839527123505e-09,
+          "decomposition_rounding_residual": 1.371304825628091e-09,
+          "amp": 0.9831328392028809,
+          "amp_stage": 2,
+          "filter_eg": 1.67202889919281,
+          "filter_stage": 2,
+          "lp_cutoff_hz": 1703.536376953125,
+          "oscillator_phase": 0.5371085909209887,
+          "oscillator_hz": 262.1217041015625,
+          "reset_count": 1999
+        }
+      ],
+      "first_rendered_event_sample_minus_omitted": {
+        "left": 2.3283064365386963e-10,
+        "right": 0.0
+      },
+      "archived_cold_clock_before_after": {
+        "old_peak_jump": 0.00565055478364,
+        "new_peak_jump": 0.00565045978874,
+        "peak_percent_change": -0.001681160587529984,
+        "old_chord_reference": 0.004534408450129705,
+        "new_chord_reference": 0.004137575626388067,
+        "reference_percent_change": -8.751589719057772,
+        "old_score": 1.24615037348,
+        "new_score": 1.36564507793
+      }
+    }
+  ],
+  "captured_fields_compared": 288,
+  "assignment_bit_mismatches": 0,
+  "raw_files": [
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/assignment-48000.csv",
+      "sha256": "0468e182b1e864557a38b97e51d3eeaf943100fd7989aecf82a787f2dc73ec8e",
+      "bytes": 26046
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/assignment-96000.csv",
+      "sha256": "46da161ec88c332c147cadbd9554d677550903ca746526f09255469955b34b81",
+      "bytes": 25789
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/audio-48000.bin",
+      "sha256": "e3d448ea03705817d22fb62e12697a833b50fbf842c19a67b89cfe43850758be",
+      "bytes": 2415360
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/audio-96000.bin",
+      "sha256": "419802fc7f46f5fe38aef5a357d5a2d28958ba4fa46fb8f40b347b3938531cf8",
+      "bytes": 4830720
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/metrics.csv",
+      "sha256": "c4932b454b5d74d737f09e78fe40657a171b54e870925cebcffb091506fc8452",
+      "bytes": 683
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/output-48000.csv",
+      "sha256": "43276c4f89c7c2ec21341f15c4b6afe88451b88bbeccd846d49c71b956a23fbb",
+      "bytes": 188551
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/output-96000.csv",
+      "sha256": "f7005286b71489ac223b377a7283496fef371d3fb6a2cd3a5663ce4edfe5fda6",
+      "bytes": 376974
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/rank-taps-48000.csv",
+      "sha256": "9fa784bf2d79679b749cd11e264490b872fb2265748469307ea57f84680a3d32",
+      "bytes": 2936979
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/rank-taps-96000.csv",
+      "sha256": "73b3b301e3c2488314473bb72098d2d4f42242c8fec39d0d98f1d51cec7a6b9b",
+      "bytes": 5967419
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/reference-windows-48000.csv",
+      "sha256": "0bd27dabfcad589d5cc09ca0d104692fef4c6f6de7cb65f42a95fea332567c33",
+      "bytes": 85224
+    },
+    {
+      "local_path": "/tmp/cs80-bass-continuity-3226011/traced/reference-windows-96000.csv",
+      "sha256": "771779244741d3c3d87e70b5edf7c09a21927f183ed849644f1df169d3c8d503",
+      "bytes": 144695
+    }
+  ],
+  "limitations": [
+    "The existing <=1 phrase criterion remains failed; no acceptance value or musical source law was changed.",
+    "This diagnoses these two physical-PANEL source-policy Bass trajectories, not all presets or hardware behavior.",
+    "The original cold LI-node convention still initializes the static level on the first active sample. It is not a zero-time assignment reset in this trace; its fidelity remains the previously declared model simplification.",
+    "At the event sample, the newly rendered finite-time attack has a tiny FIR precursor relative to the omitted event; exact continuity concerns the zero-time state boundary, not identical audio after a new note.",
+    "The VCA decomposition uses recorded rounded nodes; its small residual is retained, not fitted away.",
+    "This diagnostic does not replace the separately registered capacitor-continuity, cold-clock, wake, noise or phrase gates."
+  ],
+  "analysis_sha256": "c4af9c9181b313f605275f63249dbc71a31d718241ce6e417664d478ea83a07a"
+}

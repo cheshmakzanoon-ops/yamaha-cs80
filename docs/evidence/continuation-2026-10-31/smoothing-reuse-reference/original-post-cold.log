@@ -1,0 +1,8 @@
+TRACE pressed active=8 note=48 held=1 pressure=1 touchA=0.101174771786 touchB=0.800000011921 touchC=-0.67722594738 lp=6748.45654297 fe=0.704210996628 ae=1
+TRACE settled-before-reuse active=0 note=48 held=0 pressure=1 touchA=6.98041375813e-08 touchB=0.800000011921 touchC=-3.06088487889e-13 lp=1272.57312012 fe=-1.5 ae=0
+TRACE fresh-reused active=1 note=48 held=1 pressure=0 touchA=6.97895998769e-08 touchB=0.751056134701 touchC=-0 lp=1275.5201416 fe=-1.4969111681 ae=0.0339417271316
+TRACE reference-cold active=1 note=48 held=1 pressure=0 touchA=0 touchB=0 touchC=-0 lp=3604.0390625 fe=0.00161796237808 ae=0.0339417271316
+TRACE predicate active=1 pressed_condition=1 relative_cutoff_difference=1.82554471493 pressed=6748.45654297 fresh=1275.5201416 ref=3604.0390625
+FAIL: reused circuit starts at its own zero touch
+legacy LEVEL step (unsmoothed by design): HF fraction -39.3 dB
+4 checks, 1 failures

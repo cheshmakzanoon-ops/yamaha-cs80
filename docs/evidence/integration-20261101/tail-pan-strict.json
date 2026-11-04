@@ -1,0 +1,47 @@
+{
+  "audio_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+  "pin_commit": "14ef653ed60be67ff98656966f9181c5e9b6b4fc",
+  "source_subtree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "strict_log_sha256": "81d996354b123edc4d5bfb98afdce507118b7651c78df8fe35e37cb67f3b2991",
+  "command": {
+    "phase": "compat-strict",
+    "pin_commit": "14ef653ed60be67ff98656966f9181c5e9b6b4fc",
+    "command": [
+      "scripts/check-compat-gates.sh",
+      "--strict-v2"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 330.2031104350026
+  },
+  "independent_root_byte_comparison": [
+    {
+      "baseline": "legacy-default.f32",
+      "candidate": "current-default.f32",
+      "bytes": 32863104,
+      "sha256": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+      "byte_identical": true
+    },
+    {
+      "baseline": "legacy-tails.f32",
+      "candidate": "current-tails.f32",
+      "bytes": 98589312,
+      "sha256": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+      "byte_identical": true
+    },
+    {
+      "baseline": "circuit-v1.bin",
+      "candidate": "circuit-current.bin",
+      "bytes": 133056,
+      "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+      "byte_identical": true
+    },
+    {
+      "baseline": "audio-v2.bin",
+      "candidate": "audio-current.bin",
+      "bytes": 9332176,
+      "sha256": "0e8f046c2a04aea8aa0b70a4521be87881aeb4b88ced441a5f73a6037e65aab6",
+      "byte_identical": true
+    }
+  ],
+  "scope": "Published final production source; the standard V2 fixture is also byte-identical to the preceding b75 checkpoint. Nondefault tail-pan behavior is qualified by the dedicated registered gates."
+}

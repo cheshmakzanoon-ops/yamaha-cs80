@@ -53,12 +53,12 @@ void PerformanceDeck::buildLeftPanel()
     // Knobs are sized so their engraved legends match the faders'.
     chorusSpeedKnob = &addKnob(cs80::P_chorusSpeed, 270, 668, 46, 66, "SPEED");
     chorusDepthKnob = &addKnob(cs80::P_chorusDepth, 316, 668, 46, 66, "DEPTH");
-    // Three separate tabs as named by the adjustment procedure: ON/OFF is chorus_on; TREMOLO and CHORUS are the
-    // two settings of chorus_mode (the owner's "tremolo versus chorus"), so pressing the lit one keeps it.
+    // The section master is unchanged. Circuit tabs can be selected independently;
+    // the neutral historical mode preserves existing sessions.
     struct Tab { KeyButton* key; const char* title; const char* tip; };
     const Tab tabs[] = {
         { &chorusOnKey, "Tremolo/chorus ON/OFF", "Switches the tremolo/chorus section on or off." },
-        { &tremoloKey, "Tremolo/chorus: TREMOLO", "Tremolo: amplitude modulation instead of the chorus delay." },
+        { &tremoloKey, "Tremolo/chorus: TREMOLO", "Tremolo: modulates the four wet-return VCAs; can be combined with chorus." },
         { &chorusKey, "Tremolo/chorus: CHORUS", "Chorus: the ensemble delay." },
     };
     for (int i = 0; i < 3; ++i)
@@ -68,6 +68,8 @@ void PerformanceDeck::buildLeftPanel()
         key.setTooltip(tabs[i].tip);
         key.setClickingTogglesState(false);
         key.setWantsKeyboardFocus(true);
+        const int parameter = i == 0 ? int(cs80::P_chorusOn) : int(cs80::P_chorusTabs);
+        key.bindParameterContext(processor, Cs80AudioProcessor::parameterId(parameter), parameter);
         addAndMakeVisible(key);
         place(key, 366.0f, 657.0f + (float) i * 27.0f, 70.0f, 25.0f);
     }
@@ -76,8 +78,25 @@ void PerformanceDeck::buildLeftPanel()
         setParameter(cs80::P_chorusOn, processor.getParamValue(cs80::P_chorusOn) >= 0.5f ? 0.0f : 1.0f);
         syncChorusState();
     };
-    tremoloKey.onClick = [this] { setParameter(cs80::P_chorusMode, 1.0f); syncChorusState(); };
-    chorusKey.onClick = [this] { setParameter(cs80::P_chorusMode, 0.0f); syncChorusState(); };
+    const auto toggleTab = [this](bool tremolo)
+    {
+        // Legacy has its shipped exclusive mode. Its audio must never change.
+        if (cs80::renderPolicy(processor.getParamValue(cs80::P_parityMode), processor.getParamValue(cs80::P_sourcePerformance)) == cs80::RenderPolicy::legacy)
+            setParameter(cs80::P_chorusMode, tremolo ? 1.0f : 0.0f);
+        else
+        {
+            auto tabs = cs80::chorusSwitches(true,
+                processor.getParamValue(cs80::P_chorusMode) >= 0.5f,
+                static_cast<cs80::ChorusTabMode>((int) std::lround(processor.getParamValue(cs80::P_chorusTabs))));
+            if (tremolo) tabs.tremolo = !tabs.tremolo; else tabs.chorus = !tabs.chorus;
+            const auto mode = tabs.chorus ? (tabs.tremolo ? cs80::ChorusTabMode::both : cs80::ChorusTabMode::chorus)
+                                          : (tabs.tremolo ? cs80::ChorusTabMode::tremolo : cs80::ChorusTabMode::off);
+            setParameter(cs80::P_chorusTabs, static_cast<float>(mode));
+        }
+        syncChorusState();
+    };
+    tremoloKey.onClick = [toggleTab] { toggleTab(true); };
+    chorusKey.onClick = [toggleTab] { toggleTab(false); };
     addBracket("TREMOLO / CHORUS", 270, rule, 166, 4.0f, "CHORUS");
     syncChorusState();
 
@@ -147,14 +166,24 @@ void PerformanceDeck::setParameter(int index, float physicalValue)
 void PerformanceDeck::syncChorusState()
 {
     const bool on = processor.getParamValue(cs80::P_chorusOn) >= 0.5f;
-    const bool tremolo = processor.getParamValue(cs80::P_chorusMode) >= 0.5f;
+    const auto mode = cs80::renderPolicy(processor.getParamValue(cs80::P_parityMode), processor.getParamValue(cs80::P_sourcePerformance)) == cs80::RenderPolicy::legacy
+        ? cs80::ChorusTabMode::historical
+        : static_cast<cs80::ChorusTabMode>((int) std::lround(processor.getParamValue(cs80::P_chorusTabs)));
+    const auto tabs = cs80::chorusSwitches(true, processor.getParamValue(cs80::P_chorusMode) >= 0.5f, mode);
+    const int contextParameter = mode == cs80::ChorusTabMode::historical
+        && cs80::renderPolicy(processor.getParamValue(cs80::P_parityMode), processor.getParamValue(cs80::P_sourcePerformance)) == cs80::RenderPolicy::legacy
+        ? int(cs80::P_chorusMode) : int(cs80::P_chorusTabs);
+    const auto contextId = Cs80AudioProcessor::parameterId(contextParameter);
+    for (auto* key : { &tremoloKey, &chorusKey })
+        if (key->getParameterContext() == nullptr || key->getParameterContext()->getParameterId() != contextId)
+            key->bindParameterContext(processor, contextId, contextParameter);
     chorusOnKey.setToggleState(on, juce::dontSendNotification);
-    tremoloKey.setToggleState(tremolo, juce::dontSendNotification);
-    chorusKey.setToggleState(! tremolo, juce::dontSendNotification);
+    tremoloKey.setToggleState(tabs.tremolo, juce::dontSendNotification);
+    chorusKey.setToggleState(tabs.chorus, juce::dontSendNotification);
     // With the section off its two knobs do nothing: dim them (they stay usable so a patch can be prepared).
     for (auto* knob : { chorusSpeedKnob, chorusDepthKnob })
-        if (knob != nullptr && knob->getAlpha() != (on ? 1.0f : 0.42f))
-            knob->setAlpha(on ? 1.0f : 0.42f);
+        if (knob != nullptr && knob->getAlpha() != (on && (tabs.chorus || tabs.tremolo) ? 1.0f : 0.42f))
+            knob->setAlpha(on && (tabs.chorus || tabs.tremolo) ? 1.0f : 0.42f);
 }
 
 // The two-way deck switches print the position they are in.

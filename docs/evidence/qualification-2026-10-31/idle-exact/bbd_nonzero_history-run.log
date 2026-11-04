@@ -1,0 +1,53 @@
+BBD denormal transition first mismatch sample=224
+FAIL: BBD history classification survives denormal-mode changes exactly rate=96000 profile=-1
+BBD first mismatch rate=88200 sample=91928 tabs=1 actual=0x1.0bea46p-4,-0x1.91e304p-7 reference=0x1.0bdaa4p-4,-0x1.92601ap-7
+FAIL: BBD signal and all four tab states are bit-identical rate=88200 profile=-1
+FAIL: BBD nonzero tails and re-entry to zero history are bit-identical rate=88200 profile=-1
+FAIL: BBD wake from zero packet history is bit-identical rate=88200 profile=-1
+BBD exact rate=88200 compared=281869 samples
+PRA exact rate=88200 profile=0 compared=106098 samples
+PRA exact rate=88200 profile=1 compared=106098 samples
+PRA exact rate=88200 profile=2 compared=106098 samples
+BBD first mismatch rate=96000 sample=100064 tabs=1 actual=0x1.eeebdap-5,-0x1.1364ccp-5 reference=0x1.eee79cp-5,-0x1.13690ap-5
+FAIL: BBD signal and all four tab states are bit-identical rate=96000 profile=-1
+FAIL: BBD nonzero tails and re-entry to zero history are bit-identical rate=96000 profile=-1
+FAIL: BBD wake from zero packet history is bit-identical rate=96000 profile=-1
+BBD exact rate=96000 compared=306049 samples
+PRA exact rate=96000 profile=0 compared=115458 samples
+PRA exact rate=96000 profile=1 compared=115458 samples
+PRA exact rate=96000 profile=2 compared=115458 samples
+BBD first mismatch rate=176400 sample=183869 tabs=3 actual=0x1.ce7ddap-5,-0x1.13b184p-5 reference=0x1.ce7d4ap-5,-0x1.13b1ep-5
+FAIL: BBD signal and all four tab states are bit-identical rate=176400 profile=-1
+FAIL: BBD nonzero tails and re-entry to zero history are bit-identical rate=176400 profile=-1
+FAIL: BBD wake from zero packet history is bit-identical rate=176400 profile=-1
+BBD exact rate=176400 compared=555289 samples
+PRA exact rate=176400 profile=0 compared=211938 samples
+PRA exact rate=176400 profile=1 compared=211938 samples
+PRA exact rate=176400 profile=2 compared=211938 samples
+BBD first mismatch rate=192000 sample=200127 tabs=2 actual=0x1.926532p-5,-0x1.fe96cp-6 reference=0x1.9264cp-5,-0x1.fe97a4p-6
+FAIL: BBD signal and all four tab states are bit-identical rate=192000 profile=-1
+FAIL: BBD nonzero tails and re-entry to zero history are bit-identical rate=192000 profile=-1
+FAIL: BBD wake from zero packet history is bit-identical rate=192000 profile=-1
+BBD exact rate=192000 compared=603649 samples
+PRA exact rate=192000 profile=0 compared=230658 samples
+PRA exact rate=192000 profile=1 compared=230658 samples
+PRA exact rate=192000 profile=2 compared=230658 samples
+BBD first mismatch rate=352800 sample=367746 tabs=2 actual=0x1.51ed1ap-5,-0x1.6edabp-5 reference=0x1.51ed0cp-5,-0x1.6edabep-5
+FAIL: BBD signal and all four tab states are bit-identical rate=352800 profile=-1
+FAIL: BBD nonzero tails and re-entry to zero history are bit-identical rate=352800 profile=-1
+FAIL: BBD wake from zero packet history is bit-identical rate=352800 profile=-1
+BBD exact rate=352800 compared=1102129 samples
+PRA exact rate=352800 profile=0 compared=423618 samples
+PRA exact rate=352800 profile=1 compared=423618 samples
+PRA exact rate=352800 profile=2 compared=423618 samples
+BBD first mismatch rate=384000 sample=400264 tabs=1 actual=0x1.5b039cp-5,-0x1.c20a26p-6 reference=0x1.5b0394p-5,-0x1.c20a34p-6
+FAIL: BBD signal and all four tab states are bit-identical rate=384000 profile=-1
+FAIL: BBD nonzero tails and re-entry to zero history are bit-identical rate=384000 profile=-1
+FAIL: BBD wake from zero packet history is bit-identical rate=384000 profile=-1
+BBD exact rate=384000 compared=1198849 samples
+PRA exact rate=384000 profile=0 compared=461058 samples
+PRA exact rate=384000 profile=1 compared=461058 samples
+PRA exact rate=384000 profile=2 compared=461058 samples
+Idle exact skips: 1245 checks, 19 failures
+
+EXIT 1

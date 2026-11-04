@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -697,7 +697,7 @@
+     // disables it whatever the parameters say.
+     {
+         modern::ModernControls controls;
+-        controls.enabled = ! isPureCs80(global.renderPolicy);
++        controls.enabled = true;
+         for (int m = 0; m < modern::kMsegCount; ++m)
+             controls.msegRate[(std::size_t) m] = std::exp2(p(P_mseg1Rate + m)); // octaves -> speed
+         for (int s = 0; s < modern::kModSlots; ++s)

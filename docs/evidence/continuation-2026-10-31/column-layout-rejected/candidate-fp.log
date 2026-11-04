@@ -1,0 +1,26 @@
+x86 MXCSR supported denormal control combinations=4
+Exact scalar filter suite=fp: 59498228 checks, 3360312 failures
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=0 stage.node[3] actual=-1.2616895482777718e-07 expected=-1.2616895482777716e-07 bits=0xbe80ef21dcf95b6a/0xbe80ef21dcf95b69
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=0 stage.companion[3] actual=-4.1599881078735127e-07 expected=-4.1599881078735121e-07 bits=0xbe9beace1e4fe72c/0xbe9beace1e4fe72b
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=0 memory.companion[3] actual=-4.1599881078735127e-07 expected=-4.1599881078735121e-07 bits=0xbe9beace1e4fe72c/0xbe9beace1e4fe72b
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=0 memory.node[3] actual=-1.2616895482777718e-07 expected=-1.2616895482777716e-07 bits=0xbe80ef21dcf95b6a/0xbe80ef21dcf95b69
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=0 phase.node[3] actual=-1.2616895482777718e-07 expected=-1.2616895482777716e-07 bits=0xbe80ef21dcf95b6a/0xbe80ef21dcf95b69
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=1 stage.node[3] actual=-2.0435614508636627e-06 expected=-2.0435614508636623e-06 bits=0xbec12483c9e4f248/0xbec12483c9e4f247
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=1 stage.companion[3] actual=-3.4434942248583603e-06 expected=-3.4434942248583599e-06 bits=0xbecce2d8f85f6583/0xbecce2d8f85f6582
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=1 memory.companion[3] actual=-3.4434942248583603e-06 expected=-3.4434942248583599e-06 bits=0xbecce2d8f85f6583/0xbecce2d8f85f6582
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=1 memory.node[3] actual=-2.0435614508636627e-06 expected=-2.0435614508636623e-06 bits=0xbec12483c9e4f248/0xbec12483c9e4f247
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=1 phase.node[3] actual=-2.0435614508636627e-06 expected=-2.0435614508636623e-06 bits=0xbec12483c9e4f248/0xbec12483c9e4f247
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=2 stage.node[3] actual=-2.7703257005163929e-06 expected=-2.770325700516392e-06 bits=0xbec73d3aa9045304/0xbec73d3aa9045302
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=2 stage.companion[3] actual=-2.0174905899298328e-06 expected=-2.017490589929832e-06 bits=0xbec0ec872e684077/0xbec0ec872e684075
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=2 memory.companion[3] actual=-2.0174905899298328e-06 expected=-2.017490589929832e-06 bits=0xbec0ec872e684077/0xbec0ec872e684075
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=2 memory.node[3] actual=-2.7703257005163929e-06 expected=-2.770325700516392e-06 bits=0xbec73d3aa9045304/0xbec73d3aa9045302
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=2 phase.node[3] actual=-2.7703257005163929e-06 expected=-2.770325700516392e-06 bits=0xbec73d3aa9045304/0xbec73d3aa9045302
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=3 stage.node[3] actual=-3.0948271108829403e-06 expected=-3.0948271108829394e-06 bits=0xbec9f617327ac9c4/0xbec9f617327ac9c2
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=3 stage.companion[3] actual=-4.4779911369364917e-06 expected=-4.4779911369364909e-06 bits=0xbed2c834d4beb3c8/0xbed2c834d4beb3c7
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=3 memory.companion[3] actual=-4.4779911369364917e-06 expected=-4.4779911369364909e-06 bits=0xbed2c834d4beb3c8/0xbed2c834d4beb3c7
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=3 memory.node[3] actual=-3.0948271108829403e-06 expected=-3.0948271108829394e-06 bits=0xbec9f617327ac9c4/0xbec9f617327ac9c2
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=3 phase.node[3] actual=-3.0948271108829403e-06 expected=-3.0948271108829394e-06 bits=0xbec9f617327ac9c4/0xbec9f617327ac9c2
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=4 stage.node[3] actual=-3.0961197282950338e-06 expected=-3.0961197282950325e-06 bits=0xbec9f8ddd23526d2/0xbec9f8ddd23526cf
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=4 stage.companion[3] actual=-8.4056678581001396e-07 expected=-8.4056678581001269e-07 bits=0xbeac3469e8eb53ec/0xbeac3469e8eb53e0
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=4 memory.companion[3] actual=-8.4056678581001396e-07 expected=-8.4056678581001269e-07 bits=0xbeac3469e8eb53ec/0xbeac3469e8eb53e0
+FAIL fp/HP/round=1024/denormal=0/fs=88200.000000 sample=4 memory.node[3] actual=-3.0961197282950338e-06 expected=-3.0961197282950325e-06 bits=0xbec9f8ddd23526d2/0xbec9f8ddd23526cf

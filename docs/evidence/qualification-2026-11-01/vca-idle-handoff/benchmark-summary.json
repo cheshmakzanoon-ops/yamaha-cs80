@@ -1,0 +1,66 @@
+{
+  "timing_qualification": "diagnostic_only_shared_host_contention",
+  "benchmark_scope": "baseline suite, all 11 tone pairs plus moving/idle controls, 48 kHz, 256-frame blocks, 128 held callbacks",
+  "rows": [
+    {
+      "phase": "before",
+      "round": 1,
+      "rows": 51,
+      "source_held_min_median_rtf": 0.920642625,
+      "source_held_middle_median_rtf": 2.5958596875,
+      "source_held_max_median_rtf": 9.31392075,
+      "source_idle_median_rtf": 0.1313775,
+      "nonfinite_count": 0
+    },
+    {
+      "phase": "before",
+      "round": 2,
+      "rows": 51,
+      "source_held_min_median_rtf": 0.837014625,
+      "source_held_middle_median_rtf": 1.208950125,
+      "source_held_max_median_rtf": 1.674495,
+      "source_idle_median_rtf": 0.0658965,
+      "nonfinite_count": 0
+    },
+    {
+      "phase": "before",
+      "round": 3,
+      "rows": 51,
+      "source_held_min_median_rtf": 1.2153283125,
+      "source_held_middle_median_rtf": 2.426628375,
+      "source_held_max_median_rtf": 4.875304875,
+      "source_idle_median_rtf": 0.062428875,
+      "nonfinite_count": 0
+    },
+    {
+      "phase": "after",
+      "round": 1,
+      "rows": 51,
+      "source_held_min_median_rtf": 0.6390691875,
+      "source_held_middle_median_rtf": 1.05870825,
+      "source_held_max_median_rtf": 2.3577639375,
+      "source_idle_median_rtf": 0.0619944375,
+      "nonfinite_count": 0
+    },
+    {
+      "phase": "after",
+      "round": 2,
+      "rows": 51,
+      "source_held_min_median_rtf": 0.959161125,
+      "source_held_middle_median_rtf": 1.4148650625,
+      "source_held_max_median_rtf": 4.16454825,
+      "source_idle_median_rtf": 0.1386421875,
+      "nonfinite_count": 0
+    },
+    {
+      "phase": "after",
+      "round": 3,
+      "rows": 51,
+      "source_held_min_median_rtf": 0.9771830625,
+      "source_held_middle_median_rtf": 1.4945720625,
+      "source_held_max_median_rtf": 4.7223545625,
+      "source_idle_median_rtf": 0.12282375,
+      "nonfinite_count": 0
+    }
+  ]
+}

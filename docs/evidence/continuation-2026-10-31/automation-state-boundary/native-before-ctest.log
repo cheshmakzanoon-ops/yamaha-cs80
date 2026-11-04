@@ -1,0 +1,27 @@
+Internal ctest changing into directory: /workspace/scratch/2f805bffd21a/cs80-qualification/build
+Test project /workspace/scratch/2f805bffd21a/cs80-qualification/build
+    Start 87: cs80_vst3_automation_tests
+1/1 Test #87: cs80_vst3_automation_tests .......***Failed    9.20 sec
+real VST3 maximum partition error=0 sixteen-voice error=0
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+FAIL: native zero-frame flush supersedes the old start of a delayed VST3 curve
+real VST3 zero-frame state-boundary maximum audio error=0.000974897 reader observation error=0
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   9.21 sec
+
+The following tests FAILED:
+	 87 - cs80_vst3_automation_tests (Failed)
+Errors while running CTest

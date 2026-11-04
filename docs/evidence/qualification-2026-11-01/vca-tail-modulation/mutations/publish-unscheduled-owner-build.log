@@ -1,0 +1,12 @@
+COMMAND ["c++", "-std=c++20", "-O3", "-DNDEBUG", "-I", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/src", "-c", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/src/core/Engine.cpp", "-o", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/5335d12742554680d4e26c2a67218db83672cbcd7628ab7a964682cbf184eb8a.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O3", "-DNDEBUG", "-I", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/src", "-c", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/src/core/FactoryPresets.cpp", "-o", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/94fdf87d5012b1e458d363d78c3e45cd58f83a05a5b58056f777e772c65b160c.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O3", "-DNDEBUG", "-I", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/src", "-c", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/tests/VcaTailModulationTests.cpp", "-o", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/fbeaa7ca720e83084d25ef446cef415e233a4699c77441dbaecac85afdad21c2.o"]
+
+EXIT 0
+COMMAND ["c++", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/5335d12742554680d4e26c2a67218db83672cbcd7628ab7a964682cbf184eb8a.o", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/94fdf87d5012b1e458d363d78c3e45cd58f83a05a5b58056f777e772c65b160c.o", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/fbeaa7ca720e83084d25ef446cef415e233a4699c77441dbaecac85afdad21c2.o", "-o", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/publish-unscheduled-owner-gate"]
+
+EXIT 0

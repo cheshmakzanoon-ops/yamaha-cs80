@@ -4,6 +4,7 @@
 // Program Change with bank select, A/B compare and randomise. Run from the UI
 // smoke executable after JUCE initialisation; no user files are written.
 
+#include "HostParameterState.h"
 #include "core/FactoryPresets.h"
 #include "core/Randomise.h"
 #include "plugin/PluginProcessor.h"
@@ -72,7 +73,7 @@ void testProgramLibraryHost(Check&& check)
                   && valuesMatch(restored, legacy[117].values),
               "session naming legacy program 117 restores the same index, name and sound");
         // A pre-library state carries only factoryIndex + presetName.
-        auto tree = old.getAPVTS().copyState();
+        auto tree = cs80::tests::copyHostParameterState(old);
         tree.setProperty("presetName", juce::String(legacy[40].name), nullptr);
         tree.setProperty("factoryIndex", 40, nullptr);
         const auto text = tree.createXml()->toString();
@@ -195,7 +196,7 @@ void testProgramLibraryHost(Check&& check)
         restored.abToggle();
         check(restored.getAbSlot() == 0 && std::abs(restored.getParamValue(cs80::chParam(0, cs80::CP_lpfCutoff)) - original) < 0.01f,
               "restored A slot recalls its sound");
-        check(! restored.getAPVTS().copyState().getChildWithName("AB_COMPARE").isValid(),
+        check(! cs80::tests::copyHostParameterState(restored).getChildWithName("AB_COMPARE").isValid(),
               "A/B slot is not duplicated into the live parameter state");
 
         // Copy A -> B.

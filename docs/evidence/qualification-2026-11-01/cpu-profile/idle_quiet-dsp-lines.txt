@@ -1,0 +1,627 @@
+--------------------------------------------------------------------------------
+Profile data file '/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/idle_quiet.callgrind.1' (creator: callgrind-3.22.0)
+--------------------------------------------------------------------------------
+I1 cache: 32768 B, 64 B, 8-way associative
+D1 cache: 49152 B, 64 B, 12-way associative
+LL cache: 276824064 B, 64 B, 33-way associative
+Timerange: Basic block 0 - 105873946
+Trigger: Client Request
+Profiled target:  /workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle idle_quiet 128 (PID 9, part 1)
+Events recorded:  Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw Bc Bcm Bi Bim
+Events shown:     Ir
+Event sort order: Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw Bc Bcm Bi Bim
+Thresholds:       100 0 0 0 0 0 0 0 0 0 0 0 0
+Include dirs:     
+User annotated:   src/core/Dsp.h
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+Ir                   
+--------------------------------------------------------------------------------
+535,065,489 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+Ir                    file:function
+--------------------------------------------------------------------------------
+119,865,344 (22.40%)  src/core/Dsp.h:cs80::Engine::render(float*, int, float const*)
+ 64,341,120 (12.02%)  src/core/Engine.cpp:cs80::Engine::updateSourceReadouts(float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 41,943,040 ( 7.84%)  src/core/Dsp.h:cs80::FilterEnv::tick(float, bool, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 28,966,912 ( 5.41%)  src/core/BbdChorus.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 24,969,216 ( 4.67%)  src/core/Engine.cpp:cs80::Engine::tickGlobals(float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 20,619,264 ( 3.85%)  src/core/Engine.cpp:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 19,005,440 ( 3.55%)  src/core/Engine.cpp:cs80::Engine::beginSmoothedControls() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 17,367,040 ( 3.25%)  src/core/TouchCircuit.h:cs80::Engine::tickGlobals(float)
+ 16,318,464 ( 3.05%)  src/core/Smoothing.h:cs80::Engine::beginSmoothedControls()
+ 15,532,032 ( 2.90%)  src/core/OutputTapCircuit.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+ 15,397,744 ( 2.88%)  src/core/ReconstructedOscillator.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0] [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+ 12,124,160 ( 2.27%)  src/core/Engine.cpp:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  7,798,784 ( 1.46%)  /usr/include/c++/13/cmath:cs80::Engine::tickGlobals(float)
+  7,536,640 ( 1.41%)  src/core/Engine.cpp:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  7,396,872 ( 1.38%)  src/core/Ig00156Filter.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+  7,257,012 ( 1.36%)  src/core/NoiseSource.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  7,208,960 ( 1.35%)  src/core/PraWahCircuit.h:cs80::PraWahCircuit::process(double) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  5,237,555 ( 0.98%)  ./math/../sysdeps/ieee754/dbl-64/s_sin.c:__sin_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  5,046,272 ( 0.94%)  src/core/ModulationLfo.h:cs80::Engine::tickGlobals(float)
+  5,002,032 ( 0.93%)  src/core/NoiseSource.h:cs80::Engine::tickGlobals(float)
+  4,778,504 ( 0.89%)  src/core/Dsp.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  4,715,248 ( 0.88%)  src/core/Dsp.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+  4,503,567 ( 0.84%)  ./math/../sysdeps/ieee754/dbl-64/e_log.c:__ieee754_log_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  4,390,912 ( 0.82%)  src/core/Dsp.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+  4,259,840 ( 0.80%)  /usr/include/c++/13/cmath:cs80::Engine::beginSmoothedControls()
+  3,670,623 ( 0.69%)  ./math/../sysdeps/ieee754/dbl-64/e_exp.c:__ieee754_exp_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  3,604,480 ( 0.67%)  src/core/Engine.cpp:cs80::Engine::processInternalSample(float&, float&, float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  3,538,944 ( 0.66%)  src/core/Engine.cpp:cs80::Engine::endSmoothedControls() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  3,145,728 ( 0.59%)  /usr/include/c++/13/bits/std_abs.h:cs80::Engine::tickGlobals(float)
+  3,014,656 ( 0.56%)  src/core/OriginalSubOscillator.h:cs80::Engine::tickGlobals(float)
+  2,650,112 ( 0.50%)  src/experimental/ContinuousVoiceCircuit.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  2,224,620 ( 0.42%)  ./math/./w_exp_template.c:exp@@GLIBC_2.29 [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  2,031,616 ( 0.38%)  src/core/Dsp.h:cs80::Adsr::tick(float, bool, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,769,472 ( 0.33%)  src/core/HeadphoneAmpCircuit.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+  1,731,552 ( 0.32%)  src/core/Dsp.h:cs80::Engine::tickGlobals(float)
+  1,708,288 ( 0.32%)  src/core/Engine.cpp:cs80::Engine::render(float*, int, float const*) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,572,864 ( 0.29%)  src/core/ModernLayer.h:cs80::modern::ModernLayer::beginSample(cs80::modern::GlobalInputs const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,572,864 ( 0.29%)  src/core/FxSlot.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  1,510,272 ( 0.28%)  src/core/Engine.cpp:cs80::Engine::refreshToleranceRatios() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+  1,310,720 ( 0.24%)  src/core/ExpressionOptics.h:cs80::Engine::beginSmoothedControls()
+  1,310,720 ( 0.24%)  /usr/include/c++/13/cmath:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  1,134,592 ( 0.21%)  ./math/../sysdeps/ieee754/flt-32/s_sinf.c:__sinf_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+  1,048,576 ( 0.20%)  /usr/include/c++/13/bit:cs80::PraWahCircuit::process(double)
+  1,048,576 ( 0.20%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+  1,048,576 ( 0.20%)  src/core/PraWahCircuit.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+  1,048,576 ( 0.20%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::tickGlobals(float)
+  1,004,544 ( 0.19%)  ./math/../sysdeps/x86/fpu/sincosf_poly.h:__sinf_fma
+    983,040 ( 0.18%)  src/core/Engine.cpp:cs80::Engine::updateArpeggiator(float) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    983,040 ( 0.18%)  src/core/ExactControlTransforms.h:cs80::Engine::tickGlobals(float)
+    917,504 ( 0.17%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::PraWahCircuit::process(double)
+    819,200 ( 0.15%)  src/experimental/ContinuousVoiceCircuit.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    756,352 ( 0.14%)  src/core/SourceFactoryTones.h:cs80::Engine::updateSourceReadouts(float)
+    720,896 ( 0.13%)  src/core/ExactControlTransforms.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    719,184 ( 0.13%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+    655,360 ( 0.12%)  /usr/include/c++/13/cmath:cs80::PraWahCircuit::process(double)
+    655,360 ( 0.12%)  ./math/../sysdeps/x86/fpu/fenv_private.h:__sin_fma
+    538,788 ( 0.10%)  /usr/include/c++/13/bits/std_abs.h:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+    524,288 ( 0.10%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::beginSmoothedControls()
+    524,288 ( 0.10%)  /usr/include/c++/13/bits/std_abs.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+    507,904 ( 0.09%)  src/core/Dsp.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    491,520 ( 0.09%)  ./math/./w_log_template.c:log@@GLIBC_2.29 [/usr/lib/x86_64-linux-gnu/libm.so.6]
+    467,968 ( 0.09%)  ./math/../sysdeps/ieee754/flt-32/s_sincosf.h:__sinf_fma
+    431,082 ( 0.08%)  ./math/../sysdeps/ieee754/dbl-64/s_log1p.c:__log1p_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+    425,984 ( 0.08%)  src/core/Ig00156PhaseCorrection.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    393,216 ( 0.07%)  /usr/include/c++/13/bits/stl_vector.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+    393,216 ( 0.07%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    377,160 ( 0.07%)  src/core/FastMath.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    368,640 ( 0.07%)  /usr/include/c++/13/cmath:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    358,272 ( 0.07%)  src/core/Engine.cpp:cs80::Engine::applyParams(cs80::ParamValues const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    333,693 ( 0.06%)  ./math/../sysdeps/ieee754/dbl-64/math_config.h:__ieee754_exp_fma
+    327,680 ( 0.06%)  src/core/Engine.h:cs80::Engine::tickGlobals(float)
+    327,680 ( 0.06%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::BbdChorus::processIndependent(float, float, float, float, bool, bool)
+    327,680 ( 0.06%)  /usr/include/c++/13/cmath:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+    325,040 ( 0.06%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    278,528 ( 0.05%)  ???:0x0000000000112900 [???]
+    274,560 ( 0.05%)  src/core/Engine.cpp:cs80::Engine::setControlFrame(cs80::ControlFrame const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    262,144 ( 0.05%)  src/core/Dsp.h:cs80::Engine::tickOutput(cs80::Engine::SampleContext const&, float, float, float&, float&)
+    261,992 ( 0.05%)  /usr/include/c++/13/bits/std_abs.h:cs80::voice_continuity::clockStage(cs80::Ig00156Stage&, float&, float, float, float, float, bool)
+    237,568 ( 0.04%)  src/experimental/ContinuousVoiceCircuit.h:void cs80::voice_continuity::storeSnapshot<cs80::Engine::Rank>(cs80::Engine::Rank&, int, cs80::ReconstructedOscillator::IdleState const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    222,462 ( 0.04%)  ???:0x0000000000112bb0 [???]
+    222,462 ( 0.04%)  ???:0x0000000004ad9400 [???]
+    199,808 ( 0.04%)  src/core/Params.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+    196,736 ( 0.04%)  src/core/ExternalModulationInterpolator.h:cs80::Engine::render(float*, int, float const*)
+    196,608 ( 0.04%)  src/core/ModernLayer.h:cs80::Engine::tickGlobals(float)
+    196,608 ( 0.04%)  ???:0x0000000004ad9340 [???]
+    196,608 ( 0.04%)  ???:0x00000000001128e0 [???]
+    196,608 ( 0.04%)  src/core/ModernLayer.h:cs80::modern::ModernLayer::processVoice(int, cs80::modern::VoiceInputs const&) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+    196,608 ( 0.04%)  /usr/include/c++/13/cmath:cs80::ReconstructedOscillator::advanceIdle(double, double, cs80::WscControls const&) [clone .isra.0]
+    196,608 ( 0.04%)  src/core/Engine.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    180,224 ( 0.03%)  src/core/ExactControlTransforms.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    146,432 ( 0.03%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__sinf_fma
+    135,168 ( 0.03%)  src/reference/KeyboardContour.h:cs80::kbc::outputVolts(int, double, double)
+    131,072 ( 0.02%)  ???:0x00000000001126a0 [???]
+    131,072 ( 0.02%)  src/core/ChorusTabs.h:cs80::Engine::mixBus(cs80::Engine::SampleContext const&, float&, float&)
+    114,688 ( 0.02%)  src/core/Vca.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    114,688 ( 0.02%)  src/core/ModMatrix.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+    110,592 ( 0.02%)  src/core/ReconstructedOscillator.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+    107,520 ( 0.02%)  src/core/Smoothing.h:void cs80::(anonymous namespace)::visitSmoothedSettings<cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}>(cs80::GlobalSettings&, cs80::RankSettings*, int, cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}&&) [clone .constprop.0]
+    104,960 ( 0.02%)  src/core/Engine.cpp:cs80::Engine::refreshKeyboardContour() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     98,304 ( 0.02%)  src/core/KasScanner.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     98,304 ( 0.02%)  ./math/../sysdeps/ieee754/dbl-64/math_config.h:__ieee754_log_fma
+     97,920 ( 0.02%)  src/core/Dsp.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+     90,112 ( 0.02%)  src/core/Ig00156Filter.h:void cs80::voice_continuity::storeSnapshot<cs80::Engine::Rank>(cs80::Engine::Rank&, int, cs80::ReconstructedOscillator::IdleState const&)
+     87,040 ( 0.02%)  src/core/Engine.cpp:void cs80::(anonymous namespace)::visitSmoothedSettings<cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}>(cs80::GlobalSettings&, cs80::RankSettings*, int, cs80::Engine::retargetSmoothedSettings()::{lambda(float&)#1}&&) [clone .constprop.0] [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     84,480 ( 0.02%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::updateSourceReadouts(float)
+     81,920 ( 0.02%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     80,256 ( 0.01%)  src/core/Engine.cpp:cs80::Engine::buildSettings() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     73,728 ( 0.01%)  /usr/include/c++/13/bits/std_abs.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     69,632 ( 0.01%)  src/core/KbcContour.h:cs80::kbc::outputVolts(int, double, double) [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     68,992 ( 0.01%)  ./math/../sysdeps/ieee754/flt-32/s_lroundf.c:lroundf [/usr/lib/x86_64-linux-gnu/libm.so.6]
+     65,536 ( 0.01%)  src/core/KasScanner.h:cs80::Engine::tickGlobals(float)
+     57,685 ( 0.01%)  ./math/./w_log1p_template.c:log1p [/usr/lib/x86_64-linux-gnu/libm.so.6]
+     49,152 ( 0.01%)  /usr/include/c++/13/cmath:cs80::Engine::applyParams(cs80::ParamValues const&)
+     48,896 ( 0.01%)  /usr/include/c++/13/cmath:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+     46,336 ( 0.01%)  /usr/include/c++/13/cmath:cs80::Engine::updateSourceReadouts(float)
+     32,768 ( 0.01%)  /usr/include/c++/13/bits/stl_algobase.h:void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+     32,768 ( 0.01%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::kbc::outputVolts(int, double, double)
+     24,576 ( 0.00%)  src/core/Ig00156PhaseCorrection.h:void cs80::voice_continuity::storeSnapshot<cs80::Engine::Rank>(cs80::Engine::Rank&, int, cs80::ReconstructedOscillator::IdleState const&)
+     23,074 ( 0.00%)  ???:0x0000000000112c10 [???]
+     23,074 ( 0.00%)  ???:0x0000000004ad9350 [???]
+     17,152 ( 0.00%)  src/core/Params.h:cs80::Engine::buildSettings()
+     16,384 ( 0.00%)  src/core/ModernLayer.h:cs80::Engine::tickRanks(cs80::Engine::SampleContext const&, float&, float&)
+     16,384 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/e_log2f.c:__log2f_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+     14,336 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::filterAttackTarget(int) const [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     14,336 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::filterInitialTarget(int) const [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+     10,240 ( 0.00%)  /usr/include/c++/13/cmath:cs80::kbc::outputVolts(int, double, double)
+      9,984 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/e_exp2f.c:__exp2f_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+      9,600 ( 0.00%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+      9,600 ( 0.00%)  /usr/include/c++/13/cmath:cs80::Engine::buildSettings()
+      8,704 ( 0.00%)  src/core/Dsp.h:cs80::Engine::buildSettings()
+      8,192 ( 0.00%)  /usr/include/c++/13/bits/stl_algo.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+      7,552 ( 0.00%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::buildSettings()
+      7,168 ( 0.00%)  ???:0x0000000000112a40 [???]
+      4,096 ( 0.00%)  src/core/SourceFactoryTones.h:cs80::Engine::filterAttackTarget(int) const
+      4,096 ( 0.00%)  src/core/SourceFactoryTones.h:cs80::Engine::filterInitialTarget(int) const
+      2,560 ( 0.00%)  src/core/ModernLayer.h:cs80::Engine::buildSettings()
+      2,304 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::retargetSmoothedSettings() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+      2,176 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::updateOversampling() [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+      2,176 ( 0.00%)  src/core/Oversampling.h:cs80::Engine::effectiveOversampling() const
+      2,048 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/e_powf.c:__powf_fma [/usr/lib/x86_64-linux-gnu/libm.so.6]
+      1,536 ( 0.00%)  /workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile.cpp:main [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+      1,408 ( 0.00%)  src/core/Engine.h:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+      1,024 ( 0.00%)  ???:0x0000000000112a00 [???]
+      1,024 ( 0.00%)  src/core/SourceFactoryTones.h:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+        768 ( 0.00%)  ???:0x0000000000112c20 [???]
+        768 ( 0.00%)  src/core/PerformanceControls.h:cs80::Engine::buildSettings()
+        768 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__exp2f_fma
+        512 ( 0.00%)  /usr/include/c++/13/array:cs80::Engine::buildSettings()
+        512 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__log2f_fma
+        384 ( 0.00%)  src/core/Engine.cpp:cs80::Engine::effectiveOversampling() const [/workspace/scratch/a0e502bd4cd5/cs80-evidence/qualified-profile/engine_profile_idle]
+        384 ( 0.00%)  /usr/include/c++/13/array:main
+        384 ( 0.00%)  src/core/OutputTapCircuit.h:cs80::Engine::applyParams(cs80::ParamValues const&)
+        384 ( 0.00%)  src/core/Engine.h:cs80::Engine::buildSettings()
+        384 ( 0.00%)  /usr/include/c++/13/bits/stl_algobase.h:cs80::Engine::effectiveOversampling() const
+        256 ( 0.00%)  ???:0x0000000000112ac0 [???]
+        256 ( 0.00%)  ./math/../include/math.h:__powf_fma
+        256 ( 0.00%)  /usr/include/c++/13/array:cs80::Engine::applyParams(cs80::ParamValues const&)
+        256 ( 0.00%)  ./math/../sysdeps/ieee754/flt-32/math_config.h:__powf_fma
+        128 ( 0.00%)  src/core/Params.h:cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+
+--------------------------------------------------------------------------------
+-- User-annotated source: src/core/Dsp.h
+--------------------------------------------------------------------------------
+Ir                  
+
+-- line 11 ----------------------------------------
+         .           namespace cs80
+         .           {
+         .           
+         .           constexpr float kPi = 3.14159265358979323846f;
+         .           constexpr float kTwoPi = 6.28318530717958647692f;
+         .           
+         .           inline float clampf(float x, float lo, float hi) noexcept
+         .           {
+ 2,424,192 ( 0.45%)      return x < lo ? lo : (x > hi ? hi : x);
+         .           }
+         .           
+         .           inline float lerp(float a, float b, float t) noexcept
+         .           {
+   393,216 ( 0.07%)      return a + (b - a) * t;
+         .           }
+         .           
+         .           inline float softClip(float x) noexcept
+         .           {
+         .               // Generic soft saturation approximation; not an identified OTA/op-amp transfer.
+         .               return std::tanh(x * 0.85f) / 0.85f;
+         .           }
+         .           
+         .           inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
+         .           {
+    65,536 ( 0.01%)      return tuningRef * std::pow(2.0f, (note - 69.0f) / 12.0f);
+         .           }
+         .           
+         .           // IG00156 nominal law: Yamaha CS servicing guide p34; CS-80 IC sheet p42.
+         .           // MIDI60 / .5V is an interface reference, not a panel-slider voltage claim.
+         .           constexpr float kReferenceKeyVolts = 0.5f;
+         .           // Exact-argument exp2 memo; bit-identical to std::exp2 (see ExpMemo below).
+         .           struct Exp2Memo
+         .           {
+         .               float arg = std::numeric_limits<float>::quiet_NaN();
+         .               float value = 0.0f;
+         .               float operator()(float x) noexcept
+         .               {
+   147,456 ( 0.03%)          if (!(x == arg))
+         .                   {
+         .                       arg = x;
+         .                       value = std::exp2(x);
+         .                   }
+    49,152 ( 0.01%)          return value;
+         .               }
+         .           };
+         .           
+         .           inline float filterKeyVolts(float midiPitch) noexcept
+         .           {
+         .               return kReferenceKeyVolts * std::exp2((midiPitch - 60.0f) / 12.0f);
+         .           }
+         .           inline float filterKeyVolts(float midiPitch, Exp2Memo& memo) noexcept
+         .           {
+    49,152 ( 0.01%)      return kReferenceKeyVolts * memo((midiPitch - 60.0f) / 12.0f);
+         .           }
+         .           inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv) noexcept
+         .           {
+         .               return 125.0f * keyVolts * std::exp2(effectiveCutoffCv);
+         .           }
+         .           inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv, Exp2Memo& memo) noexcept
+         .           {
+    81,920 ( 0.02%)      return 125.0f * keyVolts * memo(effectiveCutoffCv);
+         .           }
+         .           inline float filterEffectiveCv(float referenceCutoffHz) noexcept
+         .           {
+       768 ( 0.00%)      return std::log2(std::max(referenceCutoffHz, 0.001f) / (125.0f * kReferenceKeyVolts));
+         .           }
+         .           // Only Q endpoints (.5 at 10V, 5 at 0V) are documented. Linear damping
+         .           // between them and the normalized panel mapping are explicitly provisional.
+         .           inline float provisionalFilterQ(float resonance) noexcept
+         .           {
+         .               return 1.0f / (2.0f - 1.8f * clampf(resonance, 0.0f, 1.0f));
+         .           }
+         .           
+         .           class Rng
+         .           {
+         .           public:
+         .               explicit Rng(uint32_t seed = 0x8a5cd789u) : state(seed ? seed : 0x8a5cd789u) {}
+         .           
+         .               uint32_t nextUInt() noexcept
+         .               {
+   262,144 ( 0.05%)          uint32_t x = state;
+ 1,733,112 ( 0.32%)          x ^= x << 13;
+ 1,733,112 ( 0.32%)          x ^= x >> 17;
+ 1,733,112 ( 0.32%)          x ^= x << 5;
+   262,144 ( 0.05%)          state = x;
+         .                   return x;
+         .               }
+         .           
+         .               float nextUnipolar() noexcept
+         .               {
+   589,824 ( 0.11%)          return (float) (nextUInt() >> 8) * (1.0f / 16777216.0f);
+         .               }
+         .           
+         .               float nextBipolar() noexcept
+         .               {
+   327,680 ( 0.06%)          return nextUnipolar() * 2.0f - 1.0f;
+         .               }
+         .           
+         .           private:
+         .               uint32_t state;
+         .           };
+         .           
+         .           // PolyBLEP residual for a unit step at phase 0.
+         .           inline float polyBlep(float t, float dt) noexcept
+-- line 114 ----------------------------------------
+-- line 243 ----------------------------------------
+         .           inline constexpr double kIg00156OtaLevel = 2.5;
+         .           
+         .           // Lambert continued-fraction (7/6) tanh, clamped where it meets +/-1.
+         .           // Max abs error below 1e-4 (largest near the 4.97 clamp); below 1e-6 for
+         .           // |x| < 3. Odd, monotonic, cheap. Used only by the
+         .           // circuit-engine filter, never by legacy paths.
+         .           inline double fastTanh(double x) noexcept
+         .           {
+   425,680 ( 0.08%)      if (x > 4.97) return 1.0;
+   589,368 ( 0.11%)      if (x < -4.97) return -1.0;
+   392,912 ( 0.07%)      const double x2 = x * x;
+ 1,440,728 ( 0.27%)      return x * (135135.0 + x2 * (17325.0 + x2 * (378.0 + x2)))
+ 1,637,184 ( 0.31%)               / (135135.0 + x2 * (62370.0 + x2 * (3150.0 + x2 * 28.0)));
+         .           }
+         .           
+         .           // Topology-preserving state-variable filter. One instance per HP or LP stage.
+         .           class Svf
+         .           {
+         .           public:
+         .               // Numerical integrator memories, not calibrated capacitor voltages.
+         .               struct State { float ic1 = 0.0f, ic2 = 0.0f; };
+-- line 263 ----------------------------------------
+-- line 362 ----------------------------------------
+         .               {
+         .                   const float x = std::exp(-kTwoPi * clampf(cutoffHz, 1.0f, sampleRate * 0.49f) / sampleRate);
+         .                   a = 1.0f - x;
+         .                   b = x;
+         .               }
+         .           
+         .               float process(float x) noexcept
+         .               {
+ 1,572,864 ( 0.29%)          z = a * x + b * z;
+         .                   return z;
+         .               }
+         .           
+         .               void reset() noexcept { z = 0.0f; }
+         .           
+         .           private:
+         .               float a = 1.0f, b = 0.0f, z = 0.0f;
+         .           };
+-- line 378 ----------------------------------------
+-- line 383 ----------------------------------------
+         .           // NaN initial state forces the first evaluation.
+         .           template <typename T>
+         .           struct ExpMemo
+         .           {
+         .               T arg = std::numeric_limits<T>::quiet_NaN();
+         .               T value = T(0);
+         .               T operator()(T x) noexcept
+         .               {
+   393,216 ( 0.07%)          if (!(x == arg))
+         .                   {
+         .                       arg = x;
+         .                       value = std::exp(x);
+         .                   }
+   131,072 ( 0.02%)          return value;
+         .               }
+         .           };
+         .           
+         .           inline float coefficientExponent(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+         .           {
+         .               seconds = std::max(seconds, 0.00005f);
+         .               return -6.0f * multiplier / (seconds * sampleRate);
+         .           }
+-- line 404 ----------------------------------------
+-- line 459 ----------------------------------------
+         .                   {
+         .                       stage = Stage::Release;
+         .                       stageTime = 0.0f;
+         .                       preciseTime = 0.0;
+         .                   }
+         .               }
+         .           
+         .               // reconstruction is fixed for a note lifetime; Engine resets on mode changes.
+   327,680 ( 0.06%)      float tick(float sampleRate, bool bent = true, bool reconstruction = false) noexcept
+         .               {
+   131,072 ( 0.02%)          if (reconstruction) return tickReconstruction(sampleRate, bent);
+         .                   stageTime += 1.0f / sampleRate;
+         .                   switch (stage)
+         .                   {
+         .                       case Stage::Idle:
+         .                           value = 0.0f;
+         .                           break;
+         .                       case Stage::Attack:
+         .                       {
+-- line 477 ----------------------------------------
+-- line 533 ----------------------------------------
+         .                           {
+         .                               value = 0.0f;
+         .                               stage = Stage::Idle;
+         .                           }
+         .                           break;
+         .                       }
+         .                   }
+         .                   return value;
+   262,144 ( 0.05%)      }
+         .           
+         .               // Live timing controls only: preserve the capacitor-state proxy, stage and
+         .               // elapsed time. Target policies below are explicitly engineering-inferred.
+         .               void setTimes(float attack, float decay, float release) noexcept
+         .               {
+         .                   a = attack;
+         .                   d = decay;
+         .                   r = release;
+-- line 549 ----------------------------------------
+-- line 565 ----------------------------------------
+         .                       liveDecay = true;
+         .                   }
+         .                   s = sustain;
+         .               }
+         .               struct State { Stage stage = Stage::Idle; float value = 0.0f, elapsed = 0.0f; };
+         .               State getState() const noexcept { return { stage, value, stageTime }; }
+         .           
+         .               void setRelease(float seconds) noexcept { r = seconds; }
+    16,384 ( 0.00%)      bool isIdle() const noexcept { return stage == Stage::Idle; }
+         .               bool isReleased() const noexcept { return stage == Stage::Release || stage == Stage::Idle; }
+         .               float getValue() const noexcept { return value; }
+         .           
+         .           private:
+         .               // Never round this state through the public float diagnostic/output. The
+         .               // legacy path remains separate to preserve existing patches byte-for-byte.
+         .               double preciseValue = 0.0, preciseTime = 0.0;
+         .               float tickReconstruction(float sampleRate, bool) noexcept
+         .               {
+   458,752 ( 0.09%)          preciseTime += 1.0 / static_cast<double>(sampleRate);
+         .                   // Single-RC law; `log` selects the settle (decay/release) or attack constant.
+         .                   const auto coefficient = [this, sampleRate](float time, double log = kRcSettleLog) {
+         .                       return expD(-log / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+         .                   };
+   458,752 ( 0.09%)          switch (stage)
+         .                   {
+   131,072 ( 0.02%)              case Stage::Idle: preciseValue = 0.0; break;
+         .                       case Stage::Attack:
+         .                       {
+         .                           // Charge toward the overshoot target; the comparator ends at 1.
+         .                           const double target = 1.0 + (kRcAttackOvershoot - 1.0) * (1.0 - attackFrom);
+         .                           if (attackFrom < 1.0)
+         .                               preciseValue = target + (preciseValue - target) * coefficient(a, kRcAttackLog);
+         .                           if (preciseValue >= 1.0 || attackFrom >= 1.0)
+         .                           {
+-- line 598 ----------------------------------------
+-- line 618 ----------------------------------------
+         .                           }
+         .                           else preciseValue = s;
+         .                           break;
+         .                       case Stage::Release:
+         .                           preciseValue *= coefficient(r);
+         .                           if (preciseValue < 0.0002f) { preciseValue = 0.0; stage = Stage::Idle; }
+         .                           break;
+         .                   }
+    65,536 ( 0.01%)          stageTime = static_cast<float>(preciseTime);
+   196,608 ( 0.04%)          return value = static_cast<float>(preciseValue);
+         .               }
+         .               Stage stage = Stage::Idle;
+         .               float value = 0.0f;
+         .               float stageTime = 0.0f;
+         .               bool liveSustain = false, liveDecay = false;
+         .               double sustainState = 0.0, decayState = 0.0;
+         .               double attackFrom = 0.0; // circuit-engine attack start level
+         .               float a = 0.0f, d = 0.0f, s = 0.0f, r = 0.0f;
+-- line 635 ----------------------------------------
+-- line 721 ----------------------------------------
+         .                       releaseSelected = true;
+         .                       stageTime = 0.0f;
+         .                       preciseTime = 0.0;
+         .                       if (liveRelease) releaseState = value;
+         .                   }
+         .               }
+         .           
+         .               // reconstruction is fixed for a note lifetime; Engine resets on mode changes.
+ 3,145,728 ( 0.59%)      float tick(float sampleRate, bool bent = true, bool reconstruction = false) noexcept
+         .               {
+ 2,097,152 ( 0.39%)          if (reconstruction) return tickReconstruction(sampleRate, bent);
+         .                   stageTime += 1.0f / sampleRate;
+         .                   switch (stage)
+         .                   {
+         .                       case Stage::Idle:
+         .                           // Completed release is still an IL selection while another
+         .                           // envelope keeps the voice audible. Track without reactivating
+         .                           // the stage; an unselected reset Idle remains inert.
+         .                           if (releaseSelected && liveRelease && value != il)
+-- line 739 ----------------------------------------
+-- line 802 ----------------------------------------
+         .                               value = il;
+         .                               releaseState = il;
+         .                               stage = Stage::Idle;
+         .                           }
+         .                           break;
+         .                       }
+         .                   }
+         .                   return value;
+ 3,145,728 ( 0.59%)      }
+         .           
+         .               // Live timing controls only: preserve the capacitor-state proxy, stage and
+         .               // elapsed time. Target policies below are explicitly engineering-inferred.
+         .               void setTimes(float attack, float decay, float release) noexcept
+         .               {
+     4,096 ( 0.00%)          a = attack;
+         .                   d = decay;
+     2,048 ( 0.00%)          r = release;
+         .               }
+         .               // Inferred phase selection: AL acts in Attack, IL in Release (including
+         .               // completed-release Idle); other
+         .               // selections are stored, not treated as a trigger. Decay/Sustain keep their
+         .               // grounded steady target. Preserve all state, including elapsed bend time.
+         .               void setLevels(float initialLevel, float attackLevel) noexcept
+         .               {
+    10,240 ( 0.00%)          if (attackLevel != al && stage == Stage::Attack)
+         .                   {
+         .                       if (!liveAttack) attackState = value;
+         .                       liveAttack = true;
+         .                       // Circuit engine: a moved AL restarts the charge from the present level.
+         .                       attackFrom = preciseValue;
+         .                       preciseTime = 0.0;
+         .                   }
+     6,144 ( 0.00%)          if (initialLevel != il)
+         .                   {
+         .                       if (!liveRelease) releaseState = value;
+         .                       liveRelease = true;
+         .                   }
+     2,048 ( 0.00%)          il = initialLevel;
+         .                   al = attackLevel;
+         .               }
+         .               struct State { Stage stage = Stage::Idle; float value = 0.0f, elapsed = 0.0f; };
+    16,384 ( 0.00%)      State getState() const noexcept { return { stage, value, stageTime }; }
+         .           
+         .               void setRelease(float seconds) noexcept { r = seconds; }
+         .               bool isIdle() const noexcept { return stage == Stage::Idle; }
+         .               float getValue() const noexcept { return value; }
+         .           
+         .           private:
+         .               // Never round this state through the public float diagnostic/output. The
+         .               // legacy path remains separate to preserve existing patches byte-for-byte.
+         .               double preciseValue = 0.0, preciseTime = 0.0;
+         .               float tickReconstruction(float sampleRate, bool) noexcept
+         .               {
+ 7,340,032 ( 1.37%)          preciseTime += 1.0 / static_cast<double>(sampleRate);
+         .                   // Single-RC law; `log` selects the settle (decay/release) or attack constant.
+         .                   const auto coefficient = [this, sampleRate](float time, double log = kRcSettleLog) {
+         .                       return expD(-log / (std::max(time, 0.00005f) * static_cast<double>(sampleRate)));
+         .                   };
+ 7,340,032 ( 1.37%)          switch (stage)
+         .                   {
+         .                       case Stage::Idle:
+11,534,336 ( 2.16%)                  if (releaseSelected && liveRelease && preciseValue != il)
+         .                           {
+         .                               preciseValue += (il - preciseValue) * (1.0 - coefficient(r));
+         .                               if (std::abs(preciseValue - il) < 0.0008f) preciseValue = il;
+         .                           }
+         .                           break;
+         .                       case Stage::Attack:
+         .                       {
+         .                           // Charge IL -> AL toward an overshoot target; comparator at AL.
+-- line 871 ----------------------------------------
+-- line 892 ----------------------------------------
+         .                       case Stage::Release:
+         .                           preciseValue += (il - preciseValue) * (1.0 - coefficient(r));
+         .                           if (std::abs(preciseValue - il) < 0.0008f)
+         .                           {
+         .                               preciseValue = il; stage = Stage::Idle;
+         .                           }
+         .                           break;
+         .                   }
+ 1,048,576 ( 0.20%)          stageTime = static_cast<float>(preciseTime);
+ 6,291,456 ( 1.18%)          return value = static_cast<float>(preciseValue);
+         .               }
+         .               Stage stage = Stage::Idle;
+         .               float value = 0.0f, stageTime = 0.0f;
+         .               bool liveAttack = false, liveRelease = false, releaseSelected = false;
+         .               double attackState = 0.0, releaseState = 0.0;
+         .               double attackFrom = 0.0; // circuit-engine attack start level
+         .               float il = 0.0f, al = 0.0f, a = 0.0f, d = 0.0f, r = 0.0f, sustain = 0.0f;
+         .               ExpMemo<float> expF;
+-- line 909 ----------------------------------------
+-- line 1241 ----------------------------------------
+         .           // the host rate, so the filter's duration, and with the last internal sample of
+         .           // each frame retained its delay, is 63 host samples at every factor.
+         .           class OversamplingDecimator
+         .           {
+         .           public:
+         .               static constexpr int kMaxFactor = 8;
+         .               static constexpr int tapsFor(int factor) noexcept { return 128 * factor - 1; }
+         .               static constexpr int centerFor(int factor) noexcept { return (tapsFor(factor) - 1) / 2; }
+    65,536 ( 0.01%)      static constexpr int retainedPhaseFor(int factor) noexcept { return factor - 1; }
+         .               static constexpr int hostLatencyFor(int factor) noexcept
+         .               { return (centerFor(factor) - retainedPhaseFor(factor)) / factor; }
+         .               static constexpr bool validFactor(int factor) noexcept
+         .               { return factor == 2 || factor == 4 || factor == 8; }
+         .               static constexpr int kMaxTaps = 128 * kMaxFactor - 1;
+         .           
+         .               // Bounded work and no allocation: safe to repeat on the render thread.
+         .               void prepare(int newFactor) noexcept
+-- line 1257 ----------------------------------------
+-- line 1279 ----------------------------------------
+         .                       coeffs[(size_t) i] = coeffs[(size_t) (taps - 1 - i)] = (float) (design[(size_t) i] / sum);
+         .                   reset();
+         .               }
+         .           
+         .               void reset() noexcept { hist.fill(0.0f); idx = 0; }
+         .           
+         .               void push(float x) noexcept
+         .               {
+   393,216 ( 0.07%)          hist[(size_t) idx] = x;
+   524,288 ( 0.10%)          hist[(size_t) (idx + taps)] = x;
+   819,200 ( 0.15%)          if (++idx >= taps) idx = 0;
+         .               }
+         .           
+         .               float output() const noexcept
+         .               {
+   262,144 ( 0.05%)          const float* newest = hist.data() + idx - 1 + taps;
+   589,824 ( 0.11%)          double y = (double) coeffs[(size_t) center] * newest[-center];
+25,559,040 ( 4.78%)          for (int i = 0; i < center; ++i)
+24,969,216 ( 4.67%)              y += (double) coeffs[(size_t) i]
+66,584,576 (12.44%)                   * ((double) newest[-i] + (double) newest[-(taps - 1 - i)]);
+    98,304 ( 0.02%)          return (float) y;
+         .               }
+         .           
+         .               float process(float x) noexcept { push(x); return output(); }
+         .           
+         .               int getFactor() const noexcept { return factor; }
+         .               int getTaps() const noexcept { return taps; }
+         .               int getCenter() const noexcept { return center; }
+         .               int getRetainedPhase() const noexcept { return retainedPhaseFor(factor); }
+-- line 1307 ----------------------------------------
+
+--------------------------------------------------------------------------------
+Ir                   
+--------------------------------------------------------------------------------
+180,332,888 (33.70%)  events annotated
+

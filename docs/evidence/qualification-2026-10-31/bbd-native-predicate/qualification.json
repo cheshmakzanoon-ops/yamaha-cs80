@@ -1,0 +1,313 @@
+{
+  "source_commit": "360a82b8487c11f289a97d2de0f950d2860834b5",
+  "platform": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+  "generated_gate_command": [
+    "/usr/bin/c++",
+    "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE",
+    "-o",
+    "CMakeFiles/cs80_idle_exact_skip_tests.dir/tests/IdleExactSkipTests.cpp.o",
+    "-c",
+    "/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/tests/IdleExactSkipTests.cpp"
+  ],
+  "reused_compiler_arguments": [
+    "/usr/bin/c++",
+    "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE"
+  ],
+  "source_sha256": {
+    "header": "9f20e524e9a6946657e0081bfd56cfdbd9131aba458d0750eb7f127b9f639131",
+    "gate": "579d06b09e4715d4ef76a2fb8d579471284dad8ae7d5dcb83ade7ce559ed9f5e",
+    "contract": "78ed7435d329e12bc6910dd6a28fd6dd1fc489086756802ce9949f27dcc58dc7",
+    "probe": "8ea4e9642759d7c33457a82a34ae98d4ac419194a1ee8d1be7751a16717d8df5"
+  },
+  "processes": [
+    {
+      "name": "compiler-version",
+      "command": [
+        "/usr/bin/c++",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "probe-assembly.s",
+      "command": [
+        "/usr/bin/c++",
+        "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIE",
+        "-S",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/driver/tests/diagnostics/BbdHistoryPredicateProbe.cpp",
+        "-o",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/probe-assembly.s"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "probe-llvm.ll",
+      "command": [
+        "/usr/bin/c++",
+        "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIE",
+        "-S",
+        "-emit-llvm",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/driver/tests/diagnostics/BbdHistoryPredicateProbe.cpp",
+        "-o",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/probe-llvm.ll"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "probe",
+      "command": [
+        "/usr/bin/c++",
+        "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIE",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/driver/tests/diagnostics/BbdHistoryPredicateProbe.cpp",
+        "-o",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/probe"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "probe-run",
+      "command": [
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/probe"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "original-gate",
+      "command": [
+        "/usr/bin/c++",
+        "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIE",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/tests/IdleExactSkipTests.cpp",
+        "-o",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/original-gate"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "original-gate-run",
+      "command": [
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/original-gate"
+      ],
+      "exit_code": 1
+    },
+    {
+      "name": "candidate-gate",
+      "command": [
+        "/usr/bin/c++",
+        "-I",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/candidate-include",
+        "-I",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src/core",
+        "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIE",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/tests/IdleExactSkipTests.cpp",
+        "-o",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/candidate-gate"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "candidate-gate-run",
+      "command": [
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/candidate-gate"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "mutation-gate",
+      "command": [
+        "/usr/bin/c++",
+        "-I",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/floating-comparison-mutation-include",
+        "-I",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src/core",
+        "-I/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/src",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++20",
+        "-fPIE",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/baseline/tests/IdleExactSkipTests.cpp",
+        "-o",
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/mutation-gate"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "mutation-gate-run",
+      "command": [
+        "/Users/runner/work/yamaha-cs80/yamaha-cs80/evidence/mutation-gate"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "performance_pass_claim": false,
+  "probe_rows": [
+    {
+      "mxcsr": "00001f82",
+      "item": "0",
+      "expected": "1",
+      "production": "1",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00001f82",
+      "item": "1",
+      "expected": "1",
+      "production": "1",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00001f82",
+      "item": "2",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00001f82",
+      "item": "3",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00001fc0",
+      "item": "0",
+      "expected": "1",
+      "production": "0",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00001fc0",
+      "item": "1",
+      "expected": "1",
+      "production": "0",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00001fc0",
+      "item": "2",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00001fc0",
+      "item": "3",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00009f82",
+      "item": "0",
+      "expected": "1",
+      "production": "1",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00009f82",
+      "item": "1",
+      "expected": "1",
+      "production": "1",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00009f82",
+      "item": "2",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00009f82",
+      "item": "3",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00009fc0",
+      "item": "0",
+      "expected": "1",
+      "production": "0",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00009fc0",
+      "item": "1",
+      "expected": "1",
+      "production": "0",
+      "candidate": "1"
+    },
+    {
+      "mxcsr": "00009fc0",
+      "item": "2",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    },
+    {
+      "mxcsr": "00009fc0",
+      "item": "3",
+      "expected": "0",
+      "production": "0",
+      "candidate": "0"
+    }
+  ],
+  "baseline_predicate_errors": 4,
+  "candidate_predicate_errors": 0,
+  "probe_control_met": true,
+  "unchanged_gates": [
+    {
+      "name": "original-gate",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 1,
+      "named_predicate_failure": true
+    },
+    {
+      "name": "candidate-gate",
+      "exit_code": 0,
+      "checks": 1245,
+      "failures": 0,
+      "named_predicate_failure": false
+    },
+    {
+      "name": "mutation-gate",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 1,
+      "named_predicate_failure": true
+    }
+  ],
+  "source_unchanged": true,
+  "diagnostic_contract_met": true,
+  "note": "Expected original/mutant failures are retained. This result is not an overall plugin or CPU performance pass."
+}

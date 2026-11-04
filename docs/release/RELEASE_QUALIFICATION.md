@@ -83,3 +83,33 @@ Common options are a non-referential product name with a descriptive
 "inspired by" statement, removal of the wordmark from the nameplate art, and a
 bundle ID without the model number. Changing the bundle ID or plugin codes breaks
 saved sessions, so decide before the first public release.
+
+
+## Reviewed-main dispatch request (2026-10-31)
+
+The existing `release.yml` remains the installer workflow. A repository
+maintainer may dispatch it through the small
+`.github/workflows/dispatch-reviewed-release.yml` relay when their connected
+GitHub client has branch-write operations but does not expose workflow dispatch.
+Create/update `.github/release-request.json` on the dedicated
+`codex/cs80-release-dispatch` branch with full `expected_main_sha` and
+`validated_sha` fields. The request branch must start from reviewed main.
+The relay uses the repository's ephemeral Actions token, with `actions: write`
+and `contents: read`; it neither adds secrets nor exports credentials.
+
+Before dispatch, the guard checks the main SHA, the latest successful main
+push runs of `build.yml`, `dsp-measurements.yml` and `screenshots.yml`, and the
+ancestry of any automatically refreshed screenshot-only commit. A retry
+recognizes an existing running or successful release of the same main SHA.
+The dispatch target is always `main`. Code changes after the validated revision,
+a failed/pending check, or a changed main head stop the request for review;
+there is no forced branch update or retry-to-green behavior.
+
+The contract was registered in `tests/release/dispatch-contract.json` before
+implementation. The standalone fixture passes 17 checks. Five temporary
+mutations are rejected: missing main lease, unvalidated code changes, ignored
+screenshot failure, wrong dispatch branch, and duplicate release dispatch.
+Run `node tests/release/dispatch-reviewed-release.test.cjs` to repeat the guard
+fixtures. The relay executes the same fixtures before invoking GitHub's API.
+GitHub explicitly permits workflow-dispatch events created by `GITHUB_TOKEN`:
+<https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow>.

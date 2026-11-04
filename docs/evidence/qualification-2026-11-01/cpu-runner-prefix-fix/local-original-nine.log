@@ -1,0 +1,13 @@
+KILLED 01/27 request_one_round
+KILLED 02/27 request_short_commit
+KILLED 03/27 request_duplicate_label
+KILLED 04/27 request_wrong_reporter_hash
+Traceback (most recent call last):
+  File "/workspace/scratch/a0e502bd4cd5/cs80-cpu-runner-fix/tests/cpu/test-cpu-qualification-runner.py", line 295, in <module>
+    run()
+  File "/workspace/scratch/a0e502bd4cd5/cs80-cpu-runner-fix/tests/cpu/test-cpu-qualification-runner.py", line 271, in run
+    request_witness(mutant, original, request, edit)
+  File "/workspace/scratch/a0e502bd4cd5/cs80-cpu-runner-fix/tests/cpu/test-cpu-qualification-runner.py", line 94, in request_witness
+    mutant.validate_request(malformed)
+  File "/tmp/cs80-cpu-gate-mutants-6q2qu0mt/mutant-05.py", line 116, in validate_request
+ValueError: historical checkpoint identity or order changed

@@ -1,0 +1,50 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2065,23 +2065,6 @@
+             // Keep a removed pan route current until its cached offset clears.
+             // Released controller inputs stay zero after the first idle deadline,
+             // even when the smoother restores their event-set targets afterward.
+-            if (freeRunning && modern.isActive()
+-                && (modern.hasPanDestinations()
+-                    || modern.rankOffsets(vi, 0).pan != 0.0f
+-                    || modern.rankOffsets(vi, 1).pan != 0.0f)
+-                && (v.ranks[0].vca.hasCouplingTail() || v.ranks[1].vca.hasCouplingTail()))
+-            {
+-                // Tail pan needs this sample's modulation. Predict the original
+-                // idle deadline without changing its clock or ownership cadence.
+-                const bool scheduled = v.idleClock + 1 >= due;
+-                const bool releasedControls = scheduled || v.idleSteps > 0;
+-                modern.processVoice(vi,
+-                    { v.age, v.held || v.pedalHeld, v.note, v.velocity,
+-                      releasedControls ? 0.0f : v.pressure, releasedControls ? 0.0f : v.timbre, v.contour,
+-                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+-                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, scheduled);
+-                modernUpdatedForTail = true;
+-            }
+             // The amplitude gate may be closed while its downstream VCA
+             // coupling capacitor still drives the mix. Keep that signed RC
+             // discharge connected at audio rate; only the oscillator/filter
+@@ -2106,6 +2089,23 @@
+                     mixL += voiceOut * panLeft;
+                     mixR += voiceOut * panRight;
+                 }
++            if (freeRunning && modern.isActive()
++                && (modern.hasPanDestinations()
++                    || modern.rankOffsets(vi, 0).pan != 0.0f
++                    || modern.rankOffsets(vi, 1).pan != 0.0f)
++                && (v.ranks[0].vca.hasCouplingTail() || v.ranks[1].vca.hasCouplingTail()))
++            {
++                // Tail pan needs this sample's modulation. Predict the original
++                // idle deadline without changing its clock or ownership cadence.
++                const bool scheduled = v.idleClock + 1 >= due;
++                const bool releasedControls = scheduled || v.idleSteps > 0;
++                modern.processVoice(vi,
++                    { v.age, v.held || v.pedalHeld, v.note, v.velocity,
++                      releasedControls ? 0.0f : v.pressure, releasedControls ? 0.0f : v.timbre, v.contour,
++                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
++                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, scheduled);
++                modernUpdatedForTail = true;
++            }
+             if (! freeRunning || ++v.idleClock < due)
+                 continue;
+             idleSamples = v.idleClock;

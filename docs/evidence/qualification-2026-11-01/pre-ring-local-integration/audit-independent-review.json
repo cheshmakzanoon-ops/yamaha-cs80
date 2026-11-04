@@ -1,0 +1,1086 @@
+{
+  "verification": "passed independent Decimal/raw-row/matrix checks",
+  "counts": {
+    "phrase.csv": 566,
+    "fx.csv": 102,
+    "alias.csv": 168,
+    "latency.csv": 40,
+    "click-causality.csv": 9
+  },
+  "source_phrase": {
+    "peak_db": {
+      "max": "-0.370568",
+      "worst_rows": [
+        {
+          "csv_row": 315,
+          "name": "Guitar 1 + Guitar 2",
+          "group": "tab",
+          "rate": "96000"
+        }
+      ],
+      "exceeding_count": 0,
+      "exceeding_rows": []
+    },
+    "click_retrigger": {
+      "max": "1.6192",
+      "worst_rows": [
+        {
+          "csv_row": 359,
+          "name": "Laser Sweep",
+          "group": "program:FX",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 2,
+      "exceeding_rows": [
+        {
+          "csv_row": 359,
+          "name": "Laser Sweep",
+          "rate": "44100",
+          "value": "1.6192"
+        },
+        {
+          "csv_row": 533,
+          "name": "Velvet Sequences 172",
+          "rate": "44100",
+          "value": "1.23689"
+        }
+      ]
+    },
+    "click_steal": {
+      "max": "1.03039",
+      "worst_rows": [
+        {
+          "csv_row": 312,
+          "name": "Clavichord 1 + Clavichord 2",
+          "group": "tab",
+          "rate": "96000"
+        }
+      ],
+      "exceeding_count": 1,
+      "exceeding_rows": [
+        {
+          "csv_row": 312,
+          "name": "Clavichord 1 + Clavichord 2",
+          "rate": "96000",
+          "value": "1.03039"
+        }
+      ]
+    },
+    "click_off": {
+      "max": "1.62689",
+      "worst_rows": [
+        {
+          "csv_row": 294,
+          "name": "Funky 1 + Funky 2",
+          "group": "tab",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 23,
+      "exceeding_rows": [
+        {
+          "csv_row": 294,
+          "name": "Funky 1 + Funky 2",
+          "rate": "44100",
+          "value": "1.62689"
+        },
+        {
+          "csv_row": 305,
+          "name": "Funky 1 + Funky 2",
+          "rate": "48000",
+          "value": "1.29131"
+        },
+        {
+          "csv_row": 316,
+          "name": "Funky 1 + Funky 2",
+          "rate": "96000",
+          "value": "1.22096"
+        },
+        {
+          "csv_row": 317,
+          "name": "Funky 3 + Funky 4",
+          "rate": "96000",
+          "value": "1.05304"
+        },
+        {
+          "csv_row": 319,
+          "name": "Tone II: String 2",
+          "rate": "44100",
+          "value": "1.01455"
+        },
+        {
+          "csv_row": 336,
+          "name": "Tone I: Funky 1",
+          "rate": "44100",
+          "value": "1.28183"
+        },
+        {
+          "csv_row": 337,
+          "name": "Tone II: Funky 2",
+          "rate": "44100",
+          "value": "1.10494"
+        },
+        {
+          "csv_row": 339,
+          "name": "Tone II: Funky 4",
+          "rate": "44100",
+          "value": "1.01888"
+        },
+        {
+          "csv_row": 351,
+          "name": "Dry Bass",
+          "rate": "44100",
+          "value": "1.29425"
+        },
+        {
+          "csv_row": 352,
+          "name": "Resonant Bass",
+          "rate": "44100",
+          "value": "1.2857"
+        },
+        {
+          "csv_row": 353,
+          "name": "Bass Stack",
+          "rate": "44100",
+          "value": "1.06635"
+        },
+        {
+          "csv_row": 384,
+          "name": "Amber Strings 23",
+          "rate": "44100",
+          "value": "1.41526"
+        },
+        {
+          "csv_row": 402,
+          "name": "Hollow Strings 41",
+          "rate": "44100",
+          "value": "1.14565"
+        },
+        {
+          "csv_row": 415,
+          "name": "Electric Pads 54",
+          "rate": "44100",
+          "value": "1.13095"
+        },
+        {
+          "csv_row": 428,
+          "name": "Frozen Pads 67",
+          "rate": "44100",
+          "value": "1.46513"
+        },
+        {
+          "csv_row": 446,
+          "name": "Bright Bass 85",
+          "rate": "44100",
+          "value": "1.04607"
+        },
+        {
+          "csv_row": 457,
+          "name": "Electric Bass 96",
+          "rate": "44100",
+          "value": "1.00462"
+        },
+        {
+          "csv_row": 467,
+          "name": "Slow Keys 106",
+          "rate": "44100",
+          "value": "1.08675"
+        },
+        {
+          "csv_row": 511,
+          "name": "Soft FX 150",
+          "rate": "44100",
+          "value": "1.00001"
+        },
+        {
+          "csv_row": 524,
+          "name": "Frozen Sequences 163",
+          "rate": "44100",
+          "value": "1.0443"
+        },
+        {
+          "csv_row": 532,
+          "name": "Amber Sequences 171",
+          "rate": "44100",
+          "value": "1.01944"
+        },
+        {
+          "csv_row": 548,
+          "name": "Bright Bass 85",
+          "rate": "48000",
+          "value": "1.03091"
+        },
+        {
+          "csv_row": 562,
+          "name": "Bright Bass 85",
+          "rate": "96000",
+          "value": "1.07748"
+        }
+      ]
+    },
+    "click_chord_off": {
+      "max": "1.6135",
+      "worst_rows": [
+        {
+          "csv_row": 287,
+          "name": "Brass 1 + Brass 2",
+          "group": "tab",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 37,
+      "exceeding_rows": [
+        {
+          "csv_row": 285,
+          "name": "String 1 + String 2",
+          "rate": "44100",
+          "value": "1.3392"
+        },
+        {
+          "csv_row": 286,
+          "name": "String 3 + String 4",
+          "rate": "44100",
+          "value": "1.33439"
+        },
+        {
+          "csv_row": 287,
+          "name": "Brass 1 + Brass 2",
+          "rate": "44100",
+          "value": "1.6135"
+        },
+        {
+          "csv_row": 288,
+          "name": "Flute + Brass 3",
+          "rate": "44100",
+          "value": "1.10096"
+        },
+        {
+          "csv_row": 289,
+          "name": "E. Piano + Bass",
+          "rate": "44100",
+          "value": "1.00107"
+        },
+        {
+          "csv_row": 291,
+          "name": "Harpsichord 1 + Harpsichord 2",
+          "rate": "44100",
+          "value": "1.1688"
+        },
+        {
+          "csv_row": 292,
+          "name": "Organ 1 + Organ 2",
+          "rate": "44100",
+          "value": "1.04372"
+        },
+        {
+          "csv_row": 293,
+          "name": "Guitar 1 + Guitar 2",
+          "rate": "44100",
+          "value": "1.07175"
+        },
+        {
+          "csv_row": 319,
+          "name": "Tone II: String 2",
+          "rate": "44100",
+          "value": "1.04459"
+        },
+        {
+          "csv_row": 324,
+          "name": "Tone I: Flute",
+          "rate": "44100",
+          "value": "1.01111"
+        },
+        {
+          "csv_row": 339,
+          "name": "Tone II: Funky 4",
+          "rate": "44100",
+          "value": "1.00246"
+        },
+        {
+          "csv_row": 345,
+          "name": "Glass Strings",
+          "rate": "44100",
+          "value": "1.00262"
+        },
+        {
+          "csv_row": 347,
+          "name": "Dry Ensemble",
+          "rate": "44100",
+          "value": "1.00975"
+        },
+        {
+          "csv_row": 356,
+          "name": "Analog Piano",
+          "rate": "44100",
+          "value": "1.01991"
+        },
+        {
+          "csv_row": 361,
+          "name": "Init Patch",
+          "rate": "44100",
+          "value": "1.15633"
+        },
+        {
+          "csv_row": 377,
+          "name": "Velvet Brass 16",
+          "rate": "44100",
+          "value": "1.31274"
+        },
+        {
+          "csv_row": 393,
+          "name": "Slow Strings 32",
+          "rate": "44100",
+          "value": "1.01151"
+        },
+        {
+          "csv_row": 398,
+          "name": "Amber Strings 37",
+          "rate": "44100",
+          "value": "1.00594"
+        },
+        {
+          "csv_row": 402,
+          "name": "Hollow Strings 41",
+          "rate": "44100",
+          "value": "1.46621"
+        },
+        {
+          "csv_row": 421,
+          "name": "Soft Pads 60",
+          "rate": "44100",
+          "value": "1.10111"
+        },
+        {
+          "csv_row": 426,
+          "name": "Hollow Pads 65",
+          "rate": "44100",
+          "value": "1.18145"
+        },
+        {
+          "csv_row": 463,
+          "name": "Golden Keys 102",
+          "rate": "44100",
+          "value": "1.20976"
+        },
+        {
+          "csv_row": 466,
+          "name": "Midnight Keys 105",
+          "rate": "44100",
+          "value": "1.1166"
+        },
+        {
+          "csv_row": 475,
+          "name": "Neon Keys 114",
+          "rate": "44100",
+          "value": "1.09656"
+        },
+        {
+          "csv_row": 476,
+          "name": "Amber Leads 115",
+          "rate": "44100",
+          "value": "1.09981"
+        },
+        {
+          "csv_row": 491,
+          "name": "Velvet Leads 130",
+          "rate": "44100",
+          "value": "1.01255"
+        },
+        {
+          "csv_row": 500,
+          "name": "Distant FX 139",
+          "rate": "44100",
+          "value": "1.17717"
+        },
+        {
+          "csv_row": 504,
+          "name": "Frozen FX 143",
+          "rate": "44100",
+          "value": "1.18019"
+        },
+        {
+          "csv_row": 507,
+          "name": "Slow FX 146",
+          "rate": "44100",
+          "value": "1.01095"
+        },
+        {
+          "csv_row": 527,
+          "name": "Slow Sequences 166",
+          "rate": "44100",
+          "value": "1.36581"
+        },
+        {
+          "csv_row": 533,
+          "name": "Velvet Sequences 172",
+          "rate": "44100",
+          "value": "1.1314"
+        },
+        {
+          "csv_row": 534,
+          "name": "Distant Sequences 173",
+          "rate": "44100",
+          "value": "1.0548"
+        },
+        {
+          "csv_row": 539,
+          "name": "Electric Sequences 178",
+          "rate": "44100",
+          "value": "1.0899"
+        },
+        {
+          "csv_row": 541,
+          "name": "Tone I: Guitar 1",
+          "rate": "48000",
+          "value": "1.10986"
+        },
+        {
+          "csv_row": 546,
+          "name": "Frozen Pads 53",
+          "rate": "48000",
+          "value": "1.08756"
+        },
+        {
+          "csv_row": 553,
+          "name": "Midnight Sequences 165",
+          "rate": "48000",
+          "value": "1.48248"
+        },
+        {
+          "csv_row": 560,
+          "name": "Frozen Pads 53",
+          "rate": "96000",
+          "value": "1.10016"
+        }
+      ]
+    }
+  },
+  "legacy_phrase": {
+    "peak_db": {
+      "max": "-3.00479",
+      "worst_rows": [
+        {
+          "csv_row": 171,
+          "name": "Hollow Bass 93",
+          "group": "program:Bass",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 0,
+      "exceeding_rows": []
+    },
+    "click_retrigger": {
+      "max": "1.34769",
+      "worst_rows": [
+        {
+          "csv_row": 19,
+          "name": "Harpsichord 1 + Harpsichord 2",
+          "group": "tab",
+          "rate": "48000"
+        }
+      ],
+      "exceeding_count": 8,
+      "exceeding_rows": [
+        {
+          "csv_row": 7,
+          "name": "Clavichord 1 + Clavichord 2",
+          "rate": "44100",
+          "value": "1.19487"
+        },
+        {
+          "csv_row": 17,
+          "name": "E. Piano + Bass",
+          "rate": "48000",
+          "value": "1.07005"
+        },
+        {
+          "csv_row": 19,
+          "name": "Harpsichord 1 + Harpsichord 2",
+          "rate": "48000",
+          "value": "1.34769"
+        },
+        {
+          "csv_row": 21,
+          "name": "Guitar 1 + Guitar 2",
+          "rate": "48000",
+          "value": "1.02839"
+        },
+        {
+          "csv_row": 29,
+          "name": "Clavichord 1 + Clavichord 2",
+          "rate": "96000",
+          "value": "1.12515"
+        },
+        {
+          "csv_row": 30,
+          "name": "Harpsichord 1 + Harpsichord 2",
+          "rate": "96000",
+          "value": "1.13043"
+        },
+        {
+          "csv_row": 45,
+          "name": "Tone I: Clavichord 1",
+          "rate": "44100",
+          "value": "1.2049"
+        },
+        {
+          "csv_row": 258,
+          "name": "Tone I: Guitar 1",
+          "rate": "48000",
+          "value": "1.05011"
+        }
+      ]
+    },
+    "click_steal": {
+      "max": "1.18409",
+      "worst_rows": [
+        {
+          "csv_row": 48,
+          "name": "Tone II: Harpsichord 2",
+          "group": "program:Hardware Studies",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 5,
+      "exceeding_rows": [
+        {
+          "csv_row": 8,
+          "name": "Harpsichord 1 + Harpsichord 2",
+          "rate": "44100",
+          "value": "1.09393"
+        },
+        {
+          "csv_row": 18,
+          "name": "Clavichord 1 + Clavichord 2",
+          "rate": "48000",
+          "value": "1.08883"
+        },
+        {
+          "csv_row": 48,
+          "name": "Tone II: Harpsichord 2",
+          "rate": "44100",
+          "value": "1.18409"
+        },
+        {
+          "csv_row": 142,
+          "name": "Neon Pads 64",
+          "rate": "44100",
+          "value": "1.07582"
+        },
+        {
+          "csv_row": 273,
+          "name": "Blade Choir",
+          "rate": "96000",
+          "value": "1.01431"
+        }
+      ]
+    },
+    "click_off": {
+      "max": "1.17989",
+      "worst_rows": [
+        {
+          "csv_row": 147,
+          "name": "Midnight Pads 69",
+          "group": "program:Pads",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 25,
+      "exceeding_rows": [
+        {
+          "csv_row": 16,
+          "name": "Flute + Brass 3",
+          "rate": "48000",
+          "value": "1.01817"
+        },
+        {
+          "csv_row": 20,
+          "name": "Organ 1 + Organ 2",
+          "rate": "48000",
+          "value": "1.0156"
+        },
+        {
+          "csv_row": 24,
+          "name": "String 1 + String 2",
+          "rate": "96000",
+          "value": "1.00681"
+        },
+        {
+          "csv_row": 25,
+          "name": "String 3 + String 4",
+          "rate": "96000",
+          "value": "1.02847"
+        },
+        {
+          "csv_row": 35,
+          "name": "Tone I: String 1",
+          "rate": "44100",
+          "value": "1.08434"
+        },
+        {
+          "csv_row": 39,
+          "name": "Tone I: Brass 1",
+          "rate": "44100",
+          "value": "1.00841"
+        },
+        {
+          "csv_row": 43,
+          "name": "Tone I: E. Piano",
+          "rate": "44100",
+          "value": "1.0053"
+        },
+        {
+          "csv_row": 44,
+          "name": "Tone II: Bass",
+          "rate": "44100",
+          "value": "1.0316"
+        },
+        {
+          "csv_row": 55,
+          "name": "Tone I: Funky 3",
+          "rate": "44100",
+          "value": "1.01645"
+        },
+        {
+          "csv_row": 74,
+          "name": "Bright Keys",
+          "rate": "44100",
+          "value": "1.04063"
+        },
+        {
+          "csv_row": 77,
+          "name": "Arp Motion",
+          "rate": "44100",
+          "value": "1.05487"
+        },
+        {
+          "csv_row": 94,
+          "name": "Velvet Brass 16",
+          "rate": "44100",
+          "value": "1.01293"
+        },
+        {
+          "csv_row": 95,
+          "name": "Distant Brass 17",
+          "rate": "44100",
+          "value": "1.00087"
+        },
+        {
+          "csv_row": 124,
+          "name": "Slow Strings 46",
+          "rate": "44100",
+          "value": "1.04119"
+        },
+        {
+          "csv_row": 126,
+          "name": "Velvet Pads 48",
+          "rate": "44100",
+          "value": "1.01178"
+        },
+        {
+          "csv_row": 136,
+          "name": "Dark Pads 58",
+          "rate": "44100",
+          "value": "1.0225"
+        },
+        {
+          "csv_row": 141,
+          "name": "Distant Pads 63",
+          "rate": "44100",
+          "value": "1.02438"
+        },
+        {
+          "csv_row": 147,
+          "name": "Midnight Pads 69",
+          "rate": "44100",
+          "value": "1.17989"
+        },
+        {
+          "csv_row": 176,
+          "name": "Velvet Keys 98",
+          "rate": "44100",
+          "value": "1.02813"
+        },
+        {
+          "csv_row": 194,
+          "name": "Velvet Leads 116",
+          "rate": "44100",
+          "value": "1.07829"
+        },
+        {
+          "csv_row": 237,
+          "name": "Distant Sequences 159",
+          "rate": "44100",
+          "value": "1.10275"
+        },
+        {
+          "csv_row": 247,
+          "name": "Wide Sequences 169",
+          "rate": "44100",
+          "value": "1.16825"
+        },
+        {
+          "csv_row": 259,
+          "name": "Blade Choir",
+          "rate": "48000",
+          "value": "1.13382"
+        },
+        {
+          "csv_row": 270,
+          "name": "Midnight Sequences 165",
+          "rate": "48000",
+          "value": "1.1602"
+        },
+        {
+          "csv_row": 278,
+          "name": "Midnight Pads 69",
+          "rate": "96000",
+          "value": "1.02372"
+        }
+      ]
+    },
+    "click_chord_off": {
+      "max": "1.20541",
+      "worst_rows": [
+        {
+          "csv_row": 215,
+          "name": "Amber FX 137",
+          "group": "program:FX",
+          "rate": "44100"
+        }
+      ],
+      "exceeding_count": 21,
+      "exceeding_rows": [
+        {
+          "csv_row": 34,
+          "name": "Funky 3 + Funky 4",
+          "rate": "96000",
+          "value": "1.02386"
+        },
+        {
+          "csv_row": 45,
+          "name": "Tone I: Clavichord 1",
+          "rate": "44100",
+          "value": "1.00905"
+        },
+        {
+          "csv_row": 46,
+          "name": "Tone II: Clavichord 2",
+          "rate": "44100",
+          "value": "1.00905"
+        },
+        {
+          "csv_row": 47,
+          "name": "Tone I: Harpsichord 1",
+          "rate": "44100",
+          "value": "1.00905"
+        },
+        {
+          "csv_row": 48,
+          "name": "Tone II: Harpsichord 2",
+          "rate": "44100",
+          "value": "1.00905"
+        },
+        {
+          "csv_row": 51,
+          "name": "Tone I: Guitar 1",
+          "rate": "44100",
+          "value": "1.00905"
+        },
+        {
+          "csv_row": 52,
+          "name": "Tone II: Guitar 2",
+          "rate": "44100",
+          "value": "1.00905"
+        },
+        {
+          "csv_row": 64,
+          "name": "Dry Ensemble",
+          "rate": "44100",
+          "value": "1.04027"
+        },
+        {
+          "csv_row": 71,
+          "name": "Ribbon Lead",
+          "rate": "44100",
+          "value": "1.01556"
+        },
+        {
+          "csv_row": 80,
+          "name": "Velvet Brass 2",
+          "rate": "44100",
+          "value": "1.03924"
+        },
+        {
+          "csv_row": 119,
+          "name": "Hollow Strings 41",
+          "rate": "44100",
+          "value": "1.01791"
+        },
+        {
+          "csv_row": 132,
+          "name": "Electric Pads 54",
+          "rate": "44100",
+          "value": "1.03045"
+        },
+        {
+          "csv_row": 137,
+          "name": "Wide Pads 59",
+          "rate": "44100",
+          "value": "1.12382"
+        },
+        {
+          "csv_row": 141,
+          "name": "Distant Pads 63",
+          "rate": "44100",
+          "value": "1.03785"
+        },
+        {
+          "csv_row": 158,
+          "name": "Golden Bass 80",
+          "rate": "44100",
+          "value": "1.05207"
+        },
+        {
+          "csv_row": 183,
+          "name": "Midnight Keys 105",
+          "rate": "44100",
+          "value": "1.06677"
+        },
+        {
+          "csv_row": 215,
+          "name": "Amber FX 137",
+          "rate": "44100",
+          "value": "1.20541"
+        },
+        {
+          "csv_row": 216,
+          "name": "Velvet FX 138",
+          "rate": "44100",
+          "value": "1.14166"
+        },
+        {
+          "csv_row": 225,
+          "name": "Bright FX 147",
+          "rate": "44100",
+          "value": "1.00484"
+        },
+        {
+          "csv_row": 250,
+          "name": "Velvet Sequences 172",
+          "rate": "44100",
+          "value": "1.08217"
+        },
+        {
+          "csv_row": 276,
+          "name": "Amber Strings 37",
+          "rate": "96000",
+          "value": "1.18897"
+        }
+      ]
+    }
+  },
+  "source_ring_off_48k": {
+    "saw": {
+      "rows": 7,
+      "max_db": "-71.14",
+      "exceeding_count": 0
+    },
+    "pulse": {
+      "rows": 7,
+      "max_db": "-76.36",
+      "exceeding_count": 0
+    }
+  },
+  "causal": [
+    {
+      "name": "Funky 1 + Funky 2",
+      "rate": "44100",
+      "event": "single_note_off",
+      "baseline_score": "1.62688913455",
+      "omitted_event_score": "1.6268876393",
+      "prefix_max_abs": "0",
+      "first_strike_score": "",
+      "retrigger_score": "",
+      "coordinate": "tone_tabs",
+      "event_sample": "61760",
+      "baseline_peak_sample": "61814",
+      "omitted_peak_sample": "61814",
+      "baseline_peak_jump": "0.0607985258102",
+      "omitted_peak_jump": "0.0607984699309",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "R",
+      "added_peak_sample": "61982",
+      "added_peak_jump": "0.0109797725454"
+    },
+    {
+      "name": "Bass Stack",
+      "rate": "44100",
+      "event": "note_on",
+      "baseline_score": "0.567655911129",
+      "omitted_event_score": "0.0270218485223",
+      "prefix_max_abs": "0",
+      "first_strike_score": "1.05041697771",
+      "retrigger_score": "0.567655911129",
+      "coordinate": "original_physical_panel",
+      "event_sample": "275648",
+      "baseline_peak_sample": "276000",
+      "omitted_peak_sample": "275672",
+      "baseline_peak_jump": "0.00520242378116",
+      "omitted_peak_jump": "0.000247648451477",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "L",
+      "added_peak_sample": "276000",
+      "added_peak_jump": "0.00511137023568"
+    },
+    {
+      "name": "Bass Stack",
+      "rate": "44100",
+      "event": "note_on",
+      "baseline_score": "0.294052189432",
+      "omitted_event_score": "0.29405277458",
+      "prefix_max_abs": "0",
+      "first_strike_score": "0.114090498048",
+      "retrigger_score": "0.294052189432",
+      "coordinate": "electrical_programmer",
+      "event_sample": "275648",
+      "baseline_peak_sample": "275672",
+      "omitted_peak_sample": "275672",
+      "baseline_peak_jump": "0.000497264729347",
+      "omitted_peak_jump": "0.000497265718877",
+      "baseline_peak_channel": "L",
+      "omitted_peak_channel": "L",
+      "added_peak_sample": "275861",
+      "added_peak_jump": "4.26024198532e-05"
+    },
+    {
+      "name": "Funky 1 + Funky 2",
+      "rate": "48000",
+      "event": "single_note_off",
+      "baseline_score": "1.29131001926",
+      "omitted_event_score": "1.3805030684",
+      "prefix_max_abs": "0",
+      "first_strike_score": "",
+      "retrigger_score": "",
+      "coordinate": "tone_tabs",
+      "event_sample": "67200",
+      "baseline_peak_sample": "67276",
+      "omitted_peak_sample": "67458",
+      "baseline_peak_jump": "0.0478125922382",
+      "omitted_peak_jump": "0.0511150918901",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "R",
+      "added_peak_sample": "67458",
+      "added_peak_jump": "0.0107687963173"
+    },
+    {
+      "name": "Bass Stack",
+      "rate": "48000",
+      "event": "note_on",
+      "baseline_score": "1.44092402862",
+      "omitted_event_score": "0.0314353112129",
+      "prefix_max_abs": "0",
+      "first_strike_score": "1.12329136581",
+      "retrigger_score": "1.44092402862",
+      "coordinate": "original_physical_panel",
+      "event_sample": "300032",
+      "baseline_peak_sample": "300406",
+      "omitted_peak_sample": "300370",
+      "baseline_peak_jump": "0.0114142503589",
+      "omitted_peak_jump": "0.000249014177825",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "L",
+      "added_peak_sample": "300406",
+      "added_peak_jump": "0.0113861244172"
+    },
+    {
+      "name": "Bass Stack",
+      "rate": "48000",
+      "event": "note_on",
+      "baseline_score": "0.269982960216",
+      "omitted_event_score": "0.237557903226",
+      "prefix_max_abs": "0",
+      "first_strike_score": "0.120942636349",
+      "retrigger_score": "0.269982960216",
+      "coordinate": "electrical_programmer",
+      "event_sample": "300032",
+      "baseline_peak_sample": "300413",
+      "omitted_peak_sample": "300288",
+      "baseline_peak_jump": "0.00050322082825",
+      "omitted_peak_jump": "0.000442783813924",
+      "baseline_peak_channel": "L",
+      "omitted_peak_channel": "R",
+      "added_peak_sample": "300415",
+      "added_peak_jump": "7.27518927306e-05"
+    },
+    {
+      "name": "Funky 1 + Funky 2",
+      "rate": "96000",
+      "event": "single_note_off",
+      "baseline_score": "1.22095816514",
+      "omitted_event_score": "1.23890355235",
+      "prefix_max_abs": "0",
+      "first_strike_score": "",
+      "retrigger_score": "",
+      "coordinate": "tone_tabs",
+      "event_sample": "134400",
+      "baseline_peak_sample": "134484",
+      "omitted_peak_sample": "134484",
+      "baseline_peak_jump": "0.0365452691913",
+      "omitted_peak_jump": "0.0370824038982",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "R",
+      "added_peak_sample": "134849",
+      "added_peak_jump": "0.00869418121874"
+    },
+    {
+      "name": "Bass Stack",
+      "rate": "96000",
+      "event": "note_on",
+      "baseline_score": "1.36530856995",
+      "omitted_event_score": "0.0730429978427",
+      "prefix_max_abs": "0",
+      "first_strike_score": "1.10607857225",
+      "retrigger_score": "1.36530856995",
+      "coordinate": "original_physical_panel",
+      "event_sample": "600000",
+      "baseline_peak_sample": "600750",
+      "omitted_peak_sample": "600639",
+      "baseline_peak_jump": "0.00564906746149",
+      "omitted_peak_jump": "0.000302220927551",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "L",
+      "added_peak_sample": "600749",
+      "added_peak_jump": "0.0056206760928"
+    },
+    {
+      "name": "Bass Stack",
+      "rate": "96000",
+      "event": "note_on",
+      "baseline_score": "0.385795006863",
+      "omitted_event_score": "0.386348194455",
+      "prefix_max_abs": "0",
+      "first_strike_score": "0.310214964467",
+      "retrigger_score": "0.385795006863",
+      "coordinate": "electrical_programmer",
+      "event_sample": "600000",
+      "baseline_peak_sample": "600509",
+      "omitted_peak_sample": "600509",
+      "baseline_peak_jump": "0.000399122480303",
+      "omitted_peak_jump": "0.000399694778025",
+      "baseline_peak_channel": "R",
+      "omitted_peak_channel": "R",
+      "added_peak_sample": "600766",
+      "added_peak_jump": "4.15173126385e-05"
+    }
+  ],
+  "nonfinite": {
+    "phrase_stereo_frames": 0,
+    "fx_stereo_frames": 0,
+    "alias_nonfinite_render_rows": [],
+    "numeric_csv_cells": [],
+    "causal_audio_frame_count_exported": false,
+    "latency_audio_frame_count_exported": false
+  }
+}

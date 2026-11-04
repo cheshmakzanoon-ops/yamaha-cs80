@@ -1,0 +1,11 @@
+--- src/core/Vca.h
++++ src/core/Vca.h
+@@ -61,7 +61,7 @@
+         // Retain the original idle model's numerical zero floor. A charge
+         // below the audio threshold must still decay rather than freeze.
+         if (std::abs(coupling) < 1.0e-30) coupling = 0.0;
+-        return static_cast<float>(-coupling);
++        return static_cast<float>(-0.5 * coupling);
+     }
+     bool hasCouplingTail() const noexcept { return coupling != 0.0; }
+ 

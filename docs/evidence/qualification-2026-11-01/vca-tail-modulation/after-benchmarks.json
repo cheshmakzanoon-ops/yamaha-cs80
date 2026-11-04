@@ -1,0 +1,62 @@
+{
+  "source_commit": "b96c3cfd52f42eccc8cd37bbdbaa7edb84b5d94f",
+  "source_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+  "binary_sha256": "3fad41e7ff9659e7dcc4c1a73ce771892de74dc7386eea24d8185635236808a5",
+  "method": "Same 48kHz/256-frame/128-callback matrix as the three b75 after rounds reused as before. Parent validation workloads are concurrent: timing is diagnostic, not an uncontended performance claim.",
+  "rounds": [
+    {
+      "round": 1,
+      "command": [
+        "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+        "--out",
+        "/tmp/cs80-tail-modulation-qualification/after-benchmark-1",
+        "--source-commit",
+        "b96c3cfd52f42eccc8cd37bbdbaa7edb84b5d94f",
+        "--rate",
+        "48000",
+        "--block",
+        "256",
+        "--callbacks",
+        "128"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 32.496100684998964
+    },
+    {
+      "round": 2,
+      "command": [
+        "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+        "--out",
+        "/tmp/cs80-tail-modulation-qualification/after-benchmark-2",
+        "--source-commit",
+        "b96c3cfd52f42eccc8cd37bbdbaa7edb84b5d94f",
+        "--rate",
+        "48000",
+        "--block",
+        "256",
+        "--callbacks",
+        "128"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 37.409974693997356
+    },
+    {
+      "round": 3,
+      "command": [
+        "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+        "--out",
+        "/tmp/cs80-tail-modulation-qualification/after-benchmark-3",
+        "--source-commit",
+        "b96c3cfd52f42eccc8cd37bbdbaa7edb84b5d94f",
+        "--rate",
+        "48000",
+        "--block",
+        "256",
+        "--callbacks",
+        "128"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 42.71679483600019
+    }
+  ]
+}

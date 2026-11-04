@@ -1,0 +1,11 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -1562,7 +1562,7 @@
+             if (freeRunningVoices())
+                 for (auto& rank : voice.ranks)
+                 {
+-                    rank.vca.reset(0.0f);
++                    (void) rank.vca.levelNode();
+                     rank.vcaCold = true;
+                 }
+             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;

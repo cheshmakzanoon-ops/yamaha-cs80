@@ -30,26 +30,10 @@ void say(juce::Graphics& g, const juce::String& s, Rf r, float h, juce::Colour c
     g.drawFittedText(s, r.toNearestInt(), j, 1, 0.85f);
 }
 
-juce::String timeText(float seconds)
-{
-    const int ms = juce::roundToInt(seconds * 1000.0f);
-    if (ms < 1000) return juce::String(ms) + " ms";
-    return juce::String(seconds, seconds < 10.0f ? 2 : 1) + " s";
-}
-
 juce::String hertzText(float hz)
 {
     return hz >= 1000.0f ? juce::String(hz / 1000.0f, hz >= 10000.0f ? 1 : 2) + " kHz" : juce::String(juce::roundToInt(hz)) + " Hz";
 }
-
-// Display widths of the four envelope stages: logarithmic in time, so 5 ms and 5 s both stay readable.
-float stageWidth(float seconds)
-{
-    const float t = juce::jlimit(0.0f, 1.0f, std::log10(juce::jmax(0.001f, seconds) * 1000.0f) / 4.3f);
-    return 0.20f + 0.80f * t;
-}
-
-float approach(float t, float k) { return (1.0f - std::exp(-k * t)) / (1.0f - std::exp(-k)); }
 
 void frame(juce::Graphics& g, Rf r, const juce::String& title, const juce::String& readout)
 {
@@ -80,17 +64,6 @@ void stroke(juce::Graphics& g, const juce::Path& line, juce::Colour c = curveInk
     g.strokePath(line, juce::PathStrokeType(1.5f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 }
 
-// Plain magnitude of a resonant second-order section (an illustration of the panel settings, not the engine's
-// circuit model, which is nonlinear in the circuit engine).
-float sectionDb(float f, float fc, float res, bool highPass)
-{
-    const float q = 0.6f + 6.0f * res * res;
-    const float w = f / juce::jmax(1.0f, fc);
-    const float re = 1.0f - w * w, im = w / q;
-    const float mag = (highPass ? w * w : 1.0f) / std::sqrt(re * re + im * im);
-    return 20.0f * std::log10(juce::jmax(1.0e-6f, mag));
-}
-
 class DrawerKey final : public juce::Button
 {
 public:
@@ -118,7 +91,7 @@ public:
 ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
 {
     setTitle("Voice monitor");
-    setDescription("Live voice monitor: signal path, envelopes and filter response of the chosen channel, and the eight voice cards.");
+    setDescription("Live engine control taps: oscillator frequency, effective cutoffs, and both envelope outputs of the chosen physical voice and rank. The curves show recent engine values at a 15 Hz viewing rate.");
     setWantsKeyboardFocus(true);
     setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
     setOpaque(false);
@@ -138,67 +111,114 @@ ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
     closeKey->onClick = [this] { if (onClose) onClose(); };
     channelI->onClick = [this] { setChannel(0); };
     channelII->onClick = [this] { setChannel(1); };
+    voiceSelect.setTitle("Monitored physical voice");
+    voiceSelect.setComponentID("scope_voice");
+    voiceSelect.setTooltip("Choose a physical voice card; voices 9-16 belong to the second instrument in sixteen-voice mode.");
+    for (int i = 0; i < 8; ++i) voiceSelect.addItem("VOICE " + juce::String(i + 1), i + 1);
+    voiceSelect.setSelectedId(1, juce::dontSendNotification);
+    voiceSelect.onChange = [this] { setVoice(voiceSelect.getSelectedId() - 1); };
+    voiceSelect.setExplicitFocusOrder(++order);
+    addAndMakeVisible(voiceSelect);
     setChannel(0);
 }
 
 ScopeDrawer::~ScopeDrawer()
 {
     stopTimer();
+    processor.setVoiceMonitorEnabled(false);
 }
 
 void ScopeDrawer::setChannel(int newChannel)
 {
     channel = juce::jlimit(0, 1, newChannel);
+    historyCount = historyNext = 0;
     channelI->setToggleState(channel == 0, juce::dontSendNotification);
     channelII->setToggleState(channel == 1, juce::dontSendNotification);
     snap = sample();
+    updateControls();
     repaint();
+}
+
+void ScopeDrawer::setVoice(int newVoice)
+{
+    voice = juce::jlimit(0, processor.getVoiceCapacity() - 1, newVoice);
+    voiceSelect.setSelectedId(voice + 1, juce::dontSendNotification);
+    historyCount = historyNext = 0;
+    snap = sample();
+    updateControls();
+    repaint();
+}
+
+cs80::Engine::RankInfo ScopeDrawer::displayedRank() const
+{
+    return { snap.hpfHz, snap.lpfHz, snap.filterEnvelope, snap.ampEnvelope,
+             snap.oscillatorHz, snap.keyVolts, snap.hpfQ, snap.lpfQ, snap.hpfEnabled, snap.lpfEnabled };
 }
 
 ScopeDrawer::Snapshot ScopeDrawer::sample() const
 {
+    cs80::VoiceMonitorFrame frame;
+    if (!processor.readVoiceMonitor(frame)) return snap;
     Snapshot s;
     s.channel = channel;
-    s.source = processor.getHardwareSource(channel);
-    for (int local = 0; local < cs80::CP_count; ++local)
-        s.v[(size_t) local] = processor.getParamValue(cs80::chParam(channel, local));
-    // What is sounding: a tone tab or a memory owns the 26 programmer controls (as in the processor).
-    if (s.source < 11)
-    {
-        cs80::ParamValues tone;
-        cs80::applyHardwareTone(tone, channel, s.source);
-        for (int local = 0; local < cs80::CP_count; ++local)
-            if (Cs80AudioProcessor::isMemoryControl(local))
-                s.v[(size_t) local] = tone[cs80::chParam(channel, local)];
-    }
-    else if (s.source < 13)
-    {
-        const int bank = channel + (s.source == 12 ? 2 : 0);
-        for (int local = 0; local < cs80::CP_count; ++local)
-            if (Cs80AudioProcessor::isMemoryControl(local))
-                s.v[(size_t) local] = processor.getMemoryValue(bank, local);
-    }
-    for (int i = 0; i < 8; ++i)
-        if (processor.isVoiceActive(i))
-            s.voices |= 1u << i;
+    s.capacity = frame.capacity;
+    s.voice = juce::jlimit(0, s.capacity - 1, voice);
+    s.source = frame.sources[(size_t) channel];
+    s.serial = frame.serial;
+    const auto& selected = frame.voices[(size_t) s.voice];
+    const auto& rank = selected.ranks[(size_t) channel];
+    s.note = selected.info.note;
+    s.assignmentSerial = selected.info.assignmentSerial;
+    s.oscillatorHz = rank.oscillatorHz;
+    s.hpfHz = rank.hpfHz; s.lpfHz = rank.lpfHz;
+    s.filterEnvelope = rank.filterEnvelope; s.ampEnvelope = rank.ampEnvelope;
+    s.keyVolts = rank.keyVolts; s.hpfQ = rank.hpfQ; s.lpfQ = rank.lpfQ;
+    s.hpfEnabled = rank.hpfEnabled; s.lpfEnabled = rank.lpfEnabled;
+    for (int i = 0; i < s.capacity; ++i)
+        if (frame.voices[(size_t) i].info.active) s.voices |= 1u << i;
     return s;
 }
 
 void ScopeDrawer::timerCallback()
 {
     const auto now = sample();
-    if (! (now == snap))
+    if (!(now == snap))
     {
+        if (now.assignmentSerial != snap.assignmentSerial || now.voice != snap.voice || now.channel != snap.channel)
+            historyCount = historyNext = 0;
+        history[historyNext] = now;
+        historyNext = (historyNext + 1) % history.size();
+        historyCount = std::min(historyCount + 1, history.size());
         snap = now;
+        voice = snap.voice;
+        updateControls();
         repaint();
     }
 }
 
+void ScopeDrawer::updateControls()
+{
+    // Selection can change while the published audio frame stays the same. Do not wait
+    // for another block to populate the second instrument's choices or accessible text.
+    if (voiceSelect.getNumItems() != snap.capacity)
+    {
+        voiceSelect.clear(juce::dontSendNotification);
+        for (int i = 0; i < snap.capacity; ++i) voiceSelect.addItem("VOICE " + juce::String(i + 1), i + 1);
+    }
+    voiceSelect.setSelectedId(voice + 1, juce::dontSendNotification);
+    setDescription("Engine control taps, voice " + juce::String(voice + 1) + (channel == 0 ? ", rank I" : ", rank II")
+        + ": oscillator " + hertzText(snap.oscillatorHz) + ", HPF " + hertzText(snap.hpfHz) + ", LPF " + hertzText(snap.lpfHz)
+        + ", filter envelope " + juce::String(snap.filterEnvelope, 3) + ", amplitude envelope " + juce::String(snap.ampEnvelope, 3)
+        + ". Curves show recent engine values at a 15 Hz viewing rate.");
+}
+
 void ScopeDrawer::visibilityChanged()
 {
+    processor.setVoiceMonitorEnabled(isVisible());
     if (isVisible())
     {
         snap = sample();
+        updateControls();
         startTimerHz(15);
     }
     else
@@ -229,148 +249,95 @@ void ScopeDrawer::paint(juce::Graphics& g)
                           : snap.source == 13 ? juce::String("PANEL") : "MEMORY " + juce::String(snap.channel + (snap.source == 12 ? 3 : 1));
     say(g, juce::String(snap.channel == 0 ? "CHANNEL I" : "CHANNEL II") + "  /  " + sourceName, { 22.0f, 38.0f, 260.0f, 16.0f }, 11.0f, goldInk());
 
-    // Voice cards: eight jewels, lit while that card sounds.
+    // One lamp per physical slot; extension slots are a second row.
     int count = 0;
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < snap.capacity; ++i)
     {
         const bool on = (snap.voices >> i) & 1u;
         count += on ? 1 : 0;
-        drawJewelLamp(g, { 30.0f + (float) i * 22.0f, 70.0f }, 6.0f, amber, on);
+        drawJewelLamp(g, { 30.0f + (float) (i % 8) * 22.0f, snap.capacity == 16 ? 66.0f + 15.0f * (float) (i / 8) : 70.0f },
+                      snap.capacity == 16 ? 4.5f : 6.0f, amber, on);
     }
-    say(g, "VOICES  " + juce::String(count) + " / 8", { 210.0f, 62.0f, 120.0f, 16.0f }, 11.0f, ink());
+    say(g, juce::String(count) + "/" + juce::String(snap.capacity), { 196.0f, 62.0f, 36.0f, 18.0f }, 10.5f, ink());
 
-    // Signal path: VCO -> HPF -> LPF -> VCA, with the sine bypass under it.
     const char* names[] = { "VCO", "HPF", "LPF", "VCA" };
-    const bool active[] = { true, p(cs80::CP_hpfOn) >= 0.5f, p(cs80::CP_lpfOn) >= 0.5f, true };
+    const bool active[] = { true, snap.hpfEnabled, snap.lpfEnabled, true };
     const float y = 92.0f, h = 40.0f, w = 80.0f;
     for (int i = 0; i < 4; ++i)
     {
         const Rf box(22.0f + (float) i * 98.0f, y, w, h);
         if (i < 3)
         {
-            g.setColour(goldInk().withAlpha(0.9f));
-            g.drawLine(box.getRight() + 1.0f, y + h * 0.5f, box.getRight() + 14.0f, y + h * 0.5f, 1.0f);
-            juce::Path head;
-            head.addTriangle(box.getRight() + 18.0f, y + h * 0.5f, box.getRight() + 12.0f, y + h * 0.5f - 3.4f, box.getRight() + 12.0f, y + h * 0.5f + 3.4f);
-            g.fillPath(head);
+            g.setColour(goldInk());
+            g.drawArrow(juce::Line<float>(box.getRight() + 1.0f, y + h * 0.5f, box.getRight() + 18.0f, y + h * 0.5f), 1.0f, 5.0f, 5.0f);
         }
         g.setColour(active[i] ? juce::Colour(0xff2f2c27) : field());
         g.fillRoundedRectangle(box, 3.0f);
         g.setColour(goldInk().withAlpha(active[i] ? 0.85f : 0.35f));
         g.drawRoundedRectangle(box.reduced(0.5f), 3.0f, 1.0f);
-        juce::String detail;
-        if (i == 0)
-        {
-            juce::StringArray waves;
-            if (p(cs80::CP_saw) >= 0.5f) waves.add("SAW");
-            if (p(cs80::CP_pulse) >= 0.5f) waves.add("PLS");
-            if (p(cs80::CP_noise) > 0.02f) waves.add("NSE");
-            detail = waves.isEmpty() ? juce::String("---") : waves.joinIntoString("+");
-        }
-        else if (i == 1) detail = active[i] ? hertzText(p(cs80::CP_hpfCutoff)) : juce::String("BYPASS");
-        else if (i == 2) detail = active[i] ? hertzText(p(cs80::CP_lpfCutoff)) : juce::String("BYPASS");
-        else detail = juce::String(juce::roundToInt(juce::jlimit(0.0f, 1.0f, p(cs80::CP_vLevel)) * 100.0f)) + " %";
-        say(g, names[i], box.withTrimmedBottom(h * 0.48f).translated(0.0f, 2.0f), 13.0f, active[i] ? ink() : juce::Colour(0xff8a8168),
-            juce::Justification::centred);
-        say(g, detail, box.withTrimmedTop(h * 0.50f).withTrimmedBottom(2.0f), 10.5f, active[i] ? curveInk() : juce::Colour(0xff8a8168),
-            juce::Justification::centred, false);
+        const auto detail = i == 0 ? hertzText(snap.oscillatorHz)
+                          : i == 1 ? (active[i] ? hertzText(snap.hpfHz) : juce::String("BYPASS"))
+                          : i == 2 ? (active[i] ? hertzText(snap.lpfHz) : juce::String("BYPASS"))
+                          : juce::String(snap.ampEnvelope, 3);
+        say(g, names[i], box.withTrimmedBottom(h * 0.48f).translated(0.0f, 2.0f), 13.0f, ink(), juce::Justification::centred);
+        say(g, detail, box.withTrimmedTop(h * 0.50f).withTrimmedBottom(2.0f), 10.5f, curveInk(), juce::Justification::centred, false);
     }
-    {
-        const float sine = juce::jlimit(0.0f, 1.0f, p(cs80::CP_sine));
-        const float yy = y + h + 14.0f;
-        juce::Path route;
-        route.startNewSubPath(62.0f, y + h);
-        route.lineTo(62.0f, yy);
-        route.lineTo(356.0f, yy);
-        route.lineTo(356.0f, y + h + 3.0f);
-        g.setColour(goldInk().withAlpha(0.35f + 0.65f * sine));
-        g.strokePath(route, juce::PathStrokeType(1.0f));
-        g.setColour(juce::Colour(0xff26241f));
-        g.fillRect(160.0f, yy - 8.0f, 100.0f, 16.0f);
-        say(g, "SINE  " + juce::String(juce::roundToInt(sine * 100.0f)) + " %", { 160.0f, yy - 8.0f, 100.0f, 16.0f }, 10.5f, ink(),
-            juce::Justification::centred);
-    }
+    const auto note = snap.note >= 0 ? juce::MidiMessage::getMidiNoteName(snap.note, true, true, 3) : juce::String("IDLE");
+    say(g, "VOICE " + juce::String(snap.voice + 1) + "  /  " + note + "  /  SINE BYPASSES THE FILTERS",
+        { 22.0f, 142.0f, 376.0f, 20.0f }, 10.5f, goldInk(), juce::Justification::centred);
 
-    // VCF envelope: IL down, AL up, decay to zero, release back to IL (octaves of cutoff).
-    auto envelope = [&](Rf r, bool vcf)
+    auto historyAt = [&](std::size_t i) -> const Snapshot&
     {
-        const float a = p(vcf ? cs80::CP_fA : cs80::CP_vA), d = p(vcf ? cs80::CP_fD : cs80::CP_vD), rel = p(vcf ? cs80::CP_fR : cs80::CP_vR);
-        const float sus = vcf ? 0.0f : juce::jlimit(0.0f, 1.0f, p(cs80::CP_vS));
-        frame(g, r, vcf ? "VCF ENVELOPE" : "VCA ENVELOPE", {});
-        // The readout runs under the plot: a 184-unit frame has no room for it beside the title.
-        say(g, "A " + timeText(a) + "  D " + timeText(d) + (vcf ? juce::String() : "  S " + juce::String(juce::roundToInt(sus * 100.0f)) + "%")
-                   + "  R " + timeText(rel),
-            { r.getX() + 6.0f, r.getBottom() - 17.0f, r.getWidth() - 12.0f, 14.0f }, 10.0f, ink().withAlpha(0.85f), juce::Justification::centred,
-            false);
-        const Rf plot(r.getX() + 8.0f, r.getY() + 22.0f, r.getWidth() - 16.0f, r.getHeight() - 42.0f);
-        grid(g, plot, 8, 4);
-        const float wa = stageWidth(a), wd = stageWidth(d), wh = 0.55f, wr = stageWidth(rel);
-        const float u = plot.getWidth() / (wa + wd + wh + wr);
-        const float x0 = plot.getX(), xA = x0 + wa * u, xD = xA + wd * u, xS = xD + wh * u, xR = plot.getRight();
-        const float il = p(cs80::CP_fIl), al = p(cs80::CP_fAl);
-        const float v0 = vcf ? -il : 0.0f, vA = vcf ? al : 1.0f;
-        auto yOf = [&](float v)
-        {
-            return vcf ? plot.getCentreY() - v * plot.getHeight() * 0.46f : plot.getBottom() - 2.0f - v * (plot.getHeight() - 5.0f);
-        };
-        if (vcf)
-        {
-            g.setColour(goldInk().withAlpha(0.35f));
-            const float dash[] = { 3.0f, 3.0f };
-            g.drawDashedLine(juce::Line<float>(plot.getX(), plot.getCentreY(), plot.getRight(), plot.getCentreY()), dash, 2, 0.8f);
-        }
+        return history[(historyNext + history.size() - historyCount + i) % history.size()];
+    };
+    auto trace = [&](Rf plot, auto valueAt, float low, float high, juce::Colour colour)
+    {
+        if (historyCount == 0) return;
         juce::Path line;
-        line.startNewSubPath(x0, yOf(v0));
-        auto seg = [&](float xa, float xb, float va, float vb, float k)
+        for (std::size_t i = 0; i < historyCount; ++i)
         {
-            for (int i = 1; i <= 16; ++i)
-            {
-                const float t = (float) i / 16.0f;
-                line.lineTo(xa + (xb - xa) * t, yOf(va + (vb - va) * approach(t, k)));
-            }
-        };
-        seg(x0, xA, v0, vA, 2.2f);
-        seg(xA, xD, vA, sus, 4.0f);
-        line.lineTo(xS, yOf(sus));
-        seg(xS, xR, sus, v0, 4.0f);
-        juce::Graphics::ScopedSaveState state(g);
+            const float x = plot.getX() + plot.getWidth() * (float) i / (float) std::max<std::size_t>(1, historyCount - 1);
+            const float yValue = plot.getBottom() - plot.getHeight() * juce::jlimit(0.0f, 1.0f, (valueAt(historyAt(i)) - low) / (high - low));
+            if (i == 0) line.startNewSubPath(x, yValue); else line.lineTo(x, yValue);
+        }
+        juce::Graphics::ScopedSaveState clip(g);
         g.reduceClipRegion(plot.expanded(1.0f).toNearestIntEdges());
-        stroke(g, line);
+        stroke(g, line, colour);
+    };
+    auto envelope = [&](Rf r, bool filter)
+    {
+        const float value = filter ? snap.filterEnvelope : snap.ampEnvelope;
+        frame(g, r, filter ? "VCF ENVELOPE" : "VCA ENVELOPE", juce::String(value, 3));
+        const Rf plot(r.getX() + 8.0f, r.getY() + 24.0f, r.getWidth() - 16.0f, r.getHeight() - 44.0f);
+        grid(g, plot, 8, 4);
+        float low = 0.0f, high = 1.0f;
+        if (filter)
+            for (std::size_t i = 0; i < historyCount; ++i)
+            {
+                low = std::min(low, historyAt(i).filterEnvelope);
+                high = std::max(high, historyAt(i).filterEnvelope);
+            }
+        trace(plot, [filter](const Snapshot& s) { return filter ? s.filterEnvelope : s.ampEnvelope; }, low, high, curveInk());
+        say(g, "RECENT ENGINE VALUES", { r.getX() + 6.0f, r.getBottom() - 17.0f, r.getWidth() - 12.0f, 14.0f },
+            10.0f, goldInk(), juce::Justification::centred, false);
     };
     envelope({ 22.0f, 176.0f, 184.0f, 120.0f }, true);
     envelope({ 214.0f, 176.0f, 184.0f, 120.0f }, false);
-
-    // Filter response of the HPF into LPF pair, 20 Hz to 20 kHz.
-    {
-        const Rf r(22.0f, 304.0f, 376.0f, 140.0f);
-        const bool hp = p(cs80::CP_hpfOn) >= 0.5f, lp = p(cs80::CP_lpfOn) >= 0.5f;
-        frame(g, r, "FILTER RESPONSE", (hp ? "HPF " + hertzText(p(cs80::CP_hpfCutoff)) : juce::String("HPF BYPASS")) + "   "
-                                           + (lp ? "LPF " + hertzText(p(cs80::CP_lpfCutoff)) : juce::String("LPF BYPASS")));
-        const Rf plot(r.getX() + 8.0f, r.getY() + 22.0f, r.getWidth() - 16.0f, r.getHeight() - 44.0f);
-        grid(g, plot, 3, 4);
-        juce::Path line;
-        for (int i = 0; i <= 120; ++i)
-        {
-            const float t = (float) i / 120.0f;
-            const float f = 20.0f * std::pow(1000.0f, t);
-            float db = 0.0f;
-            if (hp) db += sectionDb(f, p(cs80::CP_hpfCutoff), p(cs80::CP_hpfRes), true);
-            if (lp) db += sectionDb(f, p(cs80::CP_lpfCutoff), p(cs80::CP_lpfRes), false);
-            const float yy = plot.getY() + juce::jlimit(0.0f, 1.0f, (12.0f - db) / 60.0f) * plot.getHeight();
-            if (i == 0) line.startNewSubPath(plot.getX(), yy); else line.lineTo(plot.getX() + plot.getWidth() * t, yy);
-        }
-        {
-            juce::Graphics::ScopedSaveState state(g);
-            g.reduceClipRegion(plot.expanded(1.0f).toNearestIntEdges());
-            stroke(g, line);
-        }
-        const char* ticks[] = { "20", "200", "2k", "20k" };
-        for (int i = 0; i < 4; ++i)
-            say(g, ticks[i], { plot.getX() + plot.getWidth() * (float) i / 3.0f - 20.0f, plot.getBottom() + 3.0f, 40.0f, 14.0f }, 10.0f,
-                ink().withAlpha(0.75f), juce::Justification::centred, false);
-        say(g, "ILLUSTRATION OF THE PANEL SETTINGS, NOT A MEASUREMENT", { r.getX() + 8.0f, r.getBottom() - 2.0f, r.getWidth() - 16.0f, 14.0f },
-            9.5f, goldInk().withAlpha(0.8f), juce::Justification::centredRight, false);
-    }
+    const Rf r(22.0f, 304.0f, 376.0f, 140.0f);
+    frame(g, r, "EFFECTIVE CUTOFF", "HPF / LPF");
+    const Rf plot(r.getX() + 30.0f, r.getY() + 22.0f, r.getWidth() - 40.0f, r.getHeight() - 46.0f);
+    grid(g, plot, 8, 3);
+    const auto logHz = [](float hz) { return std::log10(std::max(20.0f, hz)); };
+    trace(plot, [&](const Snapshot& s) { return logHz(s.hpfHz); }, logHz(20.0f), logHz(20000.0f), juce::Colour(0xff9ccea3));
+    trace(plot, [&](const Snapshot& s) { return logHz(s.lpfHz); }, logHz(20.0f), logHz(20000.0f), curveInk());
+    const char* labels[] = { "20k", "2k", "200", "20" };
+    for (int i = 0; i < 4; ++i)
+        say(g, labels[i], { r.getX() + 3.0f, plot.getY() + plot.getHeight() * (float) i / 3.0f - 6.0f, 24.0f, 12.0f },
+            9.5f, goldInk(), juce::Justification::centredRight, false);
+    say(g, "HPF " + hertzText(snap.hpfHz) + "  /  LPF " + hertzText(snap.lpfHz),
+        { r.getX() + 8.0f, r.getBottom() - 18.0f, r.getWidth() - 16.0f, 14.0f }, 10.5f, ink(), juce::Justification::centred, false);
+    say(g, "ENGINE CONTROL TAPS  /  15 HZ VIEW", { 22.0f, 448.0f, 376.0f, 14.0f },
+        10.0f, goldInk(), juce::Justification::centred, false);
 }
 
 void ScopeDrawer::resized()
@@ -383,6 +350,7 @@ void ScopeDrawer::resized()
     channelI->setBounds(r(254.0f, 18.0f, 36.0f, 36.0f));
     channelII->setBounds(r(292.0f, 18.0f, 40.0f, 36.0f));
     closeKey->setBounds(r(338.0f, 18.0f, 62.0f, 36.0f));
+    voiceSelect.setBounds(r(236.0f, 56.0f, 162.0f, 35.0f));
 }
 
 // ---------------------------------------------------------------------------

@@ -1,0 +1,11 @@
+--- a/src/core/ModulationLfo.h
++++ b/src/core/ModulationLfo.h
+@@ -100,7 +100,7 @@
+             case LfoWave::sine: return emitOutput ? std::sin(kTwoPi * phase) : 0.0f;
+             case LfoWave::sampleHold:
+                 // A new level at every period start, and immediately on the first tick.
+-                if (! started || wrapped)
++                if (emitOutput && (! started || wrapped))
+                 {
+                     held = rng.nextBipolar();
+                     started = true;

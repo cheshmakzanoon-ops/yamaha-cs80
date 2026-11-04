@@ -1,0 +1,25 @@
+Exact scalar filter suite=moving: 49807360 checks, 16805306 failures
+FAIL moving/HP/fs=88200.000000 sample=1 stage.node[0] actual=-0.0001654126258104002 expected=-0.00016541262582062569 bits=0xbf25ae53a2eb42ff/0xbf25ae53a2f104a5
+FAIL moving/HP/fs=88200.000000 sample=1 stage.node[1] actual=0.14648945796619817 expected=0.14648945810123323 bits=0x3fc2c02aa3963820/0x3fc2c02aa3e0749f
+FAIL moving/HP/fs=88200.000000 sample=1 stage.node[2] actual=0.0017399850514840595 expected=0.001739985051266363 bits=0x3f5c8206b910d760/0x3f5c8206b90185b4
+FAIL moving/HP/fs=88200.000000 sample=1 stage.node[3] actual=-2.043561429916626e-06 expected=-2.0435614297996554e-06 bits=0xbec12483c6f23ff8/0xbec12483c6ee091b
+FAIL moving/HP/fs=88200.000000 sample=1 stage.companion[0] actual=0.00011455300184141424 expected=0.0001145530018209992 bits=0x3f1e07859615ca8e/0x3f1e078595fece52
+FAIL moving/HP/fs=88200.000000 sample=1 stage.companion[1] actual=1.5599799118473991 expected=1.5599799117931867 bits=0x3ff8f5ad7efcd31e/0x3ff8f5ad7ef91967
+FAIL moving/HP/fs=88200.000000 sample=1 stage.companion[2] actual=0.0015014633201854417 expected=0.0015014633197508081 bits=0x3f589997f6ce467e/0x3f589997f6afb0d4
+FAIL moving/HP/fs=88200.000000 sample=1 stage.companion[3] actual=-3.4434941556479881e-06 expected=-3.4434941553558659e-06 bits=0xbecce2d8eea1d480/0xbecce2d8ee974e26
+FAIL moving/HP/fs=88200.000000 sample=1 memory.companion[0] actual=0.00011455300184141424 expected=0.0001145530018209992 bits=0x3f1e07859615ca8e/0x3f1e078595fece52
+FAIL moving/HP/fs=88200.000000 sample=1 memory.companion[1] actual=1.5599799118473991 expected=1.5599799117931867 bits=0x3ff8f5ad7efcd31e/0x3ff8f5ad7ef91967
+FAIL moving/HP/fs=88200.000000 sample=1 memory.companion[2] actual=0.0015014633201854417 expected=0.0015014633197508081 bits=0x3f589997f6ce467e/0x3f589997f6afb0d4
+FAIL moving/HP/fs=88200.000000 sample=1 memory.companion[3] actual=-3.4434941556479881e-06 expected=-3.4434941553558659e-06 bits=0xbecce2d8eea1d480/0xbecce2d8ee974e26
+FAIL moving/HP/fs=88200.000000 sample=1 memory.node[0] actual=-0.0001654126258104002 expected=-0.00016541262582062569 bits=0xbf25ae53a2eb42ff/0xbf25ae53a2f104a5
+FAIL moving/HP/fs=88200.000000 sample=1 memory.node[1] actual=0.14648945796619817 expected=0.14648945810123323 bits=0x3fc2c02aa3963820/0x3fc2c02aa3e0749f
+FAIL moving/HP/fs=88200.000000 sample=1 memory.node[2] actual=0.0017399850514840595 expected=0.001739985051266363 bits=0x3f5c8206b910d760/0x3f5c8206b90185b4
+FAIL moving/HP/fs=88200.000000 sample=1 memory.node[3] actual=-2.043561429916626e-06 expected=-2.0435614297996554e-06 bits=0xbec12483c6f23ff8/0xbec12483c6ee091b
+FAIL moving/HP/fs=88200.000000 sample=1 memory.firstSlope actual=0.99533879929119284 expected=0.99533879928276137 bits=0x3fefd9d0c0eca89a/0x3fefd9d0c0eb7ff2
+FAIL moving/HP/fs=88200.000000 sample=1 memory.secondSlope actual=0.99999983853080587 expected=0.99999983853080576 bits=0x3fefffffa94fd7cb/0x3fefffffa94fd7ca
+FAIL moving/HP/fs=88200.000000 sample=1 stage.acceptedResidual actual=-5.5904174518783822e-20 expected=-2.2126088769058427e-19 bits=0xbbf0800000000000/0xbc10538000000000
+FAIL moving/HP/fs=88200.000000 sample=1 phase.node[0] actual=-0.0001654126258104002 expected=-0.00016541262582062569 bits=0xbf25ae53a2eb42ff/0xbf25ae53a2f104a5
+FAIL moving/HP/fs=88200.000000 sample=1 phase.node[1] actual=0.14648945796619817 expected=0.14648945810123323 bits=0x3fc2c02aa3963820/0x3fc2c02aa3e0749f
+FAIL moving/HP/fs=88200.000000 sample=1 phase.node[2] actual=0.0017399850514840595 expected=0.001739985051266363 bits=0x3f5c8206b910d760/0x3f5c8206b90185b4
+FAIL moving/HP/fs=88200.000000 sample=1 phase.node[3] actual=-2.043561429916626e-06 expected=-2.0435614297996554e-06 bits=0xbec12483c6f23ff8/0xbec12483c6ee091b
+FAIL moving/HP/fs=88200.000000 sample=1 phase.firstSlope actual=0.99533879929119284 expected=0.99533879928276137 bits=0x3fefd9d0c0eca89a/0x3fefd9d0c0eb7ff2

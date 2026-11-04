@@ -1,0 +1,27 @@
+{
+  "registration": "cf52fef87c2e230dcc0c688121abea96ccafac4d",
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "before": "The registered fixture fails on macOS .mm discovery after 30 checks, matching actual CI Configure.",
+  "after": {
+    "checks": 92,
+    "failures": 0
+  },
+  "prior_generated_outputs": [
+    {
+      "original": "juce_audio_plugin_client_VST3.cpp",
+      "byte_identical_to_registration_commit": true,
+      "generated_sha256": "14440849dd6483c60db906a89659a06100c12a7cd6f3cff882b96199bfa8e4cd"
+    },
+    {
+      "original": "juce_audio_plugin_client_AU_1.mm",
+      "byte_identical_to_registration_commit": true,
+      "generated_sha256": "8f84d9996cbb587bcf52ff2f58f966bb0dad4a112c83b42fa87e48bbb4f32f5d"
+    }
+  ],
+  "candidate_files": {
+    "cmake/HostAutomation.cmake": "a6658c085705dd7f0a46a02bdc1935c78312bcfa7c6b70043a9c81afea51af54",
+    "scripts/patch-juce-automation.py": "97781039a96d7d628043621c70c592c6f7c7d596024aff549d4928f1eb3000fc",
+    "tests/HostWrapperPlatformTests.py": "45779014727ce0eb550b5604284338a2d435c0dcfdf473e651b5187c08a6b8f0"
+  },
+  "qualification_limit": "No Apple SDK was used in this interface-target fixture. Actual macOS compile, native AU scheduling and pluginval gates remain required."
+}

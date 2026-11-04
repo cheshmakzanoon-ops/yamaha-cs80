@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "Declared software recording-ownership and exact host-value contract; no hardware law or measurement",
+  "extends_registration": "4f1bd64c7c5db3e61967c8db2ae93612b58f6a30:tests/parity/tolerances-v2/state-tree-synchronization.json",
+  "source_basis": [
+    "Review of the first isolated candidate: worker syncExternal/write writes the plain recording-suppression flag while the message-thread listener reads it without the common lock; ownership must be confined to the message thread.",
+    "JUCE 8.0.11 ParameterAdapter::getRawDenormalisedValue is the canonical physical APVTS atomic; sync/snapshot must not change a legal host parameter merely by reading or saving it.",
+    "The original six fixtures and seven mutations remain required unchanged."
+  ],
+  "state_tree_recording_ownership": {
+    "maximum_lost_user_value_difference": 0.0,
+    "maximum_live_tree_physical_value_difference": 0.0,
+    "maximum_snapshot_physical_value_difference": 0.0,
+    "maximum_sync_parameter_side_effect_difference": 0.0,
+    "maximum_sync_value_notifications": 0,
+    "required_begin_gestures_per_changed_parameter_replay": 1,
+    "required_end_gestures_per_changed_parameter_replay": 1,
+    "required_worker_callback_handshake": true
+  },
+  "fixtures": [
+    {
+      "name": "worker_write_does_not_suppress_an_unrelated_live_user_gesture",
+      "sequence": "Begin a message-thread user gesture and write its first value. Call syncNow on that thread to record and clear the first pending user update. A worker changes a different parameter and synchronizes it; pause that worker inside the actual synchronous ValueTree property callback before its write scope ends. While paused, change the still-open user gesture to a second value. Release and join the worker, then end the user gesture. Undo must restore the original user value, and redo must restore the second value exactly with one balanced host gesture per replay; the unrelated worker value remains unchanged.",
+      "thread_control": "Two explicit semaphore/event handshakes; no sleep, timer pumping, MessageManagerLock or synchronous message dispatch. Worker completion also signals the rendezvous if a mutant omits the tree callback, so omission produces an assertion failure rather than a deadlock.",
+      "ownership": "Only the message thread reads/writes the flag that suppresses message-thread user recording; worker tree writes must not suppress unrelated message-thread callbacks."
+    },
+    {
+      "name": "sync_and_snapshot_preserve_legal_host_values_exactly",
+      "parameters": [
+        "P_volume",
+        "P_tuningRef",
+        "P_portamento",
+        "P_subSpeed",
+        "P_ringSpeed",
+        "P_ch1Start + CP_hpfCutoff",
+        "P_ch1Start + CP_lpfCutoff",
+        "P_ch2Start + CP_hpfCutoff",
+        "P_ch2Start + CP_lpfCutoff"
+      ],
+      "sequence": "For each listed parameter, visit normalized fractions i/64 (i=1..63) and their adjacent representable normalized floats toward 0 and 1 through the legal host setter. Record the actual normalized getter, the APVTS physical atomic, and AudioParameterFloat physical getter before synchronization. A worker performs locked syncNow and a detached host-state snapshot. Require the live parameter child and snapshot to equal the recorded APVTS atomic, all three parameter getters to remain unchanged, and no extra value notifications during synchronization or saving. The oracle is the observed legal setter result, not an idealized normalized-to-physical formula.",
+      "interpretation": "A normalized roundtrip difference is evidence to report, not permission to change a tolerance. This fixture makes no claim that every current JUCE conversion necessarily differs."
+    }
+  ],
+  "required_mutation_checks": [
+    "Restore unconditional cross-thread setting of the message-thread recording-suppression flag. The concurrent-gesture redo value assertion must fail after a successful callback handshake.",
+    "Perturb the synchronized physical value by one representable float before the live tree write. The exact live-tree physical-value assertion must fail; this checks oracle sensitivity even when an unperturbed JUCE normalized roundtrip happens to reproduce the same value."
+  ],
+  "preservation": [
+    "This extends the original registration without changing or weakening any of its limits, fixtures or seven mutation requirements.",
+    "No audio model, core source, parameter index/order/count/version hint or default changes.",
+    "Timeouts, deadlocks, compiler failures, crashes and environmental harness errors cannot count as detected mutations."
+  ]
+}

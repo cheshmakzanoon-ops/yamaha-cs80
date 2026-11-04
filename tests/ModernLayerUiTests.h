@@ -5,6 +5,7 @@
 // keyboard and combo interaction, external state changes refresh it, and a refresh never
 // writes the APVTS state. Snapshots are written beside the other UI captures.
 
+#include "HostParameterState.h"
 #include "ModernLayerHostTests.h"
 #include "plugin/ModernModulationUi.h"
 
@@ -23,7 +24,7 @@ void testModernLayerUi(Check check, Flush flush, const juce::File& snapshotDir)
     Cs80AudioProcessor host(root.getFile().getChildFile("presets"));
     host.prepareToPlay(48000.0, 256);
     auto& layer = host.getModernLayer();
-    const auto stateBefore = host.getAPVTS().copyState();
+    const auto stateBefore = cs80::tests::copyHostParameterState(host);
 
     // Construct and paint every page at the Studio sizes; a refresh must not write state.
     auto paintCheck = [&](juce::Component& page, const char* name, int w, int h)
@@ -63,7 +64,7 @@ void testModernLayerUi(Check check, Flush flush, const juce::File& snapshotDir)
         paintCheck(keyboard, "modern-keyboard", 1100, 360);
         paintCheck(fxPage, "modern-fx", 1100, 380);
         flush(120);
-        check(stateBefore.isEquivalentTo(host.getAPVTS().copyState()), "constructing and painting the pages writes no state");
+        check(stateBefore.isEquivalentTo(cs80::tests::copyHostParameterState(host)), "constructing and painting the pages writes no state");
 
         // MSEG editor: drag a point, bend a segment, add and delete points, move the loop end.
         auto& editor = modulation.getMsegPage().getEditor();

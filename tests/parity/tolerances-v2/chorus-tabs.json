@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "registered": "2026-10-31",
+  "evidence_kind": "declared_model_numerics",
+  "parameter": "chorus_tabs",
+  "default": 0,
+  "states": ["historical chorus_mode", "both off", "chorus", "tremolo", "both on"],
+  "au_version_hint": 16,
+  "historical_state_max_difference": 0.0,
+  "master_off_max_difference": 0.0,
+  "legacy_new_parameter_max_difference": 0.0,
+  "both_on_gain_oracle_max_difference": 0.000002,
+  "distinct_nonzero_depth_state_min_difference": 0.000001,
+  "rates": [88200, 96000, 192000],
+  "oracle": "OE1/ADJ printed p21 DO1/DO2 timing and O1..O4 amplitude ratios, applied to the same OE2 moving-clock wet signal. Simultaneous clock and VCA modulation is a declared inference extending the existing separate laws, not a measured hardware transfer.",
+  "mutation_requirements": ["ignore new parameter", "disable clock modulation when tremolo is enabled", "disable VCA modulation when chorus is enabled", "change historical default mapping", "apply new mode to legacy"]
+}

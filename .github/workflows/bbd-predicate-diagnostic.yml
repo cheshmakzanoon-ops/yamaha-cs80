@@ -1,0 +1,56 @@
+name: Intel BBD predicate diagnosis
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/bbd-predicate-diagnostic.yml
+      - scripts/diagnose-bbd-history-predicate.py
+      - tests/diagnostics/BbdHistoryPredicateProbe.cpp
+      - tests/diagnostics/bbd-predicate-contract.json
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: macos-15-intel
+    timeout-minutes: 20
+    env:
+      BBD_BASELINE_SHA: 360a82b8487c11f289a97d2de0f950d2860834b5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          path: driver
+          persist-credentials: false
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.BBD_BASELINE_SHA }}
+          path: baseline
+          persist-credentials: false
+      - name: Record native platform
+        run: |
+          uname -m
+          sw_vers
+          xcodebuild -version
+          c++ --version
+      - name: Configure the original native Release target
+        run: >
+          cmake -S baseline -B native-build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+      - name: Diagnose original and isolated integer candidate
+        run: >
+          python3 driver/scripts/diagnose-bbd-history-predicate.py
+          --source baseline --build native-build --out evidence
+          --source-commit "$BBD_BASELINE_SHA"
+      - name: Preserve commands, assembly, LLVM, exact gates and mutations
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-intel-bbd-predicate-${{ github.run_id }}
+          path: |
+            evidence/
+            native-build/compile_commands.json
+            native-build/CMakeCache.txt
+          if-no-files-found: error
+

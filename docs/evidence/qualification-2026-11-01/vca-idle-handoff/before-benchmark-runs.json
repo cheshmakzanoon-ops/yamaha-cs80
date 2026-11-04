@@ -1,0 +1,65 @@
+[
+  {
+    "round": 1,
+    "phase": "before",
+    "command": [
+      "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+      "--out",
+      "/tmp/cs80-click-pr6-qualification/before-benchmark-1",
+      "--source-commit",
+      "8a85faab1a125cc14425d9184f7022f6746e40a6",
+      "--rate",
+      "48000",
+      "--block",
+      "256",
+      "--callbacks",
+      "128"
+    ],
+    "started_utc": "2026-11-01T07:58:29Z",
+    "known_contention": "Root core/plugin Release builds overlap; no comparative speedup claim permitted.",
+    "exit_code": 0,
+    "wall_seconds": 130.8945006070062
+  },
+  {
+    "round": 2,
+    "phase": "before",
+    "command": [
+      "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+      "--out",
+      "/tmp/cs80-click-pr6-qualification/before-benchmark-2",
+      "--source-commit",
+      "8a85faab1a125cc14425d9184f7022f6746e40a6",
+      "--rate",
+      "48000",
+      "--block",
+      "256",
+      "--callbacks",
+      "128"
+    ],
+    "started_utc": "2026-11-01T08:00:40Z",
+    "known_contention": "Root core/plugin Release builds overlap; no comparative speedup claim permitted.",
+    "exit_code": 0,
+    "wall_seconds": 55.32542863799608
+  },
+  {
+    "round": 3,
+    "phase": "before",
+    "command": [
+      "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+      "--out",
+      "/tmp/cs80-click-pr6-qualification/before-benchmark-3",
+      "--source-commit",
+      "8a85faab1a125cc14425d9184f7022f6746e40a6",
+      "--rate",
+      "48000",
+      "--block",
+      "256",
+      "--callbacks",
+      "128"
+    ],
+    "started_utc": "2026-11-01T08:01:36Z",
+    "known_contention": "Root core/plugin Release builds overlap; no comparative speedup claim permitted.",
+    "exit_code": 0,
+    "wall_seconds": 124.70681703399896
+  }
+]

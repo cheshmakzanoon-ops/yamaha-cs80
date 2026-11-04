@@ -1,0 +1,13 @@
+UI smoke: WM_PROTOCOLS absent before window-manager startup.
+UI smoke: Openbox ready on :99; WM_PROTOCOLS present; running unchanged test command.
+UI SMOKE START: processor=356544 bytes engine=323776 bytes
+UI SMOKE PHASE: JUCE initialization
+FAIL: undo after worker snapshot brackets only the user-edited parameter
+FAIL: redo after worker snapshot retains exact host gesture ownership
+FAIL: pending gesture captured by worker retains parameter-aware undo gestures
+FAIL: pending gesture captured by worker retains parameter-aware redo gestures
+FAIL: concurrent user edit retains the original undo value and host gestures
+FAIL: worker tree write never suppresses the final concurrent user edit on redo
+State tree exact host-value matrix: 1701 cases; 161 normalized-roundtrip/APVTS-atomic differences before synchronization
+State tree MSEG precision matrix: 14 cases; 9 admitted subnormal fields; 0 round-trip mismatches
+State tree synchronization: 6 failures

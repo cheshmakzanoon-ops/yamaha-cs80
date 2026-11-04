@@ -1,0 +1,218 @@
+[
+  {
+    "checkpoint": "main-before",
+    "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.3532314375,
+      0.4168449375
+    ],
+    "held_p99_rtf_range": [
+      0.3692173125,
+      0.46685325
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.083520375,
+    "moving_median_rtf": 0.4162516875,
+    "moving_p99_rtf": 0.5225068125,
+    "moving_misses": 0,
+    "legacy_held_range": [
+      0.1532930625,
+      0.1854755625
+    ],
+    "legacy_idle_median_rtf": 0.014431125,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "inherited-before",
+    "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.378000375,
+      0.530563125
+    ],
+    "held_p99_rtf_range": [
+      0.396183375,
+      0.6564339375
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.0572420625,
+    "moving_median_rtf": 0.526779,
+    "moving_p99_rtf": 0.652558125,
+    "moving_misses": 0,
+    "legacy_held_range": [
+      0.152523375,
+      0.192124875
+    ],
+    "legacy_idle_median_rtf": 0.0157138125,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "lazy-filter-histories",
+    "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.3765166875,
+      0.5384664375
+    ],
+    "held_p99_rtf_range": [
+      0.4078820625,
+      0.651675
+    ],
+    "held_selected_round_budget_exceedances": 1,
+    "idle_median_rtf": 0.0588624375,
+    "moving_median_rtf": 0.534769125,
+    "moving_p99_rtf": 0.657896625,
+    "moving_misses": 0,
+    "legacy_held_range": [
+      0.15594825,
+      0.1928985
+    ],
+    "legacy_idle_median_rtf": 0.01470525,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "idle-exact",
+    "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.378828375,
+      0.547914
+    ],
+    "held_p99_rtf_range": [
+      0.39943575,
+      0.647710875
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.0513755625,
+    "moving_median_rtf": 0.5310039375,
+    "moving_p99_rtf": 0.6930609375,
+    "moving_misses": 4,
+    "legacy_held_range": [
+      0.1512669375,
+      0.1937679375
+    ],
+    "legacy_idle_median_rtf": 0.015490125,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "stationary-controls",
+    "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.3705770625,
+      0.559798875
+    ],
+    "held_p99_rtf_range": [
+      0.3984913125,
+      0.662259
+    ],
+    "held_selected_round_budget_exceedances": 7,
+    "idle_median_rtf": 0.050491125,
+    "moving_median_rtf": 0.5226984375,
+    "moving_p99_rtf": 0.7046023125,
+    "moving_misses": 4,
+    "legacy_held_range": [
+      0.156490875,
+      0.1904930625
+    ],
+    "legacy_idle_median_rtf": 0.0151485,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "unused-lfo",
+    "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.3720016875,
+      0.5407179375
+    ],
+    "held_p99_rtf_range": [
+      0.423601125,
+      0.661913625
+    ],
+    "held_selected_round_budget_exceedances": 3,
+    "idle_median_rtf": 0.0482415,
+    "moving_median_rtf": 0.5141728125,
+    "moving_p99_rtf": 0.642217125,
+    "moving_misses": 0,
+    "legacy_held_range": [
+      0.153708,
+      0.190288125
+    ],
+    "legacy_idle_median_rtf": 0.0149514375,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "rank-idle-1500",
+    "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.369646125,
+      0.536323875
+    ],
+    "held_p99_rtf_range": [
+      0.3956915625,
+      0.6186159375
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.0418674375,
+    "moving_median_rtf": 0.525081,
+    "moving_p99_rtf": 0.681463125,
+    "moving_misses": 3,
+    "legacy_held_range": [
+      0.153287625,
+      0.1922675625
+    ],
+    "legacy_idle_median_rtf": 0.0156065625,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "pre-fir-native-bbd",
+    "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.372466125,
+      0.5456169375
+    ],
+    "held_p99_rtf_range": [
+      0.390134625,
+      0.6530685
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.0421329375,
+    "moving_median_rtf": 0.5305228125,
+    "moving_p99_rtf": 0.7039940625,
+    "moving_misses": 1,
+    "legacy_held_range": [
+      0.1566129375,
+      0.1876535625
+    ],
+    "legacy_idle_median_rtf": 0.01545075,
+    "nonfinite_all_rounds": 0
+  },
+  {
+    "checkpoint": "zero-fir-history",
+    "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.388281375,
+      0.557422125
+    ],
+    "held_p99_rtf_range": [
+      0.3977945625,
+      0.715900125
+    ],
+    "held_selected_round_budget_exceedances": 8,
+    "idle_median_rtf": 0.0360525,
+    "moving_median_rtf": 0.53715375,
+    "moving_p99_rtf": 0.935590125,
+    "moving_misses": 9,
+    "legacy_held_range": [
+      0.156922875,
+      0.1875639375
+    ],
+    "legacy_idle_median_rtf": 0.008660625,
+    "nonfinite_all_rounds": 0
+  }
+]

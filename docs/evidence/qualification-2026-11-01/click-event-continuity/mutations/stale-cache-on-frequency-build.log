@@ -1,0 +1,12 @@
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-click-mutations-ivqm5zia/src", "-c", "/tmp/cs80-click-mutations-ivqm5zia/src/core/Engine.cpp", "-o", "/tmp/cs80-click-mutations-ivqm5zia/9b2c1685f3f186118914285cb2b4bb92be6c596496998bd5fdf72645247ae8ee.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-click-mutations-ivqm5zia/src", "-c", "/tmp/cs80-click-mutations-ivqm5zia/src/core/FactoryPresets.cpp", "-o", "/tmp/cs80-click-mutations-ivqm5zia/968ea28ff0222a6d5fa925dcfd34d69d0be772c9d686660345df1fd75b9a82d2.o"]
+
+EXIT 0
+COMMAND ["c++", "-std=c++20", "-O2", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic", "-I", "/tmp/cs80-click-mutations-ivqm5zia/src", "-c", "/tmp/cs80-click-mutations-ivqm5zia/tests/ClickEventContinuationTests.cpp", "-o", "/tmp/cs80-click-mutations-ivqm5zia/c3b8a9e20bdbd41e5bd43d9bf8535bc7d0b70be94ff8897be33c9580323d0d8a.o"]
+
+EXIT 0
+COMMAND ["c++", "/tmp/cs80-click-mutations-ivqm5zia/9b2c1685f3f186118914285cb2b4bb92be6c596496998bd5fdf72645247ae8ee.o", "/tmp/cs80-click-mutations-ivqm5zia/968ea28ff0222a6d5fa925dcfd34d69d0be772c9d686660345df1fd75b9a82d2.o", "/tmp/cs80-click-mutations-ivqm5zia/c3b8a9e20bdbd41e5bd43d9bf8535bc7d0b70be94ff8897be33c9580323d0d8a.o", "-o", "/tmp/cs80-click-mutations-ivqm5zia/stale-cache-on-frequency-gate"]
+
+EXIT 0

@@ -1,0 +1,19 @@
+Preset CMake variables:
+
+  CMAKE_BUILD_TYPE="Release"
+  CS80_BUILD_PLUGIN="ON"
+  CS80_BUILD_TESTS="ON"
+
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter 
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+-- Exporting juceaide
+-- Testing juceaide
+-- Finished setting up juceaide
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 (found version "3.12.14") found components: Interpreter 
+-- Configuring done (1.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/a0e502bd4cd5/yamaha-cs80/build

@@ -1,0 +1,16 @@
+{
+  "baseline_audio_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+  "test_commit": "c352fe2",
+  "source_tree": "a153b5ec6ca3b64331488af7d32fa13d8d29a7ec",
+  "checks": 576,
+  "failures": 78,
+  "failure_categories": {
+    "retired rank pan is from the current modulation sample": 18,
+    "retired rank mix consumes current pan before downstream processing": 36,
+    "tail poly MSEG advances once per actual internal sample": 18,
+    "current-pan control is changing in Source and inert in Pure": 6
+  },
+  "max_pan_error": 0.000119537115097,
+  "max_poly_elapsed_error": 0.0228344671202,
+  "log_sha256": "2052d0d282c27e81076e472d2e30ae59d9ca6ddf2b0d0a25f95b4c3cafd48ec8"
+}

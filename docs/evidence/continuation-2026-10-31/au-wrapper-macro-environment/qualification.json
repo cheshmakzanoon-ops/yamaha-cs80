@@ -1,0 +1,33 @@
+{
+  "registration": "111c3ed37491f818ccbf5f96534cf7c464de6051",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "results": [
+    {
+      "name": "repaired-macro-environment",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "output": ""
+    },
+    {
+      "name": "reintroduced-point",
+      "compile_exit": 1,
+      "point_diagnostic": true
+    },
+    {
+      "name": "au-curve-contract",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "output": "AU normalized curve maximum error=2.22045e-16"
+    },
+    {
+      "name": "au-bridge-contract",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "output": ""
+    }
+  ],
+  "private_rename_only": true,
+  "candidate_sha256": "67ea9ebffdae2ebecd56255c5dad4caaa8ea5280fd38a5d95ea0bd97d79a0384",
+  "fixture_sha256": "6a2e278967bd807db56dfa2a2265aa6cf0eafd836ce92afc86836af0918360fa",
+  "native_boundary": "Portable compile fixture reproduces the native macro environment; Apple ABI/rendering and pluginval still require native CI."
+}

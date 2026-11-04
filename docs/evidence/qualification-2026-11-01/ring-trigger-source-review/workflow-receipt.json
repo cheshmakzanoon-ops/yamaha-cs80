@@ -1,0 +1,97 @@
+{
+  "retrieved_utc": "2026-11-01",
+  "runs": [
+    {
+      "id": 40808650289,
+      "head_sha": "c643079d1e2eebc8a26c8671efa55d973190a73f",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40808650289",
+      "created_at": "2026-10-29T02:49:43Z",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 40807476007,
+      "head_sha": "c87b57c8b3b7b1ff79c8a4b4e168926a7a1f05de",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40807476007",
+      "created_at": "2026-10-29T02:37:41Z",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "pra53_job": {
+    "id": 123229758333,
+    "run_id": 40807476007,
+    "head_sha": "c87b57c8b3b7b1ff79c8a4b4e168926a7a1f05de",
+    "name": "Original service schematic / pra53",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40807476007/job/123229758333",
+    "completed_at": "2026-10-29T02:37:51Z"
+  },
+  "pra54_jobs": [
+    {
+      "id": 123233499536,
+      "name": "Original service schematic / pra54",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40808650289,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install official Ubuntu PDF inspection tools",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4
+        },
+        {
+          "name": "Install source inspection dependency",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Inspect original circuit source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    }
+  ]
+}

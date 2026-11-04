@@ -1,0 +1,112 @@
+diff --git a/src/core/Ig00156PhaseCorrection.h b/src/core/Ig00156PhaseCorrection.h
+index 909a8eb..303bfef 100644
+--- a/src/core/Ig00156PhaseCorrection.h
++++ b/src/core/Ig00156PhaseCorrection.h
+@@ -82,7 +82,7 @@ public:
+         for(int i=0;i<4;++i) for(int j=0;j<4;++j) {
+             const double identity=i==j?1:0;
+             left[i][j]=identity-h*.5*a[i][j]+beta*a2[i][j];
+-            right[i][j]=identity+h*.5*a[i][j]+beta*a2[i][j];
++            coefficient(right, i, j)=identity+h*.5*a[i][j]+beta*a2[i][j];
+         }
+         // Remove the linear OTA part on the left; restore it below through
+         // the exact (declared) nonlinear current, just as in Ig00156Stage.
+@@ -96,19 +96,19 @@ public:
+         const double a21=left[3][1], a22=left[3][3];
+         const double determinant=a00*(a11*a22-a12*a21)-a01*a10*a22+a02*a10*a21;
+         const double reciprocal=1.0/determinant;
+-        inverse[0][0]=(a11*a22-a12*a21)*reciprocal;
+-        inverse[0][1]=(a02*a21-a01*a22)*reciprocal;
+-        inverse[0][2]=(a01*a12-a02*a11)*reciprocal;
+-        inverse[1][0]=-a10*a22*reciprocal;
+-        inverse[1][1]=a00*a22*reciprocal;
+-        inverse[1][2]=(a02*a10-a00*a12)*reciprocal;
+-        inverse[2][0]=a10*a21*reciprocal;
+-        inverse[2][1]=-a00*a21*reciprocal;
+-        inverse[2][2]=(a00*a11-a01*a10)*reciprocal;
++        coefficient(inverse, 0, 0)=(a11*a22-a12*a21)*reciprocal;
++        coefficient(inverse, 0, 1)=(a02*a21-a01*a22)*reciprocal;
++        coefficient(inverse, 0, 2)=(a01*a12-a02*a11)*reciprocal;
++        coefficient(inverse, 1, 0)=-a10*a22*reciprocal;
++        coefficient(inverse, 1, 1)=a00*a22*reciprocal;
++        coefficient(inverse, 1, 2)=(a02*a10-a00*a12)*reciprocal;
++        coefficient(inverse, 2, 0)=a10*a21*reciprocal;
++        coefficient(inverse, 2, 1)=-a00*a21*reciprocal;
++        coefficient(inverse, 2, 2)=(a00*a11-a01*a10)*reciprocal;
+         fromBp={}; fromTanh={};
+         for(int i=0;i<3;++i) for(int j=0;j<3;++j) {
+-            fromBp[i]-=inverse[i][j]*left[e[j]][2];
+-            if(j==2) fromTanh[i]-=inverse[i][j]*nonlinear;
++            fromBp[i]-=coefficient(inverse, i, j)*left[e[j]][2];
++            if(j==2) fromTanh[i]-=coefficient(inverse, i, j)*nonlinear;
+         }
+         hpBp=2+2*fromBp[1]-fromBp[2];
+         hpTanh=2*fromTanh[1]-fromTanh[2];
+@@ -117,6 +117,9 @@ public:
+             residualBp+=left[2][e[i]]*fromBp[i];
+             residualTanh+=left[2][e[i]]*fromTanh[i];
+         }
++        // CS80_COLUMN_LAYOUT_PREPARATION_BEGIN
++        preparePadding();
++        // CS80_COLUMN_LAYOUT_PREPARATION_END
+     }
+     Output process(float input) noexcept
+     {
+@@ -130,14 +133,14 @@ public:
+         Vector rhs {};
+         for(int i=0;i<4;++i) {
+             rhs[i]=b[i]*drive-beta*ab[i]*du;
+-            for(int j=0;j<4;++j) rhs[i]+=right[i][j]*v[j];
++            for(int j=0;j<4;++j) rhs[i]+=coefficient(right, i, j)*v[j];
+         }
+         const double hpPrev=2*(v[1]+v[2])-v[3];
+         rhs[2]+=.5*h*gm*(hpPrev-kIg00156OtaLevel*previousHpTanh);
+         rhs[3]+=.5*h*gm*(v[2]-kIg00156OtaLevel*previousBpTanh);
+         constexpr int e[3]={0,1,3};
+         std::array<double,3> zero {};
+-        for(int i=0;i<3;++i) for(int j=0;j<3;++j) zero[i]+=inverse[i][j]*rhs[e[j]];
++        for(int i=0;i<3;++i) for(int j=0;j<3;++j) zero[i]+=coefficient(inverse, i, j)*rhs[e[j]];
+         const double hp0=2*zero[1]-zero[2];
+         double residual0=-rhs[2];
+         for(int i=0;i<3;++i) residual0+=left[2][e[i]]*zero[i];
+@@ -168,6 +171,26 @@ public:
+         return {float(v[3]),float(hp),float(-bp)};
+     }
+ private:
++    // CS80_COLUMN_LAYOUT_ACCESS_BEGIN
++    // Only addresses change. Every product, row sum, and nonlinear step keeps
++    // its preceding scalar expression/order. Column storage exposes adjacent
++    // independent rows to the compiler without per-sample coefficient packing.
++    template <typename Storage>
++    static decltype(auto) coefficient(Storage& storage, int row, int column) noexcept
++    {
++#if defined(CS80_IG00156_SCALAR_COEFFICIENT_LAYOUT)
++        return (storage[row][column]);
++#else
++        return (storage[column][row]);
++#endif
++    }
++    void preparePadding() noexcept
++    {
++#if !defined(CS80_IG00156_SCALAR_COEFFICIENT_LAYOUT)
++        for (int column = 0; column < 3; ++column) inverse[column][3] = 0.0;
++#endif
++    }
++    // CS80_COLUMN_LAYOUT_ACCESS_END
+     void refreshOtaCurrents() noexcept
+     {
+         previousHpTanh = fastTanh((2.0 * (v[1] + v[2]) - v[3]) / kIg00156OtaLevel);
+@@ -178,7 +201,13 @@ private:
+     double inputRow=0,feedbackInput=0,feedbackDiagonal=0;
+     Vector v {}, inputs {}, b {}, ab {};
+     Matrix left {}, right {};
++    // CS80_COLUMN_LAYOUT_STORAGE_BEGIN
++#if defined(CS80_IG00156_SCALAR_COEFFICIENT_LAYOUT)
+     double inverse[3][3] {};
++#else
++    double inverse[3][4] {};
++#endif
++    // CS80_COLUMN_LAYOUT_STORAGE_END
+     std::array<double,3> fromBp {},fromTanh {};
+     double scale=1,h=0,beta=0,gm=0,nonlinear=0;
+     double hpBp=0,hpTanh=0,residualBp=0,residualTanh=0,slope1=1,slope2=1;

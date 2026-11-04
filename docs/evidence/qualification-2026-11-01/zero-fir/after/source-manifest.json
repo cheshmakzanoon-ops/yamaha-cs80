@@ -1,0 +1,20 @@
+{
+  "source_sha": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+  "before_source_sha": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+  "implementation_local_sha": "c894a0ca2417f44329d54ea9388304ab04200d76",
+  "measured_clean_published_checkout": true,
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "build": "cmake -S . -B build-after -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON; cmake --build build-after --target cs80_source_factory_benchmark -j2",
+  "files": {
+    "src/core/Dsp.h": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5",
+    "src/core/Engine.h": "f0369a411eaab3bfbf9b322ce757638b2bafd517203e91cb324fef28fc705b0a",
+    "src/core/Engine.cpp": "76e4f0b002105d659a65a30aff685c493d4ddc3688486b64e7d8124bc132bfa6",
+    "src/core/BbdChorus.h": "f1654c5466c86aa4ae7c827f9eb7325b385eba3307a3a8fcae8a934db00d8292",
+    "src/tools/source_factory_benchmark.cpp": "3a747c959529a15ef0675784a8bf496a23f74669fc41ccd7899789dec7441d74",
+    "build-after/cs80_source_factory_benchmark": "cde249c3a5e56f3732e011effd9b7b6446ef72b6ab21339c49b7f6166da4b0f3"
+  },
+  "normalized_compile_commands_equal": true,
+  "measurement_status": "Three complete stock after rounds from the clean published source.",
+  "measurement_start_utc": "2026-11-01T01:34:26.950214+00:00",
+  "measurement_end_utc": "2026-11-01T01:40:18.673337+00:00"
+}

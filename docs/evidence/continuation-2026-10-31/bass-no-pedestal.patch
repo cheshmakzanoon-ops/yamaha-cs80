@@ -1,0 +1,27 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -2294,7 +2294,7 @@
+                     r.vca.reset(levelCv);
+                     r.vcaCold = false;
+                 }
+-                voiceOut = r.vca.process(vcaInput, levelCv, subValue * global.subVca * kIg00151SubOctaves, amp)
++                voiceOut = r.vca.process(vcaInput, levelCv, subValue * global.subVca * kIg00151SubOctaves, amp, vi != 6)
+                            * chGain * 0.17f;
+                 constantPowerPan(pan, panLeft, panRight);
+             }
+--- a/src/core/Vca.h
++++ b/src/core/Vca.h
+@@ -63,11 +63,11 @@
+ 
+     // linearCv: the LC drive (engine level units, >= 0); expOctaves: EI drive;
+     // envelope: the IG00159 amplitude envelope. Returns the VCA output.
+-    float process(float input, float linearCv, float expOctaves, float envelope) noexcept
++    float process(float input, float linearCv, float expOctaves, float envelope, bool includePedestal = true) noexcept
+     {
+         node += (linearCv - node) * coefficient;
+         const float control = std::max(0.0f, node) * envelope * std::exp2(expOctaves);
+-        const float out = control * (input + kIg00151OffsetUnits) + kIg00151FeedthroughUnits * control;
++        const float out = includePedestal ? control * (input + kIg00151OffsetUnits) + kIg00151FeedthroughUnits * control : control * input;
+         // Double state: a float 0.1 s pole stalls about -64 dB short of settling.
+         coupling += (out - coupling) * couplingCoefficient;
+         return static_cast<float>(out - coupling);

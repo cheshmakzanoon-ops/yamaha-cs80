@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "title": "Exact omission of unused modern LFO readouts",
+  "baseline_commit": "85833297249fcf0f94603144460e073769e601ad",
+  "evidence_class": "Software continuation and routing-ownership contract; modern LFOs are not CS-80 circuitry or hardware measurements.",
+  "gate": {
+    "maximum_enabled_output_bit_differences": 0,
+    "maximum_phase_bit_differences": 0,
+    "phase_comparison": "Both float historical phase and double shape phase after every sample, including disabled intervals.",
+    "internal_rates_hz": [
+      88200,
+      96000,
+      176400,
+      192000,
+      352800,
+      384000
+    ],
+    "default_api": "Omitting the new emit flag retains the frozen baseline output on every sample."
+  },
+  "frozen_reference": "Freeze the baseline ModulationLfo.h with only include/namespace qualification changed and record source/fixture SHA256.",
+  "cases": [
+    "All seven waveforms, long disabled intervals, repeated disabled/enabled edges, finite zero/slow/fast rates, wrap transitions, waveform changes, reset and copy continuation across all six rates.",
+    "Selected S&H and smooth-random state transitions and random draws continue while output is unused; the first and every subsequent enabled sample must match the frozen class exactly.",
+    "The source-policy Engine emits whenever direct depth is nonzero OR the modern matrix is active. Legacy retains its original three-argument call.",
+    "At source policy, a positive direct-depth route must change rendered samples relative to depth zero; omitting direct-depth ownership must fail this check.",
+    "At source policy, a matrix route from an LFO at zero direct depth must render bit-identically to the same matrix route with positive but unconnected direct depth; omitting matrix ownership must fail.",
+    "A modern constant-to-disabled-FX route can force a reference Engine to emit all LFO readouts without affecting audio. Compare its audio bit-for-bit to an otherwise identical inactive-matrix Engine through unused intervals and subsequent direct-depth activation.",
+    "PURE remains byte-inert for modern waveform/routing choices. No thresholds or fades are introduced."
+  ],
+  "mutation_requirements": [
+    "Freeze disabled phases: phase and wake comparisons must fail.",
+    "Suppress selected S&H random updates while disabled: enabled random outputs must fail.",
+    "Suppress selected smooth-random updates while disabled: enabled random outputs must fail.",
+    "Remove direct-depth ownership from the Engine emit predicate: direct routing gate must fail.",
+    "Remove active-matrix ownership from the Engine emit predicate: matrix equality gate must fail."
+  ],
+  "verification": [
+    "Existing ModernLfo/ModMatrix/core gates remain intact.",
+    "Root runs legacy default, legacy tails, v1 and strict-v2 compatibility.",
+    "Preserve a separate source_factory_benchmark snapshot and root measures minimum three before/after rounds."
+  ]
+}

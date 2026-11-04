@@ -5,7 +5,8 @@ namespace cs80
 {
 // Audio-thread-only, bounded attribution; no DSP changes. Snapshot accepts the
 // existing Engine VoiceInfo array (or plain test fixtures with the same fields).
-class KeyboardPressureOwnership
+template <std::size_t VoiceCount>
+class BasicKeyboardPressureOwnership
 {
 public:
     void clear() noexcept { current.fill({}); origins.fill({}); }
@@ -60,11 +61,15 @@ public:
         return exactHeldOrigin;
     }
 private:
-    // Only eight allocated circuits can own pressure. Index by physical slot,
+    // Only allocated circuits can own pressure. Index by physical slot,
     // not a 16x128 MIDI-key table copied into every processor/test stack frame.
-    std::array<KeyPressureToken, 8> current {};
-    std::array<KeyPressureToken, 8> origins {};
+    std::array<KeyPressureToken, VoiceCount> current {};
+    std::array<KeyPressureToken, VoiceCount> origins {};
 };
+using KeyboardPressureOwnership = BasicKeyboardPressureOwnership<8>;
+using SixteenVoicePressureOwnership = BasicKeyboardPressureOwnership<16>;
 static_assert(sizeof(KeyboardPressureOwnership) <= 1024,
               "Pressure ownership must remain bounded by eight physical voices");
+static_assert(sizeof(SixteenVoicePressureOwnership) <= 32 * sizeof(KeyPressureToken),
+              "Sixteen-voice pressure ownership remains bounded by its physical slots");
 }

@@ -1,0 +1,17 @@
+{
+  "baseline_audio_commit": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+  "test_commit": "31fd8ac",
+  "checks": 618,
+  "failures": 92,
+  "failure_categories": {
+    "retired rank pan is from the current modulation sample": 18,
+    "retired rank mix consumes current pan before downstream processing": 36,
+    "tail poly MSEG advances once per actual internal sample": 18,
+    "current-pan control is changing in Source and inert in Pure": 6,
+    "removing zeroing or rerouting pan clears its cache at the next tail sample": 6,
+    "removed pan cannot reach the next charged-tail mix": 6,
+    "tail mix consumes released-controller clearing on the original deadline": 2
+  },
+  "log_sha256": "09ad4ddc1fe92ebddbdcd36a0eea4929a625d6b8cc0bfcf77d70634387758cf3",
+  "additional_direct_api_tests": "registered eaf3720; new 3-argument API not present in this old baseline and not counted as any mutation rejection"
+}

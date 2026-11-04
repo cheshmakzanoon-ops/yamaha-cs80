@@ -1,0 +1,11 @@
+--- a/src/core/ExpressionOptics.h
++++ b/src/core/ExpressionOptics.h
+@@ -59,7 +59,7 @@
+             opticalLog = targetLog;
+             return pedalTarget;
+         }
+-        opticalLog += (targetLog < opticalLog ? attackStep : decayStep) * (targetLog - opticalLog);
++        // mutation: moving optical state is incorrectly frozen.
+         if (std::abs(targetLog - opticalLog) <= 1.0e-12 * std::max(1.0, std::abs(targetLog)))
+             opticalLog = targetLog;
+         return position();

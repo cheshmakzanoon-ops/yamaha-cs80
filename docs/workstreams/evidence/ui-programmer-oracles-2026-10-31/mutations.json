@@ -1,0 +1,85 @@
+{
+  "baseline": "1991fdb7b40ce69cc8768ef68c2a2d837bdeb154",
+  "source_sha256": {
+    "src/plugin/PluginProcessor.cpp": "f279a6143a1ebd22729b43448ba91e6d8c813ffcfd8dffe400120062c24716c1",
+    "src/core/Engine.cpp": "0b362287a96d2ac592d4f77863500a25fb142fd0e329108aa7eb48dd248fe01f",
+    "src/tools/ui_snapshot.cpp": "78b6dd5c51fe1d2975dadd2b0d35c5f3581a536ae18795ea7ec3bca3d570e6d6"
+  },
+  "results": [
+    {
+      "mutation": "drop-programmer-annotation",
+      "build_exit": 0,
+      "build_seconds": 12.449999854999987,
+      "test_exit": 1,
+      "test_seconds": 7.389508251000734,
+      "failed_assertions": 348,
+      "focused_summary": [
+        "Host electrical circuit contract: 348 failures"
+      ],
+      "failure_families": {
+        "metered host output is bit-exact with unmetered core plus identical channel mapping": 10,
+        "live host filter timing agrees with independent primitive history": 138,
+        "live host amplitude timing agrees with independent primitive history": 134,
+        "selected electrical programmer replaces stale factory cutoff receiver data exactly": 66
+      }
+    },
+    {
+      "mutation": "wrong-selected-memory-bank",
+      "build_exit": 0,
+      "build_seconds": 11.833876798000347,
+      "test_exit": 1,
+      "test_seconds": 8.647515935999763,
+      "failed_assertions": 594,
+      "focused_summary": [
+        "Host electrical circuit contract: 594 failures"
+      ],
+      "failure_families": {
+        "selected source preserves the legacy-effective A D R snapshot without putting source volts in Params": 288,
+        "selected source preserves the legacy-effective S IL AL snapshot separately from source targets": 96,
+        "live host amplitude timing agrees with independent primitive history": 120,
+        "live host filter timing agrees with independent primitive history": 90
+      }
+    },
+    {
+      "mutation": "reset-cold-filter-at-assignment",
+      "build_exit": 0,
+      "build_seconds": 24.453853250000975,
+      "test_exit": 1,
+      "test_seconds": 9.571195446000274,
+      "failed_assertions": 67,
+      "focused_summary": [
+        "Host electrical circuit contract: 67 failures"
+      ],
+      "failure_families": {
+        "live host filter timing agrees with independent primitive history": 34,
+        "source-selected host note-on uses explicit matrix envelope targets and times from the first tick": 33
+      }
+    },
+    {
+      "mutation": "chorus-tabs-treated-continuously",
+      "build_exit": 0,
+      "build_seconds": 46.917696660999354,
+      "test_exit": 1,
+      "test_seconds": 10.75088081099966,
+      "failed_assertions": 2,
+      "focused_summary": [
+        "Host electrical circuit contract: 2 failures"
+      ],
+      "failure_families": {
+        "physical parameter round trips host skew": 2
+      }
+    },
+    {
+      "mutation": "restored-baseline",
+      "build_exit": 0,
+      "build_seconds": 30.939673946000767,
+      "test_exit": 0,
+      "test_seconds": 9.434644253000442,
+      "failed_assertions": 0,
+      "focused_summary": [
+        "Host electrical circuit contract: 0 failures"
+      ],
+      "failure_families": {}
+    }
+  ]
+}

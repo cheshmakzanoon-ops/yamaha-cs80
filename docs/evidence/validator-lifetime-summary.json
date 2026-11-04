@@ -1,0 +1,50 @@
+[
+  {
+    "variant": "Old",
+    "scenario": "normal",
+    "returncode": 0,
+    "asan_uaf": false,
+    "stdout": "leave owner alive\nPASS handler calls 1 expected 1",
+    "first_error": ""
+  },
+  {
+    "variant": "Old",
+    "scenario": "destroy-owner",
+    "returncode": 1,
+    "asan_uaf": true,
+    "stdout": "destroyed RunLoop before next ready callback",
+    "first_error": "==94198==ERROR: AddressSanitizer: heap-use-after-free on address 0x507000000178 at pc 0x55cee65e5996 bp 0x7ffc995f90b0 sp 0x7ffc995f90a0"
+  },
+  {
+    "variant": "Fixed",
+    "scenario": "normal",
+    "returncode": 0,
+    "asan_uaf": false,
+    "stdout": "leave owner alive\nPASS handler calls 1 expected 1",
+    "first_error": ""
+  },
+  {
+    "variant": "Fixed",
+    "scenario": "destroy-owner",
+    "returncode": 0,
+    "asan_uaf": false,
+    "stdout": "destroyed RunLoop before next ready callback\nPASS handler calls 0 expected 0",
+    "first_error": ""
+  },
+  {
+    "variant": "Fixed",
+    "scenario": "unregister-handler",
+    "returncode": 0,
+    "asan_uaf": false,
+    "stdout": "removed handler before next ready callback\nPASS handler calls 0 expected 0",
+    "first_error": ""
+  },
+  {
+    "variant": "Mutated",
+    "scenario": "destroy-owner",
+    "returncode": 1,
+    "asan_uaf": true,
+    "stdout": "destroyed RunLoop before next ready callback",
+    "first_error": "==94205==ERROR: AddressSanitizer: heap-use-after-free on address 0x504000000090 at pc 0x5641292e2648 bp 0x7ffc676c3080 sp 0x7ffc676c3070"
+  }
+]

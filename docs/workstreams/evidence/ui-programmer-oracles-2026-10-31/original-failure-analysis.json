@@ -1,0 +1,14 @@
+{
+  "baseline_commit": "2acd64a",
+  "log_sha256": "864afb85616d92f89812e22147e367ad09659e69dae8b7d7fab28363d21d5e15",
+  "failed_assertions": 385,
+  "failure_families": {
+    "metered host output is bit-exact with unmetered core plus identical channel mapping": 10,
+    "live host filter timing agrees with independent primitive history": 138,
+    "live host amplitude timing agrees with independent primitive history": 134,
+    "isolated held sustain follows selected memory while legacy remains latched": 2,
+    "source-selected host note-on uses explicit matrix envelope targets and times from the first tick": 33,
+    "non-source callback does not render stale source cutoff receiver data": 66,
+    "physical parameter round trips host skew": 2
+  }
+}

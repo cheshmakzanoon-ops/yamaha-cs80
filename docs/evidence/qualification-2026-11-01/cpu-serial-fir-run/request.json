@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "description": "One-runner serial comparison retaining all seven preregistered historical checkpoints, followed by the native-BBD pre-FIR source and exact zero-history FIR candidate. Software callback timing; no hardware or real-DAW qualification.",
+  "rate": 48000,
+  "block": 256,
+  "callbacks": 1024,
+  "rounds": 3,
+  "suite": "baseline",
+  "reporter_sha256": "66f610e5c0ffcf1c574705a2328b58ffc7e800658d796efe6299a04ec0f1357c",
+  "checkpoints": [
+    {
+      "label": "main-before",
+      "source_commit": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "benchmark_blob": "b73298678acb6684654ed1b3771fb442352853c0"
+    },
+    {
+      "label": "inherited-before",
+      "source_commit": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "lazy-filter-histories",
+      "source_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "idle-exact",
+      "source_commit": "f79b6f7fe6831a9a518bc2a94435a6214e46290b",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "stationary-controls",
+      "source_commit": "8dac795558eab6bae99a0812cfa1fc6632cfc024",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "unused-lfo",
+      "source_commit": "193f1a31a636b78f7c50f642ad1794fc6023017b",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "rank-idle-1500",
+      "source_commit": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "pre-fir-native-bbd",
+      "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    },
+    {
+      "label": "zero-fir-history",
+      "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+      "benchmark_blob": "92ea7e0b1801bf98fccaed21c13e676890039c94"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "round": 1,
+    "phase": "after",
+    "command": [
+      "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+      "--out",
+      "/tmp/cs80-click-pr6-qualification/after-benchmark-1",
+      "--source-commit",
+      "754b4cccc6f0e9a37c8e98d221757b0deec19f30",
+      "--rate",
+      "48000",
+      "--block",
+      "256",
+      "--callbacks",
+      "128"
+    ],
+    "started_utc": "2026-11-01T08:08:43Z",
+    "known_contention": "Root integration builds, deterministic validation or audit can overlap; no comparative speedup claim permitted. No other click-agent heavy job overlaps these rounds.",
+    "exit_code": 0,
+    "wall_seconds": 56.75370655900042
+  },
+  {
+    "round": 2,
+    "phase": "after",
+    "command": [
+      "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+      "--out",
+      "/tmp/cs80-click-pr6-qualification/after-benchmark-2",
+      "--source-commit",
+      "754b4cccc6f0e9a37c8e98d221757b0deec19f30",
+      "--rate",
+      "48000",
+      "--block",
+      "256",
+      "--callbacks",
+      "128"
+    ],
+    "started_utc": "2026-11-01T08:09:40Z",
+    "known_contention": "Root integration builds, deterministic validation or audit can overlap; no comparative speedup claim permitted. No other click-agent heavy job overlaps these rounds.",
+    "exit_code": 0,
+    "wall_seconds": 75.34698007500265
+  },
+  {
+    "round": 3,
+    "phase": "after",
+    "command": [
+      "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_source_factory_benchmark",
+      "--out",
+      "/tmp/cs80-click-pr6-qualification/after-benchmark-3",
+      "--source-commit",
+      "754b4cccc6f0e9a37c8e98d221757b0deec19f30",
+      "--rate",
+      "48000",
+      "--block",
+      "256",
+      "--callbacks",
+      "128"
+    ],
+    "started_utc": "2026-11-01T08:10:55Z",
+    "known_contention": "Root integration builds, deterministic validation or audit can overlap; no comparative speedup claim permitted. No other click-agent heavy job overlaps these rounds.",
+    "exit_code": 0,
+    "wall_seconds": 111.9169627070005
+  }
+]

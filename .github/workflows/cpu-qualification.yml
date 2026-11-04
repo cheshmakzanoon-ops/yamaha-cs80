@@ -1,0 +1,59 @@
+name: CPU checkpoint qualification
+
+on:
+  workflow_dispatch:
+  # A new immutable checkpoint request starts one controlled serial comparison.
+  # Ordinary source, documentation and evidence commits do not rerun it.
+  push:
+    paths:
+      - '.github/cpu-qualification-request.json'
+      - '.github/workflows/cpu-qualification.yml'
+      # Collector witness changes must requalify the unchanged checkpoint request.
+      - 'tests/cpu/test-cpu-qualification-runner.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cs80-cpu-checkpoint-qualification
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    name: Serial immutable checkpoints on one Ubuntu runner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      CC: gcc
+      CXX: g++
+      LC_ALL: C
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install core build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake ninja-build g++ python3
+
+      - name: Verify frozen fixture and actual-source mutation gates
+        run: python3 tests/cpu/test-cpu-qualification-runner.py
+
+      - name: Compile all checkpoints, then run every serial round
+        run: >
+          python3 scripts/run-cpu-qualification.py
+          --request .github/cpu-qualification-request.json
+          --work "$RUNNER_TEMP/cs80-cpu-work"
+          --out "$RUNNER_TEMP/cs80-cpu-evidence"
+
+      - name: Preserve complete and partial evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-cpu-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/cs80-cpu-evidence/
+          if-no-files-found: error
+          retention-days: 90
+

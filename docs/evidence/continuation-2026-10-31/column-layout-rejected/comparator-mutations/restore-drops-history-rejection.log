@@ -1,0 +1,25 @@
+Exact scalar filter suite=state: 73759498 checks, 10038200 failures
+FAIL copy-reset-restore/HP/length=1 sample=0 memory.inputHistory[0] actual=0 expected=-2.3780890076675196 bits=0x0/0xc0030653879745d1
+FAIL copy-reset-restore/HP/length=1 sample=0 stage.inputHistory[0] actual=0 expected=-2.3780890076675196 bits=0x0/0xc0030653879745d1
+FAIL copy-reset-restore/HP/length=1 sample=0 phase.inputHistory[0] actual=0 expected=-2.3780890076675196 bits=0x0/0xc0030653879745d1
+FAIL copy-reset-restore/HP/length=1 sample=0 memory.inputHistory[0] actual=0 expected=-2.3780890076675196 bits=0x0/0xc0030653879745d1
+FAIL copy-reset-restore/HP/length=1 sample=0 stage.inputHistory[0] actual=0 expected=-2.3780890076675196 bits=0x0/0xc0030653879745d1
+FAIL copy-reset-restore/HP/length=1 sample=0 phase.inputHistory[0] actual=0 expected=-2.3780890076675196 bits=0x0/0xc0030653879745d1
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.output[0] actual=-0.19644387066364288 expected=-0.48580572009086609 bits=0xbe492895/0xbef8bb87
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.output[1] actual=0.9204026460647583 expected=0.81028884649276733 bits=0x3f6b9f82/0x3f4f6f17
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.output[2] actual=0.11473646759986877 expected=-0.45398101210594177 bits=0x3deafaf4/0xbee87033
+FAIL copy-reset-restore/HP/length=1 sample=1 phase.output[0] actual=-0.19644387066364288 expected=-0.48580572009086609 bits=0xbe492895/0xbef8bb87
+FAIL copy-reset-restore/HP/length=1 sample=1 phase.output[1] actual=0.9204026460647583 expected=0.81028884649276733 bits=0x3f6b9f82/0x3f4f6f17
+FAIL copy-reset-restore/HP/length=1 sample=1 phase.output[2] actual=0.11473646759986877 expected=-0.45398101210594177 bits=0x3deafaf4/0xbee87033
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.node[0] actual=7.2935964930783285e-05 expected=-0.00018111151496304551 bits=0x3f131ea656190bb9/0xbf27bd181140827d
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.node[1] actual=0.47671586549213518 expected=-0.29173944237115579 bits=0x3fde828342f179be/0xbfd2abdbe8fbfe36
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.node[2] actual=-0.11473646484893049 expected=0.45398099948560966 bits=0xbfbd5f5e742f4fb6/0x3fdd0e065272f314
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.node[3] actual=-0.19644386685857965 expected=-0.48580571210639684 bits=0xbfc9251297d424f5/0xbfdf1770d76d3eed
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.companion[0] actual=0.00031529408629309174 expected=7.5134932163752169e-05 bits=0x3f34a9c1ca0c5b06/0x3f13b2384e43cba2
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.companion[1] actual=1.4822658502127029 expected=1.0440981003606775 bits=0x3ff7b75c656a4254/0x3ff0b4a035add65e
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.companion[2] actual=-0.58318498193002888 expected=0.037594944131083503 bits=0xbfe2a9738d1d0ce7/0x3fa33fa4ff136e49
+FAIL copy-reset-restore/HP/length=1 sample=1 stage.companion[3] actual=-0.13547922417196459 expected=-0.72458016969559269 bits=0xbfc157621a8d92bd/0xbfe72fc2c08586c4
+FAIL copy-reset-restore/HP/length=1 sample=1 memory.companion[0] actual=0.00031529408629309174 expected=7.5134932163752169e-05 bits=0x3f34a9c1ca0c5b06/0x3f13b2384e43cba2
+FAIL copy-reset-restore/HP/length=1 sample=1 memory.companion[1] actual=1.4822658502127029 expected=1.0440981003606775 bits=0x3ff7b75c656a4254/0x3ff0b4a035add65e
+FAIL copy-reset-restore/HP/length=1 sample=1 memory.companion[2] actual=-0.58318498193002888 expected=0.037594944131083503 bits=0xbfe2a9738d1d0ce7/0x3fa33fa4ff136e49
+FAIL copy-reset-restore/HP/length=1 sample=1 memory.companion[3] actual=-0.13547922417196459 expected=-0.72458016969559269 bits=0xbfc157621a8d92bd/0xbfe72fc2c08586c4

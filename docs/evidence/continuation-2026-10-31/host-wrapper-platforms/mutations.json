@@ -1,0 +1,30 @@
+{
+  "registration": "cf52fef87c2e230dcc0c688121abea96ccafac4d",
+  "method": "Isolated temporary copies; production CMake/script unchanged. Same 92-check fixture and pinned JUCE input.",
+  "results": [
+    {
+      "mutation": "missing-macos-wrapper",
+      "exit_code": 1,
+      "detected": true,
+      "first_diagnostic": "FAIL: valid native source list must configure:"
+    },
+    {
+      "mutation": "pristine-macos-include",
+      "exit_code": 1,
+      "detected": true,
+      "first_diagnostic": "FAIL: VST3 translation unit contains exactly one bridge include"
+    },
+    {
+      "mutation": "disabled-source-hash",
+      "exit_code": 1,
+      "detected": true,
+      "first_diagnostic": "FAIL: trampoline: malformed/unreviewed sources fail closed"
+    },
+    {
+      "mutation": "dropped-unrelated-source",
+      "exit_code": 1,
+      "detected": true,
+      "first_diagnostic": "FAIL: only the wrapper source is replaced, without dropping helpers"
+    }
+  ]
+}

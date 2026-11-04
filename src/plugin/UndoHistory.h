@@ -20,7 +20,8 @@
 //     UndoManager, so the history never sees it. Loading a sound clears the history, as
 //     AudioProcessorValueTreeState::replaceState already does for state restores.
 //
-// Undo and redo write the tree; the APVTS turns that into parameter changes as usual.
+// Undo and redo use parameter-aware actions: only the affected parameter is bracketed in a
+// host gesture before the APVTS turns the tree write into its value notification.
 //
 // Thread safety: the tree is touched on the message thread (timer, gestures) and by the host's
 // state calls; treeLock() serialises them (the processor takes it around copyState/replaceState).
@@ -34,6 +35,7 @@
 
 namespace cs80
 {
+namespace tests { struct UndoableStateHistoryTestAccess; }
 
 class UndoableParameterState final : public juce::AudioProcessorValueTreeState,
                                      private juce::AudioProcessorParameter::Listener
@@ -43,10 +45,16 @@ public:
                            const juce::Identifier& valueTreeType, ParameterLayout layout);
     ~UndoableParameterState() override;
 
-    // Brings the tree up to date now: pending non-user changes without the UndoManager, pending
-    // user edits into the current transaction. Message thread.
+    // Any non-audio caller may reconcile external changes without the UndoManager.
+    // Only the message thread records pending user edits in their transaction.
     void syncNow();
     juce::CriticalSection& treeLock() noexcept { return lock; }
+
+    // A host may save while the message thread is blocked waiting for that host.
+    // JUCE's base copyState flushes through its UndoManager. Copy the synchronized
+    // tree and overlay current parameter atomics on the detached result instead;
+    // a pending user gesture remains owned by the message thread.
+    juce::ValueTree copyState();
 
     // A programmatic edit that the player should be able to undo in one step (the A/B switch,
     // a randomise, a copy between ranks). Message thread.
@@ -64,20 +72,35 @@ public:
 
     juce::UndoManager& getHistory() noexcept { return history; }
 
+    struct HistorySnapshot
+    {
+        bool canUndo = false, canRedo = false;
+        juce::String undoDescription, redoDescription;
+        bool operator==(const HistorySnapshot&) const = default;
+    };
+    // Detached toolbar data: a worker restore may clear history concurrently.
+    HistorySnapshot getHistorySnapshot() const;
+
 private:
+    class ParameterChangeAction;
     void beginUserEdit(const juce::String& name);
     void endUserEdit();
     void timerCallback() override;   // replaces the base class's flush (see the file comment)
     void parameterValueChanged(int index, float) override;
     void parameterGestureChanged(int index, bool starting) override;
     void openTransaction(const juce::String& name);
+    using HistoryReader = HistorySnapshot (*)(void*, const juce::UndoManager&);
+    using TransactionWriter = void (*)(void*, juce::UndoManager&, const juce::String&);
+    HistorySnapshot readHistoryUsing(void* context, HistoryReader reader) const;
+    void openTransactionUsing(const juce::String& name, void* context, TransactionWriter writer);
+    friend struct tests::UndoableStateHistoryTestAccess;
     void flushUser();
     void syncExternal();
     void write(int index, juce::UndoManager* undoManager);
 
     juce::AudioProcessor& owner;
     juce::UndoManager& history;
-    juce::CriticalSection lock;
+    mutable juce::CriticalSection lock;
     std::vector<juce::RangedAudioParameter*> parameters;   // by host parameter index
     std::unique_ptr<std::atomic<bool>[]> externalPending, userPending;
     int openGestures = 0, userScopes = 0;

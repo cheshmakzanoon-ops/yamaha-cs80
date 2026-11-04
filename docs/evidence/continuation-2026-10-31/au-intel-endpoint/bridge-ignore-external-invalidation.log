@@ -1,0 +1,3 @@
+FAIL: external notification invalidates AU ownership even with unchanged storage readback
+FAIL: AU lifecycle reset discards preceding publication ownership
+FAIL: an external invalidation during commit cannot be overwritten by the older AU publication

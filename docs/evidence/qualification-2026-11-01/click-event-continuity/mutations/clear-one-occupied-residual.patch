@@ -1,0 +1,18 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1191,6 +1191,15 @@
+         // Consume the legacy draw even when retaining phase: unrelated noise
+         // must not move in the shared RNG stream. Default-off order is unchanged.
+         const float legacyPhase = audioRng.nextUnipolar();
++        if (preserveAudioState && wasActive)
++        {
++            auto altered = r.wsc.getState();
++            bool cleared = false;
++            for (auto& row : altered.residual)
++                for (auto& value : row)
++                    if (!cleared && value != 0.0) { value = 0.0; cleared = true; }
++            r.wsc.restoreState(altered);
++        }
+         if (!preserveAudioState)
+         {
+             r.osc.reset(legacyPhase);

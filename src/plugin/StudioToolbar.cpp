@@ -36,14 +36,14 @@ juce::ColourGradient vgrad(juce::Colour top, juce::Colour bottom, Rf r)
 // One key of the toolbar: the toolbar keycap (warm grey plastic, lit amber when on), as a plain key,
 // one segment of a segmented switch, or an arrow / undo / redo / menu glyph.
 // ---------------------------------------------------------------------------
-class StudioToolbar::Key final : public juce::Button
+class StudioToolbar::Key final : public ContextButton
 {
 public:
     enum class Glyph { none, previous, next, undo, redo, menu };
     enum class Segment { whole, left, right };
 
     Key(const juce::String& text, const juce::String& title, Glyph g = Glyph::none, Segment s = Segment::whole)
-        : juce::Button(text), glyph(g), segment(s)
+        : ContextButton(text), glyph(g), segment(s)
     {
         setTitle(title);
         setWantsKeyboardFocus(true);
@@ -306,6 +306,9 @@ StudioToolbar::StudioToolbar(Cs80AudioProcessor& p) : processor(p)
     circuitKey->onClick = [this] { setEngine(true); };
     legacyKey->onClick = [this] { setEngine(false); };
     pureKey->onClick = [this] { setPure(pureValue < 0.5f); };
+    circuitKey->bindParameterContext(processor, Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance), cs80::P_sourcePerformance);
+    legacyKey->bindParameterContext(processor, Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance), cs80::P_sourcePerformance);
+    pureKey->bindParameterContext(processor, Cs80AudioProcessor::parameterId(cs80::P_parityMode), cs80::P_parityMode);
 
     auto& apvts = processor.getAPVTS();
     if (auto* engine = apvts.getParameter(Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance)))

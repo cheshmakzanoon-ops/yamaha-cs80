@@ -1,0 +1,82 @@
+equivalence fail fs176400 fc60 q0.5 kind0 0.126399259
+equivalence fail fs176400 fc60 q0.5 kind2 5.11724004e-06
+equivalence fail fs176400 fc60 q1 kind0 0.122444966
+equivalence fail fs176400 fc60 q1 kind2 2.35770991e-06
+equivalence fail fs176400 fc60 q2 kind0 0.117815818
+equivalence fail fs176400 fc60 q5 kind0 0.101989686
+equivalence fail fs176400 fc60 q9 kind0 0.0963673531
+equivalence fail fs176400 fc250 q0.5 kind0 0.126438132
+equivalence fail fs176400 fc250 q0.5 kind1 2.19075601e-05
+equivalence fail fs176400 fc250 q0.5 kind2 2.66562105e-05
+equivalence fail fs176400 fc250 q1 kind0 0.117829744
+equivalence fail fs176400 fc250 q1 kind1 1.47009113e-05
+equivalence fail fs176400 fc250 q1 kind2 1.38121348e-05
+equivalence fail fs176400 fc250 q2 kind0 0.103258936
+equivalence fail fs176400 fc250 q2 kind1 1.37785121e-05
+equivalence fail fs176400 fc250 q2 kind2 1.24073778e-05
+equivalence fail fs176400 fc250 q5 kind0 0.0840475984
+equivalence fail fs176400 fc250 q5 kind1 1.86689693e-05
+equivalence fail fs176400 fc250 q5 kind2 1.59188442e-05
+equivalence fail fs176400 fc250 q9 kind0 0.0775783382
+equivalence fail fs176400 fc250 q9 kind1 2.27172728e-05
+equivalence fail fs176400 fc250 q9 kind2 1.95227328e-05
+equivalence fail fs176400 fc1000 q0.5 kind0 0.110876142
+equivalence fail fs176400 fc1000 q0.5 kind1 0.0003185165
+equivalence fail fs176400 fc1000 q0.5 kind2 0.00039547359
+equivalence fail fs176400 fc1000 q1 kind0 0.101085744
+equivalence fail fs176400 fc1000 q1 kind1 0.000324319107
+equivalence fail fs176400 fc1000 q1 kind2 0.000303446879
+equivalence fail fs176400 fc1000 q2 kind0 0.100732431
+equivalence fail fs176400 fc1000 q2 kind1 0.000292048321
+equivalence fail fs176400 fc1000 q2 kind2 0.000239439716
+equivalence fail fs176400 fc1000 q5 kind0 0.0830638581
+equivalence fail fs176400 fc1000 q5 kind1 0.000339061041
+equivalence fail fs176400 fc1000 q5 kind2 0.000250064703
+equivalence fail fs176400 fc1000 q9 kind0 0.0730738865
+equivalence fail fs176400 fc1000 q9 kind1 0.000437460223
+equivalence fail fs176400 fc1000 q9 kind2 0.000321420916
+equivalence fail fs176400 fc4000 q0.5 kind0 0.106272178
+equivalence fail fs176400 fc4000 q0.5 kind1 0.00250896897
+equivalence fail fs176400 fc4000 q0.5 kind2 0.00401151599
+equivalence fail fs176400 fc4000 q1 kind0 0.100529227
+equivalence fail fs176400 fc4000 q1 kind1 0.00231049016
+equivalence fail fs176400 fc4000 q1 kind2 0.00288624997
+equivalence fail fs176400 fc4000 q2 kind0 0.0912818093
+equivalence fail fs176400 fc4000 q2 kind1 0.00288800379
+equivalence fail fs176400 fc4000 q2 kind2 0.00261174203
+equivalence fail fs176400 fc4000 q5 kind0 0.070746988
+equivalence fail fs176400 fc4000 q5 kind1 0.0044414163
+equivalence fail fs176400 fc4000 q5 kind2 0.00362103761
+equivalence fail fs176400 fc4000 q9 kind0 0.0623586758
+equivalence fail fs176400 fc4000 q9 kind1 0.00606387816
+equivalence fail fs176400 fc4000 q9 kind2 0.0047347732
+equivalence fail fs176400 fc12000 q0.5 kind0 0.137724823
+equivalence fail fs176400 fc12000 q0.5 kind1 0.0188624611
+equivalence fail fs176400 fc12000 q0.5 kind2 0.0453040339
+equivalence fail fs176400 fc12000 q1 kind0 0.12000241
+equivalence fail fs176400 fc12000 q1 kind1 0.0185507839
+equivalence fail fs176400 fc12000 q1 kind2 0.0312948175
+equivalence fail fs176400 fc12000 q2 kind0 0.101722485
+equivalence fail fs176400 fc12000 q2 kind1 0.021804144
+equivalence fail fs176400 fc12000 q2 kind2 0.0299717867
+equivalence fail fs176400 fc12000 q5 kind0 0.0959399182
+equivalence fail fs176400 fc12000 q5 kind1 0.02939357
+equivalence fail fs176400 fc12000 q5 kind2 0.0304861382
+equivalence fail fs176400 fc12000 q9 kind0 0.102506812
+equivalence fail fs176400 fc12000 q9 kind1 0.0336459241
+equivalence fail fs176400 fc12000 q9 kind2 0.0317379059
+phase-correction matrix equivalence: 1.74203272e-07 (limit 2e-06)
+176400 Hz matrix equivalence: 0.137724823 (limit 2e-06)
+FAIL: 176400 Hz reduced stage matches independent full-matrix step
+phase-corrected 88200 Hz: core 0.00889716555 band 0.0488373171
+phase-corrected 96000 Hz: core 0.00891568599 band 0.043923228
+phase-corrected 176400 Hz: core 0.00264237663 band 0.00296699871
+phase-corrected 192000 Hz: core 0.00173014801 band 0.0019537923
+phase-corrected 384000 Hz: core 5.09026489e-05 band 5.8253518e-05
+direct realtime fail fs176400 fc12000 q5 hp0 ratio1 0.0968438881 (limit 0.03)
+FAIL: direct realtime lock-in within unchanged continuous-truth limit
+direct realtime fail fs176400 fc12000 q5 hp1 ratio1 0.108769661 (limit 0.03)
+FAIL: direct realtime lock-in within unchanged continuous-truth limit
+phase-corrected direct realtime: worst normalized error 0.108769661
+176400 Hz direct realtime: worst normalized error 0.108769661
+853 checks, 3 failures

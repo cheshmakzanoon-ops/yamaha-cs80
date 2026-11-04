@@ -30,6 +30,32 @@ if (CS80_BUILD_TESTS)
     endif()
     enable_testing()
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    # Frozen scalar-kernel oracle: registered in c56726f before optimization.
+    set(cs80_scalar_oracle_dir "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle/exact_scalar_frozen")
+    set(cs80_scalar_oracle_inputs "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels/manifest.json")
+    set(cs80_scalar_oracle_outputs "${cs80_scalar_oracle_dir}/oracle-source-manifest.json")
+    foreach(cs80_scalar_header Dsp.h FastMath.h Ig00156PhaseCorrection.h Ig00156Filter.h ReconstructedOscillator.h)
+        list(APPEND cs80_scalar_oracle_inputs
+             "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels/raw/${cs80_scalar_header}")
+        list(APPEND cs80_scalar_oracle_outputs "${cs80_scalar_oracle_dir}/${cs80_scalar_header}")
+    endforeach()
+    add_custom_command(OUTPUT ${cs80_scalar_oracle_outputs}
+        COMMAND ${Python3_EXECUTABLE}
+                "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/materialize-frozen-scalar-kernels.py"
+                --fixture-root "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/exact_scalar_kernels"
+                --output "${cs80_scalar_oracle_dir}"
+        DEPENDS ${cs80_scalar_oracle_inputs}
+                "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/materialize-frozen-scalar-kernels.py"
+        VERBATIM)
+    add_custom_target(cs80_exact_scalar_oracle DEPENDS ${cs80_scalar_oracle_outputs})
+    add_executable(cs80_exact_scalar_filter_tests tests/ExactScalarFilterTests.cpp)
+    add_dependencies(cs80_exact_scalar_filter_tests cs80_exact_scalar_oracle)
+    target_include_directories(cs80_exact_scalar_filter_tests PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/scalar-oracle")
+    foreach(cs80_scalar_suite fixed moving state row fp)
+        add_test(NAME cs80_exact_scalar_filter_${cs80_scalar_suite}_tests
+                 COMMAND cs80_exact_scalar_filter_tests --suite ${cs80_scalar_suite})
+        set_tests_properties(cs80_exact_scalar_filter_${cs80_scalar_suite}_tests PROPERTIES TIMEOUT 300)
+    endforeach()
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
@@ -112,6 +138,40 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_active_tail_continuity_tests PRIVATE cs80_core)
     add_test(NAME cs80_active_tail_continuity_tests COMMAND cs80_active_tail_continuity_tests)
     set_tests_properties(cs80_active_tail_continuity_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_cold_idle_timing_tests tests/ColdIdleTimingTests.cpp)
+    target_link_libraries(cs80_cold_idle_timing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_cold_idle_timing_tests COMMAND cs80_cold_idle_timing_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/cold-idle-timing.json)
+    set_tests_properties(cs80_cold_idle_timing_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_cold_filter_envelope_tests tests/ColdFilterEnvelopeTests.cpp)
+    target_link_libraries(cs80_cold_filter_envelope_tests PRIVATE cs80_core)
+    add_test(NAME cs80_cold_filter_envelope_tests COMMAND cs80_cold_filter_envelope_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/completion-dsp.json)
+    set_tests_properties(cs80_cold_filter_envelope_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_note_off_continuity_tests tests/NoteOffContinuityTests.cpp)
+    target_link_libraries(cs80_note_off_continuity_tests PRIVATE cs80_core)
+    add_test(NAME cs80_note_off_continuity_tests COMMAND cs80_note_off_continuity_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/completion-dsp.json)
+    set_tests_properties(cs80_note_off_continuity_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_click_event_continuation_tests tests/ClickEventContinuationTests.cpp)
+    target_link_libraries(cs80_click_event_continuation_tests PRIVATE cs80_core)
+    add_test(NAME cs80_click_event_continuation_tests COMMAND cs80_click_event_continuation_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/click-residual-continuity.json
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/cold-idle-timing.json)
+    set_tests_properties(cs80_click_event_continuation_tests PROPERTIES TIMEOUT 300)
+    # Optional, test-only event-omission diagnostic; the source audit and its
+    # qualification CSV contract remain frozen and unmodified.
+    add_executable(cs80_click_bank_causality_tests tests/ClickBankCausalityTests.cpp)
+    target_link_libraries(cs80_click_bank_causality_tests PRIVATE cs80_core)
+    add_test(NAME cs80_click_bank_causality_tests COMMAND cs80_click_bank_causality_tests --self-test)
+    set_tests_properties(cs80_click_bank_causality_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_ring_event_continuity_tests tests/RingEventContinuityTests.cpp)
+    target_link_libraries(cs80_ring_event_continuity_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ring_event_continuity_tests COMMAND cs80_ring_event_continuity_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ring-event-continuity.json)
+    set_tests_properties(cs80_ring_event_continuity_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_ring_event_causality tests/RingEventCausality.cpp)
+    target_link_libraries(cs80_ring_event_causality PRIVATE cs80_core)
     add_test(NAME cs80_core_tests COMMAND cs80_tests)
     # Experimental linear-path model only; nonlinear Engine/CPU gates are not qualified.
     add_executable(cs80_experimental_oscillator_tests tests/ReconstructedOscillatorTests.cpp)
@@ -195,6 +255,14 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_pra_wah_tests PRIVATE src)
     add_test(NAME cs80_pra_wah_tests COMMAND cs80_pra_wah_tests)
     set_tests_properties(cs80_pra_wah_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_chorus_tabs_tests tests/ChorusTabsTests.cpp)
+    target_link_libraries(cs80_chorus_tabs_tests PRIVATE cs80_core)
+    add_test(NAME cs80_chorus_tabs_tests COMMAND cs80_chorus_tabs_tests)
+
+    add_executable(cs80_idle_exact_skip_tests tests/IdleExactSkipTests.cpp)
+    target_include_directories(cs80_idle_exact_skip_tests PRIVATE src)
+    add_test(NAME cs80_idle_exact_skip_tests COMMAND cs80_idle_exact_skip_tests)
+    set_tests_properties(cs80_idle_exact_skip_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_bbd_chorus_tests tests/BbdChorusTests.cpp)
     target_include_directories(cs80_bbd_chorus_tests PRIVATE src)
     add_test(NAME cs80_bbd_chorus_tests COMMAND cs80_bbd_chorus_tests)
@@ -220,11 +288,45 @@ if (CS80_BUILD_TESTS)
     endif()
 
     # [ws1-voice] register this workstream's core tests below this line.
+    add_executable(cs80_oscillator_cache_tests tests/OscillatorCacheTests.cpp)
+    target_link_libraries(cs80_oscillator_cache_tests PRIVATE cs80_core)
+    add_test(NAME cs80_oscillator_cache_tests COMMAND cs80_oscillator_cache_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/kernel-cache.json)
+    set_tests_properties(cs80_oscillator_cache_tests PROPERTIES TIMEOUT 30)
+    # [CPU experiment] Preregistered exact-bit comparison with frozen 7c864f
+    # original scheduler. No production audio, tolerance or V2 pin changes.
+    add_executable(cs80_wsc_fast_path_oracle_tests tests/OscillatorFastPathOracleTests.cpp)
+    target_link_libraries(cs80_wsc_fast_path_oracle_tests PRIVATE cs80_core)
+    add_test(NAME cs80_wsc_fast_path_oracle_tests COMMAND cs80_wsc_fast_path_oracle_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/wsc-steady-fastpath.json)
+    set_tests_properties(cs80_wsc_fast_path_oracle_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
+    target_link_libraries(cs80_ig00156_cache_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/kernel-cache.json)
+    set_tests_properties(cs80_ig00156_cache_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_ig00156_companion_history_tests tests/Ig00156CompanionHistoryTests.cpp)
+    target_include_directories(cs80_ig00156_companion_history_tests PRIVATE src)
+    add_test(NAME cs80_ig00156_companion_history_tests COMMAND cs80_ig00156_companion_history_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/lazy-filter-histories.json)
+    set_tests_properties(cs80_ig00156_companion_history_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_ig00156_companion_efficiency_tests COMMAND ${Python3_EXECUTABLE}
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/run-lazy-filter-histories.py
+             --mode efficiency --source ${CMAKE_CURRENT_SOURCE_DIR}
+             --contract ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpu/lazy-filter-histories.json
+             --cmake ${CMAKE_COMMAND} --cxx ${CMAKE_CXX_COMPILER})
+    set_tests_properties(cs80_ig00156_companion_efficiency_tests PROPERTIES TIMEOUT 120 RUN_SERIAL TRUE)
     add_executable(cs80_ig00156_nodal_tests tests/Ig00156NodalTests.cpp)
     target_link_libraries(cs80_ig00156_nodal_tests PRIVATE cs80_core)
     add_test(NAME cs80_ig00156_nodal_tests COMMAND cs80_ig00156_nodal_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
     set_tests_properties(cs80_ig00156_nodal_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_ig00156_phase_correction_tests tests/Ig00156PhaseCorrectionTests.cpp)
+    target_link_libraries(cs80_ig00156_phase_correction_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00156_phase_correction_tests COMMAND cs80_ig00156_phase_correction_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ig00156-176400.json)
+    set_tests_properties(cs80_ig00156_phase_correction_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_oscillator_promotion_tests tests/OscillatorPromotionTests.cpp)
     target_link_libraries(cs80_oscillator_promotion_tests PRIVATE cs80_core)
     add_test(NAME cs80_oscillator_promotion_tests COMMAND cs80_oscillator_promotion_tests
@@ -235,6 +337,22 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_ig00151_vca_tests COMMAND cs80_ig00151_vca_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
     set_tests_properties(cs80_ig00151_vca_tests PROPERTIES TIMEOUT 120)
+
+    add_executable(cs80_ig00151_idle_tail_tests tests/Ig00151IdleTailTests.cpp)
+    target_link_libraries(cs80_ig00151_idle_tail_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00151_idle_tail_tests COMMAND cs80_ig00151_idle_tail_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
+    set_tests_properties(cs80_ig00151_idle_tail_tests PROPERTIES TIMEOUT 120)
+
+    add_executable(cs80_vca_tail_modulation_tests tests/VcaTailModulationTests.cpp)
+    target_link_libraries(cs80_vca_tail_modulation_tests PRIVATE cs80_core)
+    add_test(NAME cs80_vca_tail_modulation_tests COMMAND cs80_vca_tail_modulation_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/vca-tail-modulation.json)
+    set_tests_properties(cs80_vca_tail_modulation_tests PROPERTIES TIMEOUT 240)
+    add_executable(cs80_modern_tail_scheduling_tests tests/ModernTailSchedulingTests.cpp)
+    target_link_libraries(cs80_modern_tail_scheduling_tests PRIVATE cs80_core)
+    add_test(NAME cs80_modern_tail_scheduling_tests COMMAND cs80_modern_tail_scheduling_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/vca-tail-modulation.json)
     add_executable(cs80_tolerance_drift_tests tests/ToleranceDriftTests.cpp)
     target_link_libraries(cs80_tolerance_drift_tests PRIVATE cs80_core)
     add_test(NAME cs80_tolerance_drift_tests COMMAND cs80_tolerance_drift_tests
@@ -245,6 +363,10 @@ if (CS80_BUILD_TESTS)
     add_executable(cs80_oversampling_tests tests/OversamplingTests.cpp)
     target_link_libraries(cs80_oversampling_tests PRIVATE cs80_core)
     add_test(NAME cs80_oversampling_tests COMMAND cs80_oversampling_tests)
+    add_executable(cs80_stationary_controls_exact_tests tests/StationaryControlsExactTests.cpp)
+    target_include_directories(cs80_stationary_controls_exact_tests PRIVATE src)
+    add_test(NAME cs80_stationary_controls_exact_tests COMMAND cs80_stationary_controls_exact_tests)
+    set_tests_properties(cs80_stationary_controls_exact_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_smoothing_tests tests/SmoothingTests.cpp)
     target_link_libraries(cs80_smoothing_tests PRIVATE cs80_core)
     add_test(NAME cs80_smoothing_tests COMMAND cs80_smoothing_tests)
@@ -256,6 +378,36 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_noise_tests COMMAND cs80_noise_tests)
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_mts_esp_native_tests tests/MtsEspNativeTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_native_tests PRIVATE src)
+    target_link_libraries(cs80_mts_esp_native_tests PRIVATE ${CMAKE_DL_LIBS})
+    add_test(NAME cs80_mts_esp_native_tests COMMAND cs80_mts_esp_native_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/mts-client.json)
+    set_tests_properties(cs80_mts_esp_native_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_mts_esp_shim_tests tests/MtsEspShimTests.cpp src/plugin/MtsEspClient.cpp)
+    target_compile_definitions(cs80_mts_esp_shim_tests PRIVATE CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    target_link_libraries(cs80_mts_esp_shim_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mts_esp_shim_tests COMMAND cs80_mts_esp_shim_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/mts-client.json)
+    set_tests_properties(cs80_mts_esp_shim_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_mts_esp_fallback_tests tests/MtsEspFallbackTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_fallback_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_fallback_tests PRIVATE CS80_WITH_MTS_ESP=0)
+    add_test(NAME cs80_mts_esp_fallback_tests COMMAND cs80_mts_esp_fallback_tests)
+    add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
+    target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
+    add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    add_executable(cs80_au_automation_curve_tests tests/AuAutomationCurveTests.cpp)
+    target_include_directories(cs80_au_automation_curve_tests PRIVATE src)
+    add_test(NAME cs80_au_automation_curve_tests COMMAND cs80_au_automation_curve_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    add_executable(cs80_au_automation_bridge_contract_tests tests/AuAutomationBridgeContractTests.cpp)
+    target_include_directories(cs80_au_automation_bridge_contract_tests PRIVATE src)
+    target_link_libraries(cs80_au_automation_bridge_contract_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_au_automation_bridge_contract_tests COMMAND cs80_au_automation_bridge_contract_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    set_tests_properties(cs80_mts_esp_fallback_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
     add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)
@@ -298,6 +450,14 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_pra_optical_cell_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
+    add_executable(cs80_unused_lfo_readout_exact_tests tests/UnusedLfoReadoutExactTests.cpp)
+    target_include_directories(cs80_unused_lfo_readout_exact_tests PRIVATE src)
+    add_test(NAME cs80_unused_lfo_readout_exact_tests COMMAND cs80_unused_lfo_readout_exact_tests)
+    set_tests_properties(cs80_unused_lfo_readout_exact_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_unused_lfo_engine_ownership_tests tests/UnusedLfoEngineOwnershipTests.cpp)
+    target_link_libraries(cs80_unused_lfo_engine_ownership_tests PRIVATE cs80_core)
+    add_test(NAME cs80_unused_lfo_engine_ownership_tests COMMAND cs80_unused_lfo_engine_ownership_tests)
+    set_tests_properties(cs80_unused_lfo_engine_ownership_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_modern_lfo_tests tests/ModernLfoTests.cpp)
     target_link_libraries(cs80_modern_lfo_tests PRIVATE cs80_core)
     add_test(NAME cs80_modern_lfo_tests COMMAND cs80_modern_lfo_tests)
@@ -329,6 +489,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_source_factory_boundary_tests
              COMMAND cs80_source_factory_boundary_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    add_executable(cs80_programmer_integration_tests tests/ProgrammerIntegrationTests.cpp)
+    target_link_libraries(cs80_programmer_integration_tests PRIVATE cs80_core)
+    add_test(NAME cs80_programmer_integration_tests COMMAND cs80_programmer_integration_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/programmer-integration.json)
+    set_tests_properties(cs80_programmer_integration_tests PROPERTIES TIMEOUT 180)
     add_executable(cs80_memory_panel_tests tests/MemoryPanelTests.cpp)
     target_include_directories(cs80_memory_panel_tests PRIVATE src)
     add_test(NAME cs80_memory_panel_tests
@@ -397,6 +562,8 @@ if (CS80_BUILD_PLUGIN)
         FetchContent_MakeAvailable(JUCE)
     endif()
 
+    include(cmake/HostAutomation.cmake)
+
     set(CS80_PLUGIN_FORMATS VST3 Standalone)
     if (APPLE)
         list(APPEND CS80_PLUGIN_FORMATS AU)
@@ -422,6 +589,7 @@ if (CS80_BUILD_PLUGIN)
         src/plugin/PluginProcessor.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/UiComponents.cpp
+        src/plugin/ParameterContext.cpp
         src/plugin/AdvancedPanel.cpp
         src/plugin/PresetBrowser.cpp
 
@@ -431,6 +599,7 @@ if (CS80_BUILD_PLUGIN)
 
         # [ws3-keyboard] add this workstream's plugin sources below this line.
         src/plugin/MtsEspClient.cpp
+        src/plugin/PluginProcessorAutomation.cpp
         src/plugin/KeyboardTuningPage.cpp
 
         # [ws4-circuits] add this workstream's plugin sources below this line.
@@ -473,6 +642,43 @@ if (CS80_BUILD_PLUGIN)
         JUCE_VST3_CAN_REPLACE_VST2=0
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
+
+    if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        get_target_property(CS80_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+        set(CS80_VST3_SDK "${CS80_JUCE_MODULES}/juce_audio_processors_headless/format_types/VST3_SDK")
+        add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_automation_tests CS80Reference_VST3)
+        add_test(NAME cs80_vst3_automation_tests COMMAND cs80_vst3_automation_tests
+            "$<TARGET_FILE:CS80Reference_VST3>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        set_tests_properties(cs80_vst3_automation_tests PROPERTIES TIMEOUT 180)
+    endif()
+
+    if(CS80_BUILD_TESTS AND APPLE)
+        add_executable(cs80_au_automation_host_tests tests/AuAutomationHostTests.cpp)
+        target_include_directories(cs80_au_automation_host_tests PRIVATE src)
+        target_link_libraries(cs80_au_automation_host_tests PRIVATE
+            "-framework AudioToolbox" "-framework AudioUnit" "-framework CoreFoundation")
+        add_dependencies(cs80_au_automation_host_tests CS80Reference_AU)
+        add_test(NAME cs80_au_automation_host_tests COMMAND cs80_au_automation_host_tests
+            "$<TARGET_BUNDLE_DIR:CS80Reference_AU>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        set_tests_properties(cs80_au_automation_host_tests PROPERTIES TIMEOUT 180)
+        add_test(NAME cs80_au_automation_native_mutations COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/AuAutomationNativeMutations.py"
+            --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
+            --host "$<TARGET_FILE:cs80_au_automation_host_tests>"
+            --component "$<TARGET_BUNDLE_DIR:CS80Reference_AU>"
+            --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+            --config "$<CONFIG>")
+        set_tests_properties(cs80_au_automation_native_mutations PROPERTIES TIMEOUT 1200 RUN_SERIAL TRUE
+            DEPENDS cs80_au_automation_host_tests)
+    endif()
 
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
@@ -566,6 +772,41 @@ if (CS80_BUILD_PLUGIN)
     endif()
 endif()
 
+# AU wrapper macro environment contract (registered 2026-10-31).
+# Keep the native JUCE macros active around the production queue on every host.
+# Native macOS AU compilation, scheduling and pluginval remain independent gates.
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_au_wrapper_macro_environment_tests tests/AuWrapperMacroEnvironmentTests.cpp)
+    target_include_directories(cs80_au_wrapper_macro_environment_tests PRIVATE src)
+    add_test(NAME cs80_au_wrapper_macro_environment_tests COMMAND cs80_au_wrapper_macro_environment_tests)
+    set_tests_properties(cs80_au_wrapper_macro_environment_tests PROPERTIES TIMEOUT 30)
+endif()
+
+# Exact zero-history FIR gates; published acceptance and rounding extension in
+# 156d82e9f3ee20089bb952ba853e0f0c779b903f. No production-wide FP option changes.
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_zero_fir_history_tests tests/ZeroFirHistoryTests.cpp)
+    target_include_directories(cs80_zero_fir_history_tests PRIVATE src)
+    add_test(NAME cs80_zero_fir_history_tests COMMAND cs80_zero_fir_history_tests)
+    set_tests_properties(cs80_zero_fir_history_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_zero_fir_rounding_tests tests/ZeroFirRoundingTests.cpp)
+    target_include_directories(cs80_zero_fir_rounding_tests PRIVATE src)
+    if (MSVC)
+        target_compile_options(cs80_zero_fir_rounding_tests PRIVATE /fp:strict)
+    else()
+        target_compile_options(cs80_zero_fir_rounding_tests PRIVATE -frounding-math)
+    endif()
+    add_test(NAME cs80_zero_fir_rounding_tests COMMAND cs80_zero_fir_rounding_tests)
+    set_tests_properties(cs80_zero_fir_rounding_tests PROPERTIES TIMEOUT 120)
+endif()
+
+# Exact control-transform gate; registered before implementation in c881983.
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_exact_control_transform_tests tests/ExactControlTransformTests.cpp)
+    target_link_libraries(cs80_exact_control_transform_tests PRIVATE cs80_core)
+    add_test(NAME cs80_exact_control_transform_tests COMMAND cs80_exact_control_transform_tests)
+endif()
+
 # Core test executables keep several Engine fixtures (about 270 KB each since
 # the free-running idle snapshots and the circuit-engine voice) on the stack in
 # one function. Give them the ordinary 8 MiB Unix test-process budget instead of
@@ -581,6 +822,20 @@ if (MSVC AND CS80_BUILD_TESTS)
             endif()
         endif()
     endforeach()
+endif()
+
+# Host automation wrapper platform contract (registered 2026-10-31).
+# Mock interface source lists exercise C++ and Objective-C++ generation on
+# every build host; native AU/VST3 compilation and host gates remain separate.
+if (CS80_BUILD_PLUGIN AND CS80_BUILD_TESTS)
+    get_target_property(CS80_WRAPPER_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+    add_test(NAME cs80_host_wrapper_platform_tests COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/HostWrapperPlatformTests.py"
+        --source "${CMAKE_CURRENT_SOURCE_DIR}"
+        --juce-wrappers "${CS80_WRAPPER_JUCE_MODULES}/juce_audio_plugin_client"
+        --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-wrapper-platforms.json"
+        --cmake "${CMAKE_COMMAND}")
+    set_tests_properties(cs80_host_wrapper_platform_tests PROPERTIES TIMEOUT 90)
 endif()
 
 # Instrumented builds (ASan + UBSan) run several times slower than the Release

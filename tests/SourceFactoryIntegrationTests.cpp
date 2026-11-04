@@ -161,7 +161,7 @@ void receiverRouting(double rate)
                               static_cast<float>(sf::envelopeStateFromVolts(tone.filterEnvelope.attackVolts)),
                               static_cast<float>(tone.filterEnvelope.attackSeconds),
                               static_cast<float>(tone.filterEnvelope.decaySeconds),
-                              static_cast<float>(tone.filterEnvelope.releaseSeconds), 0);
+                              static_cast<float>(tone.filterEnvelope.releaseSeconds), 0, true);
         expectedAmplitude.noteOn(static_cast<float>(tone.amplitudeEnvelope.attackSeconds),
                                  static_cast<float>(tone.amplitudeEnvelope.decaySeconds),
                                  static_cast<float>(tone.amplitudeEnvelope.sustainRatio),
@@ -370,10 +370,17 @@ void inactiveControlRelaxation(double rate)
     f.effectiveValues[chParam(1, CP_vR)] = .001f;
     Engine e; e.prepare(rate); e.setControlFrame(f);
     render(e, 31);
+    sf::ToneControls coldTone; sf::compileTone(0, 9, coldTone);
+    const double coldIl = static_cast<float>(sf::envelopeStateFromVolts(coldTone.filterEnvelope.initialVolts));
+    const double coldRelease = static_cast<float>(coldTone.filterEnvelope.releaseSeconds);
+    // Independently solved RC evolution from reset's zero charge. Released TR
+    // selects IL before the first note; this is not an assignment-time reset.
+    const float coldExpected = static_cast<float>(coldIl * (1.0 - std::exp(-std::log(1000.0) * (31.0 / rate) / coldRelease)));
     for (int voice = 0; voice < 8; ++voice)
     {
         const auto state = e.getRankEnvelopeState(voice, 0).filter;
-        check(state.stage == FilterEnv::Stage::Idle && state.value == 0, "cold untriggered source control remains idle at zero");
+        check(state.stage == FilterEnv::Stage::Idle && state.value == coldExpected,
+              "every cold untriggered source follows the independent RC-to-IL solution exactly at float precision");
     }
     e.noteOn(60, .8f); render(e, static_cast<int>(rate * .1)); e.noteOff(60);
     int waited = 0;
@@ -391,7 +398,10 @@ void inactiveControlRelaxation(double rate)
     // free-runs, so its oscillator keeps advancing while its control relaxes.
     check(e.getRankAudioState(0, 0).phase != audio.phase, "inactive relaxation keeps the free-running oscillator advancing");
     sf::ToneControls tone; sf::compileTone(0, 9, tone);
-    sf::RankDrives drives {}; drives[0].filterEnvelopeZ = -3;
+    sf::RankDrives drives {};
+    // Every released/untriggered receiver, not only the previously audible
+    // circuit, has reached IL after this interval.
+    for (auto& drive : drives) drive.filterEnvelopeZ = -3;
     // Phase 2.4 (intentional): the silent channel still holds its TWS b.
     drives[0].velocity = e.getVoiceInfo(0).touchB;
     drives[0].pressure = e.getVoiceInfo(0).touchA;

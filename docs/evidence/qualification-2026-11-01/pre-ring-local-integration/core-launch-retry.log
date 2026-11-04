@@ -1,0 +1,21 @@
+Internal ctest changing into directory: /workspace/scratch/a0e502bd4cd5/yamaha-cs80/build-core
+Test project /workspace/scratch/a0e502bd4cd5/yamaha-cs80/build-core
+    Start 18: cs80_source_performance_audit_tests
+Process not started
+ /workspace/scratch/a0e502bd4cd5/yamaha-cs80/build-core/cs80_source_performance_audit_tests
+[permission denied]
+1/2 Test #18: cs80_source_performance_audit_tests ...***Not Run   0.00 sec
+    Start 20: cs80_ig00156_filter_tests
+Process not started
+ /workspace/scratch/a0e502bd4cd5/yamaha-cs80/build-core/cs80_ig00156_filter_tests
+[permission denied]
+2/2 Test #20: cs80_ig00156_filter_tests .............***Not Run   0.00 sec
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =   0.03 sec
+
+The following tests FAILED:
+	 18 - cs80_source_performance_audit_tests (BAD_COMMAND)
+	 20 - cs80_ig00156_filter_tests (BAD_COMMAND)
+Errors while running CTest

@@ -1,0 +1,170 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "model_id": "dormant-noise-conditional-gaussian-v1",
+  "baseline_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+  "status": "Acceptance registered before implementation evaluation. No CPU or sound qualification is implied.",
+  "evidence_kind": "Algebraic/stochastic continuation of the existing declared Gaussian software sources, not hardware measurements.",
+  "sources": {
+    "panel": "CS-80 service manual SUB29:0.047uF/100k coupling,1M/4.7k stage,10uF/10k coupling,10M/10k stage. Shared C1/C2 to NO1/NO2 fan-out is source-derived.3MHz op-amp GBW, Gaussian unclipped drive and software level calibration are existing declared inferences; alternatives remain in src/reference/NoiseSpectrum.h and docs/workstreams/ws2-engine.md.",
+    "hiss": "Existing declared output-bus inference: independent left/right Gaussian sources with15/5Hz and160/80Hz shelves, representing a100Hz flicker corner.50/200Hz alternatives and absence of a measured hardware floor remain documented.",
+    "scheduler": "New numerical realization of those declared sources. Sampling their conditional state after unobserved intervals preserves the ideal Gaussian law within stated floating-point limits; deterministic PRNG sequences intentionally change after dormancy."
+  },
+  "ownership": {
+    "panel_dormant_iff": "Both current rankSettings[0].noise and rankSettings[1].noise have zero IEEE754 magnitude bits. Negative zero is allowed; subnormals, nonzero, infinity and NaN must keep the original full-rate path. Do not use voice count, VCA state, output volume, mute or a threshold.",
+    "panel_consumers": "Engine::tickGlobals obtains the shared panelNoise; its only downstream use is Engine::tickRanks x += panelNoise*rs.noise*0.8f. With both rank gains exactly zero there is no connected rank/filter consumer, including future charge.",
+    "hiss_dormant_iff": "Current global.analogNoise has zero IEEE754 magnitude bits. Any nonzero/subnormal/nonfinite value keeps full rate.",
+    "hiss_consumers": "Engine::mixBus adds hissL/R only through global.analogNoise*0.0008f, before BBD/output circuits. These gains must be exactly zero to suppress the source.",
+    "unchanged_rng_owners": [
+      "Engine audioRng per-rank legacy draws and both hiss draws are still consumed in their original order.",
+      "OriginalSubOscillator NO3 retains its existing separate RNG; this work does not claim to complete the physical SUB29 fan-out into that model.",
+      "The per-voice idle replay RNG remains separate and unchanged."
+    ],
+    "policy": "Use only in existing source-model branches. Legacy never calls the new dormant path. This is circuit-model scheduling, with no new modern control or PURE exception."
+  },
+  "law": {
+    "existing_step": "For each first-order section, y=b0*x+b1*x_previous+a1*y_previous. Cascade coefficients and Gaussian variance N0*fs/2 are unchanged.",
+    "reduced_state": "Previous cascade input plus each section output:5 dimensions for the4-section panel chain,3 for the2-section hiss chain. Section input memories are reconstructed from the preceding section output. The independent oracle retains all2*section_count input/output memories.",
+    "conditional_transition": "x[n+N]=A^N*x[n]+eta_N; E[eta_N]=0; Q_N=sum(k=0..N-1) A^k*B*B^T*(A^k)^T, with sigma absorbed in B.",
+    "precomputation": "Prepare fixed A^N and a covariance factor for everyN=1..32. A stable QR factorization of the innovation columns is permitted; no pole fitting, diagonal covariance shortcut or added noise is permitted.",
+    "cadence": "Advance each dormant source at absolute multiples of32 source samples since reset/prepare, independently of render block boundaries. Preserve the exact number of elapsed samples, complete any partial interval before the first active sample, and then use the original per-sample section/Gaussian path.",
+    "reset_prepare_copy": "Reset and prepare clear pending samples and absolute counters using the original seed/state reset semantics. Plain copies preserve every section state, Gaussian spare/RNG state, pending sample count, absolute counter and prepared transition. A rate change retains the original prepare/reset behavior.",
+    "zero_output": "Dormant source output is declared+0. The existing per-rank and hiss multiply/add expressions remain in place, including IEEE signs from a negative-zero gain. Adding a signed zero leaves a finite nonzero accumulator unchanged; the sign of an exactly-zero accumulator may differ from the old unobserved random sample. Exercise both gain zero signs and zero/nonzero mix histories; report this as part of the intentional V2 realization change, never as whole-engine byte identity after dormancy. No output fade, capacitor reset, tail cutoff, gain change or altered active per-sample source law is allowed."
+  },
+  "rates": [
+    88200,
+    96000,
+    176400,
+    192000,
+    352800,
+    384000,
+    705600,
+    768000
+  ],
+  "truth": {
+    "frozen_active": "tests/fixtures/dormant_noise/NoiseSourceBeforeDecimation.h",
+    "full_section_oracle": "tests/DormantNoiseTruth.h: independently clock every original section memory in long double for each basis vector and each Gaussian innovation; it must not call production reduced-state or factorization helpers.",
+    "matrix_samples": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "transition_error_max": 2e-12,
+    "transition_metric": "Maximum absolute entry error of A^N, scaled by max(1, absolute oracle entry). Also compare conditional means from zero and the fixed nonzero state vector.",
+    "covariance_error_max": 2e-12,
+    "covariance_metric": "For every element of F*F^T, absolute difference from independently accumulated Q_N divided by sqrt(Q_ii*Q_jj). A zero oracle variance requires absolute error<=2e-12; N=0 must be exact identity/zero innovation.",
+    "psd_requirement": "F*F^T must be finite and positive semidefinite within2e-12 times its trace. No regularization/jitter or discarded small eigenmode is permitted.",
+    "composed_intervals": [
+      1,
+      7,
+      31,
+      32,
+      33,
+      127,
+      1024,
+      1000000
+    ],
+    "composition": "Independently compose registered N<=32 transitions/covariances and compare with the frozen full-section law. Large intervals may use binary composition; they are not sampled by a million-step Monte Carlo.",
+    "rank_retention": "Each fixed section has a pole/zero mismatch, all source poles are distinct, and no section zero cancels another section pole. Thus the N-step innovation rank is min(N,state_dimension). Canonicalize the lower factor to positive diagonal by consistent QR row/sign flips. Require each diagonal through the stated rank strictly positive and finite; unused factor columns are exactly zero. Inspect the implementation for the absence of magnitude thresholds, covariance regularization, diagonal jitter, eigenmode truncation or fallback-to-zero. This verifies retained nonzero modes; it does not claim relative accuracy of arbitrarily tiny covariance eigenvalues beyond the stated entrywise covariance criterion.",
+    "rank_mutation": "After factorization, zero the smallest nonzero factor column. The rank-retention assertion must reject that actual-source mutation even when its entrywise covariance error is below2e-12."
+  },
+  "conditional_moments": {
+    "samples_per_case": 262144,
+    "intervals": [
+      1,
+      7,
+      31,
+      32,
+      33
+    ],
+    "initial_states": [
+      "all zero",
+      "x[i]=(-1)^i*(i+1)/10 in normalized model units"
+    ],
+    "chains": [
+      "panel",
+      "hiss"
+    ],
+    "rates": "all eight registered rates",
+    "seed_rule": "One continuous frozen Gaussian stream per case. Seed is fixed before evaluation as mix32(0x4e4f4953u ^ rate_index*0x9e3779b9u ^ interval_index*0x85ebca6bu ^ initial_index*0xc2b2ae35u ^ chain_index*0x27d4eb2du); mix32 applies x^=x>>16; x*=0x7feb352du; x^=x>>15; x*=0x846ca68bu; x^=x>>16, with32-bit wrap. Never choose seeds from observed results.",
+    "mean_sigma_error_max": 0.01,
+    "covariance_normalized_error_max": 0.015,
+    "method": "Accumulate deviations from the independent conditional mean in long double. Compare empirical mean/standard deviation and the full empirically centered covariance. Normalize each covariance error by sqrt(Q_ii*Q_jj), retaining cross-covariances.",
+    "rationale": "At262144 independent Gaussian realizations,0.01sigma is5.12 standard errors of the mean;0.015 on a variance is5.43 standard errors. This is a preregistered finite-sample check, not a replacement for the2e-12 algebraic covariance gate.",
+    "left_right_correlation_max": 0.02,
+    "channel_rule": "Separate inherited left/right seeds and Gaussian states. Test both dormant and post-wake streams; never share an innovation vector.",
+    "initialization": "Each Monte Carlo realization starts from exactly the same declared x0 and zero elapsed/pending samples. Only the one prescribed Gaussian RNG/spare sequence continues across realizations. Never use one long evolving section-state trajectory as a conditional ensemble."
+  },
+  "active_and_wake": {
+    "active_byte_identity": "At every registered rate, compare65536 consecutive panel and stereo hiss samples with the independent frozen active source, including reset/prepare. A source that has never been dormant must be byte-identical.",
+    "schedules": "Exercise every partial length0..31, exact32/64 boundaries, long gaps, back-to-back active/dormant transitions, reset while pending, rate change and copies while pending. Every first active sample must finish exactly the elapsed dormant interval before advancing the original one-sample path.",
+    "partition_byte_identity": "The new seeded law must render byte-identically for identical sample-position events under1-frame,256-frame and repeating17/1/63/511/4 partitions; verify component scheduling and Engine integration. A zero-frame control event advances no noise time.",
+    "post_wake_psd": "At each registered rate, advance floor(0.5*fs)+17 dormant samples, then record immediately from the first active sample using the existing NoiseTests.cpp17*FFT-length Welch procedure. No post-wake discard, fade, alternate seed, or relaxed band/statistical limits.",
+    "unchanged_limits": {
+      "third_octave_psd_error_db": 1.0,
+      "psd_band_low_hz": 63.0,
+      "psd_band_high_hz": 16000.0,
+      "rate_band_power_error_db": 0.5,
+      "rate_band_low_hz": 100.0,
+      "rate_band_high_hz": 10000.0,
+      "kurtosis_error": 0.1,
+      "mean_sigma_error": 0.01,
+      "left_right_correlation": 0.02
+    },
+    "engine_ownership": "Render fixtures with only rankI noise, only rankII noise, both, hiss alone, and physical-tab/programmer noise sources. Any active consumer must retain its original source path. Include positive/negative zero and subnormal guard probes independent of floating-point denormal mode. Retain the original coherent panel fan-out and legacy independent-voice gates.",
+    "signed_zero": "Probe+0/-0 panel and hiss gains with both exact-zero and finite nonzero downstream histories. Keep the original multiply/add order. Active source samples remain byte-identical when no dormancy has occurred; exact-zero sign differences after dormant substitution belong to the explicitly re-pinned V2 law. Legacy arithmetic and its signed-zero behavior must remain byte-identical."
+  },
+  "work": {
+    "disabled_4096_samples": "Exactly128 absolute32-sample updates per source. At most640 panel and384 per-channel hiss Gaussian next() calls, compared with4096 on each full-rate source. Source-call counters required by this assertion are temporary test instrumentation, not shipping telemetry.",
+    "partial": "A wake may add at most min(pending_samples,state_dimension) Gaussian samples before the normal active sample; no unbounded loop or render-thread allocation.",
+    "preparation": "Bounded fixed-size matrices only. No allocation on audio processing or ownership transitions; prepare cost is reported separately.",
+    "timing": "Run the unchanged source-factory benchmark for a minimum of3 serial rounds before and after this isolated patch. Report held/moving/idle, p99 and deadline misses; the0.15-0.20 RTF /0.02 idle targets remain open unless measured."
+  },
+  "mutations": [
+    "freeze the dormant state",
+    "count one batch as one elapsed sample",
+    "use N*B*B^T without A propagation",
+    "discard covariance off-diagonals",
+    "discard the smallest nonzero covariance-factor column",
+    "share left/right Gaussian innovations",
+    "drop the partial interval on wake",
+    "reset cadence from render block boundaries",
+    "declare panel dormant when only one rank gain is zero",
+    "ignore a nonzero/subnormal consumer gain",
+    "declare hiss dormant while analogNoise is nonzero",
+    "leave pending samples across reset/prepare",
+    "clear charged section states before wake",
+    "change active Gaussian/sample recurrence"
+  ],
+  "compatibility": "Legacy default/tails and V1 numerics must remain byte-identical. This intentionally changes the circuit-engine seeded sequence after a dormant interval; use a separate audio commit, full-SHA V2 re-pin commit and strict compatibility gate. Do not represent these outputs as bit-identical to the old V2 after dormancy. Preserve all existing noise, cold/wake/phase, click and unrelated circuit gates without relaxation.",
+  "rate_scope": "The original six ws2 rates retain indexes0..5;705600 and768000Hz are appended as indexes6..7 to cover HQ8 at88.2/96k host. Every new algebraic, conditional-moment, active-continuation and post-wake statistical gate covers all eight rates. Existing ws2 gates remain unchanged."
+}

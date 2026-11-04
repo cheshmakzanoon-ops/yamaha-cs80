@@ -1,0 +1,21 @@
+{
+  "registered": "2026-10-31",
+  "baseline_commit": "476c2f1fed4dcec18c5a42bc8d29ae542dab02b9",
+  "purpose": "Independent frozen active implementation before any dormant-state implementation or evaluation. Namespace adaptation only; no numerical law changed.",
+  "original_sources": {
+    "src/core/NoiseSource.h": "5d96d45c64c86cedc944562e1f25e59a49d9689f04dd3787d5333f3ce95e5662",
+    "src/core/Dsp.h:Rng": "bbd99ceb7137f2786aea9423c1abdb0733eeb4a270096ab7eae1662e26aefef9",
+    "tests/Ws2EngineTolerances.h": "c91df5dda1b2daeb03aab76fccadd3cb003acab7d56a80d38f59732b36b22a36"
+  },
+  "frozen_file": "NoiseSourceBeforeDecimation.h",
+  "frozen_sha256": "4e535062fd3738ee5fa7ada4e46919a2fd96dcf8c578043217ad2ebbc947b511",
+  "adaptations": [
+    "replace Dsp.h include with algorithm; standard array/cmath/cstdint includes remain",
+    "nest the original source in cs80::dormant_noise_frozen",
+    "copy original Rng verbatim into the frozen namespace so later production RNG edits cannot move the oracle",
+    "add this provenance comment only"
+  ],
+  "scope": "Declared software noise distribution and numerical continuation; no hardware measurements.",
+  "independent_truth_file": "tests/DormantNoiseTruth.h",
+  "independent_truth_sha256": "f2c963cda8e8c7d60441c4ed02eeba48109ee211a64c58c9d559eeaa09cb41be"
+}

@@ -1,0 +1,64 @@
+{
+  "phase_rows": [
+    {
+      "rate": 44100,
+      "rank": 0,
+      "phase_error_cycles": 2.0593404770008483e-05,
+      "limit_cycles": 0.002
+    },
+    {
+      "rate": 44100,
+      "rank": 1,
+      "phase_error_cycles": 0.00010704994200994022,
+      "limit_cycles": 0.002
+    },
+    {
+      "rate": 48000,
+      "rank": 0,
+      "phase_error_cycles": 7.927417760011934e-06,
+      "limit_cycles": 0.002
+    },
+    {
+      "rate": 48000,
+      "rank": 1,
+      "phase_error_cycles": 1.537799835005238e-05,
+      "limit_cycles": 0.002
+    },
+    {
+      "rate": 96000,
+      "rank": 0,
+      "phase_error_cycles": 1.101195811997746e-05,
+      "limit_cycles": 0.002
+    },
+    {
+      "rate": 96000,
+      "rank": 1,
+      "phase_error_cycles": 1.6927719119985696e-05,
+      "limit_cycles": 0.002
+    }
+  ],
+  "worst_phase_error_cycles": 0.00010704994200994022,
+  "prefixes": [
+    {
+      "rate": 44100,
+      "host_frames": 275648,
+      "bytes_identical": true,
+      "maximum_absolute_difference": 0.0,
+      "sha256": "f84fc5d92e07d29ef6ffe0a3389d0c947c44ef76d43f24c59a4838a4fe71b475"
+    },
+    {
+      "rate": 48000,
+      "host_frames": 300032,
+      "bytes_identical": true,
+      "maximum_absolute_difference": 0.0,
+      "sha256": "31fc097a752f17f638837d1eb816f4dab5e82ab9b45d52f09b0c58183a54a364"
+    },
+    {
+      "rate": 96000,
+      "host_frames": 600000,
+      "bytes_identical": true,
+      "maximum_absolute_difference": 0.0,
+      "sha256": "08f753c3ea3218807bbc7ede98bd848cf35fc0b0ae1c577683070d41ae566e48"
+    }
+  ]
+}

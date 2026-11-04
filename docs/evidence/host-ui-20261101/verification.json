@@ -1,0 +1,432 @@
+{
+  "date_utc": "2026-11-01T08:00:22.481374+00:00",
+  "reviewed_sha": "8a85faab1a125cc14425d9184f7022f6746e40a6",
+  "production_audio_sha": "481c7e9fdb20372288864eecf746bf7efb28190a",
+  "fresh_local_scope": "Existing core executables built by root from the reviewed production source; no native AU or GUI smoke rerun in this review.",
+  "archived_run": 41251946760,
+  "archived_run_conclusion": "failure",
+  "source_records": [
+    {
+      "path": "src/plugin/HostAutomationBridge.h",
+      "sha256": "934842df25190bb1c7c8597d2ca5a3c3fc7f663de455937fd3852bf8fd0edb25",
+      "archived_sha256": "934842df25190bb1c7c8597d2ca5a3c3fc7f663de455937fd3852bf8fd0edb25",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/PluginProcessorAutomation.cpp",
+      "sha256": "0d8e0ee71cf329a18845ac55ea7f9567d398d5da92e540e4cd970d089b9e6e3e",
+      "archived_sha256": "0d8e0ee71cf329a18845ac55ea7f9567d398d5da92e540e4cd970d089b9e6e3e",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/AuAutomationHooks.inc",
+      "sha256": "3e47ad3d1f2271a1810762d75736375b913f906e69685a87710431ebd60904c4",
+      "archived_sha256": "3e47ad3d1f2271a1810762d75736375b913f906e69685a87710431ebd60904c4",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/AuAutomationQueue.h",
+      "sha256": "a0ee9c6b973b6e63ee2790ef61ceaaaa1f8e29596207845a5a74347e159c893f",
+      "archived_sha256": "a0ee9c6b973b6e63ee2790ef61ceaaaa1f8e29596207845a5a74347e159c893f",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "sha256": "3a113c78b1f18437b88245a06a34978de80189ded2209c067744043729eb6820",
+      "archived_sha256": "3a113c78b1f18437b88245a06a34978de80189ded2209c067744043729eb6820",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/PluginProcessor.h",
+      "sha256": "ae3a322aa533a67fab1e0cabeb81a4475f51dac92bbf135bf371de69810c5248",
+      "archived_sha256": "ae3a322aa533a67fab1e0cabeb81a4475f51dac92bbf135bf371de69810c5248",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/UndoHistory.cpp",
+      "sha256": "37f1cca8d6e735390a758a11b7152aa2bc48d145340fe583b23e1f46e37bd654",
+      "archived_sha256": "37f1cca8d6e735390a758a11b7152aa2bc48d145340fe583b23e1f46e37bd654",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/UndoHistory.h",
+      "sha256": "3845350b3c34fedf8743eb069a765a3fb793e2f68a4be44e9cf1ef3f2891a56d",
+      "archived_sha256": "3845350b3c34fedf8743eb069a765a3fb793e2f68a4be44e9cf1ef3f2891a56d",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/ModernLayerState.cpp",
+      "sha256": "8e9789e18bc1de29d6d0b1f628af97e3f98eeb5dee563f0d636b9bb253afd504",
+      "archived_sha256": "8e9789e18bc1de29d6d0b1f628af97e3f98eeb5dee563f0d636b9bb253afd504",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/ModernLayerState.h",
+      "sha256": "68010c30cad9c7d92379d6a83f6ee11b6ab8f6fb8f6b0ac633da89668be2a3ae",
+      "archived_sha256": "68010c30cad9c7d92379d6a83f6ee11b6ab8f6fb8f6b0ac633da89668be2a3ae",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/MtsEspClient.cpp",
+      "sha256": "2185518de1812c30a5dfff2e2117ad3e536de9714628aeb991802b6c41c56541",
+      "archived_sha256": "2185518de1812c30a5dfff2e2117ad3e536de9714628aeb991802b6c41c56541",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/plugin/MtsEspClient.h",
+      "sha256": "3b4c6cd63afe6f6e8065ee0a1aff902649a6fec5321e1480172b272db343ae53",
+      "archived_sha256": "3b4c6cd63afe6f6e8065ee0a1aff902649a6fec5321e1480172b272db343ae53",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/core/MemoryPanels.h",
+      "sha256": "f7d98a5f0575cd8d446060128e80606c39c2b49d6dfeb797d92d71569b053725",
+      "archived_sha256": "f7d98a5f0575cd8d446060128e80606c39c2b49d6dfeb797d92d71569b053725",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/core/ChorusTabs.h",
+      "sha256": "67d38c5d9c0d48c2240ee9ceae85d841c2a1b8edc47ffc23068419bcdedabf9d",
+      "archived_sha256": "67d38c5d9c0d48c2240ee9ceae85d841c2a1b8edc47ffc23068419bcdedabf9d",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/core/Params.h",
+      "sha256": "e5b71b2c5de60deda00777d5e0fbf7ec854d153c97efb67ba341fbecf0981976",
+      "archived_sha256": "e5b71b2c5de60deda00777d5e0fbf7ec854d153c97efb67ba341fbecf0981976",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "0ed5854a4ec6dfc62f5414e513e1191d4bff4cbfbc50fe52e50d89ab2963a65a",
+      "archived_sha256": "76e4f0b002105d659a65a30aff685c493d4ddc3688486b64e7d8124bc132bfa6",
+      "matches_archived": false,
+      "matches_tested_head": false,
+      "matches_build_tree": true
+    },
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "f0369a411eaab3bfbf9b322ce757638b2bafd517203e91cb324fef28fc705b0a",
+      "archived_sha256": "2041497154ce70aac7465f5b81c4c493bdc6ac1196c8a7d14a4f9faab5d21ae3",
+      "matches_archived": false,
+      "matches_tested_head": false,
+      "matches_build_tree": true
+    },
+    {
+      "path": "cmake/HostAutomation.cmake",
+      "sha256": "a6658c085705dd7f0a46a02bdc1935c78312bcfa7c6b70043a9c81afea51af54",
+      "archived_sha256": "a6658c085705dd7f0a46a02bdc1935c78312bcfa7c6b70043a9c81afea51af54",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "scripts/patch-juce-automation.py",
+      "sha256": "8e2f178f0f047f2c5be04d5f6c1242c5b7be6163505e78399a2c962d6d87aa36",
+      "archived_sha256": "8e2f178f0f047f2c5be04d5f6c1242c5b7be6163505e78399a2c962d6d87aa36",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/HostAutomationCurveTests.cpp",
+      "sha256": "24559652b21c3029db09d3ae8b77c9703936cb2ac750d99a3d5c6e9fea1a2c4d",
+      "archived_sha256": "24559652b21c3029db09d3ae8b77c9703936cb2ac750d99a3d5c6e9fea1a2c4d",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/AuAutomationCurveTests.cpp",
+      "sha256": "4180b0c4563c2905cdec0950a8bdb15ac74c53ca049e2d29bdc5445ca43983ae",
+      "archived_sha256": "4180b0c4563c2905cdec0950a8bdb15ac74c53ca049e2d29bdc5445ca43983ae",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/AuAutomationBridgeContractTests.cpp",
+      "sha256": "2de528a01633f1997c857967390d90395aaeede2eda2542d0592359e8b0cc039",
+      "archived_sha256": "2de528a01633f1997c857967390d90395aaeede2eda2542d0592359e8b0cc039",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/AuAutomationHostTests.cpp",
+      "sha256": "e99aa6b2b1182d14d293ca49c34faa5f7f16f201f356da7b703ba0201424de8e",
+      "archived_sha256": "e99aa6b2b1182d14d293ca49c34faa5f7f16f201f356da7b703ba0201424de8e",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/AuAutomationNativeMutations.py",
+      "sha256": "9f66857a8b599c881556a91fa35cebcc384e58040b68ad7fdb0212059a939361",
+      "archived_sha256": "9f66857a8b599c881556a91fa35cebcc384e58040b68ad7fdb0212059a939361",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/Vst3AutomationTests.cpp",
+      "sha256": "ca40f26c22b10fe0b02e9005763fccc38a2c2df9ca301e242df7d73c92a9d0ff",
+      "archived_sha256": "ca40f26c22b10fe0b02e9005763fccc38a2c2df9ca301e242df7d73c92a9d0ff",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/MtsEspNativeTests.cpp",
+      "sha256": "f38a12b32cbacbdbd3560899ceefff122357aa52879ef4daf7295fd74cd7f21a",
+      "archived_sha256": "f38a12b32cbacbdbd3560899ceefff122357aa52879ef4daf7295fd74cd7f21a",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/MtsEspShimTests.cpp",
+      "sha256": "03123b5f418cfb60f10a9c85683cb53940f0b1e1ed2c1dc2535a0f6900585066",
+      "archived_sha256": "03123b5f418cfb60f10a9c85683cb53940f0b1e1ed2c1dc2535a0f6900585066",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/MtsEspFallbackTests.cpp",
+      "sha256": "224799d11e240234484b34e4f21c7a96ea95a83306730aed0dfa372b92087178",
+      "archived_sha256": "224799d11e240234484b34e4f21c7a96ea95a83306730aed0dfa372b92087178",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/StateTreeSynchronizationTests.h",
+      "sha256": "f41ca9f636107e9af0fff0b7c27acb6d107330a9151771772c6088533919b13c",
+      "archived_sha256": "f41ca9f636107e9af0fff0b7c27acb6d107330a9151771772c6088533919b13c",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/ProgrammerIntegrationTests.cpp",
+      "sha256": "d128e2de023407f958c2f410170c25b2d5fc1d808bcc9a3e800e7ae23a40379b",
+      "archived_sha256": "d128e2de023407f958c2f410170c25b2d5fc1d808bcc9a3e800e7ae23a40379b",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/MemoryPanelTests.cpp",
+      "sha256": "9e46235093807d17d46db2177920013f3074e17a0933d8a9c7561d9abedb94fe",
+      "archived_sha256": "9e46235093807d17d46db2177920013f3074e17a0933d8a9c7561d9abedb94fe",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/ChorusTabsTests.cpp",
+      "sha256": "291e8687ac2620a72ed101e2974ce3e031a9f156d2b8e95454b9e1589010579e",
+      "archived_sha256": "291e8687ac2620a72ed101e2974ce3e031a9f156d2b8e95454b9e1589010579e",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/PanelEditorTests.h",
+      "sha256": "7cba3ead1f960ffcc03ade5e58f073932b1294ec578853c36a6600c6f2a5cc8e",
+      "archived_sha256": "7cba3ead1f960ffcc03ade5e58f073932b1294ec578853c36a6600c6f2a5cc8e",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "tests/test_parity_capture.py",
+      "sha256": "845ee8597cd717b5e26068336b975526b0f89b05b22ccce392b1c7dc6f4f6d5b",
+      "archived_sha256": "845ee8597cd717b5e26068336b975526b0f89b05b22ccce392b1c7dc6f4f6d5b",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "deps/mts-esp/Client/libMTSClient.h",
+      "sha256": "5c89f524b41f732b955e092c35522eb007dcb3a23db7631e9f9f75f4ffcf958f",
+      "archived_sha256": "5c89f524b41f732b955e092c35522eb007dcb3a23db7631e9f9f75f4ffcf958f",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "deps/mts-esp/Client/libMTSClient.cpp",
+      "sha256": "b854e7c2b657a660431839fb1c413522fa2877296404cee2a36db55d8813c4b3",
+      "archived_sha256": "b854e7c2b657a660431839fb1c413522fa2877296404cee2a36db55d8813c4b3",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    },
+    {
+      "path": "deps/mts-esp/LICENSE",
+      "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+      "archived_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+      "matches_archived": true,
+      "matches_tested_head": true,
+      "matches_build_tree": true
+    }
+  ],
+  "preregistration": [
+    {
+      "path": "tests/parity/tolerances-v2/host-automation.json",
+      "registered": "08e08e492b62b8078a3364d14754a6870c55ee22",
+      "implementation": "3a37594b11c8dd696e5e3e622d8dd60a3f36480e",
+      "unchanged": true,
+      "registered_ancestor_of_implementation": true,
+      "sha256": "bbd07b70a9e9d88119cfd7489e86c6f8d09855d501f2ab823cde349d50dd7317"
+    },
+    {
+      "path": "tests/parity/tolerances-v2/mts-client.json",
+      "registered": "6db0012c3f4d8c72b87ccc3ee591af461b4c2183",
+      "implementation": "fa2016c2fe76920bb0064c1850a1ca4530218df0",
+      "unchanged": true,
+      "registered_ancestor_of_implementation": true,
+      "sha256": "1dcde679d73b410a505ca3a0e04ff83bcf0136a408f063f4836c20240b0babbe"
+    }
+  ],
+  "local_results": [
+    {
+      "name": "cs80_mts_esp_native_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_mts_esp_native_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/mts-client.json"
+      ],
+      "binary_sha256": "0da02157cd02d716098919cc235ac28506f6465cd0bc6d12621a7edafc3a9fde",
+      "started_utc": "2026-11-01T07:59:17.089715+00:00",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_file": "cs80_mts_esp_native_tests.log"
+    },
+    {
+      "name": "cs80_mts_esp_shim_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_mts_esp_shim_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/mts-client.json"
+      ],
+      "binary_sha256": "f4d403359c03777ae74c913780f591390dae218e81a15ddaa95c34c586708445",
+      "started_utc": "2026-11-01T07:59:17.118076+00:00",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_file": "cs80_mts_esp_shim_tests.log"
+    },
+    {
+      "name": "cs80_mts_esp_fallback_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_mts_esp_fallback_tests"
+      ],
+      "binary_sha256": "296e556f30423d811978c8c4840695292eefa0ffa6c0230338fd8d06e5d17906",
+      "started_utc": "2026-11-01T07:59:17.923480+00:00",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_file": "cs80_mts_esp_fallback_tests.log"
+    },
+    {
+      "name": "cs80_host_automation_curve_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_host_automation_curve_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "binary_sha256": "71b4fad17b5274963f3d390b17f4c097d545095943cd7663143cd17de9423e7c",
+      "started_utc": "2026-11-01T07:59:18.002378+00:00",
+      "exit": 0,
+      "log_sha256": "a9e85df9fa8edc1bd444ce1a51828de3c7708e57a7fdcba632f0740989b20217",
+      "log_file": "cs80_host_automation_curve_tests.log"
+    },
+    {
+      "name": "cs80_au_automation_curve_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_au_automation_curve_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "binary_sha256": "09ad765edfa0a8f4d32bf530f5e45d8e67c14e08d4c3a5133bc4bf43eb12ce78",
+      "started_utc": "2026-11-01T07:59:23.507933+00:00",
+      "exit": 0,
+      "log_sha256": "de8a5e75b0e348294dd45e372c262a7a5e3e746e35b1b721c21f36fac21bc57f",
+      "log_file": "cs80_au_automation_curve_tests.log"
+    },
+    {
+      "name": "cs80_au_automation_bridge_contract_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_au_automation_bridge_contract_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/host-automation.json"
+      ],
+      "binary_sha256": "b0d1e59dc0620f1d994527edfb7bb4ad6516ee47d73cdd9185e94ec01001e008",
+      "started_utc": "2026-11-01T07:59:23.700015+00:00",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_file": "cs80_au_automation_bridge_contract_tests.log"
+    },
+    {
+      "name": "cs80_chorus_tabs_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_chorus_tabs_tests"
+      ],
+      "binary_sha256": "1c160caf368bfa6c3f2b6f225709d5726140ebed69e57c140a34c90065946208",
+      "started_utc": "2026-11-01T07:59:23.827423+00:00",
+      "exit": 0,
+      "log_sha256": "c996dc2eff5fa0a778333aaee07f7412fd3613662d670ddc9b6b4b60942913ce",
+      "log_file": "cs80_chorus_tabs_tests.log"
+    },
+    {
+      "name": "cs80_programmer_integration_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_programmer_integration_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/programmer-integration.json"
+      ],
+      "binary_sha256": "15fd3f6261b66544f0cbb738a60acec66f1ae8d8b5b94459d31be3fde60bc9d8",
+      "started_utc": "2026-11-01T07:59:39.820882+00:00",
+      "exit": 0,
+      "log_sha256": "16b8f3c894b887956d9e1088d6f466d96264b4fc6e90509d10af1ee534ebb152",
+      "log_file": "cs80_programmer_integration_tests.log"
+    },
+    {
+      "name": "cs80_memory_panel_tests",
+      "command": [
+        "/workspace/scratch/e8b335644872/yamaha-cs80/build-core/cs80_memory_panel_tests",
+        "/workspace/scratch/e8b335644872/cs80-host-ui/tests/parity/tolerances-v2/ws6-library.json"
+      ],
+      "binary_sha256": "6ea84651013e623d0de52479e4e6616bb951d5bece0862bb7a07233de4aeb76a",
+      "started_utc": "2026-11-01T08:00:21.488030+00:00",
+      "exit": 0,
+      "log_sha256": "6a7708e07f85d0e5f8ca34a584399ab183161a4966201b410c7cb050c4734603",
+      "log_file": "cs80_memory_panel_tests.log"
+    }
+  ]
+}

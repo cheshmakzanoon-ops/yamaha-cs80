@@ -1,0 +1,11 @@
+--- src/core/ModernLayer.h
++++ src/core/ModernLayer.h
+@@ -273,7 +273,7 @@
+                 values[msegSource(m)] = msegOutput(m, voice.runners[(std::size_t) m].getValue());
+         values[ModSource::filterEnvelope] = in.filterEnvelope[0] / kEnvelopeOctaves;
+         values[ModSource::ampEnvelope] = in.ampEnvelope[0];
+-        if (scheduled && in.age >= newestThisSample)
++        if (in.age >= newestThisSample)
+         {
+             newestThisSample = in.age;
+             newestCandidate = values;

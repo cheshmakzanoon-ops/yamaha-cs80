@@ -1,0 +1,77 @@
+{
+  "positive-fixed": {
+    "suite": "fixed",
+    "assertions": 576843520,
+    "failures": 0
+  },
+  "restored-moving": {
+    "suite": "moving",
+    "assertions": 49807360,
+    "failures": 0
+  },
+  "restored-state": {
+    "suite": "state",
+    "assertions": 73759498,
+    "failures": 0
+  },
+  "restored-fp": {
+    "suite": "fp",
+    "assertions": 59498228,
+    "failures": 0
+  },
+  "restored-row": {
+    "suite": "row",
+    "assertions": 21405696,
+    "failures": 0
+  },
+  "one-ulp-coefficient-rejection": {
+    "suite": "row",
+    "assertions": 21405696,
+    "failures": 113504
+  },
+  "positive-state": {
+    "suite": "state",
+    "assertions": 73759498,
+    "failures": 0
+  },
+  "restored-fixed": {
+    "suite": "fixed",
+    "assertions": 576843520,
+    "failures": 0
+  },
+  "positive-fp": {
+    "suite": "fp",
+    "assertions": 59498228,
+    "failures": 0
+  },
+  "restore-drops-history-rejection": {
+    "suite": "state",
+    "assertions": 73759498,
+    "failures": 10038200
+  },
+  "stale-coefficients-rejection": {
+    "suite": "moving",
+    "assertions": 49807360,
+    "failures": 16805306
+  },
+  "reordered-row-sum-rejection": {
+    "suite": "row",
+    "assertions": 21405696,
+    "failures": 3121973
+  },
+  "positive-row": {
+    "suite": "row",
+    "assertions": 21405696,
+    "failures": 0
+  },
+  "positive-moving": {
+    "suite": "moving",
+    "assertions": 49807360,
+    "failures": 0
+  },
+  "early-newton-stop-rejection": {
+    "suite": "moving",
+    "assertions": 49807360,
+    "failures": 16338622
+  }
+}

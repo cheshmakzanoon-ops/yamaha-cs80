@@ -1,0 +1,7 @@
+COMMAND ["/tmp/cs80-rank-idle1500-current/build/free_running"]
+FAIL: wake residual high HP 96000.000000 Hz idle 0.050000 s: -39.298479 dB
+FAIL: wake residual high HP 192000.000000 Hz idle 0.050000 s: -38.616325 dB
+free-running gate: worst wake residual -38.62 dB, worst idle phase 4.36e-05 cycles
+Free-running voices: 73965 checks, 2 failures
+
+EXIT 1

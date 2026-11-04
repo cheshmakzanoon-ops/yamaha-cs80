@@ -1,5 +1,11 @@
 #pragma once
 
+#include <bit>
+#include <cfenv>
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+#include <xmmintrin.h>
+#endif
+
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -440,7 +446,8 @@ public:
         liveSustain = liveDecay = false;
     }
 
-    void noteOn(float attack, float decay, float sustain, float release) noexcept
+    void noteOn(float attack, float decay, float sustain, float release,
+                bool preservePreciseCharge = false) noexcept
     {
         a = attack; d = decay; s = clampf(sustain, 0.0f, 1.0f); r = release;
         liveSustain = liveDecay = false;
@@ -449,7 +456,10 @@ public:
         preciseTime = 0.0;
         if (a <= 0.0002f)
             value = 1.0f;
-        preciseValue = value;
+        // Source continuation can retain the actual capacitor accumulator.
+        // Default callers keep their historical float-to-double initialization.
+        if (!preservePreciseCharge || a <= 0.0002f)
+            preciseValue = value;
         attackFrom = preciseValue;
     }
 
@@ -575,6 +585,7 @@ public:
     float getValue() const noexcept { return value; }
 
 private:
+    friend struct EngineEventContinuityProbe; // isolated test observer; no runtime state
     // Never round this state through the public float diagnostic/output. The
     // legacy path remains separate to preserve existing patches byte-for-byte.
     double preciseValue = 0.0, preciseTime = 0.0;
@@ -676,8 +687,21 @@ public:
         liveAttack = liveRelease = releaseSelected = false;
     }
 
-    // fromCurrentLevel: circuit-engine reuse of a sounding voice restarts the
-    // attack from the capacitor's present level instead of jumping to IL.
+    // Circuit-engine released TR selects IL even before the first note.
+    // This changes a drive selector only: no capacitor value is assigned.
+    // Existing release timing supplies the bounded evolution in Idle.
+    // M41/IC12 and guide p33; docs/COLD_FILTER_ENVELOPE.md.
+    void selectInitialWhileIdle() noexcept
+    {
+        if (stage == Stage::Idle)
+        {
+            releaseSelected = liveRelease = true;
+            releaseState = value;
+        }
+    }
+
+    // fromCurrentLevel: circuit-engine assignment retains the capacitor's
+    // present level, including a first note before idle IL settling.
     void noteOn(float initialLevel, float attackLevel, float attack, float decay,
                 float release, float sustainLevel, bool fromCurrentLevel = false) noexcept
     {
@@ -722,7 +746,7 @@ public:
             case Stage::Idle:
                 // Completed release is still an IL selection while another
                 // envelope keeps the voice audible. Track without reactivating
-                // the stage; reset/untriggered Idle remains inert.
+                // the stage; an unselected reset Idle remains inert.
                 if (releaseSelected && liveRelease && value != il)
                 {
                     const double c = expD(-6.0 / (std::max(r, 0.00005f) * static_cast<double>(sampleRate)));
@@ -1267,10 +1291,14 @@ public:
         reset();
     }
 
-    void reset() noexcept { hist.fill(0.0f); idx = 0; }
+    void reset() noexcept { hist.fill(0.0f); idx = 0; nonzeroHistory = 0; }
 
     void push(float x) noexcept
     {
+        // Raw magnitude bits retain subnormal history across FTZ/DAZ changes.
+        // Only complete exact-zero history permits skipping the convolution.
+        nonzeroHistory -= hasMagnitude(hist[(size_t) idx]) ? 1u : 0u;
+        nonzeroHistory += hasMagnitude(x) ? 1u : 0u;
         hist[(size_t) idx] = x;
         hist[(size_t) (idx + taps)] = x;
         if (++idx >= taps) idx = 0;
@@ -1279,6 +1307,16 @@ public:
     float output() const noexcept
     {
         const float* newest = hist.data() + idx - 1 + taps;
+        // With numeric-zero history, the positive-zero center starts the ordered
+        // sum at +0 (the center coefficient is positive, or +0 before prepare).
+        // At nearest rounding, adding signed-zero terms then stays +0. A -0
+        // center may instead yield an all-negative-zero sum; keep its full FIR.
+        // Directed rounding can also make +0 plus -0 become -0. Query only
+        // after the zero-history predicate; every other case keeps the original
+        // ordered convolution. Reading the environment changes no caller flags.
+        if (nonzeroHistory == 0 && std::bit_cast<std::uint32_t>(newest[-center]) == 0u
+            && nearestOutputRounding())
+            return 0.0f;
         double y = (double) coeffs[(size_t) center] * newest[-center];
         for (int i = 0; i < center; ++i)
             y += (double) coeffs[(size_t) i]
@@ -1288,6 +1326,7 @@ public:
 
     float process(float x) noexcept { push(x); return output(); }
 
+    unsigned getNonzeroHistoryCount() const noexcept { return nonzeroHistory; }
     int getFactor() const noexcept { return factor; }
     int getTaps() const noexcept { return taps; }
     int getCenter() const noexcept { return center; }
@@ -1297,6 +1336,24 @@ public:
     { return tap >= 0 && tap < taps ? coeffs[(size_t) tap] : 0.0f; }
 
 private:
+    static bool nearestOutputRounding() noexcept
+    {
+        if (std::fegetround() != FE_TONEAREST) return false;
+#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
+        // Some x86 fenv implementations report the x87 direction while SSE
+        // has a separately selected direction. Both must admit the proof.
+        return (_mm_getcsr() & 0x6000u) == 0u;
+#else
+        return true;
+#endif
+    }
+    static bool hasMagnitude(float value) noexcept
+    {
+        // Preserve raw subnormal ownership under DAZ. AppleClang can otherwise
+        // lower the bit test to an FP compare that treats a subnormal as zero.
+        const volatile std::uint32_t bits = std::bit_cast<std::uint32_t>(value);
+        return (bits & 0x7fffffffu) != 0;
+    }
     static double besselI0(double x) noexcept
     {
         double sum = 1.0, term = 1.0;
@@ -1311,6 +1368,7 @@ private:
     std::array<float, kMaxTaps> coeffs {};
     std::array<float, 2 * kMaxTaps> hist {};
     int factor = 2, taps = 255, center = 127, idx = 0;
+    unsigned nonzeroHistory = 0;
 };
 static_assert(OversamplingDecimator::hostLatencyFor(2) == Decimator::kHostLatency
               && OversamplingDecimator::tapsFor(2) == Decimator::kTaps

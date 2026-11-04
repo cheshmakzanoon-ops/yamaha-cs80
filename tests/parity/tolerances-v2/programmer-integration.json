@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "evidence_kind": "numerical",
+  "rationale": "Registered before evaluating circuit-engine MemoryPanels integration. The existing memory_panel_v1 bus and Newton limits remain unchanged. Hardware pot values/taper and the parameter-to-position coordinate are declared inferences, never fitted to a patch or voltage target.",
+  "programmer_integration": {
+    "mapping_max_abs": 1e-7,
+    "mapping_fixture": "All26 outputs mapped by named channel enums, including inverse voltage versus seconds for six EG time controls, inverse resonance voltage, logarithmic PWM rate, and the existing cutoff CV/alignment coordinate. Exact switch states and saturated endpoints. The reference is the declared equation, not the production mapping helper.",
+    "bus_volts_max_abs": 0.002,
+    "bus_fixture": "Both ranks, selectors11/12/13, four deterministic position banks: production compiled sources as actually accepted by Engine versus the full independent MemoryPanelNetwork, all24 analog buses at zero envelope/touch/master-RES injection. Same2mV limit as ws6-library.json memory_panel_v1.",
+    "source_reconstruction_max_abs": 1e-9,
+    "source_fixture": "Every compiled source equivalent loaded by its documented receiver conductance reproduces the already solved bus operating point; no resistor is counted twice.",
+    "diagonal_impedance_rel": 0.01,
+    "diagonal_impedance_fixture": "All analog rows of both ranks and each programmer selector, bank fractions0.2/0.5/0.8; diagonal incremental bus impedance compared with central +/-10nA current injection into the independent full network, retaining all inactive diodes and shared rail. The compiled equivalent includes the local pot/diode and shared-rail differential impedance; it does not promise nonlinear large-injection or off-diagonal dynamic coupling accuracy.",
+    "unchanged_frame_compile_delta": 0.0,
+    "legacy_audio_difference_max_abs": 0.0,
+    "legacy_fixture": "Changing electrical programmer positions while Legacy is selected cannot change rendered samples; frames without electrical positions and Engine::setParams retain the existing physical-unit API. Existing compatibility captures remain mandatory.",
+    "invalid_transaction_state_delta": 0.0,
+    "invalid_transaction_fixture": "Nonfinite or out-of-domain positions reject the complete source-policy frame before publishing parameters, selectors, compiled sources or audio state.",
+    "audio_effect_min_peak_abs": 1e-6,
+    "audio_fixture": "In circuit and Pure policies, selected programmer switches and independent cutoff/level changes measurably affect rendered audio; the other unselected programmer cannot affect a factory tab. This is a routing assertion, not a tone or hardware measurement. Existing phrase/headroom metrics remain reported without widened tolerances."
+  }
+}

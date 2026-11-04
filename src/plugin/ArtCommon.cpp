@@ -13,6 +13,16 @@ namespace
 {
 float floorPx = 0.0f;
 bool smallEditor = false;
+struct PanelResources
+{
+    juce::Typeface::Ptr medium, semiBold;
+    juce::Image tile;
+};
+PanelResources& panelResources()
+{
+    static PanelResources resources;
+    return resources;
+}
 } // namespace
 
 FloorScope::FloorScope(float screenScale) : previous(floorPx), previousSmall(smallEditor)
@@ -34,12 +44,17 @@ bool isSmallEditor() noexcept { return smallEditor; }
 // If a face cannot be loaded the system sans serif is used, so the panel still draws.
 const juce::Typeface::Ptr& panelTypeface(bool bold)
 {
-    static const juce::Typeface::Ptr medium = juce::Typeface::createSystemTypefaceFor(
-        cs80_panel_fonts::BarlowCondensedMedium_ttf, (size_t) cs80_panel_fonts::BarlowCondensedMedium_ttfSize);
-    static const juce::Typeface::Ptr semiBold = juce::Typeface::createSystemTypefaceFor(
-        cs80_panel_fonts::BarlowCondensedSemiBold_ttf, (size_t) cs80_panel_fonts::BarlowCondensedSemiBold_ttfSize);
-    return bold ? semiBold : medium;
+    auto& resources = panelResources();
+    if (resources.medium == nullptr)
+        resources.medium = juce::Typeface::createSystemTypefaceFor(
+            cs80_panel_fonts::BarlowCondensedMedium_ttf, (size_t) cs80_panel_fonts::BarlowCondensedMedium_ttfSize);
+    if (resources.semiBold == nullptr)
+        resources.semiBold = juce::Typeface::createSystemTypefaceFor(
+            cs80_panel_fonts::BarlowCondensedSemiBold_ttf, (size_t) cs80_panel_fonts::BarlowCondensedSemiBold_ttfSize);
+    return bold ? resources.semiBold : resources.medium;
 }
+
+void releasePanelResources() { panelResources() = {}; }
 
 juce::Font displayFont(float height, int style)
 {
@@ -343,7 +358,8 @@ juce::Image makeWrinkleTile(int n, int seed, Colour albedo, float contrast)
 // The one finish used by the toolbar, panel, deck and memory lid: near-black, neutral to very slightly warm.
 const juce::Image& panelTile()
 {
-    static const juce::Image tile = makeWrinkleTile(256, 5, Colour(0xff1d1c19), 0.46f);
+    auto& tile = panelResources().tile;
+    if (tile.isNull()) tile = makeWrinkleTile(256, 5, Colour(0xff1d1c19), 0.46f);
     return tile;
 }
 

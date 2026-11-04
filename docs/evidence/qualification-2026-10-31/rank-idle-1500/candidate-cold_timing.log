@@ -1,0 +1,11 @@
+COMMAND ["/tmp/cs80-rank-idle1500-current/build/cold_timing", "/workspace/scratch/2f805bffd21a/cs80-cpu-study/tests/parity/tolerances-v2/cold-idle-timing.json"]
+cold idle rate=44100 policy=source worst_time=2.23465690397e-12 seconds worst_phase=6.52736586559e-07 cycles
+cold idle rate=44100 policy=pure worst_time=2.23465690397e-12 seconds worst_phase=6.52736586559e-07 cycles
+cold idle rate=48000 policy=source worst_time=3.89466237039e-12 seconds worst_phase=6.36259438691e-07 cycles
+cold idle rate=48000 policy=pure worst_time=3.89466237039e-12 seconds worst_phase=6.36259438691e-07 cycles
+cold idle rate=96000 policy=source worst_time=3.89466237039e-12 seconds worst_phase=3.8870205088e-07 cycles
+cold idle rate=96000 policy=pure worst_time=3.89466237039e-12 seconds worst_phase=3.8870205088e-07 cycles
+cold idle worst elapsed error 3.89466237039e-12 seconds; worst phase 6.52736586559e-07 cycles
+Cold idle timing: 2121 checks, 0 failures
+
+EXIT 0

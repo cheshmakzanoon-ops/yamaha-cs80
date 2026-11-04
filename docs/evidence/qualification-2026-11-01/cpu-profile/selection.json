@@ -1,0 +1,31 @@
+{
+  "profile_source": "d06648c386486cf2630de6e41195ddd5d4360ff0",
+  "current_production_checkpoint": "18400c29a54ac2204564b355c0e52ffd3b0dcb8e",
+  "selection_rule": "Selector 0 plus minimum and maximum mean of three held per-case median RTFs; ties choose lower selector. Moving begins at selector0. Idle quiet/noise supplement.",
+  "csv_sha256": {
+    "docs/evidence/qualification-2026-10-31/cpu/rank-idle-1500/round-1/results.csv": "46e26a1cf8f7ed0bfe0f0c127a351b7e37af78cf08ae381a2a8d02e5ffe2ac28",
+    "docs/evidence/qualification-2026-10-31/cpu/rank-idle-1500/round-2/results.csv": "ec9ac4cd829a8f86e2d123d2ce4b5241768461eb282fbf4f0627a3489a22ce62",
+    "docs/evidence/qualification-2026-10-31/cpu/rank-idle-1500/round-3/results.csv": "e132988e7523d8d8eda50f2d1be1ee1986b8b3081135c4c7192136cd30fa8448"
+  },
+  "held_mean_median_rtf": {
+    "1": 0.921819625,
+    "2": 1.0117075,
+    "6": 0.8560125625,
+    "3": 1.1980234375,
+    "4": 1.000911,
+    "10": 1.1987855625,
+    "7": 0.8105021875,
+    "0": 0.74394025,
+    "9": 0.864736875,
+    "5": 0.8829434374999999,
+    "8": 0.8413875000000001
+  },
+  "held_selected": [
+    0,
+    10
+  ],
+  "held_callbacks": 128,
+  "moving_callbacks": 256,
+  "idle_callbacks": 128,
+  "scope": "Callgrind instruction/simulated-cache/branch diagnosis only, not native CPU timing or hardware measurements."
+}

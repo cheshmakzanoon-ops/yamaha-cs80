@@ -1,0 +1,26 @@
+{
+  "cause": "Both local test executables lacked every execute bit; CTest failed before process entry. Why these two link outputs acquired mode0644 is not established.",
+  "repair": "Restore the executable mode observed on byte-identical native plugin-build test binaries; no binary/source/test content changed.",
+  "binaries": [
+    {
+      "name": "cs80_source_performance_audit_tests",
+      "mode": "-rw-r--r--",
+      "uid": 0,
+      "gid": 0,
+      "size": 436768,
+      "sha256": "f12f32fea06d167702809c91f251d3f54ef30886bdf3e5af32ce6ece593b5b1f",
+      "mode_after": "-rwxr-xr-x",
+      "same_bytes_as_passing_plugin_build": true
+    },
+    {
+      "name": "cs80_ig00156_filter_tests",
+      "mode": "-rw-r--r--",
+      "uid": 0,
+      "gid": 0,
+      "size": 427032,
+      "sha256": "5a201f0eb7eac15231693119a5fb211ea0e0745cc41ce6b485070074db30a0a7",
+      "mode_after": "-rwxr-xr-x",
+      "same_bytes_as_passing_plugin_build": true
+    }
+  ]
+}

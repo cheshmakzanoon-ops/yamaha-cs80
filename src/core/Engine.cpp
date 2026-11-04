@@ -42,6 +42,7 @@ void visitSmoothedSettings(GlobalSettings& g, RankSettings* ranks, int rankCount
 } // namespace
 
 Engine::Engine()
+    : voices { Voice(rankChains, 0), Voice(rankChains, 1), Voice(rankChains, 2), Voice(rankChains, 3), Voice(rankChains, 4), Voice(rankChains, 5), Voice(rankChains, 6), Voice(rankChains, 7) }
 {
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
@@ -94,6 +95,7 @@ void Engine::prepare(double hostSampleRate)
             r.trimPan = trimRng.nextBipolar();
         }
         v.active = false;
+        v.idleControlsPrimed = false;
         v.held = false;
         v.sustained = false;
         v.pedalHeld = false;
@@ -224,6 +226,7 @@ void Engine::prepareWarmColdOscillators() noexcept
 
 void Engine::reset()
 {
+    sourceReadoutCacheValid = false;
     // Circuit engine: every circuit starts cold but free-running (Phase 2.1).
     const bool freeRunning = freeRunningVoices();
     Rng coldPhases(kColdPhaseSeed);
@@ -231,6 +234,7 @@ void Engine::reset()
     {
         auto& v = voices[(size_t) vi];
         v.active = false;
+        v.idleControlsPrimed = false;
         v.held = false;
         v.sustained = false;
         v.pedalHeld = false;
@@ -250,19 +254,23 @@ void Engine::reset()
             r.lpf.reset();
             r.hpStage.reset();
             r.lpStage.reset();
+            // Idle output is connected too, so the explicit cold reset must
+            // clear old coupling charge before any later note can clock it.
+            if (freeRunning) r.vca.reset(0.0f);
             r.vcaCold = true;
             r.fenv.reset();
+            if (freeRunning) r.fenv.selectInitialWhileIdle();
             r.aenv.reset();
             r.idle = {};
             r.idleRefs = {};
         }
-        v.envelopeReset = true;
         v.idleSteps = 0;
         v.keyNode.track();
         v.touch.reset();
         v.touchA = v.touchB = v.touchC = 0.0f;
-        // Stagger the idle steps so the eight circuits do not all step at once.
-        v.idleClock = vi * idleStepSamples / kNumVoices;
+        // This counter is physical elapsed time, not a scheduling offset.
+        // The first-step threshold in tickRanks staggers work without inventing time.
+        v.idleClock = 0;
         idleNoise[(size_t) vi] = Rng(kIdleNoiseSeed + (std::uint32_t) vi);
         if (freeRunning)
         {
@@ -348,6 +356,7 @@ void Engine::setParams(const ParamValues& values)
     hardwareSources = {13, 13};
     sourceRoutes.fill(source_factory::Route::panel_or_memory);
     sourceActive.fill(false);
+    programmerActive.fill(false);
     sourceCutoff = {};
     sourceShared = {};
     controlFrameStatus = ControlFrameStatus::accepted;
@@ -374,6 +383,19 @@ bool Engine::setControlFrame(const ControlFrame& frame)
             return false;
         }
 
+    const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
+                                                            frame.effectiveValues[P_sourcePerformance]));
+    std::array<bool, kNumRanks> programmer {};
+    for (int rank = 0; rank < kNumRanks; ++rank)
+    {
+        programmer[rank] = sourceModels && frame.hardwareSources[rank] >= 11 && frame.hasProgrammerPositions[rank];
+        if (programmer[rank] && !memory_panels::valid(frame.programmerPositions[rank]))
+        {
+            controlFrameStatus = ControlFrameStatus::invalidProgrammerPosition;
+            return false;
+        }
+    }
+
     // Validate/compile both ranks before publishing any part of the transaction.
     // Originally incomplete columns use the separate, versioned inference
     // manifest. Their source_inferred identity and original unknown masks remain
@@ -384,11 +406,22 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     for (int rank = 0; rank < kNumRanks; ++rank)
     {
         const int selector = frame.hardwareSources[rank];
-        const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
-                                                                frame.effectiveValues[P_sourcePerformance]));
         if (selector != hardwareSources[rank] || sourceModels != usesSourceModels(global.renderPolicy))
             routes[rank] = source_factory::route(rank, selector, sourceModels);
-        if (source_factory::isSourceDriven(routes[rank])
+        if (programmer[rank])
+        {
+            if (!programmerActive[rank] || !tones[rank].compiled || tones[rank].source.selector != selector
+                || programmerPositions[rank] != frame.programmerPositions[rank])
+            {
+                if (!memory_panels::compileTone(rank, selector, frame.programmerPositions[rank], tones[rank]))
+                {
+                    controlFrameStatus = ControlFrameStatus::compileFailure;
+                    return false;
+                }
+                ++compilations;
+            }
+        }
+        else if (source_factory::isSourceDriven(routes[rank])
             && (!tones[rank].compiled || tones[rank].source.selector != selector))
         {
             if (!source_factory::compileTone(rank, selector, tones[rank]))
@@ -403,8 +436,10 @@ bool Engine::setControlFrame(const ControlFrame& frame)
     sourceRoutes = routes;
     sourceTones = tones;
     sourceCompileCount += compilations;
+    programmerActive = programmer;
+    programmerPositions = frame.programmerPositions;
     for (int rank = 0; rank < kNumRanks; ++rank)
-        sourceActive[rank] = source_factory::isSourceDriven(routes[rank]);
+        sourceActive[rank] = programmer[rank] || source_factory::isSourceDriven(routes[rank]);
     sourceCutoff = {};
     sourceShared = {};
     applyParams(frame.effectiveValues);
@@ -414,6 +449,7 @@ bool Engine::setControlFrame(const ControlFrame& frame)
 
 void Engine::applyParams(const ParamValues& values)
 {
+    sourceReadoutCacheValid = false;
     params = values;
     // Sanitize once at the core boundary before integer casts and DSP laws.
     for (int i = 0; i < P_numParams; ++i)
@@ -554,6 +590,7 @@ void Engine::buildSettings()
     global.ringAmount = p(P_ringAmount);
     global.chorusOn = p(P_chorusOn) >= 0.5f;
     global.chorusTremolo = p(P_chorusMode) >= 0.5f;
+    global.chorusTabs = static_cast<ChorusTabMode>((int) std::lround(p(P_chorusTabs)));
     global.chorusSpeed = p(P_chorusSpeed);
     global.chorusDepth = p(P_chorusDepth);
     global.stereo = p(P_outputMode) >= 0.5f;
@@ -803,12 +840,29 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
             sourceFilterValues[rank][voice] = z;
             // Continuous control-state inference: a source-selected filter EG
             // continues to relax after VCA retirement, avoiding a permanently
-            // frozen common-bus bias. Cold never-triggered Idle remains at zero.
+            // frozen common-bus bias. Cold released Idle also follows IL.
             // Phase 2.4: the TRG banks see every channel's held TWS b and
             // smoothed a, silent channels included (b holds its last strike; a
             // relaxes once the key is up). Formerly inactive touch was zero.
             drives[rank][voice] = {z, v.touchB, v.touchA};
         }
+    // These networks are memoryless algebra, not time integration. After a
+    // control tail settles, identical inputs imply identical readouts. Keep
+    // every EG/TWS clock above running; invalidate on any parameter/selection
+    // transaction and reset. Equality is exact (no threshold or decimation).
+    bool unchanged = sourceReadoutCacheValid && global.resonance == sourceReadoutResonance;
+    for (int rank = 0; unchanged && rank < kNumRanks; ++rank)
+        for (int voice = 0; unchanged && voice < kNumVoices; ++voice)
+        {
+            const auto& a = drives[rank][voice];
+            const auto& b = sourceReadoutDrives[rank][voice];
+            unchanged = a.filterEnvelopeZ == b.filterEnvelopeZ
+                     && a.velocity == b.velocity && a.pressure == b.pressure;
+        }
+    if (unchanged) return;
+    sourceReadoutDrives = drives;
+    sourceReadoutResonance = global.resonance;
+    sourceReadoutCacheValid = true;
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
             source_factory::evaluateCutoff(sourceTones[rank], drives[rank], sourceCutoff[rank]);
@@ -1096,9 +1150,9 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     const bool preserveAudioState = freeRunningVoices() && !v.held && !v.pedalHeld;
     if (preserveAudioState && ! wasActive)
         wakeIdleVoice(v);
-    // A reset (cold or Sustain-II-cleared) filter EG restarts from IL as before.
-    const bool preserveEnvelope = preserveAudioState && ! v.envelopeReset;
-    v.envelopeReset = false;
+    // IL is a selected drive, not an assignment-time capacitor reset. Keep
+    // charge even for a first strike before the released circuit settles.
+    const bool preserveEnvelope = preserveAudioState;
     v.idleClock = 0;
     v.idleSteps = 0;
     v.keyNode.track(); // TR low: K acquires the new key
@@ -1176,16 +1230,25 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
         r.aenv.noteOn(std::max(0.001f, rs.vA * global.envTimeScale * r.tol.ampEnvTime),
                       std::max(0.001f, rs.vD * global.envTimeScale * r.tol.ampEnvTime),
                       rs.vS,
-                      std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime));
+                      std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime),
+                      usesSourceModels(global.renderPolicy));
     }
 
     if (! ringKeyDown)
     {
         ringKeyDown = true;
-        ringPhase = 0.0f;
-        ringEnv = 0.0f;
-        ringAdsr.reset();
-        ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f);
+        // PRA53 TR selects the IG00159 envelope stage, not the IG00150
+        // carrier phase or stored capacitor charge. Source inference and
+        // preregistered exact-state gates: RING_EVENT_CONTINUITY_PROPOSAL.md.
+        // Legacy keeps its historical phase/envelope reset bit for bit.
+        const bool retainRingState = usesSourceModels(global.renderPolicy);
+        if (!retainRingState)
+        {
+            ringPhase = 0.0f;
+            ringEnv = 0.0f;
+            ringAdsr.reset();
+        }
+        ringAdsr.noteOn(global.ringAttack, global.ringDecay, 0.0f, 0.35f, retainRingState);
     }
 }
 
@@ -1252,10 +1315,11 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
                 for (auto& rank : v.ranks)
                 {
                     rank.aenv.reset();
-                    rank.fenv.reset();
+                    // TR was already released. Its separate filter capacitor
+                    // remains connected; do not replace charge or restart time.
+                    if (!freeRunningVoices()) rank.fenv.reset();
                 }
                 v.active = v.sustained = v.pedalHeld = false;
-                v.envelopeReset = true;
             }
     }
 
@@ -1483,7 +1547,7 @@ void Engine::allNotesOff(bool release, int midiChannel)
             // Explicit inferred MIDI-panic gate policy: hard-mute audio as
             // before, but source TP1 controls must be released from their
             // retained value rather than held forever in a pre-panic stage.
-            // Legacy/PANEL paths and Sustain-II reset semantics are unchanged.
+            // Legacy retains its historical hard-panic policy.
             for (int rank = 0; rank < kNumRanks; ++rank)
                 if (sourceActive[rank])
                 {
@@ -1492,6 +1556,14 @@ void Engine::allNotesOff(bool release, int midiChannel)
                     if (stage == FilterEnv::Stage::Attack || stage == FilterEnv::Stage::Decay
                         || stage == FilterEnv::Stage::Sustain)
                         fenv.noteOff();
+                }
+            // Explicit MIDI All Sound Off is a hard panic, unlike ordinary
+            // envelope retirement. It intentionally clears the coupling tail.
+            if (freeRunningVoices())
+                for (auto& rank : voice.ranks)
+                {
+                    rank.vca.reset(0.0f);
+                    rank.vcaCold = true;
                 }
             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
         }
@@ -1804,7 +1876,7 @@ void Engine::endSmoothedControls() noexcept
     }
 }
 
-void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+Engine::SampleContext Engine::tickGlobals(float externalModulation)
 {
     const float sr = (float) internalRate;
     const float invSr = 1.0f / sr;
@@ -1843,7 +1915,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Global modulation oscillators.
     for (int i = 0; i < 3; ++i)
-        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
+        lfoValues[i] = usesSourceModels(global.renderPolicy)
+            ? modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i],
+                              global.lfoDepth[i] != 0.0f || modern.isActive())
+            : modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
 
     lfoPitch = lfoFilter = lfoAmp = 0.0f;
     lfoPwm = lfoPan = 0.0f;
@@ -1866,7 +1941,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     pwmPhase[0] -= std::floor(pwmPhase[0]);
     pwmPhase[1] -= std::floor(pwmPhase[1]);
     // PWM is one shared sine per rank; evaluate it once, not once per voice.
-    const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
+    const std::array<float, 2> pwmSine = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
 
     // TRG5 positive diode-OR -> SP. Legacy: normalized ideal maximum of held
     // voices, not event memory (physical release removes it even if a pedal or
@@ -1914,7 +1989,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     {
         // Circuit engine: IG00150 exponential converter (touch adds octaves) smoothed on
         // the control node, band-limited resets. ws4-circuits.md Step 1.
-        const double rate = originalSub.circuitRate(OriginalSubOscillator::circuitTargetRate(
+        const double rate = originalSub.circuitRate(subTargetRateMemo(
             global.subOriginalSpeed, global.subAtSpeed, sharedPressure) * (double) modernGlobal.subSpeedRatio,
             originalSubSmoothing);
         originalSubSpeedSmoothed = (float) rate;
@@ -1946,9 +2021,6 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     driftPhase += 0.031f * invSr;
     driftPhase -= std::floor(driftPhase);
 
-    float mixL = 0.0f;
-    float mixR = 0.0f;
-    int stillHeld = 0;
 
     // Double accumulator avoids long-glide float rounding stalling before target.
     // An open assigned footswitch suppresses new glides and snaps running ones to target.
@@ -1966,16 +2038,75 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
     const bool freeRunning = freeRunningVoices();
+    return { sr, invSr, pwmSine, glideActive, glideCoef, panelNoise,
+             freeRunning, sharedNoise, smoothControls };
+}
+
+void Engine::tickRanks(const SampleContext& context, float& mixL, float& mixR)
+{
+    const auto& [sr, invSr, pwmSine, glideActive, glideCoef, panelNoise,
+                 freeRunning, sharedNoise, smoothControls] = context;
+    int stillHeld = 0;
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
         // Circuit engine (Phase 2.1): a silent circuit keeps running. It is
         // clocked once per idle step rather than every sample, and caught up
         // exactly when it is next assigned (ContinuousVoiceCircuit.h).
+        // A cold circuit has no previous controls to interpolate. Run exactly
+        // its first physical sample to seed them; never invent a zero-Hz past.
+        const bool coldBootstrap = freeRunning && !v.active && !v.idleControlsPrimed;
         int idleSamples = 0;
-        if (! v.active)
+        bool modernUpdatedForTail = false;
+        if (! v.active && !coldBootstrap)
         {
-            if (! freeRunning || ++v.idleClock < idleStepSamples)
+            const int firstStep = idleStepSamples - vi * idleStepSamples / kNumVoices;
+            const int due = v.idleSteps == 0 ? firstStep : idleStepSamples;
+            // Keep a removed pan route current until its cached offset clears.
+            // Released controller inputs stay zero after the first idle deadline,
+            // even when the smoother restores their event-set targets afterward.
+            if (freeRunning && modern.isActive()
+                && (modern.hasPanDestinations()
+                    || modern.rankOffsets(vi, 0).pan != 0.0f
+                    || modern.rankOffsets(vi, 1).pan != 0.0f)
+                && (v.ranks[0].vca.hasCouplingTail() || v.ranks[1].vca.hasCouplingTail()))
+            {
+                // Tail pan needs this sample's modulation. Predict the original
+                // idle deadline without changing its clock or ownership cadence.
+                const bool scheduled = v.idleClock + 1 >= due;
+                const bool releasedControls = scheduled || v.idleSteps > 0;
+                modern.processVoice(vi,
+                    { v.age, v.held || v.pedalHeld, v.note, v.velocity,
+                      releasedControls ? 0.0f : v.pressure, releasedControls ? 0.0f : v.timbre, v.contour,
+                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, scheduled);
+                modernUpdatedForTail = true;
+            }
+            // The amplitude gate may be closed while its downstream VCA
+            // coupling capacitor still drives the mix. Keep that signed RC
+            // discharge connected at audio rate; only the oscillator/filter
+            // use the decimated idle schedule. No fade or changed pole.
+            if (freeRunning)
+                for (int ch = 0; ch < kNumRanks; ++ch)
+                {
+                    auto& r = v.ranks[ch];
+                    if (!r.vca.hasCouplingTail())
+                        continue;
+                    const float closed = r.vca.processClosed();
+                    const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+                    if (chGain == 0.0f)
+                        continue;
+                    const auto& rs = rankSettings[ch];
+                    const auto& mod = modern.rankOffsets(vi, ch);
+                    const float pan = clampf(rs.pan + r.trimPan * global.voiceDispersion * 0.8f
+                                             + lfoPan + mod.pan, -1.0f, 1.0f);
+                    float panLeft, panRight;
+                    constantPowerPan(pan, panLeft, panRight);
+                    const float voiceOut = closed * chGain * 0.17f;
+                    mixL += voiceOut * panLeft;
+                    mixR += voiceOut * panRight;
+                }
+            if (! freeRunning || ++v.idleClock < due)
                 continue;
             idleSamples = v.idleClock;
             v.idleClock = 0;
@@ -2065,9 +2196,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float dispersion = global.voiceDispersion;
         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
         // Envelope sources are the previous sample's values of each rank.
-        modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
-                                  { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
-                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
+        if (! modernUpdatedForTail)
+            modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
+                                      { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                                      { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
 
         for (int ch = 0; ch < 2; ++ch)
         {
@@ -2104,7 +2236,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
             // Transposition is a separate nominal harmonic ratio, not rounded
             // equal-tempered fifths and not part of the shared filter key CV.
-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
+            const float pitchHz = usesSourceModels(global.renderPolicy)
+                ? r.pitchHz(pitch, global.tuningRef) : midiToHz(pitch, global.tuningRef);
+            const float freq = pitchHz * v.ribbonRatio
                                * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
@@ -2138,7 +2272,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             x = sawPulse;
             // The shared RNG draw is consumed in both engines so oscillator start
             // phases keep their sequence; the circuit engine hears the SUB29 sample.
-            const float rankNoise = audioRng.nextBipolar();
+            const float rankNoise = coldBootstrap ? 0.0f : audioRng.nextBipolar();
             x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
             x *= 0.9f;
             }
@@ -2191,11 +2325,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                     cutoffHp, hpQ, cutoffLp, lpQ, rs.hpfOn, rs.lpfOn };
                 if (idle)
                 {
-                    // Silent circuit: closed-form oscillator advance, one
-                    // decimated step of both stages, the VCA's output coupling
-                    // discharging, and no contribution to the mix.
+                    // Closed-form oscillator advance and one decimated step
+                    // of both stages. VCA coupling was already clocked and
+                    // mixed at the inactive entry; never discharge it twice.
                     voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
-                    r.vca.relaxIdle((double) idleSamples / sr);
                     r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
                     continue;
                 }
@@ -2220,6 +2353,15 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                     r.lpf.set(cutoffLp, lpQ, sr);
                     filtered = r.lpf.process(filtered).lp;
                 }
+            }
+
+            if (coldBootstrap)
+            {
+                // Seed oscillator/filter time and controls only. The VCA keeps
+                // its existing closed idle treatment and cold LI convention.
+                r.vca.relaxIdle(1.0 / sr);
+                r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
+                continue;
             }
 
             const float sine = sineWave * rs.sine;
@@ -2278,6 +2420,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             mixR += voiceOut * panRight;
         }
 
+        v.idleControlsPrimed = true;
         if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
         {
             v.active = false;
@@ -2287,6 +2430,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     }
 
     heldCount = stillHeld;
+}
+
+void Engine::mixBus(const SampleContext& context, float& mixL, float& mixR)
+{
+    const float sr = context.sr, invSr = context.invSr;
+    const bool sharedNoise = context.sharedNoise;
+    const auto& modernGlobal = modern.getGlobalOffsets();
+
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
@@ -2294,7 +2445,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Circuit engine: ADJ p19-anchored exponential converter and offset multiplier
     // (RingModulatorCircuit.h, ws4-circuits.md Step 2). Legacy: provisional law, ideal multiply.
     ringFrequency = clampf(usesSourceModels(global.renderPolicy)
-                               ? RingModulatorCircuit::frequency(global.ringSpeed, global.ringDepth, ringEnv)
+                               ? ringFrequencyMemo(global.ringSpeed, global.ringDepth, ringEnv)
                                : ringModulationFrequency(global.ringSpeed, global.ringDepth, ringEnv),
                            0.0f, sr * 0.4f);
     ringPhase += ringFrequency * invSr;
@@ -2370,9 +2521,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Legacy: provisional generic delay-line chorus/tremolo. Source policies: OE2 BBD
     // delay path (docs/BBD_CHORUS_MODEL.md); its inferred constants are not calibrated.
+    const auto tabs = chorusSwitches(global.chorusOn, global.chorusTremolo, global.chorusTabs);
     const auto ch = usesSourceModels(global.renderPolicy)
-        ? bbdChorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
-                            global.chorusOn, global.chorusTremolo)
+        ? bbdChorus.processIndependent(mixL, mixR, global.chorusSpeed, global.chorusDepth,
+                                       tabs.chorus, tabs.tremolo)
         : chorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
                          global.chorusOn, global.chorusTremolo);
     mixL = ch.l;
@@ -2397,9 +2549,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         mixR = out.r;
     }
 
+}
+
+void Engine::tickOutput(const SampleContext& context, float mixL, float mixR, float& outL, float& outR)
+{
+    const float invSr = context.invSr;
+    const bool smoothControls = context.smoothControls;
     // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
     // resets without eating the low end of the instrument.
-    const float dcCoeff = std::exp(-kTwoPi * 10.0f * invSr);
+    const float dcCoeff = smoothControls ? dcCoefficientExp(-kTwoPi * 10.0f * invSr)
+                                         : std::exp(-kTwoPi * 10.0f * invSr);
     const float dcOutL = mixL - dcInL + dcCoeff * dcL;
     const float dcOutR = mixR - dcInR + dcCoeff * dcR;
     dcInL = mixL;
@@ -2469,7 +2628,16 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float m = (outL + outR) * 0.5f;
         outL = outR = m;
     }
-    if (smoothControls)
+}
+
+void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+{
+    const auto context = tickGlobals(externalModulation);
+    float mixL = 0.0f, mixR = 0.0f;
+    tickRanks(context, mixL, mixR);
+    mixBus(context, mixL, mixR);
+    tickOutput(context, mixL, mixR, outL, outR);
+    if (context.smoothControls)
         endSmoothedControls();
 }
 
@@ -2543,7 +2711,7 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
         return {};
     const auto& v = voices[(size_t) index];
     return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio, v.held, v.pedalHeld,
-             v.touchA, v.touchB, v.touchC };
+             v.touchA, v.touchB, v.touchC, v.age };
 }
 
 Engine::RankInfo Engine::getRankInfo(int voice, int rank) const

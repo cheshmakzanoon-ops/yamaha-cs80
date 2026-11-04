@@ -1,0 +1,12 @@
+--- a/src/core/ModulationLfo.h
++++ b/src/core/ModulationLfo.h
+@@ -109,7 +109,8 @@
+             case LfoWave::smoothRandom:
+                 // Raised-cosine interpolation from one random level to the next across
+                 // each period: continuous, with zero slope at every period boundary.
+-                if (! started)
++                if (! emitOutput) {}
++                else if (! started)
+                 {
+                     from = rng.nextBipolar();
+                     to = rng.nextBipolar();

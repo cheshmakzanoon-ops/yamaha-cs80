@@ -1,0 +1,267 @@
+{
+  "date": "2026-11-01 UTC",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "subtitle": "DRAFT / Source qualification current; merge and release evidence pending",
+  "assessment": [
+    "This is an interim engineering handover for PR #6, not a completed release. CPU budgets and original physical-PANEL musical click scores are still outside their unchanged targets. The three-rate final-audio engine audit is currently running; no unobserved pass is claimed.",
+    "The proven Linux validator-host lifetime failure is repaired, the nodal top-octave numerical law and all eight host-feature families are integrated, and all 25 disputed tone cells carry schematic-page hypotheses. No original instrument was measured."
+  ],
+  "provenance": {
+    "source_sha": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+    "v2_pin": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+    "merge_sha": "PENDING_MAIN_MERGE",
+    "pr_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/6",
+    "release_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/release.yml",
+    "release_source_sha": "PENDING_RELEASE_SOURCE",
+    "release_status": "PENDING: feature branch is not merged; no new release run",
+    "ci": [
+      {
+        "label": "Main build + pluginval",
+        "status": "PENDING",
+        "sha": "PENDING_MAIN_MERGE",
+        "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/build.yml"
+      },
+      {
+        "label": "Main DSP measurements",
+        "status": "PENDING",
+        "sha": "PENDING_MAIN_MERGE",
+        "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/dsp-measurements.yml"
+      },
+      {
+        "label": "Main screenshots",
+        "status": "PENDING",
+        "sha": "PENDING_MAIN_MERGE",
+        "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/screenshots.yml"
+      }
+    ]
+  },
+  "scorecard": [
+    {
+      "metric": "Eight held voices; 48k/256",
+      "before": "main .588123-.696543",
+      "after": "final83 .605709-.888572",
+      "target": ".15-.20 RTF",
+      "state": "OPEN"
+    },
+    {
+      "metric": "Quiet idle; 48k/256",
+      "before": "main .143823",
+      "after": "final83 .067570 (6.76%)",
+      "target": "<=.020 (2%)",
+      "state": "OPEN"
+    },
+    {
+      "metric": "Full-bank peak",
+      "before": "Preplan +3.9 dBFS",
+      "after": "Final83 full audit PENDING",
+      "target": "<=0 dBFS",
+      "state": "UNVERIFIED"
+    },
+    {
+      "metric": "Voice-steal click",
+      "before": "Preplan 1.17",
+      "after": "Final83 full audit PENDING",
+      "target": "<=1",
+      "state": "UNVERIFIED"
+    },
+    {
+      "metric": "Ring-off alias; 48k",
+      "before": "Preplan -33.8 dB",
+      "after": "Final83 full audit PENDING",
+      "target": "<=-70 dB",
+      "state": "UNVERIFIED"
+    },
+    {
+      "metric": "PANEL Bass retrigger",
+      "before": "Earlier 1.51 at 44k",
+      "after": "Pre-final .568/1.441/1.365",
+      "target": "<=1 at all rates",
+      "state": "OPEN"
+    },
+    {
+      "metric": "Funky note-off",
+      "before": "Earlier up to 1.65",
+      "after": "Pre-final 1.627/1.291/1.221",
+      "target": "<=1 at all rates",
+      "state": "OPEN"
+    },
+    {
+      "metric": "Nodal 2x/4x top band",
+      "before": "Original top band fails",
+      "after": ".04884/.04392/.002967/.001954/.0000583",
+      "target": "Original rate limits",
+      "state": "PASS"
+    },
+    {
+      "metric": "ADJ p11 HP / LP",
+      "before": "4.3+/-1 / 2.2+/-1 Vpp",
+      "after": "Model 1.692 / 1.648 Vpp",
+      "target": "HP 3.3-5.3; LP 1.2-3.2",
+      "state": "HP OPEN"
+    },
+    {
+      "metric": "Legacy / V1 / V2 audio",
+      "before": "Immutable baselines",
+      "after": "All four byte-identical",
+      "target": "Exact bytes",
+      "state": "PASS"
+    }
+  ],
+  "measurement_notes": [
+    "CPU: [run 41292549292] twelve immutable sources, 36 serial rounds, AMD EPYC 7763, 48 kHz/256, 1,024 callbacks. Main-to-final idle improves 53.02%; held p99 reaches 1.050427 RTF with 49 selected held misses. CPU percentages express callback realtime factor, not OS load.",
+    "The Bass/Funky figures shown are pre-final b75 physical-PANEL/tone-tab causal observations, not the final83 full-bank audit. Bass excess peaks +7.8 ms after onset; Funky omitted-note-off control still exceeds one. Neither is a proven charge discontinuity.",
+    "Historical 00ceccf peak/steal/alias figures remain historical. The running all-suite audit must supply final83 results. Nodal voltage predictions and native M41/tone images are source-based model evidence, not analogue measurements."
+  ],
+  "workstreams": [
+    {
+      "title": "1. CPU",
+      "status": "IMPLEMENTED; BUDGETS OPEN",
+      "text": "Oscillator event and Jacobian caches, sixteen component chains, split process and exact idle/FIR savings. Final held .605709-.888572; idle 6.757%. True independent-rank SIMD remains open.",
+      "commits": "6bf6055, 031a333, 1207068, 23a7b8d, ee4377f"
+    },
+    {
+      "title": "2. Retrigger / note-off",
+      "status": "STATE DEFECTS FIXED; MUSICAL SCORES OPEN",
+      "text": "Filter charge/time, ring phase and connected VCA coupling corrected without fades. Physical PANEL Bass 48/96k and Funky note-off remain above score 1; final causal audit pending.",
+      "commits": "481c7e9, b75b4d6, 83b7f76"
+    },
+    {
+      "title": "3. Linux pluginval 139",
+      "status": "PROVEN HOST MECHANISM REMOVED",
+      "text": "Original/fixed/restored JUCE callback maps prove use-after-free, pass, use-after-free. CI pins SHA-checked pluginval2 beta3; strict10, headless/GUI/fixed-seed, one attempt.",
+      "commits": "f39af47; VALIDATOR_HOST_LIFETIME.md"
+    },
+    {
+      "title": "4. Nodal filter",
+      "status": "TOP-OCTAVE PASS; HP SETUP OPEN",
+      "text": "Original 2x/4x error limits pass, including 176.4k. M41 p41: 150k series CP7-AI and distinct 33k shunt. ADJ printed p11 HP model 1.692 Vpp vs 4.3+/-1; no fit.",
+      "commits": "4917708, 99d5198; M41/ADJ native evidence"
+    },
+    {
+      "title": "5. Host/UI and modern",
+      "status": "IMPLEMENTED; DAW SESSIONS OWNER-ONLY",
+      "text": "18 timed automation lanes; actual 0BSD MTS client; circuit memory audio; both-on/off chorus/tremolo; switch/miniature MIDI learn; undo host gestures; engine taps and 16-voice ownership. Neutral in PURE.",
+      "commits": "6474265, fa2016c2, 6f1c4aa, 6300163"
+    },
+    {
+      "title": "6. Tone cells",
+      "status": "ALL 25 TRANSCRIBED; HYPOTHESES REMAIN",
+      "text": "Native Yamaha source pages S31-S38: T51 eight, T52 four, T53 nine, T54 four. Glyph/board-revision uncertainty stays labelled; no V1 numeric or fingerprint modification.",
+      "commits": "5a3027d, c56070f"
+    }
+  ],
+  "compatibility": [
+    {
+      "capture": "Legacy default",
+      "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "result": "Byte-identical"
+    },
+    {
+      "capture": "Legacy tails",
+      "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "result": "Byte-identical"
+    },
+    {
+      "capture": "Circuit V1 numerics",
+      "baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "result": "Byte-identical"
+    },
+    {
+      "capture": "Circuit V2 audio/state",
+      "baseline": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+      "result": "Byte-identical; strict"
+    }
+  ],
+  "audio_sequence": [
+    {
+      "change": "Retained ring phase / precise charge",
+      "audio": "481c7e9fdb20372288864eecf746bf7efb28190a",
+      "pin": "8a85faab1a125cc14425d9184f7022f6746e40a6",
+      "evidence": "Predeclared event gates + strict STATUS"
+    },
+    {
+      "change": "Connected idle VCA coupling",
+      "audio": "b75b4d653b6ed6f0aa5ef8ee99b670d83e975250",
+      "pin": "fb43c04e68e91eea120add3a89e6866ef1e64e01",
+      "evidence": "VCA state/causal mutation gates, strict STATUS"
+    },
+    {
+      "change": "Current-sample tail-pan ownership",
+      "audio": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+      "pin": "14ef653ed60be67ff98656966f9181c5e9b6b4fc",
+      "evidence": "Tail-pan modulation 618+6 assertions, strict STATUS"
+    }
+  ],
+  "evidence_notes": [
+    "The 36-round final CPU archive independently verified 346 artifact hashes, 884 source hashes, 1,836 finite rows and twelve source summaries. GitHub Actions run 41292549292; SHA-256 3ffa33d3d5674ea0f1aed409efb3d8940024a8891f4e51147a1d69b3f37dffed.",
+    "M41 service p41 and ADJ printed p11 are documentary references. The corrected LP 150k series leg and separate 33k shunt do not resolve the HP 1.692 Vpp discrepancy.",
+    "All 25 tone cells cite native S31-S38 board and schematic sheets. Ambiguous T53 B14 installed marking versus schematic value remains a revision hypothesis; V1 fingerprint e5f877a025fc52c6 is frozen."
+  ],
+  "remaining": [
+    {
+      "title": "Held and idle CPU speed",
+      "text": "Need measured 3.03-4.44x held and 3.38x idle acceleration. Preregister truly masked 16-rank SIMD, exact states/rounding/NaN oracle, mutation controls and same-host three-before/after benchmark. Event cache alone is insufficient."
+    },
+    {
+      "title": "PANEL Bass and Funky click scores",
+      "text": "Original <=1 gates remain red at named rates. Compare time-varying attack to high-precision nonlinear reference and use diagnostic-only pedestal ablation before proposing any physical law change; no fade."
+    },
+    {
+      "title": "ADJ HP setup loading",
+      "text": "Verify source and mixer impedances, VR7-VR9 alignment and available manual wiring for service p11 before altering the model; never fit to one 4.3+/-1 Vpp point."
+    },
+    {
+      "title": "Native tone historical applicability",
+      "text": "Inspect board revision/installation evidence for all 25 hypotheses; retain S31-S38 readings, ambiguity labels and immutable V1 numerics until corroborated."
+    },
+    {
+      "title": "PR6 main acceptance and release",
+      "text": "PENDING complete all-rate raw audit and final main CI. Then obtain accepted merge M, verified main screenshots S, guarded release and true installer URLs; replace this draft PDF with six-page final."
+    }
+  ],
+  "owner_only": [
+    "Apple/Windows signing, notarization credentials and certificates",
+    "Real DAW session checks on the requested installed hosts",
+    "Legal trademark/nameplate review of Yamaha and CS-80",
+    "AAX/Avid/PACE integration"
+  ],
+  "commands": [
+    "cmake -S . -B build-core -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON",
+    "cmake --build build-core && ctest --test-dir build-core --output-on-failure",
+    "scripts/check-compat-gates.sh --strict-v2",
+    "cmake --preset linux-release && cmake --build --preset linux-release && ctest --preset linux-release --output-on-failure",
+    "build-core/cs80_engine_audit --suite all --rates 44100,48000,96000 --out artifacts/audit",
+    "build-core/cs80_source_factory_benchmark --rate 48000 --block 256"
+  ],
+  "references": [
+    {
+      "label": "Current STATUS / scorecard",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/finish/cs80-qualification-20261031/docs/STATUS.md"
+    },
+    {
+      "label": "Final 36-round CPU qualification",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/ee4377fc078bb2fcbe1400d92b9cee663558b934/docs/evidence/qualification-2026-11-01/cpu-serial-fir-run/FINAL_12_CHECKPOINTS.md"
+    },
+    {
+      "label": "Validator callback lifetime",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/finish/cs80-qualification-20261031/docs/evidence/VALIDATOR_HOST_LIFETIME.md"
+    },
+    {
+      "label": "Native M41 / ADJ evidence",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/finish/cs80-qualification-20261031/docs/NATIVE_FILTER_EVIDENCE.md"
+    },
+    {
+      "label": "25 native tone-cell readings",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/finish/cs80-qualification-20261031/docs/evidence/continuation-2026-10-31/TONE_CELL_NATIVE_REVIEW.md"
+    }
+  ],
+  "_draft_provenance": {
+    "status": "INTERIM_WORKING_DRAFT_NOT_A_RELEASE",
+    "pdf_sha256": "f2348b311b59f06ef8bdbe824692806d75696b1ad31ba8def3ae771a7d412c98",
+    "pdf_pages": 6,
+    "rendered_and_visually_reviewed": true,
+    "production_src_tree": "7dd159d491012fd47b46c0aa651e86ea959ca289",
+    "source_audio_commit": "83b7f7670f000a95c6b44f96ffb0df3894755d14",
+    "full_audit_run": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41336194253"
+  }
+}

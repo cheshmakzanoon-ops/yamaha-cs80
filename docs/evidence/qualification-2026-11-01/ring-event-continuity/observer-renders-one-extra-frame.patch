@@ -1,0 +1,10 @@
+--- tests/RingEventContinuityTests.cpp
++++ tests/RingEventContinuityTests.cpp
+@@ -200,6 +200,7 @@
+         if (source(policy) && event.on && !refBefore.keyDown)
+             Probe::retainedRingReference(*reference, refBefore);
+         // OBSERVER_INERT_POINT: no elapsed time belongs between event snapshots.
++        float extraFrame[2]; actual->render(extraFrame, 1);
+         const auto after = Probe::ring(*actual);
+         trace.envelope("ring", policy, rate, quality, event.label, -1, before.charge, after.charge,
+                        before.phase, after.phase, before.output, after.output);

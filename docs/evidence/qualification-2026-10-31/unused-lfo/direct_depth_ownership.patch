@@ -1,0 +1,11 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1897,7 +1897,7 @@
+     for (int i = 0; i < 3; ++i)
+         lfoValues[i] = usesSourceModels(global.renderPolicy)
+             ? modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i],
+-                              global.lfoDepth[i] != 0.0f || modern.isActive())
++                              modern.isActive())
+             : modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
+ 
+     lfoPitch = lfoFilter = lfoAmp = 0.0f;

@@ -33,6 +33,9 @@ bool isSmallEditor() noexcept;
 
 // The embedded panel typeface (Barlow Condensed, OFL; bold = SemiBold), or null if it could not be loaded.
 const juce::Typeface::Ptr& panelTypeface(bool bold);
+// Release shared strong references while the final editor's JUCE graphics lifetime is live.
+// Fonts/images held by a still-live component retain their own reference-counted ownership.
+void releasePanelResources();
 // The panel typeface at `height`, never below the current design floor.
 juce::Font displayFont(float height, int style = juce::Font::plain);
 juce::Font spacedFont(float height, float kerning, float hscale = 1.0f, int style = juce::Font::bold);

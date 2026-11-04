@@ -1,0 +1,107 @@
+Start testing: Nov 01 03:13 EST
+----------------------------------------------------------
+28/104 Testing: cs80_click_event_continuation_tests
+28/104 Test: cs80_click_event_continuation_tests
+Command: "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_click_event_continuation_tests" "/workspace/scratch/e8b335644872/cs80-click/tests/parity/tolerances-v2/click-residual-continuity.json" "/workspace/scratch/e8b335644872/cs80-click/tests/parity/tolerances-v2/cold-idle-timing.json"
+Directory: /workspace/scratch/e8b335644872/cs80-click/build-core
+"cs80_click_event_continuation_tests" start time: Nov 01 03:13 EST
+Output:
+----------------------------------------------------------
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=source off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=44100 policy=source, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=source off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=48000 policy=source, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=source off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=source off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=source off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=96000 policy=source, populated WSC residual retained
+Bass cold-retrigger exact gate: rate=48000 policy=source, selected=6, pending=47 internal samples, 9376 steps
+Bass cold-retrigger exact gate: rate=96000 policy=source, selected=6, pending=95 internal samples, 9375 steps
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=0 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=1 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=44100 quality=2 policy=pure off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=44100 policy=pure, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=0 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=1 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=48000 quality=2 policy=pure off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=48000 policy=pure, populated WSC residual retained
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=0 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=1 policy=pure off=0.22s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=pure off=1.40s, held/released distinguished
+Funky1+2 note-off exact gate: rate=96000 quality=2 policy=pure off=0.22s, held/released distinguished
+Bass active-tail zero-time gate: rate=96000 policy=pure, populated WSC residual retained
+Bass cold-retrigger exact gate: rate=48000 policy=pure, selected=6, pending=47 internal samples, 9376 steps
+Bass cold-retrigger exact gate: rate=96000 policy=pure, selected=6, pending=95 internal samples, 9375 steps
+WSC cache-invalidation oracle: internal_rate=96000 control_case=0
+WSC cache-invalidation oracle: internal_rate=96000 control_case=1
+WSC cache-invalidation oracle: internal_rate=96000 control_case=2
+WSC cache-invalidation oracle: internal_rate=192000 control_case=0
+WSC cache-invalidation oracle: internal_rate=192000 control_case=1
+WSC cache-invalidation oracle: internal_rate=192000 control_case=2
+Click event continuation: 7438 checks, 0 failures
+<end of output>
+Test time = 216.10 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_click_event_continuation_tests" end time: Nov 01 03:16 EST
+"cs80_click_event_continuation_tests" time elapsed: 00:03:36
+----------------------------------------------------------
+
+29/104 Testing: cs80_ring_event_continuity_tests
+29/104 Test: cs80_ring_event_continuity_tests
+Command: "/workspace/scratch/e8b335644872/cs80-click/build-core/cs80_ring_event_continuity_tests" "/workspace/scratch/e8b335644872/cs80-click/tests/parity/tolerances-v2/ring-event-continuity.json"
+Directory: /workspace/scratch/e8b335644872/cs80-click/build-core
+"cs80_ring_event_continuity_tests" start time: Nov 01 03:16 EST
+Output:
+----------------------------------------------------------
+COVERAGE phase_Source 45/45
+COVERAGE float_charge_Source 45/45
+COVERAGE precise_charge_Source 45/45
+COVERAGE telemetry_Source 45/45
+COVERAGE blend_Source 135/135
+COVERAGE attack_origin_Source 18/18
+COVERAGE rank_charge_Source_0 9/9
+COVERAGE rank_origin_Source_0 9/9
+COVERAGE rank_charge_Source_1 9/9
+COVERAGE rank_origin_Source_1 9/9
+COVERAGE phase_Pure 45/45
+COVERAGE float_charge_Pure 45/45
+COVERAGE precise_charge_Pure 45/45
+COVERAGE telemetry_Pure 45/45
+COVERAGE blend_Pure 135/135
+COVERAGE attack_origin_Pure 18/18
+COVERAGE rank_charge_Pure_0 9/9
+COVERAGE rank_origin_Pure_0 9/9
+COVERAGE rank_charge_Pure_1 9/9
+COVERAGE rank_origin_Pure_1 9/9
+Ring event continuity: 2998 assertions, 0 failures
+<end of output>
+Test time =  31.12 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ring_event_continuity_tests" end time: Nov 01 03:17 EST
+"cs80_ring_event_continuity_tests" time elapsed: 00:00:31
+----------------------------------------------------------
+
+End testing: Nov 01 03:17 EST

@@ -15,7 +15,7 @@ establish").
 ```
 cmake -S . -B build -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release
 cmake --build build --target cs80_engine_audit
-build/cs80_engine_audit --out DIR [--suite phrase|fx|alias|latency|all]
+build/cs80_engine_audit --out DIR [--suite phrase|click-causality|fx|alias|latency|all]
                         [--rates 44100,48000,96000] [--quick]
 ```
 
@@ -60,10 +60,22 @@ shared core. It is a manual tool and is not registered with CTest.
 | `click_steal` | step in 8 ms after the stealing chord, over the largest step of the eight-voice chord |
 | `voices_at_end` | voices still active when the 12 s phrase ends, 2.35 s after the last release; nonzero only for programs whose release is longer than that (every factory program goes idle eventually) |
 
-A click score near or below 1 means the step is no bigger than the program itself
-makes; a step well above 1 is a discontinuity. Programs with a fast attack score near
+A click score near or below 1 means the step is no bigger than the reference window.
+A larger score flags a candidate discontinuity; it does not establish causation.
+Programs with a fast attack score near
 1 on a fresh chord by construction (the attack is the reference), so compare
 `click_steal` with `click_fresh_chord`, not with a threshold.
+
+**Click-causality suite** (`click-causality.csv`). The original phrase score,
+8 ms window and reference windows are unchanged. For the Funky 1 + Funky 2
+tab it renders a second copy with only the first note-off omitted and requires
+sample-identical output before that event. This exposes ordinary waveform
+edges that are already present without a release. For Bass Stack it reports
+the first strike at 6.0 s as well as the repeated strike at 6.25 s against the
+same chord reference. Neither row overrides the registered target of 1.
+The exact capacitor-continuity regression is `cs80_note_off_continuity_tests`;
+its event-time delta limit is zero. See the dated
+[investigation](evidence/continuation-2026-10-31/DSP_INVESTIGATION.md).
 
 **Alias suite.** One sustained saw or pulse (50 %) note of rank I with detune, drift,
 dispersion and noise off, the high-pass off and the low-pass open, 65 536 samples

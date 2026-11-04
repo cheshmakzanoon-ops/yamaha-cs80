@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-31",
+  "status": "open: native numeric diagnostics pending",
+  "source_sha": "56b85819eea8d939d08faebb028f212e475825ed",
+  "workflow_run_id": 41238033893,
+  "job_id": 124645832711,
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41238033893/job/124645832711",
+  "artifact_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41238033893/artifacts/13057572684",
+  "platform": "native macOS Intel",
+  "observed": {
+    "ctest_total": 91,
+    "failed_tests": [
+      "cs80_cold_idle_timing_tests",
+      "cs80_smoothing_tests",
+      "cs80_au_automation_host_tests",
+      "cs80_au_automation_native_mutations"
+    ],
+    "known_previously_repaired": [
+      "cs80_cold_idle_timing_tests",
+      "cs80_smoothing_tests"
+    ],
+    "new_failure": "AU publishes the current buffer endpoint, not a future ramp endpoint",
+    "restored_mutation_control": "fails the same endpoint assertion",
+    "audio_ramp_max_error": 5.82077e-11,
+    "audio_immediate_max_error": 2.55357e-7,
+    "audio_sixteen_voice_max_error": 0
+  },
+  "unchanged": {
+    "normalized_curve_error": 1e-7,
+    "audio_max_abs_error": 0.000002,
+    "predicates": "all existing native host assertions unchanged",
+    "mutation_gates": "all existing mutations and restored control retained"
+  },
+  "diagnostic_scope": "Print only; no production code, parameter, queue, rendering, test predicate, numerical limit or schedule change.",
+  "diagnostics": [
+    "parameter enum and string ID",
+    "lane",
+    "block size",
+    "render start/count and absolute endpoint frame",
+    "actual AU value and queried maximum",
+    "actual and expected normalized values, expected Float32, error and threshold",
+    "physical Float32 projections explicitly labelled as projections",
+    "JUCE default exp/log + normalized pow round trip",
+    "containing curve segment endpoints",
+    "per-lane failure counts and worst frame/value/error"
+  ],
+  "hypotheses": [
+    "Incorrect AU state publication or stale committed endpoint.",
+    "Float32 physical storage and inverse normalization differ from the ideal double curve by more than the unchanged 1e-7 assertion limit on Intel.",
+    "Approximate-equality setter suppression or a platform-dependent conversion/optimization changes readback."
+  ],
+  "next_decision": "Native numeric evidence must establish the mechanism before any corrective contract or implementation is evaluated. Arm64 success does not qualify Intel. Do not loosen the threshold.",
+  "raw_log": "native-before-full-job.log"
+}

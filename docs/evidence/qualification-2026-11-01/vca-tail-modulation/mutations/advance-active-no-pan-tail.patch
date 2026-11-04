@@ -1,0 +1,13 @@
+--- src/core/Engine.cpp
++++ src/core/Engine.cpp
+@@ -2066,9 +2066,7 @@
+             // Released controller inputs stay zero after the first idle deadline,
+             // even when the smoother restores their event-set targets afterward.
+             if (freeRunning && modern.isActive()
+-                && (modern.hasPanDestinations()
+-                    || modern.rankOffsets(vi, 0).pan != 0.0f
+-                    || modern.rankOffsets(vi, 1).pan != 0.0f)
++                && true
+                 && (v.ranks[0].vca.hasCouplingTail() || v.ranks[1].vca.hasCouplingTail()))
+             {
+                 // Tail pan needs this sample's modulation. Predict the original

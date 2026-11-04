@@ -1,0 +1,11 @@
+--- a/src/core/ExpressionOptics.h
++++ b/src/core/ExpressionOptics.h
+@@ -57,7 +57,7 @@
+         if (opticalLog == targetLog && std::isfinite(targetLog) && std::isfinite(decayStep))
+         {
+             opticalLog = targetLog;
+-            return pedalTarget;
++            return pedalTarget == 0.0 ? 0.0 : pedalTarget;
+         }
+         opticalLog += (targetLog < opticalLog ? attackStep : decayStep) * (targetLog - opticalLog);
+         if (std::abs(targetLog - opticalLog) <= 1.0e-12 * std::max(1.0, std::abs(targetLog)))

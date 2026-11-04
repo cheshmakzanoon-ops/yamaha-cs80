@@ -1,0 +1,12 @@
+--- a/cmake/HostAutomation.cmake
++++ b/cmake/HostAutomation.cmake
+@@ -23,6 +23,9 @@
+         get_filename_component(_cs80_source_name "${_cs80_source}" NAME)
+         if(_cs80_source_name IN_LIST _cs80_filenames)
+             set(_cs80_wrapper "${CMAKE_CURRENT_BINARY_DIR}/cs80-juce-wrappers/${_cs80_source_name}")
++            if(_cs80_source_name STREQUAL "juce_audio_plugin_client_VST3.cpp")
++                set(_cs80_wrapper "${CMAKE_CURRENT_BINARY_DIR}/cs80-juce-wrappers/juce_audio_plugin_client_VST3.mm")
++            endif()
+             execute_process(COMMAND "${Python3_EXECUTABLE}"
+                 "${CMAKE_CURRENT_SOURCE_DIR}/scripts/patch-juce-automation.py"
+                 "${_cs80_source}" "${_cs80_wrapper}"

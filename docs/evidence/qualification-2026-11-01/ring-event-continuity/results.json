@@ -1,0 +1,218 @@
+[
+  {
+    "name": "unmutated",
+    "suite": "all",
+    "exit": 0,
+    "assertions": 2998,
+    "failures": 0,
+    "intended_assertion": null,
+    "intended_assertion_seen": null
+  },
+  {
+    "name": "phase-reset-source",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 117,
+    "intended_assertion": "source carrier phase",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "charge-reset-source",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 36,
+    "intended_assertion": "source precise charge",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "phase-reset-pure",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 117,
+    "intended_assertion": "source carrier phase",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "charge-reset-pure",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 36,
+    "intended_assertion": "source precise charge",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "telemetry-reset",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 18,
+    "intended_assertion": "source envelope telemetry",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "precise-charge-rounded-through-float",
+    "suite": "all",
+    "exit": 1,
+    "assertions": 2998,
+    "failures": 142,
+    "intended_assertion": "source precise charge",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "rounded-attack-origin",
+    "suite": "all",
+    "exit": 1,
+    "assertions": 2998,
+    "failures": 62,
+    "intended_assertion": "retained precise attack origin",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "rank-0-charge-rounded",
+    "suite": "rank",
+    "exit": 1,
+    "assertions": 593,
+    "failures": 36,
+    "intended_assertion": "rank0 source precise retention",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "rank-1-charge-rounded",
+    "suite": "rank",
+    "exit": 1,
+    "assertions": 593,
+    "failures": 36,
+    "intended_assertion": "rank1 source precise retention",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "rank-II-only-rounded-origin",
+    "suite": "rank",
+    "exit": 1,
+    "assertions": 593,
+    "failures": 18,
+    "intended_assertion": "rank1 precise attack origin",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "suppress-first-key-envelope-trigger",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 306,
+    "intended_assertion": "enters Attack",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "retrigger-envelope-on-legato",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 72,
+    "intended_assertion": "nontrigger selection float elapsed",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "change-historical-legacy-reset",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 36,
+    "intended_assertion": "historical Legacy phase reset",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "observer-renders-one-extra-frame",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 1341,
+    "intended_assertion": "nonmutating observer PCM",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "neutral-ring-amount-leaks",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 90,
+    "intended_assertion": "neutral ring PCM",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "explicit-reset-retains-phase",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 27,
+    "intended_assertion": "explicit reset phase",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "explicit-reset-retains-charge",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2325,
+    "failures": 72,
+    "intended_assertion": "explicit reset precise charge",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "omitted-Source-phase-assertion",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2280,
+    "failures": 1,
+    "intended_assertion": "registered coverage phase_Source",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "omitted-Source-precise_charge-assertion",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2280,
+    "failures": 1,
+    "intended_assertion": "registered coverage precise_charge_Source",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "omitted-Pure-phase-assertion",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2280,
+    "failures": 1,
+    "intended_assertion": "registered coverage phase_Pure",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "omitted-Pure-precise_charge-assertion",
+    "suite": "ring",
+    "exit": 1,
+    "assertions": 2280,
+    "failures": 1,
+    "intended_assertion": "registered coverage precise_charge_Pure",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "weakened-zero-bit-bound",
+    "suite": "ring",
+    "exit": 2,
+    "assertions": null,
+    "failures": null,
+    "intended_assertion": "registered bit bound must remain zero",
+    "intended_assertion_seen": true
+  },
+  {
+    "name": "restored",
+    "suite": "all",
+    "exit": 0,
+    "assertions": 2998,
+    "failures": 0,
+    "intended_assertion": null,
+    "intended_assertion_seen": null
+  }
+]

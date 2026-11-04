@@ -1,0 +1,19 @@
+{
+  "captured_utc": "2026-11-01T07:56:50Z",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "python": "3.12.14",
+  "cpu_count": 9,
+  "base_commit": "8a85faab1a125cc14425d9184f7022f6746e40a6",
+  "callbacks": 128,
+  "rate": 48000,
+  "block": 256,
+  "suite": "baseline",
+  "quick": false,
+  "rounds_per_phase": 3,
+  "compiler": "GCC 13.3.0 Release -O3 -DNDEBUG",
+  "timing_caveat": "Shared cloud host; commanded quiet window excludes known local builds/renders but does not establish dedicated hardware or realtime qualification.",
+  "/sys/fs/cgroup/cpu.max": "1600000 200000",
+  "/proc/loadavg": "17.68 15.13 9.69 13/270 9",
+  "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C"
+}

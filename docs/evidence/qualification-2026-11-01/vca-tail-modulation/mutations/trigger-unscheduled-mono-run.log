@@ -1,0 +1,6 @@
+COMMAND ["/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/trigger-unscheduled-mono-gate", "/tmp/cs80-vca-tail-modulation-mutations-pa7q0qy_/tests/parity/tolerances-v2/vca-tail-modulation.json"]
+FAIL: unscheduled unlatched tail never triggers the shared mono MSEG early
+FAIL: extra tail updates preserve shared mono trigger timing exactly
+6 checks, 2 failures
+
+EXIT 1

@@ -1,0 +1,13 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -266,8 +266,8 @@
+         v.touch.reset();
+         v.touchA = v.touchB = v.touchC = 0.0f;
+         // This counter is physical elapsed time, not a scheduling offset.
+-        // The first-step threshold in tickRanks staggers work without inventing time.
+-        v.idleClock = 0;
++        // Deliberate mutation: scheduler stagger falsely counted as elapsed time.
++        v.idleClock = vi * idleStepSamples / kNumVoices;
+         idleNoise[(size_t) vi] = Rng(kIdleNoiseSeed + (std::uint32_t) vi);
+         if (freeRunning)
+         {

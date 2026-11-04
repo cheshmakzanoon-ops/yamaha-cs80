@@ -1,0 +1,31 @@
+{
+  "qualification_kind": "original isolated pure-transform gates, retained historical evidence",
+  "source_commit": "bd2ade0cbc552b7d36a41652f5179cb04d64219d",
+  "mutations": [
+    {
+      "mutation": "pitch",
+      "exit": 1,
+      "summary": "Exact transforms: 174978 checks, 36864 failures"
+    },
+    {
+      "mutation": "ring",
+      "exit": 1,
+      "summary": "Exact transforms: 174978 checks, 180 failures"
+    },
+    {
+      "mutation": "dc",
+      "exit": 1,
+      "summary": "Exact transforms: 174978 checks, 96114 failures"
+    },
+    {
+      "mutation": "sub_target",
+      "exit": 1,
+      "summary": "Exact transforms: 174978 checks, 240 failures"
+    },
+    {
+      "mutation": "sub_dynamics",
+      "exit": 1,
+      "summary": "Exact transforms: 174978 checks, 69280 failures"
+    }
+  ]
+}

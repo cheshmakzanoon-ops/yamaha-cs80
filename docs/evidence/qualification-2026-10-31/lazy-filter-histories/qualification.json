@@ -1,0 +1,124 @@
+{
+  "original_registration": "29f482061801048e366983a4c5b5fb07d0e2679e",
+  "published_registration": "32f141b10050309c06a471009180ece6f3bcef60",
+  "mode": "qualify",
+  "candidate_sha256": "e57664b64e2e7c21aa0afb43c16bb39610241e5297316c261eecfc27a5a5941f",
+  "candidate_normalized_sha256": "e57664b64e2e7c21aa0afb43c16bb39610241e5297316c261eecfc27a5a5941f",
+  "driver_sha256": "86a4dfd262d20b1a54abdbd2dac796656ba163059ff2178f63d4901ae1db5c92",
+  "efficiency_driver_sha256": "3c739606f5fcefa06e5582c242b5aea8b95fe6b3db942f849e1fcdb34e603f07",
+  "reference_sha256": "a0bed6a73d8824b08d403304a331eea15f6865035560bf04b9ccaea9b0192b9f",
+  "contract_sha256": "cabde0c348d832690a306d9bdcf727261bf740053dd67b643d48f85b6c691001",
+  "phase_sha256": "26d7919d1dc8a1fe210d2bbc47798354b804476eaf6452221d51ef85c8171947",
+  "outcomes": [
+    {
+      "name": "candidate",
+      "functional": {
+        "exit": 0,
+        "checks": 52408128,
+        "failures": 0
+      },
+      "efficiency": {
+        "exit": 0,
+        "counts": [
+          {
+            "network": 0,
+            "steady_samples": 2048,
+            "steady_reconstructions": 0,
+            "single_export_reconstructions": 1,
+            "coefficient_change_reconstructions": 1,
+            "moving_samples": 256,
+            "moving_reconstructions": 255,
+            "state_checksum": -0.0867452
+          },
+          {
+            "network": 1,
+            "steady_samples": 2048,
+            "steady_reconstructions": 0,
+            "single_export_reconstructions": 1,
+            "coefficient_change_reconstructions": 1,
+            "moving_samples": 256,
+            "moving_reconstructions": 255,
+            "state_checksum": 0.0364239
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing-export",
+      "functional": {
+        "exit": 1,
+        "checks": 1537,
+        "failures": 32
+      }
+    },
+    {
+      "name": "coefficients-before-materialization",
+      "functional": {
+        "exit": 1,
+        "checks": 43415,
+        "failures": 32
+      }
+    },
+    {
+      "name": "reset-retains-pending",
+      "functional": {
+        "exit": 1,
+        "checks": 8732861,
+        "failures": 32
+      }
+    },
+    {
+      "name": "eager-audio-reconstruction",
+      "efficiency": {
+        "exit": 1,
+        "counts": [
+          {
+            "network": 0,
+            "steady_samples": 2048,
+            "steady_reconstructions": 2048,
+            "single_export_reconstructions": 0,
+            "coefficient_change_reconstructions": 0,
+            "moving_samples": 256,
+            "moving_reconstructions": 256,
+            "state_checksum": -0.0867452
+          },
+          {
+            "network": 1,
+            "steady_samples": 2048,
+            "steady_reconstructions": 2048,
+            "single_export_reconstructions": 0,
+            "coefficient_change_reconstructions": 0,
+            "moving_samples": 256,
+            "moving_reconstructions": 256,
+            "state_checksum": 0.0364239
+          }
+        ]
+      }
+    },
+    {
+      "name": "restore-retains-pending",
+      "functional": {
+        "exit": 1,
+        "checks": 2182462,
+        "failures": 32
+      }
+    },
+    {
+      "name": "copy-drops-pending",
+      "functional": {
+        "exit": 1,
+        "checks": 4361649,
+        "failures": 32
+      }
+    },
+    {
+      "name": "restore-loses-input-history",
+      "functional": {
+        "exit": 1,
+        "checks": 2182824,
+        "failures": 32
+      }
+    }
+  ],
+  "boundary": "Fixed floating-point mode within each process/export sequence. Moving-coefficient reconstruction counts are reported, not promised to improve. No whole-engine CPU speedup is established here."
+}

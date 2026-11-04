@@ -1,0 +1,103 @@
+{
+  "before": {
+    "checkpoint": "pre-fir-native-bbd",
+    "source_commit": "475063ca4b5640c1b17cb45eb89a23706ad18873",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.372466125,
+      0.5456169375
+    ],
+    "held_p99_rtf_range": [
+      0.390134625,
+      0.6530685
+    ],
+    "held_selected_round_budget_exceedances": 0,
+    "idle_median_rtf": 0.0421329375,
+    "moving_median_rtf": 0.5305228125,
+    "moving_p99_rtf": 0.7039940625,
+    "moving_misses": 1,
+    "legacy_held_range": [
+      0.1566129375,
+      0.1876535625
+    ],
+    "legacy_idle_median_rtf": 0.01545075,
+    "nonfinite_all_rounds": 0
+  },
+  "after": {
+    "checkpoint": "zero-fir-history",
+    "source_commit": "23a7b8df5c9f118d0b625f1d4bd37e12fa3c6162",
+    "rounds": 3,
+    "held_median_rtf_range": [
+      0.388281375,
+      0.557422125
+    ],
+    "held_p99_rtf_range": [
+      0.3977945625,
+      0.715900125
+    ],
+    "held_selected_round_budget_exceedances": 8,
+    "idle_median_rtf": 0.0360525,
+    "moving_median_rtf": 0.53715375,
+    "moving_p99_rtf": 0.935590125,
+    "moving_misses": 9,
+    "legacy_held_range": [
+      0.156922875,
+      0.1875639375
+    ],
+    "legacy_idle_median_rtf": 0.008660625,
+    "nonfinite_all_rounds": 0
+  },
+  "idle_selected_median_relative_reduction": 0.1443155369833874,
+  "compared_fields": [
+    "abs_at_or_above_one",
+    "audio_seconds",
+    "block",
+    "budget_us",
+    "callbacks",
+    "checksum",
+    "controller_events",
+    "final_active_voices",
+    "initial_selector",
+    "isolation",
+    "last_block_peak",
+    "max_active_voices",
+    "min_active_voices",
+    "mode",
+    "mpe_member_state_checks",
+    "nonfinite_count",
+    "peak",
+    "pedal_held_callbacks",
+    "phase",
+    "pra_target_max_ohms",
+    "pra_target_min_ohms",
+    "rank_i_name",
+    "rank_ii_name",
+    "rate",
+    "rms",
+    "scenario",
+    "selector_events",
+    "source_compilations",
+    "source_performance",
+    "tail_voices_complete"
+  ],
+  "excluded_timing_fields": [
+    "budget_exceedances",
+    "event_max_us",
+    "event_median_us",
+    "max_rtf",
+    "max_us",
+    "mean_rtf",
+    "median_rtf",
+    "median_us",
+    "min_us",
+    "p95_us",
+    "p99_rtf",
+    "p99_us",
+    "process_cpu_seconds_including_checks",
+    "thread_cpu_seconds_including_checks"
+  ],
+  "rounds": 6,
+  "rows": 306,
+  "all_non_timing_fields_equal": true,
+  "differences": []
+}

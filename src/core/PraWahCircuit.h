@@ -4,6 +4,8 @@
 // See docs/REALTIME_PRA_WAH_MODEL.md for graph, equations and limitations.
 #include <algorithm>
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <cmath>
 
 namespace cs80 {
@@ -80,6 +82,15 @@ public:
             ? std::clamp(input,-maximumInputMagnitude,maximumInputMagnitude) : 0.0;
         // Falling resistance = brightening = attack; rising = darkening = decay.
         opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);
+        // The homogeneous capacitor graph maps exact +0 state and zero input to
+        // exact +0 state. Keep the optical recurrence above running, but avoid its
+        // unused exp and zero nodal algebra. Negative-zero node signs below are the
+        // original inverting outputs; no amplitude threshold or capacitor reset.
+        // Valid profiles also accept signed-zero trim/source resistance. Their
+        // original node or capacitor zero signs require the full algebra below.
+        if (u==0.0 && !std::signbit(profile.vr2Ohms)
+            && !std::signbit(profile.sourceOhms) && capacitorsArePositiveZero())
+            return {.a=-0.0, .y=-0.0};
         const double optical=std::exp(opticalLog);
         const double rt=profile.vr1Ohms+optical/(1.0+optical/profile.parallelOhms);
         std::array<double,4> j;
@@ -121,6 +132,12 @@ public:
     double sampleRate() const noexcept { return rate; }
     const Profile& getProfile() const noexcept { return profile; }
 private:
+    bool capacitorsArePositiveZero() const noexcept {
+        std::uint64_t bits=0;
+        for (const auto& c:caps)
+            bits|=std::bit_cast<std::uint64_t>(c.voltage)|std::bit_cast<std::uint64_t>(c.current);
+        return bits==0;
+    }
     inline static constexpr std::array<double,4> capacitance {10e-6,2.2e-9,33e-9,1e-6};
     Profile profile;
     Capacitors caps{};

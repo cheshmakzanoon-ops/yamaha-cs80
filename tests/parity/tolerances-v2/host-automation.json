@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "registered": "2026-10-31",
+  "evidence_kind": "software_protocol",
+  "description": "Acceptance registered before host automation implementation. This is host protocol behavior, not an inferred CS-80 circuit law.",
+  "host_automation": {
+    "normalized_curve_error": 0.0000001,
+    "audio_max_abs_error": 0.000002,
+    "sample_offset_error": 0,
+    "key_parameter_count": 18,
+    "keys": "P_volume, P_mix, P_brilliance, P_resonance, P_masterTune, P_detune; CP_hpfCutoff, CP_hpfRes, CP_lpfCutoff, CP_lpfRes, CP_vLevel and CP_pw in both ranks, always referred to by enum name.",
+    "vst3_truth": "Steinberg IParamValueQueue: normalized piecewise-linear curves; previous block's last value is the implicit point at sample -1. A discontinuity is encoded by the old value at sample n-1 and new value at sample n. Preserve every queue point and all sample offsets, including first and last sample. Non-key parameters retain JUCE block-rate semantics.",
+    "au_truth": "Apple AudioUnitScheduleParameters: immediate changes at bufferOffset; ramps interpolate from startValue at signed startBufferOffset to endValue after durationInFrames, within the current render. Report scheduling capacity/invalid-input errors rather than silently dropping events.",
+    "curve_windows": "Evaluate independent scalar curves at every sample of 1, 7, 64, 256 and 1024 frame blocks: constant, ramp from implicit -1, several slope changes, consecutive-sample jump, first/last-sample event, negative-start AU ramp and constant tails. The same complete timeline split into these block sizes must preserve values and event timing.",
+    "render_windows": "Actual plugin processing compared against independently generated per-sample control frames with the same MIDI onset/release schedule. Compare one long host block with differently partitioned blocks; complete signal covers automation before and after note onset and both ranks. The VST3 test must exercise a built module through real IParameterChanges, not only an APVTS setter.",
+    "compatibility": "No-queue render must be byte-identical to the old block path. PURE CS-80 and Legacy retain last-point-at-block-start behavior byte-for-byte. Panel parameter automation must not bypass factory or memory source selection. Both engines receive effective changes in 16-voice mode.",
+    "mutations": "Drop an intermediate point, flatten offsets to zero, replace linear interpolation with hold, shift implicit origin from -1 to 0, drop last-sample point, remove Pure/Legacy isolation, bypass selected memory/factory authority. Each new gate must reject its corresponding implementation mutation."
+  },
+  "sources": [
+    "https://steinbergmedia.github.io/vst3_doc/vstinterfaces/classSteinberg_1_1Vst_1_1IParamValueQueue.html",
+    "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Parameters%2BAutomation/Index.html",
+    "https://developer.apple.com/documentation/audiotoolbox/audiounitscheduleparameters(_:_:_:)"
+  ]
+}

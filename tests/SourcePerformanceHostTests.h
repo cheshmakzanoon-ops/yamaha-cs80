@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HostParameterState.h"
 #include "plugin/PluginProcessor.h"
 
 #include <array>
@@ -31,7 +32,7 @@ void testSourcePerformanceHost(Check&& check)
         const auto text = tree.createXml()->toString();
         host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
     };
-    const auto original = host.getAPVTS().copyState();
+    const auto original = cs80::tests::copyHostParameterState(host);
     {
         juce::MemoryBlock saved;
         host.getStateInformation(saved);
@@ -55,7 +56,7 @@ void testSourcePerformanceHost(Check&& check)
                   && host.getHardwareSource(0) == 1
                   && std::abs(host.getParamValue(P_macro1) - .87f) < 1e-6f,
               "session state restores model choice, tone identity and stored overlays");
-        auto userState = host.getAPVTS().copyState();
+        auto userState = cs80::tests::copyHostParameterState(host);
         userState.getChildWithProperty("id", "parity_mode").setProperty("value", 0, nullptr);
         host.setParamValue(P_parityMode, 1);
         host.setParamValue(P_sourcePerformance, 1 - enabled);

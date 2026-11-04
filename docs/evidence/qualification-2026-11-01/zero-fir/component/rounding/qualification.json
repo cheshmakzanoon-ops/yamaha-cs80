@@ -1,0 +1,82 @@
+{
+  "registration_commit": "156d82e9f3ee20089bb952ba853e0f0c779b903f",
+  "contract_sha256": "e03a258785d23ac6135cdf932034ed7b88fc744aeb5d9a0abb3f5118ff604997",
+  "baseline_sha256": "d704003dcc4ca262e31bc98a2df0494e7b3da97f747c892644264efd5f3a4347",
+  "candidate_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5",
+  "driver_sha256": "dc4b0bcafa915f95b34af3bb2adbf0421d86609a7b89077a12691c05c0ae6fcb",
+  "runner_sha256": "cb666b1a775b6bb22d1844526b9b562919392111ca5fd8e86fbc41eea26c8ddd",
+  "compiler": "c++",
+  "outcomes": {
+    "unmodified_positive_control": {
+      "exit_code": 0,
+      "checks": 3276237,
+      "failures": 0,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "",
+      "expected_assertion_observed": true,
+      "header_sha256": "d704003dcc4ca262e31bc98a2df0494e7b3da97f747c892644264efd5f3a4347"
+    },
+    "candidate": {
+      "exit_code": 0,
+      "checks": 3276237,
+      "failures": 0,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "",
+      "expected_assertion_observed": true,
+      "header_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5"
+    },
+    "omit_both_rounding_checks": {
+      "exit_code": 1,
+      "checks": 3276237,
+      "failures": 47976,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "all-rounding FIR ordered convolution including positive-center signed zeros",
+      "expected_assertion_observed": true,
+      "header_sha256": "fc758098cc446452db60a38e5b4970e0d6de1eb977a179316c0c9ba56392fe33"
+    },
+    "omit_independent_mxcsr_check": {
+      "exit_code": 1,
+      "checks": 3276237,
+      "failures": 23984,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "MXCSR-only FIR ordered convolution including positive-center signed zeros",
+      "expected_assertion_observed": true,
+      "header_sha256": "539a41486351e7d7466bb54c24287f8b7dbbf4316023a7053b01f06a1c1d352d"
+    },
+    "cache_rounding_at_prepare": {
+      "exit_code": 1,
+      "checks": 3276237,
+      "failures": 8,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "same-history FIR rounding transition is exact",
+      "expected_assertion_observed": true,
+      "header_sha256": "86c0a8aa6a84f1b1c2a667327f653efd0c6e16bd3ba29a0211c7b829790e66a9"
+    },
+    "admit_downward_rounding": {
+      "exit_code": 1,
+      "checks": 3276237,
+      "failures": 47976,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "all-rounding FIR ordered convolution including positive-center signed zeros",
+      "expected_assertion_observed": true,
+      "header_sha256": "905a2b1762f35e06114f14ecec0de02b42c82449f3b00ee6c4b771f0e6db8f22"
+    },
+    "restored_candidate": {
+      "exit_code": 0,
+      "checks": 3276237,
+      "failures": 0,
+      "downward_witnesses": 16352,
+      "independent_mxcsr_directions": 3,
+      "expected_assertion": "",
+      "expected_assertion_observed": true,
+      "header_sha256": "1edc968eb4a297f29cb78f1301f253554fea7a01362bc71bd074598f90df71f5"
+    }
+  },
+  "scope": "Exact FIR rounding continuation and four actual-source guard mutations. The original nearest-only history gate, whole-engine compatibility and CPU timings remain separate requirements."
+}

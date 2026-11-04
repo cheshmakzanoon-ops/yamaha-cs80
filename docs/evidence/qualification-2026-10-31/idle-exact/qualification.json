@@ -1,0 +1,134 @@
+{
+  "group": "idle",
+  "registration_commit": "706c673c54772eb45cb9fe41bd7dbf342792c64a",
+  "contract_sha256": "55ee648869260d3de089230b29f8da309447520d01ec09f918873c6207f8b034",
+  "source_sha256": {
+    "src/core/PraWahCircuit.h": "9f340ae1dc0d6a9e83773e0d519ced87695c515fde15d3174fef3def87046cbd",
+    "src/core/BbdChorus.h": "9f20e524e9a6946657e0081bfd56cfdbd9131aba458d0750eb7f127b9f639131"
+  },
+  "driver_sha256": {
+    "idle": "579d06b09e4715d4ef76a2fb8d579471284dad8ae7d5dcb83ade7ce559ed9f5e"
+  },
+  "compiler": "/usr/bin/c++",
+  "results": [
+    {
+      "name": "candidate-idle",
+      "target": "idle",
+      "exit_code": 0,
+      "checks": 1245,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "bbd_off_phase",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 31,
+      "expected_assertions": [
+        "BBD off-to-on wake preserves phase and noise state bit-for-bit"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "bbd_off_noise",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 31,
+      "expected_assertions": [
+        "BBD off-to-on wake preserves phase and noise state bit-for-bit"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "bbd_nonzero_history",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 19,
+      "expected_assertions": [
+        "BBD signal and all four tab states are bit-identical"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "pra_charged_tail",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 150,
+      "expected_assertions": [
+        "PRA charged-capacitor zero-input tails are bit-identical",
+        "PRA all four capacitor voltages and currents are bit-identical"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "pra_optical_clock",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 486,
+      "expected_assertions": [
+        "PRA optical movement remains bit-identical through zero-state skipping"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "pra_signed_zero",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 324,
+      "expected_assertions": [
+        "PRA exact-zero nodes preserve signed-zero and bounded-input semantics"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "bbd_history_daz",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 1,
+      "expected_assertions": [
+        "BBD history predicate classifies stored bits independently of denormal mode"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "pra_negative_zero_trim",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 144,
+      "expected_assertions": [
+        "PRA signed-zero profile nodes and capacitor states"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "pra_negative_zero_source",
+      "target": "idle",
+      "exit_code": 1,
+      "checks": 1245,
+      "failures": 168,
+      "expected_assertions": [
+        "PRA signed-zero profile nodes and capacitor states"
+      ],
+      "all_expected_assertions_observed": true
+    },
+    {
+      "name": "restored-idle",
+      "target": "idle",
+      "exit_code": 0,
+      "checks": 1245,
+      "failures": 0,
+      "expected_assertions": [],
+      "all_expected_assertions_observed": true
+    }
+  ],
+  "scope": "Fresh independent software continuation and actual-source mutations; whole-engine compatibility and timings are separate."
+}
