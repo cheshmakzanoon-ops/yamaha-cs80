@@ -1148,15 +1148,14 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         }
         float value = (float) child.getProperty("value", fallback);
         if (!std::isfinite(value)) value = fallback;
-        if (id == parameterId(cs80::P_subOriginalMode) && value != 0.0f && value != 1.0f)
-            value = 0.0f;
-        if (id == parameterId(cs80::P_parityMode)
+        if (id == parameterId(cs80::P_subOriginalMode)
+            || id == parameterId(cs80::P_parityMode)
             || id == parameterId(cs80::P_sourcePerformance))
         {
             // Only complete finite numeric 0/1 values are taken literally.
             // Fractional, out-of-range, partially parsed or missing values
-            // restore the writing schema's meaning (the fallback): PURE off,
-            // ENGINE Legacy before schema 3 and Circuit from schema 3. A
+            // restore the writing schema's meaning (the fallback): original
+            // SUB/PURE off, ENGINE Legacy before schema 3 and Circuit from 3. A
             // missing value never inherits the live instance's policy.
             const auto encoded = child.getProperty("value", juce::var()).toString().trim();
             const auto* begin = encoded.toRawUTF8();

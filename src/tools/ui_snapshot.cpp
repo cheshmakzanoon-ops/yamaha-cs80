@@ -14,6 +14,7 @@
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/PresetRecallHostTests.h"
 #include "../../tests/PresetFileHostTests.h"
+#include "../../tests/SessionSchemaHostTests.h"
 #include "../../tests/SessionUndoHostTests.h"
 #include "../../tests/UiReadinessTests.h"
 #include "../../tests/Ws3KeyboardHostTests.h"
@@ -2015,6 +2016,8 @@ int main(int argc, char** argv)
     cs80::tests::testPresetRecallHost(check);
     std::puts("UI SMOKE PHASE: preset file host");
     cs80::tests::testPresetFileHost(check);
+    std::puts("UI SMOKE PHASE: session schema host");
+    cs80::tests::testSessionSchemaHost(check);
     std::puts("UI SMOKE PHASE: session undo host");
     cs80::tests::testSessionUndoHost(check);
     std::puts("UI SMOKE PHASE: engine I/O host");
