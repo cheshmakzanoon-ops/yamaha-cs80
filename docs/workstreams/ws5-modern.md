@@ -274,6 +274,29 @@ measured band-decay difference in the grid is 1.3%. The 8% regression limit acco
 matched-pole frequency-response approximation, delay rounding and tank modulation,
 rather than claiming exact spectral invariance. The uncorrected model fails six checks.
 
+
+### Tape Time changes keep playback moving forward (2026-11-04)
+
+The modern Tape echo's 250 ms delay glide previously moved the read position backwards
+when Time increased quickly. A full 60 ms to 1.2 s jump initially increased delay by
+about 4.56 samples per sample. A 500 Hz burst already heard before that jump was replayed
+backwards at nearly its original peak, with about 24.6% of its first-echo energy.
+
+The positive delay slope is now limited to 0.9 seconds per second. This declared
+engineering choice leaves room for wow/flutter while ensuring forward playback; it is
+not a complete variable-speed tape simulation. Existing tape memory is preserved. A
+full-range increase produces a longer, deep downward pitch bend (about one second near
+0.1x speed), then resumes the existing exponential convergence. Large upward Time
+automation therefore intentionally sounds different, including in saved sessions.
+Constant settings, smaller upward changes that do not hit the limit, and downward
+changes retain their previous arithmetic. No classic effect or CS-80 circuit is changed.
+
+`cs80_tape_echo_time_tests` covers both channels at 88.2/96/192/384 kHz, three Time-jump
+positions including buffer wraps, preservation of pending tape audio, convergence to
+both endpoint delays, reset and reprepare. The uncorrected model fails 32 of 104 checks;
+the corrected model passes all 104. The already-heard burst's post-jump energy ratio
+falls below 6e-9, against a 1e-4 regression limit that allows filter settling tails.
+
 ## Step 4 — State and host parameters
 
 `src/plugin/ModernLayerState.*` keeps the MSEG shapes and matrix routing as a versioned child

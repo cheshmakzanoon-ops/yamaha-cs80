@@ -323,6 +323,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_plate_reverb_rate_tests PRIVATE src)
     add_test(NAME cs80_plate_reverb_rate_tests COMMAND cs80_plate_reverb_rate_tests)
     set_tests_properties(cs80_plate_reverb_rate_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_tape_echo_time_tests tests/TapeEchoTimeTests.cpp)
+    target_include_directories(cs80_tape_echo_time_tests PRIVATE src)
+    add_test(NAME cs80_tape_echo_time_tests COMMAND cs80_tape_echo_time_tests)
+    set_tests_properties(cs80_tape_echo_time_tests PROPERTIES TIMEOUT 60)
 
     # [ws6-library] register this workstream's core tests below this line.
     find_package(Threads REQUIRED)

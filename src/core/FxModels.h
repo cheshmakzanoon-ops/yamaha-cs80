@@ -518,6 +518,9 @@ class TapeEchoFx
 public:
     static constexpr double kWowHz = 0.55, kWowDepth = 0.0018, kFlutterHz = 6.1, kFlutterDepth = 0.0004;
     static constexpr double kMaxSeconds = 1.2;
+    // Keep the playback head moving forward during large time increases. Leaving 10 %
+    // of the nominal speed also gives the wow/flutter modulation ample headroom.
+    static constexpr double kMaxDelayIncrease = 0.9; // seconds of delay per elapsed second
 
     static double delaySeconds(float a) noexcept { return 0.06 * std::pow(20.0, (double) clampf(a, 0.0f, 1.0f)); }
     static double tailSeconds(float b) noexcept { return 0.3 * std::pow(8.0 / 0.3, (double) clampf(b, 0.0f, 1.0f)); }
@@ -556,7 +559,11 @@ public:
     StereoSample process(float l, float r, float a, float b) noexcept
     {
         const double target = delaySeconds(a);
-        time = time < 0.0 ? target : time + glide * (target - time);
+        // A delay tap reads at t - D(t). An unconstrained 250 ms glide can increase D
+        // faster than real time (4.56 s/s for 60 ms -> 1.2 s), replaying old audio in
+        // reverse. Limit only the positive slope; small changes and faster playback
+        // retain the existing one-pole glide, and delay memory is never discarded.
+        time = time < 0.0 ? target : time + std::min(glide * (target - time), kMaxDelayIncrease / sr);
         const float g = (float) std::min(0.95, std::pow(10.0, -3.0 * time / tailSeconds(b)));
         const float in[2] = { l, r };
         const float cross[2] = { channels[1].playback, channels[0].playback }; // ping-pong
