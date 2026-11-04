@@ -1644,7 +1644,16 @@ void Engine::controlChange(int controller, float value, int midiChannel)
                 {
                     voice.pedalHeld = false;
                     if (! voice.held && ! voice.sustained)
+                    {
                         releaseVoice(voice);
+                        // Circuit CC64 defers gate release, not the panel's
+                        // Sustain II policy for the resulting tail. Use the
+                        // mode/gate at pedal-up, as for an ordinary key-up.
+                        // Legacy retains its historical unprivileged tail.
+                        if (usesSourceModels(global.renderPolicy)
+                            && global.sustainMode == 1 && global.sustainGate)
+                            voice.sustained = true;
+                    }
                 }
             heldCount = 0;
             for (const auto& voice : voices)
