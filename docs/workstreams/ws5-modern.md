@@ -116,10 +116,20 @@ that law**; the new shapes run on a double phase advanced in parallel and are ra
 Random shapes use a private, re-seeded generator per LFO, never the shared `modRng` stream
 (so the arpeggiator and SUB random patterns cannot shift).
 
-**Results** (`cs80_modern_lfo_tests`, 93 checks): sine bit-identical to `Lfo::tick(..., 0, ...)`
+Live waveform changes initialize the newly selected random shape immediately: one
+fresh level for S&H, two fresh endpoints for smooth random. Both phase clocks keep
+running, and selecting the same waveform again does not restart it. This prevents a
+stale/zero modulation signal until the next wrap (up to twenty seconds at 0.05 Hz).
+A waveform change may step, as other waveform selections do; smooth-random continuity
+applies within an uninterrupted selection. Unchanged-waveform output stays identical.
+
+**Results** (`cs80_modern_lfo_tests`, 132 checks): sine bit-identical to `Lfo::tick(..., 0, ...)`
 over 200k samples at 4 rates x 5 LFO rates; shapes within 1e-6 of an independent analytic
 definition; period error <= 1 sample over the run; S&H holds and steps at wraps; smooth random
-never exceeds its slope bound; waveform inert at depth 0 and under PURE CS-80.
+never exceeds its slope bound; waveform inert at depth 0 and under PURE CS-80. Live
+random-wave transitions, repeated selections and reset sequences are checked at three
+rates and start phases, including a wrap; all three engine waveform controls drive
+their matrix sources immediately in both Legacy and Circuit modes.
 
 ## Step 2a — Modulation matrix (`src/core/ModMatrix.h`, `src/core/ModernLayer.h`)
 

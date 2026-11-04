@@ -78,6 +78,7 @@ public:
         shapePhase = (double) p;
         rng = Rng(seed);
         started = false;
+        previousWaveform = -1;
         held = from = to = 0.0f;
     }
 
@@ -93,6 +94,16 @@ public:
         const bool wrapped = shapePhase >= 1.0;
         if (wrapped)
             shapePhase -= std::floor(shapePhase);
+        // Random waveforms own different state (one held level versus two
+        // interpolation endpoints). Initialize the newly selected waveform on
+        // this sample, rather than inheriting the previous shape's started
+        // flag and waiting as long as twenty seconds for a wrap. Keep both
+        // phase clocks running without reseeding the private random stream.
+        if (waveform != previousWaveform)
+        {
+            started = false;
+            previousWaveform = waveform;
+        }
         switch ((LfoWave) waveform)
         {
             case LfoWave::sine: return std::sin(kTwoPi * phase);
@@ -132,6 +143,7 @@ private:
     float phase = 0.0f;
     double shapePhase = 0.0;
     bool started = false;
+    int previousWaveform = -1;
     float held = 0.0f, from = 0.0f, to = 0.0f;
 };
 
