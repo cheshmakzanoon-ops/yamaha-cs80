@@ -1128,7 +1128,18 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     {
         auto* p = apvts.getParameter(id);
         if (p == nullptr) return;
-        auto child = result.getChildWithProperty("id", id);
+        // JUCE binds the final matching child when replacing its state. Keep
+        // that same value authority, but remove earlier duplicates before
+        // validation and the caller's live-session overrides. Sanitizing only
+        // the first child leaves the value JUCE actually loads unchecked.
+        juce::ValueTree child;
+        for (int i = result.getNumChildren(); --i >= 0;)
+        {
+            auto candidate = result.getChild(i);
+            if (candidate.getProperty("id").toString() != id) continue;
+            if (! child.isValid()) child = candidate;
+            else result.removeChild(i, nullptr);
+        }
         if (!child.isValid())
         {
             child = juce::ValueTree("PARAM");
