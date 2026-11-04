@@ -462,6 +462,9 @@ private:
         double initialPitchTransient = 0.0;
         float ribbonRatio = 1.0f;
         uint64_t age = 0;
+        // Circuits allocated by one note-on release together, even if the
+        // voice mode changes before note-off. Age remains per circuit.
+        uint64_t releaseGroup = 0;
         KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
         // Circuit engine free-running state (Phase 2.1). idleClock counts the

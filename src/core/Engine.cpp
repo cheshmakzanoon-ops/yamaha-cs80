@@ -236,6 +236,7 @@ void Engine::reset()
         v.pedalHeld = false;
         v.note = 60;
         v.age = 0;
+        v.releaseGroup = 0;
         v.initialPitchTransient = 0.0;
         for (auto& r : v.ranks)
         {
@@ -1130,6 +1131,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.touch.trigger(v.velocity);
     v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
+    v.releaseGroup = v.age;
     lastNote = note;
     lastPitch = v.targetPitch;
     ++heldCount;
@@ -1276,12 +1278,16 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
     // Phase 6 unison extension: N circuits per key, detuned symmetrically.
     if (const int unison = unisonCount(); unison > 1)
     {
+        uint64_t releaseGroup = 0;
         for (int k = 0; k < unison; ++k)
         {
             const int idx = chooseVoice();
             if (idx < 0)
                 break;
             startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+            if (k == 0)
+                releaseGroup = voices[(size_t) idx].releaseGroup;
+            voices[(size_t) idx].releaseGroup = releaseGroup;
             voices[(size_t) idx].unisonOffset = global.unisonDetune / 100.0f
                 * ((float) k / (float) (unison - 1) - 0.5f);
         }
@@ -1419,11 +1425,14 @@ void Engine::applyNoteOff(int midiNote, int midiChannel)
         return;
     if (auto* voice = findVoiceForNote(midiNote, midiChannel))
     {
-        releaseKey(*voice);
-        // Unison: the key's other circuits release with it.
-        if (unisonCount() > 1)
-            while (auto* other = findVoiceForNote(midiNote, midiChannel))
-                releaseKey(*other);
+        // Note ownership is established at onset, not by the current voice
+        // mode. Keep the newest-onset convention for overlapping equal notes
+        // while releasing every circuit allocated by that one note-on.
+        const auto releaseGroup = voice->releaseGroup;
+        for (auto& other : voices)
+            if (other.active && other.held && other.releaseGroup == releaseGroup
+                && other.note == midiNote && other.midiChannel == midiChannel)
+                releaseKey(other);
         if (unassignedCount > 0)
             reconsiderUnassignedKeys();
     }
