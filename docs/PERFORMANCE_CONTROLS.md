@@ -25,6 +25,8 @@ All earlier IDs, order, ranges, defaults and AU hints are untouched (the smoke t
 
 **Preset recall.** Loading a factory preset recalls the sound, not the wiring: `footswitch_plugged`, `footswitch_pressed`, `foot_mode` and `output_level` are left where they are. The four contour levers and both assigners are part of the patch and return to their neutral values with it. User presets and host state restore all ten. Parity isolation is a separate session policy: both factory and user presets preserve its current setting, whereas host state restores its saved setting.
 
+The tuning source (`tuning_mode`) also stays with the session on both factory and user preset recall. Scala/KBM texts and MTS tuning data are not part of a user preset, so loading a sound must not disable the current source or select an unrelated one. Full host-session restore still recalls its saved tuning source and Scala/KBM texts. This exception does not change user-preset recall of the ten performance controls above.
+
 ## Keyboard contour (owner controls 9 and 10)
 
 Source chain: [KEYBOARD_CONTOUR_EVIDENCE.md](KEYBOARD_CONTOUR_EVIDENCE.md). Established there: four center-neutral bipolar levers; brilliance moves both filters, level feeds the VCA control sum through its own branch; the effect grows toward the keyboard ends.

@@ -77,15 +77,16 @@ struct PresetSaveAccess
             parameter->setValueNotifyingHost(0.0f);
         host.setParamValue(cs80::P_parityMode, 1.0f);
         host.loadUserPreset(saved.file);
-        // Session settings keep their live values (ws2: oversampling quality and
-        // listening output join the isolation policy); all else is restored.
+        // Session settings keep their live values (oversampling quality,
+        // listening output, tuning source and isolation); all else is restored.
         const auto* oversampling = host.getAPVTS().getParameter("oversampling");
         const auto* listening = host.getAPVTS().getParameter("output_jack");
+        const auto* tuning = host.getAPVTS().getParameter("tuning_mode");
         for (int i = 0; i < parameters.size(); ++i)
         {
             if (parameters[i] == host.getAPVTS().getParameter("parity_mode"))
                 continue;
-            if (parameters[i] == oversampling || parameters[i] == listening)
+            if (parameters[i] == oversampling || parameters[i] == listening || parameters[i] == tuning)
             {
                 check(parameters[i]->getValue() == 0.0f, "user preset keeps the live session settings");
                 continue;

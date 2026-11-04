@@ -1409,7 +1409,10 @@ void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
                 tree.removeChild(tree.getChildWithName(child), nullptr);
             auto restored = normaliseRestoredState(tree);
             // Session settings, not sounds: a user preset keeps the live values.
-            for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling, (int) cs80::P_outputJack })
+            // Scala/KBM and MTS data are not recalled here, so their source must
+            // stay with the live session rather than the preset writer's setup.
+            for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling,
+                               (int) cs80::P_outputJack, (int) cs80::P_tuningMode })
                 restored.getChildWithProperty("id", parameterId(index))
                     .setProperty("value", getParamValue(index), nullptr);
             const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
