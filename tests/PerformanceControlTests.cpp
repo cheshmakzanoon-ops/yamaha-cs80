@@ -740,6 +740,94 @@ void testBoundaryInputs()
         check(finiteBounded(out), "performance controls are finite at sample rate " + std::to_string((int) sr));
     }
 }
+
+void testPitchBendEventBoundaries()
+{
+    const float invalidValues[] = { std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity() };
+    for (int policy = 0; policy < 3; ++policy)
+        for (double rate : { 44100.0, 96000.0 })
+            for (bool mpe : { false, true })
+            {
+                auto initialise = [&](Engine& e)
+                {
+                    auto p = quietPatch();
+                    p[P_sourcePerformance] = policy != 0 ? 1.0f : 0.0f;
+                    p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+                    p[P_mpeOn] = mpe ? 1.0f : 0.0f;
+                    p[P_pitchBendRange] = 12.0f;
+                    p[P_mpeBendRange] = 24.0f;
+                    p[P_mod1Amount] = p[P_mod2Amount] = 0.5f;
+                    modern::ModernConfig config;
+                    config.slots[0].source = config.slots[1].source = modern::ModSource::pitchBend;
+                    config.slots[0].destination = modern::ModDestination::subDepth;
+                    config.slots[1].destination = modern::ModDestination::pan;
+                    e.prepare(rate);
+                    e.setModernConfig(config);
+                    e.setParams(p);
+                    if (mpe)
+                        for (int channel : { 1, 16 })
+                        {
+                            e.controlChange(101, 0.0f, channel);
+                            e.controlChange(100, 6.0f / 127.0f, channel);
+                            e.controlChange(6, 7.0f / 127.0f, channel);
+                        }
+                    e.noteOn(60, 0.7f, 3);
+                    e.noteOn(64, 0.6f, 10);
+                    render(e, 96); // All bends address already-sounding notes.
+                    for (int channel : { 1, 3, 16, 10 })
+                        e.pitchBend(channel, 0.25f);
+                    render(e, 96); // Leave source-policy smoothers mid-gesture.
+                };
+                for (int channel : { 1, 3, 16, 10 })
+                {
+                    if (!mpe && channel != 1)
+                        continue;
+                    const auto label = "pitch-bend boundary policy " + std::to_string(policy)
+                        + " rate " + std::to_string((int) rate) + " MPE " + std::to_string(mpe)
+                        + " channel " + std::to_string(channel);
+                    for (float invalid : invalidValues)
+                    {
+                        const auto eventLabel = label + " value " + std::to_string(invalid);
+                        Engine expected, actual;
+                        initialise(expected);
+                        initialise(actual);
+                        actual.pitchBend(channel, invalid);
+                        const auto reference = render(expected, 128);
+                        const auto observed = render(actual, 128);
+                        check(observed == reference, eventLabel + ": non-finite event is absent");
+                        check(finiteBounded(observed, 2.0f), eventLabel + ": audio remains finite");
+                        for (int voice = 0; voice < 2; ++voice)
+                            for (int rank = 0; rank < 2; ++rank)
+                            {
+                                check(actual.getRankInfo(voice, rank).oscillatorHz
+                                          == expected.getRankInfo(voice, rank).oscillatorHz,
+                                      eventLabel + ": oscillator pitch retains the valid gesture");
+                                check(actual.getModernRankOffsets(voice, rank).pan
+                                          == expected.getModernRankOffsets(voice, rank).pan,
+                                      eventLabel + ": rank wheel modulation retains the valid gesture");
+                            }
+                        check(actual.getModernGlobalOffsets().subDepthGain
+                                  == expected.getModernGlobalOffsets().subDepthGain,
+                              eventLabel + ": global wheel modulation retains the valid gesture");
+                        actual.pitchBend(channel, -0.375f);
+                        expected.pitchBend(channel, -0.375f);
+                        check(render(actual, 256) == render(expected, 256),
+                              eventLabel + ": later valid events preserve exact continuity");
+                    }
+                    for (float value : { -2.0f, 2.0f })
+                    {
+                        Engine expected, actual;
+                        initialise(expected);
+                        initialise(actual);
+                        actual.pitchBend(channel, value);
+                        expected.pitchBend(channel, std::clamp(value, -1.0f, 1.0f));
+                        check(render(actual, 128) == render(expected, 128),
+                              label + ": finite out-of-range values retain endpoint clamping");
+                    }
+                }
+            }
+}
 } // namespace
 
 int main()
@@ -756,6 +844,7 @@ int main()
     testOutputLevel();
     testBoundaryInputs();
     testPerformanceEventBoundaries();
+    testPitchBendEventBoundaries();
 
     if (failures == 0)
         std::printf("ALL %d PERFORMANCE CONTROL CHECKS PASSED\n", checks);

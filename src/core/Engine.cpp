@@ -1565,7 +1565,9 @@ void Engine::channelPressure(int midiChannel, float pressure)
 
 void Engine::pitchBend(int midiChannel, float value)
 {
-    if (global.parityMode)
+    // Ignore malformed float events before they can poison bend smoothers or
+    // the independent pitch-wheel modulation source. Keep the last valid target.
+    if (global.parityMode || ! std::isfinite(value))
         return;
     value = clampf(value, -1.0f, 1.0f);
     if (global.mpe)
