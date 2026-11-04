@@ -265,4 +265,78 @@ constexpr bool reviewValid() noexcept {
 }
 static_assert(reviewValid(), "The re-examination record must cover exactly the 25 manifest cells");
 
+// 2026-11-01 follow-up: native S31/S33/S35/S37 crop PNGs were recovered from
+// GitHub Actions job logs (the 2026-10-31 fetch limitation above no longer
+// applies). The crop IDs and log-reported SHA-256 digests are preserved here
+// to let a second reader reproduce every one of the 25 visual inspections.
+// These are SOURCE-IMAGE observations, not component measurements or revision
+// applicability findings. Nothing here modifies the frozen v1 manifest,
+// candidate sensitivity, or the classified source table. Full board-page
+// provenance and alternative readings: docs/FACTORY_TONE_NATIVE_INSPECTION_2026-11-01.md.
+struct NativeSchematicCrop {
+    std::string_view id, sha256;
+};
+inline constexpr std::array<NativeSchematicCrop, 8> nativeSchematicCrops {{
+    {"t51-native-r0-c1", "27ae6687ad865d4c4ee88482f0aa314a0ec1df28c5a0267505bc9888805394b2"}, // S31, upper rows
+    {"t51-native-r1-c1", "68795583a18f17b6753c2eab8c36a162083374ac6a10725ce4315b115f184e38"}, // S31, lower rows
+    {"t52-native-r0-c1", "863a60e6c7c2bd93cd7ef93aaf985f02b303a427bb08429d4f1976eee278efa0"}, // S33
+    {"t52-native-r1-c1", "8c4a474c5636b3f19c1621aedd32657e3008aebad3a65bd4ad23d6c322d5ca00"},
+    {"t53-native-r0-c1", "0cdc2b30a12ed70334c49169e73662aaeeebde636b575d008b98e79579c824ad"}, // S35
+    {"t53-native-r1-c1", "64540888ccb299995fdef132e93a85b0656445c0ee04f086ffea11795e6a0230"},
+    {"t54-native-r0-c1", "e319619176e391274a00b2bd6c7427b11bb7726af7d23c7242f01fb3343f4051"}, // S37
+    {"t54-native-r1-c1", "72c490ec3332631965bcc9390b5cfaa58b82b792af0a123b1fa8f6c9eefecf0d"}
+}};
+struct NativeCellEvidence {
+    CellAddress address;
+    std::uint8_t schematicCropIndex = 0;
+};
+inline constexpr std::string_view nativeReviewId = "native-s31-s38-review-2026-11-01";
+// Index 0/1 = T51, 2/3 = T52, 4/5 = T53, 6/7 = T54.
+// The lower crop starts at source y=2136 (overlap with upper crop), covering
+// outputs 20-26; outputs 9 and 14 appear in the upper crop.
+inline constexpr std::array<NativeCellEvidence, 25> nativeCellEvidence {{
+    {{51,'A',20},1}, {{51,'A',25},1}, {{51,'C',25},1}, {{51,'E',22},1},
+    {{51,'E',26},1}, {{51,'F',22},1}, {{51,'F',25},1}, {{51,'F',26},1},
+    {{52,'A',26},3}, {{52,'B',9},2}, {{52,'C',22},3}, {{52,'E',20},3},
+    {{53,'A',20},5}, {{53,'A',25},5}, {{53,'B',14},4}, {{53,'B',20},5},
+    {{53,'C',20},5}, {{53,'E',23},5}, {{53,'E',26},5}, {{53,'F',22},5},
+    {{53,'F',26},5}, {{54,'A',26},7}, {{54,'C',22},7}, {{54,'C',25},7},
+    {{54,'C',26},7}
+}};
+constexpr const NativeSchematicCrop* findNativeSchematicCrop(CellAddress a) noexcept {
+    for (const auto& e : nativeCellEvidence)
+        if (e.address == a && e.schematicCropIndex < nativeSchematicCrops.size())
+            return &nativeSchematicCrops[e.schematicCropIndex];
+    return nullptr;
+}
+constexpr bool nativeCellEvidenceValid(const std::array<NativeCellEvidence, 25>& evidence) noexcept {
+    for (const auto& crop : nativeSchematicCrops)
+        if (crop.id.empty() || crop.sha256.size() != 64) return false;
+    for (const auto& cell : review) {
+        std::size_t matches = 0;
+        for (const auto& e : evidence) {
+            if (e.schematicCropIndex >= nativeSchematicCrops.size()) return false;
+            // Repeated board/page mappings are not independent evidence.
+            if (e.address == cell.address) ++matches;
+            if (e.schematicCropIndex != static_cast<std::size_t>((e.address.board - 51) * 2
+                                                                 + (e.address.output >= 20 ? 1 : 0))) return false;
+        }
+        if (matches != 1) return false;
+    }
+    return true;
+}
+static_assert(nativeCellEvidenceValid(nativeCellEvidence), "All 25 held cells require an exact native source crop");
+// Mutation checks: a duplicate/missing address or a mislabelled page/row must
+// fail the evidence mapping gate, without changing any tolerance or V1 number.
+static_assert(!nativeCellEvidenceValid([] {
+    auto mutated = nativeCellEvidence;
+    mutated[0].address = mutated[1].address;
+    return mutated;
+}()), "Native crop coverage gate must reject a missing address");
+static_assert(!nativeCellEvidenceValid([] {
+    auto mutated = nativeCellEvidence;
+    mutated[0].schematicCropIndex = 0;
+    return mutated;
+}()), "Native crop coverage gate must reject a wrong row");
+
 } // namespace cs80::factory_hypotheses

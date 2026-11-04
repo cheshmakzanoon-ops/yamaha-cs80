@@ -177,6 +177,17 @@ std::vector<float> phrase(Engine& e, int blocks = 24)
 
 void testEngine()
 {
+    // 2026-11-01 pre-registered cache gate: the historical 10 Hz DC-blocker
+    // coefficient is one EXACT float expression per internal rate. Querying
+    // this telemetry after a re-prepare or policy switch must not expose a
+    // stale coefficient or a different (e.g. double-precision) evaluation.
+    const auto exactDcPole = [](const Engine& engine)
+    {
+        const float sr = (float) engine.getInternalSampleRate();
+        const float invSr = 1.0f / sr;
+        const float original = std::exp(-kTwoPi * 10.0f * invSr);
+        return engine.getDcBlockCoefficient() == original;
+    };
     for (double rate : { 44100.0, 48000.0, 96000.0 })
         for (float quality : { 0.0f, 1.0f, 2.0f })
             for (bool source : { false, true })
@@ -189,6 +200,7 @@ void testEngine()
                 const int expected = oversamplingFactor(oversamplingMode(quality), source, false, rate);
                 check(e.getOversamplingFactor() == expected && e.getInternalSampleRate() == rate * expected,
                       "engine runs at the rule's factor");
+                check(exactDcPole(e), "DC-blocker cache equals old float expression at every internal rate/policy");
                 // ws1 merge, intentional circuit-engine change: the reconstructed
                 // oscillator's 8-internal-sample kernel is reported too (8/N).
                 check(e.getLatencySamples() == ws2::kReportedLatencySamples + (source ? 8 / expected : 0),
@@ -216,6 +228,7 @@ void testEngine()
         if (! factorChanges)
         {
             check(switched.activeVoices() > 0, "a quality change that keeps the factor leaves notes sounding");
+            check(exactDcPole(switched), "unchanged oversampling factor retains exact DC-blocker coefficient");
             continue;
         }
         check(switched.activeVoices() == 0, "factor change stops sounding notes like a policy change");
@@ -223,6 +236,8 @@ void testEngine()
         check(switched.getOversamplingFactor() == reprepared.getOversamplingFactor()
                   && phrase(switched) == phrase(reprepared),
               "render-thread switch equals a full prepare at the new mode");
+        check(exactDcPole(switched) && exactDcPole(reprepared),
+              "render-thread factor change refreshes exact original DC-blocker coefficient");
     }
 
     // Offline flag: circuit engine goes to HQ, legacy does not move.
@@ -232,8 +247,10 @@ void testEngine()
         e.setParams(circuit(0.0f));
         e.setNonRealtime(true);
         check(e.getOversamplingFactor() == 8, "circuit offline render uses HQ");
+        check(exactDcPole(e), "offline factor refreshes exact original DC-blocker coefficient");
         e.setNonRealtime(false);
         check(e.getOversamplingFactor() == 2, "returning to realtime restores the selected mode");
+        check(exactDcPole(e), "realtime factor restores exact original DC-blocker coefficient");
         Engine legacy;
         legacy.prepare(48000.0);
         legacy.setNonRealtime(true);

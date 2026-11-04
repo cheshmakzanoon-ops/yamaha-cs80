@@ -3,6 +3,8 @@
 // measured CS-80 parity. The independent circuit oracle is SourceFactoryToneTests.
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
+#include "core/MemoryPanelControlBridge.h"
+#include "core/MemoryPanelToneAdapter.h"
 
 #include <algorithm>
 #include <array>
@@ -177,9 +179,18 @@ void receiverRouting(double rate)
         {
             const auto& p = f.effectiveValues;
             if (ch == rank) boundaries[ch] = tone.boundary;
-            else check(sf::bridgeBoundary(p[chParam(ch, CP_hpfRes)], p[chParam(ch, CP_lpfRes)],
-                       p[chParam(ch, CP_vLevel)], p[chParam(ch, CP_initLevel)], p[chParam(ch, CP_afterLevel)], boundaries[ch]),
-                       "mixed rank represented by explicit bridge boundary");
+            else
+            {
+                // A factory selected on this rank no longer turns the other
+                // rank's original PANEL into a zero-ohm digital proxy. Both
+                // ranks own distinct physical sources in circuit/PURE; keep
+                // their actual finite Q/LC loading in the shared oracle.
+                sf::ToneControls memory;
+                const auto positions = memory_panels::control_bridge::positions(p, ch);
+                check(memory_panels::tone_adapter::compile(ch, 13, positions, memory),
+                      "opposite rank's PANEL source network compiles alongside selected factory tone");
+                boundaries[ch] = memory.boundary;
+            }
             for (int voice = 0; voice < 8; ++voice)
             {
                 auto vi = e.getVoiceInfo(voice);
@@ -260,18 +271,29 @@ void ownershipAndClearing(double rate)
         check(render(monoEngine, 1024) == render(stereoEngine, 1024), "modern mono selector remains inert in isolated source path");
         for (int destination : {13, 11, 12})
         {
-            // The plugin resolves PANEL/memory/legacy tables before this seam.
-            // Setting a valid non-source selection must never reuse old voltage controls.
+            // The plugin resolves PANEL/memory host banks before this seam.
+            // Circuit/PURE must switch from a factory column to the selected
+            // original M1..M4/PANEL electrical source, never reuse stale
+            // factory voltage controls or pretend it is a verified column.
             auto next = b; next.hardwareSources[rank] = destination;
             applyHardwareTone(next.effectiveValues, rank, 0);
             first.setControlFrame(next);
-            check(!sf::isSourceDriven(first.getSourceToneInfo(rank).route),
-                  "PANEL/memory immediately clears complete or inferred active source route");
+            const auto switchedRoute = first.getSourceToneInfo(rank).route;
+            check(sf::isSourceDriven(switchedRoute)
+                  && switchedRoute != sf::Route::source_complete
+                  && switchedRoute != sf::Route::source_inferred,
+                  "PANEL/memory immediately clears factory identity and activates its own original circuit source");
+            // Retain the historical byte-identical non-source programmer
+            // contract as a separate, explicit Legacy-policy assertion.
+            auto legacyNext = next;
+            legacyNext.effectiveValues[P_parityMode] = 0.0f;
+            legacyNext.effectiveValues[P_sourcePerformance] = 0.0f;
             Engine fresh, framed;
             fresh.prepare(rate); framed.prepare(rate);
-            fresh.setParams(next.effectiveValues); framed.setControlFrame(next);
+            fresh.setParams(legacyNext.effectiveValues); framed.setControlFrame(legacyNext);
             fresh.noteOn(62, .7f); framed.noteOn(62, .7f);
-            check(render(fresh, 257) == render(framed, 257), "valid non-source routes use exact legacy audio adapter");
+            check(render(fresh, 257) == render(framed, 257),
+                  "Legacy PANEL/memory non-source routes still use exact byte-identical audio adapter");
             first.setControlFrame(a);
         }
     }
@@ -284,9 +306,17 @@ void transitions(double rate)
         for (int rank = 0; rank < 2; ++rank)
         {
             auto& p = base.effectiveValues;
-            p[chParam(rank, CP_fA)] = p[chParam(rank, CP_vA)] = phase == 0 ? 1.f : .001f;
-            p[chParam(rank, CP_fD)] = p[chParam(rank, CP_vD)] = phase == 2 ? .001f : 2.f;
-            p[chParam(rank, CP_fR)] = p[chParam(rank, CP_vR)] = 2.f;
+            // The original PANEL path is now an electrical source, not a
+            // digital timing knob. Under its named source law, a HIGH 1S1555
+            // bus shortens attack/decay; an unpowered/near-zero wiper makes
+            // them long. Choose physical pot endpoints that still exercise
+            // all four envelope stages exactly, rather than assuming the
+            // opposite legacy-digital time direction.
+            p[chParam(rank, CP_fA)] = p[chParam(rank, CP_vA)] =
+                phase == 0 ? kChannelDefs[CP_vA].min : kChannelDefs[CP_vA].max;
+            p[chParam(rank, CP_fD)] = p[chParam(rank, CP_vD)] =
+                phase >= 2 ? kChannelDefs[CP_vD].max : kChannelDefs[CP_vD].min;
+            p[chParam(rank, CP_fR)] = p[chParam(rank, CP_vR)] = kChannelDefs[CP_vR].min;
             p[chParam(rank, CP_vS)] = .4f;
         }
         Engine e, split; e.prepare(rate); split.prepare(rate);
@@ -332,6 +362,11 @@ void audioStressAndTailReuse(double rate)
         check(sf::isSourceDriven(sf::route(rank, selector, true)), "every valid isolated factory selector is source driven");
         auto f = frame(); f.hardwareSources[rank] = selector;
         f.effectiveValues[P_mix] = static_cast<float>(rank); // dry single-rank audition, not saved patch rewrite
+        // The opposite rank now also has a real PANEL VCA EG. Give that rank
+        // a physically fast source-driven release so the original factory
+        // tail-retirement contract tests the selected source's own duration,
+        // not an unrelated default PANEL wiper held near 0V (10s inferred R).
+        f.effectiveValues[chParam(1 - rank, CP_vR)] = kChannelDefs[CP_vR].max;
         Engine e; e.prepare(rate); e.setControlFrame(f);
         for (int voice = 0; voice < 8; ++voice) e.noteOn(notes[voice], .125f * (voice + 1));
         auto audio = render(e, static_cast<int>(rate * .2));
@@ -367,7 +402,11 @@ void audioStressAndTailReuse(double rate)
 void inactiveControlRelaxation(double rate)
 {
     auto f = frame(); f.hardwareSources[0] = 9; // Funky1: slow filter tail, fast VCA release
-    f.effectiveValues[chParam(1, CP_vR)] = .001f;
+    // The other rank's original PANEL now owns its own source-driven VCA.
+    // Its old digital 1ms setting mapped to a nearly unpowered physical
+    // wiper (the inferred 10s release); select the HIGH wiper endpoint to
+    // preserve the test's deliberate short-VCA/long-filter contrast.
+    f.effectiveValues[chParam(1, CP_vR)] = kChannelDefs[CP_vR].max;
     Engine e; e.prepare(rate); e.setControlFrame(f);
     render(e, 31);
     for (int voice = 0; voice < 8; ++voice)
@@ -412,13 +451,13 @@ void inactiveControlRelaxation(double rate)
     // never make it audible (no voice is resurrected).
     check(e.activeVoices() == 0 && !e.getVoiceInfo(0).active && e.getRankEnvelopeState(0, 0).amplitude.value == 0.0f,
           "inactive source retargeting never resurrects audio circuits");
-    // Also enter from a deliberately different PANEL release target AFTER its
-    // VCA has retired. This checks the bridge-to-source handoff separately from
-    // the source-to-source Funky1 -> Flute IL/time retarget above.
+    // Also enter from a deliberately different original PANEL release target
+    // AFTER its source-driven VCA has retired. This checks memory/PANEL-to-
+    // factory handoff separately from Funky1 -> Flute IL/time retarget.
     auto panel = frame();
     for (int rank = 0; rank < 2; ++rank)
     {
-        panel.effectiveValues[chParam(rank, CP_vR)] = .001f;
+        panel.effectiveValues[chParam(rank, CP_vR)] = kChannelDefs[CP_vR].max;
         panel.effectiveValues[chParam(rank, CP_fR)] = 2;
         panel.effectiveValues[chParam(rank, CP_fIl)] = .2f;
     }
@@ -459,10 +498,22 @@ void panicControlGates(double rate)
 
     auto panel = frame();
     for (int rank = 0; rank < 2; ++rank) panel.effectiveValues[chParam(rank, CP_fA)] = 1;
+    // Preserve the original hard-panic behavior under its actual Legacy
+    // policy. The newly source-driven original PANEL follows the same TP1
+    // gate-on-hard-panic law as classified/inferred factory sources.
+    auto legacyPanel = panel;
+    legacyPanel.effectiveValues[P_parityMode] = 0.0f;
+    legacyPanel.effectiveValues[P_sourcePerformance] = 0.0f;
+    Engine legacyBridge; legacyBridge.prepare(rate); legacyBridge.setControlFrame(legacyPanel);
+    legacyBridge.noteOn(60, .8f); render(legacyBridge, 64);
+    legacyBridge.allNotesOff(false);
+    check(legacyBridge.getRankEnvelopeState(0, 0).filter.stage == FilterEnv::Stage::Attack,
+          "legacy hard-panic EG semantics remain unchanged");
     Engine bridge; bridge.prepare(rate); bridge.setControlFrame(panel); bridge.noteOn(60, .8f); render(bridge, 64);
     bridge.allNotesOff(false);
     const auto abandoned = bridge.getRankEnvelopeState(0, 0).filter;
-    check(abandoned.stage == FilterEnv::Stage::Attack, "legacy hard-panic EG semantics remain unchanged");
+    check(abandoned.stage == FilterEnv::Stage::Release,
+          "circuit original PANEL releases its retained filter source on hard panic");
     panel.hardwareSources = {9, 3}; bridge.setControlFrame(panel);
     check(same(abandoned, bridge.getRankEnvelopeState(0, 0).filter), "bridge-panic to source preserves exact zero-frame envelope state");
     render(bridge, 1);

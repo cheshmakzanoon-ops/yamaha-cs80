@@ -630,6 +630,10 @@ LfoPanel::LfoPanel(Cs80AudioProcessor& p)
         styleSlider(r.depth, "LFO " + juce::String(i + 1) + " depth");
         if (auto* q = parameter(p, waveIds[i])) r.waveAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, r.wave);
         if (auto* q = parameter(p, destIds[i])) r.destinationAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, r.destination);
+        bindParameterContextMenu(r.wave, p,
+                                 Cs80AudioProcessor::parameterId(waveIds[i]), waveIds[i]);
+        bindParameterContextMenu(r.destination, p,
+                                 Cs80AudioProcessor::parameterId(destIds[i]), destIds[i]);
         if (auto* q = parameter(p, rateIds[i])) r.rateAttachment = std::make_unique<juce::SliderParameterAttachment>(*q, r.rate);
         if (auto* q = parameter(p, depthIds[i])) r.depthAttachment = std::make_unique<juce::SliderParameterAttachment>(*q, r.depth);
         compactText(r.rate, 2, " Hz");
@@ -874,6 +878,9 @@ ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
         attachCombo(base, s.model, s.modelAttachment);
         attachCombo(typeId, s.type, s.typeAttachment);
         attachCombo(base + 3, s.oversampling, s.oversamplingAttachment);
+        bindParameterContextMenu(s.model, p, Cs80AudioProcessor::parameterId(base), base);
+        bindParameterContextMenu(s.type, p, Cs80AudioProcessor::parameterId(typeId), typeId);
+        bindParameterContextMenu(s.oversampling, p, Cs80AudioProcessor::parameterId(base + 3), base + 3);
         attachSlider(mixId, s.mix, s.mixAttachment);
         attachSlider(base + 1, s.a, s.aAttachment);
         attachSlider(base + 2, s.b, s.bAttachment);
@@ -890,7 +897,23 @@ ModernFxPage::ModernFxPage(Cs80AudioProcessor& p) : processor(p)
     gainComp.setTooltip("Each slot's K-weighted (ITU-R BS.1770) output loudness follows its input loudness");
     if (auto* q = parameter(p, P_fxGainCompensation))
         gainCompAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, gainComp);
+    bindParameterContextMenu(gainComp, p,
+                             Cs80AudioProcessor::parameterId(P_fxGainCompensation), P_fxGainCompensation);
     addAndMakeVisible(gainComp);
+
+    // BA617 p21 and OE57/OE58 show separate named control nodes, not proven
+    // simultaneous tab mechanics. The new states are opt-in declared inference;
+    // "Legacy selector" is the zero/default and preserves existing audio.
+    styleLabel(chorusRoutingLabel, "TREM / CHORUS");
+    chorusRoutingLabel.setTooltip("OE1/OE2 independent switch routing is a declared inference, not a hardware measurement");
+    chorusTremoloRouting.addItemList({ "Legacy selector", "Both off", "Chorus only", "Tremolo only", "Both on" }, 1);
+    styleCombo(chorusTremoloRouting, "OE1/OE2 chorus and tremolo switch combinations (declared inference)");
+    if (auto* q = parameter(p, P_chorusTremoloRouting))
+        chorusRoutingAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, chorusTremoloRouting);
+    bindParameterContextMenu(chorusTremoloRouting, p,
+                             Cs80AudioProcessor::parameterId(P_chorusTremoloRouting), P_chorusTremoloRouting);
+    addAndMakeVisible(chorusRoutingLabel);
+    addAndMakeVisible(chorusTremoloRouting);
     refreshLabels();
     startTimerHz(10);
 }
@@ -933,7 +956,10 @@ void ModernFxPage::paint(juce::Graphics& g)
 void ModernFxPage::resized()
 {
     auto area = getLocalBounds().reduced(8).withTrimmedTop(22);
-    gainComp.setBounds(area.removeFromBottom(30).reduced(6, 4));
+    auto footer = area.removeFromBottom(30).reduced(6, 4);
+    gainComp.setBounds(footer.removeFromLeft(footer.getWidth() * 46 / 100));
+    chorusRoutingLabel.setBounds(footer.removeFromLeft(footer.getWidth() * 32 / 100));
+    chorusTremoloRouting.setBounds(footer);
     const int w = area.getWidth() / 3;
     for (auto& s : slots)
     {

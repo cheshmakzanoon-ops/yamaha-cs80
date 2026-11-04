@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "model_id": "steinberg-vst3-piecewise-linear-automation-cursor-v1",
+  "registered_utc": "2026-11-01",
+  "evidence_kind": "Steinberg VST3 SDK software contract, not a hardware measurement",
+  "primary_source": "JUCE 8.0.11 pinned c352e2489000ffeb9e397051377d75eef2efe641: modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/vst/ivstparameterchanges.h, IParamValueQueue contract (linear curve sections and implicit sample -1)",
+  "truth_model": "For the segment between points (x1,y1) and (x2,y2), normalized value at integer host sample x is y1+(y2-y1)*(x-x1)/(x2-x1). At each block start, the last normalized parameter value is an implicit point (x=-1). An explicit point at x=0 supersedes it at sample 0. After the last queue point the value holds. All calculations below use double precision; the plugin wrapper may cast the normalized result to the host parameter's float representation afterward.",
+  "gates": {
+    "explicit_linear_ramp": {
+      "previous_value_at_minus_one": 0.62,
+      "block_frames": 256,
+      "points_offset_and_value": [[0, 0.8], [128, 0.2]],
+      "expected_samples": [[0, 0.8], [1, 0.7953125], [64, 0.5], [127, 0.2046875], [128, 0.2], [255, 0.2]],
+      "maximum_absolute_error": 1e-12,
+      "mutation": "Treating the two points as a step at sample 128, or adding one to the interpolation denominator, must fail."
+    },
+    "implicit_previous_point": {
+      "previous_value_at_minus_one": 0.62,
+      "block_frames": 256,
+      "points_offset_and_value": [[128, 0.2]],
+      "expected_sample_formula_until_128": "0.62+(0.2-0.62)*(sample+1)/129",
+      "expected_samples": [[128, 0.2], [255, 0.2]],
+      "maximum_absolute_error": 1e-12,
+      "mutation": "Holding the initial value until the first explicit point, or pretending the implicit point is at sample 0, must fail."
+    },
+    "legal_jump": {
+      "previous_value_at_minus_one": 0.62,
+      "block_frames": 256,
+      "points_offset_and_value": [[0, 0.8], [127, 0.8], [128, 0.2]],
+      "expected_samples": [[0, 0.8], [64, 0.8], [127, 0.8], [128, 0.2], [129, 0.2]],
+      "maximum_absolute_error": 1e-12,
+      "mutation": "Removing the repeated old-value point at 127 must turn the legal jump into a linear ramp and fail."
+    },
+    "repeated_offset_inference": {
+      "declared_inference": "The SDK requires ordered curve points but does not define duplicate offsets. For a repeated offset, the last point at that exact offset wins; no division by zero or allocation is permitted.",
+      "alternatives_not_selected": ["reject the duplicate-offset queue", "first point at the repeated offset wins"],
+      "previous_value_at_minus_one": 0.62,
+      "block_frames": 256,
+      "points_offset_and_value": [[0, 0.8], [0, 0.75], [128, 0.25]],
+      "expected_samples": [[0, 0.75], [64, 0.5], [128, 0.25]],
+      "maximum_absolute_error": 1e-12
+    },
+    "empty_and_dense_queues": {
+      "empty_queue_holds_previous_value": true,
+      "dense_block_frames": 512,
+      "dense_points": 512,
+      "dense_point_formula": "at point offset i, 0.2+0.6*i/511 for i=0..511",
+      "dense_maximum_absolute_error": 1e-12,
+      "dense_reader_calls_maximum": 512,
+      "cursor_dynamic_allocations": 0,
+      "cursor_object_size_bytes_maximum": 96,
+      "mutation": "A 256-event hard cap, a heap-backed per-sample queue, or rereading all 512 points at each of 512 samples must fail."
+    },
+    "key_parameter_normalization": {
+      "truth_source": "src/core/Params.h kGlobalDefs for P_volume, P_brilliance, P_resonance, all with skew 1",
+      "volume_range": [0.0, 1.0],
+      "brilliance_range": [-2.0, 2.0],
+      "resonance_range": [0.0, 1.0],
+      "expected_at_normalized_zero_half_one": {
+        "volume": [0.0, 0.5, 1.0],
+        "brilliance": [-2.0, 0.0, 2.0],
+        "resonance": [0.0, 0.5, 1.0]
+      },
+      "maximum_absolute_error": 1e-12
+    }
+  },
+  "audio_acceptance": {
+    "already_committed_test": "cs80_vst3_automation_ramp in tests/Vst3AutomationAudioTests.cpp at test-first SHA bb93326ebfec6f3ac89d667ec255ed73f2d5e251",
+    "maximum_absolute_audio_difference": 1e-6,
+    "minimum_nonvacuous_reference_sum_abs": 0.01,
+    "existing_legacy_v1_v2_gates_unchanged": true,
+    "note": "This pre-registration proves only the curve math and key normalized range; it does not authorize sound changes, CPU regressions, tests skipped on red, or a claim of complete DAW automation until the real 256-frame VST3 ramp audio oracle is green."
+  }
+}

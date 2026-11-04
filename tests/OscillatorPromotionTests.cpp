@@ -186,6 +186,49 @@ void sharedBasis()
     check(same, "shared-basis oscillators are bit-identical");
 }
 
+// 2026-11-01 pre-registered event-cache gate. Existing comparator-timing,
+// zero-history, state-replay and alias gates remain the numerical authority;
+// this gate checks that the same analytic segment is not re-solved each tick.
+void segmentCacheGate(const ws1::Tolerances& tol)
+{
+    ReconstructedOscillator oscillator;
+    check(oscillator.prepare(96000.0, {}), "segment-cache fixture prepares");
+    oscillator.reset(0.0, 261.6);
+    WscControls controls;
+    for (int i = 0; i < 9600; ++i) oscillator.tick(261.6, controls);
+    std::uint64_t searches = 0;
+    for (int i = 0; i < 4096; ++i)
+    {
+        oscillator.tick(261.6, controls);
+        searches += oscillator.getDiagnostics().branchRootSearches;
+    }
+    std::printf("oscillator event-root searches per 4096 stable ticks: %llu (limit %.0f)\n",
+                static_cast<unsigned long long>(searches), tol["stable_root_solves_per_4096_ticks_max"]);
+    check(searches > 0 && searches <= tol["stable_root_solves_per_4096_ticks_max"],
+          "event roots are reused until a real analytic-segment boundary");
+    const auto checkInvalidation = [&](double hz, const char* description)
+    {
+        oscillator.tick(hz, controls);
+        check(oscillator.getDiagnostics().branchRootSearches >= tol["invalidation_root_solves_min"],
+              description);
+    };
+    checkInvalidation(440.0, "frequency change invalidates cached branch event");
+    controls.pulseThresholdVolts = 0.6;
+    checkInvalidation(440.0, "comparator threshold change invalidates cached branch event");
+    controls.sawEnabled = false;
+    checkInvalidation(440.0, "waveform gate change invalidates cached branch event");
+    const auto snapshot = oscillator.getState();
+    oscillator.tick(440.0, controls);
+    oscillator.restoreState(snapshot);
+    checkInvalidation(440.0, "state restore invalidates cached branch event");
+    oscillator.advanceIdle(0.002, 440.0, controls);
+    checkInvalidation(440.0, "idle advance invalidates cached branch event");
+    const auto idle = oscillator.getIdleState();
+    oscillator.tick(440.0, controls);
+    oscillator.restoreIdleState(idle);
+    checkInvalidation(440.0, "idle snapshot restore invalidates cached branch event");
+}
+
 // The circuit engine's sine is the folded triangle -> PWL shaper, not
 // sin + 3.5 % third harmonic: measure the third harmonic at the output.
 double thirdHarmonicRatio(float source)
@@ -222,8 +265,10 @@ int main(int argc, char** argv)
     try
     {
         const ws1::Tolerances tol(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/ws1-voice.json", "oscillator_promotion");
+        const ws1::Tolerances cacheTol(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/ws1-voice.json", "oscillator_segment_cache");
         pinAnchors();
         sharedBasis();
+        segmentCacheGate(cacheTol);
         sineShaper();
         aliasGate(tol);
     }

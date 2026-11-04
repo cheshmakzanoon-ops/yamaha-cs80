@@ -1,0 +1,21 @@
+{
+  "model_id": "memory-panel-source-to-tonecontrols-v1",
+  "registered_utc": "2026-11-01",
+  "evidence_pages": ["BA27", "BA28", "MBK63", "S31", "S32", "S33", "S34", "S35", "S36", "S37", "S38"],
+  "declared_inference": "50k-linear-pots, 1ohm-ends, ideal-follower-1ohm, nominal-2SC458-1S1555-proxy, and original V1 downstream output laws are model assumptions; no physical calibration",
+  "memory_panel_tone_adapter_v1": {
+    "source_voltage_absolute_volts": 1e-12,
+    "source_impedance_absolute_ohms": 1e-9,
+    "control_law_absolute": 1e-12,
+    "zero_drive_bus_vs_truth_volts": 2e-3,
+    "source_receiver_roundtrip_volts": 1e-9,
+    "mutant_swapped_hp_lp_cutoff_bus_min_volts": 1e-2,
+    "mutant_zero_cutoff_impedance_bus_min_volts": 1e-2,
+    "mutant_reversed_gate_count_min": 1
+  },
+  "mutation_contract": [
+    "Swap HP/LP cutoff ports 7 and 9; reject the resulting wrong receiver-loaded HP bus.",
+    "Erase the selected HP source impedance; reject the wrong finite receiver-loaded bus.",
+    "Invert the selected PULSE/SAW gates; reject the resulting binary waveform source identity."
+  ]
+}

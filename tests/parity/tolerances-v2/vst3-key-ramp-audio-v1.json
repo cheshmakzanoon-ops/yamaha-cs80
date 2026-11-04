@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "model_id": "vst3-three-key-parameter-ramp-audio-v1",
+  "registered_utc": "2026-11-01",
+  "evidence_kind": "Steinberg VST3 host automation software contract and existing CS80 public parameter ranges; not a hardware measurement",
+  "sdk_source": "JUCE 8.0.11 pinned c352e2489000ffeb9e397051377d75eef2efe641, pluginterfaces/vst/ivstparameterchanges.h IParamValueQueue: piecewise-linear segments and implicit previous point at sample -1",
+  "plugin_parameter_source": "src/core/Params.h kGlobalDefs: P_volume [0,1], P_brilliance [-2,2], P_resonance [0,1]; all NormalisableRange skew 1",
+  "truth_model": {
+    "sample_rate_hz": 48000,
+    "host_block_frames": 256,
+    "input_format": "32-bit VST3 host audio, one mono input and two output channels, sustained MIDI note 60 from a deterministic 3 x 256 sample prelude",
+    "parameters": ["volume", "brilliance", "resonance"],
+    "full_block_queue": [[0, 0.8], [128, 0.2]],
+    "reference_first_half": "128 consecutive 1-frame host process calls; each receives exactly one point at offset 0 and value 0.8 + (0.2-0.8)*i/128 for i=0..127",
+    "reference_second_half": "One 128-frame call with an offset-0 point at normalized 0.2",
+    "reference_sample_count": 256,
+    "float_conversion": "Each host point is double precision; the JUCE parameter receives float-normalized values. The engine performs its existing global-settings mapping, macro offset and circuit SmootherBank retargeting at the start of every corresponding host sample.",
+    "independence": "Two freshly created VST3 components render the same prelude before the 256 vs 128x1+128 comparison. Full-block and microblock voices are never the same instance.",
+    "all_other_parameters_unchanged": true
+  },
+  "acceptance": {
+    "max_absolute_difference": 1e-6,
+    "minimum_reference_sum_abs": 0.01,
+    "minimum_no_ramp_mutant_max_absolute_difference": 1e-7,
+    "required_modes": ["ramp", "ramp_brilliance", "ramp_resonance"],
+    "existing_flat_sample_control_must_remain_green": true,
+    "no_allocation_or_unbounded_per_sample_process_block": true,
+    "legacy_default_tails_v1_v2_compatibility_byte_identical": true
+  },
+  "mutations": {
+    "ramp": "Suppress the volume queue or hold its last point for the full 256 frames; reference difference must exceed the declared minimum.",
+    "ramp_brilliance": "Suppress the brilliance queue or hold its last point for the full 256 frames; reference difference must exceed the declared minimum.",
+    "ramp_resonance": "Suppress the resonance queue or hold its last point for the full 256 frames; reference difference must exceed the declared minimum.",
+    "flat_sample": "No automation must remain exactly equivalent across a 256-frame and 128x1+128 partition; do not weaken this control to make an automation gate green."
+  },
+  "status_at_registration": "truth-model only; these new gates have not been evaluated. No performance or hardware measurement is claimed."
+}

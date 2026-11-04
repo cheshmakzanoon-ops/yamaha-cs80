@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profile_id": "memory-panel-local-thevenin-v1",
+  "evidence_kind": "declared-circuit-inference-model-consistency-not-hardware-measurement",
+  "preregistered": "2026-11-01 before implementation or evaluation of the local memory-panel source-impedance adapter",
+  "source_pages": "CS-80 service BA27/BA28, MBK63 (image marked MKB), T51-T54 S31-S38; alternative pot/diode/driver values in docs/PRESET_BA_CUTOFF_BRANCHES.md and docs/workstreams/ws6-library.md",
+  "rationale": "A local Thevenin source is a differential one-port tangent about the loaded DC operating point: the 10k assembled bus shunt stays inside the source, the receiver conductance is de-embedded, and unbuffered wiper currents can back-react through the shared 2SC458 selected rail. This is a diagonal reduction of a multiport nonlinear network, not a hardware-measured or global nonlinear open-circuit equivalent. The pre-existing 2mV DC model-consistency gate is retained without relaxation.",
+  "stages": {
+    "memory_panel_thevenin_v1": {
+      "selected_analog_bus_volts": 2e-3,
+      "reconstructed_dc_bus_volts": 1e-9,
+      "local_tangent_resistance_absolute_ohms": 2.0,
+      "local_tangent_resistance_relative": 2e-3,
+      "truth_newton_residual_amps": 1e-12,
+      "small_signal_current_injection_amps": 5e-8,
+      "shared_rail_backreaction_ohms_min": 1e-2,
+      "covered_positions": "both ranks, source selectors 11/12/13, 24 analogue outputs, 0.1..0.9 wiper fractions; switch outputs 4/5 are logic only",
+      "mutation_contract": "Omitting assembled 10k shunt, omitting receiver de-embedding, and zeroing shared-rail backreaction must each be independently detected"
+    }
+  }
+}

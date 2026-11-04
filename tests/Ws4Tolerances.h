@@ -71,6 +71,13 @@ inline constexpr double kFeedthroughAliasDb = 6.0;
 // TREMOLO sample trajectories versus the OE1 truth law, 500 Hz tone, as a fraction of the
 // input amplitude.
 inline constexpr double kTremoloTrajectory = 0.02;
+// CPU off-path optimization guard (registered 2026-11-01 before editing BbdChorus):
+// While OE1 CHORUS/TREMOLO is off, all physical BBD delay/noise/filter states and
+// both DO oscillator phases must continue exactly. An always-enabled reference at
+// zero DEPTH runs the same nominal clock and physical path; after enabling the
+// effect, its stereo output must match sample-for-sample at all tested rates.
+// This is a software/state equivalence limit, NOT a hardware measurement.
+inline constexpr float kOffToOnReactivationAbs = 0.0f;
 } // namespace oe2
 
 // Step 4: PRA wah optical cell with asymmetric attack and decay (declared LDR model).

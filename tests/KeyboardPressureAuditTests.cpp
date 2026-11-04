@@ -25,6 +25,7 @@ using Capture=cs80::KeyboardGestureCapture;
 using Ownership=cs80::KeyboardPressureOwnership;
 struct Voice{bool active=false,held=false,pedalHeld=false;int channel=1,note=-1;};
 using Snapshot=std::array<Voice,8>;
+using ExtendedSnapshot=std::array<Voice,16>;
 template<std::size_t N>Token onset(cs80::KeyboardEventQueue<N>& q,int ch=1,int note=60,unsigned t=1){Token token;check(q.push(ch,note,.8f,true,t,&token),"onset publication accepted");check(static_cast<bool>(token),"accepted onset token nonempty");return token;}
 void testPublicationAndBoundaries(){
     using Q=cs80::KeyboardEventQueue<8>;Q q,foreign;Q::Batch batch;auto a=onset(q);
@@ -115,8 +116,8 @@ void testOwnership(){
     check(!owner.allows(b,v),"clear revokes ALL origins, not only current gesture table");
 }
 void testEightSlotBound(){
-    static_assert(sizeof(Ownership)<=16*sizeof(Token));
-    check(sizeof(Ownership)<=1024,"owner storage is bounded by eight circuits rather than MIDI keyspace");
+    static_assert(sizeof(Ownership)<=32*sizeof(Token));
+    check(sizeof(Ownership)<=1024,"owner storage is bounded by sixteen circuits rather than MIDI keyspace");
     cs80::KeyboardEventQueue<16> queue;Ownership owner;Snapshot voices{};
     std::array<Token,8> tokens{};
     for(int i=0;i<8;++i){const auto before=voices;tokens[i]=onset(queue,i+1,60,static_cast<unsigned>(i+1));
@@ -134,6 +135,47 @@ void testEightSlotBound(){
     before=voices;voices[0]={true,true,false,8,60};owner.allocated(before,voices,fresh,8,60);
     check(owner.allows(fresh,voices)&&!owner.allows(tokens[7],voices),"a reused empty current slot binds only the fresh allocated identity");
 }
+void testSixteenSlotOwnership(){
+    // Two eight-voice engines are one 16-slot attribution domain. In eight-
+    // voice mode, only the first eight slots are visible to this same class.
+    cs80::KeyboardEventQueue<32> queue;
+    Ownership owner;
+    ExtendedSnapshot voices{};
+    std::array<Token,16> tokens{};
+    for(int i=0;i<16;++i){
+        const auto before=voices;
+        tokens[(size_t)i]=onset(queue,i+1,60+i,static_cast<unsigned>(i+1));
+        voices[(size_t)i]={true,true,false,i+1,60+i};
+        check(owner.allocated(before,voices,tokens[(size_t)i],i+1,60+i),
+              "both physical engines attribute their own allocated key");
+    }
+    for(const auto& token:tokens)
+        check(owner.allows(token,voices),"all sixteen allocated UI voices retain pressure ownership");
+
+    const auto refused=onset(queue,1,99,17);
+    check(!owner.allocated(voices,voices,refused,1,99) && !owner.allows(refused,voices),
+          "a refused seventeenth note does not acquire ownership");
+
+    owner.noteOff(16,75);
+    check(!owner.allows(tokens[15],voices) && owner.allows(tokens[8],voices),
+          "releasing the second engine's last key preserves its other owners");
+    owner.clearExtension();
+    check(owner.allows(tokens[0],voices) && !owner.allows(tokens[8],voices),
+          "leaving sixteen-voice mode revokes only extension pressure owners");
+    owner.clear();
+    auto before=ExtendedSnapshot{};
+    voices={};
+    voices[8]={true,true,false,9,68};
+    check(owner.allocated(before,voices,tokens[8],9,68)
+          && owner.allows(tokens[8],voices),"an extension-engine key is attributable by slot 8");
+    Snapshot eight{};
+    check(!owner.allows(tokens[8],eight),"an eight-voice snapshot never sees a stale second-engine owner");
+    voices[8].held=false; // a released slot is eligible for host reallocation
+    before=voices;
+    voices[8]={true,true,false,3,76};
+    check(owner.allocated(before,voices,{},3,76)
+          && !owner.allows(tokens[8],voices),"host reuse of extension slot revokes UI ownership");
+}
 void testConsumerAllocationBoundary(){
     cs80::KeyboardEventQueue<8> q;cs80::KeyboardEventQueue<8>::Batch batch;const auto a=onset(q);q.pushPressure(a,.4f,2);
     Ownership owner;Snapshot before{},after{};after[0]={true,true,false,1,60};
@@ -146,5 +188,5 @@ void testConsumerAllocationBoundary(){
 void* operator new(std::size_t n){return allocate(n);}void* operator new[](std::size_t n){return allocate(n);}
 void operator delete(void* p) noexcept{std::free(p);}void operator delete[](void* p) noexcept{std::free(p);}
 void operator delete(void* p,std::size_t) noexcept{std::free(p);}void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
-int main(){testPublicationAndBoundaries();testCapture();testOwnership();testEightSlotBound();testConsumerAllocationBoundary();
+int main(){testPublicationAndBoundaries();testCapture();testOwnership();testEightSlotBound();testSixteenSlotOwnership();testConsumerAllocationBoundary();
     std::printf("Keyboard pressure independent audit: %d checks, %d failures\n",checks,failures);return failures?1:0;}

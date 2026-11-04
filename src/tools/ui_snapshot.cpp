@@ -2,10 +2,16 @@
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
 #include "plugin/EditorPreferences.h"
+#include "core/MemoryPanelControlBridge.h"
+#include "core/MemoryPanelToneAdapter.h"
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/OutputMeterUiTests.h"
+#include "../../tests/VoiceActivityUiTests.h"
+#include "../../tests/VoiceMonitorHostTests.h"
+#include "../../tests/UndoStateReplacementHostTests.h"
+#include "../../tests/ChorusRoutingHostTests.h"
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
 #include "../../tests/SourcePerformanceHostTests.h"
@@ -16,6 +22,7 @@
 #include "../../tests/Ws3KeyboardHostTests.h"
 #include "../../tests/PanelEditorTests.h"
 #include "../../tests/StudioUiTests.h"   // [ws8-studio]
+#include "../../tests/ControlContextHostTests.h" // parameter menus on switches/combos/memory miniatures
 #include "../../tests/ModernLayerHostTests.h"
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
@@ -1406,7 +1413,7 @@ void testSourceFactoryHost()
     for (bool isolated : { false, true })
     {
         routing.setParamValue(cs80::P_parityMode, isolated ? 1.0f : 0.0f);
-        int sourceCount = 0, inferredCount = 0, bridgeCount = 0;
+        int sourceCount = 0, inferredCount = 0, memoryCount = 0, bridgeCount = 0;
         int knownCells = 0, unknownCells = 0, inferredCells = 0;
         for (int rank = 0; rank < 2; ++rank)
         {
@@ -1416,7 +1423,8 @@ void testSourceFactoryHost()
                 automate(routing, rank, selector);
                 apply(routing);
                 const auto info = routing.getEngine().getSourceToneInfo(rank);
-                const auto expected = selector >= 11 ? sf::Route::panel_or_memory
+                const auto expected = selector >= 11
+                    ? (isolated ? sf::Route::source_memory_panel : sf::Route::panel_or_memory)
                     : !isolated ? sf::Route::legacy_bridge
                     : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
                 check(info.selector == selector && info.route == expected,
@@ -1431,32 +1439,47 @@ void testSourceFactoryHost()
                       "repeated host callbacks do not compile an unchanged source");
                 if (sf::isSourceDriven(info.route))
                 {
-                    if (info.route == sf::Route::source_complete) ++sourceCount;
-                    else ++inferredCount;
-                    const auto unknown = sourceFixtureUnknownMask(rank, selector);
-                    check(info.provenance.knownCells == (sf::allOutputsMask & ~unknown)
-                              && info.provenance.unknownCells == unknown && info.provenance.inferredCells == unknown
-                              && (info.provenance.knownCells & info.provenance.inferredCells) == 0
-                              && !info.provenance.hardwareMeasured && info.provenance.version == 2
-                              && info.provenance.sourceHash == sf::sourceFingerprint
-                              && info.provenance.hypothesisOverrideMask == 0,
-                          "host source provenance preserves known evidence and overlapping original-unknown/inferred masks");
-                    check(info.provenance.hypothesisVersion == (unknown == 0 ? 0u : 1u)
-                              && info.provenance.hypothesisHash == (unknown == 0 ? 0ull : 0xe5f877a025fc52c6ull),
-                          "host distinguishes seven unchanged complete tones from the frozen version-one inference manifest");
-                    for (int output = 0; output < 26; ++output)
+                    if (selector >= 11)
                     {
-                        knownCells += (info.provenance.knownCells >> output) & 1u;
-                        unknownCells += (info.provenance.unknownCells >> output) & 1u;
-                        inferredCells += (info.provenance.inferredCells >> output) & 1u;
+                        ++memoryCount;
+                        check(info.route == sf::Route::source_memory_panel
+                                  && info.provenance.knownCells == 0
+                                  && info.provenance.unknownCells == 0
+                                  && info.provenance.inferredCells == 0
+                                  && !info.provenance.hardwareMeasured
+                                  && info.provenance.boundaryVersion == 1,
+                              "original memory/PANEL source is a separate inferred electrical network, never a factory-cell identity");
+                    }
+                    else
+                    {
+                        if (info.route == sf::Route::source_complete) ++sourceCount;
+                        else ++inferredCount;
+                        const auto unknown = sourceFixtureUnknownMask(rank, selector);
+                        check(info.provenance.knownCells == (sf::allOutputsMask & ~unknown)
+                                  && info.provenance.unknownCells == unknown && info.provenance.inferredCells == unknown
+                                  && (info.provenance.knownCells & info.provenance.inferredCells) == 0
+                                  && !info.provenance.hardwareMeasured && info.provenance.version == 2
+                                  && info.provenance.sourceHash == sf::sourceFingerprint
+                                  && info.provenance.hypothesisOverrideMask == 0,
+                              "host source provenance preserves known evidence and overlapping original-unknown/inferred masks");
+                        check(info.provenance.hypothesisVersion == (unknown == 0 ? 0u : 1u)
+                                  && info.provenance.hypothesisHash == (unknown == 0 ? 0ull : 0xe5f877a025fc52c6ull),
+                              "host distinguishes seven unchanged complete tones from the frozen version-one inference manifest");
+                        for (int output = 0; output < 26; ++output)
+                        {
+                            knownCells += (info.provenance.knownCells >> output) & 1u;
+                            unknownCells += (info.provenance.unknownCells >> output) & 1u;
+                            inferredCells += (info.provenance.inferredCells >> output) & 1u;
+                        }
                     }
                 }
                 if (info.route == sf::Route::legacy_bridge) ++bridgeCount;
             }
         }
         check(sourceCount == (isolated ? 7 : 0) && inferredCount == (isolated ? 15 : 0)
+                  && memoryCount == (isolated ? 6 : 0)
                   && bridgeCount == (isolated ? 0 : 22),
-              "host enables seven complete plus fifteen inferred sources, retaining legacy bridges only when isolation is off");
+              "host enables seven complete, fifteen inferred and six separate memory/PANEL sources only under circuit/PURE; Legacy preserves its 22 factory bridges");
         check(knownCells == (isolated ? 547 : 0) && unknownCells == (isolated ? 25 : 0)
                   && inferredCells == (isolated ? 25 : 0),
               "all 22 host source identities expose exactly 547 classified and 25 separately inferred original unknown cells");
@@ -1573,9 +1596,10 @@ void testSourceFactoryHost()
         }
         check(ownedControls == 26 && energy > 1e-10, "all 26 source-owned host controls were tested on non-silent finite audio");
 
-        // Every exit uses this same instance, after real source audio. The
-        // selected PANEL/memory values must remain stored, become effective on
-        // selection, and never inherit a stale typed source cutoff readout.
+        // Every source switch uses this same host, after real factory audio.
+        // Original PANEL/memory values become independent electrical sources;
+        // they retain their stored controls and must replace (not retain) the
+        // preceding factory receiver readout at the next rendered sample.
         for (int destination : { 13, 11, 12 })
         {
             automate(edited, rank, selector);
@@ -1583,8 +1607,8 @@ void testSourceFactoryHost()
             automate(edited, rank, destination);
             apply(edited);
             const auto info = edited.getEngine().getSourceToneInfo(rank);
-            check(info.selector == destination && info.route == sf::Route::panel_or_memory,
-                  "complete or inferred source clears only on PANEL and either memory selection");
+            check(info.selector == destination && info.route == sf::Route::source_memory_panel,
+                  "complete or inferred factory source becomes the distinct original PANEL/memory source");
             for (int control = 0; control < cs80::CP_count; ++control)
             {
                 if (!Cs80AudioProcessor::isMemoryControl(control)) continue;
@@ -1598,9 +1622,28 @@ void testSourceFactoryHost()
             juce::MidiBuffer midi;
             edited.processBlock(audio, midi);
             const auto cutoff = edited.getEngine().getSourceCutoffReadout(rank);
-            check(cutoff.pinVolts == sf::CutoffReadout{}.pinVolts
-                      && cutoff.effectiveCv == sf::CutoffReadout{}.effectiveCv,
-                  "non-source callback does not render stale source cutoff receiver data");
+            sf::ToneControls expectedTone;
+            const auto positions = cs80::memory_panels::control_bridge::positions(
+                edited.getEngine().getParams(), rank);
+            const bool sourceCompiled = cs80::memory_panels::tone_adapter::compile(
+                rank, destination, positions, expectedTone);
+            check(sourceCompiled, "host memory/PANEL source can be compiled independently from the published effective frame");
+            if (sourceCompiled)
+            {
+                sf::RankDrives drives {};
+                for (int voice = 0; voice < sf::voiceCount; ++voice)
+                {
+                    const auto vi = edited.getEngine().getVoiceInfo(voice);
+                    drives[voice] = {edited.getEngine().getRankEnvelopeState(voice, rank).filter.value,
+                                     vi.touchB, vi.touchA};
+                }
+                sf::CutoffReadout expectedCutoff;
+                check(sf::evaluateCutoff(expectedTone, drives, expectedCutoff),
+                      "independent memory/PANEL 8-receiver cutoff oracle evaluated");
+                check(cutoff.pinVolts == expectedCutoff.pinVolts
+                          && cutoff.effectiveCv == expectedCutoff.effectiveCv,
+                      "new memory/PANEL callback publishes exact original-source HP/LP traces, never stale factory cutoff");
+            }
         }
     }
 
@@ -1629,7 +1672,8 @@ void testSourceFactoryHost()
         for (int rank = 0; rank < 2; ++rank)
         {
             const int selector = selectors[(size_t) rank];
-            const auto expected = selector >= 11 ? sf::Route::panel_or_memory
+            const auto expected = selector >= 11
+                ? (isolated ? sf::Route::source_memory_panel : sf::Route::panel_or_memory)
                 : !isolated ? sf::Route::legacy_bridge
                     : complete(rank, selector) ? sf::Route::source_complete : sf::Route::source_inferred;
             check(restored.getHardwareSource(rank) == selector
@@ -1966,8 +2010,57 @@ int main(int argc, char** argv)
     // Never read or write the user's real editor preferences (display size) from the snapshot tool.
     const juce::TemporaryFile preferences(".settings");
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
+    if (argc > 1 && std::strcmp(argv[1], "--control-context-headless-host-smoke") == 0)
+    {
+        cs80::tests::control_context::testParameterMenusHeadless(check);
+        std::printf("Headless switch/combo/memory host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--control-context-host-smoke") == 0)
+    {
+        // Same preregistered fixture as the full UI smoke, isolated to make
+        // host gesture and right-click mutation checks quick to rerun.
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::control_context::testParameterMenus(check, flushGui);
+        std::printf("Switch/combo/memory context host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--chorus-routing-host-smoke") == 0)
+    {
+        cs80::tests::testChorusRoutingHost(check);
+        std::printf("OE1/OE2 host parameter regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--voice-monitor-host-smoke") == 0)
+    {
+        cs80::tests::testVoiceMonitorHost(check);
+        std::printf("Live rank-model monitor host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--undo-state-host-smoke") == 0)
+    {
+        cs80::tests::testUndoStateReplacementHost(check);
+        std::printf("APVTS replacement host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--voice-meter-host-smoke") == 0)
+    {
+        // Does not open X11: the real JUCE processor, keyboard-event pipeline,
+        // mode transitions and extension-engine pressure run without an editor.
+        cs80::tests::testWs3KeyboardHost(check);
+        std::printf("Voice-activity headless host regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--voice-meter-smoke") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::testWs3KeyboardHost(check);
+        cs80::tests::testVoiceActivityUi(check, flushGui);
+        std::printf("Voice-activity native host/editor regression: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--teardown-probe") == 0)
     {
         // Phase 7 validator diagnosis (docs/VALIDATOR_DIAGNOSTICS.md): the life cycle a host gives a
@@ -2009,6 +2102,8 @@ int main(int argc, char** argv)
     std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
     cs80::tests::testWs3KeyboardHost(check);
     std::puts("UI SMOKE PHASE: engine I/O host");
+    cs80::tests::testVoiceMonitorHost(check);
+    cs80::tests::testChorusRoutingHost(check);
     cs80::tests::testOversamplingHost(check);
     cs80::tests::testEngineDefaultHost(check);
     cs80::tests::testListeningOutputHost(check);
@@ -3574,6 +3669,7 @@ int main(int argc, char** argv)
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
+    cs80::tests::testVoiceActivityUi(check, flushGui);
     std::puts("UI SMOKE PHASE: original panel editor (ws7)");
     cs80::tests::runPanelEditorTests(check, flushGui, dir);
 
@@ -3582,6 +3678,8 @@ int main(int argc, char** argv)
     cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio interaction");
     cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
+    std::puts("UI SMOKE PHASE: parameter menus and host gestures");
+    cs80::tests::control_context::testParameterMenus(check, flushGui);
     std::puts("UI SMOKE PHASE: studio MIDI learn");
     cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: studio undo and redo");

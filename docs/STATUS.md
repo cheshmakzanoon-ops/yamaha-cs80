@@ -7,8 +7,28 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-10-31, branch `claude/adoring-fermi-alhg4x` (the eight-workstream
-integration; see [workstreams/HANDOVER.md](workstreams/HANDOVER.md)).
+Last updated: 2026-11-01, feature branch
+`feat/close-cs80-handover-gaps-20261101` ([draft PR #7](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/7)).
+This branch is **not release-qualified or merged**. The inherited 2026-10-31
+eight-workstream integration and its historical baseline are described below;
+the following table distinguishes new evidence from items still open.
+
+## 2026-11-01 handover-closure checkpoint (unmerged)
+
+| Work item | Verified progress on this branch | Still open |
+| --- | --- | --- |
+| CPU | Exact-coefficient/oscillator/filter guards, a four-phase Engine sample pipeline (`aa188f9`), and exact SUB converter/settled-exp memo (`c901170`, remote `2ba811d`); strict Legacy default/tails, V1 and pinned V2 all byte-identical. Independent three-round 48 kHz/256-frame immutable-SHA before→after best median RTF: pair 0 **0.597513→0.592821**, pair 1 **0.712322→0.670827**, pair 10 **0.822671→0.795842**, moving **0.785232→0.794684**, idle **0.129415→0.125722**. | Active 0.15–0.20 and idle ≤0.02 targets; 16-rank SoA and safe global idle decimation. Severe shared-host variance prevents a causal speedup claim from these small changes. |
+| Retrigger / note-off | VCA AC-coupled capacitor tail corrected without a fade (`53466a4`); counterfactual phrase audit added (`d4d98dd`). | Bass Stack raw 1.51052 and Funky 1+2 note-off 1.64797 still exceed 1. The leading peaks do not establish a key-edge discontinuity; no curve-fitting permitted. |
+| Linux pluginval exit 139 | Four failing logs resolve the historical mechanism to the validator host's raw-this JUCE RunLoop callback; pinned source validator backport (`a134718`) and 30/30 headless trials, with mutation verifier. | Full multi-platform CI qualification and native GUI-unload evidence are pending. A green rerun alone is not the proof. |
+| Nodal accuracy | Zero-state Newton fast path and coefficient cache have truth/mutation gates. Optional reproducible nonlinear research (`scripts/ig00156_nonlinear_research.py`) exposes a strong-drive startup branch mismatch. | Existing top-octave 2×/4× tolerance is **not** met by a production-ready nonlinear integrator; ADJ p11 HP prediction is still 1.69 Vpp vs 4.3 ± 1 Vpp. No tolerance was relaxed or setup value fitted. |
+| Modern features | ODDSound MTS-ESP client vendored under 0BSD (`b21efd1`); AU-hint-16 neutral 191st chorus route parameter (`0964dcf`); second-engine pressure/meter ownership (`3088ef3`, `fdf3416`); offline memory Thevenin and tone law with default-edge diode test (`1087950`, `46c2335`, `860f5e8`); actual live 8/16-rank voice taps (`84c34f4`, remote `fd9d619`); modern chorus routing UI (`914c411`, remote `2c913b9`); switch/combo/lid context-menu support (`54ead62`, remote `e843d63`); undo/redo host-gesture fix (`c29d5f8`, remote `2f56380`) mutation checked and targeted host tests green. | Continuous VST3 automation ramp and real-host qualification; memory connection to Engine audio and V2 re-pin; both-off/both-on chorus **audio** wiring. Native UI, full CI and plugin qualification remain pending; test-first fixtures alone are not closed features. |
+| 25 tone-tab cells | Native crops and S31–S38 page-by-page provenance (`f754aa8`), with unrecoverable values explicitly labelled hypotheses. | Unresolved cells remain hypotheses; no V1 circuit numerics were changed. |
+
+The local source SHAs in the checkpoint identify reviewable commits;
+GitHub commit SHAs are listed where the connector-backed fast-forward commit
+has a distinct identifier. This is a branch checkpoint, not a claim that the
+completion PDF's section-3 exit criteria are met. Full qualification, release
+dispatch, screenshot refresh and merge-commit landing have **not** occurred.
 
 ## Where to read what
 
@@ -67,7 +87,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 (Studio > SETTINGS) and per-control help compile the same register
 (`src/plugin/EvidenceRegister.h`).
 
-## Phase progress
+## Phase progress (inherited 2026-10-31 baseline; see the current checkpoint above)
 
 | Plan step | State | Commit |
 | --- | --- | --- |
@@ -104,7 +124,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 6 Sample-accurate automation | not done | — |
 | 7 Release qualification | release workflow, installers, licence AGPLv3 done; signing needs secrets; exit 139 open | `d9b98c6`, `06eb8f3`, `80cbe8c` |
 
-## Scorecard (2026-10-31, `00ceccf`)
+## Historical scorecard (2026-10-31, `00ceccf`)
 
 `cs80_engine_audit --suite all --rates 44100,48000,96000` and
 `cs80_source_factory_benchmark` on this container (4 cores, shared). Circuit
@@ -132,18 +152,26 @@ CPU: the reconstructed oscillator's event solver (about 29 % of instructions)
 and the nodal stages' Newton solve (about 22 %) dominate. The bounded-error tan
 was the one libm call worth replacing. The realistic route to the target is a
 structure-of-arrays, segment-cached fast path for the oscillator (compute the
-next branch event once per analytic segment rather than per sample); not done.
+next branch event once per analytic segment rather than per sample); not done
+*at this historical scorecard date*. The segment cache and its mutation gate
+subsequently landed in `aa1d7a2`; the current CPU results are at the top.
 
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
   to `d56911a`. Legacy must never change.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
-  (`22d6a32`) and circuit-engine audio V2, now **`00ceccf`** (the eight-workstream
-  integration). Earlier V2 pins, for historical circuit-engine renders:
+  (`22d6a32`) and circuit-engine audio V2, now **`aa1d7a23d89fcce8cfa8a7fb88d37f19ef014e6b`**
+  (the committed capacitor tail plus exact oscillator branch-search forecast).
+  The eight-workstream integration pin was `00ceccf`. Earlier V2 pins:
   `f6b126d` (Phase 1.1 filter), `131f72b` (Phase 1.3 envelopes), `228459c`
   (Phase 1.5 gain staging), `6e5892f` before that.
-- `scripts/check-compat-gates.sh --strict-v2` passes at the re-pin commit `ef9bc35`.
+- `scripts/check-compat-gates.sh --strict-v2` passed all four byte-exact gates
+  after the `aa188f9` Engine four-helper refactor and independently after the
+  `c901170` SUB memo (Legacy default/tails, V1 numerics, V2 audio).
+  The historical `ef9bc35` pass remains relevant to the original integration
+  only. Any later memory/chorus sound changes must
+  be independently committed, re-pinned to their full SHA and checked again.
 
 ### CI on the integrated tree
 
@@ -210,7 +238,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   keeps it.
 - The goldens show the circuit-engine default.
 
-## Open issues
+## Open issues in the 2026-10-31 baseline (see current checkpoint above)
 
 - Intermittent Linux pluginval exit 139 after SUCCESS: code review and a memcheck
   teardown probe found no fault in project code; root cause not established

@@ -2,13 +2,11 @@
 
 // MTS-ESP client shim (IMPROVEMENT_PLAN Phase 6, modern layer).
 //
-// ODDSound's MTS-ESP client (libMTSClient.h/.cpp, 0BSD licence per the
-// ODDSound/MTS-ESP repository page) is NOT vendored: its source could not be
-// fetched byte-exactly from this session. The shim compiles the client in
-// automatically when the two files are placed at deps/mts-esp/Client/ (deps/
-// is untracked; vendor them in-tree with their licence to ship). Without them
-// it reports "not available" and the processor falls back to MIDI Tuning
-// Standard SysEx, which needs no library (Engine::handleSysEx).
+// ODDSound's 0BSD-licensed MTS-ESP client is vendored, byte-for-byte, in
+// src/vendor/mts-esp/Client/. The client dynamically searches for the MTS-ESP
+// master library on the user's system and retains its own MTS SysEx fallback.
+// If there is no master the engine's MIDI Tuning Standard parser still works
+// without any external installation (Engine::handleSysEx).
 //
 // Client API used (as documented in the MTS-ESP client header): RegisterClient,
 // DeregisterClient, HasMaster, NoteToFrequency(note, channel), ShouldFilterNote,
@@ -28,7 +26,7 @@ public:
     MtsEspClient(const MtsEspClient&) = delete;
     MtsEspClient& operator=(const MtsEspClient&) = delete;
 
-    // True when the client library was compiled in.
+    // True when the vendored client was compiled in (even without a master).
     static bool available() noexcept;
     // Audio thread. True while an MTS-ESP master is connected.
     bool hasMaster() const noexcept;

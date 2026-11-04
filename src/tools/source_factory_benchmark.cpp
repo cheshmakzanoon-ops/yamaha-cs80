@@ -343,6 +343,8 @@ void usage() {
     std::cout << "Usage: cs80_source_factory_benchmark --out NEW_DIRECTORY --source-commit HEX "
                  "[--callbacks 1024] [--suite baseline|performance] [--include-64] [--quick] "
                  "[--rate 44100|48000] [--block 64|128|256]\n"
+                 "--quick defaults to 48 kHz / 128 frames; explicit --rate and --block "
+                 "override those quick-run defaults.\n"
                  "Full sweep: 44.1/48 kHz, 64/128/256 frames, all 22 tabs as 11 two-rank pairs, "
                  "8 notes, source/legacy held and release, moving controls, idle/noise.\n"
                  "Performance suite: 128/256 frames, Source Performance all22 dry/live MPE+FX profiles, "
@@ -424,7 +426,11 @@ int main(int argc, char** argv) {
                "pedal_held_callbacks,last_block_peak,pra_target_min_ohms,pra_target_max_ohms\n";
         std::vector<Case> cases;
         for (int rate : {44100, 48000}) for (int block : {64, 128, 256}) {
-            if (quick && (rate != 48000 || block != 128)) continue;
+            // A quick target-block benchmark must not silently return an empty
+            // sweep: the prior hard-coded 128-frame filter made
+            // `--quick --rate 48000 --block 256` record zero cases.
+            if (quick && (rate != (onlyRate ? onlyRate : 48000)
+                       || block != (onlyBlock ? onlyBlock : 128))) continue;
             if ((onlyRate && rate != onlyRate) || (onlyBlock && block != onlyBlock)) continue;
             if (suite == "performance") {
                 if (block == 64 && !include64) continue;

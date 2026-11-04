@@ -394,9 +394,28 @@ void showControlHelp(juce::Component& anchor, int parameterIndex);
 // The same help as plain text (the card's content, and what tests read).
 juce::String controlHelpText(int parameterIndex);
 
+// A native JUCE button with an opt-in secondary-button menu. Used by both
+// illuminated rockers and the Studio's plain-words segmented switches.
+class ContextButton : public juce::Button
+{
+public:
+    explicit ContextButton(const juce::String& name) : juce::Button(name) {}
+
+    // The ordinary click stays with JUCE's ButtonAttachment (which brackets
+    // one host gesture). Right-click/Ctrl-click is a menu gesture only and
+    // cannot accidentally toggle the button when the pointer is released.
+    std::function<void()> onContextMenu;
+    void mouseDown(const juce::MouseEvent&) override;
+    void mouseDrag(const juce::MouseEvent&) override;
+    void mouseUp(const juce::MouseEvent&) override;
+
+private:
+    bool popupPointer = false;
+};
+
 // A parameter-backed illuminated switch. Used for waveforms, filters,
 // effects, and performance modes.
-class LedButton final : public juce::Button
+class LedButton final : public ContextButton
 {
 public:
     explicit LedButton(const juce::String& text, bool momentary = false);
@@ -427,6 +446,62 @@ private:
     void refreshTooltip();
     juce::String customTip;
 };
+
+// The native JUCE ComboBoxParameterAttachment already provides one balanced
+// begin/end host gesture per selection. Only the popup mouse button needs a
+// separate route so it opens MIDI learn instead of the choices list.
+class ContextComboBox final : public juce::ComboBox
+{
+public:
+    std::function<void()> onContextMenu;
+    void mouseDown(const juce::MouseEvent&) override;
+    void mouseDrag(const juce::MouseEvent&) override;
+    void mouseUp(const juce::MouseEvent&) override;
+
+private:
+    bool popupPointer = false;
+};
+
+// JUCE's check-box style ToggleButton cannot derive from ContextButton (its
+// look-and-feel takes a ToggleButton&), so preserve its native painting while
+// applying the same right-click suppression and menu callback.
+class ContextToggleButton final : public juce::ToggleButton
+{
+public:
+    explicit ContextToggleButton(const juce::String& text) : juce::ToggleButton(text) {}
+    std::function<void()> onContextMenu;
+    void mouseDown(const juce::MouseEvent&) override;
+    void mouseDrag(const juce::MouseEvent&) override;
+    void mouseUp(const juce::MouseEvent&) override;
+
+private:
+    bool popupPointer = false;
+};
+
+// Reusable menu for every APVTS-backed switch, combo or memory miniature.
+// The ID, not the displayed core index, determines the MIDI learn target and
+// host automation: memory cells have their own appended host parameters.
+// A display index is optional, used only for readable units/help text.
+juce::PopupMenu buildParameterContextMenu(Cs80AudioProcessor&, const juce::String& parameterId,
+                                          juce::Component& anchor, int displayIndex = -1);
+void showParameterContextMenu(Cs80AudioProcessor&, const juce::String& parameterId,
+                              juce::Component& anchor, int displayIndex = -1);
+
+// Binding captures a weak UI target: an async popup action is inert after the
+// editor/control is destroyed, including while a plugin is being unloaded.
+// All supported control types expose `onContextMenu`.
+template <typename Control>
+void bindParameterContextMenu(Control& control, Cs80AudioProcessor& processor,
+                              const juce::String& parameterId, int displayIndex = -1)
+{
+    juce::Component::SafePointer<Control> safe(&control);
+    control.onContextMenu = [safe, &processor, parameterId, displayIndex]
+    {
+        if (safe != nullptr)
+            showParameterContextMenu(processor, parameterId, *safe, displayIndex);
+    };
+    control.setComponentID(parameterId);
+}
 
 // Optional light layer: add it to the editor BEFORE the controls (so it sits behind them), give it
 // the full editor bounds, and lit tone tabs, deck tabs and rocker switches under the same parent

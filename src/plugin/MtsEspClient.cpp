@@ -1,20 +1,15 @@
 #include "MtsEspClient.h"
 
-// Compile-time switch: the client is built in only when its sources are present.
-#if defined(__has_include)
- #if __has_include("../../deps/mts-esp/Client/libMTSClient.h")
-  #define CS80_WITH_MTS_ESP 1
-  #include "../../deps/mts-esp/Client/libMTSClient.h"
-  #include "../../deps/mts-esp/Client/libMTSClient.cpp"
- #endif
-#endif
-#ifndef CS80_WITH_MTS_ESP
- #define CS80_WITH_MTS_ESP 0
-#endif
+// The exact ODDSound client is vendored under src/vendor/mts-esp/ (0BSD).
+// Build it in this translation unit so CS80 core-only builds do not need a
+// separate library, and so a missing vendor file fails the build explicitly.
+// The client searches for an installed libMTS master at runtime; that master is
+// not bundled with this plugin.
+#include "../vendor/mts-esp/Client/libMTSClient.h"
+#include "../vendor/mts-esp/Client/libMTSClient.cpp"
 
 namespace cs80
 {
-#if CS80_WITH_MTS_ESP
 MtsEspClient::MtsEspClient() : client(MTS_RegisterClient()) {}
 MtsEspClient::~MtsEspClient()
 {
@@ -40,12 +35,4 @@ void MtsEspClient::parseMidi(const std::uint8_t* data, int size) noexcept
 {
     if (client != nullptr) MTS_ParseMIDIDataU(static_cast<MTSClient*>(client), data, size);
 }
-#else
-MtsEspClient::MtsEspClient() = default;
-MtsEspClient::~MtsEspClient() = default;
-bool MtsEspClient::available() noexcept { return false; }
-bool MtsEspClient::hasMaster() const noexcept { return false; }
-bool MtsEspClient::fillTable(tuning::TuningTable&) const noexcept { return false; }
-void MtsEspClient::parseMidi(const std::uint8_t*, int) noexcept {}
-#endif
 } // namespace cs80

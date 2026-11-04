@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "profile_id": "memory-panel-audio-input-v1",
+  "evidence_kind": "model-consistency-not-hardware-measurement",
+  "preregistered": "2026-11-01 before the circuit-engine memory-panel audio route or control-frame bridge was evaluated",
+  "source_pages": "CS-80 service BA27/BA28, MKB63, S31-S38; engineering alternatives documented in docs/workstreams/ws6-library.md",
+  "rationale": "A memory or PANEL source must preserve the same 26-row addresses, selected-supply semantics, unbuffered wiper loading and diode isolation already checked against the standalone double-precision Newton truth model. The existing memory_panel_v1 bus/current/residual limits are copied unchanged, not relaxed. Pot position tolerances cover only float host-parameter quantisation and inverted JUCE NormalisableRange skew; they are not hardware slider tolerances.",
+  "stages": {
+    "memory_panel_audio_input_v1": {
+      "control_frame_pot_fraction": 2e-5,
+      "selected_analog_bus_volts": 2e-3,
+      "unselected_source_current_amps": 1e-8,
+      "truth_newton_residual_amps": 1e-12,
+      "unselected_bank_isolation_bus_volts": 1e-6,
+      "switch_rows": "exact logical pulse/saw identity; no analogue voltage tolerance",
+      "scope": "both ranks, selector 11/12/13, schematic outputs 1..26 except waveform switch rows 4/5, inverse physical-parameter skew; no Engine path or factory V1 numerics modified"
+    }
+  }
+}

@@ -89,6 +89,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     tuningMode.setTooltip("Modern layer: PURE CS-80 always plays equal temperament.");
     if (auto* q = parameter(p, cs80::P_tuningMode))
         tuningModeAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, tuningMode);
+    bindParameterContextMenu(tuningMode, processor, Cs80AudioProcessor::parameterId(cs80::P_tuningMode), cs80::P_tuningMode);
 
     styleLabel(voiceModeLabel, "Voice mode");
     styleCombo(voiceMode, "Voice mode");
@@ -96,6 +97,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     voiceMode.setTooltip("Labelled extensions beyond the eight voice cards; PURE CS-80 always plays eight single voices.");
     if (auto* q = parameter(p, cs80::P_voiceMode))
         voiceModeAttachment = std::make_unique<juce::ComboBoxParameterAttachment>(*q, voiceMode);
+    bindParameterContextMenu(voiceMode, processor, Cs80AudioProcessor::parameterId(cs80::P_voiceMode), cs80::P_voiceMode);
 
     styleButton(loadScl, "Load a Scala scale (.scl). It is kept with the session, not with presets.");
     styleButton(loadKbm, "Load a Scala keyboard mapping (.kbm) for the loaded scale; without one, middle C is 261.63 Hz.");
@@ -116,6 +118,10 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
         scanTimingAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, scanTiming);
     if (auto* q = parameter(p, cs80::P_ribbonCcEnable))
         ribbonCcEnableAttachment = std::make_unique<juce::ButtonParameterAttachment>(*q, ribbonCcEnable);
+    bindParameterContextMenu(scanTiming, processor,
+                             Cs80AudioProcessor::parameterId(cs80::P_kasScanTiming), cs80::P_kasScanTiming);
+    bindParameterContextMenu(ribbonCcEnable, processor,
+                             Cs80AudioProcessor::parameterId(cs80::P_ribbonCcEnable), cs80::P_ribbonCcEnable);
 
     const struct { int id; const char* name; const char* tip; int decimals; const char* suffix; } defs[] = {
         { cs80::P_unisonDetune, "Unison detune", "Spread of the stacked unison voices.", 0, " ct" },

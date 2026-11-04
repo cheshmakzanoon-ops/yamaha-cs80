@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "profile_id": "idle-global-clock-v2",
+  "registered": "2026-11-01",
+  "evidence_kind": "declared numerical invariants; no hardware measurement",
+  "rationale": "Pre-registration for source-policy CPU-only optimizations. The unoptimized Engine.cpp float PWM phase recurrence, its sine at the exact rank consumption sample, and OriginalSubOscillator::circuitRate's log-node smoothing are the software truth models. Evaluation must not relax byte equality because these optimizations do not intentionally change sound. Legacy rendering and V1 circuit numerics remain protected by the independent compatibility gates.",
+  "gates": {
+    "pwm_sine_consumption": {
+      "truth_model": "Engine::processGlobalSample before CPU changes: for each rank, phase += pwmSpeed * (1.0f/internalRate); phase -= floor(phase); sine = sin(kTwoPi * phase). The sine is observed only when a rank is evaluated; inactive source-policy ranks are evaluated at voice_continuity::idleStepRank instants, while an active voice observes it every sample.",
+      "host_rates_hz": [44100, 48000, 96000],
+      "oversampling_factors": [2, 4],
+      "silence_internal_frames": [0, 1, 31, 32, 33, 127, 128, 1024, 9600, 96000],
+      "pwm_speeds_hz": [0.0, 0.03125, 0.71, 8.0],
+      "phase_bitwise_equal_every_internal_sample": true,
+      "sine_bitwise_equal_when_rank_consumes": true,
+      "wake_sine_bitwise_equal_on_first_active_sample": true,
+      "active_rank_sine_bitwise_equal_every_sample": true,
+      "idle_oscillator_state_continuity": "Existing ws3-keyboard-v2 idle phase and wake residual gates remain unchanged. This gate requires additional exact equality of the upstream PWM control trajectory, not a weakened approximation.",
+      "mutation_requirements": [
+        "Freezing either PWM phase while all voices are silent must fail a wake-sine comparison.",
+        "Skipping an idle-rank-consumed sine or evaluating it at the wrong idle clock must fail exact equality."
+      ]
+    },
+    "sub_target_rate_memo": {
+      "truth_model": "OriginalSubOscillator::circuitRate unoptimized recurrence: target=log(targetHz), prime circuitLogRate at target, circuitLogRate+=(target-circuitLogRate)*smoothing, return exp(circuitLogRate). Its target is the inferred IG00150 exponential converter law; only redundant computation may be cached.",
+      "internal_rates_hz": [88200, 96000, 192000, 384000],
+      "target_rates_hz": [0.7, 1.0, 13.75, 60.0, 200.0],
+      "smoothing_values": [0.0, 0.000001, 0.001, 0.1, 1.0],
+      "repeat_spans": [1, 2, 32, 4096],
+      "adjacent_representable_double_targets": true,
+      "target_log_bitwise_equal": true,
+      "output_rate_bitwise_equal_each_sample": true,
+      "oscillator_phase_and_output_bitwise_equal_after_target_changes": true,
+      "legacy_tick_unchanged": true,
+      "mutation_requirements": [
+        "Reusing a cached target log after a one-ULP target-rate change must fail the rate equality gate.",
+        "Skipping smoothing while it has not converged must fail sample-by-sample rate equality."
+      ]
+    },
+    "engine_transition_regression": {
+      "truth_model": "Two source-policy Engine renders with identical controls/events, one using the original unconditional PWM sine and SUB target calculation and the other the optimized implementation; compare raw host float bits, including start/retrigger and note-off windows.",
+      "render_policies": ["sourceIsolation", "sourcePerformance"],
+      "host_rates_hz": [44100, 48000, 96000],
+      "oversampling_factors": [2, 4],
+      "block_lengths_frames": [1, 17, 128, 256],
+      "silent_gap_host_frames": [0, 1, 17, 128, 2048, 48000],
+      "events": ["idle_to_note_on", "note_off_to_idle_to_note_on", "parameter_change_while_idle"],
+      "source_audio_bitwise_equal": true,
+      "legacy_default_and_tails_byte_identical": true,
+      "v1_circuit_numerics_byte_identical": true,
+      "check_compat_script": "scripts/check-compat-gates.sh --strict-v2",
+      "note": "No model-data delta or V2 re-pin is authorized by these exact-only optimizations. The final CPU qualification remains the separate minimum-of-three cs80_source_factory_benchmark 48 kHz/256-frame gate (active 0.15-0.20 realtime; idle <=0.02 realtime)."
+    }
+  }
+}

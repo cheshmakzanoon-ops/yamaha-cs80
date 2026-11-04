@@ -33,12 +33,27 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_apvts_state_lock_contract
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_apvts_state_lock.py)
+    set_tests_properties(cs80_apvts_state_lock_contract PROPERTIES TIMEOUT 10)
+    # Native ModernLayerUiTests owns the actual JUCE interaction oracle; this
+    # headless preflight also mutation-checks exact MIDI-learn/host bindings.
+    add_test(NAME cs80_chorus_fx_ui_wiring_contract
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_chorus_fx_ui_wiring.py)
+    set_tests_properties(cs80_chorus_fx_ui_wiring_contract PROPERTIES TIMEOUT 10)
     if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         add_test(NAME cs80_ui_environment_tests
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_ui_smoke_environment.py)
         set_tests_properties(cs80_ui_environment_tests PROPERTIES TIMEOUT 45)
     endif()
     find_package(Threads REQUIRED)
+    # Sample-coherent audio->UI rank telemetry. No direct GUI polling of
+    # render-thread Engine state, no locks or allocations in the callback.
+    add_executable(cs80_voice_monitor_taps_tests tests/VoiceMonitorTapsTests.cpp)
+    target_include_directories(cs80_voice_monitor_taps_tests PRIVATE src)
+    target_link_libraries(cs80_voice_monitor_taps_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_voice_monitor_taps_tests COMMAND cs80_voice_monitor_taps_tests)
+    set_tests_properties(cs80_voice_monitor_taps_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_continuous_voice_circuit_tests tests/ContinuousVoiceCircuitTests.cpp)
     target_include_directories(cs80_continuous_voice_circuit_tests PRIVATE src)
     add_test(NAME cs80_continuous_voice_circuit_tests COMMAND cs80_continuous_voice_circuit_tests)
@@ -84,6 +99,13 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_source_performance_tests PRIVATE cs80_core)
     add_test(NAME cs80_source_performance_tests COMMAND cs80_source_performance_tests)
     set_tests_properties(cs80_source_performance_tests PROPERTIES TIMEOUT 180)
+
+    # Truth-first OE1/OE2 independent switch policy gate. Its audio override is
+    # source-engine only; legacy/PURE numerics must be byte-identical.
+    add_executable(cs80_chorus_routing_engine_tests tests/ChorusRoutingEngineTests.cpp)
+    target_link_libraries(cs80_chorus_routing_engine_tests PRIVATE cs80_core)
+    add_test(NAME cs80_chorus_routing_engine_tests COMMAND cs80_chorus_routing_engine_tests)
+    set_tests_properties(cs80_chorus_routing_engine_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_source_performance_audit_tests tests/SourcePerformanceAuditTests.cpp)
     target_link_libraries(cs80_source_performance_audit_tests PRIVATE cs80_core)
     add_test(NAME cs80_source_performance_audit_tests COMMAND cs80_source_performance_audit_tests)
@@ -199,6 +221,12 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_bbd_chorus_tests PRIVATE src)
     add_test(NAME cs80_bbd_chorus_tests COMMAND cs80_bbd_chorus_tests)
     set_tests_properties(cs80_bbd_chorus_tests PROPERTIES TIMEOUT 60)
+    # Exact-only CPU optimization: preserve every PWM phase/sampled sine and
+    # original SUB exponential-control recurrence across idle-to-wake events.
+    add_executable(cs80_idle_global_clock_tests tests/IdleGlobalClockTests.cpp)
+    target_link_libraries(cs80_idle_global_clock_tests PRIVATE cs80_core)
+    add_test(NAME cs80_idle_global_clock_tests COMMAND cs80_idle_global_clock_tests)
+    set_tests_properties(cs80_idle_global_clock_tests PROPERTIES TIMEOUT 300)
     add_executable(cs80_mn3001_packet_tests tests/Mn3001PacketTests.cpp)
     target_include_directories(cs80_mn3001_packet_tests PRIVATE src)
     add_test(NAME cs80_mn3001_packet_tests COMMAND cs80_mn3001_packet_tests)
@@ -279,6 +307,14 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
     set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
 
+    # MTS-ESP is a vendored, 0BSD client. Build and exercise the actual shim in
+    # core-only CI too, so it cannot quietly regress to the unvendored branch.
+    add_executable(cs80_mts_esp_client_tests tests/MtsEspClientTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_client_tests PRIVATE src)
+    target_link_libraries(cs80_mts_esp_client_tests PRIVATE ${CMAKE_DL_LIBS})
+    add_test(NAME cs80_mts_esp_client_tests COMMAND cs80_mts_esp_client_tests)
+    set_tests_properties(cs80_mts_esp_client_tests PROPERTIES TIMEOUT 30)
+
     # [ws4-circuits] register this workstream's core tests below this line.
     add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
     target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
@@ -315,6 +351,16 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_modern_fx_tests COMMAND cs80_modern_fx_tests)
     set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
 
+    # Truth registered first in steinberg-automation-cursor-v1.json.
+    # No JUCE or VST3 SDK linkage: the real-time curve reader must stay a
+    # fixed-size, allocation-free core helper across all plugin formats.
+    add_executable(cs80_steinberg_automation_cursor_tests tests/SteinbergAutomationCursorTests.cpp)
+    target_include_directories(cs80_steinberg_automation_cursor_tests PRIVATE src)
+    add_test(NAME cs80_steinberg_automation_cursor_tests
+             COMMAND cs80_steinberg_automation_cursor_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/steinberg-automation-cursor-v1.json)
+    set_tests_properties(cs80_steinberg_automation_cursor_tests PROPERTIES TIMEOUT 30)
+
     # [ws6-library] register this workstream's core tests below this line.
     find_package(Threads REQUIRED)
     add_executable(cs80_library_audit_tests tests/LibraryAuditTests.cpp)
@@ -334,6 +380,41 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_tests
              COMMAND cs80_memory_panel_tests
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws6-library.json)
+    # Preregistered original memory/PANEL pot-to-bus audio-input contract.
+    # The engine route is intentionally not changed by this truth-first gate.
+    add_executable(cs80_memory_panel_audio_input_tests tests/MemoryPanelAudioInputTests.cpp)
+    target_include_directories(cs80_memory_panel_audio_input_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_audio_input_tests
+             COMMAND cs80_memory_panel_audio_input_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-audio-input-v1.json)
+    # Local 24-port memory/PANEL Thevenin tangent vs independent injected-current Newton truth.
+    # Preregistration lives in the separately committed memory-panel-thevenin-v1.json.
+    add_executable(cs80_memory_panel_thevenin_tests tests/MemoryPanelTheveninTests.cpp)
+    target_include_directories(cs80_memory_panel_thevenin_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_thevenin_tests
+             COMMAND cs80_memory_panel_thevenin_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-thevenin-v1.json)
+    # Source-only 26-port ToneControls bridge; no Engine audio route yet.
+    # The separately committed acceptance JSON freezes all role and mutation gates.
+    add_executable(cs80_memory_panel_tone_adapter_tests tests/MemoryPanelToneAdapterTests.cpp)
+    target_include_directories(cs80_memory_panel_tone_adapter_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_tone_adapter_tests
+             COMMAND cs80_memory_panel_tone_adapter_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-tone-adapter-v1.json)
+    # Truth-first RED gate: circuit/PURE M1..M4/PANEL must use real source
+    # audio, while the legacy programmer remains byte-identical.
+    add_executable(cs80_memory_panel_engine_audio_tests tests/MemoryPanelEngineAudioTests.cpp)
+    target_link_libraries(cs80_memory_panel_engine_audio_tests PRIVATE cs80_core)
+    add_test(NAME cs80_memory_panel_engine_audio_tests
+             COMMAND cs80_memory_panel_engine_audio_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-engine-audio-v1.json)
+    # Explicit default/endpoint diode tangent guard (low-drive branch cannot
+    # abort the whole selected source). Tolerances registered before evaluation.
+    add_executable(cs80_memory_panel_default_edge_tests tests/MemoryPanelDefaultEdgeTests.cpp)
+    target_include_directories(cs80_memory_panel_default_edge_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_default_edge_tests
+             COMMAND cs80_memory_panel_default_edge_tests
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-panel-default-edge-v1.json)
 
     # [ws7-panel] register this workstream's core tests below this line.
 
@@ -375,6 +456,10 @@ target_link_libraries(cs80_engine_audit PRIVATE cs80_core)
 add_executable(cs80_parity_capture src/tools/parity_capture.cpp)
 target_link_libraries(cs80_parity_capture PRIVATE cs80_core)
 if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_click_event_causality
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_click_event_causality.py
+                     --audit $<TARGET_FILE:cs80_engine_audit>)
+    set_tests_properties(cs80_click_event_causality PROPERTIES TIMEOUT 240)
     add_test(NAME cs80_parity_capture_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_capture.py
                      --capture $<TARGET_FILE:cs80_parity_capture>)
@@ -474,6 +559,28 @@ if (CS80_BUILD_PLUGIN)
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
 
+    # Test-first VST3 host oracle: a 256-frame automation jump at sample 128
+    # must render exactly like two 128-frame calls. The `flat` control rejects
+    # block-size drift; the driver rejects vacuous silence and bad teardown.
+    # Stock JUCE 8.0.11 intentionally fails `jump` by applying only the final
+    # point, so commit this gate before enabling any wrapper adapter.
+    if (CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_executable(cs80_vst3_automation_host tests/Vst3AutomationAudioTests.cpp)
+        target_compile_features(cs80_vst3_automation_host PRIVATE cxx_std_20)
+        target_include_directories(cs80_vst3_automation_host PRIVATE
+            "${JUCE_SOURCE_DIR}/modules/juce_audio_processors_headless/format_types/VST3_SDK")
+        target_link_libraries(cs80_vst3_automation_host PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_automation_host CS80Reference_VST3)
+        foreach(cs80_vst3_mode IN ITEMS empty flat flat_sample jump transport midi ramp
+                                       ramp_brilliance ramp_resonance)
+            add_test(NAME cs80_vst3_automation_${cs80_vst3_mode}
+                COMMAND $<TARGET_FILE:cs80_vst3_automation_host>
+                        $<TARGET_FILE:CS80Reference_VST3> ${cs80_vst3_mode})
+            set_tests_properties(cs80_vst3_automation_${cs80_vst3_mode}
+                                 PROPERTIES TIMEOUT 60)
+        endforeach()
+    endif()
+
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
     target_sources(CS80Snapshots PRIVATE
@@ -529,6 +636,52 @@ if (CS80_BUILD_PLUGIN)
                  COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
     endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
+
+    # Isolated native host contract for all APVTS-backed right-click context
+    # controls. The full UI smoke repeats it; the focused target makes a
+    # source mutation of popup suppression or menu reset gestures observable.
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_control_context_ui
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --control-context-host-smoke)
+    else()
+        add_test(NAME cs80_control_context_ui
+                 COMMAND CS80Snapshots --control-context-host-smoke)
+    endif()
+    set_tests_properties(cs80_control_context_ui PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_control_context_headless_host
+             COMMAND CS80Snapshots --control-context-headless-host-smoke)
+    set_tests_properties(cs80_control_context_headless_host PROPERTIES TIMEOUT 60)
+
+    # Real JUCE processor host regression, runnable with no X11/display.
+    add_test(NAME cs80_voice_activity_host
+             COMMAND CS80Snapshots --voice-meter-host-smoke)
+    set_tests_properties(cs80_voice_activity_host PROPERTIES TIMEOUT 60)
+    # Actual Engine::RankInfo audio-thread snapshots delivered to the Studio
+    # monitor in both 8/16 modes. Headless, deterministic real JUCE callback.
+    add_test(NAME cs80_voice_monitor_host
+             COMMAND CS80Snapshots --voice-monitor-host-smoke)
+    set_tests_properties(cs80_voice_monitor_host PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_undo_state_replacement_host
+             COMMAND CS80Snapshots --undo-state-host-smoke)
+    set_tests_properties(cs80_undo_state_replacement_host PROPERTIES TIMEOUT 60)
+    # Declared OE1/OE2 independent-switch extension: host labels, exact
+    # append-only AU hint, neutral default, saved state and old-session load.
+    add_test(NAME cs80_chorus_routing_host
+             COMMAND CS80Snapshots --chorus-routing-host-smoke)
+    set_tests_properties(cs80_chorus_routing_host PROPERTIES TIMEOUT 60)
+
+    # Fast, isolated native regression for both 16-voice meter banks, display
+    # mode transitions and PURE semantics. Also runs in the full UI smoke above.
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_voice_activity_ui
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --voice-meter-smoke)
+    else()
+        add_test(NAME cs80_voice_activity_ui
+                 COMMAND CS80Snapshots --voice-meter-smoke)
+    endif()
+    set_tests_properties(cs80_voice_activity_ui PROPERTIES TIMEOUT 120)
 
     # Phase 7 validator diagnosis: one module life cycle (JUCE start, instance and editor paint,
     # destruction, JUCE shutdown, then static destructors) must exit cleanly. CI runs it plainly;

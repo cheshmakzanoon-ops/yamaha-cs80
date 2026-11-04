@@ -29,6 +29,8 @@ public:
         phase = 0.0;
         noise = Rng(0x53554231u);
         circuitPrimed = false;
+        circuitTargetLogValid = false;
+        circuitOutputRateValid = false;
     }
 
     float tick(float rate, float sampleRate, int function, float external = 0.0f) noexcept
@@ -79,14 +81,34 @@ public:
     // pin-1 control node, i.e. in log frequency. First call after reset starts at target.
     double circuitRate(double targetHz, double smoothing) noexcept
     {
-        const double target = std::log(targetHz);
+        // The IG00150 target remains constant for most internal samples. An
+        // exact-key memo avoids repeating log(targetHz), while invalidating
+        // even on a one-ULP control change. Keep the original log-node RC
+        // recurrence below on EVERY sample, including after convergence.
+        if (! circuitTargetLogValid || targetHz != cachedCircuitTargetHz)
+        {
+            cachedCircuitTargetHz = targetHz;
+            cachedCircuitTargetLog = std::log(targetHz);
+            circuitTargetLogValid = true;
+        }
+        const double target = cachedCircuitTargetLog;
         if (! circuitPrimed)
         {
             circuitLogRate = target;
             circuitPrimed = true;
         }
         circuitLogRate += (target - circuitLogRate) * smoothing;
-        return std::exp(circuitLogRate);
+        // Smoothing reaches an identical floating-point fixed point long
+        // before voices necessarily sound; only memo the exp of an EXACTLY
+        // repeated post-update node. Never approximate convergence by a
+        // threshold or skip the recurrence when its inputs change.
+        if (! circuitOutputRateValid || circuitLogRate != cachedCircuitOutputLog)
+        {
+            cachedCircuitOutputLog = circuitLogRate;
+            cachedCircuitOutputRate = std::exp(circuitLogRate);
+            circuitOutputRateValid = true;
+        }
+        return cachedCircuitOutputRate;
     }
 
     // Same functions, amplitudes, phase and noise stream as tick(), but the saw resets and
@@ -147,5 +169,8 @@ private:
     Rng noise { 0x53554231u };
     double circuitLogRate = 0.0;
     bool circuitPrimed = false;
+    double cachedCircuitTargetHz = 0.0, cachedCircuitTargetLog = 0.0;
+    double cachedCircuitOutputLog = 0.0, cachedCircuitOutputRate = 0.0;
+    bool circuitTargetLogValid = false, circuitOutputRateValid = false;
 };
 } // namespace cs80

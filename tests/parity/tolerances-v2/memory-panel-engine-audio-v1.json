@@ -1,0 +1,25 @@
+{
+  "model_id": "memory-panel-circuit-only-engine-audio-v1",
+  "registered_utc": "2026-11-01",
+  "evidence_pages": ["BA27", "BA28", "MBK63", "S31", "S32", "S33", "S34", "S35", "S36", "S37", "S38"],
+  "declared_inference": "Source electrical parameters are nominal non-measured surrogates; current 24-port diagonal tangent omits simultaneous off-diagonal shared-rail small-signal load coupling.",
+  "memory_panel_engine_audio_v1": {
+    "zero_drive_bus_vs_truth_volts": 2e-3,
+    "cutoff_pin_and_effective_cv_volts": 1e-11,
+    "shared_q_and_level_readout_absolute": 1e-11,
+    "legacy_pcm_max_absolute": 0,
+    "zero_frame_state_max_absolute": 0,
+    "memory_audio_pcm_peak_min": 1e-4,
+    "mutant_stiff_hp_cv_delta_min_volts": 5e-3,
+    "mutant_swapped_memory_hp_cv_delta_min_volts": 1e-2,
+    "mutant_disabled_source_route_count_min": 1,
+    "mutant_reversed_waveform_gate_count_min": 1
+  },
+  "mutation_contract": [
+    "Disable the original memory/PANEL source route in circuit/PURE mode; test must reject the no-source gate and zero receiver traces.",
+    "Replace selected HP Thevenin source with a zero-ohm digital source; reject wrong dynamic effective CV against independent network.",
+    "Swap rank I and II selected memory banks while keeping source selector identities; reject wrong HP effective CV.",
+    "Invert the two selected oscillator gate rows; reject wrong waveform source identity."
+  ],
+  "compatibility_contract": "Legacy default/tails and all V1 circuit numerics remain byte-identical. Circuit-only memory/PANEL audio is an intentional V2 change requiring separate push, full-SHA repin and strict-v2 gate. This file records acceptance before waveform evaluation, not success."
+}

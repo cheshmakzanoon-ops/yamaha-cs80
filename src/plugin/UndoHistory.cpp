@@ -10,6 +10,75 @@ bool onMessageThread()
     auto* mm = juce::MessageManager::getInstanceWithoutCreating();
     return mm != nullptr && mm->isThisTheMessageThread();
 }
+
+// APVTS's ordinary ValueTree SetPropertyAction restores the parameter value
+// during UndoManager replay, but never brackets that host notification in a
+// begin/end gesture. Use the same property/UndoManager mechanism with a
+// parameter-specific action: the initial perform is already inside the UI's
+// own gesture, and only subsequent undo/redo replays need a new host gesture.
+// This does not wrap unrelated MSEG/matrix ValueTree transactions, and it
+// preserves JUCE's consecutive-property-action coalescing for long drags.
+class ParameterValueAction final : public juce::UndoableAction
+{
+public:
+    ParameterValueAction(juce::ValueTree target, juce::RangedAudioParameter& parameter,
+                         juce::var previous, juce::var next,
+                         bool addingProperty = false, bool alreadyPerformed = false)
+        : child(std::move(target)), hostParameter(parameter), before(std::move(previous)),
+          after(std::move(next)), wasAddingProperty(addingProperty), firstPerform(! alreadyPerformed)
+    {
+    }
+
+    bool perform() override
+    {
+        const bool isReplay = ! firstPerform;
+        firstPerform = false;
+        return apply(after, isReplay);
+    }
+
+    bool undo() override { return apply(before, true, wasAddingProperty); }
+
+    int getSizeInUnits() override { return (int) sizeof(*this); }
+
+    juce::UndoableAction* createCoalescedAction(juce::UndoableAction* next) override
+    {
+        if (! wasAddingProperty)
+            if (auto* candidate = dynamic_cast<ParameterValueAction*>(next))
+                if (! candidate->wasAddingProperty && candidate->child == child
+                    && &candidate->hostParameter == &hostParameter)
+                    return new ParameterValueAction(child, hostParameter, before, candidate->after, false, true);
+        return nullptr;
+    }
+
+private:
+    bool apply(const juce::var& value, bool replay, bool remove = false)
+    {
+        struct ScopedHostGesture
+        {
+            explicit ScopedHostGesture(juce::RangedAudioParameter& p) : parameter(p) { parameter.beginChangeGesture(); }
+            ~ScopedHostGesture() { parameter.endChangeGesture(); }
+            juce::RangedAudioParameter& parameter;
+        };
+        if (replay)
+        {
+            ScopedHostGesture gesture(hostParameter);
+            if (remove) child.removeProperty("value", nullptr);
+            else child.setProperty("value", value, nullptr);
+        }
+        else
+        {
+            if (remove) child.removeProperty("value", nullptr);
+            else child.setProperty("value", value, nullptr);
+        }
+        return true;
+    }
+
+    juce::ValueTree child;
+    juce::RangedAudioParameter& hostParameter;
+    juce::var before, after;
+    bool wasAddingProperty = false;
+    bool firstPerform = true;
+};
 } // namespace
 
 UndoableParameterState::UndoableParameterState(juce::AudioProcessor& processor, juce::UndoManager& undoManager,
@@ -59,7 +128,9 @@ void UndoableParameterState::parameterValueChanged(int index, float)
 
 void UndoableParameterState::parameterGestureChanged(int index, bool starting)
 {
-    if (! onMessageThread())
+    // A replay action itself opens a host gesture. It must not open a second
+    // user transaction or record the same undo operation back into history.
+    if (! onMessageThread() || history.isPerformingUndoRedo())
         return;
     if (starting)
     {
@@ -116,10 +187,15 @@ void UndoableParameterState::write(int index, juce::UndoManager* undoManager)
     if (! child.isValid())
         return;
     const float value = p->convertFrom0to1(p->getValue());
-    if (const auto* current = child.getPropertyPointer("value"); current != nullptr && (float) *current == value)
+    const auto* currentProperty = child.getPropertyPointer("value");
+    if (currentProperty != nullptr && (float) *currentProperty == value)
         return;
     const juce::ScopedValueSetter<bool> guard(writing, true);
-    child.setProperty("value", value, undoManager);
+    if (undoManager != nullptr)
+        undoManager->perform(new ParameterValueAction(child, *p,
+            currentProperty != nullptr ? *currentProperty : juce::var(), value, currentProperty == nullptr));
+    else
+        child.setProperty("value", value, nullptr);
 }
 
 void UndoableParameterState::syncExternal()

@@ -124,7 +124,16 @@ void sourceIdentity() {
         if (r < 0 || r > 1 || s < 0 || s > 13) {
             check(sf::route(r,s,true) == sf::Route::invalid, "invalid restored route explicitly rejected");
             check(!sf::compileTone(r,s,t), "invalid compile selector safely rejected");
-        } else if (s >= 11) check(sf::route(r,s,true) == sf::Route::panel_or_memory, "memory/PANEL not factory");
+        } else if (s >= 11) {
+            check(sf::route(r,s,false) == sf::Route::panel_or_memory,
+                  "Legacy memory/PANEL keeps its byte-identical historical adapter");
+            const auto circuitRoute = sf::route(r,s,true);
+            check(circuitRoute != sf::Route::panel_or_memory
+                  && circuitRoute != sf::Route::source_complete
+                  && circuitRoute != sf::Route::source_inferred
+                  && sf::isSourceDriven(circuitRoute),
+                  "memory/PANEL not factory, but original circuitry is source-driven in circuit/PURE mode");
+        }
     }
     check(hw::findBranch(52,'F',1).kind == hw::BranchKind::unknown
           && hw::findBranch(54,'F',1).kind == hw::BranchKind::unknown, "no extra unused board columns");

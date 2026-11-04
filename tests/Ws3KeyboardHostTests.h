@@ -8,6 +8,7 @@
 
 #include "plugin/PluginProcessor.h"
 
+#include <array>
 #include <cmath>
 #include <vector>
 
@@ -108,9 +109,68 @@ void testWs3KeyboardHost(Check&& check)
         process(host, midi);
         check(host.getEngine().activeVoices() == 8 && host.getExtensionEngine().activeVoices() == 8,
               "sixteen-voice mode plays sixteen held keys");
+        bool allMetered = host.getActiveVoiceCount() == 16;
+        for (int i = 0; i < 16; ++i) allMetered = allMetered && host.isVoiceActive(i);
+        check(allMetered && !host.isVoiceActive(16),
+              "voice count and activity meter include all sixteen slots, with bounded indexes");
+        const auto fullActivity = host.getVoiceActivitySnapshot();
+        check(fullActivity.capacity == 16 && fullActivity.mask == 0xffffu && fullActivity.activeCount() == 16,
+              "single audio callback publishes sixteen-voice mode and both banks' activity atomically");
         host.setParamValue(P_voiceMode, 0.0f);
         process(host, midi);
         check(host.getExtensionEngine().activeVoices() == 0, "leaving sixteen-voice mode stops the second instrument");
+        check(host.getActiveVoiceCount() <= 8 && !host.isVoiceActive(8) && !host.isVoiceActive(15),
+              "leaving sixteen-voice mode removes the second instrument from UI telemetry");
+        const auto eightActivity = host.getVoiceActivitySnapshot();
+        check(eightActivity.capacity == 8 && (eightActivity.mask & 0xff00u) == 0,
+              "dropping the extension publishes eight-voice capacity and clears upper meter slots together");
+        host.setParamValue(P_voiceMode, 1.0f);
+        host.setPure(true);
+        process(host, midi);
+        check(host.getExtensionEngine().activeVoices() == 0
+              && host.getActiveVoiceCount() <= 8 && !host.isVoiceActive(8),
+              "PURE CS-80 never exposes the extension instrument or its meter slots");
+        check(host.getVoiceActivitySnapshot().capacity == 8,
+              "PURE CS-80 cannot expose the extension meter capacity even if voice-mode parameter requests sixteen");
+    }
+    {
+        // Actual UI onset + pressure dispatch into the ninth through sixteenth
+        // physical slots, not just a model-only ownership table.
+        Cs80AudioProcessor host;
+        host.prepareToPlay(48000.0, 256);
+        host.serviceKeyboardUI(); // acknowledge prepareToPlay's new UI onset epoch
+        host.setParamValue(P_voiceMode, 1.0f);
+        juce::MidiBuffer midi;
+        process(host, midi);
+        std::array<Cs80AudioProcessor::KeyPressureToken, 16> tokens {};
+        for (int i = 0; i < 16; ++i)
+        {
+            const int note = 40 + i;
+            tokens[(size_t) i] = host.captureKeyboardGesture(1, note, [&]
+            {
+                host.getKeyboardState().noteOn(1, note, 0.8f);
+            });
+        }
+        process(host, midi);
+        check(host.getExtensionEngine().activeVoices() == 8
+                  && tokens[8] && tokens[15],
+              "the ninth and sixteenth real JUCE keyboard onsets reach the extension engine");
+        const bool queuedPressure = host.setKeyPressureFromUI(tokens[0], 0.41f)
+                                 && host.setKeyPressureFromUI(tokens[8], 0.37f)
+                                 && host.setKeyPressureFromUI(tokens[15], 0.73f);
+        process(host, midi);
+        check(queuedPressure
+                  && std::abs(host.getEngine().getVoiceInfo(0).pressure - 0.41f) < 1e-6f
+                  && std::abs(host.getExtensionEngine().getVoiceInfo(0).pressure - 0.37f) < 1e-6f
+                  && std::abs(host.getExtensionEngine().getVoiceInfo(7).pressure - 0.73f) < 1e-6f,
+              "same-batch UI pressure targets original and extension physical voice origins independently");
+        host.setParamValue(P_voiceMode, 0.0f);
+        process(host, midi);
+        host.setKeyPressureFromUI(tokens[15], 1.0f); // publication may succeed, but no owner may consume it
+        process(host, midi);
+        check(host.getVoiceActivitySnapshot().capacity == 8
+                  && !host.isVoiceActive(15) && host.getExtensionEngine().activeVoices() == 0,
+              "stale extension pressure stays unowned after leaving sixteen-voice mode");
     }
     {
         // Ribbon CC from the host.

@@ -173,6 +173,10 @@ public:
     struct Diagnostics {
         bool invalidControl=false,frequencyLimited=false,eventCapacityExceeded=false;
         std::size_t eventCount=0;
+        // Per-tick diagnostic for the 2026-11-01 segment-cache regression gate;
+        // no event-root solver is needed on an ordinary sample inside a
+        // previously searched analytic segment.
+        std::uint32_t branchRootSearches=0;
         std::array<Event,maximumEventsPerTick> events{};
         double rawPin7Volts=0.,coupledInputVolts=0.,trianglePin3Volts=0.,shaperInputVolts=0.;
         WscOutputVolts raw{};
@@ -230,7 +234,7 @@ public:
     // Cold-start convention only. No noteOn() method deliberately exists: the
     // inspected M41 graph has no note-trigger phase/coupling reset connection.
     void reset(double phase=0.,double initialHz=261.6) noexcept {
-        state={};diagnostics={};endNodesValid=false;
+        state={};diagnostics={};endNodesValid=false;segmentCache={};
         state.heldFrequencyHz=std::isfinite(initialHz)?std::clamp(initialHz,0.,maximumFrequencyHz()):std::clamp(profile.referenceHzNominal,0.,maximumFrequencyHz());
         phase=std::isfinite(phase)?phase-std::floor(phase):0.;
         const double f=state.heldFrequencyHz;
@@ -244,6 +248,7 @@ public:
     }
     WscOutputVolts tick(double requestedHz,const WscControls& controls={}) noexcept {
         diagnostics.eventCount=0;
+        diagnostics.branchRootSearches=0;
         if(!basis)return {}; // never prepared (basis pool exhausted at construction)
         const double inverseTauSamples=basis->inverseTauSamples,weightedArea=basis->weightedArea,weightedMoment=basis->weightedMoment;
         Nodes before;
@@ -252,6 +257,12 @@ public:
         else diagnostics.invalidControl=true;
         if(std::isfinite(controls.pulseThresholdVolts))threshold=controls.pulseThresholdVolts;
         else diagnostics.invalidControl=true;
+        // A cached root is only valid under the exact control law that
+        // produced it. In particular, a tiny pitch/drift change may omit its
+        // anti-alias corner but still changes the analytic root location.
+        const bool controlsChanged=f!=state.heldFrequencyHz||threshold!=state.heldThresholdVolts
+            ||controls.sawEnabled!=state.sawEnabled||controls.pulseEnabled!=state.pulseEnabled;
+        if(controlsChanged||!endNodesValid)segmentCache.valid=false;
         // Control changes. A full event (branch residuals) is recorded unless the
         // change provably or negligibly alters no branch:
         // - exact: a threshold move that does not cross the comparator input
@@ -286,14 +297,44 @@ public:
             const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
             double span=std::min(dt-elapsed,physical);
             const auto start=after;
+            // Root search across an analytic segment is a FORECAST, never the
+            // integration time used for the audible state. Advancing by the
+            // cached countdown changed the last few ULPs of branch positions:
+            // repeated remaining-=dt rounds differently from a root solved
+            // against the actual node state on the event's sample. Use the
+            // forecast only to skip searches on samples known not to cross a
+            // branch. At a candidate crossing run the original exact one-tick
+            // search with `span` as its limit, preserving event time and
+            // residual accumulation byte for byte. A bounded 125 ms horizon
+            // merely refreshes a stopped oscillator's forecast; it must never
+            // split the physical integration interval itself.
+            if(!segmentCache.valid){
+                bool found=false;
+                segmentCache.remaining=nextBranchEvent(start,std::min(physical,kSegmentCacheHorizonSeconds),found);
+                ++diagnostics.branchRootSearches;
+                segmentCache.branch=found;
+                segmentCache.valid=true;
+            }
+            // At most one short forecast guard (1e-4 sample) before the
+            // predicted boundary; this exceeds the accumulated double-roundoff
+            // by orders of magnitude without reintroducing per-tick root work.
+            // If a forecast is slightly early, the precise search returns the
+            // full original interval and we simply try again next sample.
+            const double guard=dt*1.e-4;
             bool branchEvent=false;
-            span=nextBranchEvent(start,span,branchEvent);
+            if(segmentCache.branch&&segmentCache.remaining<=span+guard){
+                span=nextBranchEvent(start,span,branchEvent);
+                ++diagnostics.branchRootSearches;
+            }
             // Roots closer than round-off to the previous event are represented
             // by its right-sided branch derivative, never a zero-progress loop.
             if(!(span>0.)){diagnostics.eventCapacityExceeded=true;break;}
             advance(span,start);
             elapsed+=span;
+            segmentCache.remaining-=span;
+            if(segmentCache.remaining<=0.||branchEvent)segmentCache.valid=false;
             const bool physicalReached=std::abs(span-physical)<=2e-15;
+            if(physicalReached)segmentCache.valid=false;
             if(physicalReached&&inReset)state.resetRemainingSeconds=std::numeric_limits<double>::min();
             if(physicalReached||branchEvent)before=nodes(-1);
             if(physicalReached){
@@ -331,6 +372,7 @@ public:
         diagnostics.eventCount=0;
         state.residual={};
         endNodesValid=false;
+        segmentCache.valid=false;
         if(!(seconds>0.))return 0.;
         double f=state.heldFrequencyHz;
         if(std::isfinite(requestedHz))f=std::clamp(requestedHz,0.,maximumFrequencyHz());
@@ -367,7 +409,7 @@ public:
     static constexpr int kMaximumIdleEvents=4096;
     // Restore a state captured with getState() (same rate and profile): the
     // idle snapshot ring and the wake replay use it. Never allocates.
-    void restoreState(const State& captured) noexcept { state=captured;endNodesValid=false;diagnostics.eventCount=0; }
+    void restoreState(const State& captured) noexcept { state=captured;endNodesValid=false;segmentCache.valid=false;diagnostics.eventCount=0; }
     // Compact physical state for the idle snapshot ring: after advanceIdle()
     // nothing is pending in the residual buffer, so it is not stored.
     struct IdleState {
@@ -387,7 +429,7 @@ public:
         state.heldFrequencyHz=s.heldFrequencyHz;state.heldThresholdVolts=s.heldThresholdVolts;
         state.elapsedSeconds=s.elapsedSeconds;state.resetCount=s.resetCount;
         state.sawEnabled=s.sawEnabled;state.pulseEnabled=s.pulseEnabled;
-        state.residual={};endNodesValid=false;diagnostics.eventCount=0;
+        state.residual={};endNodesValid=false;segmentCache.valid=false;diagnostics.eventCount=0;
     }
     double maximumFrequencyHz() const noexcept { return std::min(.45*rate,.95/profile.resetSecondsNominal); }
     static constexpr double latencyInternalSamples() noexcept { return OscillatorResidualKernel::latencySamples; }
@@ -557,11 +599,17 @@ private:
         basis=other.basis;profile=other.profile;state=other.state;diagnostics=other.diagnostics;
         rate=other.rate;dt=other.dt;converterGain=other.converterGain;rampHalf=other.rampHalf;
         negligibleCornerScale=other.negligibleCornerScale;endNodes=other.endNodes;endNodesValid=other.endNodesValid;
+        segmentCache=other.segmentCache;
     }
     // Node values at the end of the last tick: the next tick's start when
     // nothing changed in between (recomputation would give the same bits).
     Nodes endNodes{};
     bool endNodesValid=false;
+    // Derived from the physical continuation state, never serialized into
+    // State / IdleState. Restores and idle stepping invalidate it explicitly.
+    static constexpr double kSegmentCacheHorizonSeconds=0.125;
+    struct CachedSegmentBoundary { double remaining=0.;bool valid=false,branch=false; };
+    CachedSegmentBoundary segmentCache{};
     double negligibleCornerScale=0.;
     const OscillatorExponentialBasis* basis=nullptr;
     OscillatorNominalProfile profile{};

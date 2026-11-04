@@ -170,3 +170,53 @@ HP passband roll-off near 20 kHz, the OTA limit now acting on the gm part only
 - A gm-versus-control-current law, finite amplifier effects, Q-block saturation.
 - Identification between the Q-block alternatives (needs pin-9 measurements).
 - Top-octave accuracy at 2x/4x (oversampling choice, ws2).
+
+### 2026-11-01 evidence recheck: ADJ p11 remains unqualified
+
+The model result **1.69 Vpp under the ADJ p11 HP setup** remains a miss
+against **4.3 ± 1 Vpp** (the documented band is 3.3–5.3 Vpp). The LP
+reading **1.65 Vpp** remains inside its **2.2 ± 1 Vpp** band. These are
+software-model predictions under the declared fixture, not measurements of a
+hardware CS-80. They have not been changed to force agreement.
+
+There is a setup inconsistency that warrants native-source inspection before
+any adjustment. The HP model's **75 kΩ** source is the parallel value of two
+150 kΩ waveform feeds, whereas `serviceSetup` gates off the saw and then
+represents the remaining square as `(0 + pulse) / 2`. The actual waveform
+switches and passive mixing-node load determine *both* the pulse amplitude
+and the Thevenin resistance when the saw is off. Holding the current 75 kΩ
+network fixed and merely removing the fixture's factor of two would predict
+3.38 Vpp, but that calculation is **only a sensitivity scenario**: with one
+branch disconnected the network conductance also changes. It is not grounds
+to alter the model, the fixture, or the registered service-point tolerance.
+
+The M41 evidence ledger ([IG00156_MODEL_EVIDENCE.md](IG00156_MODEL_EVIDENCE.md))
+calls the LP-side 150 kΩ a **shunt** alongside the 33 kΩ resistor; the realtime
+model explicitly uses a **series** 150 kΩ to retain a finite modeled LP Q
+under the ideal-output assumption. Alternatives remain (1) the ledger's
+150 kΩ shunt plus an unidentified series resistance, (2) a missing loaded
+interstage path, or (3) a different effective op-amp output impedance.
+These alternatives require the native M41/CP7-to-AI1 crop or pin-level
+evidence. No hardware response, source resistor, or drive level has been
+fitted from the ADJ discrepancy.
+
+### Numerical limitation of a single cutoff prewarp
+
+The current coefficient law already prewarps all four capacitor histories
+at their requested total cutoff. A *constant* per-stage prewarp `p`
+maps a sampled frequency `f` to the analog-equivalent frequency
+`fs * tan(pi * f / fs) / (pi * p)`. It can cancel bilinear warping at one
+chosen frequency, but it cannot cancel the frequency-dependent mismatch
+over the gate's entire 20 Hz–20 kHz band. In particular, the upper portion
+of the gate includes frequencies substantially above the cutoff at a
+sample rate of only 88.2 or 96 kHz. Moving the one anchor cannot by
+itself establish the unpassed 8 % / 2 % full-band criteria.
+
+An accurate next candidate is a stable higher-order or matched-z
+discretization of the **whole coupled four-state network**, including
+the input and 180 pF feedback branches. Any such implementation must be
+compared with the unchanged continuous truth model at the registered
+rates, cutoffs and Q values, and must satisfy the same nonlinear,
+stability, idle-referencing and compatibility gates. This is a
+mathematical numerical-method issue, not evidence of an analog component
+value; no tolerance or circuit law should be changed to mask it.

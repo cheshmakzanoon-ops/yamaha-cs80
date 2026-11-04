@@ -3897,9 +3897,24 @@ juce::PopupMenu ParamKnob::buildContextMenu()
         add("Cancel MIDI learn (waiting for a controller)", true, [safe] { if (safe != nullptr) { safe->processor.getMidiLearn().cancelLearn(); safe->repaint(); } });
     else
         add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", host >= 0,
-            [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
+            [safe, host]
+            {
+                // An async menu can outlive the policy under which it opened.
+                if (safe != nullptr && safe->processor.getParamValue(cs80::P_parityMode) < 0.5f)
+                {
+                    safe->processor.getMidiLearn().armLearn(host);
+                    safe->watchLearning();
+                }
+            });
     if (cc >= 0)
-        add("Forget MIDI CC " + juce::String(cc), true, [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().clearParameter(host); safe->repaint(); } });
+        add("Forget MIDI CC " + juce::String(cc), ! pure, [safe, host]
+        {
+            if (safe != nullptr && safe->processor.getParamValue(cs80::P_parityMode) < 0.5f)
+            {
+                safe->processor.getMidiLearn().clearParameter(host);
+                safe->repaint();
+            }
+        });
     menu.addSeparator();
     add("Reset to default  (" + formatParamValue(parameterIndex, cs80::paramDef(parameterIndex).def) + ")", true,
         [safe] { if (safe != nullptr) safe->resetToDefault(); });
@@ -3923,6 +3938,96 @@ void ParamKnob::showContextMenu()
 {
     auto menu = buildContextMenu();
     menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(this).withMinimumWidth(240));
+}
+
+juce::PopupMenu buildParameterContextMenu(Cs80AudioProcessor& processor, const juce::String& id,
+                                          juce::Component& anchor, int displayIndex)
+{
+    juce::PopupMenu menu;
+    auto* parameter = processor.getAPVTS().getParameter(id);
+    if (parameter == nullptr)
+        return menu;
+
+    const bool knownDisplay = displayIndex >= 0 && displayIndex < cs80::P_numParams;
+    const float value = parameter->convertFrom0to1(parameter->getValue());
+    const juce::String shown = knownDisplay ? formatParamValue(displayIndex, value)
+                                             : parameter->getText(parameter->getValue(), 64);
+    const juce::String title = anchor.getTitle().isNotEmpty() ? anchor.getTitle() : parameter->getName(72);
+    menu.addSectionHeader(title.toUpperCase() + "   " + shown);
+
+    // Unlike a core parameter index, an APVTS parameter ID also addresses the
+    // four memory banks, each with its own host index. Never learn the rank's
+    // main-panel control when the player right-clicked a miniature memory.
+    const int host = processor.getParameters().indexOf(parameter);
+    const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
+    auto& learn = processor.getMidiLearn();
+    const int cc = host >= 0 ? learn.controllerFor(host) : cs80::MidiLearnMap::kNone;
+    juce::Component::SafePointer<juce::Component> safe(&anchor);
+    auto add = [&menu](const juce::String& label, bool enabled, std::function<void()> action)
+    {
+        juce::PopupMenu::Item item(label);
+        item.isEnabled = enabled;
+        item.action = std::move(action);
+        menu.addItem(item);
+    };
+    if (pure)
+        add("MIDI learn (off in PURE CS-80)", false, nullptr);
+    else if (host >= 0 && learn.learningParameter() == host)
+        add("Cancel MIDI learn (waiting for a controller)", true, [safe, &processor]
+        {
+            if (safe != nullptr) processor.getMidiLearn().cancelLearn();
+        });
+    else
+        add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", host >= 0,
+            [safe, &processor, host]
+            {
+                // Popup actions are asynchronous. A player can enter PURE
+                // after opening this menu but before invoking its action.
+                if (safe != nullptr && host >= 0
+                    && processor.getParamValue(cs80::P_parityMode) < 0.5f)
+                    processor.getMidiLearn().armLearn(host);
+            });
+    if (cc >= 0)
+        add("Forget MIDI CC " + juce::String(cc), ! pure, [safe, &processor, host]
+        {
+            if (safe != nullptr && host >= 0
+                && processor.getParamValue(cs80::P_parityMode) < 0.5f)
+                processor.getMidiLearn().clearParameter(host);
+        });
+
+    menu.addSeparator();
+    const float defaultValue = parameter->convertFrom0to1(parameter->getDefaultValue());
+    const auto defaultShown = knownDisplay ? formatParamValue(displayIndex, defaultValue)
+                                           : parameter->getText(parameter->getDefaultValue(), 64);
+    add("Reset to default  (" + defaultShown + ")", true, [safe, &processor, id]
+    {
+        if (safe == nullptr) return;
+        auto* p = processor.getAPVTS().getParameter(id);
+        if (p == nullptr || p->getValue() == p->getDefaultValue()) return;
+        // APVTS Button/Combo attachments supply their own balanced gesture on
+        // ordinary clicks. This direct menu edit must supply exactly one too,
+        // so the host sees automation and the UndoableParameterState records a
+        // single undo step; no synthetic Button::clicked() is sent.
+        p->beginChangeGesture();
+        p->setValueNotifyingHost(p->getDefaultValue());
+        p->endChangeGesture();
+    });
+    if (knownDisplay)
+    {
+        menu.addSeparator();
+        add("What is this control?", true, [safe, displayIndex]
+        {
+            if (safe != nullptr) showControlHelp(*safe, displayIndex);
+        });
+    }
+    return menu;
+}
+
+void showParameterContextMenu(Cs80AudioProcessor& processor, const juce::String& id,
+                              juce::Component& anchor, int displayIndex)
+{
+    auto menu = buildParameterContextMenu(processor, id, anchor, displayIndex);
+    menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&anchor).withMinimumWidth(240));
 }
 
 bool ParamKnob::applyTypedValue(const juce::String& text)
@@ -4033,7 +4138,7 @@ void ParamKnob::paintOverChildren(juce::Graphics& g)
 // LedButton
 // ---------------------------------------------------------------------------
 LedButton::LedButton(const juce::String& text, bool momentary)
-    : juce::Button(text)
+    : ContextButton(text)
 {
     setClickingTogglesState(! momentary);
     setMouseClickGrabsKeyboardFocus(true);
@@ -4042,6 +4147,92 @@ LedButton::LedButton(const juce::String& text, bool momentary)
     setDescription("Press Space or Return to operate this switch.");
     onStateChange = [this] { refreshTooltip(); };
     refreshTooltip();
+}
+
+void ContextButton::mouseDown(const juce::MouseEvent& e)
+{
+    if (e.mods.isPopupMenu())
+    {
+        popupPointer = true;
+        if (onContextMenu) onContextMenu();
+        return;
+    }
+    popupPointer = false;
+    juce::Button::mouseDown(e);
+}
+
+void ContextButton::mouseDrag(const juce::MouseEvent& e)
+{
+    // JUCE's Button::mouseDrag would otherwise set its internal down state,
+    // despite our popup mouseDown never having begun a normal button press.
+    if (! popupPointer)
+        juce::Button::mouseDrag(e);
+}
+
+void ContextButton::mouseUp(const juce::MouseEvent& e)
+{
+    if (popupPointer)
+    {
+        popupPointer = false;
+        return;
+    }
+    juce::Button::mouseUp(e);
+}
+
+void ContextComboBox::mouseDown(const juce::MouseEvent& e)
+{
+    if (e.mods.isPopupMenu())
+    {
+        popupPointer = true;
+        if (onContextMenu) onContextMenu();
+        return;
+    }
+    popupPointer = false;
+    juce::ComboBox::mouseDown(e);
+}
+
+void ContextComboBox::mouseDrag(const juce::MouseEvent& e)
+{
+    if (! popupPointer)
+        juce::ComboBox::mouseDrag(e);
+}
+
+void ContextComboBox::mouseUp(const juce::MouseEvent& e)
+{
+    if (popupPointer)
+    {
+        popupPointer = false;
+        return;
+    }
+    juce::ComboBox::mouseUp(e);
+}
+
+void ContextToggleButton::mouseDown(const juce::MouseEvent& e)
+{
+    if (e.mods.isPopupMenu())
+    {
+        popupPointer = true;
+        if (onContextMenu) onContextMenu();
+        return;
+    }
+    popupPointer = false;
+    juce::ToggleButton::mouseDown(e);
+}
+
+void ContextToggleButton::mouseDrag(const juce::MouseEvent& e)
+{
+    if (! popupPointer)
+        juce::ToggleButton::mouseDrag(e);
+}
+
+void ContextToggleButton::mouseUp(const juce::MouseEvent& e)
+{
+    if (popupPointer)
+    {
+        popupPointer = false;
+        return;
+    }
+    juce::ToggleButton::mouseUp(e);
 }
 
 void LedButton::setTooltip(const juce::String& tip)
