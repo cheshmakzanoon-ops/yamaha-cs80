@@ -286,6 +286,133 @@ void testAllocation()
     }
 }
 
+// Channel-mode messages free the same physical circuits as note-off. Waiting
+// keys on other channels must be reconsidered without needing another MIDI event.
+void testChannelModeReconsideration()
+{
+    for (int policy = 0; policy < 3; ++policy)
+        for (int scan : {0, 1})
+            for (int controller : {120, 123})
+            {
+                Engine e;
+                e.prepare(48000.0);
+                ParamValues p;
+                p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+                p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+                p[P_kasScanTiming] = static_cast<float>(scan);
+                e.setParams(p);
+                const auto flushScan = [&] { if (scan && policy != 0) render(e, 64); };
+                const auto held = [&](int note, int channel) {
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto voice = e.getVoiceInfo(i);
+                        if (voice.held && voice.note == note && voice.channel == channel)
+                            return true;
+                    }
+                    return false;
+                };
+                const std::string context = " policy=" + std::to_string(policy)
+                    + " scan=" + std::to_string(scan) + " CC=" + std::to_string(controller);
+                // Two circuits on channel 1; six unaffected held voices on channel 2.
+                for (int i = 0; i < 8; ++i) e.noteOn(48 + i, 0.8f, i < 2 ? 1 : 2);
+                flushScan();
+                e.noteOn(90, 0.9f, 3);
+                e.noteOn(85, 0.9f, 3);
+                e.noteOn(80, 0.9f, 3);
+                e.noteOn(75, 0.9f, 1); // must be removed with channel 1's keys
+                flushScan();
+                e.controlChange(controller, 0.0f, 1);
+                if (policy != 0)
+                {
+                    check(held(80, 3) && held(85, 3) && !held(90, 3),
+                          "channel-mode release reassigns lowest surviving waiting keys" + context);
+                    bool zeroTouch = true;
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto voice = e.getVoiceInfo(i);
+                        if (voice.held && voice.channel == 3)
+                            zeroTouch &= voice.velocity == 0.0f;
+                    }
+                    check(zeroTouch, "reconsidered keys do not acquire a new strike" + context);
+                }
+                else
+                    check(!held(80, 3) && !held(85, 3) && !held(90, 3),
+                          "Legacy does not remember excess keys" + context);
+                bool unaffected = true;
+                for (int note = 50; note <= 55; ++note) unaffected &= held(note, 2);
+                check(unaffected && !held(75, 1),
+                      "channel-mode release preserves other held keys and forgets its own waiting key" + context);
+                e.noteOff(80, 3);
+                flushScan();
+                if (policy != 0)
+                    check(!held(80, 3) && held(90, 3),
+                          "reassigned key releases normally and lets the next waiting key play" + context);
+                e.allNotesOff(false, 0);
+                check(e.activeVoices() == 0,
+                      "application panic clears every held and waiting key" + context);
+            }
+
+    for (int controller : {120, 123})
+    {
+        Engine e;
+        e.prepare(48000.0);
+        e.setParams(circuit(0.0f));
+        e.controlChange(64, 1.0f, 1);
+        for (int i = 0; i < 8; ++i) e.noteOn(48 + i, 0.8f, 1);
+        e.noteOn(80, 0.9f, 2);
+        e.controlChange(controller, 0.0f, 1);
+        bool waitingAssigned = false, pedalProtected = true;
+        for (int i = 0; i < 8; ++i)
+        {
+            const auto voice = e.getVoiceInfo(i);
+            waitingAssigned |= voice.held && voice.note == 80 && voice.channel == 2;
+            pedalProtected &= voice.pedalHeld;
+        }
+        check(controller == 120 ? waitingAssigned : (!waitingAssigned && pedalProtected),
+              "CC120 frees circuits immediately; CC123 preserves pedal-held circuits");
+        if (controller == 123)
+        {
+            e.controlChange(64, 0.0f, 1);
+            waitingAssigned = false;
+            for (int i = 0; i < 8; ++i)
+                waitingAssigned |= e.getVoiceInfo(i).held && e.getVoiceInfo(i).note == 80;
+            check(waitingAssigned, "CC123 waiting key is reconsidered when its occupied circuits lose pedal hold");
+        }
+    }
+}
+
+void testArpDiscardsWaitingDirectKeys()
+{
+    for (bool disableAgain : {false, true})
+        for (int controller : {64, 120, 123})
+        {
+            Engine e;
+            e.prepare(48000.0);
+            auto p = circuit(0.0f);
+            e.setParams(p);
+            e.controlChange(64, 1.0f, 1);
+            for (int i = 0; i < 8; ++i) e.noteOn(48 + i, 0.8f, 1);
+            e.noteOn(80, 0.9f, 2); // waiting for a direct-play circuit
+            p[P_arpOn] = 1.0f;
+            e.setParams(p); // already discards directly played held keys
+            e.noteOff(80, 2); // must not leave a hidden direct key behind
+            if (disableAgain)
+            {
+                p[P_arpOn] = 0.0f;
+                e.setParams(p);
+            }
+            e.controlChange(controller, 0.0f, 1);
+            bool staleKey = false;
+            for (int i = 0; i < 8; ++i)
+            {
+                const auto voice = e.getVoiceInfo(i);
+                staleKey |= voice.held && voice.note == 80 && voice.channel == 2;
+            }
+            check(!staleKey, "arpeggiator activation discards waiting direct keys: arp="
+                  + std::to_string(!disableAgain) + " CC=" + std::to_string(controller));
+        }
+}
+
 void testEngineScanTiming()
 {
     auto p = circuit();
@@ -332,6 +459,8 @@ int main()
     testScanner();
     testEngineHold();
     testAllocation();
+    testChannelModeReconsideration();
+    testArpDiscardsWaitingDirectKeys();
     testEngineScanTiming();
     std::printf("KAS scan / sample-hold: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;

@@ -504,6 +504,9 @@ void Engine::applyParams(const ParamValues& values)
         {
             for (auto& v : voices)
                 releaseVoice(v);
+            // Waiting direct keys belong to the same discarded keyboard
+            // gesture, not to the new arpeggiator input set.
+            unassignedCount = 0;
             heldKeyCount = 0;
             arpClock = 1.0e9f;
         }
@@ -1512,6 +1515,11 @@ void Engine::allNotesOff(bool release, int midiChannel)
         ringKeyDown = false;
         ringAdsr.noteOff();
     }
+    // A channel-mode release can free circuits while another channel still
+    // holds unassigned keys. Reconsider them just as note-off/pedal release
+    // does, after all target-channel voices and queued keys are cleared.
+    if (unassignedCount > 0)
+        reconsiderUnassignedKeys();
 }
 
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
