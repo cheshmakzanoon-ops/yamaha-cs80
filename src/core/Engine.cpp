@@ -2085,7 +2085,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // Envelope sources are the previous sample's values of each rank.
         modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
                                   { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
-                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
+                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, ! idle);
 
         for (int ch = 0; ch < 2; ++ch)
         {

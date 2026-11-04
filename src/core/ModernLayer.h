@@ -141,8 +141,9 @@ public:
     bool isActive() const noexcept { return active; }
 
     // Once per internal sample, before the voices: advance shared envelopes and evaluate
-    // the global destinations. Per-voice sources come from the newest voice of the
-    // previous sample (last-note priority).
+    // the global destinations. Per-voice sources come from the newest active voice
+    // of the previous sample (last-note priority), holding the last values if none
+    // remain. Decimated idle circuits must not compete with sounding notes.
     void beginSample(const GlobalInputs& in) noexcept
     {
         if (! active)
@@ -229,8 +230,10 @@ public:
         globalRate = rate;
     }
 
-    // Once per internal sample for each active voice, before its ranks render.
-    void processVoice(int voiceIndex, const VoiceInputs& in) noexcept
+    // Before a circuit's ranks render. Active voices run every internal sample;
+    // decimated idle circuits still receive rank modulation but cannot become
+    // the source of global modulation. Release tails remain eligible.
+    void processVoice(int voiceIndex, const VoiceInputs& in, bool globalSourceEligible = true) noexcept
     {
         if (! active || voiceIndex < 0 || voiceIndex >= kVoices)
             return;
@@ -269,7 +272,7 @@ public:
                 values[msegSource(m)] = msegOutput(m, voice.runners[(std::size_t) m].getValue());
         values[ModSource::filterEnvelope] = in.filterEnvelope[0] / kEnvelopeOctaves;
         values[ModSource::ampEnvelope] = in.ampEnvelope[0];
-        if (in.age >= newestThisSample)
+        if (globalSourceEligible && in.age >= newestThisSample)
         {
             newestThisSample = in.age;
             newestCandidate = values;

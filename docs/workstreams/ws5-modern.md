@@ -154,7 +154,10 @@ append only.
 | FX 1-3 mix | 1 |
 | MSEG 1-3 rate | 3 octaves |
 
-Global destinations use per-voice sources from the newest voice (last-note priority).
+Global destinations use per-voice sources from the newest active voice (last-note
+priority, including release tails). When no active voices remain, the last values
+are held. Free-running idle circuits still receive rank modulation, but their
+decimated processing must not replace the global source or interrupt a sounding note.
 Filter-EG values are normalised by `kProvisionalFilterEnvelopeOctaves` (3).
 
 Alternatives considered: a per-voice matrix evaluated at control rate (cheaper, but zipper on

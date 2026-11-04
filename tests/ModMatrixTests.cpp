@@ -261,6 +261,68 @@ void testCurvesAndNoteValues()
           "note random holds for a note and changes on the next");
 }
 
+void testIdleCircuitsDoNotDriveGlobalSources()
+{
+    for (bool idleFirst : { false, true })
+    {
+        ModernLayer layer;
+        layer.prepare(96000.0);
+        layer.setConfig(routed({
+            { ModSource::velocity, ModSource::none, ModDestination::fx1Mix, ModTarget::both },
+            { ModSource::constant, ModSource::polyPressure, ModDestination::fx2Mix, ModTarget::both },
+            { ModSource::ampEnvelope, ModSource::none, ModDestination::fx3Mix, ModTarget::both },
+            { ModSource::velocity, ModSource::none, ModDestination::pitch, ModTarget::both }
+        }));
+        layer.setControls(amounts({ 1.0f, 1.0f, 1.0f, 1.0f }));
+        auto older = voiceAt(60, 0.2f, 5);
+        auto newer = voiceAt(67, 0.9f, 7);
+        auto cold = voiceAt(60, 0.0f, 0);
+        cold.gate = false;
+        newer.pressure = 0.75f;
+        newer.ampEnvelope[0] = 0.8f;
+        auto sample = [&](bool newerEligible, bool olderEligible)
+        {
+            layer.beginSample(globals());
+            if (idleFirst)
+                layer.processVoice(1, newer, newerEligible);
+            layer.processVoice(0, older, olderEligible);
+            if (! idleFirst)
+                layer.processVoice(1, newer, newerEligible);
+            layer.processVoice(2, cold, false);
+        };
+        sample(true, true);
+        sample(true, true);
+        check(near(layer.getGlobalOffsets().fxMix[0], 0.9, 1.0),
+              "global source initially follows the newest active note in either traversal order");
+        newer.gate = false;
+        newer.pressure = 0.65f;
+        newer.ampEnvelope[0] = 0.4f;
+        sample(true, true);
+        sample(true, true);
+        const auto release = layer.getGlobalOffsets().fxMix;
+        check(near(release[0], 0.9, 1.0) && near(release[1], 0.65, 1.0) && near(release[2], 0.4, 1.0),
+              "a releasing active voice retains priority and updates source/via/envelope values");
+        sample(false, true);
+        sample(false, true);
+        const auto held = layer.getGlobalOffsets().fxMix;
+        check(near(held[0], 0.2, 1.0) && near(held[1], 0.4, 1.0) && near(held[2], 0.6, 1.0),
+              "older sounding note resumes priority after the newer circuit becomes idle");
+        check(near(layer.rankOffsets(1, 0).pitch, 0.9 * kPitchSemitones, kPitchSemitones),
+              "excluding an idle circuit from global sources preserves its rank modulation");
+        older.gate = false;
+        sample(false, false);
+        layer.beginSample(globals()); // No circuits processed on this sample.
+        sample(false, false);
+        check(layer.getGlobalOffsets().fxMix == held,
+              "idle and empty samples retain the last global source when no active voices remain");
+        newer = voiceAt(72, 0.7f, 8);
+        sample(true, false);
+        sample(true, false);
+        check(near(layer.getGlobalOffsets().fxMix[0], 0.7, 1.0),
+              "a new sounding note replaces the held global snapshot after silence");
+    }
+}
+
 void testInactiveIsIdentity()
 {
     // No live slot (no source, no destination or a zero amount) or disabled: identity.
@@ -624,6 +686,51 @@ void testEngineRateRouteRemoval()
             }
 }
 
+void testEngineGlobalSourcePriorityAfterRelease()
+{
+    // Circuit voices continue on staggered, decimated idle clocks after their
+    // notes end. They must not periodically replace a still-sounding voice as
+    // the source of global modulation. Legacy already skips those idle voices.
+    for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
+        for (int policy = 0; policy < 2; ++policy)
+        {
+            ParamValues p;
+            p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+            p[P_masterSustain] = p[P_keyRelease] = p[P_sustainMode] = p[P_sustainAssign] = 0.0f;
+            p[P_mod1Amount] = 1.0f;
+            for (int rank = 0; rank < 2; ++rank)
+            {
+                p[chParam(rank, CP_vA)] = p[chParam(rank, CP_vD)] = p[chParam(rank, CP_vR)] = 0.001f;
+                p[chParam(rank, CP_vS)] = 0.7f;
+            }
+            Engine engine;
+            engine.prepare(sr);
+            engine.setParams(p);
+            engine.setModernConfig(routed({
+                { ModSource::velocity, ModSource::none, ModDestination::fx1Mix, ModTarget::both }
+            }));
+            std::vector<float> block(1024);
+            engine.noteOn(60, 0.2f);
+            engine.render(block.data(), 37); // Offset the two idle schedules.
+            engine.noteOn(67, 0.9f);
+            engine.render(block.data(), 512);
+            check(near(engine.getModernGlobalOffsets().fxMix[0], 0.9, 1.0),
+                  "newest sounding note drives the global source");
+            engine.noteOff(67);
+            for (int n = 0; n < (int) (sr * 0.1); n += 512)
+                engine.render(block.data(), 512);
+            check(engine.activeVoices() == 1,
+                  "priority regression keeps the older note sounding after the newer note ends");
+            bool steady = true;
+            for (int n = 0; n < 1024; ++n)
+            {
+                engine.render(block.data(), 1);
+                steady = steady && near(engine.getModernGlobalOffsets().fxMix[0], 0.2, 1.0);
+            }
+            check(steady, "idle circuits cannot interrupt the newest sounding global source");
+        }
+}
+
 void testStability()
 {
     for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
@@ -658,11 +765,13 @@ int main()
 {
     testRoutingMath();
     testCurvesAndNoteValues();
+    testIdleCircuitsDoNotDriveGlobalSources();
     testInactiveIsIdentity();
     testRemovedGlobalRateIsIdentity();
     testDefaultInvarianceAndPurity();
     testEngineConsumption();
     testEngineRateRouteRemoval();
+    testEngineGlobalSourcePriorityAfterRelease();
     testStability();
     std::printf("%d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;
