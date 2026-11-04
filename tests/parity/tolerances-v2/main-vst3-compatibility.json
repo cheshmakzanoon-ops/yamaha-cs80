@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "63b32c1e733c10fdbedd83425922590540527188",
+  "purpose": "Preserve existing main no-queue, ordinary non-key and protected-key native VST3 audio, complete controller parameter ID order and final normalized state",
+  "capture_cases": 336,
+  "audio_samples_per_case": 4096,
+  "comparison": "complete_binary_byte_identity",
+  "maximum_differing_bytes": 0,
+  "policies": [
+    "modern",
+    "legacy",
+    "pure"
+  ],
+  "voice_counts": [
+    8,
+    16
+  ],
+  "block_sizes": [
+    64,
+    256,
+    1024
+  ],
+  "queue_kinds": [
+    "none",
+    "ordinary_attack_first_block",
+    "supported_keys_first_protected_block"
+  ],
+  "recalls": [
+    {
+      "bank": -1,
+      "sample": 64
+    },
+    {
+      "bank": 0,
+      "sample": 0
+    },
+    {
+      "bank": 0,
+      "sample": 64
+    },
+    {
+      "bank": 1,
+      "sample": 1
+    },
+    {
+      "bank": 1,
+      "sample": 64
+    },
+    {
+      "bank": 1,
+      "sample": 700
+    },
+    {
+      "bank": 3,
+      "sample": 64
+    }
+  ],
+  "boundary_notes": "Same-sample note follows Program Change in stable event order; 16 initial notes exercise an active extension where the selected policy permits it",
+  "exclusions": [
+    "modern supported-key trajectories are the new behavior, not baseline equality",
+    "native AU",
+    "actual DAW",
+    "CPU budget"
+  ],
+  "state_capture": "Native component getState and controller setComponentState, followed by every exposed controller parameter ID in index order and its normalized value; no APVTS XML inference"
+}

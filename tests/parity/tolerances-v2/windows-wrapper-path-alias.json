@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "profile_id": "host-wrapper-windows-path-identity",
+  "registered": "2026-10-31",
+  "evidence_kind": "Native build-fixture path identity and source provenance; no audio or hardware measurements",
+  "registration_order": "Publish this contract before implementing or evaluating the corrected predicate.",
+  "original_contract": "tests/parity/tolerances-v2/host-wrapper-platforms.json, preregistered at cf52fef87c2e230dcc0c688121abea96ccafac4d",
+  "failure_evidence": {
+    "observed_commit": "b5901b2f846468038da5330ea9ce7271b8a7a8ef",
+    "run_id": 41239902650,
+    "job_id": 124651460860,
+    "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41239902650/job/124651460860",
+    "runner": "windows-2022",
+    "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "gate_result": "failure",
+    "failed_check": 8,
+    "diagnostic": {
+      "actual": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp",
+      "expected": "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp",
+      "actual_resolved": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp",
+      "expected_resolved": "C:\\Users\\runneradmin\\AppData\\Local\\Temp\\cs80-host-wrapper-platforms-zgbe0hbq\\cpp-lf\\build\\cs80-juce-wrappers\\juce_audio_plugin_client_VST3.cpp",
+      "samefile": true
+    }
+  },
+  "mechanism": "Windows gives the temporary directory through the RUNNER~1 short-name alias while CMake emits the equivalent runneradmin long path. Native diagnostics prove identical resolved absolute paths and samefile=true. The lexical pathlib comparison fails although the prescribed generated file, native filename and language extension are correct.",
+  "preserved": {
+    "allowed_failures": 0,
+    "full_suite_check_count": 92,
+    "supported_translation_units": {
+      "VST3": [
+        "juce_audio_plugin_client_VST3.cpp",
+        "juce_audio_plugin_client_VST3.mm"
+      ],
+      "AU": [
+        "juce_audio_plugin_client_AU_1.mm"
+      ]
+    },
+    "predicate_scope": "Only the generated-wrapper lexical path equality changes. All 92 existing checks, bridge checks, byte/hash checks, upstream non-mutation, helper order, configure dependencies, malformed-source rejection and LF/CRLF equivalence remain mandatory. The ordinary native Windows CTest gate and separate early source-contract job both run the full suite.",
+    "numeric_limits_changed": false,
+    "audio_changed": false,
+    "workflow_test_coverage_removed": false
+  },
+  "corrected_predicate": {
+    "exact_basename": "wrapper.name == original_name",
+    "resolved_absolute_path_equality": "wrapper.resolve() == expected_wrapper.resolve()",
+    "filesystem_identity": "wrapper.samefile(expected_wrapper)",
+    "combination": "All three requirements are combined with AND in the same existing check call. Missing files, different canonical targets, wrong names or wrong language extensions cannot pass.",
+    "why_not_lexical": "An OS-supported alias denotes the same filesystem object; acceptance concerns the exact generated translation unit, its basename and native language, not one of the valid spellings of its parent directory.",
+    "diagnostics": "Retain raw actual/expected paths, both resolved absolute paths and samefile result before the assertion."
+  },
+  "qualification": {
+    "portable": "Run the entire existing host-wrapper fixture against pinned JUCE c352e2489000ffeb9e397051377d75eef2efe641 on the local host after benchmarking permits it. It must report 92 checks, zero failures.",
+    "native_windows": "Run the independent windows-2022 source-contract job. The observed short/long alias case must pass all 92 checks with the hash-validated pinned source. A local POSIX pass alone does not qualify the Windows correction.",
+    "native_build": "The ordinary Windows plugin build/CTest and all other platform gates remain required; no cross-platform dependency or bypass is introduced."
+  },
+  "mutations": [
+    {
+      "name": "redirect_to_existing_different_file",
+      "isolated_change": "In a temporary HostAutomation.cmake copy, append the existing original _cs80_source to _cs80_patched_sources instead of the generated _cs80_wrapper for a VST3 fixture, while still generating the output. Both files exist and share the correct basename, but have different resolved absolute paths and filesystem identities.",
+      "expected_result": "The unchanged corrected fixture fails the generated-wrapper identity assertion at its first VST3 case; it must not accept an existing file merely because its basename is correct."
+    },
+    {
+      "name": "change_generated_native_extension",
+      "isolated_change": "In a temporary HostAutomation.cmake copy, when the selected original source is juce_audio_plugin_client_VST3.cpp, write and select the generated output as juce_audio_plugin_client_VST3.mm instead. The source text and automation bridge remain generated, but the prescribed filename/native extension is wrong.",
+      "expected_result": "The unchanged corrected fixture fails the exact-basename/native-extension assertion at its first VST3 case. A valid existing generated file cannot pass under the wrong native filename."
+    }
+  ],
+  "restoration": "After both isolated mutations fail, rerun the original production fixture; it must still report all 92 checks with zero failures.",
+  "evidence_files": {
+    "raw_native_diagnostic": "/tmp/cs80-windows-wrapper-alias-native.log",
+    "structured_native_identity": "/tmp/cs80-windows-wrapper-alias-native.json",
+    "decoded_full_job_log": "/tmp/cs80-windows-wrapper-alias-full-job.log"
+  }
+}

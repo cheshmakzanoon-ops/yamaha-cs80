@@ -6,6 +6,7 @@
 
 #include "core/Randomise.h"
 
+#include <algorithm>
 #include <cmath>
 
 void Cs80AudioProcessor::initialiseLibrary()
@@ -51,6 +52,21 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     // parameter writes from the audio thread are the same path as host
     // automation write-back.
     const auto& values = programs[(size_t) index].values;
+    // Scope the new two-engine publication to a real VST3 curve block. Main's
+    // ordinary no-queue, AU and Standalone recall paths remain unchanged.
+    const bool vst3CurveRecall = vst3CurveRecallInProcess
+        || (hostAutomationVst3 && hostAutomationBlock
+            && std::any_of(automationCurves.begin(), automationCurves.end(),
+                           [](const auto& curve) { return curve.active(); }));
+    // Seed only after a valid, permitted recall sees actual VST3 curves. Keep
+    // it for later recalls even when this one cancels the borrowed queues.
+    vst3CurveRecallInProcess = vst3CurveRecall;
+    // Finalize old endpoints before preset writes so they cannot overwrite a
+    // recalled Legacy program. Same-policy modern curves remain attached.
+    const auto recalledPolicy = cs80::renderPolicy(cached[cs80::P_parityMode],
+                                                   values[cs80::P_sourcePerformance]);
+    if (hostAutomationVst3 && hostAutomationBlock && !cs80::usesSourceModels(recalledPolicy))
+        endHostAutomationBlock();
     for (auto* source : library->sources)
         if (source != nullptr)
             source->setValueNotifyingHost(source->convertTo0to1(13.0f));
@@ -69,12 +85,26 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     // The new sound starts at the Program Change's sample position.
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
-    engine.setControlFrame({ cached, cachedHardwareSources });
+    if (vst3CurveRecall)
+    {
+        // Keep main's physical-unit aggregate coordinate and active-extension
+        // lifetime. Do not shut voices down at the program event.
+        forEachEngine([&](cs80::Engine& target)
+        {
+            const auto prior = target.getRenderPolicy();
+            target.setControlFrame({ cached, cachedHardwareSources });
+            if (target.getRenderPolicy() != prior)
+                target.setExpression(expressionValue.load(std::memory_order_relaxed));
+        });
+    }
+    else
+        engine.setControlFrame({ cached, cachedHardwareSources });
     if (engine.getRenderPolicy() == previousPolicy)
         return false;
     // A program on the other engine is a policy transition, exactly as at a
     // block boundary: the engine resets and the keyboard handoff is revoked.
-    engine.setExpression(expressionValue.load(std::memory_order_relaxed));
+    if (!vst3CurveRecall)
+        engine.setExpression(expressionValue.load(std::memory_order_relaxed));
     resetKeyboardHandoff();
     return true;
 }

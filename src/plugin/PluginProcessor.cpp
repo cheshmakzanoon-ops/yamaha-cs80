@@ -66,6 +66,7 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     // circuit engine (plan 1.7).
     applyFreshInstancePatch();
     cached = currentValues();
+    resetHostAutomationState();
     engine.setParams(cached);
     engine.prepare(48000.0);
     extensionEngine = std::make_unique<cs80::Engine>();
@@ -410,6 +411,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     extensionActive = false;
     highResolutionVelocity.reset();
     readParameters();
+    resetHostAutomationState();
     const auto previousPolicy = engine.getRenderPolicy();
     engine.setControlFrame({ cached, cachedHardwareSources });
     if (engine.getRenderPolicy() != previousPolicy)
@@ -429,6 +431,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 
 void Cs80AudioProcessor::releaseResources()
 {
+    resetHostAutomationState();
     outputMeter.reset();
     engine.reset();
     extensionEngine->reset();
@@ -459,6 +462,7 @@ void Cs80AudioProcessor::readParameters()
                 : getMemoryValue(channel + (source == 12 ? 2 : 0), local);
         }
     }
+    syncHostAutomationParameters();
 }
 
 cs80::ParamValues Cs80AudioProcessor::currentValues() const
@@ -759,6 +763,10 @@ juce::String Cs80AudioProcessor::getScalaDescription() const
 
 void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midi)
 {
+    // A Legacy recall cancels trajectories, but later recalls in this same
+    // VST3 process call must still update both already-active instruments.
+    // Never let that ownership escape into the following ordinary block.
+    const juce::ScopedValueSetter<bool> recallScope(vst3CurveRecallInProcess, false, false);
     juce::ScopedNoDenormals noDenormals;
     if (! midi.isEmpty())
         hostMidiEvents.fetch_add((unsigned) midi.getNumEvents(), std::memory_order_relaxed);   // lock-free UI activity telemetry
@@ -798,7 +806,14 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     cs80::KeyboardEventQueue<>::Batch uiEvents;
     auto uiCount = keyboardEvents.take(uiEvents);
 
-    applyMidiLearn(midi);   // [ws8-studio] learned controllers move their parameters before this block reads them
+    if (hostAutomationVst3)
+        applyVst3MidiLearn(midi);
+    else
+    {
+        // Main's AU/Standalone path retains its existing MIDI-learn ordering.
+        prepareHostAutomation();
+        applyMidiLearn(midi);
+    }
     readParameters();
     const auto previousPolicy = engine.getRenderPolicy();
     const int previousFactor = engine.getOversamplingFactor();
@@ -879,7 +894,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         }
         for (int offset = 0; offset < length; )
         {
-            const int n = std::min(capacity, length - offset);
+            applyHostAutomationAt(start + offset, true);
+            const int n = hostAutomationSpan(start + offset, std::min(capacity, length - offset));
             if (input != nullptr)
                 std::copy_n(input + start + offset, n, externalScratch.data());
             engine.render(interleaved.data(), n, input != nullptr ? externalScratch.data() : nullptr);
@@ -912,6 +928,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             renderSegment(done, position - done);
             done = position;
         }
+        // Publish the automated target before MIDI allocation at this sample.
+        applyHostAutomationAt(position, true);
     };
     size_t uiIndex = 0;
     auto voiceSnapshot = [&]
@@ -1431,6 +1449,65 @@ void Cs80AudioProcessor::applyMidiLearn(const juce::MidiBuffer& midi) noexcept
         if (target >= 0 && target < parameters.size())
             parameters.getUnchecked(target)->setValueNotifyingHost((float) metadata.data[2] / 127.0f);
     }
+}
+
+void Cs80AudioProcessor::applyVst3MidiLearn(const juce::MidiBuffer& midi) noexcept
+{
+    if (std::none_of(automationCurves.begin(), automationCurves.end(),
+                     [](const auto& curve) { return curve.active(); }))
+    {
+        prepareHostAutomation();
+        applyMidiLearn(midi);
+        return;
+    }
+    // PURE gating belongs to block entry, as in applyMidiLearn. A learned
+    // transition to PURE must not suppress later CCs from this same buffer.
+    const auto* parity = parameterValues[(size_t) cs80::P_parityMode];
+    midiLearnLive = parity == nullptr || parity->load(std::memory_order_relaxed) < 0.5f;
+    if (!midiLearnLive || midi.isEmpty())
+    {
+        prepareHostAutomation();
+        return;
+    }
+    const auto validController = [](const auto& metadata) noexcept {
+        return metadata.numBytes == 3 && (metadata.data[0] & 0xf0) == 0xb0
+            && metadata.data[1] < 0x80 && metadata.data[2] < 0x80;
+    };
+    // Resolve an armed learn exactly once at the first eligible CC. Take one
+    // bounded map snapshot for both passes. Edits after this snapshot are
+    // observed by a subsequent block, not between the policy and key passes.
+    for (const auto metadata : midi)
+        if (validController(metadata) && cs80::MidiLearnMap::isLearnable(metadata.data[1]))
+        {
+            midiLearn.handleController(metadata.data[1]);
+            break;
+        }
+    std::array<int, cs80::MidiLearnMap::kNumControllers> targets;
+    for (size_t cc = 0; cc < targets.size(); ++cc)
+        targets[cc] = midiLearn.parameterFor(static_cast<int>(cc));
+    const auto& parameters = getParameters();
+    const auto isPolicy = [](juce::AudioProcessorParameter* parameter) noexcept {
+        const auto* identified = dynamic_cast<juce::AudioProcessorParameterWithID*>(parameter);
+        return identified != nullptr
+            && (identified->paramID == cs80::paramDef(cs80::P_parityMode).id
+                || identified->paramID == cs80::paramDef(cs80::P_sourcePerformance).id);
+    };
+    const auto applyPass = [&](bool policies) noexcept {
+        for (const auto metadata : midi)
+        {
+            if (!validController(metadata)) continue;
+            const int target = targets[metadata.data[1]];
+            if (target < 0 || target >= parameters.size()) continue;
+            auto* parameter = parameters.getUnchecked(target);
+            if (isPolicy(parameter) == policies)
+                parameter->setValueNotifyingHost(static_cast<float>(metadata.data[2]) / 127.0f);
+        }
+    };
+    applyPass(true);
+    // Select VST3 timing using the final learned policy. Protected final-point
+    // publication still precedes ordinary learned controls, including repeats.
+    prepareHostAutomation();
+    applyPass(false);
 }
 
 void Cs80AudioProcessor::writeStudioState(juce::ValueTree& state) const

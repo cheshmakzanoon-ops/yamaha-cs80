@@ -13,6 +13,7 @@
 #include "OutputMeter.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
+#include "HostAutomationBridge.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
@@ -28,7 +29,8 @@
 class Cs80AudioProcessorEditor;
 namespace cs80::tests { struct PresetSaveAccess; }
 
-class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener
+class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener,
+                           public cs80::HostAutomationClient
 {
 public:
     explicit Cs80AudioProcessor(const juce::File& presetDirectory = {});
@@ -37,6 +39,13 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    bool usesHostAutomationTiming() const noexcept override;
+    int sampleAccurateParameterIndex(const juce::AudioProcessorParameter&) const noexcept override;
+    double sampleAccurateParameterValue(size_t lane) const noexcept override;
+    void beginHostAutomationBlock(int frameCount) noexcept override;
+    void beginVst3HostAutomationBlock(int frameCount) noexcept override;
+    bool attachHostAutomationQueue(juce::AudioProcessorParameter&, cs80::HostAutomationQueue) noexcept override;
+    void endHostAutomationBlock() noexcept override;
     bool isBusesLayoutSupported(const BusesLayout&) const override;
     bool isExternalInputEnabled() const noexcept
     { return externalInputEnabled.load(std::memory_order_relaxed); }
@@ -330,6 +339,21 @@ private:
     std::array<std::array<std::atomic<float>*, cs80::CP_count>, 4> hardwareMemories {};
     std::array<std::array<std::array<float, cs80::CP_count>, 11>, 2> hardwareFactoryValues {};
     std::array<std::atomic<float>*, cs80::P_numParams> parameterValues {};
+    std::array<juce::RangedAudioParameter*, cs80::kSampleAccurateParameters.size()> automationParameters {};
+    std::array<cs80::HostAutomationCurve, cs80::kSampleAccurateParameters.size()> automationCurves {};
+    std::array<double, cs80::kSampleAccurateParameters.size()> automationCurrent {};
+    std::array<float, cs80::kSampleAccurateParameters.size()> automationParameterReadback {};
+    bool hostAutomationBlock = false;
+    bool hostAutomationVst3 = false;
+    bool vst3CurveRecallInProcess = false;
+    int hostAutomationFrames = 0, hostAutomationPosition = 0;
+    void resetHostAutomationState() noexcept;
+    void refreshHostAutomationParameter(size_t lane) noexcept;
+    void prepareHostAutomation() noexcept;
+    void applyVst3MidiLearn(const juce::MidiBuffer& midi) noexcept;
+    void syncHostAutomationParameters() noexcept;
+    void applyHostAutomationAt(int position, bool publish) noexcept;
+    int hostAutomationSpan(int position, int remaining) const noexcept;
     static constexpr float noPendingControl = std::numeric_limits<float>::quiet_NaN();
     static_assert(std::atomic<bool>::is_always_lock_free, "Panic handoff must be lock-free");
     std::atomic<bool> pendingPanic { false };

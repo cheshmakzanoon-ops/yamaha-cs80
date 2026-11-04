@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-04",
+  "evidence_kind": "Additive product-format and source-preservation contract; not native AU or DAW qualification",
+  "main_base": "63b32c1e733c10fdbedd83425922590540527188",
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "product_automation_formats": ["VST3"],
+  "supported_vst3_translation_units": ["juce_audio_plugin_client_VST3.cpp", "juce_audio_plugin_client_VST3.mm"],
+  "unchanged_original_gates_lf_sha256": {
+    "tests/HostWrapperPlatformTests.py": "8fa4c9a8e5aa62e4375116c2521745e6de0eb99526b36cb34248f80c95dcae25",
+    "tests/parity/tolerances-v2/host-wrapper-platforms.json": "f38086ecc6997f74b80fe5c66d19ef3c0032a435ab9904a0a407f78538e1686d"
+  },
+  "required": [
+    "The product explicitly selects VST3 only before including the wrapper-generation helper, with no cache override enabling AU",
+    "The existing product format set still includes Standalone and preserves its Apple AU target",
+    "VST3 .cpp and .mm interface targets generate exactly one reviewed source of the original language and preserve unrelated sources and source order",
+    "The AU target keeps its exact interface-source paths, source order, include directories, compile definitions and link libraries",
+    "No original JUCE source byte is changed, no AU generated source is emitted, and AU sources are not added as generation dependencies",
+    "Unreviewed, missing or duplicated AU wrapper sources do not affect VST3-only configuration because AU must not be inspected or replaced",
+    "LF and CRLF inputs and repeated configurations generate identical VST3 content",
+    "Missing, duplicated or unreviewed selected VST3 sources fail closed",
+    "Empty and unsupported selected-format lists fail closed",
+    "The existing broader platform test and its acceptance JSON remain unchanged"
+  ],
+  "allowed_failures": 0,
+  "mutation_contract": [
+    "Remove the product's explicit VST3-only selector",
+    "Select AU as well as VST3 in the product",
+    "Ignore the product selector and generate both wrapper formats",
+    "Mutate an untouched AU interface property",
+    "Drop VST3 .mm support",
+    "Disable VST3 source-hash checking"
+  ],
+  "limits": "This gate adds exact source/build-system assertions only. It changes no numerical, curve, image, audio or native acceptance limits. Portable macOS source-shape tests do not establish a native macOS VST3 build, AU scheduling qualification or DAW/release approval."
+}

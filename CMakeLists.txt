@@ -256,6 +256,11 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_noise_tests COMMAND cs80_noise_tests)
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
+    target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
+    add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    set_tests_properties(cs80_host_automation_curve_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
     add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)
@@ -397,6 +402,10 @@ if (CS80_BUILD_PLUGIN)
         FetchContent_MakeAvailable(JUCE)
     endif()
 
+    # This main-based feature is VST3-only. Keep the shipping AU wrapper intact.
+    set(CS80_HOST_AUTOMATION_FORMATS VST3)
+    include(cmake/HostAutomation.cmake)
+
     set(CS80_PLUGIN_FORMATS VST3 Standalone)
     if (APPLE)
         list(APPEND CS80_PLUGIN_FORMATS AU)
@@ -420,6 +429,7 @@ if (CS80_BUILD_PLUGIN)
     # Editor and processor sources shared by the plugin and the snapshot tool.
     set(CS80_PLUGIN_SOURCES
         src/plugin/PluginProcessor.cpp
+        src/plugin/PluginProcessorAutomation.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/UiComponents.cpp
         src/plugin/AdvancedPanel.cpp
@@ -473,6 +483,24 @@ if (CS80_BUILD_PLUGIN)
         JUCE_VST3_CAN_REPLACE_VST2=0
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
+
+    if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        get_target_property(CS80_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+        set(CS80_VST3_SDK "${CS80_JUCE_MODULES}/juce_audio_processors_headless/format_types/VST3_SDK")
+        add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_automation_tests CS80Reference_VST3)
+        add_test(NAME cs80_vst3_automation_tests COMMAND cs80_vst3_automation_tests
+            "$<TARGET_FILE:CS80Reference_VST3>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        set_tests_properties(cs80_vst3_automation_tests PROPERTIES TIMEOUT 180)
+        include(cmake/HostAutomationTests.cmake)
+        cs80_add_main_automation_witnesses("${CMAKE_CURRENT_SOURCE_DIR}" "${CS80_VST3_SDK}")
+    endif()
 
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
@@ -581,6 +609,27 @@ if (MSVC AND CS80_BUILD_TESTS)
             endif()
         endif()
     endforeach()
+endif()
+
+# Host automation wrapper platform contract (registered 2026-10-31).
+# Mock interface source lists exercise C++ and Objective-C++ generation on
+# every build host; native AU/VST3 compilation and host gates remain separate.
+if (CS80_BUILD_PLUGIN AND CS80_BUILD_TESTS)
+    get_target_property(CS80_WRAPPER_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+    add_test(NAME cs80_host_wrapper_platform_tests COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/HostWrapperPlatformTests.py"
+        --source "${CMAKE_CURRENT_SOURCE_DIR}"
+        --juce-wrappers "${CS80_WRAPPER_JUCE_MODULES}/juce_audio_plugin_client"
+        --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-wrapper-platforms.json"
+        --cmake "${CMAKE_COMMAND}")
+    set_tests_properties(cs80_host_wrapper_platform_tests PROPERTIES TIMEOUT 90)
+    add_test(NAME cs80_main_vst3_only_automation_tests COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/MainVst3OnlyAutomationTests.py"
+        --source "${CMAKE_CURRENT_SOURCE_DIR}"
+        --juce-wrappers "${CS80_WRAPPER_JUCE_MODULES}/juce_audio_plugin_client"
+        --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/main-vst3-only-automation.json"
+        --cmake "${CMAKE_COMMAND}")
+    set_tests_properties(cs80_main_vst3_only_automation_tests PROPERTIES TIMEOUT 90)
 endif()
 
 # Instrumented builds (ASan + UBSan) run several times slower than the Release
