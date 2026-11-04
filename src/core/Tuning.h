@@ -256,6 +256,7 @@ inline std::string buildTable(const Scale& s, const KeyboardMapping& m, TuningTa
 // ---- MIDI Tuning Standard SysEx ----------------------------------------------
 // Applies a complete SysEx (F0 .. F7) to `table` when it is an MTS message for
 // any device (7F) or `deviceId`. Returns true when the table changed.
+// Malformed lengths and non-data bytes reject the entire message unchanged.
 inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table, int deviceId = 0x7F) noexcept
 {
     if (data == nullptr || size < 6 || data[0] != 0xF0 || data[size - 1] != 0xF7) return false;
@@ -263,13 +264,33 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
     if ((!realtime && !nonRealtime) || data[3] != 0x08) return false;
     if (data[2] != 0x7F && data[2] != (std::uint8_t) deviceId) return false;
     const int sub = data[4];
+    // Validate the complete message before touching the table: an interrupted
+    // multi-note update must not apply its complete prefix to sounding notes.
+    // This pass is allocation-free and bounded by the supported wire formats.
+    int expectedSize = 0;
+    if (sub == 0x01 && nonRealtime)
+        expectedSize = 6 + 16 + 128 * 3 + 2;
+    else if (sub == 0x02 || sub == 0x07)
+    {
+        const int header = sub == 0x02 ? 7 : 8;
+        if (size < header + 1) return false;
+        expectedSize = header + data[header - 1] * 4 + 1;
+    }
+    else if (sub == 0x08 || sub == 0x09)
+        expectedSize = 8 + (sub == 0x08 ? 12 : 24) + 1;
+    else
+        return false;
+    if (size != expectedSize) return false;
+    for (int i = 1; i < size - 1; ++i)
+        if (data[i] > 0x7F) return false;
+
     auto pitch3 = [](const std::uint8_t* p, float& out) {
         if (p[0] == 0x7F && p[1] == 0x7F && p[2] == 0x7F) return false; // "no change"
         out = (float) p[0] + (float) ((p[1] << 7) | p[2]) / 16384.0f;
         return true;
     };
     bool changed = false;
-    if (sub == 0x01 && nonRealtime && size >= 6 + 16 + 128 * 3 + 2)
+    if (sub == 0x01)
     {
         const std::uint8_t* p = data + 6 + 16; // program, 16-byte name
         for (int n = 0; n < 128; ++n, p += 3)
@@ -282,15 +303,13 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
     if (sub == 0x02 || sub == 0x07)
     {
         const int header = sub == 0x02 ? 7 : 8; // [prog] or [bank prog], then count
-        if (size < header + 1) return false;
         const int count = data[header - 1];
         for (int i = 0; i < count; ++i)
         {
             const int at = header + i * 4;
-            if (at + 4 > size - 1) break;
             const int key = data[at];
             float v = 0.0f;
-            if (key < 128 && pitch3(data + at + 1, v))
+            if (pitch3(data + at + 1, v))
             {
                 table.pitch[(std::size_t) key] = v;
                 table.mapped[(std::size_t) key] = true;
@@ -299,7 +318,7 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
         }
         return changed;
     }
-    if ((sub == 0x08 || sub == 0x09) && size >= 8 + (sub == 0x08 ? 12 : 24) + 1)
+    if (sub == 0x08 || sub == 0x09)
     {
         const std::uint8_t* p = data + 8; // after channel mask ff gg hh
         std::array<float, 12> offset {};

@@ -123,6 +123,141 @@ void testMtsSysEx()
     check(!tn::applyMtsSysEx(junk, 4, u) && !tn::applyMtsSysEx(single.data(), 5, u), "non-MTS and truncated ignored");
 }
 
+void testMtsMessageBoundaries()
+{
+    using Bytes = std::vector<std::uint8_t>;
+    const Bytes single { 0xF0, 0x7F, 0x7F, 0x08, 0x02, 0, 2,
+                         60, 60, 0x40, 0, 64, 64, 0x20, 0, 0xF7 };
+    const Bytes bank { 0xF0, 0x7F, 0x7F, 0x08, 0x07, 3, 4, 2,
+                       60, 60, 0x40, 0, 64, 64, 0x20, 0, 0xF7 };
+    Bytes bulk { 0xF0, 0x7E, 0x7F, 0x08, 0x01, 0 };
+    bulk.insert(bulk.end(), 16, ' ');
+    for (int n = 0; n < 128; ++n)
+        bulk.insert(bulk.end(), { static_cast<std::uint8_t>(n), 0x40, 0 });
+    bulk.insert(bulk.end(), { 0, 0xF7 }); // legacy bulk checksum is intentionally ignored
+    Bytes octave1 { 0xF0, 0x7F, 0x7F, 0x08, 0x08, 3, 0x7F, 0x7F };
+    octave1.insert(octave1.end(), 12, 74);
+    octave1.push_back(0xF7);
+    Bytes octave2 { 0xF0, 0x7F, 0x7F, 0x08, 0x09, 3, 0x7F, 0x7F };
+    for (int n = 0; n < 12; ++n) octave2.insert(octave2.end(), { 0x50, 0 });
+    octave2.push_back(0xF7);
+    auto nonRealtime = [](Bytes message) { message[1] = 0x7E; return message; };
+    const std::vector<Bytes> valid { single, bank, nonRealtime(bank), bulk,
+                                   octave1, nonRealtime(octave1), octave2, nonRealtime(octave2) };
+
+    // Use a non-default table, including unmapped keys, so a failed transaction
+    // cannot hide a reset-to-12-TET or a change to the mapping bits.
+    tn::TuningTable before;
+    for (int n = 0; n < 128; ++n)
+    {
+        before.pitch[static_cast<std::size_t>(n)] += 0.125f;
+        before.mapped[static_cast<std::size_t>(n)] = n % 3 != 0;
+    }
+    auto rejectedUnchanged = [&](const Bytes& bytes) {
+        auto actual = before;
+        return !tn::applyMtsSysEx(bytes.data(), static_cast<int>(bytes.size()), actual)
+            && actual.pitch == before.pitch && actual.mapped == before.mapped;
+    };
+    std::size_t malformedCases = 0;
+    for (std::size_t fixture = 0; fixture < valid.size(); ++fixture)
+    {
+        const auto& bytes = valid[fixture];
+        auto accepted = before;
+        check(tn::applyMtsSysEx(bytes.data(), static_cast<int>(bytes.size()), accepted),
+              "complete MTS boundary fixture accepted " + std::to_string(fixture));
+        const float expected64 = fixture == 3 ? 64.5f : fixture == 4 || fixture == 5 ? 64.1f : 64.25f;
+        check(accepted.pitch[64] == expected64 && accepted.mapped[64],
+              "accepted MTS boundary fixture has the expected pitch " + std::to_string(fixture));
+        bool prefixesRejected = true, extraRejected = true, highBitsRejected = true;
+        // Every prematurely terminated message, even after a complete first
+        // note, must be rejected before ANY table entry can change.
+        for (std::size_t kept = 1; kept + 1 < bytes.size(); ++kept)
+        {
+            Bytes truncated(bytes.begin(), bytes.begin() + kept);
+            truncated.push_back(0xF7);
+            prefixesRejected &= rejectedUnchanged(truncated);
+            ++malformedCases;
+        }
+        for (int extra : { 1, 4, 17 })
+        {
+            auto oversized = bytes;
+            oversized.insert(oversized.end() - 1, extra, 0);
+            extraRejected &= rejectedUnchanged(oversized);
+            ++malformedCases;
+        }
+        // A status byte is not 7-bit SysEx data. Corrupt every position,
+        // especially late entries that used to allow earlier notes to apply.
+        for (std::size_t at = 1; at + 1 < bytes.size(); ++at)
+            for (const int invalid : { 0x80, 0xF0, 0xF7, 0xFF })
+            {
+                auto corrupt = bytes;
+                corrupt[at] = static_cast<std::uint8_t>(invalid);
+                highBitsRejected &= rejectedUnchanged(corrupt);
+                ++malformedCases;
+            }
+        const auto label = std::to_string(fixture);
+        check(prefixesRejected, "all truncated MTS payloads rejected atomically " + label);
+        check(extraRejected, "all oversized MTS payloads rejected atomically " + label);
+        check(highBitsRejected, "all non-data MTS bytes rejected atomically " + label);
+    }
+    std::printf("MTS boundary matrix: %zu malformed messages\n", malformedCases);
+
+    // The sentinel is valid data, not a malformed frequency. It must leave
+    // both the old pitch and mapped flag untouched while other entries apply.
+    auto noChange = single;
+    noChange[8] = noChange[9] = noChange[10] = 0x7F;
+    auto sentinel = before;
+    check(tn::applyMtsSysEx(noChange.data(), static_cast<int>(noChange.size()), sentinel)
+          && sentinel.pitch[60] == before.pitch[60] && sentinel.mapped[60] == before.mapped[60]
+          && sentinel.pitch[64] == 64.25f && sentinel.mapped[64],
+          "valid no-change sentinel preserves its entry while the next note applies");
+    noChange[12] = noChange[13] = noChange[14] = 0x7F;
+    check(rejectedUnchanged(noChange), "all-no-change MTS payload leaves the table untouched");
+    const Bytes empty { 0xF0, 0x7F, 0x7F, 0x08, 0x02, 0, 0, 0xF7 };
+    check(rejectedUnchanged(empty), "empty MTS update remains a no-op");
+    Bytes maximum { 0xF0, 0x7F, 0x7F, 0x08, 0x02, 0, 127 };
+    for (int n = 0; n < 127; ++n)
+        maximum.insert(maximum.end(), { static_cast<std::uint8_t>(n), static_cast<std::uint8_t>(n), 0x20, 0 });
+    maximum.push_back(0xF7);
+    auto maximumTable = before;
+    bool maximumApplied = tn::applyMtsSysEx(maximum.data(), static_cast<int>(maximum.size()), maximumTable);
+    for (int n = 0; n < 127; ++n)
+        maximumApplied &= maximumTable.pitch[static_cast<std::size_t>(n)] == n + 0.25f
+                       && maximumTable.mapped[static_cast<std::size_t>(n)];
+    check(maximumApplied && maximumTable.pitch[127] == before.pitch[127],
+          "maximum seven-bit count applies every complete note and preserves the unaddressed one");
+    const Bytes topNote { 0xF0, 0x7F, 0x7F, 0x08, 0x02, 0, 1, 127, 127, 127, 126, 0xF7 };
+    check(tn::applyMtsSysEx(topNote.data(), static_cast<int>(topNote.size()), maximumTable)
+          && maximumTable.pitch[127] == 127.0f + 16382.0f / 16384.0f,
+          "highest legal key and pitch are data, not status bytes or the no-change sentinel");
+
+    // A malformed performance message must not retune a sounding voice or
+    // perturb its continuation. This crosses the parser/Engine boundary.
+    auto p = quiet(); p[P_tuningMode] = 2;
+    Engine actual, reference;
+    for (auto* e : { &actual, &reference })
+    {
+        e->prepare(48000.0); e->setParams(p); e->setMtsTuning(before);
+        e->noteOn(64, 0.8f); render(*e, 256);
+    }
+    auto truncated = single;
+    truncated.resize(12);
+    truncated.back() = 0xF7;
+    // Make the first (formerly partially accepted) entry affect the held key.
+    truncated[7] = 64; truncated[8] = 76;
+    check(!actual.handleSysEx(truncated.data(), static_cast<int>(truncated.size())),
+          "engine rejects truncated two-note MTS message");
+    check(actual.getMtsTuning().pitch == before.pitch && actual.getMtsTuning().mapped == before.mapped,
+          "engine preserves the complete table after a malformed MTS message");
+    check(render(actual, 4096) == render(reference, 4096),
+          "rejected MTS message leaves sounding audio continuation bit-identical");
+    check(actual.handleSysEx(single.data(), static_cast<int>(single.size())),
+          "a valid MTS message still applies after a rejected one");
+    render(actual, 64);
+    check(std::abs(semitonesOf(actual, 0, 64.25f)) < 1e-3f,
+          "valid MTS message retunes the sounding note after rejection");
+}
+
 void testEngineTuning()
 {
     auto p = quiet();
@@ -261,6 +396,7 @@ int main()
 {
     testScala();
     testMtsSysEx();
+    testMtsMessageBoundaries();
     testEngineTuning();
     testMpe();
     testVoiceModes();
