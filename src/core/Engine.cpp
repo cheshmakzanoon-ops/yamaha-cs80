@@ -1544,7 +1544,7 @@ void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     for (auto& v : voices)
         if (v.active && v.note == midiNote
-            && (! global.mpe || midiChannel <= 0 || v.midiChannel == midiChannel))
+            && (midiChannel <= 0 || v.midiChannel == midiChannel))
         {
             v.pressure = pressure;
         }

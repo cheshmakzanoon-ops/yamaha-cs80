@@ -268,6 +268,10 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_noise_tests COMMAND cs80_noise_tests)
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_poly_pressure_routing_tests tests/PolyPressureRoutingTests.cpp)
+    target_link_libraries(cs80_poly_pressure_routing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_poly_pressure_routing_tests COMMAND cs80_poly_pressure_routing_tests)
+    set_tests_properties(cs80_poly_pressure_routing_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
     target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
     add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests

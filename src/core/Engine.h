@@ -228,7 +228,7 @@ public:
     void noteOff(int midiNote, int midiChannel = 1);
     void allNotesOff(bool release = true, int midiChannel = 0);
     // A channel of 0 applies the pressure to every matching note; a positive
-    // channel is required for correct per-note behaviour in MPE.
+    // channel addresses only that channel's note, whether or not MPE is on.
     void polyPressure(int midiNote, float pressure, int midiChannel = 0);
     void channelPressure(int midiChannel, float pressure);
     void pitchBend(int midiChannel, float value); // -1..1
