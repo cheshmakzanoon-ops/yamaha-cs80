@@ -316,6 +316,7 @@ void Engine::reset()
     upperZoneBend = 0.0f;
     nextVoice = 0;
     globalBend = 0.0f;
+    globalPitchWheel = 0.0f;
     modWheel = 0.0f;
     lastChannelPressure = 0.0f;
     expression = 1.0f;
@@ -1576,6 +1577,7 @@ void Engine::pitchBend(int midiChannel, float value)
         {
             const float range = mpeZones.masterRange(false);
             globalBend = value * (range >= 0.0f ? range : global.pitchBendRange);
+            globalPitchWheel = value;
             return;
         }
         if (role == MpeZoneLayout::Role::upperMaster)
@@ -1593,6 +1595,7 @@ void Engine::pitchBend(int midiChannel, float value)
     else
     {
         globalBend = value * global.pitchBendRange;
+        globalPitchWheel = value;
     }
 }
 
@@ -1785,16 +1788,19 @@ void Engine::beginSmoothedControls() noexcept
     const double k = controlSmoothing;
     const float ribbonTotal = ribbon + params[P_ribbon];
     c.bendTarget = globalBend;
+    c.pitchWheelTarget = globalPitchWheel;
     c.modWheelTarget = modWheel;
     c.ribbonTarget = ribbon;
     if (c.snapPending)
     {
         c.bend.snap(globalBend);
+        c.pitchWheel.snap(globalPitchWheel);
         c.modWheel.snap(modWheel);
         expressionOptics.reset(expression);
         c.ribbon.snap(ribbonTotal);
     }
     globalBend = (float) c.bend.advance(globalBend, k);
+    globalPitchWheel = (float) c.pitchWheel.advance(globalPitchWheel, k);
     modWheel = (float) c.modWheel.advance(modWheel, k);
     // The EXP volume path is an optical cell (ws4 hand-off, ExpressionOptics.h):
     // its declared log-R law is this controller's smoothing.
@@ -1829,6 +1835,7 @@ void Engine::endSmoothedControls() noexcept
 {
     auto& c = controllerSmoothing;
     globalBend = c.bendTarget;
+    globalPitchWheel = c.pitchWheelTarget;
     modWheel = c.modWheelTarget;
     ribbon = c.ribbonTarget;
     for (int vi = 0; vi < kNumVoices; ++vi)
@@ -1941,8 +1948,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Modern layer (Phase 6): MSEGs and matrix evaluated once per sample. Identity offsets
     // (0, or ratios of exactly 1) when nothing is routed or under PURE CS-80.
+    // Keep wheel position separate from its semitone destination: changing
+    // the bend range is not a new gesture. The existing lower-master source
+    // selection remains unchanged.
     modern.beginSample({ modWheel, ribbon + params[P_ribbon], lastChannelPressure, sharedPressure, expression,
-                         global.pitchBendRange > 0.0f ? globalBend / global.pitchBendRange : 0.0f,
+                         globalPitchWheel,
                          subValue, ringEnv, { lfoValues[0], lfoValues[1], lfoValues[2] } });
     const auto& modernGlobal = modern.getGlobalOffsets();
 

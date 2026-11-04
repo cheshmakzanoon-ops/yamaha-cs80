@@ -543,6 +543,81 @@ void testDefaultInvarianceAndPurity()
               "configured modern layer is audible in Legacy and Source Performance");
 }
 
+// The matrix taps the physical wheel position, not a semitone displacement
+// divided by the current bend range. Range automation is not a wheel event.
+void testPitchWheelSourceIndependentOfRange()
+{
+    const auto config = routed({
+        { ModSource::pitchBend, ModSource::none, ModDestination::subDepth, ModTarget::both },
+        { ModSource::pitchBend, ModSource::none, ModDestination::pan, ModTarget::rankII },
+    });
+    const auto renderFrames = [](Engine& e, int frames)
+    {
+        std::vector<float> block(2 * (std::size_t) frames);
+        e.render(block.data(), frames);
+    };
+    const auto setup = [&](Engine& e, ParamValues& p, int policy, float range)
+    {
+        p[P_sourcePerformance] = policy != 0 ? 1.0f : 0.0f;
+        p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+        p[P_analogNoise] = p[P_drift] = p[P_voiceDispersion] = 0.0f;
+        p[P_pitchBendRange] = range;
+        p[P_mod1Amount] = p[P_mod2Amount] = 0.5f;
+        e.prepare(kRate);
+        e.setModernConfig(config);
+        e.setParams(p);
+        check(e.getParams()[P_pitchBendRange] == range, "wheel-source fixture uses a legal bend range");
+        e.noteOn(60, 0.8f);
+    };
+    for (int policy = 0; policy < 3; ++policy)
+        for (float range : { 1.0f, 2.0f, 12.0f, 48.0f })
+            for (float wheel : { -0.75f, 0.5f })
+            {
+                Engine e;
+                ParamValues p;
+                setup(e, p, policy, range);
+                e.pitchBend(1, wheel);
+                renderFrames(e, 64);
+                const double expected = policy == 2 ? 0.0 : 0.5 * wheel;
+                check(near(e.getModernGlobalOffsets().subDepthGain, 1.0 + expected, 1.0),
+                      "wheel position drives global matrix routes independently of bend range");
+                check(near(e.getModernRankOffsets(0, 1).pan, expected, 1.0),
+                      "wheel position drives rank matrix routes independently of bend range");
+                for (float changed : { 12.0f, 1.0f, 48.0f, 2.0f })
+                {
+                    p[P_pitchBendRange] = changed;
+                    e.setParams(p);
+                    renderFrames(e, 64);
+                    check(near(e.getModernGlobalOffsets().subDepthGain, 1.0 + expected, 1.0),
+                          "changing bend range while the wheel is held does not change the matrix source");
+                }
+                e.reset();
+                e.noteOn(60, 0.8f);
+                renderFrames(e, 64);
+                check(e.getModernGlobalOffsets().subDepthGain == 1.0f
+                          && e.getModernRankOffsets(0, 1).pan == 0.0f,
+                      "reset clears the independent pitch-wheel matrix source");
+            }
+
+    // Source policy keeps its 5 ms control smoothing independently of pitch
+    // depth. A range change during the gesture must not restart that glide.
+    for (float range : { 1.0f, 2.0f, 12.0f, 48.0f })
+    {
+        Engine e;
+        ParamValues p;
+        setup(e, p, 1, range);
+        renderFrames(e, 64);
+        e.pitchBend(1, 0.8f);
+        renderFrames(e, 120);
+        p[P_pitchBendRange] = range == 1.0f ? 12.0f : 1.0f;
+        e.setParams(p);
+        renderFrames(e, 120);
+        check(std::abs(e.getModernGlobalOffsets().subDepthGain
+                       - (1.0 + 0.4 * (1.0 - std::exp(-1.0)))) < 1.0e-6,
+              "pitch-wheel matrix gesture retains the 5 ms source-policy response across a range edit");
+    }
+}
+
 void testEngineConsumption()
 {
     // velocity -> pitch, mod wheel -> LP cutoff on rank II: read the rank telemetry against
@@ -770,6 +845,7 @@ int main()
     testRemovedGlobalRateIsIdentity();
     testDefaultInvarianceAndPurity();
     testEngineConsumption();
+    testPitchWheelSourceIndependentOfRange();
     testEngineRateRouteRemoval();
     testEngineGlobalSourcePriorityAfterRelease();
     testStability();

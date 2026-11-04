@@ -142,6 +142,15 @@ append only.
 | original controls tapped | ribbon, poly pressure, channel pressure, shared pressure (TRG5 diode-OR maximum of held keys), keyboard contour (KBC ladder HIGH - LOW weight, `PerformanceControls.h`), SUB output, ring-modulator envelope, filter EG and VCA EG of the rank (previous sample) |
 | interface / modern | velocity, mod wheel, key follow (61-key playing surface MIDI 24..84 as -1..1, the instrument's own software convention in `PerformanceControls.h`, not the unresolved KAS map), LFO 1-3, MSEG 1-3, expression, pitch bend, CC74, note random, constant |
 
+The pitch-bend matrix source is the normalized wheel position (-1..1), independent
+of the wheel's semitone range. Editing the range while holding the wheel does
+not change its matrix assignments. Circuit mode smooths this source with the same 5 ms response as other
+wheel gestures; Legacy updates immediately. Reset clears it and PURE masks it.
+The existing direct pitch-bend calculation and MPE lower-master source selection
+are unchanged. `testPitchWheelSourceIndependentOfRange` in `ModMatrixTests.cpp`
+covers legal range endpoints, signed positions, live range edits, smoothing, reset
+and PURE.
+
 | Destination | Full scale at amount 1 (declared) |
 | --- | --- |
 | pitch | 12 semitones |

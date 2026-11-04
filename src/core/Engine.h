@@ -579,6 +579,7 @@ private:
     int nextVoice = 0;
     int lastNote = 60;
     float globalBend = 0.0f;
+    float globalPitchWheel = 0.0f; // normalized matrix source, independent of bend range
     float modWheel = 0.0f;
     float lastChannelPressure = 0.0f; // modern-layer matrix source only
     float expression = 1.0f;
@@ -609,10 +610,10 @@ private:
     SmootherBank settingsSmoothing;
     struct ControllerSmoothing
     {
-        ControlSmoother bend, modWheel, ribbon;
+        ControlSmoother bend, pitchWheel, modWheel, ribbon;
         std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
         std::array<uint64_t, kNumVoices> age {};
-        float bendTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
+        float bendTarget = 0.0f, pitchWheelTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
         // Expression acts at its gain stage through the PRA I2/I3 optical cell
         // (ExpressionOptics.h); the wah cell reads the pedal target itself.
         float expressionGain = 1.0f;
