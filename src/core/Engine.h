@@ -610,10 +610,11 @@ private:
     SmootherBank settingsSmoothing;
     struct ControllerSmoothing
     {
-        ControlSmoother bend, pitchWheel, modWheel, ribbon;
+        ControlSmoother bend, upperBend, pitchWheel, modWheel, ribbon;
         std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
         std::array<uint64_t, kNumVoices> age {};
-        float bendTarget = 0.0f, pitchWheelTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
+        float bendTarget = 0.0f, upperBendTarget = 0.0f, pitchWheelTarget = 0.0f;
+        float modWheelTarget = 0.0f, ribbonTarget = 0.0f;
         // Expression acts at its gain stage through the PRA I2/I3 optical cell
         // (ExpressionOptics.h); the wah cell reads the pedal target itself.
         float expressionGain = 1.0f;

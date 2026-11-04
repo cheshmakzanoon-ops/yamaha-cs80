@@ -1788,18 +1788,23 @@ void Engine::beginSmoothedControls() noexcept
     const double k = controlSmoothing;
     const float ribbonTotal = ribbon + params[P_ribbon];
     c.bendTarget = globalBend;
+    c.upperBendTarget = upperZoneBend;
     c.pitchWheelTarget = globalPitchWheel;
     c.modWheelTarget = modWheel;
     c.ribbonTarget = ribbon;
     if (c.snapPending)
     {
         c.bend.snap(globalBend);
+        c.upperBend.snap(upperZoneBend);
         c.pitchWheel.snap(globalPitchWheel);
         c.modWheel.snap(modWheel);
         expressionOptics.reset(expression);
         c.ribbon.snap(ribbonTotal);
     }
     globalBend = (float) c.bend.advance(globalBend, k);
+    // Each MPE master owns a separate zone, but both follow the same
+    // controller dezipper. Keep the event target intact between samples.
+    upperZoneBend = (float) c.upperBend.advance(upperZoneBend, k);
     globalPitchWheel = (float) c.pitchWheel.advance(globalPitchWheel, k);
     modWheel = (float) c.modWheel.advance(modWheel, k);
     // The EXP volume path is an optical cell (ws4 hand-off, ExpressionOptics.h):
@@ -1835,6 +1840,7 @@ void Engine::endSmoothedControls() noexcept
 {
     auto& c = controllerSmoothing;
     globalBend = c.bendTarget;
+    upperZoneBend = c.upperBendTarget;
     globalPitchWheel = c.pitchWheelTarget;
     modWheel = c.modWheelTarget;
     ribbon = c.ribbonTarget;
