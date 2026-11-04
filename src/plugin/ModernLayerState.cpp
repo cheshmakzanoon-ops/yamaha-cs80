@@ -1,6 +1,7 @@
 #include "ModernLayerState.h"
 
 #include <cmath>
+#include <limits>
 
 namespace cs80
 {
@@ -53,7 +54,16 @@ int intProperty(const juce::ValueTree& tree, const juce::Identifier& id, int fal
     if (! (value.isInt() || value.isInt64() || value.isDouble() || value.isString()))
         return fallback;
     const double number = value.isString() ? value.toString().getDoubleValue() : (double) value;
-    return std::isfinite(number) ? (int) std::lround(number) : fallback;
+    if (! std::isfinite(number))
+        return fallback;
+    // Round without converting to long first: lround can overflow before the
+    // subsequent int cast, and narrowing a large long can alias a valid index
+    // or enum. Keep the existing nearest-integer rule within the int domain.
+    const double rounded = std::round(number);
+    if (rounded < (double) std::numeric_limits<int>::min()
+        || rounded > (double) std::numeric_limits<int>::max())
+        return fallback;
+    return (int) rounded;
 }
 } // namespace
 

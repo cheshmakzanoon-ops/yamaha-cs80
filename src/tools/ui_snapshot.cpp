@@ -15,6 +15,7 @@
 #include "../../tests/PresetRecallHostTests.h"
 #include "../../tests/PresetFileHostTests.h"
 #include "../../tests/SessionSchemaHostTests.h"
+#include "../../tests/ModernLayerStateRangeHostTests.h"
 #include "../../tests/SessionUndoHostTests.h"
 #include "../../tests/UiReadinessTests.h"
 #include "../../tests/Ws3KeyboardHostTests.h"
@@ -3608,6 +3609,7 @@ int main(int argc, char** argv)
     // [ws5-modern] modern modulation/FX layer: session state, host parameters, audio, pages.
     std::puts("UI SMOKE PHASE: modern modulation and FX layer");
     cs80::tests::testModernLayerHost(check);
+    cs80::tests::testModernLayerStateRangeHost(check);
     cs80::tests::testModernLayerUi(check, flushGui, dir);
     std::puts("UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)");
     cs80::tests::testIntegrationUi(check, flushGui);

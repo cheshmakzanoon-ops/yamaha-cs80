@@ -325,6 +325,12 @@ of the APVTS state:
 - A fresh instance writes no child until edited; a state without the child (every session saved
   before this layer) restores the defaults, which are inert until an amount is raised. A later
   `version` loads every field it understands; malformed values are sanitised.
+- Integer fields are rounded in double precision and checked against the `int` range before
+  conversion. Oversized indices are ignored and settings use their existing field fallbacks,
+  so values such as `4294967297` cannot wrap into MSEG/slot 1 or an active routing enum.
+  Representable values retain the existing nearest-integer and enum/shape sanitation rules.
+  `ModernLayerStateRangeHostTests.h` covers typed trees, host and user-preset XML restores,
+  audio-engine publication, saved round trips and both rounded integer boundaries.
 - The listener sits on `apvts.state` itself, because `replaceState` reports the redirection only
   to listeners of the assigned object.
 - Threads: edits and restores from any non-audio thread; the audio thread takes the newest
