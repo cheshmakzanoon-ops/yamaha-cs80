@@ -441,10 +441,14 @@ private:
             identity();
             newestCandidate = newest = SourceValues {};
         }
-        // processVoice rewrites every rank offset each sample; global offsets are only
-        // written while a global destination is routed, so clear them when none is.
+        // processVoice rewrites every rank offset each sample; global offsets and
+        // shared MSEG-rate offsets are only written while a global destination is
+        // routed. Clear both when none is, or a removed rate route keeps acting.
         if (active && ! globalDestinations)
+        {
             globalOffsets = GlobalOffsets {};
+            globalRate = {};
+        }
     }
 
     ModernConfig config {};

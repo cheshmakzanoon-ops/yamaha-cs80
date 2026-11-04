@@ -290,6 +290,86 @@ void testInactiveIsIdentity()
     check(identity(layer), "removing the last route restores the identity immediately");
 }
 
+// Removing the last global destination must also remove its cached MSEG-rate
+// offset. The layer stays active through the MSEG -> pitch route in every case.
+void testRemovedGlobalRateIsIdentity()
+{
+    constexpr double sampleRate = 48000.0;
+    constexpr int samples = 64;
+    for (int m = 0; m < kMsegCount; ++m)
+        for (auto trigger : { MsegTrigger::mono, MsegTrigger::free })
+            for (float amount : { -0.5f, 0.5f })
+                for (int removal = 0; removal < 3; ++removal)
+                {
+                    auto config = routed({
+                        { (ModSource) ((int) ModSource::mseg1 + m), ModSource::none,
+                          ModDestination::pitch, ModTarget::both },
+                        { ModSource::constant, ModSource::none,
+                          (ModDestination) ((int) ModDestination::mseg1Rate + m), ModTarget::both }
+                    });
+                    auto& shape = config.msegs[(std::size_t) m];
+                    shape = defaultShape(2);
+                    shape.trigger = trigger;
+                    auto controls = amounts({ 0.5f, amount });
+                    controls.msegRate[(std::size_t) m] = 1.25f;
+                    ModernLayer layer;
+                    layer.prepare(sampleRate);
+                    layer.setConfig(config);
+                    layer.setControls(controls);
+                    auto advance = [&](int count)
+                    {
+                        for (int n = 0; n < count; ++n)
+                        {
+                            layer.beginSample(globals());
+                            layer.processVoice(0, voiceAt(60, 0.8f));
+                        }
+                    };
+                    advance(4); // Start the mono runner and establish the rate offset.
+                    const double beforeModulated = layer.displayPosition(m);
+                    advance(samples);
+                    const double baseAdvance = samples * 1.25 / sampleRate;
+                    check(std::abs(layer.displayPosition(m) - beforeModulated
+                                   - baseAdvance * std::exp2((double) amount * kMsegRateOctaves)) < 1e-10,
+                          "global MSEG-rate route changes the shared envelope speed");
+
+                    if (removal == 0)
+                    {
+                        config.slots[1] = {};
+                        layer.setConfig(config);
+                    }
+                    else if (removal == 1)
+                    {
+                        controls.amount[1] = 0.0f;
+                        layer.setControls(controls);
+                    }
+                    else
+                    {
+                        config.slots[1].destination = ModDestination::pan;
+                        layer.setConfig(config);
+                    }
+                    const double beforeRemoved = layer.displayPosition(m);
+                    advance(samples);
+                    check(layer.isActive(), "removing a global rate route leaves the rank route active");
+                    check(std::abs(layer.displayPosition(m) - beforeRemoved - baseAdvance) < 1e-10,
+                          "deleting, zeroing or rerouting the last global rate route restores the base speed");
+
+                    // An unrelated rank-route edit must not clear a live rate offset.
+                    config.slots[1].destination = (ModDestination) ((int) ModDestination::mseg1Rate + m);
+                    config.slots[1].source = ModSource::constant;
+                    controls.amount[1] = amount;
+                    layer.setConfig(config);
+                    layer.setControls(controls);
+                    advance(2);
+                    config.slots[0].target = ModTarget::rankII;
+                    layer.setConfig(config);
+                    const double beforeRankEdit = layer.displayPosition(m);
+                    advance(samples);
+                    check(std::abs(layer.displayPosition(m) - beforeRankEdit
+                                   - baseAdvance * std::exp2((double) amount * kMsegRateOctaves)) < 1e-10,
+                          "editing a rank route preserves a still-live shared MSEG-rate route");
+                }
+}
+
 // ---- Engine level -------------------------------------------------------------------
 
 constexpr double kRate = 48000.0;
@@ -496,6 +576,54 @@ void testEngineConsumption()
     }
 }
 
+void testEngineRateRouteRemoval()
+{
+    constexpr int frames = 480;
+    constexpr double duration = (double) frames / kRate;
+    for (int policy = 0; policy < 2; ++policy)
+        for (auto trigger : { MsegTrigger::mono, MsegTrigger::free })
+            for (bool removeRouting : { false, true })
+            {
+                ParamValues p;
+                p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+                p[P_mod1Amount] = 0.5f;
+                p[P_mod2Amount] = 1.0f;
+                auto config = routed({
+                    { ModSource::mseg1, ModSource::none, ModDestination::pitch, ModTarget::both },
+                    { ModSource::constant, ModSource::none, ModDestination::mseg1Rate, ModTarget::both }
+                });
+                config.msegs[0] = defaultShape(2); // Two-second linear ramp.
+                config.msegs[0].trigger = trigger;
+                Engine engine;
+                engine.prepare(kRate);
+                engine.setModernConfig(config);
+                engine.setParams(p);
+                engine.noteOn(60, 0.8f);
+                std::vector<float> block(2 * frames);
+                engine.render(block.data(), frames);
+                const float modulatedStart = engine.getModernMsegValue(-1, 0);
+                engine.render(block.data(), frames);
+                check(std::abs(engine.getModernMsegValue(-1, 0) - modulatedStart - 4.0 * duration)
+                          < tol::kMsegLevelAbsTolerance,
+                      "engine consumes the routed shared MSEG's eight-times rate");
+                if (removeRouting)
+                {
+                    config.slots[1] = {};
+                    engine.setModernConfig(config);
+                }
+                else
+                {
+                    p[P_mod2Amount] = 0.0f;
+                    engine.setParams(p);
+                }
+                const float removedStart = engine.getModernMsegValue(-1, 0);
+                engine.render(block.data(), frames);
+                check(std::abs(engine.getModernMsegValue(-1, 0) - removedStart - 0.5 * duration)
+                          < tol::kMsegLevelAbsTolerance,
+                      "engine removes the shared MSEG-rate offset after routing or amount edits");
+            }
+}
+
 void testStability()
 {
     for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
@@ -531,8 +659,10 @@ int main()
     testRoutingMath();
     testCurvesAndNoteValues();
     testInactiveIsIdentity();
+    testRemovedGlobalRateIsIdentity();
     testDefaultInvarianceAndPurity();
     testEngineConsumption();
+    testEngineRateRouteRemoval();
     testStability();
     std::printf("%d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;
