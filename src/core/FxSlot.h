@@ -37,6 +37,7 @@ struct FxSlot
     ModernFxSlot modern;   // modern models (liveType kModernTypeBase + model)
     LoudnessMatcher match; // FX LOUDNESS MATCH: slot in/out loudness
     int liveType = 0;      // effect whose state may hold audio; 0 = none
+    bool gainCompActive = false; // last observed FX LOUDNESS MATCH switch state
 
     void prepare(float rate)
     {
@@ -52,6 +53,7 @@ struct FxSlot
         modern.prepare(rate);
         match.prepare(rate);
         liveType = 0;
+        gainCompActive = false;
     }
     // Delay-line and filter history only; the tape-delay damping OnePoles are left alone so
     // that Engine::reset keeps its historical arithmetic (see Engine::applyParams).
@@ -65,6 +67,7 @@ struct FxSlot
         modern.reset();
         match.reset();
         liveType = 0;
+        gainCompActive = false;
     }
     void resetDamping() noexcept { dampL.reset(); dampR.reset(); }
     // Drop the audio held by one effect type (1 chorus, 2 phaser, 3 tape, 4 plate, 5 drive,
@@ -101,6 +104,14 @@ struct FxSlot
             // it would replay it, late, the next time the slot is switched on.
             clear(liveType);
             liveType = live;
+        }
+        if (c.gainComp != gainCompActive)
+        {
+            // While bypassed the matcher does not see the running effect. Start a new
+            // measurement when it is toggled instead of reapplying an obsolete gain
+            // and energy/filter history. The effect itself, including its tail, stays.
+            match.reset();
+            gainCompActive = c.gainComp;
         }
         if (live == 0)
             return { l, r };

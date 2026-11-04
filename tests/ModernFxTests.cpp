@@ -296,6 +296,85 @@ void testOversamplingTransitions()
             }
 }
 
+// ---- live loudness matching changes --------------------------------------------------
+
+void testLoudnessMatchTransitions()
+{
+    // Matching can be switched off while the effect keeps running. Its old gain and
+    // measurement filters must not be applied to later audio when it is switched on
+    // again. The reference advances exactly the same effect but explicitly starts a
+    // new loudness measurement on each enable edge.
+    for (float fs : { 88200.0f, 96000.0f, 192000.0f, 384000.0f })
+        for (int kind = 1; kind <= 10; ++kind)
+        {
+            FxSlot slot;
+            slot.prepare(fs);
+            SlotControls c;
+            c.type = kind <= 5 ? kind : 0;
+            c.model = kind <= 5 ? 0 : kind - 5;
+            c.mix = 1.0f;
+            c.gainComp = true;
+            for (int n = 0; n < (int) fs; ++n)
+            {
+                const float x = 0.25f * std::sin(kTwoPi * 4000.0f * (float) n / fs);
+                slot.process(c, x, x, 0.0f, fs);
+            }
+            const double learnedGain = slot.match.currentGain();
+            check(std::abs(learnedGain - 1.0) > 1.0e-5,
+                  "loudness-transition fixture establishes non-neutral old gain");
+
+            // Turning matching off must preserve the existing effect and its tail.
+            // Copy the warmed effect and use its raw wet/dry path as the reference.
+            FxSlot reference = slot;
+            c.gainComp = false;
+            c.mix = 0.1f;
+            bool sameOff = true;
+            for (int n = 0; n < (int) (0.1f * fs); ++n)
+            {
+                const float x = 0.1f * std::sin(kTwoPi * 200.0f * (float) n / fs);
+                const auto expected = c.model > 0
+                    ? reference.modern.process(c.model, x, x, c.mix, c.a, c.b, c.oversampling)
+                    : reference.processClassic(c.type, x, x, c.mix, 0.0f, fs);
+                const auto actual = slot.process(c, x, x, 0.0f, fs);
+                sameOff = sameOff && actual.l == expected.l && actual.r == expected.r;
+            }
+            check(sameOff, "disabling loudness matching preserves the running effect state");
+
+            reference.match.reset();
+            c.gainComp = true;
+            bool sameOn = true;
+            for (int n = 0; n < 4096; ++n)
+            {
+                const float l = 0.1f * std::cos(0.037f * (float) n);
+                const float r = 0.08f * std::sin(0.043f * (float) n);
+                auto expected = c.model > 0
+                    ? reference.modern.process(c.model, l, r, c.mix, c.a, c.b, c.oversampling)
+                    : reference.processClassic(c.type, l, r, c.mix, 0.0f, fs);
+                const float gain = reference.match.process(l, r, expected.l, expected.r);
+                expected.l *= gain;
+                expected.r *= gain;
+                const auto actual = slot.process(c, l, r, 0.0f, fs);
+                sameOn = sameOn && actual.l == expected.l && actual.r == expected.r;
+            }
+            check(sameOn, "re-enabling loudness matching uses fresh measurements and preserves the effect");
+
+            // A second toggle exercises the reused control state. An unchanged enabled
+            // state must not reset on every sample: the reference above is continuous.
+            c.gainComp = false;
+            slot.process(c, 0.0f, 0.0f, 0.0f, fs);
+            reference = slot;
+            reference.match.reset();
+            c.gainComp = true;
+            auto expected = c.model > 0
+                ? reference.modern.process(c.model, 0.2f, -0.1f, c.mix, c.a, c.b, c.oversampling)
+                : reference.processClassic(c.type, 0.2f, -0.1f, c.mix, 0.0f, fs);
+            const float gain = reference.match.process(0.2f, -0.1f, expected.l, expected.r);
+            const auto actual = slot.process(c, 0.2f, -0.1f, 0.0f, fs);
+            check(actual.l == expected.l * gain && actual.r == expected.r * gain,
+                  "a repeated matching toggle also starts a fresh measurement");
+        }
+}
+
 // ---- drive aliasing against the 64x truth model ----------------------------------------
 
 // Coherent test tone: 2799 cycles in 65536 samples at 96 kHz = 4100.1 Hz.
@@ -770,6 +849,7 @@ int main(int argc, char** argv)
     run("halfband", testHalfband);
     run("drive", testDriveOversampling);
     run("transitions", testOversamplingTransitions);
+    run("matching-transitions", testLoudnessMatchTransitions);
     run("classic", testClassicByteIdentity);
     run("static", testStaticLoudness);
     run("matched", testMatchedLoudness);
