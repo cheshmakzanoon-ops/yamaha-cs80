@@ -319,6 +319,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_modern_fx_tests PRIVATE cs80_core)
     add_test(NAME cs80_modern_fx_tests COMMAND cs80_modern_fx_tests)
     set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
+    add_executable(cs80_plate_reverb_rate_tests tests/PlateReverbRateTests.cpp)
+    target_include_directories(cs80_plate_reverb_rate_tests PRIVATE src)
+    add_test(NAME cs80_plate_reverb_rate_tests COMMAND cs80_plate_reverb_rate_tests)
+    set_tests_properties(cs80_plate_reverb_rate_tests PROPERTIES TIMEOUT 180)
 
     # [ws6-library] register this workstream's core tests below this line.
     find_package(Threads REQUIRED)

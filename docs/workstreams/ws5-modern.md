@@ -251,6 +251,29 @@ decay range now starts at 0.8 s, which the structure can honour. The tape repeat
 a 3 kHz burst that the in-loop head-loss filter attenuates; the law holds in the passband, so the
 check uses 500 Hz.
 
+### Plate brightness across processing rates (2026-11-04)
+
+The modern plate previously kept its input-bandwidth and tank-damping coefficients fixed
+per sample while scaling its delay lengths with the internal rate. A higher host rate or
+oversampling factor therefore made a damped tail brighter and longer. At decay 0.7 and
+brightness 0, the stereo 12 kHz octave-band RT60 was 2.481 s at 96 kHz but 3.754 s at
+384 kHz, a 51% increase. Existing 1 kHz decay tests used brightness 1, which bypasses tank
+damping and did not catch this defect.
+
+The poles now use `p(rate) = p(96000)^(96000/rate)`, preserving their decay in seconds.
+The 96 kHz reference is the existing modern-effect voicing and static-calibration rate,
+not Dattorro's 29761 Hz delay-length reference. The original float arithmetic remains
+unchanged at 96 kHz. This intentionally changes active modern Plate renders at other
+rates, including saved sessions; it does not claim byte compatibility for those renders.
+Classic effects, inactive modern effects and PURE CS-80 are outside the correction.
+
+`cs80_plate_reverb_rate_tests` compares stereo octave-band decay at 1/4/12 kHz and
+brightness 0/0.5/1 across 88.2/96/192/384 kHz, plus reset and same-brightness rate changes.
+The corrected dark 12 kHz tail is 2.483 s at 384 kHz versus 2.481 s at 96 kHz; the largest
+measured band-decay difference in the grid is 1.3%. The 8% regression limit accounts for
+matched-pole frequency-response approximation, delay rounding and tank modulation,
+rather than claiming exact spectral invariance. The uncorrected model fails six checks.
+
 ## Step 4 — State and host parameters
 
 `src/plugin/ModernLayerState.*` keeps the MSEG shapes and matrix routing as a versioned child
