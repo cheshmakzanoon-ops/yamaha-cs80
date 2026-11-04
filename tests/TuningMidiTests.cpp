@@ -336,6 +336,86 @@ void testMpe()
     check(hr.noteOnVelocity(1, 100) == 100.0f * (1.0f / 127.0f), "the prefix is consumed by one note-on");
 }
 
+// Data Entry belongs to the last selected parameter family. Unsupported NRPNs
+// must not reuse an earlier MPE RPN (MIDI.org, About MIDI Part 3, MIDI Messages).
+void testMpeNrpnIsolation()
+{
+    const auto exercise = [](const std::string& path, int firstNrpn, auto cc, auto zones)
+    {
+        const auto rpn = [&](int channel, int parameter, int value) {
+            cc(channel, 101, 0); cc(channel, 100, parameter); cc(channel, 6, value);
+        };
+        const std::string label = path + " NRPN CC" + std::to_string(firstNrpn) + ": ";
+        rpn(1, 6, 7); rpn(16, 6, 7);
+        check(zones().lowerMemberCount() == 7 && zones().upperMemberCount() == 7,
+              label + "fixture has two seven-member zones");
+        for (int channel : { 1, 16 })
+        {
+            // Each selector independently terminates the prior RPN, including
+            // an incomplete NRPN pair and either selector order.
+            cc(channel, firstNrpn, 1); cc(channel, 6, 3);
+            check(zones().lowerMemberCount() == 7 && zones().upperMemberCount() == 7,
+                  label + "first NRPN selector prevents stale MCM data entry");
+            cc(channel, firstNrpn == 99 ? 98 : 99, 2); cc(channel, 6, 4);
+            check(zones().lowerMemberCount() == 7 && zones().upperMemberCount() == 7,
+                  label + "complete NRPN pair cannot change either zone");
+        }
+        rpn(1, 6, 7); rpn(16, 6, 7); // Isolate range checks from a failing zone check.
+        // NRPN cancellation is per channel and covers both data-entry bytes,
+        // whether the prior RPN selected a master or a member bend range.
+        for (int channel : { 1, 2, 10, 16 })
+        {
+            const bool upper = channel >= 10;
+            const bool master = channel == 1 || channel == 16;
+            const auto range = [&] {
+                return master ? zones().masterRange(upper) : zones().memberRange(upper);
+            };
+            rpn(channel, 0, 24);
+            check(range() == 24.0f, label + "legitimate RPN bend range applies");
+            cc(channel, firstNrpn, 1); cc(channel, 38, 50);
+            check(range() == 24.0f, label + "NRPN fine data cannot reuse an RPN MSB");
+            cc(channel, 6, 3); cc(channel, 38, 25);
+            check(range() == 24.0f, label + "NRPN coarse and fine data preserve bend range");
+            // Reselect a supported RPN with the alternate byte order.
+            cc(channel, 100, 0); cc(channel, 101, 0); cc(channel, 6, 12); cc(channel, 38, 50);
+            check(range() == 12.5f, label + "RPN reselection restores coarse/fine data entry");
+        }
+        rpn(2, 0, 24); rpn(10, 0, 36);
+        cc(2, firstNrpn, 1); cc(10, 6, 40);
+        check(zones().memberRange(false) == 24.0f && zones().memberRange(true) == 40.0f,
+              label + "NRPN selection leaves another channel's RPN selected");
+        // Registered selector bytes remain cached independently of NRPN bytes.
+        // Returning with just one RPN selector retains the other RPN byte, and
+        // must not reuse the unsupported transaction's data MSB.
+        for (int rpnSelector : { 100, 101 })
+        {
+            rpn(2, 0, 24);
+            cc(2, 99, 2); cc(2, 98, 6); cc(2, 6, 3);
+            cc(2, rpnSelector, 0); cc(2, 38, 50);
+            check(zones().memberRange(false) == 24.0f,
+                  label + "RPN return does not reuse NRPN data MSB");
+            cc(2, 6, 13);
+            check(zones().memberRange(false) == 13.0f,
+                  label + "single-byte RPN return retains the other registered selector");
+        }
+        rpn(1, 6, 5);
+        check(zones().lowerMemberCount() == 5 && zones().upperMemberCount() == 7,
+              label + "MCM reselection still updates the intended zone");
+    };
+    for (int firstNrpn : { 98, 99 })
+    {
+        MpeZoneLayout layout;
+        exercise("layout", firstNrpn,
+                 [&](int channel, int controller, int value) { layout.controlChange(channel, controller, value); },
+                 [&]() -> const MpeZoneLayout& { return layout; });
+        auto p = quiet(); p[P_mpeOn] = 1.0f;
+        Engine engine; engine.prepare(48000.0); engine.setParams(p);
+        exercise("engine", firstNrpn,
+                 [&](int channel, int controller, int value) { engine.controlChange(controller, value / 127.0f, channel); },
+                 [&]() -> const MpeZoneLayout& { return engine.getMpeZones(); });
+    }
+}
+
 void testVoiceModes()
 {
     for (int mode : {2, 3, 4})
@@ -399,6 +479,7 @@ int main()
     testMtsMessageBoundaries();
     testEngineTuning();
     testMpe();
+    testMpeNrpnIsolation();
     testVoiceModes();
     testRibbonCc();
     std::printf("Tuning / MIDI / voice modes: %d checks, %d failures\n", checks, failures);

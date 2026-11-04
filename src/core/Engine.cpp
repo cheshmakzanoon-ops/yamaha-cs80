@@ -1587,7 +1587,10 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         setRibbon(cc >= 64 ? (float) (cc - 64) / 63.0f : (float) (cc - 64) / 64.0f);
     }
     // MPE zone negotiation (Phase 6): RPN 0 / RPN 6 while MPE is on.
-    if (global.mpe && std::isfinite(value) && (controller == 101 || controller == 100 || controller == 6 || controller == 38))
+    // NRPN selectors must also arrive so their data cannot reuse a stale RPN.
+    if (global.mpe && std::isfinite(value)
+        && (controller == 101 || controller == 100 || controller == 99 || controller == 98
+            || controller == 6 || controller == 38))
     {
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
         return;

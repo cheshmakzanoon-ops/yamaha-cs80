@@ -11,8 +11,9 @@
 // channels next to its master; a new MCM shrinks the other zone if they would
 // overlap; 0 members switches the zone off. RPN 0 (pitch-bend sensitivity) on
 // a master sets the zone's master range, on a member the members' range.
-// RPN 127/127 deselects. CC88 (MMA CA-031) is the low 7 bits of the next
-// note-on velocity on that channel.
+// RPN 127/127 deselects. Selecting an unsupported NRPN suspends RPN data
+// entry on that channel until an RPN selector arrives again. CC88 (MMA CA-031)
+// is the low 7 bits of the next note-on velocity on that channel.
 
 #include <array>
 #include <cstdint>
@@ -51,15 +52,19 @@ public:
     float masterRange(bool upper) const noexcept { return upper ? upperMasterRange : lowerMasterRange; }
     float memberRange(bool upper) const noexcept { return upper ? upperMemberRange : lowerMemberRange; }
 
-    // Feed every CC; returns true if it was an RPN controller (101/100/6/38).
+    // Feed every CC; returns true for RPN/NRPN selection or data entry.
     bool controlChange(int channel, int controller, int value) noexcept
     {
         if (channel < 1 || channel > 16) return false;
         auto& s = rpn[static_cast<std::size_t>(channel)];
         switch (controller)
         {
-            case 101: s.msb = value; s.dataMsb = -1; return true;
-            case 100: s.lsb = value; s.dataMsb = -1; return true;
+            case 101: s.msb = value; s.dataMsb = -1; s.nrpn = false; return true;
+            case 100: s.lsb = value; s.dataMsb = -1; s.nrpn = false; return true;
+            // Retain the registered selector bytes for one-byte RPN changes,
+            // but never route unsupported NRPN data into the previous RPN.
+            case 99:
+            case 98: s.nrpn = true; s.dataMsb = -1; return true;
             case 6: s.dataMsb = value; apply(channel, s, false); return true;
             case 38: if (s.dataMsb >= 0) apply(channel, s, true, value); return true;
             default: return false;
@@ -67,10 +72,10 @@ public:
     }
 
 private:
-    struct RpnState { int msb = 127, lsb = 127, dataMsb = -1; };
+    struct RpnState { int msb = 127, lsb = 127, dataMsb = -1; bool nrpn = false; };
     void apply(int channel, const RpnState& s, bool lsbData, int lsbValue = 0) noexcept
     {
-        if (s.msb == 127 && s.lsb == 127) return; // null RPN
+        if (s.nrpn || (s.msb == 127 && s.lsb == 127)) return; // NRPN or null RPN
         if (s.msb == 0 && s.lsb == 6 && !lsbData)
         {
             const int members = s.dataMsb > 15 ? 15 : s.dataMsb;
