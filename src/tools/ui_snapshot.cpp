@@ -13,6 +13,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/PresetRecallHostTests.h"
+#include "../../tests/SessionUndoHostTests.h"
 #include "../../tests/UiReadinessTests.h"
 #include "../../tests/Ws3KeyboardHostTests.h"
 #include "../../tests/PanelEditorTests.h"
@@ -2011,6 +2012,8 @@ int main(int argc, char** argv)
     cs80::tests::testWs3KeyboardHost(check);
     std::puts("UI SMOKE PHASE: preset recall host");
     cs80::tests::testPresetRecallHost(check);
+    std::puts("UI SMOKE PHASE: session undo host");
+    cs80::tests::testSessionUndoHost(check);
     std::puts("UI SMOKE PHASE: engine I/O host");
     cs80::tests::testOversamplingHost(check);
     cs80::tests::testEngineDefaultHost(check);

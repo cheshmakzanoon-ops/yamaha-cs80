@@ -1227,7 +1227,7 @@ void Cs80AudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio] the undo flush and the host never touch the tree at once
     apvts.syncNow();
-    auto state = apvts.copyState();
+    auto state = apvts.copyStateForSave();
     {
         // ws3 Phase 6: the session keeps its Scala/KBM texts (not presets).
         const juce::SpinLock::ScopedLockType lock(scalaLock);
@@ -1328,7 +1328,7 @@ Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
     {
         const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
         apvts.syncNow();
-        return apvts.copyState();
+        return apvts.copyStateForSave();
     }();
     state.setProperty("presetName", savedName, nullptr);
     state.setProperty("factoryIndex", metadata.factoryIndex, nullptr);

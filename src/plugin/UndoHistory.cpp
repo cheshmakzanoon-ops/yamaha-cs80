@@ -146,6 +146,42 @@ void UndoableParameterState::syncNow()
     flushUser();
 }
 
+juce::ValueTree UndoableParameterState::copyStateForSave()
+{
+    const juce::ScopedLock scoped(lock);
+    auto snapshot = state.createCopy();
+    for (auto* parameter : parameters)
+    {
+        if (parameter == nullptr)
+            continue;
+        const auto& id = parameter->getParameterID();
+        const auto* raw = getRawParameterValue(id);
+        if (raw == nullptr)
+            continue;
+        // This is the same denormalised atomic that JUCE flushes to its tree.
+        // Write only to the detached copy: pending live edits retain their
+        // original user/automation classification until the normal flush.
+        const float value = raw->load(std::memory_order_relaxed);
+        bool found = false;
+        for (auto child : snapshot)
+            if (child.getProperty("id").toString() == id)
+            {
+                child.setProperty("value", value, nullptr);
+                found = true;
+            }
+        // JUCE accepts all direct children with a known id, with the last
+        // duplicate winning. Keep every duplicate current in a saved state.
+        if (!found)
+        {
+            juce::ValueTree child("PARAM");
+            child.setProperty("id", id, nullptr);
+            child.setProperty("value", value, nullptr);
+            snapshot.appendChild(child, nullptr);
+        }
+    }
+    return snapshot;
+}
+
 void UndoableParameterState::timerCallback()
 {
     syncExternal();
