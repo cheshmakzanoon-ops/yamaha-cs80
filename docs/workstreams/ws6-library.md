@@ -344,10 +344,16 @@ opposite (original SUB on the circuit engine) for 222+. Intentional change, comm
 - `abToggle()`, `abCopyCurrentTo(int slot)`, `getAbSlot()`, `isAbSlotStored(int)`
   (message thread). A snapshot is the whole sound: panel values (engine policy
   included, so A/B can compare the legacy and circuit engines), both tone selectors, all
-  104 memory controls and the preset name/index. Physical setup and isolation stay live.
+  104 memory controls, MSEG shapes, matrix routing and the preset name/index. Physical
+  setup and isolation stay live.
   The first toggle copies A into the empty B, so it is silent. The inactive slot is saved
   with the session as `<AB_COMPARE version="1">`; a state without it clears both slots;
   it is stripped from the live APVTS state and never read from user preset files.
+  The inactive slot's non-parameter modulation data is an additive `MODERN_LAYER`
+  child within `SLOT`, using the same encoding and sanitation as the active sound.
+  Older A/B states without that child inherit the saved session's top-level modern
+  configuration, because both slots previously shared it. A present child, including
+  an explicitly default configuration, remains independent of the active sound.
 - `randomiseWithinOriginalRanges(uint32 seed)` applies `cs80::library::randomiseWithinOriginalRanges`
   (`src/core/Randomise.h`) to the current sound, names it "Random XXXXXXXX", and leaves
   it a PANEL sound. Rules:

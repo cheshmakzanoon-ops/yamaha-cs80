@@ -212,6 +212,152 @@ void testProgramLibraryHost(Check&& check)
         check(copy.getAbSlot() == 0 && ! copy.isAbSlotStored(1), "a session without A/B data clears both slots");
     }
 
+    // --- A/B also owns non-parameter sound data: MSEG shapes and matrix routing.
+    {
+        auto a = cs80::modern::ModernConfig {};
+        a.slots[0] = { cs80::modern::ModSource::mseg1, cs80::modern::ModSource::velocity,
+                       cs80::modern::ModDestination::lpCutoff, cs80::modern::ModTarget::rankI };
+        a.msegs[0].points[1].level = 0.25f;
+        a.msegs[0].sync = true;
+        a = cs80::modern::sanitizeConfig(a);
+        auto b = a;
+        b.slots[0] = { cs80::modern::ModSource::lfo2, cs80::modern::ModSource::none,
+                       cs80::modern::ModDestination::pitch, cs80::modern::ModTarget::rankII };
+        b.msegs[0].points[1].level = 0.75f;
+        b.msegs[0].sync = false;
+        b = cs80::modern::sanitizeConfig(b);
+
+        Cs80AudioProcessor host;
+        host.getModernLayer().setConfig(a);
+        host.setParamValue(cs80::P_mod1Amount, 0.25f);
+        host.abToggle();
+        check(host.getModernLayer().getConfig() == a,
+              "first A/B toggle copies the current MSEG shapes and routing");
+        host.getModernLayer().setConfig(b);
+        host.setParamValue(cs80::P_mod1Amount, 0.75f);
+        host.abToggle();
+        check(host.getModernLayer().getConfig() == a && host.getParamValue(cs80::P_mod1Amount) == 0.25f,
+              "A/B restores A's routing and MSEG shapes together with its amounts");
+
+        // Both active-slot choices survive two saves/restores. The receiver's
+        // pre-existing routing must not leak into either restored slot.
+        for (int active = 0; active < 2; ++active)
+        {
+            if (host.getAbSlot() != active)
+                host.abToggle();
+            const auto& current = active == 0 ? a : b;
+            const auto& other = active == 0 ? b : a;
+            check(host.getModernLayer().getConfig() == current,
+                  "A/B recalls each slot's own modern sound data");
+            juce::MemoryBlock saved;
+            host.getStateInformation(saved);
+            auto serialized = juce::parseXML(juce::String::fromUTF8(
+                static_cast<const char*>(saved.getData()), (int) saved.getSize()));
+            check(serialized != nullptr, "modern A/B session serializes");
+            if (serialized != nullptr)
+            {
+                const auto tree = juce::ValueTree::fromXml(*serialized);
+                const auto nested = tree.getChildWithName("AB_COMPARE").getChildWithName("SLOT")
+                                        .getChildWithName(cs80::ModernLayerState::treeType);
+                check(cs80::ModernLayerState::fromTree(tree.getChildWithName(cs80::ModernLayerState::treeType))
+                          == current,
+                      "active modern A/B configuration stays in the session's top-level state");
+                check(nested.isValid() && cs80::ModernLayerState::fromTree(nested) == other,
+                      "inactive modern A/B configuration is serialized inside its slot");
+            }
+            Cs80AudioProcessor restored;
+            restored.setStateInformation(saved.getData(), (int) saved.getSize());
+            check(restored.getAbSlot() == active && restored.getModernLayer().getConfig() == current
+                      && restored.getParamValue(cs80::P_mod1Amount) == (active == 0 ? 0.25f : 0.75f),
+                  "session restore preserves the active modern A/B sound");
+            restored.abToggle();
+            check(restored.getModernLayer().getConfig() == other
+                      && restored.getParamValue(cs80::P_mod1Amount) == (active == 0 ? 0.75f : 0.25f),
+                  "session restore preserves the inactive modern A/B sound");
+            restored.getStateInformation(saved);
+            host.getModernLayer().resetToDefaults();
+            host.setStateInformation(saved.getData(), (int) saved.getSize());
+            host.abToggle();
+            check(host.getModernLayer().getConfig() == current,
+                  "repeated A/B session saves retain both modulation configurations");
+        }
+
+        // Before the modern child was stored per slot, both slots shared the
+        // session's top-level config. Preserve that sound when reading old data.
+        juce::MemoryBlock saved;
+        host.getStateInformation(saved);
+        auto xml = juce::parseXML(juce::String::fromUTF8(
+            static_cast<const char*>(saved.getData()), (int) saved.getSize()));
+        check(xml != nullptr, "A/B modern-data fixture serializes");
+        if (xml != nullptr)
+        {
+            auto legacy = juce::ValueTree::fromXml(*xml);
+            auto slot = legacy.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
+            slot.removeChild(slot.getChildWithName(cs80::ModernLayerState::treeType), nullptr);
+            const auto text = legacy.createXml()->toString();
+            const auto current = host.getModernLayer().getConfig();
+            host.getModernLayer().resetToDefaults();
+            host.setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+            host.abToggle();
+            check(host.getModernLayer().getConfig() == current,
+                  "old A/B states without per-slot modern data retain their shared session config");
+
+            auto oldest = legacy.createCopy();
+            oldest.removeChild(oldest.getChildWithName(cs80::ModernLayerState::treeType), nullptr);
+            const auto oldestText = oldest.createXml()->toString();
+            host.getModernLayer().setConfig(b);
+            host.setStateInformation(oldestText.toRawUTF8(), oldestText.getNumBytesAsUTF8());
+            host.abToggle();
+            check(host.getModernLayer().getConfig() == cs80::modern::ModernConfig {},
+                  "A/B states without any modern data restore defaults rather than prior live edits");
+
+            // A present but malformed nested child is sanitized independently;
+            // it is not mistaken for missing legacy data and replaced by A.
+            auto broken = legacy.createCopy();
+            auto nested = cs80::ModernLayerState::toTree(a);
+            nested.getChildWithName("MATRIX").getChild(0).setProperty("source", 1000, nullptr);
+            broken.getChildWithName("AB_COMPARE").getChildWithName("SLOT").addChild(nested, -1, nullptr);
+            const auto expected = cs80::ModernLayerState::fromTree(nested);
+            const auto brokenText = broken.createXml()->toString();
+            host.setStateInformation(brokenText.toRawUTF8(), brokenText.getNumBytesAsUTF8());
+            check(host.getModernLayer().getConfig() == current,
+                  "malformed inactive A/B modulation data does not alter the active sound");
+            host.abToggle();
+            check(host.getModernLayer().getConfig() == expected,
+                  "inactive A/B modulation data uses the normal modern-state sanitation");
+        }
+
+        host.getModernLayer().resetToDefaults();
+        host.abCopyCurrentTo(1 - host.getAbSlot());
+        host.getModernLayer().setConfig(b);
+        host.abToggle();
+        check(host.getModernLayer().getConfig() == cs80::modern::ModernConfig {},
+              "A/B copy captures an explicitly default modern configuration");
+        host.getModernLayer().setConfig(a);
+        host.abCopyCurrentTo(1 - host.getAbSlot());
+        host.getModernLayer().setConfig(b);
+        host.abToggle();
+        host.prepareToPlay(48000.0, 256);
+        block(host, {});
+        check(host.getModernLayer().getConfig() == a && host.getEngine().getModernConfig() == a,
+              "A/B copy restores modern sound data and publishes it to the audio engine");
+
+        host.abCopyCurrentTo(1 - host.getAbSlot());
+        host.getModernLayer().setConfig(b);
+        host.getUndoManager().clearUndoHistory();
+        {
+            Cs80AudioProcessor::ScopedUserEdit edit(host.getUndoableState(), "Compare modulation");
+            host.abToggle();
+        }
+        check(host.getModernLayer().getConfig() == a && host.undo()
+                  && host.getModernLayer().getConfig() == b,
+              "modern-only A/B recall joins the toolbar's undo transaction");
+        check(host.redo() && host.getModernLayer().getConfig() == a,
+              "modern-only A/B recall can be redone");
+        check(!host.getAPVTS().copyState().getChildWithName("AB_COMPARE").isValid(),
+              "modern A/B snapshots stay outside the live parameter tree");
+    }
+
     // --- Library browser: prev/next through the current filter, Legacy section, audition.
     {
         juce::TemporaryFile folder;

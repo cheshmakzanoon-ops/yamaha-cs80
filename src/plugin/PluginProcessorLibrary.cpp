@@ -117,6 +117,7 @@ void Cs80AudioProcessor::captureAbSnapshot(int slot)
     LibraryState::Snapshot s;
     s.stored = true;
     s.values = currentValues();
+    s.modern = modernLayer.getConfig();
     for (int channel = 0; channel < 2; ++channel)
         s.sources[(size_t) channel] = getHardwareSource(channel);
     for (int bank = 0; bank < 4; ++bank)
@@ -152,6 +153,13 @@ void Cs80AudioProcessor::recallAbSnapshot(int slot)
         for (int local = 0; local < cs80::CP_count; ++local)
             if (isMemoryControl(local))
                 write(apvts.getParameter(memoryParameterId(bank, local)), s.memories[(size_t) bank][(size_t) local]);
+    {
+        // The modulation shape/routing is sound data, just like its parameter
+        // amounts. Keep its tree write serialized with host state calls, and
+        // outside abLock to preserve the treeLock -> abLock lock order.
+        const juce::ScopedLock treeLock(apvts.treeLock());
+        modernLayer.setConfig(s.modern);
+    }
     setPresetMetadata(s.name, s.program);
     updateHostDisplay();
 }
@@ -224,6 +232,7 @@ void Cs80AudioProcessor::writeLibraryState(juce::ValueTree& state) const
         for (int local = 0; local < cs80::CP_count; ++local)
             if (isMemoryControl(local))
                 slot.setProperty(memoryParameterId(bank, local), s.memories[(size_t) bank][(size_t) local], nullptr);
+    slot.addChild(cs80::ModernLayerState::toTree(s.modern), -1, nullptr);
     node.addChild(slot, -1, nullptr);
     state.addChild(node, -1, nullptr);
 }
@@ -251,6 +260,12 @@ void Cs80AudioProcessor::readLibraryState(const juce::ValueTree& state)
             return range.snapToLegalValue(juce::jlimit(range.start, range.end, value));
         };
         restored.stored = true;
+        // Older A/B snapshots stored no modulation config: both slots used
+        // the session's top-level data. Inherit that incoming state (never
+        // the receiving instance's live edits) only when the child is absent.
+        const auto modern = slot.getChildWithName(cs80::ModernLayerState::treeType);
+        restored.modern = cs80::ModernLayerState::fromTree(modern.isValid()
+            ? modern : state.getChildWithName(cs80::ModernLayerState::treeType));
         restored.name = slot.getProperty("presetName", "Init Patch").toString();
         restored.program = juce::jlimit(0, juce::jmax(0, (int) getFactoryPresets().size() - 1),
                                         (int) slot.getProperty("factoryIndex", 0));
