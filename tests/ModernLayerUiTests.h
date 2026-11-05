@@ -6,6 +6,7 @@
 // writes the APVTS state. Snapshots are written beside the other UI captures.
 
 #include "ModernLayerHostTests.h"
+#include "UiSmokeTiming.h"
 #include "plugin/ModernModulationUi.h"
 
 namespace cs80::tests
@@ -28,11 +29,16 @@ void testModernLayerUi(Check check, Flush flush, const juce::File& snapshotDir)
     // Construct and paint every page at the Studio sizes; a refresh must not write state.
     auto paintCheck = [&](juce::Component& page, const char* name, int w, int h)
     {
+        const auto paintStart = ui_timing::Clock::now();
+        ui_timing::Duration snapshotTime, pngTime;
         page.setSize(w, h);
         page.addToDesktop(0);
         page.setVisible(true);
         flush(60);
-        const auto image = page.createComponentSnapshot(page.getLocalBounds(), true, 1.0f);
+        const auto image = snapshotTime.measure([&]
+        {
+            return page.createComponentSnapshot(page.getLocalBounds(), true, 1.0f);
+        });
         check(image.isValid() && image.getWidth() == w && distinctColours(image) > 12, "modern layer page paints");
         std::function<void(juce::Component&)> inside = [&](juce::Component& parent)
         {
@@ -51,8 +57,12 @@ void testModernLayerUi(Check check, Flush flush, const juce::File& snapshotDir)
         {
             stream.setPosition(0);
             stream.truncate();
-            juce::PNGImageFormat().writeImageToStream(image, stream);
+            pngTime.measure([&] { juce::PNGImageFormat().writeImageToStream(image, stream); });
         }
+        std::printf("UI SMOKE TIMING: modern_page=%s width=%d height=%d total_seconds=%.6f "
+                    "snapshot=%.6f png=%.6f\n", name, w, h,
+                    ui_timing::secondsSince(paintStart, ui_timing::Clock::now()),
+                    snapshotTime.seconds, pngTime.seconds);
     };
     {
         mui::ModernModulationPage modulation(host);

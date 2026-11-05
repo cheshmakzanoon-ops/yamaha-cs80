@@ -2,6 +2,7 @@
 
 #include "plugin/ModernLayerState.h"
 #include "plugin/PluginProcessor.h"
+#include "UiSmokeTiming.h"
 
 #include <array>
 #include <limits>
@@ -47,6 +48,22 @@ void testModernLayerStateRangeHost(Check&& check)
     edited.slots[0] = { ModSource::velocity, ModSource::none, ModDestination::pitch, ModTarget::rankII };
     edited.msegs[0].points[1].level = 0.25f;
 
+    ui_timing::Duration fixtureCopy, fixtureXml, sessionText, fixtureWrite;
+    ui_timing::Duration presetLoad, sessionLoad, audioProcess, stateSave, roundTripLoad;
+    int completedCases = 0, completedPaths = 0;
+    const auto rangeStart = ui_timing::Clock::now();
+    const auto reportTiming = [&]
+    {
+        std::printf("UI SMOKE TIMING: modern_state_ranges cases=%d paths=%d total_seconds=%.6f "
+                    "copy=%.6f xml=%.6f session_text=%.6f fixture_write=%.6f "
+                    "preset_load=%.6f session_load=%.6f audio=%.6f save=%.6f round_trip_load=%.6f\n",
+                    completedCases, completedPaths,
+                    ui_timing::secondsSince(rangeStart, ui_timing::Clock::now()),
+                    fixtureCopy.seconds, fixtureXml.seconds, sessionText.seconds, fixtureWrite.seconds,
+                    presetLoad.seconds, sessionLoad.seconds, audioProcess.seconds,
+                    stateSave.seconds, roundTripLoad.seconds);
+    };
+
     auto verify = [&](const juce::ValueTree& layer, const ModernConfig& expected, const juce::String& context)
     {
         const auto checkCase = [&](bool ok, const char* message)
@@ -58,34 +75,56 @@ void testModernLayerStateRangeHost(Check&& check)
                   "typed modern state bounds integers before narrowing");
         for (bool session : { false, true })
         {
-            auto state = original.createCopy();
-            state.appendChild(layer.createCopy(), nullptr);
+            auto state = fixtureCopy.measure([&]
+            {
+                auto copy = original.createCopy();
+                copy.appendChild(layer.createCopy(), nullptr);
+                return copy;
+            });
             host->getModernLayer().setConfig(edited);
             if (session)
             {
-                const auto text = state.createXml()->toString();
-                host->setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+                const auto text = [&]
+                {
+                    const auto xml = fixtureXml.measure([&] { return state.createXml(); });
+                    return sessionText.measure([&] { return xml->toString(); });
+                }();
+                sessionLoad.measure([&]
+                {
+                    host->setStateInformation(text.toRawUTF8(), text.getNumBytesAsUTF8());
+                });
             }
             else
             {
-                const bool written = state.createXml()->writeTo(file);
+                const bool written = [&]
+                {
+                    const auto xml = fixtureXml.measure([&] { return state.createXml(); });
+                    return fixtureWrite.measure([&] { return xml->writeTo(file); });
+                }();
                 check(written, "modern state range user-preset fixture written");
                 if (! written) return;
-                host->loadUserPreset(file);
+                presetLoad.measure([&] { host->loadUserPreset(file); });
             }
             checkCase(host->getModernLayer().getConfig() == expected,
                       session ? "host restore rejects overflowing modern integers"
                               : "preset restore rejects overflowing modern integers");
-            host->processBlock(audio, midi);
+            audioProcess.measure([&] { host->processBlock(audio, midi); });
             checkCase(host->getEngine().getModernConfig() == expected,
                       "bounded modern configuration reaches the audio engine");
             juce::MemoryBlock saved;
-            host->getStateInformation(saved);
+            stateSave.measure([&] { host->getStateInformation(saved); });
             roundTrip->getModernLayer().setConfig(edited);
-            roundTrip->setStateInformation(saved.getData(), (int) saved.getSize());
+            roundTripLoad.measure([&]
+            {
+                roundTrip->setStateInformation(saved.getData(), (int) saved.getSize());
+            });
             checkCase(roundTrip->getModernLayer().getConfig() == expected,
                       "bounded modern state survives serialized session round trip");
+            ++completedPaths;
         }
+        ++completedCases;
+        // Keep partial cumulative evidence even if a later case times out.
+        if (completedCases % 12 == 0) reportTiming();
     };
 
     for (const auto& value : outside)
@@ -147,5 +186,6 @@ void testModernLayerStateRangeHost(Check&& check)
         expected = sanitizeConfig(expected);
         verify(layer, expected, "representable loopStart=" + juce::String(item.first, 2));
     }
+    reportTiming();
 }
 } // namespace cs80::tests

@@ -25,6 +25,7 @@
 #include "../../tests/ModernLayerUiTests.h"
 #include "../../tests/IntegrationUiTests.h"   // [integration] pages, toolbar wiring and undo scope
 #include "../../tests/ProgramLibraryHostTests.h"
+#include "../../tests/UiSmokeTiming.h"
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_graphics/juce_graphics.h>
@@ -2003,30 +2004,31 @@ int main(int argc, char** argv)
     std::setvbuf(stdout, nullptr, _IONBF, 0);
     std::printf("UI SMOKE START: processor=%zu bytes engine=%zu bytes\n",
                 sizeof(Cs80AudioProcessor), sizeof(cs80::Engine));
-    std::puts("UI SMOKE PHASE: JUCE initialization");
+    cs80::tests::ui_timing::Phases phases;
+    phases.begin("JUCE initialization");
     juce::ScopedJuceInitialiser_GUI juceInit;
-    std::puts("UI SMOKE PHASE: host metadata");
+    phases.begin("host metadata");
     cs80::tests::testPluginHostMetadata(check);
-    std::puts("UI SMOKE PHASE: output meter host");
+    phases.begin("output meter host");
     cs80::tests::testOutputMeterHost(check);
-    std::puts("UI SMOKE PHASE: source performance host");
+    phases.begin("source performance host");
     cs80::tests::testSourcePerformanceHost(check);
-    std::puts("UI SMOKE PHASE: ws3 keyboard/tuning host");
+    phases.begin("ws3 keyboard/tuning host");
     cs80::tests::testWs3KeyboardHost(check);
-    std::puts("UI SMOKE PHASE: preset recall host");
+    phases.begin("preset recall host");
     cs80::tests::testPresetRecallHost(check);
-    std::puts("UI SMOKE PHASE: preset file host");
+    phases.begin("preset file host");
     cs80::tests::testPresetFileHost(check);
-    std::puts("UI SMOKE PHASE: session schema host");
+    phases.begin("session schema host");
     cs80::tests::testSessionSchemaHost(check);
-    std::puts("UI SMOKE PHASE: session undo host");
+    phases.begin("session undo host");
     cs80::tests::testSessionUndoHost(check);
-    std::puts("UI SMOKE PHASE: engine I/O host");
+    phases.begin("engine I/O host");
     cs80::tests::testOversamplingHost(check);
     cs80::tests::testEngineDefaultHost(check);
     cs80::tests::testListeningOutputHost(check);
     cs80::tests::testParameterGroupsHost(check);
-    std::puts("UI SMOKE PHASE: editor initial size");
+    phases.begin("editor initial size");
     cs80::tests::testEditorInitialSize(check);
 
     juce::String outDir = "artifacts/ui";
@@ -2042,23 +2044,23 @@ int main(int argc, char** argv)
     juce::File dir(juce::File::getCurrentWorkingDirectory().getChildFile(outDir));
     dir.createDirectory();
 
-    std::puts("UI SMOKE PHASE: external input host");
+    phases.begin("external input host");
     testExternalInputHost();
-    std::puts("UI SMOKE PHASE: performance and isolation host");
+    phases.begin("performance and isolation host");
     testPerformanceControlsHost();
     testIsolatedFootControllerHost();
     testParityIsolationHost();
-    std::puts("UI SMOKE PHASE: keyboard and expression host");
+    phases.begin("keyboard and expression host");
     testKeyPressureGesture();
     testKeyPressureGesture(true);
     testKeyboardHandoffHost(false);
     testKeyboardHandoffHost(true);
     testExpressionPersistence();
-    std::puts("UI SMOKE PHASE: live envelope and factory source host");
+    phases.begin("live envelope and factory source host");
     testLiveEnvelopeTimingHost();
     testSourceFactoryHost();
 
-    std::puts("UI SMOKE PHASE: editor, state and automation");
+    phases.begin("editor, state and automation");
     Cs80AudioProcessor processor;
     // Fresh instances run the circuit engine (plan 1.7): 63 decimator samples
     // plus its oscillator's 8 internal samples (ws1 merge).
@@ -3573,47 +3575,50 @@ int main(int argc, char** argv)
     }
     else check(false, "physical memory lid can be opened");
 
-    std::puts("UI SMOKE PHASE: source performance captures");
+    phases.begin("source performance captures");
     captureSourcePerformanceViews(dir);
 
     // All preset-save I/O is confined to fresh temporary fixtures.
-    std::puts("UI SMOKE PHASE: preset save and panic");
+    phases.begin("preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::testPluginPanic(check, flushGui);
-    std::puts("UI SMOKE PHASE: program library, Program Change, A/B and randomise");
+    phases.begin("program library, Program Change, A/B and randomise");
     cs80::tests::testProgramLibraryHost(check);
-    std::puts("UI SMOKE PHASE: pressure ownership and UI readiness");
+    phases.begin("pressure ownership and UI readiness");
     cs80::tests::testKeyboardPressureOwnershipHost(check);
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
-    std::puts("UI SMOKE PHASE: original panel editor (ws7)");
+    phases.begin("original panel editor (ws7)");
     cs80::tests::runPanelEditorTests(check, flushGui, dir);
 
     // [ws8-studio] begin: modern-layer UI tests (toolbar, Studio view, drawers, interaction, MIDI learn, undo).
-    std::puts("UI SMOKE PHASE: studio views");
+    phases.begin("studio views");
     cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
     cs80::tests::studio::testLfoScopeWaveforms(check, flushGui, dir);
-    std::puts("UI SMOKE PHASE: studio interaction");
+    phases.begin("studio interaction");
     cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
-    std::puts("UI SMOKE PHASE: studio MIDI learn");
+    phases.begin("studio MIDI learn");
     cs80::tests::studio::testMidiLearnRoundTrip(check, flushGui, dir);
-    std::puts("UI SMOKE PHASE: studio undo and redo");
+    phases.begin("studio undo and redo");
     cs80::tests::studio::testUndoRedo(check, flushGui);
-    std::puts("UI SMOKE PHASE: studio learning tools");
+    phases.begin("studio learning tools");
     cs80::tests::studio::testLearningTools(check, flushGui, dir);
-    std::puts("UI SMOKE PHASE: studio tab order, hit targets and contrast");
+    phases.begin("studio tab order, hit targets and contrast");
     cs80::tests::studio::testTabOrder(check, flushGui);
     cs80::tests::studio::testHitTargets(check, flushGui);
     cs80::tests::studio::testContrast(check);
     // [ws8-studio] end
     // [ws5-modern] modern modulation/FX layer: session state, host parameters, audio, pages.
-    std::puts("UI SMOKE PHASE: modern modulation and FX layer");
+    phases.begin("modern modulation and FX layer");
     cs80::tests::testModernLayerHost(check);
+    phases.begin("modern layer integer state ranges");
     cs80::tests::testModernLayerStateRangeHost(check);
+    phases.begin("modern layer page painting and interaction");
     cs80::tests::testModernLayerUi(check, flushGui, dir);
-    std::puts("UI SMOKE PHASE: integration wiring (pages, toolbar, library, undo)");
+    phases.begin("integration wiring (pages, toolbar, library, undo)");
     cs80::tests::testIntegrationUi(check, flushGui);
+    phases.finish();
 
     if (failures == 0)
         std::printf("UI SMOKE TEST PASSED\n");
