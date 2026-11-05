@@ -966,6 +966,11 @@ void Engine::triggerArpNote()
     }
 
     const auto& step = arpSequence[(size_t) index];
+    // Admit the generated pitch using the current table, as for direct notes.
+    // An excluded step is a timed rest, not a removed source key: another
+    // octave can be mapped, and remapping must work without a new key strike.
+    if (global.tuningMode != 0 && ! noteMapped(step.note))
+        return;
     const int voice = chooseVoice();
     if (voice < 0)
         return;

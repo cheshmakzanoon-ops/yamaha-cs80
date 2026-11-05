@@ -285,6 +285,126 @@ void testEngineTuning()
     check(std::abs(semitonesOf(q, 0, 69.0f)) < 1e-3f, "PURE CS-80 ignores microtuning");
 }
 
+
+// Generated ARP notes obey the same mapping admission as direct onsets. Keep
+// excluded steps as rests: the next octave may be mapped, and the table can
+// change while its source key remains held.
+void testArpeggiatorTuningMap()
+{
+    const auto white = table("diatonic7.scl", "white-keys.kbm");
+    tn::Scale scale;
+    check(tn::parseScale(readFile("12tet.scl"), scale).empty(), "parse ARP range scale");
+    auto range = tn::defaultMapping(scale);
+    range.first = 60;
+    range.last = 71;
+    tn::TuningTable narrow;
+    check(tn::buildTable(scale, range, narrow).empty(), "build ARP range mapping");
+
+    const auto heldVoice = [](const Engine& engine) {
+        for (int voice = 0; voice < 8; ++voice)
+            if (const auto info = engine.getVoiceInfo(voice); info.active && info.held)
+                return voice;
+        return -1;
+    };
+    const auto heldNote = [&](const Engine& engine) {
+        const int voice = heldVoice(engine);
+        return voice < 0 ? -1 : engine.getVoiceInfo(voice).note;
+    };
+    const auto load = [](Engine& engine, const tn::TuningTable& mapping, int mode) {
+        if (mode == 1) engine.setScalaTuning(mapping);
+        else engine.setMtsTuning(mapping); // Table API supports mapped flags; no SysEx claim.
+    };
+
+    for (bool source : {false, true})
+        for (int mode : {1, 2})
+        {
+            auto p = quiet();
+            p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+            p[P_tuningMode] = (float) mode;
+            p[P_arpOn] = 1.0f;
+            p[P_arpRate] = 16.0f; // 3,000 host frames per step at 48 kHz.
+            const std::string label = std::string(source ? "Circuit" : "Legacy")
+                + " ARP tuning " + std::to_string(mode) + ": ";
+
+            Engine excluded;
+            excluded.prepare(48000.0);
+            excluded.setParams(p);
+            load(excluded, white, mode);
+            excluded.noteOn(61, 0.8f, 2);
+            render(excluded, 1);
+            check(excluded.activeVoices() == 0, label + "bundled KBM x key allocates no voice");
+
+            auto octaves = p;
+            octaves[P_arpOctaves] = 2.0f;
+            Engine ranged;
+            ranged.prepare(48000.0);
+            ranged.setParams(octaves);
+            load(ranged, narrow, mode);
+            ranged.noteOn(60, 0.8f, 2);
+            render(ranged, 1);
+            check(heldNote(ranged) == 60, label + "mapped root starts");
+            render(ranged, 3001);
+            check(heldNote(ranged) == -1, label + "excluded generated octave is a timed rest");
+            render(ranged, 3000);
+            check(heldNote(ranged) == 60, label + "next mapped step keeps the scheduled clock");
+
+            Engine dynamic;
+            dynamic.prepare(48000.0);
+            dynamic.setParams(p);
+            tn::TuningTable live;
+            load(dynamic, live, mode);
+            dynamic.noteOn(60, 0.8f, 2);
+            render(dynamic, 1);
+            check(heldNote(dynamic) == 60, label + "initial table admits onset");
+            live.mapped[60] = false;
+            load(dynamic, live, mode);
+            render(dynamic, 0);
+            check(heldNote(dynamic) == 60, label + "table edit preserves the existing gate");
+            render(dynamic, 3001);
+            check(heldNote(dynamic) == -1, label + "next onset uses the current table");
+            live.mapped[60] = true;
+            load(dynamic, live, mode);
+            render(dynamic, 3000);
+            check(heldNote(dynamic) == 60, label + "remapping resumes without a new key strike");
+
+            Engine generated;
+            generated.prepare(48000.0);
+            generated.setParams(octaves);
+            tn::TuningTable hole;
+            hole.mapped[60] = false;
+            load(generated, hole, mode);
+            generated.noteOn(60, 0.8f, 2);
+            render(generated, 1);
+            check(heldNote(generated) == -1, label + "unmapped root step rests");
+            render(generated, 3001);
+            check(heldNote(generated) == 72, label + "mapped octave of an unmapped root still plays");
+
+            Engine allocation;
+            allocation.prepare(48000.0);
+            allocation.setParams(p);
+            load(allocation, hole, mode);
+            allocation.noteOn(60, 0.3f, 2);
+            allocation.noteOn(64, 0.7f, 7);
+            render(allocation, 1);
+            check(allocation.activeVoices() == 0, label + "rest does not consume an allocator slot");
+            render(allocation, 3001);
+            const auto info = allocation.getVoiceInfo(0);
+            check(heldVoice(allocation) == 0 && info.note == 64
+                      && info.channel == 7 && info.velocity == 0.7f,
+                  label + "next mapped note keeps allocator, channel and velocity");
+
+            // Merely loading exclusions does not enable them in 12-TET mode.
+            p[P_tuningMode] = 0.0f;
+            Engine bypass;
+            bypass.prepare(48000.0);
+            bypass.setParams(p);
+            load(bypass, white, mode);
+            bypass.noteOn(61, 0.8f, 2);
+            render(bypass, 1);
+            check(heldNote(bypass) == 61, label + "tuning mode zero ignores loaded exclusions");
+        }
+}
+
 void testMpe()
 {
     MpeZoneLayout z;
@@ -478,6 +598,7 @@ int main()
     testMtsSysEx();
     testMtsMessageBoundaries();
     testEngineTuning();
+    testArpeggiatorTuningMap();
     testMpe();
     testMpeNrpnIsolation();
     testVoiceModes();
