@@ -1243,9 +1243,23 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
     if (global.velocityCurve != 0.0f)
         velocity = applyVelocityCurve(velocity, global.velocityCurve);
     // Opt-in KAS scan timing: act at the next scan instant, in scan order.
-    if (scanTimingActive() && scanner.push(midiNote, midiChannel, velocity, true))
-        return;
+    if (scanTimingActive())
+    {
+        if (scanner.push(midiNote, midiChannel, velocity, true))
+            return;
+        flushScanEvents();
+    }
     applyNoteOn(midiNote, velocity, midiChannel);
+}
+
+void Engine::flushScanEvents()
+{
+    // A full queue must complete before the overflow event takes the immediate
+    // path; otherwise releases and retriggers can overtake their earlier keys.
+    scanner.flush([this](const kas::Scanner::Event& event) {
+        if (event.on) applyNoteOn(event.note, event.velocity, event.channel);
+        else applyNoteOff(event.note, event.channel);
+    });
 }
 
 void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
@@ -1409,8 +1423,12 @@ void Engine::cancelSustainTails()
 
 void Engine::noteOff(int midiNote, int midiChannel)
 {
-    if (scanTimingActive() && scanner.push(midiNote, midiChannel, 0.0f, false))
-        return;
+    if (scanTimingActive())
+    {
+        if (scanner.push(midiNote, midiChannel, 0.0f, false))
+            return;
+        flushScanEvents();
+    }
     applyNoteOff(midiNote, midiChannel);
 }
 

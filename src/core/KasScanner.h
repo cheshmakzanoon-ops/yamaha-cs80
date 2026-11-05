@@ -86,7 +86,8 @@ public:
     int scanPeriodSamples() const noexcept { return period; }
     int pending() const noexcept { return count; }
 
-    // Returns false when full; the caller then acts on the event at once.
+    // Returns false when full. The caller must flush pending events before
+    // acting on the rejected event, so it cannot overtake an earlier onset.
     bool push(int note, int channel, float velocity, bool on) noexcept
     {
         if (count >= kCapacity) return false;
@@ -110,6 +111,15 @@ public:
     {
         if (++clock < period) return false;
         clock = 0;
+        flush(dispatch);
+        return true;
+    }
+
+    // Bounded overload fallback: dispatch at most kCapacity events early,
+    // keeping the same scan order and leaving the periodic scan clock alone.
+    template <class Dispatch>
+    void flush(Dispatch&& dispatch) noexcept
+    {
         if (count > 0)
         {
             std::sort(events.begin(), events.begin() + count, [](const Event& a, const Event& b) {
@@ -123,7 +133,6 @@ public:
             count = 0;
             for (int i = 0; i < n; ++i) dispatch(events[static_cast<std::size_t>(i)]);
         }
-        return true;
     }
 
 private:

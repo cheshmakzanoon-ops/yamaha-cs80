@@ -229,6 +229,17 @@ separate scans, distinct pitches, Legacy, and scan-off operation with no pending
 queue retain their previous order. This is a software event-adapter correction,
 not a newly measured hardware behavior.
 
+**Queue-overflow compatibility correction.** The adapter holds at most 64
+pending events. If another event arrives before the next scan, it now dispatches
+the queued batch first, in the same low-key/same-pitch arrival order, then acts
+on the overflowing event immediately. The scan clock is unchanged. Previously,
+the overflowing event acted first: a release could miss its queued strike,
+a retrigger could release the wrong onset, or a released waiting key could
+revive later. Dense performances with scan timing enabled can therefore change
+when more than 64 events arrive within a scan interval. Batches of at most 64,
+Legacy, and scan-off playback retain their existing behavior. This bounded,
+allocation-free overload policy is a software safeguard, not a hardware claim.
+
 ### Evidence class
 
 | Law | Class | Source / alternatives |

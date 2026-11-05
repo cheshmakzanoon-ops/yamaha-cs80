@@ -536,6 +536,7 @@ private:
     // Note events after the optional KAS scan quantisation (Phase 2.2).
     void applyNoteOn(int midiNote, float velocity, int midiChannel);
     void applyNoteOff(int midiNote, int midiChannel);
+    void flushScanEvents();
     bool scanTimingActive() const noexcept
     { return global.kasScanTiming && usesSourceModels(global.renderPolicy) && ! global.arpOn; }
     // Circuit engine: a still-held key that found no free circuit is assigned
