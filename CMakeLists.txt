@@ -29,6 +29,9 @@ if (CS80_BUILD_TESTS)
         target_compile_options(cs80_tests PRIVATE -Wall -Wextra)
     endif()
     enable_testing()
+    add_executable(cs80_pump_until_tests tests/PumpUntilTests.cpp)
+    add_test(NAME cs80_pump_until_tests COMMAND cs80_pump_until_tests)
+    set_tests_properties(cs80_pump_until_tests PROPERTIES TIMEOUT 30)
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
@@ -461,6 +464,16 @@ if (CS80_BUILD_PLUGIN)
     endif()
 
     if (CS80_BUILD_TESTS)
+        # XML display metadata only: no processor or GUI initialization.
+        juce_add_console_app(cs80_preset_display_name_tests
+            PRODUCT_NAME "CS80 Preset Display Name Tests")
+        target_sources(cs80_preset_display_name_tests PRIVATE tests/PresetDisplayNameTests.cpp)
+        target_include_directories(cs80_preset_display_name_tests PRIVATE src)
+        target_link_libraries(cs80_preset_display_name_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_preset_display_name_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_preset_display_name_tests COMMAND cs80_preset_display_name_tests)
+        set_tests_properties(cs80_preset_display_name_tests PROPERTIES TIMEOUT 30)
+
         # Detached ValueTree matching only: no processor or GUI initialization.
         juce_add_console_app(cs80_parameter_state_index_tests
             PRODUCT_NAME "CS80 Parameter State Index Tests")

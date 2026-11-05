@@ -2,6 +2,7 @@
 
 #include "ArtCommon.h"
 #include "PluginProcessor.h"
+#include "PresetDisplayName.h"
 #include "core/FactoryPresets.h"
 
 #include <algorithm>
@@ -279,12 +280,14 @@ void readUserFileValues(const juce::File& file, cs80::ParamValues& values, std::
 
 // Reads the parameter values of a saved user patch (an APVTS state document)
 // without touching the processor. Unknown or missing entries keep defaults.
-std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& file)
+std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& file, juce::String& displayName)
 {
     const auto& ids = parameterIdMap();
 
     cs80::ParamValues values;
-    if (auto xml = juce::XmlDocument::parse(file))
+    auto xml = juce::XmlDocument::parse(file);
+    displayName = presetDisplayName(xml.get(), file.getFileNameWithoutExtension());
+    if (xml != nullptr)
         for (auto* child : xml->getChildIterator())
         {
             if (! child->hasAttribute("id") || ! child->hasAttribute("value"))
@@ -2954,7 +2957,7 @@ void PresetBrowser::refresh()
         e.key = "U:" + file.getFileName();
         e.slot = "U" + juce::String(++userNumber).paddedLeft('0', 2);
         e.modified = file.getLastModificationTime().toMilliseconds();
-        e.signature = signatureForUserFile(file);
+        e.signature = signatureForUserFile(file, e.name);
         finish(e);
         entries.push_back(std::move(e));
     }
@@ -3725,7 +3728,7 @@ void PresetBrowser::revertToOpening()
 
 // Works out which library entry is the loaded sound. A factory program counts
 // when the name still matches it (a fresh instance appends " / Original SUB");
-// a saved user patch counts when its file name matches the preset name; a
+// a saved user patch counts when its display name matches the preset name; a
 // factory program with the same name is the last resort.
 void PresetBrowser::syncLoaded()
 {

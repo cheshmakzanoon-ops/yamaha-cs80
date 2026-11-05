@@ -2,8 +2,10 @@
 
 #include "plugin/PluginProcessor.h"
 #include "plugin/PresetBrowser.h"
+#include "PumpUntil.h"
 
 #include <cmath>
+#include <cstdio>
 #include <memory>
 #include <vector>
 
@@ -179,6 +181,17 @@ struct PresetSaveAccess
             return nullptr;
         };
 
+        const auto waitFor = [&](const char* phase, auto ready)
+        {
+            const bool completed = pumpUntil(ready, flush,
+                [] { return std::chrono::steady_clock::now(); });
+            if (! completed)
+                std::fprintf(stderr, "Preset-save timeout: %s (2000 ms); overwrite alert=%s\n",
+                             phase, findAlert() != nullptr ? "present" : "absent");
+            check(completed, phase);
+            return completed;
+        };
+
         cs80::ui::PresetBrowser browser(host);
         int loadedCallbacks = 0;
         browser.onPresetLoaded = [&] { ++loadedCallbacks; };
@@ -186,7 +199,8 @@ struct PresetSaveAccess
         const int previousSelection = browser.selectedFilteredRow;
         const auto previousDescription = browser.description.getText();
         browser.saveButton.onClick();
-        flush(30);
+        if (! waitFor("first overwrite dialog becomes modal", [&] { return findAlert() != nullptr; }))
+            return; // Do not let a stale dialog contaminate the next scenario.
         auto* alert = findAlert();
         check(alert != nullptr && ! browser.saveButton.isEnabled() && loadedCallbacks == 0 && unchanged(),
               "browser asks before overwriting and does not report a save while pending");
@@ -197,7 +211,9 @@ struct PresetSaveAccess
             browser.saveButton.onClick();
             check(findAlert() == alert, "repeated Save does not create duplicate overwrite dialogs");
             alert->triggerButtonClick("Cancel");
-            flush(30);
+            if (! waitFor("cancel callback completes", [&]
+                { return ! browser.overwriteConfirmationPending && findAlert() == nullptr; }))
+                return;
         }
         check(loadedCallbacks == 0 && unchanged() && browser.saveButton.isEnabled()
                   && browser.selectedFilteredRow == previousSelection
@@ -207,13 +223,16 @@ struct PresetSaveAccess
 
         browser.saveName.setText("Round: trip", false);
         browser.saveButton.onClick();
-        flush(30);
+        if (! waitFor("sanitized-name overwrite dialog becomes modal", [&] { return findAlert() != nullptr; }))
+            return;
         alert = findAlert();
         check(alert != nullptr, "sanitized-name collision also requires UI confirmation");
         if (alert != nullptr)
         {
             alert->triggerButtonClick("Overwrite");
-            flush(30);
+            if (! waitFor("overwrite callback completes", [&]
+                { return ! browser.overwriteConfirmationPending && findAlert() == nullptr; }))
+                return;
         }
         check(loadedCallbacks == 1 && host.getPresetName() == "Round: trip"
                   && browser.saveStatus.getText().startsWith("Saved")
@@ -222,6 +241,54 @@ struct PresetSaveAccess
         auto overwritten = juce::XmlDocument::parse(saved.file);
         check(overwritten != nullptr && overwritten->getStringAttribute("presetName") == "Round: trip",
               "confirmed overwrite keeps the requested display name inside valid XML");
+
+        check(browser.selectedEntry() != nullptr
+                  && browser.selectedEntry()->name == "Round: trip"
+                  && browser.selectedEntry()->key == "U:Round trip.cs80xml"
+                  && browser.isLoaded(*browser.selectedEntry())
+                  && browser.loadButton.getButtonText() == "RELOAD",
+              "sanitized save keeps the XML display name and filename-based loaded key");
+        host.loadUserPreset(saved.file);
+        browser.refresh();
+        check(browser.selectedEntry() != nullptr
+                  && browser.selectedEntry()->name == "Round: trip"
+                  && browser.loadedKey == "U:Round trip.cs80xml",
+              "sanitized display name and loaded identity survive reload and refresh");
+
+        // External copies can share metadata names. Their favourite identities
+        // must remain their distinct filenames, not their display labels.
+        const auto copiedFile = root.getChildFile("presets/External copy.cs80xml");
+        check(copiedFile.replaceWithText(saved.file.loadFileAsString()),
+              "external copy fixture written");
+        browser.refresh();
+        int matchingNames = 0;
+        juce::StringArray matchingKeys;
+        for (const auto& entry : browser.entries)
+            if (entry.isUser && entry.name == "Round: trip")
+            {
+                ++matchingNames;
+                matchingKeys.addIfNotAlreadyThere(entry.key);
+            }
+        check(matchingNames == 2 && matchingKeys.size() == 2
+                  && matchingKeys.contains("U:Round trip.cs80xml")
+                  && matchingKeys.contains("U:External copy.cs80xml"),
+              "duplicate XML names retain distinct unchanged favourite keys");
+
+        const juce::String factoryName(host.getFactoryPresets().front().name);
+        if (overwritten != nullptr)
+        {
+            overwritten->setAttribute("presetName", factoryName);
+            check(overwritten->writeTo(root.getChildFile("presets/Factory named user.cs80xml")),
+                  "factory-name user fixture written");
+        }
+        browser.refresh();
+        juce::StringArray factoryNamedKeys;
+        for (const auto& entry : browser.entries)
+            if (entry.name == factoryName)
+                factoryNamedKeys.addIfNotAlreadyThere(entry.key);
+        check(factoryNamedKeys.contains("F:" + factoryName)
+                  && factoryNamedKeys.contains("U:Factory named user.cs80xml"),
+              "factory and user display-name duplicates retain separate favourite identities");
 
         const auto beforeNewSaveEntries = browser.entries.size();
         browser.saveName.setText("Browser success", false);
@@ -249,11 +316,14 @@ struct PresetSaveAccess
         const auto beforeCloseBytes = saved.file.loadFileAsString();
         const auto beforeCloseName = host.getPresetName();
         closing->saveButton.onClick();
-        flush(30);
+        if (! waitFor("closing-browser overwrite dialog becomes modal", [&] { return findAlert() != nullptr; }))
+            return;
         juce::Component::SafePointer<juce::AlertWindow> closingAlert(findAlert());
         check(closingAlert != nullptr, "closing-browser test reaches pending confirmation");
         closing.reset();
-        flush(30);
+        if (! waitFor("closing browser destroys its dialog", [&]
+            { return closingAlert == nullptr && findAlert() == nullptr; }))
+            return;
         check(loadedCallbacks == 2 && host.getPresetName() == beforeCloseName
                   && saved.file.loadFileAsString() == beforeCloseBytes && findAlert() == nullptr,
               "closing browser before confirmation makes the safe callback a no-op");
@@ -262,7 +332,13 @@ struct PresetSaveAccess
         closing->saveName.setText("Round trip", false);
         closing->saveButton.onClick();
         closing.reset(); // Before JUCE's deferred dialog creation runs.
-        flush(30);
+        // Observe a queued turn even though "no dialog" is already true now.
+        // Shared ownership keeps the marker safe if the bounded wait times out.
+        auto dispatched = std::make_shared<bool>(false);
+        const bool posted = juce::MessageManager::callAsync([dispatched] { *dispatched = true; });
+        check(posted, "post close-before-creation event-loop marker");
+        if (! posted || ! waitFor("close-before-creation event-loop marker runs", [&] { return *dispatched; }))
+            return;
         check(loadedCallbacks == 2 && host.getPresetName() == beforeCloseName
                   && saved.file.loadFileAsString() == beforeCloseBytes && findAlert() == nullptr,
               "closing browser before dialog creation cancels the queued dialog safely");
