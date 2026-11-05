@@ -1098,6 +1098,10 @@ void Engine::refreshKeyboardContour() noexcept
 
 void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
 {
+    // Capture the accepted onset before it owns a circuit. A last key-up and
+    // this key-down can share one host sample, with no rendered gate gap.
+    const bool startsMonoPhrase = modern.isActive() && std::none_of(voices.begin(), voices.end(),
+        [](const Voice& voice) { return voice.active && (voice.held || voice.pedalHeld); });
     // Circuit engine (Phase 2.1): every circuit free-runs, so assignment never
     // resets oscillator phase or filter memories; a silent circuit is first
     // caught up to the present. Legacy keeps the historical reset.
@@ -1137,6 +1141,8 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.touch.trigger(v.velocity);
     v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
+    if (startsMonoPhrase)
+        modern.noteMonoPhraseStart(v.age);
     v.releaseGroup = v.age;
     lastNote = note;
     lastPitch = v.targetPitch;

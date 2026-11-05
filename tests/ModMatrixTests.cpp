@@ -913,6 +913,134 @@ void testEngineConsumption()
     }
 }
 
+void testEngineSameSampleMonoRetrigger()
+{
+    // A last key-up and following key-down share a host MIDI position. The
+    // accepted onset, not a rendered silent gap, distinguishes it from legato.
+    for (int policy : {0, 1})
+        for (double sampleRate : {48000.0, 96000.0})
+            for (int quality : {0, 2})
+                for (int scenario = 0; scenario < 16; ++scenario)
+                {
+                    Engine e;
+                    ParamValues p;
+                    p[P_sourcePerformance] = static_cast<float>(policy);
+                    p[P_parityMode] = 0.0f;
+                    p[P_kasScanTiming] = scenario == 15 ? 1.0f : 0.0f;
+                    p[P_oversampling] = static_cast<float>(quality);
+                    p[P_mod1Amount] = p[P_mod2Amount] = p[P_mod3Amount] = 0.1f;
+                    p[P_sustainMode] = scenario == 7 ? 1.0f : 0.0f;
+                    p[P_sustainAssign] = p[P_footswitchPlugged] = p[P_footswitchPressed] = 1.0f;
+                    p[P_voiceMode] = scenario == 8 ? 3.0f : 0.0f; // Four-voice unison.
+                    ModernConfig config;
+                    for (int m = 0; m < 3; ++m)
+                    {
+                        auto& shape = config.msegs[(size_t) m];
+                        shape = MsegShape {};
+                        shape.count = 2;
+                        shape.points[0] = {0.0f, 0.0f, 0.0f};
+                        shape.points[1] = {0.1f, 1.0f, 0.0f};
+                        shape.trigger = m == 0 ? MsegTrigger::mono
+                            : m == 1 ? MsegTrigger::poly : MsegTrigger::free;
+                        config.slots[(size_t) m] = {static_cast<ModSource>(static_cast<int>(ModSource::mseg1) + m), ModSource::none,
+                                                   ModDestination::pan, ModTarget::both};
+                    }
+                    e.prepare(sampleRate);
+                    e.setParams(p);
+                    e.setModernConfig(config);
+                    if (scenario == 10)
+                    {
+                        tuning::TuningTable mapping;
+                        mapping.mapped[64] = false;
+                        e.setScalaTuning(mapping);
+                        p[P_tuningMode] = 1.0f;
+                        e.setParams(p);
+                    }
+                    std::vector<float> audio(2 * 480);
+                    e.noteOn(60, 0.8f, 1);
+                    if (scenario == 9)
+                        for (int note = 61; note < 68; ++note) e.noteOn(note, 0.8f, 1);
+                    e.render(audio.data(), 480);
+                    const float beforeMono = e.getModernMsegValue(-1, 0);
+                    const float beforeFree = e.getModernMsegValue(-1, 2);
+                    if (scenario == 5 || scenario == 6) e.controlChange(64, 1.0f, 1);
+                    if (scenario != 1 && scenario != 2 && scenario != 9)
+                        e.noteOff(60, 1);
+                    if (scenario == 4) e.render(audio.data(), 1); // Existing gap control.
+                    if (scenario == 6) e.controlChange(64, 0.0f, 1);
+                    int nextNote = scenario == 3 ? 60 : 64;
+                    if (scenario == 7)
+                    {
+                        // The first accepted phrase voice disappears under Sustain II;
+                        // its surviving legato members must still carry the restart.
+                        e.noteOn(62, 0.8f, 1);
+                        e.noteOn(64, 0.8f, 1);
+                        e.noteOff(62, 1);
+                        e.noteOn(65, 0.8f, 1);
+                        nextNote = 65;
+                        bool originalAlive = false;
+                        for (int v = 0; v < 8; ++v)
+                            originalAlive |= e.getVoiceInfo(v).active && e.getVoiceInfo(v).note == 62;
+                        check(!originalAlive, "Sustain II removes the first voice of the unrendered phrase");
+                    }
+                    else if (scenario == 11)
+                    {
+                        e.noteOn(62, 0.8f, 1); e.noteOff(62, 1); // Earlier phrase survives as a tail.
+                        e.noteOn(65, 0.8f, 2); e.allNotesOff(false, 2); // Later phrase is canceled.
+                    }
+                    else
+                    {
+                        e.noteOn(nextNote, 0.8f, 1);
+                        if (scenario == 12) e.allNotesOff(false); // Canceled before any voice observes it.
+                        if (scenario == 13)
+                        {
+                            e.reset();
+                            nextNote = 67;
+                            e.noteOn(nextNote, 0.8f, 1);
+                        }
+                        if (scenario == 14)
+                        {
+                            p[P_mod1Amount] = p[P_mod2Amount] = p[P_mod3Amount] = 0.0f;
+                            e.setParams(p);
+                            e.noteOff(nextNote, 1);
+                            nextNote = 67;
+                            e.noteOn(nextNote, 0.8f, 1);
+                            p[P_mod1Amount] = p[P_mod2Amount] = p[P_mod3Amount] = 0.1f;
+                            e.setParams(p);
+                        }
+                    }
+                    if (scenario == 2) e.noteOff(60, 1); // Reverse order stays legato.
+                    const int frames = scenario == 11 || scenario == 12 ? 1
+                        : scenario == 15 ? static_cast<int>(sampleRate * 0.001) + 8 : 8;
+                    e.render(audio.data(), frames);
+                    const bool restart = scenario == 0 || scenario == 3 || scenario == 4
+                        || scenario == 6 || scenario == 7 || scenario == 8 || scenario == 11
+                        || scenario == 13 || scenario == 15;
+                    const double duration = static_cast<double>(config.msegs[0].points[1].time);
+                    const double factor = e.getOversamplingFactor();
+                    const double scanDelay = scenario == 15 && policy == 1 ? sampleRate * factor * 0.001 - 1.0 : 0.0;
+                    const double expectedMono = (frames * factor - scanDelay - 1.0) / (sampleRate * factor * duration);
+                    if (restart)
+                        check(std::abs(e.getModernMsegValue(-1, 0) - expectedMono) < 1.0e-7,
+                              "non-legato mono restart keeps its one-internal-sample scheduling delay");
+                    else
+                        check(e.getModernMsegValue(-1, 0) > beforeMono,
+                              "legato, pedal-held, refused and unmapped onsets do not restart mono");
+                    check(scenario == 13 ? e.getModernMsegValue(-1, 2) > 0.0f && e.getModernMsegValue(-1, 2) < 0.005f
+                                          : e.getModernMsegValue(-1, 2) > beforeFree,
+                          "free MSEG continues across events and restarts only at explicit engine reset");
+                    if (scenario != 9 && scenario != 10 && scenario != 11 && scenario != 12)
+                    {
+                        int newest = -1;
+                        for (int v = 0; v < 8; ++v)
+                            if (e.getVoiceInfo(v).held && e.getVoiceInfo(v).note == nextNote) newest = v;
+                        check(newest >= 0 && std::abs(e.getModernMsegValue(newest, 1)
+                                  - (frames * factor - scanDelay) / (sampleRate * factor * duration)) < 1.0e-7,
+                              "poly MSEG retains its independent onset timing");
+                    }
+                }
+}
+
 void testEngineRateRouteRemoval()
 {
     constexpr int frames = 480;
@@ -1114,6 +1242,7 @@ int main()
     testEngineConsumption();
     testPitchWheelSourceIndependentOfRange();
     testChannelPressureSourceSmoothing();
+    testEngineSameSampleMonoRetrigger();
     testEngineRateRouteRemoval();
     testEngineUnusableTransportPosition();
     testEngineGlobalSourcePriorityAfterRelease();

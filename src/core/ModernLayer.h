@@ -101,6 +101,7 @@ public:
         newestThisSample = 0;
         anyGateLast = anyGateNow = false;
         monoTriggerPending = false;
+        monoPhraseStartAge = 0;
         lockPending = transport.hasPosition && transport.playing;
         freeStarted = {};
         globalRate = {};
@@ -139,6 +140,15 @@ public:
     }
 
     bool isActive() const noexcept { return active; }
+
+    // Accepted onset with no held/pedal-held gates. Ages increase in event
+    // order. Retain the earliest unobserved phrase so a later canceled onset
+    // cannot erase it; a surviving legato member can carry it to the renderer.
+    void noteMonoPhraseStart(std::uint64_t age) noexcept
+    {
+        if (active && monoPhraseStartAge == 0)
+            monoPhraseStartAge = age;
+    }
 
     // Once per internal sample, before the voices: advance shared envelopes and evaluate
     // the global destinations. Per-voice sources come from the newest active voice
@@ -252,7 +262,14 @@ public:
             for (int m = 0; m < kMsegCount; ++m)
                 if (config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
                     voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
-            if (! anyGateLast)
+            // Keep the next-beginSample trigger timing. Only a newly observed
+            // eligible voice can consume the event-order phrase marker; idle
+            // circuits must neither consume it nor add a delayed shared trigger.
+            const bool startsPhrase = globalSourceEligible && monoPhraseStartAge != 0
+                && in.age >= monoPhraseStartAge;
+            if (startsPhrase)
+                monoPhraseStartAge = 0;
+            if (! anyGateLast || startsPhrase)
                 monoTriggerPending = true;
         }
         anyGateNow = anyGateNow || in.gate;
@@ -440,7 +457,10 @@ private:
         active = liveCount > 0;
         // Leaving the active state returns every consumer to the identity at once.
         if (wasActive && ! active)
+        {
             identity();
+            monoPhraseStartAge = 0;
+        }
         if (! wasActive && active)
         {
             identity();
@@ -471,6 +491,7 @@ private:
     std::array<float, kMsegCount> globalRate {};
     SourceValues globalValues {}, newest {}, newestCandidate {};
     std::uint64_t newestThisSample = 0;
+    std::uint64_t monoPhraseStartAge = 0;
     bool anyGateLast = false, anyGateNow = false, monoTriggerPending = false;
     bool lockPending = false;
     std::array<bool, kMsegCount> freeStarted {};
