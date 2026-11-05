@@ -23,8 +23,8 @@
 //    0.22 uF (CS-50 servicing guide).
 // 3. Scan timing and priority (declared inference). The YM26600 scans the
 //    keyboard continuously; an event is acted on at the next scan instant, and
-//    events seen in one scan are taken in scan order (lowest key first, a
-//    release before a strike of the same key). The scan period is not in the
+//    events seen in one scan are taken in scan order (lowest key first,
+//    preserving arrival order within a pitch). The scan period is not in the
 //    inspected sources; nominal 1 ms, alternatives 0.25-4 ms. Opt-in through
 //    the kas_scan_timing parameter (it adds up to one period of note latency).
 // 4. Ninth held key (declared inference). The YM26600 keeps an 8-entry code
@@ -114,7 +114,9 @@ public:
         {
             std::sort(events.begin(), events.begin() + count, [](const Event& a, const Event& b) {
                 if (a.note != b.note) return a.note < b.note;
-                if (a.on != b.on) return !a.on; // release before strike of the same key
+                // A short note can start AND finish in one scan interval.
+                // Moving its release ahead of its strike would leave a stuck
+                // gate (or a waiting ninth key). Preserve MIDI event order.
                 return a.order < b.order;
             });
             const int n = count;

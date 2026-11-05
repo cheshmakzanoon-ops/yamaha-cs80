@@ -206,8 +206,10 @@ therefore adds up to ≈ 1.5 ms of CPU within one block in the worst case
 - **Droop.** `dK/dt = −I/C` toward 0 V, never below.
 - **Scan timing and priority** (opt-in parameter `kas_scan_timing`): note
   events are queued and acted on at the next scan instant; one scan dispatches
-  lowest key first, a release before a strike of the same key. Panic discards a
-  channel's queued events; switching the option off flushes the queue.
+  lowest key first, preserving arrival order within each pitch. Moving a short
+  note's release before its strike would leave a stuck gate, so MIDI on/off
+  ordering is retained even when both events fall in one scan interval. Panic
+  discards a channel's queued events; switching the option off flushes the queue.
 - **Ninth held key** (circuit engine): a held key that found no free circuit is
   remembered and takes the first circuit that frees (note-off, CC64 release),
   lowest waiting key first, with zero initial touch (it was not struck then).
@@ -221,7 +223,7 @@ therefore adds up to ≈ 1.5 ms of CPU within one block in the worst case
 | Glide frozen while holding | inference from topology | portamento upstream of KI; alternative: K downstream glide (would keep gliding) |
 | Hold capacitance 0.033 µF | **declared** | SH7 does not print it; value of the KBC per-voice held nodes (brief and KEYBOARD_CONTOUR_EVIDENCE.md); alternatives 0.02 µF (SH7 note), 0.22 µF (CS-50 guide) |
 | Leakage 1 pA toward 0 V | **declared** | CA3140T K buffer (SH8); data sheet: 10 pA typical magnitude, no sign; switch leakage taken as 0 (KI = K after release). Alternatives 0, 10–50 pA, either polarity |
-| Scan period 1 ms, lowest key first, release before strike | **declared** | not in the inspected sources; alternatives 0.25–4 ms, top-down or arrival order |
+| Scan period 1 ms, lowest key first; same-pitch MIDI events retain arrival order | **declared** | not in the inspected sources; alternatives 0.25–4 ms, top-down or full arrival order. Same-pitch ordering is a software event-adapter correction, not a measured hardware claim. |
 | Ninth key reconsidered when a circuit frees | **declared** | YM26600 block diagram shows an 8-entry code memory and no 61-key store (KEYBOARD_MAPPING_CONSTRAINT_REVIEW.md, IC guide PDF15–16), so a held key without a channel is a new key on every scan. Alternative: edge-detecting scanner, never reconsidered (Legacy; owner manual p43 covers only the occupied case) |
 | Reconsidered key has zero initial touch | **declared** | TWS b samples a strike transient; a key held still has none. Alternative: original velocity |
 

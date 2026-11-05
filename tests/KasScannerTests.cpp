@@ -126,7 +126,7 @@ void testScanner()
         latencyOk = latencyOk && dispatchedAt - pushedAt >= 1 && dispatchedAt - pushedAt <= period;
     }
     check(latencyOk, "detection latency is within one scan period for every event");
-    // Priority within one scan: lowest key first, release before strike of the same key.
+    // Priority within one scan: lowest key first, arrival order within a pitch.
     scanner.reset();
     scanner.push(72, 1, 1.0f, true);
     scanner.push(48, 1, 1.0f, true);
@@ -138,7 +138,7 @@ void testScanner()
         scanner.tick([&](const kas::Scanner::Event& e) { order.push_back(e); });
     check(order.size() == 5 && order[0].note == 36 && order[1].note == 48 && order[2].note == 60 && !order[2].on
               && order[3].note == 60 && order[3].on && order[4].note == 72,
-          "one scan dispatches in scan order: lowest key first, release before strike");
+          "one scan dispatches lowest key first and preserves the queued release/strike order");
     scanner.push(40, 3, 1.0f, true);
     scanner.push(41, 4, 1.0f, true);
     scanner.discard(3);
