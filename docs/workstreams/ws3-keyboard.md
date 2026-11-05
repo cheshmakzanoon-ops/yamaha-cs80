@@ -215,6 +215,20 @@ therefore adds up to ≈ 1.5 ms of CPU within one block in the worst case
   lowest waiting key first, with zero initial touch (it was not struck then).
   Released before that, it is forgotten; panic forgets it.
 
+**MIDI ordering compatibility correction.** Earlier versions moved every
+same-pitch release before every strike within one scan. The corrected adapter
+retains arrival order, including across MIDI channels. Saved performances with
+KAS scan timing enabled can therefore change when a same-pitch strike precedes
+a release within one scan. Besides fixing stuck short notes, this affects
+voice allocation: with all eight circuits occupied, a new channel's strike
+followed by the old channel's same-pitch release is reconsidered with zero
+initial touch, rather than being treated as a fresh strike after a preemptive
+release. Pending events also use the corrected order if scan timing is switched
+off before they dispatch. Ordinary release-then-strike retriggers, events in
+separate scans, distinct pitches, Legacy, and scan-off operation with no pending
+queue retain their previous order. This is a software event-adapter correction,
+not a newly measured hardware behavior.
+
 ### Evidence class
 
 | Law | Class | Source / alternatives |

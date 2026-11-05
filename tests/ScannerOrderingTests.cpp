@@ -124,6 +124,22 @@ void testEngineOrdering()
 
                 engine.reset();
                 engine.noteOn(60, 0.8f, 1);
+                render(engine);
+                engine.noteOn(60, 0.7f, 1);
+                engine.noteOff(60, 1);
+                render(engine);
+                bool originalTouch = true;
+                for (int i = 0; i < 8; ++i)
+                {
+                    const auto voice = engine.getVoiceInfo(i);
+                    if (voice.held && voice.note == 60 && voice.channel == 1)
+                        originalTouch &= voice.velocity == 0.8f;
+                }
+                check(held(engine, 60, 1) == 1 && originalTouch,
+                    "overlapping ON/OFF releases newest onset and retains the original" + context);
+
+                engine.reset();
+                engine.noteOn(60, 0.8f, 1);
                 engine.noteOn(60, 0.7f, 2);
                 engine.noteOff(60, 1);
                 render(engine);
@@ -143,6 +159,40 @@ void testEngineOrdering()
                 render(engine);
                 check(held(engine, 90, 2) == 0 && held(engine) == 7,
                     "short ninth key is not revived when a circuit frees" + context);
+
+                // Saturated cross-channel handoff is also order-sensitive:
+                // the new key arrives before a circuit frees, so it is a
+                // reconsidered held key, not a fresh strike at that instant.
+                engine.reset();
+                for (int i = 0; i < 7; ++i) engine.noteOn(48 + i, 0.8f, 1);
+                engine.noteOn(60, 0.8f, 1);
+                render(engine);
+                engine.noteOn(60, 0.7f, 2);
+                engine.noteOff(60, 1);
+                render(engine);
+                if (policy == 0)
+                    check(held(engine, 60, 2) == 0 && held(engine) == 7,
+                        "Legacy keeps discarding a key that arrived while full" + context);
+                else
+                {
+                    bool zeroTouch = true;
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto voice = engine.getVoiceInfo(i);
+                        if (voice.held && voice.note == 60 && voice.channel == 2)
+                            zeroTouch &= voice.velocity == 0.0f;
+                    }
+                    check(held(engine, 60, 2) == 1 && held(engine) == 8 && zeroTouch,
+                        "same-pitch handoff keeps chronological ninth-key zero touch" + context);
+                }
+
+                engine.reset();
+                engine.noteOn(60, 0.8f, 1);
+                engine.noteOff(60, 1);
+                params[P_kasScanTiming] = 0.0f;
+                engine.setParams(params);
+                render(engine, 1);
+                check(held(engine) == 0, "disabling scan flushes a short note in arrival order" + context);
             }
 }
 }
