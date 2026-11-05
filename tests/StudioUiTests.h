@@ -7,6 +7,7 @@
 // next to the other snapshots for visual review.
 
 #include "plugin/AdvancedPanel.h"
+#include "core/ModulationLfo.h"
 #include "plugin/EvidenceRegister.h"
 #include "plugin/PanelLayout.h"
 #include "plugin/HardwareKeyboard.h"
@@ -19,6 +20,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include <cstdint>
 #include <functional>
 #include <set>
 #include <thread>
@@ -166,6 +168,109 @@ inline void testStudioViewsPaint(const Check& check, const Flush& flush, const j
     flush(150);
     check(! scope->isVisible() && ! controllers->isVisible(), "drawers close again");
     editor.setSize(1600, 1000);
+}
+
+// ---- LFO scope: waveform-only refresh, all seven shapes and repeatable random examples -----------------
+inline void testLfoScopeWaveforms(const Check& check, const Flush& flush, const juce::File& dir)
+{
+    Cs80AudioProcessor processor;
+    Cs80AudioProcessorEditor editor(processor);
+    editor.setSize(1600, 1000);
+    editor.setVisible(true);
+    editor.showAdvancedPanel(true);
+    auto* studio = studioOf(editor);
+    check(studio != nullptr, "LFO preview test finds Studio");
+    if (studio == nullptr) return;
+    studio->showTab(cs80::ui::StudioTab::modulation, 0);
+    processor.setParamValue(cs80::P_parityMode, 0.0f);
+    flush(80);
+
+    // Observe repaint invalidation, not just createComponentSnapshot (which paints even
+    // when the widget's change signature accidentally omits the waveform parameter).
+    struct RepaintProbe final : juce::CachedComponentImage
+    {
+        explicit RepaintProbe(juce::Component& c) : component(c) {}
+        void paint(juce::Graphics& g) override { component.paint(g); }
+        bool invalidateAll() override { ++invalidations; return true; }
+        bool invalidate(const juce::Rectangle<int>&) override { ++invalidations; return true; }
+        void releaseResources() override {}
+        juce::Component& component;
+        int invalidations = 0;
+    };
+    const auto scopeHash = [](const juce::Image& image, bool axis = false)
+    {
+        std::uint64_t hash = 14695981039346656037ull;
+        // Normally trace only: exclude captions, units and route status. Changing
+        // text without fixing the waveform cannot satisfy the shape regression.
+        // The optional axis-only crop separately checks full-scale depth labels.
+        for (int y = image.getHeight() * 26 / 196; y < image.getHeight() * 178 / 196; ++y)
+            for (int x = image.getWidth() * (axis ? 0 : 70) / 440;
+                 x < image.getWidth() * (axis ? 64 : 426) / 440; ++x)
+            {
+                hash ^= image.getPixelAt(x, y).getARGB();
+                hash *= 1099511628211ull;
+            }
+        return hash;
+    };
+
+    for (int lfo = 0; lfo < 3; ++lfo)
+    {
+        auto* scope = findById(*studio, "lfo_scope_" + juce::String(lfo + 1));
+        check(scope != nullptr && scope->isVisible(), "each LFO scope has a stable identity and is visible");
+        if (scope == nullptr) continue;
+        processor.setParamValue(cs80::P_lfo1Rate + lfo * 3, 1.0f);
+        processor.setParamValue(cs80::P_lfo1Depth + lfo * 3, 0.5f);
+        processor.setParamValue(cs80::P_lfo1Dest + lfo * 3, 1.0f);
+        processor.setParamValue(cs80::P_lfo1Wave + lfo, 0.0f);
+        flush(80);
+        auto* probe = new RepaintProbe(*scope);
+        scope->setCachedComponentImage(probe); // Component owns the probe.
+        flush(80);
+        std::set<std::uint64_t> traces;
+        for (int wave = 0; wave < cs80::kLfoWaveCount; ++wave)
+        {
+            const int before = probe->invalidations;
+            processor.setParamValue(cs80::P_lfo1Wave + lfo, static_cast<float>(wave));
+            flush(80);
+            if (wave > 0)
+                check(probe->invalidations > before, "waveform-only change invalidates the correct LFO scope");
+            const auto state = processor.getAPVTS().copyState();
+            const auto image = scope->createComponentSnapshot(scope->getLocalBounds());
+            check(image.isValid(), "LFO waveform snapshot is valid");
+            const auto hash = scopeHash(image);
+            check(traces.insert(hash).second, "all seven waveforms produce different traces, not merely different captions");
+            const auto repeat = scope->createComponentSnapshot(scope->getLocalBounds());
+            check(hash == scopeHash(repeat), "random and analytic scope traces remain stable on repaint");
+            check(state.isEquivalentTo(processor.getAPVTS().copyState()), "scope painting never changes parameter state");
+        }
+        // Return to an earlier waveform, then dismiss and revisit the page after an
+        // external edit. The waveform must not stay at the last visible cached shape.
+        processor.setParamValue(cs80::P_lfo1Wave + lfo, 0.0f);
+        flush(80);
+        const auto sine = scopeHash(scope->createComponentSnapshot(scope->getLocalBounds()));
+        studio->showTab(cs80::ui::StudioTab::modulation, 1);
+        processor.setParamValue(cs80::P_lfo1Wave + lfo, 4.0f);
+        studio->showTab(cs80::ui::StudioTab::modulation, 0);
+        flush(80);
+        check(sine != scopeHash(scope->createComponentSnapshot(scope->getLocalBounds())),
+              "LFO scope follows a waveform changed while its page was hidden");
+        const auto halfDepth = scope->createComponentSnapshot(scope->getLocalBounds());
+        processor.setParamValue(cs80::P_lfo1Depth + lfo * 3, 0.25f);
+        flush(80);
+        const auto quarterDepth = scope->createComponentSnapshot(scope->getLocalBounds());
+        check(scopeHash(halfDepth, true) == scopeHash(quarterDepth, true),
+              "routed scope axis stays full-scale when configured depth changes");
+        check(scopeHash(halfDepth) != scopeHash(quarterDepth), "configured depth changes the lit trace height");
+        scope->setCachedComponentImage(nullptr);
+    }
+    processor.setParamValue(cs80::P_lfo1Wave, 1.0f);
+    processor.setParamValue(cs80::P_lfo2Wave, 4.0f);
+    processor.setParamValue(cs80::P_lfo3Wave, 6.0f);
+    flush(80);
+    save(editor, dir, "studio-lfo-selected-waves-1600x1000", check);
+    editor.setSize(1120, 700);
+    flush(80);
+    save(editor, dir, "studio-lfo-selected-waves-1120x700", check);
 }
 
 // ---- Interaction polish: faders, typed values, context menu, ribbon, QWERTY play and tooltips --------------

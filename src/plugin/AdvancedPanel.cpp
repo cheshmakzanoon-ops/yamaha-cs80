@@ -3,6 +3,7 @@
 #include "ArtCommon.h"
 #include "EvidenceRegister.h"
 #include "HardwareKeyboard.h"
+#include "LfoScopePreview.h"
 #include "PluginProcessor.h"
 #include "core/Dsp.h"
 
@@ -466,7 +467,7 @@ private:
     std::function<bool(Cs80AudioProcessor&)> state;
 };
 
-// ---- LFO scope: the LFO at the set rate; the modulated output is drawn only when routed --------
+// ---- LFO scope: static selected-wave preview; the direct-route depth is drawn when routed ----
 class LfoScope final : public LiveWidget
 {
 public:
@@ -476,6 +477,8 @@ public:
         rateIdx = cs80::P_lfo1Rate + n * 3;
         depthIdx = rateIdx + 1;
         destIdx = rateIdx + 2;
+        waveIdx = cs80::P_lfo1Wave + n;
+        setComponentID("lfo_scope_" + juce::String(n + 1));
     }
 
     void paintStatic(juce::Graphics& g) override
@@ -499,6 +502,7 @@ private:
     void sample(Sig& s) const override
     {
         s[0] = v(rateIdx); s[1] = v(depthIdx); s[2] = v(destIdx); s[3] = v(cs80::P_parityMode);
+        s[4] = v(waveIdx);
     }
 
     void draw(juce::Graphics& g) override
@@ -509,22 +513,23 @@ private:
         const bool routed = dest > 0 && depth > 0.001f && ! iso;
         const auto plot = plotRect();
         const float cy = plot.getCentreY(), amp = plot.getHeight() * 0.5f - 6.0f;
-        const float cycles = rate * 4.0f;
-        const int count = juce::jlimit(160, 2000, (int) std::ceil(cycles * 14.0f) + 160);
+        const int waveform = juce::jlimit(0, cs80::kLfoWaveCount - 1, juce::roundToInt(v(waveIdx)));
+        const auto preview = makeLfoScopePreview(waveform, rate);
         auto build = [&](float scale)
         {
             juce::Path path;
-            for (int i = 0; i <= count; ++i)
+            bool first = true;
+            for (const auto& point : preview)
             {
-                const float t = (float) i / (float) count;
-                const float x = plot.getX() + plot.getWidth() * t;
-                const float y = cy - std::sin(juce::MathConstants<float>::twoPi * cycles * t) * amp * scale;
-                if (i == 0) path.startNewSubPath(x, y); else path.lineTo(x, y);
+                const float x = plot.getX() + plot.getWidth() * point.x;
+                const float y = cy - point.value * amp * scale;
+                if (first) { path.startNewSubPath(x, y); first = false; } else path.lineTo(x, y);
             }
             return path;
         };
-        // The vertical axis is the swing the engine applies; before a route exists it is the unit LFO.
-        const float swing = routed ? depth * kLfoScale[dest] : 1.0f;
+        // The axis is full-scale: depth is already applied to the lit trace below.
+        // Before a direct route exists, the preview is a unit waveform.
+        const float swing = routed ? kLfoScale[dest] : 1.0f;
         const juce::String top = routed ? "+" + juce::String(swing, 2) + kLfoUnit[dest] : juce::String("+1");
         const juce::String bottom = routed ? "-" + juce::String(swing, 2) : juce::String("-1");
         const Rect axisBox(2.0f, 0.0f, plot.getX() - 8.0f, 14.0f);
@@ -534,7 +539,7 @@ private:
 
         if (routed)
         {
-            // Full-scale LFO faint underneath; the modulated output is the lit trace.
+            // Full-scale shape faint underneath; configured direct-route depth is the lit trace.
             g.setColour(colour.withAlpha(0.30f));
             g.strokePath(build(1.0f), juce::PathStrokeType(1.0f));
             const auto trace = build(depth);
@@ -560,13 +565,16 @@ private:
              { 14.0f, 5.0f, 230.0f, 18.0f }, 12.0f, true, routed ? colour.brighter(0.3f) : axisInk(), Just::centredLeft, 0.03f);
         juce::String right;
         if (iso) right = "MASKED BY ISOLATION";
-        else if (dest == 0) right = "NOT ROUTED";
+        else if (dest == 0) right = "NO DIRECT ROUTE";
         else if (depth <= 0.001f) right = kDestinations[dest] + "   DEPTH 0";
         else right = "TO " + kDestinations[dest];
         text(g, right, { 220.0f, 5.0f, 206.0f, 18.0f }, 12.0f, true, routed ? ivory : (iso ? amber : axisInk()), Just::centredRight, 0.06f);
+        const bool random = waveform >= static_cast<int>(cs80::LfoWave::sampleHold);
+        text(g, juce::String(cs80::lfoWaveName(waveform)).toUpperCase() + (random ? " (EXAMPLE)" : " PREVIEW"),
+             { 70.0f, 181.0f, 356.0f, 14.0f }, 12.5f, false, axisInk(), Just::centred);
     }
 
-    int n, rateIdx, depthIdx, destIdx;
+    int n, rateIdx, depthIdx, destIdx, waveIdx;
     juce::Colour colour;
 };
 
@@ -4359,8 +4367,9 @@ void buildLfos(AdvancedPage& page)
     {
         const float x = xs[i], y = 108.0f;
         page.module({ x, y, 480.0f, 440.0f }, "LFO " + juce::String(i + 1), true, lfoColour(i),
-                    juce::String("A free-running global sine LFO shared by all voices. ") + flavour[i]
-                        + " Each LFO drives one destination: click a chip to route it there, or click the lit chip to switch the LFO off. "
+                    juce::String("A free-running global LFO shared by all voices. Select its waveform on the MSEG + MATRIX page. ") + flavour[i]
+                        + " Each LFO has one direct destination: click a chip to route it there, or click the lit chip to disable its direct route. "
+                          "The scope previews the configured rate and direct-route depth, not the live signal or Motion macro; random waves show a repeatable four-second example. "
                           "The vertical axis of the scope is the swing the engine applies at full depth: PITCH 2 st, VCF 1.6 oct, VCA 0.25 level, "
                           "PAN 0.7, PWM 0.18 pulse width. In PURE CS-80 the modern LFO routing is masked.",
                     [i](Cs80AudioProcessor& p) { return lfoRouted(p, i); });
