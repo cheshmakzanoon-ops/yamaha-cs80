@@ -536,6 +536,80 @@ void testMpeNrpnIsolation()
     }
 }
 
+
+// An MCM with zero members removes only its addressed zone. With no second
+// master channel reserved, the opposite zone may still own all 15 members.
+void testMpeZeroMemberConfiguration()
+{
+    const auto exercise = [](const std::string& label, int master, int members, auto cc, auto zones)
+    {
+        const auto rpn = [&](int channel, int parameter, int value) {
+            cc(channel, 101, 0); cc(channel, 100, parameter); cc(channel, 6, value);
+        };
+        rpn(1, 6, 0); rpn(16, 6, 0);
+        rpn(master, 6, members);
+        if (members > 0)
+        {
+            rpn(master, 0, 7);
+            rpn(master == 1 ? 2 : 15, 0, 23);
+        }
+        std::array<MpeZoneLayout::Role, 16> before {};
+        for (int channel = 1; channel <= 16; ++channel)
+            before[(size_t) channel - 1] = zones().role(channel);
+        const bool upper = master == 16;
+        const float masterRange = zones().masterRange(upper);
+        const float memberRange = zones().memberRange(upper);
+        for (int repeat = 0; repeat < 2; ++repeat)
+        {
+            rpn(17 - master, 6, 0);
+            const auto& z = zones();
+            check(z.lowerMemberCount() == (upper ? 0 : members)
+                      && z.upperMemberCount() == (upper ? members : 0),
+                  label + "disabling the opposite zone preserves the active member count");
+            bool sameRoles = true;
+            for (int channel = 1; channel <= 16; ++channel)
+                sameRoles &= z.role(channel) == before[(size_t) channel - 1];
+            check(sameRoles, label + "disabling the opposite zone preserves every channel role");
+            check(z.masterRange(upper) == masterRange && z.memberRange(upper) == memberRange,
+                  label + "disabling the opposite zone preserves active negotiated ranges");
+        }
+    };
+    for (int master : { 1, 16 })
+        for (int members = 0; members <= 15; ++members)
+        {
+            const auto label = "MCM master " + std::to_string(master) + " members "
+                + std::to_string(members) + ": ";
+            MpeZoneLayout layout;
+            exercise("layout " + label, master, members,
+                     [&](int channel, int controller, int value) { layout.controlChange(channel, controller, value); },
+                     [&]() -> const MpeZoneLayout& { return layout; });
+            for (float source : { 0.0f, 1.0f })
+            {
+                auto p = quiet(); p[P_sourcePerformance] = source; p[P_mpeOn] = 1.0f;
+                Engine engine; engine.prepare(48000.0); engine.setParams(p);
+                exercise("engine " + label, master, members,
+                         [&](int channel, int controller, int value) { engine.controlChange(controller, value / 127.0f, channel); },
+                         [&]() -> const MpeZoneLayout& { return engine.getMpeZones(); });
+                if (members == 15)
+                {
+                    // The other zone's former master is a valid endpoint member.
+                    // Negotiate there, then bend an already allocated note.
+                    const int endpoint = 17 - master;
+                    engine.controlChange(101, 0.0f, endpoint);
+                    engine.controlChange(100, 0.0f, endpoint);
+                    engine.controlChange(6, 12.0f / 127.0f, endpoint);
+                    engine.noteOn(60, 0.8f, endpoint);
+                    engine.pitchBend(endpoint, 0.5f);
+                    check(engine.getVoiceInfo(0).bend == 6.0f,
+                          label + "endpoint remains a member with its negotiated bend range");
+                    render(engine, 1);
+                    check(std::abs(semitonesOf(engine, 0, 66.0f)) < 1e-3f,
+                          label + "endpoint note renders at the member bend pitch");
+                }
+            }
+        }
+}
+
 void testVoiceModes()
 {
     for (int mode : {2, 3, 4})
@@ -601,6 +675,7 @@ int main()
     testArpeggiatorTuningMap();
     testMpe();
     testMpeNrpnIsolation();
+    testMpeZeroMemberConfiguration();
     testVoiceModes();
     testRibbonCc();
     std::printf("Tuning / MIDI / voice modes: %d checks, %d failures\n", checks, failures);

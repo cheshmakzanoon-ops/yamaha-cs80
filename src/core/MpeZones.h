@@ -82,13 +82,14 @@ private:
             if (channel == 1)
             {
                 lowerMembers = members;
-                if (lowerMembers + upperMembers > 14) upperMembers = 14 - lowerMembers > 0 ? 14 - lowerMembers : 0;
+                // A disabled zone reserves no master channel in the other zone.
+                if (lowerMembers > 0 && lowerMembers + upperMembers > 14) upperMembers = 14 - lowerMembers > 0 ? 14 - lowerMembers : 0;
                 if (lowerMembers == 15) upperMembers = 0;
             }
             else if (channel == 16)
             {
                 upperMembers = members;
-                if (lowerMembers + upperMembers > 14) lowerMembers = 14 - upperMembers > 0 ? 14 - upperMembers : 0;
+                if (upperMembers > 0 && lowerMembers + upperMembers > 14) lowerMembers = 14 - upperMembers > 0 ? 14 - upperMembers : 0;
                 if (upperMembers == 15) lowerMembers = 0;
             }
             // MPE: an MCM resets the zone's bend ranges to their defaults.
