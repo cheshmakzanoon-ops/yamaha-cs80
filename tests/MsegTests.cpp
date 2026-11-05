@@ -2,6 +2,7 @@
 // src/reference/MsegReference.h: timing, curves, loops, release and tempo sync. A modern
 // control; agreement with the reference says nothing about the CS-80.
 #include "core/Mseg.h"
+#include "core/ModernLayer.h"
 #include "reference/MsegReference.h"
 #include "ModernLayerTolerances.h"
 
@@ -170,6 +171,113 @@ void testBoundaries()
     check(std::abs((double) (dropped - 123457)) <= tol::kMsegBoundaryToleranceSamples, "release jump is sample-exact");
 }
 
+
+// Loop markers select point indices, not the later side of a vertical step.
+// These expectations read the indexed anchor directly, independently of both
+// runner interpolation and the closed-form reference's static evaluator.
+void testCoincidentHoldPoints()
+{
+    for (float anchorTime : { 0.0f, 0.5f })
+        for (bool atShapeEnd : { false, true })
+            for (bool multipleLoopPoints : { false, true })
+                for (auto loop : { MsegLoop::off, MsegLoop::sustain, MsegLoop::always })
+                    for (float anchorLevel : { 0.25f, 0.75f })
+                    {
+                        MsegShape s;
+                        s.count = 0;
+                        const auto add = [&](float time, float level, float curve) {
+                            s.points[(size_t) s.count++] = { time, level, curve };
+                        };
+                        add(0.0f, 0.125f, 0.0f);
+                        s.loopStart = s.count;
+                        if (multipleLoopPoints) add(anchorTime, 0.5f, -0.7f);
+                        s.loopEnd = s.count;
+                        add(anchorTime, anchorLevel, 0.7f);
+                        const float tail = 1.0f - anchorLevel;
+                        add(anchorTime, tail, -0.7f);
+                        add(atShapeEnd ? anchorTime : anchorTime + 0.5f, tail, 0.0f);
+                        s.loop = loop;
+                        s = sanitizeShape(s);
+                        const bool looping = loop != MsegLoop::off;
+                        const float held = looping ? s.points[(size_t) s.loopEnd].level : tail;
+                        MsegRunner runner;
+                        runner.trigger(s);
+                        check(runner.tick(s, anchorTime, true) == held,
+                              "coincident boundary holds its indexed loop anchor, not the release step");
+                        for (double advance : { 0.0, 0.125, 2.0 })
+                        {
+                            check(runner.tick(s, advance, true) == held,
+                                  "zero-length loop retains the anchor across held ticks and overshoot");
+                            if (looping)
+                                check(runner.getPosition() == anchorTime && runner.isRunning(),
+                                      "held coincident loop remains running at its anchor position");
+                        }
+                        check(msegReferenceLevel(s, anchorTime, 1) == held,
+                              "closed-form held result obeys the indexed anchor contract");
+                        for (double position : { (double) anchorTime, anchorTime + 0.125, 10.0 })
+                        {
+                            runner.seek(s, position);
+                            check(runner.getValue() == held,
+                                  "transport seek preserves the indexed coincident loop anchor");
+                        }
+                        const float afterRelease = loop == MsegLoop::always ? held : tail;
+                        check(runner.tick(s, 0.0, false) == afterRelease,
+                              "sustain release takes the vertical step on the first gate-low tick");
+                        check(runner.tick(s, 0.125, false) == afterRelease,
+                              "released sustain uses the ordinary right-continuous step path");
+                        check(msegReferenceLevel(s, anchorTime, 2, 2) == afterRelease,
+                              "closed-form release distinguishes sustain from always-looping anchors");
+                        runner.seek(s, anchorTime);
+                        check(runner.getValue() == held && !runner.isReleased(),
+                              "seek after release restores the held loop anchor");
+                    }
+
+    // Exercise the public modulation path for poly, mono and transport-locked
+    // free runners. The shape is valid and directly constructible in the UI.
+    for (auto trigger : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free })
+        for (bool bipolar : { false, true })
+        {
+            auto shape = makeShape({ {0.0f, 0.0f, 0.0f}, {0.5f, 0.75f, 0.0f},
+                                     {0.5f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f} },
+                                   MsegLoop::sustain, 1, 1);
+            shape.trigger = trigger;
+            shape.bipolar = bipolar;
+            shape.sync = trigger == MsegTrigger::free;
+            ModernConfig config;
+            config.msegs[0] = shape;
+            config.slots[0] = {ModSource::mseg1, ModSource::none, ModDestination::pitch, ModTarget::both};
+            ModernControls controls;
+            controls.enabled = true;
+            controls.amount[0] = 1.0f;
+            ModernLayer layer;
+            layer.prepare(64.0);
+            layer.setConfig(config);
+            layer.setControls(controls);
+            if (shape.sync) layer.setTransport({120.0, 4.0, true, true});
+            VoiceInputs voice;
+            voice.age = 1;
+            voice.gate = true;
+            for (int sample = 0; sample < 128; ++sample)
+            {
+                layer.beginSample({});
+                layer.processVoice(0, voice);
+            }
+            const float expected = bipolar ? 0.5f : 0.75f;
+            check(layer.msegValue(0, 0) == 0.75f,
+                  "public modulation runner retains its held indexed anchor");
+            check(layer.rankOffsets(0, 0).pitch == expected * kPitchSemitones,
+                  "held coincident MSEG routes the anchor's pitch modulation");
+            voice.gate = false;
+            for (int sample = 0; sample < 2; ++sample)
+            {
+                layer.beginSample({});
+                layer.processVoice(0, voice);
+            }
+            check(layer.msegValue(0, 0) == (trigger == MsegTrigger::free ? 0.75f : 0.0f),
+                  "poly/mono release takes the step while free modulation remains held");
+        }
+}
+
 void testLoopDrift()
 {
     for (double sr : { 44100.0, 96000.0, 192000.0 })
@@ -292,6 +400,7 @@ int main()
     testHeldLevels();
     testRelease();
     testBoundaries();
+    testCoincidentHoldPoints();
     testLoopDrift();
     testSync();
     testSanitize();

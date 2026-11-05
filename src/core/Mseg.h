@@ -280,6 +280,18 @@ private:
 
     double levelHere(const MsegShape& s) const noexcept
     {
+        // A zero-length loop holds its indexed anchor, even when a vertical
+        // release step shares that time. Static right-continuous lookup would
+        // select the later point before the sustain gate has been released.
+        if (s.loopEnd + 1 < s.count
+            && (s.loop == MsegLoop::always || (s.loop == MsegLoop::sustain && !released)))
+        {
+            const auto& anchor = s.points[(std::size_t) s.loopEnd];
+            if (position == (double) anchor.time
+                && s.points[(std::size_t) s.loopStart].time == anchor.time
+                && s.points[(std::size_t) s.loopEnd + 1].time == anchor.time)
+                return anchor.level;
+        }
         if (segment >= s.count - 1)
             return overrideSegment == s.count - 1 ? overrideLevel : s.points[(std::size_t) (s.count - 1)].level;
         const double start = segment == overrideSegment ? overrideLevel : (double) s.points[(std::size_t) segment].level;
