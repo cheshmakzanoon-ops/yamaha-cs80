@@ -85,6 +85,10 @@ only guard on them.
   never restarts; when synced and the host transport plays it follows the song position).
 - **Tempo sync:** host BPM from `getPlayHead()->getPosition()` each block; no or unusable
   tempo falls back to **120 BPM**. Position is double precision, so loops do not drift.
+  For free synced envelopes, an unusable song position (NaN, infinity, or overflow after
+  scaling by the rate) is treated as absent: the clock continues, or starts normally on
+  first use. The next usable position locks it again. Finite seeks and negative pre-roll
+  retain their existing behavior; this is modern-layer input handling, not a circuit law.
 - Live shape edits are safe on running envelopes (the runner re-locates its segment).
 - Rate: host parameter `msegN_rate` in octaves (-3..+3, i.e. 0.125x..8x, linear so the default
   round-trips exactly through host state) plus the matrix MSEG-rate offset, also in octaves.

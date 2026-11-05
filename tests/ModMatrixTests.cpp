@@ -10,6 +10,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <limits>
 #include <vector>
 
 using namespace cs80;
@@ -432,6 +433,128 @@ void testRemovedGlobalRateIsIdentity()
                 }
 }
 
+// A host may report a present but unusable PPQ. Treat it like an absent
+// position: preserve the local clock, or start normally if it has not run yet.
+// Check the scaled position too: a finite PPQ can overflow at a valid rate.
+void testUnusableTransportPosition()
+{
+    constexpr double sr = 96000.0;
+    const double invalid[] = { std::numeric_limits<double>::quiet_NaN(),
+                               std::numeric_limits<double>::infinity(),
+                              -std::numeric_limits<double>::infinity(),
+                               std::numeric_limits<double>::max() };
+    for (int m = 0; m < kMsegCount; ++m)
+        for (float rate : { 0.125f, 1.0f, 4.0f, 8.0f })
+            for (auto loop : { MsegLoop::off, MsegLoop::sustain, MsegLoop::always })
+                for (bool warm : { false, true })
+                    for (double ppq : invalid)
+                    {
+                        if (std::isfinite(ppq * (double) rate))
+                            continue; // Large but usable positions remain valid seeks.
+                        const auto source = (ModSource) ((int) ModSource::mseg1 + m);
+                        auto config = routed({
+                            { source, ModSource::none, ModDestination::pitch, ModTarget::both },
+                            { source, ModSource::none, ModDestination::fx1Mix, ModTarget::both }
+                        });
+                        auto& shape = config.msegs[(std::size_t) m];
+                        shape = defaultShape(1);
+                        shape.trigger = MsegTrigger::free;
+                        shape.sync = true;
+                        shape.loop = loop;
+                        auto controls = amounts({ 0.5f, 0.25f });
+                        controls.msegRate[(std::size_t) m] = rate;
+                        ModernLayer tested, missing;
+                        for (auto* layer : { &tested, &missing })
+                        {
+                            layer->prepare(sr);
+                            layer->setConfig(config);
+                            layer->setControls(controls);
+                        }
+                        const auto voice = voiceAt(60, 0.8f);
+                        auto advance = [&](int count)
+                        {
+                            bool same = true;
+                            for (int n = 0; n < count; ++n)
+                            {
+                                for (auto* layer : { &tested, &missing })
+                                {
+                                    layer->beginSample(globals());
+                                    layer->processVoice(0, voice);
+                                }
+                                same = same && tested.displayPosition(m) == missing.displayPosition(m)
+                                    && tested.msegValue(-1, m) == missing.msegValue(-1, m)
+                                    && tested.rankOffsets(0, 0).pitch == missing.rankOffsets(0, 0).pitch
+                                    && tested.getGlobalOffsets().fxMix[0] == missing.getGlobalOffsets().fxMix[0];
+                            }
+                            return same;
+                        };
+                        if (warm)
+                        {
+                            for (auto* layer : { &tested, &missing })
+                                layer->setTransport({ 90.0, 0.03125, true, true });
+                            check(advance(17), "valid transport warm-up is identical");
+                        }
+                        tested.setTransport({ 90.0, ppq, true, true });
+                        missing.setTransport({ 90.0, 0.0, false, true });
+                        check(advance(13), "unusable PPQ preserves the clock exactly like absent position");
+                        for (auto* layer : { &tested, &missing })
+                            layer->setTransport({ 90.0, 0.0, false, true });
+                        check(advance(19), "unusable PPQ cannot poison subsequent free-running modulation");
+                        for (auto* layer : { &tested, &missing })
+                            layer->setTransport({ 90.0, 0.375, true, true });
+                        check(advance(1), "valid song position resumes transport lock after unusable PPQ");
+                        check(std::isfinite(tested.displayPosition(m)) && std::isfinite(tested.msegValue(-1, m)),
+                              "recovered free MSEG position and value are finite");
+                    }
+}
+
+// Keep ordinary seeks, negative pre-roll, tempo fallback, and all non-locked
+// trigger modes unchanged. Include enormous finite, non-overflowing positions.
+void testFiniteTransportPosition()
+{
+    constexpr double sr = 96000.0;
+    for (auto trigger : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free })
+        for (bool sync : { false, true })
+            for (bool playing : { false, true })
+                for (bool hasPosition : { false, true })
+                    for (double ppq : { -4.0, 0.0, 0.125, 7.375, 1.0e12,
+                                        std::numeric_limits<double>::max() / 32.0 })
+                        for (float rate : { 0.125f, 1.0f, 8.0f })
+                            for (double bpm : { 90.0, 0.0 })
+                            {
+                                auto config = routed({ { ModSource::mseg1, ModSource::none,
+                                                         ModDestination::pitch, ModTarget::both } });
+                                auto& shape = config.msegs[0];
+                                shape = defaultShape(1); // One-unit loop.
+                                shape.trigger = trigger;
+                                shape.sync = sync;
+                                auto controls = amounts({ 0.5f });
+                                controls.msegRate[0] = rate;
+                                ModernLayer layer;
+                                layer.prepare(sr);
+                                layer.setConfig(config);
+                                layer.setControls(controls);
+                                layer.setTransport({ bpm, ppq, hasPosition, playing });
+                                const auto voice = voiceAt(60, 0.8f);
+                                bool matches = true;
+                                const bool locked = trigger == MsegTrigger::free && sync && playing && hasPosition;
+                                const double start = locked ? std::fmod(std::max(0.0, ppq * rate), 1.0) : 0.0;
+                                const double step = rate * (sync ? effectiveBpm(bpm) / 60.0 : 1.0) / sr;
+                                for (int n = 1; n <= 5; ++n)
+                                {
+                                    layer.beginSample(globals());
+                                    layer.processVoice(0, voice);
+                                    const int ticks = trigger == MsegTrigger::mono ? n - 1 : n;
+                                    const double expectedPosition = std::fmod(start + ticks * step, 1.0);
+                                    const double expected = cs80::reference::msegReferenceStatic(
+                                        shape, expectedPosition, 0, shape.points[0].level);
+                                    matches = matches && std::abs(layer.msegValue(0, 0) - expected)
+                                        <= tol::kMsegLevelAbsTolerance;
+                                }
+                                check(matches, "finite transport preserves existing lock and trigger semantics");
+                            }
+}
+
 // ---- Engine level -------------------------------------------------------------------
 
 constexpr double kRate = 48000.0;
@@ -761,6 +884,71 @@ void testEngineRateRouteRemoval()
             }
 }
 
+void testEngineUnusableTransportPosition()
+{
+    const double invalid[] = { std::numeric_limits<double>::quiet_NaN(),
+                               std::numeric_limits<double>::infinity(),
+                              -std::numeric_limits<double>::infinity(),
+                               std::numeric_limits<double>::max() };
+    for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
+        for (int policy = 0; policy < 3; ++policy)
+            for (bool warm : { false, true })
+            {
+                ParamValues p;
+                p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+                p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+                p[P_mod1Amount] = p[P_mod2Amount] = p[P_mod3Amount] = p[P_mod4Amount] = 0.25f;
+                p[P_mseg1Rate] = p[P_mseg2Rate] = p[P_mseg3Rate] = 2.0f; // Four times base speed.
+                auto config = routed({
+                    { ModSource::mseg1, ModSource::none, ModDestination::pitch, ModTarget::both },
+                    { ModSource::mseg2, ModSource::none, ModDestination::cutoff, ModTarget::both },
+                    { ModSource::mseg3, ModSource::none, ModDestination::pan, ModTarget::both },
+                    { ModSource::mseg1, ModSource::none, ModDestination::subDepth, ModTarget::both }
+                });
+                for (auto& shape : config.msegs)
+                {
+                    shape = defaultShape(1);
+                    shape.trigger = MsegTrigger::free;
+                    shape.sync = true;
+                }
+                Engine tested, missing;
+                for (auto* engine : { &tested, &missing })
+                {
+                    engine->prepare(sr);
+                    engine->setParams(p);
+                    engine->setModernConfig(config);
+                    engine->noteOn(60, 0.8f);
+                }
+                auto renderPair = [&](int frames)
+                {
+                    std::vector<float> a(2 * (std::size_t) frames), b(a.size());
+                    tested.render(a.data(), frames);
+                    missing.render(b.data(), frames);
+                    bool finite = true;
+                    for (float value : a) finite = finite && std::isfinite(value);
+                    return finite && identical(a, b);
+                };
+                if (warm)
+                {
+                    for (auto* engine : { &tested, &missing })
+                        engine->setTransport({ 90.0, 0.03125, true, true });
+                    check(renderPair(32), "engine valid transport warm-up is byte-identical");
+                }
+                for (double ppq : invalid)
+                {
+                    tested.setTransport({ 90.0, ppq, true, true });
+                    missing.setTransport({ 90.0, 0.0, false, true });
+                    check(renderPair(17), "engine ignores unusable PPQ with finite byte-identical audio");
+                    for (auto* engine : { &tested, &missing })
+                        engine->setTransport({ 90.0, 0.0, false, true });
+                    check(renderPair(31), "engine stays finite and byte-identical without a later PPQ");
+                    for (auto* engine : { &tested, &missing })
+                        engine->setTransport({ 90.0, 0.375, true, true });
+                    check(renderPair(29), "engine reacquires valid transport with byte-identical audio");
+                }
+            }
+}
+
 void testEngineGlobalSourcePriorityAfterRelease()
 {
     // Circuit voices continue on staggered, decimated idle clocks after their
@@ -843,10 +1031,13 @@ int main()
     testIdleCircuitsDoNotDriveGlobalSources();
     testInactiveIsIdentity();
     testRemovedGlobalRateIsIdentity();
+    testUnusableTransportPosition();
+    testFiniteTransportPosition();
     testDefaultInvarianceAndPurity();
     testEngineConsumption();
     testPitchWheelSourceIndependentOfRange();
     testEngineRateRouteRemoval();
+    testEngineUnusableTransportPosition();
     testEngineGlobalSourcePriorityAfterRelease();
     testStability();
     std::printf("%d checks, %d failures\n", checks, failures);

@@ -165,8 +165,10 @@ public:
             if (shape.trigger == MsegTrigger::free)
             {
                 // Free: started once, never restarted; a synced one follows the song
-                // position at every host block while the transport plays.
-                if (lockPending && shape.sync)
+                // position at every host block while the transport plays. An
+                // unusable host position is equivalent to no position update;
+                // also reject overflow when a finite PPQ is scaled by the rate.
+                if (lockPending && shape.sync && std::isfinite(transport.ppq * rate))
                     runner.seek(shape, transport.ppq * rate);
                 else if (! freeStarted[(std::size_t) m])
                     runner.trigger(shape);
