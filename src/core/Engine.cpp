@@ -1377,11 +1377,16 @@ bool Engine::isSustainPedalDown(int midiChannel) const noexcept
 {
     if (midiChannel < 1 || midiChannel > 16)
         return false;
+    // Retain the engine's own-channel pedal behavior, including MPE members.
+    if (sustainPedals[(size_t) midiChannel])
+        return true;
     if (! global.mpe)
-        return sustainPedals[(size_t) midiChannel];
-    // MPE: a zone's master pedal holds its members (upper zone: channel 16).
-    return sustainPedals[(size_t) midiChannel]
-        || (mpeZones.inUpperZone(midiChannel) ? sustainPedals[16] : sustainPedals[1]);
+        return false;
+    // Only actual members inherit a zone's master pedal. Channels outside
+    // both zones remain conventional channels, not implicit lower members.
+    const auto role = mpeZones.role(midiChannel);
+    return (role == MpeZoneLayout::Role::lowerMember && sustainPedals[1])
+        || (role == MpeZoneLayout::Role::upperMember && sustainPedals[16]);
 }
 
 void Engine::releaseKey(Voice& v)

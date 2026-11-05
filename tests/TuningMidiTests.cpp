@@ -456,6 +456,94 @@ void testMpe()
     check(hr.noteOnVelocity(1, 100) == 100.0f * (1.0f / 127.0f), "the prefix is consumed by one note-on");
 }
 
+// Damper inheritance is limited to negotiated zone members. Unassigned
+// channels remain conventional MIDI channels. Own-channel CC64 is deliberately
+// retained as this engine's compatibility behavior, including on MPE members.
+void testMpePedalZoneBoundaries()
+{
+    const std::array<std::array<int, 2>, 7> layouts {{
+        {{15, 0}}, {{0, 15}}, {{7, 7}}, {{2, 2}}, {{0, 2}}, {{2, 0}}, {{0, 0}}
+    }};
+    // Legacy/Circuit with MPE off/on, plus PURE with requested MPE ignored.
+    for (int policy = 0; policy < 5; ++policy)
+    {
+        Engine e; e.prepare(48000.0);
+        auto p = quiet(policy == 4 ? 1.0f : 0.0f);
+        p[P_sourcePerformance] = policy >= 2 ? 1.0f : 0.0f;
+        p[P_mpeOn] = policy % 2 != 0 || policy == 4 ? 1.0f : 0.0f;
+        p[P_kasScanTiming] = 0.0f;
+        p[P_sustainMode] = p[P_masterSustain] = 0.0f;
+        e.setParams(p);
+        const bool mpe = policy == 1 || policy == 3;
+        auto cc = [&](int channel, int controller, int value) {
+            e.controlChange(controller, value / 127.0f, channel);
+        };
+        auto zone = [&](int channel, int members) {
+            cc(channel, 101, 0); cc(channel, 100, 6); cc(channel, 6, members);
+        };
+        auto voice = [&](int channel) {
+            for (int i = 0; i < 8; ++i)
+            {
+                const auto v = e.getVoiceInfo(i);
+                if (v.active && v.note == 60 && v.channel == channel) return v;
+            }
+            return Engine::VoiceInfo {};
+        };
+        for (const auto& layout : layouts)
+        {
+            e.allNotesOff(false);
+            zone(1, 0); zone(16, 0);
+            zone(1, layout[0]); zone(16, layout[1]);
+            for (int channel = 1; channel <= 16; ++channel)
+                for (int pedal : {1, 8, 16, channel})
+                {
+                    e.allNotesOff(false); // Clears every pedal between fixtures.
+                    e.noteOn(60, 0.8f, channel);
+                    check(voice(channel).held, "pedal zone fixture allocates its note");
+                    cc(pedal, 64, 127);
+                    e.noteOff(60, channel);
+                    const bool lowerMember = layout[0] > 0 && channel >= 2 && channel <= 1 + layout[0];
+                    const bool upperMember = layout[1] > 0 && channel <= 15 && channel >= 16 - layout[1];
+                    const bool expected = policy != 4 && (pedal == channel
+                        || (mpe && ((lowerMember && pedal == 1) || (upperMember && pedal == 16))));
+                    const auto released = voice(channel);
+                    const auto label = "policy " + std::to_string(policy) + " zones "
+                        + std::to_string(layout[0]) + "/" + std::to_string(layout[1])
+                        + " note channel " + std::to_string(channel) + " pedal " + std::to_string(pedal);
+                    check(!released.held && released.pedalHeld == expected, label + " correct pedal scope");
+                    cc(pedal, 64, 0);
+                    check(!voice(channel).pedalHeld, label + " pedal-up releases its hold");
+                }
+        }
+        if (!mpe) continue;
+        zone(1, 2); zone(16, 2);
+        for (int sustainMode : {0, 1})
+            for (bool channelRelease : {false, true})
+                for (bool masterFirst : {false, true})
+                    for (int channel : {2, 8, 15})
+                    {
+                        p[P_sustainMode] = static_cast<float>(sustainMode);
+                        e.setParams(p);
+                        const int master = channel == 15 ? 16 : 1;
+                        e.allNotesOff(false);
+                        e.noteOn(60, 0.8f, channel);
+                        cc(channel, 64, 127); cc(master, 64, 127);
+                        if (channelRelease) cc(channel, 123, 0);
+                        else e.noteOff(60, channel);
+                        check(voice(channel).pedalHeld, "own pedal holds beside a master pedal");
+                        cc(7, 64, 127); cc(7, 64, 0);
+                        check(voice(channel).pedalHeld, "unrelated pedal-up does not release a held note");
+                        cc(masterFirst ? master : channel, 64, 0);
+                        check(voice(channel).pedalHeld == (masterFirst || channel != 8),
+                              "first pedal-up leaves only an applicable second hold");
+                        cc(masterFirst ? channel : master, 64, 0);
+                        check(!voice(channel).pedalHeld, "last relevant pedal-up releases the note");
+                        cc(masterFirst ? channel : master, 64, 0);
+                        check(!voice(channel).pedalHeld, "repeated pedal-up remains released");
+                    }
+    }
+}
+
 // Data Entry belongs to the last selected parameter family. Unsupported NRPNs
 // must not reuse an earlier MPE RPN (MIDI.org, About MIDI Part 3, MIDI Messages).
 void testMpeNrpnIsolation()
@@ -674,6 +762,7 @@ int main()
     testEngineTuning();
     testArpeggiatorTuningMap();
     testMpe();
+    testMpePedalZoneBoundaries();
     testMpeNrpnIsolation();
     testMpeZeroMemberConfiguration();
     testVoiceModes();
