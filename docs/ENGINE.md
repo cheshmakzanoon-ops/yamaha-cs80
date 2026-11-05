@@ -31,6 +31,12 @@ The core has no JUCE dependency, so it can be rendered offline, tested with plai
 
 Each `Rank` contains an oscillator, HPF, LPF, filter envelope, amplifier envelope, and per-card trim values for tune, cutoff, level, envelope and pan. Trims are assigned deterministically at `prepare()` so a patch is consistent between runs but the voice cards are not identical.
 
+## Plugin lifecycle and expression
+
+The modern sixteen-voice mode uses two eight-voice engines. Effective quality, offline-render or engine-policy changes reset sounding notes. The processor retains the physical expression pedal (UI or CC11) and restores it to both engines before new MIDI in that block. A newer pending pedal gesture still takes precedence. Ordinary blocks and quality changes that keep the effective factor do not reset voices.
+
+This corrects a lifecycle bug in `3e5521e`: an already-active second engine could return to full expression after a reset, making its next notes audible even with the pedal at zero. Simultaneous offline-to-realtime and Eco-to-HQ changes can also reset 8x -> 2x -> 8x; those intermediate resets must restore expression and revoke old queued UI gestures even though the final factor is unchanged. Playback across these boundaries intentionally changes. Steady-state Legacy DSP arithmetic and the established note-reset behavior are unchanged. `testExtensionExpressionLifecycleHost` in `tests/EngineHostTests.h` covers both pedal sources, zero/partial/full positions, resource and policy transitions, same-block notes, pending gestures and the intermediate-factor case.
+
 ## Oscillators
 
 `Oscillator` produces four outputs from one phase accumulator:

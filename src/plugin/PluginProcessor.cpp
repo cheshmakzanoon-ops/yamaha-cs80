@@ -819,10 +819,14 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     const int previousFactor = engine.getOversamplingFactor();
     // Hosts may switch to offline rendering without a new prepareToPlay.
     engine.setNonRealtime(isNonRealtime());
+    // Offline and parameter updates are ordered: they can reset 8x -> 2x ->
+    // 8x in one block. Keep the intermediate reset even if the final rate agrees.
+    const bool offlineReset = engine.getOversamplingFactor() != previousFactor;
     engine.setControlFrame({ cached, cachedHardwareSources });
     modernLayer.applyToEngine(engine, getPlayHead()); // MSEG shapes, routing, host tempo
     // A policy or oversampling-factor change resets the engine the same way.
-    if (engine.getRenderPolicy() != previousPolicy || engine.getOversamplingFactor() != previousFactor)
+    if (offlineReset || engine.getRenderPolicy() != previousPolicy
+        || engine.getOversamplingFactor() != previousFactor)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
         // Discard the already-captured pre-transition batch too: otherwise its
@@ -833,15 +837,24 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     // ws3 Phase 6: sixteen-voice mode drives a second, identical instrument.
     if (engine.getVoiceMode() == 1)
     {
+        const auto previousExtensionPolicy = extensionEngine->getRenderPolicy();
+        const int previousExtensionFactor = extensionEngine->getOversamplingFactor();
         extensionEngine->setNonRealtime(isNonRealtime());
+        const bool extensionOfflineReset = extensionEngine->getOversamplingFactor() != previousExtensionFactor;
         extensionEngine->setControlFrame({ cached, cachedHardwareSources });
         cs80::ModernLayerState::mirrorToEngine(engine, *extensionEngine);
+        const bool restoreExpression = !extensionActive || extensionOfflineReset
+            || extensionEngine->getRenderPolicy() != previousExtensionPolicy
+            || extensionEngine->getOversamplingFactor() != previousExtensionFactor;
         if (!extensionActive)
         {
             extensionEngine->reset();
-            extensionEngine->setExpression(expressionValue.load(std::memory_order_relaxed));
             extensionActive = true;
         }
+        // Retain the physical pedal after every lifecycle reset, not just
+        // activation. New pending UI/MIDI gestures are applied below as usual.
+        if (restoreExpression)
+            extensionEngine->setExpression(expressionValue.load(std::memory_order_relaxed));
     }
     else if (extensionActive)
     {

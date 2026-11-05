@@ -741,6 +741,83 @@ void testPitchWheelSourceIndependentOfRange()
     }
 }
 
+// The channel-pressure source is shared event memory, but its value must take
+// the same Circuit controller dezipper as a held voice's pressure. Otherwise
+// selecting Channel pressure rather than Poly pressure restores abrupt jumps.
+void testChannelPressureSourceSmoothing()
+{
+    const auto config = routed({
+        { ModSource::channelPressure, ModSource::none, ModDestination::fx1Mix, ModTarget::both },
+        { ModSource::channelPressure, ModSource::none, ModDestination::pan, ModTarget::rankII },
+        { ModSource::polyPressure, ModSource::none, ModDestination::pan, ModTarget::rankI },
+        { ModSource::constant, ModSource::channelPressure, ModDestination::fx2Mix, ModTarget::both },
+    });
+    const auto renderFrames = [](Engine& e, int frames)
+    {
+        std::vector<float> block(2 * (std::size_t) frames);
+        e.render(block.data(), frames);
+    };
+    for (double rate : { 44100.0, 48000.0, 96000.0 })
+        for (float quality : { 0.0f, 1.0f, 2.0f })
+            for (int policy = 0; policy < 3; ++policy)
+            {
+                ParamValues p;
+                p[P_sourcePerformance] = policy != 0 ? 1.0f : 0.0f;
+                p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+                p[P_oversampling] = quality;
+                p[P_analogNoise] = p[P_drift] = p[P_voiceDispersion] = 0.0f;
+                p[P_mod1Amount] = p[P_mod2Amount] = p[P_mod3Amount] = p[P_mod4Amount] = 0.5f;
+                Engine e;
+                e.prepare(rate);
+                e.setParams(p);
+                e.setModernConfig(config);
+                e.noteOn(60, 0.8f);
+                renderFrames(e, 64); // End first-sample snap before the gesture.
+                const auto checkRoutes = [&](double expected)
+                {
+                    const double offset = policy == 2 ? 0.0 : 0.5 * expected;
+                    check(near(e.getModernGlobalOffsets().fxMix[0], offset, 1.0)
+                              && near(e.getModernGlobalOffsets().fxMix[1], offset, 1.0),
+                          "channel-pressure source and via follow the controller response globally");
+                    check(near(e.getModernRankOffsets(0, 1).pan, offset, 1.0),
+                          "channel-pressure source follows the controller response at rank destinations");
+                    check(near(e.getModernRankOffsets(0, 0).pan,
+                               e.getModernRankOffsets(0, 1).pan, 1.0),
+                          "held voice and shared channel-pressure source have the same response");
+                };
+                e.channelPressure(1, 0.8f);
+                int elapsed = 0;
+                double response = 0.0;
+                for (int frames : { 1, (int) (rate * 0.0025), (int) (rate * 0.0025) })
+                {
+                    renderFrames(e, frames);
+                    elapsed += frames;
+                    response = policy == 0 ? 0.8f : (double) 0.8f
+                        * (1.0 - std::exp(-(double) elapsed / (rate * kControlSmoothingSeconds)));
+                    checkRoutes(response);
+                    // Repeated MIDI events at the same value do not restart
+                    // the glide or replace the target with the running value.
+                    e.channelPressure(1, 0.8f);
+                }
+                e.channelPressure(1, 0.2f);
+                const int returnFrames = (int) (rate * kControlSmoothingSeconds);
+                renderFrames(e, returnFrames);
+                const double returned = policy == 0 ? 0.2f : (double) 0.2f
+                    + (response - (double) 0.2f)
+                        * std::exp(-(double) returnFrames / (rate * kControlSmoothingSeconds));
+                checkRoutes(returned);
+                e.reset();
+                e.noteOn(60, 0.8f);
+                renderFrames(e, 1);
+                checkRoutes(0.0);
+                e.reset();
+                e.noteOn(60, 0.8f);
+                e.channelPressure(1, 0.6f);
+                renderFrames(e, 1);
+                checkRoutes(0.6f); // First sample snaps, just like other controllers.
+            }
+}
+
 void testEngineConsumption()
 {
     // velocity -> pitch, mod wheel -> LP cutoff on rank II: read the rank telemetry against
@@ -1036,6 +1113,7 @@ int main()
     testDefaultInvarianceAndPurity();
     testEngineConsumption();
     testPitchWheelSourceIndependentOfRange();
+    testChannelPressureSourceSmoothing();
     testEngineRateRouteRemoval();
     testEngineUnusableTransportPosition();
     testEngineGlobalSourcePriorityAfterRelease();

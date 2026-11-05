@@ -54,6 +54,12 @@ The engine knows the layer through one member and a handful of hook lines in
    gets `+ modernGlobal.fxMix[slot]`.
 6. LFOs: `modLfos[i].tick(rate, sr, global.lfoWave[i])` (was a hard-coded `0`).
 7. `channelPressure()` remembers the last message for the channel-pressure source.
+   Circuit applies its existing 5 ms controller response to this shared matrix
+   tap as well as to per-voice pressure. Source and via routes share that value;
+   the event target is restored after each internal sample. Initial/reset
+   values snap on the first sample, Legacy remains immediate and PURE masks
+   the matrix. This corrects abrupt channel-pressure matrix gestures without
+   changing pressure ownership, the controller curves or the touch circuit.
 8. `buildSettings()`: reads the new parameters; PURE CS-80 disables the layer, forces sine and
    model 0 and turns loudness matching off.
 

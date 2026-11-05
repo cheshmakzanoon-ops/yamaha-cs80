@@ -1812,12 +1812,14 @@ void Engine::beginSmoothedControls() noexcept
     c.pitchWheelTarget = globalPitchWheel;
     c.modWheelTarget = modWheel;
     c.ribbonTarget = ribbon;
+    c.channelPressureTarget = lastChannelPressure;
     if (c.snapPending)
     {
         c.bend.snap(globalBend);
         c.upperBend.snap(upperZoneBend);
         c.pitchWheel.snap(globalPitchWheel);
         c.modWheel.snap(modWheel);
+        c.channelPressure.snap(lastChannelPressure);
         expressionOptics.reset(expression);
         c.ribbon.snap(ribbonTotal);
     }
@@ -1827,6 +1829,9 @@ void Engine::beginSmoothedControls() noexcept
     upperZoneBend = (float) c.upperBend.advance(upperZoneBend, k);
     globalPitchWheel = (float) c.pitchWheel.advance(globalPitchWheel, k);
     modWheel = (float) c.modWheel.advance(modWheel, k);
+    // The shared matrix tap of channel pressure must follow the same
+    // dezipper as its per-voice counterpart, not bypass it with event memory.
+    lastChannelPressure = (float) c.channelPressure.advance(lastChannelPressure, k);
     // The EXP volume path is an optical cell (ws4 hand-off, ExpressionOptics.h):
     // its declared log-R law is this controller's smoothing.
     expressionOptics.setPedal(expression);
@@ -1864,6 +1869,7 @@ void Engine::endSmoothedControls() noexcept
     globalPitchWheel = c.pitchWheelTarget;
     modWheel = c.modWheelTarget;
     ribbon = c.ribbonTarget;
+    lastChannelPressure = c.channelPressureTarget;
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
