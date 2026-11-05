@@ -460,6 +460,18 @@ if (CS80_BUILD_PLUGIN)
         FetchContent_MakeAvailable(JUCE)
     endif()
 
+    if (CS80_BUILD_TESTS)
+        # Detached ValueTree matching only: no processor or GUI initialization.
+        juce_add_console_app(cs80_parameter_state_index_tests
+            PRODUCT_NAME "CS80 Parameter State Index Tests")
+        target_sources(cs80_parameter_state_index_tests PRIVATE tests/ParameterStateChildIndexTests.cpp)
+        target_include_directories(cs80_parameter_state_index_tests PRIVATE src)
+        target_link_libraries(cs80_parameter_state_index_tests PRIVATE juce::juce_data_structures)
+        target_compile_definitions(cs80_parameter_state_index_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_parameter_state_index_tests COMMAND cs80_parameter_state_index_tests)
+        set_tests_properties(cs80_parameter_state_index_tests PROPERTIES TIMEOUT 120)
+    endif()
+
     # This main-based feature is VST3-only. Keep the shipping AU wrapper intact.
     set(CS80_HOST_AUTOMATION_FORMATS VST3)
     include(cmake/HostAutomation.cmake)

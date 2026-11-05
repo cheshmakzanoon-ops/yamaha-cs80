@@ -1,4 +1,5 @@
 #include "UndoHistory.h"
+#include "ParameterStateChildIndex.h"
 
 namespace cs80
 {
@@ -150,6 +151,7 @@ juce::ValueTree UndoableParameterState::copyStateForSave()
 {
     const juce::ScopedLock scoped(lock);
     auto snapshot = state.createCopy();
+    detail::ParameterStateChildIndex index(snapshot);
     for (auto* parameter : parameters)
     {
         if (parameter == nullptr)
@@ -162,13 +164,10 @@ juce::ValueTree UndoableParameterState::copyStateForSave()
         // Write only to the detached copy: pending live edits retain their
         // original user/automation classification until the normal flush.
         const float value = raw->load(std::memory_order_relaxed);
-        bool found = false;
-        for (auto child : snapshot)
-            if (child.getProperty("id").toString() == id)
-            {
-                child.setProperty("value", value, nullptr);
-                found = true;
-            }
+        auto& matches = index.matches(id);
+        const bool found = ! matches.empty();
+        for (auto child : matches)
+            child.setProperty("value", value, nullptr);
         // JUCE accepts all direct children with a known id, with the last
         // duplicate winning. Keep every duplicate current in a saved state.
         if (!found)
@@ -177,6 +176,7 @@ juce::ValueTree UndoableParameterState::copyStateForSave()
             child.setProperty("id", id, nullptr);
             child.setProperty("value", value, nullptr);
             snapshot.appendChild(child, nullptr);
+            matches.push_back(child);
         }
     }
     return snapshot;

@@ -3,6 +3,7 @@
 #include "PluginEditor.h"
 #include "core/VoiceModes.h"
 #include "PluginProcessorLibrary.h"
+#include "ParameterStateChildIndex.h"
 
 #include <algorithm>
 #include <cmath>
@@ -1118,6 +1119,7 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
     // APVTS is the sole authority. Complete a detached state before replacing
     // it: JUCE otherwise retains live parameter values for missing children.
     auto result = state.createCopy();
+    cs80::detail::ParameterStateChildIndex index(result);
     auto hardware = state.getChildWithName("HARDWARE");
     // Malformed or missing schema markers are treated as the oldest schema.
     // XML attributes arrive as strings (ValueTree::fromXml), so a complete
@@ -1146,19 +1148,30 @@ juce::ValueTree Cs80AudioProcessor::normaliseRestoredState(const juce::ValueTree
         // that same value authority, but remove earlier duplicates before
         // validation and the caller's live-session overrides. Sanitizing only
         // the first child leaves the value JUCE actually loads unchecked.
+        auto& matches = index.matches(id);
         juce::ValueTree child;
-        for (int i = result.getNumChildren(); --i >= 0;)
+        if (matches.size() > 1)
         {
-            auto candidate = result.getChild(i);
-            if (candidate.getProperty("id").toString() != id) continue;
-            if (! child.isValid()) child = candidate;
-            else result.removeChild(i, nullptr);
+            // Keep the original reverse-index removal for malformed duplicate
+            // input: removing each handle would repeatedly search the children.
+            for (int i = result.getNumChildren(); --i >= 0;)
+            {
+                auto candidate = result.getChild(i);
+                if (candidate.getProperty("id").toString() != id) continue;
+                if (! child.isValid()) child = candidate;
+                else result.removeChild(i, nullptr);
+            }
+            matches.resize(1);
+            matches[0] = child;
         }
+        else if (! matches.empty())
+            child = matches.front();
         if (!child.isValid())
         {
             child = juce::ValueTree("PARAM");
             child.setProperty("id", id, nullptr);
             result.addChild(child, -1, nullptr);
+            matches.push_back(child);
         }
         float value = (float) child.getProperty("value", fallback);
         if (!std::isfinite(value)) value = fallback;
