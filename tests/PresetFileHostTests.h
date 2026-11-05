@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <memory>
 
 namespace cs80::tests
@@ -164,5 +165,92 @@ void testPresetFileHost(Check&& check)
           "nonfinite final duplicate hardware source restores PANEL fallback");
     check(std::abs(reader->getMemoryValue(0, CP_lpfCutoff) - kChannelDefs[CP_lpfCutoff].def) < 0.02f,
           "nonfinite final duplicate memory control restores its declared default");
+
+    // A root factory index is metadata for the custom sound, not a request to
+    // recall a program. Hosts require a valid index while synchronizing state.
+    // Cover both restore paths, repeated loads, and their subsequent exports.
+    const int lastProgram = reader->getNumPrograms() - 1;
+    check(lastProgram > 0, "factory-index fixtures have multiple host programs");
+    if (lastProgram <= 0) return;
+    for (bool session : { false, true })
+        for (bool missing : { false, true })
+            for (int index : { std::numeric_limits<int>::min(), -1000000, -2, -1,
+                               0, 1, legacyProgramCount - 1, legacyProgramCount,
+                               lastProgram / 2, lastProgram, lastProgram + 1,
+                               1000000, std::numeric_limits<int>::max() })
+            {
+                // One missing-property fixture is enough per restore path.
+                if (missing && index != 0) continue;
+                auto indexed = original.createCopy();
+                indexed.setProperty("presetName", "Custom index fixture", nullptr);
+                if (missing) indexed.removeProperty("factoryIndex", nullptr);
+                else indexed.setProperty("factoryIndex", index, nullptr);
+                append(indexed, "macro1", 0.73125f);
+                append(indexed, "macro2", 0.26875f);
+                const int expected = missing ? 0 : std::clamp(index, 0, lastProgram);
+                for (int repeat = 0; repeat < 2; ++repeat)
+                {
+                    // Start at a different valid program to expose stale metadata.
+                    reader->setCurrentProgram(expected == 0 ? lastProgram : 0);
+                    if (session) restoreSession(indexed);
+                    else if (const auto file = write(indexed); file != juce::File())
+                        reader->loadUserPreset(file);
+                    const auto metadata = reader->getPresetMetadata();
+                    check(reader->getCurrentProgram() == expected && metadata.factoryIndex == expected,
+                          "restore bounds factory index before exposing it to the host");
+                    check(metadata.name == "Custom index fixture",
+                          "factory-index normalization retains the custom preset name");
+                    check(std::abs(reader->getParamValue(P_macro1) - 0.73125f) < 1.0e-6f
+                              && std::abs(reader->getParamValue(P_macro2) - 0.26875f) < 1.0e-6f,
+                          "factory-index normalization does not recall factory parameters");
+                }
+
+                const auto checkExport = [&](const juce::ValueTree& state)
+                {
+                    check((int) state.getProperty("factoryIndex", -1) == expected,
+                          "subsequent export writes the normalized factory index");
+                    check(state.getProperty("presetName").toString() == "Custom index fixture",
+                          "subsequent export retains the custom preset name");
+                };
+                const auto checkReimport = [&]
+                {
+                    const auto metadata = writer->getPresetMetadata();
+                    check(writer->getCurrentProgram() == expected && metadata.factoryIndex == expected,
+                          "round-trip reimport retains the normalized factory index");
+                    check(metadata.name == "Custom index fixture"
+                              && std::abs(writer->getParamValue(P_macro1) - 0.73125f) < 1.0e-6f
+                              && std::abs(writer->getParamValue(P_macro2) - 0.26875f) < 1.0e-6f,
+                          "round-trip reimport retains the custom name and sound");
+                };
+                const auto prepareReimport = [&]
+                {
+                    writer->setCurrentProgram(expected == 0 ? lastProgram : 0);
+                    writer->setPresetName("Before index round-trip");
+                    writer->setParamValue(P_macro1, 0.125f);
+                    writer->setParamValue(P_macro2, 0.875f);
+                };
+                juce::MemoryBlock stateData;
+                reader->getStateInformation(stateData);
+                auto stateXml = juce::XmlDocument::parse(juce::String::fromUTF8(
+                    static_cast<const char*>(stateData.getData()), (int) stateData.getSize()));
+                check(stateXml != nullptr, "factory-index host round-trip is valid XML");
+                if (stateXml) checkExport(juce::ValueTree::fromXml(*stateXml));
+                prepareReimport();
+                writer->setStateInformation(stateData.getData(), (int) stateData.getSize());
+                checkReimport();
+
+                const auto exported = reader->saveUserPreset("Custom index fixture",
+                                                            Cs80AudioProcessor::PresetOverwrite::yes);
+                check(exported.wasSaved(), "factory-index user-preset round-trip saves");
+                if (exported.wasSaved())
+                {
+                    auto exportedXml = juce::XmlDocument::parse(exported.file);
+                    check(exportedXml != nullptr, "factory-index user-preset round-trip is valid XML");
+                    if (exportedXml) checkExport(juce::ValueTree::fromXml(*exportedXml));
+                    prepareReimport();
+                    writer->loadUserPreset(exported.file);
+                    checkReimport();
+                }
+            }
 }
 } // namespace cs80::tests

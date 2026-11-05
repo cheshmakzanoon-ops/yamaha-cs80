@@ -554,7 +554,10 @@ void Cs80AudioProcessor::setPresetMetadata(const juce::String& name, int index)
 {
     const juce::ScopedLock lock(presetMetadataLock);
     presetName = name;
-    currentProgram.store(index, std::memory_order_relaxed);
+    // Session/preset metadata is external input. Keep the host program valid
+    // without recalling a factory sound over the restored custom parameters.
+    currentProgram.store(juce::jlimit(0, juce::jmax(0, (int) getFactoryPresets().size() - 1), index),
+                         std::memory_order_relaxed);
     if (library != nullptr) library->midiProgram.store(-1, std::memory_order_release);
 }
 
