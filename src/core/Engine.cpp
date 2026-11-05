@@ -1829,6 +1829,10 @@ bool Engine::hasFreeCircuit() const noexcept
 
 bool Engine::isZoneMaster(const Voice& v, int midiChannel) const noexcept
 {
+    // Unassigned MPE channels are conventional channels, not lower-zone members.
+    // Callers still accept their own-channel pressure and CC74 directly.
+    if (global.mpe && mpeZones.role(v.midiChannel) == MpeZoneLayout::Role::none)
+        return false;
     // Non-MPE and the lower zone: channel 1 is the master (historical rule).
     if (! v.upperZone) return midiChannel == 1;
     return midiChannel == 16 && mpeZones.role(16) == MpeZoneLayout::Role::upperMaster;

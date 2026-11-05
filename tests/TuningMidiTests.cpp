@@ -10,6 +10,7 @@
 #include <cmath>
 #include <cstdio>
 #include <fstream>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -544,6 +545,195 @@ void testMpePedalZoneBoundaries()
     }
 }
 
+// Master pressure/CC74 applies only inside an assigned MPE zone. The global
+// latest-channel-pressure matrix source and historical non-MPE routing remain.
+void testMpeExpressionZoneBoundaries()
+{
+    using namespace modern;
+    struct Fixture
+    {
+        Engine engine;
+        ParamValues params;
+        bool pure = false, mpe = false;
+        explicit Fixture(int policy) : params(quiet(policy == 4 ? 1.0f : 0.0f))
+        {
+            pure = policy == 4;
+            mpe = policy == 1 || policy == 3;
+            params[P_sourcePerformance] = policy >= 2 ? 1.0f : 0.0f;
+            params[P_mpeOn] = mpe || pure ? 1.0f : 0.0f;
+            params[P_kasScanTiming] = params[P_arpOn] = params[P_voiceMode] = 0.0f;
+            params[P_pressureCurve] = params[P_pressureThreshold] = 0.0f;
+            params[P_keyRelease] = 5.0f;
+            params[P_mod1Amount] = params[P_mod2Amount] = params[P_mod3Amount] = 1.0f;
+            ModernConfig config;
+            config.slots[0] = { ModSource::polyPressure, ModSource::none, ModDestination::pitch, ModTarget::both };
+            config.slots[1] = { ModSource::timbre, ModSource::none, ModDestination::pan, ModTarget::both };
+            config.slots[2] = { ModSource::channelPressure, ModSource::none, ModDestination::fx1Mix, ModTarget::both };
+            engine.prepare(48000.0);
+            engine.setModernConfig(config);
+            engine.setParams(params);
+        }
+        void zone(int channel, int members)
+        {
+            engine.controlChange(101, 0.0f, channel);
+            engine.controlChange(100, 6.0f / 127.0f, channel);
+            engine.controlChange(6, members / 127.0f, channel);
+        }
+        void layout(int lower, int upper)
+        {
+            zone(1, 0); zone(16, 0); zone(1, lower); zone(16, upper);
+            if (mpe)
+                check(engine.getMpeZones().lowerMemberCount() == lower
+                          && engine.getMpeZones().upperMemberCount() == upper,
+                      "expression fixture accepts the requested zone layout");
+        }
+        int start(int channel, bool releaseTail = false)
+        {
+            engine.allNotesOff(false);
+            engine.noteOn(60, 0.8f, channel);
+            int index = -1;
+            for (int i = 0; i < 8; ++i)
+            {
+                const auto v = engine.getVoiceInfo(i);
+                if (v.active && v.held && v.note == 60 && v.channel == channel) index = i;
+            }
+            check(index >= 0, "expression fixture allocates its requested channel");
+            if (releaseTail)
+            {
+                render(engine, 256);
+                engine.noteOff(60, channel);
+                check(engine.getVoiceInfo(index).active && !engine.getVoiceInfo(index).held,
+                      "expression fixture retains a sounding release tail");
+            }
+            return index;
+        }
+        void send(int channel, float value)
+        {
+            engine.channelPressure(channel, value);
+            engine.controlChange(74, value, channel);
+        }
+        void verify(int index, float expected, int frames, const std::string& label)
+        {
+            check(index >= 0 && engine.getVoiceInfo(index).pressure == expected,
+                  label + " per-voice pressure target");
+            render(engine, frames);
+            check(engine.getVoiceInfo(index).active, label + " note or tail remains active");
+            const auto& rank = engine.getModernRankOffsets(index, 0);
+            const float modernExpected = pure ? 0.0f : expected;
+            check(std::abs(rank.pitch - 12.0f * modernExpected) < 0.001f,
+                  label + " per-voice pressure matrix route");
+            check(std::abs(rank.pan - modernExpected) < 0.0001f,
+                  label + " per-voice CC74 matrix route");
+        }
+    };
+
+    const std::array<std::array<int, 2>, 7> layouts {{
+        {{15, 0}}, {{0, 15}}, {{7, 7}}, {{2, 2}}, {{0, 2}}, {{2, 0}}, {{0, 0}}
+    }};
+    // Stable non-MPE Legacy/Circuit, MPE Legacy/Circuit, and PURE's ignored MPE.
+    for (int policy = 0; policy < 5; ++policy)
+    {
+        Fixture f(policy);
+        for (const auto& layout : layouts)
+        {
+            f.layout(layout[0], layout[1]);
+            for (int channel = 1; channel <= 16; ++channel)
+                for (int controller : {1, 8, 16, channel})
+                {
+                    const int index = f.start(channel);
+                    const bool lower = layout[0] > 0 && channel <= 1 + layout[0];
+                    const bool upper = layout[1] > 0 && channel >= 16 - layout[1];
+                    const bool applies = controller == channel || (f.mpe
+                        ? ((lower && controller == 1) || (upper && controller == 16))
+                        : controller == 1);
+                    const auto label = "expression policy " + std::to_string(policy) + " layout "
+                        + std::to_string(layout[0]) + "/" + std::to_string(layout[1])
+                        + " note " + std::to_string(channel) + " controller " + std::to_string(controller);
+                    f.send(controller, 0.75f);
+                    f.verify(index, applies ? 0.75f : 0.0f, 2, label);
+                }
+        }
+    }
+
+    for (int policy : {1, 3})
+        for (bool tail : {false, true})
+        {
+            // Live shrink/disable can make a retained voice unassigned. Stop
+            // only its master inheritance; its own channel still controls it.
+            for (const auto change : {std::array<int, 4>{3, 1, 1, 2},
+                                      std::array<int, 4>{14, 16, 2, 1},
+                                      std::array<int, 4>{2, 1, 0, 2},
+                                      std::array<int, 4>{15, 16, 2, 0}})
+            {
+                Fixture f(policy); f.layout(2, 2);
+                const int channel = change[0], master = change[1];
+                const int index = f.start(channel, tail);
+                f.send(master, 0.25f); f.verify(index, 0.25f, 3000, "assigned master before shrink");
+                f.layout(change[2], change[3]);
+                check(f.engine.getMpeZones().role(channel) == MpeZoneLayout::Role::none,
+                      "reconfiguration makes the retained channel unassigned");
+                f.send(master, 0.75f); f.verify(index, 0.25f, 3000, "unassigned voice ignores old master");
+                f.send(channel, 0.5f); f.verify(index, 0.5f, 3000, "unassigned voice keeps own channel");
+            }
+            // A formerly unassigned voice can enter the lower zone without
+            // changing its captured non-upper ownership classification.
+            {
+                Fixture f(policy); f.layout(2, 2);
+                const int index = f.start(8, tail);
+                f.send(1, 0.75f); f.verify(index, 0.0f, 3000, "gap before lower expansion");
+                f.zone(1, 7);
+                f.send(1, 0.5f); f.verify(index, 0.5f, 3000, "lower expansion enables its master");
+            }
+            // The MPE condition is essential: a gap channel carried into
+            // non-MPE retains the historical channel-1 broadcast, then loses
+            // that cross-channel inheritance again when MPE is re-enabled.
+            {
+                Fixture f(policy); f.layout(2, 2);
+                const int index = f.start(8, tail);
+                f.send(1, 0.75f); f.verify(index, 0.0f, 3000, "gap voice before MPE off");
+                f.params[P_mpeOn] = 0.0f; f.engine.setParams(f.params);
+                f.send(1, 0.5f); f.verify(index, 0.5f, 3000, "MPE off restores gap broadcast");
+                f.params[P_mpeOn] = 1.0f; f.engine.setParams(f.params);
+                f.send(1, 0.25f); f.verify(index, 0.5f, 3000, "MPE on excludes gap again");
+                f.send(8, 0.25f); f.verify(index, 0.25f, 3000, "gap own channel after MPE toggles");
+            }
+            // Preserve existing captured-upper semantics outside Role::none.
+            // This is compatibility coverage, not a new live-retag policy.
+            {
+                Fixture f(policy); f.layout(2, 2);
+                const int index = f.start(14, tail);
+                f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "captured upper initial control");
+                f.layout(14, 0); // Channel 14 is assigned lower, still captured upper.
+                f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "assigned voice is not live-retagged");
+                f.send(14, 0.5f); f.verify(index, 0.5f, 3000, "retained upper own channel");
+            }
+            {
+                Fixture f(policy); f.layout(2, 2);
+                const int index = f.start(15, tail);
+                f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "upper voice before MPE toggle");
+                f.params[P_mpeOn] = 0.0f; f.engine.setParams(f.params);
+                f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "MPE off preserves captured upper branch");
+                f.send(16, 0.5f); f.verify(index, 0.5f, 3000, "MPE off retains existing upper master");
+                f.params[P_mpeOn] = 1.0f; f.engine.setParams(f.params);
+                f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "MPE on resumes same upper ownership");
+            }
+        }
+
+    // Rejection is only per-voice inheritance. Latest channel pressure remains
+    // a global matrix source, even when it does not address this voice.
+    for (int policy : {1, 3})
+    {
+        Fixture f(policy); f.layout(2, 2);
+        const int index = f.start(8);
+        f.send(1, 0.75f); f.verify(index, 0.0f, 3000, "global tap preserves unrelated voice targets");
+        check(std::abs(f.engine.getModernGlobalOffsets().fxMix[0] - 0.75f) < 0.0001f,
+              "latest channel pressure stays globally available to the matrix");
+        f.send(8, 0.5f); f.verify(index, 0.5f, 3000, "own channel before malformed expression");
+        f.send(8, std::numeric_limits<float>::quiet_NaN());
+        f.verify(index, 0.5f, 3000, "nonfinite own-channel expression remains ignored");
+    }
+}
+
 // Data Entry belongs to the last selected parameter family. Unsupported NRPNs
 // must not reuse an earlier MPE RPN (MIDI.org, About MIDI Part 3, MIDI Messages).
 void testMpeNrpnIsolation()
@@ -763,6 +953,7 @@ int main()
     testArpeggiatorTuningMap();
     testMpe();
     testMpePedalZoneBoundaries();
+    testMpeExpressionZoneBoundaries();
     testMpeNrpnIsolation();
     testMpeZeroMemberConfiguration();
     testVoiceModes();
