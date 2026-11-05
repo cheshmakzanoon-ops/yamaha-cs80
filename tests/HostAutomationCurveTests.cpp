@@ -137,6 +137,110 @@ int main(int argc, char** argv)
               "extreme positive host offset retains forward interpolation");
         check(std::abs(actualStart - expectedStart) <= limits["extreme_offset_denominator_error"],
               "extreme host offset matches widened independent denominator");
+
+        // Rendering skips regressing/invalid knots. Endpoint publication must
+        // follow that same accepted path, including early and suspended exits.
+        struct EndpointCase { Points points; double expected; int failedRead = -1; };
+        const double nan = std::numeric_limits<double>::quiet_NaN();
+        const std::vector<EndpointCase> endpointCases {
+            {{{0, 0.25}, {8, 0.75}, {3, 0.1}, {6, 0.2}}, 0.75},
+            {{{8, 0.75}, {3, 0.1}, {8, 0.4}, {6, 0.2}}, 0.4},
+            {{{std::numeric_limits<int>::max(), 0.75}, {0, 0.1}}, 0.75},
+            {{{7, 2.0}, {6, nan}, {5, 0.1}, {9, -2.0}, {8, 0.75}}, 0.0},
+            {{{-1, 0.9}, {-10, 0.2}}, 0.125},
+            {{{3, nan}, {4, std::numeric_limits<double>::infinity()}}, 0.125},
+            {{{0, 0.25}, {8, 0.75}, {9, 0.9}, {3, 0.1}}, 0.75, 2},
+            {{{0, 0.25}, {4, 0.5}, {8, 0.75}}, 0.75},
+            {{}, 0.125}
+        };
+        struct EndpointQueue { const EndpointCase* fixture; };
+        const auto endpointRead = +[](void* context, int index, int& offset, double& value) noexcept {
+            const auto& fixture = *static_cast<EndpointQueue*>(context)->fixture;
+            if (index == fixture.failedRead || index < 0
+                || index >= static_cast<int>(fixture.points.size())) return false;
+            offset = fixture.points[static_cast<size_t>(index)].first;
+            value = fixture.points[static_cast<size_t>(index)].second;
+            return true;
+        };
+        const auto publish = +[](void* context, float value) noexcept { *static_cast<float*>(context) = value; };
+        int endpointChecks = 0, endpointFailures = 0;
+        const auto endpointCheck = [&](bool pass, const char* message) {
+            ++endpointChecks;
+            if (!pass) ++endpointFailures;
+            check(pass, message);
+        };
+        for (const auto& fixture : endpointCases)
+            for (int through : {-1, 0, 3, 8, 12})
+            {
+                EndpointQueue data {&fixture};
+                float published = -1.0f;
+                cs80::HostAutomationCurve tested, untouched;
+                const cs80::HostAutomationQueue queue {
+                    &data, static_cast<int>(fixture.points.size()), endpointRead, &published, publish};
+                tested.begin(queue, 0.125);
+                untouched.begin(queue, 0.125);
+                for (int sample = 0; sample <= through; ++sample)
+                    endpointCheck(tested.valueAt(sample) == untouched.valueAt(sample),
+                                  "endpoint fixture renders identically before publication");
+                endpointCheck(tested.finalValue() == fixture.expected,
+                              "endpoint ignores knots rejected by the render cursor");
+                tested.commit();
+                endpointCheck(published == static_cast<float>(fixture.expected),
+                              "commit publishes the accepted endpoint at early and ordinary exits");
+                endpointCheck(tested.finalValue() == fixture.expected,
+                              "repeated endpoint queries are stable");
+                for (int sample = through + 1; sample <= 16; ++sample)
+                    endpointCheck(tested.valueAt(sample) == untouched.valueAt(sample),
+                                  "endpoint query and commit do not advance the live render cursor");
+                endpointCheck(tested.valueAt(std::numeric_limits<int>::max()) == fixture.expected,
+                              "published endpoint agrees with complete accepted-queue traversal");
+            }
+        // Match the processor's publication order: keep full precision first,
+        // then notify the host using that value without a second queue walk.
+        struct PublicationProbe
+        {
+            Points points {{0, 0.25}, {8, 0.75}, {3, 0.1}, {6, 0.2}};
+            int reads = 0, notifications = 0;
+            double stored = -1.0, observedStored = -1.0;
+            float published = -1.0f;
+        } publication;
+        const auto countedRead = +[](void* context, int index, int& position, double& value) noexcept {
+            auto& probe = *static_cast<PublicationProbe*>(context);
+            ++probe.reads;
+            return read(&probe.points, index, position, value);
+        };
+        const auto notify = +[](void* context, float value) noexcept {
+            auto& probe = *static_cast<PublicationProbe*>(context);
+            ++probe.notifications;
+            probe.observedStored = probe.stored;
+            probe.published = value;
+        };
+        cs80::HostAutomationCurve precomputed;
+        precomputed.begin({&publication, 4, countedRead, &publication, notify}, 0.125);
+        publication.stored = precomputed.finalValue();
+        const int readsBeforeCommit = publication.reads;
+        precomputed.commitFinalValue(publication.stored);
+        endpointCheck(publication.reads == readsBeforeCommit,
+                      "publishing a computed endpoint never rereads queue points");
+        endpointCheck(publication.notifications == 1 && publication.published == 0.75f
+                          && publication.observedStored == 0.75,
+                      "endpoint storage precedes its one host callback");
+        endpointCheck(precomputed.valueAt(0) == 0.25,
+                      "computed endpoint publication leaves the live cursor unchanged");
+        precomputed.commit();
+        endpointCheck(publication.notifications == 2 && publication.published == 0.75f,
+                      "ordinary commit still computes and publishes the accepted endpoint");
+        PublicationProbe noDestination;
+        cs80::HostAutomationCurve noNotification;
+        noNotification.begin({&noDestination, 4, countedRead, nullptr, nullptr}, 0.125);
+        const int readsWithoutNotification = noDestination.reads;
+        noNotification.commit();
+        noNotification.commitFinalValue(0.75);
+        endpointCheck(noDestination.reads == readsWithoutNotification,
+                      "commit without a publication callback remains a no-op");
+        std::cout << "endpoint publication checks=" << endpointChecks
+                  << ", failures=" << endpointFailures << '\n';
+
         std::cout << "maximum normalized curve error=" << maxError << '\n';
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }

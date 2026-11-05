@@ -80,20 +80,25 @@ public:
 
     double finalValue() const noexcept
     {
-        for (int i = queue.count; i-- > 0;)
-        {
-            int position = 0;
-            double value = 0.0;
-            if (queue.readPoint(queue.context, i, position, value) && position >= 0 && std::isfinite(value))
-                return std::clamp(value, 0.0, 1.0);
-        }
-        return previousValue;
+        // Complete the same accepted-knot traversal on a copy: a regressing
+        // point rejected during rendering must not reappear at publication.
+        // The live cursor stays untouched, including on early block exits.
+        auto endpoint = *this;
+        return endpoint.valueAt(std::numeric_limits<int>::max());
     }
 
     void commit() const noexcept
     {
         if (queue.commitParameter != nullptr)
-            queue.commitParameter(queue.parameter, static_cast<float>(finalValue()));
+            commitFinalValue(finalValue());
+    }
+
+    // Publish an already computed endpoint without walking the unread suffix
+    // again. The caller can store its full precision before the notification.
+    void commitFinalValue(double value) const noexcept
+    {
+        if (queue.commitParameter != nullptr)
+            queue.commitParameter(queue.parameter, static_cast<float>(value));
     }
 
 private:

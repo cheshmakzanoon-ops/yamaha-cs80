@@ -88,7 +88,7 @@ void Cs80AudioProcessor::endHostAutomationBlock() noexcept
         if (curve.active())
         {
             automationCurrent[i] = curve.finalValue();
-            curve.commit();
+            curve.commitFinalValue(automationCurrent[i]);
             if (automationParameters[i] != nullptr)
                 automationParameterReadback[i] = automationParameters[i]->getValue();
             curve = {};
