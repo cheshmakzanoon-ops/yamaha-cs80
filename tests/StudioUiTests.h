@@ -20,6 +20,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include <chrono>
 #include <cstdint>
 #include <functional>
 #include <set>
@@ -231,9 +232,23 @@ inline void testLfoScopeWaveforms(const Check& check, const Flush& flush, const 
         {
             const int before = probe->invalidations;
             processor.setParamValue(cs80::P_lfo1Wave + lfo, static_cast<float>(wave));
-            flush(80);
             if (wave > 0)
+            {
+                // Studio refreshes at 15 Hz. One fixed 80 ms dispatch is barely one
+                // tick and can miss a delayed callback on a busy CI message thread.
+                // Wait for the actual repaint before taking any forced snapshot;
+                // a missing waveform signature still fails at the bounded deadline.
+                const auto started = std::chrono::steady_clock::now();
+                const auto deadline = started + std::chrono::seconds(1);
+                while (probe->invalidations == before && std::chrono::steady_clock::now() < deadline)
+                    flush(20);
+                if (probe->invalidations == before)
+                    std::printf("  LFO %d wave %d: no repaint after %.0f ms (parameter %.0f, invalidations %d -> %d)\n",
+                                lfo + 1, wave,
+                                std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - started).count(),
+                                static_cast<double>(processor.getParamValue(cs80::P_lfo1Wave + lfo)), before, probe->invalidations);
                 check(probe->invalidations > before, "waveform-only change invalidates the correct LFO scope");
+            }
             const auto state = processor.getAPVTS().copyState();
             const auto image = scope->createComponentSnapshot(scope->getLocalBounds());
             check(image.isValid(), "LFO waveform snapshot is valid");
