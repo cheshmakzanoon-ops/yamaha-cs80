@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 
 void Cs80AudioProcessor::initialiseLibrary()
 {
@@ -112,6 +113,106 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
 // ---------------------------------------------------------------------------
 // A/B compare (message thread)
 // ---------------------------------------------------------------------------
+// These actions restore side state only. The existing parameter and modern
+// ValueTree actions remain responsible for the sound. Calling recall here
+// would recapture snapshots or recursively record new actions during replay.
+Cs80AudioProcessor::LibraryState::CompareHistoryState
+Cs80AudioProcessor::LibraryState::captureCompareHistoryState() const
+{
+    CompareHistoryState result;
+    {
+        const juce::ScopedLock lock(abLock);
+        result.slots = ab;
+        result.active = abActive;
+    }
+    result.metadata = owner.getPresetMetadata();
+    return result;
+}
+
+struct Cs80AudioProcessor::LibraryState::ToggleAction final : juce::UndoableAction
+{
+    ToggleAction(LibraryState& state, CompareHistoryState oldState, CompareHistoryState newState)
+        : library(state), before(std::move(oldState)), after(std::move(newState)) {}
+
+    bool perform() override
+    {
+        // The initial switch has already staged these snapshots. Record the
+        // action before recall writes, without moving its normal notification.
+        if (firstPerform)
+            firstPerform = false;
+        else
+            apply(after);
+        return true;
+    }
+
+    bool undo() override { apply(before); return true; }
+    int getSizeInUnits() override
+    {
+        size_t bytes = sizeof(*this);
+        for (const auto* state : { &before, &after })
+        {
+            bytes += state->metadata.name.getNumBytesAsUTF8() + 1;
+            for (const auto& snapshot : state->slots)
+                bytes += snapshot.name.getNumBytesAsUTF8() + 1;
+        }
+        return (int) std::min(bytes, (size_t) std::numeric_limits<int>::max());
+    }
+
+    void apply(const CompareHistoryState& state)
+    {
+        const juce::ScopedLock treeLock(library.owner.apvts.treeLock());
+        {
+            const juce::ScopedLock lock(library.abLock);
+            library.ab = state.slots;
+            library.abActive = state.active;
+        }
+        library.owner.setPresetMetadata(state.metadata.name, state.metadata.factoryIndex);
+        // Redo applies this action before the sound's tree actions. The existing
+        // async notifier must wait until the whole transaction has completed.
+        library.notifyProgramChanged();
+    }
+
+    LibraryState& library;
+    const CompareHistoryState before, after;
+    bool firstPerform = true;
+};
+
+struct Cs80AudioProcessor::LibraryState::CopyAction final : juce::UndoableAction
+{
+    CopyAction(LibraryState& state, int destination, Snapshot oldState, Snapshot newState)
+        : library(state), slot(destination), before(std::move(oldState)), after(std::move(newState)) {}
+
+    bool perform() override
+    {
+        if (firstPerform)
+            firstPerform = false;
+        else
+            apply(after);
+        return true;
+    }
+
+    bool undo() override { apply(before); return true; }
+    int getSizeInUnits() override
+    {
+        const size_t bytes = sizeof(*this) + before.name.getNumBytesAsUTF8()
+                             + after.name.getNumBytesAsUTF8() + 2;
+        return (int) std::min(bytes, (size_t) std::numeric_limits<int>::max());
+    }
+
+    void apply(const Snapshot& snapshot)
+    {
+        const juce::ScopedLock treeLock(library.owner.apvts.treeLock());
+        const juce::ScopedLock lock(library.abLock);
+        library.ab[(size_t) slot] = snapshot;
+        // Copy never changes the active slot, sounding patch or its metadata.
+    }
+
+    LibraryState& library;
+    const int slot;
+    const Snapshot before, after;
+    bool firstPerform = true;
+};
+
 void Cs80AudioProcessor::captureAbSnapshot(int slot)
 {
     LibraryState::Snapshot s;
@@ -168,6 +269,9 @@ void Cs80AudioProcessor::abToggle()
 {
     if (library == nullptr)
         return;
+    const juce::ScopedLock treeLock(apvts.treeLock());
+    const bool record = apvts.hasActiveUserEdit();
+    const auto before = record ? library->captureCompareHistoryState() : LibraryState::CompareHistoryState {};
     int target = 0;
     {
         const juce::ScopedLock lock(library->abLock);
@@ -180,6 +284,13 @@ void Cs80AudioProcessor::abToggle()
             library->ab[(size_t) target] = library->ab[(size_t) (1 - target)];
         library->abActive = target;
     }
+    if (record)
+    {
+        auto after = library->captureCompareHistoryState();
+        const auto& destination = after.slots[(size_t) target];
+        after.metadata = { destination.name, destination.program };
+        undoManager.perform(new LibraryState::ToggleAction(*library, before, std::move(after)));
+    }
     recallAbSnapshot(target);
 }
 
@@ -187,7 +298,24 @@ void Cs80AudioProcessor::abCopyCurrentTo(int slot)
 {
     if (library == nullptr || slot < 0 || slot > 1)
         return;
+    const juce::ScopedLock treeLock(apvts.treeLock());
+    const bool record = apvts.hasActiveUserEdit();
+    LibraryState::Snapshot before;
+    if (record)
+    {
+        const juce::ScopedLock lock(library->abLock);
+        before = library->ab[(size_t) slot];
+    }
     captureAbSnapshot(slot);
+    if (record)
+    {
+        LibraryState::Snapshot after;
+        {
+            const juce::ScopedLock lock(library->abLock);
+            after = library->ab[(size_t) slot];
+        }
+        undoManager.perform(new LibraryState::CopyAction(*library, slot, std::move(before), std::move(after)));
+    }
 }
 
 int Cs80AudioProcessor::getAbSlot() const noexcept

@@ -69,6 +69,10 @@ public:
 
     juce::UndoManager& getHistory() noexcept { return history; }
 
+    // Side-state edits join only an explicit message-thread ScopedUserEdit.
+    // A direct API call or unrelated parameter gesture must not record them.
+    bool hasActiveUserEdit() const;
+
 private:
     void beginUserEdit(const juce::String& name);
     void endUserEdit();

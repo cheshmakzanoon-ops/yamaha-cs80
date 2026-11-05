@@ -91,6 +91,11 @@ void UndoableParameterState::openTransaction(const juce::String& name)
     });
 }
 
+bool UndoableParameterState::hasActiveUserEdit() const
+{
+    return onMessageThread() && userScopes > 0 && ! history.isPerformingUndoRedo();
+}
+
 void UndoableParameterState::beginUserEdit(const juce::String& name)
 {
     jassert(onMessageThread());

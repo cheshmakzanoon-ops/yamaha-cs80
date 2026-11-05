@@ -4,6 +4,7 @@
 // Program Change with bank select, A/B compare and randomise. Run from the UI
 // smoke executable after JUCE initialisation; no user files are written.
 
+#include "AbCompareHistoryHostTests.h"
 #include "core/FactoryPresets.h"
 #include "core/Randomise.h"
 #include "plugin/PluginProcessor.h"
@@ -357,6 +358,8 @@ void testProgramLibraryHost(Check&& check)
         check(!host.getAPVTS().copyState().getChildWithName("AB_COMPARE").isValid(),
               "modern A/B snapshots stay outside the live parameter tree");
     }
+
+    testAbCompareHistoryHost(check);
 
     // --- Library browser: prev/next through the current filter, Legacy section, audition.
     {
