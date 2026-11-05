@@ -303,8 +303,8 @@ private:
     void observeHostMidi(const juce::MidiMessage& message) noexcept;
     // Key events go to the first instrument until it is full, then (sixteen-
     // voice mode only) to the second; everything else reaches both.
-    void routeNoteOn(int note, float velocity, int channel);
-    void routeNoteOff(int note, int channel);
+    bool routeNoteOn(int note, float velocity, int channel, bool fromKeyboard = false);
+    void routeNoteOff(int note, int channel, bool fromKeyboard = false);
     template <class F> void forEachEngine(F&& f) { f(engine); if (extensionActive) f(*extensionEngine); }
     juce::String publishScala(const juce::String& scl, const juce::String& kbm);
     void applyValues(const cs80::ParamValues& values);

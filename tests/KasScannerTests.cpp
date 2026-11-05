@@ -450,6 +450,160 @@ void testEngineScanTiming()
         check(flush.activeVoices() == 1, "disabling scan timing flushes queued strikes");
     }
 }
+// UI ownership is evaluated at scanner dispatch, not inferred from queue
+// acceptance. These are direct Engine checks; real processor cases live in
+// KeyboardPressureHostTests.h and run through the normal host-test target.
+void testKeyboardDeferredRelease()
+{
+    for (int policy : {1, 2})
+        for (double rate : {48000.0, 96000.0})
+            for (float quality : {0.0f, 1.0f})
+            {
+                Engine e;
+                ParamValues base = circuit(policy == 2 ? 1.0f : 0.0f);
+                base[P_kasScanTiming] = 1.0f;
+                base[P_oversampling] = quality;
+                e.prepare(rate);
+                e.setParams(base);
+                ParamValues p = base;
+                const auto fresh = [&] { p = base; e.setParams(p); e.reset(); };
+                const auto held = [&](int note, int channel = 1, float velocity = -1.0f) {
+                    int count = 0;
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto v = e.getVoiceInfo(i);
+                        count += v.active && v.held && v.note == note && v.channel == channel
+                              && (velocity < 0.0f || v.velocity == velocity);
+                    }
+                    return count;
+                };
+                const auto fullHost = [&] {
+                    for (int n = 60; n < 68; ++n) e.noteOn(n, 0.5f);
+                    render(e, 128);
+                };
+                const auto set = [&](int id, float value) { p[id] = value; e.setParams(p); };
+                const std::string context = " policy=" + std::to_string(policy)
+                    + " rate=" + std::to_string((int) rate) + " quality=" + std::to_string(quality);
+                const auto expect = [&](bool result, const char* what) { check(result, what + context); };
+
+                for (bool sameBatch : {false, true})
+                {
+                    fresh();
+                    expect(e.noteOnFromKeyboard(60, 0.25f), "UI onset reports deferred attribution");
+                    if (!sameBatch) render(e, 128);
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "same/cross-block UI release reaches deferred onset");
+                }
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f);
+                render(e, (int) (rate / 1000.0) - 1);
+                expect(held(60) == 0, "UI onset does not run before nominal scan boundary");
+                render(e, 1);
+                expect(held(60) == 1, "UI onset runs at unchanged nominal scan boundary");
+                e.noteOffFromKeyboard(60);
+                render(e, (int) (rate / 1000.0) - 1);
+                expect(held(60) == 1, "conditional release retains scan latency");
+                render(e, 1);
+                expect(held(60) == 0, "conditional release executes at scan boundary");
+
+                fresh(); fullHost();
+                e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.5f) == 1, "refused UI same-key onset cannot release host voice");
+                e.noteOff(61); render(e, 128);
+                expect(held(60) == 1, "cancelled UI waiting key never resurrects");
+
+                fresh(); fullHost();
+                e.noteOn(70, 0.75f); e.noteOnFromKeyboard(70, 0.25f);
+                e.noteOffFromKeyboard(70); render(e, 128);
+                e.noteOff(61); render(e, 128);
+                expect(held(70) == 1, "UI duplicate never adopts host-owned waiting key");
+                fresh(); fullHost();
+                e.noteOnFromKeyboard(70, 0.25f); e.noteOn(70, 0.75f);
+                e.noteOffFromKeyboard(70); render(e, 128);
+                e.noteOff(61); render(e, 128);
+                expect(held(70) == 0, "refused host duplicate does not revoke UI waiting cancellation");
+
+                fresh(); fullHost();
+                e.noteOnFromKeyboard(70, 0.25f); render(e, 128);
+                e.noteOff(61); render(e, 128);
+                expect(held(70, 1, 0.0f) == 1, "waiting UI key retains attribution through reconsideration");
+                e.noteOffFromKeyboard(70); render(e, 128);
+                expect(held(70) == 0, "reconsidered UI key releases normally");
+
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f);
+                for (int n = 61; n < 68; ++n) e.noteOn(n, 0.5f);
+                render(e, 128); e.noteOn(60, 0.75f); render(e, 128);
+                e.noteOff(60); render(e, 128);
+                expect(held(60, 1, 0.25f) == 1, "host release cancels its waiter without releasing earlier UI voice");
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60) == 0, "UI release remains valid after host waiter cancellation");
+
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f); e.noteOn(60, 0.75f);
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.75f) == 1, "successful deferred host takeover cannot be released by UI");
+                fresh();
+                e.noteOn(60, 0.5f, 2); e.noteOnFromKeyboard(60, 0.25f, 1);
+                e.noteOffFromKeyboard(60, 1); render(e, 128);
+                expect(held(60, 2) == 1 && held(60, 1) == 0, "conditional release preserves other MIDI channel");
+
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60);
+                e.noteOnFromKeyboard(60, 0.75f); render(e, 128);
+                expect(held(60) == 1 && held(60, 1, 0.75f) == 1, "same-scan release/restrike keeps newest UI onset");
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60) == 0, "same-scan restrike retains conditional release");
+
+                fresh(); e.noteOnFromKeyboard(60, 0.25f); set(P_kasScanTiming, 0.0f);
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60) == 0, "scan disable cannot move UI release before pending onset");
+                fresh(); e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60);
+                set(P_kasScanTiming, 0.0f);
+                expect(e.noteOnFromKeyboard(60, 0.75f), "restrike behind pending scan reports deferred even after disable");
+                render(e, 128);
+                expect(held(60, 1, 0.75f) == 1, "scan disable cannot move UI restrike before pending release");
+
+                fresh();
+                for (int i = 0; i < kas::Scanner::kCapacity; ++i) e.noteOn(60, 0.5f);
+                expect(e.noteOnFromKeyboard(60, 0.25f), "scanner overflow still forbids immediate pressure inference");
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.5f) == 8, "overflow refusal and release preserve all host-owned voices");
+                for (int channel : {0, 1})
+                {
+                    fresh(); e.noteOnFromKeyboard(60, 0.25f); e.allNotesOff(false, channel);
+                    e.noteOn(60, 0.75f); e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60, 1, 0.75f) == 1, "panic discards pending UI ownership before later host onset");
+                }
+                fresh(); e.noteOnFromKeyboard(60, 0.25f); e.reset();
+                e.noteOn(60, 0.75f); e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.75f) == 1, "reset clears pending UI origin");
+
+                if (policy == 1) // PURE deliberately disables these extensions.
+                {
+                    fresh(); set(P_voiceMode, 2.0f);
+                    for (int n = 60; n < 64; ++n) e.noteOn(n, 0.5f);
+                    render(e, 128); e.noteOnFromKeyboard(60, 0.25f);
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60, 1, 0.5f) == 2, "refused unison UI onset does not release host group");
+                    fresh(); set(P_voiceMode, 3.0f);
+                    e.noteOnFromKeyboard(60, 0.25f); render(e, 128);
+                    expect(held(60) == 4, "UI unison onset tags its complete release group");
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "UI unison release retires complete attributed group");
+                    fresh(); e.noteOnFromKeyboard(60, 0.25f); set(P_arpOn, 1.0f);
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "pending UI onset cancellation follows ARP held-key path");
+                    fresh(); e.noteOnFromKeyboard(60, 0.25f); set(P_arpOn, 1.0f);
+                    e.noteOn(60, 0.75f); e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 1, "older queued UI onset cannot relabel newer host ARP ownership");
+                    fresh(); e.noteOn(60, 0.5f); set(P_arpOn, 1.0f);
+                    e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "newer UI ARP ownership releases after earlier queued host onset");
+                }
+            }
+}
+
 } // namespace
 
 int main()
@@ -462,6 +616,7 @@ int main()
     testChannelModeReconsideration();
     testArpDiscardsWaitingDirectKeys();
     testEngineScanTiming();
+    testKeyboardDeferredRelease();
     std::printf("KAS scan / sample-hold: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }

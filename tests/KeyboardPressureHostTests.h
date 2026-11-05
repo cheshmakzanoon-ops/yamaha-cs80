@@ -27,6 +27,298 @@ inline juce::MidiKeyboardComponent* keyboard(juce::Component& root)
 }
 }
 
+// Exercise the real processor handoff while KAS allocation is deferred. A
+// zero-frame callback publishes events without advancing the scan clock; each
+// 128-frame callback then exceeds the nominal 1 ms scan at 48 kHz. No sleeps,
+// direct Engine note calls or synthetic pressure ownership are needed.
+template <class Check>
+void testKeyboardScannerReleaseOwnershipHost(Check check)
+{
+    juce::TemporaryFile fixture("-cs80-pressure-scanner-host");
+    for (bool pure : { false, true })
+    {
+        Cs80AudioProcessor host(fixture.getFile());
+        host.setEngineMode(Cs80AudioProcessor::EngineMode::circuit);
+        host.setParamValue(P_parityMode, pure ? 1.0f : 0.0f);
+        host.setParamValue(P_kasScanTiming, 1.0f);
+        host.setParamValue(P_oversampling, 0.0f);
+        host.setParamValue(P_arpOn, 0.0f);
+        host.setParamValue(P_voiceMode, 0.0f);
+        host.setParamValue(P_tuningMode, 0.0f);
+        host.setParamValue(P_mpeOn, 0.0f);
+        host.setParamValue(P_analogNoise, 0.0f);
+        host.setParamValue(P_masterSustain, 0.0f);
+        host.setParamValue(P_sustainMode, 0.0f);
+        host.setParamValue(chParam(0, CP_vR), 0.5f);
+        host.setParamValue(chParam(1, CP_vR), 0.5f);
+        host.prepareToPlay(48000.0, 128);
+        host.serviceKeyboardUI();
+        juce::MidiBuffer midi;
+        auto tick = [&](int frames = 128)
+        {
+            juce::AudioBuffer<float> audio(2, frames);
+            audio.clear();
+            host.processBlock(audio, midi);
+            midi.clear();
+        };
+        auto require = [&](bool condition, const char* message)
+        {
+            const auto label = juce::String(pure ? "PURE scanner: " : "Source scanner: ") + message;
+            check(condition, label.toRawUTF8());
+        };
+        auto strike = [&](int note)
+        { return host.captureKeyboardGesture(1, note, [&] { host.getKeyboardState().noteOn(1, note, 0.8f); }); };
+        auto release = [&](int note) { host.getKeyboardState().noteOff(1, note, 0.0f); };
+        auto hostOn = [&](int note, int channel = 1)
+        { midi.addEvent(juce::MidiMessage::noteOn(channel, note, (juce::uint8) 100), 0); };
+        auto hostOff = [&](int note, int channel = 1)
+        { midi.addEvent(juce::MidiMessage::noteOff(channel, note), 0); };
+        auto held = [&](int note = -1, int channel = -1)
+        {
+            int count = 0;
+            for (int i = 0; i < 8; ++i)
+            {
+                const auto voice = host.getEngine().getVoiceInfo(i);
+                count += voice.active && voice.held && (note < 0 || voice.note == note)
+                    && (channel < 0 || voice.channel == channel);
+            }
+            return count;
+        };
+        auto zeroPressure = [&]
+        {
+            for (int i = 0; i < 8; ++i)
+            {
+                const auto voice = host.getEngine().getVoiceInfo(i);
+                if (voice.active && voice.pressure != 0.0f) return false;
+            }
+            return true;
+        };
+        auto reset = [&]
+        {
+            host.setParamValue(P_kasScanTiming, 1.0f);
+            host.requestPanicFromUI(); tick(0); host.serviceKeyboardUI();
+        };
+        tick(); // Settle the selected policy before any captured UI gesture.
+        host.serviceKeyboardUI();
+
+        for (int frames : { 0, 128 })
+        {
+            reset();
+            const auto token = strike(60); release(60);
+            tick(frames); tick();
+            require(token && held() == 0,
+                    "same-batch UI onset/off leaves no held key after the next scan");
+        }
+        reset();
+        const auto deferred = strike(60);
+        host.setKeyPressureFromUI(deferred, 0.8f); tick(0);
+        require(deferred && held() == 0, "zero-frame dispatch queues rather than allocates a UI onset");
+        tick();
+        require(held(60, 1) == 1 && pressure_detail::pressure(host, 60) == 0.0f,
+                "scanned UI onset sounds without claiming immediate pressure ownership");
+        host.setKeyPressureFromUI(deferred, 0.9f); tick();
+        require(pressure_detail::pressure(host, 60) == 0.0f,
+                "a later pressure event cannot turn a deferred token into an allocation proof");
+        release(60); tick(0); tick();
+        require(held() == 0, "cross-block UI release reaches its scanned voice");
+
+        // A ninth UI key can wait, but must neither release nor pressure an
+        // already-held host note of the same pitch when the UI key is lifted.
+        reset();
+        for (int note = 60; note < 68; ++note) hostOn(note);
+        tick();
+        const auto refused = strike(60); host.setKeyPressureFromUI(refused, 0.9f); tick(0); tick();
+        require(refused && held() == 8 && zeroPressure(), "refused UI onset cannot pressure eight host-held voices");
+        release(60); tick(0); tick();
+        require(held() == 8 && held(60, 1) == 1,
+                "refused UI release cancels only its waiting key, not the host voice");
+        hostOff(61); tick();
+        require(held() == 7 && held(60, 1) == 1,
+                "cancelled waiting UI key cannot reappear when a circuit becomes free");
+
+        reset(); hostOn(60, 2); tick();
+        const auto alias = strike(60); host.setKeyPressureFromUI(alias, 0.7f); tick();
+        release(60); tick();
+        require(alias && held(60, 1) == 0 && held(60, 2) == 1 && zeroPressure(),
+                "UI release preserves the equal-pitch host voice on another channel");
+
+        // Existing newest-onset semantics leave the older UI allocation alone
+        // after a successful same-pitch host onset. Its stale UI off must not
+        // release the newer host allocation; two host offs clean up both keys.
+        reset();
+        const auto superseded = strike(60); tick(0);
+        hostOn(60); tick(0); tick();
+        require(superseded && held(60, 1) == 2, "queued host takeover obtains a second same-pitch circuit");
+        release(60); host.setKeyPressureFromUI(superseded, 0.9f); tick(0); tick();
+        require(held(60, 1) == 2 && zeroPressure(), "stale UI release and pressure preserve a newer host onset");
+        hostOff(60); hostOff(60); tick();
+        require(held() == 0, "ordinary host releases retain the existing newest-onset behavior");
+
+        // A refused host onset is a waiting key, not a takeover of the UI
+        // circuit. Cancelling that host key must retain the UI release bit.
+        reset();
+        for (int note = 60; note < 68; ++note) strike(note);
+        tick(0); tick(); hostOn(60); tick(0); tick();
+        hostOff(60); tick(0); tick();
+        require(held() == 8 && held(60, 1) == 1,
+                "host off cancels its refused waiting onset without releasing the UI circuit");
+        release(60); tick(0); tick();
+        require(held() == 7 && held(60, 1) == 0,
+                "cancelling a refused host key does not revoke the earlier UI release");
+
+        reset();
+        for (int note = 60; note < 68; ++note) strike(note);
+        tick(0); tick(); hostOn(60); tick(0);
+        release(60); tick(0); tick();
+        bool reconsideredHost = false;
+        for (int i = 0; i < 8; ++i)
+        {
+            const auto voice = host.getEngine().getVoiceInfo(i);
+            reconsideredHost |= voice.active && voice.held && voice.note == 60
+                && voice.channel == 1 && voice.velocity == 0.0f;
+        }
+        require(held() == 8 && held(60, 1) == 1 && reconsideredHost,
+                "UI release frees its circuit for a still-waiting host key with zero initial touch");
+        hostOff(60); tick();
+        require(held() == 7 && held(60, 1) == 0, "reconsidered host key still follows ordinary host release");
+
+        reset();
+        const auto old = strike(60); release(60);
+        const auto fresh = strike(60);
+        host.setKeyPressureFromUI(old, 0.9f); host.setKeyPressureFromUI(fresh, 0.4f);
+        tick(0); tick();
+        require(old && fresh && !(old == fresh) && held(60, 1) == 1 && zeroPressure(),
+                "queued UI release/restrike keeps only the fresh held onset without false pressure claims");
+        release(60); tick();
+        require(held() == 0, "queued retrigger retains its own eventual UI release");
+
+        // Scan disable must drain an older onset before its UI off, including
+        // an off/restrike pair captured while that old scan is still pending.
+        for (bool retrigger : { false, true })
+        {
+            reset(); strike(60); tick(0);
+            host.setParamValue(P_kasScanTiming, 0.0f);
+            release(60);
+            Cs80AudioProcessor::KeyPressureToken next;
+            if (retrigger) next = strike(60);
+            tick(0); tick();
+            require(held(60, 1) == (retrigger ? 1 : 0) && (!retrigger || next),
+                    "scan disable preserves pending UI onset/off/restrike order");
+            if (retrigger) { release(60); tick(); }
+            require(held() == 0, "no UI key stays held after the disabled scan drains");
+        }
+        reset(); strike(60); tick();
+        host.setParamValue(P_kasScanTiming, 0.0f); release(60); tick();
+        require(held() == 0, "already-sounding scanned UI voice releases after scan disable");
+        const auto immediate = strike(62); host.setKeyPressureFromUI(immediate, 0.4f); tick();
+        require(immediate && std::abs(pressure_detail::pressure(host, 62) - 0.4f) < 1e-6f,
+                "scan-disabled immediate allocation retains existing pressure ownership");
+        release(62); tick();
+
+        // Released UI pressure origins outlive their current gesture. Reuse
+        // that exact circuit through the scanner, then allocate a fresh UI key
+        // elsewhere: a saved old origin must not disguise the host alias.
+        host.setParamValue(P_kasScanTiming, 0.0f);
+        host.prepareToPlay(48000.0, 128); host.serviceKeyboardUI();
+        const auto slotOrigin = strike(60);
+        host.setKeyPressureFromUI(slotOrigin, 0.2f); tick(0);
+        const auto seededSlot = host.getEngine().getVoiceInfo(0);
+        require(slotOrigin && seededSlot.active && seededSlot.held && seededSlot.note == 60
+                    && std::abs(seededSlot.pressure - 0.2f) < 1e-6f,
+                "immediate UI onset establishes pressure ownership in physical slot zero");
+        release(60); tick(0);
+        bool advancedSlots = true;
+        for (int note = 61; note < 68; ++note)
+        {
+            hostOn(note); hostOff(note); tick(0);
+            const auto voice = host.getEngine().getVoiceInfo(note - 60);
+            advancedSlots &= voice.active && !voice.held && voice.note == note;
+        }
+        require(advancedSlots && held() == 0,
+                "seven host onset/off pairs advance the allocator back to the old UI slot");
+        host.setParamValue(P_kasScanTiming, 1.0f); hostOn(60); tick(0); tick();
+        const auto reusedSlot = host.getEngine().getVoiceInfo(0);
+        require(held() == 1 && reusedSlot.active && reusedSlot.held && reusedSlot.note == 60
+                    && reusedSlot.channel == 1 && reusedSlot.pressure == 0.0f,
+                "deferred host onset reuses the released UI slot with zero pressure");
+        host.setParamValue(P_kasScanTiming, 0.0f);
+        const auto freshAlias = strike(60);
+        const bool aliasPressureAccepted = host.setKeyPressureFromUI(freshAlias, 0.9f);
+        tick(0);
+        const auto aliasSlot = host.getEngine().getVoiceInfo(1);
+        require(freshAlias && !(slotOrigin == freshAlias) && aliasPressureAccepted
+                    && held(60, 1) == 2 && aliasSlot.active && aliasSlot.held && aliasSlot.note == 60
+                    && zeroPressure(),
+                "scan toggles cannot reuse a stale slot origin to pressure the host alias");
+        release(60); tick(0);
+        require(held() == 1 && host.getEngine().getVoiceInfo(0).held && zeroPressure(),
+                "fresh UI alias still releases without touching the reused host slot");
+        hostOff(60); tick(0);
+        require(held() == 0, "host alias releases normally after the stale-origin pressure check");
+
+        // Fill only the 64-event scanner, not the 256-event UI mailbox. The
+        // UI overflow event flushes a HOST onset into the before/after snapshot,
+        // so that snapshot must not accidentally claim the host's pressure.
+        reset(); hostOn(60);
+        for (int i = 1; i < kas::Scanner::kCapacity; ++i) hostOff(127, 16);
+        tick(0);
+        const auto overflowing = strike(60); host.setKeyPressureFromUI(overflowing, 0.9f); tick(0);
+        require(overflowing && held(60, 1) == 2 && zeroPressure(),
+                "UI scanner overflow cannot claim a host voice allocated by the flush");
+        release(60); tick();
+        require(held(60, 1) == 1 && zeroPressure(), "overflowed UI voice releases without touching the host voice");
+        hostOff(60); tick();
+        require(held() == 0, "host voice preserved through UI overflow still releases normally");
+
+        // Conversely, a host overflow flush can allocate an earlier UI onset
+        // while the host itself is refused. That is not a host takeover.
+        reset();
+        for (int note = 60; note < 68; ++note) strike(note);
+        tick(0);
+        for (int i = 8; i < kas::Scanner::kCapacity; ++i) hostOff(127, 16);
+        hostOn(60); tick(0);
+        require(held() == 8, "host scanner overflow flushes the eight earlier UI onsets");
+        hostOff(60); tick();
+        require(held() == 8, "overflow-refused host cancellation leaves the UI allocations held");
+        release(60); tick();
+        require(held() == 7 && held(60, 1) == 0,
+                "host overflow snapshot cannot revoke an earlier UI release obligation");
+
+        // Every lifecycle reset must discard pending scanner events, sounding
+        // UI ownership and refused waiting keys. The queued old off must not
+        // reach a fresh host note after the UI acknowledges the new epoch.
+        for (int lifecycle = 0; lifecycle < 3; ++lifecycle)
+            for (int state = 0; state < 3; ++state)
+            {
+                reset();
+                if (state == 2)
+                {
+                    for (int note = 48; note < 56; ++note) hostOn(note);
+                    tick();
+                }
+                const auto stale = strike(60); tick(0);
+                if (state != 0) tick();
+                require(stale && held(60, 1) == (state == 1 ? 1 : 0)
+                            && held() == (state == 2 ? 8 : state == 1 ? 1 : 0),
+                        "lifecycle fixture reaches its queued, sounding or waiting UI state");
+                release(60);
+                if (lifecycle == 0) host.prepareToPlay(48000.0, 128);
+                if (lifecycle == 1) { host.releaseResources(); host.prepareToPlay(48000.0, 128); }
+                if (lifecycle == 2) { host.requestPanicFromUI(); tick(0); }
+                host.serviceKeyboardUI();
+                require(!host.setKeyPressureFromUI(stale, 0.9f), "lifecycle reset rejects the old UI pressure token");
+                hostOn(60); tick(); tick();
+                require(held() == 1 && held(60, 1) == 1 && zeroPressure(),
+                        "reset scanner/waiting/UI state cannot revive or release a fresh host note");
+                const auto next = strike(62); tick(); release(62); tick();
+                require(next && held() == 1 && held(60, 1) == 1,
+                        "fresh post-reset UI gesture releases while the host note remains held");
+                hostOff(60); tick();
+                require(held() == 0, "no old queued or waiting UI key reappears after the fresh host release");
+            }
+    }
+}
+
 // Real processor dispatch, including zero-frame callbacks; no synthetic direct
 // pressure-to-host mailbox. All storage paths are isolated unused temp fixtures.
 template <class Check>
@@ -166,6 +458,7 @@ void testKeyboardPressureOwnershipHost(Check check)
         host.serviceKeyboardUI();
         check(!host.setKeyPressureFromUI(flood, 0.9f), "overflow acknowledgment does not revive an old gesture");
     }
+    testKeyboardScannerReleaseOwnershipHost(check);
 }
 
 template <class Check>

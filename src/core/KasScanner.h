@@ -75,7 +75,16 @@ class Scanner
 {
 public:
     static constexpr int kCapacity = 64;
-    struct Event { int note = 60, channel = 1; float velocity = 0.0f; bool on = false; std::uint32_t order = 0; };
+    struct Event
+    {
+        int note = 60, channel = 1;
+        float velocity = 0.0f;
+        bool on = false;
+        std::uint32_t order = 0;
+        // Opaque release attribution. Neither field affects scan ordering.
+        bool keyboardOrigin = false;
+        std::uint64_t onsetOrder = 0;
+    };
 
     void prepare(double internalRate, double scanSeconds = kNominalScanSeconds) noexcept
     {
@@ -88,10 +97,11 @@ public:
 
     // Returns false when full. The caller must flush pending events before
     // acting on the rejected event, so it cannot overtake an earlier onset.
-    bool push(int note, int channel, float velocity, bool on) noexcept
+    bool push(int note, int channel, float velocity, bool on, bool keyboardOrigin = false,
+              std::uint64_t onsetOrder = 0) noexcept
     {
         if (count >= kCapacity) return false;
-        events[static_cast<std::size_t>(count++)] = { note, channel, velocity, on, ++arrivals };
+        events[static_cast<std::size_t>(count++)] = { note, channel, velocity, on, ++arrivals, keyboardOrigin, onsetOrder };
         return true;
     }
     // Drop queued events of one MIDI channel (0 = all), e.g. on a panic.

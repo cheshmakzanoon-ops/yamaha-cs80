@@ -144,7 +144,8 @@ void Cs80AudioProcessor::observeHostMidi(const juce::MidiMessage& message) noexc
     {
         const auto note = (size_t) message.getNoteNumber();
         hostKeyMasks[note].fetch_and(~bit, std::memory_order_relaxed);
-        uiHeldMasks[note] &= ~bit;
+        // A host release can cancel only a waiting host key while an earlier
+        // UI voice is still held. Its conditional release obligation survives.
         keyPressureOwnership.hostNote((int) note);
     }
     else if (message.isAllNotesOff() || message.isAllSoundOff())
@@ -655,17 +656,21 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
     updateHostDisplay();
 }
 
-void Cs80AudioProcessor::routeNoteOn(int note, float velocity, int channel)
+bool Cs80AudioProcessor::routeNoteOn(int note, float velocity, int channel, bool fromKeyboard)
 {
-    if (extensionActive)
-        cs80::SixteenVoiceRouter::noteOnTarget(engine, *extensionEngine).noteOn(note, velocity, channel);
-    else
-        engine.noteOn(note, velocity, channel);
+    auto& target = extensionActive ? cs80::SixteenVoiceRouter::noteOnTarget(engine, *extensionEngine) : engine;
+    if (fromKeyboard)
+        return target.noteOnFromKeyboard(note, velocity, channel);
+    target.noteOn(note, velocity, channel);
+    return target.hasDeferredNoteTiming();
 }
 
-void Cs80AudioProcessor::routeNoteOff(int note, int channel)
+void Cs80AudioProcessor::routeNoteOff(int note, int channel, bool fromKeyboard)
 {
-    forEachEngine([&](cs80::Engine& e) { e.noteOff(note, channel); });
+    forEachEngine([&](cs80::Engine& e) {
+        if (fromKeyboard) e.noteOffFromKeyboard(note, channel);
+        else e.noteOff(note, channel);
+    });
 }
 
 void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
@@ -799,7 +804,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         for (size_t note = 0; note < uiHeldMasks.size(); ++note)
             for (int channel = 1; channel <= 16; ++channel)
                 if ((uiHeldMasks[note] & (1u << (channel - 1))) != 0)
-                    routeNoteOff((int) note, channel);
+                    routeNoteOff((int) note, channel, true);
         keyboardEvents.requestReset();
         uiHeldMasks.fill(0);
         keyPressureOwnership.clear();
@@ -970,14 +975,18 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         else if (event.on)
         {
             const auto before = voiceSnapshot();
-            routeNoteOn(event.note, event.velocity, event.channel);
-            if (pressureArpOn || keyPressureOwnership.allocated(before, voiceSnapshot(), event.token,
-                                                                event.channel, event.note))
+            const bool deferred = routeNoteOn(event.note, event.velocity, event.channel, true);
+            // A scan FIFO entry owns a conditional release, not pressure. Even
+            // overflow can flush OTHER onsets into this before/after snapshot.
+            if (deferred)
+                keyPressureOwnership.clear(); // Queued reuse can invalidate any saved slot origin.
+            if (deferred || pressureArpOn || keyPressureOwnership.allocated(before, voiceSnapshot(), event.token,
+                                                                            event.channel, event.note))
                 held |= bit;
         }
         else if ((held & bit) != 0)
         {
-            routeNoteOff(event.note, event.channel);
+            routeNoteOff(event.note, event.channel, true);
             held &= ~bit;
         }
         if (!event.on && !event.pressure) keyPressureOwnership.noteOff(event.channel, event.note);
@@ -1015,13 +1024,15 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         }
         const auto message = metadata.getMessage();
         std::array<cs80::Engine::VoiceInfo, 8> before;
-        const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn;
+        const bool deferredHostNote = message.isNoteOn() && engine.hasDeferredNoteTiming();
+        const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn && !deferredHostNote;
         if (allocatingHostNote) before = voiceSnapshot();
+        if (deferredHostNote) keyPressureOwnership.clear();
         observeHostMidi(message);
         handleMidi(message);
         if (message.isNoteOn()
-            && (pressureArpOn || keyPressureOwnership.allocated(before, voiceSnapshot(), {},
-                                                               message.getChannel(), message.getNoteNumber())))
+            && (pressureArpOn || (allocatingHostNote && keyPressureOwnership.allocated(before, voiceSnapshot(), {},
+                                                                                      message.getChannel(), message.getNoteNumber()))))
             uiHeldMasks[(size_t) message.getNoteNumber()] &= ~(1u << (message.getChannel() - 1));
     }
     while (uiIndex < uiCount) dispatchUI();

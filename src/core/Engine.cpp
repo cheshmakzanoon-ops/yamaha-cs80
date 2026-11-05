@@ -280,6 +280,7 @@ void Engine::reset()
     heldCount = 0;
     sustainPedals.fill(false);
     scanner.reset();
+    noteIngressOrder = 0;
     unassignedCount = 0;
     trg5BusVolts = 0.0;
     ringKeyDown = false;
@@ -839,7 +840,7 @@ int Engine::chooseVoice()
     return -1;
 }
 
-void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
+void Engine::rememberHeldKey(int note, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder)
 {
     for (int i = 0; i < heldKeyCount; ++i)
     {
@@ -847,6 +848,14 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
             && heldKeys[(size_t) i].midiChannel == midiChannel)
         {
             heldKeys[(size_t) i].velocity = velocity;
+            // Scan disable/ARP enable can flush an older UI onset after a
+            // newer immediate host onset. Keep the newer release ownership;
+            // existing velocity and sequence behavior remains unchanged.
+            if (onsetOrder >= heldKeys[(size_t) i].originOrder)
+            {
+                heldKeys[(size_t) i].keyboardOrigin = keyboardOrigin;
+                heldKeys[(size_t) i].originOrder = onsetOrder;
+            }
             rebuildArpSequence();
             return;
         }
@@ -865,6 +874,8 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
     key.velocity = clampf(velocity, 0.0f, 1.0f);
     key.midiChannel = midiChannel;
     key.order = ++keyOrder;
+    key.keyboardOrigin = keyboardOrigin;
+    key.originOrder = onsetOrder;
     rebuildArpSequence();
 
     // Start the pattern on the next sample rather than after a full clock
@@ -876,12 +887,13 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
     }
 }
 
-void Engine::forgetHeldKey(int note, int midiChannel)
+void Engine::forgetHeldKey(int note, int midiChannel, bool keyboardOnly)
 {
     for (int i = 0; i < heldKeyCount; ++i)
     {
         if (heldKeys[(size_t) i].note == note
-            && heldKeys[(size_t) i].midiChannel == midiChannel)
+            && heldKeys[(size_t) i].midiChannel == midiChannel
+            && (!keyboardOnly || heldKeys[(size_t) i].keyboardOrigin))
         {
             if (arpSourceOrder == heldKeys[(size_t) i].order)
                 stopArpVoice();
@@ -1096,7 +1108,7 @@ void Engine::refreshKeyboardContour() noexcept
     }
 }
 
-void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
+void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, bool keyboardOrigin)
 {
     // Capture the accepted onset before it owns a circuit. A last key-up and
     // this key-down can share one host sample, with no rendered gate gap.
@@ -1144,6 +1156,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     if (startsMonoPhrase)
         modern.noteMonoPhraseStart(v.age);
     v.releaseGroup = v.age;
+    v.keyboardOrigin = keyboardOrigin;
     lastNote = note;
     lastPitch = v.targetPitch;
     ++heldCount;
@@ -1246,21 +1259,37 @@ void Engine::releaseVoice(Voice& v)
 
 void Engine::noteOn(int midiNote, float velocity, int midiChannel)
 {
+    enqueueNoteOn(midiNote, velocity, midiChannel, false);
+}
+
+bool Engine::noteOnFromKeyboard(int midiNote, float velocity, int midiChannel)
+{
+    if (midiNote < 0 || midiNote > 127 || !std::isfinite(velocity))
+        return false;
+    const bool deferred = scanTimingActive() || scanner.pending() > 0;
+    enqueueNoteOn(midiNote, velocity, midiChannel, true);
+    return deferred;
+}
+
+void Engine::enqueueNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin)
+{
     // Reject malformed events before curves, scan queuing or voice lifecycle
     // changes. A non-finite velocity is not a new key strike.
     if (midiNote < 0 || midiNote > 127 || ! std::isfinite(velocity))
         return;
+    const auto onsetOrder = ++noteIngressOrder;
     // Interface-layer controller curve (Phase 2.4); exact identity at 0.
     if (global.velocityCurve != 0.0f)
         velocity = applyVelocityCurve(velocity, global.velocityCurve);
     // Opt-in KAS scan timing: act at the next scan instant, in scan order.
-    if (scanTimingActive())
+    // Keep a UI restrike behind earlier queued UI releases after scan disable.
+    if (scanTimingActive() || (keyboardOrigin && scanner.pending() > 0))
     {
-        if (scanner.push(midiNote, midiChannel, velocity, true))
+        if (scanner.push(midiNote, midiChannel, velocity, true, keyboardOrigin, onsetOrder))
             return;
         flushScanEvents();
     }
-    applyNoteOn(midiNote, velocity, midiChannel);
+    applyNoteOn(midiNote, velocity, midiChannel, keyboardOrigin, onsetOrder);
 }
 
 void Engine::flushScanEvents()
@@ -1268,12 +1297,12 @@ void Engine::flushScanEvents()
     // A full queue must complete before the overflow event takes the immediate
     // path; otherwise releases and retriggers can overtake their earlier keys.
     scanner.flush([this](const kas::Scanner::Event& event) {
-        if (event.on) applyNoteOn(event.note, event.velocity, event.channel);
-        else applyNoteOff(event.note, event.channel);
+        if (event.on) applyNoteOn(event.note, event.velocity, event.channel, event.keyboardOrigin, event.onsetOrder);
+        else applyNoteOff(event.note, event.channel, event.keyboardOrigin);
     });
 }
 
-void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
+void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder)
 {
     if (global.sustainMode == 1)
     {
@@ -1294,7 +1323,7 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
 
     if (global.arpOn)
     {
-        rememberHeldKey(midiNote, velocity, midiChannel);
+        rememberHeldKey(midiNote, velocity, midiChannel, keyboardOrigin, onsetOrder);
         return;
     }
 
@@ -1310,7 +1339,7 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
             const int idx = chooseVoice();
             if (idx < 0)
                 break;
-            startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+            startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel, keyboardOrigin);
             if (k == 0)
                 releaseGroup = voices[(size_t) idx].releaseGroup;
             voices[(size_t) idx].releaseGroup = releaseGroup;
@@ -1326,13 +1355,13 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
         // All circuits occupied; leave held/ring state untouched. Circuit
         // engine: the KAS keeps seeing this held key (Phase 2.2).
         if (usesSourceModels(global.renderPolicy))
-            rememberUnassignedKey(midiNote, velocity, midiChannel);
+            rememberUnassignedKey(midiNote, velocity, midiChannel, keyboardOrigin);
         return;
     }
-    startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+    startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel, keyboardOrigin);
 }
 
-void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel)
+void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel, bool keyboardOrigin)
 {
     for (int i = 0; i < unassignedCount; ++i)
         if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel)
@@ -1344,12 +1373,14 @@ void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel)
     key.midiChannel = midiChannel;
     key.velocity = velocity;
     key.order = ++keyOrder;
+    key.keyboardOrigin = keyboardOrigin;
 }
 
-bool Engine::forgetUnassignedKey(int note, int midiChannel)
+bool Engine::forgetUnassignedKey(int note, int midiChannel, bool keyboardOnly)
 {
     for (int i = 0; i < unassignedCount; ++i)
-        if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel)
+        if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel
+            && (!keyboardOnly || unassignedKeys[(size_t) i].keyboardOrigin))
         {
             for (int j = i + 1; j < unassignedCount; ++j)
                 unassignedKeys[(size_t) (j - 1)] = unassignedKeys[(size_t) j];
@@ -1375,7 +1406,7 @@ void Engine::reconsiderUnassignedKeys()
                 best = i;
         const auto key = unassignedKeys[(size_t) best];
         forgetUnassignedKey(key.note, key.midiChannel);
-        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel);
+        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel, key.keyboardOrigin);
     }
 }
 
@@ -1439,27 +1470,43 @@ void Engine::cancelSustainTails()
 
 void Engine::noteOff(int midiNote, int midiChannel)
 {
-    if (scanTimingActive())
+    enqueueNoteOff(midiNote, midiChannel, false);
+}
+
+void Engine::noteOffFromKeyboard(int midiNote, int midiChannel)
+{
+    enqueueNoteOff(midiNote, midiChannel, true);
+}
+
+void Engine::enqueueNoteOff(int midiNote, int midiChannel, bool keyboardOnly)
+{
+    // A UI release must remain behind its queued onset even if scan timing
+    // was disabled between events. Ordinary host dispatch is unchanged.
+    if (scanTimingActive() || (keyboardOnly && scanner.pending() > 0))
     {
-        if (scanner.push(midiNote, midiChannel, 0.0f, false))
+        if (scanner.push(midiNote, midiChannel, 0.0f, false, keyboardOnly))
             return;
         flushScanEvents();
     }
-    applyNoteOff(midiNote, midiChannel);
+    applyNoteOff(midiNote, midiChannel, keyboardOnly);
 }
 
-void Engine::applyNoteOff(int midiNote, int midiChannel)
+void Engine::applyNoteOff(int midiNote, int midiChannel, bool keyboardOnly)
 {
     if (global.arpOn)
     {
-        forgetHeldKey(midiNote, midiChannel);
+        forgetHeldKey(midiNote, midiChannel, keyboardOnly);
         return;
     }
     // A released key that never found a circuit simply stops being seen.
-    if (unassignedCount > 0 && forgetUnassignedKey(midiNote, midiChannel))
+    if (unassignedCount > 0 && forgetUnassignedKey(midiNote, midiChannel, keyboardOnly))
         return;
     if (auto* voice = findVoiceForNote(midiNote, midiChannel))
     {
+        // Check at execution, after deferred onsets/refusals. A newer host
+        // allocation is never released by an earlier UI gesture.
+        if (keyboardOnly && !voice->keyboardOrigin)
+            return;
         // Note ownership is established at onset, not by the current voice
         // mode. Keep the newest-onset convention for overlapping equal notes
         // while releasing every circuit allocated by that one note-on.
@@ -1905,8 +1952,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     if (scanTimingActive() || scanner.pending() > 0)
     {
         auto dispatch = [this](const kas::Scanner::Event& e) {
-            if (e.on) applyNoteOn(e.note, e.velocity, e.channel);
-            else applyNoteOff(e.note, e.channel);
+            if (e.on) applyNoteOn(e.note, e.velocity, e.channel, e.keyboardOrigin, e.onsetOrder);
+            else applyNoteOff(e.note, e.channel, e.keyboardOrigin);
         };
         if (! scanTimingActive())
             while (! scanner.tick(dispatch)) {}
