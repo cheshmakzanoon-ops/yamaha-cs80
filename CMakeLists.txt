@@ -312,6 +312,28 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
     set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
 
+    # Build the shipping MTS-ESP adapter in core-only CI as well as plugin builds.
+    add_executable(cs80_mts_esp_native_tests tests/MtsEspNativeTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_native_tests PRIVATE src)
+    target_link_libraries(cs80_mts_esp_native_tests PRIVATE ${CMAKE_DL_LIBS})
+    add_test(NAME cs80_mts_esp_native_tests COMMAND cs80_mts_esp_native_tests)
+    add_executable(cs80_mts_esp_integration_tests tests/MtsEspIntegrationTests.cpp src/plugin/MtsEspClient.cpp)
+    target_compile_definitions(cs80_mts_esp_integration_tests PRIVATE
+        CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    target_link_libraries(cs80_mts_esp_integration_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mts_esp_integration_tests COMMAND cs80_mts_esp_integration_tests)
+    add_executable(cs80_mts_esp_fallback_tests tests/MtsEspFallbackTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_fallback_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_fallback_tests PRIVATE CS80_WITH_MTS_ESP=0)
+    add_test(NAME cs80_mts_esp_fallback_tests COMMAND cs80_mts_esp_fallback_tests)
+    add_executable(cs80_mts_esp_windows_macro_tests tests/MtsEspWindowsMacroTests.cpp)
+    target_include_directories(cs80_mts_esp_windows_macro_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_windows_macro_tests PRIVATE
+        CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    add_test(NAME cs80_mts_esp_windows_macro_tests COMMAND cs80_mts_esp_windows_macro_tests)
+    set_tests_properties(cs80_mts_esp_native_tests cs80_mts_esp_integration_tests
+        cs80_mts_esp_fallback_tests cs80_mts_esp_windows_macro_tests PROPERTIES TIMEOUT 120)
+
     # [ws4-circuits] register this workstream's core tests below this line.
     add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
     target_link_libraries(cs80_ig00150_sub_tests PRIVATE cs80_core)
@@ -508,6 +530,7 @@ if (CS80_BUILD_PLUGIN)
     target_include_directories(CS80Reference PRIVATE src)
     target_link_libraries(CS80Reference PRIVATE
         cs80_core
+        ${CMAKE_DL_LIBS}
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_gui_extra
@@ -547,6 +570,7 @@ if (CS80_BUILD_PLUGIN)
     target_include_directories(CS80Snapshots PRIVATE src)
     target_link_libraries(CS80Snapshots PRIVATE
         cs80_core
+        ${CMAKE_DL_LIBS}
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_gui_extra

@@ -139,7 +139,8 @@ Legacy audio is pinned byte-identical to `d56911a` and the circuit-engine audio 
 - **Validator:** the Linux pluginval run has intermittently exited 139 after printing SUCCESS. Code review and a valgrind teardown probe found no fault in project code; the cause is not established ([validator diagnostics](docs/VALIDATOR_DIAGNOSTICS.md)).
 - **Clicks:** retrigger 1.51 on "Bass Stack"; note-off click scores up to 1.65 on percussive circuit-engine programs.
 - **Filter:** top-octave small-signal accuracy at 2x/4x internal rate; the ADJ p11 HP point.
-- **Not yet:** sample-accurate automation; the MTS-ESP client library (a shim is in place); memory-panel electrical model driving audio; the 25 tone-tab hypothesis cells; tremolo/chorus both-on and both-off panel states.
+- **MTS-ESP:** the [pinned 0BSD client](src/vendor/mts-esp/README.md) is included. A separately installed master and platform library are required. Live external-master DAW qualification and per-channel master tables remain open.
+- **Not yet:** sample-accurate automation; memory-panel electrical model driving audio; the 25 tone-tab hypothesis cells; tremolo/chorus both-on and both-off panel states.
 - **Release:** signing and notarization need the owner's certificates; real-DAW sessions, trademark review and AAX are owner actions ([release qualification](docs/release/RELEASE_QUALIFICATION.md)).
 
 ## Build from source

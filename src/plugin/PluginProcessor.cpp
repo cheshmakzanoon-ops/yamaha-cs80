@@ -990,7 +990,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             const int sysexPos = juce::jlimit(0, numSamples, metadata.samplePosition);
             while (uiIndex < uiCount && uiPosition() < sysexPos) dispatchUI();
             advanceTo(sysexPos);
-            mtsEsp.parseMidi(metadata.data, metadata.numBytes);
+            // Keep SysEx on the existing validated Engine path. The MTS-ESP
+            // adapter is used only for live-master tuning, not local parsing.
             forEachEngine([&](cs80::Engine& e) { e.handleSysEx(metadata.data, metadata.numBytes); });
             continue;
         }

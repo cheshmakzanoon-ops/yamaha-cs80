@@ -218,8 +218,10 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - CPU above target (above). Idle above target.
 - Nodal filter top-octave small-signal accuracy at 2x/4x internal; ADJ p11 HP point.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
-- MTS-ESP client library not vendored (shim only); 16-voice mode meter and
-  pressure ownership cover the first engine only.
+- MTS-ESP now includes the [pinned 0BSD client](../src/vendor/mts-esp/README.md)
+  for channel-independent live-master queries. External-master DAW qualification
+  and per-channel master tables remain open.
+- 16-voice mode meter and pressure ownership cover the first engine only.
 - Memory-panel electrical model not wired into audio; 25 tone-tab cells remain
   hypotheses; tremolo/chorus both-off/both-on states need an engine parameter.
 - Context menu and MIDI learn for switches, combo boxes and lid miniatures;
