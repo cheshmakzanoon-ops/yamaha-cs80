@@ -1827,6 +1827,136 @@ bool Engine::hasFreeCircuit() const noexcept
     return false;
 }
 
+bool Engine::hasFreeCircuitForRouting() const noexcept
+{
+    // Keep physical availability as an upper bound: a future queued release
+    // must not divert a strike from a currently free second instrument.
+    if (! hasFreeCircuit())
+        return false;
+    // In particular, after scan disable a host onset is immediate while a
+    // UI onset can still defer. This argument-free query preserves that old
+    // routing rather than pretending to know the incoming event's origin.
+    if (global.voiceMode != 1 || ! scanTimingActive() || scanner.pending() == 0)
+        return true;
+
+    // Read-only, bounded ownership projection. Do not copy DSP state, reserve
+    // live voices or flush the live scanner. Keep this replay consistent with
+    // chooseVoice/applyNoteOn/applyNoteOff/reconsiderUnassignedKeys; tests use
+    // actual core dispatch as an independent oracle. Queue/waiter capacity
+    // and pitch-order behavior remain those of the existing eight-voice engine.
+    struct Slot
+    {
+        int note, channel;
+        uint64_t age, group;
+        bool active, held, pedalHeld, sustained, keyboardOrigin;
+    };
+    std::array<Slot, kNumVoices> projected {};
+    for (int i = 0; i < kNumVoices; ++i)
+    {
+        const auto& v = voices[(size_t) i];
+        projected[(size_t) i] = {v.note, v.midiChannel, v.age, v.releaseGroup,
+                                v.active, v.held, v.pedalHeld, v.sustained, v.keyboardOrigin};
+    }
+    auto waiting = unassignedKeys;
+    int waitingCount = unassignedCount;
+    int cursor = nextVoice;
+    uint64_t age = voiceCounter;
+    const auto choose = [&]() {
+        for (int offset = 0; offset < kNumVoices; ++offset)
+        {
+            const int i = (cursor + offset) % kNumVoices;
+            const auto& v = projected[(size_t) i];
+            if (! v.held && ! v.pedalHeld)
+            {
+                cursor = (i + 1) % kNumVoices;
+                return i;
+            }
+        }
+        return -1;
+    };
+    const auto start = [&](int i, int note, int channel, bool keyboardOrigin) {
+        const auto serial = ++age;
+        projected[(size_t) i] = {note, channel, serial, serial, true, true, false, false, keyboardOrigin};
+    };
+    const auto eraseWaiting = [&](int i) {
+        for (int j = i + 1; j < waitingCount; ++j)
+            waiting[(size_t) (j - 1)] = waiting[(size_t) j];
+        --waitingCount;
+    };
+    const auto reconsider = [&]() {
+        while (waitingCount > 0)
+        {
+            const int i = choose();
+            if (i < 0) return;
+            int best = 0;
+            for (int j = 1; j < waitingCount; ++j)
+                if (waiting[(size_t) j].note < waiting[(size_t) best].note)
+                    best = j;
+            const auto key = waiting[(size_t) best];
+            eraseWaiting(best);
+            // Match existing waiting-key promotion, including its mapping
+            // behavior. This query must not introduce another tuning policy.
+            start(i, key.note, key.midiChannel, key.keyboardOrigin);
+        }
+    };
+    auto pending = scanner;
+    pending.flush([&](const kas::Scanner::Event& event) {
+        if (event.on)
+        {
+            if (global.sustainMode == 1)
+                for (auto& v : projected)
+                    if (v.sustained)
+                        v.active = v.sustained = v.pedalHeld = false;
+            if (global.tuningMode != 0 && ! noteMapped(event.note))
+                return;
+            if (const int i = choose(); i >= 0)
+                start(i, event.note, event.channel, event.keyboardOrigin);
+            else
+            {
+                for (int j = 0; j < waitingCount; ++j)
+                    if (waiting[(size_t) j].note == event.note
+                        && waiting[(size_t) j].midiChannel == event.channel)
+                        return;
+                if (waitingCount < kMaxHeldKeys)
+                {
+                    auto& key = waiting[(size_t) waitingCount++];
+                    key.note = event.note;
+                    key.midiChannel = event.channel;
+                    key.keyboardOrigin = event.keyboardOrigin;
+                }
+            }
+            return;
+        }
+        for (int j = 0; j < waitingCount; ++j)
+            if (waiting[(size_t) j].note == event.note && waiting[(size_t) j].midiChannel == event.channel
+                && (! event.keyboardOrigin || waiting[(size_t) j].keyboardOrigin))
+            {
+                eraseWaiting(j);
+                return;
+            }
+        Slot* newest = nullptr;
+        for (auto& v : projected)
+            if (v.active && v.held && v.note == event.note && v.channel == event.channel
+                && (newest == nullptr || v.age > newest->age))
+                newest = &v;
+        if (newest == nullptr || (event.keyboardOrigin && ! newest->keyboardOrigin))
+            return;
+        const auto group = newest->group;
+        for (auto& v : projected)
+            if (v.active && v.held && v.group == group && v.note == event.note && v.channel == event.channel)
+            {
+                v.held = false;
+                v.pedalHeld = isSustainPedalDown(v.channel);
+                if (! v.pedalHeld)
+                    v.sustained = global.sustainMode == 1 && global.sustainGate;
+            }
+        reconsider();
+    });
+    return std::any_of(projected.begin(), projected.end(), [](const Slot& v) {
+        return ! v.held && ! v.pedalHeld;
+    });
+}
+
 bool Engine::isZoneMaster(const Voice& v, int midiChannel) const noexcept
 {
     // Unassigned MPE channels are conventional channels, not lower-zone members.

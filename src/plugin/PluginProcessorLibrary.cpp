@@ -419,10 +419,59 @@ void Cs80AudioProcessor::readLibraryState(const juce::ValueTree& state)
 // ---------------------------------------------------------------------------
 // Randomise within original ranges (message thread)
 // ---------------------------------------------------------------------------
+struct Cs80AudioProcessor::LibraryState::RandomiseMetadataAction final : juce::UndoableAction
+{
+    RandomiseMetadataAction(LibraryState& state, PresetMetadata oldState, PresetMetadata newState)
+        : library(state), before(std::move(oldState)), after(std::move(newState)) {}
+
+    bool perform() override
+    {
+        // The original operation still sets its name and notifies the host.
+        // Replays only restore metadata; the existing tree actions own sound.
+        if (firstPerform)
+            firstPerform = false;
+        else
+            apply(after);
+        return true;
+    }
+
+    bool undo() override { apply(before); return true; }
+    int getSizeInUnits() override
+    {
+        const size_t bytes = sizeof(*this) + before.name.getNumBytesAsUTF8()
+                             + after.name.getNumBytesAsUTF8() + 2;
+        return (int) std::min(bytes, (size_t) std::numeric_limits<int>::max());
+    }
+
+    void apply(const PresetMetadata& metadata)
+    {
+        const juce::ScopedLock treeLock(library.owner.apvts.treeLock());
+        library.owner.setPresetMetadata(metadata.name, metadata.factoryIndex);
+        // Redo runs this before the parameter actions. Defer the display
+        // notification instead of reporting a partly replayed sound.
+        library.notifyProgramChanged();
+    }
+
+    LibraryState& library;
+    const PresetMetadata before, after;
+    bool firstPerform = true;
+};
+
 void Cs80AudioProcessor::randomiseWithinOriginalRanges(juce::uint32 seed)
 {
+    const juce::ScopedLock treeLock(apvts.treeLock());
     const auto next = cs80::library::randomiseWithinOriginalRanges(currentValues(), seed);
+    const auto name = "Random " + juce::String::toHexString((juce::int64) seed).paddedLeft('0', 8).toUpperCase();
+    if (library != nullptr && apvts.hasActiveUserEdit())
+    {
+        const auto before = getPresetMetadata();
+        // Randomise preserves the effective program index, including a prior
+        // MIDI recall. Register before parameter callbacks can flush history.
+        if (before.name != name)
+            undoManager.perform(new LibraryState::RandomiseMetadataAction(
+                *library, before, PresetMetadata { name, before.factoryIndex }));
+    }
     // A randomised patch is a PANEL sound; physical setup and isolation stay.
     applyValues(next);
-    setPresetName("Random " + juce::String::toHexString((juce::int64) seed).paddedLeft('0', 8).toUpperCase());
+    setPresetName(name);
 }

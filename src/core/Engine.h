@@ -258,6 +258,10 @@ public:
     int getVoiceMode() const noexcept { return global.voiceMode; }
     // True while some circuit is neither key-held nor pedal-held.
     bool hasFreeCircuit() const noexcept;
+    // Sixteen-voice routing only: an active direct scanner must also have
+    // room after its existing queue. This never makes a busy circuit free
+    // early, changes the scan clock, or predicts the incoming event.
+    bool hasFreeCircuitForRouting() const noexcept;
     // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
     void setExpression(float value);
 

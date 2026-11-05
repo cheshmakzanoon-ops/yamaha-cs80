@@ -5,6 +5,7 @@
 // smoke executable after JUCE initialisation; no user files are written.
 
 #include "AbCompareHistoryHostTests.h"
+#include "RandomiseHistoryHostTests.h"
 #include "core/FactoryPresets.h"
 #include "core/Randomise.h"
 #include "plugin/PluginProcessor.h"
@@ -360,6 +361,7 @@ void testProgramLibraryHost(Check&& check)
     }
 
     testAbCompareHistoryHost(check);
+    testRandomiseHistoryHost(check);
 
     // --- Library browser: prev/next through the current filter, Legacy section, audition.
     {

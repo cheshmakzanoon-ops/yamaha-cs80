@@ -11,6 +11,8 @@
 #include <cstdio>
 #include <fstream>
 #include <limits>
+#include <memory>
+#include <type_traits>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -916,6 +918,461 @@ void testVoiceModes()
     check(a.activeVoices() == 8 && b.activeVoices() == 8, "sixteen held keys fill both instruments");
 }
 
+// The routing preview is checked through the existing public router so this
+// same test file can be compiled against the pre-fix Engine and header. Its
+// oracle is the real dispatcher in an independently copied Engine, not a
+// second implementation of the allocator or scanner.
+static_assert(std::is_copy_constructible<Engine>::value, "dispatch oracle needs an Engine snapshot");
+
+ParamValues scanRoutingParams()
+{
+    auto p = quiet();
+    p[P_sourcePerformance] = p[P_voiceMode] = p[P_kasScanTiming] = 1.0f;
+    p[P_sustainMode] = p[P_masterSustain] = 0.0f;
+    return p;
+}
+
+int routingHeld(const Engine& e, int note = -1, int channel = -1)
+{
+    int held = 0;
+    for (int i = 0; i < 8; ++i)
+    {
+        const auto v = e.getVoiceInfo(i);
+        held += v.held && (note < 0 || v.note == note) && (channel < 0 || v.channel == channel);
+    }
+    return held;
+}
+
+bool sameRoutingVoices(const Engine& a, const Engine& b)
+{
+    for (int i = 0; i < 8; ++i)
+    {
+        const auto x = a.getVoiceInfo(i), y = b.getVoiceInfo(i);
+        if (x.active != y.active || x.note != y.note || x.channel != y.channel
+            || x.velocity != y.velocity || x.pressure != y.pressure || x.bend != y.bend
+            || x.ribbonRatio != y.ribbonRatio || x.held != y.held || x.pedalHeld != y.pedalHeld
+            || x.touchA != y.touchA || x.touchB != y.touchB || x.touchC != y.touchC)
+            return false;
+    }
+    return a.hasFreeCircuit() == b.hasFreeCircuit();
+}
+
+bool routesToFirst(Engine& e, Engine& empty)
+{
+    return &SixteenVoiceRouter::noteOnTarget(e, empty) == &e;
+}
+
+bool routingMatchesDispatch(Engine& e, Engine& empty, int* projectedFull = nullptr)
+{
+    const bool physicallyFree = e.hasFreeCircuit();
+    auto dispatched = std::make_unique<Engine>(e);
+    // Every fixture is 48 kHz. Forty-eight host frames pass one complete
+    // nominal scan regardless of the current phase or oversampling factor.
+    render(*dispatched, 48);
+    const bool expected = physicallyFree && dispatched->hasFreeCircuit();
+    if (projectedFull != nullptr && physicallyFree && !dispatched->hasFreeCircuit())
+        ++*projectedFull;
+    return routesToFirst(e, empty) == expected;
+}
+
+void routingFill(Engine& e, int count, int base = 40, int channel = 1)
+{
+    for (int n = 0; n < count; ++n) e.noteOn(base + n, 0.75f, channel);
+    render(e, 48);
+}
+
+void testSixteenVoiceScanChords(const Engine& prototype)
+{
+    const std::array<int, 16> ascending {{40, 41, 42, 43, 44, 45, 46, 47,
+                                         48, 49, 50, 51, 52, 53, 54, 55}};
+    const std::array<int, 16> scrambled {{76, 43, 65, 38, 70, 54, 61, 47,
+                                         59, 35, 80, 51, 68, 41, 73, 56}};
+    for (const bool keyboard : {false, true})
+        for (const auto& notes : {ascending, scrambled})
+        {
+            auto a = std::make_unique<Engine>(prototype), b = std::make_unique<Engine>(prototype);
+            auto silent = std::make_unique<Engine>(prototype);
+            bool destinations = true;
+            for (int k = 0; k < 16; ++k)
+            {
+                auto& target = SixteenVoiceRouter::noteOnTarget(*a, *b);
+                destinations &= &target == (k < 8 ? a.get() : b.get());
+                if (keyboard) target.noteOnFromKeyboard(notes[static_cast<std::size_t>(k)], 0.8f);
+                else target.noteOn(notes[static_cast<std::size_t>(k)], 0.8f);
+            }
+            const std::string label = std::string("scan chord ") + (keyboard ? "keyboard " : "host ")
+                + (notes == ascending ? "ascending: " : "scrambled: ");
+            check(destinations, label + "the first eight arrivals choose A and the next eight B");
+            check(a->hasFreeCircuit() && b->hasFreeCircuit() && routingHeld(*a) == 0 && routingHeld(*b) == 0,
+                  label + "physical capacity and live gates remain untouched before dispatch");
+            const auto silence = render(*silent, 47);
+            check(render(*a, 47) == silence && render(*b, 47) == silence
+                      && routingHeld(*a) == 0 && routingHeld(*b) == 0,
+                  label + "no allocator onset or audio change before the one-ms boundary");
+            render(*a, 1); render(*b, 1);
+            check(routingHeld(*a) == 8 && routingHeld(*b) == 8,
+                  label + "sixteen gates open on the 48th host frame");
+            bool sorted = true;
+            for (int side = 0; side < 2; ++side)
+            {
+                std::array<int, 8> expected;
+                std::copy_n(notes.begin() + side * 8, 8, expected.begin());
+                std::sort(expected.begin(), expected.end());
+                const auto& engine = side == 0 ? *a : *b;
+                for (int v = 0; v < 8; ++v)
+                    sorted &= engine.getVoiceInfo(v).note == expected[static_cast<std::size_t>(v)]
+                           && engine.getVoiceInfo(v).velocity == 0.8f;
+            }
+            check(sorted, label + "each instrument retains its own pitch-sorted scan and strike velocity");
+            check(&SixteenVoiceRouter::noteOnTarget(*a, *b) == a.get(),
+                  label + "both physically full instruments retain first-instrument fallback");
+        }
+
+    auto a = std::make_unique<Engine>(prototype), b = std::make_unique<Engine>(prototype);
+    for (int n = 0; n < 8; ++n) { a->noteOn(40 + n, 0.7f); b->noteOn(60 + n, 0.7f); }
+    check(&SixteenVoiceRouter::noteOnTarget(*a, *b) == a.get(),
+          "both projected-full instruments retain first-instrument fallback before dispatch");
+    render(*a, 48); render(*b, 48);
+    a->noteOff(47);
+    b->allNotesOff(false);
+    check(!routesToFirst(*a, *b) && routingMatchesDispatch(*a, *b),
+          "a queued release cannot make a physically full instrument claim a new strike");
+    SixteenVoiceRouter::noteOnTarget(*a, *b).noteOn(30, 0.9f);
+    render(*a, 48); render(*b, 48);
+    check(routingHeld(*a) == 7 && routingHeld(*b, 30) == 1 && b->getVoiceInfo(0).velocity == 0.9f,
+          "physical-free upper bound sends the lower key to a real circuit with its original touch");
+}
+
+void testScanRoutingLifecycles(const Engine& prototype, Engine& empty)
+{
+    auto e = std::make_unique<Engine>(prototype);
+    routingFill(*e, 6, 20);
+    e->noteOnFromKeyboard(60, 0.6f, 2);
+    e->noteOn(60, 0.9f, 2);
+    e->noteOffFromKeyboard(60, 2);
+    check(!routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "queued UI release cannot release the newest host-owned duplicate");
+    e->noteOff(60, 2);
+    check(routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "queued host release frees only the newest matching duplicate");
+    render(*e, 48);
+    check(routingHeld(*e, 60, 2) == 1 && routingHeld(*e) == 7,
+          "older keyboard duplicate survives the host release");
+    e->noteOffFromKeyboard(60, 2); render(*e, 48);
+    check(routingHeld(*e, 60, 2) == 0 && routingHeld(*e) == 6,
+          "the remaining keyboard-owned duplicate releases normally");
+
+    *e = prototype; routingFill(*e, 6, 20);
+    e->noteOn(60, 0.6f, 2); e->noteOn(60, 0.8f, 3); e->noteOff(60, 4);
+    check(!routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "unmatched-channel note-off does not create projected capacity");
+    e->noteOff(60, 2);
+    check(routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "equal pitches on distinct channels retain separate projected ownership");
+
+    *e = prototype; routingFill(*e, 7, 50);
+    e->noteOn(20, 0.8f); e->noteOn(21, 0.8f); e->noteOn(22, 0.8f);
+    e->noteOff(21); e->noteOff(56);
+    check(!routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "queued waiter cancellation and lowest-key promotion refill the released circuit");
+    render(*e, 48);
+    bool promoted = false;
+    for (int v = 0; v < 8; ++v)
+    {
+        const auto info = e->getVoiceInfo(v);
+        promoted |= info.held && info.note == 22 && info.velocity == 0.0f;
+    }
+    check(promoted && routingHeld(*e, 21) == 0 && routingHeld(*e) == 8,
+          "cancelled waiter stays absent and surviving waiter has zero initial touch");
+
+    *e = prototype; routingFill(*e, 8);
+    e->noteOn(40, 0.8f); render(*e, 48);
+    e->noteOff(40); render(*e, 48);
+    check(routingHeld(*e, 40) == 1 && !routesToFirst(*e, empty),
+          "same-note waiting key is cancelled before its existing held voice");
+    e->noteOff(40); render(*e, 48);
+    check(routingHeld(*e, 40) == 0 && routesToFirst(*e, empty),
+          "a second release frees the existing voice after waiter cancellation");
+
+    // A release group created under unison remains an onset's ownership even
+    // after switching to sixteen-voice mode before its deferred release.
+    *e = prototype;
+    auto p = e->getParams(); p[P_voiceMode] = 2.0f; e->setParams(p);
+    routingFill(*e, 4, 60);
+    p[P_voiceMode] = 1.0f; e->setParams(p);
+    e->noteOff(63); render(*e, 48);
+    check(routingHeld(*e) == 6, "mode change preserves both circuits of the original unison release group");
+    e->noteOn(70, 0.7f); e->noteOn(71, 0.7f);
+    check(!routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "projection resumes from capacity released by an existing unison group");
+
+    // Keep the old group's release queued while querying: releasing both
+    // circuits leaves seven occupied after the three new onsets, whereas
+    // releasing only one would incorrectly project all eight as occupied.
+    *e = prototype;
+    p = e->getParams(); p[P_voiceMode] = 2.0f; e->setParams(p);
+    routingFill(*e, 3, 60);
+    check(routingHeld(*e) == 6 && routingHeld(*e, 62) == 2,
+          "projected release-group fixture starts with three x2-unison onsets");
+    p[P_voiceMode] = 1.0f; e->setParams(p);
+    e->noteOff(62);
+    for (int note : {70, 71, 72}) e->noteOn(note, 0.7f);
+    check(routingMatchesDispatch(*e, empty) && routesToFirst(*e, empty),
+          "queued old-unison release frees its entire group in the routing projection");
+    render(*e, 48);
+    check(routingHeld(*e) == 7 && routingHeld(*e, 62) == 0
+              && routingHeld(*e, 70) == 1 && routingHeld(*e, 71) == 1 && routingHeld(*e, 72) == 1,
+          "real dispatch confirms seven occupied circuits after the queued group release and three onsets");
+}
+
+void testScanRoutingQueueBounds(const Engine& prototype, Engine& empty)
+{
+    for (const int events : {63, 64, 65, 129, 130})
+    {
+        auto e = std::make_unique<Engine>(prototype);
+        for (int i = 0; i < events; ++i)
+        {
+            if (i % 2 == 0) e->noteOn(60, 0.8f);
+            else e->noteOff(60);
+        }
+        const std::string label = "scan cancellation queue with " + std::to_string(events) + " events: ";
+        check(routingMatchesDispatch(*e, empty) && routesToFirst(*e, empty),
+              label + "no phantom full reservation across capacity/overflow boundaries");
+        check(routingHeld(*e) == (events == 65 || events == 129 ? 1 : 0),
+              label + "only an overflow onset can dispatch before rendering");
+        render(*e, 48);
+        check(routingHeld(*e) == events % 2, label + "real dispatch preserves every short-note cancellation");
+    }
+    auto e = std::make_unique<Engine>(prototype);
+    render(*e, 17);
+    for (int i = 0; i < 64; ++i) e->noteOn(20 + i, 0.7f);
+    check(e->hasFreeCircuit() && !routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "64 pending onsets are projected without consuming or eagerly flushing them");
+    e->noteOff(20); // Event 65 flushes the 64 onsets, then releases immediately.
+    check(routingHeld(*e) == 8 && routingHeld(*e, 28) == 1 && !routesToFirst(*e, empty),
+          "event 65 keeps live flush-then-release ordering and waiting promotion");
+    e->allNotesOff(false);
+    e->noteOn(100, 0.6f);
+    render(*e, 30);
+    check(routingHeld(*e) == 0, "overflow and panic preserve the pre-existing scan phase before frame 48");
+    render(*e, 1);
+    check(routingHeld(*e, 100) == 1, "overflow does not reset the scanner clock");
+
+    *e = prototype;
+    routingFill(*e, 8, 0, 1);
+    for (int n = 8; n < 48; ++n) e->noteOn(n, 0.7f, 2);
+    render(*e, 48);
+    e->allNotesOff(false, 1);
+    bool waitingBound = true;
+    for (int n = 8; n < 40; ++n)
+    {
+        waitingBound &= routingHeld(*e, n, 2) == 1;
+        e->noteOff(n, 2); render(*e, 48);
+    }
+    check(waitingBound && routingHeld(*e) == 0,
+          "existing 32-waiter bound retains keys 8..39 and drops later excess keys");
+}
+
+void testScanRoutingPedalsAndMapping(const Engine& prototype, Engine& empty)
+{
+    for (const bool mpe : {false, true})
+        for (const int sustain : {0, 1})
+            for (const int channel : {2, 8, 15})
+                for (const int pedal : {1, 8, 16, channel})
+                {
+                    auto e = std::make_unique<Engine>(prototype);
+                    auto p = e->getParams(); p[P_mpeOn] = mpe ? 1.0f : 0.0f;
+                    p[P_sustainMode] = static_cast<float>(sustain); e->setParams(p);
+                    if (mpe)
+                        for (const int master : {1, 16})
+                        {
+                            e->controlChange(101, 0.0f, master);
+                            e->controlChange(100, 6.0f / 127.0f, master);
+                            e->controlChange(6, 3.0f / 127.0f, master);
+                        }
+                    routingFill(*e, 6, 20);
+                    e->noteOn(60, 0.8f, channel); e->noteOn(61, 0.8f, channel);
+                    e->noteOff(60, channel);
+                    e->controlChange(64, 1.0f, pedal); // State at dispatch, not at enqueue.
+                    const bool inherited = pedal == channel || (mpe && ((channel == 2 && pedal == 1)
+                                                                              || (channel == 15 && pedal == 16)));
+                    const std::string label = "routing pedal mpe=" + std::to_string(mpe)
+                        + " sustain=" + std::to_string(sustain) + " note=" + std::to_string(channel)
+                        + " pedal=" + std::to_string(pedal);
+                    check(routesToFirst(*e, empty) == !inherited && routingMatchesDispatch(*e, empty),
+                          label + " matches own-channel and negotiated-zone hold");
+                    e->controlChange(64, 0.0f, pedal);
+                    check(routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+                          label + " latest pedal-up removes projected hold before the scan");
+                }
+
+    for (const int mode : {1, 2})
+    {
+        auto e = std::make_unique<Engine>(prototype);
+        auto p = e->getParams(); p[P_tuningMode] = static_cast<float>(mode); e->setParams(p);
+        tn::TuningTable map; map.mapped[60] = false;
+        const auto setMap = [&] { if (mode == 1) e->setScalaTuning(map); else e->setMtsTuning(map); };
+        setMap();
+        for (int n = 60; n < 68; ++n) e->noteOn(n, 0.8f);
+        check(routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+              "unmapped queued onset consumes no projected circuit in tuning mode " + std::to_string(mode));
+        map.mapped[60] = true; setMap();
+        check(!routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+              "mapping change before dispatch updates projected occupancy in tuning mode " + std::to_string(mode));
+        render(*e, 48);
+        e->noteOn(80, 0.8f); render(*e, 48);
+        map.mapped[80] = false; setMap();
+        e->noteOff(60); render(*e, 48);
+        bool unchangedWaitingRule = false;
+        for (int v = 0; v < 8; ++v)
+        {
+            const auto voice = e->getVoiceInfo(v);
+            unchangedWaitingRule |= voice.held && voice.note == 80 && voice.velocity == 0.0f;
+        }
+        check(unchangedWaitingRule,
+              "waiting promotion retains its existing no-remapping rule in tuning mode " + std::to_string(mode));
+    }
+}
+
+void testScanRoutingTransitions(const Engine& prototype, Engine& empty)
+{
+    auto e = std::make_unique<Engine>(prototype);
+    for (int n = 40; n < 48; ++n) e->noteOn(n, 0.7f, n % 2 + 2);
+    check(!routesToFirst(*e, empty), "eight queued notes occupy projected capacity before channel panic");
+    e->allNotesOff(true, 2);
+    check(routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+          "channel release panic discards only that channel's pending events");
+    e->allNotesOff(false, 3); render(*e, 48);
+    check(routingHeld(*e) == 0, "channel hard panic removes the remaining pending events");
+    for (int n = 40; n < 48; ++n) e->noteOn(n, 0.7f);
+    e->reset();
+    check(routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty) && routingHeld(*e) == 0,
+          "reset clears pending reservations and live allocator state");
+
+    // Deliberate limit: disabling scan preserves the published distinction.
+    // Host notes are immediate; keyboard notes stay behind an existing queue.
+    for (const bool keyboard : {false, true})
+    {
+        *e = prototype;
+        for (int n = 40; n < 48; ++n) e->noteOnFromKeyboard(n, 0.7f);
+        auto p = e->getParams(); p[P_kasScanTiming] = 0.0f; e->setParams(p);
+        check(!e->hasDeferredNoteTiming() && routesToFirst(*e, empty),
+              "scan-disable routing retains physical-only capacity with old UI events pending");
+        if (keyboard) e->noteOnFromKeyboard(90, 0.9f);
+        else e->noteOn(90, 0.9f);
+        check(routingHeld(*e, 90) == (keyboard ? 0 : 1),
+              "scan-disable keeps the existing keyboard-deferred versus host-immediate distinction");
+        render(*e, 1);
+        check(routingHeld(*e) == 8 && routingHeld(*e, 90) == (keyboard ? 0 : 1),
+              "mixed disabled-scan/UI congestion remains the explicitly unchanged behavior");
+    }
+
+    // Paths outside sixteen-voice active direct scanning remain physical-only,
+    // including existing queued events surviving an ARP transition.
+    for (const int control : {0, 1, 2, 3, 4, 5, 6, 7})
+    {
+        *e = prototype;
+        auto p = e->getParams();
+        if (control == 0) p[P_sourcePerformance] = 0.0f; // Legacy, scan requested.
+        if (control == 1) p[P_kasScanTiming] = 0.0f;
+        if (control >= 2 && control <= 5) p[P_voiceMode] = static_cast<float>(control == 2 ? 0 : control - 1);
+        if (control == 6) p[P_arpOn] = 1.0f;
+        if (control == 7) p[P_parityMode] = 1.0f;
+        e->setParams(p);
+        for (int n = 40; n < 48; ++n) e->noteOn(n, 0.7f);
+        check(routesToFirst(*e, empty) == e->hasFreeCircuit(),
+              "non-preview control retains physical-only routing " + std::to_string(control));
+    }
+    *e = prototype;
+    for (int n = 40; n < 48; ++n) e->noteOn(n, 0.7f);
+    auto p = e->getParams(); p[P_arpOn] = 1.0f; e->setParams(p);
+    check(routesToFirst(*e, empty) == e->hasFreeCircuit(),
+          "ARP enable with a pending queue does not use direct-scan projection");
+}
+
+void testScanRoutingQueryPurity(const Engine& prototype, Engine& empty)
+{
+    auto queried = std::make_unique<Engine>(prototype), untouched = std::make_unique<Engine>(prototype);
+    bool beforeEqual = true, audioEqual = true, afterEqual = true;
+    for (int round = 0; round < 24; ++round)
+    {
+        for (auto* e : {queried.get(), untouched.get()})
+        {
+            const int note = 40 + round % 12, channel = 1 + round % 3;
+            e->noteOnFromKeyboard(note, 0.6f, channel);
+            e->noteOn(note, 0.9f, channel);
+            if (round % 2 == 0) e->noteOffFromKeyboard(note, channel);
+            if (round % 3 == 0) e->controlChange(64, round % 6 == 0 ? 1.0f : 0.0f, channel);
+            if (round % 4 == 0) e->noteOff(40 + (round + 7) % 12, channel);
+            if (round == 12) e->allNotesOff(false, 2);
+        }
+        for (int repeat = 0; repeat < 37; ++repeat) (void) routesToFirst(*queried, empty);
+        beforeEqual &= sameRoutingVoices(*queried, *untouched);
+        const int frames = std::array<int, 5> {{1, 17, 30, 48, 73}}[static_cast<std::size_t>(round % 5)];
+        audioEqual &= render(*queried, frames) == render(*untouched, frames);
+        afterEqual &= sameRoutingVoices(*queried, *untouched);
+    }
+    check(beforeEqual, "repeated routing queries leave live voice and physical-capacity telemetry unchanged");
+    check(audioEqual, "repeated routing queries leave subsequent PCM bit-identical across scan boundaries");
+    check(afterEqual, "repeated routing queries preserve allocator, ownership, pedal and touch continuation");
+}
+
+void testScanRoutingRandomOracle(const Engine& prototype, Engine& empty)
+{
+    int projectedFull = 0, comparisons = 0, mismatches = 0;
+    for (std::uint32_t seed = 1; seed <= 24; ++seed)
+    {
+        auto e = std::make_unique<Engine>(prototype);
+        auto p = e->getParams(); p[P_sustainMode] = static_cast<float>(seed % 2);
+        p[P_mpeOn] = static_cast<float>((seed / 2) % 2); p[P_tuningMode] = static_cast<float>(1 + seed % 2);
+        e->setParams(p);
+        routingFill(*e, static_cast<int>(seed % 8), 40);
+        std::uint32_t rng = 0x80C580u ^ seed;
+        const auto random = [&]() { rng = rng * 1664525u + 1013904223u; return rng; };
+        bool matches = true;
+        tn::TuningTable map;
+        for (int step = 0; step < 48; ++step)
+        {
+            const auto value = random();
+            const int note = 40 + static_cast<int>((value >> 8) % 24);
+            const int channel = std::array<int, 5> {{1, 2, 8, 15, 16}}[(value >> 16) % 5];
+            const int action = static_cast<int>((value >> 24) % 16);
+            if (action < 5) e->noteOn(note, 0.75f, channel);
+            else if (action < 8) e->noteOnFromKeyboard(note, 0.5f, channel);
+            else if (action < 10) e->noteOff(note, channel);
+            else if (action < 12) e->noteOffFromKeyboard(note, channel);
+            else if (action == 12) e->controlChange(64, (value & 1u) ? 1.0f : 0.0f, channel);
+            else if (action == 13)
+            {
+                map.mapped[static_cast<std::size_t>(note)] = (value & 1u) != 0;
+                e->setScalaTuning(map); e->setMtsTuning(map);
+            }
+            else if (action == 14) e->allNotesOff((value & 1u) != 0, channel);
+            else render(*e, 1 + static_cast<int>((value >> 4) % 47));
+            const bool match = routingMatchesDispatch(*e, empty, &projectedFull);
+            matches &= match; mismatches += !match; ++comparisons;
+        }
+        check(matches, "independent real-dispatch capacity oracle, deterministic transcript " + std::to_string(seed));
+    }
+    check(projectedFull > 20, "random oracle exercises physically-free but projected-full states");
+    std::printf("Scan routing dispatch oracle: %d comparisons, %d projected-full states, %d mismatches\n",
+                comparisons, projectedFull, mismatches);
+}
+
+void testSixteenVoiceScanRouting()
+{
+    auto prototype = std::make_unique<Engine>();
+    prototype->prepare(48000.0); prototype->setParams(scanRoutingParams());
+    auto empty = std::make_unique<Engine>(*prototype);
+    testSixteenVoiceScanChords(*prototype);
+    testScanRoutingLifecycles(*prototype, *empty);
+    testScanRoutingQueueBounds(*prototype, *empty);
+    testScanRoutingPedalsAndMapping(*prototype, *empty);
+    testScanRoutingTransitions(*prototype, *empty);
+    testScanRoutingQueryPurity(*prototype, *empty);
+    testScanRoutingRandomOracle(*prototype, *empty);
+}
+
 void testRibbonCc()
 {
     auto p = quiet();
@@ -957,6 +1414,7 @@ int main()
     testMpeNrpnIsolation();
     testMpeZeroMemberConfiguration();
     testVoiceModes();
+    testSixteenVoiceScanRouting();
     testRibbonCc();
     std::printf("Tuning / MIDI / voice modes: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;

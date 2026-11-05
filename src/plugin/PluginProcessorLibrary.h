@@ -49,6 +49,7 @@ struct Cs80AudioProcessor::LibraryState final : private juce::AsyncUpdater
     CompareHistoryState captureCompareHistoryState() const;
     struct ToggleAction;
     struct CopyAction;
+    struct RandomiseMetadataAction;
 
     // Message thread and state-restore threads; never the audio thread.
     mutable juce::CriticalSection abLock;
