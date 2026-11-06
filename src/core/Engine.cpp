@@ -1342,6 +1342,7 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool key
     if (const int unison = unisonCount(); unison > 1)
     {
         uint64_t releaseGroup = 0;
+        double onsetGlidePitch = 0.0;
         for (int k = 0; k < unison; ++k)
         {
             const int idx = chooseVoice();
@@ -1349,8 +1350,15 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool key
                 break;
             startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel, keyboardOrigin);
             if (k == 0)
+            {
                 releaseGroup = voices[(size_t) idx].releaseGroup;
+                onsetGlidePitch = voices[(size_t) idx].glidePitch;
+            }
             voices[(size_t) idx].releaseGroup = releaseGroup;
+            // startVoice updates lastPitch for the next accepted onset. The
+            // siblings belong to this onset, so retain the first circuit's
+            // gated/tuned glide origin instead of jumping to the new target.
+            voices[(size_t) idx].glidePitch = onsetGlidePitch;
             voices[(size_t) idx].unisonOffset = global.unisonDetune / 100.0f
                 * ((float) k / (float) (unison - 1) - 0.5f);
         }
