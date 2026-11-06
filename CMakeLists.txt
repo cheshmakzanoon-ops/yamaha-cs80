@@ -308,6 +308,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_touch_circuit_tests PRIVATE cs80_core)
     add_test(NAME cs80_touch_circuit_tests COMMAND cs80_touch_circuit_tests)
     set_tests_properties(cs80_touch_circuit_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_mpe_master_bend_routing_tests tests/MpeMasterBendRoutingTests.cpp)
+    target_link_libraries(cs80_mpe_master_bend_routing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mpe_master_bend_routing_tests COMMAND cs80_mpe_master_bend_routing_tests)
+    set_tests_properties(cs80_mpe_master_bend_routing_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_tuning_midi_tests tests/TuningMidiTests.cpp)
     target_link_libraries(cs80_tuning_midi_tests PRIVATE cs80_core)
     target_compile_definitions(cs80_tuning_midi_tests PRIVATE
@@ -464,6 +468,16 @@ if (CS80_BUILD_PLUGIN)
     endif()
 
     if (CS80_BUILD_TESTS)
+        # Production modern-state number parser only: no processor or GUI initialization.
+        juce_add_console_app(cs80_modern_state_integer_tests
+            PRODUCT_NAME "CS80 Modern State Integer Tests")
+        target_sources(cs80_modern_state_integer_tests PRIVATE tests/ModernStateIntegerTests.cpp)
+        target_include_directories(cs80_modern_state_integer_tests PRIVATE src)
+        target_link_libraries(cs80_modern_state_integer_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_modern_state_integer_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_modern_state_integer_tests COMMAND cs80_modern_state_integer_tests)
+        set_tests_properties(cs80_modern_state_integer_tests PROPERTIES TIMEOUT 30)
+
         # XML display metadata only: no processor or GUI initialization.
         juce_add_console_app(cs80_preset_display_name_tests
             PRODUCT_NAME "CS80 Preset Display Name Tests")
@@ -473,6 +487,16 @@ if (CS80_BUILD_PLUGIN)
         target_compile_definitions(cs80_preset_display_name_tests PRIVATE JUCE_USE_CURL=0)
         add_test(NAME cs80_preset_display_name_tests COMMAND cs80_preset_display_name_tests)
         set_tests_properties(cs80_preset_display_name_tests PROPERTIES TIMEOUT 30)
+
+        # MSEG text/XML codec only: no processor or GUI initialization.
+        juce_add_console_app(cs80_mseg_state_text_tests
+            PRODUCT_NAME "CS80 MSEG State Text Tests")
+        target_sources(cs80_mseg_state_text_tests PRIVATE tests/MsegStateTextTests.cpp)
+        target_include_directories(cs80_mseg_state_text_tests PRIVATE src)
+        target_link_libraries(cs80_mseg_state_text_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_mseg_state_text_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_mseg_state_text_tests COMMAND cs80_mseg_state_text_tests)
+        set_tests_properties(cs80_mseg_state_text_tests PROPERTIES TIMEOUT 30)
 
         # Detached ValueTree matching only: no processor or GUI initialization.
         juce_add_console_app(cs80_parameter_state_index_tests

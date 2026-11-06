@@ -2344,6 +2344,12 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                   { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
                                   { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, ! idle);
 
+        // A gap channel is not an implicit member of the lower MPE zone.
+        // Keep channel 1's existing own-channel fallback when its zone is off,
+        // and retain captured-upper routing for channels still in either zone.
+        const float masterBend = global.mpe && v.midiChannel != 1
+            && mpeZones.role(v.midiChannel) == MpeZoneLayout::Role::none
+                ? 0.0f : (v.upperZone ? upperZoneBend : globalBend);
         for (int ch = 0; ch < 2; ++ch)
         {
             auto& r = v.ranks[ch];
@@ -2362,7 +2368,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             float pitch = (float) v.note
                           + global.masterTune
                           + (ch == 1 ? global.detuneCents / 100.0f : 0.0f)
-                          + (v.upperZone ? upperZoneBend : globalBend)
+                          + masterBend
                           + v.mpeBend
                           + glideOffset
                           + (float) (global.initBend * v.initialPitchTransient)

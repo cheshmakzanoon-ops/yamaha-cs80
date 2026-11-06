@@ -104,6 +104,7 @@ public:
         monoPhraseStartAge = 0;
         lockPending = transport.hasPosition && transport.playing;
         freeStarted = {};
+        monoRestartPending = {};
         globalRate = {};
         noteRng = Rng(0x7f4a7c15u);
         identity();
@@ -116,11 +117,17 @@ public:
         for (int m = 0; m < kMsegCount; ++m)
             if (config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
             {
-                // A trigger-mode change restarts that envelope cleanly.
+                // Restart only the changed envelope, using the next sample's
+                // gates. Keeping each voice's age preserves its latched note
+                // values, but means a held poly note needs an explicit restart.
                 freeStarted[(std::size_t) m] = false;
+                monoRestartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::mono;
                 globalRunners[(std::size_t) m].clear();
                 for (auto& voice : voices)
+                {
                     voice.runners[(std::size_t) m].clear();
+                    voice.restartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::poly;
+                }
             }
         rebuild();
     }
@@ -184,8 +191,9 @@ public:
                     runner.trigger(shape);
                 freeStarted[(std::size_t) m] = true;
             }
-            else if (monoTriggerPending)
+            else if (monoTriggerPending || (monoRestartPending[(std::size_t) m] && anyGateLast))
                 runner.trigger(shape);
+            monoRestartPending[(std::size_t) m] = false;
             const bool gate = shape.trigger == MsegTrigger::free || anyGateLast;
             runner.tick(shape, advanceFor(m, globalRate[(std::size_t) m]), gate);
         }
@@ -261,7 +269,10 @@ public:
             voice.key = bipolarResponseCurve(clampf(key, -1.0f, 1.0f), controls.keyCurve);
             for (int m = 0; m < kMsegCount; ++m)
                 if (config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
+                {
                     voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                    voice.restartPending[(std::size_t) m] = false;
+                }
             // Keep the next-beginSample trigger timing. Only a newly observed
             // eligible voice can consume the event-order phrase marker; idle
             // circuits must neither consume it nor add a delayed shared trigger.
@@ -276,8 +287,16 @@ public:
 
         for (int m = 0; m < kMsegCount; ++m)
             if (msegUsed[(std::size_t) m] && config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
+            {
+                if (voice.restartPending[(std::size_t) m])
+                {
+                    if (globalSourceEligible && in.gate)
+                        voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                    voice.restartPending[(std::size_t) m] = false;
+                }
                 voice.runners[(std::size_t) m].tick(config.msegs[(std::size_t) m],
                                                     advanceFor(m, voice.rate[(std::size_t) m]), in.gate);
+            }
 
         SourceValues values = globalValues;
         values[ModSource::velocity] = voice.velocity;
@@ -392,6 +411,7 @@ private:
         std::uint64_t age = 0;
         float random = 0.0f, velocity = 0.0f, key = 0.0f;
         std::array<MsegRunner, kMsegCount> runners {};
+        std::array<bool, kMsegCount> restartPending {};
         std::array<float, kMsegCount> rate {};
         std::array<RankOffsets, 2> offsets {};
     };
@@ -495,6 +515,7 @@ private:
     bool anyGateLast = false, anyGateNow = false, monoTriggerPending = false;
     bool lockPending = false;
     std::array<bool, kMsegCount> freeStarted {};
+    std::array<bool, kMsegCount> monoRestartPending {};
     Rng noteRng { 0x7f4a7c15u };
     GlobalOffsets globalOffsets {};
 };

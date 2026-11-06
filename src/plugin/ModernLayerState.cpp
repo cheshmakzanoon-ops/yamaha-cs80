@@ -1,7 +1,6 @@
 #include "ModernLayerState.h"
-
-#include <cmath>
-#include <limits>
+#include "ModernStateInteger.h"
+#include "MsegStateText.h"
 
 namespace cs80
 {
@@ -16,54 +15,9 @@ const juce::Identifier versionId { "version" }, indexId { "index" }, pointsId { 
     syncId { "sync" }, bipolarId { "bipolar" }, sourceId { "source" }, viaId { "via" },
     destinationId { "destination" }, targetId { "target" };
 
-// Locale-independent: juce::String(double) and getFloatValue() never use the C locale.
-juce::String encodePoints(const modern::MsegShape& s)
-{
-    juce::StringArray items;
-    for (int i = 0; i < s.count; ++i)
-    {
-        const auto& p = s.points[(std::size_t) i];
-        items.add(juce::String(p.time, 6) + " " + juce::String(p.level, 6) + " " + juce::String(p.curve, 6));
-    }
-    return items.joinIntoString(";");
-}
-
-void decodePoints(const juce::String& text, modern::MsegShape& s)
-{
-    juce::StringArray items;
-    items.addTokens(text, ";", {});
-    items.removeEmptyStrings();
-    if (items.size() < 2)
-        return; // keep the default shape
-    s.count = std::min(items.size(), modern::kMsegMaxPoints);
-    for (int i = 0; i < s.count; ++i)
-    {
-        juce::StringArray fields;
-        fields.addTokens(items[i], " ", {});
-        fields.removeEmptyStrings();
-        auto& p = s.points[(std::size_t) i];
-        p.time = fields.size() > 0 ? fields[0].getFloatValue() : 0.0f;
-        p.level = fields.size() > 1 ? fields[1].getFloatValue() : 0.0f;
-        p.curve = fields.size() > 2 ? fields[2].getFloatValue() : 0.0f;
-    }
-}
-
 int intProperty(const juce::ValueTree& tree, const juce::Identifier& id, int fallback)
 {
-    const auto value = tree.getProperty(id);
-    if (! (value.isInt() || value.isInt64() || value.isDouble() || value.isString()))
-        return fallback;
-    const double number = value.isString() ? value.toString().getDoubleValue() : (double) value;
-    if (! std::isfinite(number))
-        return fallback;
-    // Round without converting to long first: lround can overflow before the
-    // subsequent int cast, and narrowing a large long can alias a valid index
-    // or enum. Keep the existing nearest-integer rule within the int domain.
-    const double rounded = std::round(number);
-    if (rounded < (double) std::numeric_limits<int>::min()
-        || rounded > (double) std::numeric_limits<int>::max())
-        return fallback;
-    return (int) rounded;
+    return detail::modernStateInteger(tree.getProperty(id), fallback);
 }
 } // namespace
 
@@ -94,7 +48,7 @@ juce::ValueTree ModernLayerState::toTree(const modern::ModernConfig& source)
         const auto& s = c.msegs[(std::size_t) m];
         juce::ValueTree node(msegType);
         node.setProperty(indexId, m, nullptr);
-        node.setProperty(pointsId, encodePoints(s), nullptr);
+        node.setProperty(pointsId, detail::encodeMsegPoints(s), nullptr);
         node.setProperty(loopStartId, s.loopStart, nullptr);
         node.setProperty(loopEndId, s.loopEnd, nullptr);
         node.setProperty(loopId, (int) s.loop, nullptr);
@@ -132,7 +86,7 @@ modern::ModernConfig ModernLayerState::fromTree(const juce::ValueTree& tree)
         if (m < 0 || m >= modern::kMsegCount)
             continue;
         auto& s = c.msegs[(std::size_t) m];
-        decodePoints(node.getProperty(pointsId).toString(), s);
+        detail::decodeMsegPoints(node.getProperty(pointsId).toString(), s);
         s.loopStart = intProperty(node, loopStartId, s.loopStart);
         s.loopEnd = intProperty(node, loopEndId, s.loopEnd);
         s.loop = (modern::MsegLoop) intProperty(node, loopId, (int) s.loop);

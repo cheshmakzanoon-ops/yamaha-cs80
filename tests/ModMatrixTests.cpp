@@ -1089,6 +1089,152 @@ void testEngineRateRouteRemoval()
             }
 }
 
+void testLiveTriggerModeChanges()
+{
+    // A mode edit is an envelope restart, not a new note. Exercise every
+    // transition and every MSEG without changing either voice's onset age.
+    for (auto from : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free })
+        for (auto to : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free })
+            for (int m = 0; m < kMsegCount; ++m)
+            {
+                if (from == to) continue;
+                auto config = routed({
+                    { ModSource::mseg1, ModSource::none, ModDestination::pitch, ModTarget::both },
+                    { ModSource::mseg2, ModSource::none, ModDestination::cutoff, ModTarget::both },
+                    { ModSource::mseg3, ModSource::none, ModDestination::pan, ModTarget::both },
+                    { ModSource::noteRandom, ModSource::none, ModDestination::level, ModTarget::both }
+                });
+                for (auto& shape : config.msegs)
+                {
+                    shape = defaultShape(2); // Two-second linear ramp.
+                    shape.trigger = from;
+                }
+                ModernLayer layer;
+                layer.prepare(1000.0);
+                layer.setConfig(config);
+                layer.setControls(amounts({ 0.25f, 0.25f, 0.25f, 0.25f }));
+                auto tick = [&](int count)
+                {
+                    for (int n = 0; n < count; ++n)
+                    {
+                        layer.beginSample({});
+                        layer.processVoice(0, voiceAt(60, 0.8f, 1));
+                        layer.processVoice(1, voiceAt(67, 0.3f, 2));
+                    }
+                };
+                tick(100);
+                const int other = (m + 1) % kMsegCount;
+                const float beforeOther = layer.msegValue(0, other);
+                const float noteRandom = layer.rankOffsets(0, 0).level;
+                config.msegs[(std::size_t) m].trigger = to;
+                layer.setConfig(config);
+                tick(100);
+                for (int v = 0; v < 2; ++v)
+                    check(near(layer.msegValue(v, m), 0.05, 1.0),
+                          "live MSEG trigger-mode edit restarts each held note or shared runner");
+                check(near(layer.msegValue(0, other) - beforeOther, 0.05, 1.0),
+                      "live trigger-mode edit leaves the other envelopes running");
+                check(layer.rankOffsets(0, 0).level == noteRandom,
+                      "live trigger-mode edit preserves the note's latched random value");
+                layer.setConfig(config); // Identical publication must not restart again.
+                tick(100);
+                check(near(layer.msegValue(0, m), 0.1, 1.0),
+                      "repeated unchanged MSEG configuration does not retrigger");
+            }
+
+    // A mode edit with no key held is not a new onset. Released notes and
+    // decimated idle circuits must not acquire a fresh poly/mono envelope.
+    for (auto to : { MsegTrigger::poly, MsegTrigger::mono })
+        for (bool eligible : { false, true })
+        {
+            auto config = routed({ { ModSource::mseg1, ModSource::none,
+                                     ModDestination::pitch, ModTarget::both } });
+            config.msegs[0] = defaultShape(2);
+            config.msegs[0].trigger = MsegTrigger::free;
+            ModernLayer layer;
+            layer.prepare(1000.0);
+            layer.setConfig(config);
+            layer.setControls(amounts({ 1.0f }));
+            auto voice = voiceAt(60, 0.8f);
+            for (int n = 0; n < 20; ++n)
+            {
+                layer.beginSample({});
+                layer.processVoice(0, voice);
+            }
+            voice.gate = false;
+            layer.beginSample({});
+            layer.processVoice(0, voice, eligible);
+            config.msegs[0].trigger = to;
+            layer.setConfig(config);
+            for (int n = 0; n < 20; ++n)
+            {
+                layer.beginSample({});
+                layer.processVoice(0, voice, eligible);
+            }
+            check(layer.msegValue(0, 0) == 0.0f,
+                  "mode edits do not restart envelopes for released notes or idle circuits");
+            voice.gate = true;
+            ++voice.age;
+            for (int n = 0; n < 20; ++n)
+            {
+                layer.beginSample({});
+                layer.processVoice(0, voice);
+            }
+            check(near(layer.msegValue(0, 0), to == MsegTrigger::mono ? 0.0095 : 0.01, 1.0),
+                  "next note retains normal poly and mono onset timing after an idle mode edit");
+        }
+
+    // The Engine must apply the live edit to both held voices without another
+    // MIDI onset, under both render policies and every supported host rate.
+    for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
+        for (int policy = 0; policy < 2; ++policy)
+            for (int m = 0; m < kMsegCount; ++m)
+                for (auto from : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free })
+                    for (auto trigger : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free })
+                    {
+                        if (from == trigger) continue;
+                        ParamValues p;
+                        p[P_sourcePerformance] = (float) policy;
+                        p[P_mod1Amount] = 0.25f;
+                        auto config = routed({ { (ModSource) ((int) ModSource::mseg1 + m), ModSource::none,
+                                                ModDestination::pitch, ModTarget::both } });
+                        auto& shape = config.msegs[(std::size_t) m];
+                        shape = defaultShape(2);
+                        shape.trigger = from;
+                        Engine e;
+                        e.prepare(sr);
+                        e.setParams(p);
+                        e.setModernConfig(config);
+                        e.noteOn(60, 0.8f);
+                        e.noteOn(67, 0.4f);
+                        const int frames = (int) (sr * 0.01);
+                        std::vector<float> block(2 * (std::size_t) frames);
+                        e.render(block.data(), frames);
+                        shape.trigger = trigger;
+                        e.setModernConfig(config);
+                        e.render(block.data(), frames);
+                        bool finite = true;
+                        for (float sample : block) finite = finite && std::isfinite(sample);
+                        check(finite, "live trigger-mode edit renders finite engine audio");
+                        const double expected = frames / (2.0 * sr);
+                        if (trigger == MsegTrigger::poly)
+                        {
+                            int held = 0;
+                            for (int v = 0; v < 8; ++v)
+                                if (e.getVoiceInfo(v).held)
+                                {
+                                    ++held;
+                                    check(near(e.getModernMsegValue(v, m), expected, 1.0),
+                                          "Engine restarts each held poly MSEG after a mode edit");
+                                }
+                            check(held == 2, "live mode-edit regression keeps both keys held");
+                        }
+                        else
+                            check(near(e.getModernMsegValue(-1, m), expected, 1.0),
+                                  "Engine restarts the shared MSEG after a mode edit");
+                    }
+}
+
 void testEngineUnusableTransportPosition()
 {
     const double invalid[] = { std::numeric_limits<double>::quiet_NaN(),
@@ -1244,6 +1390,7 @@ int main()
     testChannelPressureSourceSmoothing();
     testEngineSameSampleMonoRetrigger();
     testEngineRateRouteRemoval();
+    testLiveTriggerModeChanges();
     testEngineUnusableTransportPosition();
     testEngineGlobalSourcePriorityAfterRelease();
     testStability();

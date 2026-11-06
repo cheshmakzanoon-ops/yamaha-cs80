@@ -127,6 +127,68 @@ void testModernLayerStateRangeHost(Check&& check)
         if (completedCases % 12 == 0) reportTiming();
     };
 
+    // A malformed index must not alias entry zero or a valid numeric prefix.
+    // Preserve non-default entries through both preset and session restore.
+    {
+        auto expected = defaults;
+        for (auto& shape : expected.msegs)
+        {
+            shape.points[1].level = 0.25f;
+            shape.sync = true;
+        }
+        for (auto& slot : expected.slots)
+            slot = { ModSource::velocity, ModSource::expression, ModDestination::pitch, ModTarget::rankII };
+        auto layer = ModernLayerState::toTree(expected);
+        for (const auto* text : { "", " ", "banana", "0suffix", "1suffix", "1 2", ".",
+                                 "+", "-", "1.2.3", "1e", "1e+", "1e-", "1e0suffix",
+                                 "0x1", "--1", "+-1", "- 1", "NaN", "Inf", "1,0",
+                                 "1e4294967296", "1e-4294967296", "1e+4294967297" })
+        {
+            juce::ValueTree mseg("MSEG"), slot("SLOT");
+            mseg.setProperty("index", text, nullptr);
+            mseg.setProperty("points", "0 1 0;1 0.9 0", nullptr);
+            mseg.setProperty("sync", 0, nullptr);
+            layer.appendChild(mseg, nullptr);
+            slot.setProperty("index", text, nullptr);
+            slot.setProperty("source", (int) ModSource::lfo1, nullptr);
+            slot.setProperty("destination", (int) ModDestination::pan, nullptr);
+            layer.getChildWithName("MATRIX").appendChild(slot, nullptr);
+        }
+        verify(layer, expected, "malformed string indices preserve existing entries");
+    }
+
+    // Complete decimal strings retain the same rounding as numeric variants.
+    // These detached-tree checks need no additional processor/audio iteration.
+    for (const auto& [text, index] : std::array<std::pair<const char*, int>, 12> {{
+             { "0", 0 }, { " +1 ", 1 }, { "01", 1 }, { "0.49", 0 }, { ".5", 1 },
+             { "1.49", 1 }, { "1.5", 2 }, { "-.49", 0 }, { "-.5", -1 },
+             { "1.", 1 }, { "1.e0", 1 }, { "15E-1", 2 } }})
+    {
+        auto layer = ModernLayerState::toTree(defaults);
+        juce::ValueTree mseg("MSEG"), slot("SLOT");
+        mseg.setProperty("index", text, nullptr);
+        mseg.setProperty("points", "0 0 0;1 0.25 0", nullptr);
+        layer.appendChild(mseg, nullptr);
+        slot.setProperty("index", text, nullptr);
+        slot.setProperty("source", (int) ModSource::velocity, nullptr);
+        slot.setProperty("destination", (int) ModDestination::pitch, nullptr);
+        layer.getChildWithName("MATRIX").appendChild(slot, nullptr);
+        auto expected = defaults;
+        if (index >= 0)
+        {
+            expected.msegs[(std::size_t) index].count = 2;
+            expected.msegs[(std::size_t) index].points[0] = { 0.0f, 0.0f, 0.0f };
+            expected.msegs[(std::size_t) index].points[1] = { 1.0f, 0.25f, 0.0f };
+            expected.slots[(std::size_t) index] = {
+                ModSource::velocity, ModSource::none, ModDestination::pitch, ModTarget::both };
+        }
+        expected = sanitizeConfig(expected);
+        const auto context = juce::String("complete numeric index retains rounding: ") + text;
+        check(ModernLayerState::fromTree(layer) == expected, context.toRawUTF8());
+        check(ModernLayerState::fromTree(juce::ValueTree::fromXml(*layer.createXml())) == expected,
+              "complete numeric indices survive XML round trip");
+    }
+
     for (const auto& value : outside)
     {
         const auto context = "value=" + value.toString();
