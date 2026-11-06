@@ -52,13 +52,16 @@ public:
     float masterRange(bool upper) const noexcept { return upper ? upperMasterRange : lowerMasterRange; }
     float memberRange(bool upper) const noexcept { return upper ? upperMemberRange : lowerMemberRange; }
 
-    // Feed every CC; returns true for RPN/NRPN selection or data entry.
+    // Feed every CC; returns true for RPN/NRPN selection, data entry or reset.
     bool controlChange(int channel, int controller, int value) noexcept
     {
         if (channel < 1 || channel > 16) return false;
         auto& s = rpn[static_cast<std::size_t>(channel)];
         switch (controller)
         {
+            // Reset All Controllers deselects parameters on this channel;
+            // it does not renegotiate the zone or its pitch-bend ranges.
+            case 121: s = {}; return true;
             case 101: s.msb = value; s.dataMsb = -1; s.nrpn = false; return true;
             case 100: s.lsb = value; s.dataMsb = -1; s.nrpn = false; return true;
             // Retain the registered selector bytes for one-byte RPN changes,
