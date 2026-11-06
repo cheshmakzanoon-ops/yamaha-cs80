@@ -4,10 +4,12 @@ An independent software reconstruction of the Yamaha CS-80, written in C++20 wit
 
 **What it is not:** a measured clone. No CS-80 has been measured for this project. Every law is either read from a schematic, manual or adjustment page, or is a declared engineering inference with its alternatives recorded. Nothing here claims measured hardware parity.
 
-**State on 2026-11-06:** the latest validated repository checkpoint is [`fe16f0a`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/fe16f0afcc7958d65f7010331bb1fc7f737b60e9). It includes the eight-workstream [improvement plan](docs/IMPROVEMENT_PLAN.md), host/MIDI/modulation/state/editor corrections through [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566), and the reviewed [OE1 speed endpoint evidence](docs/OE1_SPEED_ENDPOINT_DESIGN.md) and diagnostic probe. The OE1 addition does not change the shipping audio implementation. Current scope and remaining work are in [docs/STATUS.md](docs/STATUS.md).
+**State on 2026-11-06:** the latest merged code checkpoint is [`228cc8d`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/228cc8db3e8e0ab99056652c4265dc08f963eb69), including the filter resonance cache and sparse external-modulation interpolation changes. It also includes the earlier host/MIDI/modulation/state/editor corrections, delay-reader wrap safety fix, and reviewed OE1 speed endpoint evidence and diagnostic probe. The post-merge build is **not fully green**: its Apple Silicon job was canceled, leaving native ARM qualification incomplete. The downloads below deliberately retain the last fully passing `fe16f0a` checkpoint. Current scope and evidence are in [docs/STATUS.md](docs/STATUS.md).
 
 Since the October 31 integration:
 
+- **Filter and external modulation:** the [IG00156 cache](docs/IG00156_RESONANCE_CACHE.md) reuses cutoff-dependent coefficients for resonance-only updates; [sparse external interpolation](docs/EXTERNAL_INTERPOLATOR_SPARSE.md) skips guaranteed-zero FIR work while preserving the existing accumulation order. These are numerical optimizations, not new circuit laws or proof that the whole-instrument CPU target is met.
+- **Delay-reader safety:** the [rounded wrap fix](docs/DELAY_LINE_WRAP_SAFETY.md) prevents an out-of-bounds read at the circular buffer boundary while preserving arithmetic for previously valid positions.
 - **VST3 automation:** eighteen key parameters preserve host sample offsets in modern circuit policy. Legacy, PURE CS-80, unsupported parameters and AU retain their existing block-rate behavior. See [host automation](docs/HOST_AUTOMATION.md).
 - **MIDI and voices:** fixes cover channel-scoped pressure and MPE controllers, note-release ownership, short notes in the optional KAS scanner, partial CC121 sustain/selector reset, live pitch-bend range changes and shared unison glide onset.
 - **Modulation and state:** fixes cover MSEG trigger and sustain boundaries, synced rate modulation across host blocks, modern FX transitions, A/B and undo, preset names, and state validation. The [pinned MTS-ESP client](docs/MTS_ESP_INTEGRATION.md) is now included; a separately installed external master is still needed.
@@ -17,11 +19,13 @@ Since the October 31 integration:
 
 ## Downloads
 
-### Native development bundles
+### Native development bundles: last fully passing checkpoint
 
-The latest fully passing build verified for this update is [`fe16f0a`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/fe16f0afcc7958d65f7010331bb1fc7f737b60e9), from November 6 [build run 42183946774](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774). The build and [DSP measurements 42183946757](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946757) passed. These bundles include the unison glide correction and all shipping changes described above.
+The latest fully passing build verified for this update is [`fe16f0a`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/fe16f0afcc7958d65f7010331bb1fc7f737b60e9), from November 6 [build run 42183946774](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774). The build and [DSP measurements 42183946757](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946757) passed. **These bundles predate the delay-reader safety fix, filter resonance cache and sparse external interpolation now merged into `main`.** They include the earlier unison glide correction; they are not builds of the current merged code.
 
-The earlier [build at `f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425) failed its Linux fixed-seed GUI validation step. The newer passing run does not establish that failure's cause or resolve the intermittent validator issue. No release qualification is inferred from either outcome.
+The current code's [post-merge build 42274477424](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477424), at `228cc8d`, completed with failure: five jobs succeeded, but the [macOS Apple Silicon job](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477424/job/128087142687) was canceled. Linux, Windows and Intel macOS bundles exist for that run; no ARM bundle was produced. Native ARM build/test qualification remains incomplete, so this page keeps one consistent, fully passing older bundle set. The matching [DSP run 42274477310](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477310) and [screenshot run 42274477540](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477540) passed.
+
+The earlier [build at `f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425) failed its Linux fixed-seed GUI validation step. The passing `fe16f0a` checkpoint does not establish that failure's cause or resolve the intermittent validator issue. No release qualification is inferred from these outcomes.
 
 | Platform | Architecture | Formats | Download |
 | --- | --- | --- | --- |
@@ -123,7 +127,7 @@ The voice monitor and controllers strip open from the toolbar menu:
 
 ![The voice monitor drawer and the controllers strip over the panel](docs/screenshots/studio-drawers-1600x1000.png)
 
-The documentation set of 68 screenshots was rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from source [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566) in successful [run 42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), then committed in [`f447493`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f447493f0c0b384600d45ebce598cd37d0ec7d28). The engine, editor and snapshot-renderer sources are unchanged between that screenshot source and the validated `fe16f0a` build. [provenance.json](docs/screenshots/provenance.json) records the actual rendering source and run; all 68 image hashes match [SHA256SUMS](docs/screenshots/SHA256SUMS). The [screenshot directory](docs/screenshots/) holds the complete set. Screenshots show what the editor draws, not how it sounds.
+The documentation set of 68 screenshots was rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from merged source [`228cc8d`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/228cc8db3e8e0ab99056652c4265dc08f963eb69) in successful [run 42274477540](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477540), then committed in the screenshot-only descendant [`1a69b71`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/1a69b71267c52144365b9c3a231bf98c2f058bb8). [provenance.json](docs/screenshots/provenance.json) records the actual rendering source and run; all 68 image hashes match [SHA256SUMS](docs/screenshots/SHA256SUMS). The [screenshot directory](docs/screenshots/) holds the complete set. These screenshots represent the newer merged source, not the older downloadable `fe16f0a` bundles. Screenshots show what the editor draws, not how it sounds, and do not qualify the canceled ARM job.
 
 ## PURE CS-80
 
@@ -156,7 +160,7 @@ These are historical measurements of the named audio commit, not a new benchmark
 
 ## Open items
 
-- **CPU:** the oscillator's event solver and the nodal stages' Newton solve dominate. A structure-of-arrays, segment-cached oscillator path is the route to the target; not done.
+- **CPU:** the oscillator's event solver and the nodal stages' Newton solve dominate the recorded baseline. Resonance-only coefficient caching and sparse external interpolation are merged; their focused measurements do not establish whole-instrument target completion. The structure-of-arrays, segment-cached oscillator path remains open.
 - **Validator:** the Linux pluginval run has intermittently exited 139 after printing SUCCESS. Code review and a valgrind teardown probe found no fault in project code; the cause is not established ([validator diagnostics](docs/VALIDATOR_DIAGNOSTICS.md)).
 - **Clicks:** retrigger 1.51 on "Bass Stack"; note-off click scores up to 1.65 on percussive circuit-engine programs.
 - **Filter:** top-octave small-signal accuracy at 2x/4x internal rate; the ADJ p11 HP point.
@@ -213,6 +217,7 @@ Plugin outputs are under `build/CS80Reference_artefacts/Release/` (`VST3/`, `Sta
 | Read | For |
 | --- | --- |
 | [STATUS.md](docs/STATUS.md) | current integration state, model register, historical scorecard, compatibility pins, open issues |
+| [IG00156_RESONANCE_CACHE.md](docs/IG00156_RESONANCE_CACHE.md), [EXTERNAL_INTERPOLATOR_SPARSE.md](docs/EXTERNAL_INTERPOLATOR_SPARSE.md), [DELAY_LINE_WRAP_SAFETY.md](docs/DELAY_LINE_WRAP_SAFETY.md) | merged numerical optimizations, their scope and the delay-reader safety correction |
 | [HOST_AUTOMATION.md](docs/HOST_AUTOMATION.md), [MTS_ESP_INTEGRATION.md](docs/MTS_ESP_INTEGRATION.md) | current VST3 automation scope and embedded tuning client |
 | [CONTROLLER_RESET.md](docs/CONTROLLER_RESET.md), [MSEG_TRANSPORT_RATE.md](docs/MSEG_TRANSPORT_RATE.md) | recent MIDI reset and modulation timing corrections |
 | [IMPROVEMENT_PLAN.md](docs/IMPROVEMENT_PLAN.md), [workstreams/HANDOVER.md](docs/workstreams/HANDOVER.md) | the plan and how the eight workstreams were merged |

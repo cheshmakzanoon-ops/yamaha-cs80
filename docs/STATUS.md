@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-06. Latest validated repository checkpoint: `fe16f0afcc7958d65f7010331bb1fc7f737b60e9`. The shipping engine/plugin and snapshot-renderer sources are unchanged since `f921f548abaaaa31036fe8af007367288ce58566`; the screenshot refresh remains `f447493f0c0b384600d45ebce598cd37d0ec7d28`.
+Last updated: 2026-11-06. Latest merged code checkpoint: `228cc8db3e8e0ab99056652c4265dc08f963eb69`; screenshot-only refresh: `1a69b71267c52144365b9c3a231bf98c2f058bb8`. The latest fully passing native build checkpoint remains `fe16f0afcc7958d65f7010331bb1fc7f737b60e9`. Native ARM qualification of the newer merged code is incomplete because its Apple Silicon CI job was canceled.
 
 ## Changes since the October 31 integration
 
@@ -17,6 +17,9 @@ handover PDF remain dated evidence, not current-head measurements.
 
 | Area | Current state | Source / scope |
 | --- | --- | --- |
+| Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
+| External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
+| Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
 | Host automation | Eighteen key VST3 parameters retain sample offsets in modern circuit policy; protected policies and unsupported parameters keep block-rate behavior | `1b3df5a`, endpoint correction `7c54caf`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md). AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). External master, per-channel tables and live DAW qualification remain separate. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, partial CC121 reset and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
@@ -24,23 +27,41 @@ handover PDF remain dated evidence, not current-head measurements.
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
 | OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
-| Editor evidence | Selected LFO waveform previews and 68 current real-editor screenshots | `ae3958d`; source `f921f54`, screenshot run [42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), [provenance](screenshots/provenance.json) |
+| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots of the merged source | LFO preview fix `ae3958d`; screenshot source `228cc8d`, run [42274477540](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477540), committed `1a69b71`; [provenance](screenshots/provenance.json) |
 
-The most recent fully passing native bundle run checked for this update is
+The optimization reports retain draft-stage qualification notes as historical
+evidence. Both PRs are now merged; the post-merge status below is current.
+
+### Post-merge CI and download checkpoints
+
+[Build 42274477424](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477424)
+for merged code `228cc8d` completed with **failure**. Five jobs succeeded; the
+[macOS Apple Silicon job 128087142687](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477424/job/128087142687)
+was **canceled**. Native ARM build/test qualification is incomplete. The run has
+Linux, Windows and Intel macOS bundles, but no ARM bundle. The matching
+[DSP run 42274477310](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477310)
+and [screenshot run 42274477540](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477540)
+passed. These results do not turn the failed aggregate build into a pass.
+
+The latest fully passing native bundle run is still
 [42183946774](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774)
 at `fe16f0a`, with successful
 [DSP run 42183946757](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946757).
-All four native install bundles are available and unexpired, with GitHub recording
-an expiry of February 4, 2027. Downloads require a signed-in GitHub account.
+Its four linked bundles remain available and unexpired until February 4, 2027,
+and require a signed-in GitHub account. **They predate the delay-reader safety
+fix, resonance cache and sparse external interpolation.** The README retains
+that coherent four-platform set instead of presenting mixed revisions as one build.
+
+The documentation screenshots now come from `228cc8d` and were published by the
+screenshot-only commit `1a69b71`. All 68 hashes match their manifest. They are not
+screenshots from the older downloadable `fe16f0a` build or later documentation-only
+commits, and a successful screenshot run does not qualify native ARM products.
 
 The earlier `f921f54` [build run 42175969425](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425)
-failed its Linux fixed-seed GUI validation step. The newer passing run does not
-establish the earlier failure's cause or resolve the intermittent validator issue.
-The documentation screenshots still come from successful
-[run 42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590)
-at `f921f54`, not from the newer build or its documentation-only descendants.
-[README downloads](../README.md#downloads) separate the current native bundles
-from the older October 31 installers. No tagged GitHub Release has been published.
+failed its Linux fixed-seed GUI validation step. The later passing `fe16f0a` run
+does not establish that failure's cause or resolve the intermittent validator issue.
+[README downloads](../README.md#downloads) also retain the October 31 installers
+as explicitly historical artifacts. No tagged GitHub Release has been published.
 
 ## Where to read what
 
@@ -107,6 +128,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | --- | --- | --- |
 | Plan recorded | done | `97cc815` |
 | 0.1 Coefficient caching | done; bit-identical | `7b55d34` |
+| 0.1 Resonance-only cache and sparse external interpolation | merged numerical optimizations; focused comparisons preserve tested output, whole-instrument CPU target remains open | `465e56c`, `228cc8d`; reports above |
 | 0.1 Split, fast math, structure of arrays | partial: bounded-error tan in the nodal stage (`00ceccf`); fast exp2/pow measured no faster than glibc's and dropped; `processInternalSample` split and SoA not done | `00ceccf` |
 | 0.2 Parameter smoothing | done (circuit engine), ws2 | `d29f6eb` |
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
@@ -257,7 +279,11 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - Intermittent Linux pluginval exit 139 after SUCCESS: code review and a memcheck
   teardown probe found no fault in project code; root cause not established
   ([VALIDATOR_DIAGNOSTICS.md](VALIDATOR_DIAGNOSTICS.md)).
-- CPU above target (above). Idle above target.
+- CPU and idle targets remain open. The resonance cache and sparse external
+  interpolation optimizations are merged, but their focused measurements do not
+  replace a new full scorecard for the merged source.
+- Native ARM build/test qualification is incomplete at `228cc8d`: the
+  Apple Silicon job was canceled in post-merge build `42274477424`.
 - Nodal filter top-octave small-signal accuracy at 2x/4x internal; ADJ p11 HP point.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
 - MTS-ESP now includes the [pinned 0BSD client](../src/vendor/mts-esp/README.md)
