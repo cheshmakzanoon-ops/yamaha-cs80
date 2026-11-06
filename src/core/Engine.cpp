@@ -1426,6 +1426,45 @@ bool Engine::isSustainPedalDown(int midiChannel) const noexcept
         || (role == MpeZoneLayout::Role::upperMember && sustainPedals[16]);
 }
 
+void Engine::setSustainPedal(int midiChannel, bool down)
+{
+    if (midiChannel < 1 || midiChannel > 16)
+        return;
+    if (down == sustainPedals[(size_t) midiChannel])
+        return;
+    sustainPedals[(size_t) midiChannel] = down;
+    if (! down)
+    {
+        for (auto& voice : voices)
+            if (voice.pedalHeld && ! isSustainPedalDown(voice.midiChannel))
+            {
+                voice.pedalHeld = false;
+                if (! voice.held && ! voice.sustained)
+                {
+                    releaseVoice(voice);
+                    // Circuit CC64 defers gate release, not the panel's
+                    // Sustain II policy for the resulting tail. Use the
+                    // mode/gate at pedal-up, as for an ordinary key-up.
+                    // Legacy retains its historical unprivileged tail.
+                    if (usesSourceModels(global.renderPolicy)
+                        && global.sustainMode == 1 && global.sustainGate)
+                        voice.sustained = true;
+                }
+            }
+        heldCount = 0;
+        for (const auto& voice : voices)
+            if (voice.held || voice.pedalHeld)
+                ++heldCount;
+        if (heldCount == 0)
+        {
+            ringKeyDown = false;
+            ringAdsr.noteOff();
+        }
+        if (unassignedCount > 0)
+            reconsiderUnassignedKeys();
+    }
+}
+
 void Engine::releaseKey(Voice& v)
 {
     if (! v.held)
@@ -1689,6 +1728,18 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         allNotesOff(controller == 123, midiChannel);
         return;
     }
+    if (controller == 121)
+    {
+        if (midiChannel < 1 || midiChannel > 16 || ! std::isfinite(value))
+            return;
+        // Narrow Reset All Controllers support: null parameter selection,
+        // including while MPE is off, and release this channel's MIDI pedal.
+        // Retain negotiated zones/ranges and all other controller policies.
+        mpeZones.controlChange(midiChannel, controller, 0);
+        if (! global.parityMode)
+            setSustainPedal(midiChannel, false);
+        return;
+    }
     // Ribbon from a MIDI CC (interface layer, off by default): 64 is centre.
     if (global.ribbonCcEnabled && controller == global.ribbonCc && std::isfinite(value))
     {
@@ -1716,44 +1767,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
     else if (controller == 11)
         expression = value;
     else if (controller == 64)
-    {
-        if (midiChannel < 1 || midiChannel > 16)
-            return;
-        const bool down = value >= 0.5f;
-        if (down == sustainPedals[(size_t) midiChannel])
-            return;
-        sustainPedals[(size_t) midiChannel] = down;
-        if (! down)
-        {
-            for (auto& voice : voices)
-                if (voice.pedalHeld && ! isSustainPedalDown(voice.midiChannel))
-                {
-                    voice.pedalHeld = false;
-                    if (! voice.held && ! voice.sustained)
-                    {
-                        releaseVoice(voice);
-                        // Circuit CC64 defers gate release, not the panel's
-                        // Sustain II policy for the resulting tail. Use the
-                        // mode/gate at pedal-up, as for an ordinary key-up.
-                        // Legacy retains its historical unprivileged tail.
-                        if (usesSourceModels(global.renderPolicy)
-                            && global.sustainMode == 1 && global.sustainGate)
-                            voice.sustained = true;
-                    }
-                }
-            heldCount = 0;
-            for (const auto& voice : voices)
-                if (voice.held || voice.pedalHeld)
-                    ++heldCount;
-            if (heldCount == 0)
-            {
-                ringKeyDown = false;
-                ringAdsr.noteOff();
-            }
-            if (unassignedCount > 0)
-                reconsiderUnassignedKeys();
-        }
-    }
+        setSustainPedal(midiChannel, value >= 0.5f);
     else if (controller == 74)
     {
         for (auto& v : voices)

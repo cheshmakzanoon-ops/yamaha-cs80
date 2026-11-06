@@ -544,6 +544,7 @@ private:
     // release without restarting the envelope stage, retriggering or holding a note.
     void cancelSustainTails();
     bool isSustainPedalDown(int midiChannel) const noexcept;
+    void setSustainPedal(int midiChannel, bool down);
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
     // Note events after the optional KAS scan quantisation (Phase 2.2).
