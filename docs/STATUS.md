@@ -7,8 +7,34 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-10-31, branch `claude/adoring-fermi-alhg4x` (the eight-workstream
-integration; see [workstreams/HANDOVER.md](workstreams/HANDOVER.md)).
+Last updated: 2026-11-06. Current engine/plugin source: `f921f548abaaaa31036fe8af007367288ce58566`; screenshot refresh: `f447493f0c0b384600d45ebce598cd37d0ec7d28`.
+
+## Changes since the October 31 integration
+
+The original eight-workstream integration is recorded in
+[workstreams/HANDOVER.md](workstreams/HANDOVER.md). The October 31 scorecard and
+handover PDF remain dated evidence, not current-head measurements.
+
+| Area | Current state | Source / scope |
+| --- | --- | --- |
+| Host automation | Eighteen key VST3 parameters retain sample offsets in modern circuit policy; protected policies and unsupported parameters keep block-rate behavior | `1b3df5a`, endpoint correction `7c54caf`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md). AU scheduled ramps are not enabled. |
+| Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). External master, per-channel tables and live DAW qualification remain separate. |
+| MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, partial CC121 reset and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
+| MSEG and FX | Trigger/sustain boundary fixes, synced rate phase retained across host blocks, and corrections to tape, plate, Drive and loudness-match transitions | `ce423e3`; [MSEG_TRANSPORT_RATE.md](MSEG_TRANSPORT_RATE.md), [ws5 report](workstreams/ws5-modern.md) |
+| Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
+| Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
+| Editor evidence | Selected LFO waveform previews and 68 current real-editor screenshots | `ae3958d`; source `f921f54`, screenshot run [42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), [provenance](screenshots/provenance.json) |
+
+The most recent fully passing native bundle run checked for this update is
+[42165333280](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280)
+at `ac27687`, with successful
+[DSP run 42165333241](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333241).
+The newer `f921f54` [build run 42175969425](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425)
+has successful native build jobs on all four platforms, but its [Linux validator job](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425/job/127760198405)
+failed at the fixed-seed GUI step. Its [DSP run 42175969485](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969485)
+and screenshot run passed; the failed build gate remains open. [README downloads](../README.md#downloads)
+separate native bundles from the older October 31 installers. No tagged GitHub
+Release has been published.
 
 ## Where to read what
 
@@ -29,8 +55,10 @@ integration; see [workstreams/HANDOVER.md](workstreams/HANDOVER.md)).
 - **ENGINE: CIRCUIT** (host parameter `source_performance`, "Engine") renders the
   circuit models below. Fresh instances and new presets use it (plan 1.7, state
   schema 3).
-- **ENGINE: LEGACY (compat)** keeps the older voicing byte-identical, so sessions
-  saved before schema 3 and the Legacy Library sound unchanged.
+- **ENGINE: LEGACY (compat)** retains the older synthesis voicing and is used for
+  sessions saved before schema 3 and the Legacy Library. Pinned render gates
+  preserve their tested cases; MIDI/modern-layer bug fixes can change affected
+  performances, including the optional KAS scanner ordering described below.
 - **PURE CS-80** (`parity_mode`) strips every modern addition (MSEG, matrix,
   modern FX, LFOs, arpeggiator, MPE, microtuning, voice modes, MIDI learn,
   Program Change, voice dispersion and drift) and runs the circuit models only.
@@ -101,7 +129,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | not done | — |
+| 6 Sample-accurate automation | partial: eighteen key VST3 parameters in modern circuit policy; AU and other parameters remain block-rate | `1b3df5a`, `7c54caf`; [scope](HOST_AUTOMATION.md) |
 | 7 Release qualification | release workflow, installers, licence AGPLv3 done; signing needs secrets; exit 139 open | `d9b98c6`, `06eb8f3`, `80cbe8c` |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -137,7 +165,7 @@ next branch event once per analytic segment rather than per sample); not done.
 ## Pinned compatibility gates
 
 - `dsp-measurements.yml` **legacy-compatibility**: default-off audio byte-identical
-  to `d56911a`. Legacy must never change.
+  to `d56911a`. These pinned audio cases remain a compatibility requirement.
 - `dsp-measurements.yml` **source-factory-compatibility**: circuit V1 numerics
   (`22d6a32`) and circuit-engine audio V2, now **`00ceccf`** (the eight-workstream
   integration). Earlier V2 pins, for historical circuit-engine renders:
@@ -145,7 +173,14 @@ next branch event once per analytic segment rather than per sample); not done.
   (Phase 1.5 gain staging), `6e5892f` before that.
 - `scripts/check-compat-gates.sh --strict-v2` passes at the re-pin commit `ef9bc35`.
 
-### CI on the integrated tree
+These gates cover their defined render cases, not every MIDI performance.
+The optional KAS scanner now preserves same-pitch event arrival order, including
+across channels. A strike before a release within one scan can change voice
+allocation and playback in saved sessions that enable it. See the explicit
+compatibility correction in [ws3-keyboard.md](workstreams/ws3-keyboard.md).
+Other optional MIDI and modern-layer fixes have the scoped contracts linked above.
+
+### Historical CI on the October 31 integrated tree
 
 At `e048dca` (the head merged into `main` as `ec72eed`):
 [build 41208373099](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41208373099)
@@ -176,7 +211,8 @@ On `main` after [#3](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/3) (
 [release 41218772353](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353)
 (unsigned: no signing secrets) and
 [DSP measurements 41218763836](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218763836)
-passed every job; the README links their artifacts.
+passed every job. The README retains the installer artifacts as explicitly
+historical downloads and links newer native bundles separately.
 
 A passing Linux pluginval run is not a fix for the intermittent exit 139.
 
@@ -227,7 +263,11 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - Context menu and MIDI learn for switches, combo boxes and lid miniatures;
   undo-applied values reach the host without gestures; the voice monitor
   illustrates settings rather than tapping the engine.
-- Sample-accurate automation not done.
+- Sample-offset automation is limited to eighteen key VST3 parameters in modern
+  circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
+  qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
+- CC121 support resets MIDI sustain and RPN/NRPN selection only; full Reset All
+  Controllers behavior is not implemented ([CONTROLLER_RESET.md](CONTROLLER_RESET.md)).
 - Signing and notarization need the owner's certificates; real-DAW sessions,
   trademark review and AAX are owner actions
   ([release/RELEASE_QUALIFICATION.md](release/RELEASE_QUALIFICATION.md)).

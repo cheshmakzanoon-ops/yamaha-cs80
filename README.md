@@ -4,41 +4,54 @@ An independent software reconstruction of the Yamaha CS-80, written in C++20 wit
 
 **What it is not:** a measured clone. No CS-80 has been measured for this project. Every law is either read from a schematic, manual or adjustment page, or is a declared engineering inference with its alternatives recorded. Nothing here claims measured hardware parity.
 
-**State on 2026-10-31:** `main` integrates the eight workstreams of the [improvement plan](docs/IMPROVEMENT_PLAN.md) ([#2](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/2), merge [`ec72eed`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/ec72eedb297fce0e5b9803ec96809f0b072f6aa5)) and the CI fixes that followed ([#3](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/3), merge [`55bb043`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/55bb04314231a8da78554317095cbc6bbf4ff092)). Per-subsystem detail, the scorecard and the open issues are in [docs/STATUS.md](docs/STATUS.md).
+**State on 2026-11-06:** `main` includes the eight-workstream [improvement plan](docs/IMPROVEMENT_PLAN.md) and subsequent host, MIDI, modulation, state and editor corrections through [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566). Current scope and remaining work are in [docs/STATUS.md](docs/STATUS.md).
 
-**Plan completion and handover (PDF):** [docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf](docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf) lists what the improvement plan delivered, what is still open (CPU targets, one retrigger-click outlier, the intermittent Linux pluginval exit 139, and a few partial features), and step by step how the next engineer should finish each item.
+Since the October 31 integration:
+
+- **VST3 automation:** eighteen key parameters preserve host sample offsets in modern circuit policy. Legacy, PURE CS-80, unsupported parameters and AU retain their existing block-rate behavior. See [host automation](docs/HOST_AUTOMATION.md).
+- **MIDI and voices:** fixes cover channel-scoped pressure and MPE controllers, note-release ownership, short notes in the optional KAS scanner, partial CC121 sustain/selector reset, live pitch-bend range changes and shared unison glide onset.
+- **Modulation and state:** fixes cover MSEG trigger and sustain boundaries, synced rate modulation across host blocks, modern FX transitions, A/B and undo, preset names, and state validation. The [pinned MTS-ESP client](docs/MTS_ESP_INTEGRATION.md) is now included; a separately installed external master is still needed.
+- **Editor:** Studio LFO previews follow the selected waveforms. The screenshots below come from the actual editor, with source and run provenance.
+
+**Historical handover (2026-10-31 PDF):** [CS80_PLAN_COMPLETION_AND_HANDOVER.pdf](docs/CS80_PLAN_COMPLETION_AND_HANDOVER.pdf) records the original plan delivery. It predates the corrections above; use the current status page for implemented features and open work.
 
 ## Downloads
 
-Development builds from `main` at [`55bb043`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/55bb04314231a8da78554317095cbc6bbf4ff092); later commits on `main` change documentation only. **They are unsigned and not notarized**: the release run found no signing secrets, so the macOS package is labelled UNSIGNED and Gatekeeper will block it until you allow it, and Windows SmartScreen will warn. GitHub artifact downloads need a signed-in GitHub account and expire under the repository's retention settings (these on 29 January 2027).
+### Native development bundles
 
-**Install bundles** (build.yml run [41218764120](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218764120): native build, tests, pluginval and packaging per platform):
+The latest fully passing build verified for this update is [`ac27687`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/ac27687fe324c7a2b4eec1d53d78cb41f1a9adfb), from November 6 [build run 42165333280](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280). All six build/validation jobs and its [DSP measurements](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333241) passed. These bundles include the recent fixes through live pitch-bend range edits, but predate the unison glide correction in `f921f54`. The [newer main build at `f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425) built all four native platforms, but its [Linux validator job](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425/job/127760198405) failed at the fixed-seed GUI step. It is not substituted for the fully passing bundle set below. Its [DSP measurements](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969485) and screenshot run passed; the failed build gate remains open.
 
 | Platform | Architecture | Formats | Download |
 | --- | --- | --- | --- |
-| Windows | x64 | VST3, Standalone `.exe` | [`cs80-windows-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218764120/artifacts/13050450945) |
-| macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218764120/artifacts/13049492717) |
-| macOS Intel | x86-64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-intel-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218764120/artifacts/13049702399) |
-| Linux (Ubuntu 24.04) | x86-64 | VST3, Standalone | [`cs80-linux-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218764120/artifacts/13049791928) |
+| Windows | x64 | VST3, Standalone `.exe` | [`cs80-windows-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13479728008) |
+| macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13479955402) |
+| macOS Intel | x86-64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-intel-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13480587593) |
+| Linux (Ubuntu 24.04) | x86-64 | VST3, Standalone | [`cs80-linux-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13479666356) |
 
-**Installers** (release.yml run [41218772353](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353), workflow_dispatch on `main`):
+GitHub artifact downloads require a signed-in GitHub account. These four artifacts were present and unexpired when checked; their recorded expiry is **4 February 2027**. If a link has expired, check the [main build history](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/build.yml?query=branch%3Amain) for a completed successful run and its artifacts.
 
-| Platform | Contents | Download |
+**These are development builds, not release-qualified installers.** macOS bundles are separate native builds and are ad-hoc signed, not Developer ID signed or notarized. No Windows publisher signature is claimed. Gatekeeper or SmartScreen may warn. Linux targets Ubuntu 24.04 and is not an AppImage or a portable Linux runtime. Passing automated checks is not DAW qualification and does not establish the cause of the intermittent Linux validator failure.
+
+Unpack the outer ZIP, check `SHA256SUMS`, and follow [Install and quickstart](docs/INSTALL_AND_QUICKSTART.md). `manifest.json` and `SOURCE.txt` inside each native bundle identify its source commit; the version string `1.0.0` alone does not.
+
+### Historical installers: October 31 source
+
+The latest installer workflow is still [release run 41218772353](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353), built from [`55bb043`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/55bb04314231a8da78554317095cbc6bbf4ff092). **These installers do not include the November corrections above.** All three packaging jobs passed, but the macOS and Windows installers are unsigned and macOS is not notarized. Their artifact expiry is **29 January 2027**.
+
+| Platform | Contents | Historical download |
 | --- | --- | --- |
 | macOS 11+ (universal arm64 + x86-64) | `.pkg` installer (VST3, AU, Standalone), labelled `-UNSIGNED` | [`cs80-macos-universal-installer`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353/artifacts/13049424181) |
 | Windows x64 | setup `.exe` (VST3, Standalone), labelled `-UNSIGNED` | [`cs80-windows-installer`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353/artifacts/13050675497) |
 | Linux x86-64 | `.deb` package and tarball | [`cs80-linux-packages`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218772353/artifacts/13049562316) |
 
-CI at `55bb043`: the build run passed all six jobs (Linux, Windows, macOS arm64 and Intel builds and tests; pluginval at strictness 10 on Linux VST3 headless, GUI and seeded, Windows VST3, and VST3, AU and AU GUI on both macOS builds), the release run passed all three jobs, and [DSP measurements 41218763836](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/41218763836) passed (legacy byte comparison, circuit V1/V2 compatibility, ASan + UBSan suite). Passing validators are not a DAW qualification, and a passing Linux pluginval run does not explain its intermittent exit 139 (see open items).
-
-The install bundles' macOS builds are separate native arm64 and x86-64 builds; the release installer is a universal binary. macOS bundles are ad-hoc signed so they load locally; Gatekeeper will still warn. Linux builds target Ubuntu 24.04 and are not an AppImage. Unpack the outer ZIP, check `SHA256SUMS`, and follow [Install and quickstart](docs/INSTALL_AND_QUICKSTART.md). `manifest.json` and `SOURCE.txt` inside each package name the exact source commit; the version string `1.0.0` alone does not.
+No tagged GitHub Release is published. The native bundles and historical installers above are GitHub Actions artifacts, with separate source revisions and retention dates.
 
 ## What is modelled, and how
 
 The engine has three render policies:
 
 - **ENGINE: CIRCUIT** (host parameter "Engine", `source_performance`) renders the circuit models. Fresh instances, INIT and new presets use it.
-- **ENGINE: LEGACY (compat)** keeps the earlier voicing byte-identical, so sessions saved before state schema 3 and the Legacy Library sound as they did.
+- **ENGINE: LEGACY (compat)** retains the earlier synthesis voicing and is selected for sessions saved before state schema 3 and the Legacy Library. Compatibility gates cover pinned render cases; the event-handling corrections described below can change affected performances.
 - **PURE CS-80** (`parity_mode`) runs the circuit models with every modern addition removed (see below).
 
 | Subsystem | Circuit engine | Reference |
@@ -100,11 +113,15 @@ STUDIO opens the modern layer as a second panel behind the first, so the primary
 | --- | --- | --- |
 | ![Studio MODULATION: MSEG editor, LFOs and the 16-slot matrix](docs/screenshots/studio-modulation-3-1600x1000.png) | ![Studio KEYBOARD: tuning source, Scala loading and voice modes](docs/screenshots/studio-keyboard-2-1600x1000.png) | ![Studio FX: three serial modern effect slots after the CS-80 chorus](docs/screenshots/studio-fx-2-1600x1000.png) |
 
+The LFO / WHEELS page now previews each selected waveform instead of always drawing a sine:
+
+![Studio LFO previews showing triangle, square and smooth-random selections](docs/screenshots/studio-lfo-selected-waves-1600x1000.png)
+
 The voice monitor and controllers strip open from the toolbar menu:
 
 ![The voice monitor drawer and the controllers strip over the panel](docs/screenshots/studio-drawers-1600x1000.png)
 
-Every screenshot is rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from the source named in [provenance.json](docs/screenshots/provenance.json); [SHA256SUMS](docs/screenshots/SHA256SUMS) lists the images. The [screenshot directory](docs/screenshots/) holds the complete set. Screenshots show what the editor draws, not how it sounds.
+The current set of 68 screenshots was rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from source [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566) in successful [run 42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), then committed in [`f447493`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f447493f0c0b384600d45ebce598cd37d0ec7d28). [provenance.json](docs/screenshots/provenance.json) records the source and run; all 68 image hashes match [SHA256SUMS](docs/screenshots/SHA256SUMS). The [screenshot directory](docs/screenshots/) holds the complete set. Screenshots show what the editor draws, not how it sounds.
 
 ## PURE CS-80
 
@@ -116,11 +133,11 @@ PURE CS-80 (toolbar key, host parameter `parity_mode`) is the circuit engine wit
 
 It is a session policy: program recall keeps it, and switching it off applies the stored ENGINE choice and the player's settings again. Outside PURE CS-80 the modern features are neutral by default, so a fresh instance also starts from the original behaviour. Contract and checks: [PARITY_ISOLATION.md](docs/PARITY_ISOLATION.md).
 
-## Scorecard
+## Recorded scorecard: October 31 baseline
 
 `cs80_engine_audit --suite all --rates 44100,48000,96000` and `cs80_source_factory_benchmark` (8 held voices, 48 kHz, 256 frames, minimum of 3 rounds) at the audio commit `00ceccf`, circuit engine, on a shared 4-core cloud container:
 
-| Metric | Target | Before the plan | Now |
+| Metric | Target | Before the plan | Recorded at `00ceccf` |
 | --- | --- | --- | --- |
 | Worst saw/pulse non-harmonic content, ring off | <= -70 dB | -33.8 dB | **-88.3 dB** (48 kHz), -88.5 (44.1), -89.5 (96): met |
 | Worst tab/program peak at default volume | <= 0 dBFS | +3.9 dBFS | **-0.24 dBFS**: met |
@@ -131,7 +148,9 @@ It is a session policy: program recall keeps it, and switching it off applies th
 
 Ring-modulator rows read -43 dB at every oversampling factor: that is the declared carrier feedthrough, a spectral line, not aliasing. Legacy runs the same row at 0.21-0.27 x realtime.
 
-Legacy audio is pinned byte-identical to `d56911a` and the circuit-engine audio to `00ceccf` by `dsp-measurements.yml`; `scripts/check-compat-gates.sh --strict-v2` runs the same comparisons locally.
+These are historical measurements of the named audio commit, not a new benchmark of current `main`. The CPU and click targets remain open until new measurements demonstrate otherwise.
+
+`dsp-measurements.yml` checks the pinned Legacy default/tail renders against `d56911a` and circuit-engine compatibility cases against `00ceccf`; `scripts/check-compat-gates.sh --strict-v2` runs the same comparisons locally. This is not a guarantee that every earlier MIDI performance is unchanged. In particular, the optional KAS scanner now preserves same-pitch event arrival order, which can change allocation and playback in affected saved performances ([compatibility note](docs/workstreams/ws3-keyboard.md)).
 
 ## Open items
 
@@ -140,7 +159,8 @@ Legacy audio is pinned byte-identical to `d56911a` and the circuit-engine audio 
 - **Clicks:** retrigger 1.51 on "Bass Stack"; note-off click scores up to 1.65 on percussive circuit-engine programs.
 - **Filter:** top-octave small-signal accuracy at 2x/4x internal rate; the ADJ p11 HP point.
 - **MTS-ESP:** the [pinned 0BSD client](src/vendor/mts-esp/README.md) is included. A separately installed master and platform library are required. Live external-master DAW qualification and per-channel master tables remain open.
-- **Not yet:** sample-accurate automation; memory-panel electrical model driving audio; the 25 tone-tab hypothesis cells; tremolo/chorus both-on and both-off panel states.
+- **Automation:** sample-offset handling is limited to eighteen key VST3 parameters in modern circuit policy. AU scheduled ramps, unsupported parameters and DAW-level automation qualification remain open ([scope](docs/HOST_AUTOMATION.md)).
+- **Not yet:** memory-panel electrical model driving audio; the 25 tone-tab hypothesis cells; tremolo/chorus both-on and both-off panel states. CC121 currently resets sustain and parameter selectors only, not every controller ([scope](docs/CONTROLLER_RESET.md)).
 - **Release:** signing and notarization need the owner's certificates; real-DAW sessions, trademark review and AAX are owner actions ([release qualification](docs/release/RELEASE_QUALIFICATION.md)).
 
 ## Build from source
@@ -190,7 +210,9 @@ Plugin outputs are under `build/CS80Reference_artefacts/Release/` (`VST3/`, `Sta
 
 | Read | For |
 | --- | --- |
-| [STATUS.md](docs/STATUS.md) | model register, phase progress, scorecard, compatibility pins, open issues |
+| [STATUS.md](docs/STATUS.md) | current integration state, model register, historical scorecard, compatibility pins, open issues |
+| [HOST_AUTOMATION.md](docs/HOST_AUTOMATION.md), [MTS_ESP_INTEGRATION.md](docs/MTS_ESP_INTEGRATION.md) | current VST3 automation scope and embedded tuning client |
+| [CONTROLLER_RESET.md](docs/CONTROLLER_RESET.md), [MSEG_TRANSPORT_RATE.md](docs/MSEG_TRANSPORT_RATE.md) | recent MIDI reset and modulation timing corrections |
 | [IMPROVEMENT_PLAN.md](docs/IMPROVEMENT_PLAN.md), [workstreams/HANDOVER.md](docs/workstreams/HANDOVER.md) | the plan and how the eight workstreams were merged |
 | [HARDWARE_COVERAGE.md](docs/HARDWARE_COVERAGE.md), [HARDWARE_REFERENCES.md](docs/HARDWARE_REFERENCES.md) | row-by-row behaviour, dated findings, primary sources |
 | [ANALOG_FIDELITY_REQUIREMENT.md](docs/ANALOG_FIDELITY_REQUIREMENT.md) | the target and the evidence rules |
