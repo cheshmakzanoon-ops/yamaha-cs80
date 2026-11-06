@@ -427,6 +427,8 @@ void Engine::applyParams(const ParamValues& values)
     }
     const auto previousPolicy = global.renderPolicy;
     const int previousTuning = global.tuningMode;
+    const float previousBendRange = global.pitchBendRange;
+    const bool wasMpe = global.mpe;
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
@@ -448,6 +450,12 @@ void Engine::applyParams(const ParamValues& values)
         for (auto& slot : fxSlots)
             slot.resetDamping();
     }
+    // A conventional MIDI wheel remains held when its range is edited. Retarget
+    // from its normalized event value, not the previous semitone bend or the
+    // in-flight smoother. Reset transitions above have already cleared it.
+    // MPE ranges and mode transitions keep their separate event-driven policy.
+    if (!wasMpe && !global.mpe && previousBendRange != global.pitchBendRange)
+        globalBend = globalPitchWheel * global.pitchBendRange;
     // Circuit engine: the new settings become smoothing targets; the fields keep
     // the running values (exactly the targets until audio has been rendered).
     if (usesSourceModels(global.renderPolicy))
