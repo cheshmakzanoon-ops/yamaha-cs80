@@ -1089,6 +1089,68 @@ void testEngineRateRouteRemoval()
             }
 }
 
+void testEngineSyncedRateBlockPartitions()
+{
+    // The host PPQ interval is measured in host frames, while the layer is
+    // advanced at the selected internal oversampling rate. Compare audio and
+    // telemetry with a runner receiving only its initial transport position.
+    for (double sr : { 44100.0, 96000.0 })
+        for (int quality : { 0, 1, 2 })
+            for (int policy : { 0, 1 })
+                for (int blockSize : { 1, 17, 128 })
+                {
+                    ParamValues p;
+                    p[P_oversampling] = static_cast<float>(quality);
+                    p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+                    p[P_mod1Amount] = 0.5f;
+                    p[P_mod2Amount] = 0.5f;
+                    auto config = routed({
+                        { ModSource::mseg1, ModSource::none, ModDestination::pitch, ModTarget::both },
+                        { ModSource::constant, ModSource::none, ModDestination::mseg1Rate, ModTarget::both }
+                    });
+                    config.msegs[0] = defaultShape(2);
+                    config.msegs[0].trigger = MsegTrigger::free;
+                    config.msegs[0].sync = true;
+                    Engine continuous, partitioned;
+                    for (auto* engine : { &continuous, &partitioned })
+                    {
+                        engine->prepare(sr);
+                        engine->setParams(p);
+                        engine->setModernConfig(config);
+                        engine->setTransport({ 132.0, 0.0, true, true });
+                        engine->noteOn(60, 0.8f);
+                    }
+                    bool phasesMatch = true, audioMatches = true;
+                    double peak = 0.0, maxAudioError = 0.0, maxPhaseError = 0.0;
+                    constexpr int frames = 1024;
+                    for (int frame = 0; frame < frames;)
+                    {
+                        const int count = std::min(blockSize, frames - frame);
+                        partitioned.setTransport({ 132.0, frame * 132.0 / (60.0 * sr), true, true });
+                        std::vector<float> a(2 * (std::size_t) count), b(a.size());
+                        continuous.render(a.data(), count);
+                        partitioned.render(b.data(), count);
+                        maxPhaseError = std::max(maxPhaseError, (double) std::abs(continuous.getModernMsegValue(-1, 0)
+                            - partitioned.getModernMsegValue(-1, 0)));
+                        phasesMatch = phasesMatch && maxPhaseError < 1.0e-7;
+                        for (std::size_t i = 0; i < a.size(); ++i)
+                        {
+                            peak = std::max(peak, std::abs((double) a[i]));
+                            maxAudioError = std::max(maxAudioError, (double) std::abs(a[i] - b[i]));
+                            audioMatches = audioMatches && std::isfinite(a[i]) && std::isfinite(b[i])
+                                && std::abs(a[i] - b[i]) < 1.0e-6f;
+                        }
+                        frame += count;
+                    }
+                    if (!phasesMatch || !audioMatches || peak <= 1.0e-8)
+                        std::fprintf(stderr, "MSEG partition sr=%.0f quality=%d policy=%d block=%d phaseError=%.9g audioError=%.9g peak=%.9g\n",
+                                     sr, quality, policy, blockSize, maxPhaseError, maxAudioError, peak);
+                    check(phasesMatch, "engine synced rate modulation preserves phase across host blocks and internal rates");
+                    check(audioMatches && peak > 1.0e-8,
+                          "engine synced rate modulation produces matching non-silent finite audio across host blocks");
+                }
+}
+
 void testLiveTriggerModeChanges()
 {
     // A mode edit is an envelope restart, not a new note. Exercise every
@@ -1390,6 +1452,7 @@ int main()
     testChannelPressureSourceSmoothing();
     testEngineSameSampleMonoRetrigger();
     testEngineRateRouteRemoval();
+    testEngineSyncedRateBlockPartitions();
     testLiveTriggerModeChanges();
     testEngineUnusableTransportPosition();
     testEngineGlobalSourcePriorityAfterRelease();

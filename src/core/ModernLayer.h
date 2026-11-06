@@ -6,6 +6,7 @@
 
 #include <array>
 #include <cstdint>
+#include <limits>
 
 // The modern modulation layer (IMPROVEMENT_PLAN Phase 6): three MSEGs, the 16-slot matrix
 // and the keyboard response curves, evaluated in one place. The engine feeds it the
@@ -106,6 +107,8 @@ public:
         freeStarted = {};
         monoRestartPending = {};
         globalRate = {};
+        transportRatePhase = {};
+        transportSamples = 0;
         noteRng = Rng(0x7f4a7c15u);
         identity();
     }
@@ -115,6 +118,10 @@ public:
         const auto previous = config;
         config = sanitizeConfig(newConfig);
         for (int m = 0; m < kMsegCount; ++m)
+        {
+            if (config.msegs[(std::size_t) m].sync != previous.msegs[(std::size_t) m].sync
+                || config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
+                transportRatePhase[(std::size_t) m] = 0.0;
             if (config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
             {
                 // Restart only the changed envelope, using the next sample's
@@ -129,6 +136,7 @@ public:
                     voice.restartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::poly;
                 }
             }
+        }
         rebuild();
     }
     const ModernConfig& getConfig() const noexcept { return config; }
@@ -142,7 +150,20 @@ public:
     const Transport& getTransport() const noexcept { return transport; }
     void setTransport(const Transport& t) noexcept
     {
+        // PPQ corrections survive only genuinely contiguous playing blocks. Use
+        // the OLD tempo for elapsed samples, including at a tempo-change boundary.
+        const double expected = transport.ppq + (double) transportSamples
+            * effectiveBpm(transport.bpm) / (60.0 * sampleRate);
+        const double tolerance = 1.0e-10 + 4.0 * std::numeric_limits<double>::epsilon()
+            * std::abs(expected);
+        const bool contiguous = transport.hasPosition && transport.playing
+            && t.hasPosition && t.playing && std::isfinite(expected) && std::isfinite(t.ppq)
+            && (transportSamples == 0 || t.ppq != transport.ppq)
+            && std::abs(t.ppq - expected) <= tolerance;
+        if (! contiguous)
+            transportRatePhase = {};
         transport = t;
+        transportSamples = 0;
         lockPending = t.hasPosition && t.playing;
     }
 
@@ -163,6 +184,7 @@ public:
     // remain. Decimated idle circuits must not compete with sounding notes.
     void beginSample(const GlobalInputs& in) noexcept
     {
+        ++transportSamples;
         if (! active)
             return;
         newest = newestCandidate;
@@ -186,7 +208,16 @@ public:
                 // unusable host position is equivalent to no position update;
                 // also reject overflow when a finite PPQ is scaled by the rate.
                 if (lockPending && shape.sync && std::isfinite(transport.ppq * rate))
-                    runner.seek(shape, transport.ppq * rate);
+                {
+                    const double position = transport.ppq * rate + transportRatePhase[(std::size_t) m];
+                    if (std::isfinite(position))
+                        runner.seek(shape, position);
+                    else
+                    {
+                        transportRatePhase[(std::size_t) m] = 0.0;
+                        runner.seek(shape, transport.ppq * rate);
+                    }
+                }
                 else if (! freeStarted[(std::size_t) m])
                     runner.trigger(shape);
                 freeStarted[(std::size_t) m] = true;
@@ -195,7 +226,14 @@ public:
                 runner.trigger(shape);
             monoRestartPending[(std::size_t) m] = false;
             const bool gate = shape.trigger == MsegTrigger::free || anyGateLast;
-            runner.tick(shape, advanceFor(m, globalRate[(std::size_t) m]), gate);
+            const double advance = advanceFor(m, globalRate[(std::size_t) m]);
+            runner.tick(shape, advance, gate);
+            // Integrate only the extra distance from matrix rate modulation, not
+            // the wrapped runner position. Preserve it when a rate route is removed.
+            // Base-rate edits intentionally retain the existing PPQ * base-rate law.
+            if (shape.trigger == MsegTrigger::free && shape.sync
+                && transport.hasPosition && transport.playing && std::isfinite(transport.ppq * rate))
+                transportRatePhase[(std::size_t) m] += advance - advanceFor(m, 0.0f);
         }
         lockPending = false;
         monoTriggerPending = false;
@@ -457,6 +495,7 @@ private:
     void rebuild() noexcept
     {
         const bool wasActive = active;
+        const auto previouslyUsed = msegUsed;
         liveCount = 0;
         msegUsed = {};
         globalDestinations = false;
@@ -475,6 +514,9 @@ private:
                     globalDestinations = true;
             }
         active = liveCount > 0;
+        for (int m = 0; m < kMsegCount; ++m)
+            if (! msegUsed[(std::size_t) m] || ! previouslyUsed[(std::size_t) m])
+                transportRatePhase[(std::size_t) m] = 0.0;
         // Leaving the active state returns every consumer to the identity at once.
         if (wasActive && ! active)
         {
@@ -509,6 +551,8 @@ private:
     std::array<VoiceState, kVoices> voices {};
     std::array<MsegRunner, kMsegCount> globalRunners {};
     std::array<float, kMsegCount> globalRate {};
+    std::array<double, kMsegCount> transportRatePhase {};
+    std::uint64_t transportSamples = 0;
     SourceValues globalValues {}, newest {}, newestCandidate {};
     std::uint64_t newestThisSample = 0;
     std::uint64_t monoPhraseStartAge = 0;
