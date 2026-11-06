@@ -4,7 +4,7 @@ An independent software reconstruction of the Yamaha CS-80, written in C++20 wit
 
 **What it is not:** a measured clone. No CS-80 has been measured for this project. Every law is either read from a schematic, manual or adjustment page, or is a declared engineering inference with its alternatives recorded. Nothing here claims measured hardware parity.
 
-**State on 2026-11-06:** `main` includes the eight-workstream [improvement plan](docs/IMPROVEMENT_PLAN.md) and subsequent host, MIDI, modulation, state and editor corrections through [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566). Current scope and remaining work are in [docs/STATUS.md](docs/STATUS.md).
+**State on 2026-11-06:** the latest validated repository checkpoint is [`fe16f0a`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/fe16f0afcc7958d65f7010331bb1fc7f737b60e9). It includes the eight-workstream [improvement plan](docs/IMPROVEMENT_PLAN.md), host/MIDI/modulation/state/editor corrections through [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566), and the reviewed [OE1 speed endpoint evidence](docs/OE1_SPEED_ENDPOINT_DESIGN.md) and diagnostic probe. The OE1 addition does not change the shipping audio implementation. Current scope and remaining work are in [docs/STATUS.md](docs/STATUS.md).
 
 Since the October 31 integration:
 
@@ -19,14 +19,16 @@ Since the October 31 integration:
 
 ### Native development bundles
 
-The latest fully passing build verified for this update is [`ac27687`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/ac27687fe324c7a2b4eec1d53d78cb41f1a9adfb), from November 6 [build run 42165333280](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280). All six build/validation jobs and its [DSP measurements](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333241) passed. These bundles include the recent fixes through live pitch-bend range edits, but predate the unison glide correction in `f921f54`. The [newer main build at `f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425) built all four native platforms, but its [Linux validator job](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425/job/127760198405) failed at the fixed-seed GUI step. It is not substituted for the fully passing bundle set below. Its [DSP measurements](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969485) and screenshot run passed; the failed build gate remains open.
+The latest fully passing build verified for this update is [`fe16f0a`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/fe16f0afcc7958d65f7010331bb1fc7f737b60e9), from November 6 [build run 42183946774](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774). The build and [DSP measurements 42183946757](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946757) passed. These bundles include the unison glide correction and all shipping changes described above.
+
+The earlier [build at `f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425) failed its Linux fixed-seed GUI validation step. The newer passing run does not establish that failure's cause or resolve the intermittent validator issue. No release qualification is inferred from either outcome.
 
 | Platform | Architecture | Formats | Download |
 | --- | --- | --- | --- |
-| Windows | x64 | VST3, Standalone `.exe` | [`cs80-windows-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13479728008) |
-| macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13479955402) |
-| macOS Intel | x86-64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-intel-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13480587593) |
-| Linux (Ubuntu 24.04) | x86-64 | VST3, Standalone | [`cs80-linux-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280/artifacts/13479666356) |
+| Windows | x64 | VST3, Standalone `.exe` | [`cs80-windows-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774/artifacts/13488985489) |
+| macOS Apple Silicon | arm64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774/artifacts/13487677050) |
+| macOS Intel | x86-64 | VST3, AU, Standalone `.app` | [`cs80-macos-15-intel-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774/artifacts/13489375717) |
+| Linux (Ubuntu 24.04) | x86-64 | VST3, Standalone | [`cs80-linux-install-bundle`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774/artifacts/13487573122) |
 
 GitHub artifact downloads require a signed-in GitHub account. These four artifacts were present and unexpired when checked; their recorded expiry is **4 February 2027**. If a link has expired, check the [main build history](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/build.yml?query=branch%3Amain) for a completed successful run and its artifacts.
 
@@ -121,7 +123,7 @@ The voice monitor and controllers strip open from the toolbar menu:
 
 ![The voice monitor drawer and the controllers strip over the panel](docs/screenshots/studio-drawers-1600x1000.png)
 
-The current set of 68 screenshots was rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from source [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566) in successful [run 42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), then committed in [`f447493`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f447493f0c0b384600d45ebce598cd37d0ec7d28). [provenance.json](docs/screenshots/provenance.json) records the source and run; all 68 image hashes match [SHA256SUMS](docs/screenshots/SHA256SUMS). The [screenshot directory](docs/screenshots/) holds the complete set. Screenshots show what the editor draws, not how it sounds.
+The documentation set of 68 screenshots was rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from source [`f921f54`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f921f548abaaaa31036fe8af007367288ce58566) in successful [run 42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), then committed in [`f447493`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/f447493f0c0b384600d45ebce598cd37d0ec7d28). The engine, editor and snapshot-renderer sources are unchanged between that screenshot source and the validated `fe16f0a` build. [provenance.json](docs/screenshots/provenance.json) records the actual rendering source and run; all 68 image hashes match [SHA256SUMS](docs/screenshots/SHA256SUMS). The [screenshot directory](docs/screenshots/) holds the complete set. Screenshots show what the editor draws, not how it sounds.
 
 ## PURE CS-80
 

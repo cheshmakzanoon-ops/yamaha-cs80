@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-06. Current engine/plugin source: `f921f548abaaaa31036fe8af007367288ce58566`; screenshot refresh: `f447493f0c0b384600d45ebce598cd37d0ec7d28`.
+Last updated: 2026-11-06. Latest validated repository checkpoint: `fe16f0afcc7958d65f7010331bb1fc7f737b60e9`. The shipping engine/plugin and snapshot-renderer sources are unchanged since `f921f548abaaaa31036fe8af007367288ce58566`; the screenshot refresh remains `f447493f0c0b384600d45ebce598cd37d0ec7d28`.
 
 ## Changes since the October 31 integration
 
@@ -23,18 +23,24 @@ handover PDF remain dated evidence, not current-head measurements.
 | MSEG and FX | Trigger/sustain boundary fixes, synced rate phase retained across host blocks, and corrections to tape, plate, Drive and loudness-match transitions | `ce423e3`; [MSEG_TRANSPORT_RATE.md](MSEG_TRANSPORT_RATE.md), [ws5 report](workstreams/ws5-modern.md) |
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
+| OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
 | Editor evidence | Selected LFO waveform previews and 68 current real-editor screenshots | `ae3958d`; source `f921f54`, screenshot run [42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), [provenance](screenshots/provenance.json) |
 
 The most recent fully passing native bundle run checked for this update is
-[42165333280](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280)
-at `ac27687`, with successful
-[DSP run 42165333241](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333241).
-The newer `f921f54` [build run 42175969425](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425)
-has successful native build jobs on all four platforms, but its [Linux validator job](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425/job/127760198405)
-failed at the fixed-seed GUI step. Its [DSP run 42175969485](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969485)
-and screenshot run passed; the failed build gate remains open. [README downloads](../README.md#downloads)
-separate native bundles from the older October 31 installers. No tagged GitHub
-Release has been published.
+[42183946774](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946774)
+at `fe16f0a`, with successful
+[DSP run 42183946757](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42183946757).
+All four native install bundles are available and unexpired, with GitHub recording
+an expiry of February 4, 2027. Downloads require a signed-in GitHub account.
+
+The earlier `f921f54` [build run 42175969425](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425)
+failed its Linux fixed-seed GUI validation step. The newer passing run does not
+establish the earlier failure's cause or resolve the intermittent validator issue.
+The documentation screenshots still come from successful
+[run 42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590)
+at `f921f54`, not from the newer build or its documentation-only descendants.
+[README downloads](../README.md#downloads) separate the current native bundles
+from the older October 31 installers. No tagged GitHub Release has been published.
 
 ## Where to read what
 
