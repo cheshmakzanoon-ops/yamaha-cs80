@@ -18,6 +18,9 @@
 namespace {
 using cs80::Ig00156Stage;
 using cs80::Ig00156StageBaseline;
+// Keep the partial-cache validity flag in the baseline's trailing padding.
+// A coefficient cache must not expand all 32 stages in the engine's hot state.
+static_assert(sizeof(Ig00156Stage) == sizeof(Ig00156StageBaseline));
 std::uint64_t comparisons = 0, samples = 0, exceptionalNanPairs = 0;
 // Invalid controls can produce NaNs whose sign/payload is compiler-dependent.
 // This exception is enabled ONLY in explicit invalid-control cases. Finite,

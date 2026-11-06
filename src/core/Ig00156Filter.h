@@ -174,34 +174,33 @@ public:
         q = clampf(q, 0.35f, 9.0f);
         if (gmCutoffHz == lastCutoff && q == lastQ && sampleRate == lastRate && couplingsUnwarped == lastUnwarped)
             return;
-        // Q does not enter the cutoff calibration or the linear elimination
-        // except for xFromBp. Keep its original expression (not a factored
-        // affine approximation) so Q-only automation preserves the same bits.
-        // Optimize only finite positive clocks: +0 and -0 compare equal but
-        // produce distinct unwarped half steps on the exceptional-input path.
-        const bool cutoffUnchanged = cutoffCoefficientsValid && sampleRate > 0.0f
-                                  && std::isfinite(sampleRate) && gmCutoffHz == lastCutoff
-                                  && sampleRate == lastRate && couplingsUnwarped == lastUnwarped;
+        // Q does not enter the cutoff calibration or capacitor half steps.
+        // Reuse those existing fields, but keep the original linear elimination
+        // below in one common path. Extra coefficient-cache doubles grow every
+        // voice's hot state and can change unrelated compiler inlining decisions.
+        // Changed cutoff/rate/mode keys fail before the exceptional-clock checks.
+        // +0 and -0 rates compare equal but need distinct unwarped half steps.
+        const bool cutoffUnchanged = cutoffCoefficientsValid && gmCutoffHz == lastCutoff
+                                  && sampleRate == lastRate && couplingsUnwarped == lastUnwarped
+                                  && sampleRate > 0.0f && std::isfinite(sampleRate);
         lastCutoff = gmCutoffHz; lastQ = q; lastRate = sampleRate; lastUnwarped = couplingsUnwarped;
-        if (cutoffUnchanged)
-        {
-            qSiemensValue = std::max(0.0, gTotal / (2.0 * q) - gf);
-            xFromBp = (cachedA11 * cachedKf * (qSiemensValue - gs - gg) + cachedA21 * kiGs) / cachedDet;
-            return;
-        }
-        const double fs = sampleRate;
         qSiemensValue = std::max(0.0, gTotal / (2.0 * q) - gf);
-        // Network natural frequency = control law + 4.7 MOhm feedforward.
-        const double total = std::clamp(static_cast<double>(gmCutoffHz), 0.0,
-                                        std::max(0.0, 0.45 * fs - feedforwardHz)) + feedforwardHz;
-        const double rate = ig00156IntegratorRate(net, total, qSiemensValue);
-        const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
-        const double theta = 3.14159265358979323846 * total / fs;
-        // CPU pass: bounded-error tan (relative 1e-10 here, FastMath.h).
-        kHalf = 0.5 * (fastmath::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
-        kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
-        gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
-        ffPart = kHalf * ffRate;
+        if (!cutoffUnchanged)
+        {
+            const double fs = sampleRate;
+            // Network natural frequency = control law + 4.7 MOhm feedforward.
+            const double total = std::clamp(static_cast<double>(gmCutoffHz), 0.0,
+                                            std::max(0.0, 0.45 * fs - feedforwardHz)) + feedforwardHz;
+            const double rate = ig00156IntegratorRate(net, total, qSiemensValue);
+            const double ffRate = 1.0 / (net.feedforwardOhms * net.integratorFarads);
+            const double theta = 3.14159265358979323846 * total / fs;
+            // CPU pass: bounded-error tan (relative 1e-10 here, FastMath.h).
+            kHalf = 0.5 * (fastmath::tan(theta) / theta) / fs; // p * T / 2, warp pinned at total
+            kHalfCoupling = couplingsUnwarped ? 0.5 / fs : kHalf;
+            gmPart = kHalf * std::max(0.0, rate - ffRate); // kHalf * gm / C
+            ffPart = kHalf * ffRate;
+            cutoffCoefficientsValid = true;
+        }
         // Linear block (vin, x) given BP: [a11 a12; a21 a22] [vin; x] = rhs.
         const double ki = kHalfCoupling / net.inputFarads, kf = kHalfCoupling / net.feedbackFarads;
         kiGs = ki * gs;
@@ -213,8 +212,6 @@ public:
         xFromBp = (a11 * kf * (qSiemensValue - gs - gg) + a21 * kiGs) / det;
         inFromX = kiGs / a11;
         invA11 = 1.0 / a11;
-        cachedA11 = a11; cachedA21 = a21; cachedKf = kf; cachedDet = det;
-        cutoffCoefficientsValid = true;
     }
 
     struct Output { float lp = 0.0f, hp = 0.0f, bp = 0.0f; };
@@ -273,7 +270,6 @@ private:
     double slope1 = 1.0, slope2 = 1.0;
     float lastCutoff = -1.0f, lastQ = -1.0f, lastRate = -1.0f;
     bool lastUnwarped = false;
-    double cachedA11 = 0.0, cachedA21 = 0.0, cachedKf = 0.0, cachedDet = 0.0;
     bool cutoffCoefficientsValid = false;
 };
 
