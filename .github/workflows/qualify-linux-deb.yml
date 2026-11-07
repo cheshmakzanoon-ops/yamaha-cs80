@@ -1,0 +1,109 @@
+name: Qualify existing Linux Debian package
+
+# Independent evidence check. This does not replace or bypass ordinary checks.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/qualify-linux-deb.yml'
+      - 'scripts/qualify-linux-deb.py'
+      - 'scripts/test-qualify-linux-deb.py'
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Successful first-attempt same-repo push build run ID
+        required: true
+        type: string
+        default: '42351562098'
+      source_sha:
+        description: Full lowercase commit SHA of that source build
+        required: true
+        type: string
+        default: '635ad6e8f24978040b02a4a10e646d7e3c592ce4'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  qualify-linux-deb:
+    if: >-
+      github.repository == 'cheshmakzanoon-ops/yamaha-cs80' &&
+      github.repository_id == '1436742091' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'pull_request' &&
+        github.event.pull_request.base.ref == 'main' &&
+        github.event.pull_request.base.repo.full_name == github.repository &&
+        github.event.pull_request.base.repo.id == 1436742091 &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        github.event.pull_request.head.repo.id == 1436742091 &&
+        github.event.pull_request.head.repo.fork == false))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out reviewed qualification helper
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          path: qualification
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            scripts/qualify-linux-deb.py
+            scripts/test-qualify-linux-deb.py
+
+      - name: Check out the exact corrected packager
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: 635ad6e8f24978040b02a4a10e646d7e3c592ce4
+          path: packager
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            installer/linux/make-deb.sh
+            CMakeLists.txt
+            LICENSE
+            docs/INSTALL_AND_QUICKSTART.md
+
+      - name: Install native dependency metadata and packaging tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            dpkg-dev binutils libasound2t64 libfontconfig1 libfreetype6 \
+            libc6 libstdc++6 libgcc-s1 \
+            libx11-6 libxext6 libxrandr2 libxinerama1 libxcursor1
+
+      - name: Test metadata and safe archive qualification logic
+        shell: bash
+        run: python3 -B qualification/scripts/test-qualify-linux-deb.py
+
+      - name: Verify source bundle and qualify ABI packaging without product execution
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # PR jobs use reviewed fixed pins, not PR-supplied input fields.
+          SOURCE_RUN_ID: ${{ github.event_name == 'pull_request' && '42351562098' || inputs.source_run_id }}
+          SOURCE_SHA: ${{ github.event_name == 'pull_request' && '635ad6e8f24978040b02a4a10e646d7e3c592ce4' || inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          python3 -B qualification/scripts/qualify-linux-deb.py \
+            --source-run-id "$SOURCE_RUN_ID" \
+            --source-sha "$SOURCE_SHA" \
+            --packager-root "$GITHUB_WORKSPACE/packager" \
+            --work-dir "$RUNNER_TEMP/cs80-deb-qualification"
+
+      # Success-only, text/JSON evidence only. The .deb, products and source
+      # archives stay in runner temp and are never copied into this output.
+      - name: Upload scoped ABI and provenance evidence only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-deb-abi-evidence-${{ github.run_id }}
+          path: ${{ runner.temp }}/cs80-deb-qualification/qualified/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
