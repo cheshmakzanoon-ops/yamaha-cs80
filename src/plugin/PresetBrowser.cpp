@@ -3,12 +3,12 @@
 #include "ArtCommon.h"
 #include "PluginProcessor.h"
 #include "PresetDisplayName.h"
+#include "PresetFileValues.h"
 #include "core/FactoryPresets.h"
 
 #include <algorithm>
 #include <array>
 #include <cmath>
-#include <unordered_map>
 
 namespace cs80::ui
 {
@@ -247,58 +247,21 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
     return s;
 }
 
-const std::unordered_map<std::string, int>& parameterIdMap()
-{
-    static const std::unordered_map<std::string, int> ids = []
-    {
-        std::unordered_map<std::string, int> map;
-        for (int i = 0; i < cs80::P_numParams; ++i)
-            map.emplace(cs80::paramId(i), i);
-        return map;
-    }();
-    return ids;
-}
-
 // The values stored in a saved user patch; `used[i]` says whether the file names parameter i.
 void readUserFileValues(const juce::File& file, cs80::ParamValues& values, std::vector<char>& used)
 {
-    used.assign((size_t) cs80::P_numParams, 0);
-    const auto& ids = parameterIdMap();
-    if (auto xml = juce::XmlDocument::parse(file))
-        for (auto* child : xml->getChildIterator())
-        {
-            if (! child->hasAttribute("id") || ! child->hasAttribute("value"))
-                continue;
-            const auto found = ids.find(child->getStringAttribute("id").toStdString());
-            if (found == ids.end())
-                continue;
-            const auto& def = cs80::paramDef(found->second);
-            values[found->second] = cs80::clampValue((float) child->getDoubleAttribute("value"), def.min, def.max);
-            used[(size_t) found->second] = 1;
-        }
+    const auto xml = juce::XmlDocument::parse(file);
+    readPresetFileValues(xml.get(), values, &used);
 }
 
 // Reads the parameter values of a saved user patch (an APVTS state document)
 // without touching the processor. Unknown or missing entries keep defaults.
 std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& file, juce::String& displayName)
 {
-    const auto& ids = parameterIdMap();
-
     cs80::ParamValues values;
     auto xml = juce::XmlDocument::parse(file);
     displayName = presetDisplayName(xml.get(), file.getFileNameWithoutExtension());
-    if (xml != nullptr)
-        for (auto* child : xml->getChildIterator())
-        {
-            if (! child->hasAttribute("id") || ! child->hasAttribute("value"))
-                continue;
-            const auto found = ids.find(child->getStringAttribute("id").toStdString());
-            if (found == ids.end())
-                continue;
-            const auto& def = cs80::paramDef(found->second);
-            values[found->second] = cs80::clampValue((float) child->getDoubleAttribute("value"),
-                                                     def.min, def.max);
-        }
+    readPresetFileValues(xml.get(), values);
     return std::make_shared<const PresetSignature>(computeSignature(values));
 }
 

@@ -21,6 +21,7 @@ int main()
     check("<CS80_PARAMS presetName=\"\"/>", "Empty metadata", "");
     check("<CS80_PARAMS presetName=\"  \"/>", "Whitespace metadata", "  ");
     check("<WRONG_ROOT presetName=\"Ignore me\"/>", "Wrong root", "Wrong root");
+    check("<cs80_params presetName=\"Ignore me\"/>", "Wrong case", "Wrong case");
     check("<not valid XML", "Malformed", "Malformed");
     // Duplicate names are display labels, never inferred file identities.
     check("<CS80_PARAMS presetName=\"Init Patch\"/>", "User copy", "Init Patch");
