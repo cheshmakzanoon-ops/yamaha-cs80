@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Focused notice payload tests. All binaries/evidence are synthetic.
 
-No builds, signing, host validation, workflow reads, or network access.
-Linux additionally builds/extracts a synthetic .deb when dpkg tools are present.
+No product builds, signing, host validation, workflow reads, or network access.
+Linux compiles inert ELF fixtures (never executed) and builds/extracts a synthetic
+.deb using isolated dependency metadata when the required tools are present.
 macOS/Windows checks cover notice source mappings, not native installers.
 """
 from __future__ import annotations
@@ -119,15 +120,45 @@ class NoticeTests(unittest.TestCase):
         for name, data in self.expected.items():
             self.assertEqual((script.parent / sources[name].replace("\\", "/")).read_bytes(), data)
 
-    @unittest.skipUnless(os.name != "nt" and shutil.which("dpkg-deb") and shutil.which("dpkg"), "Debian packaging tools unavailable")
+    @unittest.skipUnless(os.name != "nt" and all(shutil.which(tool) for tool in
+                         ("bash", "cc", "readelf", "dpkg-deb", "dpkg", "dpkg-shlibdeps")),
+                         "Debian packaging tools and cc required")
     def test_synthetic_deb_notice_bytes(self):
         build = self.temp_root / "build"
-        products(build / "CS80Reference_artefacts/Release", "linux")
+        # Only the Debian installer needs real ELF input. Archive fixtures above
+        # remain platform-independent byte payloads. Neither ELF is executed.
+        base = build / "CS80Reference_artefacts/Release"
+        product = packaging.PRODUCT
+        standalone = base / "Standalone" / product
+        plugin = base / "VST3" / f"{product}.vst3/Contents/x86_64-linux/{product}.so"
+        standalone.parent.mkdir(parents=True)
+        plugin.parent.mkdir(parents=True)
+        source = self.temp_root / "fixture.c"
+        source.write_text('#include <stdio.h>\nint main(void) { return puts("fixture"); }\n')
+        run("cc", str(source), "-o", str(standalone))
+        source.write_text('#include <stdio.h>\nint fixture(void) { return puts("fixture"); }\n')
+        run("cc", "-shared", "-fPIC", str(source), "-o", str(plugin))
+
+        # A synthetic database makes the real ABI scanner independent of the
+        # host's installed-package database. This is not ABI qualification.
+        db = self.temp_root / "dpkg-db"
+        (db / "info").mkdir(parents=True)
+        library = Path(run("cc", "-print-file-name=libc.so.6").strip()).resolve()
+        self.assertTrue(library.is_file())
+        paths = {str(library), str(library).replace("/usr/lib/", "/lib/", 1)}
+        (db / "info/libc6.list").write_text("\n".join(sorted(paths)) + "\n")
+        (db / "info/libc6.shlibs").write_text("libc 6 libc6 (>= 2.36)\n")
+        arch = run("dpkg", "--print-architecture").strip()
+        (db / "status").write_text(
+            f"Package: libc6\nStatus: install ok installed\nArchitecture: {arch}\n"
+            "Version: 2.36\nMaintainer: Fixture <test@example.invalid>\n"
+            "Description: Synthetic packaging fixture\n")
         juce = build / "_deps/juce-src/LICENSE.md"
         juce.parent.mkdir(parents=True)
         juce.write_bytes(b"synthetic JUCE notice fixture\n")
         out = self.temp_root / "out"
-        run("bash", str(ROOT / "installer/linux/make-deb.sh"), str(build), str(out))
+        with patch.dict(os.environ, {"DPKG_ADMINDIR": str(db)}):
+            run("bash", str(ROOT / "installer/linux/make-deb.sh"), str(build), str(out))
         archives = list(out.glob("*.deb"))
         self.assertEqual(len(archives), 1)
         extracted = self.temp_root / "extracted"
