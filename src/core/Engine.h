@@ -293,6 +293,7 @@ public:
     // Offline diagnostics; read on the rendering thread, not concurrently.
     float getRingFrequency() const noexcept { return ringFrequency; }
     float getRingEnvelope() const noexcept { return ringEnv; }
+    Adsr::State getRingEnvelopeState() const noexcept { return ringAdsr.getState(); }
     float getSubOscillatorValue() const noexcept { return subValue; }
     float getSubOscillatorRate() const noexcept
     { return global.subOriginalMode ? originalSubSpeedSmoothed : subSpeedSmoothed; }

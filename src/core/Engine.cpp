@@ -474,6 +474,10 @@ void Engine::applyParams(const ParamValues& values)
     // inference; see docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md.
     if (usesSourceModels(global.renderPolicy))
     {
+        // Inferred live ring timing ports: change the existing AD rate without
+        // retriggering its phrase, replacing its state or changing the fixed
+        // release. Legacy keeps note-on latching. See LIVE_RING_TIMING.md.
+        ringAdsr.setTimes(global.ringAttack, global.ringDecay, 0.35f);
         const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
         for (auto& voice : voices)
         {
