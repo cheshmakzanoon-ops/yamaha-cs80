@@ -13,7 +13,7 @@
 // a master sets the zone's master range, on a member the members' range.
 // RPN 127/127 deselects. Selecting an unsupported NRPN suspends RPN data
 // entry on that channel until an RPN selector arrives again. CC88 (MMA CA-031)
-// is the low 7 bits of the next note-on velocity on that channel.
+// is the low 7 bits of the next note-on/off velocity on that channel.
 
 #include <array>
 #include <cstdint>
@@ -126,6 +126,12 @@ public:
     void controlChange(int channel, int value) noexcept
     {
         if (channel >= 1 && channel <= 16) lsb[static_cast<std::size_t>(channel)] = value & 0x7f;
+    }
+    // A release consumes its prefix even though this engine does not use
+    // release velocity. Do not let it change the velocity of a later strike.
+    void noteOff(int channel) noexcept
+    {
+        if (channel >= 1 && channel <= 16) lsb[static_cast<std::size_t>(channel)] = -1;
     }
     // Velocity for a note-on with 7-bit velocity `v7`; consumes the prefix.
     float noteOnVelocity(int channel, int v7) noexcept
