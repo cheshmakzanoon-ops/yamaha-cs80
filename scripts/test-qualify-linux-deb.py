@@ -7,6 +7,7 @@ from contextlib import redirect_stderr
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -21,6 +22,8 @@ q = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(q)
 SHA = 'a' * 40
 RUN = '12345'
+MERGE = 'c' * 40
+BASE = 'd' * 40
 
 
 def successful_run():
@@ -50,6 +53,153 @@ def write_evidence(directory):
         (directory / name).write_bytes(data)
         payload[name] = data
     return payload
+
+
+def event_fixture(manual=False):
+    repo = {'full_name': q.REPOSITORY, 'id': q.REPOSITORY_ID, 'fork': False}
+    environment = {'GITHUB_REPOSITORY': q.REPOSITORY, 'GITHUB_REPOSITORY_ID': str(q.REPOSITORY_ID),
+                   'GITHUB_EVENT_NAME': 'workflow_dispatch' if manual else 'pull_request',
+                   'GITHUB_SHA': MERGE, 'GITHUB_REF': 'refs/heads/main' if manual else 'refs/pull/84/merge',
+                   'GITHUB_RUN_ID': '98765', 'GITHUB_RUN_ATTEMPT': '1'}
+    event = {'repository': copy.deepcopy(repo)}
+    if manual:
+        event.update(ref='refs/heads/main', inputs={'source_run_id': RUN, 'source_sha': SHA})
+    else:
+        event.update(action='synchronize', number=84, pull_request={
+            'number': 84, 'state': 'open', 'head': {'sha': SHA, 'repo': copy.deepcopy(repo)},
+            'base': {'sha': BASE, 'ref': 'main', 'repo': copy.deepcopy(repo)}})
+    return environment, event
+
+
+class EventAuthorizationTests(unittest.TestCase):
+    def validate(self, environment=None, event=None, candidate=MERGE, parents=None, run=None, sha=None):
+        default_environment, default_event = event_fixture()
+        return q.validate_event(environment or default_environment, event or default_event, candidate,
+                                [BASE, SHA] if parents is None else parents,
+                                q.PR_SOURCE_RUN if run is None else run,
+                                q.PR_SOURCE_COMMIT if sha is None else sha)
+
+    def test_pr_context_records_synthetic_merge_separately_from_branch_head(self):
+        for action in ('opened', 'synchronize', 'reopened'):
+            environment, event = event_fixture(); event['action'] = action
+            context = self.validate(environment, event)
+            self.assertEqual(context['event'], 'pull_request')
+        self.assertEqual(context['checkout_commit'], MERGE)
+        self.assertEqual(context['pr_head_commit'], SHA)
+        self.assertEqual(context['run_head_commit'], SHA)
+        self.assertEqual(context['base_commit'], BASE)
+        self.assertEqual(context['checkout_kind'], 'synthetic PR merge')
+        self.assertNotEqual(context['checkout_commit'], context['run_head_commit'])
+
+    def test_manual_context_binds_explicit_dispatch_inputs_and_checkout(self):
+        environment, event = event_fixture(manual=True)
+        for ref in ('main', 'refs/heads/main'):
+            event['ref'] = ref
+            context = self.validate(environment, event, parents=[], run=RUN, sha=SHA)
+            self.assertEqual(context['run_head_commit'], MERGE)
+            self.assertEqual(context['checkout_kind'], 'dispatched branch')
+            self.assertNotIn('pr_head_commit', context)
+
+    def test_unsupported_or_privileged_events_and_pr_actions_are_rejected(self):
+        for name in ('pull_request_target', 'workflow_run', 'push', 'issue_comment', ''):
+            environment, event = event_fixture()
+            environment['GITHUB_EVENT_NAME'] = name
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, 'Unsupported qualification event'):
+                self.validate(environment, event)
+        for action in ('closed', 'edited', 'labeled', 'ready_for_review', ''):
+            environment, event = event_fixture(); event['action'] = action
+            with self.subTest(action=action), self.assertRaisesRegex(ValueError, 'Unsupported PR action'):
+                self.validate(environment, event)
+
+    def test_fork_or_mismatched_event_base_and_head_repository_are_rejected(self):
+        for target in ('repository', 'base', 'head'):
+            for field, value in (('full_name', 'fork/repo'), ('id', 123), ('fork', True), ('fork', None)):
+                environment, event = event_fixture()
+                repo = event['repository'] if target == 'repository' else event['pull_request'][target]['repo']
+                repo[field] = value
+                with self.subTest(target=target, field=field), self.assertRaises(ValueError):
+                    self.validate(environment, event)
+
+    def test_invalid_pr_base_ref_identity_state_or_merge_parents_are_rejected(self):
+        for field, value in (('number', 85), ('state', 'closed')):
+            environment, event = event_fixture(); event['pull_request'][field] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.validate(environment, event)
+        environment, event = event_fixture(); event['pull_request']['base']['ref'] = 'other'
+        with self.assertRaisesRegex(ValueError, 'main-targeted'):
+            self.validate(environment, event)
+        for parents in ([], [SHA], [SHA, BASE], [BASE, MERGE], [BASE, SHA, MERGE]):
+            with self.subTest(parents=parents), self.assertRaisesRegex(ValueError, 'merge parents'):
+                self.validate(parents=parents)
+
+    def test_unpinned_or_event_supplied_pr_source_inputs_are_rejected(self):
+        for run, sha in ((RUN, q.PR_SOURCE_COMMIT), (q.PR_SOURCE_RUN, SHA)):
+            with self.subTest(run=run, sha=sha), self.assertRaisesRegex(ValueError, 'fixed approved source inputs'):
+                self.validate(run=run, sha=sha)
+        for inputs in ({'source_run_id': q.PR_SOURCE_RUN, 'source_sha': q.PR_SOURCE_COMMIT}, [], 'untrusted'):
+            environment, event = event_fixture(); event['inputs'] = inputs
+            with self.subTest(inputs=inputs), self.assertRaisesRegex(ValueError, 'fixed approved source inputs'):
+                self.validate(environment, event)
+
+    def test_invalid_checkout_environment_and_run_identity_are_rejected(self):
+        for key, value in (('GITHUB_REPOSITORY', 'fork/repo'), ('GITHUB_REPOSITORY_ID', '1'),
+                           ('GITHUB_SHA', SHA), ('GITHUB_REF', 'refs/heads/main'),
+                           ('GITHUB_RUN_ID', '1;bad'), ('GITHUB_RUN_ATTEMPT', '0')):
+            environment, event = event_fixture(); environment[key] = value
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                self.validate(environment, event)
+
+    def test_manual_ref_or_input_mismatch_is_rejected(self):
+        for change in ({'ref': 'other'}, {'ref': 'refs/tags/v1'}, {'inputs': {}},
+                       {'inputs': {'source_run_id': q.PR_SOURCE_RUN, 'source_sha': SHA}}):
+            environment, event = event_fixture(manual=True); event.update(change)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                self.validate(environment, event, parents=[], run=RUN, sha=SHA)
+
+    def test_current_run_metadata_is_bound_to_branch_head_not_merge_checkout(self):
+        context = self.validate()
+        repo = event_fixture()[1]['repository']
+        metadata = {'id': 98765, 'run_attempt': 1, 'head_sha': SHA, 'event': 'pull_request',
+                    'path': '.github/workflows/qualify-linux-deb.yml', 'repository': repo, 'head_repository': repo}
+        q.validate_qualification_run(metadata, context)
+        for change in ({'head_sha': MERGE}, {'id': 98766}, {'run_attempt': 2}, {'event': 'pull_request_target'},
+                       {'path': '.github/workflows/other.yml'}, {'head_repository': dict(repo, fork=True)}):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                q.validate_qualification_run(dict(metadata, **change), context)
+        environment, event = event_fixture(manual=True)
+        manual = self.validate(environment, event, parents=[], run=RUN, sha=SHA)
+        q.validate_qualification_run(dict(metadata, head_sha=MERGE, event='workflow_dispatch'), manual)
+
+    def test_pr_artifact_id_digest_size_and_source_pins_are_exact(self):
+        self.assertEqual(q.PR_SOURCE_RUN, '42351562098')
+        self.assertEqual(q.PR_SOURCE_COMMIT, '635ad6e8f24978040b02a4a10e646d7e3c592ce4')
+        self.assertEqual(q.PR_SOURCE_COMMIT, q.PACKAGER_COMMIT)
+        context = self.validate()
+        artifact = {'id': 13566771073, 'size_in_bytes': 12413145,
+                    'digest': 'sha256:01b00fc1e2c32c840507ed27052e9cb9cbf67cf3cc0149df920233be3bb3a29d'}
+        q.validate_pr_artifact(artifact, context)
+        for change in ({'id': 13566771074}, {'size_in_bytes': 1}, {'digest': 'sha256:' + '0' * 64}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, 'fixed approved source artifact'):
+                q.validate_pr_artifact(dict(artifact, **change), context)
+        # Manual sources are still subject to validate_run/select_artifact/read_bundle.
+        q.validate_pr_artifact(artifact_record(), {'event': 'workflow_dispatch'})
+
+    def test_main_rejects_unauthorized_event_before_network_or_materialization(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); environment, event = event_fixture()
+            event['pull_request']['head']['repo']['fork'] = True
+            event_path = root / 'event.json'; event_path.write_text(json.dumps(event))
+            environment['GITHUB_EVENT_PATH'] = str(event_path)
+            work = root / 'must-not-exist'
+            argv = ['qualifier', '--source-run-id', q.PR_SOURCE_RUN, '--source-sha', q.PR_SOURCE_COMMIT,
+                    '--work-dir', str(work), '--packager-root', str(root / 'packager')]
+            headers = f'tree {SHA}\nparent {BASE}\nparent {SHA}\n\nSynthetic test commit\n'.encode()
+            with patch.dict(os.environ, environment, clear=True), patch('sys.argv', argv), \
+                    patch.object(q, 'run', side_effect=[MERGE.encode(), headers]), patch.object(q, 'api_json') as api:
+                with self.assertRaisesRegex(ValueError, 'non-fork'):
+                    q.main()
+                api.assert_not_called()
+            self.assertFalse(work.exists())
 
 
 class EvidenceOutputTests(unittest.TestCase):

@@ -1,6 +1,6 @@
 # Packaging-only qualification of an existing Linux build
 
-`qualify-linux-deb.yml` is an isolated, **manual-only** workflow. It does not
+`qualify-linux-deb.yml` is an isolated, **scoped PR or manual** workflow. It does not
 compile, load or execute the product, install the generated `.deb`, run validators,
 change ordinary CI/check statuses, publish a release or replace existing gates.
 It uploads **text/JSON ABI-packaging evidence only**, not a distributable package
@@ -8,13 +8,15 @@ or release certificate. The generated `.deb` remains in ephemeral runner storage
 
 ## Pinned inputs and execution boundary
 
-- Default source: successful first-attempt same-repository **push** build run
+- Fixed PR source and manual default: successful first-attempt same-repository **push** build run
   `42351562098`, commit `635ad6e8f24978040b02a4a10e646d7e3c592ce4`.
 - Its Linux install bundle is artifact `13566771073`, 12,413,145 bytes, ZIP SHA-256
   `01b00fc1e2c32c840507ed27052e9cb9cbf67cf3cc0149df920233be3bb3a29d`.
   Those actual bytes were downloaded and verified locally, not inferred from a
   different platform/archive. They contain the expected checksum file, manifest
   and tarball; the manifest has 13 entries, including 9 regular files.
+  PR execution requires this exact run, commit, artifact ID, size and ZIP digest.
+  Missing, expired or different artifacts fail closed without substitution.
 - The workflow checks out its reviewed helper separately from the packager.
   The **packager checkout is pinned to commit `635ad6e8`**, and the helper verifies
   its full commit ID, clean tracked state and exact `make-deb.sh` Git blob
@@ -32,7 +34,11 @@ or release certificate. The generated `.deb` remains in ephemeral runner storage
 
 ## Gates before evidence is uploaded
 
-1. Validate numeric run ID/full source SHA and check the same repository and
+1. Authorize the runner-provided event and bind it to the checked-out Git commit
+   and current workflow-run metadata. Reject fork/mismatched repositories,
+   privileged or unsupported events, unapproved PR actions, non-main PR bases
+   and unpinned PR source inputs. Then validate numeric source run ID/full SHA and
+   check the same repository and
    head-repository IDs, expected ordinary build workflow, push event, exact head,
    completed success and first attempt. The current artifact format has no attempt
    identity, so later reruns are deliberately rejected rather than trusting an
@@ -80,16 +86,51 @@ loadability or release qualification.
 
 ## Safe activation path
 
+### Scoped pull requests
+
+The ordinary `pull_request` trigger handles `opened`, `synchronize` and `reopened`
+events targeting `main`, only when the PR changes at least one of:
+
+- `.github/workflows/qualify-linux-deb.yml`
+- `scripts/qualify-linux-deb.py`
+- `scripts/test-qualify-linux-deb.py`
+
+Documentation-only PRs do not trigger it. A same-repository, non-fork job guard
+and independent helper checks restrict execution. It never uses
+`pull_request_target`. Merge-conflicted PRs do not run; resolve conflicts through
+the normal review process rather than substituting a privileged trigger.
+
+After normal review, a qualifying branch update on an open same-repository PR
+can run this check without default-branch manual-workflow registration. It still
+uses the fixed approved binary source and corrected packager, **not binaries
+built from the PR**. The PR's helper is checked out at the synthetic merge commit
+from `GITHUB_SHA`. Raw Git commit parents must match the event snapshot's base
+and PR-head commits, including in a depth-one checkout. A stale/mismatched merge
+fails closed instead of fetching substitute refs.
+
+Evidence records `qualification_context.checkout_commit` (synthetic merge),
+`pr_head_commit` and `base_commit`, plus the qualification run ID/attempt.
+Workflow-run API `head_sha` must match `run_head_commit`, the **PR branch head**,
+not the synthetic merge SHA. Manual runs instead record the dispatched checkout
+as their run head. This distinguishes which helper tree ran from which PR head
+the run belongs to; neither value replaces the independent binary/packager pins.
+
+Review the exact event/head and successful evidence artifact before claiming
+native qualification. Ordinary repository CI remains independent and may run
+its usual tests. This check does not replace those outcomes, bypass failed checks
+or qualify the PR's own product binaries.
+
+### Explicit manual runs
+
 [GitHub's manual-workflow documentation](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
-requires the workflow to exist on the default branch before dispatch. A feature-
-branch push alone is not a substitute for registration. An ordinary push or PR
-can still trigger the repository's existing CI independently of this manual file.
+requires the workflow to exist on the default branch before `workflow_dispatch`.
+This registration requirement applies to manual dispatch, not the PR trigger.
 
 1. Review these four new files and their tests. Publish/integrate them through the
    ordinary authorized path, preserving existing checks and failure outcomes.
    Do **not** add skip-CI markers, alter existing triggers or change validator
    workflows to make this easier. Complete normal review and integration before
-   dispatch.
+   manual dispatch.
 2. Verify the reviewed workflow is registered on default `main`, its exact head
    commit and this fixed packager pin. In the authenticated GitHub Actions UI,
    select **Qualify existing Linux Debian package**, then **Run workflow**.
@@ -98,6 +139,9 @@ can still trigger the repository's existing CI independently of this manual file
    qualification run's `head_sha` is the reviewed workflow commit. The helper
    independently checks the source build and artifact again; expired or failed
    sources stop the run rather than being silently replaced.
+   Manual inputs must exactly match the trusted dispatch event. Alternative
+   explicit manual source inputs remain subject to every original run, artifact,
+   provenance and production/build-input-identity gate; PRs cannot supply them.
 4. Read the new job's outcome and verification artifact before claiming success.
    Source build success alone does not prove this packaging job ran or passed.
 
@@ -116,4 +160,4 @@ current exact-source `635ad6e8` bundle pass the new reader/provenance checks.
 The current local container has no native `dpkg` package database. An earlier
 real-product attempt correctly failed closed on missing libasound dependency
 metadata. A successful native `.deb` from this new workflow remains **unrun** until
-registration, authorized manual activation and final result verification.
+a scoped PR or registered manual run completes and its exact result is verified.

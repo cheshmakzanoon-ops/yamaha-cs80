@@ -24,6 +24,11 @@ REPOSITORY = 'cheshmakzanoon-ops/yamaha-cs80'
 REPOSITORY_ID = 1436742091
 PACKAGER_COMMIT = '635ad6e8f24978040b02a4a10e646d7e3c592ce4'
 PACKAGER_BLOB = '4342b31ddc5762fcc2a5c3dca7842ac3abdf4df2'
+PR_SOURCE_RUN = '42351562098'
+PR_SOURCE_COMMIT = '635ad6e8f24978040b02a4a10e646d7e3c592ce4'
+PR_ARTIFACT_ID = 13566771073
+PR_ARTIFACT_DIGEST = 'sha256:01b00fc1e2c32c840507ed27052e9cb9cbf67cf3cc0149df920233be3bb3a29d'
+PR_ARTIFACT_SIZE = 12413145
 ARTIFACT_NAME = 'cs80-linux-install-bundle'
 PRODUCT = 'CS-80 Reference'
 JUCE_SHA = 'c352e2489000ffeb9e397051377d75eef2efe641'
@@ -80,6 +85,79 @@ def validate_inputs(repository, run_id, source_sha):
     require(repository == REPOSITORY, 'Only the configured same-repository source is permitted')
     require(bool(re.fullmatch(r'[1-9][0-9]{0,19}', run_id)), 'Expected a positive numeric run ID')
     require(bool(re.fullmatch(r'[0-9a-f]{40}', source_sha)), 'Expected a full lowercase source commit SHA')
+
+
+def valid_sha(value):
+    return isinstance(value, str) and bool(re.fullmatch(r'[0-9a-f]{40}', value))
+
+
+def same_repository(value):
+    return (isinstance(value, dict) and value.get('full_name') == REPOSITORY
+            and value.get('id') == REPOSITORY_ID and value.get('fork') is False)
+
+
+def validate_event(environment, event, candidate, parents, source_run_id, source_sha):
+    """Bind the inspected checkout and inputs to the runner-provided event, not PR text."""
+    require(isinstance(event, dict), 'Invalid qualification event payload')
+    validate_inputs(environment.get('GITHUB_REPOSITORY', ''), source_run_id, source_sha)
+    require(environment.get('GITHUB_REPOSITORY_ID') == str(REPOSITORY_ID)
+            and same_repository(event.get('repository')), 'Qualification repository mismatch or fork')
+    name = environment.get('GITHUB_EVENT_NAME')
+    require(name in ('pull_request', 'workflow_dispatch'), 'Unsupported qualification event')
+    require(valid_sha(candidate) and candidate == environment.get('GITHUB_SHA'),
+            'Checkout and qualification event commit differ')
+    for key in ('GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT'):
+        require(bool(re.fullmatch(r'[1-9][0-9]{0,19}', environment.get(key, ''))), 'Invalid qualification run identity')
+    context = {'event': name, 'checkout_commit': candidate, 'ref': environment.get('GITHUB_REF'),
+               'run_id': environment['GITHUB_RUN_ID'], 'run_attempt': int(environment['GITHUB_RUN_ATTEMPT'])}
+    if name == 'pull_request':
+        require(event.get('action') in ('opened', 'synchronize', 'reopened'), 'Unsupported PR action')
+        pr = event.get('pull_request', {})
+        require(isinstance(pr, dict), 'Invalid PR context')
+        number = event.get('number')
+        require(type(number) is int and number > 0 and pr.get('number') == number
+                and pr.get('state') == 'open', 'Invalid or closed PR context')
+        base, head = pr.get('base', {}), pr.get('head', {})
+        require(isinstance(base, dict) and isinstance(head, dict), 'Invalid PR base/head context')
+        require(same_repository(base.get('repo')) and same_repository(head.get('repo')),
+                'Only same-repository non-fork PRs may qualify')
+        require(base.get('ref') == 'main' and context['ref'] == f'refs/pull/{number}/merge',
+                'Expected a main-targeted PR merge ref')
+        require(valid_sha(base.get('sha')) and valid_sha(head.get('sha'))
+                and parents == [base['sha'], head['sha']], 'Checkout merge parents differ from PR base/head')
+        require(event.get('inputs') in (None, {}) and source_run_id == PR_SOURCE_RUN and source_sha == PR_SOURCE_COMMIT,
+                'PR qualification requires fixed approved source inputs')
+        # GITHUB_SHA identifies the synthetic merge checkout; run head_sha is the
+        # branch head. Check both without pretending they identify the same tree.
+        context.update(pr_number=number, pr_head_commit=head['sha'], base_commit=base['sha'],
+                       run_head_commit=head['sha'], checkout_kind='synthetic PR merge')
+    else:
+        ref = context['ref']
+        require(isinstance(ref, str) and ref.startswith('refs/heads/')
+                and event.get('ref') in (ref, ref.removeprefix('refs/heads/')),
+                'Manual qualification requires a matching branch ref')
+        require(event.get('inputs') == {'source_run_id': source_run_id, 'source_sha': source_sha},
+                'Manual source inputs differ from the dispatch event')
+        context.update(run_head_commit=candidate, checkout_kind='dispatched branch')
+    return context
+
+
+def validate_qualification_run(metadata, context):
+    require(metadata.get('id') == int(context['run_id'])
+            and metadata.get('run_attempt') == context['run_attempt']
+            and metadata.get('head_sha') == context['run_head_commit']
+            and metadata.get('event') == context['event']
+            and metadata.get('path') == '.github/workflows/qualify-linux-deb.yml',
+            'Qualification run metadata differs from the trusted event context')
+    require(all(same_repository(metadata.get(key)) for key in ('repository', 'head_repository')),
+            'Qualification run repository mismatch or fork')
+
+
+def validate_pr_artifact(artifact, context):
+    if context['event'] == 'pull_request':
+        require(artifact.get('id') == PR_ARTIFACT_ID and artifact.get('digest') == PR_ARTIFACT_DIGEST
+                and artifact.get('size_in_bytes') == PR_ARTIFACT_SIZE,
+                'PR qualification requires the fixed approved source artifact')
 
 
 def validate_run(metadata, run_id, source_sha):
@@ -399,23 +477,28 @@ def main():
     args = parser.parse_args()
     repository = os.environ.get('GITHUB_REPOSITORY', '')
     validate_inputs(repository, args.source_run_id, args.source_sha)
-    require(os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch', 'Only explicit manual qualification is supported')
+    candidate = run('git', '-C', str(ROOT), 'rev-parse', 'HEAD').decode().strip()
+    # Raw commit headers retain parent IDs even in a depth-one checkout.
+    headers = run('git', '-C', str(ROOT), 'cat-file', 'commit', 'HEAD').decode().split('\n\n', 1)[0]
+    parents = [line.removeprefix('parent ') for line in headers.splitlines() if line.startswith('parent ')]
+    event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+    context = validate_event(os.environ, event, candidate, parents, args.source_run_id, args.source_sha)
+    endpoint = f'repos/{REPOSITORY}'
+    validate_qualification_run(api_json(f'{endpoint}/actions/runs/{context["run_id"]}'), context)
     require(not any(os.environ.get(k) for k in ('DPKG_ADMINDIR', 'DPKG_ROOT', 'LD_LIBRARY_PATH', 'LD_PRELOAD')),
             'Non-native dependency lookup environment is forbidden')
     require(Path('/var/lib/dpkg/status').is_file(), 'Native installed-package metadata is required')
-    candidate = run('git', '-C', str(ROOT), 'rev-parse', 'HEAD').decode().strip()
-    require(candidate == os.environ.get('GITHUB_SHA'), 'Checkout and qualification run commit differ')
     require(not run('git', '-C', str(ROOT), 'status', '--porcelain', '--untracked-files=no'), 'Tracked checkout is dirty')
     packager = args.packager_root.resolve()
     validate_packager(packager)
     require(not args.work_dir.exists(), 'Refusing to reuse a qualification directory')
     args.work_dir.mkdir(parents=True)
     evidence = args.work_dir / 'evidence'; evidence.mkdir()
-    endpoint = f'repos/{REPOSITORY}'
     source_run = api_json(f'{endpoint}/actions/runs/{args.source_run_id}')
     validate_run(source_run, args.source_run_id, args.source_sha)
     artifact = select_artifact(api_json(f'{endpoint}/actions/runs/{args.source_run_id}/artifacts?per_page=100'),
                                args.source_run_id, args.source_sha)
+    validate_pr_artifact(artifact, context)
     source_commit = api_json(f'{endpoint}/git/commits/{args.source_sha}')
     require(source_commit.get('sha') == args.source_sha, 'Source commit API mismatch')
     tree_sha = source_commit['tree']['sha']
@@ -447,7 +530,7 @@ def main():
     report = {'qualification': 'PASS', 'scope': 'source identity, archive integrity, native ABI packaging and #83 notice bytes; not complete licence/runtime/release qualification',
               'notice_coverage': {'verified': ['project LICENSE', 'JUCE licence', 'quickstart'], 'font_mts': 'absent; separate PR #70 not included'},
               'packager_commit': PACKAGER_COMMIT, 'packager_blob': PACKAGER_BLOB,
-              'candidate_commit': candidate, 'source_commit': args.source_sha, 'source_run_id': args.source_run_id,
+              'qualification_context': context, 'source_commit': args.source_sha, 'source_run_id': args.source_run_id,
               'source_run_attempt': source_run['run_attempt'], 'artifact_id': artifact['id'], 'artifact_digest': artifact['digest'],
               'packaging_only_source_differences': differences, 'depends': depends, 'files': file_hashes,
               'deb_sha256': digest(archives[0].read_bytes()), 'product_executed': False, 'package_installed': False,

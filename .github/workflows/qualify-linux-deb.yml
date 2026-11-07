@@ -1,7 +1,14 @@
 name: Qualify existing Linux Debian package
 
-# Deliberately manual only. This does not replace or bypass any ordinary checks.
+# Independent evidence check. This does not replace or bypass ordinary checks.
 on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/qualify-linux-deb.yml'
+      - 'scripts/qualify-linux-deb.py'
+      - 'scripts/test-qualify-linux-deb.py'
   workflow_dispatch:
     inputs:
       source_run_id:
@@ -21,7 +28,17 @@ permissions:
 
 jobs:
   qualify-linux-deb:
-    if: github.repository == 'cheshmakzanoon-ops/yamaha-cs80' && github.event_name == 'workflow_dispatch'
+    if: >-
+      github.repository == 'cheshmakzanoon-ops/yamaha-cs80' &&
+      github.repository_id == '1436742091' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'pull_request' &&
+        github.event.pull_request.base.ref == 'main' &&
+        github.event.pull_request.base.repo.full_name == github.repository &&
+        github.event.pull_request.base.repo.id == 1436742091 &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        github.event.pull_request.head.repo.id == 1436742091 &&
+        github.event.pull_request.head.repo.fork == false))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -69,8 +86,9 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
-          SOURCE_SHA: ${{ inputs.source_sha }}
+          # PR jobs use reviewed fixed pins, not PR-supplied input fields.
+          SOURCE_RUN_ID: ${{ github.event_name == 'pull_request' && '42351562098' || inputs.source_run_id }}
+          SOURCE_SHA: ${{ github.event_name == 'pull_request' && '635ad6e8f24978040b02a4a10e646d7e3c592ce4' || inputs.source_sha }}
         run: |
           set -euo pipefail
           python3 -B qualification/scripts/qualify-linux-deb.py \
