@@ -554,17 +554,31 @@ public:
             c.flutter = i == 0 ? 0.0 : 0.61;
         }
         time = -1.0;
+        lastTimeControl = lastRepeatControl = std::numeric_limits<float>::quiet_NaN();
     }
 
     StereoSample process(float l, float r, float a, float b) noexcept
     {
-        const double target = delaySeconds(a);
+        // These laws depend only on their controls, not the moving tape state.
+        // Exact-input caches avoid two powers per sample when the controls hold.
+        // Keep double results and the original arithmetic for sample automation.
+        if (!(a == lastTimeControl))
+        {
+            lastTimeControl = a;
+            targetTime = delaySeconds(a);
+        }
+        if (!(b == lastRepeatControl))
+        {
+            lastRepeatControl = b;
+            repeatTail = tailSeconds(b);
+        }
+        const double target = targetTime;
         // A delay tap reads at t - D(t). An unconstrained 250 ms glide can increase D
         // faster than real time (4.56 s/s for 60 ms -> 1.2 s), replaying old audio in
         // reverse. Limit only the positive slope; small changes and faster playback
         // retain the existing one-pole glide, and delay memory is never discarded.
         time = time < 0.0 ? target : time + std::min(glide * (target - time), kMaxDelayIncrease / sr);
-        const float g = (float) std::min(0.95, std::pow(10.0, -3.0 * time / tailSeconds(b)));
+        const float g = (float) std::min(0.95, std::pow(10.0, -3.0 * time / repeatTail));
         const float in[2] = { l, r };
         const float cross[2] = { channels[1].playback, channels[0].playback }; // ping-pong
         StereoSample out;
@@ -606,6 +620,9 @@ private:
     };
     std::array<Channel, 2> channels;
     double sr = 96000.0, glide = 0.0, time = -1.0;
+    double targetTime = 0.0, repeatTail = 1.0;
+    float lastTimeControl = std::numeric_limits<float>::quiet_NaN();
+    float lastRepeatControl = std::numeric_limits<float>::quiet_NaN();
     float trim = 1.0f;
 };
 
