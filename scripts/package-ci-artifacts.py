@@ -49,6 +49,85 @@ def safe_name(name: str) -> None:
             and "\\" not in name and ":" not in parts[0], f"Unsafe archive path: {name}")
 
 
+def verify_binary(path: Path, system: str, arch: str, standalone: bool) -> None:
+    """Inspect binary headers without loading or executing build products.
+
+    Runner architecture and directory names are not proof of payload identity.
+    Require the advertised 64-bit target and a loadable image type. This is a
+    packaging sanity check, not full binary validation or runtime qualification.
+    """
+    size = path.stat().st_size
+    with path.open("rb") as stream:
+        def read(offset: int, count: int) -> bytes:
+            require(offset >= 0 and offset + count <= size,
+                    f"Truncated binary header: {path}")
+            stream.seek(offset)
+            data = stream.read(count)
+            require(len(data) == count, f"Truncated binary header: {path}")
+            return data
+
+        if system == "linux":
+            header = read(0, 64)
+            require(header[:7] == b"\x7fELF\x02\x01\x01",
+                    f"Expected little-endian ELF64 binary: {path}")
+            kind = int.from_bytes(header[16:18], "little")
+            machine = int.from_bytes(header[18:20], "little")
+            require(machine == {"x86_64": 62, "arm64": 183}[arch],
+                    f"ELF architecture differs from advertised {arch}: {path}")
+            require(kind in ({2, 3} if standalone else {3}),
+                    f"Expected ELF executable/shared object, not relocatable input: {path}")
+        elif system == "windows":
+            dos = read(0, 64)
+            require(dos[:2] == b"MZ", f"Expected PE binary: {path}")
+            offset = int.from_bytes(dos[60:64], "little")
+            require(offset >= 64, f"Invalid PE header offset: {path}")
+            header = read(offset, 26)
+            require(header[:4] == b"PE\x00\x00" and header[4:6] == b"\x64\x86"
+                    and header[24:26] == b"\x0b\x02",
+                    f"Expected x86_64 PE32+ binary: {path}")
+            optional_size = int.from_bytes(header[20:22], "little")
+            require(optional_size >= 112 and offset + 24 + optional_size <= size,
+                    f"Truncated PE32+ optional header: {path}")
+            flags = int.from_bytes(header[22:24], "little")
+            require(bool(flags & 2) and bool(flags & 0x2000) == (not standalone),
+                    f"PE executable/DLL role mismatch: {path}")
+        else:
+            require(system == "macos", f"Unsupported binary platform: {system}")
+            magic = read(0, 4)
+            cpu = {"x86_64": 0x01000007, "arm64": 0x0100000c}[arch]
+
+            def check_macho(offset: int, length: int) -> None:
+                require(length >= 32, f"Truncated Mach-O slice: {path}")
+                header = read(offset, 32)
+                require(header[:4] == b"\xcf\xfa\xed\xfe"
+                        and int.from_bytes(header[4:8], "little") == cpu,
+                        f"Expected {arch} Mach-O 64-bit binary: {path}")
+                kind = int.from_bytes(header[12:16], "little")
+                require(kind in ({2} if standalone else {6, 8}),
+                        f"Mach-O executable/bundle role mismatch: {path}")
+
+            if magic in (b"\xca\xfe\xba\xbe", b"\xca\xfe\xba\xbf"):
+                count = int.from_bytes(read(4, 4), "big")
+                width = 32 if magic[-1] == 0xbf else 20
+                require(0 < count <= 64 and 8 + count * width <= size,
+                        f"Invalid Mach-O universal header: {path}")
+                found = False
+                for i in range(count):
+                    entry = read(8 + i * width, width)
+                    if int.from_bytes(entry[:4], "big") != cpu:
+                        continue
+                    field = 8 if width == 32 else 4
+                    offset = int.from_bytes(entry[8:8 + field], "big")
+                    length = int.from_bytes(entry[8 + field:8 + 2 * field], "big")
+                    require(offset >= 8 + count * width and offset + length <= size,
+                            f"Invalid Mach-O universal slice: {path}")
+                    check_macho(offset, length)
+                    found = True
+                require(found, f"Universal binary lacks advertised {arch}: {path}")
+            else:
+                check_macho(0, size)
+
+
 def collect_products(base: Path, system: str, arch: str) -> list[tuple[str, Path]]:
     """Return only advertised bundles, preserving safe internal symlinks."""
     vst = base / "VST3" / f"{PRODUCT}.vst3"
@@ -96,6 +175,9 @@ def collect_products(base: Path, system: str, arch: str) -> list[tuple[str, Path
                 require(path.exists() and path.resolve().is_relative_to(product.resolve()),
                         f"Escaping or dangling bundle symlink: {path}")
             entries.append((name, path))
+    # Containment/symlink checks must precede opening payload content.
+    for index, binary in enumerate(binaries):
+        verify_binary(binary, system, arch, index == len(binaries) - 1)
     return sorted(entries)
 
 
@@ -254,6 +336,29 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     return commit, metadata, extras
 
 
+def binary_fixture(system: str, arch: str, standalone: bool) -> bytes:
+    """Inert, header-only self-test input. Contains no machine instructions."""
+    if system == "linux":
+        header = bytearray(64)
+        header[:7] = b"\x7fELF\x02\x01\x01"
+        header[16:18] = (2 if standalone else 3).to_bytes(2, "little")
+        header[18:20] = (62 if arch == "x86_64" else 183).to_bytes(2, "little")
+    elif system == "windows":
+        header = bytearray(200)
+        header[:2] = b"MZ"
+        header[60:64] = (64).to_bytes(4, "little")
+        header[64:70] = b"PE\x00\x00\x64\x86"
+        header[84:86] = (112).to_bytes(2, "little")
+        header[86:88] = (2 if standalone else 0x2002).to_bytes(2, "little")
+        header[88:90] = b"\x0b\x02"
+    else:
+        header = bytearray(32)
+        header[:4] = b"\xcf\xfa\xed\xfe"
+        header[4:8] = (0x01000007 if arch == "x86_64" else 0x0100000c).to_bytes(4, "little")
+        header[12:16] = (2 if standalone else 8).to_bytes(4, "little")
+    return bytes(header)
+
+
 def self_test() -> None:
     checks = 0
 
@@ -283,9 +388,9 @@ def self_test() -> None:
                 binaries = [vst / "Contents/x86_64-linux" / f"{PRODUCT}.so", base / "Standalone" / PRODUCT]
             else:
                 binaries = [vst / "Contents/x86_64-win" / f"{PRODUCT}.vst3", base / "Standalone" / f"{PRODUCT}.exe"]
-            for binary in binaries:
+            for index, binary in enumerate(binaries):
                 binary.parent.mkdir(parents=True, exist_ok=True)
-                binary.write_bytes(b"synthetic binary fixture, not a loadable plugin\x00")
+                binary.write_bytes(binary_fixture(system, arch, index == len(binaries) - 1))
                 binary.chmod(0o755)
             if system == "macos" and os.name != "nt":
                 link = products[-1] / "Contents/Resources/binary-link"
@@ -300,6 +405,22 @@ def self_test() -> None:
             original = binaries[0].read_bytes()
             binaries[0].write_bytes(b"")
             rejected(lambda: collect_products(base, system, arch), "empty binary")
+            binaries[0].write_bytes(b"inert nonbinary fixture")
+            rejected(lambda: collect_products(base, system, arch), "nonbinary product")
+            foreign = bytearray(binary_fixture(system, "arm64" if arch == "x86_64" else "x86_64", False))
+            if system == "windows":
+                foreign[68:70] = (0xaa64).to_bytes(2, "little")
+            binaries[0].write_bytes(foreign)
+            rejected(lambda: collect_products(base, system, arch), "wrong payload architecture")
+            wrong_kind = bytearray(original)
+            if system == "linux":
+                wrong_kind[16:18] = (1).to_bytes(2, "little")
+            elif system == "windows":
+                wrong_kind[86:88] = (2).to_bytes(2, "little")
+            else:
+                wrong_kind[12:16] = (1).to_bytes(4, "little")
+            binaries[0].write_bytes(wrong_kind)
+            rejected(lambda: collect_products(base, system, arch), "wrong image kind")
             binaries[0].write_bytes(original)
             if system != "windows" and os.name != "nt":
                 binaries[0].chmod(0o644)
@@ -355,3 +476,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
