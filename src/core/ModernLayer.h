@@ -309,6 +309,10 @@ public:
                 if (config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
                 {
                     voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                    // Rate routes are evaluated after the runners and apply on
+                    // the next sample. A new envelope starts at its base rate,
+                    // just like a fresh voice, not at the previous note's rate.
+                    voice.rate[(std::size_t) m] = 0.0f;
                     voice.restartPending[(std::size_t) m] = false;
                 }
             // Keep the next-beginSample trigger timing. Only a newly observed
@@ -329,7 +333,10 @@ public:
                 if (voice.restartPending[(std::size_t) m])
                 {
                     if (globalSourceEligible && in.gate)
+                    {
                         voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                        voice.rate[(std::size_t) m] = 0.0f;
+                    }
                     voice.restartPending[(std::size_t) m] = false;
                 }
                 voice.runners[(std::size_t) m].tick(config.msegs[(std::size_t) m],
