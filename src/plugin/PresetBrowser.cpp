@@ -3945,9 +3945,13 @@ void PresetBrowser::deleteSelected()
         return;
 
     disarmDelete(false);
-    const bool removed = file.moveToTrash() || file.deleteFile();
+    // A trash failure must never become permanent deletion: the confirmation
+    // promises a recoverable operation, including on systems without a trash folder.
+    const bool removed = file.moveToTrash();
     refresh();
-    setStatus(removed ? "Deleted \"" + name + "\"." : "Could not delete \"" + name + "\".", removed ? 1 : -1);
+    setStatus(removed ? "Moved \"" + name + "\" to the trash."
+                      : "Could not move \"" + name + "\" to the trash.",
+              removed ? 1 : -1);
 }
 
 void PresetBrowser::disarmDelete(bool announce)
@@ -4215,3 +4219,4 @@ void PresetBrowser::updateRail()
 }
 
 } // namespace cs80::ui
+
