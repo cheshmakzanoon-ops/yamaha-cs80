@@ -54,6 +54,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_lfo_scope_preview_tests PRIVATE src)
     add_test(NAME cs80_lfo_scope_preview_tests COMMAND cs80_lfo_scope_preview_tests)
     set_tests_properties(cs80_lfo_scope_preview_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_preset_preview_math_tests tests/PresetPreviewMathTests.cpp)
+    target_include_directories(cs80_preset_preview_math_tests PRIVATE src)
+    add_test(NAME cs80_preset_preview_math_tests COMMAND cs80_preset_preview_math_tests)
+    set_tests_properties(cs80_preset_preview_math_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_output_meter_display_tests tests/OutputMeterDisplayTests.cpp)
     target_include_directories(cs80_output_meter_display_tests PRIVATE src)
     add_test(NAME cs80_output_meter_display_tests COMMAND cs80_output_meter_display_tests)
@@ -527,6 +531,16 @@ if (CS80_BUILD_PLUGIN)
         target_compile_definitions(cs80_preset_display_name_tests PRIVATE JUCE_USE_CURL=0)
         add_test(NAME cs80_preset_display_name_tests COMMAND cs80_preset_display_name_tests)
         set_tests_properties(cs80_preset_display_name_tests PROPERTIES TIMEOUT 30)
+
+        # Preset browser XML values only: no processor or GUI initialization.
+        juce_add_console_app(cs80_preset_file_values_tests
+            PRODUCT_NAME "CS80 Preset File Values Tests")
+        target_sources(cs80_preset_file_values_tests PRIVATE tests/PresetFileValuesTests.cpp)
+        target_include_directories(cs80_preset_file_values_tests PRIVATE src)
+        target_link_libraries(cs80_preset_file_values_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_preset_file_values_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_preset_file_values_tests COMMAND cs80_preset_file_values_tests)
+        set_tests_properties(cs80_preset_file_values_tests PROPERTIES TIMEOUT 30)
 
         # MSEG text/XML codec only: no processor or GUI initialization.
         juce_add_console_app(cs80_mseg_state_text_tests
