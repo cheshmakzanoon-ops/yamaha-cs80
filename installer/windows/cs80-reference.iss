@@ -46,6 +46,9 @@ Source: "{#BuildDir}\VST3\CS-80 Reference.vst3\*"; DestDir: "{commoncf64}\VST3\C
 Source: "{#BuildDir}\Standalone\CS-80 Reference.exe"; DestDir: "{app}"; Components: standalone; Flags: ignoreversion
 Source: "..\..\LICENSE"; DestDir: "{app}\licenses"; DestName: "LICENSE.txt"; Flags: ignoreversion
 Source: "{#JuceLicense}"; DestDir: "{app}\licenses"; DestName: "JUCE-LICENSE.md"; Flags: ignoreversion
+Source: "..\..\assets\fonts\barlow-condensed\OFL.txt"; DestDir: "{app}\licenses"; DestName: "BarlowCondensed-OFL.txt"; Flags: ignoreversion
+Source: "..\..\assets\fonts\barlow-condensed\SOURCE.txt"; DestDir: "{app}\licenses"; DestName: "BarlowCondensed-SOURCE.txt"; Flags: ignoreversion
+Source: "..\..\src\vendor\mts-esp\LICENSE"; DestDir: "{app}\licenses"; DestName: "MTS-ESP-LICENSE.txt"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\CS-80 Reference"; Filename: "{app}\CS-80 Reference.exe"; Components: standalone
