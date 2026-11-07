@@ -38,12 +38,29 @@ done
 # Do not guess or publish a package when dependency metadata is unavailable.
 command -v dpkg-shlibdeps >/dev/null || { echo "dpkg-shlibdeps is required (install dpkg-dev)" >&2; exit 1; }
 command -v readelf >/dev/null || { echo "readelf is required (install binutils)" >&2; exit 1; }
-# dpkg-shlibdeps only warns for non-ELF input, so one malformed product must
-# not be hidden by valid dependencies collected from the other product.
-for binary in "$stage/usr/lib/vst3/$product.vst3/Contents/x86_64-linux/$product.so" \
-              "$stage/usr/bin/cs80-reference"; do
-    readelf -h "$binary" >/dev/null || { echo "invalid ELF product: $binary" >&2; exit 1; }
-done
+command -v realpath >/dev/null || { echo "realpath is required (install coreutils)" >&2; exit 1; }
+# cp -a preserves VST3 links, while the scanner follows them. Only scan a payload
+# actually delivered inside the bundle, including relative in-bundle links.
+stage_real="$(cd "$stage" && pwd -P)"
+plugin_real="$(realpath -e -- "$stage/usr/lib/vst3/$product.vst3/Contents/x86_64-linux/$product.so")" \
+    || { echo "unresolvable packaged VST3 payload" >&2; exit 1; }
+case "$plugin_real" in
+    "$stage_real/usr/lib/vst3/$product.vst3/"*) ;;
+    *) echo "VST3 payload resolves outside packaged bundle: $plugin_real" >&2; exit 1 ;;
+esac
+# dpkg-shlibdeps only warns for some non-runtime inputs, including relocatable
+# ELF objects. One invalid product must not be hidden by the other's dependencies.
+check_elf_type() {
+    local binary="$1" role="$2" header elf_type
+    header="$(LC_ALL=C readelf -h "$binary")" || { echo "invalid ELF product: $binary" >&2; exit 1; }
+    elf_type="$(printf '%s\n' "$header" | sed -n 's/^[[:space:]]*Type:[[:space:]]*\([^[:space:]]*\).*/\1/p')"
+    case "$role:$elf_type" in
+        VST3:DYN|Standalone:EXEC|Standalone:DYN) ;;
+        *) echo "invalid ELF type for $role: $elf_type ($binary)" >&2; exit 1 ;;
+    esac
+}
+check_elf_type "$stage/usr/lib/vst3/$product.vst3/Contents/x86_64-linux/$product.so" VST3
+check_elf_type "$stage/usr/bin/cs80-reference" Standalone
 mkdir "$work/debian"
 printf 'Source: cs80-reference\n\nPackage: cs80-reference\nArchitecture: any\nDescription: CS-80 Reference\n' > "$work/debian/control"
 runtime_deps="$(cd "$work" && dpkg-shlibdeps -O \

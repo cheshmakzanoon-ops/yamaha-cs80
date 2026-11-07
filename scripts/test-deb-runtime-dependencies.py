@@ -13,7 +13,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-TOOLS = ('cc', 'readelf', 'dpkg', 'dpkg-deb', 'dpkg-shlibdeps')
+TOOLS = ('cc', 'readelf', 'realpath', 'dpkg', 'dpkg-deb', 'dpkg-shlibdeps')
 
 
 def run(*args, **kwargs):
@@ -34,7 +34,7 @@ class DependencyTests(unittest.TestCase):
         self.plugin.parent.mkdir(parents=True)
         source = self.root / 'fixture.c'
         source.write_text('#include <stdio.h>\nint main(void) { puts("fixture"); return 0; }\n')
-        run('cc', str(source), '-o', str(self.standalone))
+        run('cc', '-fPIE', '-pie', str(source), '-o', str(self.standalone))
         source.write_text('#include <math.h>\ndouble fixture(double x) { return sin(x); }\n')
         run('cc', '-shared', '-fPIC', '-nostdlib', str(source), '-lm', '-o', str(self.plugin))
         juce = self.build / '_deps/juce-src/LICENSE.md'
@@ -130,6 +130,92 @@ class DependencyTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('no dependency information', result.stderr)
         self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_non_pie_standalone_is_accepted(self):
+        source = self.root / 'non-pie.c'
+        source.write_text('#include <stdio.h>\nint main(void) { puts("fixture"); return 0; }\n')
+        run('cc', '-fno-PIE', '-no-pie', str(source), '-o', str(self.standalone))
+        self.package()
+        self.assertEqual(len(list(self.out.glob('*.deb'))), 1)
+
+    def test_relocatable_plugin_fails_without_package(self):
+        source = self.root / 'relocatable.c'
+        source.write_text('int fixture(void) { return 1; }\n')
+        run('cc', '-c', '-fPIC', str(source), '-o', str(self.plugin))
+        result = self.package(check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('invalid ELF type for VST3: REL', result.stderr)
+        self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_relocatable_standalone_fails_without_package(self):
+        source = self.root / 'relocatable.c'
+        source.write_text('int fixture(void) { return 1; }\n')
+        run('cc', '-c', str(source), '-o', str(self.standalone))
+        self.standalone.chmod(0o755)
+        result = self.package(check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('invalid ELF type for Standalone: REL', result.stderr)
+        self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_non_pie_executable_plugin_fails_without_package(self):
+        source = self.root / 'executable.c'
+        source.write_text('#include <stdio.h>\nint main(void) { puts("fixture"); return 0; }\n')
+        run('cc', '-fno-PIE', '-no-pie', str(source), '-o', str(self.plugin))
+        result = self.package(check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('invalid ELF type for VST3: EXEC', result.stderr)
+        self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_external_plugin_symlink_fails_without_package(self):
+        target = self.root / 'external.so'
+        self.plugin.rename(target)
+        self.plugin.symlink_to(target)
+        result = self.package(check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('VST3 payload resolves outside packaged bundle', result.stderr)
+        self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_external_plugin_directory_symlink_fails_without_package(self):
+        target = self.root / 'external module'
+        self.plugin.parent.rename(target)
+        self.plugin.parent.symlink_to(target, target_is_directory=True)
+        result = self.package(check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('VST3 payload resolves outside packaged bundle', result.stderr)
+        self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_internal_relative_plugin_symlink_is_delivered(self):
+        target = self.plugin.with_name('payload.so')
+        self.plugin.rename(target)
+        self.plugin.symlink_to(target.name)
+        self.package()
+        archive, = self.out.glob('*.deb')
+        extracted = self.root / 'extracted'
+        run('dpkg-deb', '-x', str(archive), str(extracted))
+        delivered = extracted / 'usr/lib/vst3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so'
+        self.assertTrue(delivered.is_symlink())
+        self.assertEqual(delivered.read_bytes(), target.read_bytes())
+
+    def test_internal_relative_plugin_directory_symlink_is_delivered(self):
+        target = self.plugin.parent.with_name('module')
+        self.plugin.parent.rename(target)
+        self.plugin.parent.symlink_to(target.name, target_is_directory=True)
+        self.package()
+        archive, = self.out.glob('*.deb')
+        extracted = self.root / 'extracted'
+        run('dpkg-deb', '-x', str(archive), str(extracted))
+        delivered = extracted / 'usr/lib/vst3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so'
+        self.assertTrue(delivered.parent.is_symlink())
+        self.assertEqual(delivered.read_bytes(), self.plugin.read_bytes())
+
+    def test_symlinked_temporary_directory_is_accepted(self):
+        target = self.root / 'temporary directory'
+        target.mkdir()
+        link = self.root / 'temporary link'
+        link.symlink_to(target, target_is_directory=True)
+        self.env['TMPDIR'] = str(link)
+        self.package()
+        self.assertEqual(len(list(self.out.glob('*.deb'))), 1)
 
 
 if __name__ == '__main__':

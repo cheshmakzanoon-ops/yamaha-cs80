@@ -17,8 +17,15 @@ workflows passed.
 | Linux x86_64 | `.deb` from [`installer/linux/make-deb.sh`](../../installer/linux/make-deb.sh) (VST3 in `/usr/lib/vst3`, Standalone as `cs80-reference`) plus the existing provenance tarball. | None (unsigned, as is usual for direct `.deb` downloads). |
 
 The Linux packager requires `dpkg-dev` (`dpkg-shlibdeps`), `binutils` (`readelf`),
+`coreutils` (`realpath`),
 and the build runner's
-installed-library package metadata. It checks each product's ELF header, then scans both the VST3 shared object and
+installed-library package metadata. It requires the VST3 to have shared-object
+ELF type (`DYN`) and the Standalone to have executable type (`EXEC` or PIE `DYN`),
+rejecting relocatable objects even when the other product has valid dependencies.
+The staged VST3 payload must resolve inside its packaged bundle: relative
+in-bundle file/directory links are supported, but links to unshipped build files
+are rejected rather than silently scanned and archived as broken links.
+It then scans both the VST3 shared object and
 Standalone executable to record versioned ELF runtime dependencies, including
 libc/libstdc++ ABI floors when linked, and retains the explicit JUCE dynamically
 loaded-library dependencies. Missing dependency metadata is a packaging failure,
