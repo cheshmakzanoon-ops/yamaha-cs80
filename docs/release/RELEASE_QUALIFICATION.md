@@ -16,6 +16,17 @@ workflows passed.
 | Windows x64 | Inno Setup installer from [`installer/windows/cs80-reference.iss`](../../installer/windows/cs80-reference.iss): VST3 to `Common Files\VST3`, Standalone to `Program Files`. | Authenticode with `signtool` when the secrets exist; otherwise `*-UNSIGNED.exe`. |
 | Linux x86_64 | `.deb` from [`installer/linux/make-deb.sh`](../../installer/linux/make-deb.sh) (VST3 in `/usr/lib/vst3`, Standalone as `cs80-reference`) plus the existing provenance tarball. | None (unsigned, as is usual for direct `.deb` downloads). |
 
+The Linux packager requires `dpkg-dev` (`dpkg-shlibdeps`), `binutils` (`readelf`),
+and the build runner's
+installed-library package metadata. It checks each product's ELF header, then scans both the VST3 shared object and
+Standalone executable to record versioned ELF runtime dependencies, including
+libc/libstdc++ ABI floors when linked, and retains the explicit JUCE dynamically
+loaded-library dependencies. Missing dependency metadata is a packaging failure,
+not permission to emit a package with guessed minimum versions. This records the
+build environment's requirements; it does not make binaries portable to older
+Linux distributions. Run `python scripts/test-deb-runtime-dependencies.py` for
+inert ELF packaging tests with an isolated synthetic dpkg metadata database.
+
 Every installer ships the JUCE licence. The secrets the workflow reads are listed
 at the top of `release.yml`; none are stored in the repository.
 
