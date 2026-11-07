@@ -70,6 +70,30 @@ ctest --test-dir build-core --output-on-failure \
 scripts/check-compat-gates.sh --strict-v2
 ```
 
+## FMA-safe oracle rounding
+
+The first integration revision, `b07eced`, failed the new mixed test on
+Apple Silicon: 2,280/2,304 assertions passed, with 24 exact-trajectory
+mismatches at 96 kHz, synced time and negative rates. Both original MSEG
+regressions passed. The scoped CTest report identified no other failed test
+in that Apple Silicon job.
+
+The same 24 failures reproduce locally with GCC `-march=native`, and by
+forcing only the oracle's cross-rate accumulation to `std::fma`. Its first
+mismatch is one float ULP at sample 82. The expression `rate += scale * value`
+in the oracle can contract into one fused operation, whereas the matrix
+separately evaluates its float slot product before accumulation.
+
+The oracle now explicitly rounds that product through a volatile float
+intermediate. This is test-only: production arithmetic, exact comparisons,
+scenario coverage and compiler flags are unchanged. No tolerance or check
+waiver is introduced. The corrected test passes all 2,304 assertions with
+ordinary Release flags, `-march=native`, and `-mfma` with contraction both
+`fast` and `off`, as well as native-FMA ASan/UBSan. Native-FMA negative
+controls retain the same 1,728/1,152/1,152 failures for main/#71-only/#79-only.
+The six focused CTest suites pass again. Exact-revision native CI remains
+required; local FMA reproduction alone is not Apple Silicon qualification.
+
 ## Prior CI discrepancies and merge hold
 
 The separate proposals have differing CI outcomes; this integration does not

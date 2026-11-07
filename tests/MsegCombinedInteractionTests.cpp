@@ -136,7 +136,15 @@ void scenario(double fs, int mono, int poly, bool sync, float sign, int edit)
         const float polyValue = polyRunner.tick(config.msegs[poly], advance(poly, polyRate), true);
         polyRate = (controls.amount[3] * destinationScale(destination(poly))) * velocity;
         if (used)
-            polyRate += (controls.amount[4] * destinationScale(destination(poly))) * monoValue;
+        {
+            // Match the matrix's rounded float slot product before its separate
+            // accumulation. An oracle-only fused multiply-add changes the
+            // trajectory by one float ULP on FMA-capable targets. Keep the
+            // exact assertions and production arithmetic unchanged.
+            const volatile float crossRate =
+                (controls.amount[4] * destinationScale(destination(poly))) * monoValue;
+            polyRate += crossRate;
+        }
         lastPoly = polyValue;
 
         VoiceInputs voice;
