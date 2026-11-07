@@ -61,3 +61,36 @@ locally; syntax-only and helper tests do not replace those checks.
 
 The regression targets are `cs80_preset_file_values_tests` and
 `cs80_preset_display_name_tests` in a normal JUCE-enabled CMake build.
+
+## Finite release-preview endpoint
+
+A deeper numerical check found a separate NaN path even with entirely finite
+parameter values. At the last envelope point, separately rounded shared-axis
+and release calculations can make `x < total` while release progress is slightly
+greater than one. Raising the resulting negative base to the fractional power
+1.7 produces NaN. One reproducible finite preset has attack
+`0x1.11815cp+4`, decay `0x1.2dddbcp+4`, sustain 1 and release `0x1.abbf1p+2`.
+
+`presetPreviewReleaseShape` now bounds the power's base at zero. Progress in
+the valid [0, 1] interval uses the same base and exponent as before; endpoint
+overshoot terminates at zero. This affects only the library's drawn envelope,
+not either audio engine or the saved preset values.
+
+Additional GCC 14.2 verification:
+
+- Pure production-helper test: **65,543 checks, zero failures** in optimized
+  and UBSan plus float-cast-overflow builds. The former unbounded expression
+  fails three of those checks. The standalone CMake/CTest target also passes.
+- Exact production signature arithmetic, extracted without its unused GUI
+  declarations, was exercised with each malformed token in each parameter,
+  complete malformed documents, 2,000 deterministic finite random presets and
+  rejected documents: **4,296 cases, 1,323,168 finite checks, zero failures**.
+  The unguarded production math has one NaN in that same sweep.
+- Independent source review and the final browser translation-unit syntax
+  check pass. No processor, message loop or GUI execution is involved.
+
+The new `cs80_preset_preview_math_tests` target is JUCE-free and runs in both
+core-only and plugin-enabled builds. The extracted arithmetic experiment is
+not a rendering or real-host qualification. Other compilers may round the
+specific preset boundary differently; the portable regression explicitly
+tests one-ULP progress overshoot as well as the finite preset.

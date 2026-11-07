@@ -4,6 +4,7 @@
 #include "PluginProcessor.h"
 #include "PresetDisplayName.h"
 #include "PresetFileValues.h"
+#include "PresetPreviewMath.h"
 #include "core/FactoryPresets.h"
 
 #include <algorithm>
@@ -162,7 +163,7 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
             else if (x < total[c])
             {
                 const float t = (x - segA[c] - segD[c] - hold) / segR[c];
-                y = ch.sustain * std::pow(1.0f - t, 1.7f);
+                y = ch.sustain * presetPreviewReleaseShape(t);
             }
             ch.env[(size_t) i] = y * ch.gain;
         }
