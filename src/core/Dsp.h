@@ -986,7 +986,10 @@ public:
     // keeps sub-sample precision. Existing read() above is unchanged.
     float readHermite(double delaySamples) const noexcept
     {
-        delaySamples = std::clamp(delaySamples, 2.0, (double) (size - 3));
+        // prepare() permits four samples, where the usual upper bound would
+        // be one and violate clamp's ordered-bounds precondition. The four
+        // Hermite neighbours fit at the fixed two-sample tap in that case.
+        delaySamples = std::clamp(delaySamples, 2.0, (double) std::max(2, size - 3));
         double pos = (double) writePos - delaySamples;
         if (pos < 0.0)
             pos += (double) size;
