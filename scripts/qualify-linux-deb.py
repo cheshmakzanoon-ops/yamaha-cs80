@@ -13,6 +13,7 @@ import io
 import json
 import os
 from pathlib import Path, PurePosixPath
+import platform
 import re
 import stat
 import subprocess
@@ -29,6 +30,13 @@ PR_SOURCE_COMMIT = '635ad6e8f24978040b02a4a10e646d7e3c592ce4'
 PR_ARTIFACT_ID = 13566771073
 PR_ARTIFACT_DIGEST = 'sha256:01b00fc1e2c32c840507ed27052e9cb9cbf67cf3cc0149df920233be3bb3a29d'
 PR_ARTIFACT_SIZE = 12413145
+LOADER_ALIAS = '/lib64/ld-linux-x86-64.so.2'
+LOADER_TARGET = '/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2'
+LOADER_DIVERSION = LOADER_ALIAS + '.usr-is-merged'
+LOADER_WARNING = ('dpkg-shlibdeps: warning: diversions involved - output may be incorrect\n'
+                  f' diversion by libc6 from: {LOADER_ALIAS}\n'
+                  'dpkg-shlibdeps: warning: diversions involved - output may be incorrect\n'
+                  f' diversion by libc6 to: {LOADER_DIVERSION}\n')
 ARTIFACT_NAME = 'cs80-linux-install-bundle'
 PRODUCT = 'CS-80 Reference'
 JUCE_SHA = 'c352e2489000ffeb9e397051377d75eef2efe641'
@@ -427,10 +435,64 @@ def validate_packager(root):
     require(not run('git', '-C', str(root), 'status', '--porcelain', '--untracked-files=no'), 'Packager checkout is dirty')
 
 
-def check_packaging_result(result, evidence):
+def verify_native_loader_diversion(products, native_root=Path('/')):
+    """Read-only verification of one Ubuntu 24.04 glibc DEP17 safety diversion.
+
+    native_root exists for inert filesystem tests only; production always uses /.
+    No interpreter/library is executed, and no dpkg or binary metadata is changed.
+    """
+    distro = platform.freedesktop_os_release()
+    require(distro.get('ID') == 'ubuntu' and distro.get('VERSION_ID') == '24.04',
+            'Loader diversion is only reviewed for Ubuntu 24.04')
+    env = dict(os.environ, LC_ALL='C')
+    owner = run('dpkg-divert', '--listpackage', LOADER_ALIAS, env=env).decode().strip()
+    truename = run('dpkg-divert', '--truename', LOADER_ALIAS, env=env).decode().strip()
+    require(owner == 'libc6' and truename == LOADER_DIVERSION, 'Native loader diversion owner/path mismatch')
+    installed = run('dpkg-query', '-W', '-f=${Status}\t${Architecture}\t${Version}\n', 'libc6:amd64', env=env).decode().strip()
+    fields = installed.split('\t')
+    require(len(fields) == 3 and fields[:2] == ['install ok installed', 'amd64']
+            and re.fullmatch(r'2\.39-0ubuntu8(?:\.[0-9]+)?', fields[2]), 'Unexpected native libc6 installation')
+    alias = native_root / LOADER_ALIAS.lstrip('/')
+    target = native_root / LOADER_TARGET.lstrip('/')
+    diverted = native_root / LOADER_DIVERSION.lstrip('/')
+    require(not diverted.exists() and not diverted.is_symlink(), 'Unexpected diverted loader payload')
+    require(alias.resolve(strict=True) == target and target.resolve(strict=True) == target,
+            'Native loader does not resolve to the expected canonical target')
+    info = target.lstat()
+    require(stat.S_ISREG(info.st_mode) and info.st_uid == 0 and stat.S_IMODE(info.st_mode) == 0o755
+            and 0 < info.st_size <= MAX_FILE, 'Canonical loader is not a root-owned regular executable file')
+    package_owner = run('dpkg-query', '--search', '--', LOADER_TARGET, env=env).decode().strip()
+    require(package_owner == f'libc6:amd64: {LOADER_TARGET}', 'Canonical loader is not owned by native libc6')
+    data = target.read_bytes()
+    sums = run('dpkg-query', '--control-show', 'libc6:amd64', 'md5sums', env=env).decode().splitlines()
+    matches = [line.split() for line in sums if line.split()[1:] == [LOADER_TARGET.lstrip('/')]]
+    require(len(matches) == 1 and re.fullmatch(r'[0-9a-f]{32}', matches[0][0])
+            and hashlib.md5(data, usedforsecurity=False).hexdigest() == matches[0][0],
+            'Canonical loader differs from installed libc6 file metadata')
+    require(data.startswith(b'\x7fELF\x02\x01\x01'), 'Canonical loader has an unexpected ELF identity')
+    header = run('readelf', '-h', str(target), env=env).decode()
+    require(re.search(r'Type:\s+DYN\b', header)
+            and re.search(r'Machine:\s+Advanced Micro Devices X86-64\s*\n', header),
+            'Canonical loader is not the expected x86-64 dynamic ELF')
+    standalone = run('readelf', '-l', '-d', str(products / STANDALONE), env=env).decode()
+    interpreters = re.findall(r'\[Requesting program interpreter: ([^\]]+)\]', standalone)
+    needed = re.search(r'^\s*0x[0-9a-f]+\s+\(NEEDED\)\s+Shared library:\s+\[ld-linux-x86-64\.so\.2\]\s*$',
+                       standalone, flags=re.MULTILINE)
+    require(interpreters == [LOADER_ALIAS] and needed,
+            'Product interpreter/dependency does not match the verified loader diversion')
+    return {'distro': {'ID': distro['ID'], 'VERSION_ID': distro['VERSION_ID']},
+            'diversion_owner': owner, 'diversion_from': LOADER_ALIAS, 'diversion_to': truename,
+            'diverted_payload_present': False, 'canonical_loader': LOADER_TARGET,
+            'loader_package_owner': package_owner, 'libc6_status_arch_version': installed,
+            'loader_mode': oct(stat.S_IMODE(info.st_mode)), 'loader_uid': info.st_uid,
+            'loader_sha256': digest(data), 'installed_loader_md5_verified': True,
+            'loader_elf_header': header, 'standalone_interpreter': interpreters[0]}
+
+
+def check_packaging_result(result, evidence, products=None):
     (evidence / 'packaging.stdout.txt').write_text(result.stdout)
     (evidence / 'packaging.stderr.txt').write_text(result.stderr)
-    warnings = 'dpkg-shlibdeps: warning:' in result.stderr
+    warnings = bool(re.search(r'\bwarning\b', result.stderr, flags=re.IGNORECASE))
     if result.returncode != 0 or warnings:
         # Preserve native scanner diagnostics in the job log even though failed
         # packages/evidence are not uploaded. Escape command delimiters/newlines
@@ -439,7 +501,12 @@ def check_packaging_result(result, evidence):
             safe = json.dumps(output).replace('::', r'\u003a\u003a')
             print(f'Packaging {label} (JSON): {safe}', file=sys.stderr)
     require(result.returncode == 0, 'Debian packaging failed; native diagnostics are above')
-    require(not warnings, 'Dependency scanner warnings require review')
+    if warnings:
+        require(result.stderr == LOADER_WARNING and products is not None,
+                'Dependency scanner warnings require review')
+        facts = verify_native_loader_diversion(products)
+        return {'status': 'verified native diversion warning', 'warning_text': result.stderr, 'native_diversion': facts}
+    return {'status': 'no dependency-scanner warnings', 'warning_text': ''}
 
 
 def stage_qualified_evidence(evidence, qualified):
@@ -516,11 +583,11 @@ def main():
         header = run('readelf', '-h', str(products / rel), env=env).decode()
         require(re.search(r'Class:\s+ELF64\b', header)
                 and re.search(r'Machine:\s+Advanced Micro Devices X86-64\s*\n', header), 'Wrong product ELF architecture')
-        (evidence / (label + '-elf.txt')).write_bytes(run('readelf', '-h', '-d', '--version-info', str(products / rel), env=env))
+        (evidence / (label + '-elf.txt')).write_bytes(run('readelf', '-h', '-l', '-d', '--version-info', str(products / rel), env=env))
     packages = args.work_dir / 'packages'
     result = subprocess.run(['bash', str(packager / 'installer/linux/make-deb.sh'), str(args.work_dir / 'build'), str(packages)],
                             capture_output=True, text=True, env=env, check=False)
-    check_packaging_result(result, evidence)
+    scanner_diagnostics = check_packaging_result(result, evidence, products)
     archives = list(packages.glob('*.deb'))
     require(len(archives) == 1, 'Expected exactly one Debian package')
     depends, file_hashes = verify_deb(archives[0], payload, packager, args.work_dir / 'extracted')
@@ -533,6 +600,7 @@ def main():
               'qualification_context': context, 'source_commit': args.source_sha, 'source_run_id': args.source_run_id,
               'source_run_attempt': source_run['run_attempt'], 'artifact_id': artifact['id'], 'artifact_digest': artifact['digest'],
               'packaging_only_source_differences': differences, 'depends': depends, 'files': file_hashes,
+              'dependency_scanner_diagnostics': scanner_diagnostics,
               'deb_sha256': digest(archives[0].read_bytes()), 'product_executed': False, 'package_installed': False,
               'package_uploaded': False, 'output_scope': 'scoped text/JSON evidence only; no package, product or source archive'}
     validate_run(api_json(f'{endpoint}/actions/runs/{args.source_run_id}'), args.source_run_id, args.source_sha)

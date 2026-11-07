@@ -59,8 +59,10 @@ or release certificate. The generated `.deb` remains in ephemeral runner storage
    build paths under a fresh runner-temp directory. Inspect ELF headers/dynamic
    tags/version requirements using `readelf`; never execute an artifact payload.
 6. Run the pinned packaging script against genuine native library metadata.
-   Scanner errors or warnings fail the qualification. Failure diagnostics are
-   safely escaped into the job log; failed packages are not uploaded.
+   Nonzero exits and unknown warnings fail the qualification. The sole reviewed
+   warning case is the verified native loader diversion described below. Complete
+   diagnostics are retained and safely escaped into the job log; failed packages
+   are not uploaded.
 7. Inspect the `.deb` without installing it. Require versioned libc6/libstdc++6
    floors, explicit dynamic-library dependencies, amd64 architecture, expected
    root ownership/modes, no maintainer scripts or links, and exact payload and
@@ -83,6 +85,37 @@ reported **absent**, pending separate PR #70. Nothing from #70 is silently impor
 or treated as qualified. Neither successful ABI packaging nor its textual
 evidence establishes complete licence, native installation, host compatibility,
 loadability or release qualification.
+
+### Verified native diversion warning, not warning-free qualification
+
+Ubuntu 24.04's libc6 uses a glibc DEP17 safety diversion for
+`/lib64/ld-linux-x86-64.so.2` to the `.usr-is-merged` name. This behavior and its
+generic dpkg-shlibdeps warning are documented in
+[Debian glibc migration issue 1064840](https://bugs.debian.org/1064840).
+dpkg's library discovery checks both alias and canonical paths; adding a
+canonical search path or canonicalizing product inputs does not remove the
+alias query. The qualifier does not patch the scanner, alter system/binary
+metadata, change library search paths or discard stderr to hide that warning.
+
+It accepts only the exact warning/from-to lines observed for this diversion,
+and only after read-only native checks establish all of the following:
+
+- Distro/version is Ubuntu 24.04; libc6:amd64 is installed at an Ubuntu 2.39
+  package version. dpkg-divert independently reports owner `libc6` and the exact
+  source/destination pair, with no payload at the diverted destination.
+- The interpreter alias resolves exactly to the regular, root-owned, mode-0755
+  `/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2` target. Native dpkg ownership
+  identifies libc6:amd64, and the file matches its installed package checksum.
+- Static ELF inspection confirms the target is x86-64 dynamic ELF, and the
+  actual Standalone's interpreter/dependency points to this verified loader.
+  Neither the loader nor the product is executed.
+
+Verification evidence labels this **`verified native diversion warning`**, saves
+the full warning text and native facts (including package version, loader paths,
+owner, mode, ELF header and SHA-256), and retains the original stderr evidence.
+Every other warning, missing/mutated fact or nonzero exit remains fatal. All
+dependency-floor, package-content and evidence-only output gates still follow;
+this exception alone does not qualify a package.
 
 ## Safe activation path
 
@@ -161,3 +194,8 @@ The current local container has no native `dpkg` package database. An earlier
 real-product attempt correctly failed closed on missing libasound dependency
 metadata. A successful native `.deb` from this new workflow remains **unrun** until
 a scoped PR or registered manual run completes and its exact result is verified.
+The first hosted run, `42360278797` at `851ecb76`, created a temporary `.deb` but
+failed the original strict warning gate on the libc6 diversion above. It did not
+finish package inspection or upload evidence. The narrow verified-diversion
+handling is covered by offline regressions but still requires a successful
+hosted run; the failed attempt is not treated as a pass.

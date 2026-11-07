@@ -239,6 +239,182 @@ class EvidenceOutputTests(unittest.TestCase):
                 self.assertFalse(qualified.exists())
 
 
+class NativeDiversionTests(unittest.TestCase):
+    """Synthetic native metadata/filesystem; system ELF bytes are inspected, never run."""
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='cs80-native-diversion-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.target = self.root / q.LOADER_TARGET.lstrip('/')
+        self.target.parent.mkdir(parents=True)
+        # Existing system ELF is only copied/read by readelf, never executed.
+        self.target.write_bytes(Path('/bin/true').read_bytes())
+        self.target.chmod(0o755)
+        (self.root / 'usr/lib64').mkdir()
+        (self.root / 'lib64').symlink_to('usr/lib64')
+        self.alias = self.root / q.LOADER_ALIAS.lstrip('/')
+        self.alias.symlink_to('../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2')
+        self.diverted = self.root / q.LOADER_DIVERSION.lstrip('/')
+        self.products = self.root / 'products'
+        self.evidence = self.root / 'evidence'; self.evidence.mkdir()
+        self.distro = {'ID': 'ubuntu', 'VERSION_ID': '24.04'}
+        self.owner = 'libc6'; self.truename = q.LOADER_DIVERSION
+        self.installed = 'install ok installed\tamd64\t2.39-0ubuntu8.9'
+        self.package_owner = f'libc6:amd64: {q.LOADER_TARGET}'
+        self.md5 = q.hashlib.md5(self.target.read_bytes(), usedforsecurity=False).hexdigest()
+        self.header = None
+        self.interpreter = f'[Requesting program interpreter: {q.LOADER_ALIAS}]\n 0x0000000000000001 (NEEDED) Shared library: [ld-linux-x86-64.so.2]\n'
+        self.uid = 0
+        self.extra_mode = 0
+        original_lstat = Path.lstat
+        def fixture_lstat(path):
+            value = original_lstat(path)
+            if path == self.target:
+                fields = list(value); fields[4] = self.uid; fields[0] |= self.extra_mode
+                return os.stat_result(fields)
+            return value
+        for patcher in (patch.object(Path, 'lstat', fixture_lstat),
+                        patch.object(q.platform, 'freedesktop_os_release', lambda: self.distro),
+                        patch.object(q, 'run', self.native_read)):
+            patcher.start(); self.addCleanup(patcher.stop)
+
+    def native_read(self, *args, **kwargs):
+        self.assertEqual(kwargs['env']['LC_ALL'], 'C')
+        if args == ('dpkg-divert', '--listpackage', q.LOADER_ALIAS):
+            return self.owner.encode()
+        if args == ('dpkg-divert', '--truename', q.LOADER_ALIAS):
+            return self.truename.encode()
+        if args == ('dpkg-query', '-W', '-f=${Status}\t${Architecture}\t${Version}\n', 'libc6:amd64'):
+            return self.installed.encode()
+        if args == ('dpkg-query', '--search', '--', q.LOADER_TARGET):
+            return self.package_owner.encode()
+        if args == ('dpkg-query', '--control-show', 'libc6:amd64', 'md5sums'):
+            return f'{self.md5}  {q.LOADER_TARGET.lstrip("/")}\n'.encode()
+        if args == ('readelf', '-h', str(self.target)):
+            return self.header.encode() if self.header is not None else subprocess.check_output(args, env=kwargs['env'])
+        if args == ('readelf', '-l', '-d', str(self.products / q.STANDALONE)):
+            return self.interpreter.encode()
+        self.fail('Unexpected native probe: ' + repr(args))
+
+    def verify(self):
+        return q.verify_native_loader_diversion(self.products, self.root)
+
+    def test_exact_native_diversion_and_package_file_are_verified(self):
+        facts = self.verify()
+        self.assertEqual(facts['canonical_loader'], q.LOADER_TARGET)
+        self.assertEqual(facts['diversion_owner'], 'libc6')
+        self.assertTrue(facts['installed_loader_md5_verified'])
+        self.assertEqual(facts['loader_sha256'], q.digest(self.target.read_bytes()))
+        self.assertEqual(facts['standalone_interpreter'], q.LOADER_ALIAS)
+        self.assertFalse(facts['diverted_payload_present'])
+
+    def test_exact_warning_retained_and_labeled_verified_not_warning_free(self):
+        verifier = q.verify_native_loader_diversion
+        result = subprocess.CompletedProcess([], 0, stdout='package built', stderr=q.LOADER_WARNING)
+        with patch.object(q, 'verify_native_loader_diversion', lambda products: verifier(products, self.root)), redirect_stderr(io.StringIO()):
+            report = q.check_packaging_result(result, self.evidence, self.products)
+        self.assertEqual(report['status'], 'verified native diversion warning')
+        self.assertEqual(report['warning_text'], q.LOADER_WARNING)
+        self.assertEqual((self.evidence / 'packaging.stderr.txt').read_text(), q.LOADER_WARNING)
+        self.assertTrue(report['native_diversion']['installed_loader_md5_verified'])
+        with redirect_stderr(io.StringIO()), self.assertRaisesRegex(ValueError, 'warnings require review'):
+            q.check_packaging_result(result, self.evidence)
+
+    def test_unknown_mutated_duplicate_or_partial_warnings_are_fatal(self):
+        for text in (q.LOADER_WARNING + 'another tool: warning: extra\n', q.LOADER_WARNING * 2,
+                     q.LOADER_WARNING.replace('libc6 from', 'other from'),
+                     q.LOADER_WARNING.replace('.usr-is-merged', '.other'),
+                     q.LOADER_WARNING.splitlines()[0] + '\n', 'other tool: WARNING: unknown\n'):
+            result = subprocess.CompletedProcess([], 0, stdout='', stderr=text)
+            with self.subTest(text=text), patch.object(q, 'verify_native_loader_diversion') as verify, \
+                    redirect_stderr(io.StringIO()), self.assertRaisesRegex(ValueError, 'warnings require review'):
+                q.check_packaging_result(result, self.evidence, self.products)
+            verify.assert_not_called()
+
+    def test_nonzero_exit_remains_fatal_before_known_warning_verification(self):
+        result = subprocess.CompletedProcess([], 1, stdout='', stderr=q.LOADER_WARNING)
+        with patch.object(q, 'verify_native_loader_diversion') as verify, redirect_stderr(io.StringIO()), \
+                self.assertRaisesRegex(ValueError, 'Debian packaging failed'):
+            q.check_packaging_result(result, self.evidence, self.products)
+        verify.assert_not_called()
+
+    def test_warning_free_result_does_not_invoke_diversion_exception(self):
+        with patch.object(q, 'verify_native_loader_diversion') as verify:
+            report = q.check_packaging_result(subprocess.CompletedProcess([], 0, stdout='', stderr=''), self.evidence, self.products)
+        verify.assert_not_called()
+        self.assertEqual(report['status'], 'no dependency-scanner warnings')
+
+    def test_other_or_missing_distro_version_is_rejected(self):
+        for self.distro in ({}, {'ID': 'debian', 'VERSION_ID': '24.04'}, {'ID': 'ubuntu', 'VERSION_ID': '22.04'}):
+            with self.subTest(distro=self.distro), self.assertRaisesRegex(ValueError, 'Ubuntu 24.04'):
+                self.verify()
+
+    def test_absent_mutated_diversion_owner_or_path_is_rejected(self):
+        for self.owner, self.truename in (('', q.LOADER_DIVERSION), ('LOCAL', q.LOADER_DIVERSION),
+                                        ('other', q.LOADER_DIVERSION), ('libc6', ''), ('libc6', q.LOADER_TARGET)):
+            with self.subTest(owner=self.owner, path=self.truename), self.assertRaisesRegex(ValueError, 'owner/path mismatch'):
+                self.verify()
+
+    def test_uninstalled_wrong_arch_version_or_file_owner_is_rejected(self):
+        good = self.installed
+        for self.installed in ('', 'deinstall ok config-files\tamd64\t2.39-0ubuntu8.9',
+                               'install ok installed\tarm64\t2.39-0ubuntu8.9', 'install ok installed\tamd64\t2.40-1'):
+            with self.subTest(installed=self.installed), self.assertRaisesRegex(ValueError, 'libc6 installation'):
+                self.verify()
+        self.installed = good
+        for self.package_owner in ('', f'other:amd64: {q.LOADER_TARGET}', f'libc6:amd64: {q.LOADER_ALIAS}'):
+            with self.subTest(owner=self.package_owner), self.assertRaisesRegex(ValueError, 'owned by native libc6'):
+                self.verify()
+
+    def test_mismatched_missing_or_redirected_loader_target_is_rejected(self):
+        self.alias.unlink(); self.alias.symlink_to('../lib/x86_64-linux-gnu/other')
+        with self.assertRaises(FileNotFoundError):
+            self.verify()
+        other = self.target.with_name('other'); other.write_bytes(self.target.read_bytes())
+        with self.assertRaisesRegex(ValueError, 'canonical target'):
+            self.verify()
+        self.alias.unlink(); self.alias.symlink_to('../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2')
+        self.target.unlink(); self.target.symlink_to('other')
+        with self.assertRaisesRegex(ValueError, 'canonical target'):
+            self.verify()
+
+    def test_diverted_payload_bad_permissions_or_package_digest_is_rejected(self):
+        self.diverted.write_text('unexpected')
+        with self.assertRaisesRegex(ValueError, 'diverted loader payload'):
+            self.verify()
+        self.diverted.unlink(); self.diverted.symlink_to('absent')
+        with self.assertRaisesRegex(ValueError, 'diverted loader payload'):
+            self.verify()
+        self.diverted.unlink()
+        for self.uid, mode in ((1000, 0o755), (0, 0o777), (0, 0o644)):
+            self.target.chmod(mode)
+            with self.subTest(uid=self.uid, mode=mode), self.assertRaisesRegex(ValueError, 'root-owned regular'):
+                self.verify()
+        self.uid = 0; self.target.chmod(0o755)
+        for self.extra_mode in (0o4000, 0o2000, 0o1000):
+            with self.subTest(extra_mode=self.extra_mode), self.assertRaisesRegex(ValueError, 'root-owned regular'):
+                self.verify()
+        self.extra_mode = 0
+        for self.md5 in ('', 'invalid', '0' * 32):
+            with self.subTest(md5=self.md5), self.assertRaisesRegex(ValueError, 'installed libc6 file metadata'):
+                self.verify()
+
+    def test_wrong_loader_elf_or_product_interpreter_is_rejected(self):
+        for self.header in ('Type: REL\nMachine: Advanced Micro Devices X86-64\n', 'Type: DYN\nMachine: AArch64\n'):
+            with self.subTest(header=self.header), self.assertRaisesRegex(ValueError, 'dynamic ELF'):
+                self.verify()
+        self.header = None
+        for self.interpreter in ('', '[Requesting program interpreter: /tmp/loader]\n[ld-linux-x86-64.so.2]',
+                                  f'[Requesting program interpreter: {q.LOADER_ALIAS}]\n',
+                                  f'[Requesting program interpreter: {q.LOADER_ALIAS}]\n 0x1d (RUNPATH) Library runpath: [ld-linux-x86-64.so.2]\n'):
+            with self.subTest(interpreter=self.interpreter), self.assertRaisesRegex(ValueError, 'interpreter/dependency'):
+                self.verify()
+        self.target.write_bytes(b'not an ELF loader')
+        self.md5 = q.hashlib.md5(self.target.read_bytes(), usedforsecurity=False).hexdigest()
+        with self.assertRaisesRegex(ValueError, 'unexpected ELF identity'):
+            self.verify()
+
+
 class MetadataTests(unittest.TestCase):
     def test_valid_inputs_and_successful_same_repo_run(self):
         q.validate_inputs(q.REPOSITORY, RUN, SHA)
