@@ -1,0 +1,36 @@
+{
+  "flags": "-O3 -DNDEBUG -std=gnu++20 -fPIC",
+  "cpu": 3,
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "sources": {
+    "baseline": {
+      "src/core/Dsp.h": "07fb45e4f313accb33677ceca18fc291b0157f5f3665ca529080b042c2933196",
+      "src/core/Engine.h": "a66f255f910c27791e0eda10e843e9129de94378d3eec86cf8aa67b64b722f78",
+      "src/core/Engine.cpp": "50ddf0df0804d521d19d51839d1ae36bc4bd03702566c28007b330db0ef3a06b",
+      "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af"
+    },
+    "candidate": {
+      "src/core/Dsp.h": "050dc08aa94bc20a83e88ee588bc0635bbc9b557753afa4a50acaad663f3467e",
+      "src/core/Engine.h": "fb55d97174d5814ac343b72b8e6844602db75f199981d4eae83317d6e20d0c96",
+      "src/core/Engine.cpp": "3eafe1ea944b48eb364184471e6e74dc6213779a598ccd20ac588806374510cd",
+      "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af"
+    }
+  },
+  "probe_sha256": "4f4ed5d26917cbc22d4d9fada06942c67fcde23f5cca4b71d44460280dbb4695",
+  "scenarios": [
+    3,
+    5
+  ],
+  "trials": 7
+}

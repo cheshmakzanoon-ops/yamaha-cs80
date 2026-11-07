@@ -1,0 +1,155 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0ad3e2c..1e7f17a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -99,6 +99,10 @@ if (CS80_BUILD_TESTS)
+     target_link_libraries(cs80_envelope_precision_tests PRIVATE cs80_core)
+     add_test(NAME cs80_envelope_precision_tests COMMAND cs80_envelope_precision_tests)
+     set_tests_properties(cs80_envelope_precision_tests PROPERTIES TIMEOUT 300)
++    add_executable(cs80_midi_pitch_power_memo_tests tests/MidiPitchPowerMemoTests.cpp)
++    target_include_directories(cs80_midi_pitch_power_memo_tests PRIVATE src)
++    add_test(NAME cs80_midi_pitch_power_memo_tests COMMAND cs80_midi_pitch_power_memo_tests)
++    set_tests_properties(cs80_midi_pitch_power_memo_tests PROPERTIES TIMEOUT 60)
+     add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
+     target_include_directories(cs80_ig00156_cache_tests PRIVATE src)
+     add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests)
+diff --git a/src/core/Dsp.h b/src/core/Dsp.h
+index fb3a038..fac7f9a 100644
+--- a/src/core/Dsp.h
++++ b/src/core/Dsp.h
+@@ -35,6 +35,30 @@ inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
+     return tuningRef * std::pow(2.0f, (note - 69.0f) / 12.0f);
+ }
+
++// Exact-argument memo for the existing MIDI pitch power. Rounded Float32
++// pitch often holds for several samples even during slow analog drift. Cache
++// only pow(2, exponent), so tuning-reference changes still apply immediately.
++// No pitch quantization, approximate power or altered evaluation order.
++struct MidiPitchPowerMemo
++{
++    float argument = std::numeric_limits<float>::quiet_NaN();
++    float value = 0.0f;
++    float operator()(float exponent) noexcept
++    {
++        if (!(exponent == argument))
++        {
++            argument = exponent;
++            value = std::pow(2.0f, exponent);
++        }
++        return value;
++    }
++};
++
++inline float midiToHz(float note, float tuningRef, MidiPitchPowerMemo& memo) noexcept
++{
++    return tuningRef * memo((note - 69.0f) / 12.0f);
++}
++
+ // IG00156 nominal law: Yamaha CS servicing guide p34; CS-80 IC sheet p42.
+ // MIDI60 / .5V is an interface reference, not a panel-slider voltage claim.
+ constexpr float kReferenceKeyVolts = 0.5f;
+diff --git a/src/core/Engine.cpp b/src/core/Engine.cpp
+index d1a2c5b..234b5ad 100644
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -2415,7 +2415,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
+
+             // Transposition is a separate nominal harmonic ratio, not rounded
+             // equal-tempered fifths and not part of the shared filter key CV.
+-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
++            const float freq = midiToHz(pitch, global.tuningRef, pitchPowers[(size_t) (vi * kNumRanks + ch)]) * v.ribbonRatio
+                                * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
+             const float pwm = pwmSine[ch];
+             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
+diff --git a/src/core/Engine.h b/src/core/Engine.h
+index abb2f46..82cfc8f 100644
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -732,6 +732,8 @@ private:
+     bool arpWasOn = false;
+     float arpClock = 0.0f;
+     float arpGateTime = 0.0f;
++    // Derived pitch memo only; keep it outside the per-rank circuit hot state.
++    std::array<MidiPitchPowerMemo, kNumVoices * kNumRanks> pitchPowers;
+ };
+
+ } // namespace cs80
+diff --git a/tests/MidiPitchPowerMemoTests.cpp b/tests/MidiPitchPowerMemoTests.cpp
+new file mode 100644
+index 0000000..f3ab7d1
+--- /dev/null
++++ b/tests/MidiPitchPowerMemoTests.cpp
+@@ -0,0 +1,73 @@
++// Same-toolchain, exact Float32 pitch-power memo contract. No audio host/GUI.
++#include "core/Dsp.h"
++#include <array>
++#include <bit>
++#include <cmath>
++#include <cstdint>
++#include <cstdio>
++#include <limits>
++
++namespace {
++#if defined(_MSC_VER)
++#define NOINLINE __declspec(noinline)
++#elif defined(__GNUC__) || defined(__clang__)
++#define NOINLINE __attribute__((noinline))
++#else
++#define NOINLINE
++#endif
++NOINLINE float original(float note, float reference)
++{ return cs80::midiToHz(note, reference); }
++NOINLINE float cached(float note, float reference, cs80::MidiPitchPowerMemo& memo)
++{ return cs80::midiToHz(note, reference, memo); }
++int failures = 0;
++std::uint64_t comparisons = 0;
++void same(float expected, float actual)
++{
++    ++comparisons;
++    // A NaN's payload is not a pitch value. All other results, including
++    // infinities and signed zero, must have identical Float32 bits.
++    if (std::isnan(expected) && std::isnan(actual)) return;
++    if (std::bit_cast<std::uint32_t>(expected) != std::bit_cast<std::uint32_t>(actual))
++        if (++failures <= 8) std::printf("mismatch %.9g != %.9g\n", expected, actual);
++}
++}
++int main()
++{
++    cs80::MidiPitchPowerMemo memo;
++    std::uint32_t rng = 0x87c580u;
++    for (int i = 0; i < 1000000; ++i)
++    {
++        rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5;
++        const float note = float(rng % 256000) / 1000.0f - 64.0f;
++        const float adjacent = std::nextafter(note, i % 2 ? 300.0f : -300.0f);
++        for (float n : {note, note, adjacent, adjacent, note})
++            for (float reference : {440.0f, 432.0f, 444.0f})
++                same(original(n, reference), cached(n, reference, memo));
++    }
++    // Broad Float32 coverage also exercises exponent overflow/underflow and
++    // invalid values, followed by recovery to a regular pitch.
++    for (int i = 0; i < 100000; ++i)
++    {
++        rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5;
++        const float note = std::bit_cast<float>(rng);
++        same(original(note, 440.0f), cached(note, 440.0f, memo));
++        same(original(note, 432.0f), cached(note, 432.0f, memo));
++        same(original(69.0f, 440.0f), cached(69.0f, 440.0f, memo));
++    }
++    const float inf = std::numeric_limits<float>::infinity();
++    const float nan = std::numeric_limits<float>::quiet_NaN();
++    for (float note : {0.0f, -0.0f, 69.0f, inf, -inf, nan})
++        for (float reference : {0.0f, -0.0f, 440.0f, inf, -inf, nan})
++            for (int repeat = 0; repeat < 2; ++repeat)
++                same(original(note, reference), cached(note, reference, memo));
++    // Separate ranks and copies retain independent memo keys. Cache memory is
++    // derived, so reset/rate transitions do not require explicit invalidation.
++    auto other = memo;
++    for (int i = 0; i < 2048; ++i)
++    {
++        same(original(float(i), 440.0f), cached(float(i), 440.0f, memo));
++        same(original(float(-i), 432.0f), cached(float(-i), 432.0f, other));
++    }
++    std::printf("%llu exact comparisons, %d failures\n", (unsigned long long)comparisons, failures);
++    return failures ? 1 : 0;
++}
