@@ -66,6 +66,36 @@ class DependencyTests(unittest.TestCase):
                                str(self.build), str(self.out)], env=self.env,
                               text=True, capture_output=True, check=check)
 
+    def test_non_amd64_packaging_host_rejected(self):
+        # Simulate dpkg's architecture answer only; payloads are inert x64 ELF.
+        tools = self.root / 'foreign-host-tools'
+        tools.mkdir()
+        dpkg = tools / 'dpkg'
+        dpkg.write_text('#!/bin/sh\nprintf "arm64\\n"\n')
+        dpkg.chmod(0o755)
+        self.env['PATH'] = str(tools) + os.pathsep + os.environ['PATH']
+        result = self.package(check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('requires an amd64 packaging host', result.stderr)
+        self.assertFalse(list(self.out.glob('*.deb')))
+
+    def test_foreign_machine_products_rejected(self):
+        for binary, role in ((self.plugin, 'VST3'), (self.standalone, 'Standalone')):
+            with self.subTest(role=role):
+                original = binary.read_bytes()
+                self.assertEqual(original[:6], b'\x7fELF\x02\x01')
+                modified = bytearray(original)
+                # e_machine = EM_AARCH64. The fixture is inspected, never run.
+                modified[18:20] = (183).to_bytes(2, 'little')
+                binary.write_bytes(modified)
+                try:
+                    result = self.package(check=False)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn('invalid ELF architecture for ' + role, result.stderr)
+                    self.assertFalse(list(self.out.glob('*.deb')))
+                finally:
+                    binary.write_bytes(original)
+
     def test_versioned_dependencies_from_both_payloads(self):
         self.package()
         archives = list(self.out.glob('*.deb'))
@@ -220,3 +250,4 @@ class DependencyTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
+
