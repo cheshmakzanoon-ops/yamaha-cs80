@@ -79,12 +79,12 @@ jobs:
             --packager-root "$GITHUB_WORKSPACE/packager" \
             --work-dir "$RUNNER_TEMP/cs80-deb-qualification"
 
-      # Runs only after every prior step succeeds; failed packages/evidence are
-      # not advertised as qualified artifacts. This is not release publication.
-      - name: Upload the ABI-qualified development package and scoped evidence
+      # Success-only, text/JSON evidence only. The .deb, products and source
+      # archives stay in runner temp and are never copied into this output.
+      - name: Upload scoped ABI and provenance evidence only
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: linux-deb-abi-packaging-${{ github.run_id }}
+          name: linux-deb-abi-evidence-${{ github.run_id }}
           path: ${{ runner.temp }}/cs80-deb-qualification/qualified/
           if-no-files-found: error
           retention-days: 7

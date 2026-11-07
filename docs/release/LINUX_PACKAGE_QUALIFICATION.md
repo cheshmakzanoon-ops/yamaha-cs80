@@ -3,7 +3,8 @@
 `qualify-linux-deb.yml` is an isolated, **manual-only** workflow. It does not
 compile, load or execute the product, install the generated `.deb`, run validators,
 change ordinary CI/check statuses, publish a release or replace existing gates.
-It creates an **ABI-packaging development artifact**, not a release certificate.
+It uploads **text/JSON ABI-packaging evidence only**, not a distributable package
+or release certificate. The generated `.deb` remains in ephemeral runner storage.
 
 ## Pinned inputs and execution boundary
 
@@ -29,7 +30,7 @@ It creates an **ABI-packaging development artifact**, not a release certificate.
   No synthetic `dpkg` database, altered library search path or missing native
   `/var/lib/dpkg/status` is accepted. No product recompilation is required.
 
-## Gates before any qualified artifact is uploaded
+## Gates before evidence is uploaded
 
 1. Validate numeric run ID/full source SHA and check the same repository and
    head-repository IDs, expected ordinary build workflow, push event, exact head,
@@ -59,15 +60,22 @@ It creates an **ABI-packaging development artifact**, not a release certificate.
    root ownership/modes, no maintainer scripts or links, and exact payload and
    notice bytes. Extract only verified regular-file bytes into an isolated path.
 
-Only then is `linux-deb-abi-packaging-<qualification-run-id>` uploaded, containing
-the `.deb`, its digest, declared dependencies, per-file hashes, source manifest,
-JUCE provenance, ELF inspection, packaging output and native package versions.
+Only then is `linux-deb-abi-evidence-<qualification-run-id>` uploaded. Its output
+is restricted to eight allowlisted UTF-8 text/JSON files containing the package
+digest, declared dependencies, per-file hashes, source manifest metadata, JUCE
+provenance, ELF inspection text, packaging output and native package versions.
+The report explicitly declares `package_uploaded=false`.
+
+The native `.deb` is still created, inspected and extracted inside runner temp,
+but **no `.deb`, ELF/product bytes or product/source archive is copied into the
+qualified output or uploaded**. Unexpected files, links or binary evidence fail
+the output gate. The evidence does not imply that a distributable package exists.
 
 **Notice scope is intentionally #83-only:** project LICENSE, JUCE licence and
 quickstart are required and byte-verified. Font/MTS notice coverage is explicitly
 reported **absent**, pending separate PR #70. Nothing from #70 is silently imported
-or treated as qualified. Neither successful ABI packaging nor this development
-artifact establishes complete licence, native installation, host compatibility,
+or treated as qualified. Neither successful ABI packaging nor its textual
+evidence establishes complete licence, native installation, host compatibility,
 loadability or release qualification.
 
 ## Safe activation path

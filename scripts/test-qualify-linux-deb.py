@@ -37,6 +37,58 @@ def artifact_record():
                              'head_repository_id': q.REPOSITORY_ID}}
 
 
+def write_evidence(directory):
+    directory.mkdir()
+    payload = {}
+    for name in q.EVIDENCE_FILES:
+        if name == 'verification.json':
+            data = json.dumps({'package_uploaded': False, 'deb_sha256': 'a' * 64}).encode()
+        elif name.endswith('.json'):
+            data = b'{}\n'
+        else:
+            data = b'Scoped text evidence about a package.deb; not package bytes.\n'
+        (directory / name).write_bytes(data)
+        payload[name] = data
+    return payload
+
+
+class EvidenceOutputTests(unittest.TestCase):
+    def test_unexpected_package_product_archive_or_other_file_fails_closed(self):
+        for name in ('package.deb', 'plugin.so', 'source.tar.gz', 'extra.txt'):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp); evidence = root / 'evidence'; qualified = root / 'qualified'
+                write_evidence(evidence)
+                (evidence / name).write_bytes(b'not eligible for output')
+                with self.assertRaisesRegex(ValueError, 'Unexpected or missing evidence files'):
+                    q.stage_qualified_evidence(evidence, qualified)
+                self.assertFalse(qualified.exists())
+
+    def test_binary_or_link_disguised_as_allowed_text_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); evidence = root / 'evidence'; qualified = root / 'qualified'
+            write_evidence(evidence)
+            path = evidence / 'standalone-elf.txt'
+            path.write_bytes(b'\x7fELF\x02\x01\x01\x00binary canary')
+            with self.assertRaisesRegex(ValueError, 'Binary evidence is forbidden'):
+                q.stage_qualified_evidence(evidence, qualified)
+            self.assertFalse(qualified.exists())
+            path.unlink(); path.symlink_to(root / 'outside.txt')
+            (root / 'outside.txt').write_text('not an eligible source')
+            with self.assertRaisesRegex(ValueError, 'Evidence must be regular files'):
+                q.stage_qualified_evidence(evidence, qualified)
+            self.assertFalse(qualified.exists())
+
+    def test_output_report_must_explicitly_state_package_not_uploaded(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); evidence = root / 'evidence'; qualified = root / 'qualified'
+            write_evidence(evidence)
+            for report in ({}, {'package_uploaded': True}):
+                (evidence / 'verification.json').write_text(json.dumps(report))
+                with self.assertRaisesRegex(ValueError, 'package_uploaded=false'):
+                    q.stage_qualified_evidence(evidence, qualified)
+                self.assertFalse(qualified.exists())
+
+
 class MetadataTests(unittest.TestCase):
     def test_valid_inputs_and_successful_same_repo_run(self):
         q.validate_inputs(q.REPOSITORY, RUN, SHA)
@@ -289,6 +341,30 @@ class DebianInspectionTests(unittest.TestCase):
         self.assertEqual(depends, self.depends)
         self.assertEqual(hashes['usr/bin/cs80-reference'], q.digest(self.payload[q.STANDALONE]))
         self.assertEqual((self.root / 'extracted/usr/bin/cs80-reference').stat().st_mode & 0o777, 0o755)
+
+    def test_qualified_output_excludes_actual_deb_elf_and_archive_bytes(self):
+        self.check()  # Build/inspect an actual .deb containing inert fixture bytes.
+        elf = self.root / 'fixture.so'
+        elf.write_bytes(b'\x7fELF\x02\x01\x01\x00never execute this binary canary')
+        archive = self.root / 'source-bundle.zip'
+        with zipfile.ZipFile(archive, 'w') as stream:
+            stream.writestr('source.c', 'Never compile or distribute this archive fixture.\n')
+        forbidden = [self.root / 'package.deb', elf, archive]
+        evidence = self.root / 'evidence'; qualified = self.root / 'qualified'
+        expected = write_evidence(evidence)
+
+        q.stage_qualified_evidence(evidence, qualified)
+
+        actual = {p.relative_to(qualified).as_posix(): p.read_bytes()
+                  for p in qualified.rglob('*') if p.is_file()}
+        self.assertEqual(actual, expected)  # Inspect actual staged files and bytes.
+        self.assertEqual(set(actual), q.EVIDENCE_FILES)
+        for path in forbidden:
+            self.assertTrue(path.is_file())  # Inputs remain confined to runner temp.
+            self.assertFalse((qualified / path.name).exists())
+            for data in actual.values():
+                self.assertNotIn(path.read_bytes(), data)
+        self.assertFalse(json.loads(actual['verification.json'])['package_uploaded'])
 
     def test_missing_versioned_abi_floor_rejected(self):
         for package in ('libc6', 'libstdc++6'):

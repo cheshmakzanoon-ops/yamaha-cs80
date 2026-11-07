@@ -14,7 +14,6 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
-import shutil
 import stat
 import subprocess
 import sys
@@ -46,6 +45,12 @@ PACKAGING_PATHS = {
 NOTICE_SOURCES = {
     'copyright': 'LICENSE',
     'INSTALL_AND_QUICKSTART.md': 'docs/INSTALL_AND_QUICKSTART.md',
+}
+EVIDENCE_FILES = {
+    'standalone-elf.txt', 'vst3-elf.txt',
+    'packaging.stdout.txt', 'packaging.stderr.txt',
+    'source-manifest.json', 'juce-provenance.txt',
+    'native-dpkg-packages.txt', 'verification.json',
 }
 
 
@@ -359,6 +364,32 @@ def check_packaging_result(result, evidence):
     require(not warnings, 'Dependency scanner warnings require review')
 
 
+def stage_qualified_evidence(evidence, qualified):
+    """Stage only scoped text/JSON evidence, never package/product/archive bytes."""
+    require(not qualified.exists(), 'Refusing to reuse qualified output')
+    require({p.name for p in evidence.iterdir()} == EVIDENCE_FILES,
+            'Unexpected or missing evidence files; package/product uploads are forbidden')
+    payload = {}
+    for name in sorted(EVIDENCE_FILES):
+        path = evidence / name
+        require(path.is_file() and not path.is_symlink(), 'Evidence must be regular files')
+        require(path.stat().st_size <= MAX_FILE, 'Evidence file exceeds size limit')
+        data = path.read_bytes()
+        text = data.decode('utf-8')
+        require('\x00' not in text, 'Binary evidence is forbidden')
+        if name.endswith('.json'):
+            json.loads(text)
+        payload[name] = data
+    require(json.loads(payload['verification.json']).get('package_uploaded') is False,
+            'Evidence report must explicitly declare package_uploaded=false')
+    qualified.mkdir()
+    for name, data in payload.items():
+        path = qualified / name
+        with path.open('xb') as stream:
+            stream.write(data)
+        path.chmod(0o644)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-run-id', required=True)
@@ -419,12 +450,11 @@ def main():
               'candidate_commit': candidate, 'source_commit': args.source_sha, 'source_run_id': args.source_run_id,
               'source_run_attempt': source_run['run_attempt'], 'artifact_id': artifact['id'], 'artifact_digest': artifact['digest'],
               'packaging_only_source_differences': differences, 'depends': depends, 'files': file_hashes,
-              'deb_sha256': digest(archives[0].read_bytes()), 'product_executed': False, 'package_installed': False}
+              'deb_sha256': digest(archives[0].read_bytes()), 'product_executed': False, 'package_installed': False,
+              'package_uploaded': False, 'output_scope': 'scoped text/JSON evidence only; no package, product or source archive'}
     validate_run(api_json(f'{endpoint}/actions/runs/{args.source_run_id}'), args.source_run_id, args.source_sha)
     (evidence / 'verification.json').write_text(json.dumps(report, indent=2) + '\n')
-    qualified = args.work_dir / 'qualified'; qualified.mkdir()
-    shutil.copy2(archives[0], qualified / archives[0].name)
-    shutil.copytree(evidence, qualified / 'evidence')
+    stage_qualified_evidence(evidence, args.work_dir / 'qualified')
     print(json.dumps(report, indent=2))
 
 
