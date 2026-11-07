@@ -12,6 +12,9 @@ product="CS-80 Reference"
 artefacts="$build/CS80Reference_artefacts/Release"
 version="$(sed -n 's/^project(CS80Reference VERSION \([0-9.]*\).*/\1/p' "$root/CMakeLists.txt")"
 arch="$(dpkg --print-architecture)"
+# The delivered VST3 layout and current Linux build are x86_64-only. Do not
+# relabel those bytes with a foreign packaging host's Debian architecture.
+[ "$arch" = amd64 ] || { echo "Linux installer requires an amd64 packaging host (found: $arch)" >&2; exit 1; }
 
 [ -n "$version" ] || { echo "cannot read the project version" >&2; exit 1; }
 [ -f "$artefacts/VST3/$product.vst3/Contents/x86_64-linux/$product.so" ] || { echo "missing VST3 in $artefacts" >&2; exit 1; }
@@ -51,9 +54,14 @@ esac
 # dpkg-shlibdeps only warns for some non-runtime inputs, including relocatable
 # ELF objects. One invalid product must not be hidden by the other's dependencies.
 check_elf_type() {
-    local binary="$1" role="$2" header elf_type
+    local binary="$1" role="$2" header elf_type elf_class elf_machine
     header="$(LC_ALL=C readelf -h "$binary")" || { echo "invalid ELF product: $binary" >&2; exit 1; }
     elf_type="$(printf '%s\n' "$header" | sed -n 's/^[[:space:]]*Type:[[:space:]]*\([^[:space:]]*\).*/\1/p')"
+    elf_class="$(printf '%s\n' "$header" | sed -n 's/^[[:space:]]*Class:[[:space:]]*//p')"
+    elf_machine="$(printf '%s\n' "$header" | sed -n 's/^[[:space:]]*Machine:[[:space:]]*//p')"
+    [ "$elf_class:$elf_machine" = 'ELF64:Advanced Micro Devices X86-64' ] || {
+        echo "invalid ELF architecture for $role: $elf_class / $elf_machine ($binary); expected x86_64" >&2; exit 1;
+    }
     case "$role:$elf_type" in
         VST3:DYN|Standalone:EXEC|Standalone:DYN) ;;
         *) echo "invalid ELF type for $role: $elf_type ($binary)" >&2; exit 1 ;;
@@ -84,3 +92,4 @@ mkdir -p "$out"
 dpkg-deb --build --root-owner-group "$stage" "$out/cs80-reference_${version}_${arch}.deb"
 dpkg-deb --info "$out/cs80-reference_${version}_${arch}.deb" >/dev/null
 echo "$out/cs80-reference_${version}_${arch}.deb"
+
