@@ -42,8 +42,10 @@ matrix nonsymmetric; shared rails couple different rows.
 ## Evidence and assumptions
 
 The existing circuit source graph and receiver loads are described in
-`src/core/MemoryPanels.h` and `docs/workstreams/ws6-library.md`. Pot resistance
-(default 50 kΩ, studied alternatives 10/100 kΩ), linear taper, endpoint behavior,
+`src/core/MemoryPanels.h` and `docs/workstreams/ws6-library.md`. The historical
+default pot resistance is 50 kΩ; a later
+[parts-list review](memory-pot-source.md) supplies primary evidence for B-coded
+10 kΩ memory sliders without changing that default. Linear taper, endpoint behavior,
 and follower/driver/diode laws remain declared inferences, not hardware calibration.
 The mapping from stored digital controls to physical pot travel is not established.
 This API does not resolve those questions or wire the memory circuit into audio.
