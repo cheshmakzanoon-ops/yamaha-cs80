@@ -1,5 +1,6 @@
 #include "core/Engine.h"
 #include "core/Params.h"
+#include "EventTimeline.h"
 
 #include <algorithm>
 #include <cmath>
@@ -175,13 +176,8 @@ int main(int argc, char** argv)
     const int frames = (int) (seconds * sr);
     std::vector<float> buffer((size_t) frames * 2);
     const int block = 128;
-    size_t nextEvent = 0;
-    for (int frame = 0; frame < frames; frame += block)
-    {
-        const int n = std::min(block, frames - frame);
-        while (nextEvent < events.size() && events[nextEvent].frame <= frame)
-        {
-            const auto& e = events[nextEvent++];
+    tools::renderEventTimeline(frames, block, events,
+        [&](const Event& e) {
             switch (e.type)
             {
                 case EventType::NoteOn: engine.noteOn(e.note, e.value, 1); break;
@@ -189,9 +185,10 @@ int main(int argc, char** argv)
                 case EventType::Pressure: engine.channelPressure(1, e.value); break;
                 case EventType::Ribbon: engine.setRibbon(e.value); break;
             }
-        }
-        engine.render(buffer.data() + (size_t) frame * 2, n);
-    }
+        },
+        [&](int frame, int n) {
+            engine.render(buffer.data() + (size_t) frame * 2, n);
+        });
 
     if (! writeWav(path, buffer, sr))
     {
