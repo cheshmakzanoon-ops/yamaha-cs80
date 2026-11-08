@@ -1,4 +1,4 @@
-// Linear delay-reader wrap safety. Pure core DSP, without plugin/GUI startup.
+// Delay-reader wrap and minimum-buffer safety. Pure core DSP, without plugin/GUI startup.
 #include "core/Dsp.h"
 
 #include <array>
@@ -115,6 +115,76 @@ void testClassicChorus()
         check(valid && energy > 1.0, "classic chorus remains finite and audible through repeated wraps");
     }
 }
+
+void testMinimumHermiteBuffer()
+{
+    // Four samples is a supported prepared capacity. All four neighbours fit
+    // at delay 2, even though the ordinary size - 3 upper bound would be 1.
+    for (float rate : {16000.0f, 48000.0f, 96000.0f, 1536000.0f})
+        for (float samples : {0.0f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f})
+        {
+            cs80::DelayLine line;
+            line.prepare(samples / rate, rate);
+            const int size = line.capacity();
+            check(size >= 4 && size <= 6, "short delay prepares a four-to-six-sample buffer");
+            bool exact = true;
+            for (int n = 0; n < size * 4; ++n)
+            {
+                line.write((float) (n + 1) * 0.125f);
+                for (double delay : {-100.0, 0.0, 1.0, 1.5, 2.0, 3.0, 100.0})
+                {
+                    const int tap = size == 6 && delay >= 3.0 ? 3 : 2;
+                    exact = exact && line.readHermite(delay) == line.tap(tap);
+                }
+            }
+            check(exact, "short Hermite reads clamp to the supported integer tap across wraps");
+            line.reset();
+            check(line.readHermite(2.0) == 0.0f, "short Hermite read observes reset history");
+        }
+}
+
+void testUnchangedHermiteInterpolation()
+{
+    // Freeze the existing arithmetic for all capacities with ordered bounds.
+    // Cover all ring positions, integral/fractional taps and both clamp ends.
+    for (float samples : {3.0f, 4.0f, 16.0f, 1000.0f})
+    {
+        cs80::DelayLine line;
+        line.prepare(samples, 1.0f);
+        const int size = line.capacity();
+        std::vector<float> reference((size_t) size, 0.0f);
+        int writePos = 0;
+        cs80::Rng rng(0x431BAu);
+        bool exact = true;
+        for (int n = 0; n < size * 3; ++n)
+        {
+            const float x = rng.nextBipolar();
+            line.write(x);
+            reference[(size_t) writePos] = x;
+            if (++writePos == size) writePos = 0;
+            for (double delay : {-10.0, 2.0, 2.25, 2.75, (double) size - 3.0,
+                                 (double) size + 1.0, 2.0 + rng.nextUnipolar() * (size - 5.0)})
+            {
+                const double bounded = std::clamp(delay, 2.0, (double) (size - 3));
+                double pos = writePos - bounded;
+                if (pos < 0.0) pos += size;
+                const int i0 = std::min((int) pos, size - 1);
+                const float t = (float) (pos - i0);
+                const float xm1 = reference[(size_t) ((i0 + size - 1) % size)];
+                const float x0 = reference[(size_t) i0];
+                const float x1 = reference[(size_t) ((i0 + 1) % size)];
+                const float x2 = reference[(size_t) ((i0 + 2) % size)];
+                const float c1 = 0.5f * (x1 - xm1);
+                const float c2 = xm1 - 2.5f * x0 + 2.0f * x1 - 0.5f * x2;
+                const float c3 = 0.5f * (x2 - xm1) + 1.5f * (x0 - x1);
+                const float expected = ((c3 * t + c2) * t + c1) * t + x0;
+                exact = exact && std::bit_cast<std::uint32_t>(line.readHermite(delay))
+                    == std::bit_cast<std::uint32_t>(expected);
+            }
+        }
+        check(exact, "Hermite reads with formerly valid bounds stay bit-identical");
+    }
+}
 }
 
 int main()
@@ -122,6 +192,8 @@ int main()
     testRoundedWrap();
     testUnchangedInterpolation();
     testClassicChorus();
+    testMinimumHermiteBuffer();
+    testUnchangedHermiteInterpolation();
     std::printf("Delay line: %d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;
 }
