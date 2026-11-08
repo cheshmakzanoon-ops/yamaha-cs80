@@ -1462,7 +1462,14 @@ void testMixedRouteLifecycle()
                 check(mixed.msegValue(v, 0) == isolated.msegValue(v, 0),
                       "rate route migration preserves exact envelope state");
                 float expectedPitch = 0.0f, expectedFx = 0.0f;
-                for (int s : { 0, 2, 4 }) expectedPitch += controls.amount[(std::size_t) s] * kPitchSemitones;
+                for (int s : { 0, 2, 4 })
+                {
+                    // Match the production scaled-value rounding point. A single
+                    // += amount * scale can contract into FMA on Apple Clang and
+                    // would test a different arithmetic expression.
+                    volatile float scaled = controls.amount[(std::size_t) s] * kPitchSemitones;
+                    expectedPitch += scaled;
+                }
                 for (int s : { 1, 3, 5 }) expectedFx += controls.amount[(std::size_t) s];
                 check(mixed.rankOffsets(v, 0).pitch == expectedPitch
                       && mixed.rankOffsets(v, 1).pitch == expectedPitch
