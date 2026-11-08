@@ -5,6 +5,9 @@ Never executes a fixture. Run with --packager PATH for before/after comparison.
 """
 import argparse
 import importlib.util
+import os
+import subprocess
+from unittest import mock
 from pathlib import Path
 import struct
 import tempfile
@@ -174,6 +177,58 @@ class IdentityTests(unittest.TestCase):
             paths[0].write_bytes(bad)
             with self.assertRaises(ValueError):
                 packager.collect_products(self.base, 'macos', 'arm64')
+
+    def test_windows_reparse_rejected_before_walk_or_binary_read(self):
+        paths = self.products('windows', 'x86_64')
+        bundle = self.base / 'VST3' / (packager.PRODUCT + '.vst3')
+        nested = bundle / 'Contents/Resources/junction'
+        nested.mkdir(parents=True)
+        (nested / 'unshipped.txt').write_text('must not be traversed')
+        original_lstat, original_walk = Path.lstat, packager.os.walk
+
+        class WindowsStat:
+            def __init__(self, original):
+                self.original = original
+                self.st_file_attributes = getattr(original, 'st_file_attributes', 0) | 0x400
+            def __getattr__(self, name):
+                return getattr(self.original, name)
+
+        for marked in (bundle, nested, paths[0], paths[1]):
+            with self.subTest(marked=marked):
+                walked = []
+                def lstat(path):
+                    value = original_lstat(path)
+                    return WindowsStat(value) if path == marked else value
+                def walk(*args, **kwargs):
+                    for row in original_walk(*args, **kwargs):
+                        walked.append(Path(row[0]))
+                        yield row
+                with mock.patch.object(Path, 'lstat', lstat), mock.patch.object(packager.os, 'walk', walk), \
+                     mock.patch.object(packager, 'verify_binary') as verify:
+                    with self.assertRaisesRegex(ValueError, 'reparse'):
+                        packager.collect_products(self.base, 'windows', 'x86_64')
+                    verify.assert_not_called()
+                self.assertNotIn(marked, walked)
+
+    @unittest.skipUnless(os.name == 'nt', 'Native Windows junction fixture')
+    def test_native_windows_junction_is_rejected(self):
+        self.products('windows', 'x86_64')
+        junction = self.base / 'VST3' / (packager.PRODUCT + '.vst3') / 'Contents/junction'
+        outside = self.base.parent / 'outside'
+        outside.mkdir()
+        (outside / 'unshipped.txt').write_text('external fixture')
+        result = subprocess.run(['cmd', '/d', '/c', 'mklink', '/J', str(junction), str(outside)],
+                                text=True, capture_output=True, timeout=15)
+        if result.returncode:
+            self.skipTest('Junction creation unavailable: ' + result.stderr.strip())
+        try:
+            with mock.patch.object(packager, 'verify_binary') as verify:
+                with self.assertRaisesRegex(ValueError, 'reparse'):
+                    packager.collect_products(self.base, 'windows', 'x86_64')
+                verify.assert_not_called()
+        finally:
+            junction.rmdir()
+        self.assertEqual((outside / 'unshipped.txt').read_text(), 'external fixture')
 
     def test_rejected_before_output(self):
         paths = self.products('linux', 'x86_64')

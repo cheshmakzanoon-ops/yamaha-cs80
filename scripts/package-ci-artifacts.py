@@ -128,6 +128,15 @@ def verify_binary(path: Path, system: str, arch: str, standalone: bool) -> None:
                 check_macho(0, size)
 
 
+def reject_windows_reparse(path: Path, system: str) -> None:
+    # Directory junctions and mount points are reparse points, but are not
+    # symlinks to Path.is_symlink() on supported Windows/Python versions.
+    # Reject before os.walk descends or any payload bytes are opened.
+    if system == "windows":
+        require(not getattr(path.lstat(), "st_file_attributes", 0) & 0x400,
+                f"Windows package must not contain reparse points: {path}")
+
+
 def collect_products(base: Path, system: str, arch: str) -> list[tuple[str, Path]]:
     """Return only advertised bundles, preserving safe internal symlinks."""
     vst = base / "VST3" / f"{PRODUCT}.vst3"
@@ -156,12 +165,16 @@ def collect_products(base: Path, system: str, arch: str) -> list[tuple[str, Path
     entries: list[tuple[str, Path]] = []
     for product in products:
         require(product.exists() and not product.is_symlink(), f"Missing or linked product root: {product}")
+        reject_windows_reparse(product, system)
         require(product.resolve().is_relative_to(base.resolve()), f"Product escapes artifact root: {product}")
         paths = [product]
         if product.is_dir():
             # os.walk does not traverse symbolic directory links.
             for folder, dirs, files in os.walk(product, followlinks=False):
-                paths.extend(Path(folder) / name for name in sorted(dirs + files))
+                for name in sorted(dirs + files):
+                    child = Path(folder) / name
+                    reject_windows_reparse(child, system)
+                    paths.append(child)
         for path in sorted(set(paths)):
             name = path.relative_to(base).as_posix()
             safe_name(name)

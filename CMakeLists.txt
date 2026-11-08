@@ -33,6 +33,9 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_pump_until_tests COMMAND cs80_pump_until_tests)
     set_tests_properties(cs80_pump_until_tests PROPERTIES TIMEOUT 30)
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME cs80_package_binary_identity_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-package-binary-identity.py)
+    set_tests_properties(cs80_package_binary_identity_tests PROPERTIES TIMEOUT 30)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)
