@@ -454,6 +454,10 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_ports_tests COMMAND cs80_memory_panel_ports_tests)
     set_tests_properties(cs80_memory_panel_ports_tests PROPERTIES TIMEOUT 120)
 
+    add_executable(cs80_programmer_control_identity_tests tests/ProgrammerControlIdentityTests.cpp)
+    target_include_directories(cs80_programmer_control_identity_tests PRIVATE src)
+    add_test(NAME cs80_programmer_control_identity_tests COMMAND cs80_programmer_control_identity_tests)
+
     # [ws7-panel] register this workstream's core tests below this line.
 
     # [integration] CPU pass: bounded-error approximations against std::.

@@ -68,3 +68,28 @@ checks a biased operating point, and rejects invalid injection/digital ports.
 The tolerance includes finite-difference truncation and nonlinear solver error;
 it is not a physical fidelity specification. Existing memory-panel tests remain
 separate coverage of zero-excitation behavior and the compiled model.
+
+## Control identity is not a calibration law
+
+`reference/ProgrammerControlIdentity.h` maps the source ledger's `Role` values and
+one-based physical output rows to channel-local `CP_*` indices, with a checked
+inverse. This is identity metadata only. Row 1 is PWM rate, but channel control 0
+is SAW (physical row 5); a sequential copy of the 26 stored miniature controls is
+not a physical row mapping. Feet, pan and both filter-bypass controls have no
+programmer row. Switch rows 4/5 map to pulse/saw. The 26 identities are checked
+against explicit parameter-ID strings rather than relying on enum order.
+
+Both ranks share control identities, not all receiver circuits: source rows
+23–26 retain the rank-specific `touchReceiverIds` in `SourceFactoryTones.h`.
+The mapping returns channel-local indices, never host/global parameter indices.
+It does not read APVTS, mutate stored memory, reorder runtime controls, or produce
+`MemoryPanels::Positions`.
+
+Stored memory values retain their main-panel physical ranges and skew mappings
+(`docs/MEMORY_AUTOMATION.md`, `core/Params.h`). Electrical `Positions` instead
+means wiper fraction between reference and rail. Neither linear normalization of
+Hz/seconds nor GUI skew proves a hardware taper or its orientation. A future
+calibration must supply separately, per role, the observed control-to-wiper law,
+pot resistance/taper/endpoints, source/load conditions and provenance. Current
+inferred boundary-law IDs are not substitute measurements. This identity API
+intentionally has no numeric conversion function until that evidence exists.
