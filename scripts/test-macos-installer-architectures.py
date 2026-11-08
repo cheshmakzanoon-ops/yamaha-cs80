@@ -9,15 +9,20 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCT = 'CS-80 Reference'
+NOTICE_FIXTURES = ('assets/fonts/barlow-condensed/OFL.txt',
+                   'assets/fonts/barlow-condensed/SOURCE.txt',
+                   'src/vendor/mts-esp/LICENSE')
 
 class Architectures(unittest.TestCase):
-    def run_fixture(self, architectures, missing=None, nonexecutable=None):
+    def run_fixture(self, architectures, missing=None, nonexecutable=None, missing_notice=None):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             script = root / 'installer/macos/make-pkg.sh'
             script.parent.mkdir(parents=True)
             shutil.copyfile(ROOT / 'installer/macos/make-pkg.sh', script)
-            for relative in ('CMakeLists.txt', 'LICENSE', 'docs/INSTALL_AND_QUICKSTART.md'):
+            for relative in ('CMakeLists.txt', 'LICENSE', 'docs/INSTALL_AND_QUICKSTART.md') + NOTICE_FIXTURES:
+                if relative == missing_notice:
+                    continue
                 target = root / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / relative, target)
@@ -58,6 +63,20 @@ elif name in ('pkgbuild', 'productbuild'): pathlib.Path(args[-1]).touch()
         self.assertEqual(code, 0, err)
         self.assertEqual(calls[:3], ['lipo'] * 3)
         self.assertEqual(len(packages), 1)
+        self.assertEqual(calls.count('ditto'), 3)
+        self.assertEqual(calls.count('pkgbuild'), 4)
+        self.assertEqual(calls.count('productbuild'), 1)
+        self.assertEqual(calls[-1], 'pkgutil')
+
+    def test_missing_notice_prevents_distribution(self):
+        for notice in NOTICE_FIXTURES:
+            with self.subTest(notice=notice):
+                code, err, calls, packages = self.run_fixture(
+                    ['x86_64 arm64'] * 3, missing_notice=notice)
+                self.assertNotEqual(code, 0)
+                self.assertIn(Path(notice).name, err)
+                self.assertNotIn('productbuild', calls)
+                self.assertFalse(packages)
 
     def test_native_and_mixed_rejected_before_staging(self):
         for index in range(3):
