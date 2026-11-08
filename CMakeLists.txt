@@ -45,6 +45,12 @@ if (CS80_BUILD_TESTS)
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_ui_smoke_environment.py)
         set_tests_properties(cs80_ui_environment_tests PROPERTIES TIMEOUT 45)
     endif()
+    if (UNIX)
+        # Synthetic shell/tool fixtures only; no native installer or product runs.
+        add_test(NAME cs80_macos_installer_architecture_tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-macos-installer-architectures.py)
+        set_tests_properties(cs80_macos_installer_architecture_tests PROPERTIES TIMEOUT 60)
+    endif()
     find_package(Threads REQUIRED)
     add_executable(cs80_continuous_voice_circuit_tests tests/ContinuousVoiceCircuitTests.cpp)
     target_include_directories(cs80_continuous_voice_circuit_tests PRIVATE src)
