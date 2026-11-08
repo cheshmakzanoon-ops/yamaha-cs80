@@ -3,6 +3,7 @@
 import argparse
 import os
 import signal
+import sys
 from pathlib import Path
 import subprocess
 import tempfile
@@ -60,6 +61,45 @@ class RenderArguments(unittest.TestCase):
             result = subprocess.run([RENDER, '--seconds', '0.001', '--out', str(output)],
                                     capture_output=True, timeout=10, preexec_fn=limit_output)
             self.assertEqual(result.returncode, 1, result.stdout)
+            self.assertIn(b'Could not write', result.stderr)
+            self.assertNotIn(b'Wrote ', result.stdout)
+            self.assertEqual(output.stat().st_size, 64)
+
+    @unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),
+                         'requires POSIX child-only resource limits')
+    def test_long_render_has_bounded_buffers(self):
+        import resource
+        if not hasattr(resource, 'RLIMIT_AS'):
+            self.skipTest('address-space limit unavailable')
+
+        # Run setup in a visible, isolated interpreter rather than preexec_fn:
+        # macOS may expose RLIMIT_AS yet reject setrlimit with ValueError.
+        # Only that specific unavailable capability skips this memory test.
+        launcher = """
+import os, resource, signal, sys
+try:
+    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024,) * 2)
+except (ValueError, OSError) as error:
+    print('RLIMIT_AS unavailable: ' + str(error), file=sys.stderr)
+    sys.exit(77)
+signal.signal(signal.SIGXFSZ, signal.SIG_IGN)
+resource.setrlimit(resource.RLIMIT_FSIZE, (64, 64))
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+os.execv(sys.argv[1], sys.argv[1:])
+"""
+
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'long.wav'
+            # Accepted duration formerly allocated 384 MB before rendering.
+            # Bounded buffers reach the deliberate disk limit instead. This
+            # does not spend 1000 seconds rendering or claim a full long WAV.
+            result = subprocess.run([sys.executable, '-c', launcher, RENDER,
+                                     '--seconds', '1000', '--out', str(output)],
+                                    capture_output=True, timeout=10)
+            if result.returncode == 77 and result.stderr.startswith(b'RLIMIT_AS unavailable: '):
+                self.assertFalse(output.exists())
+                self.skipTest(result.stderr.decode(errors='replace').strip())
+            self.assertEqual(result.returncode, 1, result.stderr)
             self.assertIn(b'Could not write', result.stderr)
             self.assertNotIn(b'Wrote ', result.stdout)
             self.assertEqual(output.stat().st_size, 64)
