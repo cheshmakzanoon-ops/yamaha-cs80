@@ -35,6 +35,27 @@ inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
     return tuningRef * std::pow(2.0f, (note - 69.0f) / 12.0f);
 }
 
+// Memoize the exact existing pow call, not an exp2 approximation/substitution.
+// NaN forces evaluation; signed-zero exponents both produce exactly one.
+struct PitchPowMemo
+{
+    float arg = std::numeric_limits<float>::quiet_NaN();
+    float value = 0.0f;
+    float operator()(float x) noexcept
+    {
+        if (!(x == arg))
+        {
+            arg = x;
+            value = std::pow(2.0f, x);
+        }
+        return value;
+    }
+};
+inline float midiToHz(float note, float tuningRef, PitchPowMemo& memo) noexcept
+{
+    return tuningRef * memo((note - 69.0f) / 12.0f);
+}
+
 // IG00156 nominal law: Yamaha CS servicing guide p34; CS-80 IC sheet p42.
 // MIDI60 / .5V is an interface reference, not a panel-slider voltage claim.
 constexpr float kReferenceKeyVolts = 0.5f;
