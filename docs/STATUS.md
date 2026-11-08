@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-07. Latest merged code and native download source: `0996a15af334f9dcfd63ed8c1d574a22b6804f00` (#86, CC88 release-prefix fix). Its post-merge build passed all six jobs; the matching DSP and screenshot runs passed. Screenshot-only publication: `430c9e04d74dc9975fc6ddf4dd49621ef1cae952`. These are source/provenance checkpoints, not subsequent documentation-only commits. Earlier Linux validation failures remain historical failures with no established cause.
+Last updated: 2026-11-08. Latest merged implementation checkpoint: `1f7b4079ed20d38fc4ab7f9a872e4ee9b58938c8` (#70, package notices), following the #87/#88 architecture/binary identity gates. Its post-merge build passed five of six jobs and failed Linux GUI validation; the cause is unknown. The native downloads and screenshots still use the earlier verified `0996a15af334f9dcfd63ed8c1d574a22b6804f00` checkpoint. Screenshot-only publication: `430c9e04d74dc9975fc6ddf4dd49621ef1cae952`. Do not equate current source with the published binary/rendering source.
 
 ## Changes since the October 31 integration
 
@@ -17,9 +17,11 @@ handover PDF remain dated evidence, not current-head measurements.
 
 | Area | Current state | Source / scope |
 | --- | --- | --- |
+| Package notices | Native archives and Windows/macOS/Linux packaging recipes include the embedded Barlow font licence/source notice and MTS-ESP licence | `1f7b407` ([PR #70](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/70)); not a retroactive update to historical artifacts or full licence/release qualification. |
+| Binary architecture guards | Native archive gate checks ELF/PE/Mach-O identity and architecture; Debian installer rejects mismatched architecture | `41db04b` ([PR #87](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/87)), `de856f7` ([PR #88](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/88)); not runtime/loadability qualification. |
 | CC88 release prefix | Note Off consumes only its channel's pending prefix, preventing it from changing the next unprefixed strike; positive Note On arithmetic is unchanged and release velocity is not synthesized | `0996a15` ([PR #86](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/86)); [scope and focused evidence](CC88_RELEASE_PREFIX.md). Processor integration was source-reviewed, not runtime-tested in the focused audit. |
 | Linux installer | Derives versioned runtime dependencies from both staged products; rejects invalid ELF types and primary VST3 payloads outside the shipped bundle | `b363b325` ([PR #83](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/83)); [packaging requirements](release/RELEASE_QUALIFICATION.md). Not full loadability or bundle-resource validation. |
-| Linux packaging evidence | Scoped native check successfully inspected a temporary package from pinned existing binaries; uploads text/JSON evidence only | `fa7e988` ([PR #84](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/84)); [scope and input pins](release/LINUX_PACKAGE_QUALIFICATION.md). No package publication, execution or installation; incomplete font/MTS notices. |
+| Linux packaging evidence | Scoped native check successfully inspected a temporary package from pinned existing binaries; uploads text/JSON evidence only | `fa7e988` ([PR #84](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/84)); [scope and input pins](release/LINUX_PACKAGE_QUALIFICATION.md). No package publication, execution or installation; that historical evidence predates #70 notices. |
 | Universal macOS installer | Requires executable VST3, AU and Standalone payloads with x86-64 and arm64 slices before staging | `58ed29e` ([PR #85](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/85)); [architecture guard](MACOS_INSTALLER_ARCHITECTURE_GATE.md). Native development archives unchanged; real universal-installer qualification still open. |
 | Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
 | External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
@@ -31,7 +33,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
 | OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
-| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots of the current merged-code checkpoint | LFO preview fix `ae3958d`; screenshot source `0996a15`, run [42381017512](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017512), committed `430c9e0`; [provenance](screenshots/provenance.json) |
+| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots of the retained download checkpoint | LFO preview fix `ae3958d`; screenshot source `0996a15`, run [42381017512](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017512), committed `430c9e0`; [provenance](screenshots/provenance.json) |
 
 The optimization and MSEG reports retain draft-stage qualification notes as
 historical evidence. Those changes are now merged; the post-merge status below
@@ -53,9 +55,9 @@ was downloaded and verified: eight UTF-8 text/JSON files, no `.deb`, ELF or
 product/source archive, and `package_uploaded=false`. Authenticated access was
 rechecked; it expires **November 14, 2026 at 09:50 UTC**. This is packaging evidence
 for the named pinned inputs, not qualification of the current `0996a15` downloads
-or a newly published installer. Font/MTS notices remain absent pending separate #70;
-complete licence, installation, host, loadability and release qualification remain
-open. #85's macOS guard has inert-fixture coverage, not native universal-installer,
+or a newly published installer. That pinned package predates the font/MTS notices now integrated by #70.
+Current packaging recipes include those notices, but historical downloads are unchanged;
+complete licence, installation, host, loadability and release qualification remain open. #85's macOS guard has inert-fixture coverage, not native universal-installer,
 Apple `lipo`, signing or notarization qualification.
 
 The earlier native [qualification run 42360278797](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42360278797)
@@ -66,7 +68,20 @@ that earlier stage; the verified result above is current.
 
 ### Post-merge CI and download checkpoints
 
-Latest merged code `0996a15` passed
+Current implementation checkpoint `1f7b407` was merged from reviewed head
+`f45f6426bbbe5eeb4cfb4f21c52ebb6231ccff58`, which passed all four pre-merge runs:
+[PR build 42441612078](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42441612078),
+[push build 42441609396](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42441609396),
+[DSP 42441609392](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42441609392),
+and [screenshots 42441609423](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42441609423).
+The exact merged tree matches that reviewed head. However, its
+[post-merge build 42444667238](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42444667238)
+failed Linux GUI-under-Xvfb and GUI state regression validation. All four native
+build/test/package jobs and Windows validation passed. This is status metadata,
+not a root-cause diagnosis; the earlier passing runs do not erase the failure.
+No newer artifacts from this failed run replace the README downloads.
+
+The retained download checkpoint `0996a15` passed
 [build 42381017495](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017495),
 [DSP run 42381017482](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017482)
 and [screenshot run 42381017512](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017512).
