@@ -1,8 +1,12 @@
 #include "core/Engine.h"
 #include "core/Params.h"
+#include "EventTimeline.h"
 
 #include <algorithm>
 #include <cmath>
+#include <cerrno>
+#include <cstdlib>
+#include <limits>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -54,8 +58,9 @@ bool writeWav(const std::string& path, const std::vector<float>& stereo, double 
     if (! fp)
         return false;
     const size_t n = std::fwrite(b.data(), 1, b.size(), fp);
-    std::fclose(fp);
-    return n == b.size();
+    // Buffered-write errors may surface only at fclose (disk full, quota).
+    const int closed = std::fclose(fp);
+    return n == b.size() && closed == 0;
 }
 
 ParamValues makeBrass()
@@ -133,15 +138,56 @@ int main(int argc, char** argv)
     double sr = 48000.0;
     double seconds = 12.0;
     std::string path = "artifacts/cs80-demo.wav";
+    const auto usage = [] {
+        std::fprintf(stderr, "Usage: cs80_render [--sr integer-Hz (8000..768000)] "
+                             "[--seconds positive-number] [--out path]\n");
+    };
+    const auto number = [](const char* text, double& value) {
+        char* end = nullptr;
+        errno = 0;
+        value = std::strtod(text, &end);
+        return end != text && *end == '\0' && errno != ERANGE && std::isfinite(value);
+    };
     for (int i = 1; i < argc; ++i)
     {
-        if (! std::strcmp(argv[i], "--sr") && i + 1 < argc)
-            sr = std::atof(argv[++i]);
-        else if (! std::strcmp(argv[i], "--seconds") && i + 1 < argc)
-            seconds = std::atof(argv[++i]);
-        else if (! std::strcmp(argv[i], "--out") && i + 1 < argc)
-            path = argv[++i];
+        const std::string option = argv[i];
+        if (option == "--help") { usage(); return 0; }
+        if ((option != "--sr" && option != "--seconds" && option != "--out") || i + 1 >= argc)
+        {
+            usage();
+            return 2;
+        }
+        const char* argument = argv[++i];
+        if (option == "--out")
+        {
+            path = argument;
+            if (path.empty()) { usage(); return 2; }
+        }
+        else if (!number(argument, option == "--sr" ? sr : seconds))
+        {
+            std::fprintf(stderr, "Invalid numeric value for %s\n", option.c_str());
+            return 2;
+        }
     }
+    // Match Engine::prepare's supported rates instead of silently rendering at
+    // its fallback while writing a different WAV rate. PCM WAV rates are integers.
+    if (sr < 8000.0 || sr > 768000.0 || std::floor(sr) != sr || seconds <= 0.0)
+    {
+        usage();
+        return 2;
+    }
+    const double requestedFrames = seconds * sr;
+    // PCM16 stereo uses four bytes per frame; the RIFF chunk size includes36
+    // bytes of headers. Check before float-to-int conversion or allocation.
+    constexpr auto maxWavFrames = (std::numeric_limits<uint32_t>::max() - 36u) / 4u;
+    if (!std::isfinite(requestedFrames) || requestedFrames < 1.0
+        || requestedFrames > static_cast<double>(maxWavFrames)
+        || requestedFrames > static_cast<double>(std::numeric_limits<int>::max()))
+    {
+        std::fprintf(stderr, "Requested duration must fit at least one frame and a PCM RIFF WAV\n");
+        return 2;
+    }
+    const int frames = static_cast<int>(requestedFrames);
 
     Engine engine;
     engine.prepare(sr);
@@ -172,16 +218,10 @@ int main(int argc, char** argv)
         return a.frame < b.frame;
     });
 
-    const int frames = (int) (seconds * sr);
     std::vector<float> buffer((size_t) frames * 2);
     const int block = 128;
-    size_t nextEvent = 0;
-    for (int frame = 0; frame < frames; frame += block)
-    {
-        const int n = std::min(block, frames - frame);
-        while (nextEvent < events.size() && events[nextEvent].frame <= frame)
-        {
-            const auto& e = events[nextEvent++];
+    tools::renderEventTimeline(frames, block, events,
+        [&](const Event& e) {
             switch (e.type)
             {
                 case EventType::NoteOn: engine.noteOn(e.note, e.value, 1); break;
@@ -189,9 +229,10 @@ int main(int argc, char** argv)
                 case EventType::Pressure: engine.channelPressure(1, e.value); break;
                 case EventType::Ribbon: engine.setRibbon(e.value); break;
             }
-        }
-        engine.render(buffer.data() + (size_t) frame * 2, n);
-    }
+        },
+        [&](int frame, int n) {
+            engine.render(buffer.data() + (size_t) frame * 2, n);
+        });
 
     if (! writeWav(path, buffer, sr))
     {

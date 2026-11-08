@@ -986,7 +986,10 @@ public:
     // keeps sub-sample precision. Existing read() above is unchanged.
     float readHermite(double delaySamples) const noexcept
     {
-        delaySamples = std::clamp(delaySamples, 2.0, (double) (size - 3));
+        // prepare() permits a four-sample minimum buffer. Its only safe
+        // Hermite delay is two samples; never pass reversed clamp bounds.
+        const double maximumDelay = (double) std::max(2, size - 3);
+        delaySamples = std::clamp(delaySamples, 2.0, maximumDelay);
         double pos = (double) writePos - delaySamples;
         if (pos < 0.0)
             pos += (double) size;

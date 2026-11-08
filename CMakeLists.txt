@@ -33,6 +33,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_ig00151_zero_ei_tests PRIVATE src)
     add_test(NAME cs80_ig00151_zero_ei_tests COMMAND cs80_ig00151_zero_ei_tests)
     set_tests_properties(cs80_ig00151_zero_ei_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_event_timeline_tests tests/EventTimelineTests.cpp)
+    target_include_directories(cs80_event_timeline_tests PRIVATE src)
+    add_test(NAME cs80_event_timeline_tests COMMAND cs80_event_timeline_tests)
+    set_tests_properties(cs80_event_timeline_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_pump_until_tests tests/PumpUntilTests.cpp)
     add_test(NAME cs80_pump_until_tests COMMAND cs80_pump_until_tests)
     set_tests_properties(cs80_pump_until_tests PROPERTIES TIMEOUT 30)
@@ -476,6 +480,12 @@ endif()
 
 add_executable(cs80_render src/tools/render_cli.cpp)
 target_link_libraries(cs80_render PRIVATE cs80_core)
+if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_render_cli_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_render_cli.py
+                     --render $<TARGET_FILE:cs80_render>)
+    set_tests_properties(cs80_render_cli_tests PROPERTIES TIMEOUT 60)
+endif()
 
 add_executable(cs80_source_factory_audition src/tools/source_factory_audition.cpp)
 target_link_libraries(cs80_source_factory_audition PRIVATE cs80_core)
@@ -485,6 +495,12 @@ target_include_directories(cs80_voice_continuity_probe PRIVATE src)
 
 add_executable(cs80_source_factory_benchmark src/tools/source_factory_benchmark.cpp)
 target_link_libraries(cs80_source_factory_benchmark PRIVATE cs80_core)
+if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_benchmark_preflight_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_benchmark_preflight.py
+                     --benchmark $<TARGET_FILE:cs80_source_factory_benchmark>)
+    set_tests_properties(cs80_benchmark_preflight_tests PROPERTIES TIMEOUT 60)
+endif()
 
 add_executable(cs80_dsp_probe src/tools/dsp_probe.cpp)
 target_link_libraries(cs80_dsp_probe PRIVATE cs80_core)
