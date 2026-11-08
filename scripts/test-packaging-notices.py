@@ -48,9 +48,11 @@ def products(base, system):
         binaries = [vst / "Contents/x86_64-win" / f"{product}.vst3", base / "Standalone" / f"{product}.exe"]
     else:
         binaries = [vst / "Contents/x86_64-linux" / f"{product}.so", base / "Standalone" / product]
-    for binary in binaries:
+    for index, binary in enumerate(binaries):
         binary.parent.mkdir(parents=True, exist_ok=True)
-        binary.write_bytes(b"synthetic, not a loadable plugin\x00")
+        # Header-only inert inputs satisfy archive identity checks without
+        # introducing executable fixture code or bypassing production checks.
+        binary.write_bytes(packaging.binary_fixture(system, "x86_64", index == len(binaries) - 1))
         binary.chmod(0o755)
 
 
@@ -126,7 +128,7 @@ class NoticeTests(unittest.TestCase):
     def test_synthetic_deb_notice_bytes(self):
         build = self.temp_root / "build"
         # Only the Debian installer needs real ELF input. Archive fixtures above
-        # remain platform-independent byte payloads. Neither ELF is executed.
+        # are inert identity headers, not executable products. Neither ELF is executed.
         base = build / "CS80Reference_artefacts/Release"
         product = packaging.PRODUCT
         standalone = base / "Standalone" / product

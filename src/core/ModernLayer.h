@@ -194,12 +194,23 @@ public:
 
         for (int m = 0; m < kMsegCount; ++m)
         {
-            if (! msegUsed[(std::size_t) m])
-                continue;
             const auto& shape = config.msegs[(std::size_t) m];
             if (shape.trigger == MsegTrigger::poly)
                 continue;
             auto& runner = globalRunners[(std::size_t) m];
+            // Like poly runners, mono runners must observe phrase onsets even
+            // while no live route reads them. Otherwise the shared trigger is
+            // consumed below and a later route edit revives a stale prior
+            // phrase, or leaves this held note's envelope unstarted forever.
+            // Only event state changes here; unused envelope clocks stay paused.
+            if (shape.trigger == MsegTrigger::mono)
+            {
+                if (monoTriggerPending || (monoRestartPending[(std::size_t) m] && anyGateLast))
+                    runner.trigger(shape);
+                monoRestartPending[(std::size_t) m] = false;
+            }
+            if (! msegUsed[(std::size_t) m])
+                continue;
             const double rate = (double) controls.msegRate[(std::size_t) m];
             if (shape.trigger == MsegTrigger::free)
             {
@@ -222,8 +233,6 @@ public:
                     runner.trigger(shape);
                 freeStarted[(std::size_t) m] = true;
             }
-            else if (monoTriggerPending || (monoRestartPending[(std::size_t) m] && anyGateLast))
-                runner.trigger(shape);
             monoRestartPending[(std::size_t) m] = false;
             const bool gate = shape.trigger == MsegTrigger::free || anyGateLast;
             const double advance = advanceFor(m, globalRate[(std::size_t) m]);
@@ -309,6 +318,10 @@ public:
                 if (config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
                 {
                     voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                    // Rate routes are evaluated after the runners and apply on
+                    // the next sample. A new envelope starts at its base rate,
+                    // just like a fresh voice, not at the previous note's rate.
+                    voice.rate[(std::size_t) m] = 0.0f;
                     voice.restartPending[(std::size_t) m] = false;
                 }
             // Keep the next-beginSample trigger timing. Only a newly observed
@@ -329,7 +342,10 @@ public:
                 if (voice.restartPending[(std::size_t) m])
                 {
                     if (globalSourceEligible && in.gate)
+                    {
                         voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                        voice.rate[(std::size_t) m] = 0.0f;
+                    }
                     voice.restartPending[(std::size_t) m] = false;
                 }
                 voice.runners[(std::size_t) m].tick(config.msegs[(std::size_t) m],

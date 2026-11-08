@@ -687,6 +687,9 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isNoteOff())
     {
+        // CA-031: CC88 belongs to the next Note On OR Note Off on its channel.
+        // JUCE also classifies zero-velocity Note On as Note Off here.
+        highResolutionVelocity.noteOff(message.getChannel());
         routeNoteOff(message.getNoteNumber(), message.getChannel());
     }
     else if (message.isAftertouch())

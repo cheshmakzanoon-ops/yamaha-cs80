@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-06. Current engine/plugin source: `f921f548abaaaa31036fe8af007367288ce58566`; screenshot refresh: `f447493f0c0b384600d45ebce598cd37d0ec7d28`.
+Last updated: 2026-11-07. Latest merged code and native download source: `0996a15af334f9dcfd63ed8c1d574a22b6804f00` (#86, CC88 release-prefix fix). Its post-merge build passed all six jobs; the matching DSP and screenshot runs passed. Screenshot-only publication: `430c9e04d74dc9975fc6ddf4dd49621ef1cae952`. These are source/provenance checkpoints, not subsequent documentation-only commits. Earlier Linux validation failures remain historical failures with no established cause.
 
 ## Changes since the October 31 integration
 
@@ -17,24 +17,105 @@ handover PDF remain dated evidence, not current-head measurements.
 
 | Area | Current state | Source / scope |
 | --- | --- | --- |
+| CC88 release prefix | Note Off consumes only its channel's pending prefix, preventing it from changing the next unprefixed strike; positive Note On arithmetic is unchanged and release velocity is not synthesized | `0996a15` ([PR #86](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/86)); [scope and focused evidence](CC88_RELEASE_PREFIX.md). Processor integration was source-reviewed, not runtime-tested in the focused audit. |
+| Linux installer | Derives versioned runtime dependencies from both staged products; rejects invalid ELF types and primary VST3 payloads outside the shipped bundle | `b363b325` ([PR #83](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/83)); [packaging requirements](release/RELEASE_QUALIFICATION.md). Not full loadability or bundle-resource validation. |
+| Linux packaging evidence | Scoped native check successfully inspected a temporary package from pinned existing binaries; uploads text/JSON evidence only | `fa7e988` ([PR #84](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/84)); [scope and input pins](release/LINUX_PACKAGE_QUALIFICATION.md). No package publication, execution or installation; incomplete font/MTS notices. |
+| Universal macOS installer | Requires executable VST3, AU and Standalone payloads with x86-64 and arm64 slices before staging | `58ed29e` ([PR #85](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/85)); [architecture guard](MACOS_INSTALLER_ARCHITECTURE_GATE.md). Native development archives unchanged; real universal-installer qualification still open. |
+| Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
+| External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
+| Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
 | Host automation | Eighteen key VST3 parameters retain sample offsets in modern circuit policy; protected policies and unsupported parameters keep block-rate behavior | `1b3df5a`, endpoint correction `7c54caf`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md). AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). External master, per-channel tables and live DAW qualification remain separate. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, partial CC121 reset and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
-| MSEG and FX | Trigger/sustain boundary fixes, synced rate phase retained across host blocks, and corrections to tape, plate, Drive and loudness-match transitions | `ce423e3`; [MSEG_TRANSPORT_RATE.md](MSEG_TRANSPORT_RATE.md), [ws5 report](workstreams/ws5-modern.md) |
+| MSEG and FX | Trigger/sustain boundary fixes, mono onset retained while its routes are unused, restarted poly envelopes' rate history cleared, synced rate phase retained across host blocks, and corrections to tape, plate, Drive and loudness-match transitions | MSEG integration `59b1b3c` ([PR #80](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/80)); transport fix `ce423e3`; [MSEG_COMBINED_INTEGRATION.md](MSEG_COMBINED_INTEGRATION.md), [MSEG_TRANSPORT_RATE.md](MSEG_TRANSPORT_RATE.md), [ws5 report](workstreams/ws5-modern.md) |
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
-| Editor evidence | Selected LFO waveform previews and 68 current real-editor screenshots | `ae3958d`; source `f921f54`, screenshot run [42175969590](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969590), [provenance](screenshots/provenance.json) |
+| OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
+| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots of the current merged-code checkpoint | LFO preview fix `ae3958d`; screenshot source `0996a15`, run [42381017512](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017512), committed `430c9e0`; [provenance](screenshots/provenance.json) |
 
-The most recent fully passing native bundle run checked for this update is
-[42165333280](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333280)
-at `ac27687`, with successful
-[DSP run 42165333241](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42165333241).
-The newer `f921f54` [build run 42175969425](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425)
-has successful native build jobs on all four platforms, but its [Linux validator job](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425/job/127760198405)
-failed at the fixed-seed GUI step. Its [DSP run 42175969485](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969485)
-and screenshot run passed; the failed build gate remains open. [README downloads](../README.md#downloads)
-separate native bundles from the older October 31 installers. No tagged GitHub
-Release has been published.
+The optimization and MSEG reports retain draft-stage qualification notes as
+historical evidence. Those changes are now merged; the post-merge status below
+is current. The mono/poly MSEG corrections intentionally change affected routed
+performances in Legacy and Circuit, while default/no-route playback and PURE
+CS-80 remain unchanged.
+
+### Packaging qualification scope
+
+The native [qualification run 42361342953](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42361342953)
+passed for PR #84 head `27f7166`, using synthetic merge checkout `f059e7c`.
+The binary source and packager were separately pinned to `635ad6e8`, source build
+`42351562098`, Linux bundle `13566771073`. It inspected a temporary `.deb` on
+Ubuntu 24.04 and recorded libc6 >= 2.38 and libstdc++6 >= 13.1, retaining a
+**verified native diversion warning**, not claiming warning-free packaging.
+
+Its [evidence artifact 13569616693](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42361342953/artifacts/13569616693)
+was downloaded and verified: eight UTF-8 text/JSON files, no `.deb`, ELF or
+product/source archive, and `package_uploaded=false`. Authenticated access was
+rechecked; it expires **November 14, 2026 at 09:50 UTC**. This is packaging evidence
+for the named pinned inputs, not qualification of the current `0996a15` downloads
+or a newly published installer. Font/MTS notices remain absent pending separate #70;
+complete licence, installation, host, loadability and release qualification remain
+open. #85's macOS guard has inert-fixture coverage, not native universal-installer,
+Apple `lipo`, signing or notarization qualification.
+
+The earlier native [qualification run 42360278797](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42360278797)
+at `851ecb76` failed its original strict warning gate after temporary package
+creation; inspection did not finish and evidence upload was skipped. That failure
+remains historical. The packaging report's pre-success "unrun" notes describe
+that earlier stage; the verified result above is current.
+
+### Post-merge CI and download checkpoints
+
+Latest merged code `0996a15` passed
+[build 42381017495](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017495),
+[DSP run 42381017482](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017482)
+and [screenshot run 42381017512](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017512).
+All six build jobs passed: Linux, Windows, Intel macOS, Apple Silicon macOS,
+and the separate Linux and Windows validation jobs.
+
+The README links four native bundles from that exact source. They include the
+CC88 release-prefix fix, MSEG integration, delay-reader safety fix, resonance
+cache and sparse external interpolation, superseding the `59b1b3c` downloads.
+The artifacts were downloaded and checked: all archive checksums, 54 manifest-listed
+regular-file hashes and sizes, source stamps and native architecture headers matched.
+Authenticated access was verified on November 7. They are unexpired until
+**February 5, 2027 at 14:19 UTC** and require a signed-in GitHub account.
+Package inspection does not verify code signatures or notarization. Automated
+native CI coverage is not DAW or release qualification; no new installer release
+was run.
+
+The 68 documentation screenshots also come from `0996a15`, published in
+screenshot-only commit `430c9e0`. All 68 hashes match their manifest and the
+recorded rendering run passed. Their source matches the downloadable native
+bundles, not the later screenshot-publication or documentation commits.
+
+The preceding #85 integration `58ed29e`
+[build 42373292449](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42373292449)
+remains a historical **failure**. All four platform build jobs and Windows
+validation passed, but [Linux validation job 128411618538](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42373292449/job/128411618538)
+failed at `Validate GUI state regression seed 0x2da72db`. Only job/step status
+metadata establishes that outcome. Neither #85's passing pre-merge runs nor
+`0996a15`'s later success proves a root cause, flakiness or a CC88-related repair.
+
+The #83 [main build 42354715740](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42354715740)
+at `b363b325` and #84 [main build 42364637787](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42364637787)
+at `fa7e988` remain earlier successful six-job runs. The previous `59b1b3c`
+[build checkpoint 42334458843](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42334458843)
+also passed, but it predates the CC88 correction and is no longer the download
+source listed in the README.
+
+The earlier [build 42274477424](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477424)
+at `228cc8d` remains a historical **failure**: five jobs succeeded and the
+[Apple Silicon job 128087142687](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42274477424/job/128087142687)
+was canceled, leaving no ARM bundle or completed ARM qualification for that run.
+Later passing checkpoints, including `0996a15`, supply successful four-platform
+CI and ARM bundles without changing the earlier outcome.
+
+The still-earlier `f921f54` [build run 42175969425](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42175969425)
+failed its Linux fixed-seed GUI validation step. Later passing runs do not
+establish that failure's cause or resolve the intermittent validator issue.
+[README downloads](../README.md#downloads) also retain the October 31 installers
+as explicitly historical artifacts. No tagged GitHub Release has been published.
 
 ## Where to read what
 
@@ -101,6 +182,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | --- | --- | --- |
 | Plan recorded | done | `97cc815` |
 | 0.1 Coefficient caching | done; bit-identical | `7b55d34` |
+| 0.1 Resonance-only cache and sparse external interpolation | merged numerical optimizations; focused comparisons preserve tested output, whole-instrument CPU target remains open | `465e56c`, `228cc8d`; reports above |
 | 0.1 Split, fast math, structure of arrays | partial: bounded-error tan in the nodal stage (`00ceccf`); fast exp2/pow measured no faster than glibc's and dropped; `processInternalSample` split and SoA not done | `00ceccf` |
 | 0.2 Parameter smoothing | done (circuit engine), ws2 | `d29f6eb` |
 | 0.3 State schema version | done (schema 3 since ws2) | `eb486cb`, `83f8a0e` |
@@ -130,7 +212,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
 | 6 Sample-accurate automation | partial: eighteen key VST3 parameters in modern circuit policy; AU and other parameters remain block-rate | `1b3df5a`, `7c54caf`; [scope](HOST_AUTOMATION.md) |
-| 7 Release qualification | release workflow, installers, licence AGPLv3 done; signing needs secrets; exit 139 open | `d9b98c6`, `06eb8f3`, `80cbe8c` |
+| 7 Release qualification | packaging safeguards and scoped Linux ABI evidence merged; complete licence/native installation/host/signing qualification and Linux validation failures remain open | `b363b325`, `fa7e988`, `58ed29e`; exact scope and failures above |
 
 ## Scorecard (2026-10-31, `00ceccf`)
 
@@ -251,7 +333,12 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - Intermittent Linux pluginval exit 139 after SUCCESS: code review and a memcheck
   teardown probe found no fault in project code; root cause not established
   ([VALIDATOR_DIAGNOSTICS.md](VALIDATOR_DIAGNOSTICS.md)).
-- CPU above target (above). Idle above target.
+- CPU and idle targets remain open. The resonance cache and sparse external
+  interpolation optimizations are merged, but their focused measurements do not
+  replace a new full scorecard for the merged source.
+- Native four-platform CI passes at `0996a15`, including Apple Silicon.
+  Actual DAW sessions and release qualification remain separate; earlier Linux
+  failures and the canceled ARM job remain in the historical CI record above.
 - Nodal filter top-octave small-signal accuracy at 2x/4x internal; ADJ p11 HP point.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
 - MTS-ESP now includes the [pinned 0BSD client](../src/vendor/mts-esp/README.md)
