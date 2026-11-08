@@ -7,6 +7,9 @@ This verifies packaging, not plugin loading or native DAW qualification.
 """
 from pathlib import Path
 import os
+import io
+import stat
+import tarfile
 import shutil
 import subprocess
 import tempfile
@@ -61,10 +64,10 @@ class DependencyTests(unittest.TestCase):
         self.env = dict(os.environ, DPKG_ADMINDIR=str(db))
         self.out = self.root / 'output with spaces'
 
-    def package(self, check=True):
+    def package(self, check=True, umask=-1):
         return subprocess.run([shutil.which('bash'), str(ROOT / 'installer/linux/make-deb.sh'),
                                str(self.build), str(self.out)], env=self.env,
-                              text=True, capture_output=True, check=check)
+                              text=True, capture_output=True, check=check, umask=umask)
 
     def test_non_amd64_packaging_host_rejected(self):
         # Simulate dpkg's architecture answer only; payloads are inert x64 ELF.
@@ -109,6 +112,34 @@ class DependencyTests(unittest.TestCase):
         run('dpkg-deb', '-x', str(archives[0]), str(extracted))
         self.assertEqual((extracted / 'usr/bin/cs80-reference').read_bytes(), self.standalone.read_bytes())
         self.assertFalse((extracted / 'debian').exists())
+
+    def test_restrictive_caller_umask_preserves_package_modes(self):
+        # Before the fix, caller umask 077 creates DEBIAN as 0700 and
+        # dpkg-deb exits 2: "control directory has bad permissions 700".
+        # This child-only setting does not change the test runner's umask.
+        self.plugin.chmod(0o751)
+        self.standalone.chmod(0o711)
+        self.package(umask=0o077)
+        archives = list(self.out.glob('*.deb'))
+        self.assertEqual(len(archives), 1)
+        data = subprocess.check_output(['dpkg-deb', '--fsys-tarfile', str(archives[0])])
+        with tarfile.open(fileobj=io.BytesIO(data), mode='r:') as payload:
+            members = {item.name.removeprefix('./').rstrip('/'): item for item in payload}
+            for directory in ('usr', 'usr/bin', 'usr/lib', 'usr/lib/vst3',
+                              'usr/share', 'usr/share/doc', 'usr/share/doc/cs80-reference'):
+                self.assertTrue(members[directory].isdir(), directory)
+                self.assertEqual(stat.S_IMODE(members[directory].mode), 0o755, directory)
+            docs = [item for name, item in members.items()
+                    if name.startswith('usr/share/doc/cs80-reference/') and item.isfile()]
+            self.assertGreaterEqual(len(docs), 6)
+            for item in docs:
+                self.assertEqual(stat.S_IMODE(item.mode), 0o644, item.name)
+            installed = members['usr/bin/cs80-reference']
+            plugin = members['usr/lib/vst3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so']
+            self.assertEqual(stat.S_IMODE(installed.mode), 0o755)  # install -m 0755
+            self.assertEqual(stat.S_IMODE(plugin.mode), 0o751)     # cp -a preserves payload mode
+            self.assertEqual(payload.extractfile(installed).read(), self.standalone.read_bytes())
+            self.assertEqual(payload.extractfile(plugin).read(), self.plugin.read_bytes())
 
     def test_missing_scanner_fails_without_package(self):
         bin_dir = self.root / 'tools-without-scanner'
