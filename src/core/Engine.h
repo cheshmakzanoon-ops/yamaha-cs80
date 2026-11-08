@@ -222,11 +222,19 @@ public:
     source_factory::SharedReadout getSourceSharedReadout() const noexcept { return sourceShared; }
     const ParamValues& getParams() const noexcept { return params; }
 
+    // Non-finite velocity/pressure/ribbon/pitch-bend events are ignored. Finite values
+    // retain their existing clamping and controller-response curves.
     void noteOn(int midiNote, float velocity, int midiChannel = 1);
     void noteOff(int midiNote, int midiChannel = 1);
+    // UI release attribution follows deferred allocation, never FIFO acceptance
+    // alone. The result reports deferred/overflow dispatch, NOT allocation;
+    // a true result forbids immediate before/after pressure attribution.
+    bool noteOnFromKeyboard(int midiNote, float velocity, int midiChannel = 1);
+    void noteOffFromKeyboard(int midiNote, int midiChannel = 1);
+    bool hasDeferredNoteTiming() const noexcept { return scanTimingActive(); }
     void allNotesOff(bool release = true, int midiChannel = 0);
     // A channel of 0 applies the pressure to every matching note; a positive
-    // channel is required for correct per-note behaviour in MPE.
+    // channel addresses only that channel's note, whether or not MPE is on.
     void polyPressure(int midiNote, float pressure, int midiChannel = 0);
     void channelPressure(int midiChannel, float pressure);
     void pitchBend(int midiChannel, float value); // -1..1
@@ -250,6 +258,10 @@ public:
     int getVoiceMode() const noexcept { return global.voiceMode; }
     // True while some circuit is neither key-held nor pedal-held.
     bool hasFreeCircuit() const noexcept;
+    // Sixteen-voice routing only: an active direct scanner must also have
+    // room after its existing queue. This never makes a busy circuit free
+    // early, changes the scan clock, or predicts the incoming event.
+    bool hasFreeCircuitForRouting() const noexcept;
     // Direct physical-pedal proxy, independent of the optional MIDI CC11 mapping.
     void setExpression(float value);
 
@@ -460,6 +472,10 @@ private:
         double initialPitchTransient = 0.0;
         float ribbonRatio = 1.0f;
         uint64_t age = 0;
+        // Circuits allocated by one note-on release together, even if the
+        // voice mode changes before note-off. Age remains per circuit.
+        uint64_t releaseGroup = 0;
+        bool keyboardOrigin = false;
         KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
         // Circuit engine free-running state (Phase 2.1). idleClock counts the
@@ -491,6 +507,8 @@ private:
         int midiChannel = 1;
         float velocity = 0.8f;
         uint64_t order = 0;
+        bool keyboardOrigin = false;
+        uint64_t originOrder = 0;
     };
 
     void applyParams(const ParamValues& values);
@@ -511,7 +529,7 @@ private:
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
-    void startVoice(Voice& voice, int note, float velocity, int midiChannel);
+    void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false);
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
     void wakeIdleVoice(Voice& voice) noexcept;
@@ -526,17 +544,21 @@ private:
     // release without restarting the envelope stage, retriggering or holding a note.
     void cancelSustainTails();
     bool isSustainPedalDown(int midiChannel) const noexcept;
+    void setSustainPedal(int midiChannel, bool down);
     Voice* findVoiceForNote(int note, int midiChannel);
     int chooseVoice();
     // Note events after the optional KAS scan quantisation (Phase 2.2).
-    void applyNoteOn(int midiNote, float velocity, int midiChannel);
-    void applyNoteOff(int midiNote, int midiChannel);
+    void enqueueNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin);
+    void enqueueNoteOff(int midiNote, int midiChannel, bool keyboardOnly);
+    void applyNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder);
+    void applyNoteOff(int midiNote, int midiChannel, bool keyboardOnly = false);
+    void flushScanEvents();
     bool scanTimingActive() const noexcept
     { return global.kasScanTiming && usesSourceModels(global.renderPolicy) && ! global.arpOn; }
     // Circuit engine: a still-held key that found no free circuit is assigned
     // when one frees (declared KAS model, KasScanner.h).
-    void rememberUnassignedKey(int note, float velocity, int midiChannel);
-    bool forgetUnassignedKey(int note, int midiChannel);
+    void rememberUnassignedKey(int note, float velocity, int midiChannel, bool keyboardOrigin);
+    bool forgetUnassignedKey(int note, int midiChannel, bool keyboardOnly = false);
     void reconsiderUnassignedKeys();
     bool noteMapped(int midiNote) const noexcept;
     void retuneSoundingVoices() noexcept;
@@ -550,8 +572,8 @@ private:
     void rebuildArpSequence();
     void triggerArpNote();
     void stopArpVoice();
-    void rememberHeldKey(int note, float velocity, int midiChannel);
-    void forgetHeldKey(int note, int midiChannel);
+    void rememberHeldKey(int note, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder);
+    void forgetHeldKey(int note, int midiChannel, bool keyboardOnly = false);
 
     ParamValues params;
     GlobalSettings global;
@@ -571,9 +593,11 @@ private:
 
     std::array<Voice, kNumVoices> voices;
     uint64_t voiceCounter = 0;
+    uint64_t noteIngressOrder = 0;
     int nextVoice = 0;
     int lastNote = 60;
     float globalBend = 0.0f;
+    float globalPitchWheel = 0.0f; // normalized matrix source, independent of bend range
     float modWheel = 0.0f;
     float lastChannelPressure = 0.0f; // modern-layer matrix source only
     float expression = 1.0f;
@@ -604,10 +628,11 @@ private:
     SmootherBank settingsSmoothing;
     struct ControllerSmoothing
     {
-        ControlSmoother bend, modWheel, ribbon;
+        ControlSmoother bend, upperBend, pitchWheel, modWheel, ribbon, channelPressure;
         std::array<ControlSmoother, kNumVoices> pressure, mpeBend, timbre;
         std::array<uint64_t, kNumVoices> age {};
-        float bendTarget = 0.0f, modWheelTarget = 0.0f, ribbonTarget = 0.0f;
+        float bendTarget = 0.0f, upperBendTarget = 0.0f, pitchWheelTarget = 0.0f;
+        float modWheelTarget = 0.0f, ribbonTarget = 0.0f, channelPressureTarget = 0.0f;
         // Expression acts at its gain stage through the PRA I2/I3 optical cell
         // (ExpressionOptics.h); the wah cell reads the pedal target itself.
         float expressionGain = 1.0f;

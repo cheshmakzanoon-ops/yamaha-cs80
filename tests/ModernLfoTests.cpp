@@ -200,6 +200,121 @@ void testRandomShapes()
     }
 }
 
+// A waveform selection must initialize its own random state immediately,
+// even when another random waveform already ran. The phase stays free-running;
+// only new selections consume fresh random endpoint(s).
+void testLiveWaveformSelection()
+{
+    constexpr std::uint32_t seed = 0x6c8e9cf5u;
+    constexpr int sequence[] = { 5, 5, 6, 6, 5, 0, 5, 6, 1, 6, 5, 4, 6, 5 };
+    for (float sr : { 88200.0f, 96000.0f, 384000.0f })
+        for (float start : { 0.0f, 0.37f, 0.99999994f })
+        {
+            ModulationLfo lfo(seed);
+            lfo.reset(start);
+            Rng expectedRng(seed);
+            double phase = start;
+            float held = 0.0f, from = 0.0f, to = 0.0f;
+            int previousWave = -1;
+            bool matched = true, phasePreserved = true;
+            // Slowest user rate: a missing initialization would otherwise wait
+            // nearly twenty seconds for the next cycle boundary.
+            constexpr float rate = 0.05f;
+            for (int wave : sequence)
+                for (int n = 0; n < 64; ++n)
+                {
+                    phase += (double) rate / (double) sr;
+                    const bool wrapped = phase >= 1.0;
+                    phase -= std::floor(phase);
+                    const bool selected = wave != previousWave;
+                    previousWave = wave;
+                    if (wave == 5 && (selected || wrapped))
+                        held = expectedRng.nextBipolar();
+                    if (wave == 6)
+                    {
+                        if (selected)
+                        {
+                            from = expectedRng.nextBipolar();
+                            to = expectedRng.nextBipolar();
+                        }
+                        else if (wrapped)
+                        {
+                            from = to;
+                            to = expectedRng.nextBipolar();
+                        }
+                    }
+                    const float value = lfo.tick(rate, sr, wave);
+                    if (wave == 5)
+                        matched = matched && value == held;
+                    else if (wave == 6)
+                    {
+                        const double expected = from + ((double) to - from)
+                            * (0.5 - 0.5 * std::cos(kPi * phase));
+                        matched = matched && std::abs(value - expected) <= tol::kLfoShapeAbsTolerance;
+                    }
+                    phasePreserved = phasePreserved && lfo.getShapePhase() == phase;
+                }
+            check(matched, "live random-wave selections initialize immediately without stale levels or endpoints");
+            check(phasePreserved, "waveform changes preserve the free-running LFO phase");
+
+            lfo.reset(start);
+            ModulationLfo fresh(seed);
+            fresh.reset(start);
+            bool repeat = true;
+            for (int wave : sequence)
+                for (int n = 0; n < 64; ++n)
+                    repeat = repeat && lfo.tick(rate, sr, wave) == fresh.tick(rate, sr, wave);
+            check(repeat, "reset reproduces an entire mixed-waveform selection sequence");
+        }
+}
+
+void testEngineWaveformSelection()
+{
+    // Witness all three host waveform controls through their matrix sources,
+    // without adding a test-only accessor to the oscillator or touching audio
+    // tolerances. Fixed rates mean no smoothing transition can hide a dropout.
+    const int waveParameters[] = { P_lfo1Wave, P_lfo2Wave, P_lfo3Wave };
+    const int rateParameters[] = { P_lfo1Rate, P_lfo2Rate, P_lfo3Rate };
+    const std::uint32_t seeds[] = { 0x6c8e9cf5u, 0x3b9e5d21u, 0xa1c4f00du };
+    for (bool circuit : { false, true })
+        for (int index = 0; index < 3; ++index)
+            for (int firstWave : { 5, 6 })
+            {
+                ParamValues p;
+                p[P_sourcePerformance] = circuit ? 1.0f : 0.0f;
+                p[waveParameters[index]] = (float) firstWave;
+                p[rateParameters[index]] = 0.05f;
+                p[P_mod1Amount] = 1.0f;
+                modern::ModernConfig config;
+                config.slots[0] = {
+                    (modern::ModSource) ((int) modern::ModSource::lfo1 + index),
+                    modern::ModSource::none, modern::ModDestination::fx1Mix,
+                    modern::ModTarget::both };
+                Engine e;
+                e.prepare(48000.0);
+                e.setParams(p);
+                e.setModernConfig(config);
+                float audio[128] {};
+                e.render(audio, 64);
+                p[waveParameters[index]] = (float) (firstWave == 5 ? 6 : 5);
+                e.setParams(p);
+                e.render(audio, 64);
+                Rng expectedRng(seeds[index]);
+                expectedRng.nextBipolar();
+                if (firstWave == 6) expectedRng.nextBipolar();
+                double expected = expectedRng.nextBipolar();
+                if (firstWave == 5)
+                {
+                    const double to = expectedRng.nextBipolar();
+                    const double phase = 128.0 * e.getOversamplingFactor()
+                        * (double) p[rateParameters[index]] / e.getInternalSampleRate();
+                    expected += (to - expected) * (0.5 - 0.5 * std::cos(kPi * phase));
+                }
+                check(std::abs(e.getModernGlobalOffsets().fxMix[0] - expected) <= tol::kLfoShapeAbsTolerance,
+                      "each live LFO control immediately drives the correct newly selected random matrix source");
+            }
+}
+
 std::vector<float> render(Engine& e, int frames)
 {
     std::vector<float> out((std::size_t) frames * 2);
@@ -248,6 +363,8 @@ int main()
     testAnalyticShapes();
     testPeriods();
     testRandomShapes();
+    testLiveWaveformSelection();
+    testEngineWaveformSelection();
     testEngineHook();
     std::printf("%d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;

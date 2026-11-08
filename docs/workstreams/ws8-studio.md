@@ -194,8 +194,13 @@ each parameter change from a listener on every host parameter:
   already does for state restores and user presets, so stale steps never apply to a different sound. The local
   A/B switch is one named step ("Compare A/B").
 - **Threads**: the tree is written on the message thread; `treeLock()` serialises those writes with the host's
-  `getStateInformation` / `setStateInformation` (the processor takes it around `copyState` / `replaceState` and
-  calls `syncNow()` first when it is on the message thread).
+  `getStateInformation` / `setStateInformation` (the processor takes it around `copyStateForSave` / `replaceState`
+  and calls `syncNow()` first when it is on the message thread). Saving copies the latest APVTS parameter atomics
+  into a detached tree. It never uses JUCE's `copyState()` live flush, which can otherwise record pending host
+  automation as an undo action when a host saves off the message thread. Saving also preserves an existing redo
+  branch. The snapshot reads each parameter individually, as JUCE does; it is not a transaction across concurrent
+  automation of multiple parameters. `tests/SessionUndoHostTests.h` covers session and user-preset saves on both
+  threads, including pending automation, undo, redo and repeated saves without a timer flush.
 - **UI**: toolbar UNDO/REDO keys (titles name the step), menu entries, Ctrl/Cmd+Z, Shift+Ctrl/Cmd+Z and Ctrl+Y
   (`StudioShortcuts`, a key listener that leaves text fields alone).
 
@@ -399,7 +404,8 @@ None. MIDI learn and the editor state are plugin-state children (`MIDI_LEARN` ve
   replaces the built-in controls.
 - **ws2**: nothing to wire; the toolbar binds `source_performance` and `parity_mode` by ID.
 - **New code that saves or restores the APVTS tree** must take `getUndoableState().treeLock()` and call
-  `syncNow()` on the message thread first, and must not put `MIDI_LEARN`/`UI_STATE` into the parameter tree.
+  `syncNow()` on the message thread first. Save through `copyStateForSave()`, not the base APVTS `copyState()`
+  live flush, and do not put `MIDI_LEARN`/`UI_STATE` into the parameter tree.
 
 ## Verification
 

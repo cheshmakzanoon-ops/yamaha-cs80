@@ -13,12 +13,16 @@ namespace cs80
 {
 struct SixteenVoiceRouter
 {
-    // The first instrument plays until it has no free circuit; the second
-    // then takes the key. If both are full, the first keeps it (its KAS model
-    // remembers a still-held key).
+    // The first instrument plays until it has no available circuit; the
+    // second then takes the key. Active direct KAS scanning also accounts for
+    // occupancy after the existing queue, without borrowing future releases.
+    // If both are full, the first keeps it (its KAS model remembers a held key).
+    // This is not incoming-event admission: queue/waiter limits still apply.
+    // Scan-disabled routing stays unchanged, including deferred UI events
+    // left behind by that transition; this API has no event-origin argument.
     static Engine& noteOnTarget(Engine& first, Engine& second) noexcept
     {
-        return first.hasFreeCircuit() || ! second.hasFreeCircuit() ? first : second;
+        return first.hasFreeCircuitForRouting() || ! second.hasFreeCircuitForRouting() ? first : second;
     }
 };
 } // namespace cs80

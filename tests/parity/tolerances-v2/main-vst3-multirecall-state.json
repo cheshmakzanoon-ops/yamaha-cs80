@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-04",
+  "main_base": "63b32c1e733c10fdbedd83425922590540527188",
+  "evidence_kind": "Additive direct-processor hidden-state witness; not a replacement native-wrapper or audio-partition gate",
+  "trigger": "An already-active sixteen-voice extension must receive the final program after an active VST3 supported-curve block recalls Legacy and then modern again, even though the first recall cancels all trajectories.",
+  "fixture": "Use normal JUCE MIDI and the real HostAutomationBlock tagged as VST3. Warm sixteen notes, attach all eighteen supported queues, then send Legacy program 0 followed by curated program 0 in one uninterrupted 1024-frame block. Inspect through the pre-existing PresetSaveAccess friend; no production instrumentation is added.",
+  "recall_sample_pairs": [[0, 1], [63, 64], [64, 64], [64, 700], [700, 1023]],
+  "required": [
+    "The warmup reaches both engines and activates the existing extension",
+    "The final program identity and policy are independently fixed by bank 0 program 0",
+    "APVTS and both active engines exactly equal the final program's physical values, as independently prepared through ordinary public preset recall",
+    "Each supported queue is published once, before preset writes, and remains cancelled through later recalls and wrapper-scope exit",
+    "The extension remains active through the recalled block and wrapper-scope exit, and retires only at the next ordinary block boundary because the final program selects eight voices",
+    "Tagged empty-queue and untagged ordinary no-queue paths remain byte-identical in PCM and state; their historical secondary-engine state is characterized rather than corrected",
+    "All original native fixtures and acceptance limits remain unchanged"
+  ],
+  "main_vst3_multirecall_state": {
+    "key_parameter_count": 18,
+    "warm_note_count": 16,
+    "block_frames": 1024,
+    "recall_pair_count": 5,
+    "maximum_physical_parameter_error": 0,
+    "maximum_stored_parameter_error": 0,
+    "allowed_failures": 0
+  },
+  "limits": "No split-after-recall audio oracle is used because the original extension lifetime is block-boundary dependent. This fixture requires no new native AU behavior and grants no native macOS, DAW, UI, real-time or release qualification."
+}

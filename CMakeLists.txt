@@ -29,6 +29,9 @@ if (CS80_BUILD_TESTS)
         target_compile_options(cs80_tests PRIVATE -Wall -Wextra)
     endif()
     enable_testing()
+    add_executable(cs80_pump_until_tests tests/PumpUntilTests.cpp)
+    add_test(NAME cs80_pump_until_tests COMMAND cs80_pump_until_tests)
+    set_tests_properties(cs80_pump_until_tests PROPERTIES TIMEOUT 30)
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
@@ -47,6 +50,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_continuous_voice_circuit_audit_tests PRIVATE src)
     add_test(NAME cs80_continuous_voice_circuit_audit_tests COMMAND cs80_continuous_voice_circuit_audit_tests)
     set_tests_properties(cs80_continuous_voice_circuit_audit_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_lfo_scope_preview_tests tests/LfoScopePreviewTests.cpp)
+    target_include_directories(cs80_lfo_scope_preview_tests PRIVATE src)
+    add_test(NAME cs80_lfo_scope_preview_tests COMMAND cs80_lfo_scope_preview_tests)
+    set_tests_properties(cs80_lfo_scope_preview_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_output_meter_display_tests tests/OutputMeterDisplayTests.cpp)
     target_include_directories(cs80_output_meter_display_tests PRIVATE src)
     add_test(NAME cs80_output_meter_display_tests COMMAND cs80_output_meter_display_tests)
@@ -92,6 +99,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_envelope_precision_tests PRIVATE cs80_core)
     add_test(NAME cs80_envelope_precision_tests COMMAND cs80_envelope_precision_tests)
     set_tests_properties(cs80_envelope_precision_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
+    target_include_directories(cs80_ig00156_cache_tests PRIVATE src)
+    add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests)
+    set_tests_properties(cs80_ig00156_cache_tests PROPERTIES TIMEOUT 60)
     add_executable(cs80_ig00156_filter_tests tests/Ig00156FilterTests.cpp)
     target_link_libraries(cs80_ig00156_filter_tests PRIVATE cs80_core)
     add_test(NAME cs80_ig00156_filter_tests COMMAND cs80_ig00156_filter_tests)
@@ -113,6 +124,26 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_active_tail_continuity_tests COMMAND cs80_active_tail_continuity_tests)
     set_tests_properties(cs80_active_tail_continuity_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_core_tests COMMAND cs80_tests)
+    add_executable(cs80_voice_release_tests tests/VoiceReleaseTests.cpp)
+    target_link_libraries(cs80_voice_release_tests PRIVATE cs80_core)
+    add_test(NAME cs80_voice_release_tests COMMAND cs80_voice_release_tests)
+    set_tests_properties(cs80_voice_release_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_unison_glide_tests tests/UnisonGlideTests.cpp)
+    target_link_libraries(cs80_unison_glide_tests PRIVATE cs80_core)
+    add_test(NAME cs80_unison_glide_tests COMMAND cs80_unison_glide_tests)
+    set_tests_properties(cs80_unison_glide_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_pedal_release_tests tests/PedalReleaseTests.cpp)
+    target_link_libraries(cs80_pedal_release_tests PRIVATE cs80_core)
+    add_test(NAME cs80_pedal_release_tests COMMAND cs80_pedal_release_tests)
+    set_tests_properties(cs80_pedal_release_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_high_resolution_velocity_tests tests/HighResolutionVelocityTests.cpp)
+    target_include_directories(cs80_high_resolution_velocity_tests PRIVATE src)
+    add_test(NAME cs80_high_resolution_velocity_tests COMMAND cs80_high_resolution_velocity_tests)
+    set_tests_properties(cs80_high_resolution_velocity_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_controller_reset_tests tests/ControllerResetTests.cpp)
+    target_link_libraries(cs80_controller_reset_tests PRIVATE cs80_core)
+    add_test(NAME cs80_controller_reset_tests COMMAND cs80_controller_reset_tests)
+    set_tests_properties(cs80_controller_reset_tests PROPERTIES TIMEOUT 120)
     # Experimental linear-path model only; nonlinear Engine/CPU gates are not qualified.
     add_executable(cs80_experimental_oscillator_tests tests/ReconstructedOscillatorTests.cpp)
     target_include_directories(cs80_experimental_oscillator_tests PRIVATE src)
@@ -242,12 +273,24 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_tolerance_drift_tests PROPERTIES TIMEOUT 300)
 
     # [ws2-engine] register this workstream's core tests below this line.
+    add_executable(cs80_external_interpolator_tests tests/ExternalModulationInterpolatorTests.cpp)
+    target_include_directories(cs80_external_interpolator_tests PRIVATE src)
+    add_test(NAME cs80_external_interpolator_tests COMMAND cs80_external_interpolator_tests)
+    set_tests_properties(cs80_external_interpolator_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_oversampling_tests tests/OversamplingTests.cpp)
     target_link_libraries(cs80_oversampling_tests PRIVATE cs80_core)
     add_test(NAME cs80_oversampling_tests COMMAND cs80_oversampling_tests)
     add_executable(cs80_smoothing_tests tests/SmoothingTests.cpp)
     target_link_libraries(cs80_smoothing_tests PRIVATE cs80_core)
     add_test(NAME cs80_smoothing_tests COMMAND cs80_smoothing_tests)
+    add_executable(cs80_pitch_bend_range_tests tests/PitchBendRangeTests.cpp)
+    target_link_libraries(cs80_pitch_bend_range_tests PRIVATE cs80_core)
+    add_test(NAME cs80_pitch_bend_range_tests COMMAND cs80_pitch_bend_range_tests)
+    set_tests_properties(cs80_pitch_bend_range_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mpe_master_smoothing_tests tests/MpeMasterSmoothingTests.cpp)
+    target_link_libraries(cs80_mpe_master_smoothing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mpe_master_smoothing_tests COMMAND cs80_mpe_master_smoothing_tests)
+    set_tests_properties(cs80_mpe_master_smoothing_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_output_listening_tests tests/OutputListeningTests.cpp)
     target_link_libraries(cs80_output_listening_tests PRIVATE cs80_core)
     add_test(NAME cs80_output_listening_tests COMMAND cs80_output_listening_tests)
@@ -256,6 +299,15 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_noise_tests COMMAND cs80_noise_tests)
 
     # [ws3-keyboard] register this workstream's core tests below this line.
+    add_executable(cs80_poly_pressure_routing_tests tests/PolyPressureRoutingTests.cpp)
+    target_link_libraries(cs80_poly_pressure_routing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_poly_pressure_routing_tests COMMAND cs80_poly_pressure_routing_tests)
+    set_tests_properties(cs80_poly_pressure_routing_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
+    target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
+    add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+    set_tests_properties(cs80_host_automation_curve_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
     add_test(NAME cs80_free_running_voice_tests COMMAND cs80_free_running_voice_tests)
@@ -264,6 +316,14 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_kas_scanner_tests PRIVATE cs80_core)
     add_test(NAME cs80_kas_scanner_tests COMMAND cs80_kas_scanner_tests)
     set_tests_properties(cs80_kas_scanner_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_scanner_ordering_tests tests/ScannerOrderingTests.cpp)
+    target_link_libraries(cs80_scanner_ordering_tests PRIVATE cs80_core)
+    add_test(NAME cs80_scanner_ordering_tests COMMAND cs80_scanner_ordering_tests)
+    set_tests_properties(cs80_scanner_ordering_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_scanner_overflow_tests tests/ScannerOverflowTests.cpp)
+    target_link_libraries(cs80_scanner_overflow_tests PRIVATE cs80_core)
+    add_test(NAME cs80_scanner_overflow_tests COMMAND cs80_scanner_overflow_tests)
+    set_tests_properties(cs80_scanner_overflow_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_keyboard_contour_key_map_tests tests/KeyboardContourKeyMapTests.cpp)
     target_link_libraries(cs80_keyboard_contour_key_map_tests PRIVATE cs80_core)
     add_test(NAME cs80_keyboard_contour_key_map_tests COMMAND cs80_keyboard_contour_key_map_tests)
@@ -272,12 +332,38 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_touch_circuit_tests PRIVATE cs80_core)
     add_test(NAME cs80_touch_circuit_tests COMMAND cs80_touch_circuit_tests)
     set_tests_properties(cs80_touch_circuit_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_mpe_master_bend_routing_tests tests/MpeMasterBendRoutingTests.cpp)
+    target_link_libraries(cs80_mpe_master_bend_routing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mpe_master_bend_routing_tests COMMAND cs80_mpe_master_bend_routing_tests)
+    set_tests_properties(cs80_mpe_master_bend_routing_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_tuning_midi_tests tests/TuningMidiTests.cpp)
     target_link_libraries(cs80_tuning_midi_tests PRIVATE cs80_core)
     target_compile_definitions(cs80_tuning_midi_tests PRIVATE
         CS80_TUNING_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/data/tuning")
     add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
     set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
+
+    # Build the shipping MTS-ESP adapter in core-only CI as well as plugin builds.
+    add_executable(cs80_mts_esp_native_tests tests/MtsEspNativeTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_native_tests PRIVATE src)
+    target_link_libraries(cs80_mts_esp_native_tests PRIVATE ${CMAKE_DL_LIBS})
+    add_test(NAME cs80_mts_esp_native_tests COMMAND cs80_mts_esp_native_tests)
+    add_executable(cs80_mts_esp_integration_tests tests/MtsEspIntegrationTests.cpp src/plugin/MtsEspClient.cpp)
+    target_compile_definitions(cs80_mts_esp_integration_tests PRIVATE
+        CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    target_link_libraries(cs80_mts_esp_integration_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mts_esp_integration_tests COMMAND cs80_mts_esp_integration_tests)
+    add_executable(cs80_mts_esp_fallback_tests tests/MtsEspFallbackTests.cpp src/plugin/MtsEspClient.cpp)
+    target_include_directories(cs80_mts_esp_fallback_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_fallback_tests PRIVATE CS80_WITH_MTS_ESP=0)
+    add_test(NAME cs80_mts_esp_fallback_tests COMMAND cs80_mts_esp_fallback_tests)
+    add_executable(cs80_mts_esp_windows_macro_tests tests/MtsEspWindowsMacroTests.cpp)
+    target_include_directories(cs80_mts_esp_windows_macro_tests PRIVATE src)
+    target_compile_definitions(cs80_mts_esp_windows_macro_tests PRIVATE
+        CS80_WITH_MTS_ESP=1 CS80_MTS_ESP_TEST_BACKEND=1)
+    add_test(NAME cs80_mts_esp_windows_macro_tests COMMAND cs80_mts_esp_windows_macro_tests)
+    set_tests_properties(cs80_mts_esp_native_tests cs80_mts_esp_integration_tests
+        cs80_mts_esp_fallback_tests cs80_mts_esp_windows_macro_tests PROPERTIES TIMEOUT 120)
 
     # [ws4-circuits] register this workstream's core tests below this line.
     add_executable(cs80_ig00150_sub_tests tests/Ig00150SubTests.cpp)
@@ -306,6 +392,22 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_mseg_tests PRIVATE src)
     add_test(NAME cs80_mseg_tests COMMAND cs80_mseg_tests)
     set_tests_properties(cs80_mseg_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mseg_transport_rate_tests tests/MsegTransportRateTests.cpp)
+    target_include_directories(cs80_mseg_transport_rate_tests PRIVATE src)
+    add_test(NAME cs80_mseg_transport_rate_tests COMMAND cs80_mseg_transport_rate_tests)
+    set_tests_properties(cs80_mseg_transport_rate_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mono_mseg_routing_tests tests/MonoMsegRoutingTests.cpp)
+    target_link_libraries(cs80_mono_mseg_routing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mono_mseg_routing_tests COMMAND cs80_mono_mseg_routing_tests)
+    set_tests_properties(cs80_mono_mseg_routing_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mseg_retrigger_rate_tests tests/MsegRetriggerRateTests.cpp)
+    target_link_libraries(cs80_mseg_retrigger_rate_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mseg_retrigger_rate_tests COMMAND cs80_mseg_retrigger_rate_tests)
+    set_tests_properties(cs80_mseg_retrigger_rate_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_mseg_combined_interaction_tests tests/MsegCombinedInteractionTests.cpp)
+    target_link_libraries(cs80_mseg_combined_interaction_tests PRIVATE cs80_core)
+    add_test(NAME cs80_mseg_combined_interaction_tests COMMAND cs80_mseg_combined_interaction_tests)
+    set_tests_properties(cs80_mseg_combined_interaction_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_mod_matrix_tests tests/ModMatrixTests.cpp)
     target_link_libraries(cs80_mod_matrix_tests PRIVATE cs80_core)
     add_test(NAME cs80_mod_matrix_tests COMMAND cs80_mod_matrix_tests)
@@ -314,6 +416,18 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_modern_fx_tests PRIVATE cs80_core)
     add_test(NAME cs80_modern_fx_tests COMMAND cs80_modern_fx_tests)
     set_tests_properties(cs80_modern_fx_tests PROPERTIES TIMEOUT 900)
+    add_executable(cs80_delay_line_tests tests/DelayLineTests.cpp)
+    target_include_directories(cs80_delay_line_tests PRIVATE src)
+    add_test(NAME cs80_delay_line_tests COMMAND cs80_delay_line_tests)
+    set_tests_properties(cs80_delay_line_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_plate_reverb_rate_tests tests/PlateReverbRateTests.cpp)
+    target_include_directories(cs80_plate_reverb_rate_tests PRIVATE src)
+    add_test(NAME cs80_plate_reverb_rate_tests COMMAND cs80_plate_reverb_rate_tests)
+    set_tests_properties(cs80_plate_reverb_rate_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_tape_echo_time_tests tests/TapeEchoTimeTests.cpp)
+    target_include_directories(cs80_tape_echo_time_tests PRIVATE src)
+    add_test(NAME cs80_tape_echo_time_tests COMMAND cs80_tape_echo_time_tests)
+    set_tests_properties(cs80_tape_echo_time_tests PROPERTIES TIMEOUT 60)
 
     # [ws6-library] register this workstream's core tests below this line.
     find_package(Threads REQUIRED)
@@ -397,6 +511,52 @@ if (CS80_BUILD_PLUGIN)
         FetchContent_MakeAvailable(JUCE)
     endif()
 
+    if (CS80_BUILD_TESTS)
+        # Production modern-state number parser only: no processor or GUI initialization.
+        juce_add_console_app(cs80_modern_state_integer_tests
+            PRODUCT_NAME "CS80 Modern State Integer Tests")
+        target_sources(cs80_modern_state_integer_tests PRIVATE tests/ModernStateIntegerTests.cpp)
+        target_include_directories(cs80_modern_state_integer_tests PRIVATE src)
+        target_link_libraries(cs80_modern_state_integer_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_modern_state_integer_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_modern_state_integer_tests COMMAND cs80_modern_state_integer_tests)
+        set_tests_properties(cs80_modern_state_integer_tests PROPERTIES TIMEOUT 30)
+
+        # XML display metadata only: no processor or GUI initialization.
+        juce_add_console_app(cs80_preset_display_name_tests
+            PRODUCT_NAME "CS80 Preset Display Name Tests")
+        target_sources(cs80_preset_display_name_tests PRIVATE tests/PresetDisplayNameTests.cpp)
+        target_include_directories(cs80_preset_display_name_tests PRIVATE src)
+        target_link_libraries(cs80_preset_display_name_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_preset_display_name_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_preset_display_name_tests COMMAND cs80_preset_display_name_tests)
+        set_tests_properties(cs80_preset_display_name_tests PROPERTIES TIMEOUT 30)
+
+        # MSEG text/XML codec only: no processor or GUI initialization.
+        juce_add_console_app(cs80_mseg_state_text_tests
+            PRODUCT_NAME "CS80 MSEG State Text Tests")
+        target_sources(cs80_mseg_state_text_tests PRIVATE tests/MsegStateTextTests.cpp)
+        target_include_directories(cs80_mseg_state_text_tests PRIVATE src)
+        target_link_libraries(cs80_mseg_state_text_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_mseg_state_text_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_mseg_state_text_tests COMMAND cs80_mseg_state_text_tests)
+        set_tests_properties(cs80_mseg_state_text_tests PROPERTIES TIMEOUT 30)
+
+        # Detached ValueTree matching only: no processor or GUI initialization.
+        juce_add_console_app(cs80_parameter_state_index_tests
+            PRODUCT_NAME "CS80 Parameter State Index Tests")
+        target_sources(cs80_parameter_state_index_tests PRIVATE tests/ParameterStateChildIndexTests.cpp)
+        target_include_directories(cs80_parameter_state_index_tests PRIVATE src)
+        target_link_libraries(cs80_parameter_state_index_tests PRIVATE juce::juce_data_structures)
+        target_compile_definitions(cs80_parameter_state_index_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_parameter_state_index_tests COMMAND cs80_parameter_state_index_tests)
+        set_tests_properties(cs80_parameter_state_index_tests PROPERTIES TIMEOUT 120)
+    endif()
+
+    # This main-based feature is VST3-only. Keep the shipping AU wrapper intact.
+    set(CS80_HOST_AUTOMATION_FORMATS VST3)
+    include(cmake/HostAutomation.cmake)
+
     set(CS80_PLUGIN_FORMATS VST3 Standalone)
     if (APPLE)
         list(APPEND CS80_PLUGIN_FORMATS AU)
@@ -420,6 +580,7 @@ if (CS80_BUILD_PLUGIN)
     # Editor and processor sources shared by the plugin and the snapshot tool.
     set(CS80_PLUGIN_SOURCES
         src/plugin/PluginProcessor.cpp
+        src/plugin/PluginProcessorAutomation.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/UiComponents.cpp
         src/plugin/AdvancedPanel.cpp
@@ -462,6 +623,7 @@ if (CS80_BUILD_PLUGIN)
     target_include_directories(CS80Reference PRIVATE src)
     target_link_libraries(CS80Reference PRIVATE
         cs80_core
+        ${CMAKE_DL_LIBS}
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_gui_extra
@@ -474,6 +636,24 @@ if (CS80_BUILD_PLUGIN)
         JUCE_MODAL_LOOPS_PERMITTED=1
     )
 
+    if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        get_target_property(CS80_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+        set(CS80_VST3_SDK "${CS80_JUCE_MODULES}/juce_audio_processors_headless/format_types/VST3_SDK")
+        add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_automation_tests CS80Reference_VST3)
+        add_test(NAME cs80_vst3_automation_tests COMMAND cs80_vst3_automation_tests
+            "$<TARGET_FILE:CS80Reference_VST3>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        set_tests_properties(cs80_vst3_automation_tests PROPERTIES TIMEOUT 180)
+        include(cmake/HostAutomationTests.cmake)
+        cs80_add_main_automation_witnesses("${CMAKE_CURRENT_SOURCE_DIR}" "${CS80_VST3_SDK}")
+    endif()
+
     # Headless UI snapshot tool, built from the same editor/processor sources.
     juce_add_console_app(CS80Snapshots PRODUCT_NAME "CS80Snapshots")
     target_sources(CS80Snapshots PRIVATE
@@ -483,6 +663,7 @@ if (CS80_BUILD_PLUGIN)
     target_include_directories(CS80Snapshots PRIVATE src)
     target_link_libraries(CS80Snapshots PRIVATE
         cs80_core
+        ${CMAKE_DL_LIBS}
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_gui_extra
@@ -581,6 +762,27 @@ if (MSVC AND CS80_BUILD_TESTS)
             endif()
         endif()
     endforeach()
+endif()
+
+# Host automation wrapper platform contract (registered 2026-10-31).
+# Mock interface source lists exercise C++ and Objective-C++ generation on
+# every build host; native AU/VST3 compilation and host gates remain separate.
+if (CS80_BUILD_PLUGIN AND CS80_BUILD_TESTS)
+    get_target_property(CS80_WRAPPER_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
+    add_test(NAME cs80_host_wrapper_platform_tests COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/HostWrapperPlatformTests.py"
+        --source "${CMAKE_CURRENT_SOURCE_DIR}"
+        --juce-wrappers "${CS80_WRAPPER_JUCE_MODULES}/juce_audio_plugin_client"
+        --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-wrapper-platforms.json"
+        --cmake "${CMAKE_COMMAND}")
+    set_tests_properties(cs80_host_wrapper_platform_tests PROPERTIES TIMEOUT 90)
+    add_test(NAME cs80_main_vst3_only_automation_tests COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/MainVst3OnlyAutomationTests.py"
+        --source "${CMAKE_CURRENT_SOURCE_DIR}"
+        --juce-wrappers "${CS80_WRAPPER_JUCE_MODULES}/juce_audio_plugin_client"
+        --tolerances "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/main-vst3-only-automation.json"
+        --cmake "${CMAKE_COMMAND}")
+    set_tests_properties(cs80_main_vst3_only_automation_tests PROPERTIES TIMEOUT 90)
 endif()
 
 # Instrumented builds (ASan + UBSan) run several times slower than the Release

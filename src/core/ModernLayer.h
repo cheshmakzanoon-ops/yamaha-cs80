@@ -6,6 +6,7 @@
 
 #include <array>
 #include <cstdint>
+#include <limits>
 
 // The modern modulation layer (IMPROVEMENT_PLAN Phase 6): three MSEGs, the 16-slot matrix
 // and the keyboard response curves, evaluated in one place. The engine feeds it the
@@ -101,9 +102,13 @@ public:
         newestThisSample = 0;
         anyGateLast = anyGateNow = false;
         monoTriggerPending = false;
+        monoPhraseStartAge = 0;
         lockPending = transport.hasPosition && transport.playing;
         freeStarted = {};
+        monoRestartPending = {};
         globalRate = {};
+        transportRatePhase = {};
+        transportSamples = 0;
         noteRng = Rng(0x7f4a7c15u);
         identity();
     }
@@ -113,14 +118,25 @@ public:
         const auto previous = config;
         config = sanitizeConfig(newConfig);
         for (int m = 0; m < kMsegCount; ++m)
+        {
+            if (config.msegs[(std::size_t) m].sync != previous.msegs[(std::size_t) m].sync
+                || config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
+                transportRatePhase[(std::size_t) m] = 0.0;
             if (config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
             {
-                // A trigger-mode change restarts that envelope cleanly.
+                // Restart only the changed envelope, using the next sample's
+                // gates. Keeping each voice's age preserves its latched note
+                // values, but means a held poly note needs an explicit restart.
                 freeStarted[(std::size_t) m] = false;
+                monoRestartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::mono;
                 globalRunners[(std::size_t) m].clear();
                 for (auto& voice : voices)
+                {
                     voice.runners[(std::size_t) m].clear();
+                    voice.restartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::poly;
+                }
             }
+        }
         rebuild();
     }
     const ModernConfig& getConfig() const noexcept { return config; }
@@ -134,17 +150,41 @@ public:
     const Transport& getTransport() const noexcept { return transport; }
     void setTransport(const Transport& t) noexcept
     {
+        // PPQ corrections survive only genuinely contiguous playing blocks. Use
+        // the OLD tempo for elapsed samples, including at a tempo-change boundary.
+        const double expected = transport.ppq + (double) transportSamples
+            * effectiveBpm(transport.bpm) / (60.0 * sampleRate);
+        const double tolerance = 1.0e-10 + 4.0 * std::numeric_limits<double>::epsilon()
+            * std::abs(expected);
+        const bool contiguous = transport.hasPosition && transport.playing
+            && t.hasPosition && t.playing && std::isfinite(expected) && std::isfinite(t.ppq)
+            && (transportSamples == 0 || t.ppq != transport.ppq)
+            && std::abs(t.ppq - expected) <= tolerance;
+        if (! contiguous)
+            transportRatePhase = {};
         transport = t;
+        transportSamples = 0;
         lockPending = t.hasPosition && t.playing;
     }
 
     bool isActive() const noexcept { return active; }
 
+    // Accepted onset with no held/pedal-held gates. Ages increase in event
+    // order. Retain the earliest unobserved phrase so a later canceled onset
+    // cannot erase it; a surviving legato member can carry it to the renderer.
+    void noteMonoPhraseStart(std::uint64_t age) noexcept
+    {
+        if (active && monoPhraseStartAge == 0)
+            monoPhraseStartAge = age;
+    }
+
     // Once per internal sample, before the voices: advance shared envelopes and evaluate
-    // the global destinations. Per-voice sources come from the newest voice of the
-    // previous sample (last-note priority).
+    // the global destinations. Per-voice sources come from the newest active voice
+    // of the previous sample (last-note priority), holding the last values if none
+    // remain. Decimated idle circuits must not compete with sounding notes.
     void beginSample(const GlobalInputs& in) noexcept
     {
+        ++transportSamples;
         if (! active)
             return;
         newest = newestCandidate;
@@ -154,27 +194,55 @@ public:
 
         for (int m = 0; m < kMsegCount; ++m)
         {
-            if (! msegUsed[(std::size_t) m])
-                continue;
             const auto& shape = config.msegs[(std::size_t) m];
             if (shape.trigger == MsegTrigger::poly)
                 continue;
             auto& runner = globalRunners[(std::size_t) m];
+            // Like poly runners, mono runners must observe phrase onsets even
+            // while no live route reads them. Otherwise the shared trigger is
+            // consumed below and a later route edit revives a stale prior
+            // phrase, or leaves this held note's envelope unstarted forever.
+            // Only event state changes here; unused envelope clocks stay paused.
+            if (shape.trigger == MsegTrigger::mono)
+            {
+                if (monoTriggerPending || (monoRestartPending[(std::size_t) m] && anyGateLast))
+                    runner.trigger(shape);
+                monoRestartPending[(std::size_t) m] = false;
+            }
+            if (! msegUsed[(std::size_t) m])
+                continue;
             const double rate = (double) controls.msegRate[(std::size_t) m];
             if (shape.trigger == MsegTrigger::free)
             {
                 // Free: started once, never restarted; a synced one follows the song
-                // position at every host block while the transport plays.
-                if (lockPending && shape.sync)
-                    runner.seek(shape, transport.ppq * rate);
+                // position at every host block while the transport plays. An
+                // unusable host position is equivalent to no position update;
+                // also reject overflow when a finite PPQ is scaled by the rate.
+                if (lockPending && shape.sync && std::isfinite(transport.ppq * rate))
+                {
+                    const double position = transport.ppq * rate + transportRatePhase[(std::size_t) m];
+                    if (std::isfinite(position))
+                        runner.seek(shape, position);
+                    else
+                    {
+                        transportRatePhase[(std::size_t) m] = 0.0;
+                        runner.seek(shape, transport.ppq * rate);
+                    }
+                }
                 else if (! freeStarted[(std::size_t) m])
                     runner.trigger(shape);
                 freeStarted[(std::size_t) m] = true;
             }
-            else if (monoTriggerPending)
-                runner.trigger(shape);
+            monoRestartPending[(std::size_t) m] = false;
             const bool gate = shape.trigger == MsegTrigger::free || anyGateLast;
-            runner.tick(shape, advanceFor(m, globalRate[(std::size_t) m]), gate);
+            const double advance = advanceFor(m, globalRate[(std::size_t) m]);
+            runner.tick(shape, advance, gate);
+            // Integrate only the extra distance from matrix rate modulation, not
+            // the wrapped runner position. Preserve it when a rate route is removed.
+            // Base-rate edits intentionally retain the existing PPQ * base-rate law.
+            if (shape.trigger == MsegTrigger::free && shape.sync
+                && transport.hasPosition && transport.playing && std::isfinite(transport.ppq * rate))
+                transportRatePhase[(std::size_t) m] += advance - advanceFor(m, 0.0f);
         }
         lockPending = false;
         monoTriggerPending = false;
@@ -229,8 +297,10 @@ public:
         globalRate = rate;
     }
 
-    // Once per internal sample for each active voice, before its ranks render.
-    void processVoice(int voiceIndex, const VoiceInputs& in) noexcept
+    // Before a circuit's ranks render. Active voices run every internal sample;
+    // decimated idle circuits still receive rank modulation but cannot become
+    // the source of global modulation. Release tails remain eligible.
+    void processVoice(int voiceIndex, const VoiceInputs& in, bool globalSourceEligible = true) noexcept
     {
         if (! active || voiceIndex < 0 || voiceIndex >= kVoices)
             return;
@@ -246,16 +316,41 @@ public:
             voice.key = bipolarResponseCurve(clampf(key, -1.0f, 1.0f), controls.keyCurve);
             for (int m = 0; m < kMsegCount; ++m)
                 if (config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
+                {
                     voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
-            if (! anyGateLast)
+                    // Rate routes are evaluated after the runners and apply on
+                    // the next sample. A new envelope starts at its base rate,
+                    // just like a fresh voice, not at the previous note's rate.
+                    voice.rate[(std::size_t) m] = 0.0f;
+                    voice.restartPending[(std::size_t) m] = false;
+                }
+            // Keep the next-beginSample trigger timing. Only a newly observed
+            // eligible voice can consume the event-order phrase marker; idle
+            // circuits must neither consume it nor add a delayed shared trigger.
+            const bool startsPhrase = globalSourceEligible && monoPhraseStartAge != 0
+                && in.age >= monoPhraseStartAge;
+            if (startsPhrase)
+                monoPhraseStartAge = 0;
+            if (! anyGateLast || startsPhrase)
                 monoTriggerPending = true;
         }
         anyGateNow = anyGateNow || in.gate;
 
         for (int m = 0; m < kMsegCount; ++m)
             if (msegUsed[(std::size_t) m] && config.msegs[(std::size_t) m].trigger == MsegTrigger::poly)
+            {
+                if (voice.restartPending[(std::size_t) m])
+                {
+                    if (globalSourceEligible && in.gate)
+                    {
+                        voice.runners[(std::size_t) m].trigger(config.msegs[(std::size_t) m]);
+                        voice.rate[(std::size_t) m] = 0.0f;
+                    }
+                    voice.restartPending[(std::size_t) m] = false;
+                }
                 voice.runners[(std::size_t) m].tick(config.msegs[(std::size_t) m],
                                                     advanceFor(m, voice.rate[(std::size_t) m]), in.gate);
+            }
 
         SourceValues values = globalValues;
         values[ModSource::velocity] = voice.velocity;
@@ -269,7 +364,7 @@ public:
                 values[msegSource(m)] = msegOutput(m, voice.runners[(std::size_t) m].getValue());
         values[ModSource::filterEnvelope] = in.filterEnvelope[0] / kEnvelopeOctaves;
         values[ModSource::ampEnvelope] = in.ampEnvelope[0];
-        if (in.age >= newestThisSample)
+        if (globalSourceEligible && in.age >= newestThisSample)
         {
             newestThisSample = in.age;
             newestCandidate = values;
@@ -370,6 +465,7 @@ private:
         std::uint64_t age = 0;
         float random = 0.0f, velocity = 0.0f, key = 0.0f;
         std::array<MsegRunner, kMsegCount> runners {};
+        std::array<bool, kMsegCount> restartPending {};
         std::array<float, kMsegCount> rate {};
         std::array<RankOffsets, 2> offsets {};
     };
@@ -415,6 +511,7 @@ private:
     void rebuild() noexcept
     {
         const bool wasActive = active;
+        const auto previouslyUsed = msegUsed;
         liveCount = 0;
         msegUsed = {};
         globalDestinations = false;
@@ -433,18 +530,28 @@ private:
                     globalDestinations = true;
             }
         active = liveCount > 0;
+        for (int m = 0; m < kMsegCount; ++m)
+            if (! msegUsed[(std::size_t) m] || ! previouslyUsed[(std::size_t) m])
+                transportRatePhase[(std::size_t) m] = 0.0;
         // Leaving the active state returns every consumer to the identity at once.
         if (wasActive && ! active)
+        {
             identity();
+            monoPhraseStartAge = 0;
+        }
         if (! wasActive && active)
         {
             identity();
             newestCandidate = newest = SourceValues {};
         }
-        // processVoice rewrites every rank offset each sample; global offsets are only
-        // written while a global destination is routed, so clear them when none is.
+        // processVoice rewrites every rank offset each sample; global offsets and
+        // shared MSEG-rate offsets are only written while a global destination is
+        // routed. Clear both when none is, or a removed rate route keeps acting.
         if (active && ! globalDestinations)
+        {
             globalOffsets = GlobalOffsets {};
+            globalRate = {};
+        }
     }
 
     ModernConfig config {};
@@ -460,11 +567,15 @@ private:
     std::array<VoiceState, kVoices> voices {};
     std::array<MsegRunner, kMsegCount> globalRunners {};
     std::array<float, kMsegCount> globalRate {};
+    std::array<double, kMsegCount> transportRatePhase {};
+    std::uint64_t transportSamples = 0;
     SourceValues globalValues {}, newest {}, newestCandidate {};
     std::uint64_t newestThisSample = 0;
+    std::uint64_t monoPhraseStartAge = 0;
     bool anyGateLast = false, anyGateNow = false, monoTriggerPending = false;
     bool lockPending = false;
     std::array<bool, kMsegCount> freeStarted {};
+    std::array<bool, kMsegCount> monoRestartPending {};
     Rng noteRng { 0x7f4a7c15u };
     GlobalOffsets globalOffsets {};
 };

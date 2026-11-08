@@ -25,6 +25,8 @@ All earlier IDs, order, ranges, defaults and AU hints are untouched (the smoke t
 
 **Preset recall.** Loading a factory preset recalls the sound, not the wiring: `footswitch_plugged`, `footswitch_pressed`, `foot_mode` and `output_level` are left where they are. The four contour levers and both assigners are part of the patch and return to their neutral values with it. User presets and host state restore all ten. Parity isolation is a separate session policy: both factory and user presets preserve its current setting, whereas host state restores its saved setting.
 
+The tuning source (`tuning_mode`) also stays with the session on both factory and user preset recall. Scala/KBM texts and MTS tuning data are not part of a user preset, so loading a sound must not disable the current source or select an unrelated one. Full host-session restore still recalls its saved tuning source and Scala/KBM texts. This exception does not change user-preset recall of the ten performance controls above.
+
 ## Keyboard contour (owner controls 9 and 10)
 
 Source chain: [KEYBOARD_CONTOUR_EVIDENCE.md](KEYBOARD_CONTOUR_EVIDENCE.md). Established there: four center-neutral bipolar levers; brilliance moves both filters, level feeds the VCA control sum through its own branch; the effect grows toward the keyboard ends.
@@ -46,7 +48,25 @@ Source chain: [KEYBOARD_CONTOUR_EVIDENCE.md](KEYBOARD_CONTOUR_EVIDENCE.md). Esta
 - **Sustain gate closed.** Only the `masterSustain * 10 s` release term is removed. Per-rank release and KEY RELEASE survive. Sustain II's tail privileges (a new note cutting earlier tails, tails following the ribbon) are tied to the gate, so with it closed there is no tail to privilege.
 - **Gate falls while a tail sounds.** `Engine::cancelSustainTails()` shortens the release of already-released voices through `setRelease`, which keeps stage, value and elapsed stage time. The envelope value does not jump, nothing retriggers and no note is held. Re-opening the gate neither resurrects a finished voice nor lengthens a tail that began without SUSTAIN. The edge acts when parameters are applied, not by per-sample polling, so it does not depend on render partitioning.
 - **Glide gate closed.** New notes start on their own pitch, a running glide snaps to its target on the next sample, and glissando quantization is suppressed. Re-opening does not resurrect the discarded transition.
-- MIDI CC64 and its per-channel/MPE bookkeeping are an unrelated software convention and are untouched. A MIDI controller cannot say whether a jack is plugged in, so there is no MIDI adapter.
+- MIDI CC64 hold and its per-channel/MPE bookkeeping remain a separate, unchanged software convention. A MIDI controller cannot say whether a jack is plugged in, so there is no MIDI adapter. Circuit release-tail eligibility after that hold ends is specified below.
+
+**Circuit MIDI pedal release.** In the opt-in Circuit/source-performance policy,
+CC64 delays the envelope's gate release. Once the pedal is lifted, the resulting
+tail follows the Sustain I/II selector and footswitch gate at that instant, just
+as an ordinary key release does. With Sustain II enabled and its gate open, a
+subsequent strike terminates that tail. While CC64 remains down, new strikes do
+not terminate pedal-held voices. Closing the footswitch gate later removes the
+tail's termination eligibility; reopening it does not restore that eligibility.
+
+This intentionally corrects a longstanding Circuit software inconsistency:
+post-CC64 tails previously received the panel release duration but never its
+Sustain II termination behavior. Legacy retains that historical behavior for
+compatibility, and isolation continues to ignore CC64. This is not a MIDI adapter
+for the physical footswitch or a claim about measured Yamaha pedal behavior.
+`cs80_pedal_release_tests` covers both policies, both sustain modes, open/closed
+gates, note-off and CC123, mode/gate edits during pedal hold, another channel's
+held key, repeated pedal-up, continuous envelope values, completed tails and
+render partitioning. The mode/gate matrix runs at 44.1, 48, 96 and 192 kHz.
 
 The truth table is a discrete routing law, not a transistor transfer model. The cancellation policy (shorten, don't restart) is an explicit provisional choice; the real switch transient is unmeasured.
 

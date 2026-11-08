@@ -177,6 +177,7 @@ public:
     {
         for (auto& u : up) u.reset();
         for (auto& d : down) d.reset();
+        activeStages = -1;
     }
 
     // stages: 0 (1x) .. 3 (8x). fn(float) -> float runs at base rate * 2^stages.
@@ -184,6 +185,13 @@ public:
     float process(float x, int stages, Fn&& fn) noexcept
     {
         stages = std::clamp(stages, 0, kMaxStages);
+        if (stages != activeStages)
+        {
+            // A factor change changes the cascade topology. Inactive stages must not
+            // retain old audio and replay it when a higher factor is selected again.
+            reset();
+            activeStages = stages;
+        }
         std::array<float, kMaxFactor> low {}, high {};
         low[0] = x;
         int n = 1;
@@ -209,6 +217,7 @@ public:
 private:
     std::array<HalfbandUpsampler, kMaxStages> up;
     std::array<HalfbandDownsampler, kMaxStages> down;
+    int activeStages = -1;
 };
 
 } // namespace cs80::fx

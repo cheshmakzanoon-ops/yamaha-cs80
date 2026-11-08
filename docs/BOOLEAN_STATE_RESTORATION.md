@@ -25,6 +25,18 @@ saved states and opposite-bucket restores. It inspects both host-facing values
 and APVTS atomics. Missing/invalid Original SUB mode XML still restores legacy;
 fractional XML is deliberately not made authoritative by this fix.
 
+Original SUB XML uses the same complete-number validation as ENGINE and PURE:
+only numeric values exactly equal to 0 or 1 are authoritative. Numeric prefixes
+such as `1oops`, incomplete exponents and fractions that merely round to 1 as a
+float restore legacy/off. Valid numeric spellings such as `1.0` and `1e0` remain
+valid, including files without schema or diagnostic SUB markers. This changes
+only saved-state validation, not the normalized host-automation threshold.
+
+`SessionSchemaHostTests.h`, included in the UI smoke executable, checks both
+session and user-preset restoration across old/current schemas and both live
+mode values, host/APVTS agreement, saved-byte round trips, and final-duplicate
+validation. Its fixtures are confined to a fresh temporary directory.
+
 Primary implementation references:
 - [JUCE 8.0.6 AudioParameterBool](https://github.com/juce-framework/JUCE/blob/8.0.6/modules/juce_audio_processors/utilities/juce_AudioParameterBool.cpp)
 - [JUCE 8.0.6 APVTS ParameterAdapter](https://github.com/juce-framework/JUCE/blob/8.0.6/modules/juce_audio_processors/utilities/juce_AudioProcessorValueTreeState.cpp)

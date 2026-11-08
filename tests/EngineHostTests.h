@@ -9,9 +9,152 @@
 
 namespace cs80::tests
 {
+// Sixteen-voice mode keeps the physical expression pedal on both engines
+// across resource/policy resets, before new MIDI at the transition boundary.
+template <typename Check>
+void testExtensionExpressionLifecycleHost(Check&& check)
+{
+    enum class Change { qualityUp, qualityDown, offlineOn, offlineOff,
+                        circuitToLegacy, legacyToCircuit, offlineOffQualityUp, prepare, releasePrepare };
+    constexpr const char* changeNames[] = { "quality up", "quality down", "offline on", "offline off",
+        "Circuit to Legacy", "Legacy to Circuit", "offline off + quality up", "prepare", "release + prepare" };
+    for (const auto change : { Change::qualityUp, Change::qualityDown, Change::offlineOn,
+                               Change::offlineOff, Change::circuitToLegacy, Change::legacyToCircuit,
+                               Change::offlineOffQualityUp, Change::prepare, Change::releasePrepare })
+        for (const bool midiPedal : { false, true })
+            for (const float requestedPedal : { 0.0f, 0.35f, 1.0f })
+            {
+                const auto verify = [&](bool ok, const char* message)
+                {
+                    const auto context = juce::String(changeNames[static_cast<int>(change)])
+                        + (midiPedal ? " / CC11 / " : " / UI pedal / ") + juce::String(requestedPedal)
+                        + ": " + message;
+                    check(ok, context.toRawUTF8());
+                };
+                Cs80AudioProcessor host;
+                host.setParamValue(P_voiceMode, 1.0f);
+                host.setParamValue(P_sourcePerformance, change == Change::legacyToCircuit ? 0.0f : 1.0f);
+                host.setParamValue(P_oversampling, change == Change::qualityDown ? 2.0f : 0.0f);
+                host.setParamValue(P_analogNoise, 0.0f);
+                host.setParamValue(P_drift, 0.0f);
+                host.setParamValue(P_voiceDispersion, 0.0f);
+                host.setNonRealtime(change == Change::offlineOff || change == Change::offlineOffQualityUp);
+                host.prepareToPlay(48000.0, 64);
+                juce::AudioBuffer<float> block(2, 512);
+                juce::MidiBuffer midi;
+                float pedal = requestedPedal;
+                if (midiPedal)
+                {
+                    const int cc = juce::roundToInt(pedal * 127.0f);
+                    pedal = cc / 127.0f;
+                    midi.addEvent(juce::MidiMessage::controllerEvent(1, 11, cc), 0);
+                }
+                else host.setExpressionFromUI(pedal);
+                for (int note = 48; note < 57; ++note)
+                    midi.addEvent(juce::MidiMessage::noteOn(1, note, (juce::uint8) 100), 0);
+                host.processBlock(block, midi);
+                midi.clear();
+                verify(host.getEngine().activeVoices() == 8 && host.getExtensionEngine().activeVoices() == 1,
+                      "expression lifecycle fixture activates both engines and consumes the pedal event");
+
+                switch (change)
+                {
+                    case Change::qualityUp: host.setParamValue(P_oversampling, 2.0f); break;
+                    case Change::qualityDown: host.setParamValue(P_oversampling, 0.0f); break;
+                    case Change::offlineOn: host.setNonRealtime(true); break;
+                    case Change::offlineOff: host.setNonRealtime(false); break;
+                    case Change::circuitToLegacy: host.setParamValue(P_sourcePerformance, 0.0f); break;
+                    case Change::legacyToCircuit: host.setParamValue(P_sourcePerformance, 1.0f); break;
+                    case Change::offlineOffQualityUp:
+                        host.setNonRealtime(false); host.setParamValue(P_oversampling, 2.0f); break;
+                    case Change::prepare: host.prepareToPlay(48000.0, 64); break;
+                    case Change::releasePrepare:
+                        host.releaseResources(); host.prepareToPlay(48000.0, 64); break;
+                }
+                // Fresh notes share the block containing the transition; no
+                // intervening pedal event is available to repair lost state.
+                for (int note = 60; note < 69; ++note)
+                    midi.addEvent(juce::MidiMessage::noteOn(1, note, (juce::uint8) 100), 0);
+                host.processBlock(block, midi);
+                midi.clear();
+                const auto& main = host.getEngine();
+                const auto& extension = host.getExtensionEngine();
+                verify(main.activeVoices() == 8 && extension.activeVoices() == 1
+                          && main.getVoiceInfo(0).note == 60 && extension.getVoiceInfo(0).note == 68,
+                      "lifecycle transition clears old voices and accepts fresh MIDI on both engines");
+                verify(main.getRenderPolicy() == extension.getRenderPolicy()
+                          && main.getOversamplingFactor() == extension.getOversamplingFactor(),
+                      "both engines agree on the resulting render policy and sample rate");
+                verify(host.getExpressionValue() == pedal,
+                      "lifecycle transition retains the physical pedal mailbox");
+                if (usesSourceModels(main.getRenderPolicy()))
+                {
+                    const double target = std::exp(std::log(1000000.0)
+                        + pedal * (std::log(2000.0) - std::log(1000000.0)));
+                    for (const auto* engine : { &main, &extension })
+                        verify(std::abs(engine->getPraWahState(0).targetOhms - target) < 1e-6,
+                              "both engines restore the expression optical target after a reset");
+                }
+                const float peak = std::max(block.getMagnitude(0, 0, block.getNumSamples()),
+                                            block.getMagnitude(1, 0, block.getNumSamples()));
+                verify(pedal == 0.0f ? peak == 0.0f : peak > 1e-5f,
+                      "heel-down stays silent across all sixteen voices; nonzero expression remains audible");
+            }
+
+    // The two ordered updates can reset 8x -> 2x -> 8x. A matching final
+    // factor does not make pre-transition keyboard gestures valid again.
+    {
+        Cs80AudioProcessor transition;
+        transition.setParamValue(P_oversampling, 0.0f);
+        transition.setNonRealtime(true);
+        transition.prepareToPlay(48000.0, 64);
+        transition.serviceKeyboardUI();
+        transition.getKeyboardState().noteOn(1, 59, 0.8f);
+        transition.setNonRealtime(false);
+        transition.setParamValue(P_oversampling, 2.0f);
+        juce::AudioBuffer<float> audio(2, 64);
+        juce::MidiBuffer freshHost;
+        freshHost.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+        transition.processBlock(audio, freshHost);
+        check(transition.getEngine().getOversamplingFactor() == 8
+                  && transition.getEngine().activeVoices() == 1
+                  && transition.getEngine().getVoiceInfo(0).note == 60,
+              "intermediate rate resets revoke stale UI gestures but accept fresh host MIDI");
+    }
+
+    // A quality selector change which keeps 2x must not reset held notes or
+    // defeat a new pedal gesture queued at that same block boundary.
+    Cs80AudioProcessor host;
+    host.setParamValue(P_voiceMode, 1.0f);
+    host.setParamValue(P_oversampling, 0.0f);
+    host.setExpressionFromUI(0.35f);
+    host.prepareToPlay(48000.0, 64);
+    juce::AudioBuffer<float> block(2, 64);
+    juce::MidiBuffer midi;
+    for (int note = 60; note < 69; ++note)
+        midi.addEvent(juce::MidiMessage::noteOn(1, note, (juce::uint8) 100), 0);
+    host.processBlock(block, midi);
+    midi.clear();
+    host.setParamValue(P_oversampling, 1.0f);
+    host.setExpressionFromUI(0.2f);
+    host.processBlock(block, midi);
+    check(host.getEngine().activeVoices() == 8 && host.getExtensionEngine().activeVoices() == 1,
+          "same-factor quality changes leave both engines' held notes intact");
+    check(host.getEngine().getPraWahState(0).targetOhms == host.getExtensionEngine().getPraWahState(0).targetOhms
+              && host.getExpressionValue() == 0.2f,
+          "a new pedal gesture reaches both engines without a lifecycle reset");
+    host.setParamValue(P_oversampling, 2.0f);
+    host.setExpressionFromUI(0.4f);
+    host.processBlock(block, midi);
+    check(host.getEngine().getPraWahState(0).targetOhms == host.getExtensionEngine().getPraWahState(0).targetOhms
+              && host.getExpressionValue() == 0.4f,
+          "a queued pedal gesture takes precedence after both engines reset");
+}
+
 template <typename Check>
 void testOversamplingHost(Check&& check)
 {
+    testExtensionExpressionLifecycleHost(check);
     {
         Cs80AudioProcessor host;
         auto* quality = dynamic_cast<juce::AudioParameterChoice*>(

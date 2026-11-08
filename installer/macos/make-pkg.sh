@@ -16,6 +16,20 @@ artefacts="$build/CS80Reference_artefacts/Release"
 version="$(sed -n 's/^project(CS80Reference VERSION \([0-9.]*\).*/\1/p' "$root/CMakeLists.txt")"
 [ -n "$version" ] || { echo "cannot read the project version" >&2; exit 1; }
 
+# This installer advertises both architectures. Reject native-only or malformed
+# inputs before staging anything; CI native archives are a separate product.
+for bundle in "$artefacts/VST3/$product.vst3" \
+              "$artefacts/AU/$product.component" \
+              "$artefacts/Standalone/$product.app"; do
+    binary="$bundle/Contents/MacOS/$product"
+    [ -f "$binary" ] && [ -x "$binary" ] || {
+        echo "missing/non-executable universal bundle binary: $binary" >&2; exit 1;
+    }
+    lipo -verify_arch x86_64 arm64 "$binary" || {
+        echo "universal installer requires x86_64 and arm64 in: $binary" >&2; exit 1;
+    }
+done
+
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 mkdir -p "$work/components" "$out"
@@ -41,6 +55,9 @@ juce_license="$build/_deps/juce-src/LICENSE.md"
 cp "$juce_license" "$work/root-docs/JUCE-LICENSE.md"
 cp "$root/docs/INSTALL_AND_QUICKSTART.md" "$work/root-docs/"
 cp "$root/LICENSE" "$work/root-docs/LICENSE.txt"
+cp "$root/assets/fonts/barlow-condensed/OFL.txt" "$work/root-docs/BarlowCondensed-OFL.txt"
+cp "$root/assets/fonts/barlow-condensed/SOURCE.txt" "$work/root-docs/BarlowCondensed-SOURCE.txt"
+cp "$root/src/vendor/mts-esp/LICENSE" "$work/root-docs/MTS-ESP-LICENSE.txt"
 pkgbuild --root "$work/root-docs" --install-location "/Library/Application Support/Reference Instruments/$product" \
     --identifier "$bundle_id.docs" --version "$version" "$work/components/docs.pkg"
 

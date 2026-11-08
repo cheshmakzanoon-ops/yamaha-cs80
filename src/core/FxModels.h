@@ -195,10 +195,14 @@ private:
 // specifies (decay + 0.15, clipped to 0.25..0.50). A = decay (RT60 0.8..8 s at 1 kHz with
 // B = 1: the fixed 0.70 tank all-passes ring for ~0.4 s by themselves, so the structure
 // cannot honour shorter times), B = brightness (input bandwidth and in-tank damping).
+// The brightness poles are matched to the existing 96 kHz calibration, independently
+// of the tank's 29761 Hz delay-length reference, so quality/rate changes keep their
+// physical decay times. This is a modern-effect voicing choice, not a hardware model.
 class PlateReverbFx
 {
 public:
     static constexpr double kDesignRate = 29761.0;
+    static constexpr double kFilterReferenceRate = 96000.0;
 
     static double targetRt60(float a) noexcept { return 0.8 * std::pow(10.0, (double) clampf(a, 0.0f, 1.0f)); }
     // Tank loop: both halves' all-passes and delays, in seconds.
@@ -254,13 +258,29 @@ public:
         damping = { 0.0f, 0.0f };
         feedback = { 0.0f, 0.0f };
         lfoPhase = 0.0;
+        lastBrightness = -1.0f;
     }
 
     StereoSample process(float l, float r, float a, float b) noexcept
     {
         const float bright = clampf(b, 0.0f, 1.0f);
-        const float bandwidth = 0.45f + 0.5495f * bright; // Dattorro default 0.9995 at B = 1
-        const float damp = 0.6f * (1.0f - bright);        // 0 (none) at B = 1
+        if (bright != lastBrightness)
+        {
+            lastBrightness = bright;
+            const float referenceBandwidth = 0.45f + 0.5495f * bright;
+            const float referenceDamp = 0.6f * (1.0f - bright);
+            // Preserve the calibrated 96 kHz arithmetic exactly. At another rate,
+            // p^(referenceRate / sr) preserves each one-pole's decay in seconds.
+            // In particular the fully bright tank keeps its exact damping bypass.
+            bandwidth = referenceBandwidth;
+            dampingAmount = 1.0f - referenceDamp;
+            if (sr != kFilterReferenceRate)
+            {
+                const double ratio = kFilterReferenceRate / sr;
+                bandwidth = (float) (1.0 - std::pow(1.0 - (double) referenceBandwidth, ratio));
+                dampingAmount = (float) (1.0 - std::pow((double) referenceDamp, ratio));
+            }
+        }
         if (a != lastDecayControl)
         {
             lastDecayControl = a;
@@ -288,7 +308,7 @@ public:
             y = tankAp1[(size_t) h].processModulated(y, -0.70f, (double) tankAp1[(size_t) h].length + mod[h]);
             delay1[(size_t) h].write(y);
             y = delay1[(size_t) h].tap(delay1Length[(size_t) h]);
-            damping[(size_t) h] += (1.0f - damp) * (y - damping[(size_t) h]);
+            damping[(size_t) h] += dampingAmount * (y - damping[(size_t) h]);
             y = damping[(size_t) h] * decay;
             y = tankAp2[(size_t) h].process(y, decayDiffusion2);
             delay2[(size_t) h].write(y);
@@ -341,6 +361,7 @@ private:
     int predelaySamples = 1;
     std::array<float, 2> damping {}, feedback {};
     float bandwidthState = 0.0f;
+    float bandwidth = 1.0f, dampingAmount = 1.0f, lastBrightness = -1.0f;
     double sr = 96000.0, scale = 1.0, excursion = 16.0, lfoPhase = 0.0;
     float trim = 1.0f, decay = 0.0f, decayDiffusion2 = 0.5f, lastDecayControl = -1.0f;
 };
@@ -497,6 +518,9 @@ class TapeEchoFx
 public:
     static constexpr double kWowHz = 0.55, kWowDepth = 0.0018, kFlutterHz = 6.1, kFlutterDepth = 0.0004;
     static constexpr double kMaxSeconds = 1.2;
+    // Keep the playback head moving forward during large time increases. Leaving 10 %
+    // of the nominal speed also gives the wow/flutter modulation ample headroom.
+    static constexpr double kMaxDelayIncrease = 0.9; // seconds of delay per elapsed second
 
     static double delaySeconds(float a) noexcept { return 0.06 * std::pow(20.0, (double) clampf(a, 0.0f, 1.0f)); }
     static double tailSeconds(float b) noexcept { return 0.3 * std::pow(8.0 / 0.3, (double) clampf(b, 0.0f, 1.0f)); }
@@ -535,7 +559,11 @@ public:
     StereoSample process(float l, float r, float a, float b) noexcept
     {
         const double target = delaySeconds(a);
-        time = time < 0.0 ? target : time + glide * (target - time);
+        // A delay tap reads at t - D(t). An unconstrained 250 ms glide can increase D
+        // faster than real time (4.56 s/s for 60 ms -> 1.2 s), replaying old audio in
+        // reverse. Limit only the positive slope; small changes and faster playback
+        // retain the existing one-pole glide, and delay memory is never discarded.
+        time = time < 0.0 ? target : time + std::min(glide * (target - time), kMaxDelayIncrease / sr);
         const float g = (float) std::min(0.95, std::pow(10.0, -3.0 * time / tailSeconds(b)));
         const float in[2] = { l, r };
         const float cross[2] = { channels[1].playback, channels[0].playback }; // ping-pong

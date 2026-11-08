@@ -62,6 +62,14 @@ inline double msegReferenceLevel(const modern::MsegShape& s, double advance, lon
     if (! released || s.loop != modern::MsegLoop::sustain)
     {
         const double p = msegReferenceHeldPosition(s, advance, k);
+        // A collapsed loop is an indexed hold, not the right side of any
+        // coincident step that follows it. Release/static lookup is unchanged.
+        const int e = s.loopEnd;
+        if (s.loop != modern::MsegLoop::off && e + 1 < s.count
+            && p == (double) s.points[(std::size_t) e].time
+            && s.points[(std::size_t) s.loopStart].time == s.points[(std::size_t) e].time
+            && s.points[(std::size_t) e + 1].time == s.points[(std::size_t) e].time)
+            return s.points[(std::size_t) e].level;
         return msegReferenceStatic(s, p, 0, s.points[0].level);
     }
     // Gate fell at releaseTick: the level reached by the previous tick is held as the start

@@ -187,6 +187,194 @@ void testHalfband()
     }
 }
 
+// ---- live oversampling changes --------------------------------------------------------
+
+void testOversamplingTransitions()
+{
+    // A new factor changes the cascade topology. None of the old topology's filter
+    // history belongs to it, including deeper stages that would otherwise freeze when
+    // the factor is reduced. Compare every directed transition with a fresh cascade.
+    for (int from = 0; from <= Oversampler::kMaxStages; ++from)
+        for (int to = 0; to <= Oversampler::kMaxStages; ++to)
+        {
+            if (from == to) continue;
+            Oversampler changed, fresh;
+            const auto shape = [](float x) { return DriveFx::shape(x, 4.0f); };
+            for (int n = 0; n < 2048; ++n)
+                changed.process(0.3f * std::sin(0.071f * (float) n) + 0.1f, from, shape);
+            bool same = true;
+            for (int n = 0; n < 2048; ++n)
+            {
+                const float x = 0.2f * std::cos(0.113f * (float) n) - 0.05f;
+                const float actual = changed.process(x, to, shape), expected = fresh.process(x, to, shape);
+                same = same && actual == expected;
+            }
+            check(same, "changing the oversampling factor starts with fresh filter history");
+        }
+
+    // No change means no reset. Also check effective, clamped factors: asking for nine
+    // stages still selects the same 8x cascade and must not repeatedly clear it.
+    for (int stages = 0; stages <= Oversampler::kMaxStages; ++stages)
+    {
+        Oversampler actual;
+        std::array<HalfbandUpsampler, Oversampler::kMaxStages> up;
+        std::array<HalfbandDownsampler, Oversampler::kMaxStages> down;
+        for (auto& stage : up) stage.setup(sharedHalfband());
+        for (auto& stage : down) stage.setup(sharedHalfband());
+        bool same = true;
+        for (int n = 0; n < 4096; ++n)
+        {
+            const float x = 0.4f * std::sin(0.037f * (float) n);
+            std::array<float, Oversampler::kMaxFactor> low {}, high {};
+            low[0] = x;
+            int count = 1;
+            for (int s = 0; s < stages; ++s)
+            {
+                for (int i = 0; i < count; ++i)
+                    up[(std::size_t) s].process(low[(std::size_t) i], high[(std::size_t) (2 * i)], high[(std::size_t) (2 * i + 1)]);
+                count *= 2;
+                std::copy_n(high.begin(), count, low.begin());
+            }
+            for (int i = 0; i < count; ++i)
+                low[(std::size_t) i] = DriveFx::shape(low[(std::size_t) i], 4.0f);
+            for (int s = stages - 1; s >= 0; --s)
+            {
+                count /= 2;
+                for (int i = 0; i < count; ++i)
+                    low[(std::size_t) i] = down[(std::size_t) s].process(low[(std::size_t) (2 * i)], low[(std::size_t) (2 * i + 1)]);
+            }
+            const int requested = n % 2 == 0 ? stages : stages == 0 ? -5 : stages == Oversampler::kMaxStages ? 9 : stages;
+            const float y = actual.process(x, requested, [](float v) { return DriveFx::shape(v, 4.0f); });
+            same = same && y == low[0];
+        }
+        check(same, "unchanged effective factor preserves the original oversampling arithmetic");
+        actual.reset();
+        Oversampler fresh;
+        same = true;
+        for (int n = 0; n < 1024; ++n)
+        {
+            const float x = n == 0 ? 0.4f : 0.0f;
+            const auto shape = [](float v) { return DriveFx::shape(v, 4.0f); };
+            const float y = actual.process(x, stages, shape), expected = fresh.process(x, stages, shape);
+            same = same && y == expected;
+        }
+        check(same, "explicit oversampler reset still matches a fresh cascade");
+    }
+
+    // Public slot path: play through a high factor, reduce it during silence, then
+    // restore it. A drive has no delay tail; returning to a factor must not replay
+    // samples from the earlier note, even through its DC/tone filters and loudness gain.
+    for (float fs : { 88200.0f, 96000.0f, 192000.0f, 384000.0f })
+        for (int from = 1; from <= Oversampler::kMaxStages; ++from)
+            for (int lower = 0; lower < from; ++lower)
+            {
+                FxSlot slot;
+                slot.prepare(fs);
+                SlotControls c;
+                c.model = (int) Model::drive;
+                c.mix = 1.0f;
+                c.a = 0.7f;
+                c.b = 0.8f;
+                c.gainComp = true;
+                c.oversampling = from;
+                for (int n = 0; n < 2048; ++n)
+                    slot.process(c, 0.3f * std::sin(0.071f * (float) n) + 0.1f,
+                                 0.2f * std::cos(0.113f * (float) n) - 0.05f, 0.0f, fs);
+                c.oversampling = lower;
+                for (int n = 0; n < (int) fs; ++n)
+                    slot.process(c, 0.0f, 0.0f, 0.0f, fs);
+                c.oversampling = from;
+                float peak = 0.0f;
+                bool finite = true;
+                for (int n = 0; n < 2048; ++n)
+                {
+                    const auto y = slot.process(c, 0.0f, 0.0f, 0.0f, fs);
+                    finite = finite && std::isfinite(y.l) && std::isfinite(y.r);
+                    peak = std::max({ peak, std::abs(y.l), std::abs(y.r) });
+                }
+                check(finite && peak < 1.0e-12f, "restoring Drive oversampling after silence does not replay an earlier note");
+            }
+}
+
+// ---- live loudness matching changes --------------------------------------------------
+
+void testLoudnessMatchTransitions()
+{
+    // Matching can be switched off while the effect keeps running. Its old gain and
+    // measurement filters must not be applied to later audio when it is switched on
+    // again. The reference advances exactly the same effect but explicitly starts a
+    // new loudness measurement on each enable edge.
+    for (float fs : { 88200.0f, 96000.0f, 192000.0f, 384000.0f })
+        for (int kind = 1; kind <= 10; ++kind)
+        {
+            FxSlot slot;
+            slot.prepare(fs);
+            SlotControls c;
+            c.type = kind <= 5 ? kind : 0;
+            c.model = kind <= 5 ? 0 : kind - 5;
+            c.mix = 1.0f;
+            c.gainComp = true;
+            for (int n = 0; n < (int) fs; ++n)
+            {
+                const float x = 0.25f * std::sin(kTwoPi * 4000.0f * (float) n / fs);
+                slot.process(c, x, x, 0.0f, fs);
+            }
+            const double learnedGain = slot.match.currentGain();
+            check(std::abs(learnedGain - 1.0) > 1.0e-5,
+                  "loudness-transition fixture establishes non-neutral old gain");
+
+            // Turning matching off must preserve the existing effect and its tail.
+            // Copy the warmed effect and use its raw wet/dry path as the reference.
+            FxSlot reference = slot;
+            c.gainComp = false;
+            c.mix = 0.1f;
+            bool sameOff = true;
+            for (int n = 0; n < (int) (0.1f * fs); ++n)
+            {
+                const float x = 0.1f * std::sin(kTwoPi * 200.0f * (float) n / fs);
+                const auto expected = c.model > 0
+                    ? reference.modern.process(c.model, x, x, c.mix, c.a, c.b, c.oversampling)
+                    : reference.processClassic(c.type, x, x, c.mix, 0.0f, fs);
+                const auto actual = slot.process(c, x, x, 0.0f, fs);
+                sameOff = sameOff && actual.l == expected.l && actual.r == expected.r;
+            }
+            check(sameOff, "disabling loudness matching preserves the running effect state");
+
+            reference.match.reset();
+            c.gainComp = true;
+            bool sameOn = true;
+            for (int n = 0; n < 4096; ++n)
+            {
+                const float l = 0.1f * std::cos(0.037f * (float) n);
+                const float r = 0.08f * std::sin(0.043f * (float) n);
+                auto expected = c.model > 0
+                    ? reference.modern.process(c.model, l, r, c.mix, c.a, c.b, c.oversampling)
+                    : reference.processClassic(c.type, l, r, c.mix, 0.0f, fs);
+                const float gain = reference.match.process(l, r, expected.l, expected.r);
+                expected.l *= gain;
+                expected.r *= gain;
+                const auto actual = slot.process(c, l, r, 0.0f, fs);
+                sameOn = sameOn && actual.l == expected.l && actual.r == expected.r;
+            }
+            check(sameOn, "re-enabling loudness matching uses fresh measurements and preserves the effect");
+
+            // A second toggle exercises the reused control state. An unchanged enabled
+            // state must not reset on every sample: the reference above is continuous.
+            c.gainComp = false;
+            slot.process(c, 0.0f, 0.0f, 0.0f, fs);
+            reference = slot;
+            reference.match.reset();
+            c.gainComp = true;
+            auto expected = c.model > 0
+                ? reference.modern.process(c.model, 0.2f, -0.1f, c.mix, c.a, c.b, c.oversampling)
+                : reference.processClassic(c.type, 0.2f, -0.1f, c.mix, 0.0f, fs);
+            const float gain = reference.match.process(0.2f, -0.1f, expected.l, expected.r);
+            const auto actual = slot.process(c, 0.2f, -0.1f, 0.0f, fs);
+            check(actual.l == expected.l * gain && actual.r == expected.r * gain,
+                  "a repeated matching toggle also starts a fresh measurement");
+        }
+}
+
 // ---- drive aliasing against the 64x truth model ----------------------------------------
 
 // Coherent test tone: 2799 cycles in 65536 samples at 96 kHz = 4100.1 Hz.
@@ -660,6 +848,8 @@ int main(int argc, char** argv)
     run("kweighting", testKWeighting);
     run("halfband", testHalfband);
     run("drive", testDriveOversampling);
+    run("transitions", testOversamplingTransitions);
+    run("matching-transitions", testLoudnessMatchTransitions);
     run("classic", testClassicByteIdentity);
     run("static", testStaticLoudness);
     run("matched", testMatchedLoudness);

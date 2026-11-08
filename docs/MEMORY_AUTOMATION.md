@@ -38,6 +38,12 @@ core parameters take declared defaults; missing miniature controls take their
 declared defaults; missing selectors take PANEL. Nonfinite values are rejected
 and ranges/discrete values are constrained before APVTS replacement.
 
+Repeated known parameter IDs use the final occurrence, matching JUCE's existing
+restore order. Earlier occurrences are removed from the detached tree before
+validation or live-session overrides, so a later duplicate cannot bypass either.
+Additional properties on the retained child and unknown future children survive.
+The normalized state and subsequent exports contain one child per known parameter.
+
 Legacy version-1 HARDWARE children migrate sourceI/sourceII and each MEMORY bank's
 pN properties into the appended parameters. Explicit new parameter children take
 precedence over legacy copies. The legacy subtree is removed. Unknown hardware
@@ -56,6 +62,13 @@ settings without an editor; all 104 controls and two selectors roundtripping;
 legacy migration and missing-state defaulting; GUI-to-APVTS and host-to-GUI updates
 with balanced slider/switch gestures. These additions require CI execution;
 source inspection alone is not a test pass.
+
+`tests/PresetFileHostTests.h`, included in the UI smoke executable, exercises real
+user-preset import/export and host restoration with duplicate IDs across the
+complete host layout. It checks last-value compatibility, canonical round trips,
+session-setting preservation, malformed final policy/memory/selector values,
+three interleaved occurrences, and unknown-data preservation. File fixtures are
+confined to a fresh temporary directory.
 
 ### Gesture regression correction
 

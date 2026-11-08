@@ -54,6 +54,12 @@ The engine knows the layer through one member and a handful of hook lines in
    gets `+ modernGlobal.fxMix[slot]`.
 6. LFOs: `modLfos[i].tick(rate, sr, global.lfoWave[i])` (was a hard-coded `0`).
 7. `channelPressure()` remembers the last message for the channel-pressure source.
+   Circuit applies its existing 5 ms controller response to this shared matrix
+   tap as well as to per-voice pressure. Source and via routes share that value;
+   the event target is restored after each internal sample. Initial/reset
+   values snap on the first sample, Legacy remains immediate and PURE masks
+   the matrix. This corrects abrupt channel-pressure matrix gestures without
+   changing pressure ownership, the controller curves or the touch circuit.
 8. `buildSettings()`: reads the new parameters; PURE CS-80 disables the layer, forces sine and
    model 0 and turns loudness matching off.
 
@@ -85,6 +91,10 @@ only guard on them.
   never restarts; when synced and the host transport plays it follows the song position).
 - **Tempo sync:** host BPM from `getPlayHead()->getPosition()` each block; no or unusable
   tempo falls back to **120 BPM**. Position is double precision, so loops do not drift.
+  For free synced envelopes, an unusable song position (NaN, infinity, or overflow after
+  scaling by the rate) is treated as absent: the clock continues, or starts normally on
+  first use. The next usable position locks it again. Finite seeks and negative pre-roll
+  retain their existing behavior; this is modern-layer input handling, not a circuit law.
 - Live shape edits are safe on running envelopes (the runner re-locates its segment).
 - Rate: host parameter `msegN_rate` in octaves (-3..+3, i.e. 0.125x..8x, linear so the default
   round-trips exactly through host state) plus the matrix MSEG-rate offset, also in octaves.
@@ -116,10 +126,20 @@ that law**; the new shapes run on a double phase advanced in parallel and are ra
 Random shapes use a private, re-seeded generator per LFO, never the shared `modRng` stream
 (so the arpeggiator and SUB random patterns cannot shift).
 
-**Results** (`cs80_modern_lfo_tests`, 93 checks): sine bit-identical to `Lfo::tick(..., 0, ...)`
+Live waveform changes initialize the newly selected random shape immediately: one
+fresh level for S&H, two fresh endpoints for smooth random. Both phase clocks keep
+running, and selecting the same waveform again does not restart it. This prevents a
+stale/zero modulation signal until the next wrap (up to twenty seconds at 0.05 Hz).
+A waveform change may step, as other waveform selections do; smooth-random continuity
+applies within an uninterrupted selection. Unchanged-waveform output stays identical.
+
+**Results** (`cs80_modern_lfo_tests`, 132 checks): sine bit-identical to `Lfo::tick(..., 0, ...)`
 over 200k samples at 4 rates x 5 LFO rates; shapes within 1e-6 of an independent analytic
 definition; period error <= 1 sample over the run; S&H holds and steps at wraps; smooth random
-never exceeds its slope bound; waveform inert at depth 0 and under PURE CS-80.
+never exceeds its slope bound; waveform inert at depth 0 and under PURE CS-80. Live
+random-wave transitions, repeated selections and reset sequences are checked at three
+rates and start phases, including a wrap; all three engine waveform controls drive
+their matrix sources immediately in both Legacy and Circuit modes.
 
 ## Step 2a — Modulation matrix (`src/core/ModMatrix.h`, `src/core/ModernLayer.h`)
 
@@ -131,6 +151,15 @@ append only.
 | --- | --- |
 | original controls tapped | ribbon, poly pressure, channel pressure, shared pressure (TRG5 diode-OR maximum of held keys), keyboard contour (KBC ladder HIGH - LOW weight, `PerformanceControls.h`), SUB output, ring-modulator envelope, filter EG and VCA EG of the rank (previous sample) |
 | interface / modern | velocity, mod wheel, key follow (61-key playing surface MIDI 24..84 as -1..1, the instrument's own software convention in `PerformanceControls.h`, not the unresolved KAS map), LFO 1-3, MSEG 1-3, expression, pitch bend, CC74, note random, constant |
+
+The pitch-bend matrix source is the normalized wheel position (-1..1), independent
+of the wheel's semitone range. Editing the range while holding the wheel does
+not change its matrix assignments. Circuit mode smooths this source with the same 5 ms response as other
+wheel gestures; Legacy updates immediately. Reset clears it and PURE masks it.
+The existing direct pitch-bend calculation and MPE lower-master source selection
+are unchanged. `testPitchWheelSourceIndependentOfRange` in `ModMatrixTests.cpp`
+covers legal range endpoints, signed positions, live range edits, smoothing, reset
+and PURE.
 
 | Destination | Full scale at amount 1 (declared) |
 | --- | --- |
@@ -144,7 +173,10 @@ append only.
 | FX 1-3 mix | 1 |
 | MSEG 1-3 rate | 3 octaves |
 
-Global destinations use per-voice sources from the newest voice (last-note priority).
+Global destinations use per-voice sources from the newest active voice (last-note
+priority, including release tails). When no active voices remain, the last values
+are held. Free-running idle circuits still receive rank modulation, but their
+decimated processing must not replace the global source or interrupt a sounding note.
 Filter-EG values are normalised by `kProvisionalFilterEnvelopeOctaves` (3).
 
 Alternatives considered: a per-voice matrix evaluated at control rate (cheaper, but zipper on
@@ -238,6 +270,52 @@ decay range now starts at 0.8 s, which the structure can honour. The tape repeat
 a 3 kHz burst that the in-loop head-loss filter attenuates; the law holds in the passband, so the
 check uses 500 Hz.
 
+### Plate brightness across processing rates (2026-11-04)
+
+The modern plate previously kept its input-bandwidth and tank-damping coefficients fixed
+per sample while scaling its delay lengths with the internal rate. A higher host rate or
+oversampling factor therefore made a damped tail brighter and longer. At decay 0.7 and
+brightness 0, the stereo 12 kHz octave-band RT60 was 2.481 s at 96 kHz but 3.754 s at
+384 kHz, a 51% increase. Existing 1 kHz decay tests used brightness 1, which bypasses tank
+damping and did not catch this defect.
+
+The poles now use `p(rate) = p(96000)^(96000/rate)`, preserving their decay in seconds.
+The 96 kHz reference is the existing modern-effect voicing and static-calibration rate,
+not Dattorro's 29761 Hz delay-length reference. The original float arithmetic remains
+unchanged at 96 kHz. This intentionally changes active modern Plate renders at other
+rates, including saved sessions; it does not claim byte compatibility for those renders.
+Classic effects, inactive modern effects and PURE CS-80 are outside the correction.
+
+`cs80_plate_reverb_rate_tests` compares stereo octave-band decay at 1/4/12 kHz and
+brightness 0/0.5/1 across 88.2/96/192/384 kHz, plus reset and same-brightness rate changes.
+The corrected dark 12 kHz tail is 2.483 s at 384 kHz versus 2.481 s at 96 kHz; the largest
+measured band-decay difference in the grid is 1.3%. The 8% regression limit accounts for
+matched-pole frequency-response approximation, delay rounding and tank modulation,
+rather than claiming exact spectral invariance. The uncorrected model fails six checks.
+
+
+### Tape Time changes keep playback moving forward (2026-11-04)
+
+The modern Tape echo's 250 ms delay glide previously moved the read position backwards
+when Time increased quickly. A full 60 ms to 1.2 s jump initially increased delay by
+about 4.56 samples per sample. A 500 Hz burst already heard before that jump was replayed
+backwards at nearly its original peak, with about 24.6% of its first-echo energy.
+
+The positive delay slope is now limited to 0.9 seconds per second. This declared
+engineering choice leaves room for wow/flutter while ensuring forward playback; it is
+not a complete variable-speed tape simulation. Existing tape memory is preserved. A
+full-range increase produces a longer, deep downward pitch bend (about one second near
+0.1x speed), then resumes the existing exponential convergence. Large upward Time
+automation therefore intentionally sounds different, including in saved sessions.
+Constant settings, smaller upward changes that do not hit the limit, and downward
+changes retain their previous arithmetic. No classic effect or CS-80 circuit is changed.
+
+`cs80_tape_echo_time_tests` covers both channels at 88.2/96/192/384 kHz, three Time-jump
+positions including buffer wraps, preservation of pending tape audio, convergence to
+both endpoint delays, reset and reprepare. The uncorrected model fails 32 of 104 checks;
+the corrected model passes all 104. The already-heard burst's post-jump energy ratio
+falls below 6e-9, against a 1e-4 regression limit that allows filter settling tails.
+
 ## Step 4 — State and host parameters
 
 `src/plugin/ModernLayerState.*` keeps the MSEG shapes and matrix routing as a versioned child
@@ -257,6 +335,12 @@ of the APVTS state:
 - A fresh instance writes no child until edited; a state without the child (every session saved
   before this layer) restores the defaults, which are inert until an amount is raised. A later
   `version` loads every field it understands; malformed values are sanitised.
+- Integer fields are rounded in double precision and checked against the `int` range before
+  conversion. Oversized indices are ignored and settings use their existing field fallbacks,
+  so values such as `4294967297` cannot wrap into MSEG/slot 1 or an active routing enum.
+  Representable values retain the existing nearest-integer and enum/shape sanitation rules.
+  `ModernLayerStateRangeHostTests.h` covers typed trees, host and user-preset XML restores,
+  audio-engine publication, saved round trips and both rounded integer boundaries.
 - The listener sits on `apvts.state` itself, because `replaceState` reports the redirection only
   to listeners of the assigned object.
 - Threads: edits and restores from any non-audio thread; the audio thread takes the newest

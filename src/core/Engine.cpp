@@ -236,6 +236,7 @@ void Engine::reset()
         v.pedalHeld = false;
         v.note = 60;
         v.age = 0;
+        v.releaseGroup = 0;
         v.initialPitchTransient = 0.0;
         for (auto& r : v.ranks)
         {
@@ -279,6 +280,7 @@ void Engine::reset()
     heldCount = 0;
     sustainPedals.fill(false);
     scanner.reset();
+    noteIngressOrder = 0;
     unassignedCount = 0;
     trg5BusVolts = 0.0;
     ringKeyDown = false;
@@ -315,6 +317,7 @@ void Engine::reset()
     upperZoneBend = 0.0f;
     nextVoice = 0;
     globalBend = 0.0f;
+    globalPitchWheel = 0.0f;
     modWheel = 0.0f;
     lastChannelPressure = 0.0f;
     expression = 1.0f;
@@ -424,6 +427,8 @@ void Engine::applyParams(const ParamValues& values)
     }
     const auto previousPolicy = global.renderPolicy;
     const int previousTuning = global.tuningMode;
+    const float previousBendRange = global.pitchBendRange;
+    const bool wasMpe = global.mpe;
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
@@ -445,6 +450,12 @@ void Engine::applyParams(const ParamValues& values)
         for (auto& slot : fxSlots)
             slot.resetDamping();
     }
+    // A conventional MIDI wheel remains held when its range is edited. Retarget
+    // from its normalized event value, not the previous semitone bend or the
+    // in-flight smoother. Reset transitions above have already cleared it.
+    // MPE ranges and mode transitions keep their separate event-driven policy.
+    if (!wasMpe && !global.mpe && previousBendRange != global.pitchBendRange)
+        globalBend = globalPitchWheel * global.pitchBendRange;
     // Circuit engine: the new settings become smoothing targets; the fields keep
     // the running values (exactly the targets until audio has been rendered).
     if (usesSourceModels(global.renderPolicy))
@@ -504,6 +515,9 @@ void Engine::applyParams(const ParamValues& values)
         {
             for (auto& v : voices)
                 releaseVoice(v);
+            // Waiting direct keys belong to the same discarded keyboard
+            // gesture, not to the new arpeggiator input set.
+            unassignedCount = 0;
             heldKeyCount = 0;
             arpClock = 1.0e9f;
         }
@@ -834,7 +848,7 @@ int Engine::chooseVoice()
     return -1;
 }
 
-void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
+void Engine::rememberHeldKey(int note, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder)
 {
     for (int i = 0; i < heldKeyCount; ++i)
     {
@@ -842,6 +856,14 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
             && heldKeys[(size_t) i].midiChannel == midiChannel)
         {
             heldKeys[(size_t) i].velocity = velocity;
+            // Scan disable/ARP enable can flush an older UI onset after a
+            // newer immediate host onset. Keep the newer release ownership;
+            // existing velocity and sequence behavior remains unchanged.
+            if (onsetOrder >= heldKeys[(size_t) i].originOrder)
+            {
+                heldKeys[(size_t) i].keyboardOrigin = keyboardOrigin;
+                heldKeys[(size_t) i].originOrder = onsetOrder;
+            }
             rebuildArpSequence();
             return;
         }
@@ -860,6 +882,8 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
     key.velocity = clampf(velocity, 0.0f, 1.0f);
     key.midiChannel = midiChannel;
     key.order = ++keyOrder;
+    key.keyboardOrigin = keyboardOrigin;
+    key.originOrder = onsetOrder;
     rebuildArpSequence();
 
     // Start the pattern on the next sample rather than after a full clock
@@ -871,12 +895,13 @@ void Engine::rememberHeldKey(int note, float velocity, int midiChannel)
     }
 }
 
-void Engine::forgetHeldKey(int note, int midiChannel)
+void Engine::forgetHeldKey(int note, int midiChannel, bool keyboardOnly)
 {
     for (int i = 0; i < heldKeyCount; ++i)
     {
         if (heldKeys[(size_t) i].note == note
-            && heldKeys[(size_t) i].midiChannel == midiChannel)
+            && heldKeys[(size_t) i].midiChannel == midiChannel
+            && (!keyboardOnly || heldKeys[(size_t) i].keyboardOrigin))
         {
             if (arpSourceOrder == heldKeys[(size_t) i].order)
                 stopArpVoice();
@@ -961,6 +986,11 @@ void Engine::triggerArpNote()
     }
 
     const auto& step = arpSequence[(size_t) index];
+    // Admit the generated pitch using the current table, as for direct notes.
+    // An excluded step is a timed rest, not a removed source key: another
+    // octave can be mapped, and remapping must work without a new key strike.
+    if (global.tuningMode != 0 && ! noteMapped(step.note))
+        return;
     const int voice = chooseVoice();
     if (voice < 0)
         return;
@@ -1086,8 +1116,12 @@ void Engine::refreshKeyboardContour() noexcept
     }
 }
 
-void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
+void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, bool keyboardOrigin)
 {
+    // Capture the accepted onset before it owns a circuit. A last key-up and
+    // this key-down can share one host sample, with no rendered gate gap.
+    const bool startsMonoPhrase = modern.isActive() && std::none_of(voices.begin(), voices.end(),
+        [](const Voice& voice) { return voice.active && (voice.held || voice.pedalHeld); });
     // Circuit engine (Phase 2.1): every circuit free-runs, so assignment never
     // resets oscillator phase or filter memories; a silent circuit is first
     // caught up to the present. Legacy keeps the historical reset.
@@ -1127,6 +1161,10 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel)
     v.touch.trigger(v.velocity);
     v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
     v.age = ++voiceCounter;
+    if (startsMonoPhrase)
+        modern.noteMonoPhraseStart(v.age);
+    v.releaseGroup = v.age;
+    v.keyboardOrigin = keyboardOrigin;
     lastNote = note;
     lastPitch = v.targetPitch;
     ++heldCount;
@@ -1229,18 +1267,50 @@ void Engine::releaseVoice(Voice& v)
 
 void Engine::noteOn(int midiNote, float velocity, int midiChannel)
 {
-    if (midiNote < 0 || midiNote > 127)
+    enqueueNoteOn(midiNote, velocity, midiChannel, false);
+}
+
+bool Engine::noteOnFromKeyboard(int midiNote, float velocity, int midiChannel)
+{
+    if (midiNote < 0 || midiNote > 127 || !std::isfinite(velocity))
+        return false;
+    const bool deferred = scanTimingActive() || scanner.pending() > 0;
+    enqueueNoteOn(midiNote, velocity, midiChannel, true);
+    return deferred;
+}
+
+void Engine::enqueueNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin)
+{
+    // Reject malformed events before curves, scan queuing or voice lifecycle
+    // changes. A non-finite velocity is not a new key strike.
+    if (midiNote < 0 || midiNote > 127 || ! std::isfinite(velocity))
         return;
+    const auto onsetOrder = ++noteIngressOrder;
     // Interface-layer controller curve (Phase 2.4); exact identity at 0.
     if (global.velocityCurve != 0.0f)
         velocity = applyVelocityCurve(velocity, global.velocityCurve);
     // Opt-in KAS scan timing: act at the next scan instant, in scan order.
-    if (scanTimingActive() && scanner.push(midiNote, midiChannel, velocity, true))
-        return;
-    applyNoteOn(midiNote, velocity, midiChannel);
+    // Keep a UI restrike behind earlier queued UI releases after scan disable.
+    if (scanTimingActive() || (keyboardOrigin && scanner.pending() > 0))
+    {
+        if (scanner.push(midiNote, midiChannel, velocity, true, keyboardOrigin, onsetOrder))
+            return;
+        flushScanEvents();
+    }
+    applyNoteOn(midiNote, velocity, midiChannel, keyboardOrigin, onsetOrder);
 }
 
-void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
+void Engine::flushScanEvents()
+{
+    // A full queue must complete before the overflow event takes the immediate
+    // path; otherwise releases and retriggers can overtake their earlier keys.
+    scanner.flush([this](const kas::Scanner::Event& event) {
+        if (event.on) applyNoteOn(event.note, event.velocity, event.channel, event.keyboardOrigin, event.onsetOrder);
+        else applyNoteOff(event.note, event.channel, event.keyboardOrigin);
+    });
+}
+
+void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder)
 {
     if (global.sustainMode == 1)
     {
@@ -1261,7 +1331,7 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
 
     if (global.arpOn)
     {
-        rememberHeldKey(midiNote, velocity, midiChannel);
+        rememberHeldKey(midiNote, velocity, midiChannel, keyboardOrigin, onsetOrder);
         return;
     }
 
@@ -1271,12 +1341,24 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
     // Phase 6 unison extension: N circuits per key, detuned symmetrically.
     if (const int unison = unisonCount(); unison > 1)
     {
+        uint64_t releaseGroup = 0;
+        double onsetGlidePitch = 0.0;
         for (int k = 0; k < unison; ++k)
         {
             const int idx = chooseVoice();
             if (idx < 0)
                 break;
-            startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+            startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel, keyboardOrigin);
+            if (k == 0)
+            {
+                releaseGroup = voices[(size_t) idx].releaseGroup;
+                onsetGlidePitch = voices[(size_t) idx].glidePitch;
+            }
+            voices[(size_t) idx].releaseGroup = releaseGroup;
+            // startVoice updates lastPitch for the next accepted onset. The
+            // siblings belong to this onset, so retain the first circuit's
+            // gated/tuned glide origin instead of jumping to the new target.
+            voices[(size_t) idx].glidePitch = onsetGlidePitch;
             voices[(size_t) idx].unisonOffset = global.unisonDetune / 100.0f
                 * ((float) k / (float) (unison - 1) - 0.5f);
         }
@@ -1289,13 +1371,13 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel)
         // All circuits occupied; leave held/ring state untouched. Circuit
         // engine: the KAS keeps seeing this held key (Phase 2.2).
         if (usesSourceModels(global.renderPolicy))
-            rememberUnassignedKey(midiNote, velocity, midiChannel);
+            rememberUnassignedKey(midiNote, velocity, midiChannel, keyboardOrigin);
         return;
     }
-    startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel);
+    startVoice(voices[(size_t) idx], midiNote, velocity, midiChannel, keyboardOrigin);
 }
 
-void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel)
+void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel, bool keyboardOrigin)
 {
     for (int i = 0; i < unassignedCount; ++i)
         if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel)
@@ -1307,12 +1389,14 @@ void Engine::rememberUnassignedKey(int note, float velocity, int midiChannel)
     key.midiChannel = midiChannel;
     key.velocity = velocity;
     key.order = ++keyOrder;
+    key.keyboardOrigin = keyboardOrigin;
 }
 
-bool Engine::forgetUnassignedKey(int note, int midiChannel)
+bool Engine::forgetUnassignedKey(int note, int midiChannel, bool keyboardOnly)
 {
     for (int i = 0; i < unassignedCount; ++i)
-        if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel)
+        if (unassignedKeys[(size_t) i].note == note && unassignedKeys[(size_t) i].midiChannel == midiChannel
+            && (!keyboardOnly || unassignedKeys[(size_t) i].keyboardOrigin))
         {
             for (int j = i + 1; j < unassignedCount; ++j)
                 unassignedKeys[(size_t) (j - 1)] = unassignedKeys[(size_t) j];
@@ -1338,7 +1422,7 @@ void Engine::reconsiderUnassignedKeys()
                 best = i;
         const auto key = unassignedKeys[(size_t) best];
         forgetUnassignedKey(key.note, key.midiChannel);
-        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel);
+        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel, key.keyboardOrigin);
     }
 }
 
@@ -1346,11 +1430,55 @@ bool Engine::isSustainPedalDown(int midiChannel) const noexcept
 {
     if (midiChannel < 1 || midiChannel > 16)
         return false;
+    // Retain the engine's own-channel pedal behavior, including MPE members.
+    if (sustainPedals[(size_t) midiChannel])
+        return true;
     if (! global.mpe)
-        return sustainPedals[(size_t) midiChannel];
-    // MPE: a zone's master pedal holds its members (upper zone: channel 16).
-    return sustainPedals[(size_t) midiChannel]
-        || (mpeZones.inUpperZone(midiChannel) ? sustainPedals[16] : sustainPedals[1]);
+        return false;
+    // Only actual members inherit a zone's master pedal. Channels outside
+    // both zones remain conventional channels, not implicit lower members.
+    const auto role = mpeZones.role(midiChannel);
+    return (role == MpeZoneLayout::Role::lowerMember && sustainPedals[1])
+        || (role == MpeZoneLayout::Role::upperMember && sustainPedals[16]);
+}
+
+void Engine::setSustainPedal(int midiChannel, bool down)
+{
+    if (midiChannel < 1 || midiChannel > 16)
+        return;
+    if (down == sustainPedals[(size_t) midiChannel])
+        return;
+    sustainPedals[(size_t) midiChannel] = down;
+    if (! down)
+    {
+        for (auto& voice : voices)
+            if (voice.pedalHeld && ! isSustainPedalDown(voice.midiChannel))
+            {
+                voice.pedalHeld = false;
+                if (! voice.held && ! voice.sustained)
+                {
+                    releaseVoice(voice);
+                    // Circuit CC64 defers gate release, not the panel's
+                    // Sustain II policy for the resulting tail. Use the
+                    // mode/gate at pedal-up, as for an ordinary key-up.
+                    // Legacy retains its historical unprivileged tail.
+                    if (usesSourceModels(global.renderPolicy)
+                        && global.sustainMode == 1 && global.sustainGate)
+                        voice.sustained = true;
+                }
+            }
+        heldCount = 0;
+        for (const auto& voice : voices)
+            if (voice.held || voice.pedalHeld)
+                ++heldCount;
+        if (heldCount == 0)
+        {
+            ringKeyDown = false;
+            ringAdsr.noteOff();
+        }
+        if (unassignedCount > 0)
+            reconsiderUnassignedKeys();
+    }
 }
 
 void Engine::releaseKey(Voice& v)
@@ -1397,28 +1525,51 @@ void Engine::cancelSustainTails()
 
 void Engine::noteOff(int midiNote, int midiChannel)
 {
-    if (scanTimingActive() && scanner.push(midiNote, midiChannel, 0.0f, false))
-        return;
-    applyNoteOff(midiNote, midiChannel);
+    enqueueNoteOff(midiNote, midiChannel, false);
 }
 
-void Engine::applyNoteOff(int midiNote, int midiChannel)
+void Engine::noteOffFromKeyboard(int midiNote, int midiChannel)
+{
+    enqueueNoteOff(midiNote, midiChannel, true);
+}
+
+void Engine::enqueueNoteOff(int midiNote, int midiChannel, bool keyboardOnly)
+{
+    // A UI release must remain behind its queued onset even if scan timing
+    // was disabled between events. Ordinary host dispatch is unchanged.
+    if (scanTimingActive() || (keyboardOnly && scanner.pending() > 0))
+    {
+        if (scanner.push(midiNote, midiChannel, 0.0f, false, keyboardOnly))
+            return;
+        flushScanEvents();
+    }
+    applyNoteOff(midiNote, midiChannel, keyboardOnly);
+}
+
+void Engine::applyNoteOff(int midiNote, int midiChannel, bool keyboardOnly)
 {
     if (global.arpOn)
     {
-        forgetHeldKey(midiNote, midiChannel);
+        forgetHeldKey(midiNote, midiChannel, keyboardOnly);
         return;
     }
     // A released key that never found a circuit simply stops being seen.
-    if (unassignedCount > 0 && forgetUnassignedKey(midiNote, midiChannel))
+    if (unassignedCount > 0 && forgetUnassignedKey(midiNote, midiChannel, keyboardOnly))
         return;
     if (auto* voice = findVoiceForNote(midiNote, midiChannel))
     {
-        releaseKey(*voice);
-        // Unison: the key's other circuits release with it.
-        if (unisonCount() > 1)
-            while (auto* other = findVoiceForNote(midiNote, midiChannel))
-                releaseKey(*other);
+        // Check at execution, after deferred onsets/refusals. A newer host
+        // allocation is never released by an earlier UI gesture.
+        if (keyboardOnly && !voice->keyboardOrigin)
+            return;
+        // Note ownership is established at onset, not by the current voice
+        // mode. Keep the newest-onset convention for overlapping equal notes
+        // while releasing every circuit allocated by that one note-on.
+        const auto releaseGroup = voice->releaseGroup;
+        for (auto& other : voices)
+            if (other.active && other.held && other.releaseGroup == releaseGroup
+                && other.note == midiNote && other.midiChannel == midiChannel)
+                releaseKey(other);
         if (unassignedCount > 0)
             reconsiderUnassignedKeys();
     }
@@ -1512,17 +1663,24 @@ void Engine::allNotesOff(bool release, int midiChannel)
         ringKeyDown = false;
         ringAdsr.noteOff();
     }
+    // A channel-mode release can free circuits while another channel still
+    // holds unassigned keys. Reconsider them just as note-off/pedal release
+    // does, after all target-channel voices and queued keys are cleared.
+    if (unassignedCount > 0)
+        reconsiderUnassignedKeys();
 }
 
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
+    if (! std::isfinite(pressure))
+        return;
     pressure = clampf(pressure, 0.0f, 1.0f);
     // Interface-layer controller curve (Phase 2.4); exact identity at default.
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     for (auto& v : voices)
         if (v.active && v.note == midiNote
-            && (! global.mpe || midiChannel <= 0 || v.midiChannel == midiChannel))
+            && (midiChannel <= 0 || v.midiChannel == midiChannel))
         {
             v.pressure = pressure;
         }
@@ -1530,6 +1688,8 @@ void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 
 void Engine::channelPressure(int midiChannel, float pressure)
 {
+    if (! std::isfinite(pressure))
+        return;
     pressure = clampf(pressure, 0.0f, 1.0f);
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
@@ -1541,7 +1701,9 @@ void Engine::channelPressure(int midiChannel, float pressure)
 
 void Engine::pitchBend(int midiChannel, float value)
 {
-    if (global.parityMode)
+    // Ignore malformed float events before they can poison bend smoothers or
+    // the independent pitch-wheel modulation source. Keep the last valid target.
+    if (global.parityMode || ! std::isfinite(value))
         return;
     value = clampf(value, -1.0f, 1.0f);
     if (global.mpe)
@@ -1553,6 +1715,7 @@ void Engine::pitchBend(int midiChannel, float value)
         {
             const float range = mpeZones.masterRange(false);
             globalBend = value * (range >= 0.0f ? range : global.pitchBendRange);
+            globalPitchWheel = value;
             return;
         }
         if (role == MpeZoneLayout::Role::upperMaster)
@@ -1570,6 +1733,7 @@ void Engine::pitchBend(int midiChannel, float value)
     else
     {
         globalBend = value * global.pitchBendRange;
+        globalPitchWheel = value;
     }
 }
 
@@ -1580,6 +1744,18 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         allNotesOff(controller == 123, midiChannel);
         return;
     }
+    if (controller == 121)
+    {
+        if (midiChannel < 1 || midiChannel > 16 || ! std::isfinite(value))
+            return;
+        // Narrow Reset All Controllers support: null parameter selection,
+        // including while MPE is off, and release this channel's MIDI pedal.
+        // Retain negotiated zones/ranges and all other controller policies.
+        mpeZones.controlChange(midiChannel, controller, 0);
+        if (! global.parityMode)
+            setSustainPedal(midiChannel, false);
+        return;
+    }
     // Ribbon from a MIDI CC (interface layer, off by default): 64 is centre.
     if (global.ribbonCcEnabled && controller == global.ribbonCc && std::isfinite(value))
     {
@@ -1587,7 +1763,10 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         setRibbon(cc >= 64 ? (float) (cc - 64) / 63.0f : (float) (cc - 64) / 64.0f);
     }
     // MPE zone negotiation (Phase 6): RPN 0 / RPN 6 while MPE is on.
-    if (global.mpe && std::isfinite(value) && (controller == 101 || controller == 100 || controller == 6 || controller == 38))
+    // NRPN selectors must also arrive so their data cannot reuse a stale RPN.
+    if (global.mpe && std::isfinite(value)
+        && (controller == 101 || controller == 100 || controller == 99 || controller == 98
+            || controller == 6 || controller == 38))
     {
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
         return;
@@ -1604,35 +1783,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
     else if (controller == 11)
         expression = value;
     else if (controller == 64)
-    {
-        if (midiChannel < 1 || midiChannel > 16)
-            return;
-        const bool down = value >= 0.5f;
-        if (down == sustainPedals[(size_t) midiChannel])
-            return;
-        sustainPedals[(size_t) midiChannel] = down;
-        if (! down)
-        {
-            for (auto& voice : voices)
-                if (voice.pedalHeld && ! isSustainPedalDown(voice.midiChannel))
-                {
-                    voice.pedalHeld = false;
-                    if (! voice.held && ! voice.sustained)
-                        releaseVoice(voice);
-                }
-            heldCount = 0;
-            for (const auto& voice : voices)
-                if (voice.held || voice.pedalHeld)
-                    ++heldCount;
-            if (heldCount == 0)
-            {
-                ringKeyDown = false;
-                ringAdsr.noteOff();
-            }
-            if (unassignedCount > 0)
-                reconsiderUnassignedKeys();
-        }
-    }
+        setSustainPedal(midiChannel, value >= 0.5f);
     else if (controller == 74)
     {
         for (auto& v : voices)
@@ -1649,7 +1800,8 @@ void Engine::setExpression(float value)
 
 void Engine::setRibbon(float value)
 {
-    ribbon = clampf(value, -1.0f, 1.0f);
+    if (std::isfinite(value))
+        ribbon = clampf(value, -1.0f, 1.0f);
 }
 
 float Engine::tunedPitch(int midiNote) const noexcept
@@ -1705,8 +1857,142 @@ bool Engine::hasFreeCircuit() const noexcept
     return false;
 }
 
+bool Engine::hasFreeCircuitForRouting() const noexcept
+{
+    // Keep physical availability as an upper bound: a future queued release
+    // must not divert a strike from a currently free second instrument.
+    if (! hasFreeCircuit())
+        return false;
+    // In particular, after scan disable a host onset is immediate while a
+    // UI onset can still defer. This argument-free query preserves that old
+    // routing rather than pretending to know the incoming event's origin.
+    if (global.voiceMode != 1 || ! scanTimingActive() || scanner.pending() == 0)
+        return true;
+
+    // Read-only, bounded ownership projection. Do not copy DSP state, reserve
+    // live voices or flush the live scanner. Keep this replay consistent with
+    // chooseVoice/applyNoteOn/applyNoteOff/reconsiderUnassignedKeys; tests use
+    // actual core dispatch as an independent oracle. Queue/waiter capacity
+    // and pitch-order behavior remain those of the existing eight-voice engine.
+    struct Slot
+    {
+        int note, channel;
+        uint64_t age, group;
+        bool active, held, pedalHeld, sustained, keyboardOrigin;
+    };
+    std::array<Slot, kNumVoices> projected {};
+    for (int i = 0; i < kNumVoices; ++i)
+    {
+        const auto& v = voices[(size_t) i];
+        projected[(size_t) i] = {v.note, v.midiChannel, v.age, v.releaseGroup,
+                                v.active, v.held, v.pedalHeld, v.sustained, v.keyboardOrigin};
+    }
+    auto waiting = unassignedKeys;
+    int waitingCount = unassignedCount;
+    int cursor = nextVoice;
+    uint64_t age = voiceCounter;
+    const auto choose = [&]() {
+        for (int offset = 0; offset < kNumVoices; ++offset)
+        {
+            const int i = (cursor + offset) % kNumVoices;
+            const auto& v = projected[(size_t) i];
+            if (! v.held && ! v.pedalHeld)
+            {
+                cursor = (i + 1) % kNumVoices;
+                return i;
+            }
+        }
+        return -1;
+    };
+    const auto start = [&](int i, int note, int channel, bool keyboardOrigin) {
+        const auto serial = ++age;
+        projected[(size_t) i] = {note, channel, serial, serial, true, true, false, false, keyboardOrigin};
+    };
+    const auto eraseWaiting = [&](int i) {
+        for (int j = i + 1; j < waitingCount; ++j)
+            waiting[(size_t) (j - 1)] = waiting[(size_t) j];
+        --waitingCount;
+    };
+    const auto reconsider = [&]() {
+        while (waitingCount > 0)
+        {
+            const int i = choose();
+            if (i < 0) return;
+            int best = 0;
+            for (int j = 1; j < waitingCount; ++j)
+                if (waiting[(size_t) j].note < waiting[(size_t) best].note)
+                    best = j;
+            const auto key = waiting[(size_t) best];
+            eraseWaiting(best);
+            // Match existing waiting-key promotion, including its mapping
+            // behavior. This query must not introduce another tuning policy.
+            start(i, key.note, key.midiChannel, key.keyboardOrigin);
+        }
+    };
+    auto pending = scanner;
+    pending.flush([&](const kas::Scanner::Event& event) {
+        if (event.on)
+        {
+            if (global.sustainMode == 1)
+                for (auto& v : projected)
+                    if (v.sustained)
+                        v.active = v.sustained = v.pedalHeld = false;
+            if (global.tuningMode != 0 && ! noteMapped(event.note))
+                return;
+            if (const int i = choose(); i >= 0)
+                start(i, event.note, event.channel, event.keyboardOrigin);
+            else
+            {
+                for (int j = 0; j < waitingCount; ++j)
+                    if (waiting[(size_t) j].note == event.note
+                        && waiting[(size_t) j].midiChannel == event.channel)
+                        return;
+                if (waitingCount < kMaxHeldKeys)
+                {
+                    auto& key = waiting[(size_t) waitingCount++];
+                    key.note = event.note;
+                    key.midiChannel = event.channel;
+                    key.keyboardOrigin = event.keyboardOrigin;
+                }
+            }
+            return;
+        }
+        for (int j = 0; j < waitingCount; ++j)
+            if (waiting[(size_t) j].note == event.note && waiting[(size_t) j].midiChannel == event.channel
+                && (! event.keyboardOrigin || waiting[(size_t) j].keyboardOrigin))
+            {
+                eraseWaiting(j);
+                return;
+            }
+        Slot* newest = nullptr;
+        for (auto& v : projected)
+            if (v.active && v.held && v.note == event.note && v.channel == event.channel
+                && (newest == nullptr || v.age > newest->age))
+                newest = &v;
+        if (newest == nullptr || (event.keyboardOrigin && ! newest->keyboardOrigin))
+            return;
+        const auto group = newest->group;
+        for (auto& v : projected)
+            if (v.active && v.held && v.group == group && v.note == event.note && v.channel == event.channel)
+            {
+                v.held = false;
+                v.pedalHeld = isSustainPedalDown(v.channel);
+                if (! v.pedalHeld)
+                    v.sustained = global.sustainMode == 1 && global.sustainGate;
+            }
+        reconsider();
+    });
+    return std::any_of(projected.begin(), projected.end(), [](const Slot& v) {
+        return ! v.held && ! v.pedalHeld;
+    });
+}
+
 bool Engine::isZoneMaster(const Voice& v, int midiChannel) const noexcept
 {
+    // Unassigned MPE channels are conventional channels, not lower-zone members.
+    // Callers still accept their own-channel pressure and CC74 directly.
+    if (global.mpe && mpeZones.role(v.midiChannel) == MpeZoneLayout::Role::none)
+        return false;
     // Non-MPE and the lower zone: channel 1 is the master (historical rule).
     if (! v.upperZone) return midiChannel == 1;
     return midiChannel == 16 && mpeZones.role(16) == MpeZoneLayout::Role::upperMaster;
@@ -1749,17 +2035,30 @@ void Engine::beginSmoothedControls() noexcept
     const double k = controlSmoothing;
     const float ribbonTotal = ribbon + params[P_ribbon];
     c.bendTarget = globalBend;
+    c.upperBendTarget = upperZoneBend;
+    c.pitchWheelTarget = globalPitchWheel;
     c.modWheelTarget = modWheel;
     c.ribbonTarget = ribbon;
+    c.channelPressureTarget = lastChannelPressure;
     if (c.snapPending)
     {
         c.bend.snap(globalBend);
+        c.upperBend.snap(upperZoneBend);
+        c.pitchWheel.snap(globalPitchWheel);
         c.modWheel.snap(modWheel);
+        c.channelPressure.snap(lastChannelPressure);
         expressionOptics.reset(expression);
         c.ribbon.snap(ribbonTotal);
     }
     globalBend = (float) c.bend.advance(globalBend, k);
+    // Each MPE master owns a separate zone, but both follow the same
+    // controller dezipper. Keep the event target intact between samples.
+    upperZoneBend = (float) c.upperBend.advance(upperZoneBend, k);
+    globalPitchWheel = (float) c.pitchWheel.advance(globalPitchWheel, k);
     modWheel = (float) c.modWheel.advance(modWheel, k);
+    // The shared matrix tap of channel pressure must follow the same
+    // dezipper as its per-voice counterpart, not bypass it with event memory.
+    lastChannelPressure = (float) c.channelPressure.advance(lastChannelPressure, k);
     // The EXP volume path is an optical cell (ws4 hand-off, ExpressionOptics.h):
     // its declared log-R law is this controller's smoothing.
     expressionOptics.setPedal(expression);
@@ -1793,8 +2092,11 @@ void Engine::endSmoothedControls() noexcept
 {
     auto& c = controllerSmoothing;
     globalBend = c.bendTarget;
+    upperZoneBend = c.upperBendTarget;
+    globalPitchWheel = c.pitchWheelTarget;
     modWheel = c.modWheelTarget;
     ribbon = c.ribbonTarget;
+    lastChannelPressure = c.channelPressureTarget;
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
@@ -1814,8 +2116,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     if (scanTimingActive() || scanner.pending() > 0)
     {
         auto dispatch = [this](const kas::Scanner::Event& e) {
-            if (e.on) applyNoteOn(e.note, e.velocity, e.channel);
-            else applyNoteOff(e.note, e.channel);
+            if (e.on) applyNoteOn(e.note, e.velocity, e.channel, e.keyboardOrigin, e.onsetOrder);
+            else applyNoteOff(e.note, e.channel, e.keyboardOrigin);
         };
         if (! scanTimingActive())
             while (! scanner.tick(dispatch)) {}
@@ -1905,8 +2207,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Modern layer (Phase 6): MSEGs and matrix evaluated once per sample. Identity offsets
     // (0, or ratios of exactly 1) when nothing is routed or under PURE CS-80.
+    // Keep wheel position separate from its semitone destination: changing
+    // the bend range is not a new gesture. The existing lower-master source
+    // selection remains unchanged.
     modern.beginSample({ modWheel, ribbon + params[P_ribbon], lastChannelPressure, sharedPressure, expression,
-                         global.pitchBendRange > 0.0f ? globalBend / global.pitchBendRange : 0.0f,
+                         globalPitchWheel,
                          subValue, ringEnv, { lfoValues[0], lfoValues[1], lfoValues[2] } });
     const auto& modernGlobal = modern.getGlobalOffsets();
 
@@ -2067,8 +2372,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         // Envelope sources are the previous sample's values of each rank.
         modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
                                   { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
-                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } });
+                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, ! idle);
 
+        // A gap channel is not an implicit member of the lower MPE zone.
+        // Keep channel 1's existing own-channel fallback when its zone is off,
+        // and retain captured-upper routing for channels still in either zone.
+        const float masterBend = global.mpe && v.midiChannel != 1
+            && mpeZones.role(v.midiChannel) == MpeZoneLayout::Role::none
+                ? 0.0f : (v.upperZone ? upperZoneBend : globalBend);
         for (int ch = 0; ch < 2; ++ch)
         {
             auto& r = v.ranks[ch];
@@ -2087,7 +2398,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             float pitch = (float) v.note
                           + global.masterTune
                           + (ch == 1 ? global.detuneCents / 100.0f : 0.0f)
-                          + (v.upperZone ? upperZoneBend : globalBend)
+                          + masterBend
                           + v.mpeBend
                           + glideOffset
                           + (float) (global.initBend * v.initialPitchTransient)

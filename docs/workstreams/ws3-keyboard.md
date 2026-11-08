@@ -206,12 +206,39 @@ therefore adds up to ≈ 1.5 ms of CPU within one block in the worst case
 - **Droop.** `dK/dt = −I/C` toward 0 V, never below.
 - **Scan timing and priority** (opt-in parameter `kas_scan_timing`): note
   events are queued and acted on at the next scan instant; one scan dispatches
-  lowest key first, a release before a strike of the same key. Panic discards a
-  channel's queued events; switching the option off flushes the queue.
+  lowest key first, preserving arrival order within each pitch. Moving a short
+  note's release before its strike would leave a stuck gate, so MIDI on/off
+  ordering is retained even when both events fall in one scan interval. Panic
+  discards a channel's queued events; switching the option off flushes the queue.
 - **Ninth held key** (circuit engine): a held key that found no free circuit is
   remembered and takes the first circuit that frees (note-off, CC64 release),
   lowest waiting key first, with zero initial touch (it was not struck then).
   Released before that, it is forgotten; panic forgets it.
+
+**MIDI ordering compatibility correction.** Earlier versions moved every
+same-pitch release before every strike within one scan. The corrected adapter
+retains arrival order, including across MIDI channels. Saved performances with
+KAS scan timing enabled can therefore change when a same-pitch strike precedes
+a release within one scan. Besides fixing stuck short notes, this affects
+voice allocation: with all eight circuits occupied, a new channel's strike
+followed by the old channel's same-pitch release is reconsidered with zero
+initial touch, rather than being treated as a fresh strike after a preemptive
+release. Pending events also use the corrected order if scan timing is switched
+off before they dispatch. Ordinary release-then-strike retriggers, events in
+separate scans, distinct pitches, Legacy, and scan-off operation with no pending
+queue retain their previous order. This is a software event-adapter correction,
+not a newly measured hardware behavior.
+
+**Queue-overflow compatibility correction.** The adapter holds at most 64
+pending events. If another event arrives before the next scan, it now dispatches
+the queued batch first, in the same low-key/same-pitch arrival order, then acts
+on the overflowing event immediately. The scan clock is unchanged. Previously,
+the overflowing event acted first: a release could miss its queued strike,
+a retrigger could release the wrong onset, or a released waiting key could
+revive later. Dense performances with scan timing enabled can therefore change
+when more than 64 events arrive within a scan interval. Batches of at most 64,
+Legacy, and scan-off playback retain their existing behavior. This bounded,
+allocation-free overload policy is a software safeguard, not a hardware claim.
 
 ### Evidence class
 
@@ -221,7 +248,7 @@ therefore adds up to ≈ 1.5 ms of CPU within one block in the worst case
 | Glide frozen while holding | inference from topology | portamento upstream of KI; alternative: K downstream glide (would keep gliding) |
 | Hold capacitance 0.033 µF | **declared** | SH7 does not print it; value of the KBC per-voice held nodes (brief and KEYBOARD_CONTOUR_EVIDENCE.md); alternatives 0.02 µF (SH7 note), 0.22 µF (CS-50 guide) |
 | Leakage 1 pA toward 0 V | **declared** | CA3140T K buffer (SH8); data sheet: 10 pA typical magnitude, no sign; switch leakage taken as 0 (KI = K after release). Alternatives 0, 10–50 pA, either polarity |
-| Scan period 1 ms, lowest key first, release before strike | **declared** | not in the inspected sources; alternatives 0.25–4 ms, top-down or arrival order |
+| Scan period 1 ms, lowest key first; same-pitch MIDI events retain arrival order | **declared** | not in the inspected sources; alternatives 0.25–4 ms, top-down or full arrival order. Same-pitch ordering is a software event-adapter correction, not a measured hardware claim. |
 | Ninth key reconsidered when a circuit frees | **declared** | YM26600 block diagram shows an 8-entry code memory and no 61-key store (KEYBOARD_MAPPING_CONSTRAINT_REVIEW.md, IC guide PDF15–16), so a held key without a channel is a new key on every scan. Alternative: edge-detecting scanner, never reconsidered (Legacy; owner manual p43 covers only the occupied case) |
 | Reconsidered key has zero initial touch | **declared** | TWS b samples a strike transient; a key held still has none. Alternative: original velocity |
 

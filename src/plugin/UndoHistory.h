@@ -23,7 +23,7 @@
 // Undo and redo write the tree; the APVTS turns that into parameter changes as usual.
 //
 // Thread safety: the tree is touched on the message thread (timer, gestures) and by the host's
-// state calls; treeLock() serialises them (the processor takes it around copyState/replaceState).
+// state calls; treeLock() serialises them (the processor takes it around copyStateForSave/replaceState).
 // The parameter listener only stores atomics when it is called off the message thread.
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -48,6 +48,11 @@ public:
     void syncNow();
     juce::CriticalSection& treeLock() noexcept { return lock; }
 
+    // Any non-audio thread: snapshot the latest parameter atomics without
+    // JUCE copyState() flushing them through the live tree's UndoManager.
+    // Reads are per parameter, not a transaction across concurrent automation.
+    juce::ValueTree copyStateForSave();
+
     // A programmatic edit that the player should be able to undo in one step (the A/B switch,
     // a randomise, a copy between ranks). Message thread.
     class ScopedUserEdit
@@ -63,6 +68,10 @@ public:
     };
 
     juce::UndoManager& getHistory() noexcept { return history; }
+
+    // Side-state edits join only an explicit message-thread ScopedUserEdit.
+    // A direct API call or unrelated parameter gesture must not record them.
+    bool hasActiveUserEdit() const;
 
 private:
     void beginUserEdit(const juce::String& name);

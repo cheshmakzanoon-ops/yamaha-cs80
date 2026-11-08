@@ -902,7 +902,11 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
                 centreRow.syncToneMarks();
             };
             actions.activeCompare = [this] { return processor.getAbSlot(); };
-            actions.copyCompare = [this] { processor.abCopyCurrentTo(1 - processor.getAbSlot()); };
+            actions.copyCompare = [this]
+            {
+                const Cs80AudioProcessor::ScopedUserEdit edit(processor.getUndoableState(), "Copy compare");
+                processor.abCopyCurrentTo(1 - processor.getAbSlot());
+            };
             actions.toggleStudio = [this] { showAdvanced(! advancedVisible, true); };
             actions.studioOpen = [this] { return advancedVisible; };
             actions.showEvidence = [this] { showAdvanced(true, true); advanced.showTab(ui::StudioTab::settings); };

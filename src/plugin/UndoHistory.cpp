@@ -1,4 +1,5 @@
 #include "UndoHistory.h"
+#include "ParameterStateChildIndex.h"
 
 namespace cs80
 {
@@ -90,6 +91,11 @@ void UndoableParameterState::openTransaction(const juce::String& name)
     });
 }
 
+bool UndoableParameterState::hasActiveUserEdit() const
+{
+    return onMessageThread() && userScopes > 0 && ! history.isPerformingUndoRedo();
+}
+
 void UndoableParameterState::beginUserEdit(const juce::String& name)
 {
     jassert(onMessageThread());
@@ -144,6 +150,41 @@ void UndoableParameterState::syncNow()
         return;
     syncExternal();
     flushUser();
+}
+
+juce::ValueTree UndoableParameterState::copyStateForSave()
+{
+    const juce::ScopedLock scoped(lock);
+    auto snapshot = state.createCopy();
+    detail::ParameterStateChildIndex index(snapshot);
+    for (auto* parameter : parameters)
+    {
+        if (parameter == nullptr)
+            continue;
+        const auto& id = parameter->getParameterID();
+        const auto* raw = getRawParameterValue(id);
+        if (raw == nullptr)
+            continue;
+        // This is the same denormalised atomic that JUCE flushes to its tree.
+        // Write only to the detached copy: pending live edits retain their
+        // original user/automation classification until the normal flush.
+        const float value = raw->load(std::memory_order_relaxed);
+        auto& matches = index.matches(id);
+        const bool found = ! matches.empty();
+        for (auto child : matches)
+            child.setProperty("value", value, nullptr);
+        // JUCE accepts all direct children with a known id, with the last
+        // duplicate winning. Keep every duplicate current in a saved state.
+        if (!found)
+        {
+            juce::ValueTree child("PARAM");
+            child.setProperty("id", id, nullptr);
+            child.setProperty("value", value, nullptr);
+            snapshot.appendChild(child, nullptr);
+            matches.push_back(child);
+        }
+    }
+    return snapshot;
 }
 
 void UndoableParameterState::timerCallback()

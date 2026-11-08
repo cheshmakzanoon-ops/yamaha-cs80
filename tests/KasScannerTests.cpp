@@ -126,7 +126,7 @@ void testScanner()
         latencyOk = latencyOk && dispatchedAt - pushedAt >= 1 && dispatchedAt - pushedAt <= period;
     }
     check(latencyOk, "detection latency is within one scan period for every event");
-    // Priority within one scan: lowest key first, release before strike of the same key.
+    // Priority within one scan: lowest key first, arrival order within a pitch.
     scanner.reset();
     scanner.push(72, 1, 1.0f, true);
     scanner.push(48, 1, 1.0f, true);
@@ -138,7 +138,7 @@ void testScanner()
         scanner.tick([&](const kas::Scanner::Event& e) { order.push_back(e); });
     check(order.size() == 5 && order[0].note == 36 && order[1].note == 48 && order[2].note == 60 && !order[2].on
               && order[3].note == 60 && order[3].on && order[4].note == 72,
-          "one scan dispatches in scan order: lowest key first, release before strike");
+          "one scan dispatches lowest key first and preserves the queued release/strike order");
     scanner.push(40, 3, 1.0f, true);
     scanner.push(41, 4, 1.0f, true);
     scanner.discard(3);
@@ -286,6 +286,133 @@ void testAllocation()
     }
 }
 
+// Channel-mode messages free the same physical circuits as note-off. Waiting
+// keys on other channels must be reconsidered without needing another MIDI event.
+void testChannelModeReconsideration()
+{
+    for (int policy = 0; policy < 3; ++policy)
+        for (int scan : {0, 1})
+            for (int controller : {120, 123})
+            {
+                Engine e;
+                e.prepare(48000.0);
+                ParamValues p;
+                p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+                p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+                p[P_kasScanTiming] = static_cast<float>(scan);
+                e.setParams(p);
+                const auto flushScan = [&] { if (scan && policy != 0) render(e, 64); };
+                const auto held = [&](int note, int channel) {
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto voice = e.getVoiceInfo(i);
+                        if (voice.held && voice.note == note && voice.channel == channel)
+                            return true;
+                    }
+                    return false;
+                };
+                const std::string context = " policy=" + std::to_string(policy)
+                    + " scan=" + std::to_string(scan) + " CC=" + std::to_string(controller);
+                // Two circuits on channel 1; six unaffected held voices on channel 2.
+                for (int i = 0; i < 8; ++i) e.noteOn(48 + i, 0.8f, i < 2 ? 1 : 2);
+                flushScan();
+                e.noteOn(90, 0.9f, 3);
+                e.noteOn(85, 0.9f, 3);
+                e.noteOn(80, 0.9f, 3);
+                e.noteOn(75, 0.9f, 1); // must be removed with channel 1's keys
+                flushScan();
+                e.controlChange(controller, 0.0f, 1);
+                if (policy != 0)
+                {
+                    check(held(80, 3) && held(85, 3) && !held(90, 3),
+                          "channel-mode release reassigns lowest surviving waiting keys" + context);
+                    bool zeroTouch = true;
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto voice = e.getVoiceInfo(i);
+                        if (voice.held && voice.channel == 3)
+                            zeroTouch &= voice.velocity == 0.0f;
+                    }
+                    check(zeroTouch, "reconsidered keys do not acquire a new strike" + context);
+                }
+                else
+                    check(!held(80, 3) && !held(85, 3) && !held(90, 3),
+                          "Legacy does not remember excess keys" + context);
+                bool unaffected = true;
+                for (int note = 50; note <= 55; ++note) unaffected &= held(note, 2);
+                check(unaffected && !held(75, 1),
+                      "channel-mode release preserves other held keys and forgets its own waiting key" + context);
+                e.noteOff(80, 3);
+                flushScan();
+                if (policy != 0)
+                    check(!held(80, 3) && held(90, 3),
+                          "reassigned key releases normally and lets the next waiting key play" + context);
+                e.allNotesOff(false, 0);
+                check(e.activeVoices() == 0,
+                      "application panic clears every held and waiting key" + context);
+            }
+
+    for (int controller : {120, 123})
+    {
+        Engine e;
+        e.prepare(48000.0);
+        e.setParams(circuit(0.0f));
+        e.controlChange(64, 1.0f, 1);
+        for (int i = 0; i < 8; ++i) e.noteOn(48 + i, 0.8f, 1);
+        e.noteOn(80, 0.9f, 2);
+        e.controlChange(controller, 0.0f, 1);
+        bool waitingAssigned = false, pedalProtected = true;
+        for (int i = 0; i < 8; ++i)
+        {
+            const auto voice = e.getVoiceInfo(i);
+            waitingAssigned |= voice.held && voice.note == 80 && voice.channel == 2;
+            pedalProtected &= voice.pedalHeld;
+        }
+        check(controller == 120 ? waitingAssigned : (!waitingAssigned && pedalProtected),
+              "CC120 frees circuits immediately; CC123 preserves pedal-held circuits");
+        if (controller == 123)
+        {
+            e.controlChange(64, 0.0f, 1);
+            waitingAssigned = false;
+            for (int i = 0; i < 8; ++i)
+                waitingAssigned |= e.getVoiceInfo(i).held && e.getVoiceInfo(i).note == 80;
+            check(waitingAssigned, "CC123 waiting key is reconsidered when its occupied circuits lose pedal hold");
+        }
+    }
+}
+
+void testArpDiscardsWaitingDirectKeys()
+{
+    for (bool disableAgain : {false, true})
+        for (int controller : {64, 120, 123})
+        {
+            Engine e;
+            e.prepare(48000.0);
+            auto p = circuit(0.0f);
+            e.setParams(p);
+            e.controlChange(64, 1.0f, 1);
+            for (int i = 0; i < 8; ++i) e.noteOn(48 + i, 0.8f, 1);
+            e.noteOn(80, 0.9f, 2); // waiting for a direct-play circuit
+            p[P_arpOn] = 1.0f;
+            e.setParams(p); // already discards directly played held keys
+            e.noteOff(80, 2); // must not leave a hidden direct key behind
+            if (disableAgain)
+            {
+                p[P_arpOn] = 0.0f;
+                e.setParams(p);
+            }
+            e.controlChange(controller, 0.0f, 1);
+            bool staleKey = false;
+            for (int i = 0; i < 8; ++i)
+            {
+                const auto voice = e.getVoiceInfo(i);
+                staleKey |= voice.held && voice.note == 80 && voice.channel == 2;
+            }
+            check(!staleKey, "arpeggiator activation discards waiting direct keys: arp="
+                  + std::to_string(!disableAgain) + " CC=" + std::to_string(controller));
+        }
+}
+
 void testEngineScanTiming()
 {
     auto p = circuit();
@@ -323,6 +450,160 @@ void testEngineScanTiming()
         check(flush.activeVoices() == 1, "disabling scan timing flushes queued strikes");
     }
 }
+// UI ownership is evaluated at scanner dispatch, not inferred from queue
+// acceptance. These are direct Engine checks; real processor cases live in
+// KeyboardPressureHostTests.h and run through the normal host-test target.
+void testKeyboardDeferredRelease()
+{
+    for (int policy : {1, 2})
+        for (double rate : {48000.0, 96000.0})
+            for (float quality : {0.0f, 1.0f})
+            {
+                Engine e;
+                ParamValues base = circuit(policy == 2 ? 1.0f : 0.0f);
+                base[P_kasScanTiming] = 1.0f;
+                base[P_oversampling] = quality;
+                e.prepare(rate);
+                e.setParams(base);
+                ParamValues p = base;
+                const auto fresh = [&] { p = base; e.setParams(p); e.reset(); };
+                const auto held = [&](int note, int channel = 1, float velocity = -1.0f) {
+                    int count = 0;
+                    for (int i = 0; i < 8; ++i)
+                    {
+                        const auto v = e.getVoiceInfo(i);
+                        count += v.active && v.held && v.note == note && v.channel == channel
+                              && (velocity < 0.0f || v.velocity == velocity);
+                    }
+                    return count;
+                };
+                const auto fullHost = [&] {
+                    for (int n = 60; n < 68; ++n) e.noteOn(n, 0.5f);
+                    render(e, 128);
+                };
+                const auto set = [&](int id, float value) { p[id] = value; e.setParams(p); };
+                const std::string context = " policy=" + std::to_string(policy)
+                    + " rate=" + std::to_string((int) rate) + " quality=" + std::to_string(quality);
+                const auto expect = [&](bool result, const char* what) { check(result, what + context); };
+
+                for (bool sameBatch : {false, true})
+                {
+                    fresh();
+                    expect(e.noteOnFromKeyboard(60, 0.25f), "UI onset reports deferred attribution");
+                    if (!sameBatch) render(e, 128);
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "same/cross-block UI release reaches deferred onset");
+                }
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f);
+                render(e, (int) (rate / 1000.0) - 1);
+                expect(held(60) == 0, "UI onset does not run before nominal scan boundary");
+                render(e, 1);
+                expect(held(60) == 1, "UI onset runs at unchanged nominal scan boundary");
+                e.noteOffFromKeyboard(60);
+                render(e, (int) (rate / 1000.0) - 1);
+                expect(held(60) == 1, "conditional release retains scan latency");
+                render(e, 1);
+                expect(held(60) == 0, "conditional release executes at scan boundary");
+
+                fresh(); fullHost();
+                e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.5f) == 1, "refused UI same-key onset cannot release host voice");
+                e.noteOff(61); render(e, 128);
+                expect(held(60) == 1, "cancelled UI waiting key never resurrects");
+
+                fresh(); fullHost();
+                e.noteOn(70, 0.75f); e.noteOnFromKeyboard(70, 0.25f);
+                e.noteOffFromKeyboard(70); render(e, 128);
+                e.noteOff(61); render(e, 128);
+                expect(held(70) == 1, "UI duplicate never adopts host-owned waiting key");
+                fresh(); fullHost();
+                e.noteOnFromKeyboard(70, 0.25f); e.noteOn(70, 0.75f);
+                e.noteOffFromKeyboard(70); render(e, 128);
+                e.noteOff(61); render(e, 128);
+                expect(held(70) == 0, "refused host duplicate does not revoke UI waiting cancellation");
+
+                fresh(); fullHost();
+                e.noteOnFromKeyboard(70, 0.25f); render(e, 128);
+                e.noteOff(61); render(e, 128);
+                expect(held(70, 1, 0.0f) == 1, "waiting UI key retains attribution through reconsideration");
+                e.noteOffFromKeyboard(70); render(e, 128);
+                expect(held(70) == 0, "reconsidered UI key releases normally");
+
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f);
+                for (int n = 61; n < 68; ++n) e.noteOn(n, 0.5f);
+                render(e, 128); e.noteOn(60, 0.75f); render(e, 128);
+                e.noteOff(60); render(e, 128);
+                expect(held(60, 1, 0.25f) == 1, "host release cancels its waiter without releasing earlier UI voice");
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60) == 0, "UI release remains valid after host waiter cancellation");
+
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f); e.noteOn(60, 0.75f);
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.75f) == 1, "successful deferred host takeover cannot be released by UI");
+                fresh();
+                e.noteOn(60, 0.5f, 2); e.noteOnFromKeyboard(60, 0.25f, 1);
+                e.noteOffFromKeyboard(60, 1); render(e, 128);
+                expect(held(60, 2) == 1 && held(60, 1) == 0, "conditional release preserves other MIDI channel");
+
+                fresh();
+                e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60);
+                e.noteOnFromKeyboard(60, 0.75f); render(e, 128);
+                expect(held(60) == 1 && held(60, 1, 0.75f) == 1, "same-scan release/restrike keeps newest UI onset");
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60) == 0, "same-scan restrike retains conditional release");
+
+                fresh(); e.noteOnFromKeyboard(60, 0.25f); set(P_kasScanTiming, 0.0f);
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60) == 0, "scan disable cannot move UI release before pending onset");
+                fresh(); e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60);
+                set(P_kasScanTiming, 0.0f);
+                expect(e.noteOnFromKeyboard(60, 0.75f), "restrike behind pending scan reports deferred even after disable");
+                render(e, 128);
+                expect(held(60, 1, 0.75f) == 1, "scan disable cannot move UI restrike before pending release");
+
+                fresh();
+                for (int i = 0; i < kas::Scanner::kCapacity; ++i) e.noteOn(60, 0.5f);
+                expect(e.noteOnFromKeyboard(60, 0.25f), "scanner overflow still forbids immediate pressure inference");
+                e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.5f) == 8, "overflow refusal and release preserve all host-owned voices");
+                for (int channel : {0, 1})
+                {
+                    fresh(); e.noteOnFromKeyboard(60, 0.25f); e.allNotesOff(false, channel);
+                    e.noteOn(60, 0.75f); e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60, 1, 0.75f) == 1, "panic discards pending UI ownership before later host onset");
+                }
+                fresh(); e.noteOnFromKeyboard(60, 0.25f); e.reset();
+                e.noteOn(60, 0.75f); e.noteOffFromKeyboard(60); render(e, 128);
+                expect(held(60, 1, 0.75f) == 1, "reset clears pending UI origin");
+
+                if (policy == 1) // PURE deliberately disables these extensions.
+                {
+                    fresh(); set(P_voiceMode, 2.0f);
+                    for (int n = 60; n < 64; ++n) e.noteOn(n, 0.5f);
+                    render(e, 128); e.noteOnFromKeyboard(60, 0.25f);
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60, 1, 0.5f) == 2, "refused unison UI onset does not release host group");
+                    fresh(); set(P_voiceMode, 3.0f);
+                    e.noteOnFromKeyboard(60, 0.25f); render(e, 128);
+                    expect(held(60) == 4, "UI unison onset tags its complete release group");
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "UI unison release retires complete attributed group");
+                    fresh(); e.noteOnFromKeyboard(60, 0.25f); set(P_arpOn, 1.0f);
+                    e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "pending UI onset cancellation follows ARP held-key path");
+                    fresh(); e.noteOnFromKeyboard(60, 0.25f); set(P_arpOn, 1.0f);
+                    e.noteOn(60, 0.75f); e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 1, "older queued UI onset cannot relabel newer host ARP ownership");
+                    fresh(); e.noteOn(60, 0.5f); set(P_arpOn, 1.0f);
+                    e.noteOnFromKeyboard(60, 0.25f); e.noteOffFromKeyboard(60); render(e, 128);
+                    expect(held(60) == 0, "newer UI ARP ownership releases after earlier queued host onset");
+                }
+            }
+}
+
 } // namespace
 
 int main()
@@ -332,7 +613,10 @@ int main()
     testScanner();
     testEngineHold();
     testAllocation();
+    testChannelModeReconsideration();
+    testArpDiscardsWaitingDirectKeys();
     testEngineScanTiming();
+    testKeyboardDeferredRelease();
     std::printf("KAS scan / sample-hold: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }

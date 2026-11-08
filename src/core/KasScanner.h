@@ -23,8 +23,8 @@
 //    0.22 uF (CS-50 servicing guide).
 // 3. Scan timing and priority (declared inference). The YM26600 scans the
 //    keyboard continuously; an event is acted on at the next scan instant, and
-//    events seen in one scan are taken in scan order (lowest key first, a
-//    release before a strike of the same key). The scan period is not in the
+//    events seen in one scan are taken in scan order (lowest key first,
+//    preserving arrival order within a pitch). The scan period is not in the
 //    inspected sources; nominal 1 ms, alternatives 0.25-4 ms. Opt-in through
 //    the kas_scan_timing parameter (it adds up to one period of note latency).
 // 4. Ninth held key (declared inference). The YM26600 keeps an 8-entry code
@@ -75,7 +75,16 @@ class Scanner
 {
 public:
     static constexpr int kCapacity = 64;
-    struct Event { int note = 60, channel = 1; float velocity = 0.0f; bool on = false; std::uint32_t order = 0; };
+    struct Event
+    {
+        int note = 60, channel = 1;
+        float velocity = 0.0f;
+        bool on = false;
+        std::uint32_t order = 0;
+        // Opaque release attribution. Neither field affects scan ordering.
+        bool keyboardOrigin = false;
+        std::uint64_t onsetOrder = 0;
+    };
 
     void prepare(double internalRate, double scanSeconds = kNominalScanSeconds) noexcept
     {
@@ -86,11 +95,13 @@ public:
     int scanPeriodSamples() const noexcept { return period; }
     int pending() const noexcept { return count; }
 
-    // Returns false when full; the caller then acts on the event at once.
-    bool push(int note, int channel, float velocity, bool on) noexcept
+    // Returns false when full. The caller must flush pending events before
+    // acting on the rejected event, so it cannot overtake an earlier onset.
+    bool push(int note, int channel, float velocity, bool on, bool keyboardOrigin = false,
+              std::uint64_t onsetOrder = 0) noexcept
     {
         if (count >= kCapacity) return false;
-        events[static_cast<std::size_t>(count++)] = { note, channel, velocity, on, ++arrivals };
+        events[static_cast<std::size_t>(count++)] = { note, channel, velocity, on, ++arrivals, keyboardOrigin, onsetOrder };
         return true;
     }
     // Drop queued events of one MIDI channel (0 = all), e.g. on a panic.
@@ -110,18 +121,28 @@ public:
     {
         if (++clock < period) return false;
         clock = 0;
+        flush(dispatch);
+        return true;
+    }
+
+    // Bounded overload fallback: dispatch at most kCapacity events early,
+    // keeping the same scan order and leaving the periodic scan clock alone.
+    template <class Dispatch>
+    void flush(Dispatch&& dispatch) noexcept
+    {
         if (count > 0)
         {
             std::sort(events.begin(), events.begin() + count, [](const Event& a, const Event& b) {
                 if (a.note != b.note) return a.note < b.note;
-                if (a.on != b.on) return !a.on; // release before strike of the same key
+                // A short note can start AND finish in one scan interval.
+                // Moving its release ahead of its strike would leave a stuck
+                // gate (or a waiting ninth key). Preserve MIDI event order.
                 return a.order < b.order;
             });
             const int n = count;
             count = 0;
             for (int i = 0; i < n; ++i) dispatch(events[static_cast<std::size_t>(i)]);
         }
-        return true;
     }
 
 private:
