@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
+#include <limits>
 #include <vector>
 
 namespace
@@ -18,6 +19,71 @@ void check(bool condition, const char* description)
     {
         ++failures;
         std::fprintf(stderr, "FAIL: %s\n", description);
+    }
+}
+
+void testMinimumHermiteBuffer()
+{
+    for (float seconds : {0.0f, 1.0f / 48000.0f, 2.0f / 48000.0f})
+    {
+        cs80::DelayLine line;
+        line.prepare(seconds, 48000.0f);
+        check(line.capacity() == 4, "minimum capacity stays unchanged");
+        for (int n = 0; n < 40; ++n)
+        {
+            line.write((float) n * 0.125f - 2.0f);
+            for (double delay : {-std::numeric_limits<double>::infinity(), -1.0, 0.0,
+                                 1.0, 2.0, 2.5, 3.0, 100.0,
+                                 std::numeric_limits<double>::infinity()})
+                check(line.readHermite(delay) == line.tap(2),
+                      "minimum Hermite buffer clamps to the two-sample tap");
+        }
+        line.reset();
+        check(line.readHermite(2.0) == 0.0f, "minimum Hermite buffer resets");
+    }
+}
+
+void testUnchangedHermiteInterpolation()
+{
+    // Old arithmetic is defined for capacities >= 5. Protect every ordinary
+    // interpolation path bit-for-bit, including wrapped/fractional positions.
+    for (float seconds : {3.0f / 48000.0f, 0.001f, 0.08f})
+    {
+        cs80::DelayLine line;
+        line.prepare(seconds, 48000.0f);
+        const int size = line.capacity();
+        std::vector<float> reference((size_t) size, 0.0f);
+        int writePos = 0;
+        cs80::Rng rng(0xBA51C123u);
+        bool exact = true;
+        for (int n = 0; n < size * 3; ++n)
+        {
+            const float x = rng.nextBipolar();
+            line.write(x);
+            reference[(size_t) writePos] = x;
+            if (++writePos == size) writePos = 0;
+            for (double delay : {-1.0, 2.0, 2.5, (double) size - 3.0, (double) size + 1.0,
+                                  2.0 + rng.nextUnipolar() * (double) (size - 5)})
+            {
+                const double bounded = std::clamp(delay, 2.0, (double) (size - 3));
+                double pos = (double) writePos - bounded;
+                if (pos < 0.0) pos += (double) size;
+                const int i0 = std::min((int) pos, size - 1);
+                const float t = (float) (pos - (double) i0);
+                const int im1 = i0 == 0 ? size - 1 : i0 - 1;
+                const int i1 = i0 + 1 >= size ? 0 : i0 + 1;
+                const int i2 = i1 + 1 >= size ? 0 : i1 + 1;
+                const float xm1 = reference[(size_t) im1], x0 = reference[(size_t) i0];
+                const float x1 = reference[(size_t) i1], x2 = reference[(size_t) i2];
+                const float c1 = 0.5f * (x1 - xm1);
+                const float c2 = xm1 - 2.5f * x0 + 2.0f * x1 - 0.5f * x2;
+                const float c3 = 0.5f * (x2 - xm1) + 1.5f * (x0 - x1);
+                const float expected = ((c3 * t + c2) * t + c1) * t + x0;
+                exact = exact && std::bit_cast<std::uint32_t>(line.readHermite(delay))
+                    == std::bit_cast<std::uint32_t>(expected);
+            }
+        }
+        check(exact, "formerly valid Hermite interpolation remains bit-identical");
     }
 }
 
@@ -119,6 +185,8 @@ void testClassicChorus()
 
 int main()
 {
+    testMinimumHermiteBuffer();
+    testUnchangedHermiteInterpolation();
     testRoundedWrap();
     testUnchangedInterpolation();
     testClassicChorus();
