@@ -14,7 +14,7 @@ NOTICE_FIXTURES = ('assets/fonts/barlow-condensed/OFL.txt',
                    'src/vendor/mts-esp/LICENSE')
 
 class Architectures(unittest.TestCase):
-    def run_fixture(self, architectures, missing=None, nonexecutable=None, missing_notice=None):
+    def run_fixture(self, architectures, missing=None, nonexecutable=None, missing_notice=None, caller_umask=-1, inspect_modes=False):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             script = root / 'installer/macos/make-pkg.sh'
@@ -35,7 +35,7 @@ class Architectures(unittest.TestCase):
                 binary.parent.mkdir(parents=True)
                 if missing != index:
                     binary.write_text(architectures[index])
-                    binary.chmod(0o644 if nonexecutable == index else 0o755)
+                    binary.chmod(0o644 if nonexecutable == index else (0o751 if inspect_modes else 0o755))
             tools = root / 'tools'
             tools.mkdir()
             mock = '''#!/usr/bin/env python3
@@ -47,15 +47,28 @@ if name == 'lipo':
     assert args[:3] == ['-verify_arch', 'x86_64', 'arm64']
     sys.exit(0 if set(pathlib.Path(args[3]).read_text().split()) >= {'x86_64', 'arm64'} else 1)
 elif name == 'ditto': shutil.copytree(*args)
-elif name in ('pkgbuild', 'productbuild'): pathlib.Path(args[-1]).touch()
+elif name == 'pkgbuild':
+    stage = pathlib.Path(args[args.index('--root') + 1])
+    if os.environ.get('INSPECT_MODES') == '1':
+        assert stage.stat().st_mode & 0o777 == 0o755, 'staging root is not publicly traversable'
+        if stage.name == 'root-docs':
+            notices = list(stage.iterdir())
+            assert len(notices) == 6
+            assert all(p.stat().st_mode & 0o777 == 0o644 for p in notices), 'notices are not publicly readable'
+        else:
+            binary, = stage.glob('*/Contents/MacOS/*')
+            assert binary.stat().st_mode & 0o777 == 0o751, 'bundle executable mode changed'
+            assert binary.read_text() == 'x86_64 arm64', 'bundle bytes changed'
+    pathlib.Path(args[-1]).touch()
+elif name == 'productbuild': pathlib.Path(args[-1]).touch()
 '''
             for name in ('lipo', 'ditto', 'pkgbuild', 'productbuild', 'pkgutil'):
                 tool = tools / name
                 tool.write_text(mock)
                 tool.chmod(0o755)
             calls = root / 'calls'
-            env = dict(os.environ, PATH=str(tools) + os.pathsep + os.environ['PATH'], CALLS=str(calls))
-            result = subprocess.run(['bash', str(script), str(build), str(root / 'out space')], env=env, text=True, capture_output=True)
+            env = dict(os.environ, PATH=str(tools) + os.pathsep + os.environ['PATH'], CALLS=str(calls), INSPECT_MODES='1' if inspect_modes else '0')
+            result = subprocess.run(['bash', str(script), str(build), str(root / 'out space')], env=env, text=True, capture_output=True, umask=caller_umask)
             return result.returncode, result.stderr, calls.read_text().splitlines() if calls.exists() else [], list((root / 'out space').glob('*.pkg'))
 
     def test_universal(self):
@@ -67,6 +80,14 @@ elif name in ('pkgbuild', 'productbuild'): pathlib.Path(args[-1]).touch()
         self.assertEqual(calls.count('pkgbuild'), 4)
         self.assertEqual(calls.count('productbuild'), 1)
         self.assertEqual(calls[-1], 'pkgutil')
+
+    def test_restrictive_umask_preserves_public_notices_and_bundle_modes(self):
+        code, err, calls, packages = self.run_fixture(
+            ['x86_64 arm64'] * 3, caller_umask=0o077, inspect_modes=True)
+        self.assertEqual(code, 0, err)
+        self.assertEqual(calls.count('pkgbuild'), 4)
+        self.assertEqual(calls.count('productbuild'), 1)
+        self.assertEqual(len(packages), 1)
 
     def test_missing_notice_prevents_distribution(self):
         for notice in NOTICE_FIXTURES:
