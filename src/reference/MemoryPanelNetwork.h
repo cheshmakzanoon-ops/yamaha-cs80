@@ -26,6 +26,9 @@ struct Setup
     // [0] the rank's first memory, [1] its second memory, [2] PANEL.
     std::array<mp::Positions, 3> banks {};
     mp::Electrical electrical = mp::nominalElectrical;
+    // Positive current INTO each assembled bus, indexed by output row minus one.
+    // Rows 4/5 are digital and must remain zero. Existing receiver loads remain.
+    std::array<double, 26> injectedAmps {};
 };
 
 struct Result
@@ -61,9 +64,22 @@ inline BranchCurrent diodeBranch(double across, double seriesOhms, const sf::Dio
     return { i, 1.0 / (rs + nvt / (i + is)) };
 }
 
-inline Result solve(const Setup& setup)
+// Optional final KCL derivative for offline small-signal studies only.
+struct Jacobian
+{
+    std::vector<double> values; // row-major d(KCL current into node)/d(node voltage)
+    int dimension = 0;
+    int busBase = 0;
+};
+
+inline Result solve(const Setup& setup, Jacobian* derivative = nullptr)
 {
     Result out;
+    if (derivative != nullptr) *derivative = {};
+    for (size_t i = 0; i < setup.injectedAmps.size(); ++i)
+        if (!std::isfinite(setup.injectedAmps[i])
+            || (mp::isSwitchRow(static_cast<int>(i) + 1) && setup.injectedAmps[i] != 0.0))
+            return out;
     const auto& e = setup.electrical;
     const auto& d = e.boundary.diode;
     const double e0 = e.boundary.driver.openCircuitVolts, rout = e.boundary.driver.outputOhms;
@@ -195,6 +211,9 @@ inline Result solve(const Setup& setup)
             const int bi = busBase + r;
             f[(size_t) bi] -= x[(size_t) bi] * load(r);
             J(bi, bi, -load(r));
+            // Skip zero to preserve the original zero-excitation arithmetic.
+            if (setup.injectedAmps[(size_t) (rows[(size_t) r] - 1)] != 0.0)
+                f[(size_t) bi] += setup.injectedAmps[(size_t) (rows[(size_t) r] - 1)];
         }
     };
 
@@ -241,7 +260,7 @@ inline Result solve(const Setup& setup)
         const double scale = largest > 0.5 ? 0.5 / largest : 1.0;
         for (int i = 0; i < n; ++i) x[(size_t) i] += scale * dx[(size_t) i];
     }
-    evaluate(false);
+    evaluate(derivative != nullptr);
     double worst = 0.0;
     for (double v : f) worst = std::max(worst, std::abs(v));
     out.residualAmps = worst;
@@ -250,6 +269,14 @@ inline Result solve(const Setup& setup)
     for (int s = 0; s < 3; ++s) out.railVolts[(size_t) s] = x[(size_t) (railBase + s)];
     out.emitterVolts = activeBank < 0 ? x[(size_t) emitterIndex] : 0.0;
     out.converged = std::isfinite(worst) && worst <= 1e-12;
+    for (double v : x) out.converged = out.converged && std::isfinite(v);
+    for (double v : f) out.converged = out.converged && std::isfinite(v);
+    if (out.converged && derivative != nullptr)
+    {
+        derivative->values = jac;
+        derivative->dimension = n;
+        derivative->busBase = busBase;
+    }
     return out;
 }
 } // namespace cs80::reference::memory_panel
