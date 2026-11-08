@@ -34,6 +34,28 @@ build environment's requirements; it does not make binaries portable to older
 Linux distributions. Run `python scripts/test-deb-runtime-dependencies.py` for
 inert ELF packaging tests with an isolated synthetic dpkg metadata database.
 
+The Windows Inno Setup script now runs a compile-time Python 3.10+ preflight
+before packaging its wildcard VST3 source. Both required payloads must exist:
+the x64 VST3 DLL and Standalone EXE. A resources-only bundle, x86/ARM64 image,
+wrong DLL/EXE role, truncated PE header or linked payload is rejected before
+installer output. Windows reparse points (including directory junctions) are
+rejected before traversal, not followed into unshipped trees. It reuses the CI archive's binary/containment checks and never
+loads or executes either product. Python must be on PATH, or pass
+`/DPythonExe=PATH_TO_PYTHON_EXE` to `ISCC`; the checked-in helper and packager
+scripts must remain with the source checkout. To see detailed failure output:
+
+```sh
+python scripts/check-windows-installer.py --build-dir "build/CS80Reference_artefacts/Release"
+python scripts/test-windows-installer-preflight.py
+```
+
+The test suite uses inert header-only fixtures. It also compiles (but never runs)
+synthetic installers when Windows and Inno Setup 6 are available; that native
+case reports an explicit skip elsewhere. Header checks do not establish signing,
+runtime validity or DAW compatibility. No release/validator workflow is changed.
+The synchronous compile-time hook follows the official
+[ISPP Exec contract](https://jrsoftware.org/ishelp/topic_exec.htm).
+
 Every installer ships the JUCE licence. The secrets the workflow reads are listed
 at the top of `release.yml`; none are stored in the repository.
 
