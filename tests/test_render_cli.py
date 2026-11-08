@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Run only the offline core renderer; no plugin, GUI or validator."""
 import argparse
+import os
+import signal
 from pathlib import Path
 import subprocess
 import tempfile
@@ -41,6 +43,26 @@ class RenderArguments(unittest.TestCase):
                     with wave.open(str(output)) as wav:
                         self.assertEqual((wav.getframerate(), wav.getnframes(), wav.getnchannels(),
                                           wav.getsampwidth()), (rate, rate // 1000, 2, 2))
+
+    @unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),
+                         'requires POSIX child-only file size limit')
+    def test_buffered_write_failure_is_reported(self):
+        import resource
+
+        def limit_output():
+            signal.signal(signal.SIGXFSZ, signal.SIG_IGN)
+            resource.setrlimit(resource.RLIMIT_FSIZE, (64, 64))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'truncated.wav'
+            # A 48-frame stereo PCM16 WAV needs 236 bytes. The stdio buffer
+            # accepts it, but flushing at fclose must fail at the 64-byte limit.
+            result = subprocess.run([RENDER, '--seconds', '0.001', '--out', str(output)],
+                                    capture_output=True, timeout=10, preexec_fn=limit_output)
+            self.assertEqual(result.returncode, 1, result.stdout)
+            self.assertIn(b'Could not write', result.stderr)
+            self.assertNotIn(b'Wrote ', result.stdout)
+            self.assertEqual(output.stat().st_size, 64)
 
     def test_help(self):
         result = subprocess.run([RENDER, '--help'], capture_output=True, timeout=10)

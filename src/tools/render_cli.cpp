@@ -58,8 +58,9 @@ bool writeWav(const std::string& path, const std::vector<float>& stereo, double 
     if (! fp)
         return false;
     const size_t n = std::fwrite(b.data(), 1, b.size(), fp);
-    std::fclose(fp);
-    return n == b.size();
+    // Buffered-write errors may surface only at fclose (disk full, quota).
+    const int closed = std::fclose(fp);
+    return n == b.size() && closed == 0;
 }
 
 ParamValues makeBrass()
