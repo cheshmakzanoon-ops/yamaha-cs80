@@ -64,6 +64,31 @@ class RenderArguments(unittest.TestCase):
             self.assertNotIn(b'Wrote ', result.stdout)
             self.assertEqual(output.stat().st_size, 64)
 
+    @unittest.skipUnless(os.name == 'posix' and hasattr(signal, 'SIGXFSZ'),
+                         'requires POSIX child-only resource limits')
+    def test_long_render_has_bounded_buffers(self):
+        import resource
+        if not hasattr(resource, 'RLIMIT_AS'):
+            self.skipTest('address-space limit unavailable')
+
+        def limits():
+            signal.signal(signal.SIGXFSZ, signal.SIG_IGN)
+            resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024,) * 2)
+            resource.setrlimit(resource.RLIMIT_FSIZE, (64, 64))
+            resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'long.wav'
+            # Accepted duration formerly allocated 384 MB before rendering.
+            # Bounded buffers reach the deliberate disk limit instead. This
+            # does not spend 1000 seconds rendering or claim a full long WAV.
+            result = subprocess.run([RENDER, '--seconds', '1000', '--out', str(output)],
+                                    capture_output=True, timeout=10, preexec_fn=limits)
+            self.assertEqual(result.returncode, 1, result.stderr)
+            self.assertIn(b'Could not write', result.stderr)
+            self.assertNotIn(b'Wrote ', result.stdout)
+            self.assertEqual(output.stat().st_size, 64)
+
     def test_help(self):
         result = subprocess.run([RENDER, '--help'], capture_output=True, timeout=10)
         self.assertEqual(result.returncode, 0)
