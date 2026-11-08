@@ -359,6 +359,11 @@ int main(int argc, char** argv) {
         bool quick = false, include64 = false;
         int onlyRate = 0, onlyBlock = 0; // optional sweep filters; 0 keeps every value
         std::string suite = "baseline";
+        const auto filterInteger = [](const std::string& value) {
+            require(!value.empty() && value.find_first_not_of("0123456789") == std::string::npos,
+                    "Rate and block filters must be whole positive integers");
+            return std::stoi(value);
+        };
         for (int i = 1; i < argc; ++i) {
             const std::string arg = argv[i];
             if (arg == "--help") { usage(); return 0; }
@@ -368,8 +373,14 @@ int main(int argc, char** argv) {
             if (arg == "--out") directory = argv[++i];
             else if (arg == "--source-commit") commit = argv[++i];
             else if (arg == "--suite") suite = argv[++i];
-            else if (arg == "--rate") onlyRate = std::stoi(argv[++i]);
-            else if (arg == "--block") onlyBlock = std::stoi(argv[++i]);
+            else if (arg == "--rate") {
+                onlyRate = filterInteger(argv[++i]);
+                require(onlyRate == 44100 || onlyRate == 48000, "Rate must be 44100 or 48000");
+            }
+            else if (arg == "--block") {
+                onlyBlock = filterInteger(argv[++i]);
+                require(onlyBlock == 64 || onlyBlock == 128 || onlyBlock == 256, "Block must be 64, 128 or 256");
+            }
             else if (arg == "--callbacks") {
                 const std::string value = argv[++i];
                 require(!value.empty() && value.find_first_not_of("0123456789") == std::string::npos,
@@ -383,6 +394,35 @@ int main(int argc, char** argv) {
                 "A new output directory and caller-verified source commit are required; use --help");
         require(callbacks >= 16 && callbacks <= 1000000, "Callbacks must be in 16..1000000");
         require(suite == "baseline" || suite == "performance", "Suite must be baseline or performance");
+        std::vector<Case> cases;
+        for (int rate : {44100, 48000}) for (int block : {64, 128, 256}) {
+            if (quick && (rate != 48000 || block != 128)) continue;
+            if ((onlyRate && rate != onlyRate) || (onlyBlock && block != onlyBlock)) continue;
+            if (suite == "performance") {
+                if (block == 64 && !include64) continue;
+                for (int selector = 0; selector < 11; ++selector) {
+                    if (quick && selector != 0 && selector != 1 && selector != 10) continue;
+                    for (int profile = 0; profile < 3; ++profile)
+                        cases.push_back({rate, block, selector, false, false, false, false, true, profile});
+                    if (selector == 0 || selector == 1 || selector == 10) {
+                        cases.push_back({rate, block, selector, true});
+                        cases.push_back({rate, block, selector, false});
+                    }
+                }
+                continue;
+            }
+            for (int selector = 0; selector < 11; ++selector) {
+                if (quick && selector != 0 && selector != 1 && selector != 10) continue;
+                cases.push_back({rate, block, selector, true});
+                cases.push_back({rate, block, selector, false});
+            }
+            cases.push_back({rate, block, 0, true, true});
+            cases.push_back({rate, block, 0, false, true});
+            cases.push_back({rate, block, 0, true, false, true, false});
+            cases.push_back({rate, block, 0, false, false, true, false});
+            cases.push_back({rate, block, 0, false, false, true, true});
+        }
+        require(!cases.empty(), "Selected filters produce no benchmark cases; use --help");
         require(!fs::exists(directory), "Output already exists; refusing to overwrite");
         require(fs::create_directories(directory), "Cannot create output directory");
         ScopedDenormals denormals;
@@ -422,34 +462,6 @@ int main(int argc, char** argv) {
                "peak,rms,checksum,process_cpu_seconds_including_checks,mode,source_performance,"
                "thread_cpu_seconds_including_checks,controller_events,mpe_member_state_checks,"
                "pedal_held_callbacks,last_block_peak,pra_target_min_ohms,pra_target_max_ohms\n";
-        std::vector<Case> cases;
-        for (int rate : {44100, 48000}) for (int block : {64, 128, 256}) {
-            if (quick && (rate != 48000 || block != 128)) continue;
-            if ((onlyRate && rate != onlyRate) || (onlyBlock && block != onlyBlock)) continue;
-            if (suite == "performance") {
-                if (block == 64 && !include64) continue;
-                for (int selector = 0; selector < 11; ++selector) {
-                    if (quick && selector != 0 && selector != 1 && selector != 10) continue;
-                    for (int profile = 0; profile < 3; ++profile)
-                        cases.push_back({rate, block, selector, false, false, false, false, true, profile});
-                    if (selector == 0 || selector == 1 || selector == 10) {
-                        cases.push_back({rate, block, selector, true});
-                        cases.push_back({rate, block, selector, false});
-                    }
-                }
-                continue;
-            }
-            for (int selector = 0; selector < 11; ++selector) {
-                if (quick && selector != 0 && selector != 1 && selector != 10) continue;
-                cases.push_back({rate, block, selector, true});
-                cases.push_back({rate, block, selector, false});
-            }
-            cases.push_back({rate, block, 0, true, true});
-            cases.push_back({rate, block, 0, false, true});
-            cases.push_back({rate, block, 0, true, false, true, false});
-            cases.push_back({rate, block, 0, false, false, true, false});
-            cases.push_back({rate, block, 0, false, false, true, true});
-        }
         std::mt19937 random(orderSeed);
         std::shuffle(cases.begin(), cases.end(), random);
         int rows = 0;
