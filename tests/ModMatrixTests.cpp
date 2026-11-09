@@ -1407,6 +1407,106 @@ void testEngineGlobalSourcePriorityAfterRelease()
         }
 }
 
+// Mixed global/rank routes must preserve slot order and refresh on both routing
+// and amount edits. Compare MSEG evolution with an isolated rate/readout layer.
+void testMixedRouteLifecycle()
+{
+    auto config = routed({
+        { ModSource::constant, ModSource::none, ModDestination::pitch, ModTarget::both },
+        { ModSource::constant, ModSource::none, ModDestination::fx1Mix, ModTarget::both },
+        { ModSource::constant, ModSource::none, ModDestination::pitch, ModTarget::both },
+        { ModSource::constant, ModSource::none, ModDestination::fx1Mix, ModTarget::both },
+        { ModSource::constant, ModSource::none, ModDestination::pitch, ModTarget::both },
+        { ModSource::constant, ModSource::none, ModDestination::fx1Mix, ModTarget::both },
+        { ModSource::constant, ModSource::none, ModDestination::mseg1Rate, ModTarget::both },
+        { ModSource::mseg1, ModSource::none, ModDestination::level, ModTarget::rankII }
+    });
+    config.msegs[0] = defaultShape(2);
+    auto isolatedConfig = config;
+    for (int s = 0; s < 6; ++s) isolatedConfig.slots[(std::size_t) s] = {};
+    // Keep a global destination live in the reference too: removing its last
+    // global route resets the previous-sample rate immediately by design.
+    isolatedConfig.slots[8] = { ModSource::constant, ModSource::none,
+                                ModDestination::fx3Mix, ModTarget::both };
+    auto controls = amounts({ 0.7f, 0.7f, 1.e-8f, 1.e-8f, -0.7f, -0.7f, 0.5f, 1.0f, 0.1f });
+    ModernLayer mixed, isolated;
+    mixed.prepare(1000.0);
+    isolated.prepare(1000.0);
+    mixed.setConfig(config);
+    isolated.setConfig(isolatedConfig);
+    mixed.setControls(controls);
+    isolated.setControls(controls);
+    for (auto trigger : { MsegTrigger::poly, MsegTrigger::mono, MsegTrigger::free,
+                          MsegTrigger::poly, MsegTrigger::free, MsegTrigger::mono })
+    {
+        config.msegs[0].trigger = isolatedConfig.msegs[0].trigger = trigger;
+        mixed.setConfig(config);
+        isolated.setConfig(isolatedConfig);
+        bool observedEnvelope = false;
+        for (int n = 0; n < 40; ++n)
+        {
+            if (n == 12 || n == 24)
+            {
+                controls.amount[6] = n == 12 ? 0.0f : 0.5f;
+                mixed.setControls(controls);
+                isolated.setControls(controls);
+            }
+            mixed.beginSample(globals());
+            isolated.beginSample(globals());
+            for (int v = 0; v < 2; ++v)
+            {
+                const auto input = voiceAt(60 + v * 7, 0.8f, 1 + v);
+                mixed.processVoice(v, input);
+                isolated.processVoice(v, input);
+                observedEnvelope = observedEnvelope || mixed.msegValue(v, 0) > 0.0f;
+                check(mixed.msegValue(v, 0) == isolated.msegValue(v, 0),
+                      "rate route migration preserves exact envelope state");
+                float expectedPitch = 0.0f, expectedFx = 0.0f;
+                for (int s : { 0, 2, 4 })
+                {
+                    // Match the production scaled-value rounding point. A single
+                    // += amount * scale can contract into FMA on Apple Clang and
+                    // would test a different arithmetic expression.
+                    volatile float scaled = controls.amount[(std::size_t) s] * kPitchSemitones;
+                    expectedPitch += scaled;
+                }
+                for (int s : { 1, 3, 5 }) expectedFx += controls.amount[(std::size_t) s];
+                check(mixed.rankOffsets(v, 0).pitch == expectedPitch
+                      && mixed.rankOffsets(v, 1).pitch == expectedPitch
+                      && mixed.getGlobalOffsets().fxMix[0] == expectedFx,
+                      "interleaved global and rank routes retain exact slot accumulation order");
+                check(mixed.rankOffsets(v, 0).level == 0.0f
+                      && mixed.rankOffsets(v, 1).level == isolated.rankOffsets(v, 1).level,
+                      "mixed rank route retains its target");
+            }
+        }
+        check(observedEnvelope, "route migration reference exercises a moving envelope");
+    }
+    // Establish a nonzero global offset so the cleanup assertion is nonvacuous.
+    controls.amount[1] = 0.5f;
+    mixed.setControls(controls);
+    mixed.beginSample(globals());
+    check(mixed.getGlobalOffsets().fxMix[0] != 0.0f, "global cleanup starts with a live nonzero offset");
+    // Remove globals and the rate route while leaving a rank route active.
+    for (int s : { 1, 3, 5, 6 }) config.slots[(std::size_t) s] = {};
+    mixed.setConfig(config);
+    mixed.beginSample(globals());
+    mixed.processVoice(0, voiceAt(60, 0.8f));
+    check(mixed.isActive() && mixed.getGlobalOffsets().fxMix[0] == 0.0f,
+          "removing global routes clears old offsets while rank routes remain active");
+    controls.amount[0] = 0.5f;
+    mixed.setControls(controls);
+    mixed.beginSample(globals());
+    mixed.processVoice(0, voiceAt(60, 0.8f));
+    check(mixed.rankOffsets(0, 0).pitch != 0.0f,
+          "disable cleanup starts with a nonzero rank offset");
+    controls.enabled = false;
+    mixed.setControls(controls);
+    check(! mixed.isActive() && mixed.rankOffsets(0, 0).pitch == 0.0f
+          && mixed.rankOffsets(0, 1).level == 0.0f,
+          "disabled routes restore identity immediately");
+}
+
 void testStability()
 {
     for (double sr : { 44100.0, 48000.0, 96000.0, 192000.0 })
@@ -1440,6 +1540,7 @@ void testStability()
 int main()
 {
     testRoutingMath();
+    testMixedRouteLifecycle();
     testCurvesAndNoteValues();
     testIdleCircuitsDoNotDriveGlobalSources();
     testInactiveIsIdentity();
