@@ -6,6 +6,7 @@
 #include "../../tests/PluginHostMetadata.h"
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/VoiceActivityHostTests.h"
+#include "../../tests/ControllerResetHostTests.h"
 #include "../../tests/VoiceActivityUiTests.h"
 #include "../../tests/ContextMenuKeyboardTests.h"
 #include "../../tests/TypedValueUnitTests.h"
@@ -2026,6 +2027,14 @@ int main(int argc, char** argv)
         juce::ScopedJuceInitialiser_GUI juceInit;
         cs80::tests::testVoiceActivityUi(check, flushGui);
         std::printf("Voice activity UI tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--controller-reset-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testControllerResetHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Controller reset host tests: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--voice-activity-tests") == 0)

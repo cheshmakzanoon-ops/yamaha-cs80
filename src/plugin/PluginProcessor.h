@@ -128,7 +128,7 @@ public:
         expressionValue.store(v, std::memory_order_relaxed);
         pendingExpression.store(v, std::memory_order_relaxed);
     }
-    // Last foot-controller position from the on-screen wheel or non-isolated MIDI CC11.
+    // Last foot-controller position from the on-screen wheel or non-isolated MIDI CC11/CC121.
     // The processor re-applies it after prepareToPlay and isolation transitions; the editor
     // reads it back; otherwise wheel and sound would disagree after a transport restart
     // or after reopening the window.

@@ -725,6 +725,14 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
         if (midiLearnConsumes(message.getControllerNumber())) return;   // [ws8-studio] a learned controller drives its parameter instead
         if (message.getControllerNumber() == 11 && !engine.isParityMode())
             expressionValue.store(message.getControllerValue() / 127.0f, std::memory_order_relaxed);
+        if (message.getControllerNumber() == 121 && !engine.isParityMode())
+        {
+            // Match the engine's reset target so prepare/extension activation
+            // cannot reapply stale expression. Keep PURE's physical position
+            // and existing high-resolution strike behavior unchanged.
+            expressionValue.store(1.0f, std::memory_order_relaxed);
+            highResolutionVelocity.resetChannel(message.getChannel());
+        }
         if (message.getControllerNumber() == 88)
             highResolutionVelocity.controlChange(message.getChannel(), message.getControllerValue());
         if (message.getControllerNumber() == 0 || message.getControllerNumber() == 32)

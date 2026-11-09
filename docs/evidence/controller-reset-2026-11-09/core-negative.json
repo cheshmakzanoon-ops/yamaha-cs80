@@ -1,0 +1,40 @@
+{
+  "base_engine": "6c560f130be649dd4a63cbe146cd5cc54dd057a3",
+  "results": {
+    "candidate": {
+      "checks": 3513,
+      "failures": 0,
+      "exit": 0
+    },
+    "base-engine": {
+      "checks": 3513,
+      "failures": 438,
+      "exit": 1
+    },
+    "omit-mod": {
+      "checks": 3513,
+      "failures": 310,
+      "exit": 1
+    },
+    "omit-expression": {
+      "checks": 3513,
+      "failures": 310,
+      "exit": 1
+    },
+    "omit-bend": {
+      "checks": 3513,
+      "failures": 320,
+      "exit": 1
+    },
+    "omit-pressure": {
+      "checks": 3513,
+      "failures": 118,
+      "exit": 1
+    },
+    "break-pure": {
+      "checks": 3513,
+      "failures": 2,
+      "exit": 1
+    }
+  }
+}

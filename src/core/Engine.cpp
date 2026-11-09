@@ -1767,12 +1767,22 @@ void Engine::controlChange(int controller, float value, int midiChannel)
     {
         if (midiChannel < 1 || midiChannel > 16 || ! std::isfinite(value))
             return;
-        // Narrow Reset All Controllers support: null parameter selection,
-        // including while MPE is off, and release this channel's MIDI pedal.
-        // Retain negotiated zones/ranges and all other controller policies.
+        // RP-015 defaults, through the existing controller routing. CC1/11
+        // and the conventional pitch/matrix-pressure targets are global;
+        // MPE bend/voice pressure keep their existing member/manager scope.
+        // Null selection even while MPE is disabled or PURE enabled, but retain
+        // negotiated values. PURE keeps its MIDI-free sound-control policy.
         mpeZones.controlChange(midiChannel, controller, 0);
         if (! global.parityMode)
+        {
+            // Set targets, not smoothers. Do not synthesize CC gestures: a
+            // CC1/11/64 ribbon mapping must not move the independent ribbon.
+            modWheel = 0.0f;
+            expression = 1.0f;
+            pitchBend(midiChannel, 0.0f);
+            channelPressure(midiChannel, 0.0f);
             setSustainPedal(midiChannel, false);
+        }
         return;
     }
     // Ribbon from a MIDI CC (interface layer, off by default): 64 is centre.

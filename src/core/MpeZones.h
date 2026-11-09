@@ -127,12 +127,14 @@ public:
     {
         if (channel >= 1 && channel <= 16) lsb[static_cast<std::size_t>(channel)] = value & 0x7f;
     }
-    // A release consumes its prefix even though this engine does not use
-    // release velocity. Do not let it change the velocity of a later strike.
-    void noteOff(int channel) noexcept
+    // Discard only this channel's pending prefix (also used by CC121).
+    void resetChannel(int channel) noexcept
     {
         if (channel >= 1 && channel <= 16) lsb[static_cast<std::size_t>(channel)] = -1;
     }
+    // A release consumes its prefix even though this engine does not use
+    // release velocity. Do not let it change the velocity of a later strike.
+    void noteOff(int channel) noexcept { resetChannel(channel); }
     // Velocity for a note-on with 7-bit velocity `v7`; consumes the prefix.
     float noteOnVelocity(int channel, int v7) noexcept
     {

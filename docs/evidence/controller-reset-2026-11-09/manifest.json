@@ -1,0 +1,61 @@
+{
+  "scope": "Bounded CC121 MIDI/software defaults through existing global/member/manager routes; no hardware, DAW, wrapper-conformance or deadline claim.",
+  "base": "6c560f130be649dd4a63cbe146cd5cc54dd057a3",
+  "source_commit": "dc8de70e3a26a9c10cba6de8489273a2e990c97b",
+  "platform": {
+    "os": "Linux 6.18.57 x86_64",
+    "compiler": "Debian GCC 14.2.0-19",
+    "cmake": "4.4.4",
+    "JUCE": "8.0.11",
+    "JUCE_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "native_build": "Release, GCC -O3 -DNDEBUG; default-off optional filter batch"
+  },
+  "commands": [
+    "cmake -S . -B /workspace/shared/yamaha-controller-reset-build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF",
+    "cmake --build /workspace/shared/yamaha-controller-reset-build --target cs80_tests cs80_controller_reset_tests cs80_smoothing_tests cs80_mpe_master_smoothing_tests cs80_pedal_release_tests cs80_voice_release_tests cs80_tuning_midi_tests cs80_mpe_master_bend_routing_tests cs80_parity_mode_tests cs80_source_performance_tests -j 4",
+    "ctest --test-dir /workspace/shared/yamaha-controller-reset-build -R '^cs80_(tests|controller_reset_tests|smoothing_tests|mpe_master_smoothing_tests|pedal_release_tests|voice_release_tests|tuning_midi_tests|mpe_master_bend_routing_tests|parity_mode_tests|source_performance_tests)$' --output-on-failure",
+    "/workspace/shared/yamaha-controller-reset-build/cs80_tests",
+    "c++ -std=c++20 -O1 -g -fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -Isrc tests/ControllerResetTests.cpp src/core/Engine.cpp src/core/FactoryPresets.cpp src/core/Ig00156Batch.cpp -o /workspace/shared/cs80-controller-reset-evidence/build/controller-reset-san",
+    "ASAN_OPTIONS=detect_leaks=0 /workspace/shared/cs80-controller-reset-evidence/build/controller-reset-san",
+    "source /workspace/shared/cs80-build-env.sh; cmake -S . -B /workspace/shared/yamaha-controller-reset-native -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_JUCE=/workspace/shared/cs80-juce",
+    "cmake --build /workspace/shared/yamaha-controller-reset-native --target CS80Snapshots -j 2",
+    "ctest --test-dir /workspace/shared/yamaha-controller-reset-native -R '^cs80_controller_reset_host_tests$' --output-on-failure",
+    "/workspace/shared/yamaha-controller-reset-native/CS80Snapshots_artefacts/Release/CS80Snapshots --controller-reset-tests",
+    "ctest --test-dir /workspace/shared/yamaha-controller-reset-native -R '^cs80_(keyboard_handoff_host_tests|voice_activity_host_tests|transient_control_tests|performance_wheel_keyboard_tests)$' --output-on-failure",
+    "CS80_COMPAT_CACHE=/workspace/shared/yamaha-fx-compat-cache bash scripts/check-compat-gates.sh --strict-v2",
+    "python3 tests/test_controller_reset_negative_controls.py --output /workspace/shared/cs80-controller-reset-evidence/negative-bit",
+    "python3 tests/test_controller_reset_host_negative_controls.py --build /workspace/shared/yamaha-controller-reset-native --output /workspace/shared/cs80-controller-reset-evidence/native-negative-bit"
+  ],
+  "result_notes": [
+    "The focused core CTest expression selects nine registered targets. cs80_tests is an executable, not a same-named CTest; its 11,508 checks were run separately.",
+    "Negative controls require expected exit status, normal completion marker and positive behavioral failure count. Every final core variant completes 3,513 checks; every native variant completes 1,408.",
+    "Base Engine negative control uses unchanged 6c560f1 Engine.cpp with current headers to admit the behavior-preserving resetChannel helper used by expanded tests. It is not a complete baseline binary comparison.",
+    "Native negative controls re-link the identical native objects except one private processor object; no working source or build object is changed.",
+    "Sanitizer leak checking disabled in the sandbox. No allocator instrumentation, complete release build, pluginval, DAW, hardware or remote CI claim.",
+    "Review hardening dc8de70 changes test comparators only: all new core/native audio identity checks compare uint32 float bit patterns (including signed zero), retaining separate finite-value checks. Focused/native/neighbor/sanitizer and both fault scripts were rerun. Production and the strict raw compatibility witnesses are unchanged from 6e639fb."
+  ],
+  "sha256": {
+    "CMakeLists.txt": "f25c91548cd62d5ae7f1feaee0023152cf90e2f41d33c8f41fa7e424bcb20f77",
+    "src/core/Engine.cpp": "89902ede2e4ce111048e51026cfbfb9d2563fefca3c2743a9c957a08f4efe349",
+    "src/core/MpeZones.h": "328fa2dbe5a7c7349d6a60aa81761a9c833b6dfa5960cbf3bcac98ef34d4a1d5",
+    "src/plugin/PluginProcessor.cpp": "48875e2626abc5d256c132e1901626e89cda4c581f33bcbab599c4bba8ab6224",
+    "src/plugin/PluginProcessor.h": "f64add4db203315dcedbba0c8ff4a13475b92914fa4b88e8130a4262dfd2e2f4",
+    "src/tools/ui_snapshot.cpp": "3f27188d093fdd67d0b84c585575374e14a879831c4d2bf3ee0339d893fbe236",
+    "tests/ControllerResetTests.cpp": "6bfceeeaa4b729cbef80984f68ddc7d66d18c8c9dd576e63c9291f4d8bc4074d",
+    "tests/ControllerResetHostTests.h": "4b9d508fb90ad61d130a927e16835dc0bdfd33bfa644b0ad951be0016745fc3b",
+    "tests/test_controller_reset_negative_controls.py": "1ea4c7e64c5d2b4e721d9efb7f4e93db8855592ad911a4083ca77e8b5c714843",
+    "tests/test_controller_reset_host_negative_controls.py": "07bc947bfd73ba76b115ee3a40f1faa57b218651eba9f356d602aae1a771f87a",
+    "docs/evidence/controller-reset-2026-11-09/compatibility.log": "293b65e0b7fbc2d9ed8b7fefb681d129be044d67e545d0dcc79039371860033f",
+    "docs/evidence/controller-reset-2026-11-09/core-ctest.log": "4949a7bc0f538ea736f2228581d54bff4558ced2d9bbb95f85f675497f526e8c",
+    "docs/evidence/controller-reset-2026-11-09/core-negative-summary.log": "81e193564ec400272c70a255b9dfe5a3f6bc49358b18cf1228a44d41a53ac377",
+    "docs/evidence/controller-reset-2026-11-09/core-negative.json": "2d2248744dff076d49f807c45ffd86cd2dfac9db4ddfb99a2036c3c57e273af1",
+    "docs/evidence/controller-reset-2026-11-09/core-sanitizers.log": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "docs/evidence/controller-reset-2026-11-09/core-summary.log": "ad61d006a963ea294b8d60a02a334f3cb79c76713d31ae3741dc5f8d8c130902",
+    "docs/evidence/controller-reset-2026-11-09/native-ctest.log": "fcda2c808980f83d0fc858cb3a8d04a2b26dd3c756f140a563db04365d1e4b24",
+    "docs/evidence/controller-reset-2026-11-09/native-focused.log": "1dcf4d77599bfb07796cf4128a0e9b0d17c9317c4c811d23cfa851c2e4643b6a",
+    "docs/evidence/controller-reset-2026-11-09/native-negative-summary.log": "167ff6fafda4586995282f384e476a9843b759a77721d501f821441aaf5d008f",
+    "docs/evidence/controller-reset-2026-11-09/native-negative.json": "c7ede50dc8a13733fa592afa32f74d6712d9a4f6e93959fcf028f568b7152b9e",
+    "docs/evidence/controller-reset-2026-11-09/native-neighbors.log": "73529b4a8d42aa1364d5fb864c68b044258ec9e0aa9350deda6423f79bfcbf1f"
+  },
+  "production_commit": "6e639fbb6decb7c8cefda786b1145c535ac987ee"
+}

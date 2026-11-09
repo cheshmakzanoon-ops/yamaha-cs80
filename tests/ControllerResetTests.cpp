@@ -1,9 +1,11 @@
-// CC121 sustain and parameter-selection reset only. This is not a complete
-// Reset All Controllers implementation or a hardware-fidelity claim.
+// Bounded CC121 defaults using existing global/member/manager routes.
+// This is not complete MIDI/MPE conformance or a hardware-fidelity claim.
 #include "core/Engine.h"
 
 #include <algorithm>
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <cmath>
 #include <cstdio>
 #include <limits>
@@ -44,6 +46,12 @@ std::vector<float> render(Engine& e, int frames = 257, int block = 128)
     check(std::all_of(out.begin(), out.end(), [](float v) { return std::isfinite(v); }),
           "finite controller-reset audio");
     return out;
+}
+bool sameAudio(const std::vector<float>& a, const std::vector<float>& b)
+{
+    return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin(), [](float x, float y) {
+        return std::bit_cast<std::uint32_t>(x) == std::bit_cast<std::uint32_t>(y);
+    });
 }
 bool same(Engine::RankEnvelopeState a, Engine::RankEnvelopeState b)
 {
@@ -97,7 +105,7 @@ void testPedalRelease()
                               row + " release is value-continuous");
                         check(reset.getVoiceInfo(1).held && same(held, reset.getRankEnvelopeState(1, 0)),
                               row + " held key and other channel are untouched");
-                        check(render(reset, 257, 17) == render(pedal, 257, 31),
+                        check(sameAudio(render(reset, 257, 17), render(pedal, 257, 31)),
                               row + " release audio matches CC64 exactly across block sizes");
                         const auto tail = reset.getRankEnvelopeState(0, 0);
                         reset.controlChange(121, 0.0f, 2);
@@ -108,7 +116,7 @@ void testPedalRelease()
                             check(e->getVoiceInfo(1).pedalHeld, row + " other channel pedal stays down");
                             e->noteOn(67, 0.8f, 4);
                         }
-                        check(render(reset) == render(pedal), row + " subsequent Sustain II policy is unchanged");
+                        check(sameAudio(render(reset), render(pedal)), row + " subsequent Sustain II policy is unchanged");
                         reset.noteOn(71, 0.8f, 2); reset.noteOff(71, 2);
                         bool laterPedalHold = false;
                         for (int voice = 0; voice < 8; ++voice)
@@ -244,7 +252,7 @@ void testMalformedAndIsolation()
         e->controlChange(64, 1.0f, 2); render(*e); e->noteOff(60, 2);
     }
     reset.controlChange(121, 0.0f, 2);
-    check(render(reset) == render(reference), "PURE CS-80 audio ignores MIDI pedal/reset controls");
+    check(sameAudio(render(reset), render(reference)), "PURE CS-80 audio ignores MIDI pedal/reset controls");
 }
 void testHeldKeysAndWaitingCircuit()
 {
@@ -274,31 +282,194 @@ void testHeldKeysAndWaitingCircuit()
     reset.controlChange(121, 0.0f, 2); pedal.controlChange(64, 0.0f, 2);
     check(reset.getVoiceInfo(0).note == 72 && reset.getVoiceInfo(0).held,
           "reset reconsiders waiting keys when a pedal-held circuit is released");
-    check(render(reset) == render(pedal), "waiting-key continuation matches ordinary pedal release");
+    check(sameAudio(render(reset), render(pedal)), "waiting-key continuation matches ordinary pedal release");
 }
-void testOtherControllersUnchanged()
+void ordinaryDefaults(Engine& e, int channel)
+{
+    e.controlChange(1, 0.0f, channel);
+    e.controlChange(11, 1.0f, channel);
+    e.pitchBend(channel, 0.0f);
+    e.channelPressure(channel, 0.0f);
+    e.controlChange(64, 0.0f, channel);
+}
+void primeControls(Engine& e, int channel)
+{
+    e.controlChange(1, 0.7f, channel); e.controlChange(11, 0.3f, channel);
+    e.controlChange(74, 0.8f, channel); e.channelPressure(channel, 0.4f);
+    e.pitchBend(channel, 0.25f); e.setRibbon(0.1f);
+}
+void testDefaultsAndPreservation()
+{
+    // The reference is the existing ordinary event route, not new reset code.
+    for (double rate : {44100.0, 48000.0, 96000.0})
+        for (bool circuit : {false, true})
+            for (int channel = 1; channel <= 16; ++channel)
+            {
+                Engine reset, reference;
+                auto p = patch(circuit);
+                p[P_modWheelSub] = p[P_modWheelVcf] = 0.7f;
+                for (auto* e : {&reset, &reference})
+                {
+                    e->prepare(rate); e->setParams(p); e->noteOn(60, 0.8f, channel);
+                    primeControls(*e, channel); render(*e, 511);
+                    e->polyPressure(60, 0.9f, channel); // same voice target as channel pressure
+                }
+                const auto before = reset.getRankEnvelopeState(0, 0);
+                reset.controlChange(121, 1.0f, channel);
+                ordinaryDefaults(reference, channel);
+                check(reset.getVoiceInfo(0).pressure == 0.0f && reset.getVoiceInfo(0).held,
+                      "reset clears poly-pressure target without releasing held note");
+                check(same(before, reset.getRankEnvelopeState(0, 0)),
+                      "reset does not restart or snap held envelopes");
+                check(sameAudio(render(reset, 769, 17), render(reference, 769, 63)),
+                      "reset follows ordinary smoothed defaults and preserves timbre/ribbon on all channels/rates");
+                reset.controlChange(121, 0.0f, channel);
+                ordinaryDefaults(reference, channel);
+                check(sameAudio(render(reset), render(reference)), "repeated default reset preserves the continuation");
+                for (auto* e : {&reset, &reference}) e->noteOn(67, 0.6f, channel);
+                check(sameAudio(render(reset), render(reference)), "later notes use the reset global targets");
+            }
+    // Distinct matrix taps expose the shared channel-pressure target and the
+    // deliberately preserved CC74 value, independent of panel touch depth.
+    for (bool circuit : {false, true})
+    {
+        using namespace cs80::modern;
+        Engine e; auto p = patch(circuit);
+        p[P_mod1Amount] = p[P_mod2Amount] = 1.0f;
+        ModernConfig config;
+        config.slots[0] = {ModSource::channelPressure, ModSource::none, ModDestination::pan, ModTarget::both};
+        config.slots[1] = {ModSource::timbre, ModSource::none, ModDestination::pitch, ModTarget::both};
+        e.prepare(48000.0); e.setParams(p); e.setModernConfig(config);
+        e.noteOn(60, 0.8f, 2); e.noteOn(64, 0.8f, 3);
+        e.controlChange(74, 0.75f, 2); e.channelPressure(2, 0.5f); render(e, 4096);
+        check(e.getModernRankOffsets(0, 0).pan > 0.49f, "shared pressure matrix fixture is active");
+        e.controlChange(121, 0.0f, 3); render(e, 4096);
+        check(std::abs(e.getModernRankOffsets(0, 0).pan) < 1.0e-5f
+                  && e.getVoiceInfo(0).pressure == 0.5f,
+              "channel-three reset clears shared matrix pressure but retains channel-two voice pressure");
+        check(std::abs(e.getModernRankOffsets(0, 0).pitch - 9.0f) < 1.0e-4f,
+              "reset preserves the CC74 timbre matrix source");
+        e.controlChange(121, 0.0f, 1);
+        check(e.getVoiceInfo(0).pressure == 0.0f && e.getVoiceInfo(1).pressure == 0.0f,
+              "conventional channel-one reset retains historical pressure broadcast scope");
+    }
+}
+void testMpeExpressionReset()
 {
     for (bool circuit : {false, true})
-        for (bool mpe : {false, true})
+        for (int channel : {1, 2, 3, 8, 14, 15, 16})
         {
-            Engine reset, reference; auto p = patch(circuit); p[P_mpeOn] = mpe ? 1.0f : 0.0f;
+            Engine reset, reference; auto p = patch(circuit); p[P_mpeOn] = 1.0f;
+            p[P_modWheelSub] = p[P_modWheelVcf] = 0.7f;
+            constexpr std::array<int, 5> channels {2, 3, 8, 14, 15};
+            for (auto* e : {&reset, &reference})
+            {
+                e->prepare(48000.0); e->setParams(p);
+                rpn(*e, 1, 6, 3); rpn(*e, 16, 6, 3);
+                rpn(*e, 1, 0, 12); rpn(*e, 16, 0, 7);
+                rpn(*e, 2, 0, 24); rpn(*e, 15, 0, 36);
+                for (int i = 0; i < 5; ++i)
+                {
+                    e->noteOn(48 + i * 3, 0.8f, channels[i]);
+                    primeControls(*e, channels[i]);
+                }
+                e->pitchBend(1, 0.5f); e->pitchBend(16, -0.5f);
+                render(*e, 511);
+            }
+            reset.controlChange(121, 0.0f, channel); ordinaryDefaults(reference, channel);
+            for (int i = 0; i < 5; ++i)
+            {
+                const int vc = channels[i];
+                const bool own = vc == channel;
+                const bool managed = (channel == 1 && vc < 5) || (channel == 16 && vc > 12);
+                const float range = vc < 5 ? 24.0f : 36.0f; // gap retains existing lower-range routing below
+                const float initialBend = vc == 8 ? 6.0f : range * 0.25f;
+                check(reset.getVoiceInfo(i).bend == (own ? 0.0f : initialBend),
+                      "MPE reset clears only addressed member bend, retaining independently bent members");
+                check(reset.getVoiceInfo(i).pressure == (own || managed ? 0.0f : 0.4f),
+                      "MPE reset pressure follows own/manager scope without crossing zone or gap");
+            }
+            check(reset.getMpeZones().lowerMemberCount() == 3 && reset.getMpeZones().upperMemberCount() == 3
+                      && reset.getMpeZones().memberRange(false) == 24.0f
+                      && reset.getMpeZones().memberRange(true) == 36.0f
+                      && reset.getMpeZones().masterRange(false) == 12.0f
+                      && reset.getMpeZones().masterRange(true) == 7.0f,
+                  "controller defaults preserve both negotiated layouts and all bend ranges");
+            check(sameAudio(render(reset, 2049, 31), render(reference, 2049, 127)),
+                  "MPE reset audio matches existing master/member bend and smoothed pressure routes");
+        }
+}
+void testRibbonAndPurePreservation()
+{
+    for (bool circuit : {false, true})
+        for (int ribbonCc : {1, 11, 64, 121})
+        {
+            Engine reset, reference;
+            auto p = patch(circuit); p[P_ribbonCcEnable] = 1.0f; p[P_ribbonCc] = static_cast<float>(ribbonCc);
             for (auto* e : {&reset, &reference})
             {
                 e->prepare(48000.0); e->setParams(p); e->noteOn(60, 0.8f, 2);
-                e->controlChange(1, 0.7f, 2); e->controlChange(11, 0.6f, 2);
-                e->controlChange(74, 0.8f, 2); e->channelPressure(2, 0.4f);
-                e->pitchBend(2, 0.25f); e->setRibbon(0.1f); render(*e);
+                primeControls(*e, 2); render(*e, 511);
             }
             reset.controlChange(121, 0.0f, 2);
-            check(render(reset) == render(reference),
-                  "narrow reset leaves modulation, expression, pressure, bend, timbre and ribbon unchanged");
+            // Disable the reference's adapter only while sending the reference
+            // events, then restore the same params. No audio advances between.
+            auto disabled = p; disabled[P_ribbonCcEnable] = 0.0f;
+            reference.setParams(disabled); ordinaryDefaults(reference, 2); reference.setParams(p);
+            check(sameAudio(render(reset, 1024), render(reference, 1024)),
+                  "CC1/11/64/121 ribbon mappings do not turn reset into a ribbon gesture");
         }
+    for (bool circuit : {false, true})
+    {
+        Engine reset, reference; auto p = patch(circuit); p[P_parityMode] = 1.0f;
+        for (auto* e : {&reset, &reference})
+        {
+            e->prepare(48000.0); e->setParams(p); e->noteOn(60, 0.8f, 2);
+            e->setExpression(0.25f); e->setRibbon(0.2f); e->channelPressure(2, 0.7f); render(*e, 511);
+        }
+        reset.controlChange(121, 0.0f, 2);
+        check(sameAudio(render(reset, 1024), render(reference, 1024)) && reset.getVoiceInfo(0).pressure == 0.7f,
+              "PURE reset retains physical expression, pressure, ribbon and exact audio");
+    }
+    for (bool circuit : {false, true})
+    {
+        Engine invalid, reference; auto p = patch(circuit);
+        for (auto* e : {&invalid, &reference})
+        {
+            e->prepare(48000.0); e->setParams(p); e->noteOn(60, 0.8f, 2);
+            primeControls(*e, 2); render(*e, 511);
+        }
+        for (int channel : {-1, 0, 17}) invalid.controlChange(121, 0.0f, channel);
+        for (float value : {std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
+                            std::numeric_limits<float>::quiet_NaN()})
+            invalid.controlChange(121, value, 2);
+        check(sameAudio(render(invalid, 1024), render(reference, 1024)),
+              "malformed resets cannot change any primed sound target");
+    }
 }
+void testPrefixChannelReset()
+{
+    for (int channel = 1; channel <= 16; ++channel)
+    {
+        HighResolutionVelocity velocity;
+        for (int c = 1; c <= 16; ++c) velocity.controlChange(c, 53);
+        for (int invalid : {-1, 0, 17}) velocity.resetChannel(invalid);
+        velocity.resetChannel(channel); velocity.resetChannel(channel);
+        for (int c = 1; c <= 16; ++c)
+        {
+            const float expected = c == channel ? 80.0f * (1.0f / 127.0f) : ((80 << 7) | 53) / 16383.0f;
+            check(velocity.noteOnVelocity(c, 80) == expected, "prefix reset affects only the addressed channel");
+            check(velocity.noteOnVelocity(c, 80) == 80.0f * (1.0f / 127.0f), "prefix remains one-shot after reset");
+        }
+    }
+}
+
 }
 int main()
 {
     testPedalRelease(); testMpePedals(); testSelectors(); testMalformedAndIsolation();
-    testHeldKeysAndWaitingCircuit(); testOtherControllersUnchanged();
+    testHeldKeysAndWaitingCircuit(); testDefaultsAndPreservation(); testMpeExpressionReset();
+    testRibbonAndPurePreservation(); testPrefixChannelReset();
     std::printf("Controller reset: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }
