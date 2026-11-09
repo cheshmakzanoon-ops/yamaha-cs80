@@ -41,6 +41,22 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_pump_until_tests COMMAND cs80_pump_until_tests)
     set_tests_properties(cs80_pump_until_tests PROPERTIES TIMEOUT 30)
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    # Inert cross-platform artifact/header and notice regressions. These must
+    # run with ordinary CTest, not only when a packaging helper is run by hand.
+    add_test(NAME cs80_package_binary_identity_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-package-binary-identity.py)
+    add_test(NAME cs80_packaging_notice_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-packaging-notices.py)
+    set_tests_properties(cs80_package_binary_identity_tests cs80_packaging_notice_tests
+                         PROPERTIES TIMEOUT 60 LABELS "packaging")
+    # The Debian fixture packager accepts native amd64 ELF only. Other hosts
+    # still exercise all archive formats and installer notice source mappings.
+    if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux" AND
+        CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "^(x86_64|amd64|AMD64)$")
+        add_test(NAME cs80_deb_runtime_dependency_tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-deb-runtime-dependencies.py)
+        set_tests_properties(cs80_deb_runtime_dependency_tests PROPERTIES TIMEOUT 60 LABELS "packaging")
+    endif()
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)

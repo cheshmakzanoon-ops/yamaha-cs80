@@ -11,9 +11,11 @@ from __future__ import annotations
 import importlib.util
 import os
 from pathlib import Path
+import platform
 import re
 import shutil
 import subprocess
+import sys
 import tarfile
 import tempfile
 import unittest
@@ -122,9 +124,10 @@ class NoticeTests(unittest.TestCase):
         for name, data in self.expected.items():
             self.assertEqual((script.parent / sources[name].replace("\\", "/")).read_bytes(), data)
 
-    @unittest.skipUnless(os.name != "nt" and all(shutil.which(tool) for tool in
+    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in ("x86_64", "amd64")
+                         and all(shutil.which(tool) for tool in
                          ("bash", "cc", "readelf", "dpkg-deb", "dpkg", "dpkg-shlibdeps")),
-                         "Debian packaging tools and cc required")
+                         "Native Linux amd64, Debian packaging tools and cc required")
     def test_synthetic_deb_notice_bytes(self):
         build = self.temp_root / "build"
         # Only the Debian installer needs real ELF input. Archive fixtures above

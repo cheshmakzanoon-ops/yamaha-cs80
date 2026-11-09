@@ -7,20 +7,24 @@ This verifies packaging, not plugin loading or native DAW qualification.
 """
 from pathlib import Path
 import os
+import platform
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-TOOLS = ('cc', 'readelf', 'realpath', 'dpkg', 'dpkg-deb', 'dpkg-shlibdeps')
+TOOLS = ('bash', 'cc', 'readelf', 'realpath', 'dpkg', 'dpkg-deb', 'dpkg-shlibdeps')
 
 
 def run(*args, **kwargs):
     return subprocess.run(args, check=True, text=True, capture_output=True, **kwargs).stdout
 
 
-@unittest.skipUnless(all(shutil.which(t) for t in TOOLS), 'Debian packaging tools and cc required')
+@unittest.skipUnless(sys.platform == 'linux' and platform.machine().lower() in ('x86_64', 'amd64')
+                     and all(shutil.which(t) for t in TOOLS),
+                     'Native Linux amd64, Debian packaging tools and cc required')
 class DependencyTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='cs80-deb-deps-')
