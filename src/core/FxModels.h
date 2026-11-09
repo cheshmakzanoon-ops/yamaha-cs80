@@ -640,6 +640,7 @@ public:
         for (auto& o : oversampler) o.reset();
         dcIn = dcOut = { 0.0f, 0.0f };
         toneState = { 0.0f, 0.0f };
+        controlsReady = false;
     }
 
     // Shaper core only (no DC blocker or tone): one channel through the oversampler.
@@ -650,9 +651,24 @@ public:
 
     StereoSample process(float l, float r, float a, float b, int stages) noexcept
     {
-        const float g = gainFor(a);
-        const float toneHz = 1500.0f * std::pow(12.0f, clampf(b, 0.0f, 1.0f));
-        const float toneCoef = 1.0f - (float) std::exp(-6.283185307179586 * std::min((double) toneHz, 0.45 * sr) / sr);
+        // These laws depend only on their controls and the prepared rate, not
+        // on audio history. Keep their exact arithmetic, but do not repeat
+        // three transcendental calls per sample while the controls are held.
+        // Every control change still takes effect on its first sample; reset
+        // also invalidates the rate-dependent tone coefficient after prepare.
+        if (! controlsReady || a != lastDrive)
+        {
+            lastDrive = a;
+            driveGain = gainFor(a);
+        }
+        if (! controlsReady || b != lastTone)
+        {
+            lastTone = b;
+            const float toneHz = 1500.0f * std::pow(12.0f, clampf(b, 0.0f, 1.0f));
+            toneCoefficient = 1.0f - (float) std::exp(-6.283185307179586 * std::min((double) toneHz, 0.45 * sr) / sr);
+        }
+        controlsReady = true;
+        const float g = driveGain;
         const float in[2] = { l, r };
         float out[2] {};
         for (int c = 0; c < 2; ++c)
@@ -661,7 +677,7 @@ public:
             const float blocked = y - dcIn[(size_t) c] + dcCoef * dcOut[(size_t) c];
             dcIn[(size_t) c] = y;
             dcOut[(size_t) c] = blocked;
-            toneState[(size_t) c] += toneCoef * (blocked - toneState[(size_t) c]);
+            toneState[(size_t) c] += toneCoefficient * (blocked - toneState[(size_t) c]);
             out[c] = toneState[(size_t) c];
         }
         return { out[0], out[1] };
@@ -672,6 +688,9 @@ private:
     std::array<float, 2> dcIn {}, dcOut {}, toneState {};
     double sr = 96000.0;
     float dcCoef = 0.0f;
+    float lastDrive = 0.0f, lastTone = 0.0f;
+    float driveGain = 1.0f, toneCoefficient = 0.0f;
+    bool controlsReady = false;
 };
 
 // Measured static calibration (dB) of each model's wet path; see calibrationDb above.

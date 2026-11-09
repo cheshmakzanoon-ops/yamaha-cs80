@@ -438,6 +438,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_tape_echo_time_tests PRIVATE src)
     add_test(NAME cs80_tape_echo_time_tests COMMAND cs80_tape_echo_time_tests)
     set_tests_properties(cs80_tape_echo_time_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_drive_control_cache_tests tests/DriveControlCacheTests.cpp)
+    target_include_directories(cs80_drive_control_cache_tests PRIVATE src)
+    add_test(NAME cs80_drive_control_cache_tests COMMAND cs80_drive_control_cache_tests)
+    set_tests_properties(cs80_drive_control_cache_tests PROPERTIES TIMEOUT 60)
 
     # [ws6-library] register this workstream's core tests below this line.
     find_package(Threads REQUIRED)
