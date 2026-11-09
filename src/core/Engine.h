@@ -311,6 +311,8 @@ public:
     { return OversamplingDecimator::hostLatencyFor(oversample) + getOscillatorLatencySamples(); }
     double getHostSampleRate() const noexcept { return hostRate; }
     double getInternalSampleRate() const noexcept { return internalRate; }
+    // Read-only telemetry of the actual cached 10 Hz DC-blocker pole.
+    float getDcBlockCoefficient() const noexcept { return dcCoefficient; }
     // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
     // render policy, the host rate and the offline flag (see Oversampling.h).
     int getOversamplingFactor() const noexcept { return oversample; }
@@ -697,6 +699,9 @@ private:
 
     float dcL = 0.0f, dcR = 0.0f;
     float dcInL = 0.0f, dcInR = 0.0f;
+    // Match the default 96 kHz internal rate before the first prepare().
+    // configureInternalRate() preserves the original float expression.
+    float dcCoefficient = std::exp(-kTwoPi * 10.0f * (1.0f / 96000.0f));
     float smoothedVolume = 0.62f;
     Adsr ringAdsr;
     bool ringKeyDown = false;

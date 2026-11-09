@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profile_id": "memory-loaded-port-map-v1",
+  "evidence_kind": "same-operating-point-model-consistency",
+  "scope": "Rank-three factorization against the full loaded Jacobian from MemoryPanelPorts, not nonlinear excursion accuracy, unloaded impedance, hardware measurements, or shipping audio qualification.",
+  "matrix_absolute_ohms": 1e-7,
+  "matrix_relative": 1e-10,
+  "prediction_absolute_volts": 1e-10,
+  "prediction_relative": 1e-12
+}

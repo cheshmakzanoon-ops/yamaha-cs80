@@ -4,9 +4,12 @@
 
 #include <algorithm>
 #include <atomic>
+#include <bit>
 #include <cmath>
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
+#include <limits>
 #include <new>
 #include <vector>
 
@@ -32,6 +35,17 @@ void check(bool ok, const char* message)
     if (!ok) { ++failures; std::printf("FAIL: %s\n", message); }
 }
 constexpr double pi = 3.14159265358979323846;
+
+// Frozen operation order from the pre-hoist internal sample loop. Compare
+// the stored coefficient itself, not a getter that recomputes the reference.
+bool exactDcPole(const Engine& engine)
+{
+    const float sr = (float) engine.getInternalSampleRate();
+    const float invSr = 1.0f / sr;
+    const float original = std::exp(-kTwoPi * 10.0f * invSr);
+    return std::bit_cast<std::uint32_t>(engine.getDcBlockCoefficient())
+           == std::bit_cast<std::uint32_t>(original);
+}
 
 void testFactorRule()
 {
@@ -175,6 +189,41 @@ std::vector<float> phrase(Engine& e, int blocks = 24)
     return audio;
 }
 
+void testDcRateLifecycle()
+{
+    Engine e;
+    check(exactDcPole(e), "default unprepared engine has the original 96 kHz DC pole");
+    // Include rate limits, fractional rates, and a rate that distinguishes the
+    // original float expression from a double-precision rewrite on GCC/libm.
+    for (double rate : { 8000.0, 8001.375, 44100.5, 96000.25, 768000.0 })
+    {
+        e.prepare(rate);
+        check(exactDcPole(e), "re-prepare at a guarded or fractional rate refreshes the DC pole");
+        for (int policy : { 0, 1, 2 })
+        {
+            auto p = circuit(0.0f);
+            p[P_sourcePerformance] = policy == 2 ? 1.0f : 0.0f;
+            p[P_parityMode] = policy == 1 ? 1.0f : 0.0f;
+            e.setParams(p);
+            check(exactDcPole(e), "Legacy, Pure and Source Performance retain exact DC arithmetic");
+            e.setNonRealtime(true);
+            check(exactDcPole(e), "offline policy transition refreshes or retains the DC pole");
+            e.setNonRealtime(false);
+            check(exactDcPole(e), "realtime policy transition restores the DC pole");
+            e.reset();
+            check(exactDcPole(e), "reset clears DC history without clearing its rate coefficient");
+        }
+    }
+    for (double invalid : { 0.0, 7999.0, 768001.0,
+                            (std::numeric_limits<double>::infinity)(),
+                            (std::numeric_limits<double>::quiet_NaN)() })
+    {
+        e.prepare(invalid);
+        check(e.getHostSampleRate() == 48000.0 && exactDcPole(e),
+              "invalid host rate uses the existing fallback and its exact DC pole");
+    }
+}
+
 void testEngine()
 {
     for (double rate : { 44100.0, 48000.0, 96000.0 })
@@ -189,6 +238,7 @@ void testEngine()
                 const int expected = oversamplingFactor(oversamplingMode(quality), source, false, rate);
                 check(e.getOversamplingFactor() == expected && e.getInternalSampleRate() == rate * expected,
                       "engine runs at the rule's factor");
+                check(exactDcPole(e), "DC pole retains the original float bits at every rate and policy");
                 // ws1 merge, intentional circuit-engine change: the reconstructed
                 // oscillator's 8-internal-sample kernel is reported too (8/N).
                 check(e.getLatencySamples() == ws2::kReportedLatencySamples + (source ? 8 / expected : 0),
@@ -216,6 +266,7 @@ void testEngine()
         if (! factorChanges)
         {
             check(switched.activeVoices() > 0, "a quality change that keeps the factor leaves notes sounding");
+            check(exactDcPole(switched), "unchanged factor retains the exact DC pole");
             continue;
         }
         check(switched.activeVoices() == 0, "factor change stops sounding notes like a policy change");
@@ -223,6 +274,8 @@ void testEngine()
         check(switched.getOversamplingFactor() == reprepared.getOversamplingFactor()
                   && phrase(switched) == phrase(reprepared),
               "render-thread switch equals a full prepare at the new mode");
+        check(exactDcPole(switched) && exactDcPole(reprepared),
+              "factor switch and re-prepare both refresh the exact DC pole");
     }
 
     // Offline flag: circuit engine goes to HQ, legacy does not move.
@@ -232,13 +285,16 @@ void testEngine()
         e.setParams(circuit(0.0f));
         e.setNonRealtime(true);
         check(e.getOversamplingFactor() == 8, "circuit offline render uses HQ");
+        check(exactDcPole(e), "offline factor refreshes the exact DC pole");
         e.setNonRealtime(false);
         check(e.getOversamplingFactor() == 2, "returning to realtime restores the selected mode");
+        check(exactDcPole(e), "returning to realtime restores the exact DC pole");
         Engine legacy;
         legacy.prepare(48000.0);
         legacy.setNonRealtime(true);
         check(legacy.getOversamplingFactor() == 2 && legacy.getRenderPolicy() == RenderPolicy::legacy,
               "legacy default renders offline at its historical 2x");
+        check(exactDcPole(legacy), "legacy offline render retains the exact DC pole");
     }
 
     // No allocation on the render-thread boundary once prepared.
@@ -253,6 +309,7 @@ void testEngine()
         {
             frame.effectiveValues[P_oversampling] = quality;
             e.setControlFrame(frame);
+            check(exactDcPole(e), "render-thread control frame refreshes the exact DC pole");
             e.render(block.data(), 64);
         }
         e.setNonRealtime(true);
@@ -337,6 +394,7 @@ int main()
 {
     testFactorRule();
     testDecimatorDesign();
+    testDcRateLifecycle();
     testEngine();
     std::printf("%d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;

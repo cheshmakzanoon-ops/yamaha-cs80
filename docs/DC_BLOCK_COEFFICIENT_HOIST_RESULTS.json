@@ -1,0 +1,61 @@
+{
+  "date_utc": "2026-11-09",
+  "baseline": "a6569a079e4c8f40975ba041e34e513abe0560b8",
+  "source_sha256": {
+    "src/core/Engine.cpp": "79ebb2cc03765e684e2a292cde5ffa3be12af2a1d15783e13279f1edec584a55",
+    "src/core/Engine.h": "d6ea0802af81c1ee75e9d8462cd445d7c939479c5e839b7c3ca824f36527c57d",
+    "tests/OversamplingTests.cpp": "3221936157f1bd52f157f59cb53fa03253cc32ab049b13b0800fe4ede97bf7ac",
+    "tests/diagnostics/DcBlockCoefficientProbe.cpp": "9b268a8b553cec831ce65f12bbcccebd075751ff98594441f0e778c1bb9336ad"
+  },
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "ctest": {
+    "passed": 4,
+    "failed": 0,
+    "checks": {
+      "oversampling": 186,
+      "core": 11508,
+      "parity": 128,
+      "source_performance": 485
+    }
+  },
+  "oversampling_instrumented": {
+    "flags": [
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-fsanitize=undefined,float-cast-overflow",
+      "-fno-sanitize-recover=all",
+      "-D_GLIBCXX_ASSERTIONS"
+    ],
+    "checks": 186,
+    "failures": 0
+  },
+  "negative_controls": {
+    "missing_refresh": {
+      "failing_checks": 84,
+      "exit_code": 1
+    },
+    "double_precision_rewrite": {
+      "failing_checks": 11,
+      "exit_code": 1
+    }
+  },
+  "raw_comparison": {
+    "non_silent_cases": 27,
+    "stereo_frames": 101574,
+    "bytes_per_file": 812592,
+    "profiles": [
+      {
+        "flags": "-std=c++20 -O2",
+        "before_sha256": "c680bd3d76657ad79cb0ec3d15c1eb846a68c88a1c54cf03d571a3594737ee87",
+        "after_sha256": "c680bd3d76657ad79cb0ec3d15c1eb846a68c88a1c54cf03d571a3594737ee87"
+      },
+      {
+        "flags": "-std=c++20 -O3 -march=native -ffp-contract=fast",
+        "before_sha256": "6eb030bbeb62dcac4f9f2d46879fbaaffbf62c6ad672b578c7d38063afe02570",
+        "after_sha256": "6eb030bbeb62dcac4f9f2d46879fbaaffbf62c6ad672b578c7d38063afe02570"
+      }
+    ]
+  },
+  "scope": "Local focused core tests and raw pre/post diagnostic; no whole-plugin performance or cross-platform release qualification."
+}

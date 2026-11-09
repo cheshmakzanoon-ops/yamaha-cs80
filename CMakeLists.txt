@@ -508,6 +508,18 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_memory_panel_ports_tests COMMAND cs80_memory_panel_ports_tests)
     set_tests_properties(cs80_memory_panel_ports_tests PROPERTIES TIMEOUT 120)
 
+    add_executable(cs80_memory_panel_port_map_tests tests/MemoryPanelPortMapTests.cpp)
+    target_include_directories(cs80_memory_panel_port_map_tests PRIVATE src)
+    add_test(NAME cs80_memory_panel_port_map_tests COMMAND cs80_memory_panel_port_map_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-port-map.json)
+    set_tests_properties(cs80_memory_panel_port_map_tests PROPERTIES TIMEOUT 300)
+    if (NOT MSVC)
+        add_test(NAME cs80_memory_port_map_negative_controls
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_port_map_negative_controls.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_memory_port_map_negative_controls PROPERTIES TIMEOUT 300)
+    endif()
+
     add_executable(cs80_programmer_control_identity_tests tests/ProgrammerControlIdentityTests.cpp)
     target_include_directories(cs80_programmer_control_identity_tests PRIVATE src)
     add_test(NAME cs80_programmer_control_identity_tests COMMAND cs80_programmer_control_identity_tests)

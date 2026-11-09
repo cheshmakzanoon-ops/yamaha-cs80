@@ -1,0 +1,2061 @@
+{
+  "baseline": "1b146c45226e14f46af9d62e6e3bd0ced4476213",
+  "snapshot_date_utc": "2026-11-09",
+  "scope": "Structural inventory; not a line-by-line or runtime audit of every branch. Counts and classifications are immutable historical snapshot values.",
+  "branches": [
+    {
+      "branch": "audit/cs80-original-repeat-20261102",
+      "sha": "844c4fc47cb1e016e5d6dc35abefa452b0c03aeb",
+      "ahead": 207,
+      "behind": 157,
+      "subject": "ci: request unchanged original CS80 three-rate audit reproduction",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1746,
+      "tip_files": [
+        ".github/workflows/full-engine-audit.yml"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "claude/adoring-fermi-alhg4x",
+      "sha": "4a47a20a3c08b314062fa6dc2b24bc57d600114d",
+      "ahead": 0,
+      "behind": 158,
+      "subject": "docs: plan completion and handover PDF, linked from the README [skip ci]",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "claude/clever-babbage-sm9ifa",
+      "sha": "ad4b00e59aafee0dbd9a0a763b8be2bb4900ca71",
+      "ahead": 0,
+      "behind": 292,
+      "subject": "docs: add PDF of the improvement plan with implemented and remaining work",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "claude/peaceful-dirac-y8is3k",
+      "sha": "4dc05d08fab84ff5924f4b909d29c2236a0ed41c",
+      "ahead": 0,
+      "behind": 463,
+      "subject": "Rewrite README for the current engineering state; add the parity roadmap",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "codex/cs80-completion",
+      "sha": "2ee33dcc8113aaca4141dc7d77fb374384d8560c",
+      "ahead": 87,
+      "behind": 157,
+      "subject": "test: preregister factory-clear and MSEG transaction lock witnesses",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 454,
+      "tip_files": [
+        "tests/parity/tolerances-v2/state-tree-history-clear.json"
+      ],
+      "contained_in": [
+        "audit/cs80-original-repeat-20261102",
+        "docs/cs80-public-source-scope-20261102",
+        "docs/full-audit-v2-source-lock-plan-20261102",
+        "docs/pr6-audit-status-accuracy-20261102",
+        "docs/qualification-status-20261102",
+        "evidence/adj-parts-bench-intake-20261102",
+        "evidence/bass-funky-event-zoom-20261102",
+        "evidence/clavichord-steal-zero-time-20261102",
+        "evidence/click-audition-ab-20261102",
+        "evidence/click-classifier-validity-20261102",
+        "evidence/full-engine-audit-20261102",
+        "evidence/m41-vca-click-path-20261102",
+        "evidence/yamaha-adj-technician-measurements-20261102",
+        "experiment/click-cue-guards-20261102",
+        "experiment/cpu-phase-simd-engine-20261102",
+        "experiment/cpu-wsc-four-lane-backend-20261102",
+        "experiment/cpu-wsc-lane-prereg-20261102",
+        "experiment/cs80-wsc-denormal-sara-20261102",
+        "experiment/engine-phase-simd-prereg-20261102",
+        "experiment/host-curve-extreme-offset-20261102",
+        "experiment/phase-lane-oracle-20261102",
+        "experiment/rejected-drift-sine-20261102",
+        "experiment/rejected-wsc-fastpath-20261102",
+        "experiment/touch-idle-exact-oracle-20261102",
+        "experiment/ui-readiness-async-click-20261102",
+        "experiment/wsc-steady-path-20261101",
+        "finish/cs80-qualification-20261031",
+        "integration/adj-hp-mixer-evidence-20261102",
+        "integration/adj-hp-noise-loading-20261102",
+        "integration/adj-hp-vr7-vr8-sensitivity-20261102",
+        "integration/au-initial-immediate-20261102",
+        "integration/host-automation-finite-20261102",
+        "integration/mts-esp-safe-20261102",
+        "integration/mts-esp-sysex-pair-20261102",
+        "integration/mts-esp-windows-max-20261102",
+        "integration/numerical-release-gate-20261102",
+        "integration/release-entrypoint-preflight-20261102",
+        "integration/release-trusted-main-dispatch-20261102",
+        "integration/trusted-release-cpu-producer-20261102",
+        "investigate/adj-hp-loading-guard-20261102",
+        "test/numerical-audit-fixture-identity-20261102",
+        "test/numerical-gate-cpu-fixture-identity-20261102",
+        "work/cs80-circuit-evidence-sara-20261102",
+        "work/cs80-composed-default-audit-v1-sara-20261102",
+        "work/cs80-distribution-notices-sara-20261102",
+        "work/cs80-host-audit-v2-sara-20261102",
+        "work/cs80-host-compatibility-sara-20261102",
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102",
+        "work/cs80-reviewed-integration-sara-20261102",
+        "work/manual-only-release-entrypoint-prereg-20261102",
+        "work/reaper-host-smoke-sara-20261102",
+        "work/release-numeric-source-lock-prereg-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "diag-win",
+      "sha": "21b055e582ca7216c59d0a5f4ce86f782210314d",
+      "ahead": 0,
+      "behind": 532,
+      "subject": "diag: windows build of the ui-wip head",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "docs/cs80-public-source-scope-20261102",
+      "sha": "2d8778eadd41806401c5ce784cd8bda8fb754115",
+      "ahead": 207,
+      "behind": 157,
+      "subject": "docs: record owner-approved public-source reconstruction and estimation scope",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1747,
+      "tip_files": [
+        "docs/PUBLIC_SOURCE_COMPLETION_SCOPE.md",
+        "docs/STATUS.md"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "docs/full-audit-v2-source-lock-plan-20261102",
+      "sha": "b801ddde31600033f36aacff4fb2433fce2510ce",
+      "ahead": 205,
+      "behind": 157,
+      "subject": "docs: plan future source-bound full-audit v2 check migration",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1743,
+      "tip_files": [
+        "docs/evidence/qualification-2026-11-01/FULL_ENGINE_AUDIT_V2_SOURCE_LOCK_AND_CHECK_MIGRATION_PLAN_20261102.md"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "docs/pr6-audit-status-accuracy-20261102",
+      "sha": "9c62d7b8813a76ce178712c82da9604a1355b112",
+      "ahead": 206,
+      "behind": 157,
+      "subject": "test: replay all 61 full-bank source click failures with event-omission controls",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1746,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/evidence/CLICK_BANK_COUNTERFACTUAL_20261102.md",
+        "docs/evidence/click-bank-counterfactual-20261102.csv",
+        "tests/ClickBankCausalityTests.cpp"
+      ],
+      "contained_in": [
+        "audit/cs80-original-repeat-20261102",
+        "docs/cs80-public-source-scope-20261102",
+        "evidence/bass-funky-event-zoom-20261102",
+        "evidence/clavichord-steal-zero-time-20261102",
+        "finish/cs80-qualification-20261031",
+        "work/cs80-composed-default-audit-v1-sara-20261102",
+        "work/cs80-distribution-notices-sara-20261102",
+        "work/cs80-host-audit-v2-sara-20261102",
+        "work/cs80-host-compatibility-sara-20261102",
+        "work/cs80-reviewed-integration-sara-20261102",
+        "work/reaper-host-smoke-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "docs/qualification-status-20261102",
+      "sha": "3236c0cff5f6330fb1c6c44744f5f6b2d56ed24f",
+      "ahead": 204,
+      "behind": 157,
+      "subject": "docs: link losslessly archived original full-engine evidence",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1742,
+      "tip_files": [
+        "docs/HARDWARE_COVERAGE.md",
+        "docs/STATUS.md"
+      ],
+      "contained_in": [
+        "audit/cs80-original-repeat-20261102",
+        "docs/cs80-public-source-scope-20261102",
+        "docs/full-audit-v2-source-lock-plan-20261102",
+        "docs/pr6-audit-status-accuracy-20261102",
+        "evidence/bass-funky-event-zoom-20261102",
+        "evidence/clavichord-steal-zero-time-20261102",
+        "evidence/click-audition-ab-20261102",
+        "evidence/click-classifier-validity-20261102",
+        "evidence/m41-vca-click-path-20261102",
+        "experiment/cpu-phase-simd-engine-20261102",
+        "experiment/cpu-wsc-four-lane-backend-20261102",
+        "experiment/cpu-wsc-lane-prereg-20261102",
+        "experiment/cs80-wsc-denormal-sara-20261102",
+        "experiment/engine-phase-simd-prereg-20261102",
+        "experiment/phase-lane-oracle-20261102",
+        "experiment/rejected-drift-sine-20261102",
+        "experiment/touch-idle-exact-oracle-20261102",
+        "finish/cs80-qualification-20261031",
+        "work/cs80-composed-default-audit-v1-sara-20261102",
+        "work/cs80-distribution-notices-sara-20261102",
+        "work/cs80-host-audit-v2-sara-20261102",
+        "work/cs80-host-compatibility-sara-20261102",
+        "work/cs80-reviewed-integration-sara-20261102",
+        "work/reaper-host-smoke-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/adj-parts-bench-intake-20261102",
+      "sha": "b778694a88063c994bc27ee99da9ae4e34c50bfa",
+      "ahead": 214,
+      "behind": 157,
+      "subject": "test: validate technician-only CS80 ADJ bench metadata",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1747,
+      "tip_files": [
+        "tests/bench/README.md",
+        "tests/bench/adj_intake.py",
+        "tests/bench/test_adj_intake.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/bass-funky-event-zoom-20261102",
+      "sha": "56c2616a7c8ee9e42e6985ad80bb93dbdcaf745a",
+      "ahead": 208,
+      "behind": 157,
+      "subject": "docs: archive independent Bass Stack and Funky event-zoom evidence",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1751,
+      "tip_files": [
+        "docs/evidence/BASS_FUNKY_CLICK_ZOOM_20261102.md",
+        "docs/evidence/BassFunkyEventZoom.cpp",
+        "docs/evidence/bass-funky-event-zoom-20261102.txt"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/clavichord-steal-zero-time-20261102",
+      "sha": "73aedaa49729653f20eb2df21f3a03fe8c4779e6",
+      "ahead": 207,
+      "behind": 157,
+      "subject": "docs: archive Clavichord zero-time voice-steal causality trace",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1748,
+      "tip_files": [
+        "docs/evidence/CLICK_BANK_COUNTERFACTUAL_20261102.md",
+        "docs/evidence/ClavichordStealZeroTimeProbe.cpp",
+        "docs/evidence/clavichord-steal-zero-time-20261102.txt"
+      ],
+      "contained_in": [
+        "evidence/bass-funky-event-zoom-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/click-audition-ab-20261102",
+      "sha": "f007f13730ae2292fae32f97283cabb44d4366a4",
+      "ahead": 205,
+      "behind": 157,
+      "subject": "docs: preserve deterministic eight-scenario click A/B renderer and analysis",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1748,
+      "tip_files": [
+        "docs/evidence/CLICK_AUDITION_AB_20261102.md",
+        "docs/evidence/ClickAuditionAB.cpp",
+        "docs/evidence/ClickAuditionAnalysis.py",
+        "docs/evidence/click-audition-energy-20261102.csv",
+        "docs/evidence/click-audition-manifest-20261102.csv",
+        "docs/evidence/click-audition-wav-inventory-20261102.csv"
+      ],
+      "contained_in": [
+        "evidence/click-classifier-validity-20261102",
+        "evidence/m41-vca-click-path-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/click-classifier-validity-20261102",
+      "sha": "f0996982dc7b0d83d16b37d71b819ebbb17b8bf9",
+      "ahead": 207,
+      "behind": 157,
+      "subject": "test: measure preregistered jump-score classifier validity",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1752,
+      "tip_files": [
+        "docs/evidence/CLICK_CLASSIFIER_VALIDITY_20261102.md",
+        "docs/evidence/click-classifier-validity-20261102.csv",
+        "tests/diagnostics/ClickClassifierValidityProbe.cpp"
+      ],
+      "contained_in": [
+        "evidence/m41-vca-click-path-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/full-engine-audit-20261102",
+      "sha": "0151b8699febc47f07c3b4d8cc9ebbf642692a5c",
+      "ahead": 201,
+      "behind": 157,
+      "subject": "evidence: preserve complete 885-row source audit and lossless original ZIP shards",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1760,
+      "tip_files": [
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/README.md",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part01",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part02",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part03",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part04",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part05",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part06",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part07",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/archive.b64.part08",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit-provenance.json",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit-run.log",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit-summary.md",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit.complete",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit/alias.csv",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit/click-causality.csv",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit/fx.csv",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit/latency.csv",
+        "docs/evidence/qualification-2026-11-01/full-engine-audit-41336194253/audit/phrase.csv"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/m41-vca-click-path-20261102",
+      "sha": "f64f964eb13ef191abfbd985858abf4a26b292a9",
+      "ahead": 210,
+      "behind": 157,
+      "subject": "test: isolate M41 filtered carrier from VCA click derivatives",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1757,
+      "tip_files": [
+        "docs/evidence/CLICK_M41_VCA_PATH_CAUSALITY_20261102.md",
+        "docs/evidence/m41-vca-path-causality-20261102.csv",
+        "tests/diagnostics/ClickM41VcaPathCausalityProbe.cpp"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "evidence/rejected-pitch-memo-nov7",
+      "sha": "d1b67da8f9c8fa6bd4cba1a19449316161bce42e",
+      "ahead": 1,
+      "behind": 38,
+      "subject": "docs: retain rejected pitch memo qualification evidence",
+      "merge_base": "185e04c2c50989de33e7b01b446801e1bbf34f50",
+      "mergebase_changed_files": 11,
+      "tip_files": [
+        "docs/MIDI_PITCH_POWER_MEMO.md",
+        "docs/evidence/midi-pitch-power-memo/candidate.patch",
+        "docs/evidence/midi-pitch-power-memo/modulation-observations.jsonl",
+        "docs/evidence/midi-pitch-power-memo/modulation-probe.cpp",
+        "docs/evidence/midi-pitch-power-memo/modulation-provenance.json",
+        "docs/evidence/midi-pitch-power-memo/modulation-summary.json",
+        "docs/evidence/midi-pitch-power-memo/provenance.json",
+        "docs/evidence/midi-pitch-power-memo/rate-observations.jsonl",
+        "docs/evidence/midi-pitch-power-memo/rate-probe.cpp",
+        "docs/evidence/midi-pitch-power-memo/rate-summary.json",
+        "docs/evidence/midi-pitch-power-memo/reproduce.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "evidence/yamaha-adj-technician-measurements-20261102",
+      "sha": "8586492afa132a75e0651ea405a05089d04ce467",
+      "ahead": 212,
+      "behind": 157,
+      "subject": "docs: specify qualified Yamaha ADJ hardware measurements without inferred results",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1743,
+      "tip_files": [
+        "docs/evidence/continuation-2026-10-31/YAMAHA_ADJ_QUALIFIED_TECH_MEASUREMENT_SPEC_20261102.md"
+      ],
+      "contained_in": [
+        "evidence/adj-parts-bench-intake-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/click-cue-guards-20261102",
+      "sha": "6792617fa19c4c63e9c38f422b70915b2f767751",
+      "ahead": 218,
+      "behind": 157,
+      "subject": "ci: publish immutable click MIDI cues on isolated branch push",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1772,
+      "tip_files": [
+        ".github/workflows/click-hardware-cue-evidence.yml",
+        "scripts/seal_click_hardware_cues.py",
+        "tests/diagnostics/test_click_cue_evidence_workflow.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/cpu-phase-simd-engine-20261102",
+      "sha": "3a85d66aee90f8cfaee69d875ee21997b61ad940",
+      "ahead": 210,
+      "behind": 157,
+      "subject": "evidence(cpu): archive rejected Engine phase SIMD six-round qualification",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1780,
+      "tip_files": [
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/README.md",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-1/completed.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-1/metadata.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-1/results.csv",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-2/completed.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-2/metadata.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-2/results.csv",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-3/completed.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-3/metadata.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/after-3/results.csv",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-1/completed.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-1/metadata.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-1/results.csv",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-2/completed.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-2/metadata.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-2/results.csv",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-3/completed.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-3/metadata.json",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/raw/before-3/results.csv",
+        "docs/evidence/qualification-2026-11-02/phase-engine-simd-rejected/verify.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/cpu-wsc-four-lane-backend-20261102",
+      "sha": "9785f9e5d3d4290e450f12db9597bb211aecfa9f",
+      "ahead": 211,
+      "behind": 157,
+      "subject": "docs(cpu): record four-lane exact oracle and rejected performance gate",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1746,
+      "tip_files": [
+        "docs/evidence/wsc-four-lane-avx2-experiment-20261102.md"
+      ],
+      "contained_in": [
+        "experiment/cs80-wsc-denormal-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/cpu-wsc-lane-prereg-20261102",
+      "sha": "58108ba7f16aec002634908f3af20a36bac907a4",
+      "ahead": 205,
+      "behind": 157,
+      "subject": "test(cpu): preregister exact independent-lane WSC SIMD oracle",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1745,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/evidence/wsc-independent-lane-prereg-20261102.md",
+        "tests/WscIndependentLanePreregTests.cpp",
+        "tests/cpu/wsc-independent-lane-simd.json"
+      ],
+      "contained_in": [
+        "experiment/cpu-wsc-four-lane-backend-20261102",
+        "experiment/cs80-wsc-denormal-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/cs80-wsc-denormal-sara-20261102",
+      "sha": "b1c9569106af87dd18c98b132ee021981248d5e9",
+      "ahead": 213,
+      "behind": 157,
+      "subject": "experiment(cpu): qualify WSC AVX2 admission with host denormal modes",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1844,
+      "tip_files": [
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/README.md",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/cache-regression.log",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/candidate-input-sha256.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls-run.log",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/vector-work.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/vector-work.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/backend-positive/vector-work.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/cross-vector-lane/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/cross-vector-lane/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/cross-vector-lane/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/cross-vector-lane/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/cross-vector-lane/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/cross-vector-lane/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/disabled-backend/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/disabled-backend/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/disabled-backend/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/disabled-backend/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/disabled-backend/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/disabled-backend/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/vector-work.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/vector-work.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/forged-scalar-work/vector-work.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/old-denormal-guard/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/old-denormal-guard/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/old-denormal-guard/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/old-denormal-guard/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/old-denormal-guard/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/old-denormal-guard/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-cross_lane/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-cross_lane/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-cross_lane/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-cross_lane/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-cross_lane/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-cross_lane/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-event/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-event/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-event/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-event/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-event/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-event/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-fp/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-fp/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-fp/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-fp/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-fp/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-fp/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-mask/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-mask/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-mask/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-mask/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-mask/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/original-mask/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/scalar-positive/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/scalar-positive/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/scalar-positive/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/scalar-positive/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/scalar-positive/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/scalar-positive/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/skipped-vector-state/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/skipped-vector-state/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/skipped-vector-state/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/skipped-vector-state/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/skipped-vector-state/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/skipped-vector-state/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/summary.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/unmasked-x87/compile.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/unmasked-x87/compile.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/unmasked-x87/compile.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/unmasked-x87/run.command.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/unmasked-x87/run.stderr",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/controls/unmasked-x87/run.stdout",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/evidence-sha256.json",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/original-loop.log",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/physical-regression.log",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/regression-build-run.log",
+        "docs/evidence/qualification-2026-11-02/wsc-denormal-admission/run-regressions.sh",
+        "src/core/ReconstructedOscillator.h",
+        "tests/WscIndependentLanePreregTests.cpp",
+        "tests/cpu/check-wsc-vector-work.py",
+        "tests/cpu/run-wsc-denormal-negative-controls.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/engine-phase-simd-prereg-20261102",
+      "sha": "b92e9846ae399b2dd15e35cfea834a21a78e11d4",
+      "ahead": 208,
+      "behind": 157,
+      "subject": "test(cpu): preregister true Engine nonlinear phase SIMD dispatch",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1757,
+      "tip_files": [
+        "docs/evidence/qualification-2026-11-01/phase-engine-dispatch-prereg-20261102.md",
+        "tests/cpu/phase-engine-dispatch.json"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/host-curve-extreme-offset-20261102",
+      "sha": "d934868135cb2fae8d62b7d5492ee79e366ecbbf",
+      "ahead": 212,
+      "behind": 157,
+      "subject": "fix: widen host automation offset arithmetic before subtracting",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1738,
+      "tip_files": [
+        "src/plugin/HostAutomationBridge.h"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/oe2-source-topology-20261103",
+      "sha": "4812b82d1572797c3f6f2a5800c4501d2f2aa4df",
+      "ahead": 2,
+      "behind": 157,
+      "subject": "ci: exercise experimental OE2 topology checks",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 16,
+      "tip_files": [
+        ".github/workflows/oe2-topology-experiment.yml",
+        "CMakeLists.txt",
+        "cmake/RunOe2TopologyExperiment.cmake",
+        "docs/OE2_TOPOLOGY_CI.md"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "experiment/phase-lane-oracle-20261102",
+      "sha": "51cc6b237feda154142e58d293703b09bb6b4ee4",
+      "ahead": 205,
+      "behind": 157,
+      "subject": "test(cpu): preregister full nonlinear phase-lane exact oracle",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1745,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/evidence/qualification-2026-11-01/phase-full-lane-prereg.md",
+        "tests/PhaseLaneOracleTests.cpp",
+        "tests/cpu/phase-full-lane-batch.json"
+      ],
+      "contained_in": [
+        "experiment/engine-phase-simd-prereg-20261102",
+        "experiment/rejected-drift-sine-20261102",
+        "experiment/touch-idle-exact-oracle-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/rejected-drift-sine-20261102",
+      "sha": "a5cf41b165e92fa3fb415568812463a0a3c8c56d",
+      "ahead": 210,
+      "behind": 157,
+      "subject": "evidence(cpu): reject exact drift sine branch on six RTF rounds [skip ci]",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1778,
+      "tip_files": [
+        "artifacts/cpu-drift-sine-after-20261102-r1/completed.json",
+        "artifacts/cpu-drift-sine-after-20261102-r1/metadata.json",
+        "artifacts/cpu-drift-sine-after-20261102-r1/results.csv",
+        "artifacts/cpu-drift-sine-after-20261102-r2/completed.json",
+        "artifacts/cpu-drift-sine-after-20261102-r2/metadata.json",
+        "artifacts/cpu-drift-sine-after-20261102-r2/results.csv",
+        "artifacts/cpu-drift-sine-after-20261102-r3/completed.json",
+        "artifacts/cpu-drift-sine-after-20261102-r3/metadata.json",
+        "artifacts/cpu-drift-sine-after-20261102-r3/results.csv",
+        "docs/evidence/qualification-2026-11-01/drift-sine-rejected-20261102.md",
+        "tests/cpu/compare-drift-benchmark-rounds.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/rejected-wsc-fastpath-20261102",
+      "sha": "fe50198c0cfc01d30dbd5c3b05225e16efd32494",
+      "ahead": 202,
+      "behind": 157,
+      "subject": "docs(cpu): preserve six-round WSC timing and failed hard gates",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1761,
+      "tip_files": [
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/README.md",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r1/completed.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r1/metadata.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r1/results.csv",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r2/completed.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r2/metadata.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r2/results.csv",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r3/completed.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r3/metadata.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/after-r3/results.csv",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r1/completed.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r1/metadata.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r1/results.csv",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r2/completed.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r2/metadata.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r2/results.csv",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r3/completed.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r3/metadata.json",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-timing/before-r3/results.csv"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/ring-carrier-continuity-20261103",
+      "sha": "a5d71adc934ba0c50ed12be8aa481a2db17a9da8",
+      "ahead": 2,
+      "behind": 157,
+      "subject": "experiment: preserve source ring carrier phase",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 9,
+      "tip_files": [
+        "CMakeLists.txt",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "tests/RingCarrierContinuityTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "experiment/touch-idle-exact-oracle-20261102",
+      "sha": "da91b1a98582705ed40c4d4e399676a65ce40620",
+      "ahead": 206,
+      "behind": 157,
+      "subject": "test(cpu): freeze idle touch and engine global continuation",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1750,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/evidence/qualification-2026-11-01/touch-idle-exact-prereg.md",
+        "tests/TouchIdleExactOracleTests.cpp",
+        "tests/cpu/touch-idle-fixedpoint.json",
+        "tests/fixtures/touch_idle/TouchCircuitBefore.h",
+        "tests/fixtures/touch_idle/manifest.json"
+      ],
+      "contained_in": [
+        "experiment/engine-phase-simd-prereg-20261102",
+        "experiment/rejected-drift-sine-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/ui-readiness-async-click-20261102",
+      "sha": "dcb3ebb7609384152afac5ebf164e9acd78c0d54",
+      "ahead": 213,
+      "behind": 157,
+      "subject": "test: expose callback counts on readiness click failure",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1739,
+      "tip_files": [
+        "tests/UiReadinessTests.h"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "experiment/wsc-steady-path-20261101",
+      "sha": "5809a52805983716a4e8f566af044ad0437ea66b",
+      "ahead": 200,
+      "behind": 157,
+      "subject": "test(cpu): preregister exact-bit WSC scheduler oracle",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1742,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-oracle-results.md",
+        "docs/evidence/qualification-2026-11-01/wsc-steady-fastpath-prereg.md",
+        "tests/OscillatorFastPathOracleTests.cpp",
+        "tests/cpu/wsc-steady-fastpath.json",
+        "tests/reference/WscLoopOriginal.h"
+      ],
+      "contained_in": [
+        "audit/cs80-original-repeat-20261102",
+        "docs/cs80-public-source-scope-20261102",
+        "docs/full-audit-v2-source-lock-plan-20261102",
+        "docs/pr6-audit-status-accuracy-20261102",
+        "docs/qualification-status-20261102",
+        "evidence/bass-funky-event-zoom-20261102",
+        "evidence/clavichord-steal-zero-time-20261102",
+        "evidence/click-audition-ab-20261102",
+        "evidence/click-classifier-validity-20261102",
+        "evidence/full-engine-audit-20261102",
+        "evidence/m41-vca-click-path-20261102",
+        "experiment/cpu-phase-simd-engine-20261102",
+        "experiment/cpu-wsc-four-lane-backend-20261102",
+        "experiment/cpu-wsc-lane-prereg-20261102",
+        "experiment/cs80-wsc-denormal-sara-20261102",
+        "experiment/engine-phase-simd-prereg-20261102",
+        "experiment/phase-lane-oracle-20261102",
+        "experiment/rejected-drift-sine-20261102",
+        "experiment/rejected-wsc-fastpath-20261102",
+        "experiment/touch-idle-exact-oracle-20261102",
+        "finish/cs80-qualification-20261031",
+        "work/cs80-composed-default-audit-v1-sara-20261102",
+        "work/cs80-distribution-notices-sara-20261102",
+        "work/cs80-host-audit-v2-sara-20261102",
+        "work/cs80-host-compatibility-sara-20261102",
+        "work/cs80-reviewed-integration-sara-20261102",
+        "work/reaper-host-smoke-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "feat/close-cs80-handover-gaps-20261101",
+      "sha": "9d7716753c07132a797d413dbcb1a9b75ac80af7",
+      "ahead": 75,
+      "behind": 157,
+      "subject": "ci: re-pin circuit-engine audio V2 gate to memory/PANEL source connection",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 108,
+      "tip_files": [
+        ".github/workflows/dsp-measurements.yml"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "finish/cs80-handover-20261031",
+      "sha": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "ahead": 0,
+      "behind": 157,
+      "subject": "Merge pull request #5: plan completion and handover PDF [skip ci]",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "finish/cs80-qualification-20261031",
+      "sha": "9c62d7b8813a76ce178712c82da9604a1355b112",
+      "ahead": 206,
+      "behind": 157,
+      "subject": "test: replay all 61 full-bank source click failures with event-omission controls",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1746,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/evidence/CLICK_BANK_COUNTERFACTUAL_20261102.md",
+        "docs/evidence/click-bank-counterfactual-20261102.csv",
+        "tests/ClickBankCausalityTests.cpp"
+      ],
+      "contained_in": [
+        "audit/cs80-original-repeat-20261102",
+        "docs/cs80-public-source-scope-20261102",
+        "docs/pr6-audit-status-accuracy-20261102",
+        "evidence/bass-funky-event-zoom-20261102",
+        "evidence/clavichord-steal-zero-time-20261102",
+        "work/cs80-composed-default-audit-v1-sara-20261102",
+        "work/cs80-distribution-notices-sara-20261102",
+        "work/cs80-host-audit-v2-sara-20261102",
+        "work/cs80-host-compatibility-sara-20261102",
+        "work/cs80-reviewed-integration-sara-20261102",
+        "work/reaper-host-smoke-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "fix/cache-drive-controls-20261106",
+      "sha": "542674580a1dc9283359e39a1c01434c9ed1712a",
+      "ahead": 1,
+      "behind": 50,
+      "subject": "Cache unchanged modern Drive control laws",
+      "merge_base": "b5e0f1f271f0d189750233f7fde6c6cbf30b71d5",
+      "mergebase_changed_files": 4,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/DRIVE_CONTROL_CACHE.md",
+        "src/core/FxModels.h",
+        "tests/DriveControlCacheTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/cache-ensemble-rate-20261106",
+      "sha": "d7dd23adc94eaddc72da6128aaee95800b33945d",
+      "ahead": 1,
+      "behind": 43,
+      "subject": "Cache unchanged modern Ensemble rate increments",
+      "merge_base": "a53c1a8b196d494dedd9f0438be173c1b0ecd28d",
+      "mergebase_changed_files": 5,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/ENSEMBLE_RATE_CACHE.md",
+        "src/core/FxModels.h",
+        "tests/EnsembleFxBaseline.h",
+        "tests/EnsembleRateCacheTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/cache-filter-resonance-20261106",
+      "sha": "92ee3ec9d465089c710c100084fa7e4db723ba14",
+      "ahead": 0,
+      "behind": 48,
+      "subject": "Keep resonance cache within existing filter state",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/cache-tape-controls-20261106",
+      "sha": "cac8c5440a92da8512d880af34ad1a6f81780769",
+      "ahead": 1,
+      "behind": 50,
+      "subject": "Cache unchanged modern Tape echo control laws",
+      "merge_base": "b5e0f1f271f0d189750233f7fde6c6cbf30b71d5",
+      "mergebase_changed_files": 5,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/TAPE_ECHO_CONTROL_CACHE.md",
+        "src/core/FxModels.h",
+        "tests/TapeEchoControlCacheTests.cpp",
+        "tests/TapeEchoUncachedReference.h"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/cc121-pedal-rpn-reset-20261106",
+      "sha": "9d78a26030e63b59a228b6a3f519253815c4d3e9",
+      "ahead": 1,
+      "behind": 66,
+      "subject": "Fix CC121 sustain and parameter selection reset",
+      "merge_base": "f7d1b7550244ac7e341f6a118b695b9f800cbc07",
+      "mergebase_changed_files": 6,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/CONTROLLER_RESET.md",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "src/core/MpeZones.h",
+        "tests/ControllerResetTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/cc88-release-prefix",
+      "sha": "e6be6af841997390b3ae00c445c4625a10fa6309",
+      "ahead": 0,
+      "behind": 27,
+      "subject": "Consume CC88 velocity prefixes on channel note releases",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/ci-archive-binary-identity",
+      "sha": "a084c39152cd6f8aaadc473226650718bc428523",
+      "ahead": 0,
+      "behind": 20,
+      "subject": "fix(packaging): verify downloadable artifact binary identity",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/conventional-pitch-bend-range",
+      "sha": "ac27687fe324c7a2b4eec1d53d78cb41f1a9adfb",
+      "ahead": 0,
+      "behind": 60,
+      "subject": "Apply conventional pitch-bend range edits to held wheels",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/core-reliability-next-20261107",
+      "sha": "b585ae5e26492933132d2323e7acbb2a8a3f5d0f",
+      "ahead": 1,
+      "behind": 38,
+      "subject": "Apply live ring envelope timing without retriggering source policies",
+      "merge_base": "185e04c2c50989de33e7b01b446801e1bbf34f50",
+      "mergebase_changed_files": 6,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/LIVE_RING_TIMING.md",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "tests/LiveRingTimingTests.cpp",
+        "tests/diagnostics/LiveRingCompatibilityProbe.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/deb-architecture-guard",
+      "sha": "11d5b82a942e49eb43f60f49095dd53a251b79e2",
+      "ahead": 0,
+      "behind": 22,
+      "subject": "fix(packaging): reject mislabeled foreign Debian architectures",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/hermite-minimum-buffer-20261106",
+      "sha": "c110aacb426e2cf60741b82e8bd8e1a43419014a",
+      "ahead": 1,
+      "behind": 50,
+      "subject": "Guard Hermite delay reads for minimum buffer capacity",
+      "merge_base": "b5e0f1f271f0d189750233f7fde6c6cbf30b71d5",
+      "mergebase_changed_files": 3,
+      "tip_files": [
+        "docs/DELAY_LINE_HERMITE_BOUNDS.md",
+        "src/core/Dsp.h",
+        "tests/DelayLineTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/macos-installer-architectures",
+      "sha": "0bc1aa43fb62bab0f83292a1ce654668dc655d28",
+      "ahead": 0,
+      "behind": 29,
+      "subject": "Reject non-universal inputs before macOS installer staging",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/mono-mseg-dormant-onsets-20261106",
+      "sha": "62e118693f76f8036ffc81aea3484dd024fc6fa6",
+      "ahead": 1,
+      "behind": 50,
+      "subject": "Retain mono MSEG onsets while modulation routes are dormant",
+      "merge_base": "b5e0f1f271f0d189750233f7fde6c6cbf30b71d5",
+      "mergebase_changed_files": 5,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/MONO_MSEG_ROUTING.md",
+        "docs/STATUS.md",
+        "src/core/ModernLayer.h",
+        "tests/MonoMsegRoutingTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/mseg-coordinate-exponent-overflow",
+      "sha": "3c968e2ad043cb64515da72ba4dda04634ecdfe9",
+      "ahead": 1,
+      "behind": 19,
+      "subject": "fix: reject overflowing MSEG coordinate exponents before parsing",
+      "merge_base": "de856f719f1053f1adc333e30c7d438d25383f63",
+      "mergebase_changed_files": 2,
+      "tip_files": [
+        "src/plugin/MsegStateText.h",
+        "tests/MsegStateTextTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/poly-mseg-retrigger-rate-20261107",
+      "sha": "06fc9df0175522f7f365d174a2d1d41dc15955df",
+      "ahead": 1,
+      "behind": 43,
+      "subject": "Reset poly MSEG rate history on envelope retrigger",
+      "merge_base": "a53c1a8b196d494dedd9f0438be173c1b0ecd28d",
+      "mergebase_changed_files": 4,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/MSEG_RETRIGGER_RATE.md",
+        "src/core/ModernLayer.h",
+        "tests/MsegRetriggerRateTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/preset-state-safety-20261107",
+      "sha": "58e6070c5a750689aabf68108c0c2b5129bb1f3b",
+      "ahead": 2,
+      "behind": 38,
+      "subject": "Keep rounded preset preview release endpoints finite",
+      "merge_base": "185e04c2c50989de33e7b01b446801e1bbf34f50",
+      "mergebase_changed_files": 9,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/PRESET_PREVIEW_BOUNDARIES.md",
+        "src/plugin/PresetBrowser.cpp",
+        "src/plugin/PresetPreviewMath.h",
+        "tests/PresetPreviewMathTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/preset-trash-no-destructive-fallback",
+      "sha": "cb33f53e792da141244b62f2071e84b75a46cb50",
+      "ahead": 1,
+      "behind": 19,
+      "subject": "fix(presets): never permanently delete when trash fails",
+      "merge_base": "de856f719f1053f1adc333e30c7d438d25383f63",
+      "mergebase_changed_files": 2,
+      "tip_files": [
+        "scripts/test-preset-trash-safety.py",
+        "src/plugin/PresetBrowser.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/scala-frequency-domain-20261103",
+      "sha": "f0ae466191079c40f1290edc8eb5037e964fc3e8",
+      "ahead": 1,
+      "behind": 157,
+      "subject": "fix: reject unrepresentable Scala tuning frequencies",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 3,
+      "tip_files": [
+        "CMakeLists.txt",
+        "src/core/Tuning.h",
+        "tests/TuningFrequencyDomainTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/scala-kbm-session-20261103",
+      "sha": "1d860d1f332fcff5e427cd3612a53b30d080f356",
+      "ahead": 1,
+      "behind": 157,
+      "subject": "fix: retain Scala mapping imports across editor sessions",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 6,
+      "tip_files": [
+        "src/plugin/KeyboardTuningPage.cpp",
+        "src/plugin/KeyboardTuningPage.h",
+        "src/plugin/PluginProcessor.cpp",
+        "src/plugin/PluginProcessor.h",
+        "src/tools/ui_snapshot.cpp",
+        "tests/KeyboardTuningUiTests.h"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "fix/sparse-external-interpolation-20261106",
+      "sha": "49a4c04914a10efae76f335af8aa2d110dd9cdfc",
+      "ahead": 0,
+      "behind": 49,
+      "subject": "Skip zero FIR products in external modulation reconstruction",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "fix/tuning-input-validation-20261103",
+      "sha": "351ff242c38a11d1654198cfb35239a4d2a81b47",
+      "ahead": 1,
+      "behind": 157,
+      "subject": "fix: validate tuning inputs before applying changes",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 3,
+      "tip_files": [
+        "CMakeLists.txt",
+        "src/core/Tuning.h",
+        "tests/TuningRobustnessTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "freebuff/98848ef40b5d961a964f7ad8",
+      "sha": "97c29f93ecf13ca71f6f7d1811fd8bc10809a37e",
+      "ahead": 0,
+      "behind": 525,
+      "subject": "Check out the repository in the pluginval job",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "integration/adj-hp-mixer-evidence-20261102",
+      "sha": "b4c175f2b398566dcdf2c2e70adc6ffaeb94438a",
+      "ahead": 201,
+      "behind": 157,
+      "subject": "test(circuits): expose HP and LP service-probe model voltages",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1737,
+      "tip_files": [
+        "docs/evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md",
+        "tests/Ig00156NodalTests.cpp"
+      ],
+      "contained_in": [
+        "evidence/adj-parts-bench-intake-20261102",
+        "evidence/yamaha-adj-technician-measurements-20261102",
+        "integration/adj-hp-noise-loading-20261102",
+        "integration/adj-hp-vr7-vr8-sensitivity-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/adj-hp-noise-loading-20261102",
+      "sha": "56535703ba6ccdc3e08dfc904360cdb1bfb4bbb1",
+      "ahead": 203,
+      "behind": 157,
+      "subject": "test(circuits): probe NI termination and trace downstream CP3 loading",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1738,
+      "tip_files": [
+        "docs/IG00156_NODAL_MODEL.md",
+        "docs/evidence/continuation-2026-10-31/ADJ_NOISE_LOAD_PREREG_20261102.md",
+        "docs/evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md",
+        "tests/Ig00156NodalTests.cpp"
+      ],
+      "contained_in": [
+        "evidence/adj-parts-bench-intake-20261102",
+        "evidence/yamaha-adj-technician-measurements-20261102",
+        "integration/adj-hp-vr7-vr8-sensitivity-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/adj-hp-vr7-vr8-sensitivity-20261102",
+      "sha": "564d4f4ada5621e89d1909bdb1b7f2e01c5d12f9",
+      "ahead": 211,
+      "behind": 157,
+      "subject": "Report preregistered VR8 Q sensitivity and preserve ADJ miss",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1742,
+      "tip_files": [
+        "docs/IG00156_NODAL_MODEL.md",
+        "docs/evidence/continuation-2026-10-31/ADJ_VR8_SEQUENCE_PREREG_20261102.md",
+        "docs/evidence/continuation-2026-10-31/NATIVE_FILTER_EVIDENCE.md",
+        "tests/Ig00156NodalTests.cpp"
+      ],
+      "contained_in": [
+        "evidence/adj-parts-bench-intake-20261102",
+        "evidence/yamaha-adj-technician-measurements-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/au-initial-immediate-20261102",
+      "sha": "bebd100d33cdad9a4357082abc179477e616584b",
+      "ahead": 208,
+      "behind": 157,
+      "subject": "fix: keep AU immediate automation timing with malformed prior state",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1737,
+      "tip_files": [
+        "src/plugin/AuAutomationQueue.h"
+      ],
+      "contained_in": [
+        "experiment/host-curve-extreme-offset-20261102",
+        "experiment/ui-readiness-async-click-20261102",
+        "integration/mts-esp-windows-max-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/clean-tuning-audits-20261103",
+      "sha": "5c56e12af5c9c98322f6509ab6d805b63cf61c3b",
+      "ahead": 1,
+      "behind": 157,
+      "subject": "Integrate tuning fixes and source-audit diagnostics",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 18,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/EXPANDED_LIBRARY_PHRASE_AUDIT.md",
+        "docs/OE1_SPEED_ENDPOINT_DESIGN.md",
+        "docs/OE1_SPEED_SOURCE_CONFLICT.md",
+        "scripts/check_library_phrase_audit.py",
+        "src/core/Tuning.h",
+        "src/plugin/KeyboardTuningPage.cpp",
+        "src/plugin/KeyboardTuningPage.h",
+        "src/plugin/PluginProcessor.cpp",
+        "src/plugin/PluginProcessor.h",
+        "src/tools/library_phrase_audit.cpp",
+        "src/tools/ui_snapshot.cpp",
+        "tests/KeyboardTuningUiTests.h",
+        "tests/TuningFrequencyDomainTests.cpp",
+        "tests/TuningRobustnessTests.cpp",
+        "tests/diagnostics/Oe1SpeedEndpointProbe.cpp",
+        "tests/parity/tolerances-v2/library-phrase-v1.json",
+        "tests/test_library_phrase_audit.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "integration/host-automation-finite-20261102",
+      "sha": "6637537afa645fa8c22266b190a20145bdfcc27a",
+      "ahead": 206,
+      "behind": 157,
+      "subject": "fix: sanitize nonfinite host automation initial readback",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1737,
+      "tip_files": [
+        "src/plugin/HostAutomationBridge.h"
+      ],
+      "contained_in": [
+        "experiment/host-curve-extreme-offset-20261102",
+        "experiment/ui-readiness-async-click-20261102",
+        "integration/au-initial-immediate-20261102",
+        "integration/mts-esp-windows-max-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/mseg-correctness-20261107",
+      "sha": "e6a629264fd6f6b7f02f737bfd45ad11a6943842",
+      "ahead": 0,
+      "behind": 41,
+      "subject": "Match mixed MSEG oracle slot rounding on FMA targets",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "integration/mts-esp-safe-20261102",
+      "sha": "745f94a5021965d09b85dac11148753b2770548a",
+      "ahead": 202,
+      "behind": 157,
+      "subject": "fix: atomically reject unsafe MTS-ESP master tuning",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1737,
+      "tip_files": [
+        "src/plugin/MtsEspClient.cpp",
+        "tests/MtsEspShimTests.cpp"
+      ],
+      "contained_in": [
+        "experiment/host-curve-extreme-offset-20261102",
+        "experiment/ui-readiness-async-click-20261102",
+        "integration/au-initial-immediate-20261102",
+        "integration/host-automation-finite-20261102",
+        "integration/mts-esp-sysex-pair-20261102",
+        "integration/mts-esp-windows-max-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/mts-esp-sysex-pair-20261102",
+      "sha": "37d4fbc5b095471bb5fefb85c9ae3647dcc611e2",
+      "ahead": 204,
+      "behind": 157,
+      "subject": "fix: isolate each vendored MTS scale/octave detune pair",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1737,
+      "tip_files": [
+        "deps/mts-esp/Client/libMTSClient.cpp",
+        "deps/mts-esp/README.vendor.md"
+      ],
+      "contained_in": [
+        "experiment/host-curve-extreme-offset-20261102",
+        "experiment/ui-readiness-async-click-20261102",
+        "integration/au-initial-immediate-20261102",
+        "integration/host-automation-finite-20261102",
+        "integration/mts-esp-windows-max-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/mts-esp-windows-max-20261102",
+      "sha": "e3302c694bbfc591ea448a86c49520dc66b0feca",
+      "ahead": 210,
+      "behind": 157,
+      "subject": "fix: guard Windows max macro in MTS float bounds",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1738,
+      "tip_files": [
+        "src/plugin/MtsEspClient.cpp"
+      ],
+      "contained_in": [
+        "experiment/host-curve-extreme-offset-20261102",
+        "experiment/ui-readiness-async-click-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/numerical-release-gate-20261102",
+      "sha": "0e3322112b8b3d7e84d1b6ab2a6d1b4d0b92d830",
+      "ahead": 201,
+      "behind": 157,
+      "subject": "feat: fail closed on exact-source audio and CPU release evidence",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1741,
+      "tip_files": [
+        ".github/release-numerical-contract.json",
+        "docs/RELEASE_NUMERICAL_GATE_DRAFT.md",
+        "scripts/release_numerical_gate.py",
+        "tests/release/test_numerical_release_gate.py"
+      ],
+      "contained_in": [
+        "integration/release-entrypoint-preflight-20261102",
+        "integration/release-trusted-main-dispatch-20261102",
+        "integration/trusted-release-cpu-producer-20261102",
+        "test/numerical-audit-fixture-identity-20261102",
+        "test/numerical-gate-cpu-fixture-identity-20261102",
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102",
+        "work/manual-only-release-entrypoint-prereg-20261102",
+        "work/release-numeric-source-lock-prereg-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/release-entrypoint-preflight-20261102",
+      "sha": "9c6c01cd04fc31687d7328b9e809a059e8779e08",
+      "ahead": 207,
+      "behind": 157,
+      "subject": "fix(release): reject renamed non-screenshot ancestry",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1747,
+      "tip_files": [
+        "docs/RELEASE_NUMERICAL_GATE_DRAFT.md",
+        "scripts/dispatch-reviewed-release.cjs"
+      ],
+      "contained_in": [
+        "integration/release-trusted-main-dispatch-20261102",
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102",
+        "work/manual-only-release-entrypoint-prereg-20261102",
+        "work/release-numeric-source-lock-prereg-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/release-trusted-main-dispatch-20261102",
+      "sha": "431a4d84735ca5048f8a02577ec23972e6f95c11",
+      "ahead": 213,
+      "behind": 157,
+      "subject": "fix(release): require owner and immutable request on all entrypoints",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1749,
+      "tip_files": [
+        ".github/workflows/release.yml",
+        "docs/RELEASE_NUMERICAL_GATE_DRAFT.md",
+        "scripts/preflight-release-entrypoint.cjs",
+        "tests/release/release-entrypoint-preflight.test.cjs"
+      ],
+      "contained_in": [
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102",
+        "work/manual-only-release-entrypoint-prereg-20261102",
+        "work/release-numeric-source-lock-prereg-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "integration/reviewed-parallel-fixes-20261105",
+      "sha": "f7d1b7550244ac7e341f6a118b695b9f800cbc07",
+      "ahead": 0,
+      "behind": 66,
+      "subject": "Integrate reviewed parallel fixes",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "integration/trusted-release-cpu-producer-20261102",
+      "sha": "e0d71051c4a94047b5dfefbc16a467a43a8fcea2",
+      "ahead": 203,
+      "behind": 157,
+      "subject": "feat: require fourth numerical workflow and collect trusted six-round CPU evidence",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1744,
+      "tip_files": [
+        ".github/release-numerical-contract.json",
+        "docs/RELEASE_NUMERICAL_GATE_DRAFT.md",
+        "scripts/dispatch-reviewed-release.cjs",
+        "scripts/release_numerical_gate.py",
+        "scripts/run_release_cpu_producer.py",
+        "tests/release/test_numerical_release_gate.py",
+        "tests/release/test_release_cpu_producer.py"
+      ],
+      "contained_in": [
+        "integration/release-entrypoint-preflight-20261102",
+        "integration/release-trusted-main-dispatch-20261102",
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102",
+        "work/manual-only-release-entrypoint-prereg-20261102",
+        "work/release-numeric-source-lock-prereg-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "investigate/adj-hp-loading-guard-20261102",
+      "sha": "058224fad844b8f51e211e3b820c0ae2d8f25762",
+      "ahead": 219,
+      "behind": 157,
+      "subject": "test(circuits): make malformed JSON guard portable",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1750,
+      "tip_files": [
+        "tests/bench/test_adj_intake.py"
+      ],
+      "contained_in": [
+        "work/cs80-circuit-evidence-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "main",
+      "sha": "1b146c45226e14f46af9d62e6e3bd0ced4476213",
+      "ahead": 0,
+      "behind": 0,
+      "subject": "docs: refresh verified panel screenshots [skip ci]",
+      "classification": "baseline"
+    },
+    {
+      "branch": "perf/pra-held-coefficients-20261106",
+      "sha": "54a08a6f18ee587a3a177910f0e43f9f3cf77a61",
+      "ahead": 1,
+      "behind": 43,
+      "subject": "Reuse held PRA coefficients with exact core regressions",
+      "merge_base": "a53c1a8b196d494dedd9f0438be173c1b0ecd28d",
+      "mergebase_changed_files": 6,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/PRA_COEFFICIENT_CACHE.md",
+        "src/core/PraWahCircuit.h",
+        "tests/PraCoefficientCacheTests.cpp",
+        "tests/PraCoefficientEngineProbe.cpp",
+        "tests/PraWahCircuitBaseline.h"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "test/expanded-library-phrase-20261103",
+      "sha": "bdde45e84f558e79bacadf78737aacfad0126f91",
+      "ahead": 2,
+      "behind": 15,
+      "subject": "Reconcile opt-in library diagnostics with current main",
+      "merge_base": "1f7b4079ed20d38fc4ab7f9a872e4ee9b58938c8",
+      "mergebase_changed_files": 5,
+      "tip_files": [],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "test/numerical-audit-fixture-identity-20261102",
+      "sha": "c55a87577619c9822faa59b206960b5c19fc23b5",
+      "ahead": 204,
+      "behind": 157,
+      "subject": "test: pin release gate to frozen five-suite CSV schemas",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1742,
+      "tip_files": [
+        ".github/release-numerical-contract.json",
+        "scripts/release_numerical_gate.py",
+        "tests/release/test_numerical_release_gate.py"
+      ],
+      "contained_in": [
+        "test/numerical-gate-cpu-fixture-identity-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "test/numerical-gate-cpu-fixture-identity-20261102",
+      "sha": "5116fd8066517dc506bf17e4245edd848417336f",
+      "ahead": 206,
+      "behind": 157,
+      "subject": "fix: pin release CPU gate to frozen benchmark case and receipt identities",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1742,
+      "tip_files": [
+        "docs/RELEASE_NUMERICAL_GATE_DRAFT.md",
+        "scripts/release_numerical_gate.py",
+        "tests/release/test_numerical_release_gate.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "test/oe1-speed-endpoint-20261103",
+      "sha": "1544d717109b53fc631cdbc2212eb15774a6fa13",
+      "ahead": 0,
+      "behind": 155,
+      "subject": "docs: preserve OE1 speed wiring source conflict",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "ui-preview",
+      "sha": "e5bb9e508cdf45a620301fe4f38cca577ef5bb10",
+      "ahead": 1,
+      "behind": 535,
+      "subject": "preview screenshots for b14f0a7afb5a18c16db747efd7142c96be90c7c2",
+      "merge_base": null,
+      "mergebase_changed_files": 69,
+      "tip_files": [],
+      "contained_in": [],
+      "classification": "image-only-orphan"
+    },
+    {
+      "branch": "ui-wip",
+      "sha": "b69d6aa4603e7e64f4b18260c7fa7b303e7d89b1",
+      "ahead": 0,
+      "behind": 317,
+      "subject": "State the CI status of the merge head honestly in the README",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/benchmark-preflight",
+      "sha": "f351306aeb1c43aa37d500f2d232ef23385767b6",
+      "ahead": 0,
+      "behind": 13,
+      "subject": "fix: reject empty benchmark selections before writing artifacts",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/bounded-offline-render",
+      "sha": "34ee308670af0f332871d2ce792f72e46071312a",
+      "ahead": 2,
+      "behind": 11,
+      "subject": "test: handle unavailable address-space limits in isolated launcher",
+      "merge_base": "ab07eeb51e2705b8f53d86fcf8c3958cad971472",
+      "mergebase_changed_files": 2,
+      "tip_files": [
+        "tests/test_render_cli.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/ci-bundle-reparse-guard",
+      "sha": "640e24f5dea3117eaccc5524307bb0c569160228",
+      "ahead": 1,
+      "behind": 14,
+      "subject": "Reject Windows reparse points before CI bundle traversal",
+      "merge_base": "36581cabdb69a377ae9b02f05349371e088cdb52",
+      "mergebase_changed_files": 4,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/CI_DISTRIBUTION_STATUS.md",
+        "scripts/package-ci-artifacts.py",
+        "scripts/test-package-binary-identity.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/cs80-circuit-evidence-sara-20261102",
+      "sha": "abb5bc4d181ad3b556e105c72ca41ef4f03eeb6a",
+      "ahead": 224,
+      "behind": 157,
+      "subject": "docs(circuits): verify published intake trees and clean rerun",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1759,
+      "tip_files": [
+        "docs/evidence/continuation-2026-10-31/ADJ_INTAKE_DC_COUPLING_RECEIPT_20261102.md",
+        "docs/evidence/continuation-2026-10-31/dc-acquisition-20261102/dc-acquisition-remote9462.log",
+        "docs/evidence/continuation-2026-10-31/dc-acquisition-20261102/manifest.json"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-composed-default-audit-v1-sara-20261102",
+      "sha": "598bbcce2293cba569e4bc42041a1bebcdee6421",
+      "ahead": 283,
+      "behind": 157,
+      "subject": "docs(audit): independently replay composed-default capture guards",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 2264,
+      "tip_files": [
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/README.md",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/SHA256.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/actionlint.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/archive-review.py",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/abbreviated_capture/.github/workflows/full-engine-audit-composed-default-v1.yml",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/abbreviated_capture/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/abbreviated_capture/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_completion_upload/.github/workflows/full-engine-audit-composed-default-v1.yml",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_completion_upload/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_completion_upload/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_fixture_trigger/.github/workflows/full-engine-audit-composed-default-v1.yml",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_fixture_trigger/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_fixture_trigger/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_mutation_execution/.github/workflows/full-engine-audit-composed-default-v1.yml",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_mutation_execution/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/missing_mutation_execution/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/positive/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/positive/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/qualification.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/restored/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/restored/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/reused_host_marker/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/reused_host_marker/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/reused_host_marker/scripts/full_engine_audit_gate_composed_default_v1.py",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/runtime_error_control/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/runtime_error_control/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/runtime_error_control/tests/release/test_full_engine_audit_composed_default_v1_registration.py",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/wrong_branch/.github/workflows/full-engine-audit-composed-default-v1.yml",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/wrong_branch/result.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/namespace-mutants/wrong_branch/run.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/preflight.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/review.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/self-test.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/ancestry.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/build_input.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/completion_digest.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/completion_validation.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/head_source_tree.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/ignored_source.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/original_contract_values.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/original_file_bytes.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/physical_source_ancestor.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/physical_source_bytes.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/physical_source_leaf.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/physical_source_mode.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/qualification.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/request_bytes.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/restored.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/runtime_error_control.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/source_commit_tree.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/source_worktree.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/source-mutants/unmodified.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review-no-archive-suffix.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review-no-archive-suffix.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review-v1-record-shape.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review-v1-record-shape.py",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review-v2-count-assumption.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review-v2-count-assumption.py",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review.json",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/static-review.py",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/test_full_engine_audit_composed_default_v1.py.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/test_full_engine_audit_composed_default_v1_completion_faults.py.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/test_full_engine_audit_composed_default_v1_lock_timeout.py.log",
+        "docs/evidence/audit-composed-default-v1-20261102/independent-6184dbb/test_full_engine_audit_composed_default_v1_registration.py.log"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-distribution-notices-sara-20261102",
+      "sha": "3c1ea4e0f1e41de2125915bdda81fdbfe8abfa0e",
+      "ahead": 261,
+      "behind": 157,
+      "subject": "test: normalize synthetic fixture before CRLF mutation",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 2362,
+      "tip_files": [
+        "tests/release/test_distribution_source_identity.py"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-handover-completion-20261101",
+      "sha": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "ahead": 0,
+      "behind": 157,
+      "subject": "Merge pull request #5: plan completion and handover PDF [skip ci]",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/cs80-host-audit-v2-sara-20261102",
+      "sha": "78da91e72c8780c0d60dfd079a88d6af2ea3b592",
+      "ahead": 226,
+      "behind": 157,
+      "subject": "test(audit): preregister host-only V2 source and unchanged audit contract",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1788,
+      "tip_files": [
+        ".github/full-engine-audit-request-v2.json",
+        "docs/evidence/qualification-2026-11-01/HOST_ONLY_AUDIT_V2_REGISTRATION_20261102.md",
+        "tests/release/full-engine-audit-v2-contract.json"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-host-compatibility-sara-20261102",
+      "sha": "b91bb20978fff2c2bc0f5a3a745b939b1b23a6d3",
+      "ahead": 225,
+      "behind": 157,
+      "subject": "docs: record independent host review and comment-only source identity",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1785,
+      "tip_files": [
+        "docs/evidence/HOST_REQUALIFICATION_20261102.md"
+      ],
+      "contained_in": [
+        "work/cs80-composed-default-audit-v1-sara-20261102",
+        "work/cs80-host-audit-v2-sara-20261102",
+        "work/cs80-reviewed-integration-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-integrity-ci-sara-20261102",
+      "sha": "d3e71774dfaf9c5072e13667f407f923e701f3b3",
+      "ahead": 231,
+      "behind": 157,
+      "subject": "docs(ci): retain numerical-integrity red green and workflow evidence",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1789,
+      "tip_files": [
+        "docs/evidence/numerical-integrity-ci-20261102/README.md",
+        "docs/evidence/numerical-integrity-ci-20261102/actionlint-before.log",
+        "docs/evidence/numerical-integrity-ci-20261102/actionlint-final.log",
+        "docs/evidence/numerical-integrity-ci-20261102/before-immediate.log",
+        "docs/evidence/numerical-integrity-ci-20261102/final-v2-sequence.log",
+        "docs/evidence/numerical-integrity-ci-20261102/full-python-v2.log",
+        "docs/evidence/numerical-integrity-ci-20261102/materialization.log",
+        "docs/evidence/numerical-integrity-ci-20261102/mutations-v2.log",
+        "docs/evidence/numerical-integrity-ci-20261102/node-guard-before.log",
+        "docs/evidence/numerical-integrity-ci-20261102/node-v2-summary.json",
+        "docs/evidence/numerical-integrity-ci-20261102/node-v2.tap",
+        "docs/evidence/numerical-integrity-ci-20261102/receipt.json"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-numerical-integrity-sara-20261102",
+      "sha": "81217d5ef3b8a5cc7360ab7edc61e78862490cb8",
+      "ahead": 227,
+      "behind": 157,
+      "subject": "fix(release): verify every raw alias nonfinite sentinel",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1770,
+      "tip_files": [
+        "scripts/release_numerical_gate.py"
+      ],
+      "contained_in": [
+        "work/cs80-integrity-ci-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/cs80-reviewed-integration-sara-20261102",
+      "sha": "2ff1b5bb0315ab29dba8f221558981cd9e4ffc2a",
+      "ahead": 315,
+      "behind": 157,
+      "subject": "test: adopt exact independently reviewed native panel golden images",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 2357,
+      "tip_files": [
+        "tests/golden/main-1120x700.png",
+        "tests/golden/main-1600x1000.png"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/deb-runtime-dependencies",
+      "sha": "635ad6e8f24978040b02a4a10e646d7e3c592ce4",
+      "ahead": 0,
+      "behind": 36,
+      "subject": "fix(packaging): validate ELF types and VST3 payload containment",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/debian-artifact-qualification",
+      "sha": "27f7166ccc4f451b3d1af5a961df3c125cbc3561",
+      "ahead": 0,
+      "behind": 31,
+      "subject": "fix(ci): verify native libc6 loader diversion before accepting its warning",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/debian-staging-umask",
+      "sha": "9ce36bb4b288785677122d616dbbf3f082674c2d",
+      "ahead": 1,
+      "behind": 14,
+      "subject": "fix: make Debian packaging independent of caller umask",
+      "merge_base": "36581cabdb69a377ae9b02f05349371e088cdb52",
+      "mergebase_changed_files": 2,
+      "tip_files": [
+        "installer/linux/make-deb.sh",
+        "scripts/test-deb-runtime-dependencies.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/delay-minimum-hermite",
+      "sha": "c191d2258c71dd66d72d4bf4b7d91457eeda1bb2",
+      "ahead": 0,
+      "behind": 13,
+      "subject": "fix: keep minimum Hermite delay clamp bounds ordered",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/macos-installer-fixture-notices",
+      "sha": "5de33483985d52426438573b4f68cb4d4b3ae3af",
+      "ahead": 0,
+      "behind": 13,
+      "subject": "test: restore macOS installer fixture notice inputs",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/macos-staging-umask",
+      "sha": "47b4c9547d9dc307d5c1d72f8c3b34b5318eb8ed",
+      "ahead": 1,
+      "behind": 13,
+      "subject": "Normalize generated macOS installer staging permissions",
+      "merge_base": "5de33483985d52426438573b4f68cb4d4b3ae3af",
+      "mergebase_changed_files": 2,
+      "tip_files": [
+        "installer/macos/make-pkg.sh",
+        "scripts/test-macos-installer-architectures.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/manual-only-release-entrypoint-prereg-20261102",
+      "sha": "c09eb09aee1043b0ff905a90818f750bbb1c3ae7",
+      "ahead": 218,
+      "behind": 157,
+      "subject": "docs(release): record manual-only candidate and unresolved gates",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1749,
+      "tip_files": [
+        "docs/release/RELEASE_QUALIFICATION.md"
+      ],
+      "contained_in": [
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102",
+        "work/release-numeric-source-lock-prereg-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/matrix-route-lifecycle-tests",
+      "sha": "c36e6d33eb7cd8367fb116437f1698dd0744daaa",
+      "ahead": 2,
+      "behind": 14,
+      "subject": "Make matrix test oracle rounding explicit across compilers",
+      "merge_base": "36581cabdb69a377ae9b02f05349371e088cdb52",
+      "mergebase_changed_files": 1,
+      "tip_files": [
+        "tests/ModMatrixTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/memory-port-reference",
+      "sha": "6097590309286ce545d6ec2ae089b4385f0367bf",
+      "ahead": 3,
+      "behind": 12,
+      "subject": "Document sourced 10k memory sliders and gate model consistency",
+      "merge_base": "36a148a38a5bf259340000b0187c023165d71dc8",
+      "mergebase_changed_files": 9,
+      "tip_files": [
+        "docs/analysis/memory-panel-ports.md",
+        "docs/analysis/memory-pot-source.md",
+        "tests/MemoryPanelTests.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/offline-bundle-verifier",
+      "sha": "053b598391589345332e41d4fb0dc059004924ca",
+      "ahead": 1,
+      "behind": 14,
+      "subject": "Add offline CI bundle integrity and inventory verification",
+      "merge_base": "36581cabdb69a377ae9b02f05349371e088cdb52",
+      "mergebase_changed_files": 4,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/INSTALL_AND_QUICKSTART.md",
+        "scripts/test-verify-ci-bundle.py",
+        "scripts/verify-ci-bundle.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/offline-event-timing",
+      "sha": "ab07eeb51e2705b8f53d86fcf8c3958cad971472",
+      "ahead": 0,
+      "behind": 11,
+      "subject": "fix: report buffered WAV flush failures",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/packaging-notices-current",
+      "sha": "f45f6426bbbe5eeb4cfb4f21c52ebb6231ccff58",
+      "ahead": 0,
+      "behind": 16,
+      "subject": "Merge current main and adapt inert notice fixtures to binary identity gates",
+      "classification": "merged-ancestor"
+    },
+    {
+      "branch": "work/pitch-pow-memo",
+      "sha": "425e7c2f3891e132c9d925beac44735ee3afb482",
+      "ahead": 1,
+      "behind": 14,
+      "subject": "Memoize repeated oscillator pitch powers with modulation bypass",
+      "merge_base": "36581cabdb69a377ae9b02f05349371e088cdb52",
+      "mergebase_changed_files": 11,
+      "tip_files": [
+        "CMakeLists.txt",
+        "artifacts/pitch-pow-memo/active-pitch-lfo.json",
+        "artifacts/pitch-pow-memo/held-pitch.json",
+        "artifacts/pitch-pow-memo/other-policies.json",
+        "docs/PITCH_POW_MEMO.md",
+        "src/core/Dsp.h",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "tests/PitchPowMemoTests.cpp",
+        "tests/diagnostics/PitchPowBenchmark.cpp",
+        "tests/diagnostics/PitchPowEngineProbe.cpp"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/reaper-host-smoke-sara-20261102",
+      "sha": "dcbb7e119db1a1859c200192d8b7a0492b08e884",
+      "ahead": 219,
+      "behind": 157,
+      "subject": "test: retain independent REAPER tour-click source and artifact review",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1789,
+      "tip_files": [
+        "docs/evidence/reaper-tour-dismissal-20261102/independent-review.json"
+      ],
+      "contained_in": [],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/release-numeric-source-lock-prereg-20261102",
+      "sha": "7145e36cc010d0739f2b1b5f740bcef3d643b3ef",
+      "ahead": 222,
+      "behind": 157,
+      "subject": "fix(release): recover source-locked same-job numerical qualification workflow",
+      "merge_base": "db24a47170610f81236e8829ef5536af69dfc94d",
+      "mergebase_changed_files": 1754,
+      "tip_files": [
+        ".github/workflows/release-numerical-qualification.yml",
+        "docs/RELEASE_NUMERICAL_GATE_DRAFT.md",
+        "scripts/prepare_release_numerical_request.py"
+      ],
+      "contained_in": [
+        "work/cs80-integrity-ci-sara-20261102",
+        "work/cs80-numerical-integrity-sara-20261102"
+      ],
+      "classification": "broad-history"
+    },
+    {
+      "branch": "work/vca-zero-ei",
+      "sha": "b14f0a7afb5a18c16db747efd7142c96be90c7c2",
+      "ahead": 2,
+      "behind": 4,
+      "subject": "Merge main and preserve VCA and event-timeline test registrations",
+      "merge_base": "b5e9d7ebf369ddebdafbe819b6e5f368af9b0c2c",
+      "mergebase_changed_files": 9,
+      "tip_files": [],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    },
+    {
+      "branch": "work/windows-installer-preflight",
+      "sha": "68a5024c06a5a5e7d699b0772dfc8959822d88db",
+      "ahead": 1,
+      "behind": 14,
+      "subject": "Preflight Windows installer payloads before wildcard packaging",
+      "merge_base": "36581cabdb69a377ae9b02f05349371e088cdb52",
+      "mergebase_changed_files": 5,
+      "tip_files": [
+        "CMakeLists.txt",
+        "docs/release/RELEASE_QUALIFICATION.md",
+        "installer/windows/cs80-reference.iss",
+        "scripts/check-windows-installer.py",
+        "scripts/test-windows-installer-preflight.py"
+      ],
+      "contained_in": [],
+      "classification": "narrow-topic"
+    }
+  ]
+}
