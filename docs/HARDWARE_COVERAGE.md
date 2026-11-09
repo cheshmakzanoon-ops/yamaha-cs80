@@ -8,6 +8,15 @@ Audit date: 2026-10-28. Code baseline: `56127be8ddfc04a09fc2a2ee18f342e1fe56330e
 
 ## Verified increment and source correction
 
+**2026-11-09, voice dispersion and envelope timing (software rows; rows 32-34,
+37-40):** live Source Performance dispersion now connects the changing per-card
+R*C ratios to the envelope timing ports at the same internal sample, rather
+than waiting for the next host control frame. The existing capacitor state and
+declared RC law are retained. Legacy and PURE CS-80 policies are unchanged.
+This is a software timing correction, not new evidence for the analog model;
+see [LIVE_DISPERSION_TIMING.md](LIVE_DISPERSION_TIMING.md) for the pre-fix source
+pin, independent recurrence and exact block-partition regression.
+
 **2026-10-31, circuit engine filters (rows 26–29):** Source Performance/Isolation
 now run each HP/LP stage as the IG00156 model in
 [IG00156_REALTIME_MODEL.md](IG00156_REALTIME_MODEL.md): in-loop OTA saturation

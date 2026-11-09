@@ -188,18 +188,39 @@ void Engine::setNonRealtime(bool offline) noexcept
         reset();
 }
 
-void Engine::refreshToleranceRatios() noexcept
+bool Engine::refreshToleranceRatios() noexcept
 {
     // Plan 2.5: identity outside the Source Performance policy (Legacy keeps its
     // own trims; PURE CS-80 masks VOICE DISPERSION to zero anyway).
     const bool circuitVariation = global.renderPolicy == RenderPolicy::sourcePerformance;
     const float scale = circuitVariation ? global.voiceDispersion / tolerance::kDefaultDispersion : 0.0f;
     if (scale == toleranceScaleApplied)
-        return;
+        return false;
     for (auto& voice : voices)
         for (auto& rank : voice.ranks)
             rank.tol = tolerance::ratios(rank.tolDraws, scale);
     toleranceScaleApplied = scale;
+    return true;
+}
+
+void Engine::refreshEnvelopeTimes() noexcept
+{
+    const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
+    for (auto& voice : voices)
+        for (int ch = 0; ch < kNumRanks; ++ch)
+        {
+            auto& rank = voice.ranks[ch];
+            const auto& settings = rankSettings[ch];
+            if (voice.active)
+                rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale * rank.tol.ampEnvTime),
+                                   std::max(0.001f, settings.vD * global.envTimeScale * rank.tol.ampEnvTime),
+                                   std::max({settings.vR, global.keyRelease, performanceRelease})
+                                       * global.envTimeScale * rank.tol.ampEnvTime);
+            rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale * rank.tol.filterEnvTime),
+                               std::max(0.001f, settings.fD * global.envTimeScale * rank.tol.filterEnvTime),
+                               std::max({settings.fR, global.keyRelease, performanceRelease})
+                                   * global.envTimeScale * rank.tol.filterEnvTime);
+        }
 }
 
 void Engine::prepareWarmColdOscillators() noexcept
@@ -474,7 +495,6 @@ void Engine::applyParams(const ParamValues& values)
     // inference; see docs/ENVELOPE_TARGET_TRANSITION_REVIEW.md.
     if (usesSourceModels(global.renderPolicy))
     {
-        const float performanceRelease = global.sustainGate ? global.masterSustain * 10.0f : 0.0f;
         for (auto& voice : voices)
         {
             for (int ch = 0; ch < kNumRanks; ++ch)
@@ -488,17 +508,9 @@ void Engine::applyParams(const ParamValues& values)
                 const auto& settings = rankSettings[ch];
                 if (voice.active) rank.aenv.setSustain(settings.vS);
                 rank.fenv.setLevels(filterInitialTarget(ch), filterAttackTarget(ch));
-                if (voice.active)
-                    rank.aenv.setTimes(std::max(0.001f, settings.vA * global.envTimeScale * rank.tol.ampEnvTime),
-                                       std::max(0.001f, settings.vD * global.envTimeScale * rank.tol.ampEnvTime),
-                                       std::max({settings.vR, global.keyRelease, performanceRelease})
-                                           * global.envTimeScale * rank.tol.ampEnvTime);
-                rank.fenv.setTimes(std::max(0.001f, settings.fA * global.envTimeScale * rank.tol.filterEnvTime),
-                                   std::max(0.001f, settings.fD * global.envTimeScale * rank.tol.filterEnvTime),
-                                   std::max({settings.fR, global.keyRelease, performanceRelease})
-                                       * global.envTimeScale * rank.tol.filterEnvTime);
             }
         }
+        refreshEnvelopeTimes();
     }
 
     refreshKeyboardContour();
@@ -2136,7 +2148,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // not, so the drift's time base never depends on activity. Legacy and PURE
     // CS-80 keep identity ratios (scale 0) and do not clock the drift.
     {
-        refreshToleranceRatios();
+        // Dispersion is smoothed per internal sample. Its envelope R*C ratios
+        // must reach the live timing ports on the same sample, not wait for a
+        // repeated host control frame (which made timing depend on block size).
+        // setTimes preserves capacitor value, stage and elapsed time. Static
+        // ratios take no extra path; Legacy and PURE keep their identity ratios.
+        if (refreshToleranceRatios())
+            refreshEnvelopeTimes();
         if (global.renderPolicy == RenderPolicy::sourcePerformance)
             for (auto& voice : voices)
                 for (auto& rank : voice.ranks)

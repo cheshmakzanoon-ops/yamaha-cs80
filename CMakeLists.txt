@@ -71,6 +71,14 @@ if (CS80_BUILD_TESTS)
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_ui_smoke_environment.py)
         set_tests_properties(cs80_ui_environment_tests PROPERTIES TIMEOUT 45)
     endif()
+    if (UNIX AND CMAKE_CXX_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
+        # Compile the actual delete handler against inert doubles with UBSan.
+        # No native trash service, GUI, or user preset is touched by this test.
+        add_test(NAME cs80_preset_trash_safety_tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-preset-trash-safety.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_preset_trash_safety_tests PROPERTIES TIMEOUT 60)
+    endif()
     if (UNIX)
         # Synthetic shell/tool fixtures only; no native installer or product runs.
         add_test(NAME cs80_macos_installer_architecture_tests
@@ -378,6 +386,16 @@ if (CS80_BUILD_TESTS)
         CS80_TUNING_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/data/tuning")
     add_test(NAME cs80_tuning_midi_tests COMMAND cs80_tuning_midi_tests)
     set_tests_properties(cs80_tuning_midi_tests PROPERTIES TIMEOUT 120)
+
+    # Admission-boundary regressions, without a processor or GUI. Preserve
+    # the existing Engine-level MTS suite above as a separate contract.
+    add_executable(cs80_tuning_frequency_domain_tests tests/TuningFrequencyDomainTests.cpp)
+    target_include_directories(cs80_tuning_frequency_domain_tests PRIVATE src)
+    add_test(NAME cs80_tuning_frequency_domain_tests COMMAND cs80_tuning_frequency_domain_tests)
+    add_executable(cs80_tuning_robustness_tests tests/TuningRobustnessTests.cpp)
+    target_include_directories(cs80_tuning_robustness_tests PRIVATE src)
+    add_test(NAME cs80_tuning_robustness_tests COMMAND cs80_tuning_robustness_tests)
+    set_tests_properties(cs80_tuning_frequency_domain_tests cs80_tuning_robustness_tests PROPERTIES TIMEOUT 30)
 
     # Build the shipping MTS-ESP adapter in core-only CI as well as plugin builds.
     add_executable(cs80_mts_esp_native_tests tests/MtsEspNativeTests.cpp src/plugin/MtsEspClient.cpp)
@@ -744,6 +762,11 @@ if (CS80_BUILD_PLUGIN)
     target_link_libraries(CS80Snapshots PRIVATE cs80_panel_fonts)
     # [ws7-panel] Golden images of the main view (tests/PanelEditorTests.h; refresh with CS80_REFRESH_GOLDENS=1).
     target_compile_definitions(CS80Snapshots PRIVATE CS80_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
+
+    # Real processor/FIFO ownership tests without constructing an editor or
+    # native peer. The existing full UI smoke test remains independent.
+    add_test(NAME cs80_keyboard_handoff_host_tests COMMAND CS80Snapshots --keyboard-handoff-tests)
+    set_tests_properties(cs80_keyboard_handoff_host_tests PROPERTIES TIMEOUT 120)
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix

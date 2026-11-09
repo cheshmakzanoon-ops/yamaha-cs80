@@ -76,3 +76,12 @@ token even when the incoming token is invalid. Exact token matching, refused
 onset behavior and active host-alias exclusion remain unchanged. A compile-time
 1,024-byte maximum prevents silently reintroducing a full MIDI-key ownership
 matrix. No audio allocation, lock, retry loop or stack-limit increase is added.
+
+## Subsequent sixteen-voice extension
+
+The [sixteen-voice UI ownership correction](../SIXTEEN_VOICE_UI_OWNERSHIP.md)
+extends the two physical-slot arrays to sixteen entries so the optional second
+instrument is included. Storage is 1,024 bytes on the same 64-bit ABI and still
+meets the original compile-time bound. The historical eight-slot measurements
+and Windows diagnostic uncertainty above are unchanged; they are not new
+compiler-frame or runtime measurements of the extended implementation.

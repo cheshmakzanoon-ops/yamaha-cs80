@@ -42,6 +42,11 @@ default 0.35 is the declared distribution, 0 gives identical cards, 1 is about
 2.9 times wider (an unaligned or aged unit). Pan dispersion keeps its existing
 law.
 
+Live VOICE DISPERSION changes update the envelope timing ports on the same
+internal sample as the smoothed card ratios, without resetting the capacitor
+state or envelope stage. This avoids host-block-dependent attack, decay and
+release timing. See [the correction and regression evidence](LIVE_DISPERSION_TIMING.md).
+
 ## Thermal drift
 
 Each channel's exponential converter wanders as 1/f noise: six first-order

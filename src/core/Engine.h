@@ -534,7 +534,8 @@ private:
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
     void wakeIdleVoice(Voice& voice) noexcept;
     void prepareWarmColdOscillators() noexcept;
-    void refreshToleranceRatios() noexcept;
+    bool refreshToleranceRatios() noexcept;
+    void refreshEnvelopeTimes() noexcept;
     // Circuit engine: recompute every channel's KBC contour contributions.
     void refreshKeyboardContour() noexcept;
     bool freeRunningVoices() const noexcept { return usesSourceModels(global.renderPolicy); }

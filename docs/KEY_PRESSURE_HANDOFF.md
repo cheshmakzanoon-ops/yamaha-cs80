@@ -31,9 +31,11 @@ tie priority. Zero-frame callbacks consume the same ordered events.
 ## Audio ownership
 
 FIFO acceptance is not proof a voice was allocated. Before/after snapshots of
-the existing eight voice diagnostics bind an onset only to a newly held slot;
-eight occupied held/pedal-held slots can refuse a ninth onset without assigning
-ownership. Host allocations clear any old UI origin in reused slots. Current
+both instruments' voice diagnostics bind an onset only to a newly held slot.
+The eight original slots and, in sixteen-voice mode, eight extension slots
+retain separate origins. A full held/pedal-held allocation can refuse another
+onset without assigning ownership. Inactive extension slots are empty in the
+snapshot. Host allocations clear any old UI origin in reused slots. Current
 gesture ownership is revoked by UI release/restrike, host onset/release,
 CC120/123, resets and both arp edges. Attribution is cleared throughout effective
 arp operation because its autonomous slot reuse cannot be attributed to a
@@ -43,7 +45,10 @@ Pressure requires the exact current token and its still-active, held slot. Every
 active same-pitch slot must have a matching UI origin, including release tails.
 This retains fresh UI restrike pressure beside prior UI tails without allowing
 an old gesture to pressure the new strike. Engine pitch grouping can still apply
-the fresh pressure to those old UI tails; no host MIDI or DSP law is changed.
+the fresh pressure to old UI tails on the addressed channel; no host MIDI or
+DSP law is changed. Positive-channel MIDI pressure is channel-scoped even when
+MPE is disabled. Cross-channel host aliases still conservatively suppress UI
+pressure; that broader UI policy is intentionally unchanged.
 
 After a host same-pitch event or an arp edge, old attribution stays revoked even
 when the collision later ends; lift and make a fresh UI strike to capture a new
@@ -72,3 +77,11 @@ consumer filter must fail. `KeyboardPressureHostTests.h` exercises processor
 dispatch, resets/modes, host collisions, arp restrictions, overflow and actual
 editor mouse-down/cross-key drag. Native host/UI execution is required in CI;
 local syntax checks alone are not a runtime pass.
+
+The [sixteen-voice handoff correction](SIXTEEN_VOICE_UI_OWNERSHIP.md) extends
+that same contract to the second instrument, including its accepted UI note
+releases. Attribution remains bounded to 1,024 bytes, with no MIDI-key matrix,
+audio-thread allocation or DSP-law change. The focused
+`CS80Snapshots --keyboard-handoff-tests` mode runs the processor/FIFO tests
+without constructing an editor or native peer; the full UI smoke gate still
+runs independently.

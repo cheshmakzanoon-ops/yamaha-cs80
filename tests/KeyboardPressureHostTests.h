@@ -1,6 +1,7 @@
 #pragma once
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
+#include "SixteenVoiceKeyboardHostTests.h"
 
 #include <chrono>
 #include <cstdio>
@@ -459,6 +460,7 @@ void testKeyboardPressureOwnershipHost(Check check)
         check(!host.setKeyPressureFromUI(flood, 0.9f), "overflow acknowledgment does not revive an old gesture");
     }
     testKeyboardScannerReleaseOwnershipHost(check);
+    testSixteenVoiceKeyboardOwnershipHost(check);
 }
 
 template <class Check>

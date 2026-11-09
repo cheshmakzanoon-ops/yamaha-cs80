@@ -177,6 +177,148 @@ void testEngine(const ws1::Tolerances& tol)
     }
 }
 
+bool sameEnvelope(const Engine::RankEnvelopeState& a, const Engine::RankEnvelopeState& b)
+{
+    return a.amplitude.stage == b.amplitude.stage && a.amplitude.value == b.amplitude.value
+        && a.amplitude.elapsed == b.amplitude.elapsed && a.filter.stage == b.filter.stage
+        && a.filter.value == b.filter.value && a.filter.elapsed == b.filter.elapsed;
+}
+
+void testLiveDispersionTiming()
+{
+    // A single dispersion edit is one event. Re-sending the unchanged control
+    // frame at host block boundaries must not be what connects the changing
+    // R*C ratios to the envelope timing ports. Exercise all moving stages,
+    // both ranks and two independent cards, including an HQ internal rate.
+    struct Setup { double rate; float quality; };
+    for (const auto setup : { Setup { 44100.0, 1.0f }, Setup { 48000.0, 1.0f },
+                              Setup { 96000.0, 1.0f }, Setup { 48000.0, 2.0f } })
+        for (int policy : { 0, 1, 2 }) // Legacy, Source Performance, PURE CS-80
+            for (int phase : { 0, 1, 2 }) // attack, decay, release
+            {
+                ParamValues p;
+                p[P_sourcePerformance] = policy == 1 ? 1.0f : 0.0f;
+                p[P_parityMode] = policy == 2 ? 1.0f : 0.0f;
+                p[P_oversampling] = setup.quality;
+                p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = 0.0f;
+                p[P_masterSustain] = p[P_keyRelease] = p[P_sustainMode] = 0.0f;
+                for (int rank = 0; rank < 2; ++rank)
+                {
+                    p[chParam(rank, CP_vA)] = p[chParam(rank, CP_fA)] = phase == 0 ? 1.0f : 0.001f;
+                    p[chParam(rank, CP_vD)] = p[chParam(rank, CP_fD)] = 2.0f;
+                    p[chParam(rank, CP_vR)] = p[chParam(rank, CP_fR)] = 2.0f;
+                    p[chParam(rank, CP_vS)] = 0.25f;
+                    p[chParam(rank, CP_fIl)] = 0.2f;
+                    p[chParam(rank, CP_fAl)] = 0.8f;
+                }
+                Engine whole, split;
+                const int warmFrames = (int) (setup.rate * 0.02);
+                const int frames = (int) (setup.rate * 0.02) + 17;
+                std::vector<float> a((size_t) std::max(warmFrames, frames) * 2), b(a.size());
+                for (Engine* e : { &whole, &split })
+                {
+                    e->setParams(p);
+                    e->prepare(setup.rate);
+                    e->noteOn(60, 0.8f);
+                    e->noteOn(67, 0.7f);
+                    e->render(a.data(), warmFrames);
+                    if (phase == 2) { e->noteOff(60); e->noteOff(67); }
+                }
+                const auto expectedAmp = phase == 0 ? Adsr::Stage::Attack
+                    : phase == 1 ? Adsr::Stage::Decay : Adsr::Stage::Release;
+                const auto expectedFilter = phase == 0 ? FilterEnv::Stage::Attack
+                    : phase == 1 ? FilterEnv::Stage::Decay : FilterEnv::Stage::Release;
+                check(whole.getRankEnvelopeState(0, 0).amplitude.stage == expectedAmp
+                          && whole.getRankEnvelopeState(0, 0).filter.stage == expectedFilter,
+                      "live dispersion fixture reaches its intended envelope stage");
+
+                for (float amount : { 0.35f, 1.0f, 0.0f })
+                {
+                    std::array<Engine::RankEnvelopeState, 4> before;
+                    for (int voice = 0; voice < 2; ++voice)
+                        for (int rank = 0; rank < 2; ++rank)
+                            before[(size_t) (2 * voice + rank)] = whole.getRankEnvelopeState(voice, rank);
+                    p[P_voiceDispersion] = amount;
+                    whole.setParams(p);
+                    split.setParams(p);
+                    for (int voice = 0; voice < 2; ++voice)
+                        for (int rank = 0; rank < 2; ++rank)
+                            check(sameEnvelope(before[(size_t) (2 * voice + rank)], whole.getRankEnvelopeState(voice, rank)),
+                                  "dispersion event preserves envelope value, stage and elapsed time");
+                    whole.render(a.data(), frames);
+                    for (int offset = 0; offset < frames; offset += 31)
+                    {
+                        split.setParams(p);
+                        split.render(b.data() + 2 * offset, std::min(31, frames - offset));
+                    }
+                    check(std::equal(a.begin(), a.begin() + 2 * frames, b.begin()),
+                          "live dispersion audio is bit-identical across block sizes and repeated frames");
+                    for (int voice = 0; voice < 2; ++voice)
+                        for (int rank = 0; rank < 2; ++rank)
+                            check(sameEnvelope(whole.getRankEnvelopeState(voice, rank), split.getRankEnvelopeState(voice, rank)),
+                                  "live dispersion envelope trajectories are independent of host blocks");
+                }
+            }
+}
+
+void testLiveDispersionTimingLaw()
+{
+    // Independent attack recurrence: smoothed dispersion -> per-card R*C ->
+    // RC coefficient. This prevents a frozen timing ratio from satisfying
+    // the partition test by merely ignoring live dispersion everywhere.
+    ParamValues p;
+    p[P_sourcePerformance] = 1.0f;
+    p[P_voiceDispersion] = p[P_drift] = p[P_analogNoise] = 0.0f;
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        p[chParam(rank, CP_vA)] = p[chParam(rank, CP_fA)] = 1.0f;
+        p[chParam(rank, CP_fIl)] = 0.0f;
+        p[chParam(rank, CP_fAl)] = 0.5f;
+    }
+    Engine e;
+    e.setParams(p);
+    e.prepare(48000.0);
+    e.noteOn(60, 0.8f);
+    constexpr int frames = 960;
+    std::vector<float> audio(frames * 2);
+    e.render(audio.data(), frames);
+    std::array<double, 2> amp {}, filter {};
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        const auto state = e.getRankEnvelopeState(0, rank);
+        amp[(size_t) rank] = state.amplitude.value;
+        filter[(size_t) rank] = state.filter.value;
+    }
+    p[P_voiceDispersion] = 1.0f;
+    e.setParams(p);
+    e.render(audio.data(), frames);
+    const double rate = e.getInternalSampleRate();
+    const double k = -std::expm1(-1.0 / (0.005 * rate));
+    double dispersion = 0.0;
+    for (int sample = 0; sample < frames * e.getOversamplingFactor(); ++sample)
+    {
+        dispersion += k * (1.0 - dispersion);
+        const float scale = (float) dispersion / tolerance::kDefaultDispersion;
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const auto d = tolerance::drawCard(rank);
+            const float ampTime = (float) std::pow((1.0 + d.ampEnvR) * (1.0 + d.ampEnvC), scale);
+            const float filterTime = (float) std::pow((1.0 + d.filterEnvR) * (1.0 + d.filterEnvC), scale);
+            amp[(size_t) rank] = 1.5 + (amp[(size_t) rank] - 1.5) * std::exp(-std::log(3.0) / (ampTime * rate));
+            filter[(size_t) rank] = 2.25 + (filter[(size_t) rank] - 2.25) * std::exp(-std::log(3.0) / (filterTime * rate));
+        }
+    }
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        const auto state = e.getRankEnvelopeState(0, rank);
+        // Diagnostic start values are float, while the engine accumulates in double.
+        check(std::abs(state.amplitude.value - amp[(size_t) rank]) < 2.0e-7,
+              "live amplitude attack uses the current smoothed R*C ratio");
+        check(std::abs(state.filter.value - filter[(size_t) rank]) < 2.0e-7,
+              "live filter attack uses the current smoothed R*C ratio");
+    }
+}
+
 void testDrift(const ws1::Tolerances& tol)
 {
     // 1/f slope of the warm process.
@@ -298,6 +440,8 @@ int main(int argc, char** argv)
     testDraws(tol);
     testMapping(tol);
     testEngine(tol);
+    testLiveDispersionTiming();
+    testLiveDispersionTimingLaw();
     testDrift(tol);
     testWornUnit(tol);
     std::printf("Tolerance and drift: %d checks, %d failures\n", checks, failures);

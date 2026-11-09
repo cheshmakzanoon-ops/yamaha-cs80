@@ -1974,6 +1974,15 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--keyboard-handoff-tests") == 0)
+    {
+        // Processor/FIFO integration only. This does not create an editor or
+        // a native peer and is not a substitute for the full UI smoke gate.
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::testKeyboardPressureOwnershipHost(check);
+        std::printf("Keyboard handoff host tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--teardown-probe") == 0)
     {
         // Phase 7 validator diagnosis (docs/VALIDATOR_DIAGNOSTICS.md): the life cycle a host gives a

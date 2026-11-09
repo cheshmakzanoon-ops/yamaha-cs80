@@ -7,7 +7,9 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-08. Latest merged implementation checkpoint: `1f7b4079ed20d38fc4ab7f9a872e4ee9b58938c8` (#70, package notices), following the #87/#88 architecture/binary identity gates. Its post-merge build passed five of six jobs and failed Linux GUI validation; the cause is unknown. The native downloads and screenshots still use the earlier verified `0996a15af334f9dcfd63ed8c1d574a22b6804f00` checkpoint. Screenshot-only publication: `430c9e04d74dc9975fc6ddf4dd49621ef1cae952`. Do not equate current source with the published binary/rendering source.
+Last updated: 2026-11-09. Integration source `18301b5` contains sixteen-voice UI ownership (`b4af7e2`, channel-scoped aftertouch regression correction `54d4622`), tuning admission safety (`18a5b07`), and live dispersion envelope timing (`62d5e9a`, cost scope `497be84`). These follow distribution verification/installer preflight base `a6569a079e4c8f40975ba041e34e513abe0560b8` and include screenshot-only publication `0831c4599fb0910c6c3baa6db5222789d9923fbb`. Local regression evidence is scoped in the linked feature documents; completed CI for this later integration is not claimed.
+
+At the November 9, 00:43 UTC check, the exact `a6569a0` build and DSP workflows were incomplete; its screenshot run passed. The earlier `47aad3b` checkpoint passed five of six build jobs but failed Linux GUI-under-Xvfb validation. No later passing subset establishes its cause or erases that failure. Native downloads still use the earlier verified `0996a15af334f9dcfd63ed8c1d574a22b6804f00` source. The current screenshots render `a6569a0`, not that download source or the later integration. A passing screenshot run is not release qualification.
 
 ## Changes since the October 31 integration
 
@@ -17,6 +19,18 @@ handover PDF remain dated evidence, not current-head measurements.
 
 | Area | Current state | Source / scope |
 | --- | --- | --- |
+| Sixteen-voice UI ownership | Accepted extension notes retain release and gesture-pressure ownership; conservative alias exclusion spans both instruments | `b4af7e2`, `54d4622`; [scope and regressions](SIXTEEN_VOICE_UI_OWNERSHIP.md). Meter remains primary-only; no source-targeted host/UI note-off expansion. |
+| Tuning admission | Bounds KBM integers before narrowing, validates nominal float-frequency construction and rejects reserved MTS bits before publication | `18a5b07`; [focused tests and exclusions](TUNING_ADMISSION_SAFETY.md). No audible-frequency clamp or Scala/KBM editor-lifetime change. |
+| Live dispersion envelope timing | Source Performance envelope timing follows smoothed ratios per internal sample, independently of host block partitioning | `62d5e9a`, `497be84`; [regressions and moving-control cost](LIVE_DISPERSION_TIMING.md). Moving performances intentionally change; no whole-instrument CPU qualification. |
+| Distribution verification and preflight | Offline bundle inventory/integrity verifier; Windows payload preflight and reparse-point rejection; macOS/Debian staging permissions independent of caller umask | `a6569a0`, `a83acd5` (#104), `c55c216` (#101); [installation and verification](INSTALL_AND_QUICKSTART.md), [qualification scope](release/RELEASE_QUALIFICATION.md). No refreshed downloads or native installation claim. |
+| MSEG coordinate import | Rejects overflowing coordinate exponents before JUCE numeric conversion | `ead4d25` ([PR #89](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/89)); malformed-input guard, not a new MSEG synthesis law. |
+| Preset trash safety | Removes the explicit permanent-delete fallback after a failed trash attempt and reports the failure | `7d42188` ([PR #90](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/90)); inert handler checks do not qualify native OS trash services or guarantee recoverability on every volume. Exact-source CI scope is recorded below. |
+| Loaded memory-panel reference | Adds offline loaded-port linearisation and programmer-control identity tests; no production audio wiring | `ebe9182` ([PR #103](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/103)); [reference and limits](analysis/memory-panel-ports.md). Exact-source CI scope is recorded below. |
+| Zero-EI VCA fast path | Avoids `exp2` only for signed-zero exponential drive; nonzero inputs keep the original path | `91bc86b` ([PR #91](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/91)); [focused exact-output and bounded timing evidence](IG00151_ZERO_EI.md), not whole-instrument CPU target completion. Exact-source CI scope is recorded below. |
+| Offline render timing and validation | Demo events dispatch at their exact sample frames; invalid rate/duration/output arguments are rejected and buffered write failures are reported | `be6eb16` ([PR #97](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/97)); offline renderer only, not host-automation expansion. |
+| Benchmark preflight | Rejects malformed/unsupported filters and empty case selections before creating output artifacts | `36a148a` ([PR #98](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/98)); not a fresh CPU scorecard or target-completion claim. |
+| Minimum Hermite delay | Keeps clamp bounds ordered for the supported four-sample minimum buffer | `b5e9d7e` ([PR #99](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/99)); separate from the earlier rounded-wrap correction. |
+| macOS installer fixtures | Restores required notice inputs and registers success-path architecture fixtures with CTest | `47aad3b` ([PR #102](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/102)); inert fixture coverage, not native universal installation, signing or notarization. |
 | Package notices | Native archives and Windows/macOS/Linux packaging recipes include the embedded Barlow font licence/source notice and MTS-ESP licence | `1f7b407` ([PR #70](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/70)); not a retroactive update to historical artifacts or full licence/release qualification. |
 | Binary architecture guards | Native archive gate checks ELF/PE/Mach-O identity and architecture; Debian installer rejects mismatched architecture | `41db04b` ([PR #87](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/87)), `de856f7` ([PR #88](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/88)); not runtime/loadability qualification. |
 | CC88 release prefix | Note Off consumes only its channel's pending prefix, preventing it from changing the next unprefixed strike; positive Note On arithmetic is unchanged and release velocity is not synthesized | `0996a15` ([PR #86](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/86)); [scope and focused evidence](CC88_RELEASE_PREFIX.md). Processor integration was source-reviewed, not runtime-tested in the focused audit. |
@@ -33,7 +47,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
 | OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
-| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots of the retained download checkpoint | LFO preview fix `ae3958d`; screenshot source `0996a15`, run [42381017512](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42381017512), committed `430c9e0`; [provenance](screenshots/provenance.json) |
+| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots, now newer than the retained download checkpoint | LFO preview fix `ae3958d`; screenshot source `a6569a0`, run [42540498223](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42540498223), committed `0831c45`; [provenance](screenshots/provenance.json) |
 
 The optimization and MSEG reports retain draft-stage qualification notes as
 historical evidence. Those changes are now merged; the post-merge status below
@@ -68,7 +82,68 @@ that earlier stage; the verified result above is current.
 
 ### Post-merge CI and download checkpoints
 
-Current implementation checkpoint `1f7b407` was merged from reviewed head
+The latest checked remote implementation base is `a6569a0`; the later local
+integration is not covered by its workflows. Exact-source results checked on
+November 9 at 00:43 UTC:
+
+| Workflow | Result at check | Scope |
+| --- | --- | --- |
+| [Build 42540498214](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42540498214) | Incomplete | Linux, Windows and Intel macOS jobs pending; Apple Silicon build finished and tests were running. No complete native/validator qualification. |
+| [DSP 42540498181](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42540498181) | Incomplete | Numerical measurements, synthetic comparison, circuit V1/audio V2 compatibility and default-off raw audio passed; sanitizers still running. |
+| [Screenshots 42540498223](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42540498223) | Passed | Actual-editor capture and publication; source `a6569a0`, screenshot-only descendant `0831c45`. |
+
+The earlier `7d42188` (#90) exact-source
+[build 42539522163](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539522163)
+was canceled: all four native jobs canceled and dependent validators skipped.
+Its [screenshots 42539522087](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539522087)
+were also canceled. These outcomes are incomplete qualification, not successful
+gates or evidence of a product defect.
+
+The reviewed #90 head `cb33f53e792da141244b62f2071e84b75a46cb50` passed its
+[PR build 42413160141](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42413160141),
+but its [push build 42413149467](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42413149467)
+failed Linux headless validation; the later Linux GUI checks were skipped. All
+four native jobs and Windows validation passed. The independent inert-handler
+UBSan check passed 23 checks; the same harness against the pre-fix main handler
+failed five checks, including the permanent-delete call and false success after
+trash failure. This verifies handler control flow, not actual OS trash services.
+The fix removes the application's explicit fallback only, not native trash
+behavior on unsupported filesystems/volumes, and does not guarantee universal
+recoverability. Neither the focused test nor a passing PR run erases the failed
+push gate or qualifies the merged source.
+
+The preceding `ebe9182` (#103, offline memory reference)
+[build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539352090),
+[DSP](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539352044) and
+[screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539352197),
+and `91bc86b` (#91, zero-EI VCA fast path)
+[build](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539258668),
+[DSP](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539258711) and
+[screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42539258559)
+remain separately scoped. At the November 9 check, #103's build and screenshot
+jobs were canceled; four DSP jobs passed but sanitizers were canceled. #91's
+build was still incomplete (Linux and Apple Silicon native jobs passed; Windows,
+Intel macOS and dependent validation had not completed); its screenshot job was
+canceled, and its DSP had three passed jobs plus canceled raw-audio/sanitizer
+jobs. No complete pass is inferred. The focused VCA and offline memory-reference
+evidence does not substitute for these workflows. The memory model remains
+offline, not a shipping audio path.
+
+The preceding implementation checkpoint `47aad3b` has exact-source results:
+
+| Workflow | Result | Scope |
+| --- | --- | --- |
+| [Build 42516112281](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42516112281) | **Failed** | All four native build/test/package jobs and Windows validation passed. [Linux validation job 128846901563](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42516112281/job/128846901563) failed GUI-under-Xvfb; headless and fixed seed `0x2da72db` passed. The diagnostic GDB step also failed. This is verified job/step status, not a root-cause finding. |
+| [DSP 42516112209](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42516112209) | Passed | All five jobs: numerical measurements, synthetic-reference comparison, circuit V1/audio V2 compatibility, default-off raw audio and sanitizers. No hardware-measured or real-DAW qualification is inferred. |
+| [Screenshots 42516112410](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42516112410) | Passed | Actual-editor capture and publication; source `47aad3b`, screenshot-only descendant `1b146c4`. |
+
+No fully green current-source result is claimed. The incomplete `a6569a0` runs
+do not qualify the later integration, and neither the historical passing DSP/
+screenshot workflows nor other build jobs erase the `47aad3b` Linux validator
+failure. The four README download links remain deliberately at `0996a15`; no
+artifacts from a failed or incomplete newer build replace them here.
+
+The earlier package-notice checkpoint `1f7b407` was merged from reviewed head
 `f45f6426bbbe5eeb4cfb4f21c52ebb6231ccff58`, which passed all four pre-merge runs:
 [PR build 42441612078](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42441612078),
 [push build 42441609396](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42441609396),
@@ -99,10 +174,15 @@ Package inspection does not verify code signatures or notarization. Automated
 native CI coverage is not DAW or release qualification; no new installer release
 was run.
 
-The 68 documentation screenshots also come from `0996a15`, published in
-screenshot-only commit `430c9e0`. All 68 hashes match their manifest and the
-recorded rendering run passed. Their source matches the downloadable native
-bundles, not the later screenshot-publication or documentation commits.
+The 68 current documentation screenshots come from `a6569a0`, published in
+screenshot-only commit `0831c45`. On November 9, all 68 image hashes were checked
+against [SHA256SUMS](screenshots/SHA256SUMS), and
+[provenance.json](screenshots/provenance.json) matched the successful rendering
+run `42540498223`. They replace the preceding `47aad3b` captures published in
+`1b146c4` and the earlier `0996a15` set published in `430c9e0`. They are neither
+captures of the retained native downloads nor of the later ownership/tuning/
+live-dispersion integration. No capture set establishes sound or release
+qualification.
 
 The preceding #85 integration `58ed29e`
 [build 42373292449](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42373292449)
@@ -348,18 +428,22 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - Intermittent Linux pluginval exit 139 after SUCCESS: code review and a memcheck
   teardown probe found no fault in project code; root cause not established
   ([VALIDATOR_DIAGNOSTICS.md](VALIDATOR_DIAGNOSTICS.md)).
-- CPU and idle targets remain open. The resonance cache and sparse external
-  interpolation optimizations are merged, but their focused measurements do not
-  replace a new full scorecard for the merged source.
-- Native four-platform CI passes at `0996a15`, including Apple Silicon.
-  Actual DAW sessions and release qualification remain separate; earlier Linux
-  failures and the canceled ARM job remain in the historical CI record above.
+- CPU and idle targets remain open. The resonance cache, sparse external
+  interpolation and zero-EI VCA optimizations are merged, but their focused
+  measurements do not replace a new full scorecard for the merged source.
+- The retained download source `0996a15` passed four-platform native CI,
+  including Apple Silicon. The later `47aad3b` build passed its four native jobs
+  but failed Linux GUI validation. At the dated check, `a6569a0` build/DSP
+  qualification remained incomplete and did not cover the later integration.
+  Actual DAW sessions and release qualification remain separate; no passing
+  subset erases the failed workflow.
 - Nodal filter top-octave small-signal accuracy at 2x/4x internal; ADJ p11 HP point.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
 - MTS-ESP now includes the [pinned 0BSD client](../src/vendor/mts-esp/README.md)
   for channel-independent live-master queries. External-master DAW qualification
   and per-channel master tables remain open.
-- 16-voice mode meter and pressure ownership cover the first engine only.
+- The 16-voice active-voice meter covers the first engine only. UI note/pressure
+  ownership now covers both instruments ([scope and regressions](SIXTEEN_VOICE_UI_OWNERSHIP.md)).
 - Memory-panel electrical model not wired into audio; 25 tone-tab cells remain
   hypotheses; tremolo/chorus both-off/both-on states need an engine parameter.
 - Context menu and MIDI learn for switches, combo boxes and lid miniatures;

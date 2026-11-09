@@ -957,10 +957,17 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         applyHostAutomationAt(position, true);
     };
     size_t uiIndex = 0;
+    using VoiceSnapshot = std::array<cs80::Engine::VoiceInfo,
+                                     cs80::KeyboardPressureOwnership::maximumVoices>;
     auto voiceSnapshot = [&]
     {
-        std::array<cs80::Engine::VoiceInfo, 8> voices;
+        VoiceSnapshot voices {};
         for (int i = 0; i < 8; ++i) voices[(size_t) i] = engine.getVoiceInfo(i);
+        // A UI onset can be accepted by either instrument. Its release and
+        // pressure proof must see that same physical slot, and host pitch
+        // aliases in either instrument must suppress unsafe UI pressure.
+        if (extensionActive)
+            for (int i = 0; i < 8; ++i) voices[(size_t) i + 8] = extensionEngine->getVoiceInfo(i);
         return voices;
     };
     auto uiPosition = [&]
@@ -1029,7 +1036,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             continue;
         }
         const auto message = metadata.getMessage();
-        std::array<cs80::Engine::VoiceInfo, 8> before;
+        VoiceSnapshot before {};
         const bool deferredHostNote = message.isNoteOn() && engine.hasDeferredNoteTiming();
         const bool allocatingHostNote = message.isNoteOn() && !pressureArpOn && !deferredHostNote;
         if (allocatingHostNote) before = voiceSnapshot();

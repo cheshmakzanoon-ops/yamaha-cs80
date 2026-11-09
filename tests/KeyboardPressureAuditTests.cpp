@@ -115,8 +115,8 @@ void testOwnership(){
     check(!owner.allows(b,v),"clear revokes ALL origins, not only current gesture table");
 }
 void testEightSlotBound(){
-    static_assert(sizeof(Ownership)<=16*sizeof(Token));
-    check(sizeof(Ownership)<=1024,"owner storage is bounded by eight circuits rather than MIDI keyspace");
+    static_assert(sizeof(Ownership)<=32*sizeof(Token));
+    check(sizeof(Ownership)<=1024,"owner storage is bounded by sixteen circuits rather than MIDI keyspace");
     cs80::KeyboardEventQueue<16> queue;Ownership owner;Snapshot voices{};
     std::array<Token,8> tokens{};
     for(int i=0;i<8;++i){const auto before=voices;tokens[i]=onset(queue,i+1,60,static_cast<unsigned>(i+1));
@@ -142,9 +142,37 @@ void testConsumerAllocationBoundary(){
     countAllocations=false;
     check(n==2&&allowed,"consumer fixture exercised publication/attribution paths");check(allocations.load()==0,"audited consumer/drain/reset/helper paths make no ordinary C++ allocation");
 }
+void testExtendedSlots(){
+    cs80::KeyboardEventQueue<32> queue;
+    Ownership owner;
+    std::array<Voice,16> voices{};
+    std::array<Token,16> tokens{};
+    for(int i=0;i<16;++i){
+        const auto before=voices;
+        tokens[i]=onset(queue,i+1,48+i,static_cast<unsigned>(i+1));
+        voices[i]={true,true,false,i+1,48+i};
+        check(owner.allocated(before,voices,tokens[i],i+1,48+i),"all sixteen physical slots retain accepted-onset/release attribution");
+        check(owner.allows(tokens[i],voices),"each primary and extension slot owns its pressure");
+    }
+    owner.noteOff(16,63);
+    check(!owner.allows(tokens[15],voices)&&owner.allows(tokens[0],voices),"extension release revokes only its own current gesture");
+    auto aliased=voices;
+    aliased[15]={true,true,false,16,48};
+    check(!owner.allows(tokens[0],aliased),"a host-origin pitch alias in extension blocks primary UI pressure");
+    aliased=voices;
+    aliased[0]={true,false,true,1,56};
+    check(!owner.allows(tokens[8],aliased),"a primary host/pedal alias blocks extension UI pressure");
+    // Host reuse of the last extension slot must erase its old UI origin.
+    voices[15].held=false;
+    auto before=voices;
+    voices[15]={true,true,false,16,63};
+    check(owner.allocated(before,voices,{},16,63)&&!owner.allows(tokens[15],voices),"host allocation revokes extension slot origin");
+    owner.clear();
+    for(const auto& token:tokens)check(!owner.allows(token,voices),"reset clears both instruments' origins");
+}
 } // namespace
 void* operator new(std::size_t n){return allocate(n);}void* operator new[](std::size_t n){return allocate(n);}
 void operator delete(void* p) noexcept{std::free(p);}void operator delete[](void* p) noexcept{std::free(p);}
 void operator delete(void* p,std::size_t) noexcept{std::free(p);}void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
-int main(){testPublicationAndBoundaries();testCapture();testOwnership();testEightSlotBound();testConsumerAllocationBoundary();
+int main(){testPublicationAndBoundaries();testCapture();testOwnership();testEightSlotBound();testConsumerAllocationBoundary();testExtendedSlots();
     std::printf("Keyboard pressure independent audit: %d checks, %d failures\n",checks,failures);return failures?1:0;}
