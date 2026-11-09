@@ -30,6 +30,7 @@ ALLOWED_HOSTS = {"api.github.com", "github.com", "release-assets.githubuserconte
                  "objects.githubusercontent.com"}
 TRANSIENT = 10
 FATAL = 11
+API_FORBIDDEN = 12
 
 
 def official_url(url):
@@ -79,6 +80,11 @@ def transfer(route, target, opener=None):
             data = response.read(EXPECTED_SIZE + 1)
             host = urllib.parse.urlsplit(response.geturl()).hostname
     except urllib.error.HTTPError as error:
+        # A public asset's API route can be refused while its canonical release
+        # route remains available. This is route fallback, not proof of a rate
+        # limit or permission to retry a browser denial; all pins still apply.
+        if route == 0 and error.code == 403:
+            return API_FORBIDDEN, {"reason": "api_forbidden", "http_status": 403}
         retryable = error.code in (408, 429) or 500 <= error.code <= 599
         return (TRANSIENT if retryable else FATAL), {"reason": "http", "http_status": error.code}
     except urllib.error.URLError as error:
@@ -137,7 +143,7 @@ def download(output, evidence, runner=subprocess.run, sleep=time.sleep):
                     target.replace(output)
                     record.update(verified=True, actual_size=len(data), actual_sha256=digest)
                     return record
-                if status != TRANSIENT:
+                if status != TRANSIENT and not (route == 0 and status == API_FORBIDDEN):
                     raise RuntimeError("non-transient transfer failure; no retry")
                 if index + 1 < len(ROUTE_ORDER):
                     sleep(2 * (index + 1))

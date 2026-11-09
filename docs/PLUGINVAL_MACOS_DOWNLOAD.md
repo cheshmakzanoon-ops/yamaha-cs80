@@ -54,18 +54,22 @@ verification; changing the pin requires renewed source verification and review.
 
 The [Windows helper](PLUGINVAL_WINDOWS_DOWNLOAD.md) already uses this transfer
 policy for a different asset (`210999198`, 2,408,590 bytes). The macOS helper
-copies that reviewed implementation with only its platform/pin fields changed,
-including the explicit total-hop counter. It is separate to avoid changing the
-already-qualified Windows path during this bounded fix.
+initially copied that reviewed implementation with only its platform/pin fields
+changed, including the explicit total-hop counter. The macOS-only API-403
+follow-up below adds one route-fallback exception; the Windows helper remains
+unchanged during this bounded correction.
 
 ## Bounded, fail-closed transfer
 
 - At most **three** attempts: asset API, canonical browser URL, then asset API.
 - Each child process has a **60-second wall timeout**, with 2/4-second backoff;
   the complete workflow fetch step has a **five-minute cap**.
-- Only transport failures, HTTP 408/429/5xx and truncation permit another
-  transfer. TLS verification errors, invalid redirects/responses, oversize,
-  permanent HTTP errors, integrity errors and local failures stop the step.
+- Transport failures, HTTP 408/429/5xx and truncation permit a bounded retry.
+  Separately, HTTP 403 on the API route permits advancing through the same
+  fixed route sequence; it is not classified as transient or proven rate
+  limiting. Browser-route 403, other permanent HTTP errors, TLS verification
+  errors, invalid redirects/responses, oversize, integrity errors and local
+  failures stop the step.
 - Redirects require HTTPS, explicit official GitHub hosts, no URL credentials,
   and at most five total hops. TLS verification is not bypassed.
 - Reads are bounded to expected size plus one byte. Each attempt has its own
@@ -99,8 +103,9 @@ archive inspection and local tests.
 
 Local tests/live transfer ran on Linux. Native macOS Python/TLS, extraction and
 validator execution remain CI qualification. The universal binary inspection
-is not a runtime or code-signing attestation. There is no new native CI result
-for this unpushed candidate, and no claim that all network outages are recoverable.
+is not a runtime or code-signing attestation. Those original local results did not qualify native execution. The subsequent
+published ARM transfer failure and bounded correction are recorded below; no
+claim is made that all network outages are recoverable.
 
 ```sh
 python3 scripts/test-pluginval-macos-download.py -v
@@ -123,8 +128,69 @@ validator commands and the bounded original-artifact replay workflow.
 
 The earlier manifest remains evidence for the original `0128a34` source/test
 checkpoint, not hashes of subsequently integrated workflow/CMake/test files.
-The macOS helper itself is unchanged. Fresh integrated checks pass 17/17 offline
-tests, reject all 14 deliberate faults, and pass 5/5 registered transfer and
+At that integration checkpoint the macOS helper itself was unchanged. Fresh
+integrated checks passed 17/17 offline tests, rejected all 14 deliberate faults,
+and passed 5/5 registered transfer and
 validator-helper CTests, including the new diagnostic selector. Production source
-and the complete screenshot tree are unchanged. Native macOS qualification of
-the new transfer remains pending; no earlier failed invocation is reclassified.
+and the complete screenshot tree were unchanged. Native macOS qualification
+remained pending at that checkpoint; no earlier failed invocation is reclassified.
+
+
+## Published ARM failure and API-403 correction
+
+Published source `25b0b9eb44abf789ae9fc2342bd0deaf35051260`, native run
+[`42588096429`, ARM job `129062691940`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42588096429/job/129062691940)
+passed **156/156 CTests** (979.79 seconds), then failed its fetch step at
+09:20:05 UTC on 2026-11-09. Artifact `13661687665` contains provenance for
+exactly one API-route request: HTTP **403**, internal transfer status **11**,
+`verified: false`. The all-403-is-fatal policy prevented a browser-route attempt.
+Extraction and validators did not run. The original run remains failed.
+
+The response body and headers were not retained, so the cause of GitHub's 403
+is **not known**. Rate limiting is possible but is not established by this
+record. Older `fee93c4` macOS success used the legacy curl path and does not
+qualify this helper.
+
+Source/test correction `0459f99619e518af822f206046278f1e298ce782` changes only
+three macOS-helper scripts. An HTTP 403 encountered on the public asset's API
+route now returns a distinct `API_FORBIDDEN` status **12** and
+`reason: api_forbidden`. The parent permits that status only while on the API
+route, advancing to the next route if one remains. The canonical public URL is
+not a new recipient or mirror; the same exact asset pin is mandatory. This
+adds no credential, authentication retry, TLS bypass, or validator reroll.
+
+- API-403 then browser success still requires exact size and SHA256 before
+  publication. Browser denial or an integrity mismatch in a complete browser
+  download is terminal, without trying the third transfer or replacing an
+  existing destination.
+- API-403, browser-504, API-403 stops after exactly three transfers. The 60-second
+  child limits, 2/4-second backoff, five-minute workflow cap and redirect guard
+  are unchanged.
+- Browser-route 403 remains fatal. An API-fallback status unexpectedly returned
+  on the browser route is also fatal. Other permanent HTTP, TLS, integrity,
+  evidence and local-write failures retain their previous behavior.
+- Workflow/CMake, all validator commands, Windows/Linux helpers and product
+  source are byte-identical to the published base.
+
+[Follow-up evidence and hashes](evidence/pluginval-macos-api-403-2026-11-09/manifest.json)
+record the original failure, exact source checkpoint and fresh checks. The
+finalized **22-test** regression against the published helper produces four
+assertion failures plus one expected unhandled `RuntimeError` in the newly
+required fallback-success case, not an import or syntax failure. The corrected
+helper passes **22/22** tests; **17/17** deliberate faults are detected and
+**5/5** focused CTests pass, including unchanged Windows and validator helpers.
+
+These are offline policy tests on Linux, not a successful live reproduction of
+the ARM API-403/browser-success sequence. Native macOS qualification of this
+correction is still pending. Earlier manifests remain historical records for
+their named checkpoints, not hashes of the newly changed helper/test files.
+
+```sh
+# Run from the corrected checkout; the first command intentionally tests old code.
+git show 25b0b9e:scripts/download-pluginval-macos.py > /tmp/macos-helper-before-403.py
+python3 scripts/test-pluginval-macos-download.py --helper /tmp/macos-helper-before-403.py -v
+python3 scripts/test-pluginval-macos-download.py -v
+python3 scripts/test-pluginval-macos-download-negative.py --output /tmp/macos-403-faults
+ctest --test-dir build-download --output-on-failure \
+  -R '^cs80_(pluginval_(macos|windows)_download|validator_(exit_classification|retry|diagnostic_selection))_tests$'
+```

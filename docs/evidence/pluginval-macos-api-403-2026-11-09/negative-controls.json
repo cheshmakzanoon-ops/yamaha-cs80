@@ -1,0 +1,92 @@
+[
+  {
+    "case": "candidate",
+    "exit": 0,
+    "expected_outcome": "pass"
+  },
+  {
+    "case": "checksum-bypass",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "unbounded-read",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "unsafe-redirect",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-hop-counter",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "retry-permanent",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-wall-timeout",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "extra-attempt",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-api-403-fallback",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "browser-403-fallback",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "browser-worker-fallback",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "tls-retry",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "false-provenance",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "signed-url-leak",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "weaken-validator",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "ignore-fetch-failure",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-step-timeout",
+    "exit": 1,
+    "expected_outcome": "detected"
+  },
+  {
+    "case": "no-provenance-upload",
+    "exit": 1,
+    "expected_outcome": "detected"
+  }
+]

@@ -1,0 +1,97 @@
+test_actual_urllib_redirect_loop_stops_before_sixth_hop (__main__.DownloadTests.test_actual_urllib_redirect_loop_stops_before_sixth_hop) ... ok
+test_api_fallback_status_is_rejected_on_browser_route (__main__.DownloadTests.test_api_fallback_status_is_rejected_on_browser_route) ... ok
+test_api_forbidden_can_use_pinned_browser_route (__main__.DownloadTests.test_api_forbidden_can_use_pinned_browser_route) ... ERROR
+test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) ... 
+  test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 11], bad_hash=False) ... FAIL
+  test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 0], bad_hash=True) ... FAIL
+test_api_forbidden_does_not_increase_attempt_cap (__main__.DownloadTests.test_api_forbidden_does_not_increase_attempt_cap) ... FAIL
+test_api_forbidden_is_route_fallback_not_browser_permission (__main__.DownloadTests.test_api_forbidden_is_route_fallback_not_browser_permission) ... 
+  test_api_forbidden_is_route_fallback_not_browser_permission (__main__.DownloadTests.test_api_forbidden_is_route_fallback_not_browser_permission) (route=0) ... FAIL
+test_bad_worker_metadata_fails_without_publishing_or_retry (__main__.DownloadTests.test_bad_worker_metadata_fails_without_publishing_or_retry) ... ok
+test_canonical_fallback_request (__main__.DownloadTests.test_canonical_fallback_request) ... ok
+test_first_transfer_success (__main__.DownloadTests.test_first_transfer_success) ... ok
+test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) ... ok
+test_local_transfer_write_failure_is_not_retryable (__main__.DownloadTests.test_local_transfer_write_failure_is_not_retryable) ... ok
+test_official_pin_and_attempt_bound (__main__.DownloadTests.test_official_pin_and_attempt_bound) ... ok
+test_one_official_transfer (__main__.DownloadTests.test_one_official_transfer) ... ok
+test_redirect_policy (__main__.DownloadTests.test_redirect_policy) ... ok
+test_required_evidence_failure_cannot_report_success (__main__.DownloadTests.test_required_evidence_failure_cannot_report_success) ... ok
+test_response_shape_and_bounded_size (__main__.DownloadTests.test_response_shape_and_bounded_size) ... ok
+test_three_transfer_limit (__main__.DownloadTests.test_three_transfer_limit) ... ok
+test_timeout_then_success (__main__.DownloadTests.test_timeout_then_success) ... ok
+test_transient_fallback_and_partial_isolation (__main__.DownloadTests.test_transient_fallback_and_partial_isolation) ... ok
+test_transient_http_only (__main__.DownloadTests.test_transient_http_only) ... ok
+test_transport_timeout_and_tls (__main__.DownloadTests.test_transport_timeout_and_tls) ... ok
+test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution) ... ok
+
+======================================================================
+ERROR: test_api_forbidden_can_use_pinned_browser_route (__main__.DownloadTests.test_api_forbidden_can_use_pinned_browser_route)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/shared/yamaha-pluginval-macos-ca/scripts/test-pluginval-macos-download.py", line 227, in test_api_forbidden_can_use_pinned_browser_route
+    calls, sleeps, record = self.run_download([12, 0], expected_success=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/shared/yamaha-pluginval-macos-ca/scripts/test-pluginval-macos-download.py", line 197, in run_download
+    result = helper.download(output, evidence, runner=runner, sleep=sleeps.append)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/shared/cs80-pluginval-macos-403-evidence/baseline-helper.py", line 141, in download
+    raise RuntimeError("non-transient transfer failure; no retry")
+RuntimeError: non-transient transfer failure; no retry
+
+======================================================================
+FAIL: test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 11], bad_hash=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/shared/yamaha-pluginval-macos-ca/scripts/test-pluginval-macos-download.py", line 238, in test_api_forbidden_does_not_hide_browser_denial_or_bad_hash
+    self.assertEqual([c[3] for c in calls], ["0", "1"])
+AssertionError: Lists differ: ['0'] != ['0', '1']
+
+Second list contains 1 additional elements.
+First extra element 1:
+'1'
+
+- ['0']
++ ['0', '1']
+
+======================================================================
+FAIL: test_api_forbidden_does_not_hide_browser_denial_or_bad_hash (__main__.DownloadTests.test_api_forbidden_does_not_hide_browser_denial_or_bad_hash) (outcomes=[12, 0], bad_hash=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/shared/yamaha-pluginval-macos-ca/scripts/test-pluginval-macos-download.py", line 238, in test_api_forbidden_does_not_hide_browser_denial_or_bad_hash
+    self.assertEqual([c[3] for c in calls], ["0", "1"])
+AssertionError: Lists differ: ['0'] != ['0', '1']
+
+Second list contains 1 additional elements.
+First extra element 1:
+'1'
+
+- ['0']
++ ['0', '1']
+
+======================================================================
+FAIL: test_api_forbidden_does_not_increase_attempt_cap (__main__.DownloadTests.test_api_forbidden_does_not_increase_attempt_cap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/shared/yamaha-pluginval-macos-ca/scripts/test-pluginval-macos-download.py", line 244, in test_api_forbidden_does_not_increase_attempt_cap
+    self.assertEqual([c[3] for c in calls], ["0", "1", "0"])
+AssertionError: Lists differ: ['0'] != ['0', '1', '0']
+
+Second list contains 2 additional elements.
+First extra element 1:
+'1'
+
+- ['0']
++ ['0', '1', '0']
+
+======================================================================
+FAIL: test_api_forbidden_is_route_fallback_not_browser_permission (__main__.DownloadTests.test_api_forbidden_is_route_fallback_not_browser_permission) (route=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/shared/yamaha-pluginval-macos-ca/scripts/test-pluginval-macos-download.py", line 110, in test_api_forbidden_is_route_fallback_not_browser_permission
+    self.assertEqual(status, expected)
+AssertionError: 11 != 12
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.012s
+
+FAILED (failures=4, errors=1)

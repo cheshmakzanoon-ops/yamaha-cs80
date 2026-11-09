@@ -1,0 +1,65 @@
+{
+  "base_commit": "25b0b9eb44abf789ae9fc2342bd0deaf35051260",
+  "source_test_commit": "0459f99619e518af822f206046278f1e298ce782",
+  "scope": "macOS helper API-route HTTP403 fallback within unchanged transfer cap; no workflow, gate or product change",
+  "original_failure": {
+    "run_id": 42588096429,
+    "job_id": 129062691940,
+    "artifact_id": 13661687665,
+    "head_sha": "25b0b9eb44abf789ae9fc2342bd0deaf35051260",
+    "artifact_zip_sha256": "65fa4425f1c4ebaca344b206455eed5c22433304dd0cc065e5db049e3445ccf8",
+    "raw_job_log_sha256": "11dd6321ac0e1c2764ba7eeda20e5739639f5de493ee3eb4495f6d724094c57a",
+    "classification": "156 tests passed; API-route HTTP403 classified fatal; no browser attempt; failed before extraction or validators",
+    "unknown": "Response headers/body were not retained, so rate limiting or other underlying cause of HTTP403 is not established."
+  },
+  "checks": {
+    "baseline": {
+      "tests": 22,
+      "assertion_failures": 4,
+      "runtime_errors": 1,
+      "exit": 1
+    },
+    "fixed": {
+      "tests": 22,
+      "failures": 0,
+      "exit": 0
+    },
+    "negative_controls": {
+      "detected": 17,
+      "each_exit": 1,
+      "normal_unittest_completion_required": true
+    },
+    "focused_ctest": {
+      "passed": 5,
+      "failed": 0
+    }
+  },
+  "commands": [
+    "git show 25b0b9e:scripts/download-pluginval-macos.py > /tmp/macos-helper-before-403.py",
+    "python3 scripts/test-pluginval-macos-download.py --helper /tmp/macos-helper-before-403.py -v",
+    "python3 scripts/test-pluginval-macos-download.py -v",
+    "python3 scripts/test-pluginval-macos-download-negative.py --output /tmp/macos-403-faults",
+    "cmake -S . -B build-download -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release",
+    "ctest --test-dir build-download -R '^cs80_(pluginval_(macos|windows)_download|validator_(exit_classification|retry|diagnostic_selection))_tests$' --output-on-failure"
+  ],
+  "limits": [
+    "Local checks are offline Linux fixtures, not native macOS qualification or proof the canonical route was reachable in the failed ARM invocation.",
+    "API-route403 is a bounded alternative-public-route condition, not proof of rate limiting or generic transient HTTP403. Browser403 and all other existing fatal checks remain fatal.",
+    "Original source/gate/failure evidence is retained. Neither a workflow rerun nor validator retry is added.",
+    "The unchanged asset pin is an observed official-source hash, not a publisher-signed digest."
+  ],
+  "sha256": {
+    "scripts/download-pluginval-macos.py": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+    "scripts/test-pluginval-macos-download.py": "a0a0c9763006c7339fd45fab2bc812cb2bc5c9f2f405227ae1d5899a6bbe6c74",
+    "scripts/test-pluginval-macos-download-negative.py": "3709139517d0329d374d62bffa70b92f36b522de0efb5cb356fe3b239bb8c26d",
+    "scripts/download-pluginval-windows.py": "590c97e17a9f34f66c225c6a06585f6def4e9c93e286497e7fbed53dfb920fed",
+    ".github/workflows/build.yml": "cff8c33a2b02444c5b9686e69068ec6a12971c5629bddbd2a3a8474ce531cbcb",
+    "CMakeLists.txt": "5b5c904d86bfc54e66164daadefd8fe6489ff2f1f38bc279ab97e47407ec99d3",
+    "docs/evidence/pluginval-macos-api-403-2026-11-09/arm-failure-excerpt.log": "28eb1b5fc42a47090b7547cc2b70a652c77c73081e25307ffed75cd5f3695576",
+    "docs/evidence/pluginval-macos-api-403-2026-11-09/baseline-final-tests.log": "ff7431896e42176fe7bad9a8c7e0a307fed505432631c672c38c139fbc2d434d",
+    "docs/evidence/pluginval-macos-api-403-2026-11-09/ctest.log": "fdc1eb2d85b452f3c865f3c91b8522baaf9c9541db3491b4ca29c35ed0dcbe89",
+    "docs/evidence/pluginval-macos-api-403-2026-11-09/fixed-tests.log": "24b8f0032993d9495706107cf4ba1f8592cc35fdb91c6cdfdc1c592aef0f9065",
+    "docs/evidence/pluginval-macos-api-403-2026-11-09/negative-controls.json": "a74506130270b03b4761631675a37900880106fc8c1cdb2a58a029eb2c582959",
+    "docs/evidence/pluginval-macos-api-403-2026-11-09/original-arm-provenance.json": "381a280900bc4ab7ff8090e3bd79c1beedccc28753a54384ab816d828dead70b"
+  }
+}

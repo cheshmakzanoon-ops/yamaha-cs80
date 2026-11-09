@@ -97,10 +97,20 @@ class DownloadTests(unittest.TestCase):
             with self.subTest(code=code):
                 error = urllib.error.HTTPError(helper.URLS[0], code, "PRIVATE_DETAIL", {}, None)
                 self.assertEqual(self.transfer(error=error)[0], helper.TRANSIENT)
-        for code in (401, 403, 404):
+        for code in (401, 404):
             with self.subTest(code=code):
                 error = urllib.error.HTTPError(helper.URLS[0], code, "PRIVATE_DETAIL", {}, None)
                 self.assertEqual(self.transfer(error=error)[0], helper.FATAL)
+
+    def test_api_forbidden_is_route_fallback_not_browser_permission(self):
+        for route, expected in ((0, 12), (1, helper.FATAL)):
+            with self.subTest(route=route):
+                error = urllib.error.HTTPError(helper.URLS[route], 403, "PRIVATE_DETAIL", {}, None)
+                status, details, data = self.transfer(error=error, route=route)
+                self.assertEqual(status, expected)
+                self.assertEqual(details["http_status"], 403)
+                self.assertEqual(details["reason"], "api_forbidden" if route == 0 else "http")
+                self.assertIsNone(data)
 
     def test_transport_timeout_and_tls(self):
         self.assertEqual(self.transfer(error=TimeoutError())[0], helper.TRANSIENT)
@@ -176,8 +186,9 @@ class DownloadTests(unittest.TestCase):
                 # Even a failed worker may have left a partial file.
                 target.write_bytes(DATA if outcome == 0 else b"partial")
                 return subprocess.CompletedProcess(command, outcome,
-                    json.dumps({"reason": "downloaded" if outcome == 0 else "http",
-                                "http_status": 200 if outcome == 0 else 504}), "")
+                    json.dumps({"reason": ("downloaded" if outcome == 0 else
+                                          "api_forbidden" if outcome == 12 else "http"),
+                                "http_status": 200 if outcome == 0 else 403 if outcome == 12 else 504}), "")
 
             digest = "0" * 64 if bad_hash else DIGEST
             with (mock.patch.object(helper, "EXPECTED_SIZE", len(DATA)),
@@ -211,6 +222,33 @@ class DownloadTests(unittest.TestCase):
         self.assertNotEqual(calls[0][-1], calls[1][-1])
         self.assertEqual(sleeps, [2])
         self.assertEqual(len(record["attempts"]), 2)
+
+    def test_api_forbidden_can_use_pinned_browser_route(self):
+        calls, sleeps, record = self.run_download([12, 0], expected_success=True)
+        self.assertEqual([c[3] for c in calls], ["0", "1"])
+        self.assertEqual(sleeps, [2])
+        self.assertEqual(record["attempts"][0]["transfer_exit"], 12)
+        self.assertEqual(record["attempts"][0]["http_status"], 403)
+        self.assertEqual(record["attempts"][0]["reason"], "api_forbidden")
+
+    def test_api_forbidden_does_not_hide_browser_denial_or_bad_hash(self):
+        for outcomes, bad_hash in (([12, 11], False), ([12, 0], True)):
+            with self.subTest(outcomes=outcomes, bad_hash=bad_hash):
+                calls, sleeps, record = self.run_download(outcomes, bad_hash=bad_hash, old_file=True)
+                self.assertEqual([c[3] for c in calls], ["0", "1"])
+                self.assertEqual(sleeps, [2])
+                self.assertFalse(record["verified"])
+
+    def test_api_forbidden_does_not_increase_attempt_cap(self):
+        calls, sleeps, record = self.run_download([12, 10, 12], old_file=True)
+        self.assertEqual([c[3] for c in calls], ["0", "1", "0"])
+        self.assertEqual(sleeps, [2, 4])
+        self.assertEqual(len(record["attempts"]), 3)
+
+    def test_api_fallback_status_is_rejected_on_browser_route(self):
+        calls, sleeps, _ = self.run_download([10, 12], old_file=True)
+        self.assertEqual([c[3] for c in calls], ["0", "1"])
+        self.assertEqual(sleeps, [2])
 
     def test_timeout_then_success(self):
         calls, sleeps, record = self.run_download(["timeout", 0], expected_success=True)

@@ -24,9 +24,15 @@ def main():
         ('unbounded-read', HELPER, 'response.read(EXPECTED_SIZE + 1)', 'response.read()'),
         ('unsafe-redirect', HELPER, 'if not official_url(newurl):', 'if False:'),
         ('no-hop-counter', HELPER, 'if hops > self.max_redirections:', 'if False:'),
-        ('retry-permanent', HELPER, 'if status != TRANSIENT:', 'if False:'),
+        ('retry-permanent', HELPER, 'if status != TRANSIENT and not (route == 0 and status == API_FORBIDDEN):', 'if False:'),
         ('no-wall-timeout', HELPER, 'timeout=ATTEMPT_SECONDS)', 'timeout=None)'),
         ('extra-attempt', HELPER, 'ROUTE_ORDER = (0, 1, 0)', 'ROUTE_ORDER = (0, 1, 0, 1)'),
+        ('no-api-403-fallback', HELPER,
+         'return API_FORBIDDEN, {"reason": "api_forbidden", "http_status": 403}',
+         'return FATAL, {"reason": "api_forbidden", "http_status": 403}'),
+        ('browser-403-fallback', HELPER, 'if route == 0 and error.code == 403:', 'if error.code == 403:'),
+        ('browser-worker-fallback', HELPER,
+         'not (route == 0 and status == API_FORBIDDEN)', 'not (status == API_FORBIDDEN)'),
         ('tls-retry', HELPER, 'return FATAL, {"reason": "tls_verification"}', 'return TRANSIENT, {"reason": "tls_verification"}'),
         ('false-provenance', HELPER, 'record.update(verified=True,', 'record.update(verified=False,'),
         ('signed-url-leak', HELPER, 'host = urllib.parse.urlsplit(response.geturl()).hostname', 'host = response.geturl()'),
@@ -58,7 +64,7 @@ def main():
             log = result.stdout + result.stderr
             (args.output / (name + '.log')).write_text(log)
             expected = 0 if name == 'candidate' else 1
-            if result.returncode != expected or 'Ran 17 tests' not in log:
+            if result.returncode != expected or 'Ran 22 tests' not in log:
                 raise RuntimeError(f'{name}: no expected normal test completion, exit={result.returncode}')
             results.append({'case': name, 'exit': result.returncode,
                             'expected_outcome': 'pass' if name == 'candidate' else 'detected'})
