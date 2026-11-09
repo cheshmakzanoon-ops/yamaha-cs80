@@ -1,0 +1,146 @@
+{
+  "classification": "rejected offline experiment; no shipping source/test/build changes",
+  "base": "35f3431400b28d95d41ef6c6a863db0516edfa01",
+  "base_source": "87405eed4b11779cc52816599d5c093601fcac2e",
+  "tested_head": "c95dafc76639706c0904a24c130dedb625aafe9a",
+  "original_preregistration": "60e8cbe5015ae8b4536c90ff6406e97781f06fae",
+  "rebased_preregistration": "3dbe589",
+  "archived_frozen_files": {
+    "src/core/ReconstructedOscillator.h": {
+      "path": "docs/experiments/oscillator-profile-cache/rejected/quotients/core/ReconstructedOscillator.h",
+      "sha256": "0a16946240eb13a0d8dc157b21ca6502bc1ec0d927c9a1def4cdb272d750d151"
+    },
+    "tests/OscillatorProfileCacheTests.cpp": {
+      "path": "docs/experiments/oscillator-profile-cache/rejected/quotients/tests/OscillatorProfileCacheTests.cpp",
+      "sha256": "1af68cf50a57e7b58c15c08263ffd5287ce0b20c9faf76b80f4052fe5b92717b"
+    },
+    "tests/OscillatorProfileCacheProbe.cpp": {
+      "path": "docs/experiments/oscillator-profile-cache/rejected/quotients/tests/OscillatorProfileCacheProbe.cpp",
+      "sha256": "03f1097b7c266e821de1e9f6c14bf8e9f728e37daf8380b703d349701c847882"
+    },
+    "tests/fixtures/ReconstructedOscillatorPreProfileCache.h": {
+      "path": "docs/experiments/oscillator-profile-cache/rejected/quotients/tests/fixtures/ReconstructedOscillatorPreProfileCache.h",
+      "sha256": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373"
+    }
+  },
+  "preserved_tree_ids": {
+    "src": "b76dba2e547c8829a86dda6d2625f330d5548d26",
+    "tests": "d403752c553737343adce9a890b061ec174e9548",
+    "CMakeLists.txt": "ea4a7b5b8530a2ad3cb973a89aef9df72fee7a0b",
+    "docs/screenshots": "0ef54e2a7345f93af76cb81cfef9d547a7c17a11"
+  },
+  "compiler_profiles": {
+    "GCC generic": "c++ -std=c++20 -O3 -DNDEBUG -Wall -Wextra -Werror",
+    "GCC native": "c++ -std=c++20 -O3 -DNDEBUG -march=native -Wall -Wextra -Werror",
+    "independent_clang": "Clang 19 -std=c++20 -O3 -DNDEBUG, repeated with -march=native"
+  },
+  "recorded_probe_binaries": {
+    "generic": {
+      "sha256": "fab0b8ab2f5c8a952cb289921a1e3e1f3cc8b084009fab2bffd0bdb33cae6775",
+      "repository_binary_included": false
+    },
+    "native": {
+      "sha256": "0564dc570c827053f3db427da78790003c588f26d92f65d5e86d97970d3700d4",
+      "repository_binary_included": false
+    }
+  },
+  "measurement": {
+    "internal_rate": 96000,
+    "frames": 32768,
+    "pairs_per_case": 9,
+    "oscillator_counts": [
+      16,
+      32
+    ],
+    "profiles": [
+      "generic",
+      "native"
+    ],
+    "rows": 432,
+    "pairs": 216,
+    "warmup_active_frames": 16384,
+    "warmup_idle_calls": 1024,
+    "idle_samples_per_call": 16,
+    "affinity_observed": [
+      8
+    ],
+    "timing_sequence": "generic complete matrix, then native complete matrix; alternating order within each matrix",
+    "baseline_object_bytes": 5984,
+    "candidate_object_bytes": 6008,
+    "failed_rows": 0,
+    "mismatched_checksums": 0,
+    "longer_rerun": false
+  },
+  "decision_gates": {
+    "primary": "pooled median of 45 non-idle 16-oscillator paired reductions >=3% in each GCC profile",
+    "secondary": "each of 12 cases per profile has median paired reduction >=-3%",
+    "generic_primary_percent": -0.00457604155643665,
+    "native_primary_percent": 0.8131072201770895,
+    "decision": "reject"
+  },
+  "not_run_after_rejection": [
+    "unchanged oscillator numerical/promotion/continuity suites",
+    "strict pinned whole-Engine audio compatibility",
+    "sanitizer qualification",
+    "cache lifecycle fault mutations",
+    "eight-voice Engine paired timing"
+  ],
+  "not_claimed": [
+    "whole-instrument speedup",
+    "current CPU/idle scorecard refresh",
+    "WCET or audio-driver deadline guarantee",
+    "all compiler/environment/input bit identity",
+    "CPU/idle goal completion"
+  ],
+  "files": {
+    "docs/experiments/oscillator-profile-cache/evidence/independent-clang-generic.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/evidence/independent-clang-native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/evidence/independent-gcc-generic.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/evidence/independent-gcc-native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/evidence/reproduction.log": "967599adc76792606ba7a5f5b6feeebb8fdf903e1bd37ec436decbaaf03558bf",
+    "docs/experiments/oscillator-profile-cache/evidence/summary.json": "409cca4b70817d412c9c1d168facf4aad115d5573e0e22945d7ed9ba7224cc09",
+    "docs/experiments/oscillator-profile-cache/evidence/tests-final-generic.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/evidence/tests-final-native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-environment.txt": "f54bb2f4b7240346061a085deef8a195f366b7f12bca2408a813561a482c050a",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-generic.csv": "386407e9dcc9f65f14796b0a04d7c9040b64d9db1a5d8b081464fcb95f33e2a5",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-generic.end": "2f1e80cbe891f78a4662fcfee8e8809ce072ab3ca3dfb59a21bf7c56e21dcdf9",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-generic.log": "512c26e0101b07414d350ef726888bd26121daa51f5e78c45fc9afc34413a7f2",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-generic.start": "5853b869e2def8a70c572dae8de263f6fbd500880d71ee08245ec5a829a7f466",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-native.csv": "1fa794a2d95b4361246645ddf1070f52efd82e9b21c9ef23dbc79808697e1aed",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-native.end": "e5d554dbc0293ffd97dcb158de45d09e97361499fc8eba9e77502bf8853a3a69",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-native.log": "512c26e0101b07414d350ef726888bd26121daa51f5e78c45fc9afc34413a7f2",
+    "docs/experiments/oscillator-profile-cache/evidence/timing-native.start": "2f1e80cbe891f78a4662fcfee8e8809ce072ab3ca3dfb59a21bf7c56e21dcdf9",
+    "docs/experiments/oscillator-profile-cache/preregistered.md": "e5454c73956ecb2ff1875f0edebc53e7577085170b9d8af0beb99a33b4620d5d",
+    "docs/experiments/oscillator-profile-cache/rejected/all-flat/core/ReconstructedOscillator.h": "b882af61aca985311a258cc016cb0f61fa05ee24b9ab4ef53b5f465800b8e717",
+    "docs/experiments/oscillator-profile-cache/rejected/evidence/all-flat-native.log": "955b96e03f40b1d813a019a707b74f53dc4ffe30df0c43549e97a0d328c60fe2",
+    "docs/experiments/oscillator-profile-cache/rejected/evidence/full-native-errors.log": "844dabd34481a1cd073d9781d01d8ca4e232b0ced0cfb5270693f3ac87725f14",
+    "docs/experiments/oscillator-profile-cache/rejected/evidence/full-native-no-contract.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/evidence/full-native.log": "bc68bf6ff26228a7402506621b180211a45a7b2129347af3e8bbdf2c9d95d1e5",
+    "docs/experiments/oscillator-profile-cache/rejected/evidence/geometry-native.log": "955b96e03f40b1d813a019a707b74f53dc4ffe30df0c43549e97a0d328c60fe2",
+    "docs/experiments/oscillator-profile-cache/rejected/evidence/identical-native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/full-aggregate/core/ReconstructedOscillator.h": "b190360f4f7cefcb515146e58883ee1f9f53796e8223d3fe0825f5070a685cf0",
+    "docs/experiments/oscillator-profile-cache/rejected/geometry/core/ReconstructedOscillator.h": "1cbc85b628796b7649bdd8429dc6e93f6a67a03786442d1a04b7b57a1b4769d3",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/fold-levels/core/ReconstructedOscillator.h": "bb27247e9dd58c034f4f9d78d62076b9f44aff585ab30db0cee4f8a5c0410a39",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/fold-levels/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/half-spacing/core/ReconstructedOscillator.h": "956d01da077a840478505bf5fd7024bdc1b927d3afaccd917c1579d1970b4a71",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/half-spacing/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/maximum/core/ReconstructedOscillator.h": "e921a3fe5dc12f252221b724950f2e8f4c5881d459aac6e0f0dbb27f7faa6b0d",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/maximum/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/maximum-gain/core/ReconstructedOscillator.h": "5bb202ba16f4c0f391fa5e9ad8a1ae32bca354e267c63aad1d3c55425c57f885",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/maximum-gain/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/reset-rate/core/ReconstructedOscillator.h": "2ec8d915d21c5f7064c0b4e6d277bf1721274d28761dc39bae358e1d79ec5e1d",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/reset-rate/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/shaper-slopes/core/ReconstructedOscillator.h": "0a5c0d46776f689fabcf6f8d489f06f01f811011bce1fff3ada9ea9c69f89887",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/shaper-slopes/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/triangle-gain/core/ReconstructedOscillator.h": "979c815992766f7253dc6925661a85dead0265d35e1ca03a755f301ecb100c4c",
+    "docs/experiments/oscillator-profile-cache/rejected/isolated-groups/triangle-gain/native.log": "a255b8f50d1bd9e4032d2c302a370dfa7e7587ec7c9921f9aa6280491647b6af",
+    "docs/experiments/oscillator-profile-cache/rejected/quotients/core/ReconstructedOscillator.h": "0a16946240eb13a0d8dc157b21ca6502bc1ec0d927c9a1def4cdb272d750d151",
+    "docs/experiments/oscillator-profile-cache/rejected/quotients/tests/OscillatorProfileCacheProbe.cpp": "03f1097b7c266e821de1e9f6c14bf8e9f728e37daf8380b703d349701c847882",
+    "docs/experiments/oscillator-profile-cache/rejected/quotients/tests/OscillatorProfileCacheTests.cpp": "1af68cf50a57e7b58c15c08263ffd5287ce0b20c9faf76b80f4052fe5b92717b",
+    "docs/experiments/oscillator-profile-cache/rejected/quotients/tests/fixtures/ReconstructedOscillatorPreProfileCache.h": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373",
+    "docs/experiments/oscillator-profile-cache/reproduce.sh": "e2c95b63f9e365283742d32d0520843dc9788113e09bbce50125cd237f464b18",
+    "docs/experiments/oscillator-profile-cache/selection.md": "e0c5dba901a9f1b735ecbc71c0cb20d573559e0a9fc56b3e7966d2f296c901d2",
+    "docs/experiments/oscillator-profile-cache/summarize.py": "ea9a449e13fdc207255aa707817cafe739f4cc8f05e7ede2ff4d35e9b261232b",
+    "docs/analysis/oscillator-profile-cache.md": "8ebfd16a6454d695b5095051fd40a48774c5e54574e8bdbb869f2f958476e2b9"
+  }
+}

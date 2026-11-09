@@ -403,6 +403,12 @@ one, "Bass Stack" (a legacy-bank program rendered on the circuit engine by the
 audit) at 1.51 against 0.63 in Legacy; not investigated to a cause yet (open). Note-off click scores (not part
 of the plan's criterion) reach 1.65 (Funky 1 + 2, 48 kHz; 16 of 283 rows above 1, Legacy has 25 rows above 1) on percussive programs; open.
 
+A November 9 [prepared-value cache experiment](analysis/oscillator-profile-cache.md)
+was rejected rather than shipped: the bit-compatible narrow candidate failed its
+predeclared active-cost gate in both GCC profiles. Its archived component timings
+are not a refresh of this historical whole-instrument scorecard; production DSP
+and the open CPU/idle targets remain unchanged.
+
 CPU: the reconstructed oscillator's event solver (about 29 % of instructions)
 and the nodal stages' Newton solve (about 22 %) dominate. The bounded-error tan
 was the one libm call worth replacing. The realistic route to the target is a
