@@ -72,6 +72,9 @@ check; it does not bound error against the nonlinear circuit at that excursion.
 
 This first increment is deliberately not connected to `Engine` or the plugin.
 It does not claim the memory electrical model is already driving shipping audio.
+The following experimental [semantic adapter and loaded receiver increment](memory-control-routing.md)
+implements a named value/travel hypothesis and simultaneous local-linear
+receiver feedback; it also remains outside shipping audio.
 
 ## Implementation and verification
 

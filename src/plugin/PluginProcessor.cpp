@@ -406,6 +406,7 @@ bool Cs80AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
+    voiceActivity.reset();
     // Offline bounces render the circuit engine at HQ (Oversampling.h).
     engine.setNonRealtime(isNonRealtime());
     engine.prepare(sampleRate);
@@ -435,6 +436,7 @@ void Cs80AudioProcessor::releaseResources()
 {
     resetHostAutomationState();
     outputMeter.reset();
+    voiceActivity.reset();
     engine.reset();
     extensionEngine->reset();
     extensionActive = false;
@@ -733,7 +735,8 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
 }
 
-juce::String Cs80AudioProcessor::publishScala(const juce::String& scl, const juce::String& kbm)
+juce::String Cs80AudioProcessor::publishScala(const juce::String& scl, const juce::String& kbm,
+                                            std::optional<unsigned> expectedVersion)
 {
     cs80::tuning::Scale scale;
     if (const auto error = cs80::tuning::parseScale(scl.toStdString(), scale); !error.empty())
@@ -746,6 +749,10 @@ juce::String Cs80AudioProcessor::publishScala(const juce::String& scl, const juc
     if (const auto error = cs80::tuning::buildTable(scale, mapping, table); !error.empty())
         return juce::String(error);
     const juce::SpinLock::ScopedLockType lock(scalaLock);
+    // A mapping-only import parses outside the lock. Do not resurrect or
+    // overwrite a scale replaced by a concurrent session restore while parsing.
+    if (expectedVersion.has_value() && scalaVersion.load(std::memory_order_relaxed) != *expectedVersion)
+        return "Scala tuning changed while loading its mapping. Please try again.";
     scalaSlot = table;
     scalaText = scl;
     kbmText = kbm;
@@ -759,12 +766,32 @@ juce::String Cs80AudioProcessor::loadScalaTuning(const juce::String& scl, const 
     return publishScala(scl, kbm);
 }
 
+juce::String Cs80AudioProcessor::loadScalaKeyboardMapping(const juce::String& kbm)
+{
+    juce::String scl;
+    unsigned version;
+    {
+        const juce::SpinLock::ScopedLockType lock(scalaLock);
+        scl = scalaText;
+        version = scalaVersion.load(std::memory_order_relaxed);
+    }
+    if (scl.isEmpty())
+        return "Load a .scl scale before its .kbm mapping.";
+    return publishScala(scl, kbm, version);
+}
+
 void Cs80AudioProcessor::clearScalaTuning()
 {
     const juce::SpinLock::ScopedLockType lock(scalaLock);
     scalaSlot = {};
     scalaText = kbmText = scalaDescription = {};
     scalaVersion.fetch_add(1, std::memory_order_release);
+}
+
+bool Cs80AudioProcessor::hasScalaTuning() const
+{
+    const juce::SpinLock::ScopedLockType lock(const_cast<juce::SpinLock&>(scalaLock));
+    return scalaText.isNotEmpty();
 }
 
 juce::String Cs80AudioProcessor::getScalaDescription() const
@@ -1053,11 +1080,13 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     if (done < numSamples)
         renderSegment(done, numSamples - done);
 
-    unsigned mask = 0;
+    unsigned primaryMask = 0, extensionMask = 0;
     for (int i = 0; i < 8; ++i)
-        if (engine.getVoiceInfo(i).active) mask |= 1u << i;
-    activeVoiceMask.store(mask, std::memory_order_relaxed);
-    activeVoiceCount.store(engine.activeVoices(), std::memory_order_relaxed);
+    {
+        if (engine.getVoiceInfo(i).active) primaryMask |= 1u << i;
+        if (extensionActive && extensionEngine->getVoiceInfo(i).active) extensionMask |= 1u << i;
+    }
+    voiceActivity.publish(primaryMask, extensionMask, extensionActive);
 
     // Inspect the completed host buffer, not pre-decimator/internal stereo
     // values: mono mapping/cancellation and its arithmetic are already applied.

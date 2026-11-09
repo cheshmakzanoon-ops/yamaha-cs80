@@ -1,0 +1,29 @@
+#77 historical failing job-log excerpts, retrieved 2026-11-09.
+
+Linux PR build 42288153169, job 128147986326:
+https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42288153169/job/128147986326
+2026-11-06T20:53:49.2327073Z Completed tests in pluginval / Fuzz parameters
+2026-11-06T20:53:49.2327679Z SUCCESS
+2026-11-06T20:53:49.5130420Z ##[error]pluginval failed (exit 139); not eligible for a post-test retry; see pluginval-headless.log
+2026-11-06T20:53:49.5321092Z Local core capture enabled: False; child soft limit: 0
+2026-11-06T20:53:49.5323580Z Original validator PID: 2897; exit: 139
+2026-11-06T20:53:49.5324661Z No local ELF core was available for this attempt.
+
+PR synthetic merge 77a73e9 (head d7dd23a into a53c1a8).
+Plugin artifact 13540555925, digest:
+23fa21541c215ab365eb74559d2e37e197baf55db8f748e7712d844e3b9d31df
+A separate branch-push Linux validator passed. This does not explain the failed PR attempt.
+
+Intel macOS push build 42288096594, job 128134063846:
+https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42288096594/job/128134063846
+fatal: unable to access 'https://github.com/juce-framework/JUCE.git/': Failed to connect to github.com port 443 after 13564 ms: Couldn't connect to server
+[second connection timeout: 13567 ms]
+fatal: unable to access 'https://github.com/juce-framework/JUCE.git/': Could not resolve host: github.com
+Had to git clone more than once: 3 times.
+CMake Error at juce-subbuild/juce-populate-prefix/tmp/juce-populate-gitclone.cmake:55
+Failed to clone repository
+2026-11-06T20:25:56.4597610Z ##[error]Process completed with exit code 1.
+
+Interpretation: Intel failed source retrieval before compilation. Linux validation is a real
+post-test process crash, cause unresolved without a diagnostic core/trace. No waiver or retry
+policy change is justified by these excerpts alone.

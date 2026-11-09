@@ -5,6 +5,11 @@
 #include "../../tests/PluginLocalePreservation.h"
 #include "../../tests/PluginHostMetadata.h"
 #include "../../tests/OutputMeterHostTests.h"
+#include "../../tests/VoiceActivityHostTests.h"
+#include "../../tests/VoiceActivityUiTests.h"
+#include "../../tests/ContextMenuKeyboardTests.h"
+#include "../../tests/TypedValueUnitTests.h"
+#include "../../tests/KeyboardTuningUiTests.h"
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
@@ -1974,6 +1979,44 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--keyboard-tuning-ui-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testKeyboardTuningUiState([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Keyboard tuning UI state: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--context-menu-keyboard-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testContextMenuKeyboard([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Context menu keyboard tests: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--typed-value-unit-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testTypedValueUnits([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Typed-value unit tests: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--voice-activity-ui-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::testVoiceActivityUi(check, flushGui);
+        std::printf("Voice activity UI tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--voice-activity-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        cs80::tests::testVoiceActivityHost(check);
+        std::printf("Voice activity host tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--keyboard-handoff-tests") == 0)
     {
         // Processor/FIFO integration only. This does not create an editor or
@@ -2020,10 +2063,14 @@ int main(int argc, char** argv)
     cs80::tests::testPluginHostMetadata(check);
     phases.begin("output meter host");
     cs80::tests::testOutputMeterHost(check);
+    cs80::tests::testVoiceActivityHost(check);
+    cs80::tests::testContextMenuKeyboard(check);
+    cs80::tests::testTypedValueUnits(check);
     phases.begin("source performance host");
     cs80::tests::testSourcePerformanceHost(check);
     phases.begin("ws3 keyboard/tuning host");
     cs80::tests::testWs3KeyboardHost(check);
+    cs80::tests::testKeyboardTuningUiState(check);
     phases.begin("preset recall host");
     cs80::tests::testPresetRecallHost(check);
     phases.begin("preset file host");
@@ -3598,6 +3645,7 @@ int main(int argc, char** argv)
     cs80::tests::testKeyboardPointerPressure(check);
     cs80::tests::runUiReadinessTests(check, flushGui);
     cs80::tests::testOutputMeterUi(check, flushGui);
+    cs80::tests::testVoiceActivityUi(check, flushGui);
     phases.begin("original panel editor (ws7)");
     cs80::tests::runPanelEditorTests(check, flushGui, dir);
 

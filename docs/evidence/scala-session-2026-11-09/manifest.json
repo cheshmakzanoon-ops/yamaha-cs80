@@ -1,0 +1,32 @@
+{
+  "baseline": "9c217df6b207eb2d5cb465c58bc79e5ebcd27fd9",
+  "candidate_origin": "1d860d1f332fcff5e427cd3612a53b30d080f356",
+  "baseline_checks": 29,
+  "baseline_failures": 13,
+  "baseline_exit_code": 1,
+  "baseline_harness_note": "Behavior-preserving extraction of the existing mapping file-button action; compatibility fixture calls the old unguarded publishScala signature. No file dialog or real tuning file required.",
+  "files_sha256": {
+    "baseline-test-harness.patch": "89f483eee227df9b6c005771a579b027fc768ba7ee963ea0af218bb3aa58d687",
+    "KeyboardTuningUiTests.baseline.h": "4108974457da39c3010053d2769f374628fab2ec1c989ef1ee96f3f035bea24f",
+    "baseline-run.txt": "dc5afa99a810eda96ca9a4fae95bfc17c349ff43f3956501f8ab158b492ba9cc",
+    "fixed-run.txt": "2ee890739cb0a8d179ed741283ab5c14fd084c6affa2475e323ed1830a72361e",
+    "robustness-sanitized.txt": "64b99c9f1dc92f0eb2874a2497f9d7c2249a4d70abd9a1549564a9db5e3bc0ac",
+    "final-seven-ctests.txt": "04ba65c83296f54c99b4f608c8a08f4aded68cea2e4564f81778bffa2be41623",
+    "frequency-sanitized.txt": "5d8cc6c8aa479153bbee042417222f837d36b258a227b9be97d1ebb6ab4e7bf7",
+    "repeated-tuning.txt": "1ef65eb69dbfddf6e63375cee660a6bcdd9d820628033639208d1c8d103c08fd"
+  },
+  "fixed_native_checks": 35,
+  "fixed_native_failures": 0,
+  "focused_ctests_passed": 7,
+  "native_repeat_passes": 20,
+  "sanitizers": "Core frequency and robustness only: GCC UBSan, float-cast-overflow, libstdc++ assertions; native plugin not sanitizer-qualified.",
+  "source_sha256": {
+    "src/plugin/PluginProcessor.cpp": "694f3cfbfae9c35077fc650a45193bd064535cebb0286b28294f9ab37d86c045",
+    "src/plugin/PluginProcessor.h": "d3993c42c193678c3c57dfde2093f652b120500aedd0c8be771fae28c1441006",
+    "src/plugin/KeyboardTuningPage.cpp": "aabf7ab2f56a2b0b7ea37f0aef9336c5e8d558e86921a3fdda179396136d3ca2",
+    "src/plugin/KeyboardTuningPage.h": "20ad94c53c86921c821d9a50e559e4510af093bcaa0350c5cf69b44fb9bbef60",
+    "tests/KeyboardTuningUiTests.h": "e8f3b08416afffab7898852bb1509176626d829d653ce23076d73cd17d5189fb",
+    "src/core/Tuning.h": "8f8ea96c44df3e2e76853573423397bc7dd2fb710bf6a58ef5e61ede9583b973"
+  },
+  "baseline_patch_application": "git apply --unidiff-zero baseline-test-harness.patch on the pinned baseline only"
+}

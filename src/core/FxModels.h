@@ -145,13 +145,39 @@ public:
         lineL.reset(); lineR.reset();
         antiAliasL.reset(); antiAliasR.reset(); reconL.reset(); reconR.reset();
         slowPhase = fastPhase = 0.0;
+        lastRate = -1.0f;
+        uncachedSamples = 0;
     }
 
     StereoSample process(float l, float r, float a, float b) noexcept
     {
-        const double speed = std::exp2(2.0 * (double) clampf(a, 0.0f, 1.0f) - 1.0);
-        slowPhase += kSlowHz * speed / sr;
-        fastPhase += kFastHz * speed / sr;
+        // A miss suspends caching briefly. Moving controls then execute the
+        // original arithmetic without updating three cache fields each sample.
+        // This is an exact fallback, NOT a control-rate hold or approximation:
+        // every bypassed sample still uses its own clamped Rate.
+        if (uncachedSamples > 0)
+        {
+            --uncachedSamples;
+            const double speed = std::exp2(2.0 * (double) clampf(a, 0.0f, 1.0f) - 1.0);
+            slowPhase += kSlowHz * speed / sr;
+            fastPhase += kFastHz * speed / sr;
+        }
+        else
+        {
+            const float rate = clampf(a, 0.0f, 1.0f);
+            if (rate != lastRate)
+            {
+                lastRate = rate;
+                const double speed = std::exp2(2.0 * (double) rate - 1.0);
+                slowIncrement = kSlowHz * speed / sr;
+                fastIncrement = kFastHz * speed / sr;
+                // Re-probe after this many exact uncached samples. Held Rate
+                // resumes caching; continuously moving Rate stays uncached.
+                uncachedSamples = 64;
+            }
+            slowPhase += slowIncrement;
+            fastPhase += fastIncrement;
+        }
         slowPhase -= std::floor(slowPhase);
         fastPhase -= std::floor(fastPhase);
         const double depth = 0.15 + 0.85 * (double) clampf(b, 0.0f, 1.0f);
@@ -184,7 +210,9 @@ private:
     DelayLine lineL, lineR;
     Eq antiAliasL, antiAliasR, reconL, reconR;
     double sr = 96000.0, slowPhase = 0.0, fastPhase = 0.0;
-    float trim = 1.0f;
+    double slowIncrement = 0.0, fastIncrement = 0.0;
+    float trim = 1.0f, lastRate = -1.0f;
+    int uncachedSamples = 0;
 };
 
 // ---- Plate reverb ----------------------------------------------------------------------

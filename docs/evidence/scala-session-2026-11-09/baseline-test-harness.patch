@@ -1,0 +1,61 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e134b3b..81cfd42 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -838,0 +839,3 @@ if (CS80_BUILD_PLUGIN)
++    add_test(NAME cs80_keyboard_tuning_ui_tests COMMAND CS80Snapshots --keyboard-tuning-ui-tests)
++    set_tests_properties(cs80_keyboard_tuning_ui_tests PROPERTIES TIMEOUT 120)
++    target_compile_definitions(CS80Snapshots PRIVATE CS80_SCALA_SESSION_BASELINE=1)
+diff --git a/src/plugin/KeyboardTuningPage.cpp b/src/plugin/KeyboardTuningPage.cpp
+index ea7b44b..61bf8b6 100644
+--- a/src/plugin/KeyboardTuningPage.cpp
++++ b/src/plugin/KeyboardTuningPage.cpp
+@@ -173,0 +174,13 @@ juce::String KeyboardTuningPage::loadScalaText(const juce::String& scl, const ju
++juce::String KeyboardTuningPage::loadKeyboardMappingText(const juce::String& kbm)
++{
++    // Baseline behavior factored from chooseFile for an actual native regression.
++    // This remains the old editor-local source, not the intended correction.
++    if (sclText.isEmpty())
++    {
++        lastError = "Load a .scl scale before its .kbm mapping.";
++        refreshStatus();
++        return lastError;
++    }
++    return loadScalaText(sclText, kbm);
++}
++
+@@ -202 +215 @@ void KeyboardTuningPage::chooseFile(bool keyboardMapping)
+-                                 safe->loadScalaText(safe->sclText, text);
++                                 safe->loadKeyboardMappingText(text);
+diff --git a/src/plugin/KeyboardTuningPage.h b/src/plugin/KeyboardTuningPage.h
+index 8ad5139..cb71fa1 100644
+--- a/src/plugin/KeyboardTuningPage.h
++++ b/src/plugin/KeyboardTuningPage.h
+@@ -32,0 +33 @@ public:
++    juce::String loadKeyboardMappingText(const juce::String& kbm);
+diff --git a/src/plugin/PluginProcessor.h b/src/plugin/PluginProcessor.h
+index ade5b54..c7b9f35 100644
+--- a/src/plugin/PluginProcessor.h
++++ b/src/plugin/PluginProcessor.h
+@@ -31 +31 @@ class Cs80AudioProcessorEditor;
+-namespace cs80::tests { struct PresetSaveAccess; }
++namespace cs80::tests { struct PresetSaveAccess; struct ScalaMappingAccess; }
+@@ -282,0 +283 @@ private:
++    friend struct cs80::tests::ScalaMappingAccess;
+diff --git a/src/tools/ui_snapshot.cpp b/src/tools/ui_snapshot.cpp
+index ed7a875..438789b 100644
+--- a/src/tools/ui_snapshot.cpp
++++ b/src/tools/ui_snapshot.cpp
+@@ -10,0 +11 @@
++#include "../../tests/KeyboardTuningUiTests.h"
+@@ -1979,0 +1981,8 @@ int main(int argc, char** argv)
++    if (argc > 1 && std::strcmp(argv[1], "--keyboard-tuning-ui-tests") == 0)
++    {
++        juce::ScopedJuceInitialiser_GUI juceInit;
++        int checks = 0;
++        cs80::tests::testKeyboardTuningUiState([&](bool condition, const char* what) { ++checks; check(condition, what); });
++        std::printf("Keyboard tuning UI state: %d checks, %d failures\n", checks, failures);
++        return failures == 0 ? 0 : 1;
++    }
+@@ -2053,0 +2063 @@ int main(int argc, char** argv)
++    cs80::tests::testKeyboardTuningUiState(check);

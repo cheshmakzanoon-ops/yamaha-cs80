@@ -1,0 +1,221 @@
+{
+  "date_utc": "2026-11-09",
+  "baseline": "0b340d9aa925141c50f2fd354c936163afe8a4f0",
+  "source_head": "d7dd23adc94eaddc72da6128aaee95800b33945d",
+  "source_sha256": {
+    "src/core/FxModels.h": "b2cd5a53030e76d3ff6378404168adcc5d873a9a2820da3bf6bf0f1df1625282",
+    "tests/EnsembleRateCacheTests.cpp": "ae30df74beffc8e59d1f6107cd6e3b919796fda3d305b308457ca69502b11024",
+    "tests/EnsembleFxBaseline.h": "4ad365005e9a8e40046ee2a74fc5931a51a9aa3b5a3850e3041b0656d6cd28a2",
+    "tests/diagnostics/EnsembleCacheProbe.cpp": "8ddd6314fefcb6398637776c0dbcb0e0c00cf79b4c8f443b6b2dc20cabe72699",
+    "scripts/test-ensemble-cache-mutations.py": "7466fc19a300e6284a7f24ff2b7179bbd7c54c48a3610ac03629b20f072c6586"
+  },
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "ctest": {
+    "passed": 8,
+    "failed": 0
+  },
+  "instrumented": {
+    "flags": "-std=c++20 -O1 -g -fsanitize=address,undefined,float-cast-overflow -fno-sanitize-recover=all -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS",
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "checks": 3160,
+    "stereo_frames": 14566394,
+    "failures": 0
+  },
+  "negative_controls": {
+    "missing_reset_invalidation": {
+      "failing_checks": 300,
+      "exit_code": 1
+    },
+    "stale_rate_key": {
+      "failing_checks": 370,
+      "exit_code": 1
+    },
+    "held_fallback_increments": {
+      "failing_checks": 370,
+      "exit_code": 1
+    }
+  },
+  "raw_comparison": {
+    "serial_slot_cases": 9,
+    "serial_slot_stereo_frames": 3676176,
+    "engine_cases": 27,
+    "engine_stereo_frames": 442368,
+    "bytes_per_file": 32948352,
+    "profiles": [
+      {
+        "flags": "-std=c++20 -O2",
+        "before_after_sha256": "499d33f638620c859123800e64ebeed39a8bf5f8e6b1abb3630331ecf64c5092"
+      },
+      {
+        "flags": "-std=c++20 -O3 -march=native -ffp-contract=fast",
+        "before_after_sha256": "4ddc2a48ae700e672cdf2697d3f861622016f0dc5bc7e162bfc53c4168bdeada"
+      }
+    ]
+  },
+  "strict_compatibility": {
+    "legacy_default": "byte-identical to d56911a",
+    "legacy_tails": "byte-identical to d56911a",
+    "v1_circuit": "byte-identical to 22d6a32",
+    "v2_audio": "byte-identical to 00ceccf"
+  },
+  "historical_ci": {
+    "intel_configure": "JUCE clone connection/DNS failure before compilation",
+    "linux_pr_pluginval": "SUCCESS printed, then exit 139; no ELF core; cause unresolved"
+  },
+  "recommendation": "Exact adaptive candidate clears local audio and repeated long-trial moving-control gates; original #77 is not integrated unchanged. Fresh native/platform validation still required; historical Linux crash unresolved.",
+  "candidate": "64-sample exact uncached fallback following a Rate-key miss; not unchanged PR #77",
+  "original_fixture_git_blobs": {
+    "tests/EnsembleRateCacheTests.cpp": "a1b6033bf135e2bb6085e32cf588de87e52f3c81",
+    "tests/EnsembleFxBaseline.h": "6a222acb5f90af930b6a13b090b2b4f28c8dd9c4"
+  },
+  "fixture_note": "Frozen class unchanged; original regression scenarios retained and adaptive transition tests added.",
+  "rejected_as_is_performance": {
+    "shared_machine": true,
+    "per_sample_rate_depth_time_change_percent": [
+      6.79,
+      3.5,
+      8.82
+    ],
+    "qualification": "Not a regression-free or whole-plugin CPU improvement."
+  },
+  "adaptive_performance": {
+    "shared_machine": true,
+    "affinity": "CPU 0",
+    "frames_per_trial": 4194304,
+    "alternating_trials_per_mode": 7,
+    "moving_slowdown_gate_percent": 2.0,
+    "final_runs": [
+      {
+        "profile": "generic",
+        "repeat": 1,
+        "modes": [
+          {
+            "mode": 0,
+            "baseline_ms": 578.388,
+            "candidate_ms": 523.343,
+            "change_percent": -9.52
+          },
+          {
+            "mode": 1,
+            "baseline_ms": 555.019,
+            "candidate_ms": 495.419,
+            "change_percent": -10.74
+          },
+          {
+            "mode": 2,
+            "baseline_ms": 584.577,
+            "candidate_ms": 591.45,
+            "change_percent": 1.18
+          },
+          {
+            "mode": 3,
+            "baseline_ms": 569.959,
+            "candidate_ms": 512.908,
+            "change_percent": -10.01
+          }
+        ]
+      },
+      {
+        "profile": "native",
+        "repeat": 1,
+        "modes": [
+          {
+            "mode": 0,
+            "baseline_ms": 524.044,
+            "candidate_ms": 442.57,
+            "change_percent": -15.55
+          },
+          {
+            "mode": 1,
+            "baseline_ms": 536.362,
+            "candidate_ms": 458.163,
+            "change_percent": -14.58
+          },
+          {
+            "mode": 2,
+            "baseline_ms": 592.297,
+            "candidate_ms": 553.524,
+            "change_percent": -6.55
+          },
+          {
+            "mode": 3,
+            "baseline_ms": 519.639,
+            "candidate_ms": 453.938,
+            "change_percent": -12.64
+          }
+        ]
+      },
+      {
+        "profile": "generic",
+        "repeat": 2,
+        "modes": [
+          {
+            "mode": 0,
+            "baseline_ms": 568.104,
+            "candidate_ms": 520.559,
+            "change_percent": -8.37
+          },
+          {
+            "mode": 1,
+            "baseline_ms": 566.464,
+            "candidate_ms": 483.592,
+            "change_percent": -14.63
+          },
+          {
+            "mode": 2,
+            "baseline_ms": 614.292,
+            "candidate_ms": 611.7,
+            "change_percent": -0.42
+          },
+          {
+            "mode": 3,
+            "baseline_ms": 580.857,
+            "candidate_ms": 537.91,
+            "change_percent": -7.39
+          }
+        ]
+      },
+      {
+        "profile": "native",
+        "repeat": 2,
+        "modes": [
+          {
+            "mode": 0,
+            "baseline_ms": 504.214,
+            "candidate_ms": 424.668,
+            "change_percent": -15.78
+          },
+          {
+            "mode": 1,
+            "baseline_ms": 512.914,
+            "candidate_ms": 420.261,
+            "change_percent": -18.06
+          },
+          {
+            "mode": 2,
+            "baseline_ms": 525.065,
+            "candidate_ms": 511.933,
+            "change_percent": -2.5
+          },
+          {
+            "mode": 3,
+            "baseline_ms": 496.492,
+            "candidate_ms": 415.286,
+            "change_percent": -16.36
+          }
+        ]
+      }
+    ],
+    "passed_local_gate": true,
+    "initial_short_generic_moving_change_percent": 2.5,
+    "exploratory_long_generic_moving_change_percent": [
+      0.63,
+      -0.42
+    ],
+    "exploratory_long_native_moving_change_percent": [
+      0.96,
+      -1.0
+    ],
+    "qualification": "Local repeated model-only timing, not a whole-plugin deadline or all-platform guarantee."
+  }
+}

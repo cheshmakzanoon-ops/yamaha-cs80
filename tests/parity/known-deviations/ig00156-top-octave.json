@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "numerical known-deviation regression, not hardware parity",
+  "recorded": "2026-11-09",
+  "baseline": "497be8482d0c8ff065b83c4c8ec3300e738c645b",
+  "rationale": "The original ws1-voice acceptance limits remain unchanged. These separate ceilings prevent the already-failing high-cutoff cells from silently worsening. They are NOT relaxed acceptance limits. Over-limit baseline observations were known before these ceilings were chosen; direct-DUT and refinement limits were chosen before running the new fixtures.",
+  "ig00156_top_octave_regressions": {
+    "grid_internal_rates_hz": [88200, 96000, 192000, 384000],
+    "grid_total_cutoff_hz": [4000, 12000],
+    "grid_low_frequency_q": [0.5, 1, 2, 5, 9],
+    "configurations": ["HP", "LP", "HP at max(60,fc/4) into LP at fc"],
+    "ceiling_pair_meaning": "[core, full-band], complex error divided by continuous response peak; same bands as ws1-voice. Cells already passing keep their original acceptance limits; failing cells receive rounded roughly 5 percent regression headroom.",
+    "limits_88200_4000": [0.03, 0.119],
+    "limits_88200_12000": [0.0505, 0.148],
+    "limits_96000_4000": [0.03, 0.117],
+    "limits_96000_12000": [0.0425, 0.145],
+    "limits_192000_4000": [0.03, 0.0295],
+    "limits_192000_12000": [0.0367, 0.0367],
+    "limits_384000_4000": [0.03, 0.02],
+    "limits_384000_12000": [0.03, 0.02],
+    "direct_discrete_max_rel": 0.000005,
+    "direct_fixture": "Actual realtime stage/cascade, amplitude 1e-5, coherent 8192-sample lock-in after 0.35 seconds settling. Measure requested fc and each analytic fixture's worst full-band frequency rounded to a coherent bin. Compare to the independent nodal system under the documented trapezoidal map. Also check measured continuous-truth error against the matching full-band regression ceiling.",
+    "refinement_ratio_max": 0.35,
+    "refinement_final_full_band_max_rel": 0.02,
+    "refinement_fixture": "Same physical 20 Hz..min(20 kHz, base fs/5) band at base/2x/4x rates, bases 88.2 and 96 kHz, cutoffs 4 and 12 kHz, full Q/config grid. Aggregate maximum complex error must shrink by at least 65 percent per doubling. This is not a CPU or runtime-quality-policy qualification."
+  }
+}

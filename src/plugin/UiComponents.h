@@ -228,7 +228,7 @@ public:
 
     // [ws8-studio] Interaction polish. Shift while dragging moves the value at kFineFactor of the normal rate (it can
     // be pressed or released mid-drag without a jump). Ctrl/Cmd-click calls onTypeValue; a right-click (Ctrl-click on
-    // macOS) calls onContextMenu. tooltipText, when set, builds the tooltip at the moment it is shown.
+    // macOS) or Shift+F10 calls onContextMenu. tooltipText, when set, builds the tooltip at the moment it is shown.
     static constexpr float kFineFactor = 0.1f;
     std::function<void()> onTypeValue;
     std::function<void()> onContextMenu;
@@ -244,6 +244,16 @@ public:
     bool isGestureInProgress() const noexcept { return gestureActive; }
     bool keyPressed(const juce::KeyPress& key) override
     {
+        const auto modifiers = key.getModifiers();
+        if (isEnabled() && !gestureActive && onContextMenu && key.getKeyCode() == juce::KeyPress::F10Key
+            && modifiers.isShiftDown() && !modifiers.isCtrlDown()
+            && !modifiers.isAltDown() && !modifiers.isCommandDown())
+        {
+            // Use the same menu as a pointer context click, without starting a
+            // parameter gesture or stealing host-modified function shortcuts.
+            onContextMenu();
+            return true;
+        }
         if (key.getKeyCode() == juce::KeyPress::F1Key && onHelp)
         {
             onHelp();

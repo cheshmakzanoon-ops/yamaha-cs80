@@ -1,0 +1,14 @@
+FAIL: a reopened page imports a KBM without reloading its SCL file
+FAIL: KBM import changes only the mapping and preserves the persisted Scala text
+FAIL: a reopened-page KBM import reaches the audio engine
+FAIL: a restored-session editor imports a KBM using its saved Scala source
+FAIL: KBM import uses the current processor scale, never a stale page-local copy
+FAIL: KBM import cannot resurrect a scale cleared outside the page
+FAIL: the mapping button and description follow an externally cleared scale
+FAIL: an unnamed Scala scale has a useful label and accepts its mapping
+FAIL: an unnamed Scala scale accepts a replacement KBM after editor reopen
+FAIL: an unnamed Scala scale has a useful label and accepts its mapping
+FAIL: an unnamed Scala scale accepts a replacement KBM after editor reopen
+FAIL: the version guard rejects a stale mapping without overwriting the replacement scale
+FAIL: the version guard rejects a stale mapping without resurrecting a cleared scale
+Keyboard tuning UI state: 29 checks, 13 failures

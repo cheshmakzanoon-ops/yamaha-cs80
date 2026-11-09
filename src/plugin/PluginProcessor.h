@@ -11,6 +11,7 @@
 #include "core/MpeZones.h"
 #include "core/Tuning.h"
 #include "OutputMeter.h"
+#include "VoiceActivity.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
 #include "HostAutomationBridge.h"
@@ -19,6 +20,7 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 
 #include <memory>
+#include <optional>
 #include <atomic>
 #include <array>
 #include <cmath>
@@ -27,7 +29,7 @@
 #include <vector>
 
 class Cs80AudioProcessorEditor;
-namespace cs80::tests { struct PresetSaveAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct ScalaMappingAccess; }
 
 class Cs80AudioProcessor : public juce::AudioProcessor, private juce::MidiKeyboardState::Listener,
                            public cs80::HostAutomationClient
@@ -102,7 +104,8 @@ public:
     // the curated circuit-engine library (cs80::programLibrary()).
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
-    int getActiveVoiceCount() const noexcept { return activeVoiceCount.load(std::memory_order_relaxed); }
+    cs80::VoiceActivityReading getVoiceActivity() const noexcept { return voiceActivity.read(); }
+    int getActiveVoiceCount() const noexcept { return getVoiceActivity().count(); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
     // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
     unsigned getHostMidiEventCount() const noexcept { return hostMidiEvents.load(std::memory_order_relaxed); }
@@ -111,7 +114,7 @@ public:
     cs80::OutputMeterReading consumeOutputMeter() noexcept { return outputMeter.consume(); }
     bool isVoiceActive(int i) const noexcept
     {
-        return i >= 0 && i < 8 && (activeVoiceMask.load(std::memory_order_relaxed) & (1u << i)) != 0;
+        return getVoiceActivity().active(i);
     }
     // Single-value mailboxes: only the audio callback mutates the DSP engine.
     void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
@@ -221,7 +224,12 @@ public:
     // success, otherwise the reason (the previous tuning is kept). The texts
     // are saved with the session, not with presets.
     juce::String loadScalaTuning(const juce::String& scl, const juce::String& kbm = {});
+    // Replaces only the keyboard mapping of the current Scala source, regardless
+    // of editor lifetime. A concurrently changed source rejects the publication
+    // and leaves the current complete scale/mapping pair untouched.
+    juce::String loadScalaKeyboardMapping(const juce::String& kbm);
     void clearScalaTuning();
+    bool hasScalaTuning() const; // a valid Scala description may be empty
     juce::String getScalaDescription() const;
     // MTS-ESP (tuning_mode 2): client compiled in, and a master connected.
     static bool isMtsEspAvailable() noexcept { return cs80::MtsEspClient::available(); }
@@ -278,6 +286,7 @@ public:
 
 private:
     friend struct cs80::tests::PresetSaveAccess;
+    friend struct cs80::tests::ScalaMappingAccess;
     // [ws6-library] program change, bank select, A/B state (PluginProcessorLibrary.cpp).
     struct LibraryState;
     std::unique_ptr<LibraryState> library;
@@ -306,7 +315,8 @@ private:
     bool routeNoteOn(int note, float velocity, int channel, bool fromKeyboard = false);
     void routeNoteOff(int note, int channel, bool fromKeyboard = false);
     template <class F> void forEachEngine(F&& f) { f(engine); if (extensionActive) f(*extensionEngine); }
-    juce::String publishScala(const juce::String& scl, const juce::String& kbm);
+    juce::String publishScala(const juce::String& scl, const juce::String& kbm,
+                              std::optional<unsigned> expectedVersion = std::nullopt);
     void applyValues(const cs80::ParamValues& values);
     // [ws8-studio] MIDI learn on the audio thread; studio state in and out of the saved tree.
     void applyMidiLearn(const juce::MidiBuffer& midi) noexcept;
@@ -360,9 +370,8 @@ private:
     std::atomic<float> pendingRibbon { noPendingControl }, pendingPitch { noPendingControl }, pendingMod { noPendingControl },
         pendingExpression { noPendingControl };
     std::atomic<float> expressionValue { 1.0f };
-    std::atomic<int> activeVoiceCount { 0 };
     std::atomic<unsigned> hostMidiEvents { 0 };
-    std::atomic<unsigned> activeVoiceMask { 0 };
+    cs80::VoiceActivity voiceActivity;
     cs80::OutputMeter outputMeter;
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread

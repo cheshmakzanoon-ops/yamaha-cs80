@@ -122,12 +122,21 @@ tour, the QWERTY and shortcut key listeners, and sets the ribbon's full-range ru
   (`GLISS`, unique prefixes). It derives each control's display law from two sample points of its own formatter,
   refuses a value in another unit (Hz into a time) and clamps to the range. Return commits in one gesture; Esc
   or losing focus cancels.
-- **Context menu** (right-click, Ctrl-click on macOS, also on a knob's caption and readout): MIDI learn (arm /
+  Named units and the `k` shorthand must now be complete tokens: `3 kittens`, `80 ms garbage`, and
+  `0.5 octopus` are refused instead of being interpreted by their prefixes. Complete aliases such as
+  `msec(s)`, `sec(s)` / `second(s)`, `semi` / `semitone(s)`, `ct(s)` / `cent(s)`, and `oct` / `octave(s)`
+  remain accepted. Case, surrounding spaces, decimal-comma input and the existing numeric display laws
+  are unchanged. MIX percentage-pair syntax is a separate existing parser path, not tightened by this fix.
+- **Context menu** (right-click, Ctrl-click on macOS, or Shift+F10 on a focused fader/knob; pointer clicks also
+  work on its caption and readout): MIDI learn (arm /
   cancel / learn a different controller / forget CC n; unavailable in PURE CS-80), reset to default (showing
   it), type a value, copy value, paste value (showing the parsed value, disabled when the clipboard is not a
   value of this control), and "What is this control?". Every edit is one host gesture and so one undo step.
   Scope: all `ParamKnob` faders and knobs (main panel and Studio). Switches, combo boxes and the memory lid's
   miniature sliders have no menu yet (open item).
+  Shift+F10 uses the existing menu callback without starting a parameter gesture. It is ignored while the
+  control is disabled or an edit gesture is in progress, and plain F10 or extra Ctrl/Alt/Cmd modifiers remain
+  unhandled. Tooltips and the accessible description advertise it, including after parameter rebinding.
 - **Ribbon**: the bend is the displacement from the first contact over the travel left in that direction, so
   sliding from any touch point to either end of the touch strip gives the full bend (a minimum travel of 12 %
   of the strip avoids an infinitely steep bend at an end). Evidence class: **declared UI inference**. The
@@ -256,6 +265,32 @@ the tests live in `tests/StudioUiTests.h`):
 
 Core tests: `cs80_evidence_register_tests`, `cs80_midi_learn_tests` (single-threaded semantics plus a two-thread
 run with pre-registered iteration counts).
+
+The later keyboard-menu follow-up is isolated in `tests/ContextMenuKeyboardTests.h` and runs as
+`cs80_context_menu_keyboard_tests` (`CS80Snapshots --context-menu-keyboard-tests`), as well as in the full
+smoke. It exercises actual JUCE sliders, gesture notifications, and an attached `ParamKnob`: exact shortcut
+dispatch, modifier/disabled/active-gesture guards, no value or gesture change when opening, preserved F1 and
+arrow behavior, and tooltip/accessibility hints before and after rebinding. The focused test observes menu
+callbacks without opening a native popup; it does not qualify popup focus, screen-reader behavior, or a
+DAW/OS forwarding the shortcut. The pre-fix implementation at `e198c7e` failed six assertions when this
+test was added, before either runtime behavior or hints were changed.
+On 2026-11-09, the patched native Linux build (GCC 14.2, JUCE 8.0.11) passed all 25 focused assertions;
+the voice-activity core/host and keyboard-handoff host CTests also passed. These are local focused results,
+not a full editor or cross-platform CI qualification: this environment cannot create the Unix sockets
+needed by the X11 display, so native popup/focus and screen-reader checks remain unverified here.
+
+The typed-unit admission follow-up is `tests/TypedValueUnitTests.h`, registered as
+`cs80_typed_value_unit_tests` (`CS80Snapshots --typed-value-unit-tests`) and included in the full smoke.
+It checks complete units/aliases, malformed suffix rejection, unchanged output on refusal, and a real
+`ParamKnob`/APVTS attachment: a rejected edit sends no value change or host gesture, while a valid edit
+remains one balanced gesture. Before the production change, the same native regression failed 18 of its
+53 assertions, including the actual parameter mutation caused by `2 kittens`.
+The patched native Linux build passed all 53 assertions and the four adjacent context-menu/voice-activity/
+keyboard-handoff CTests on November 9. A local five-points-per-parameter formatter/parser corpus retained
+the same 950-case results fingerprint (`ab1393115089aa5f`, 946 accepted) before and after this change.
+That fingerprint is diagnostic, not a cross-platform numeric pin or a claim that every displayed string
+is already parseable. This does not change ratio parsing, numeric range/display laws, or the audio engine;
+native editor windows, clipboard services and real-DAW interaction were not exercised by this focused gate.
 
 Snapshots written for review (`studio-*.png`): main view at both sizes, each tab and sub-page at both sizes,
 the drawers at both sizes, the KEYBOARD tab with a learned controller, every tour step at 1120 x 700 (first

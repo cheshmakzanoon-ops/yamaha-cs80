@@ -1,0 +1,59 @@
+{
+  "evidence_kind": "sampled_declared_model_qualification_not_shipping_audio",
+  "evaluated_local_source_commit": "fd94a2dbd3f9a3c5f302af5eb1dd603f76d249a1",
+  "provenance_note": "File content hashes are the portable identity across integration cherry-picks; no claim is made that this local commit is the release head.",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "platform": "Linux x86_64",
+  "compile_flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror",
+    "-I",
+    "src"
+  ],
+  "commands": [
+    "memory-study limits.json output-directory sweep",
+    "memory-study limits.json output-directory schedule",
+    "memory-study limits.json output-directory cpu"
+  ],
+  "nonlinear_cases": 12474,
+  "within_candidate_budget": 11892,
+  "nonlinear_trajectory_samples": 24576,
+  "cpu_trials_per_candidate": 7,
+  "cpu_iterations_per_trial": 500000,
+  "cpu_note": "Shared-machine wall time. Whole-object GNU/Clang materialization barrier. Repeats a 1,024-sample smooth-control segment including wrap discontinuities, without event-triggered refreshes. Timing is neither whole-instrument performance nor worst-case execution-time qualification.",
+  "source_sha256": {
+    "src/core/Dsp.h": "8a217f1ac7800eacb4f2691e34cab99694e873fef446d3292a3a10d030d03dd2",
+    "src/core/FactoryToneHypotheses.h": "4e5f50e5ce8bdcf8596ae637fe1b20b6cd0806dcf8a16512976b6021a72c989f",
+    "src/core/HardwareControl.h": "eb1394a5a8807d44ced418872b16c65520a15491cf3c631c2248aa51014d46a2",
+    "src/core/MemoryPanels.h": "de38f98a1f6084f99387e574f1e1c29042afe42297e52ff7505c370e4e8c5614",
+    "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+    "src/core/SourceFactoryTones.h": "f986e91c261d545ab36b2f0bfdc4ba02893c8bd5bd77e6c7ba1a07a367429ee4",
+    "src/experimental/LoadedMemoryReceivers.h": "c3c8ac6a48c86979330fa33bfb3065ecf5125056b8130184d266d42b948a27d5",
+    "src/experimental/MemoryControlAdapter.h": "76b05ac91186143b575ce9c02abaf4f747d5afd58b76213d9c6bdc6a3d43b905",
+    "src/experimental/MemoryControlFrame.h": "29b481daf4a4ac3629a0959a1c1523cb083c2919b15fe92ce34d2ab377c8c206",
+    "src/experimental/MemoryPanelPortMap.h": "1e493678df0aac6e0adc3463c2e893c8ed9defe6b6cac09e4c519aa909c76423",
+    "src/reference/MemoryPanelNetwork.h": "df17b2339ca5230951aaff24b2a2a75bd90b9e4053bff0671e34bbfe09704ceb",
+    "src/reference/MemoryPanelPortCompiler.h": "1537474ab3e75cdb02c7aee80f30b1b2b8ced6d5de6a63badcac82a03064f2c8",
+    "src/reference/MemoryReceiverNetwork.h": "7320292825b96ed602852b47b43a13702fd8fd71a9a36e35a7f2d855a3287541",
+    "src/reference/ProgrammerControlIdentity.h": "326f82a9e644040c7ab05df7af880c4604ef2215a61958dc2a42c3f9b2675ec8",
+    "tests/MemoryQualificationProbe.cpp": "08ef6720f9d0d9046cc816b822af7a41204b524fa331afb4262e00849eb9dae0",
+    "tests/MemoryReceiverTruthTests.cpp": "11bd28a31e33acb27b3fa4cbf6c9f192caaa19bdf533a961053b3fe0d14eac48",
+    "tests/parity/tolerances-v2/memory-nonlinear-study.json": "75171d226efeeb6de3acf18256c074d13470cea503b8b09264d341b1e5af4593"
+  },
+  "result_sha256": {
+    "cpu.csv": "14c7663cb69a71721058af9054285d50427af22ad426772ecb7fbb5ecef2b0a4",
+    "nonlinear-counterexamples.csv": "dca3bf31afbb46b4dd976a4613f6e7e89049e9f5d9b992e29c96139ee3b5f500",
+    "nonlinear-radius.csv": "38d44757c4724a044f6ec76b4a22f2228c3eb0ac8abffe07cde87d8f1dca4895",
+    "nonlinear-summary.csv": "bc3588accd78f1a50121df4222ac4f9752f6f1d04124a923cb469d114ca558ff",
+    "preparation-cpu.csv": "27c2f9b2e84803c639b0169542b05c8fe7fc0fddfde26ced89f30109886e9615",
+    "scheduling.csv": "edd73d95da245b9c366363d5dea8d053b8ab3ac69df84dbb2031805634d1569f"
+  },
+  "timing_output_scope": {
+    "full": "All MemoryReceiverReadout fields are materialized.",
+    "held_bus_fresh_local": "Only Observed projection (buses, effective CV, Q, level gain, six stage times) is materialized; omits pin diagnostics and several oscillator/target/sustain/provenance fields. Not an equal-output replacement benchmark."
+  }
+}

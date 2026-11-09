@@ -24,7 +24,9 @@ No audio allocation, lock, new parameter or state field is added.
 No Engine oscillator, envelope, controller law or voice-routing policy changes.
 The correction intentionally changes affected on-screen performances in Legacy
 and Circuit sixteen-voice mode. PURE CS-80 still uses the original eight voices.
-The separate active-voice meter remains limited to the first instrument.
+The ownership correction originally left the meter primary-only. The later
+[activity telemetry correction](VOICE_ACTIVITY_TELEMETRY.md) covers both
+instruments separately; its visual qualification limits remain explicit.
 
 The existing [handoff limits](KEY_PRESSURE_HANDOFF.md) remain: deferred KAS
 onsets have conditional release ownership but no immediate pressure proof;

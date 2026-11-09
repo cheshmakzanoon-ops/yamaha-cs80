@@ -37,6 +37,13 @@ jobs:
           -DCS80_BUILD_PLUGIN=ON
           -DCS80_BUILD_TESTS=ON
 
+      - name: Verify configured JUCE source
+        run: >
+          cmake -DBUILD_DIR=build
+          -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
+          -DEXPECTED_JUCE_VERSION=8.0.11
+          -P scripts/verify-ci-juce-source.cmake
+
       - name: Build
         run: cmake --build build --parallel
 
@@ -123,6 +130,14 @@ jobs:
           if-no-files-found: error
           compression-level: 0
 
+      - name: Upload JUCE source evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-macos-universal-juce-evidence
+          path: build/ci-juce-provenance.txt
+          if-no-files-found: warn
+
   windows-installer:
     name: Windows x64 / VST3 + Standalone installer
     runs-on: windows-2022
@@ -133,6 +148,13 @@ jobs:
 
       - name: Configure
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+
+      - name: Verify configured JUCE source
+        run: >
+          cmake -DBUILD_DIR=build
+          -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
+          -DEXPECTED_JUCE_VERSION=8.0.11
+          -P scripts/verify-ci-juce-source.cmake
 
       - name: Build
         run: cmake --build build --config Release --parallel
@@ -194,6 +216,14 @@ jobs:
           if-no-files-found: error
           compression-level: 0
 
+      - name: Upload JUCE source evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-windows-installer-juce-evidence
+          path: build/ci-juce-provenance.txt
+          if-no-files-found: warn
+
   linux-packages:
     name: Linux x86_64 / .deb and tarball
     runs-on: ubuntu-24.04
@@ -213,18 +243,18 @@ jobs:
       - name: Configure
         run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
 
-      - name: Build
-        run: cmake --build build --parallel "$(nproc)"
-
-      - name: Test
-        run: ctest --test-dir build --output-on-failure
-
       - name: Verify configured JUCE source
         run: >
           cmake -DBUILD_DIR=build
           -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
           -DEXPECTED_JUCE_VERSION=8.0.11
           -P scripts/verify-ci-juce-source.cmake
+
+      - name: Build
+        run: cmake --build build --parallel "$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
 
       - name: Package
         run: |
@@ -237,3 +267,11 @@ jobs:
           path: packages/
           if-no-files-found: error
           compression-level: 0
+
+      - name: Upload JUCE source evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-linux-packages-juce-evidence
+          path: build/ci-juce-provenance.txt
+          if-no-files-found: warn

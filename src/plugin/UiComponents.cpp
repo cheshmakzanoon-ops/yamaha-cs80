@@ -3236,7 +3236,7 @@ ParamKnob::ParamKnob(Cs80AudioProcessor& p, int index, juce::String displayName)
         ? juce::String(index < cs80::P_ch2Start ? "Channel I " : "Channel II ") : juce::String();
     slider.setTitle(channelName + juce::String(cs80::paramDef(index).name));
     slider.setComponentID(Cs80AudioProcessor::parameterId(index));
-    slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Double-click to restore its default.");
+    slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Shift+F10 opens its context menu. Double-click to restore its default.");
     slider.onValueChange = [this] {
         slider.setTooltip(parameterTooltip(parameterIndex, tooltipNameFor(parameterIndex), (float) slider.getValue()));
         repaint();
@@ -3269,7 +3269,7 @@ bool ParamKnob::bindParameter(int index)
     parameterIndex = index;
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
     slider.setTitle(juce::String(cs80::paramDef(index).name));
-    slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Double-click to restore its default.");
+    slider.setDescription(tooltipNameFor(index) + ". Use the arrow keys to adjust this control. Shift+F10 opens its context menu. Double-click to restore its default.");
     slider.setComponentID(Cs80AudioProcessor::parameterId(index));
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.getAPVTS(), Cs80AudioProcessor::parameterId(index), slider);
@@ -3604,17 +3604,19 @@ ReadNumber readNumber(const juce::String& raw)
     if (negative)
         number = -number;
     const auto rest = t.substring(i).trim();
-    if (rest.startsWith("khz")) { r.unit = "hz"; r.scale = 1000.0; }
-    else if (rest.startsWith("hz")) r.unit = "hz";
-    else if (rest.startsWith("ms")) { r.unit = "s"; r.scale = 0.001; }
-    else if (rest.startsWith("st")) r.unit = "st";
-    else if (rest.startsWith("semi")) r.unit = "st";
-    else if (rest.startsWith("sec") || rest == "s") r.unit = "s";
-    else if (rest.startsWith("ct") || rest.startsWith("cent")) r.unit = "ct";
-    else if (rest.startsWith("oct") || rest == "o") r.unit = "oct";
-    else if (rest.startsWith("%")) r.unit = "%";
+    // Accept complete unit tokens, not arbitrary text with a familiar prefix:
+    // "3 kittens" must not silently become 3000 Hz, nor "80 ms garbage" 80 ms.
+    if (rest == "khz") { r.unit = "hz"; r.scale = 1000.0; }
+    else if (rest == "hz") r.unit = "hz";
+    else if (rest == "ms" || rest == "msec" || rest == "msecs") { r.unit = "s"; r.scale = 0.001; }
+    else if (rest == "st" || rest == "semi" || rest == "semitone" || rest == "semitones") r.unit = "st";
+    else if (rest == "s" || rest == "sec" || rest == "secs" || rest == "second" || rest == "seconds") r.unit = "s";
+    else if (rest == "ct" || rest == "cts" || rest == "cent" || rest == "cents") r.unit = "ct";
+    else if (rest == "oct" || rest == "o" || rest == "octave" || rest == "octaves") r.unit = "oct";
+    else if (rest == "%") r.unit = "%";
+    // MIX's existing percentage-pair display/parser is separate from unit admission.
     else if (rest.startsWith("/")) r.unit = "/";
-    else if (rest.startsWith("k")) { r.scale = 1000.0; r.explicitScale = true; }
+    else if (rest == "k") { r.scale = 1000.0; r.explicitScale = true; }
     else if (rest.isNotEmpty()) return r;   // text after the number that is not a unit: not a value
     r.explicitScale = r.explicitScale || r.unit.isNotEmpty();
     r.value = number * r.scale;
@@ -3865,7 +3867,7 @@ juce::String ParamKnob::buildTooltip(bool withCircuitNotes) const
     const int cc = processor.getMidiLearn().controllerFor(getHostParameterIndex());
     if (cc >= 0)
         text << "\nMIDI CC " << cc << (processor.getParamValue(cs80::P_parityMode) >= 0.5f ? " (inactive in PURE CS-80)" : "");
-    text << "\nDouble-click resets.  Right-click: MIDI learn, type, copy, help."
+    text << "\nDouble-click resets.  Right-click or Shift+F10: MIDI learn, type, copy, help."
          << (withCircuitNotes || help == nullptr ? juce::String() : juce::String("  Shift: circuit notes."));
     if (withCircuitNotes && help != nullptr)
         text << "\n" << kNotesHeading << "  -  " << juce::String(cs80::evidence::basisName(help->basis)).toUpperCase() << "  -  " << help->coverage

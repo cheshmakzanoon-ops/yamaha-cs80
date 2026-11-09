@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UiComponents.h"
+#include "VoiceActivity.h"
 
 #include <array>
 #include <functional>
@@ -13,8 +14,8 @@ namespace cs80::ui
 
 // The voice monitor: an optional drawer that holds what the main panel's signal-flow plate used
 // to show, so the channel rows can span the panel as on the hardware. It draws the signal path,
-// both envelopes and the filter response of one channel, computed from what is sounding (the
-// panel, or the selected tone or memory), and the eight voice cards' activity. It repaints only
+// settings-based envelope/filter illustrations for one channel (not sampled DSP taps),
+// and live activity for the original eight slots plus the optional extension. It repaints only
 // while it is open (15 Hz poll; a frame is drawn only when its inputs changed).
 class ScopeDrawer final : public juce::Component, private juce::Timer
 {
@@ -38,7 +39,7 @@ private:
     struct Snapshot
     {
         std::array<float, cs80::CP_count> v {};
-        unsigned voices = 0;
+        cs80::VoiceActivityReading voices;
         int channel = 0;
         int source = 13;
         bool operator==(const Snapshot&) const = default;

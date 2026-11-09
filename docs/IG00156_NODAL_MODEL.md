@@ -126,6 +126,11 @@ hold and prints the full-grid verdict, so the gate and its limits are not
 relaxed. At 8x (384 kHz) the whole grid passes. This is direct input to the
 Standard/HQ oversampling choice (ws2).
 
+The [2026-11-09 top-octave regression guards](IG00156_TOP_OCTAVE_GUARDS.md)
+add explicit known-deviation ceilings and direct high-cutoff HP/LP/cascade
+measurements. They prevent silent worsening of the failing cells, but do not
+change the filter or turn the original full-grid acceptance miss into a pass.
+
 The ADJ p11 HP/LP ratio is not explained by any stage gain: both setups put a
 Q = 5 resonance on the fundamental, so their ratio is independent of the
 gains, but the documented readings differ by 1.95x. The setup conditions in

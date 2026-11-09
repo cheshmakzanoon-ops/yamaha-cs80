@@ -8,7 +8,26 @@ the repository now automates from what only the owner can decide or run.
 [`.github/workflows/release.yml`](../../.github/workflows/release.yml) runs on
 `workflow_dispatch` and on `v*` tags. It does not replace `build.yml`: release
 only a commit whose `build`, `DSP numerical measurements` and `screenshots`
-workflows passed.
+workflows passed. Checking those earlier workflows for the exact source commit
+is still a release-operator requirement, not an automated dependency of this
+installer workflow. Its rebuilt binaries do not inherit earlier host-validation
+results merely because they came from the same source commit.
+
+All three release jobs now run the same clean, pinned JUCE 8.0.11 source check as
+ordinary CI, immediately after configuration and before the product `Build`
+step, signing or packaging. Configuration itself can build JUCE's `juceaide`
+helper. A local `deps/juce` checkout, explicit source override, wrong commit
+or version, dirty checkout or absent Git metadata fails the job. Each job retains
+`ci-juce-provenance.txt` in a separate `cs80-<job>-juce-evidence` artifact even
+after a later failure, if the verifier ran. This is source evidence, not installer,
+signature, native-host or DAW qualification. No signing or notarization behavior
+is changed.
+
+`python scripts/test-ci-juce-provenance.py` exercises the actual CMake verifier
+against isolated inert Git fixtures, including a missing-cache failure replacing
+stale PASS evidence, and checks the release-job gate/evidence wiring. These
+offline tests also run in ordinary CTest; they neither download JUCE nor build
+or execute a product.
 
 | Platform | Output | Signing |
 | --- | --- | --- |
@@ -52,7 +71,8 @@ python scripts/test-windows-installer-preflight.py
 The test suite uses inert header-only fixtures. It also compiles (but never runs)
 synthetic installers when Windows and Inno Setup 6 are available; that native
 case reports an explicit skip elsewhere. Header checks do not establish signing,
-runtime validity or DAW compatibility. No release/validator workflow is changed.
+runtime validity or DAW compatibility. This preflight does not replace any
+release or validator check.
 The synchronous compile-time hook follows the official
 [ISPP Exec contract](https://jrsoftware.org/ishelp/topic_exec.htm).
 
@@ -102,9 +122,12 @@ platform it supports, with the release candidate installed from its installer.
 The owner chose the **GNU Affero General Public License v3** (2026-10-31). The
 full text is in [`LICENSE`](../../LICENSE). This matches JUCE 8's free AGPLv3
 option, so no commercial JUCE licence is needed. Anyone who receives a binary is
-entitled to the complete corresponding source: every package names its exact
+entitled to the complete corresponding source. The CI archives name their exact
 source commit (`SOURCE.txt` / `manifest.json`), and every installer ships both
-`LICENSE` and the JUCE licence.
+`LICENSE` and the JUCE licence. The native installers do not yet include a
+project-source commit record in their installed payload; the release workflow's
+separate provenance artifact is not a substitute for that missing installed
+record. Adding and verifying that record is a remaining packaging task.
 
 ## 5. Product name and trademarks — legal review required
 

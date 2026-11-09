@@ -49,6 +49,10 @@ if (CS80_BUILD_TESTS)
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-packaging-notices.py)
     set_tests_properties(cs80_package_binary_identity_tests cs80_packaging_notice_tests
                          PROPERTIES TIMEOUT 60 LABELS "packaging")
+    add_test(NAME cs80_ci_juce_provenance_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-ci-juce-provenance.py
+                     --cmake ${CMAKE_COMMAND})
+    set_tests_properties(cs80_ci_juce_provenance_tests PROPERTIES TIMEOUT 60 LABELS "packaging")
     # The Debian fixture packager accepts native amd64 ELF only. Other hosts
     # still exercise all archive formats and installer notice source mappings.
     if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux" AND
@@ -102,6 +106,11 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_output_meter_display_tests PRIVATE src)
     add_test(NAME cs80_output_meter_display_tests COMMAND cs80_output_meter_display_tests)
     set_tests_properties(cs80_output_meter_display_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_voice_activity_tests tests/VoiceActivityTests.cpp)
+    target_include_directories(cs80_voice_activity_tests PRIVATE src)
+    target_link_libraries(cs80_voice_activity_tests PRIVATE Threads::Threads)
+    add_test(NAME cs80_voice_activity_tests COMMAND cs80_voice_activity_tests)
+    set_tests_properties(cs80_voice_activity_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_output_meter_tests tests/OutputMeterTests.cpp)
     target_include_directories(cs80_output_meter_tests PRIVATE src)
     add_test(NAME cs80_output_meter_tests COMMAND cs80_output_meter_tests)
@@ -300,6 +309,16 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_ig00156_nodal_tests COMMAND cs80_ig00156_nodal_tests
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/ws1-voice.json)
     set_tests_properties(cs80_ig00156_nodal_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_ig00156_top_octave_tests tests/Ig00156TopOctaveTests.cpp)
+    target_include_directories(cs80_ig00156_top_octave_tests PRIVATE src)
+    if (MSVC)
+        target_compile_options(cs80_ig00156_top_octave_tests PRIVATE /W4)
+    else()
+        target_compile_options(cs80_ig00156_top_octave_tests PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
+    add_test(NAME cs80_ig00156_top_octave_tests COMMAND cs80_ig00156_top_octave_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/known-deviations/ig00156-top-octave.json)
+    set_tests_properties(cs80_ig00156_top_octave_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_oscillator_promotion_tests tests/OscillatorPromotionTests.cpp)
     target_link_libraries(cs80_oscillator_promotion_tests PRIVATE cs80_core)
     add_test(NAME cs80_oscillator_promotion_tests COMMAND cs80_oscillator_promotion_tests
@@ -486,6 +505,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_drive_control_cache_tests PRIVATE src)
     add_test(NAME cs80_drive_control_cache_tests COMMAND cs80_drive_control_cache_tests)
     set_tests_properties(cs80_drive_control_cache_tests PROPERTIES TIMEOUT 60)
+    add_executable(cs80_ensemble_rate_cache_tests tests/EnsembleRateCacheTests.cpp)
+    target_include_directories(cs80_ensemble_rate_cache_tests PRIVATE src)
+    add_test(NAME cs80_ensemble_rate_cache_tests COMMAND cs80_ensemble_rate_cache_tests)
+    set_tests_properties(cs80_ensemble_rate_cache_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_tape_echo_control_cache_tests tests/TapeEchoControlCacheTests.cpp)
     target_include_directories(cs80_tape_echo_control_cache_tests PRIVATE src)
     add_test(NAME cs80_tape_echo_control_cache_tests COMMAND cs80_tape_echo_control_cache_tests)
@@ -526,6 +549,31 @@ if (CS80_BUILD_TESTS)
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_port_map_negative_controls.py
                          --compiler ${CMAKE_CXX_COMPILER})
         set_tests_properties(cs80_memory_port_map_negative_controls PROPERTIES TIMEOUT 300)
+    endif()
+
+    add_executable(cs80_memory_control_routing_tests tests/MemoryControlRoutingTests.cpp)
+    target_include_directories(cs80_memory_control_routing_tests PRIVATE src)
+    add_test(NAME cs80_memory_control_routing_tests COMMAND cs80_memory_control_routing_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-control-routing.json)
+    set_tests_properties(cs80_memory_control_routing_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_memory_receiver_truth_tests tests/MemoryReceiverTruthTests.cpp)
+    target_include_directories(cs80_memory_receiver_truth_tests PRIVATE src)
+    add_test(NAME cs80_memory_receiver_truth_tests COMMAND cs80_memory_receiver_truth_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-nonlinear-study.json)
+    set_tests_properties(cs80_memory_receiver_truth_tests PROPERTIES TIMEOUT 300)
+    # Opt-in research probe: reports failures of candidate approximation budgets,
+    # not a shipping-audio test or a whole-instrument performance benchmark.
+    add_executable(cs80_memory_qualification_probe tests/MemoryQualificationProbe.cpp)
+    target_include_directories(cs80_memory_qualification_probe PRIVATE src)
+    add_test(NAME cs80_memory_qualification_probe_self_tests COMMAND cs80_memory_qualification_probe
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-nonlinear-study.json
+             ${CMAKE_CURRENT_BINARY_DIR} check)
+    set_tests_properties(cs80_memory_qualification_probe_self_tests PROPERTIES TIMEOUT 30)
+    if (NOT MSVC)
+        add_test(NAME cs80_memory_routing_negative_controls
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_routing_negative_controls.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_memory_routing_negative_controls PROPERTIES TIMEOUT 300)
     endif()
 
     add_executable(cs80_programmer_control_identity_tests tests/ProgrammerControlIdentityTests.cpp)
@@ -785,8 +833,26 @@ if (CS80_BUILD_PLUGIN)
 
     # Real processor/FIFO ownership tests without constructing an editor or
     # native peer. The existing full UI smoke test remains independent.
+    add_test(NAME cs80_voice_activity_host_tests COMMAND CS80Snapshots --voice-activity-tests)
+    set_tests_properties(cs80_voice_activity_host_tests PROPERTIES TIMEOUT 120)
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_test(NAME cs80_voice_activity_ui_tests
+                 COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-ui-smoke-linux.sh
+                         $<TARGET_FILE:CS80Snapshots> --voice-activity-ui-tests)
+    else()
+        add_test(NAME cs80_voice_activity_ui_tests COMMAND CS80Snapshots --voice-activity-ui-tests)
+    endif()
+    set_tests_properties(cs80_voice_activity_ui_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_keyboard_handoff_host_tests COMMAND CS80Snapshots --keyboard-handoff-tests)
     set_tests_properties(cs80_keyboard_handoff_host_tests PROPERTIES TIMEOUT 120)
+    # Native components only, with menu callbacks observed rather than opening
+    # a popup/native peer. The full UI smoke remains the popup rendering gate.
+    add_test(NAME cs80_context_menu_keyboard_tests COMMAND CS80Snapshots --context-menu-keyboard-tests)
+    set_tests_properties(cs80_context_menu_keyboard_tests PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_typed_value_unit_tests COMMAND CS80Snapshots --typed-value-unit-tests)
+    set_tests_properties(cs80_typed_value_unit_tests PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_keyboard_tuning_ui_tests COMMAND CS80Snapshots --keyboard-tuning-ui-tests)
+    set_tests_properties(cs80_keyboard_tuning_ui_tests PROPERTIES TIMEOUT 120)
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix

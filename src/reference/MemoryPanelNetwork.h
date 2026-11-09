@@ -72,10 +72,29 @@ struct Jacobian
     int busBase = 0;
 };
 
-inline Result solve(const Setup& setup, Jacobian* derivative = nullptr)
+// Optional OFFLINE Norton-current feedback: amperes INTO physical output row i
+// per volt at physical output row j. Digital rows/columns must remain zero.
+// This is not an extra load. The caller must supply a declared receiver law.
+struct BusCurrentFeedback
+{
+    std::array<std::array<double, 26>, 26> siemens {};
+};
+
+inline Result solve(const Setup& setup, Jacobian* derivative = nullptr,
+                    const BusCurrentFeedback* feedback = nullptr)
 {
     Result out;
     if (derivative != nullptr) *derivative = {};
+    bool hasFeedback = false;
+    if (feedback != nullptr)
+        for (std::size_t i = 0; i < 26; ++i)
+            for (std::size_t j = 0; j < 26; ++j)
+            {
+                const double g = feedback->siemens[i][j];
+                if (!std::isfinite(g) || ((mp::isSwitchRow(static_cast<int>(i) + 1)
+                    || mp::isSwitchRow(static_cast<int>(j) + 1)) && g != 0.0)) return out;
+                hasFeedback = hasFeedback || g != 0.0;
+            }
     for (size_t i = 0; i < setup.injectedAmps.size(); ++i)
         if (!std::isfinite(setup.injectedAmps[i])
             || (mp::isSwitchRow(static_cast<int>(i) + 1) && setup.injectedAmps[i] != 0.0))
@@ -214,6 +233,14 @@ inline Result solve(const Setup& setup, Jacobian* derivative = nullptr)
             // Skip zero to preserve the original zero-excitation arithmetic.
             if (setup.injectedAmps[(size_t) (rows[(size_t) r] - 1)] != 0.0)
                 f[(size_t) bi] += setup.injectedAmps[(size_t) (rows[(size_t) r] - 1)];
+            if (hasFeedback)
+                for (int source = 0; source < nRows; ++source)
+                {
+                    const double g = feedback->siemens[(size_t) (rows[(size_t) r] - 1)][(size_t) (rows[(size_t) source] - 1)];
+                    if (g == 0.0) continue;
+                    f[(size_t) bi] += g * x[(size_t) (busBase + source)];
+                    J(bi, busBase + source, g);
+                }
         }
     };
 

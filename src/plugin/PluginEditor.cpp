@@ -611,7 +611,7 @@ private:
     bool over = false, nonFinite = false;
 };
 
-// Eight voice lamps and a MIDI-in lamp. It polls the lock-free voice mask at
+// Eight voice lamps (two rows in sixteen-voice mode) and a MIDI-in lamp. It polls at
 // 24 Hz and repaints its own small rectangle only when a lamp changes.
 class ActivityLamps final : public juce::Component, private juce::Timer
 {
@@ -621,7 +621,7 @@ public:
         setInterceptsMouseClicks(true, false);          // only so hovering shows the description
         setComponentID("activity_lamps");
         setTitle("Voice and MIDI activity");
-        setDescription("Eight lamps follow the sounding voices (up to eight at once). The MIDI lamp flashes for any MIDI the host sends: notes, controllers, pitch bend and pressure.");
+        setDescription("Voice lamps follow the audio-applied mode: one row for the original eight slots, two rows for sixteen (extension slots 9 to 16 below). Active includes release tails. The MIDI lamp flashes for host notes, controllers, pitch bend and pressure.");
         startTimerHz(24);
     }
     ~ActivityLamps() override { stopTimer(); }
@@ -629,20 +629,22 @@ public:
     // Called on the message thread whenever a lamp changes; the argument is the MIDI lamp state.
     std::function<void(bool)> onChange;
 
-    void refresh()
+    void refresh(bool invalidate = true)
     {
         const auto now = sample();
         if (now != shown)
         {
             shown = now;
-            repaint();
+            if (invalidate) repaint();
             if (onChange) onChange(shown.midi);
         }
     }
 
     void paint(juce::Graphics& g) override
     {
-        shown = sample();
+        // A paint can run before the timer. Do not consume a new snapshot
+        // silently and leave the accessible count waiting for another change.
+        refresh(false);
         const float sx = (float) getWidth() / geo::lampWell.getWidth();
         FloorScope floor(sx);
         g.addTransform(juce::AffineTransform::scale(sx, (float) getHeight() / geo::lampWell.getHeight()));
@@ -650,25 +652,29 @@ public:
                     juce::Colour(0xffd8c68a), 0.8f);
         art::legend(g, "MIDI", { 88.0f, 2.0f, 38.0f, 13.0f }, spacedFont(9.5f, 0.10f), juce::Justification::centred,
                     juce::Colour(0xffd8c68a), 0.8f);
-        for (int i = 0; i < 8; ++i)
-            lamp(g, { 14.0f + (float) i * 10.5f, 27.0f }, 3.9f, ((shown.mask >> i) & 1u) != 0, juce::Colour(0xffffb53a));
+        for (int i = 0; i < shown.voices.capacity; ++i)
+        {
+            const bool extended = shown.voices.capacity == 16;
+            const float y = extended ? (i < 8 ? 22.0f : 32.0f) : 27.0f;
+            lamp(g, { 14.0f + (float) (i % 8) * 10.5f, y }, extended ? 3.0f : 3.9f,
+                 shown.voices.active(i), juce::Colour(0xffffb53a));
+        }
         lamp(g, { 108.0f, 27.0f }, 4.4f, shown.midi, juce::Colour(0xff5cf08a));
     }
 
 private:
     struct Sample
     {
-        unsigned mask = 0;
+        cs80::VoiceActivityReading voices;
         bool midi = false;
-        bool operator==(const Sample& o) const noexcept { return mask == o.mask && midi == o.midi; }
+        bool operator==(const Sample& o) const noexcept { return voices == o.voices && midi == o.midi; }
         bool operator!=(const Sample& o) const noexcept { return ! (*this == o); }
     };
 
     Sample sample()
     {
         Sample s;
-        for (int i = 0; i < 8; ++i)
-            if (processor.isVoiceActive(i)) s.mask |= 1u << i;
+        s.voices = processor.getVoiceActivity();
         // Any host MIDI event (note, CC, bend, pressure) bumps the processor's counter; a held note keeps it lit.
         bool held = false;
         for (int note = 0; note < 128 && ! held; ++note)
@@ -1127,7 +1133,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         }
         voiceStatusLabel.setComponentID("voice_status");
         voiceStatusLabel.setTitle("Active voices");
-        voiceStatusLabel.setTooltip("Number of sounding voices of the eight-voice engine. The lamps in the toolbar show which voices are active.");
+        voiceStatusLabel.setTooltip("Number of active voice slots, including release tails. Sixteen-voice mode shows both instruments; PURE CS-80 uses eight. The toolbar adds an extension row only after audio applies that mode.");
         midiStatusLabel.setComponentID("midi_status");
         midiStatusLabel.setTitle("MIDI input activity");
         midiStatusLabel.setTooltip("Lights while notes arrive from the host or a MIDI controller.");
@@ -1763,13 +1769,13 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
 
     void syncLampStatus(bool midi)
     {
-        const int voices = juce::jlimit(0, 8, processor.getActiveVoiceCount());
+        const auto voices = processor.getVoiceActivity();
         // The toolbar lamps carry voices and MIDI; the strip keeps the (hidden) text for accessibility only.
         voiceStatusLabel.setDisplayText({});
         midiStatusLabel.setDisplayText({});
         voiceStatusLabel.setInterceptsMouseClicks(false, false);
         midiStatusLabel.setInterceptsMouseClicks(false, false);
-        voiceStatusLabel.setText("Active voices: " + juce::String(voices) + " of 8", juce::dontSendNotification);
+        voiceStatusLabel.setText("Active voices: " + juce::String(voices.count()) + " of " + juce::String(voices.capacity), juce::dontSendNotification);
         midiStatusLabel.setText(midi ? "MIDI input: notes arriving" : "MIDI input: idle", juce::dontSendNotification);
     }
 
