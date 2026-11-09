@@ -1,0 +1,12 @@
+CPU: AMD EPYC 9V74 80-Core Processor, shared cloud host.
+Compiler: Debian GCC 14.2.0-19, -O3 -DNDEBUG, default x86-64 target.
+Backend alone uses -ffp-contract=off and function-scoped AVX2/no-FMA.
+Whole Engine timings: 48 kHz host, Eco/2x, original 9f89f8a versus
+explicit-ON template integration-v2, before the final wrapper-linkage-only fix.
+Candidate scalar/SIMD modes alternate with untouched original in rotating order.
+Raw logs are not a native ARM/non-AVX/DAW budget and no outliers were discarded.
+Survey: 7 repeats, 384 blocks x 128 frames.
+Long confirmations: 9 repeats, 1536 blocks x 128 frames.
+Stage timings: 500000 frames, 8 actual stages, 5 repeats, ordinary scalar set.
+The final option defaults OFF because no universal overhead-free win was proven.
+Do not relabel these historical timings as a final post-linkage-fix budget.

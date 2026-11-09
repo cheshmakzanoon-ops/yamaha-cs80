@@ -1,0 +1,82 @@
+{
+  "strict-current-on": [
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/strict-current-on-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/strict-current-on-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/strict-current-on-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o"
+    }
+  ],
+  "unsafe-current-on": [
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/unsafe-current-on-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -funsafe-math-optimizations -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/unsafe-current-on-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -funsafe-math-optimizations -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/unsafe-current-on-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -funsafe-math-optimizations -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o"
+    }
+  ],
+  "strict-current-off": [
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/strict-current-off-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/strict-current-off-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/strict-current-off-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o"
+    }
+  ],
+  "unsafe-current-off": [
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/unsafe-current-off-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -funsafe-math-optimizations -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/unsafe-current-off-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -funsafe-math-optimizations -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/tmp/cs80-portability/clang-admission/unsafe-current-off-build",
+      "command": "/tmp/cs80-portability/apt/root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/shared/yamaha-filter-simd/src -funsafe-math-optimizations -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "file": "/workspace/shared/yamaha-filter-simd/src/core/Ig00156Batch.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o"
+    }
+  ]
+}

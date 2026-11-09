@@ -1,0 +1,16 @@
+/tmp/cs80-filter-simd-build
+CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_CXX_FLAGS:STRING=
+CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=ON
+/tmp/cs80-filter-simd-disabled-build
+CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_CXX_FLAGS:STRING=
+CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=OFF
+/tmp/cs80-filter-simd-native-build
+CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_CXX_FLAGS:STRING=-march=native
+CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=ON
+/tmp/cs80-filter-simd-sanitize-build
+CMAKE_BUILD_TYPE:STRING=Debug
+CMAKE_CXX_FLAGS:STRING=-O1 -g -fsanitize=address,undefined,float-cast-overflow -fno-sanitize-recover=all -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS
+CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=ON

@@ -1,0 +1,69 @@
+# associative-alone-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# associative-effective-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# fast-macros.txt
+#define __FAST_MATH__ 1
+#define __FINITE_MATH_ONLY__ 1
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# finite-only-macros.txt
+#define __FINITE_MATH_ONLY__ 1
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# fma-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __FMA__ 1
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# no-signed-zero-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# no-trapping-only-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# ofast-macros.txt
+#define __FAST_MATH__ 1
+#define __FINITE_MATH_ONLY__ 1
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+clang++-19: warning: argument '-Ofast' is deprecated; use '-O3 -ffast-math' for the same behavior, or '-O3' to enable only conforming optimizations [-Wdeprecated-ofast]
+
+# reciprocal-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# strict-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1
+
+# unsafe-macros.txt
+#define __FINITE_MATH_ONLY__ 0
+#define __GNUC__ 4
+#define __clang__ 1
+#define __x86_64__ 1

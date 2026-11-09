@@ -1,0 +1,116 @@
+{
+  "compiler": "g++",
+  "family": "gcc",
+  "profiles": [
+    {
+      "profile": "strict",
+      "flags": [],
+      "caller_expected": 1,
+      "backend_expected": 1,
+      "returncode": 0,
+      "output": "admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0"
+    },
+    {
+      "profile": "associative-alone",
+      "flags": [
+        "-fassociative-math"
+      ],
+      "caller_expected": 1,
+      "backend_expected": 1,
+      "returncode": 0,
+      "output": "admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0"
+    },
+    {
+      "profile": "associative-effective",
+      "flags": [
+        "-fassociative-math",
+        "-fno-signed-zeros",
+        "-fno-trapping-math"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "reciprocal",
+      "flags": [
+        "-freciprocal-math"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "no-signed-zero",
+      "flags": [
+        "-fno-signed-zeros"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "unsafe",
+      "flags": [
+        "-funsafe-math-optimizations"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "fast",
+      "flags": [
+        "-ffast-math"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "finite-only",
+      "flags": [
+        "-ffinite-math-only"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "ofast",
+      "flags": [
+        "-Ofast"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "fma",
+      "flags": [
+        "-mfma"
+      ],
+      "caller_expected": 0,
+      "backend_expected": 0,
+      "returncode": 0,
+      "output": "admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0"
+    },
+    {
+      "profile": "no-trapping-only",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "caller_expected": 1,
+      "backend_expected": 1,
+      "returncode": 0,
+      "output": "admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0"
+    }
+  ]
+}

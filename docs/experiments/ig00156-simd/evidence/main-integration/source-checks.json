@@ -1,0 +1,61 @@
+{
+  "base": "68fcb884d49afb2a938dd703328529fca06f331d",
+  "integrated_source": "f7292e3c8fa0d8d84894ab9ed25085c13d740e49",
+  "reviewed_source": "b0b04abe1dbab19abc86a309787dad4a567f3137",
+  "files": {
+    "src/core/Engine.cpp": {
+      "sha256": "f63c03e1f04cc5a2d51205982f3ecbdc9a839812d1ec01bc61da9906ffea82ea",
+      "matches_reviewed": true
+    },
+    "src/core/Engine.h": {
+      "sha256": "ff217d28e5566d30302a39c18f1862e41b31246ec3212548afb37df4a56e4202",
+      "matches_reviewed": true
+    },
+    "src/core/Ig00156Filter.h": {
+      "sha256": "dd6ae57c9b3fed7817eeabc4e6f1128c41330a1ae7c183d73297a2fe5466e218",
+      "matches_reviewed": true
+    },
+    "src/core/Ig00156Batch.cpp": {
+      "sha256": "a426a0866f4d538e359f6c85693be75e6dcc6dfef9c2542713a98736ecaa9f7a",
+      "matches_reviewed": true
+    },
+    "src/core/Ig00156Batch.h": {
+      "sha256": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985",
+      "matches_reviewed": true
+    },
+    "src/experimental/ContinuousVoiceCircuit.h": {
+      "sha256": "eacaf50c914c965ead4369b06fcfd5bd51dd63263dad5ac1f04a67a461f38e33",
+      "matches_reviewed": true
+    },
+    "tests/Ig00156BatchTests.cpp": {
+      "sha256": "a1107ced282fc32e9698568712889cb3ba97b8a05cbccaaecc50df38b71f6906",
+      "matches_reviewed": true
+    },
+    "tests/Ig00156BatchAdmissionProbe.cpp": {
+      "sha256": "10f7664f98842bbfaa3e3eb7c9a2e82b05064eb18d12ac9193a74d5932b1339f",
+      "matches_reviewed": true
+    },
+    "tests/FilterBatchEngineTests.cpp": {
+      "sha256": "7432317444846a50c1025301cd51e89b4c8e21d5dd02fb731a5e1a406499015e",
+      "matches_reviewed": true
+    },
+    "tests/FilterBatchSchedulingTests.cpp": {
+      "sha256": "80cfdb4597d9452774b0fa36df5a2785b4c76c1059fcdc8e1747323184195852",
+      "matches_reviewed": true
+    },
+    "tests/test_filter_batch_admission.py": {
+      "sha256": "2b6c4d2a835dffe00ef2ff1d6fa88303b4730ed7b209850b70734d451ec5dbde",
+      "matches_reviewed": true
+    },
+    ".github/workflows/filter-batch.yml": {
+      "sha256": "fa1154972f0e38450637103711820be4f1cec0ee8e376473961644db50fc849f",
+      "matches_reviewed": true
+    }
+  },
+  "screenshots_unchanged_from_main": true,
+  "other_docs_build_workflow_unchanged_from_main": true,
+  "cmake_integration": {
+    "sha256": "7d76639b83224af52e2e99fc12075a910501e8c168b9d863d701c6a4a0efc43a",
+    "note": "Only auto-merged context differs from reviewed branch; existing main additions retained and fresh default/ON GCC/Clang builds exercised."
+  }
+}

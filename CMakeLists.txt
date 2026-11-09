@@ -8,12 +8,28 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(CS80_BUILD_PLUGIN "Build the JUCE plugin and standalone application" ON)
 option(CS80_BUILD_TESTS "Build core tests" ON)
+option(CS80_ENABLE_AVX2_FILTER_BATCH "Opt into exact GCC AVX2 stage batches (throughput qualification is workload-specific)" OFF)
 
 add_library(cs80_core STATIC
     src/core/Engine.cpp
     src/core/FactoryPresets.cpp
+    src/core/Ig00156Batch.cpp
 )
+# Do not alter the existing scalar arithmetic contract. The optional AVX2
+# function is isolated; dispatch and every unsupported build remain baseline ISA.
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set_source_files_properties(src/core/Ig00156Batch.cpp PROPERTIES
+        COMPILE_OPTIONS "-ffp-contract=off")
+endif()
 target_include_directories(cs80_core PUBLIC src)
+if (NOT CS80_ENABLE_AVX2_FILTER_BATCH OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # Unknown/Clang math contracts fail closed. This only disables the optional
+    # backend; it never overrides any scalar source's floating-point flags.
+    target_compile_definitions(cs80_core PUBLIC CS80_DISABLE_AVX2_FILTER_BATCH=1)
+    if (CS80_ENABLE_AVX2_FILTER_BATCH AND NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        message(STATUS "AVX2 filter batch request remains scalar: only GCC has a qualified detectable math contract")
+    endif()
+endif()
 if (MSVC)
     target_compile_options(cs80_core PRIVATE /W4 /permissive-)
 else()
@@ -29,6 +45,18 @@ if (CS80_BUILD_TESTS)
         target_compile_options(cs80_tests PRIVATE -Wall -Wextra)
     endif()
     enable_testing()
+    add_executable(cs80_ig00156_batch_tests tests/Ig00156BatchTests.cpp)
+    target_link_libraries(cs80_ig00156_batch_tests PRIVATE cs80_core)
+    add_test(NAME cs80_ig00156_batch_tests COMMAND cs80_ig00156_batch_tests)
+    set_tests_properties(cs80_ig00156_batch_tests PROPERTIES TIMEOUT 120)
+    add_executable(cs80_filter_batch_engine_tests tests/FilterBatchEngineTests.cpp)
+    target_link_libraries(cs80_filter_batch_engine_tests PRIVATE cs80_core)
+    add_test(NAME cs80_filter_batch_engine_tests COMMAND cs80_filter_batch_engine_tests)
+    set_tests_properties(cs80_filter_batch_engine_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_filter_batch_scheduling_tests tests/FilterBatchSchedulingTests.cpp)
+    target_link_libraries(cs80_filter_batch_scheduling_tests PRIVATE cs80_core)
+    add_test(NAME cs80_filter_batch_scheduling_tests COMMAND cs80_filter_batch_scheduling_tests)
+    set_tests_properties(cs80_filter_batch_scheduling_tests PROPERTIES TIMEOUT 180)
     add_executable(cs80_ig00151_zero_ei_tests tests/Ig00151ZeroEiTests.cpp)
     target_include_directories(cs80_ig00151_zero_ei_tests PRIVATE src)
     add_test(NAME cs80_ig00151_zero_ei_tests COMMAND cs80_ig00151_zero_ei_tests)
@@ -41,6 +69,12 @@ if (CS80_BUILD_TESTS)
     add_test(NAME cs80_pump_until_tests COMMAND cs80_pump_until_tests)
     set_tests_properties(cs80_pump_until_tests PROPERTIES TIMEOUT 30)
     find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    if (NOT MSVC AND NOT CMAKE_CROSSCOMPILING AND CMAKE_CXX_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
+        add_test(NAME cs80_filter_batch_admission_tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_filter_batch_admission.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_filter_batch_admission_tests PROPERTIES TIMEOUT 180)
+    endif()
     # Inert cross-platform artifact/header and notice regressions. These must
     # run with ordinary CTest, not only when a packaging helper is run by hand.
     add_test(NAME cs80_package_binary_identity_tests

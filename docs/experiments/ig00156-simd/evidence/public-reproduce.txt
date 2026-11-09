@@ -1,0 +1,62 @@
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (0.7s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/cs80-filter-simd-public-reproduce/current-build
+[  0%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[  0%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[100%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+[100%] Linking CXX static library libcs80_core.a
+[100%] Built target cs80_core
+[100%] Building CXX object CMakeFiles/cs80_ig00156_batch_tests.dir/tests/Ig00156BatchTests.cpp.o
+[100%] Linking CXX executable cs80_ig00156_batch_tests
+[100%] Built target cs80_ig00156_batch_tests
+[ 50%] Built target cs80_core
+[100%] Building CXX object CMakeFiles/cs80_filter_batch_engine_tests.dir/tests/FilterBatchEngineTests.cpp.o
+[100%] Linking CXX executable cs80_filter_batch_engine_tests
+[100%] Built target cs80_filter_batch_engine_tests
+[ 50%] Built target cs80_core
+[ 50%] Building CXX object CMakeFiles/cs80_filter_batch_scheduling_tests.dir/tests/FilterBatchSchedulingTests.cpp.o
+[100%] Linking CXX executable cs80_filter_batch_scheduling_tests
+[100%] Built target cs80_filter_batch_scheduling_tests
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/cs80-filter-simd-public-reproduce/baseline-build
+[ 66%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[ 66%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[100%] Linking CXX static library libcs80_core.a
+[100%] Built target cs80_core
+Ig00156Batch: 1126360 checks, 0 failures, 15685 accelerated groups
+FilterBatchScheduling: 869465 checks, 0 failures, 135454 timeline frames (four engine variants)
+FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures
+FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures
+30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557  /tmp/cs80-filter-simd-public-reproduce/baseline.raw
+30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557  /tmp/cs80-filter-simd-public-reproduce/current.raw
+Optional: /tmp/cs80-filter-simd-public-reproduce/stage-benchmark 500000 > /tmp/cs80-filter-simd-public-reproduce/stage-timing.csv
+Optional: python3 /workspace/shared/yamaha-filter-simd/docs/experiments/ig00156-simd/compare-benchmarks.py /tmp/cs80-filter-simd-public-reproduce/baseline-benchmark /tmp/cs80-filter-simd-public-reproduce/current-benchmark /tmp/cs80-filter-simd-public-reproduce/engine-timing.csv

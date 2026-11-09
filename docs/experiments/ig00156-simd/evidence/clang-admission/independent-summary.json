@@ -1,0 +1,60 @@
+{
+  "files": {
+    "strict-baseline": {
+      "size": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "strict-current-off": {
+      "size": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "strict-current-on": {
+      "size": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "unsafe-baseline": {
+      "size": 22400288,
+      "sha256": "3f4f8cfec00cd2aba2791e9afd2781112fbdb2a4e331e7b6e4fdb0667623c941"
+    },
+    "unsafe-current-off": {
+      "size": 22400288,
+      "sha256": "3f4f8cfec00cd2aba2791e9afd2781112fbdb2a4e331e7b6e4fdb0667623c941"
+    },
+    "unsafe-current-on": {
+      "size": 22400288,
+      "sha256": "3f4f8cfec00cd2aba2791e9afd2781112fbdb2a4e331e7b6e4fdb0667623c941"
+    }
+  },
+  "comparisons": {
+    "strict:baseline/current-on": {
+      "equal": true,
+      "byte_mismatches": 0,
+      "length_equal": true
+    },
+    "strict:baseline/current-off": {
+      "equal": true,
+      "byte_mismatches": 0,
+      "length_equal": true
+    },
+    "strict:current-on/current-off": {
+      "equal": true,
+      "byte_mismatches": 0,
+      "length_equal": true
+    },
+    "unsafe:baseline/current-on": {
+      "equal": true,
+      "byte_mismatches": 0,
+      "length_equal": true
+    },
+    "unsafe:baseline/current-off": {
+      "equal": true,
+      "byte_mismatches": 0,
+      "length_equal": true
+    },
+    "unsafe:current-on/current-off": {
+      "equal": true,
+      "byte_mismatches": 0,
+      "length_equal": true
+    }
+  }
+}

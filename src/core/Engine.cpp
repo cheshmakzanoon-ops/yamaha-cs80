@@ -43,6 +43,7 @@ void visitSmoothedSettings(GlobalSettings& g, RankSettings* ranks, int rankCount
 
 Engine::Engine()
 {
+    filterBatchKernel = Ig00156Batch::selectKernel();
     originalSubSmoothing = (float) (-std::expm1(-1.0 / (0.010 * internalRate)));
     wahSmoothing = (float) (-std::expm1(-1.0 / (0.012 * internalRate)));
     outputGainSmoothing = (float) (-std::expm1(-1.0 / (0.005 * internalRate)));
@@ -2124,7 +2125,33 @@ void Engine::endSmoothedControls() noexcept
     }
 }
 
+#if CS80_IG00156_EXACT_BATCH_BUILD
 void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+{
+    if (filterBatchKernel != nullptr && usesSourceModels(global.renderPolicy)
+        && Ig00156Batch::environmentSupported())
+    {
+        int activeCount = 0;
+        for (const auto& voice : voices)
+            activeCount += voice.active ? 1 : 0;
+        const int hpRanks = (rankSettings[0].hpfOn ? 1 : 0) + (rankSettings[1].hpfOn ? 1 : 0);
+        const int lpRanks = (rankSettings[0].lpfOn ? 1 : 0) + (rankSettings[1].lpfOn ? 1 : 0);
+        if (activeCount * std::max(hpRanks, lpRanks) >= 4)
+        {
+            processInternalSampleImpl<true>(outL, outR, externalModulation);
+            return;
+        }
+    }
+    processInternalSampleImpl<false>(outL, outR, externalModulation);
+}
+
+template<bool BatchFilters>
+void Engine::processInternalSampleImpl(float& outL, float& outR, float externalModulation)
+#else
+// Default/unsupported builds keep the original scalar function shape rather
+// than instantiating the optional scheduler, even when the CPU has AVX2.
+void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+#endif
 {
     const float sr = (float) internalRate;
     const float invSr = 1.0f / sr;
@@ -2295,6 +2322,19 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
     const bool freeRunning = freeRunningVoices();
+#if CS80_IG00156_EXACT_BATCH_BUILD
+    // Only the independent active-rank filters/VCA mix are deferred. All
+    // oscillators, RNG draws, controls, envelopes and modern modulation keep
+    // their original voice/rank order. Silent idle/replay clocks stay scalar.
+    struct PendingRank
+    {
+        Rank* rank;
+        float filtered, sine, vcfLevel, levelCv, amp, chGain, pan;
+    };
+    std::array<PendingRank, kNumVoices * kNumRanks> pending;
+    int pendingCount = 0;
+    constexpr bool batchFilters = BatchFilters;
+#endif
     for (int vi = 0; vi < kNumVoices; ++vi)
     {
         auto& v = voices[(size_t) vi];
@@ -2541,7 +2581,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             {
                 // Same stage clocking as the idle path (re-referencing a stage
                 // whose histories were last clocked at the idle step rate).
-                filtered = voice_continuity::clockStages(r.hpStage, r.lpStage, r.idleRefs, filtered, r.idle, sr);
+#if CS80_IG00156_EXACT_BATCH_BUILD
+                if (! batchFilters)
+#endif
+                    filtered = voice_continuity::clockStages(r.hpStage, r.lpStage, r.idleRefs, filtered, r.idle, sr);
             }
             else
             {
@@ -2585,6 +2628,14 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
+#if CS80_IG00156_EXACT_BATCH_BUILD
+            if (batchFilters)
+            {
+                const float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
+                pending[(size_t) pendingCount++] = { &r, filtered, sine, rs.vcfLevel, levelCv, amp, chGain, pan };
+                continue;
+            }
+#endif
             // Velocity acts through the selected initial-touch destinations.
             // An unconditional velocity gain made disabled touch controls audible.
             const float vcaInput = filtered * rs.vcfLevel + sine;
@@ -2620,6 +2671,69 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             v.sustained = false;
         }
     }
+
+#if CS80_IG00156_EXACT_BATCH_BUILD
+    if (batchFilters)
+    {
+        // Ordinary set/reReference remain the only coefficient/clock owners.
+        // Finish every HP before its own LP; packs may omit bypassed stages.
+        // Nothing reads another rank's filter/VCA state during this interval.
+        for (bool highPass : { true, false })
+        {
+            Ig00156Batch::Stages stages;
+            Ig00156Batch::Inputs inputs;
+            std::array<int, 4> indices;
+            int count = 0;
+            for (int i = 0; i < pendingCount; ++i)
+            {
+                auto& p = pending[(size_t) i];
+                auto& r = *p.rank;
+                const auto& c = r.idle;
+                if (! (highPass ? c.hpOn : c.lpOn))
+                    continue;
+                auto& stage = highPass ? r.hpStage : r.lpStage;
+                auto& rate = highPass ? r.idleRefs.hpRate : r.idleRefs.lpRate;
+                voice_continuity::prepareStageClock(stage, rate, highPass ? c.hpCutoff : c.lpCutoff,
+                                                    highPass ? c.hpQ : c.lpQ, sr, false);
+                stages[(size_t) count] = &stage;
+                inputs[(size_t) count] = p.filtered;
+                indices[(size_t) count++] = i;
+                if (count == 4)
+                {
+                    Ig00156Batch::Outputs outputs;
+                    processIg00156Four(stages, inputs, outputs, filterBatchKernel);
+                    for (int j = 0; j < 4; ++j)
+                        pending[(size_t) indices[(size_t) j]].filtered = highPass ? outputs[(size_t) j].hp : outputs[(size_t) j].lp;
+                    count = 0;
+                }
+            }
+            for (int j = 0; j < count; ++j)
+            {
+                const auto output = stages[(size_t) j]->process(inputs[(size_t) j]);
+                pending[(size_t) indices[(size_t) j]].filtered = highPass ? output.hp : output.lp;
+            }
+        }
+        // Preserve the original rank order and the exact multiply/add order
+        // of the VCA and mix. There is no block queue or additional latency.
+        for (int i = 0; i < pendingCount; ++i)
+        {
+            const auto& p = pending[(size_t) i];
+            auto& r = *p.rank;
+            if (r.vcaCold)
+            {
+                r.vca.reset(p.levelCv);
+                r.vcaCold = false;
+            }
+            const float vcaInput = p.filtered * p.vcfLevel + p.sine;
+            const float voiceOut = r.vca.process(vcaInput, p.levelCv, subValue * global.subVca * kIg00151SubOctaves, p.amp)
+                                   * p.chGain * 0.17f;
+            float panLeft, panRight;
+            constantPowerPan(p.pan, panLeft, panRight);
+            mixL += voiceOut * panLeft;
+            mixR += voiceOut * panRight;
+        }
+    }
+#endif
 
     heldCount = stillHeld;
 

@@ -4,6 +4,7 @@
 #include "ModernLayer.h"
 #include "ModulationLfo.h"
 #include "Ig00156Filter.h"
+#include "Ig00156Batch.h"
 #include "ReconstructedOscillator.h"
 #include "Vca.h"
 #include "OriginalSubOscillator.h"
@@ -313,6 +314,12 @@ public:
     double getInternalSampleRate() const noexcept { return internalRate; }
     // Read-only telemetry of the actual cached 10 Hz DC-blocker pole.
     float getDcBlockCoefficient() const noexcept { return dcCoefficient; }
+    // Setup-thread optimization switch, not a sound/patch parameter. Disabling
+    // it preserves the scalar scheduling path and does not reset any state.
+    // Unsupported CPU/build contracts always select scalar processing.
+    void setFilterBatchingEnabled(bool enabled) noexcept
+    { filterBatchKernel = Ig00156Batch::selectKernel(enabled); }
+    bool hasFilterBatchingKernel() const noexcept { return filterBatchKernel != nullptr; }
     // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
     // render policy, the host rate and the offline flag (see Oversampling.h).
     int getOversamplingFactor() const noexcept { return oversample; }
@@ -531,6 +538,8 @@ private:
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
+    template<bool BatchFilters>
+    void processInternalSampleImpl(float& outL, float& outR, float externalModulation);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false);
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
@@ -595,6 +604,7 @@ private:
     ControlFrameStatus controlFrameStatus = ControlFrameStatus::accepted;
 
     std::array<Voice, kNumVoices> voices;
+    Ig00156Batch::Kernel filterBatchKernel = nullptr;
     uint64_t voiceCounter = 0;
     uint64_t noteIngressOrder = 0;
     int nextVoice = 0;

@@ -1,0 +1,29 @@
+Test project /tmp/cs80-filter-simd-build
+      Start 29: cs80_source_performance_tests
+      Start 38: cs80_core_tests
+      Start  7: cs80_filter_batch_admission_tests
+ 1/12 Test #38: cs80_core_tests .......................   Passed   10.77 sec
+      Start  2: cs80_filter_batch_engine_tests
+ 2/12 Test  #7: cs80_filter_batch_admission_tests .....   Passed   11.01 sec
+      Start 80: cs80_free_running_voice_tests
+ 3/12 Test #29: cs80_source_performance_tests .........   Passed   11.96 sec
+      Start 28: cs80_parity_mode_tests
+ 4/12 Test #28: cs80_parity_mode_tests ................   Passed    4.87 sec
+      Start 30: cs80_source_performance_audit_tests
+ 5/12 Test #80: cs80_free_running_voice_tests .........   Passed    6.01 sec
+      Start  3: cs80_filter_batch_scheduling_tests
+ 6/12 Test  #2: cs80_filter_batch_engine_tests ........   Passed    6.91 sec
+      Start 72: cs80_oversampling_tests
+ 7/12 Test  #3: cs80_filter_batch_scheduling_tests ....   Passed    1.96 sec
+      Start 33: cs80_ig00156_filter_tests
+ 8/12 Test #33: cs80_ig00156_filter_tests .............   Passed    0.52 sec
+      Start 32: cs80_ig00156_cache_tests
+ 9/12 Test #32: cs80_ig00156_cache_tests ..............   Passed    0.12 sec
+      Start  1: cs80_ig00156_batch_tests
+10/12 Test  #1: cs80_ig00156_batch_tests ..............   Passed    0.02 sec
+11/12 Test #30: cs80_source_performance_audit_tests ...   Passed    2.92 sec
+12/12 Test #72: cs80_oversampling_tests ...............   Passed    2.12 sec
+
+100% tests passed out of 12
+
+Total Test time (real) =  19.80 sec

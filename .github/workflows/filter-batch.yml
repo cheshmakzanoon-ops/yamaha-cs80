@@ -1,0 +1,52 @@
+name: Filter batch opt-in
+
+on:
+  push:
+    paths:
+      - 'src/core/**'
+      - 'src/experimental/ContinuousVoiceCircuit.h'
+      - 'tests/*Batch*'
+      - 'tests/test_filter_batch_admission.py'
+      - 'CMakeLists.txt'
+      - '.github/workflows/filter-batch.yml'
+  pull_request:
+    paths:
+      - 'src/core/**'
+      - 'src/experimental/ContinuousVoiceCircuit.h'
+      - 'tests/*Batch*'
+      - 'tests/test_filter_batch_admission.py'
+      - 'CMakeLists.txt'
+      - '.github/workflows/filter-batch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: ${{ matrix.compiler }} / batch ${{ matrix.batch }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++, clang++]
+        batch: ['ON', 'OFF']
+    steps:
+      - uses: actions/checkout@v5
+      - name: Configure core only
+        env:
+          CXX: ${{ matrix.compiler }}
+        run: >-
+          cmake -S . -B build-filter-batch
+          -DCS80_BUILD_PLUGIN=OFF -DCMAKE_BUILD_TYPE=Release
+          -DCS80_ENABLE_AVX2_FILTER_BATCH=${{ matrix.batch }}
+      - name: Build focused qualification tests
+        run: >-
+          cmake --build build-filter-batch --parallel 2 --target
+          cs80_ig00156_batch_tests cs80_filter_batch_engine_tests
+          cs80_filter_batch_scheduling_tests
+      - name: Exactness and scheduling gates
+        run: >-
+          ctest --test-dir build-filter-batch --output-on-failure
+          -R '^cs80_(ig00156_batch_tests|filter_batch_engine_tests|filter_batch_scheduling_tests|filter_batch_admission_tests)$'

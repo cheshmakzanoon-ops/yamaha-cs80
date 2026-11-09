@@ -1,0 +1,26 @@
+{
+  "revision": "final-internal-linkage-wrapper",
+  "explicit_option": "CS80_ENABLE_AVX2_FILTER_BATCH=ON",
+  "checks_per_engine": 4135998,
+  "frames_per_engine": 285328,
+  "pairs": {
+    "clang": {
+      "baseline": "/tmp/cs80-portability/final-opt-in/clang-baseline.f32",
+      "bytes": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557",
+      "byte_identical": true
+    },
+    "qemu": {
+      "baseline": "/tmp/cs80-portability/final-opt-in/qemu-baseline.f32",
+      "bytes": 22400288,
+      "sha256": "2224c82dc224efe918ea010e5991d8b7609256c7b2615ef724efc3b2677014da",
+      "byte_identical": true
+    },
+    "arm": {
+      "baseline": "/tmp/cs80-portability/final-opt-in/arm-baseline.f32",
+      "bytes": 22400288,
+      "sha256": "d10f8d05c9abb70071f758657c4bb6ed92bed9b7f307e8fd799636b5761eb97d",
+      "byte_identical": true
+    }
+  }
+}

@@ -1,0 +1,10 @@
+Tools were read/downloaded from the environment's configured signed official
+Debian trixie snapshot 20261103T013555Z and extracted locally with dpkg-deb -x.
+No maintainer scripts, system installation, permission/security changes or
+binfmt registration were used. Exact package versions and hashes accompany
+this note. Existing Debian archive keyring verified the repository metadata.
+Native GCC 14.2.0-19; Clang 19.1.7 (3+b1); cross GCC 14.2.0-19cross1;
+qemu-user 1:10.0.13+ds-0+deb13u1. QEMU is functional emulation, not timing evidence.
+Recorded portability scripts use an extracted toolroot; adapt ROOT/OUT/SOURCE
+to an installed official toolchain or equivalent local extraction. The temp
+paths in the logs are historical artifacts, not files required from the user.

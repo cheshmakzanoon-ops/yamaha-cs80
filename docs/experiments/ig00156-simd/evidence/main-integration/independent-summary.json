@@ -1,0 +1,29 @@
+{
+  "files": {
+    "clang-on": {
+      "bytes": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "clang-baseline": {
+      "bytes": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "gcc-on": {
+      "bytes": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "gcc-default": {
+      "bytes": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    },
+    "gcc-baseline": {
+      "bytes": 22400288,
+      "sha256": "30dd6762c840465bfce5a0286cf2bf17b04ec38133424519a388f3c875e66557"
+    }
+  },
+  "comparisons": {
+    "gcc-baseline/gcc-default": true,
+    "gcc-baseline/gcc-on": true,
+    "clang-baseline/clang-on": true
+  }
+}

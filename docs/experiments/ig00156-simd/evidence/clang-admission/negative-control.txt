@@ -1,0 +1,6 @@
+admission: caller=1 kernel=1 accelerated=1 callback=1 failures=5
+FAIL: caller build admission matches the independent profile expectation
+FAIL: backend selects only an admitted CPU/build
+FAIL: actual backend use matches admission
+FAIL: caller gates a supplied callback
+FAIL: callback not entered by an incompatible caller

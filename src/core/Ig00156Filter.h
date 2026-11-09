@@ -44,6 +44,7 @@
 
 namespace cs80
 {
+struct Ig00156BatchAccess;
 struct Ig00156Network
 {
     double sourceOhms, groundOhms, inputFarads;
@@ -260,6 +261,9 @@ public:
     double feedforwardCutoffHz() const noexcept { return feedforwardHz; }
 
 private:
+    // Stateless batch processing reads/writes these same authoritative fields.
+    // It owns no parallel coefficient cache, clock metadata or snapshot state.
+    friend struct Ig00156BatchAccess;
     Ig00156Network net;
     double gs = 0.0, gg = 0.0, gf = 0.0, gTotal = 0.0, inputScale = 1.0, feedforwardHz = 0.0;
     double kHalf = 0.0, kHalfCoupling = 0.0, gmPart = 0.0, ffPart = 0.0, qSiemensValue = 0.0;
