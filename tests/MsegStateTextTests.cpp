@@ -168,10 +168,36 @@ void testExistingTextCompatibility()
     cs80::detail::decodeMsegPoints("", missing);
     check(missing == original, "missing points retain the existing default shape");
 }
+
+void testMalformedCoordinates()
+{
+    using namespace cs80::modern;
+    for (const auto* token : {"1e99999999999999999999", "1e-99999999999999999999",
+                              "1e2147483647", "1e-2147483648", "1e+", "nan", "inf",
+                              "1junk", "--1", ".", "1e309", "-1e309"})
+        for (int field = 0; field < 3; ++field)
+        {
+            juce::StringArray values {"0.5", "0.25", "-0.5"};
+            values.set(field, token);
+            juce::XmlElement xml("MSEG");
+            xml.setAttribute("points", "0 0 0;" + values.joinIntoString(" "));
+            const auto parsed = juce::XmlDocument::parse(xml.toString());
+            check(parsed != nullptr, "malformed numeric token remains valid XML");
+            MsegShape shape;
+            cs80::detail::decodeMsegPoints(parsed->getStringAttribute("points"), shape);
+            const auto point = shape.points[1];
+            check((field == 0 ? point.time : field == 1 ? point.level : point.curve) == 0.0f,
+                  "invalid coordinate is rejected before the JUCE numeric reader");
+            check(field == 0 || point.time == 0.5f, "other time survives malformed field");
+            check(field == 1 || point.level == 0.25f, "other level survives malformed field");
+            check(field == 2 || point.curve == -0.5f, "other curve survives malformed field");
+        }
+}
 } // namespace
 
 int main()
 {
+    testMalformedCoordinates();
     testShortLoopRemainsALoop();
     testExactRoundTrips();
     testCompleteShapes();
@@ -180,3 +206,4 @@ int main()
     std::cout << "MSEG state text: " << checks << " checks, " << failures << " failures\n";
     return failures == 0 ? 0 : 1;
 }
+
