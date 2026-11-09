@@ -103,6 +103,45 @@ int main(int argc, char** argv)
                         check(std::abs(t.railVolts[(size_t) s]) < 1e-6, "unselected rails stay at the reference: " + label);
             }
 
+    // --- Source-supported 10 kOhm memory nominal (parts-list printed page 8).
+    // Model-consistency scenario, NOT measured taper/rail/diode calibration.
+    // The reference currently shares one potOhms scalar across all three banks;
+    // setting inactive PANEL to 10k here is a scenario assumption, not new evidence.
+    // Keep the original 50k cases above and the existing registered tolerances.
+    double worst10kBus = 0.0;
+    int source10kCases = 0;
+    Lcg source10kRng { 0x10c0ffeeu };
+    for (int rank : {0, 1})
+        for (int selector : {11, 12})
+            for (int trial = 0; trial < 7; ++trial)
+            {
+                truth::Setup setup;
+                setup.rank = rank;
+                setup.selector = selector;
+                setup.electrical.potOhms = 10000.0;
+                for (auto& bank : setup.banks) bank = randomBank(source10kRng);
+                const size_t selectedBank = selector == 11 ? 0U : 1U;
+                if (trial < 5) setup.banks[selectedBank].fill(trial / 4.0);
+                const auto t = truth::solve(setup);
+                const auto c = mp::compileBuses(rank, selector, setup.banks[selectedBank], setup.electrical);
+                const std::string label = "10k memory rank " + std::to_string(rank + 1)
+                                        + " selector " + std::to_string(selector) + " trial " + std::to_string(trial);
+                ++source10kCases;
+                check(t.converged && c.ok, "source-nominal solves converge: " + label);
+                check(std::isfinite(t.residualAmps) && t.residualAmps <= tolResidual, "10k residual: " + label);
+                check(std::isfinite(t.worstInactiveAmps) && t.worstInactiveAmps <= tolInactive, "10k isolation: " + label);
+                check(std::abs(t.railVolts[selectedBank] - c.railVolts) <= tolBus, "10k selected rail: " + label);
+                for (int row = 1; row <= 26; ++row)
+                {
+                    if (mp::isSwitchRow(row)) continue;
+                    const double error = std::abs(c.busVolts[static_cast<size_t>(row - 1)]
+                                                - t.busVolts[static_cast<size_t>(row - 1)]);
+                    check(std::isfinite(error) && error <= tolBus, "10k compiled bus: " + label + " row " + std::to_string(row));
+                    worst10kBus = std::max(worst10kBus, error);
+                }
+            }
+    std::printf("source-nominal 10k memory: %d cases, worst compiled-vs-truth bus error %.9g V\n", source10kCases, worst10kBus);
+
     // --- Switch states: only the selected source decides; isolation is complete.
     for (int rank = 0; rank < 2; ++rank)
     {
@@ -164,7 +203,7 @@ int main(int argc, char** argv)
         }
     }
 
-    std::printf("worst compiled-vs-truth bus error %.3g V, inactive source current %.3g A, Newton residual %.3g A\n",
+    std::printf("legacy 50k compiled-vs-truth bus error %.3g V, inactive source current %.3g A, Newton residual %.3g A\n",
                 worstBus, worstInactive, worstResidual);
     if (failures != 0)
     {
