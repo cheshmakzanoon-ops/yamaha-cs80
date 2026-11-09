@@ -5,6 +5,10 @@
 #
 #   installer/macos/make-pkg.sh <build-dir> <out-dir> [developer-id-installer-identity]
 set -euo pipefail
+# Staging roots and shipped notices must be readable/traversable regardless of
+# the caller's umask. mktemp remains private; ditto preserves bundle modes.
+# This changes only this script's process, not its invoking shell.
+umask 022
 
 build="${1:?usage: $0 <build-dir> <out-dir> [installer-identity]}"
 out="${2:?usage: $0 <build-dir> <out-dir> [installer-identity]}"
