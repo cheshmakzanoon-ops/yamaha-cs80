@@ -639,6 +639,10 @@ jobs:
     env:
       PLUGINVAL_VERSION: "1.0.4"
     steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
       - name: Download Windows VST3
         uses: actions/download-artifact@v5
         with:
@@ -646,11 +650,12 @@ jobs:
           path: vst3
 
       - name: Fetch pluginval ${{ env.PLUGINVAL_VERSION }}
+        timeout-minutes: 5
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $url = "https://github.com/Tracktion/pluginval/releases/download/v$env:PLUGINVAL_VERSION/pluginval_Windows.zip"
-          Invoke-WebRequest -Uri $url -OutFile pluginval.zip
+          python scripts/download-pluginval-windows.py --output pluginval.zip --evidence pluginval-download.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Expand-Archive -Path pluginval.zip -DestinationPath pluginval -Force
           Unblock-File -Path pluginval\pluginval.exe
           & .\pluginval\pluginval.exe --version | Tee-Object -FilePath pluginval-version.txt
@@ -714,6 +719,7 @@ jobs:
         with:
           name: cs80-pluginval-windows
           path: |
+            pluginval-download.json
             pluginval-reports
             pluginval-windows.log
             pluginval-windows-seed-regression.log

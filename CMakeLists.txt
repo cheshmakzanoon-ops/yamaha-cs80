@@ -53,6 +53,9 @@ if (CS80_BUILD_TESTS)
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-ci-juce-provenance.py
                      --cmake ${CMAKE_COMMAND})
     set_tests_properties(cs80_ci_juce_provenance_tests PROPERTIES TIMEOUT 60 LABELS "packaging")
+    add_test(NAME cs80_pluginval_windows_download_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-pluginval-windows-download.py)
+    set_tests_properties(cs80_pluginval_windows_download_tests PROPERTIES TIMEOUT 30)
     # The Debian fixture packager accepts native amd64 ELF only. Other hosts
     # still exercise all archive formats and installer notice source mappings.
     if (CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux" AND
