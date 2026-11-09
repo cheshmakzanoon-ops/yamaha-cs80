@@ -62,7 +62,10 @@ public:
     float process(float input, float linearCv, float expOctaves, float envelope) noexcept
     {
         node += (linearCv - node) * coefficient;
-        const float control = std::max(0.0f, node) * envelope * std::exp2(expOctaves);
+        // Zero EI drive has exactly unit gain, including negative zero.
+        // Avoid a transcendental call for the default disabled SUB-VCA route.
+        const float exponentialGain = expOctaves == 0.0f ? 1.0f : std::exp2(expOctaves);
+        const float control = std::max(0.0f, node) * envelope * exponentialGain;
         const float out = control * (input + kIg00151OffsetUnits) + kIg00151FeedthroughUnits * control;
         // Double state: a float 0.1 s pole stalls about -64 dB short of settling.
         coupling += (out - coupling) * couplingCoefficient;
