@@ -445,6 +445,7 @@ private:
         float trimPan = 0.0f;
         RankInfo info;
         Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
+        PitchPowMemo oscillatorPitchPow;
         // Circuit engine (Phase 2.1): controls of the last processed interval,
         // which drive the idle path and the wake catch-up of a silent circuit.
         voice_continuity::IdleRankControls idle;

@@ -2331,6 +2331,8 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     const bool sharedNoise = usesSourceModels(global.renderPolicy);
     const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
 
+    const bool sharedVaryingPitch = lfoPitch != 0.0f || global.subVco != 0.0f
+        || global.subAtVco != 0.0f || (modWheel != 0.0f && global.modWheelSub != 0.0f);
     const bool freeRunning = freeRunningVoices();
 #if CS80_IG00156_EXACT_BATCH_BUILD
     // Only the independent active-rank filters/VCA mix are deferred. All
@@ -2489,7 +2491,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
             // Transposition is a separate nominal harmonic ratio, not rounded
             // equal-tempered fifths and not part of the shared filter key CV.
-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
+            // Fast-changing modulation is unlikely to repeat a pitch exponent.
+            // Retain the direct path there; the memo remains a pure-function
+            // result and needs no invalidation when a route changes.
+            const bool varyingPitch = sharedVaryingPitch || mod.pitch != 0.0f;
+            const float hz = varyingPitch ? midiToHz(pitch, global.tuningRef)
+                : midiToHz(pitch, global.tuningRef, r.oscillatorPitchPow);
+            const float freq = hz * v.ribbonRatio
                                * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
             const float pwm = pwmSine[ch];
             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
