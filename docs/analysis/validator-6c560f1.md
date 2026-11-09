@@ -115,18 +115,41 @@ missing evidence collection, not the underlying crash.
 
 ## Falsifiable teardown hypotheses, not attribution
 
-Inspected pluginval tag source `ed19c2c16b57a6d94db391bea3ef4a80b769d5bf` points to
-JUCE gitlink `5179f4e720d8406ebd1b5401c86aea8da6cc83c9` (8.0.3 headers). The plugin
-uses the pinned 8.0.11 above. Source inspection is not a claim that every released
-validator instruction was rebuilt from this checkout.
+**Source-attribution correction (2026-11-09):** an earlier version of this
+section incorrectly attributed a local, uncommitted weak-map patch to released
+pluginval 1.0.4. That attribution is retracted. The comparisons below use
+immutable `git show <commit>:<path>` contents, not the modified worktree.
 
-The host's `RunLoop::Impl::registerEventHandler` weak-locks its shared handler map
-and looks up the current FD, then iterates raw `IEventHandler*` pointers. The weak
-map protects against a delayed callback after map destruction; it does not by
-itself establish the lifetime of each pointed-to handler or iterator across
-reentrant map/vector mutation. Possible hypotheses are a handler remaining after
-its final lifetime/module unload, or unregister/re-register mutation during an
-in-flight callback. Neither occurrence has been observed in this invocation.
+Pluginval tag `v1.0.4` peels to
+[`ed19c2c16b57a6d94db391bea3ef4a80b769d5bf`](https://github.com/Tracktion/pluginval/tree/ed19c2c16b57a6d94db391bea3ef4a80b769d5bf);
+its JUCE gitlink is `5179f4e720d8406ebd1b5401c86aea8da6cc83c9` (8.0.3 headers).
+In that immutable [host source](https://github.com/juce-framework/JUCE/blob/5179f4e720d8406ebd1b5401c86aea8da6cc83c9/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp),
+`RunLoop::Impl::registerEventHandler` captures raw `this` in the FD callback,
+indexes `eventHandlerMap[descriptor]`, and iterates raw `IEventHandler*` pointers.
+The source blob is `14611a9b5bf248115b778560d705cf12d68805f8`, SHA-256
+`8b916794b33c32fc886b329d17a8df2510da3ff24415a31494868d3715ef4f47`.
+Source inspection is not a claim that every released validator instruction was
+rebuilt from this checkout or that the original runner's binary was symbolized.
+
+Upstream JUCE [commit `04e167d64661d3298afd4978f6c2e77f841b5f17`](https://github.com/juce-framework/JUCE/commit/04e167d64661d3298afd4978f6c2e77f841b5f17)
+(3 September 2026) introduces the shared-map/weak-pointer guard. Its explanation
+describes a queued FD callback running after another callback destroys `Impl`
+and unregisters that FD. The guard checks map lifetime and current registration
+before dispatch. It is absent from both the pinned 8.0.3 source and the
+[equivalent 8.0.11 hosting class](https://github.com/juce-framework/JUCE/blob/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_processors_headless/format_types/juce_VST3PluginFormatImpl.h),
+and is an ancestor of JUCE 9.0.3 at `be29c81492b6151c8ea8d14c840e1311963b3a83`.
+The presence of this hosting class in the plugin's JUCE checkout does not mean
+the plugin executes it: the VST3 client wrapper and host implementation are
+different code paths.
+
+A queued callback outliving the host `Impl`, a raw handler surviving its final
+lifetime/module unload, or unregister/re-register mutation during an in-flight
+callback are therefore distinct hypotheses. The later weak-map guard addresses
+the first source-level lifetime risk; it does not by itself establish every
+handler's lifetime. None of these schedules has been demonstrated for original
+PID 2713, whose fault stack was not captured. The historical callback-path replay
+and any isolated lifetime fixture cannot establish that invocation's ownership,
+exclude plugin corruption, or replace its failed gate.
 
 Plugin JUCE's `ScopedRunLoop` is owned by controller, component, view and factory
 creation scopes. A registration surviving `IPlugView::removed()` alone is

@@ -154,10 +154,18 @@ replay passes or cannot recover its seed. No new validator run accompanies this
 change. Source/fixture tests exercise selection and workflow wiring without
 launching pluginval or inducing a crash.
 
-Static investigation remains inconclusive. The historical callback trace makes
-JUCE's host `RunLoop::Impl` raw-handler dispatch and plugin registration lifetimes
-worth instrumenting. The host already guards delayed callbacks with a weak map;
-that alone does not prove stale handler ownership. Plugin JUCE8.0.11 also keeps
-run-loop scopes in its controller/component, not only its view, so registrations
-surviving `IPlugView::removed()` alone are not evidence of a leak. No root cause
-or production repair is claimed.
+Static investigation remains inconclusive. **Source-attribution correction
+(2026-11-09):** the earlier statement that the released host already guards
+callbacks with a weak map came from a locally patched checkout and is retracted.
+Pristine pluginval 1.0.4 pins JUCE 8.0.3 at `5179f4e720d8406ebd1b5401c86aea8da6cc83c9`;
+its host `RunLoop::Impl` callback captures raw `this` and indexes
+`eventHandlerMap[descriptor]`. The weak-map guard is introduced by later upstream
+JUCE [commit 04e167d](https://github.com/juce-framework/JUCE/commit/04e167d64661d3298afd4978f6c2e77f841b5f17),
+not by that pinned source. See the [immutable-source comparison](analysis/validator-6c560f1.md#falsifiable-teardown-hypotheses-not-attribution).
+
+This makes queued-callback/map lifetime, raw-handler dispatch and plugin
+registration lifetimes worth instrumenting; it does not identify the original
+SIGSEGV's cause. The JUCE hosting implementation is distinct from the plugin's
+client wrapper. Plugin JUCE 8.0.11 keeps run-loop scopes in its controller/component,
+not only its view, so registrations surviving `IPlugView::removed()` alone are
+not evidence of a leak. No root cause or production repair is claimed.
