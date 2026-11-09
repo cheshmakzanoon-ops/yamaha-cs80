@@ -75,6 +75,7 @@ int main(int argc,char** argv) {
   v::Interval out{-123.,456.}; bool ok=false;
   if(op=="log") ok=v::encloseLog(number(),out);
   else if(op=="mantissa") { out=v::detail::logMantissa(number()); ok=v::valid(out); }
+  else if(op=="log-interval") { double lo=number(),hi=number(); out=v::detail::logInterval({lo,hi}); ok=v::valid(out); }
   else if(op=="diode") {
    double lo=number(),hi=number(),r=number(),s=number(),a=number(),hint=number(),width=number();
    ok=v::encloseDiode({lo,hi},r,s,a,hint,out,width);

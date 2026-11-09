@@ -1,0 +1,41 @@
+{
+  "allowed_parent_before": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "selected_child_cpu": 0,
+  "affinity_scope": "child only, set and verified before exec; parent unchanged",
+  "phases": [
+    "unpinned",
+    "affinity"
+  ],
+  "trials": 7,
+  "modes": [
+    2,
+    3
+  ],
+  "evaluations_per_fixture_row": 128,
+  "order": "baseline then candidate for even trials, reversed for odd trials",
+  "binaries": {
+    "baseline": "/workspace/shared/cs80-memory-extrema/baseline-probe",
+    "candidate": "/workspace/shared/cs80-memory-extrema/candidate-probe"
+  },
+  "allowed_parent_after": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ]
+}

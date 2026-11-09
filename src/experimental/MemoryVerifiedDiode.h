@@ -76,16 +76,63 @@ inline Interval checked(double lo, double hi) noexcept
 inline Interval add(Interval a, Interval b) noexcept
 {
     if (!valid(a) || !valid(b)) return invalid();
+    if (a.lo == a.hi && b.lo == b.hi)
+    {
+        const double value = detail::rnAdd(a.lo,b.lo);
+        return detail::checked(detail::down(value),detail::up(value));
+    }
     return detail::checked(detail::down(detail::rnAdd(a.lo, b.lo)), detail::up(detail::rnAdd(a.hi, b.hi)));
 }
 inline Interval sub(Interval a, Interval b) noexcept
 {
     if (!valid(a) || !valid(b)) return invalid();
+    if (a.lo == a.hi && b.lo == b.hi)
+    {
+        const double value = detail::rnSub(a.lo,b.lo);
+        return detail::checked(detail::down(value),detail::up(value));
+    }
     return detail::checked(detail::down(detail::rnSub(a.lo, b.hi)), detail::up(detail::rnSub(a.hi, b.lo)));
 }
 inline Interval mul(Interval a, Interval b) noexcept
 {
     if (!valid(a) || !valid(b)) return invalid();
+    // Exact point operands duplicate endpoint products in the general case.
+    // Evaluate each distinct RN operation once; keep the same outward ULPs.
+    if (a.lo == a.hi && b.lo == b.hi)
+    {
+        const double value = detail::rnMul(a.lo,b.lo);
+        return detail::checked(detail::down(value),detail::up(value));
+    }
+    if (a.lo == a.hi || b.lo == b.hi)
+    {
+        const double scalar = a.lo == a.hi ? a.lo : b.lo;
+        const Interval range = a.lo == a.hi ? b : a;
+        const double low = detail::rnMul(scalar,scalar < 0.0 ? range.hi : range.lo);
+        const double high = detail::rnMul(scalar,scalar < 0.0 ? range.lo : range.hi);
+        return detail::checked(detail::down(low),detail::up(high));
+    }
+    // A sign-definite interval makes the product extrema monotone. Select
+    // those two products; retain all four only when both inputs straddle zero.
+    if (a.lo >= 0.0 || a.hi <= 0.0 || b.lo >= 0.0 || b.hi <= 0.0)
+    {
+        double lo, hi;
+        if (a.lo >= 0.0)
+        {
+            lo = detail::rnMul(b.lo < 0.0 ? a.hi : a.lo,b.lo);
+            hi = detail::rnMul(b.hi < 0.0 ? a.lo : a.hi,b.hi);
+        }
+        else if (a.hi <= 0.0)
+        {
+            lo = detail::rnMul(b.hi > 0.0 ? a.lo : a.hi,b.hi);
+            hi = detail::rnMul(b.lo > 0.0 ? a.hi : a.lo,b.lo);
+        }
+        else // a straddles zero, so b has a definite sign.
+        {
+            lo = detail::rnMul(b.lo >= 0.0 ? a.lo : a.hi,b.lo >= 0.0 ? b.hi : b.lo);
+            hi = detail::rnMul(b.lo >= 0.0 ? a.hi : a.lo,b.lo >= 0.0 ? b.hi : b.lo);
+        }
+        return detail::checked(detail::down(lo),detail::up(hi));
+    }
     const double values[] {detail::rnMul(a.lo,b.lo), detail::rnMul(a.lo,b.hi),
                            detail::rnMul(a.hi,b.lo), detail::rnMul(a.hi,b.hi)};
     double lo = std::numeric_limits<double>::infinity(), hi = -lo;
@@ -99,15 +146,38 @@ inline Interval mul(Interval a, Interval b) noexcept
 inline Interval div(Interval a, Interval b) noexcept
 {
     if (!valid(a) || !valid(b) || (b.lo <= 0.0 && b.hi >= 0.0)) return invalid();
-    const double values[] {detail::rnDiv(a.lo,b.lo), detail::rnDiv(a.lo,b.hi),
-                           detail::rnDiv(a.hi,b.lo), detail::rnDiv(a.hi,b.hi)};
-    double lo = std::numeric_limits<double>::infinity(), hi = -lo;
-    for (double x : values)
+    if (a.lo == a.hi && b.lo == b.hi)
     {
-        if (!std::isfinite(x)) return invalid();
-        lo = std::min(lo, detail::down(x)); hi = std::max(hi, detail::up(x));
+        const double value = detail::rnDiv(a.lo,b.lo);
+        return detail::checked(detail::down(value),detail::up(value));
     }
-    return detail::checked(lo,hi);
+    if (b.lo == b.hi)
+    {
+        const double low = detail::rnDiv(b.lo < 0.0 ? a.hi : a.lo,b.lo);
+        const double high = detail::rnDiv(b.lo < 0.0 ? a.lo : a.hi,b.lo);
+        return detail::checked(detail::down(low),detail::up(high));
+    }
+    if (a.lo == a.hi)
+    {
+        // d(a/x)/dx has sign -a for either permitted denominator sign.
+        const double low = detail::rnDiv(a.lo,a.lo < 0.0 ? b.lo : b.hi);
+        const double high = detail::rnDiv(a.lo,a.lo < 0.0 ? b.hi : b.lo);
+        return detail::checked(detail::down(low),detail::up(high));
+    }
+    // The denominator has one strict sign. Numerator monotonicity chooses
+    // its endpoint; d(a/b)/db = -a/b^2 chooses the denominator endpoint.
+    double lo, hi;
+    if (b.lo > 0.0)
+    {
+        lo = detail::rnDiv(a.lo,a.lo < 0.0 ? b.lo : b.hi);
+        hi = detail::rnDiv(a.hi,a.hi < 0.0 ? b.hi : b.lo);
+    }
+    else
+    {
+        lo = detail::rnDiv(a.hi,a.hi < 0.0 ? b.lo : b.hi);
+        hi = detail::rnDiv(a.lo,a.lo < 0.0 ? b.hi : b.lo);
+    }
+    return detail::checked(detail::down(lo),detail::up(hi));
 }
 inline bool supportedArithmetic() noexcept
 {

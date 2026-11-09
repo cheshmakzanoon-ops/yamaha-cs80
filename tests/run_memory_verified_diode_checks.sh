@@ -32,13 +32,15 @@ mutants={
  'unsafe-slope':s.replace('std::max(g.hi,0.0),slope)', 'std::max(g.hi,0.0),slope*1e12)')
                   .replace('std::max(-g.lo,0.0),slope)', 'std::max(-g.lo,0.0),slope*1e12)'),
  'bad-log-two':s.replace('0x1.62e42fefa39efp-1, 0x1.62e42fefa39f0p-1','0.7, 0.7'),
+ 'extrema-mul-sign':s.replace('b.lo < 0.0 ? a.hi : a.lo,b.lo','b.lo < 0.0 ? a.lo : a.hi,b.lo'),
+ 'extrema-div-sign':s.replace('detail::rnDiv(a.lo,a.lo < 0.0 ? b.lo : b.hi)','detail::rnDiv(a.lo,a.lo < 0.0 ? b.hi : b.lo)'),
 }
 for name,code in mutants.items():
     assert code!=s, name
     p=Path(sys.argv[2])/name/'experimental/MemoryVerifiedDiode.h'
     p.parent.mkdir(parents=True,exist_ok=True); p.write_text(code)
 PY
-for mutation in no-outward trust-candidate unsafe-slope bad-log-two; do
+for mutation in no-outward trust-candidate unsafe-slope bad-log-two extrema-mul-sign extrema-div-sign; do
     "$cxx" "${flags[@]}" -O2 -I "$build/$mutation" \
         "$root/tests/MemoryVerifiedDiodeTests.cpp" -o "$build/mutant-$mutation"
 done
@@ -58,3 +60,8 @@ ASAN_OPTIONS=detect_leaks=0 python3 -u "$root/tests/test_memory_verified_diode.p
 
 python3 "$root/tests/test_memory_centered_log_rational.py" "$build/primitive-o2" \
     | tee "$build/centered-rational.txt"
+
+ASAN_OPTIONS=detect_leaks=0 python3 "$root/tests/test_memory_interval_extrema.py" \
+    "$build/primitive-o0" "$build/primitive-o2" "$build/primitive-native" \
+    "$build/primitive-sanitized" "$build/mutant-extrema-mul-sign" \
+    "$build/mutant-extrema-div-sign" | tee "$build/extrema-rational.txt"

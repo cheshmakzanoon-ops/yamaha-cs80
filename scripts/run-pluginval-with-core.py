@@ -8,11 +8,25 @@ import os
 from pathlib import Path
 import resource
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
 
 MAX_CORE_BYTES = 1024 * 1024 * 1024
+
+
+def termination_details(returncode):
+    """Describe Popen's result, not inferred crash ownership or a core flag."""
+    if returncode >= 0:
+        return f"raw returncode={returncode}; kind=exit; exit_code={returncode}"
+    number = -returncode
+    try:
+        name = signal.Signals(number).name
+    except ValueError:
+        name = "UNKNOWN"
+    return (f"raw returncode={returncode}; kind=signal; "
+            f"signal_number={number}; signal_name={name}")
 
 
 def main():
@@ -69,6 +83,12 @@ def main():
         returncode = process.wait()
         status = returncode if returncode >= 0 else 128 - returncode
         note(f"Original validator PID: {process.pid}; exit: {status}")
+        # Keep the gate's existing normalized exit unchanged. In particular,
+        # exit(139) is not evidence of SIGSEGV, while Popen returncode -11 is.
+        # Only numeric status and an allowlisted signal name are added here;
+        # no command, environment, memory or exception message is recorded.
+        note(f"Original validator termination: PID={process.pid}; "
+             f"{termination_details(returncode)}")
         try:
             cores = []
             if core_enabled:

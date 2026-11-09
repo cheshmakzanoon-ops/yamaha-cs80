@@ -7,7 +7,7 @@ are test oracles only; they are not part of the C++ certificate or its proof.
 from decimal import Decimal, localcontext
 from fractions import Fraction
 from pathlib import Path
-import math, random, re, struct, subprocess, sys, os
+import math, random, re, struct, subprocess, sys, os, hashlib
 
 root=Path(__file__).resolve().parents[1]
 executables=[Path(x).resolve() for x in sys.argv[1:]]
@@ -38,12 +38,47 @@ for kind in ('add','sub','mul','div'):
   fn={'add':lambda x,y:x+y,'sub':lambda x,y:x-y,'mul':lambda x,y:x*y,'div':lambda x,y:x/y}[kind]
   values=[fn(x,y) for x in aa for y in bb]
   add(kind,a+b,min(values),max(values))
+# Exact point-operand paths: the generic interval oracle remains independent
+# of which endpoint operations the C++ implementation eliminates.
+saved_rng_state=rng.getstate()
+for kind in ('add','sub','mul','div'):
+ for mode in ('left','right','both'):
+  for _ in range(150):
+   a=sorted([finite_float(),finite_float()]); b=sorted([finite_float(),finite_float()])
+   if mode in ('left','both'): a=[a[0],a[0]]
+   if mode in ('right','both'): b=[b[0],b[0]]
+   if kind=='div' and b[0]<=0<=b[1]: b=sorted([abs(b[0]),abs(b[1])])
+   aa=list(map(Fraction.from_float,a)); bb=list(map(Fraction.from_float,b))
+   fn={'add':lambda x,y:x+y,'sub':lambda x,y:x-y,'mul':lambda x,y:x*y,'div':lambda x,y:x/y}[kind]
+   values=[fn(x,y) for x in aa for y in bb]
+   add(kind,a+b,min(values),max(values))
+rng.setstate(saved_rng_state)  # Preserve the pre-existing downstream random vectors.
 # Deliberate gradual-underflow and near-cancellation cases.
 tiny=float.fromhex('0x0.0000000000001p-1022'); normal=float.fromhex('0x1p-1022')
 for kind,a,b in [('mul',tiny,tiny),('div',normal,3.),('add',1.,-math.nextafter(1.,0.)),('sub',1.,math.nextafter(1.,0.)),('mul',-tiny,tiny),('div',-normal,3.)]:
  A,B=Fraction.from_float(a),Fraction.from_float(b)
  truth={'mul':lambda:A*B,'div':lambda:A/B,'add':lambda:A+B,'sub':lambda:A-B}[kind]()
  add(kind,[a,a,b,b],truth,truth)
+# Signed-zero points and ranges crossing zero, with explicit invalid quotient
+# domains. Also compare overflow/nonfinite rejection paths in the raw outputs.
+for zero in [0.,-0.]:
+ for other in [[-2.,-1.],[-1.,1.],[1.,2.],[-tiny,tiny],[-0.,0.]]:
+  for left in [True,False]:
+   a,b=([zero,zero],other) if left else (other,[zero,zero])
+   for kind in ('add','sub','mul','div'):
+    if kind=='div' and b[0]<=0<=b[1]:
+     add(kind,a+b,None,None,('required-rejection',)); continue
+    aa=list(map(Fraction.from_float,a));bb=list(map(Fraction.from_float,b))
+    fn={'add':lambda x,y:x+y,'sub':lambda x,y:x-y,'mul':lambda x,y:x*y,'div':lambda x,y:x/y}[kind]
+    values=[fn(x,y) for x in aa for y in bb]
+    add(kind,a+b,min(values),max(values))
+maximum=float.fromhex('0x1.fffffffffffffp1023')
+for kind,args in [('add',[maximum,maximum,maximum,maximum]),('sub',[maximum,maximum,-maximum,-maximum]),
+                  ('mul',[maximum,maximum,2.,2.]),('div',[maximum,maximum,tiny,tiny])]:
+ add(kind,args,None,None,('required-rejection',))
+for kind in ('add','sub','mul','div'):
+ for bad in [math.nan,math.inf,-math.inf]:
+  add(kind,[bad,bad,0.,0.],None,None,('required-rejection',))
 with localcontext() as ctx:
  ctx.prec=120
  values=[tiny,normal,math.nextafter(normal,0.),1.,math.nextafter(1.,0.),math.nextafter(1.,math.inf),2.,math.nextafter(2.,0.),float.fromhex('0x1.fffffffffffffp1023')]
@@ -95,15 +130,34 @@ with localcontext() as ctx:
        add('diode',[vlo,vhi,r,s,a,candidate,1e-15],low,high,('optional-tight',r,s,a,volts,uncertainty))
        diode_count+=1
 
+reference_raw=None
+reference_status=None
 for exe in executables:
  result=subprocess.run([str(exe)],input='\n'.join(c[0] for c in cases)+'\n',text=True,capture_output=True,check=True)
+ if os.environ.get('CS80_COMPARE_RAW_INTERVALS')=='1':
+  if reference_raw is None: reference_raw=result.stdout
+  else: assert result.stdout==reference_raw, 'baseline/candidate raw interval outputs differ'
+  print('Raw interval output SHA256:',hashlib.sha256(result.stdout.encode()).hexdigest())
  lines=result.stdout.splitlines()
  assert len(lines)==len(cases),(len(lines),len(cases),result.stderr)
+ if os.environ.get('CS80_COMPARE_DIODE_AVAILABILITY')=='1':
+  status=[line.split()[0] for line in lines]
+  if reference_status is not None:
+   changed=[(case[0],before,after) for case,before,after in zip(cases,reference_status,status) if before!=after]
+   print('Baseline/candidate status changes:',len(changed))
+   for change in changed: print('STATUS',change)
+   if os.environ.get('CS80_REQUIRE_NO_NEW_REJECTIONS')=='1':
+    assert not any(before=='1' and after!='1' for _,before,after in changed), 'candidate availability regressed'
+  else: reference_status=status
  failed=[]; counts={}; worst_log_width=0.; worst_current_width=0.; tight_accepted=0; tight_rejected=0
  for case,line in zip(cases,lines):
   command,low,high,meta=case
   kind=command.split()[0]; counts[kind]=counts.get(kind,0)+1
   ok,l,h=line.split(); l=float.fromhex(l); h=float.fromhex(h)
+  if meta is not None and meta[0]=='required-rejection':
+   if ok!='0' or (math.isfinite(l) and math.isfinite(h) and l<=h):
+    failed.append((command,line,'invalid elementary operation was not rejected'))
+   continue
   if ok!='1' and meta is not None and meta[0]=='optional-tight':
    tight_rejected+=1
    if l!=-123. or h!=456.: failed.append((command,line,'tight rejection changed output'))

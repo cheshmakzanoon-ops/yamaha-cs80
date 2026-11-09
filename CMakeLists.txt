@@ -311,6 +311,10 @@ if (CS80_BUILD_TESTS)
                  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-pluginval-retry.sh
                               ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run-pluginval-linux.sh)
         set_tests_properties(cs80_validator_retry_tests PROPERTIES TIMEOUT 30)
+        add_test(NAME cs80_validator_exit_classification_tests
+                 COMMAND ${Python3_EXECUTABLE}
+                         ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-pluginval-exit-classification.py)
+        set_tests_properties(cs80_validator_exit_classification_tests PROPERTIES TIMEOUT 30)
     endif()
 
     # [ws1-voice] register this workstream's core tests below this line.
@@ -589,6 +593,10 @@ if (CS80_BUILD_TESTS)
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_centered_log_rational.py
                      $<TARGET_FILE:cs80_memory_verified_diode_tests>)
     set_tests_properties(cs80_memory_centered_log_rational PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_memory_interval_extrema
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_interval_extrema.py
+                     $<TARGET_FILE:cs80_memory_verified_diode_tests>)
+    set_tests_properties(cs80_memory_interval_extrema PROPERTIES TIMEOUT 60)
     add_executable(cs80_memory_sparse_update_tests tests/MemorySparseUpdateTests.cpp)
     target_include_directories(cs80_memory_sparse_update_tests PRIVATE src)
     add_test(NAME cs80_memory_sparse_update_tests COMMAND cs80_memory_sparse_update_tests

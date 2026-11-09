@@ -1,0 +1,27 @@
+Self checks: 56, failures: 0
+Self checks: 56, failures: 0
+Self checks: 56, failures: 0
+Exact rational log(2) constant proof passed (32 terms + analytic tail)
+Executable: /workspace/shared/cs80-memory-log-span/baseline-primitive
+Independent vectors: 7374 {'add': 825, 'sub': 825, 'mul': 826, 'div': 826, 'log': 1768, 'diode': 2304}
+Largest log interval width: 6.821210263296962e-13 ; diode width A: 9.964923469387759e-12
+Additional 1e-15 A availability probes: accepted 860 ; safely rejected 4
+Failures: 0
+Baseline/candidate status changes: 2
+STATUS ('diode 0x1.6666666666665p-1 0x1.6666666666667p-1 0x1.0000000000000p-1 0x1.5798ee2308c3ap-27 0x1.52d8eae840c6ap-5 0x0.0p+0 0x1.203af9ee75616p-50', '1', '0')
+STATUS ('diode 0x1.6666666666665p-1 0x1.6666666666667p-1 0x1.22d0e56041893p-1 0x1.5798ee2308c3ap-27 0x1.52d8eae840c6ap-5 0x0.0p+0 0x1.203af9ee75616p-50', '1', '0')
+Executable: /workspace/shared/cs80-memory-log-span/primitive
+Independent vectors: 7374 {'add': 825, 'sub': 825, 'mul': 826, 'div': 826, 'log': 1768, 'diode': 2304}
+Largest log interval width: 6.821210263296962e-13 ; diode width A: 9.964923469387759e-12
+Additional 1e-15 A availability probes: accepted 858 ; safely rejected 6
+Failures: 0
+Baseline/candidate status changes: 4
+STATUS ('diode 0x1.6666666666665p-1 0x1.6666666666667p-1 0x1.0000000000000p-1 0x1.5798ee2308c3ap-27 0x1.52d8eae840c6ap-5 0x0.0p+0 0x1.203af9ee75616p-50', '1', '0')
+STATUS ('diode 0x1.6666666666665p-1 0x1.6666666666667p-1 0x1.22d0e56041893p-1 0x1.5798ee2308c3ap-27 0x1.52d8eae840c6ap-5 0x0.0p+0 0x1.203af9ee75616p-50', '1', '0')
+STATUS ('diode 0x1.6666666666665p-1 0x1.6666666666667p-1 0x1.22d0e56041893p-1 0x1.5798ee2308c3ap-27 0x1.52d8eae840c6ap-5 nan 0x1.203af9ee75616p-50', '1', '0')
+STATUS ('diode 0x1.6666666666665p-1 0x1.6666666666667p-1 0x1.22d0e56041893p-1 0x1.5798ee2308c3ap-27 0x1.52d8eae840c6ap-5 0x1.4e718d7d7625ap+664 0x1.203af9ee75616p-50', '1', '0')
+Executable: /workspace/shared/cs80-memory-log-span/primitive-centered
+Independent vectors: 7374 {'add': 825, 'sub': 825, 'mul': 826, 'div': 826, 'log': 1768, 'diode': 2304}
+Largest log interval width: 6.821210263296962e-13 ; diode width A: 9.964923469387759e-12
+Additional 1e-15 A availability probes: accepted 856 ; safely rejected 8
+Failures: 0

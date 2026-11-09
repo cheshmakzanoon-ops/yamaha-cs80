@@ -1,0 +1,28 @@
+Executable: /workspace/shared/cs80-memory-extrema/profiles/primitive-o0
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 0
+Serialized SHA256: 539957645c95cfb50c0f4100d92a4564bd6dfc4840f2dba75e017a97bd0c14b5
+Executable: /workspace/shared/cs80-memory-extrema/profiles/primitive-o2
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 0
+Serialized SHA256: 539957645c95cfb50c0f4100d92a4564bd6dfc4840f2dba75e017a97bd0c14b5
+Executable: /workspace/shared/cs80-memory-extrema/profiles/primitive-native
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 0
+Serialized SHA256: 539957645c95cfb50c0f4100d92a4564bd6dfc4840f2dba75e017a97bd0c14b5
+Executable: /workspace/shared/cs80-memory-extrema/profiles/primitive-sanitized
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 0
+Serialized SHA256: 539957645c95cfb50c0f4100d92a4564bd6dfc4840f2dba75e017a97bd0c14b5
+Executable: /workspace/shared/cs80-memory-extrema/profiles/mutant-extrema-mul-sign
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 1253
+Serialized SHA256: cbf6402fc8f2374ea3c42d18a6da3aac5114535c54072cb97777bdaf1b898f8c
+FAIL (530, ('mul', [5e-324, 1e-323], [0.9999999999999999, 1.0]), '1 0x0.0000000000001p-1022 0x0.0000000000003p-1022', 'exact extremal endpoints differ', (0.0, 1.5e-323))
+FAIL (532, ('mul', [5e-324, 1e-323], [-1.0, -0.9999999999999999]), '1 -0x0.0000000000002p-1022 -0x0p+0', 'exact extremal endpoints differ', (-1.5e-323, -0.0))
+FAIL (536, ('mul', [5e-324, 1e-323], [-0.9999999999999999, -0.0]), '1 -0x0.0000000000002p-1022 0x0.0000000000001p-1022', 'exact extremal endpoints differ', (-1.5e-323, 5e-324))
+FAIL (538, ('mul', [5e-324, 1e-323], [-0.9999999999999999, 0.9999999999999999]), '1 -0x0.0000000000002p-1022 0x0.0000000000003p-1022', 'exact extremal endpoints differ', (-1.5e-323, 1.5e-323))
+Expected endpoint-selection mutation detected numerically
+Executable: /workspace/shared/cs80-memory-extrema/profiles/mutant-extrema-div-sign
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 872
+Serialized SHA256: c272d9c1bb37bec44de4d95ad0cc16e337082f37a6310fdb88fcc8a42778b7a7
+FAIL (363, ('div', [-5e-324, 5e-324], [5e-324, 1e-323]), '1 -0x1.0000000000001p-1 0x1.0000000000001p+0', 'exact extremal endpoints differ', (-1.0000000000000002, 1.0000000000000002))
+FAIL (373, ('div', [-5e-324, 5e-324], [1e-323, 1.5e-323]), '1 -0x1.5555555555556p-2 0x1.0000000000001p-1', 'exact extremal endpoints differ', (-0.5000000000000001, 0.5000000000000001))
+FAIL (383, ('div', [-5e-324, 5e-324], [2.225073858507201e-308, 2.2250738585072014e-308]), '1 -0x1.0000000000001p-52 0x1.0000000000002p-52', 'exact extremal endpoints differ', (-2.220446049250314e-16, 2.220446049250314e-16))
+FAIL (393, ('div', [-5e-324, 5e-324], [2.2250738585072014e-308, 2.225073858507202e-308]), '1 -0x1.fffffffffffffp-53 0x1.0000000000001p-52', 'exact extremal endpoints differ', (-2.2204460492503136e-16, 2.2204460492503136e-16))
+Expected endpoint-selection mutation detected numerically

@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <string>
@@ -37,9 +38,19 @@ ref::ReceiverDrives drive(int n)
 }
 int main(int argc, char** argv)
 {
-    if (argc != 2) { std::fprintf(stderr,"usage: memory-sparse-probe output.csv\n"); return 2; }
+    if (argc != 2 && argc != 4) { std::fprintf(stderr,"usage: memory-sparse-probe output.csv [mode0..4 trial0..6]\n"); return 2; }
+    int selectedMode = -1, selectedTrial = -1;
+    if (argc == 4)
+    {
+        char* end = nullptr;
+        const long mode = std::strtol(argv[2],&end,10);
+        if (end == argv[2] || *end != '\0' || mode < 0 || mode > 4) return 2;
+        const long trial = std::strtol(argv[3],&end,10);
+        if (end == argv[3] || *end != '\0' || trial < 0 || trial > 6) return 2;
+        selectedMode = static_cast<int>(mode); selectedTrial = static_cast<int>(trial);
+    }
     std::ofstream out(argv[1]); if (!out) return 2;
-    out << std::setprecision(12) << "scenario,pot_ohms,shape,trial,iterations,mean_ns,failures,max_newton_steps,max_node_bound_V\n";
+    out << std::setprecision(12) << "scenario,pot_ohms,shape,trial,iterations,mean_ns,failures,max_newton_steps,max_node_bound_V,mean_process_cpu_ns\n";
     int errors = 0;
     for (int fixture = 0; fixture < 3; ++fixture)
     {
@@ -63,9 +74,11 @@ int main(int argc, char** argv)
         for (int trial = 0; trial < 7; ++trial) for (int position = 0; position < 5; ++position)
         {
             const int mode = trial % 2 ? 4-position : position;
+            if (selectedMode >= 0 && (mode != selectedMode || trial != selectedTrial)) continue;
             const int count = 128; // Identical input indices for paired scenario comparisons.
             const char* names[] {"dense_cold_full_nodes", "sparse_cold_certified", "sparse_warm_certified", "residual_certificate_only", "fixed_coefficient_compile"};
             sp::State state = base; int failed = 0, steps = 0; double bound = 0.0;
+            const auto cpuStart = std::clock();
             const auto start = std::chrono::steady_clock::now();
             for (int i = 0; i < count; ++i)
             {
@@ -100,7 +113,10 @@ int main(int argc, char** argv)
                 }
             }
             const double ns = std::chrono::duration<double,std::nano>(std::chrono::steady_clock::now()-start).count()/count;
-            out << names[mode] << ',' << source.electrical.potOhms << ',' << shape << ',' << trial << ',' << count << ',' << ns << ',' << failed << ',' << steps << ',' << bound << '\n';
+            const auto cpuEnd = std::clock();
+            if (cpuStart == static_cast<std::clock_t>(-1) || cpuEnd == static_cast<std::clock_t>(-1) || cpuEnd < cpuStart) return 2;
+            const double cpuNs = static_cast<double>(cpuEnd - cpuStart) * (1e9 / CLOCKS_PER_SEC) / count;
+            out << names[mode] << ',' << source.electrical.potOhms << ',' << shape << ',' << trial << ',' << count << ',' << ns << ',' << failed << ',' << steps << ',' << bound << ',' << cpuNs << '\n';
             errors += failed;
         }
     }

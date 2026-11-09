@@ -1,0 +1,17 @@
+Executable: /workspace/shared/cs80-memory-log-span/baseline-primitive
+Exact-rational log-interval cases: 1476 invalid domains: 9 failures: 0
+Unchanged point/wide: 114 411 changed wide: 0
+Executable: /workspace/shared/cs80-memory-log-span/primitive
+Exact-rational log-interval cases: 1476 invalid domains: 9 failures: 0
+Unchanged point/wide: 114 411 changed wide: 0
+Executable: /workspace/shared/cs80-memory-log-span/primitive-centered
+Exact-rational log-interval cases: 1476 invalid domains: 9 failures: 0
+Unchanged point/wide: 114 411 changed wide: 0
+Executable: /workspace/shared/cs80-memory-log-span/mutant-span-omitted
+Exact-rational log-interval cases: 1476 invalid domains: 9 failures: 268
+FAIL ('0x1.0000000000001p-1022', '0x1.0000000001000p-1022', 'boundary', '1 -0x1.6232bdd7abcd2p+9 -0x1.6232bdd7abccbp+9', 'endpoint log not enclosed')
+FAIL ('0x1.7ffffffffffffp-1022', '0x1.8000000000ffep-1022', 'boundary', '1 -0x1.61fed78fd24e1p+9 -0x1.61fed78fd24dap+9', 'endpoint log not enclosed')
+FAIL ('0x1.7ffffffffffffp-1022', '0x1.8000000000fffp-1022', 'boundary', '1 -0x1.61fed78fd24e1p+9 -0x1.61fed78fd24dap+9', 'endpoint log not enclosed')
+FAIL ('0x1.7ffffffffffffp-1022', '0x1.8000000001000p-1022', 'boundary', '1 -0x1.61fed78fd24e1p+9 -0x1.61fed78fd24dap+9', 'endpoint log not enclosed')
+FAIL ('0x1.8000000000000p-1022', '0x1.8000000000fffp-1022', 'boundary', '1 -0x1.61fed78fd24e1p+9 -0x1.61fed78fd24dap+9', 'endpoint log not enclosed')
+Expected span mutation detected numerically

@@ -26,6 +26,26 @@ are no longer available. CI fixtures check exits 0, 7 and 139, an unwritable
 optional log, normal-exit GDB handling, and actual signal propagation only when
 the kernel is not using a pipe collector.
 
+## Original-process termination classification
+
+The wrapper also records the original PID, raw `subprocess.Popen.returncode`,
+termination kind, and signal number/name when applicable. Its existing normalized
+exit status is unchanged: raw `-11` records native `SIGSEGV` termination and still
+returns `139`; raw `139` records an ordinary process exit with code `139`. An
+ordinary exit does not rule out an application handler having converted an earlier
+fault to that code. Neither classification identifies the responsible component.
+
+This metadata is written only to the existing optional core-diagnostic log, not
+the verdict stream. No command arguments, environment, memory, raw cores or new
+signal handlers are added. No gate, retry rule, timeout or security setting is
+changed, and old logs containing only normalized exit `139` remain ambiguous.
+
+`cs80_validator_exit_classification_tests` checks normal exits, mocked fatal
+signal returns, unknown signal names, logging/cleanup failures and actual child
+exit propagation. Its only real signal is non-core-producing `SIGTERM`;
+`SIGSEGV`/`SIGABRT` are mocked, including on runners with piped core collectors.
+The separate retry regression still verifies all 13 existing gate cases.
+
 This is diagnostic infrastructure, not proof that a crash is in the validator,
 the plugin, or a particular library. Tests printing SUCCESS before process exit
 do not turn exit139 into a pass. Record exact source, validator version, run,

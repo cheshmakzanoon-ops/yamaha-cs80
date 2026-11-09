@@ -1,0 +1,46 @@
+{
+  "status": "REJECTED: optional-width availability regressed; production header restored",
+  "baseline_commit": "4a86f9d75606e2e0cebf7ac270be85e11a45ec62",
+  "preregistration_commits": [
+    "53d2f06",
+    "af849e5"
+  ],
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": "-std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -ffp-contract=off",
+  "results": {
+    "primitive_vectors_per_version": 7374,
+    "self_checks_per_version": 56,
+    "optional_accepted": [
+      860,
+      858,
+      856
+    ],
+    "optional_rejected": [
+      4,
+      6,
+      8
+    ],
+    "rational_intervals": 1476,
+    "invalid_domains": 9,
+    "omitted_span_mutation_failures": 268,
+    "centered_network_cases": 2016,
+    "centered_network_checks": 533518,
+    "centered_network_failures": 0,
+    "timing_performed": false
+  },
+  "sha256": {
+    "src/experimental/MemoryVerifiedDiode.h": "5989c0969b9c8292817f44e9fd3e55b89c44e884f820bceaca67d6c712c01bb0",
+    "tests/MemoryVerifiedDiodeTests.cpp": "93656f6c918f0cf039db9b7a9267a914d8ebbfe5b58a1ac02c41855c078df033",
+    "tests/test_memory_verified_diode.py": "9356ca000c3e6bfe46065ffc28c5d3cf5575e99b2cc1709340ef7554afc43b31",
+    "tests/test_memory_log_span_rational.py": "8a3b75a1af39f962700faee28cc8b46e21dd6768c48894b6fc7d011cbce792a3",
+    "tests/MemorySparseUpdateTests.cpp": "600f81c1f68b816b52145b3217260ae3a8f163fd99cd7b696cf1d6104ad393c9",
+    "tests/parity/tolerances-v2/memory-sparse-update.json": "1370d58617cc566838e733fc5b16780a2314393051ca7138c54ab18093c4c5cf",
+    "docs/analysis/memory-log-span-study/availability.txt": "96c2ad36d4f059e0ca4ebb688fec6a12ba355399dfb27cd5a877f0f652a6b0d8",
+    "docs/analysis/memory-log-span-study/baseline-MemoryVerifiedDiode.h": "5989c0969b9c8292817f44e9fd3e55b89c44e884f820bceaca67d6c712c01bb0",
+    "docs/analysis/memory-log-span-study/centered-sparse.txt": "358c316e5f6e2057c48fded83e30f4940b77d63f7803b1f5f27b55c3e1c4dae4",
+    "docs/analysis/memory-log-span-study/rational.txt": "69cd7e72c06e8e2bd3610e831296c85681078f2daa858d0f75bbf8ba72850332",
+    "docs/analysis/memory-log-span-study/rejected-centered-MemoryVerifiedDiode.h": "9c15e036f9ede6c078ceff8e5e5e7a41c90d4609d2024b21ab3ae6cddec0f57d",
+    "docs/analysis/memory-log-span-study/rejected-lower-MemoryVerifiedDiode.h": "087a074735a9637e75cb69c437b5c9d33f02f6a873530ae7cedf05fd2d7d1a95",
+    "docs/analysis/memory-log-span-study/reproduce.sh": "3d50fb6a68b03a268b992f36df65e8afb4df84b57e764599e84fb7a80a8220fb"
+  }
+}
