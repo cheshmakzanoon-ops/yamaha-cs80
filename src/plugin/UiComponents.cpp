@@ -4402,6 +4402,13 @@ void RibbonStrip::releaseKeyboardBend()
 {
     if (! keyboardBend)
         return;
+    cancelGesture();
+}
+
+void RibbonStrip::cancelGesture()
+{
+    if (! touching && ! keyboardBend)
+        return;
     keyboardBend = false;
     touching = false;
     value = 0.0f;
@@ -4513,17 +4520,18 @@ void RibbonStrip::setFromX(float x)
 
 void RibbonStrip::mouseDown(const juce::MouseEvent& e)
 {
+    keyboardBend = false; // pointer takeover ends the previous keyboard ownership
     touching = true;
     anchorX = e.position.x;
     setFromX(anchorX);
 }
-void RibbonStrip::mouseDrag(const juce::MouseEvent& e) { setFromX(e.position.x); }
+void RibbonStrip::mouseDrag(const juce::MouseEvent& e)
+{
+    if (touching && ! keyboardBend) setFromX(e.position.x);
+}
 void RibbonStrip::mouseUp(const juce::MouseEvent&)
 {
-    touching = false;
-    value = 0.0f;
-    if (onValueChange) onValueChange(0.0f);
-    repaint();
+    if (! keyboardBend) cancelGesture();
 }
 void RibbonStrip::mouseMove(const juce::MouseEvent& e)
 {
@@ -4708,11 +4716,26 @@ void PerformanceWheel::setFromY(float y)
     repaint();
 }
 
-void PerformanceWheel::mouseDown(const juce::MouseEvent& e) { setFromY(e.position.y); }
-void PerformanceWheel::mouseDrag(const juce::MouseEvent& e) { setFromY(e.position.y); }
+void PerformanceWheel::mouseDown(const juce::MouseEvent& e)
+{
+    pointerGesture = true;
+    setFromY(e.position.y);
+}
+void PerformanceWheel::mouseDrag(const juce::MouseEvent& e)
+{
+    if (pointerGesture) setFromY(e.position.y);
+}
 
 void PerformanceWheel::mouseUp(const juce::MouseEvent&)
 {
+    cancelGesture();
+}
+
+void PerformanceWheel::cancelGesture()
+{
+    if (! pointerGesture)
+        return;
+    pointerGesture = false;
     if (spring)
     {
         value = 0.0f;

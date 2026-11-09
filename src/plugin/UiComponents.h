@@ -507,6 +507,9 @@ public:
     void mouseUp(const juce::MouseEvent&) override;
     void mouseMove(const juce::MouseEvent&) override;
     void mouseExit(const juce::MouseEvent&) override;
+    // The owning view calls this before destruction. Only an active UI gesture
+    // emits a neutral event; an idle control must not overwrite host input.
+    void cancelGesture();
     // Keyboard: Left/Right bend while held (the ribbon springs back to centre on release), Home,
     // End, Space or Return centre it. The ribbon takes focus with Tab, not from a click.
     bool keyPressed(const juce::KeyPress&) override;
@@ -552,12 +555,16 @@ public:
     float getValue() const noexcept { return value; }
     // Moves the control without notifying onValueChange (initial or restored position).
     void setValue(float newValue);
+    // End pointer ownership. Spring pitch returns to zero; latched modulation
+    // and expression retain their values without sending another event.
+    void cancelGesture();
 
 private:
     void setFromY(float y);
     juce::Rectangle<float> trackArea() const;
     juce::String wheelLabel;
     bool spring;
+    bool pointerGesture = false;
     float value = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PerformanceWheel)

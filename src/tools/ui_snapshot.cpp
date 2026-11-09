@@ -10,6 +10,7 @@
 #include "../../tests/ContextMenuKeyboardTests.h"
 #include "../../tests/TypedValueUnitTests.h"
 #include "../../tests/KeyboardTuningUiTests.h"
+#include "../../tests/TransientControlLifecycleTests.h"
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
@@ -1979,6 +1980,14 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--transient-control-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testTransientControlLifecycle([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Transient control lifecycle: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--keyboard-tuning-ui-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -2071,6 +2080,7 @@ int main(int argc, char** argv)
     phases.begin("ws3 keyboard/tuning host");
     cs80::tests::testWs3KeyboardHost(check);
     cs80::tests::testKeyboardTuningUiState(check);
+    cs80::tests::testTransientControlLifecycle(check);
     phases.begin("preset recall host");
     cs80::tests::testPresetRecallHost(check);
     phases.begin("preset file host");

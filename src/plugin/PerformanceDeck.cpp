@@ -21,6 +21,14 @@ juce::Rectangle<float> PerformanceDeck::designArea() const
                                   geo::deckBottom - geo::faceBottom).withTrimmedTop(-2.0f);
 }
 
+PerformanceDeck::~PerformanceDeck()
+{
+    // Release the owned transient input while callbacks and processor are live.
+    // The expression pedal is latched, so cancelling only ends its pointer ownership.
+    ribbon.cancelGesture();
+    expressionPedal.cancelGesture();
+}
+
 // The original left-hand panel (Panel 3, see docs/PANEL_CONFORMANCE.md): sustain, portamento/glissando, their
 // footswitch assigners, tremolo/chorus, and the foot-controller selector with the on-screen pedal.
 void PerformanceDeck::buildLeftPanel()

@@ -7,9 +7,9 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-09. The current integration extends implementation source `0b340d9aa925141c50f2fd354c936163afe8a4f0` with sixteen-voice activity telemetry, keyboard context menus, complete typed-unit admission, Scala mapping ownership, release provenance checks, exact Ensemble control caching and further experimental memory work. The feature documents separate local evidence from external qualification. Loaded memory controls/receivers and range/scheduling studies remain experimental and are not activated in Engine audio. No remote CI result for this later integration is claimed.
+Last updated: 2026-11-09. The current integration extends implementation source `8ade562f5e3baf1e0803b84249baca6b8e87eef8` with transient pitch-wheel/ribbon cleanup and an offline sparse memory solve with a full-node residual certificate. The feature documents separate local evidence from external qualification. The sparse solver still exceeds the proposed audio-update budget; loaded memory controls/receivers remain experimental and are not activated in Engine audio. No remote CI result for this later integration is claimed.
 
-At the November 9, 02:08 UTC check, the earlier `0b340d9` build, DSP and screenshot workflows all passed. The `47aad3b` Linux GUI-under-Xvfb validation failure remains historical; the later pass does not establish its cause or erase it. Native downloads still use the earlier verified `0996a15af334f9dcfd63ed8c1d574a22b6804f00` source. The current screenshots render `0b340d9`, published in screenshot-only descendant `0d84fe3a5b79e03bdb9effe5c884d991af734652`, not that download source or the later integration. CI and screenshot success are not real-DAW or release qualification.
+At the November 9 check, the earlier `8ade562` build, DSP and screenshot workflows all passed. The `47aad3b` Linux GUI-under-Xvfb validation failure remains historical; the later pass does not establish its cause or erase it. Native downloads still use the earlier verified `0996a15af334f9dcfd63ed8c1d574a22b6804f00` source. The current screenshots render `8ade562`, published in screenshot-only descendant `9f89f8a7e38eb4d4009f381a37950450f936d201`, not that download source or the later gesture/sparse-solver integration. CI and screenshot success are not real-DAW or release qualification.
 
 ## Changes since the October 31 integration
 
@@ -20,9 +20,11 @@ handover PDF remain dated evidence, not current-head measurements.
 | Area | Current state | Source / scope |
 | --- | --- | --- |
 | Sixteen-voice UI ownership | Accepted extension notes retain release and gesture-pressure ownership; conservative alias exclusion spans both instruments | `6e2c171`; [scope and regressions](SIXTEEN_VOICE_UI_OWNERSHIP.md). No source-targeted host/UI note-off expansion; the later meter correction is listed separately. |
-| Voice activity display | One coherent audio-owned snapshot covers both instruments; toolbar/monitor add an extension row and report applied 8/16 capacity | Current integration; [scope and local evidence](VOICE_ACTIVITY_TELEMETRY.md). Core/native processor tests pass; local visual gate blocked before plugin execution by unavailable display. |
-| Parameter editing | Shift+F10 opens existing parameter menus; named units require complete tokens rather than accepting arbitrary suffixes | Current integration; [interaction and native test scope](workstreams/ws8-studio.md). No new MIDI routing, numeric display law or MIX-ratio syntax. |
-| Scala mapping session ownership | KBM imports use current processor SCL source; stale in-flight mapping publication is rejected across restore/clear/replacement | Current integration; [scope and regressions](SCALA_KBM_SESSION_OWNERSHIP.md). Native component/processor checks do not automate a platform file picker or qualify a DAW. |
+| Voice activity display | One coherent audio-owned snapshot covers both instruments; toolbar/monitor add an extension row and report applied 8/16 capacity | `8ade562`; [scope and local evidence](VOICE_ACTIVITY_TELEMETRY.md). Local visual execution was display-blocked; exact-source remote CI and screenshots passed as recorded below. |
+| Parameter editing | Shift+F10 opens existing parameter menus; named units require complete tokens rather than accepting arbitrary suffixes | `8ade562`; [interaction and native test scope](workstreams/ws8-studio.md). No new MIDI routing, numeric display law or MIX-ratio syntax. |
+| Scala mapping session ownership | KBM imports use current processor SCL source; stale in-flight mapping publication is rejected across restore/clear/replacement | `8ade562`; [scope and regressions](SCALA_KBM_SESSION_OWNERSHIP.md). Native component/processor checks do not automate a platform file picker or qualify a DAW. |
+| Transient performance controls | Releases active pitch on controllers-strip hide/destruction and active ribbon on performance-deck destruction; idle host pitch and latched controls are retained | Current integration; [scope and regression evidence](TRANSIENT_CONTROL_LIFECYCLE.md). Local component/processor checks and independent review, not native capture-loss, ancestor-hide or DAW qualification. |
+| Offline sparse memory solve | Retains all 94 source nodes and gates each accepted candidate with an outward full-node residual bound for the prepared coefficient graph | Current integration; [numerical contract, evidence and timing blocker](analysis/memory-sparse-update.md). Not component-tolerance/hardware proof; cost exceeds the proposed audio-update schedule. No Engine activation. |
 | Tuning admission | Bounds KBM integers before narrowing, validates nominal float-frequency construction and rejects reserved MTS bits before publication | `6e2c171`; [focused tests and exclusions](TUNING_ADMISSION_SAFETY.md). No audible-frequency clamp or Scala/KBM editor-lifetime change. |
 | Live dispersion envelope timing | Source Performance envelope timing follows smoothed ratios per internal sample, independently of host block partitioning | `6e2c171`; [regressions and moving-control cost](LIVE_DISPERSION_TIMING.md). Moving performances intentionally change; no whole-instrument CPU qualification. |
 | Distribution verification and preflight | Offline bundle inventory/integrity verifier; Windows payload preflight and reparse-point rejection; macOS/Debian staging permissions independent of caller umask | `a6569a0`, `a83acd5` (#104), `c55c216` (#101); [installation and verification](INSTALL_AND_QUICKSTART.md), [qualification scope](release/RELEASE_QUALIFICATION.md). No refreshed downloads or native installation claim. |
@@ -50,7 +52,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
 | OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
-| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots, newer than the retained download checkpoint but older than the current integration | LFO preview fix `ae3958d`; screenshot source `0b340d9`, run [42543080304](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080304), committed `0d84fe3`; [provenance](screenshots/provenance.json) |
+| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots, newer than the retained download checkpoint but older than the current gesture/sparse-solver integration | LFO preview fix `ae3958d`; screenshot source `8ade562`, run [42550168949](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42550168949), committed `9f89f8a`; [provenance](screenshots/provenance.json) |
 
 The optimization and MSEG reports retain draft-stage qualification notes as
 historical evidence. Those changes are now merged; the post-merge status below
@@ -85,21 +87,28 @@ that earlier stage; the verified result above is current.
 
 ### Post-merge CI and download checkpoints
 
-The latest verified full CI checkpoint is **`0b340d9`**, checked November 9
-at 02:08 UTC. All three workflows used exact source
-`0b340d9aa925141c50f2fd354c936163afe8a4f0`:
+The latest verified full CI checkpoint is **`8ade562`**, checked November 9.
+All three workflows used exact source
+`8ade562f5e3baf1e0803b84249baca6b8e87eef8`:
 
 | Workflow | Verified result | Scope |
 | --- | --- | --- |
-| [Build 42543080210](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080210) | Passed | All six jobs: Linux, Windows, Apple Silicon and Intel macOS native build/test/package jobs, plus Linux and Windows VST3 pluginval at strictness 10. |
-| [DSP 42543080241](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080241) | Passed | All five jobs: measurements, synthetic-reference comparison, source circuit V1/audio V2 compatibility, default-off raw audio and sanitizers. |
-| [Screenshots 42543080304](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080304) | Passed | Actual-editor capture and publication; screenshot-only descendant `0d84fe3`. |
+| [Build 42550168950](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42550168950) | Passed | All six jobs: Linux, Windows, Apple Silicon and Intel macOS native build/test/package jobs, plus Linux and Windows VST3 pluginval at strictness 10. Both macOS jobs also passed their VST3/AU validation steps. |
+| [DSP 42550169047](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42550169047) | Passed | All five jobs: measurements, synthetic-reference comparison, source circuit V1/audio V2 compatibility, default-off raw audio and sanitizers. |
+| [Screenshots 42550168949](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42550168949) | Passed | Actual-editor capture and publication; screenshot-only descendant `9f89f8a`. |
 
-This successful checkpoint predates the current integration. Its workflows do
-not test the later telemetry, editor-input, Scala-session and other changes.
-No current-integration remote CI, real-DAW or release pass is inferred. Downloads
-remain pinned to `0996a15`; this update does not inspect or substitute newer
-binary artifacts.
+This checkpoint includes the telemetry, keyboard-menu, typed-unit, Scala-session
+and other changes in `8ade562`. Its workflows do not test the later gesture
+cleanup or sparse memory solver in the current integration. No later-source
+remote CI, real-DAW or release pass is inferred. Downloads remain pinned to
+`0996a15`; this update does not inspect or substitute newer binary artifacts.
+
+The preceding `0b340d9aa925141c50f2fd354c936163afe8a4f0` checkpoint also passed
+[build 42543080210](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080210),
+[DSP 42543080241](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080241)
+and [screenshots 42543080304](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080304),
+verified November 9 at 02:08 UTC. Its screenshot-only publication `0d84fe3`
+is now superseded by the `8ade562` captures, not erased from the history.
 
 The following `a6569a0` results are retained **historical observations**, checked
 on November 9 at 00:43 UTC, not a claim of live status or the latest remote base:
@@ -156,7 +165,7 @@ The preceding implementation checkpoint `47aad3b` has exact-source results:
 | [Screenshots 42516112410](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42516112410) | Passed | Actual-editor capture and publication; source `47aad3b`, screenshot-only descendant `1b146c4`. |
 
 No remote CI result for the current integration is claimed. The newer full
-`0b340d9` success does not qualify later sources or erase the `47aad3b` Linux
+`8ade562` success does not qualify later sources or erase the `47aad3b` Linux
 validator failure. The four README download links remain deliberately at
 `0996a15`; no newer artifacts replace them here.
 
@@ -191,18 +200,18 @@ Package inspection does not verify code signatures or notarization. Automated
 native CI coverage is not DAW or release qualification; no new installer release
 was run.
 
-The 68 current documentation screenshots come from `0b340d9`, published in
-screenshot-only commit `0d84fe3`. On November 9, all 68 image hashes and the exact
+The 68 current documentation screenshots come from `8ade562`, published in
+screenshot-only commit `9f89f8a`. On November 9, all 68 image hashes and the exact
 PNG inventory were checked against [SHA256SUMS](screenshots/SHA256SUMS), and
 [provenance.json](screenshots/provenance.json) matched successful rendering
-[run 42543080304](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42543080304).
-The repository screenshot tree is unchanged from that publication. They replace the
-`a6569a0` captures published in `0831c45`, the preceding `47aad3b` set in
-`1b146c4`, and the earlier `0996a15` set in `430c9e0`. They include the published
-ownership/tuning/live-dispersion integration, but not the later voice-activity
-display, keyboard-menu, typed-unit or Scala-session changes. They are not captures of
-the retained downloads, and no capture set establishes sound or release
-qualification.
+[run 42550168949](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42550168949).
+The repository screenshot tree is unchanged from that publication. They replace
+the `0b340d9` captures in `0d84fe3`, following the `a6569a0` set in `0831c45`,
+`47aad3b` set in `1b146c4`, and `0996a15` set in `430c9e0`. They include the
+voice-activity display, keyboard-menu, typed-unit and Scala-session changes,
+but not the later gesture cleanup or offline sparse solver. They are not
+captures of the retained downloads, and no capture set establishes sound or
+release qualification.
 
 The preceding #85 integration `58ed29e`
 [build 42373292449](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42373292449)
@@ -451,10 +460,10 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - CPU and idle targets remain open. The resonance cache, sparse external
   interpolation and zero-EI VCA optimizations are merged, but their focused
   measurements do not replace a new full scorecard for the merged source.
-- The retained download source `0996a15` and later `0b340d9` checkpoint passed
+- The retained download source `0996a15` and later `8ade562` checkpoint passed
   four-platform native CI. The latter also passed both validators, DSP and
-  screenshots, but does not cover the current integration. The intervening
-  `47aad3b` Linux GUI validation failure remains historical, not explained by
+  screenshots, but does not cover the later gesture/sparse-solver integration.
+  The intervening `47aad3b` Linux GUI validation failure remains historical, not explained by
   a later pass. Actual DAW sessions and release qualification remain separate.
 - Nodal filter top-octave small-signal accuracy at 2x/4x internal; ADJ p11 HP point.
 - Note-off click scores above 1 on some percussive circuit-engine programs.
@@ -463,10 +472,14 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   and per-channel master tables remain open.
 - Sixteen-voice UI ownership and activity telemetry now cover both instruments
   ([ownership](SIXTEEN_VOICE_UI_OWNERSHIP.md), [meter](VOICE_ACTIVITY_TELEMETRY.md)).
-  The meter's native UI/visual gate still needs a usable display; local core and
-  processor passes do not qualify actual editor rendering.
-- Memory-panel electrical model not wired into audio; 25 tone-tab cells remain
-  hypotheses; tremolo/chorus both-off/both-on states need an engine parameter.
+  Remote `8ade562` CI and actual-editor captures passed. Local native-window
+  execution remains display-blocked; no DAW qualification is inferred, and the
+  later gesture-cleanup checks do not exercise OS pointer capture.
+- Memory-panel electrical model not wired into audio. The new certified sparse
+  solver remains offline and exceeds the proposed audio-update budget; receiver
+  propagation, scheduling/fallback and eight-versus-sixteen-voice loading remain
+  unqualified. The 25 tone-tab cells remain hypotheses; tremolo/chorus
+  both-off/both-on states need an engine parameter.
 - Context menu and MIDI learn for switches, combo boxes and lid miniatures;
   undo-applied values reach the host without gestures; the voice monitor
   illustrates settings rather than tapping the engine.

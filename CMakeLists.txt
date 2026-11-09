@@ -569,6 +569,33 @@ if (CS80_BUILD_TESTS)
              ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-nonlinear-study.json
              ${CMAKE_CURRENT_BINARY_DIR} check)
     set_tests_properties(cs80_memory_qualification_probe_self_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_memory_verified_diode_tests tests/MemoryVerifiedDiodeTests.cpp)
+    target_include_directories(cs80_memory_verified_diode_tests PRIVATE src)
+    add_test(NAME cs80_memory_verified_diode_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_verified_diode.py
+                     $<TARGET_FILE:cs80_memory_verified_diode_tests>)
+    set_tests_properties(cs80_memory_verified_diode_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_memory_sparse_update_tests tests/MemorySparseUpdateTests.cpp)
+    target_include_directories(cs80_memory_sparse_update_tests PRIVATE src)
+    add_test(NAME cs80_memory_sparse_update_tests COMMAND cs80_memory_sparse_update_tests
+             ${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/memory-sparse-update.json)
+    set_tests_properties(cs80_memory_sparse_update_tests PROPERTIES TIMEOUT 300)
+    foreach(memory_target cs80_memory_verified_diode_tests cs80_memory_sparse_update_tests)
+        if (MSVC)
+            target_compile_options(${memory_target} PRIVATE /fp:strict)
+        else()
+            target_compile_options(${memory_target} PRIVATE -ffp-contract=off)
+        endif()
+    endforeach()
+    if (NOT MSVC)
+        add_executable(cs80_memory_sparse_probe tests/MemorySparseProbe.cpp)
+        target_include_directories(cs80_memory_sparse_probe PRIVATE src)
+        target_compile_options(cs80_memory_sparse_probe PRIVATE -ffp-contract=off)
+        add_test(NAME cs80_memory_sparse_negative_controls
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_sparse_negative_controls.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_memory_sparse_negative_controls PROPERTIES TIMEOUT 300)
+    endif()
     if (NOT MSVC)
         add_test(NAME cs80_memory_routing_negative_controls
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_routing_negative_controls.py
@@ -853,6 +880,8 @@ if (CS80_BUILD_PLUGIN)
     set_tests_properties(cs80_typed_value_unit_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_keyboard_tuning_ui_tests COMMAND CS80Snapshots --keyboard-tuning-ui-tests)
     set_tests_properties(cs80_keyboard_tuning_ui_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_transient_control_tests COMMAND CS80Snapshots --transient-control-tests)
+    set_tests_properties(cs80_transient_control_tests PROPERTIES TIMEOUT 120)
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix

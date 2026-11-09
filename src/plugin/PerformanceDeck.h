@@ -14,6 +14,7 @@ class PerformanceDeck final : public PanelSection
 {
 public:
     explicit PerformanceDeck(Cs80AudioProcessor& p);
+    ~PerformanceDeck() override;
 
     juce::Rectangle<float> designArea() const;
     ui::RibbonStrip& getRibbon() noexcept { return ribbon; }

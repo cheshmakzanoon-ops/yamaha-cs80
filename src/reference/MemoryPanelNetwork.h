@@ -80,11 +80,16 @@ struct BusCurrentFeedback
     std::array<std::array<double, 26>, 26> siemens {};
 };
 
+// Optional full-node snapshot for independent offline residual checks. Its
+// addition does not change the solver arithmetic or the default result path.
+struct NodeSnapshot { std::array<double, 94> volts {}; bool valid = false; };
+
 inline Result solve(const Setup& setup, Jacobian* derivative = nullptr,
-                    const BusCurrentFeedback* feedback = nullptr)
+                    const BusCurrentFeedback* feedback = nullptr, NodeSnapshot* snapshot = nullptr)
 {
     Result out;
     if (derivative != nullptr) *derivative = {};
+    if (snapshot != nullptr) *snapshot = {};
     bool hasFeedback = false;
     if (feedback != nullptr)
         for (std::size_t i = 0; i < 26; ++i)
@@ -303,6 +308,10 @@ inline Result solve(const Setup& setup, Jacobian* derivative = nullptr,
         derivative->values = jac;
         derivative->dimension = n;
         derivative->busBase = busBase;
+    }
+    if (out.converged && snapshot != nullptr && n == static_cast<int>(snapshot->volts.size()))
+    {
+        std::copy(x.begin(), x.end(), snapshot->volts.begin()); snapshot->valid = true;
     }
     return out;
 }

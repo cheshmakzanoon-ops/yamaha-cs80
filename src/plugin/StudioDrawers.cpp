@@ -401,7 +401,22 @@ ControllersStrip::ControllersStrip(Cs80AudioProcessor& p) : processor(p)
     addAndMakeVisible(mod);
 }
 
-ControllersStrip::~ControllersStrip() = default;
+ControllersStrip::~ControllersStrip()
+{
+    // The callbacks still have a live owner/processor here. Do not invoke them
+    // later from a child component destructor after its owner's fields die.
+    pitch.cancelGesture();
+    mod.cancelGesture();
+}
+
+void ControllersStrip::visibilityChanged()
+{
+    if (! isVisible())
+    {
+        pitch.cancelGesture();
+        mod.cancelGesture();
+    }
+}
 
 void ControllersStrip::paint(juce::Graphics& g)
 {

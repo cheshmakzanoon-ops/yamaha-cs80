@@ -66,6 +66,7 @@ public:
 
     PerformanceWheel& getPitchWheel() noexcept { return pitch; }
     PerformanceWheel& getModWheel() noexcept { return mod; }
+    void visibilityChanged() override;
 
     static constexpr float kDesignW = 150.0f, kDesignH = 236.0f;
 
