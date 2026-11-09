@@ -143,28 +143,31 @@ inline constexpr Interval logTwo {0x1.62e42fefa39efp-1, 0x1.62e42fefa39f0p-1};
 inline Interval logMantissa(double m) noexcept
 {
     if (m == 1.0) return {0.0,0.0};
-    if (!(m > 1.0 && m < 2.0)) return invalid();
+    if (!(m >= 0.75 && m <= 1.5)) return invalid();
     auto z = div(sub(point(m),point(1.0)),add(point(m),point(1.0)));
     if (!valid(z)) return invalid();
-    z.lo = std::max(z.lo,0.0); // exact z is nonnegative
     auto z2 = mul(z,z);
     if (!valid(z2)) return invalid();
     z2.lo = std::max(z2.lo,0.0);
     if (!(z2.hi < 1.0)) return invalid();
-    constexpr int terms = 24;
+    constexpr int terms = 12;
     Interval power = z, sum{0.0,0.0};
     for (int j=0; j<terms; ++j)
     {
         sum = add(sum,div(power,point(2*j+1.0)));
         power = mul(power,z2);
         if (!valid(sum) || !valid(power)) return invalid();
-        power.lo = std::max(power.lo,0.0);
     }
-    // Remaining positive tail is <= 2*z^(2N+1)/((2N+1)*(1-z^2)).
+    // Signed atanh series: the remaining tail has the sign of z and absolute
+    // value <= 2*abs(z)^(2N+1)/((2N+1)*(1-z^2)). The interval power includes the
+    // exact signed numerator even when its interval straddles zero.
     const auto partial = mul(point(2.0),sum);
-    const auto tail = div(mul(point(2.0),power),mul(point(2*terms+1.0),sub(point(1.0),z2)));
+    const double absolutePower = std::max(std::abs(power.lo),std::abs(power.hi));
+    const auto tail = div(mul(point(2.0),point(absolutePower)),mul(point(2*terms+1.0),sub(point(1.0),z2)));
     if (!valid(partial) || !valid(tail) || tail.hi < 0.0) return invalid();
-    return add(partial,{0.0,tail.hi});
+    const Interval remainder = z.lo >= 0.0 ? Interval{0.0,tail.hi}
+                             : z.hi <= 0.0 ? Interval{-tail.hi,0.0} : Interval{-tail.hi,tail.hi};
+    return add(partial,remainder);
 }
 inline Interval logPositive(double x) noexcept
 {
@@ -183,7 +186,11 @@ inline Interval logPositive(double x) noexcept
         k = highest - 1074;
         fraction = (fraction << (52-highest)) & fractionMask;
     }
-    const double m = std::bit_cast<double>((std::uint64_t{1023} << 52) | fraction);
+    double m = std::bit_cast<double>((std::uint64_t{1023} << 52) | fraction);
+    // Exact power-of-two scaling keeps the reduced coordinate in [0.75,1.5],
+    // giving abs((m-1)/(m+1)) <= 0.2. This halves the verified series work
+    // without discarding its analytic tail or changing the target logarithm.
+    if (m > 1.5) { m *= 0.5; ++k; }
     return add(mul(point(static_cast<double>(k)),logTwo),logMantissa(m));
 }
 inline Interval logInterval(Interval x) noexcept

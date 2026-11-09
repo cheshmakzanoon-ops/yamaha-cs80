@@ -82,6 +82,12 @@ if (CS80_BUILD_TESTS)
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-preset-trash-safety.py
                          --compiler ${CMAKE_CXX_COMPILER})
         set_tests_properties(cs80_preset_trash_safety_tests PROPERTIES TIMEOUT 60)
+        # Exact preview arithmetic with only an inert pi constant in place of JUCE.
+        # This checks finite geometry inputs, not GUI rendering or preset loading.
+        add_test(NAME cs80_preset_signature_math_tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-preset-signature-math.py
+                         --compiler ${CMAKE_CXX_COMPILER})
+        set_tests_properties(cs80_preset_signature_math_tests PROPERTIES TIMEOUT 120)
     endif()
     if (UNIX)
         # Synthetic shell/tool fixtures only; no native installer or product runs.
@@ -102,6 +108,10 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_lfo_scope_preview_tests PRIVATE src)
     add_test(NAME cs80_lfo_scope_preview_tests COMMAND cs80_lfo_scope_preview_tests)
     set_tests_properties(cs80_lfo_scope_preview_tests PROPERTIES TIMEOUT 30)
+    add_executable(cs80_preset_preview_math_tests tests/PresetPreviewMathTests.cpp)
+    target_include_directories(cs80_preset_preview_math_tests PRIVATE src)
+    add_test(NAME cs80_preset_preview_math_tests COMMAND cs80_preset_preview_math_tests)
+    set_tests_properties(cs80_preset_preview_math_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_output_meter_display_tests tests/OutputMeterDisplayTests.cpp)
     target_include_directories(cs80_output_meter_display_tests PRIVATE src)
     add_test(NAME cs80_output_meter_display_tests COMMAND cs80_output_meter_display_tests)
@@ -575,6 +585,10 @@ if (CS80_BUILD_TESTS)
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_verified_diode.py
                      $<TARGET_FILE:cs80_memory_verified_diode_tests>)
     set_tests_properties(cs80_memory_verified_diode_tests PROPERTIES TIMEOUT 300)
+    add_test(NAME cs80_memory_centered_log_rational
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_memory_centered_log_rational.py
+                     $<TARGET_FILE:cs80_memory_verified_diode_tests>)
+    set_tests_properties(cs80_memory_centered_log_rational PROPERTIES TIMEOUT 60)
     add_executable(cs80_memory_sparse_update_tests tests/MemorySparseUpdateTests.cpp)
     target_include_directories(cs80_memory_sparse_update_tests PRIVATE src)
     add_test(NAME cs80_memory_sparse_update_tests COMMAND cs80_memory_sparse_update_tests
@@ -701,6 +715,16 @@ if (CS80_BUILD_PLUGIN)
         target_compile_definitions(cs80_preset_display_name_tests PRIVATE JUCE_USE_CURL=0)
         add_test(NAME cs80_preset_display_name_tests COMMAND cs80_preset_display_name_tests)
         set_tests_properties(cs80_preset_display_name_tests PROPERTIES TIMEOUT 30)
+
+        # Preset browser XML values only: no processor or GUI initialization.
+        juce_add_console_app(cs80_preset_file_values_tests
+            PRODUCT_NAME "CS80 Preset File Values Tests")
+        target_sources(cs80_preset_file_values_tests PRIVATE tests/PresetFileValuesTests.cpp)
+        target_include_directories(cs80_preset_file_values_tests PRIVATE src)
+        target_link_libraries(cs80_preset_file_values_tests PRIVATE juce::juce_core)
+        target_compile_definitions(cs80_preset_file_values_tests PRIVATE JUCE_USE_CURL=0)
+        add_test(NAME cs80_preset_file_values_tests COMMAND cs80_preset_file_values_tests)
+        set_tests_properties(cs80_preset_file_values_tests PROPERTIES TIMEOUT 30)
 
         # MSEG text/XML codec only: no processor or GUI initialization.
         juce_add_console_app(cs80_mseg_state_text_tests
@@ -882,6 +906,8 @@ if (CS80_BUILD_PLUGIN)
     set_tests_properties(cs80_keyboard_tuning_ui_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_transient_control_tests COMMAND CS80Snapshots --transient-control-tests)
     set_tests_properties(cs80_transient_control_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_performance_wheel_keyboard_tests COMMAND CS80Snapshots --performance-wheel-keyboard-tests)
+    set_tests_properties(cs80_performance_wheel_keyboard_tests PROPERTIES TIMEOUT 120)
 
     # This offline integration harness keeps many processor fixtures alive on
     # the stack (including nested host tests). Match the ordinary 8 MiB Unix

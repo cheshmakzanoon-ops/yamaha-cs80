@@ -1,5 +1,11 @@
 # Offline verified logarithm and diode-current primitive
 
+This page records the original `b57e3ca...` primitive and its execution evidence.
+The subsequent [centered-series cost experiment](memory-certificate-cost.md)
+uses an exact additional power-of-two reduction and a 12-term signed series
+with its outward-enclosed tail. The original 24-term proof/data below remain
+historical baseline evidence, not a claim about the later header's identity.
+
 ## Scope and status
 
 `src/experimental/MemoryVerifiedDiode.h` is a bounded, nonallocating research

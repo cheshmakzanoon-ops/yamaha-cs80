@@ -93,7 +93,7 @@ void PerformanceDeck::buildLeftPanel()
                         "Foot controller selector: EXP = volume only, WAH = EXP-WAH sweep.", 444, 662);
     expressionPedal.setTitle("Foot controller position (expression)");
     expressionPedal.setComponentID("expression_pedal");
-    expressionPedal.setDescription("On-screen foot controller: volume and the EXP-WAH sweep. MIDI CC11 follows this pedal with parity isolation OFF, in both legacy and source-performance modes. In isolation, CC11 is ignored; this on-screen pedal remains active.");
+    expressionPedal.setDescription("On-screen foot controller: volume and the EXP-WAH sweep. MIDI CC11 follows this pedal with parity isolation OFF, in both legacy and source-performance modes. In isolation, CC11 is ignored; this on-screen pedal remains active. " + expressionPedal.getDescription());
     expressionPedal.setValue(processor.getExpressionValue());
     expressionPedal.onValueChange = [this](float value) { processor.setExpressionFromUI(value); };
     addAndMakeVisible(expressionPedal);

@@ -23,6 +23,29 @@ By main `a83acd5e7e9be08d4bb33dd685d4c13a46d16563`, #91, #103, #89, #90 and
 #104 were integrated. This document does not certify their complete combined
 release state or keep a moving tally of subsequent merges.
 
+### Follow-up against `b542c17`
+
+A fresh GitHub inventory on November 9 still has 112 branches and 72 open draft
+PRs. Open status is not proof that a change is absent: narrow replacements for
+Scala #41, Drive/Tape #73/#75, adaptive Ensemble #77 and renderer #100 are already
+in this main ancestry. See their scoped reports rather than reapplying old heads.
+
+**Preset preview boundaries, #82**, head
+`58e6070c5a750689aabf68108c0c2b5129bb1f3b`, remains genuinely absent at that base.
+A narrow port is independently reviewed and tested at `9b7059d`; see
+[Preset preview boundaries](PRESET_PREVIEW_BOUNDARIES.md) for the fresh negative
+controls, sanitizer tests, native build and historical validator failure. It
+does not alter processor restore, factory values or audio DSP. This dated audit
+does not imply the port has been published or passed current remote CI.
+
+**Live ring timing, #81**, head
+`b585ae5e26492933132d2323e7acbb2a8a3f5d0f`, is still a separate candidate.
+Its update of active PRA attack/decay is an engineering-inferred control policy,
+not merely a no-audio-change optimization or a measured PRA law. Its historical
+tests do not establish current-main combined compatibility. The preview safety
+fix was prioritized; no #81 integration or new current-main runtime result is
+claimed by this follow-up. No broad branch is recommended for blanket merging.
+
 ## Fresh focused findings
 
 ### Safety changes

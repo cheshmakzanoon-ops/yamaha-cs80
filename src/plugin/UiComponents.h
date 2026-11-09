@@ -551,11 +551,24 @@ public:
     void mouseDrag(const juce::MouseEvent&) override;
     void mouseUp(const juce::MouseEvent&) override;
 
+    // Tab focuses without stealing QWERTY focus on a click. Arrows adjust,
+    // Shift is fine, Home/End select limits; spring pitch releases on key-up.
+    bool keyPressed(const juce::KeyPress&) override;
+    bool keyStateChanged(bool isKeyDown) override;
+    void focusGained(juce::Component::FocusChangeType) override { repaint(); }
+    void focusLost(juce::Component::FocusChangeType) override
+    {
+        if (keyboardGesture) cancelGesture();
+        repaint();
+    }
+    void enablementChanged() override { if (!isEnabled()) cancelGesture(); }
+    void paintOverChildren(juce::Graphics&) override;
+
     std::function<void(float)> onValueChange;
     float getValue() const noexcept { return value; }
     // Moves the control without notifying onValueChange (initial or restored position).
     void setValue(float newValue);
-    // End pointer ownership. Spring pitch returns to zero; latched modulation
+    // End input ownership. Spring pitch returns to zero; latched modulation
     // and expression retain their values without sending another event.
     void cancelGesture();
 
@@ -565,6 +578,7 @@ private:
     juce::String wheelLabel;
     bool spring;
     bool pointerGesture = false;
+    bool keyboardGesture = false;
     float value = 0.0f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PerformanceWheel)

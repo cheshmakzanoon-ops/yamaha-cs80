@@ -11,6 +11,7 @@
 #include "../../tests/TypedValueUnitTests.h"
 #include "../../tests/KeyboardTuningUiTests.h"
 #include "../../tests/TransientControlLifecycleTests.h"
+#include "../../tests/PerformanceWheelKeyboardTests.h"
 #include "../../tests/OutputMeterUiTests.h"
 #include "../../tests/PluginPanicTests.h"
 #include "../../tests/KeyboardPressureHostTests.h"
@@ -1988,6 +1989,14 @@ int main(int argc, char** argv)
         std::printf("Transient control lifecycle: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--performance-wheel-keyboard-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testPerformanceWheelKeyboard([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Performance wheel keyboard: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--keyboard-tuning-ui-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -2081,6 +2090,7 @@ int main(int argc, char** argv)
     cs80::tests::testWs3KeyboardHost(check);
     cs80::tests::testKeyboardTuningUiState(check);
     cs80::tests::testTransientControlLifecycle(check);
+    cs80::tests::testPerformanceWheelKeyboard(check);
     phases.begin("preset recall host");
     cs80::tests::testPresetRecallHost(check);
     phases.begin("preset file host");

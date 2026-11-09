@@ -4552,7 +4552,58 @@ PerformanceWheel::PerformanceWheel(const juce::String& label, bool springLoaded)
 {
     setMouseCursor(juce::MouseCursor::UpDownResizeCursor);
     setRepaintsOnMouseActivity(true);
+    setWantsKeyboardFocus(true);
+    setMouseClickGrabsKeyboardFocus(false);
+    setTitle(label);
+    setDescription("Keyboard: arrow keys adjust; Shift makes fine changes; Home/End select limits. "
+                   + juce::String(spring ? "Pitch returns to centre when adjustment keys are released or focus leaves. Escape releases an active keyboard bend."
+                                         : "The value stays when keys are released or focus leaves."));
+}
 
+bool PerformanceWheel::keyPressed(const juce::KeyPress& key)
+{
+    const auto mods = key.getModifiers();
+    if (!isEnabled() || pointerGesture || mods.isCtrlDown() || mods.isAltDown() || mods.isCommandDown())
+        return false;
+    const int code = key.getKeyCode();
+    if (code == juce::KeyPress::escapeKey && keyboardGesture)
+    {
+        cancelGesture();
+        return true;
+    }
+    const bool increase = code == juce::KeyPress::upKey || code == juce::KeyPress::rightKey;
+    const bool decrease = code == juce::KeyPress::downKey || code == juce::KeyPress::leftKey;
+    if (!increase && !decrease && code != juce::KeyPress::homeKey && code != juce::KeyPress::endKey)
+        return false;
+    keyboardGesture = true;
+    const float minimum = spring ? -1.0f : 0.0f;
+    const float step = (spring ? 0.04f : 0.02f) * (mods.isShiftDown() ? 0.1f : 1.0f);
+    value = code == juce::KeyPress::homeKey ? minimum : code == juce::KeyPress::endKey ? 1.0f
+        : juce::jlimit(minimum, 1.0f, value + (increase ? step : -step));
+    if (onValueChange) onValueChange(value);
+    repaint();
+    return true;
+}
+
+bool PerformanceWheel::keyStateChanged(bool)
+{
+    if (keyboardGesture)
+    {
+        const int adjustmentKeys[] {juce::KeyPress::upKey, juce::KeyPress::downKey,
+                                    juce::KeyPress::leftKey, juce::KeyPress::rightKey,
+                                    juce::KeyPress::homeKey, juce::KeyPress::endKey};
+        bool held = false;
+        for (int code : adjustmentKeys) held |= juce::KeyPress::isKeyCurrentlyDown(code);
+        if (!held) cancelGesture();
+    }
+    // This notification does not identify the changed key. Let the editor's
+    // QWERTY listener observe note releases too, even when we ended a bend.
+    return false;
+}
+
+void PerformanceWheel::paintOverChildren(juce::Graphics& g)
+{
+    if (hasKeyboardFocus(false)) drawFocusRing(g, getLocalBounds().toFloat());
 }
 
 void PerformanceWheel::setValue(float newValue)
@@ -4718,6 +4769,7 @@ void PerformanceWheel::setFromY(float y)
 
 void PerformanceWheel::mouseDown(const juce::MouseEvent& e)
 {
+    keyboardGesture = false;
     pointerGesture = true;
     setFromY(e.position.y);
 }
@@ -4728,14 +4780,15 @@ void PerformanceWheel::mouseDrag(const juce::MouseEvent& e)
 
 void PerformanceWheel::mouseUp(const juce::MouseEvent&)
 {
-    cancelGesture();
+    if (pointerGesture) cancelGesture();
 }
 
 void PerformanceWheel::cancelGesture()
 {
-    if (! pointerGesture)
+    if (!pointerGesture && !keyboardGesture)
         return;
     pointerGesture = false;
+    keyboardGesture = false;
     if (spring)
     {
         value = 0.0f;

@@ -63,7 +63,7 @@ int main(int argc, char** argv)
         for (int trial = 0; trial < 7; ++trial) for (int position = 0; position < 5; ++position)
         {
             const int mode = trial % 2 ? 4-position : position;
-            const int count = mode == 0 ? 32 : 128;
+            const int count = 128; // Identical input indices for paired scenario comparisons.
             const char* names[] {"dense_cold_full_nodes", "sparse_cold_certified", "sparse_warm_certified", "residual_certificate_only", "fixed_coefficient_compile"};
             sp::State state = base; int failed = 0, steps = 0; double bound = 0.0;
             const auto start = std::chrono::steady_clock::now();

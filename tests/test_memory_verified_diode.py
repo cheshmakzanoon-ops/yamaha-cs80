@@ -50,6 +50,12 @@ with localcontext() as ctx:
  for k in [-1074,-1022,-1000,-500,-1,0,1,500,1000,1023]:
   x=math.ldexp(1.,k)
   values.extend(y for y in [x,math.nextafter(x,0.),math.nextafter(x,math.inf)] if y>0 and math.isfinite(y))
+ # Both sides of the centered-series reduction threshold, including tiny and
+ # largest-exponent inputs. These are explicit regressions, not random coverage.
+ for base in [.75,1.5]:
+  for exponent in [-1022,-500,0,500,1023]:
+   x=math.ldexp(base,exponent)
+   values.extend(y for y in [math.nextafter(x,0.),x,math.nextafter(x,math.inf)] if y>0 and math.isfinite(y))
  for _ in range(1700):
   bits=rng.randrange(1,0x7ff0000000000000)
   values.append(struct.unpack('>d',struct.pack('>Q',bits))[0])

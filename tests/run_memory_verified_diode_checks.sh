@@ -55,3 +55,6 @@ ASAN_OPTIONS=detect_leaks=0 python3 -u "$root/tests/test_memory_verified_diode.p
     "$build/primitive-sanitized" "$build/mutant-no-outward" \
     "$build/mutant-trust-candidate" "$build/mutant-unsafe-slope" \
     "$build/mutant-bad-log-two" | tee "$build/verification.txt"
+
+python3 "$root/tests/test_memory_centered_log_rational.py" "$build/primitive-o2" \
+    | tee "$build/centered-rational.txt"
