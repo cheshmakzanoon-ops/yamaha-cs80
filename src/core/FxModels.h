@@ -144,13 +144,23 @@ public:
         lineL.reset(); lineR.reset();
         antiAliasL.reset(); antiAliasR.reset(); reconL.reset(); reconR.reset();
         slowPhase = fastPhase = 0.0;
+        lastRate = -1.0f;
     }
 
     StereoSample process(float l, float r, float a, float b) noexcept
     {
-        const double speed = std::exp2(2.0 * (double) clampf(a, 0.0f, 1.0f) - 1.0);
-        slowPhase += kSlowHz * speed / sr;
-        fastPhase += kFastHz * speed / sr;
+        const float rate = clampf(a, 0.0f, 1.0f);
+        if (rate != lastRate)
+        {
+            lastRate = rate;
+            const double speed = std::exp2(2.0 * (double) rate - 1.0);
+            // Keep the original double expressions and sample-wise phase addition.
+            // Only unchanged rate coefficients are reused, never the moving phases.
+            slowIncrement = kSlowHz * speed / sr;
+            fastIncrement = kFastHz * speed / sr;
+        }
+        slowPhase += slowIncrement;
+        fastPhase += fastIncrement;
         slowPhase -= std::floor(slowPhase);
         fastPhase -= std::floor(fastPhase);
         const double depth = 0.15 + 0.85 * (double) clampf(b, 0.0f, 1.0f);
@@ -183,7 +193,8 @@ private:
     DelayLine lineL, lineR;
     Eq antiAliasL, antiAliasR, reconL, reconR;
     double sr = 96000.0, slowPhase = 0.0, fastPhase = 0.0;
-    float trim = 1.0f;
+    double slowIncrement = 0.0, fastIncrement = 0.0;
+    float trim = 1.0f, lastRate = -1.0f;
 };
 
 // ---- Plate reverb ----------------------------------------------------------------------
