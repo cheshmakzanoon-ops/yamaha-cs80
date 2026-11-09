@@ -128,3 +128,36 @@ pluginval locally: compare GUI validation runs that keep the module loaded with
 runs that unload it, with debug logging added around the JUCE VST3 wrapper's
 run-loop registration, to see whether a wrapper `EventHandler` registration
 survives `IPlugView::removed()`.
+
+## Fixed-GUI-seed diagnostic coverage
+
+The original Linux fixed-seed GUI invocation on `6c560f130be649dd4a63cbe146cd5cc54dd057a3`
+(run42579617910, job129045088115, seed `0x2da72db`) printed SUCCESS and then
+terminated with raw `-11` / SIGSEGV, PID2713. No core or stack was captured.
+The existing GDB and fault-thread replays were conditioned only on randomized
+GUI failure, so they did not cover this fixed-seed-only failure.
+
+The fixed-seed step now has an outcome ID. A bounded selector chooses one
+original failed GUI log once, shared by both existing diagnostic paths:
+randomized GUI takes precedence if both gates failed; otherwise a failed fixed
+seed selects its own log. Success, skipped/unrun gates without another failure,
+cancellation, and malformed outcomes do not select a replay. Only the two fixed
+log filenames can be emitted. The existing validated seed parser remains
+unchanged, including its rejection of a malformed final seed marker.
+
+There is still at most one GDB and one fault-thread replay, with the existing
+240-second outer limits, 120000ms validator limits and exit-status handling.
+The trace also still requires successful shim construction. Required validation
+commands, retry rules and verdicts are unchanged. This fixes missing diagnostic
+coverage, not the crash; the original failed gate remains failed even if a
+replay passes or cannot recover its seed. No new validator run accompanies this
+change. Source/fixture tests exercise selection and workflow wiring without
+launching pluginval or inducing a crash.
+
+Static investigation remains inconclusive. The historical callback trace makes
+JUCE's host `RunLoop::Impl` raw-handler dispatch and plugin registration lifetimes
+worth instrumenting. The host already guards delayed callbacks with a weak map;
+that alone does not prove stale handler ownership. Plugin JUCE8.0.11 also keeps
+run-loop scopes in its controller/component, not only its view, so registrations
+surviving `IPlugView::removed()` alone are not evidence of a leak. No root cause
+or production repair is claimed.

@@ -343,6 +343,9 @@ if (CS80_BUILD_TESTS)
     endif()
     add_test(NAME cs80_performance_control_tests COMMAND cs80_performance_control_tests)
     set_tests_properties(cs80_performance_control_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_validator_diagnostic_selection_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-pluginval-diagnostic-log.py)
+    set_tests_properties(cs80_validator_diagnostic_selection_tests PROPERTIES TIMEOUT 30)
     if (UNIX)
         add_test(NAME cs80_validator_retry_tests
                  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-pluginval-retry.sh

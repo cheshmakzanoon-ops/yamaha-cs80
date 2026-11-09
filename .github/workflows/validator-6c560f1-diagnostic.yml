@@ -1,0 +1,153 @@
+name: Linux validator artifact diagnostic (6c560f1)
+
+# One bounded investigation of an already failed invocation. This is not a
+# validation gate and cannot rescue the original run or publish a product.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/validator-6c560f1-diagnostic.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      ARTIFACT_ID: '13658360097'
+      ORIGINAL_RUN: '42579617910'
+      ORIGINAL_SOURCE: '6c560f130be649dd4a63cbe146cd5cc54dd057a3'
+      ARTIFACT_SHA256: 'b506b1d4d45d514fef57d2bd4ed7ec4242e5e8753eeb9100055ea30916792b26'
+      PLUGIN_SHA256: 'b77c622647b9ec6f14818c9b94be738f2b00d5f3a35e758b1010b32e841cc6cb'
+      REPLAY_SEED: '0x2da72db'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Use the original diagnostic shim/fixtures, not modified DSP code.
+          ref: 6c560f130be649dd4a63cbe146cd5cc54dd057a3
+
+      - name: Install official diagnostic runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libasound2t64 libfontconfig1 libfreetype6 \
+            libx11-6 libxext6 libxrandr2 libxcursor1 libxinerama1 \
+            libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \
+            fonts-dejavu-core xauth xvfb unzip gdb gcc libunwind-dev
+
+      - name: Retrieve and verify exact failed plugin artifact
+        id: artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostic-evidence
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" > diagnostic-evidence/artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > exact-plugin.zip
+          python3 - <<'PY'
+          import hashlib, json, os, stat, zipfile
+          from pathlib import Path
+          metadata = json.loads(Path('diagnostic-evidence/artifact.json').read_text())
+          assert metadata['id'] == int(os.environ['ARTIFACT_ID'])
+          assert metadata['name'] == 'cs80-linux-vst3' and not metadata['expired']
+          assert metadata['workflow_run']['id'] == int(os.environ['ORIGINAL_RUN'])
+          assert metadata['workflow_run']['head_sha'] == os.environ['ORIGINAL_SOURCE']
+          digest = os.environ['ARTIFACT_SHA256']
+          assert metadata['digest'] == 'sha256:' + digest
+          archive = Path('exact-plugin.zip')
+          assert archive.stat().st_size == metadata['size_in_bytes'] < 64 * 1024 * 1024
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == digest
+          plugin = 'CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so'
+          expected = {plugin, 'CS-80 Reference.vst3/Contents/Resources/moduleinfo.json'}
+          with zipfile.ZipFile(archive) as source:
+              entries = source.infolist()
+              assert len(entries) == len(expected) and {x.filename for x in entries} == expected
+              assert sum(x.file_size for x in entries) < 64 * 1024 * 1024
+              assert all(not stat.S_ISLNK(x.external_attr >> 16) for x in entries)
+              source.extractall('exact-plugin')
+          actual = hashlib.sha256((Path('exact-plugin') / plugin).read_bytes()).hexdigest()
+          assert actual == os.environ['PLUGIN_SHA256']
+          Path('diagnostic-evidence/identity.txt').write_text(
+              'Original source: ' + os.environ['ORIGINAL_SOURCE'] + '\n'
+              'Original run: ' + os.environ['ORIGINAL_RUN'] + '; artifact: ' + os.environ['ARTIFACT_ID'] + '\n'
+              'Plugin SHA256: ' + actual + '\nSeed: ' + os.environ['REPLAY_SEED'] + '\n'
+              'Original fixed-GUI invocation remains FAILED (native SIGSEGV after SUCCESS).\n')
+          PY
+
+      - name: Verify official validator and diagnostic shim
+        id: tools
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --retry-delay 2 \
+            -o pluginval.zip https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_Linux.zip
+          echo 'c01c49d8063965c4c2dea8324468336768f5c9139e0b1caebde14c2400b55352  pluginval.zip' | sha256sum --check
+          unzip -q pluginval.zip -d pluginval
+          ./pluginval/pluginval --version | tee diagnostic-evidence/pluginval-version.txt
+          sha256sum pluginval.zip pluginval/pluginval > diagnostic-evidence/validator-sha256.txt
+          gdb --version | sed -n '1p' > diagnostic-evidence/gdb-version.txt
+          cat /etc/os-release > diagnostic-evidence/os-release.txt
+          dpkg-query -W libc6 libx11-6 xvfb libunwind8 gdb > diagnostic-evidence/runtime-packages.txt
+          cc -std=c11 -O2 -Wall -Wextra -Werror -fPIC -shared -Wl,-z,now \
+            scripts/pluginval-fault-trace.c -lunwind -o fault-trace.so
+          cc -std=c11 -O0 -g -Wall -Wextra -Werror -rdynamic -pthread \
+            scripts/pluginval-fault-fixture.c -o fault-fixture
+          python3 scripts/test-pluginval-fault-trace.py fault-trace.so fault-fixture \
+            | tee diagnostic-evidence/shim-fixtures.txt
+
+      - name: One same-seed GUI diagnostic under GDB
+        id: gdb
+        if: success() && steps.artifact.outcome == 'success' && steps.tools.outcome == 'success'
+        run: |
+          set +e
+          set -o pipefail
+          mkdir -p diagnostic-evidence/gdb-reports
+          timeout --signal=TERM --kill-after=10s 240s \
+            xvfb-run -a -s '-screen 0 1920x1200x24' \
+            gdb -nx -nh --batch --return-child-result \
+            -iex 'set auto-load off' -iex 'set debuginfod enabled off' \
+            -iex 'set print frame-arguments none' -ex 'set pagination off' \
+            -ex 'set print thread-events off' -ex 'set disable-randomization off' \
+            -ex run \
+            -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
+            --args "$PWD/pluginval/pluginval" --random-seed "$REPLAY_SEED" \
+            --strictness-level 10 --validate-in-process --timeout-ms 120000 \
+            --output-dir "$PWD/diagnostic-evidence/gdb-reports" --output-filename same-seed-gdb \
+            "$PWD/exact-plugin/CS-80 Reference.vst3" 2>&1 | tee diagnostic-evidence/gdb.log
+          statuses=("${PIPESTATUS[@]}")
+          printf 'Diagnostic process exit: %s; log exit: %s\nOriginal gate remains FAILED.\n' \
+            "${statuses[0]}" "${statuses[1]}" | tee diagnostic-evidence/gdb-status.txt
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      - name: One same-seed GUI diagnostic with fault-thread trace
+        id: trace
+        if: always() && !cancelled() && steps.artifact.outcome == 'success' && steps.tools.outcome == 'success'
+        run: |
+          set +e
+          set -o pipefail
+          mkdir -p diagnostic-evidence/trace-reports
+          timeout --signal=TERM --kill-after=10s 240s \
+            xvfb-run -a -s '-screen 0 1920x1200x24' \
+            env LD_PRELOAD="$PWD/fault-trace.so" \
+            "$PWD/pluginval/pluginval" --random-seed "$REPLAY_SEED" \
+            --strictness-level 10 --validate-in-process --timeout-ms 120000 \
+            --output-dir "$PWD/diagnostic-evidence/trace-reports" --output-filename same-seed-trace \
+            "$PWD/exact-plugin/CS-80 Reference.vst3" \
+            198>diagnostic-evidence/fault-thread.log 2>&1 | tee diagnostic-evidence/trace.log
+          statuses=("${PIPESTATUS[@]}")
+          cat diagnostic-evidence/fault-thread.log
+          printf 'Diagnostic process exit: %s; log exit: %s\nOriginal gate remains FAILED.\n' \
+            "${statuses[0]}" "${statuses[1]}" | tee diagnostic-evidence/trace-status.txt
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      - name: Upload diagnostic evidence, never raw cores or binaries
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-6c560f1-same-artifact-diagnostics
+          path: diagnostic-evidence/
+          if-no-files-found: warn

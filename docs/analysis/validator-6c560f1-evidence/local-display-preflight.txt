@@ -1,0 +1,10 @@
+No plugin invocation took place during this preflight. Ordinary and permitted escalated Xvfb startup both failed.
+_XSERVTransOpen: transport open failed for local/9372966182b8:108
+_XSERVTransMakeAllCOTSServerListeners: failed to open listener for local
+_XSERVTransSocketOpenCOTSServer: Unable to open socket for unix
+_XSERVTransOpen: transport open failed for unix/9372966182b8:108
+_XSERVTransMakeAllCOTSServerListeners: failed to open listener for unix
+(EE)
+Fatal server error:
+(EE) Cannot establish any listening sockets - Make sure an X server isn't already running(EE)
+/workspace/shared/cs80-env-bin/xvfb-run: 91: kill: No such process

@@ -1,0 +1,15 @@
+Exact failed artifact; SHA256:
+b77c622647b9ec6f14818c9b94be738f2b00d5f3a35e758b1010b32e841cc6cb  /workspace/shared/yamaha-validator-6c560f1-evidence/exact-plugin/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so
+Batch-related symbols:
+0000000000971f40 T cs80::Ig00156Batch::selectKernel(bool)
+0000000000971f50 T cs80::Ig00156Batch::environmentSupported()
+Selector disassembly:
+0000000000971f40 <cs80::Ig00156Batch::selectKernel(bool)>:
+  971f40:	f3 0f 1e fa          	endbr64
+  971f44:	31 c0                	xor    %eax,%eax
+  971f46:	c3                   	ret
+  971f47:	90                   	nop
+  971f48:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+  971f4f:	00
+
+Source relation (expected empty):

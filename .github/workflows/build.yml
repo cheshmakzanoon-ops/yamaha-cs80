@@ -234,6 +234,7 @@ jobs:
       # Required replay of the state-restoration regression, never a rescue
       # for the independent randomized validation immediately above.
       - name: Validate GUI state regression seed 0x2da72db
+        id: validate_gui_seed
         if: always() && !cancelled() && (steps.validate_gui.outcome == 'success' || steps.validate_gui.outcome == 'failure')
         timeout-minutes: 5
         run: |
@@ -260,18 +261,33 @@ jobs:
             if [ -f "$log" ]; then cat "$log"; fi
           done
 
+      # Select once so both bounded diagnostic paths replay the same failed gate.
+      - name: Select failed GUI log for diagnostics
+        id: select_gui_diagnostic
+        if: always() && !cancelled()
+        env:
+          GUI_OUTCOME: ${{ steps.validate_gui.outcome }}
+          REGRESSION_OUTCOME: ${{ steps.validate_gui_seed.outcome }}
+        run: |
+          set -euo pipefail
+          log="$(python3 scripts/pluginval-diagnostic-log.py "$GUI_OUTCOME" "$REGRESSION_OUTCOME")"
+          echo "log=$log" >> "$GITHUB_OUTPUT"
+
       # This is a separate diagnostic execution, never a replacement pass.
       # The original validation step stays failed even if this run cannot
       # reproduce the crash. --return-child-result and pipe statuses preserve
       # diagnostic failure rather than turning a signal into success.
       - name: Diagnose GUI validator failure with gdb
-        if: failure() && steps.validate_gui.outcome == 'failure'
+        if: failure() && !cancelled() && steps.select_gui_diagnostic.outputs.log != ''
+        env:
+          DIAGNOSTIC_LOG: ${{ steps.select_gui_diagnostic.outputs.log }}
         run: |
           set +e
           set -o pipefail
           mkdir -p pluginval-diagnostic-reports
           seed_args=()
-          seed="$(python3 scripts/pluginval-diagnostic-seed.py pluginval-gui.log)"
+          echo "Diagnostic original log: $DIAGNOSTIC_LOG"
+          seed="$(python3 scripts/pluginval-diagnostic-seed.py "$DIAGNOSTIC_LOG")"
           if [ -n "$seed" ]; then
             seed_args=(--random-seed "$seed")
             echo "Diagnostic replay seed: $seed"
@@ -321,13 +337,16 @@ jobs:
             pluginval-trace-tools/fault-trace.so pluginval-trace-tools/fault-fixture
 
       - name: Diagnose GUI validator with fault-thread trace
-        if: failure() && steps.validate_gui.outcome == 'failure' && steps.build_trace.outcome == 'success'
+        if: failure() && !cancelled() && steps.select_gui_diagnostic.outputs.log != '' && steps.build_trace.outcome == 'success'
+        env:
+          DIAGNOSTIC_LOG: ${{ steps.select_gui_diagnostic.outputs.log }}
         run: |
           set +e
           set -o pipefail
           mkdir -p pluginval-trace-reports
           seed_args=()
-          seed="$(python3 scripts/pluginval-diagnostic-seed.py pluginval-gui.log)"
+          echo "Diagnostic original log: $DIAGNOSTIC_LOG"
+          seed="$(python3 scripts/pluginval-diagnostic-seed.py "$DIAGNOSTIC_LOG")"
           if [ -n "$seed" ]; then
             seed_args=(--random-seed "$seed")
             echo "Diagnostic replay seed: $seed"

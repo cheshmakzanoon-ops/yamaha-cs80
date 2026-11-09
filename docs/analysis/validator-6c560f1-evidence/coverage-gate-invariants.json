@@ -1,0 +1,56 @@
+[
+  {
+    "job": "pluginval",
+    "name": "Validate VST3 headless",
+    "only_changed_keys": []
+  },
+  {
+    "job": "pluginval",
+    "name": "Validate VST3 GUI under Xvfb",
+    "only_changed_keys": []
+  },
+  {
+    "job": "pluginval",
+    "name": "Validate GUI state regression seed 0x2da72db",
+    "only_changed_keys": [
+      "id"
+    ]
+  },
+  {
+    "job": "macos",
+    "name": "Validate VST3 with pluginval",
+    "only_changed_keys": []
+  },
+  {
+    "job": "macos",
+    "name": "Validate AU with pluginval",
+    "only_changed_keys": []
+  },
+  {
+    "job": "macos",
+    "name": "Validate AU with pluginval GUI",
+    "only_changed_keys": []
+  },
+  {
+    "job": "pluginval-windows",
+    "name": "Validate VST3 headless",
+    "only_changed_keys": []
+  },
+  {
+    "job": "pluginval-windows",
+    "name": "Validate state regression seed 0x5037a0c",
+    "only_changed_keys": []
+  },
+  {
+    "unchanged": "scripts/run-pluginval-linux.sh",
+    "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105"
+  },
+  {
+    "unchanged": "scripts/run-pluginval-with-core.py",
+    "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea"
+  },
+  {
+    "unchanged": "scripts/pluginval-diagnostic-seed.py",
+    "sha256": "32cd26915cbd57286d3cf39319e2b91bb4e88b0ea5ef4aed6026435dab048582"
+  }
+]

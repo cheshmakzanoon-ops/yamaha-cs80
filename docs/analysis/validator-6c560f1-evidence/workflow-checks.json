@@ -1,0 +1,65 @@
+{
+  "guards": [
+    {
+      "case": "exact_original",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "case": "wrong_artifact_id",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "wrong_artifact_name",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "expired",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "wrong_run",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "wrong_source",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "wrong_metadata_digest",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "wrong_zip_bytes",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "wrong_plugin_hash",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "extra",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "duplicate",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "case": "symlink",
+      "exit": 1,
+      "expected": 1
+    }
+  ],
+  "workflow": "YAML/shell, pinned original checkout, read-only permissions, bounded two GUI diagnostics and exact seed verified"
+}
