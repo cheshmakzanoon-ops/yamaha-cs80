@@ -1,0 +1,35 @@
+Functions sorted by metric: Exclusive Total CPU Time
+
+Excl. Total   Incl. Total    Name
+CPU           CPU
+ sec.      %   sec.      %
+0.212 100.00  0.212 100.00   <Total>
+0.049  23.00  0.058  27.23   cs80::ReconstructedOscillator::tick(double, cs80::WscControls const&)
+0.047  22.07  0.047  22.07   cs80::voice_continuity::clockStages(cs80::Ig00156Stage&, cs80::Ig00156Stage&, cs80::voice_continuity::IdleStageReferences&, float, cs80::voice_continuity::IdleRankControls const&, float, bool)
+0.037  17.37  0.188  88.73   cs80::Engine::processInternalSample(float&, float&, float)
+0.018   8.45  0.018   8.45   cs80::Engine::updateSourceReadouts(float)
+0.017   7.98  0.017   7.98   <static>@0x75c93 (<libm.so.6>)
+0.010   4.69  0.030  14.08   cs80::Engine::render(float*, int, float const*)
+0.008   3.76  0.008   3.76   cs80::ReconstructedOscillator::nextBranchEvent(cs80::ReconstructedOscillator::Nodes const&, double, bool&) const
+0.006   2.82  0.006   2.82   cs80::Engine::beginSmoothedControls()
+0.004   1.88  0.004   1.88   tanf
+0.003   1.41  0.003   1.41   cs80::OutputTapCircuit::process(double)
+0.003   1.41  0.003   1.41   tanhf
+0.002   0.94  0.004   1.88   cs80::BbdChorus::process(float, float, float, float, bool, bool)
+0.001   0.47  0.001   0.47   <static>@0x161e67 (<libc.so.6>)
+0.001   0.47  0.001   0.47   cs80::DelayLine::read(float) const
+0.001   0.47  0.001   0.47   cs80::Engine::applyParams(cs80::ParamValues const&)
+0.001   0.47  0.001   0.47   cs80::Engine::endSmoothedControls()
+0.001   0.47  0.001   0.47   cs80::PraWahCircuit::process(double)
+0.001   0.47  0.001   0.47   cs80::ReconstructedOscillator::recordEvent(double, unsigned int, cs80::ReconstructedOscillator::Nodes const&, cs80::ReconstructedOscillator::Nodes const&)
+0.001   0.47  0.001   0.47   cs80::Reverb::process(float, int)
+0.001   0.47  0.002   0.94   exp
+0.001   0.47  0.001   0.47   log1p
+0.      0.    0.005   2.35   (anonymous namespace)::run((anonymous namespace)::Case const&, int, std::ostream&)
+0.      0.    0.026  12.21   (anonymous namespace)::run((anonymous namespace)::Case const&, int, std::ostream&)::{lambda((anonymous namespace)::run((anonymous namespace)::Case const&, int, std::ostream&)::Phase)#1}::operator()((anonymous namespace)::run((anonymous namespace)::Case const&, int, std::ostream&)::Phase) const
+0.      0.    0.005   2.35   <static>@0x29c21 (<libc.so.6>)
+0.      0.    0.001   0.47   cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+0.      0.    0.001   0.47   cs80::fx::FxSlot::prepare(float)
+0.      0.    0.005   2.35   main
+0.      0.    0.001   0.47   void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+

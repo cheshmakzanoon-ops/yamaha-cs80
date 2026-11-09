@@ -1,0 +1,155 @@
+{
+  "classification": "rejected offline scalar/vector oscillator knee experiments; no shipping optimization",
+  "base": "c48d0816d7dae3e130035060dc415b0a1098d811",
+  "runtime_source_base": "35f3431400b28d95d41ef6c6a863db0516edfa01",
+  "tested_heads": {
+    "scalar_nearest": "4fa36a864014639017564e70a39f3d1a6c1f4a36",
+    "vector": "8bc5a9c313b1bc6b6ed62ba0a9546fb8f6812df8"
+  },
+  "predeclarations": {
+    "original_scalar_before_rebase": "2a7eabcfdc8b5fdc957601f4ece7cd11f05e21ae",
+    "scalar_rebased": "b7c5ee8ae0c8a96db7088b116e77bb6d3470b014",
+    "vector_followup": "9c5417f9ad7401591409eb54446ac0829612d7fb"
+  },
+  "frozen_harness_identity": {
+    "tests/OscillatorKneeLookupTests.cpp": {
+      "archive_path": "docs/experiments/oscillator-knee-lookup/harness/tests/OscillatorKneeLookupTests.cpp",
+      "sha256": "a574e5bf07bd355cd6074b19c11459e64baaf271b1840107980ba3dc1097b565"
+    },
+    "tests/OscillatorKneeLookupProbe.cpp": {
+      "archive_path": "docs/experiments/oscillator-knee-lookup/harness/tests/OscillatorKneeLookupProbe.cpp",
+      "sha256": "701d40fca92a838a831d5357bf025d4501922498ccc9abab9f54fa57818834e9"
+    },
+    "tests/fixtures/ReconstructedOscillatorPreKneeLookup.h": {
+      "archive_path": "docs/experiments/oscillator-knee-lookup/harness/tests/fixtures/ReconstructedOscillatorPreKneeLookup.h",
+      "sha256": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373"
+    }
+  },
+  "preserved_tree_ids": {
+    "src": "b76dba2e547c8829a86dda6d2625f330d5548d26",
+    "tests": "d403752c553737343adce9a890b061ec174e9548",
+    "CMakeLists.txt": "ea4a7b5b8530a2ad3cb973a89aef9df72fee7a0b",
+    "docs/screenshots": "0ef54e2a7345f93af76cb81cfef9d547a7c17a11",
+    "docs/experiments/oscillator-profile-cache": "d53d9416215e9166b3a349f2d26868c147a03866",
+    "docs/analysis/oscillator-profile-cache.md": "95ca19e0ff255ef2ba2eddf03a8c72b898b5c6f3"
+  },
+  "measurement": {
+    "matrices": 2,
+    "rows_per_matrix": 432,
+    "pairs_per_matrix": 216,
+    "total_rows": 864,
+    "total_pairs": 432,
+    "internal_rate": 96000,
+    "measured_frames": 32768,
+    "idle_calls": 2048,
+    "idle_samples_per_call": 16,
+    "pairs_per_case": 9,
+    "oscillator_counts": [
+      16,
+      32
+    ],
+    "child_affinity_observed": [
+      8
+    ],
+    "all_runtime_statuses_successful": true,
+    "all_pair_checksums_equal": true,
+    "object_bytes_baseline_and_candidates": 5984,
+    "same_generic_executable_across_matrices": true,
+    "timing_gates_pass": false,
+    "longer_confirmation_run": false
+  },
+  "raw_binary_sha256_external_only": {
+    "knee-probe-generic": "9a002d94189b4713f835427e158af34904363a7a97d57df48a830fcf315a061a",
+    "knee-probe-native": "ed7690be716f0e317f78233242588a1d8acfd728c6d9de617fc1031a14d425ba",
+    "vector-probe-generic": "9a002d94189b4713f835427e158af34904363a7a97d57df48a830fcf315a061a",
+    "vector-probe-native": "30bbb08bd812eaeb36093b5e5e968fa1f236db0eae3eed15701a97d5014a09f9",
+    "knee-tests-sanitizer": "14c4d9bbc7eadc41cb49459ffb3fed8e86205854c0918c4fb45c0a09871de0c3"
+  },
+  "correctness": {
+    "checks_per_run": 1448939,
+    "compared_ticks_per_run": 161787,
+    "scalar_profiles": [
+      "GCC14 O3 generic",
+      "GCC14 O3 native",
+      "Clang19 O3 generic",
+      "Clang19 O3 native",
+      "GCC14 O1 ASan/UBSan/float-cast-overflow, leaks disabled"
+    ],
+    "vector_profiles": [
+      "GCC14 O3 generic",
+      "GCC14 O3 native",
+      "Clang19 O3 generic",
+      "Clang19 O3 native",
+      "Clang19 O3 -mavx2 -mno-fma -mno-bmi -mno-bmi2"
+    ]
+  },
+  "instrumentation": {
+    "source_base": "35f3431400b28d95d41ef6c6a863db0516edfa01",
+    "counts_reproduced": true,
+    "compiler_flags": "-std=c++20 -O3 -DNDEBUG -g -DCS80_DISABLE_AVX2_FILTER_BATCH=1; Ig00156Batch.cpp adds -ffp-contract=off",
+    "timer_profile_usable_for_cost_shares": false,
+    "timer_warning": "Collection interval timer period was changed (997 -> 0); profile data may be unreliable",
+    "instrumented_timings_are_not_product_benchmarks": true,
+    "reproduction_driver_edit": "only original absolute scratch CSV destination changed to relative output directory"
+  },
+  "unrun_after_cost_failure": [
+    "131072-frame vector confirmation matrix",
+    "paired eight-voice Engine timing",
+    "unchanged oscillator numerical/promotion/continuity suites",
+    "strict whole-Engine pinned audio compatibility",
+    "behavioral mutations",
+    "vector sanitizer qualification"
+  ],
+  "files": {
+    "docs/experiments/oscillator-knee-lookup/evidence/counter-reproduction.log": "2db8ec6475f7c056b689184a5cb3c50aff76b4098f4d8443f83ad73885b02a0d",
+    "docs/experiments/oscillator-knee-lookup/evidence/knee-final-reproduction.log": "069d30b419ac1a4e38d7f868682548a7d7835a335e5430cfde674b0e58754d0e",
+    "docs/experiments/oscillator-knee-lookup/evidence/knee-tests-generic.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/knee-tests-native.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/knee-tests-sanitizer.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/path-counts.log": "6e4075a596168066435868cc99c63c691defeb36660995f3f56759fe29a6b6b8",
+    "docs/experiments/oscillator-knee-lookup/evidence/profile-functions.txt": "e34f315440010ada31ad82520712e8375e7bca555de212a35ad9c7962e69c7b1",
+    "docs/experiments/oscillator-knee-lookup/evidence/profile-header.txt": "5a0c7608076fa65d1fa8e7e42f95d9760415ddcdec756ab202bb03282cf891dc",
+    "docs/experiments/oscillator-knee-lookup/evidence/scalar-independent-clang-generic-run.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/scalar-independent-clang-native-run.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/summary.json": "e726a622f1d29112ee82338ce9452951ae510d2810cdcb47166090a8bd708aff",
+    "docs/experiments/oscillator-knee-lookup/evidence/vector-independent-clang-avx2-no-fma-bmi-run.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/vector-independent-clang-generic-run.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/vector-independent-clang-native-run.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/vector-tests-generic.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/evidence/vector-tests-native.log": "2f041602df6289406aac36990b33ee0183efaa4066afae0fce11fd7b55aff3ec",
+    "docs/experiments/oscillator-knee-lookup/harness/tests/OscillatorKneeLookupProbe.cpp": "701d40fca92a838a831d5357bf025d4501922498ccc9abab9f54fa57818834e9",
+    "docs/experiments/oscillator-knee-lookup/harness/tests/OscillatorKneeLookupTests.cpp": "a574e5bf07bd355cd6074b19c11459e64baaf271b1840107980ba3dc1097b565",
+    "docs/experiments/oscillator-knee-lookup/harness/tests/fixtures/ReconstructedOscillatorPreKneeLookup.h": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373",
+    "docs/experiments/oscillator-knee-lookup/preregistered.md": "ea291a112c9b01bda5f853e211f07b039d88a1da736c2e83834cc5cc3cee145a",
+    "docs/experiments/oscillator-knee-lookup/profiling/path-count.cpp": "ba187cddd582d235a001b59e3027189403524b3ab997247bf9dec40900240665",
+    "docs/experiments/oscillator-knee-lookup/profiling/path-count.patch": "5172734d61a62d69440c0e77710cd2ed99c53ab76ed04050911b34a5110d233d",
+    "docs/experiments/oscillator-knee-lookup/profiling/reproduce.sh": "8e66526217c9290f2e510517d20706a84c6e67805a3f8664db39e7a13d4a243f",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/codegen/knee-codegen-generic.s": "9260ecf0210e39b148ad47a2e4f6f5dda25e0879dda07e6b8a4450a6f65e8bc5",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/codegen/knee-codegen-native.s": "594d6b6b04b0fbbaa17ceaa393348ee7d651c38364fb6c16a1548bfe48cbe1f0",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/codegen/knee-codegen.cpp": "8dc7f5486f2df798b0b406ce2d3a74d9a756980a57a8869fe39bb2d89679d6df",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/core/ReconstructedOscillator.h": "7935b609981d657490f4a5c5066e2ab497a68cc3cc3378cfc6d31301afb218c5",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-environment.txt": "0e49ea5f4a7cfe9c0eaffd092e3cf201cb8f1ce09c1baca1695d214fc5d825eb",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-generic.csv": "f241f8a16847085ec1af19e5ce8df37a8faf1309f9efc6fa03c8153bb74013b9",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-generic.end": "68d7a55d2001a2e5d0c607682a4e31014f18ea1bddc0c483508510c0c2dd87f4",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-generic.log": "e9022f77a4924cdc675b55dd44379205b3fe18c74513aeb716b8e8636248c782",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-generic.start": "c2fbb09d4daf3736313a74de7217ca8e79c40ce602dd23ecf39d23a5ef3689f1",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-native.csv": "f8c6752140e2acef7492b64ee773b1afe89450d16f5e64f36bf70c2b31dc8a38",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-native.end": "9f8f1fddb193446f5aa33265cc91094f6c3e761409baddf761d10f6e3466b0fa",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-native.log": "e9022f77a4924cdc675b55dd44379205b3fe18c74513aeb716b8e8636248c782",
+    "docs/experiments/oscillator-knee-lookup/rejected/scalar-nearest/knee-timing-native.start": "68d7a55d2001a2e5d0c607682a4e31014f18ea1bddc0c483508510c0c2dd87f4",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/core/ReconstructedOscillator.h": "a3f445d3ba000fb460da50f2471c4533846c11cec55afc803d7a740f2e154e17",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-environment.txt": "121c0eae05db7bca0ee547ad574c1d9edbe7290cb7682e4ff86759a36f1c7a67",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-generic.csv": "1a42f56c7e75909801653c6f2780a39d54537bd83d8a1e5a85588c43375be24e",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-generic.end": "4d8625277c2b4691835971158a6e042b883e556f437d4f0cf53337bb45879b8d",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-generic.log": "e9022f77a4924cdc675b55dd44379205b3fe18c74513aeb716b8e8636248c782",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-generic.start": "6f6f23ec8132c0a7d4e9b084a6918831c16c077c3c1b50116cbbb27b527eb54e",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-native.csv": "805724215d38519d6dacc9c6c202275071a3b3de1415aed3d6e72cbcd22e3c89",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-native.end": "a1c72f0e7c73c54b965442f0d53a63a4252d3ef6e7b8828bd5eedaac0b1cab35",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-native.log": "e9022f77a4924cdc675b55dd44379205b3fe18c74513aeb716b8e8636248c782",
+    "docs/experiments/oscillator-knee-lookup/rejected/vector/vector-timing-native.start": "4d8625277c2b4691835971158a6e042b883e556f437d4f0cf53337bb45879b8d",
+    "docs/experiments/oscillator-knee-lookup/reproduce.sh": "bf12f4529d550b4c61c72c5b809d308a597c4310fe6dd39cd1a212e10ab809d2",
+    "docs/experiments/oscillator-knee-lookup/summarize.py": "d5d5a8ad33df3c41002b1941f14d0b42b92fce9061265a04638e7ef15ef49289",
+    "docs/experiments/oscillator-knee-lookup/vector-followup-plan.md": "203d7a800cfef681c2cfe9ca864c4a73207f02827861fc598b7d20b9bfe50c55",
+    "docs/analysis/oscillator-knee-lookup.md": "1bcf2d9c9686c763c80116147538212cae5fa96d74cdd9df67a3722c73c514cb"
+  }
+}

@@ -408,6 +408,9 @@ was rejected rather than shipped: the bit-compatible narrow candidate failed its
 predeclared active-cost gate in both GCC profiles. Its archived component timings
 are not a refresh of this historical whole-instrument scorecard; production DSP
 and the open CPU/idle targets remain unchanged.
+The subsequent [exact knee-lookup experiment](analysis/oscillator-knee-lookup.md)
+also failed its dual-profile cost gates. Its two complete matrices are retained;
+no scalar or AVX2 knee path is enabled.
 
 CPU: the reconstructed oscillator's event solver (about 29 % of instructions)
 and the nodal stages' Newton solve (about 22 %) dominate. The bounded-error tan
